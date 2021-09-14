@@ -265,8 +265,13 @@ sub display_form
               $a{$_} = 1;
           }
           if (!$form->{approved} && !$form->{batch_id}) {
-              $a{approve} = 1;
-              $a{edit_and_save} = 1;
+            #   Need to check for draft_modify and draft_post
+            if ($form->is_allowed_role(['draft_post'])) {
+                $a{approve} = 1;
+            }
+            if ($form->is_allowed_role(['draft_modify'])) {
+                $a{edit_and_save} = 1;
+            }
               $a{update} = 1;
           }
       } else {
