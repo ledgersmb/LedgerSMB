@@ -956,7 +956,8 @@ sub form_footer {
             $hold_text = $locale->text('On Hold');
         }
 
-
+# REMARK: According to the check below, post_as_new and delete button never render
+# Why post_as_new and delete are exist?
         %button = (
             'update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
             'copy_to_new' => { ndx => 2, key => 'C', value => $locale->text('Copy to New') },
@@ -986,6 +987,10 @@ sub form_footer {
            if (!$form->is_allowed_role(['draft_modify'])){
                delete $button{edit_and_save};
            }
+# Approve button should not render if user don't have permission
+           if (!$form->is_allowed_role(['draft_post'])) {
+             delete $button{approve};
+           }
            delete $button{post_as_new};
            delete $button{post};
         }
@@ -1000,9 +1005,10 @@ sub form_footer {
             $form->hide_form('separate_duties');
         }
         if ( $form->{id}) {
-            for ( "post","delete" ) {
+            for ( "post", "delete", "post_as_new" ) {
                 delete $button{$_};
             }
+            delete $button{'update'} unless $is_draft;
         }
         elsif (!$form->{id}) {
 
@@ -1016,12 +1022,6 @@ sub form_footer {
                     delete $button{$_};
                 }
             }
-        }
-        if ($form->{id}){
-            for ( "post_as_new"){
-               delete $button{$_};
-            }
-            delete $button{'update'} unless $is_draft;
         }
 
         if (defined $button{'print'}) {

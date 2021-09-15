@@ -619,10 +619,12 @@ sub form_header {
             if (!$form->{approved} && !$form->{batch_id}){
                if (!$form->{batch_id}){
                    $is_draft = 1;
-                   $button{approve} = {
-                       ndx   => 3,
-                       key   => 'O',
-                       value => $locale->text('Post') };
+                   if ($form->is_allowed_role(['draft_post'])) {
+                       $button{approve} = {
+                           ndx   => 3,
+                           key   => 'O',
+                           value => $locale->text('Post') };
+                   }
                    if ($form->is_allowed_role(['draft_modify'])){
                        $button{edit_and_save} = {
                            ndx   => 4,
