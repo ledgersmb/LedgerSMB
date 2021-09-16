@@ -66,6 +66,7 @@ localepath = locale/po
 
 [programs]
 
+
 [mail]
 # The sendmail command is used to send mail unless smtphost is set.
 # sendmail   = /usr/bin/sendmail
@@ -80,6 +81,10 @@ localepath = locale/po
 
 # This must be set to enable e-mail delivery of backups
 # backup_email_from = backups@lsmb_hosting.com
+
+[proxy]
+# The list of IP addresses from which to accept reverse proxy requests
+# ip = 127.0.0.1/8 ::1/128
 
 [printers]
 # Available printers
