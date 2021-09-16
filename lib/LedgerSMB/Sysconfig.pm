@@ -367,6 +367,14 @@ def 'template_ods',
     doc => q{Set to 'disabled' to prevent ODS output formats being made available};
 
 
+### SECTION  ---   reverse proxy
+
+def 'ip',
+    section => 'proxy',
+    default => '127.0.0.1/8 ::1/128 ::ffff:127.0.0.1/108',
+    doc => 'The space separated list of IP addresses (or ranges, using CIDR notation) of acceptable reverse proxies';
+
+
 ### SECTION  ---   mail
 
 def 'sendmail',
