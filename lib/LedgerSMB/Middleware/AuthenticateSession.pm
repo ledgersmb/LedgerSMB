@@ -209,7 +209,7 @@ sub call {
     $dbh->rollback;
     $dbh->disconnect;
 
-    my $secure = ($env->{SERVER_PROTOCOL} eq 'https') ? '; Secure' : '';
+    my $secure = ($env->{HTTPS} eq 'ON') ? '; Secure' : '';
     my $path = LedgerSMB::PSGI::Util::cookie_path($env->{SCRIPT_NAME});
     return Plack::Util::response_cb(
         $res, sub {
