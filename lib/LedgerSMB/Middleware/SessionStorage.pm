@@ -59,7 +59,7 @@ sub call {
     my $cookie      = $req->cookies->{$self->cookie};
     my $session     = $store->decode($cookie);
 
-    my $secure = $env->{SERVER_PROTOCOL} eq 'https';
+    my $secure = $env->{HTTPS} eq 'ON';
     my $path =
         $self->cookie_path //
         LedgerSMB::PSGI::Util::cookie_path($env->{SCRIPT_NAME});
