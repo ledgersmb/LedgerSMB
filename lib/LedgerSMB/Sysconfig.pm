@@ -375,7 +375,7 @@ def 'template_ods',
 
 ### SECTION  ---   reverse proxy
 
-def 'ip',
+def 'proxy_ip',
     section => 'proxy',
     default => '127.0.0.1/8 ::1/128 ::ffff:127.0.0.1/108',
     doc => 'The space separated list of IP addresses (or ranges, using CIDR notation) of acceptable reverse proxies';

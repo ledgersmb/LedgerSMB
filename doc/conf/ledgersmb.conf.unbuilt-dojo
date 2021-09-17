@@ -91,7 +91,7 @@ localepath = locale/po
 
 [proxy]
 # The list of IP addresses from which to accept reverse proxy requests
-# ip = 127.0.0.1/8 ::1/128
+# proxy_ip = 127.0.0.1/8 ::1/128
 
 [printers]
 # Available printers
