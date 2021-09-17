@@ -220,8 +220,11 @@ sub setup_url_space {
     my $psgi_app = \&psgi_app;
 
     return builder {
-        enable match_if addr([ split / /, LedgerSMB::Sysconfig::proxy_ip() ]),
-            'ReverseProxy';
+        if (LedgerSMB::Sysconfig::proxy_ip()) {
+            enable match_if addr([ split / /,
+                                   LedgerSMB::Sysconfig::proxy_ip() ]),
+                'ReverseProxy';
+        }
         enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
             'ConditionalGET';
 
