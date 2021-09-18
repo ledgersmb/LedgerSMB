@@ -206,7 +206,7 @@ use LedgerSMB::Setting;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 
-our $VERSION = '1.8.21';
+our $VERSION = '1.8.22-dev';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
