@@ -138,6 +138,7 @@ mc/delete-migration-validation-data.sql
 1.8/re-add-ap-aging-menu.sql
 1.8/reconciliation-links-cascade.sql
 1.8/initialize-payments-from-invoices.sql
+1.8/add-payment-links-indices.sql
 # 1.9 changes
 1.9/templates-last-modified-no-tz.sql
 1.9/drop-view-tx_report.sql
