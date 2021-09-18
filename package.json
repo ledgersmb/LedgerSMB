@@ -44,14 +44,14 @@
     "supports es6-module and supports xhr2 and supports bloburls and supports css-variables and supports css3-boxsizing and supports border-radius"
   ],
   "devDependencies": {
-    "@babel/eslint-parser": "7.15.4",
+    "@babel/eslint-parser": "7.15.7",
     "@babel/plugin-proposal-object-rest-spread": "7.15.6",
     "@babel/preset-env": "7.15.6",
     "autoprefixer": "10.3.4",
     "babel-loader": "8.2.2",
     "browserslist": "4.17.0",
     "buffer": "6.0.3",
-    "caniuse-lite": "1.0.30001257",
+    "caniuse-lite": "1.0.30001258",
     "clean-webpack-plugin": "4.0.0",
     "compression-webpack-plugin": "9.0.0",
     "copy-webpack-plugin": "9.0.1",
