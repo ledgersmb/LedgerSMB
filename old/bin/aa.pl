@@ -1155,6 +1155,7 @@ sub edit_and_save {
     delete $form->{id};
     AA->post_transaction( \%myconfig, \%$form );
     $form->{rowcount} = 0;
+    $form->{paidaccounts} = 0;
     edit();
 }
 
@@ -1370,7 +1371,8 @@ sub post {
            and ($form->{callback} !~ /vouchers/)) {
             $form->{callback}.= qq|&batch_id=$form->{batch_id}|;
     }
-            $form->{rowcount} = 0;
+        $form->{rowcount} = 0;
+        $form->{paidaccounts} = 0;
             edit();
         }
     else {
