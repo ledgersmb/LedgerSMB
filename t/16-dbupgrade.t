@@ -61,13 +61,13 @@ my $upgrade =
                         {
                             statement => q{select id, accno, description
                                from chart where link = 'AR'
-                               and charttype = 'A'},
+                                and charttype = 'A'},
                             results   => [[]],
                         },
                         {
                             statement => q{select id, accno, description
                                from chart where link = 'AP'
-                               and charttype = 'A'},
+                                and charttype = 'A'},
                             results   => [[]],
                         },
                     ),
