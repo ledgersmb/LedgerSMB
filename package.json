@@ -51,7 +51,7 @@
     "babel-loader": "8.2.2",
     "browserslist": "4.17.1",
     "buffer": "6.0.3",
-    "caniuse-lite": "1.0.30001259",
+    "caniuse-lite": "1.0.30001260",
     "clean-webpack-plugin": "4.0.0",
     "compression-webpack-plugin": "9.0.0",
     "copy-webpack-plugin": "9.0.1",
@@ -105,7 +105,7 @@
     "webpack-log": "3.0.2",
     "webpack-merge": "5.8.0",
     "webpack-sources": "3.2.1",
-    "yargs": "17.1.1"
+    "yargs": "17.2.0"
   },
   "dependencies": {
     "content-disposition": "0.5.3",
