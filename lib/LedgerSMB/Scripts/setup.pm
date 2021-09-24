@@ -24,6 +24,7 @@ management tasks.
 
 use strict;
 use warnings;
+use version;
 
 use Digest::MD5 qw(md5_hex);
 use Encode;
@@ -254,10 +255,22 @@ sub login {
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
-    my $server_info = $database->server_version;
-
+    my $template = LedgerSMB::Template::UI->new_UI;
     my $version_info =
         $database->get_info(LedgerSMB::Sysconfig::auth_db());
+
+    my $server_version     = version->parse(
+        $version_info->{system_info}->{'PostgreSQL (server)'}
+        );
+    my $server_min_version = version->parse('10.0.0');
+
+    return $template->render($request,
+                             'setup/mismatch',
+                             {
+                                 found    => "$server_version",
+                                 required => "$server_min_version",
+                             })
+        if $server_version < $server_min_version;
 
     ($reauth) = _init_db($request);
     return $reauth if $reauth;
@@ -306,7 +319,6 @@ sub login {
             }
         }
     }
-    my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'setup/confirm_operation', $request);
 }
 
