@@ -92,11 +92,9 @@ edge [];
 
 "cr_report_line" [shape = record, label = "{<col0> \N| id:  bigserial\lreport_id:  integer\lscn:  text\ltheir_balance:  numeric\lour_balance:  numeric\lerrorcode:  integer\luser:  integer\lclear_time:  date\linsert_time:  timestamp with time zone\ltrans_type:  text\lpost_date:  date\lledger_id:  integer\lvoucher_id:  integer\loverlook:  boolean\lcleared:  boolean\l}" ];
 
+"cr_report_line_links" [shape = record, label = "{<col0> \N| report_line_id:  integer\lentry_id:  integer\l}" ];
+
 "currency" [shape = record, label = "{<col0> \N| curr:  character(3)\ldescription:  text\l}" ];
-
-"db_patch_log" [shape = record, label = "{<col0> \N| when_applied:  timestamp without time zone\lpath:  text\lsha:  text\lsqlstate:  text\lerror:  text\l}" ];
-
-"db_patches" [shape = record, label = "{<col0> \N| sha:  text\lpath:  text\llast_updated:  timestamp without time zone\l}" ];
 
 "defaults" [shape = record, label = "{<col0> \N| setting_key:  text\lvalue:  text\l}" ];
 
@@ -109,6 +107,8 @@ edge [];
 "eca_to_contact" [shape = record, label = "{<col0> \N| credit_id:  integer\lcontact_class_id:  integer\lcontact:  text\ldescription:  text\l}" ];
 
 "eca_to_location" [shape = record, label = "{<col0> \N| location_id:  integer\llocation_class:  integer\lcredit_id:  integer\l}" ];
+
+"email" [shape = record, label = "{<col0> \N| workflow_id:  integer\lfrom:  text\lto:  text\lcc:  text\lbcc:  text\lnotify:  boolean\lsubject:  text\lbody:  text\lsent_date:  date\l}" ];
 
 "employee_class" [shape = record, label = "{<col0> \N| label:  text\lid:  serial\l}" ];
 
@@ -142,6 +142,8 @@ edge [];
 
 "file_eca" [shape = record, label = "{<col0> \N| content:  bytea\lmime_type_id:  integer\lfile_name:  text\ldescription:  text\luploaded_by:  integer\luploaded_at:  timestamp without time zone\lid:  integer\lref_key:  integer\lfile_class:  integer\l}" ];
 
+"file_email" [shape = record, label = "{<col0> \N| content:  bytea\lmime_type_id:  integer\lfile_name:  text\ldescription:  text\luploaded_by:  integer\luploaded_at:  timestamp without time zone\lid:  integer\lref_key:  integer\lfile_class:  integer\l}" ];
+
 "file_entity" [shape = record, label = "{<col0> \N| content:  bytea\lmime_type_id:  integer\lfile_name:  text\ldescription:  text\luploaded_by:  integer\luploaded_at:  timestamp without time zone\lid:  integer\lref_key:  integer\lfile_class:  integer\l}" ];
 
 "file_incoming" [shape = record, label = "{<col0> \N| content:  bytea\lmime_type_id:  integer\lfile_name:  text\ldescription:  text\luploaded_by:  integer\luploaded_at:  timestamp without time zone\lid:  integer\lref_key:  integer\lfile_class:  integer\l}" ];
@@ -156,6 +158,8 @@ edge [];
 
 "file_part" [shape = record, label = "{<col0> \N| content:  bytea\lmime_type_id:  integer\lfile_name:  text\ldescription:  text\luploaded_by:  integer\luploaded_at:  timestamp without time zone\lid:  integer\lref_key:  integer\lfile_class:  integer\l}" ];
 
+"file_reconciliation" [shape = record, label = "{<col0> \N| content:  bytea\lmime_type_id:  integer\lfile_name:  text\ldescription:  text\luploaded_by:  integer\luploaded_at:  timestamp without time zone\lid:  integer\lref_key:  integer\lfile_class:  integer\l}" ];
+
 "file_secondary_attachment" [shape = record, label = "{<col0> \N| file_id:  integer\lsource_class:  integer\lref_key:  integer\ldest_class:  integer\lattached_by:  integer\lattached_at:  timestamp without time zone\l}" ];
 
 "file_transaction" [shape = record, label = "{<col0> \N| content:  bytea\lmime_type_id:  integer\lfile_name:  text\ldescription:  text\luploaded_by:  integer\luploaded_at:  timestamp without time zone\lid:  integer\lref_key:  integer\lfile_class:  integer\l}" ];
@@ -163,8 +167,6 @@ edge [];
 "file_tx_to_order" [shape = record, label = "{<col0> \N| file_id:  integer\lsource_class:  integer\lref_key:  integer\ldest_class:  integer\lattached_by:  integer\lattached_at:  timestamp without time zone\l}" ];
 
 "file_view_catalog" [shape = record, label = "{<col0> \N| file_class:  integer\lview_name:  text\l}" ];
-
-"fixes" [shape = record, label = "{<col0> \N| checksum:  text\lpath:  text\lstdout:  text\lstderr:  text\lapplied_at:  timestamp without time zone\l}" ];
 
 "gifi" [shape = record, label = "{<col0> \N| accno:  text\ldescription:  text\l}" ];
 
@@ -202,10 +204,6 @@ edge [];
 
 "location_class_to_entity_class" [shape = record, label = "{<col0> \N| id:  serial\llocation_class:  integer\lentity_class:  integer\l}" ];
 
-"lsmb_group" [shape = record, label = "{<col0> \N| role_name:  text\l}" ];
-
-"lsmb_group_grants" [shape = record, label = "{<col0> \N| group_name:  text\lgranted_role:  text\l}" ];
-
 "lsmb_module" [shape = record, label = "{<col0> \N| id:  integer\llabel:  text\l}" ];
 
 "lsmb_sequence" [shape = record, label = "{<col0> \N| label:  text\lsetting_key:  text\lprefix:  text\lsuffix:  text\lsequence:  text\laccept_input:  boolean\l}" ];
@@ -214,9 +212,7 @@ edge [];
 
 "menu_acl" [shape = record, label = "{<col0> \N| id:  serial\lrole_name:  character varying\lacl_type:  character varying\lnode_id:  integer\l}" ];
 
-"menu_attribute" [shape = record, label = "{<col0> \N| node_id:  integer\lattribute:  character varying\lvalue:  character varying\lid:  serial\l}" ];
-
-"menu_node" [shape = record, label = "{<col0> \N| id:  serial\llabel:  character varying\lparent:  integer\lposition:  integer\l}" ];
+"menu_node" [shape = record, label = "{<col0> \N| id:  serial\llabel:  character varying\lparent:  integer\lposition:  integer\lurl:  text\lstandalone:  boolean\lmenu:  boolean\l}" ];
 
 "mfg_lot" [shape = record, label = "{<col0> \N| id:  serial\llot_number:  text\lparts_id:  integer\lqty:  numeric\lstock_date:  date\l}" ];
 
@@ -230,7 +226,7 @@ edge [];
 
 "note_class" [shape = record, label = "{<col0> \N| id:  serial\lclass:  text\l}" ];
 
-"oe" [shape = record, label = "{<col0> \N| id:  serial\lordnumber:  text\ltransdate:  date\lentity_id:  integer\lamount_tc:  numeric\lnetamount_tc:  numeric\lreqdate:  date\ltaxincluded:  boolean\lshippingpoint:  text\lnotes:  text\lcurr:  character(3)\lperson_id:  integer\lclosed:  boolean\lquotation:  boolean\lquonumber:  text\lintnotes:  text\lshipvia:  text\llanguage_code:  character varying(6)\lponumber:  text\lterms:  smallint\lentity_credit_account:  integer\loe_class_id:  integer\l}" ];
+"oe" [shape = record, label = "{<col0> \N| id:  serial\lordnumber:  text\ltransdate:  date\lentity_id:  integer\lamount_tc:  numeric\lnetamount_tc:  numeric\lreqdate:  date\ltaxincluded:  boolean\lshippingpoint:  text\lnotes:  text\lcurr:  character(3)\lperson_id:  integer\lclosed:  boolean\lquotation:  boolean\lquonumber:  text\lintnotes:  text\lshipvia:  text\llanguage_code:  character varying(6)\lponumber:  text\lterms:  smallint\lentity_credit_account:  integer\loe_class_id:  integer\lworkflow_id:  integer\l}" ];
 
 "oe_class" [shape = record, label = "{<col0> \N| id:  smallint\loe_class:  text\l}" ];
 
@@ -252,11 +248,9 @@ edge [];
 
 "partsvendor" [shape = record, label = "{<col0> \N| credit_id:  integer\lparts_id:  integer\lpartnumber:  text\lleadtime:  smallint\llastcost:  numeric\lcurr:  character(3)\lentry_id:  serial\l}" ];
 
-"payment" [shape = record, label = "{<col0> \N| id:  serial\lreference:  text\lgl_id:  integer\lpayment_class:  integer\lpayment_date:  date\lclosed:  boolean\lentity_credit_id:  integer\lemployee_id:  integer\lcurrency:  character(3)\lnotes:  text\l}" ];
+"payment" [shape = record, label = "{<col0> \N| id:  serial\lreference:  text\lgl_id:  integer\lpayment_class:  integer\lpayment_date:  date\lclosed:  boolean\lentity_credit_id:  integer\lemployee_id:  integer\lcurrency:  character(3)\lnotes:  text\lreversing:  integer\l}" ];
 
 "payment_links" [shape = record, label = "{<col0> \N| payment_id:  integer\lentry_id:  integer\ltype:  integer\l}" ];
-
-"payment_map" [shape = record, label = "{<col0> \N| line_id:  integer\lpays:  integer\l}" ];
 
 "payment_type" [shape = record, label = "{<col0> \N| id:  serial\llabel:  text\l}" ];
 
@@ -316,17 +310,17 @@ edge [];
 
 "taxmodule" [shape = record, label = "{<col0> \N| taxmodule_id:  serial\ltaxmodulename:  text\l}" ];
 
-"template" [shape = record, label = "{<col0> \N| id:  serial\ltemplate_name:  text\llanguage_code:  character varying(6)\ltemplate:  text\lformat:  text\llast_modified:  timestamp with time zone\l}" ];
+"template" [shape = record, label = "{<col0> \N| id:  serial\ltemplate_name:  text\llanguage_code:  character varying(6)\ltemplate:  text\lformat:  text\llast_modified:  timestamp without time zone\l}" ];
 
 "trans_type" [shape = record, label = "{<col0> \N| code:  character(2)\ldescription:  character varying(1000)\l}" ];
 
-"transactions" [shape = record, label = "{<col0> \N| id:  integer\ltable_name:  text\llocked_by:  integer\lapproved:  boolean\lapproved_by:  integer\lapproved_at:  timestamp without time zone\ltransdate:  date\l}" ];
+"transactions" [shape = record, label = "{<col0> \N| id:  integer\ltable_name:  text\llocked_by:  integer\lapproved:  boolean\lapproved_by:  integer\lapproved_at:  timestamp without time zone\ltransdate:  date\lworkflow_id:  integer\l}" ];
 
 "translation" [shape = record, label = "{<col0> \N| trans_id:  integer\llanguage_code:  character varying(6)\ldescription:  text\l}" ];
 
 "trial_balance__yearend_types" [shape = record, label = "{<col0> \N| type:  text\l}" ];
 
-"user_preference" [shape = record, label = "{<col0> \N| id:  integer\llanguage:  character varying(6)\lstylesheet:  text\lprinter:  text\ldateformat:  text\lnumberformat:  text\l}" ];
+"user_preference" [shape = record, label = "{<col0> \N| id:  serial\luser_id:  integer\lname:  text\lvalue:  text\l}" ];
 
 "users" [shape = record, label = "{<col0> \N| id:  serial\lusername:  character varying(30)\lnotify_password:  interval\lentity_id:  integer\l}" ];
 
@@ -335,6 +329,10 @@ edge [];
 "warehouse" [shape = record, label = "{<col0> \N| id:  serial\ldescription:  text\l}" ];
 
 "warehouse_inventory" [shape = record, label = "{<col0> \N| entity_id:  integer\lwarehouse_id:  integer\lparts_id:  integer\ltrans_id:  integer\lorderitems_id:  integer\lqty:  numeric\lshippingdate:  date\lentry_id:  serial\l}" ];
+
+"workflow" [shape = record, label = "{<col0> \N| workflow_id:  integer\ltype:  character varying(50)\lstate:  character varying(30)\llast_update:  timestamp without time zone\l}" ];
+
+"workflow_history" [shape = record, label = "{<col0> \N| workflow_hist_id:  integer\lworkflow_id:  integer\laction:  character varying(25)\ldescription:  character varying(255)\lstate:  character varying(30)\lworkflow_user:  character varying(50)\lhistory_date:  timestamp without time zone\l}" ];
 
 "yearend" [shape = record, label = "{<col0> \N| trans_id:  integer\lreversed:  boolean\ltransdate:  date\l}" ];
 
@@ -413,19 +411,20 @@ edge [];
 "business_unit" -> "business_unit" [label="business_unit_parent_id_fkey"];
 "business_unit" -> "entity_credit_account" [label="business_unit_credit_id_fkey"];
 "business_unit_ac" -> "acc_trans" [label="business_unit_ac_entry_id_fkey"];
+"business_unit_ac" -> "business_unit" [label="business_unit_ac_class_id_bu_id_fkey"];
 "business_unit_ac" -> "business_unit_class" [label="business_unit_ac_class_id_fkey"];
-"business_unit_ac" -> "business_unit" [label="business_unit_ac_class_id_fkey1"];
 "business_unit_inv" -> "invoice" [label="business_unit_inv_entry_id_fkey"];
+"business_unit_inv" -> "business_unit" [label="business_unit_inv_class_id_bu_id_fkey"];
 "business_unit_inv" -> "business_unit_class" [label="business_unit_inv_class_id_fkey"];
-"business_unit_inv" -> "business_unit" [label="business_unit_inv_class_id_fkey1"];
 "business_unit_jl" -> "journal_line" [label="business_unit_jl_entry_id_fkey"];
 "business_unit_jl" -> "business_unit_class" [label="business_unit_jl_bu_class_fkey"];
 "business_unit_jl" -> "business_unit" [label="business_unit_jl_bu_id_fkey"];
 "business_unit_oitem" -> "orderitems" [label="business_unit_oitem_entry_id_fkey"];
+"business_unit_oitem" -> "business_unit" [label="business_unit_oitem_class_id_bu_id_fkey"];
 "business_unit_oitem" -> "business_unit_class" [label="business_unit_oitem_class_id_fkey"];
-"business_unit_oitem" -> "business_unit" [label="business_unit_oitem_class_id_fkey1"];
 "business_unit_translation" -> "business_unit" [label="business_unit_translation_trans_id_fkey"];
 "company" -> "entity" [label="company_entity_id_fkey"];
+"company" -> "sic" [label="company_sic_code_fkey"];
 "country_tax_form" -> "country" [label="country_tax_form_country_id_fkey"];
 "cr_coa_to_account" -> "account" [label="cr_coa_to_account_chart_id_fkey"];
 "cr_report" -> "account" [label="cr_report_chart_id_fkey"];
@@ -435,6 +434,8 @@ edge [];
 "cr_report_line" -> "cr_report" [label="cr_report_line_report_id_fkey"];
 "cr_report_line" -> "entity" [label="cr_report_line_user_fkey"];
 "cr_report_line" -> "acc_trans" [label="cr_report_line_ledger_id_fkey"];
+"cr_report_line_links" -> "cr_report_line" [label="cr_report_line_links_report_line_id_fkey"];
+"cr_report_line_links" -> "acc_trans" [label="cr_report_line_links_entry_id_fkey"];
 "eca_invoice" -> "journal_entry" [label="eca_invoice_journal_id_fkey"];
 "eca_invoice" -> "entity_credit_account" [label="eca_invoice_credit_id_fkey"];
 "eca_invoice" -> "language" [label="eca_invoice_language_code_fkey"];
@@ -446,6 +447,7 @@ edge [];
 "eca_to_location" -> "location" [label="eca_to_location_location_id_fkey"];
 "eca_to_location" -> "location_class" [label="eca_to_location_location_class_fkey"];
 "eca_to_location" -> "entity_credit_account" [label="eca_to_location_credit_id_fkey"];
+"email" -> "workflow" [label="email_workflow_id_fkey"];
 "employee_to_ec" -> "entity_employee" [label="employee_to_ec_employee_id_fkey"];
 "employee_to_ec" -> "employee_class" [label="employee_to_ec_ec_id_fkey"];
 "entity" -> "entity_class" [label="entity_entity_class_fkey"];
@@ -480,6 +482,7 @@ edge [];
 "file_base" -> "entity" [label="file_base_uploaded_by_fkey"];
 "file_base" -> "file_class" [label="file_base_file_class_fkey"];
 "file_eca" -> "entity_credit_account" [label="file_eca_ref_key_fkey"];
+"file_email" -> "email" [label="file_email_ref_key_fkey"];
 "file_entity" -> "entity" [label="file_entity_ref_key_fkey"];
 "file_order" -> "oe" [label="file_order_ref_key_fkey"];
 "file_order_to_order" -> "file_order" [label="file_order_to_order_file_id_fkey"];
@@ -487,6 +490,7 @@ edge [];
 "file_order_to_tx" -> "file_order" [label="file_order_to_tx_file_id_fkey"];
 "file_order_to_tx" -> "gl" [label="file_order_to_tx_ref_key_fkey"];
 "file_part" -> "parts" [label="file_part_ref_key_fkey"];
+"file_reconciliation" -> "cr_report" [label="file_reconciliation_ref_key_fkey"];
 "file_secondary_attachment" -> "file_class" [label="file_secondary_attachment_source_class_fkey"];
 "file_secondary_attachment" -> "file_class" [label="file_secondary_attachment_dest_class_fkey"];
 "file_secondary_attachment" -> "entity" [label="file_secondary_attachment_attached_by_fkey"];
@@ -521,11 +525,9 @@ edge [];
 "location" -> "country" [label="location_country_id_fkey"];
 "location_class_to_entity_class" -> "location_class" [label="location_class_to_entity_class_location_class_fkey"];
 "location_class_to_entity_class" -> "entity_class" [label="location_class_to_entity_class_entity_class_fkey"];
-"lsmb_group_grants" -> "lsmb_group" [label="lsmb_group_grants_group_name_fkey"];
 "lsmb_sequence" -> "defaults" [label="lsmb_sequence_setting_key_fkey"];
 "makemodel" -> "parts" [label="makemodel_parts_id_fkey"];
 "menu_acl" -> "menu_node" [label="menu_acl_node_id_fkey"];
-"menu_attribute" -> "menu_node" [label="menu_attribute_node_id_fkey"];
 "menu_node" -> "menu_node" [label="menu_node_parent_fkey"];
 "mfg_lot" -> "parts" [label="mfg_lot_parts_id_fkey"];
 "mfg_lot_item" -> "mfg_lot" [label="mfg_lot_item_mfg_lot_id_fkey"];
@@ -539,6 +541,7 @@ edge [];
 "oe" -> "person" [label="oe_person_id_fkey"];
 "oe" -> "entity_credit_account" [label="oe_entity_credit_account_fkey"];
 "oe" -> "oe_class" [label="oe_oe_class_id_fkey"];
+"oe" -> "workflow" [label="oe_workflow_id_fkey"];
 "open_forms" -> "session" [label="open_forms_session_id_fkey"];
 "orderitems" -> "parts" [label="orderitems_parts_id_fkey"];
 "parts" -> "account" [label="parts_inventory_accno_id_fkey"];
@@ -562,18 +565,16 @@ edge [];
 "payment" -> "person" [label="payment_employee_id_fkey"];
 "payment_links" -> "payment" [label="payment_links_payment_id_fkey"];
 "payment_links" -> "acc_trans" [label="payment_links_entry_id_fkey"];
-"payment_map" -> "journal_line" [label="payment_map_line_id_fkey"];
-"payment_map" -> "eca_invoice" [label="payment_map_pays_fkey"];
 "payroll_deduction" -> "entity" [label="payroll_deduction_entity_id_fkey"];
 "payroll_deduction" -> "payroll_deduction_type" [label="payroll_deduction_type_id_fkey"];
 "payroll_deduction_class" -> "country" [label="payroll_deduction_class_country_id_fkey"];
 "payroll_deduction_type" -> "account" [label="payroll_deduction_type_account_id_fkey"];
-"payroll_deduction_type" -> "payroll_deduction_class" [label="payroll_deduction_type_pdc_id_fkey"];
+"payroll_deduction_type" -> "payroll_deduction_class" [label="payroll_deduction_type_pdc_id_country_id_fkey"];
 "payroll_employee_class_to_income_type" -> "payroll_employee_class" [label="payroll_employee_class_to_income_type_ec_id_fkey"];
 "payroll_employee_class_to_income_type" -> "payroll_income_type" [label="payroll_employee_class_to_income_type_it_id_fkey"];
 "payroll_income_class" -> "country" [label="payroll_income_class_country_id_fkey"];
 "payroll_income_type" -> "account" [label="payroll_income_type_account_id_fkey"];
-"payroll_income_type" -> "payroll_income_class" [label="payroll_income_type_pic_id_fkey"];
+"payroll_income_type" -> "payroll_income_class" [label="payroll_income_type_pic_id_country_id_fkey"];
 "payroll_paid_timeoff" -> "entity" [label="payroll_paid_timeoff_employee_id_fkey"];
 "payroll_paid_timeoff" -> "payroll_pto_class" [label="payroll_paid_timeoff_pto_class_id_fkey"];
 "payroll_paid_timeoff" -> "payroll_report" [label="payroll_paid_timeoff_report_id_fkey"];
@@ -602,13 +603,14 @@ edge [];
 "template" -> "language" [label="template_language_code_fkey"];
 "transactions" -> "session" [label="transactions_locked_by_fkey"];
 "transactions" -> "entity" [label="transactions_approved_by_fkey"];
-"user_preference" -> "users" [label="user_preference_id_fkey"];
-"user_preference" -> "language" [label="user_preference_language_fkey"];
+"transactions" -> "workflow" [label="transactions_workflow_id_fkey"];
+"user_preference" -> "users" [label="user_preference_user_id_fkey"];
 "users" -> "entity" [label="users_entity_id_fkey"];
 "voucher" -> "transactions" [label="voucher_trans_id_fkey"];
 "voucher" -> "batch" [label="voucher_batch_id_fkey"];
 "voucher" -> "batch_class" [label="voucher_batch_class_fkey"];
 "warehouse_inventory" -> "entity_employee" [label="warehouse_inventory_entity_id_fkey"];
+"workflow_history" -> "workflow" [label="workflow_history_workflow_id_fkey"];
 "yearend" -> "gl" [label="yearend_trans_id_fkey"];
 }
 
