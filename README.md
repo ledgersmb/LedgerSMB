@@ -38,9 +38,9 @@ fast customization. Supported output formats are PDF, CSV, HTML, ODF and more.
 # System requirements
 
 Note that these are the system requirements for LedgerSMB 1.10.0-dev, the current
-development version. Please check the system requirements for [the 1.7 old stable
-version](https://github.com/ledgersmb/LedgerSMB/tree/1.7#system-requirements)
-and [the 1.8 version](https://github.com/ledgersmb/LedgerSMB/tree/1.8#system-requirements).
+development version. Please check the system requirements for [the 1.8 old stable
+version](https://github.com/ledgersmb/LedgerSMB/tree/1.8#system-requirements)
+and [the 1.9 version](https://github.com/ledgersmb/LedgerSMB/tree/1.9#system-requirements).
 
 ## Server
 
