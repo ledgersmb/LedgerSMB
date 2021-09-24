@@ -44,6 +44,10 @@ sendmail   = /usr/bin/sendmail
 # smtptimeout = 60
 # backup_email_from = backups@lsmb_hosting.com
 
+[proxy]
+# The list of IP addresses from which to accept reverse proxy requests
+# proxy_ip = 127.0.0.1/8 ::1/128
+
 [printers]
 # Available printers
 Laser      = lpr -Plaser
