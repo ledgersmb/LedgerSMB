@@ -204,6 +204,7 @@ though the fullversion may give you an idea of what the actual version is run.
 
 sub _stringify_db_ver {
     my ($ver) = @_;
+    $ver //= 0;
     return join('.',
                 reverse
                 map {
