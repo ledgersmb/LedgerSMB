@@ -64,6 +64,7 @@ When working toward a non-patch release, it's practical to use an issue to track
 
 # Just before release
 
+* [ ] Change ledgersmb-docker default branch to the new stable release branch (this causes the 'latest' tag in docker to move to the new branch!)
 * [ ] Include the new release on the ledgersmb.org front page
 * [ ] Update the roadmap on ledgersmb.org
 * [ ] Review installation instructions on ledgersmb.org
@@ -85,7 +86,6 @@ When working toward a non-patch release, it's practical to use an issue to track
 
 # Post release steps:
 
-* [ ] Change ledgersmb-docker default branch to the new stable release branch
 * [ ] Remove "Draft" status from 1.9 related items on ledgersmb.org
 * [ ] Update the version number of the 'master' branch:
   * [ ] Update README.md reference to 'prepare for first use'
