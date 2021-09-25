@@ -105,7 +105,7 @@
     "webpack-log": "3.0.2",
     "webpack-merge": "5.8.0",
     "webpack-sources": "3.2.1",
-    "yargs": "17.2.0"
+    "yargs": "17.2.1"
   },
   "dependencies": {
     "content-disposition": "0.5.3",
