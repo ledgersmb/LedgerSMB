@@ -241,7 +241,7 @@ sub invoice_links {
 
     }
 
-    $form->{paidaccounts} = 1 unless ( exists $form->{paidaccounts} );
+    $form->{paidaccounts} = 1 if not $form->{paidaccounts};
 
     $form->{AP} = $form->{AP_1} unless $form->{id};
     $form->{AP} //= $form->{AP_links}->{AP}->[0]->{accno} unless $form->{id};
@@ -895,7 +895,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
     </tr>
 |;
 
-    $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
+    $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"}+0 );
     $form->{"selectAP_paid"} =~ /value="(\Q$form->{cash_accno}\E--[^<]*)"/;
     $form->{"AP_paid_$form->{paidaccounts}"} = $1;
     foreach my $i ( 1 .. $form->{paidaccounts} ) {
