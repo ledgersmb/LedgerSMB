@@ -99,7 +99,7 @@
     "stylelint-webpack-plugin": "3.0.1",
     "unix-timestamp": "0.2.0",
     "unused-webpack-plugin": "2.4.0",
-    "webpack": "5.53.0",
+    "webpack": "5.54.0",
     "webpack-bundle-analyzer": "4.4.2",
     "webpack-cli": "4.8.0",
     "webpack-log": "3.0.2",
