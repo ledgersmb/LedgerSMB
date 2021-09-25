@@ -121,18 +121,18 @@ requires 'namespace::autoclean';
 
 recommends 'Math::BigInt::GMP';
 
-feature 'starman', "Standalone Server w/Starman" =>
+feature 'starman', 'Standalone Server w/Starman' =>
     sub {
-        requires "Starman";
+        requires 'Starman';
 };
 
-feature 'edi', "X12 EDI support" =>
+feature 'edi', 'X12 EDI support' =>
     sub {
         requires 'X12::Parser';
         requires 'Path::Class';
 };
 
-feature 'latex-pdf-ps', "PDF and PostScript output" =>
+feature 'latex-pdf-ps', 'PDF and PostScript output' =>
     sub {
         # 1.0.0 reports much better errors than 0.300.2 in case of
         # missing executables
@@ -144,14 +144,14 @@ feature 'latex-pdf-ps', "PDF and PostScript output" =>
         requires 'TeX::Encode', '2.007';
 };
 
-feature 'openoffice', "OpenOffice.org output" =>
+feature 'openoffice', 'OpenOffice.org output' =>
     sub {
-        requires "XML::Twig";
-        requires "OpenOffice::OODoc";
+        requires 'XML::Twig';
+        requires 'OpenOffice::OODoc';
         requires 'OpenOffice::OODoc::Styles';
 };
 
-feature 'xls', "Microsoft Excel" =>
+feature 'xls', 'Microsoft Excel' =>
     sub {
         requires 'Spreadsheet::WriteExcel';
         requires 'Excel::Writer::XLSX';
@@ -200,7 +200,7 @@ on 'develop' => sub {
     requires 'Weasel::Session', '0.11';
     requires 'Weasel::Widgets::Dojo', '0.07';
 
-    feature 'debug', "Debug pane" =>
+    feature 'debug', 'Debug pane' =>
         sub {
               # No explicit require for debug pane, handled internaly
             recommends 'Devel::NYTProf';
