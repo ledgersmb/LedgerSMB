@@ -82,7 +82,7 @@ body {
     vertical-align: top;
 }
 
-#maindiv {
+#maindiv > * {
     overflow-x: auto;
     overflow-y: auto;
 }
