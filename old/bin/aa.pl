@@ -330,7 +330,7 @@ sub create_links {
         }
     }
 
-    $form->{paidaccounts} = 1 if not defined $form->{paidaccounts};
+    $form->{paidaccounts} = 1 if not $form->{paidaccounts};
 
 
     # check if calculated is equal to stored
@@ -849,7 +849,8 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
         </tr>
 ";
 
-    $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
+     # add 0 to numify the value in paid_$paidaccounts...
+    $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"}+0 );
     if (defined $form->{cash_accno}) {
         $form->{"select$form->{ARAP}_paid"} =~ /value="(\Q$form->{cash_accno}\E--[^<]*)"/;
         $form->{"$form->{ARAP}_paid_$form->{paidaccounts}"} = $1;
