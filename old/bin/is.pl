@@ -233,7 +233,7 @@ sub invoice_links {
     $form->{AR} //= $form->{AR_links}->{AR}->[0]->{accno} unless $form->{id};
     for (qw(AR_links acc_trans)) { delete $form->{$_} }
 
-    $form->{paidaccounts} = 1 unless ( exists $form->{paidaccounts} );
+    $form->{paidaccounts} = 1 if not $form->{paidaccounts};
 
     if ( !$form->{readonly} ) {
         $form->{readonly} = 1 if $myconfig{acs} =~ /AR--Sales Invoice/;
@@ -997,7 +997,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
     print "
         </tr>
 ";
-    $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
+    $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"}+0 );
     $form->{"selectAR_paid"} =~ /value="(\Q$form->{cash_accno}\E--[^<]*)"/;
     $form->{"AR_paid_$form->{paidaccounts}"} = $1;
     foreach my $i ( 1 .. $form->{paidaccounts} ) {
