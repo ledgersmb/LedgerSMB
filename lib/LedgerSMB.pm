@@ -238,7 +238,8 @@ sub new {
     $self->{_setting} = $request->env->{'lsmb.setting'};
     $self->{_req} = $request;
 
-    $self->_process_args($request->parameters);
+    # Initialize ourselves from parameters in $self->{_req}
+    $self->_process_args;
     $self->_set_default_locale();
 
     return $self;
@@ -317,16 +318,25 @@ sub _set_default_locale {
 }
 
 sub _process_args {
-    my ($self, $args) = @_;
+    my ($self) = @_;
 
-    for my $key (keys %$args){
-        my @values = grep { defined $_ && $_ ne '' } $args->get_all($key);
-        next if ! @values;
+    # Prefer body parameters over query string parameters
+    # Normally, they shouldn't both be present, but there's at least a bug in
+    # Safari 15 which submits query parameters, even when told not to.
+    #
+    # $self->{_req}->parameters values query and body parameters equally, causing
+    # them to be collected into arrays when both are specified. This way, we
+    # prefer one over the other instead.
+    for my $args ($self->{_req}->query_parameters, $self->{_req}->body_parameters) {
+        for my $key (keys %$args){
+            my @values = grep { defined $_ && $_ ne '' } $args->get_all($key);
+            next if ! @values;
 
-        my $value = (@values == 1) ? $values[0] : \@values;
-        next if $value eq '_!lsmb!empty!_';
+            my $value = (@values == 1) ? $values[0] : \@values;
+            next if $value eq '_!lsmb!empty!_';
 
-        $self->{$key} = $value;
+            $self->{$key} = $value;
+        }
     }
     return;
 }
