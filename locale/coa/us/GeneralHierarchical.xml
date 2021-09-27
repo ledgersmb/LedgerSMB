@@ -80,6 +80,7 @@
             <account code="4010" description="Sales" category="Income">
               <link code="AR_amount"/>
               <link code="IC_sale"/>
+              <link code="IC_income"/>
             </account>
           </account-heading>
           <account-heading id="h-9" code="4400" description="OTHER REVENUE">
@@ -172,7 +173,7 @@
   <settings>
     <setting name="inventory_accno_id" accno="1510"/>
     <setting name="income_accno_id" accno="4010"/>
-    <setting name="earn_id" accno="3500"/>
+    <setting name="earn_id" accno="3999"/>
     <setting name="expense_accno_id" accno="5010"/>
     <setting name="fxgain_accno_id" accno="4450"/>
     <setting name="fxloss_accno_id" accno="5810"/>
