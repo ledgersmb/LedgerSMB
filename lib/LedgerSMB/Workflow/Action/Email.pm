@@ -207,11 +207,11 @@ sub send {
     local $@ = undef;
     eval {
         # On failure, send() throws an exception
-        if ($self->{bcc}) {
+        if ( my $bcc = $ctx->param( 'bcc' ) ) {
             Email::Sender::Simple->send(
                 $mail->email,
                 {
-                    to => $self->{bcc},
+                    to => $bcc,
                     _configure_smtp(),
                 });
         }
