@@ -150,3 +150,5 @@ mc/delete-migration-validation-data.sql
 1.9/transpose_user_prefs.sql
 1.9/file-reconciliation.sql
 1.9/add-vclimit.sql
+1.9/workflow-email-expansion.sql
+# 1.10 changes

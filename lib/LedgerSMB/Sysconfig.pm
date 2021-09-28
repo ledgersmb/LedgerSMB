@@ -350,6 +350,17 @@ def 'workflows',
 
 defaults to './workflows'};
 
+def 'custom_workflows',
+    section => 'paths',
+    default => 'custom_workflows',
+    doc => q{directory where custom workflow files are stored;
+
+custom workflows are used to override behaviour of the default workflows by
+providing actions/conditions/etc by the same name and type or by providing workflows
+of the same type with e.g. additional states and actions.
+
+defaults to './custom_workflows'};
+
 ### SECTION  ---   Template file formats
 
 def 'template_latex',
@@ -556,10 +567,17 @@ sub _workflow_factory_config {
     $wf_type = lc($wf_type // '');
     $wf_type .= '.' if $wf_type;
 
-    my $wf_dir = LedgerSMB::Sysconfig::workflows();
+    my @wf_dirs = (LedgerSMB::Sysconfig::workflows());
+    push @wf_dirs, LedgerSMB::Sysconfig::custom_workflows()
+        if -d LedgerSMB::Sysconfig::custom_workflows();
+
     for my $config_type (qw(action condition persister validator workflow)) {
-        $config{$config_type} = "$wf_dir/${wf_type}${config_type}s.xml"
-            if -f "$wf_dir/${wf_type}${config_type}s.xml";
+        my @configs;
+        $config{$config_type} = \@configs;
+        for my $wf_dir (@wf_dirs) {
+            push @configs, "$wf_dir/${wf_type}${config_type}s.xml"
+                if -f "$wf_dir/${wf_type}${config_type}s.xml";
+        }
     }
 
     return \%config;
@@ -594,15 +612,19 @@ sub initialize {
     }
     else {
         my $r   = sub { File::Find::Rule->new };
-        my $wf_dir = LedgerSMB::Sysconfig::workflows();
-        my %wf_config = (
-            action    => [ $r->()->name( '*.actions.xml' )->in($wf_dir) ],
-            condition => [ $r->()->name( '*.conditions.xml' )->in($wf_dir) ],
-            persister => [ $r->()->name( '*.persisters.xml' )->in($wf_dir) ],
-            validator => [ $r->()->name( '*.validators.xml' )->in($wf_dir) ],
-            workflow  => [ $r->()->name( '*.workflow.xml' )->in($wf_dir) ],
-            );
-        FACTORY()->add_config_from_file(%wf_config);
+        for my $wf_dir (LedgerSMB::Sysconfig::workflows(),
+                        LedgerSMB::Sysconfig::custom_workflows()) {
+            next if not -d $wf_dir;
+
+            my %wf_config = (
+                action    => [ $r->()->name( '*.actions.xml' )->in($wf_dir) ],
+                condition => [ $r->()->name( '*.conditions.xml' )->in($wf_dir) ],
+                persister => [ $r->()->name( '*.persisters.xml' )->in($wf_dir) ],
+                validator => [ $r->()->name( '*.validators.xml' )->in($wf_dir) ],
+                workflow  => [ $r->()->name( '*.workflow.xml' )->in($wf_dir) ],
+                );
+            FACTORY()->add_config_from_file(%wf_config);
+        }
     }
 }
 

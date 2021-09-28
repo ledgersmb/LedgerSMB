@@ -72,6 +72,18 @@ localepath = locale/po
 #
 #templates_cache = lsmb_templates
 
+# directory where workflow files are stored
+#
+#workflows = workflows
+
+# directory where custom workflow files are stored
+#
+# custom workflows are used to override behaviour of the default workflows by
+# providing actions/conditions/etc by the same name and type or by providing
+# workflows of the same type with e.g. additional states and actions.
+#
+#custom_workflows = custom_workflows
+
 [programs]
 
 [mail]
