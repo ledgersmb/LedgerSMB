@@ -11,11 +11,14 @@
           action="queue" order="3" />
   <action name="Send"
           class="LedgerSMB::Workflow::Action::Email"
-          action="send" order="4" />
+          action="expand" order="4" />
   <action name="Attach"
           class="LedgerSMB::Workflow::Action::Email"
           action="attach" order="5" />
   <action name="Load"
           class="LedgerSMB::Workflow::Action::Email"
           action="load" order="6" />
+  <action name="do-send"
+          class="LedgerSMB::Workflow::Action::Email"
+          action="send" />
 </actions>
