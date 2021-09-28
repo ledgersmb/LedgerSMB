@@ -1,8 +1,9 @@
 <persisters>
-  <persister name="Email"
-             class="LedgerSMB::Workflow::Persister::Email"
-             driver="Pg"
-             extra_table="email"
-             extra_data_field="from,to,cc,bcc,notify,subject,body,sent_date">
+  <persister
+      name="Email"
+      class="LedgerSMB::Workflow::Persister::Email"
+      driver="Pg"
+      extra_table="email"
+      extra_data_field="from,to,cc,bcc,notify,subject,body,sent_date,expansions">
   </persister>
 </persisters>
