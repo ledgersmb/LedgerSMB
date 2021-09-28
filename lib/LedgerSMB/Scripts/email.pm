@@ -86,7 +86,8 @@ sub render {
         callback    => $request->{callback},
         id          => $wf->id,
         ( map { $_ => $wf->context->param($_) }
-          qw( from to cc bcc notify subject body sent_date attachments ) ),
+          qw( from to cc bcc notify subject body sent_date
+              attachments expansions ) ),
         actions     => [ $wf->get_current_actions ]
     });
 }
