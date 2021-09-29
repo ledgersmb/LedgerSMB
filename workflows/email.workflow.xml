@@ -5,7 +5,7 @@
  <state name="INITIAL">
    <action name="Attach" resulting_state="INITIAL"/>
    <action name="Update" resulting_state="INITIAL" />
-   <action name="Send"   resulting_state="SUCCESS" />
+   <action name="Send"   resulting_state="EXPANDED" />
    <action name="Cancel" resulting_state="CANCELLED"/>
 
  <!--
