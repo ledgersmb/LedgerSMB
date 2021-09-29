@@ -1414,6 +1414,23 @@ sub print_form {
 
         my $wf_id;
         my $wf;
+        my %expansions =
+            $form->%{
+                grep { defined $form->{$_} }
+                     ( "${inv}total", "${due}date", qw(
+    formname id
+
+    businessnumber company tel fax address
+
+    invnumber ordnumber quonumber exchangerate terms duedate taxincluded
+    curr employee reverse ponumber crdate duedate transdate terms
+
+    customernumber name address1 address2 city state zipcode country sic iban
+
+    totalqty totalship totalweight totalparts totalservices totalweightship
+
+    paid subtotal total
+                         ))};
         if ($order) {
             ($wf_id) =
                 $form->{dbh}->selectrow_array(
@@ -1453,7 +1470,9 @@ sub print_form {
         $wf->context->param(
             subject => ($form->{subject}
                         // qq|$form->{label} $form->{"${inv}number"}|) );
-
+        $wf->context->param(
+            expansions => \%expansions
+            );
         $wf->context->param(
             attachment => {
                 content => $body,

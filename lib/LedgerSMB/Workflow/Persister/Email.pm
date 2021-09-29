@@ -20,6 +20,7 @@ use warnings;
 use strict;
 use base qw( LedgerSMB::Workflow::Persister::ExtraData );
 
+use JSON::MaybeXS;
 
 =head2 fetch_extra_workflow_data($wf)
 
@@ -57,9 +58,14 @@ named argument C<disable_cache> to prevent caching the content in-memory:
 
 =cut
 
+my $json = JSON::MaybeXS->new( utf8 => 0 );
+
 sub fetch_extra_workflow_data {
     my ($self, $wf) = @_;
     $self->SUPER::fetch_extra_workflow_data($wf);
+    if ( my $expansions = $wf->context->param( 'expansions' ) ) {
+        $wf->context->param( 'expansions', $json->decode( $expansions ) );
+    }
 
     my $dbh = $self->handle;
     my $sth = $dbh->prepare(
