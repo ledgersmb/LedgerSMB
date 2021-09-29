@@ -1463,10 +1463,19 @@ sub print_form {
             email   => 'to',
             cc      => 'cc',
             bcc     => 'bcc',
-            message => 'body',
             );
-        $wf->context->param( $map{$_} => $form->{$_} )
-            for (qw/ email cc bcc message /);
+        for my $type (qw/ email cc bcc /) {
+            my @addresses;
+            if ( my $default
+                 = $form->get_setting( "default_email_$map{$type}" ) ) {
+                 push @addresses, $default;
+            }
+            if ( $form->{$type} ) {
+                push @addresses, $form->{$type};
+            }
+            $wf->context->param( $map{$type} => join(', ', @addresses) );
+        }
+        $wf->context->param( body => $form->{message} );
         $wf->context->param(
             subject => ($form->{subject}
                         // qq|$form->{label} $form->{"${inv}number"}|) );
