@@ -118,6 +118,34 @@ IF actions.grep('^Attach$').size > 0 ;
 [%
 END ; # IF
 
+IF expansions.keys.size > 0 ;
+
+%]
+
+<p>[% text('The e-mail body may contain variables to be expanded - e.g. <%invnumber%> - the table below specifies the available variables and their expansions for this e-mail') %]</p>
+<table style="min-width:40em">
+  <tr>
+    <th>[% text('Variable') %]</th>
+    <th>[% text('Expansion') %]</th>
+  </tr>
+
+[%
+FOR expansion_key IN expansions.keys ;
+%]
+
+  <tr>
+    <td>[% expansion_key %]</td>
+    <td>[% expansions.$expansion_key %]</td>
+  </tr>
+
+[%
+
+END ; # FOR
+
+%]</table>[%
+
+END ; # IF
+
 %]
 
 

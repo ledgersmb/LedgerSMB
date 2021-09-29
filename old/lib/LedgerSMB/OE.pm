@@ -1327,7 +1327,7 @@ sub order_details {
     for (qw(totalparts totalservices)) {
         $form->{$_} = $form->format_amount( $myconfig, $form->{$_}, 2 );
     }
-    for (qw(totalqty totalship totalweight)) {
+    for (qw(totalqty totalship totalweight totalweightship)) {
         $form->{$_} = $form->format_amount( $myconfig, $form->{$_} );
     }
     $form->{subtotal} = $form->format_amount( $myconfig, $form->{ordtotal}, 2 );

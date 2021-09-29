@@ -5,10 +5,10 @@
  <state name="INITIAL">
    <action name="Attach" resulting_state="INITIAL"/>
    <action name="Update" resulting_state="INITIAL" />
-   <action name="Send"   resulting_state="SUCCESS" />
+   <action name="Send"   resulting_state="EXPANDED" />
    <action name="Cancel" resulting_state="CANCELLED"/>
 
-<!--
+ <!--
       Commented out in anticipation of functionality to manage the queue
 
    <action name="Queue"  resulting_state="QUEUED">
@@ -16,7 +16,7 @@
   </action>
  -->
  </state>
-<!--
+ <!--
  <state name="QUEUED">
    <action name="Send"   resulting_state="SENT">
      <condition name="Complete" />
@@ -24,6 +24,10 @@
    <action name="Cancel" resulting_state="CANCELLED"/>
  </state>
  -->
+
+ <state name="EXPANDED" autorun="true">
+   <action name="do-send" resulting_state="SUCCESS" />
+ </state>
  <state name="SUCCESS" />
  <state name="CANCELLED" />
 </workflow>

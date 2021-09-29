@@ -40,6 +40,8 @@ This set of actions operates on the following keys in the workflow context:
 
 =item * notify
 
+=item * expansions
+
 =back
 
 
@@ -57,6 +59,8 @@ use Authen::SASL;
 use Email::MessageID;
 use Email::Sender::Simple;
 use Email::Stuffer;
+
+use JSON::MaybeXS;
 
 use Log::Any qw($log);
 use Workflow::Factory qw(FACTORY);
@@ -113,6 +117,9 @@ sub execute {
            or $self->action eq 'queue') {
         $self->save($wf);
     }
+    elsif ($self->action eq 'expand') {
+        $self->expand($wf);
+    }
     return;
 }
 
@@ -155,6 +162,30 @@ sub attach {
     $file->attach;
 
     FACTORY()->get_persister( $wf->type )->fetch_extra_workflow_data($wf);
+    return;
+}
+
+
+=head2 expand($wf)
+
+Expands variables in the message content of the e-mail. Takes its data from the
+C<expansions> key in the context.
+
+=cut
+
+sub expand {
+    my ($self, $wf) = @_;
+
+    my $body       = $wf->context->param( 'body' );
+    my $expansions = $wf->context->param( 'expansions' );
+
+    if ( $body and $expansions ) {
+        $body =~ s/<%(.+?)%>/$expansions->{$1}/g;
+
+        $wf->context->param( 'body', $body );
+        $self->save($wf)
+    }
+
     return;
 }
 
@@ -235,20 +266,32 @@ All fields in the e-mail are optional for this step.
 
 =cut
 
+my $json = JSON::MaybeXS->new(
+    utf8 => 0, pretty => 0, indent => 0, convert_blessed => 0,
+    allow_bignum => 1, canonical => 0, space_before => 0, space_after => 0
+    );
+
 sub save {
     my ($self, $wf) = @_;
     my $dbh = $self->_factory->get_persister_for_workflow_type('Email')->handle;
 
     my @values =
         map { $wf->context->param($_) } qw(from to cc bcc notify subject body);
+
+    if ( my $expansions = $wf->context->param( 'expansions' ) ) {
+        push @values, $json->encode( $expansions );
+    }
+    else {
+        push @values, undef;
+    }
     $dbh->do(
         q{
         INSERT INTO email (workflow_id, "from", "to", cc, bcc, "notify",
-                           subject, body)
-            VALUES  (?, ?, ?, ?, ?, ?, ?, ?)
+                           subject, body, expansions)
+            VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?)
           ON CONFLICT (workflow_id)
              DO UPDATE SET "from" = ?, "to" = ?, cc = ?, bcc = ?, "notify" = ?,
-                        subject = ?, body = ?
+                        subject = ?, body = ?, expansions = ?
         }, {},
         $wf->id, @values, @values)
         or $log->error($dbh->errstr);
