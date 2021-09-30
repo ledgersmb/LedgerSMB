@@ -414,7 +414,7 @@ sub _process_settings {
                 my $account = $self->coa_nodes->get(by => (code => $accno));
 
                 ###BUG: This builds on knowledge of the 'account.id'
-                $value = $account->id =~ s/A-//r;
+                $value = $account->id =~ s/[HA]-//r;
             }
             else {
                 $self->setting($name, $setting_xml->getAttribute('value'));
