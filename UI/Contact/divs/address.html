@@ -181,7 +181,7 @@
                 } #' %]
         </div>
         <div>
-                [% IF !country_id; country_id = default_country; END -%]
+                [% IF !DISPLAY.country_id; DISPLAY.country_id = default_country; END -%]
                 [% INCLUDE select_country element_data = {
                         id = "address-country-select"
                         text_attr = "name"
