@@ -27,13 +27,18 @@ and defaults to indefinite validity.
 use strict;
 use warnings;
 
+use DateTime::Format::Duration::ISO8601;
+
 use LedgerSMB::DBObject::User;
 use LedgerSMB::Locale;
 use LedgerSMB::Template::UI;
 
 our $VERSION = 1.0;
 
+
 my $slash = '::';
+my $format = DateTime::Format::Duration::ISO8601->new;
+
 
 =item preference_screen
 
@@ -50,7 +55,13 @@ sub preference_screen {
     $user->get_option_data;
 
     $user->{login} = $request->{_req}->env->{'lsmb.session'}->{login};
-    $user->{password_expires} =~ s/:(\d|\.)*$//;
+    my $pwe = $format->parse_duration($user->{password_expires});
+    $user->{password_expires} = {
+        years => $pwe->years,
+        months => $pwe->months,
+        weeks => $pwe->weeks,
+        days => $pwe->days,
+    };
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request,
                              'users/preferences',
