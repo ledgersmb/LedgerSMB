@@ -119,7 +119,7 @@ sub save {
     my ($row) = $self->call_dbmethod(
         funcname => 'account_heading_save',
         args => {
-            parent_id => $self->heading_id,
+            parent => $self->heading_id,
         });
     return $self->_id($row->{account_heading_save});
 }
