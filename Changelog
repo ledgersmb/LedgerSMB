@@ -3,6 +3,25 @@
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.1
+* Fix license declaration in package.json (gpl-v2.0-or-newer)
+* Fix scrollbars in the main window overlapping with real content (#5874)
+* Fix 'setup.pl' to work with Safari for creation of new data sets (#6016)
+* Fix no payment lines shown after saving invoices and transactions (#6017)
+* Fix e-mailed invoices not being sent to Bcc addresses
+* Add support for workflow overrides
+* Add a list of available e-mail variables for expansion
+* Restore e-mail body variable expansion (#6042)
+* Add example Chart of Accounts with hierarchy (US General based) (#6057)
+* Fix SQL date errors using date formats other than yyyy-mm-dd (#6040)
+* Fix default to/cc/bcc addresses not applied to e-mail (#6045)
+* Correctly present password experation in preferences (#6067)
+* Fix initialization of 'current earnings' setting from CoA XML
+* Correctly select the default country on Contact address entry (#6058)
+* Correctly set parent of CoA headers when loading from XML (#6068)
+
+
+
 Changelog for 1.9.0
 
 Added functionalities
