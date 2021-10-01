@@ -12,7 +12,9 @@ TODO! Check workflow when 'separate duties' is false!
   <state name="SAVED">
     <action name="save" resulting_state="NOCHANGE" />
     <action name="save_as_new" resulting_state="NOCHANGE" />
-    <action name="post" resulting_state="POSTED" />
+    <action name="post" resulting_state="POSTED">
+      <condition name="complete" />
+    </action>
     <action name="sales_order" resulting_state="NOCHANGE">
       <condition name="is_sales" />
     </action>

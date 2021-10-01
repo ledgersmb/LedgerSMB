@@ -3,4 +3,7 @@
   <condition name="is_sales"
              test="($context->{table_name} eq 'ar')"
              class="Workflow::Condition::Evaluate"/>
+  <condition name="complete"
+             test="$context->{transdate}"
+             class="Workflow::Condition::Evaluate"/>
 </conditions>
