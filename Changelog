@@ -1,5 +1,25 @@
                                                         -*- fundamental -*-
 
+Changelog for 1.10 Series
+Unreleased
+
+Changelog for 1.10.0
+
+Added functionalities
+
+Changed functionalities
+
+Removed functionalities
+
+Bugs fixed
+
+Code cleanup
+
+Dependency updates
+* Perl 5.32 (updated from 5.24)
+* PostgreSQL 13 (updated from 10)
+
+
 Changelog for 1.9 Series
 Released 2021-09-24
 
