@@ -627,7 +627,8 @@ sub form_header {
             if (!$form->{approved} && !$form->{batch_id}){
                if (!$form->{batch_id}){
                    $is_draft = 1;
-                   if ($form->is_allowed_role(['draft_post'])) {
+                   if ($form->{transdate} and
+                       $form->is_allowed_role(['draft_post'])) {
                        $button{approve} = {
                            ndx   => 3,
                            key   => 'O',
