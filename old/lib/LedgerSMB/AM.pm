@@ -680,7 +680,7 @@ sub recurring_transactions {
                   s.*, se.formname AS recurringemail,
                   sp.formname AS recurringprint,
                   s.nextdate - current_date AS overdue, '' AS vc,
-                  $defaultcurrency AS curr,
+                  '$form->{defaultcurrency}' AS curr,
                   (s.nextdate IS NULL OR s.nextdate > s.enddate)
                   AS expired
              FROM recurring s
