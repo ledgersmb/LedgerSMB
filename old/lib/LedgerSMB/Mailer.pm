@@ -252,10 +252,12 @@ sub send {
 
         # On failure, send() throws an exception
         if ($self->{bcc}) {
+            # Split Bcc into separate addresses and de-duplicate them
+            my %bcc = map { $_ => 1 } split /\s*,\s*/, $self->{bcc};
             Email::Sender::Simple->send(
                 $self->{_message}->email,
                 {
-                    to => $self->{bcc},
+                    to => [ keys %bcc ],
                     @transport,
                 });
         }
