@@ -234,15 +234,16 @@ sub send {
                       filename     => $att->{file_name});
     }
 
-
     local $@ = undef;
     eval {
         # On failure, send() throws an exception
         if ( my $bcc = $ctx->param( 'bcc' ) ) {
+            # Split $bcc into separate addresses and de-duplicate them
+            my %bcc = map { $_ => 1 } split /\s*,\s*/, $bcc;
             Email::Sender::Simple->send(
                 $mail->email,
                 {
-                    to => $bcc,
+                    to => [ keys %bcc ],
                     _configure_smtp(),
                 });
         }
