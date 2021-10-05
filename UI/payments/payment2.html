@@ -334,6 +334,8 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
         <th colspan="2">[% topay_subtotal -%]&nbsp;[% curr.value -%]</th>
       </tr>
     </table>
+
+[% IF overpayment_account.size > 0 %]
     <table width="100%" id="overpayments">
       <tr>
         <th class="listheading" colspan="7" >[% text('OVERPAYMENT / ADVANCE PAYMENT / PREPAYMENT') %]</th>
@@ -475,11 +477,22 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
    <th colspan="5" align="right">[% text('Subtotal') -%]</th>
    <th colspan="2">[% overpayment_subtotal -%]&nbsp;[% curr.value -%]</th>
    </tr>
+   <!-- this bit is repeated in the ELSE section too -->
    <tr class="listtotal">
    <th colspan="5" align="right">[% text('Total') -%]</th>
    <th colspan="2">[% payment_total -%]&nbsp;[% curr.value -%]</th>
    </tr>
    </table>
+
+[% ELSE; # IF overpayment_account.size == 0  %]
+   <table width="100%" id="overpayments">
+   <!-- this bit is repeated in the IF section too -->
+   <tr class="listtotal">
+   <th colspan="5" align="right">[% text('Total') -%]</th>
+   <th colspan="2">[% payment_total -%]&nbsp;[% curr.value -%]</th>
+   </tr>
+   </table>
+[% END; # IF overpayment_account.size == 0 %]
 
    <hr />
    [% PROCESS button element_data={
