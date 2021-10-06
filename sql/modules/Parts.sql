@@ -30,13 +30,7 @@ $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION parts__get_by_partnumber(in_partnumber text)
 RETURNS parts LANGUAGE SQL AS $$
-SELECT * FROM PARTS WHERE partnumber = $1 and obsolete is not true;
-$$;
-
-CREATE OR REPLACE FUNCTION parts__get_by_partnumber(in_partnumber text)
-RETURNS PARTS LANGUAGE SQL AS
-$$
-SELECT * FROM parts where partnumber = $1 AND NOT OBSOLETE;
+SELECT * FROM parts WHERE partnumber = $1 and obsolete is NOT TRUE;
 $$;
 
 CREATE OR REPLACE FUNCTION pricegroups__list() RETURNS SETOF pricegroup
