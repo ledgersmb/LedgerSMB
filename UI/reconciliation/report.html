@@ -80,7 +80,7 @@ END %]
 
 [% IF ! approved and !submitted%]
     <div id="csv-file">
-        <label for="file_upload">[% text('Bank (CSV) transaction file:') %]</label>
+        <label for="file_upload">[% text('Bank (CSV/OFX/CAMT.053) transaction file:') %]</label>
         [% PROCESS input element_data = {
                     type="file"
                     name="csv_file"
