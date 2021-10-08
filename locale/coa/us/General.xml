@@ -73,6 +73,7 @@
       <account code="4010" description="Sales" category="Income">
         <link code="AR_amount"/>
         <link code="IC_sale"/>
+        <link code="IC_income"/>
       </account>
     </account-heading>
     <account-heading id="h-9" code="4400" description="OTHER REVENUE">
