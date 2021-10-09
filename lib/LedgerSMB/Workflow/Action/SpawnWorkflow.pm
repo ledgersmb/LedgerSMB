@@ -27,6 +27,8 @@ The action supports the following two
 
 =item * spawn_type
 
+=item * context_param
+
 =item * description
 
 =back
@@ -52,7 +54,7 @@ use parent qw( Workflow::Action );
 use Log::Any qw($log);
 use Workflow::Factory qw(FACTORY);
 
-my @PROPS = qw( spawn_type description );
+my @PROPS = qw( spawn_type context_param description );
 __PACKAGE__->mk_accessors(@PROPS);
 
 =head2 init($wf, $params)
@@ -66,6 +68,7 @@ sub init {
     $self->SUPER::init($wf, $params);
 
     $self->spawn_type( $params->{spawn_type} );
+    $self->context_param( $params->{context_param} );
     $self->description( $params->{description}
                         // ('Created new workflow of type: '
                             . $params->{spawn_type}) );
@@ -82,7 +85,16 @@ Implements the C<Workflow::Action> protocol.
 sub execute {
     my ($self, $wf) = @_;
 
-    my $new_wf = FACTORY()->create_workflow( $self->spawn_type );
+    my $context;
+    if ( $self->context_param ) {
+        my $context_data = $wf->context->param( $self->context_param );
+
+        $context = Workflow::Context->new();
+        for my $key (keys $context_data->%*) {
+            $context->param( $key => $context_data->{$key} );
+        }
+    }
+    my $new_wf = FACTORY()->create_workflow( $self->spawn_type, $context );
     my $wf_id  = $new_wf->id;
     $wf->context->param( spawned_workflow => $new_wf );
     $wf->add_history(

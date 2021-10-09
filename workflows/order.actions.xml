@@ -8,9 +8,10 @@
   <action name="ship_to"
           description="Added shipping information"
           class="LedgerSMB::Workflow::Action::Null" />
-  <action name="e_mail"
+  <action name="E-mail"
           class="LedgerSMB::Workflow::Action::SpawnWorkflow"
-          spawn_type="Email" />
+          spawn_type="Email"
+          context_param="email-data" />
   <action name="print_and_save"
           description="Printed and saved"
           class="LedgerSMB::Workflow::Action::Null" />
