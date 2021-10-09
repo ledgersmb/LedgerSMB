@@ -55,7 +55,10 @@ sub _save_email_data {
             q{
             INSERT INTO email (workflow_id, "from", "to", cc, bcc, "notify",
                                subject, body, expansions)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+              ON CONFLICT (workflow_id)
+                 DO UPDATE SET "from" = $2, "to" = $3, cc = $4, bcc = $5, "notify" = $6,
+                        subject = $7, body = $8, expansions = $9
             }, {},
             $wf->id, $data->@{qw(from to cc bcc notify subject body expansions)})
             or $log->error($dbh->errstr);

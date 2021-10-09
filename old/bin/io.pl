@@ -1465,13 +1465,14 @@ sub print_form {
             $email_data->{$map{$type}} = join(', ', @addresses);
         }
 
+        my $trans_wf;
         if ($order) {
             ($wf_id) =
                 $form->{dbh}->selectrow_array(
                     q{select workflow_id from oe where id = ?},
                     {}, $form->{id});
 
-            my $trans_wf = FACTORY()->fetch_workflow( 'Order/Quote', $wf_id );
+            $trans_wf = FACTORY()->fetch_workflow( 'Order/Quote', $wf_id );
         }
         else {
             ($wf_id) =
@@ -1479,7 +1480,7 @@ sub print_form {
                     q{select workflow_id from transactions where id = ?},
                     {}, $form->{id});
 
-            my $trans_wf = FACTORY()->fetch_workflow( 'AR/AP', $wf_id );
+            $trans_wf = FACTORY()->fetch_workflow( 'AR/AP', $wf_id );
             if (grep { $_ eq 'save' } $trans_wf->get_current_actions) {
                 $trans_wf->execute_action( 'save' );
             }
