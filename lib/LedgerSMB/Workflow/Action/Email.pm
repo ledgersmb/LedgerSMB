@@ -60,13 +60,9 @@ use Email::MessageID;
 use Email::Sender::Simple;
 use Email::Stuffer;
 
-use JSON::MaybeXS;
-
 use Log::Any qw($log);
 use Workflow::Factory qw(FACTORY);
 
-use LedgerSMB::File::Email;
-use LedgerSMB::Magic qw(FC_EMAIL);
 use LedgerSMB::Mailer::TransportSMTP;
 use LedgerSMB::Sysconfig;
 
@@ -148,20 +144,10 @@ keys:
 sub attach {
     my ($self, $wf) = @_;
     my $persister   = FACTORY()->get_persister( $wf->type );
-    my $file        = LedgerSMB::File::Email->new(dbh => $persister->handle);
     my $att         = $wf->context->param( 'attachment' );
 
-    $file->ref_key($wf->id);
-    $file->file_class(FC_EMAIL);
-    $file->file_name($att->{file_name});
-    $file->description($att->{description});
-    $file->content($att->{content});
-    $file->mime_type_text($att->{mime_type});
-    $file->get_mime_type;
-
-    $file->attach;
-
-    FACTORY()->get_persister( $wf->type )->fetch_extra_workflow_data($wf);
+    $persister->attach( $wf, $att );
+    $persister->fetch_extra_workflow_data( $wf );
     return;
 }
 
@@ -267,35 +253,10 @@ All fields in the e-mail are optional for this step.
 
 =cut
 
-my $json = JSON::MaybeXS->new(
-    utf8 => 0, pretty => 0, indent => 0, convert_blessed => 0,
-    allow_bignum => 1, canonical => 0, space_before => 0, space_after => 0
-    );
-
 sub save {
     my ($self, $wf) = @_;
-    my $dbh = $self->_factory->get_persister_for_workflow_type('Email')->handle;
-
-    my @values =
-        map { $wf->context->param($_) } qw(from to cc bcc notify subject body);
-
-    if ( my $expansions = $wf->context->param( 'expansions' ) ) {
-        push @values, $json->encode( $expansions );
-    }
-    else {
-        push @values, undef;
-    }
-    $dbh->do(
-        q{
-        INSERT INTO email (workflow_id, "from", "to", cc, bcc, "notify",
-                           subject, body, expansions)
-            VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?)
-          ON CONFLICT (workflow_id)
-             DO UPDATE SET "from" = ?, "to" = ?, cc = ?, bcc = ?, "notify" = ?,
-                        subject = ?, body = ?, expansions = ?
-        }, {},
-        $wf->id, @values, @values)
-        or $log->error($dbh->errstr);
+    # Saving is built into the persister and happens automatically
+    # after each successful action; no additional code required
 }
 
 
