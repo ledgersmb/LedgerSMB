@@ -1462,7 +1462,7 @@ sub print_form {
             if ( $form->{$type} ) {
                 push @addresses, $form->{$type};
             }
-            $email_data->{$map{$type}} = join(', ', @addresses) );
+            $email_data->{$map{$type}} = join(', ', @addresses);
         }
 
         if ($order) {

@@ -52,6 +52,7 @@ use warnings;
 use parent qw( Workflow::Action );
 
 use Log::Any qw($log);
+use Workflow::Context;
 use Workflow::Factory qw(FACTORY);
 
 my @PROPS = qw( spawn_type context_param description );
