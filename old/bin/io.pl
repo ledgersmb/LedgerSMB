@@ -1430,35 +1430,24 @@ sub print_form {
     totalqty totalship totalweight totalparts totalservices totalweightship
 
     paid subtotal total
-                         ))};
-        if ($order) {
-            ($wf_id) =
-                $form->{dbh}->selectrow_array(
-                    q{select workflow_id from oe where id = ?},
-                    {}, $form->{id});
-
-            my $trans_wf = FACTORY()->fetch_workflow( 'Order/Quote', $wf_id );
-            $trans_wf->execute_action( 'e_mail' );
-            $wf = $trans_wf->context->param( 'spawned_workflow' );
-        }
-        else {
-            ($wf_id) =
-                $form->{dbh}->selectrow_array(
-                    q{select workflow_id from transactions where id = ?},
-                    {}, $form->{id});
-
-            my $trans_wf = FACTORY()->fetch_workflow( 'AR/AP', $wf_id );
-            if (grep { $_ eq 'save' } $trans_wf->get_current_actions) {
-                $trans_wf->execute_action( 'save' );
-            }
-            if (grep { $_ eq 'post' } $trans_wf->get_current_actions) {
-                $trans_wf->execute_action( 'post' );
-            }
-            $trans_wf->execute_action( 'E-mail' );
-            $wf = $trans_wf->context->param( 'spawned_workflow' );
-        }
+                       ))};
         my $body = $template->{output};
         utf8::encode($body) if utf8::is_utf8($body);  ## no critic
+        my $email_data = {
+            immediateSend => $form->{immediate},
+            expansions    => \%expansions,
+            body          => $form->{message},
+            from          => $form->get_setting( 'default_email_from' ),
+            subject       => ($form->{subject}
+                              // qq|$form->{label} $form->{"${inv}number"}|),
+            attachments   => [
+                { content => $body,
+                  mime_type => $template->{mimetype},
+                  file_name => ($form->{formname} . '-'
+                                . $form->{"${inv}number"} . '.'
+                                . lc($form->{format})),
+                } ],
+        };
         my %map = (
             email   => 'to',
             cc      => 'cc',
@@ -1473,29 +1462,36 @@ sub print_form {
             if ( $form->{$type} ) {
                 push @addresses, $form->{$type};
             }
-            $wf->context->param( $map{$type} => join(', ', @addresses) );
+            $email_data->{$map{$type}} = join(', ', @addresses) );
         }
-        $wf->context->param( body => $form->{message} );
-        $wf->context->param(
-            subject => ($form->{subject}
-                        // qq|$form->{label} $form->{"${inv}number"}|) );
-        $wf->context->param(
-            expansions => \%expansions
-            );
-        $wf->context->param(
-            attachment => {
-                content => $body,
-                mime_type => $template->{mimetype},
-                file_name =>
-                    $form->{formname} . '-'. $form->{"${inv}number"} . '.' . lc($form->{format}),
-            });
-        $wf->context->param(from => $form->get_setting( 'default_email_from' ));
-        $wf->execute_action( 'Attach' );
 
-        $wf->execute_action( 'Send' ) if $form->{immediate};
+        if ($order) {
+            ($wf_id) =
+                $form->{dbh}->selectrow_array(
+                    q{select workflow_id from oe where id = ?},
+                    {}, $form->{id});
 
+            my $trans_wf = FACTORY()->fetch_workflow( 'Order/Quote', $wf_id );
+        }
+        else {
+            ($wf_id) =
+                $form->{dbh}->selectrow_array(
+                    q{select workflow_id from transactions where id = ?},
+                    {}, $form->{id});
+
+            my $trans_wf = FACTORY()->fetch_workflow( 'AR/AP', $wf_id );
+            if (grep { $_ eq 'save' } $trans_wf->get_current_actions) {
+                $trans_wf->execute_action( 'save' );
+            }
+            if (grep { $_ eq 'post' } $trans_wf->get_current_actions) {
+                $trans_wf->execute_action( 'post' );
+            }
+        }
+
+        $trans_wf->context->param( 'email-data' => $email_data );
+        $trans_wf->execute_action( 'E-mail' );
+        $wf = $trans_wf->context->param( 'spawned_workflow' );
         my $id = $wf->id;
-
         if (not $form->{header}) {
             print "Location: email.pl?id=$id&action=render&callback=$form->{script}%3F"
                 . "id%3D$form->{id}%26action%3Dedit\n";

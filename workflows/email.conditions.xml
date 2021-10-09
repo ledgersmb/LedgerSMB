@@ -6,10 +6,17 @@
              class="Workflow::Condition::Evaluate"/>
   <condition name="hasSubject" test="$context->{subject} ? 1 : 0"
              class="Workflow::Condition::Evaluate"/>
+  <condition name="wantImmediate" test="$context->{immediateSend} ? 1 : 0"
+             class="Workflow::Condition::Evaluate"/>
   <condition name="Complete"
              class="Workflow::Condition::LazyAND">
     <param name="condition" value="hasTo" />
     <param name="condition" value="hasBody" />
     <param name="condition" value="hasSubject" />
+  </condition>
+  <condition name="sendImmediately"
+             class="Workflow::Condition::LazyAND">
+    <param name="condition" value="Complete"/>
+    <param name="condition" value="wantImmediate"/>
   </condition>
 </conditions>

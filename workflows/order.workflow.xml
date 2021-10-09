@@ -4,7 +4,7 @@
   <persister>Order</persister>
   <description>Manage the life cycle of an AR/AP document</description>
   <state name="SAVED">
-    <action name="e_mail" resulting_state="NOCHANGE">
+    <action name="E-mail" resulting_state="NOCHANGE">
       <!-- condition name="configuredEmailFrom" / -->
     </action>
     <action name="print" resulting_state="NOCHANGE" />

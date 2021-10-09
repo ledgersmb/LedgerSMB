@@ -2,9 +2,18 @@
   <type>Email</type>
   <persister>Email</persister>
  <description>Handles lifecycle of e-mail</description>
- <state name="INITIAL">
-   <action name="Attach" resulting_state="INITIAL"/>
-   <action name="Update" resulting_state="INITIAL" />
+ <state name="INITIAL" autorun="yes">
+   <action name="Send"    resulting_state="EXPANDED">
+     <condition name="sendImmediately" />
+   </action>
+   <!-- Save data as provided at workflow creation time -->
+   <action name="Update" resulting_state="CREATED">
+     <condition name="!sendImmediately"/>
+   </action>
+ </state>
+ <state name="CREATED">
+   <action name="Attach" resulting_state="NOCHANGE"/>
+   <action name="Update" resulting_state="NOCHANGE" />
    <action name="Send"   resulting_state="EXPANDED" />
    <action name="Cancel" resulting_state="CANCELLED"/>
 
@@ -25,7 +34,7 @@
  </state>
  -->
 
- <state name="EXPANDED" autorun="true">
+ <state name="EXPANDED" autorun="yes">
    <action name="do-send" resulting_state="SUCCESS" />
  </state>
  <state name="SUCCESS" />
