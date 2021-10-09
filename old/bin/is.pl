@@ -693,10 +693,7 @@ sub void {
         );
         delete $form->{paid_1};
     }
-    if ($form->{manual_tax}){
-        $form->{"mt_amount_$_"} *= -1 for split / /,$form->{taxaccounts};
-        $form->{"mt_basis_$_"} *= -1 for split / /,$form->{taxaccounts};
-    }
+
     &post_as_new;
 }
 

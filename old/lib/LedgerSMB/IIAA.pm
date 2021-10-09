@@ -127,9 +127,11 @@ sub post_form_manual_tax {
         my $taxrate;
         my $fx = $form->{exchangerate} || 1;
         $taxamount = $form->parse_amount($myconfig,
-                                         $form->{"mt_amount_$taccno"});
+                                         $form->{"mt_amount_$taccno"})
+            * ($form->{reverse} ? -1 : 1);
         $taxbasis = $form->parse_amount($myconfig,
-                                        $form->{"mt_basis_$taccno"});
+                                        $form->{"mt_basis_$taccno"})
+            * ($form->{reverse} ? -1 : 1);
         $taxrate=$form->parse_amount($myconfig,$form->{"mt_rate_$taccno"});
         my $fx_taxamount = $taxamount * $fx;
         my $fx_taxbasis = $taxbasis * $fx;
