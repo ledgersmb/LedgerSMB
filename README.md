@@ -5,7 +5,7 @@ Small and Medium business accounting and ERP
 
 
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/795/badge)](https://bestpractices.coreinfrastructure.org/projects/795)
-[![LedgerSMB](https://circleci.com/gh/ledgersmb/LedgerSMB/tree/master.svg?style=svg)](https://circleci.com/gh/ledgersmb/LedgerSMB/tree/master)
+[![CI](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml/badge.svg)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml)
 [![Lgtm total alerts](https://img.shields.io/lgtm/alerts/g/ledgersmb/LedgerSMB.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ledgersmb/LedgerSMB/alerts/)
 [![GPLv2 Licence](https://badges.frapsoft.com/os/gpl/gpl.png?v=103)](https://opensource.org/licenses/GPL-2.0/)
 [![Coverage Status](https://coveralls.io/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=master)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=master)
@@ -62,25 +62,25 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome              | 2017-09  | 61-81, 83-92                                |
-| Edge                | 2017-10  | 16-18, 79-81, 83-92                         |
-| Firefox             | 2018-05  | 60-90                                       |
-| Opera               | 2017-09  | 48-58, 60, 62-77                            |
+| Chrome              | 2017-09  | 61-81, 83-94                                |
+| Edge                | 2017-10  | 16-18, 79-81, 83-94                         |
+| Firefox             | 2018-05  | 60-92                                       |
+| Opera               | 2017-09  | 48-58, 60, 62-79                            |
 | Safari              | 2017-03  | 10.1, 11, 11.1, 12, 12.1, 13, 13.1, 14,     |
-|                     |          | 14.1                                        |
+|                     |          | 14.1, 15                                    |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome for Android  | 2021-07  | 92                                          |
-| Firefox for Android | 2021-07  | 90                                          |
-| Android Browser     | 2021-07  | 92                                          |
-| Safari on iOS       | 2017-03  | 10.3, 11.0-11.4, 12.0-12.4, 13.0-13.7,      |
-|                     |          | 14.0-14.7                                   |
+| Chrome for Android  | 2021-09  | 94                                          |
+| Firefox for Android | 2021-09  | 92                                          |
+| Android Browser     | 2021-09  | 94                                          |
+| Safari on iOS       | 2017-03  | 10.3, 11.0-11.4, 12.0-12.5, 13.0-13.7,      |
+|                     |          | 14.0-14.8, 15                               |
 | Opera Mobile        | 2021-02  | 64                                          |
 | Samsung Internet    | 2018-12  | 8.2, 9.2, 10.1, 11.1-11.2, 12.0, 13.0,      |
-|                     |          | 14.0                                        |
+|                     |          | 14.0, 15.0                                  |
 
 
 **Note: Earliest dates and versions come from http://caniuse.com. Only the most
@@ -90,7 +90,7 @@ devices running old browsers is negligible.**
 
 # Quick start
 
-For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-18
+For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-19
 
 ## Installation
 
@@ -98,7 +98,7 @@ This instruction assumes you have [Docker](https://docs.docker.com/get-docker/)
 installed as well as [docker-compose](https://github.com/docker/compose#where-to-get-docker-compose).
 
 ```bash
- $ wget https://raw.githubusercontent.com/ledgersmb/ledgersmb-docker/1.8/docker-compose.yml
+ $ wget https://raw.githubusercontent.com/ledgersmb/ledgersmb-docker/1.9/docker-compose.yml
  $ docker-compose up -d
 ```
 

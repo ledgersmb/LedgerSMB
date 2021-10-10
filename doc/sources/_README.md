@@ -5,7 +5,7 @@ Small and Medium business accounting and ERP
 
 
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/795/badge)](https://bestpractices.coreinfrastructure.org/projects/795)
-[![LedgerSMB](https://circleci.com/gh/ledgersmb/LedgerSMB/tree/master.svg?style=svg)](https://circleci.com/gh/ledgersmb/LedgerSMB/tree/master)
+[![CI](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml/badge.svg)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml)
 [![Lgtm total alerts](https://img.shields.io/lgtm/alerts/g/ledgersmb/LedgerSMB.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ledgersmb/LedgerSMB/alerts/)
 [![GPLv2 Licence](https://badges.frapsoft.com/os/gpl/gpl.png?v=103)](https://opensource.org/licenses/GPL-2.0/)
 [![Coverage Status](https://coveralls.io/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=master)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=master)
@@ -38,9 +38,9 @@ fast customization. Supported output formats are PDF, CSV, HTML, ODF and more.
 # System requirements
 
 Note that these are the system requirements for LedgerSMB 1.10.0-dev, the current
-development version. Please check the system requirements for [the 1.7 old stable
-version](https://github.com/ledgersmb/LedgerSMB/tree/1.7#system-requirements)
-and [the 1.8 version](https://github.com/ledgersmb/LedgerSMB/tree/1.8#system-requirements).
+development version. Please check the system requirements for [the 1.8 old stable
+version](https://github.com/ledgersmb/LedgerSMB/tree/1.8#system-requirements)
+and [the 1.9 version](https://github.com/ledgersmb/LedgerSMB/tree/1.9#system-requirements).
 
 ## Server
 
@@ -66,7 +66,7 @@ devices running old browsers is negligible.**
 
 # Quick start
 
-For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-18
+For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-19
 
 ## Installation
 
@@ -74,7 +74,7 @@ This instruction assumes you have [Docker](https://docs.docker.com/get-docker/)
 installed as well as [docker-compose](https://github.com/docker/compose#where-to-get-docker-compose).
 
 ```bash
- $ wget https://raw.githubusercontent.com/ledgersmb/ledgersmb-docker/1.8/docker-compose.yml
+ $ wget https://raw.githubusercontent.com/ledgersmb/ledgersmb-docker/1.9/docker-compose.yml
  $ docker-compose up -d
 ```
 
@@ -92,7 +92,7 @@ The system is installed and should be available for evaluation through
   Normal login for the application
 
 The system is ready for [preparation for first
-use](https://ledgersmb.org/content/preparing-ledgersmb-18-first-use).
+use](https://ledgersmb.org/content/preparing-ledgersmb-19-first-use).
 
 
 **NOTE:** This setup does not use a webserver like nginx or Apache. Setups which
