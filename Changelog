@@ -6,6 +6,8 @@ Released 2020-09-04
 Changelog for 1.8.22
 * Fix sending mail with multiple Bcc addresses (#6087)
 * Fix manual taxes on credit invoices (#5721)
+* Fix 'Secure' flag on session cookie; CVE-2021-3882
+* Improve configuring acceptable reverse proxy addresses
 
 
 Changelog for 1.8.21
