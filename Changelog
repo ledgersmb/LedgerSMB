@@ -3,6 +3,13 @@
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.2
+* Fix sending mail with multiple Bcc addresses (#6087)
+* Fix manual taxes on credit invoices (#5721)
+* Add missing account configuration on Sales account (#6100)
+* Fix Update clobbering invoice header data (e.g. fx rate) (#6114)
+
+
 Changelog for 1.9.1
 * Fix license declaration in package.json (gpl-v2.0-or-newer)
 * Fix scrollbars in the main window overlapping with real content (#5874)
@@ -19,7 +26,6 @@ Changelog for 1.9.1
 * Fix initialization of 'current earnings' setting from CoA XML
 * Correctly select the default country on Contact address entry (#6058)
 * Correctly set parent of CoA headers when loading from XML (#6068)
-
 
 
 Changelog for 1.9.0
