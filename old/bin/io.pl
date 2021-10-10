@@ -159,7 +159,9 @@ sub display_row {
         $lsmb_module = 'AP';
         $parts_list = 'purchase';
     }
-    $form->all_business_units($form->{transdate},
+
+    # replace '' transdate with NULL
+    $form->all_business_units( ($form->{transdate} or undef) ,
                               $form->{"$form->{vc}_id"},
                               $lsmb_module);
     @column_index = qw(deleteline runningnumber partnumber description qty);

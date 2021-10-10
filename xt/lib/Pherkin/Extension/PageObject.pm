@@ -89,13 +89,17 @@ sub post_step {
         my @maindivs = $w->page->find_all('.//div[@id="maindiv"]');
         my $maindiv  = shift @maindivs;
         if ($maindiv) {
-            $w->wait_for(
-                sub {
-                    my $rv = (any { $_ eq 'done-parsing' }
-                            split( /\s+/,
-                                   $maindiv->get_attribute('class')));
-                    return $rv;
-                });
+            local $@;
+            # suppress any exceptions; we're just trying to help...
+            eval {
+                $w->wait_for(
+                    sub {
+                        my $rv = (any { $_ eq 'done-parsing' }
+                                  split( /\s+/,
+                                         $maindiv->get_attribute('class')));
+                        return $rv;
+                    });
+            };
         }
     }
 }
