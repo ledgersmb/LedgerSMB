@@ -427,7 +427,8 @@ sub form_header {
           print qq|
             </tr>|;
         if ($form->{entity_control_code}){
-                    $form->hide_form(qw(entity_control_code meta_number));
+            $form->hide_form(qw(entity_control_code meta_number));
+            $form->{$_} //= '' for (qw(entity_control_code meta_number tax_id address city));
             print qq|
             <tr>
         <th align="right" nowrap>| .
@@ -448,7 +449,9 @@ sub form_header {
                 <td colspan=3>$form->{address}, $form->{city}</td>
               </tr>
         |;
-           }
+        }
+    $form->{$_} //= '' for (qw(description invnumber ordnumber quonumber sonumber ponumber
+                            crdate transdate duedate));
     print qq|
           </table>
         </td>
@@ -890,8 +893,10 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
 |;
 
     $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"}+0 );
-    $form->{"selectAP_paid"} =~ /value="(\Q$form->{cash_accno}\E--[^<]*)"/;
-    $form->{"AP_paid_$form->{paidaccounts}"} = $1;
+    if ($form->{cash_accno}) {
+        $form->{"selectAP_paid"} =~ /value="(\Q$form->{cash_accno}\E--[^<]*)"/;
+        $form->{"AP_paid_$form->{paidaccounts}"} = $1;
+    }
     foreach my $i ( 1 .. $form->{paidaccounts} ) {
 
         $form->hide_form("cleared_$i");
@@ -901,8 +906,10 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
 |;
 
         $form->{"selectAP_paid_$i"} = $form->{selectAP_paid};
-        $form->{"selectAP_paid_$i"} =~
-s/option value="\Q$form->{"AP_paid_$i"}\E"/option value="$form->{"AP_paid_$i"}" selected="selected"/;
+        if ($form->{"AP_paid_$i"}) {
+            $form->{"selectAP_paid_$i"} =~
+                s/option value="\Q$form->{"AP_paid_$i"}\E"/option value="$form->{"AP_paid_$i"}" selected="selected"/;
+        }
 
         # format amounts
         $totalpaid += $form->{"paid_$i"};
@@ -930,13 +937,14 @@ qq|<input data-dojo-type="dijit/form/TextBox" name="exchangerate_$i" id="exchang
 <input type=hidden name="forex_$i" value=$form->{"forex_$i"}>
 |;
 
+        $form->{"${_}_$i"} //= '' for (qw(memo source datepaid));
         $column_data{"paid_$i"} =
 qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id="paid_$i" size=11 value=$form->{"paid_$i"}></td>|;
         $column_data{"exchangerate_$i"} =
           qq|<td align=center>$exchangerate</td>|;
         $column_data{"paidfx_$i"} = qq|<td align="center">$form->{"paidfx_$i"}</td>|;
         $column_data{"AP_paid_$i"} =
-qq|<td align=center><select data-dojo-type="dijit/form/Select" id="AP-paid-$i" name="AP_paid_$i" id="AP_paid_$i">$form->{"selectAP_paid_$i"}</select></td>|;
+            qq|<td align=center><select data-dojo-type="dijit/form/Select" id="AP-paid-$i" name="AP_paid_$i" id="AP_paid_$i">$form->{"selectAP_paid_$i"}</select></td>|;
         $column_data{"datepaid_$i"} =
 qq|<td align=center><input class="date" data-dojo-type="lsmb/DateTextBox" name="datepaid_$i" id="datepaid_$i" size=11 title="$myconfig{dateformat}" value=$form->{"datepaid_$i"}></td>|;
         $column_data{"source_$i"} =
@@ -1150,9 +1158,9 @@ sub update {
               if $form->{"select$_"};
         }
 
-        if (   ( $form->{"partnumber_$i"} eq "" )
-            && ( $form->{"description_$i"} eq "" )
-            && ( $form->{"partsgroup_$i"}  eq "" ) )
+        if (   ( ($form->{"partnumber_$i"}//'') eq "" )
+            && ( ($form->{"description_$i"}//'') eq "" )
+            && ( ($form->{"partsgroup_$i"}//0)  eq "" ) )
         {
 
             $form->{creditremaining} +=

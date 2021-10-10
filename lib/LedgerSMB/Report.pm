@@ -478,7 +478,7 @@ sub _render {
             }
         }
         push @newrows, $r;
-        $col_val = $r->{$self->order_by};
+        $col_val = $self->order_by ? $r->{$self->order_by} : undef;
     }
     push @newrows, $subtotal if $subtotal;
     push @newrows, $total_row unless $self->manual_totals;

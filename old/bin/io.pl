@@ -159,7 +159,9 @@ sub display_row {
         $lsmb_module = 'AP';
         $parts_list = 'purchase';
     }
-    $form->all_business_units($form->{transdate},
+
+    # replace '' transdate with NULL
+    $form->all_business_units( ($form->{transdate} or undef) ,
                               $form->{"$form->{vc}_id"},
                               $lsmb_module);
     @column_index = qw(deleteline runningnumber partnumber description qty);
@@ -507,6 +509,7 @@ qq|<td><textarea data-dojo-type="dijit/form/Textarea" id="notes_$i" name="notes_
 qq|<td><input data-dojo-type="dijit/form/TextBox" id="notes_$i" name="notes_$i" size=38 value="$form->{"notes_$i"}"></td>|;
         }
 
+        $form->{"serialnumber_$i"} //= '';
         $serial = qq|
                 <td colspan=6 nowrap><b>$serialnumber</b> <input data-dojo-type="dijit/form/TextBox" id="serialnumber_$i" name="serialnumber_$i" value="$form->{"serialnumber_$i"}"></td>|
           if $form->{type} !~ /_quotation/;
@@ -565,9 +568,9 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" id="notes_$i" name="notes_$i" 
 <input type=hidden name=oldcurrency value=$form->{currency}>
 
 <input type=hidden name=selectpartsgroup value="|
-      . $form->escape( $form->{selectpartsgroup}, 1 ) . qq|">
+      . ($form->escape( $form->{selectpartsgroup}, 1 )//'') . qq|">
 <input type=hidden name=selectprojectnumber value="|
-      . $form->escape( $form->{selectprojectnumber}, 1 ) . qq|">
+      . ($form->escape( $form->{selectprojectnumber}, 1 )//'') . qq|">
 
 |;
 

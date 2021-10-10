@@ -51,14 +51,14 @@ sub initialize{
     my ($request) = @_;
 
     my $sth = $request->{dbh}->prepare(
-        q{SELECT s.*
+        q{SELECT n.setting_key, s.value
         FROM unnest(?::text[]) n(setting_key), setting_get(setting_key) s})
         or die $request->{dbh}->errstr;
     $sth->execute(\@company_settings)
         or die $sth->errstr;
 
     my $results = $sth->fetchall_arrayref({});
-    die $sth->errstr if $sth->err != 0;
+    die $sth->errstr if $sth->err; # defined and != 0 and ne ''
 
     $settings = {
         map { $_->{setting_key} => $_->{value} }

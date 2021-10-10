@@ -1120,7 +1120,7 @@ sub generate_selects {
               my $vc = $form->{vc};
               my $search_value = $form->{$vc};
               $search_value .= qq|--$form->{"${vc}_id"}|
-                  unless $search_value =~ /--/;
+                  unless $search_value and $search_value =~ /--/;
 
                 for ( @{ $form->{"all_$form->{vc}"} } ) {
                      my $value = "$_->{name}--$_->{id}";
@@ -1155,7 +1155,7 @@ sub generate_selects {
           }
 
         my $min_lines = $form->get_setting('min_empty') // 0;
-        my $rowcount = $form->{rowcount} + $min_lines;
+        my $rowcount = ($form->{rowcount}//0) + $min_lines;
         if ($rowcount) {
                 for my $i ( 1 .. $rowcount ) {
                      $form->{"select$form->{ARAP}_amount_$i"} =
@@ -1553,7 +1553,7 @@ sub all_vc {
     $sth->finish;
 
     if ( $count < ($myconfig->{vclimit} // 0) ) {
-
+        $self->{"${vc}_id"} //= 0;
         $self->{"${vc}_id"} *= 1;
 
         $query = qq|SELECT ec.id, e.name
@@ -1664,7 +1664,7 @@ sub all_taxaccounts {
 
     my $sth;
     my $query;
-    my $where;
+    my $where = '';
 
     my @queryargs = ();
 
@@ -3214,7 +3214,7 @@ sub sequence_dropdown{
         return $retval;
     }
     else {
-        return undef
+        return '';
     }
 }
 #end decrysiption

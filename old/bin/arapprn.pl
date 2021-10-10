@@ -231,7 +231,7 @@ sub print_transaction {
         $form->{OUT}       = $form->{zipdir};
         $form->{printmode} = '>';
     } elsif ( $form->{media} !~ /(zip|screen)/ ) {
-        $form->{OUT}       = ${LedgerSMB::Sysconfig::printer}{ $form->{media} };
+        $form->{OUT}       = LedgerSMB::Sysconfig::printer()->{ $form->{media} };
         $form->{printmode} = '|-';
 
         if ( $form->{printed} !~ /$form->{formname}/ ) {

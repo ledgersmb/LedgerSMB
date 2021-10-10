@@ -487,6 +487,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
           </tr>
 |;
 
+        $form->{$_} //= '' for (qw(image microfiche drawing));
         $imagelinks = qq|
   <tr>
     <td>
@@ -976,6 +977,7 @@ sub makemodel_row {
     </tr>
 |;
 
+    $form->{"${_}_$i"} //= '' for (qw(make model barcode));
     foreach my $i ( 1 .. $numrows ) {
         print qq|
     <tr>
@@ -1129,6 +1131,7 @@ sub customer_row {
         }
 
         if ( $i == $numrows ) {
+            $form->{"${_}_$i"} //= '' for (qw(customer customer_mn));
             $customer = qq|
           <td><input data-dojo-type="dijit/form/TextBox" name="customer_$i" size=35 value="$form->{"customer_$i"}"></td>
           <td>
@@ -1167,6 +1170,8 @@ sub customer_row {
             }
         }
 
+        $form->{"${_}_$i"} //= '' for (qw(validfrom validto pricebreak
+                                       customerprice customerqty));
         print qq|
     <tr>
       $customer
