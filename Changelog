@@ -2,10 +2,6 @@
 Changelog for 1.7 Series
 2019-10-04
 
-Changelog for 1.7.34
-* Follow-up to fix for CVE-2021-3693 to fix display of search results
-
-
 Changelog for 1.7.36
 * Fix manual taxes on credit invoices (#5721)
 
