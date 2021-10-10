@@ -191,8 +191,8 @@ sub create_links {
      $form->create_links( module => $form->{ARAP},
                                  myconfig => \%myconfig,
                                  vc => $form->{vc},
-                                 billing => $form->{vc} eq 'customer'
-                                      && $form->{type} eq 'invoice')
+                                 billing => ($form->{vc}//'') eq 'customer'
+                                      && ($form->{type}//'') eq 'invoice')
         unless $form->{"$form->{ARAP}_links"};
 
 
@@ -609,7 +609,13 @@ $form->open_status_div($status_div_id) . qq|
               </tr>
         |;
            }
-    print qq|
+
+     $form->{$_} //= '' for (qw(description invnumber ordnumber crdate transdate duedate
+                             ponumber));
+     $myconfig{dateformat} //= '';
+     $employee //= '';
+     $form->{sequence_select} //= '';
+     print qq|
           $exchangerate
           $department
             <tr>
@@ -780,7 +786,9 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     $form->hide_form( "oldinvtotal", "oldtotalpaid", "taxaccounts" );
 
      $selectARAP = $form->{"select$form->{ARAP}"};
-     $selectARAP =~ s/(\Qoption value="$form->{$form->{ARAP}}"\E)/$1 selected="selected"/;
+     if ($form->{$form->{ARAP}}) {
+         $selectARAP =~ s/(\Qoption value="$form->{$form->{ARAP}}"\E)/$1 selected="selected"/;
+     }
     print qq|
         <tr class="transaction-line $form->{ARAP} total" id="line-total">
       <th align=left>$formatted_invtotal</th>
@@ -844,7 +852,8 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 ";
 
      # add 0 to numify the value in paid_$paidaccounts...
-    $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"}+0 );
+    $form->{paidaccounts}++ if ( defined $form->{"paid_$form->{paidaccounts}"}
+                                 and $form->{"paid_$form->{paidaccounts}"}+0 );
     if (defined $form->{cash_accno}) {
         $form->{"select$form->{ARAP}_paid"} =~ /value="(\Q$form->{cash_accno}\E--[^<]*)"/;
         $form->{"$form->{ARAP}_paid_$form->{paidaccounts}"} = $1;
@@ -858,9 +867,11 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 |;
 
         $form->{"select$form->{ARAP}_paid_$i"} =
-          $form->{"select$form->{ARAP}_paid"};
-        $form->{"select$form->{ARAP}_paid_$i"} =~
-          s/(value="\Q$form->{"$form->{ARAP}_paid_$i"}\E")/$1 selected="selected"/;
+            $form->{"select$form->{ARAP}_paid"};
+        if ($form->{"$form->{ARAP}_paid_$i"}) {
+            $form->{"select$form->{ARAP}_paid_$i"} =~
+                s/(value="\Q$form->{"$form->{ARAP}_paid_$i"}\E")/$1 selected="selected"/;
+        }
 
         # format amounts
         $form->{"paidfx_$i"} = $form->format_amount(

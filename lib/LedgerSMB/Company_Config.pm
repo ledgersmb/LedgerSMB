@@ -51,7 +51,7 @@ sub initialize{
     my ($request) = @_;
 
     my $sth = $request->{dbh}->prepare(
-        q{SELECT s.*
+        q{SELECT n.setting_key, s.value
         FROM unnest(?::text[]) n(setting_key), setting_get(setting_key) s})
         or die $request->{dbh}->errstr;
     $sth->execute(\@company_settings)

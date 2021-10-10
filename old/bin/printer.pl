@@ -164,7 +164,7 @@ sub print_options {
 
     if (   LedgerSMB::Sysconfig::printer()->%*
         && LedgerSMB::Sysconfig::latex()
-        && $form->{media} ne 'email' )
+        && ($form->{media}//'') ne 'email' )
     {
         $options{copies} = 1;
     }

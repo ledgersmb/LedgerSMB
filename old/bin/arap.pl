@@ -341,7 +341,7 @@ sub repost {
 sub schedule {
 
     if ($form->{formname} =~ m/invoice/) {
-        prepare_invoice;
+        &prepare_invoice;
         $form->generate_selects;
     }
     (

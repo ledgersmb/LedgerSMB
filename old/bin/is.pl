@@ -487,6 +487,9 @@ sub form_header {
     $form->{$_} //= '' for (qw(description shippingpoint shipvia invnumber ordnumber
                             quonumber ponumber crdate transdate duedate));
     $myconfig{dateformat} //= '';
+    $business //= '';
+    $department //= '';
+    $exchangerate //= '';
     print qq|
             $business
           </table>
@@ -739,8 +742,10 @@ sub form_footer {
         $introws = 5;
     }
     $rows = ( $rows > $introws ) ? $rows : $introws;
+    $form->{notes} //= '';
     $notes =
-qq|<textarea data-dojo-type="dijit/form/Textarea" id="notes" name="notes" rows="$rows" cols="40" wrap="soft">$form->{notes}</textarea>|;
+        qq|<textarea data-dojo-type="dijit/form/Textarea" id="notes" name="notes" rows="$rows" cols="40" wrap="soft">$form->{notes}</textarea>|;
+    $form->{intnotes} //= '';
     $intnotes =
 qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes}</textarea>|;
 
@@ -858,7 +863,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
         if $form->{currency} ne $form->{defaultcurrency};
 
 
-    my $hold;
+    my $hold = '';
     my $hold_button_text;
     if ($form->{on_hold}) {
 
