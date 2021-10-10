@@ -581,11 +581,12 @@ sub get_name {
         $dateformat .= "yy" if ( length $a[2] > 2 );
     }
 
-    if ( $form->{transdate} !~ /\W/ ) {
+    if ( defined $from->{transdate} and $form->{transdate} !~ /\W/ ) {
         $dateformat = 'yyyymmdd';
     }
 
-    if ( $form->{transdate} =~ m/\d\d\d\d-\d\d-\d\d/ ) {
+    if ( defined $form->{transdate}
+         and $form->{transdate} =~ m/\d\d\d\d-\d\d-\d\d/ ) {
         $dateformat = 'yyyy-mm-dd';
     }
 

@@ -1553,7 +1553,7 @@ sub all_vc {
     $sth->finish;
 
     if ( $count < ($myconfig->{vclimit} // 0) ) {
-
+        $self->{"${vc}_id"} //= 0;
         $self->{"${vc}_id"} *= 1;
 
         $query = qq|SELECT ec.id, e.name

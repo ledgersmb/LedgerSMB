@@ -195,30 +195,33 @@ sub invoice_links {
         $form->{"select$key"} = '';
         foreach my $ref ( @{ $form->{AR_links}{$key} } ) {
             $value = "$ref->{accno}--$ref->{description}";
-            $selected = ($value eq $form->{$key}) ? ' selected="selected"' : "";
+            $selected = ($value eq ($form->{$key}//'')) ? ' selected="selected"' : "";
             $form->{"select$key"} .= qq|<option value="$value"$selected>$value</option>\n|;
         }
 
         if ( $key eq "AR_paid" ) {
-            foreach my $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
-                $form->{"AR_paid_$i"} =
-"$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
 
-                # reverse paid
-                $form->{"paid_$i"} =
-                  $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1;
-                $form->{"datepaid_$i"} =
-                  $form->{acc_trans}{$key}->[ $i - 1 ]->{transdate};
-                $form->{"forex_$i"} = $form->{"exchangerate_$i"} =
-                  $form->{acc_trans}{$key}->[ $i - 1 ]->{exchangerate};
-                $form->{"source_$i"} =
-                  $form->{acc_trans}{$key}->[ $i - 1 ]->{source};
-                $form->{"memo_$i"} =
-                  $form->{acc_trans}{$key}->[ $i - 1 ]->{memo};
-                $form->{"cleared_$i"} =
-                  $form->{acc_trans}{$key}->[ $i - 1 ]->{cleared};
+            if ( $form->{acc_trans} and $form->{acc_trans}{$key} ) {
+                foreach my $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
+                    $form->{"AR_paid_$i"} =
+                        "$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
 
-                $form->{paidaccounts} = $i;
+                    # reverse paid
+                    $form->{"paid_$i"} =
+                        $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1;
+                    $form->{"datepaid_$i"} =
+                        $form->{acc_trans}{$key}->[ $i - 1 ]->{transdate};
+                    $form->{"forex_$i"} = $form->{"exchangerate_$i"} =
+                        $form->{acc_trans}{$key}->[ $i - 1 ]->{exchangerate};
+                    $form->{"source_$i"} =
+                        $form->{acc_trans}{$key}->[ $i - 1 ]->{source};
+                    $form->{"memo_$i"} =
+                        $form->{acc_trans}{$key}->[ $i - 1 ]->{memo};
+                    $form->{"cleared_$i"} =
+                        $form->{acc_trans}{$key}->[ $i - 1 ]->{cleared};
+
+                    $form->{paidaccounts} = $i;
+                }
             }
         }
         else {
@@ -234,11 +237,6 @@ sub invoice_links {
     for (qw(AR_links acc_trans)) { delete $form->{$_} }
 
     $form->{paidaccounts} = 1 if not $form->{paidaccounts};
-
-    if ( !$form->{readonly} ) {
-        $form->{readonly} = 1 if $myconfig{acs} =~ /AR--Sales Invoice/;
-    }
-
 }
 
 sub prepare_invoice {
@@ -357,7 +355,7 @@ sub form_header {
           </tr>
 | if $form->{selectdepartment};
 
-    $n = ( $form->{creditremaining} < 0 ) ? "0" : "1";
+    $n = ( defined $form->{creditremaining} and $form->{creditremaining} < 0 ) ? "0" : "1";
 
     if ( $form->{business} ) {
         $business = qq|
@@ -384,13 +382,12 @@ sub form_header {
           </tr>
 | if $form->{selectemployee};
 
-    $i     = $form->{rowcount} + 1;
-    $focus = "partnumber_$i";
+    $i     = ($form->{rowcount} // 0) + 1;
 
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}" onLoad="document.forms[0].${focus}.focus()" />
+<body>
 | . $form->open_status_div($status_div_id) . qq|
 <form method="post"
       id="invoice"
@@ -462,8 +459,9 @@ sub form_header {
      } else { print "<td>&nbsp;</td>"; }
         print qq|
             </tr>|;
-        if ($form->{entity_control_code}){
-                    $form->hide_form(qw(entity_control_code meta_number));
+       if ($form->{entity_control_code}){
+           $form->hide_form(qw(entity_control_code meta_number));
+           $form->{$_} //= '' for (qw(entity_control_code meta_number tax_id address city));
             print qq|
             <tr>
         <th align="right" nowrap>| .
@@ -484,7 +482,11 @@ sub form_header {
                 <td colspan=3>$form->{address}, $form->{city}</td>
               </tr>
         |;
-           }
+       }
+
+    $form->{$_} //= '' for (qw(description shippingpoint shipvia invnumber ordnumber
+                            quonumber ponumber crdate transdate duedate));
+    $myconfig{dateformat} //= '';
     print qq|
             $business
           </table>
@@ -1194,10 +1196,10 @@ sub update {
 
     ( undef, $form->{employee_id} ) = split /--/, $form->{employee}
         if $form->{employee} && ! $form->{employee_id};
-    if ( $newname = &check_name(customer) ) {
+    if ( $newname = &check_name('customer') ) {
         $form->rebuild_vc('customer', $form->{transdate}, 1);
     }
-    if ( $form->{transdate} ne $form->{oldtransdate} ) {
+    if ( ($form->{transdate} // '') ne ($form->{oldtransdate} // '') ) {
         $form->{duedate} =
           ( $form->{terms} )
           ? $form->current_date( \%myconfig, $form->{transdate},
@@ -1259,7 +1261,7 @@ sub update {
     my $current_empties = $form->{rowcount} - $non_empty_rows;
     my $new_empties =
         max(0,
-            max($form->get_setting('min_empty'),1)
+            max($form->get_setting('min_empty')//1,1)
             - $current_empties);
 
 
@@ -1421,7 +1423,7 @@ sub post {
     $form->isblank( "customer",  $locale->text('Customer missing!') );
 
     # if oldcustomer ne customer redo form
-    if ( &check_name(customer) ) {
+    if ( &check_name('customer') ) {
         &update;
         $form->finalize_request();
     }

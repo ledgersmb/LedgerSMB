@@ -58,7 +58,7 @@ sub initialize{
         or die $sth->errstr;
 
     my $results = $sth->fetchall_arrayref({});
-    die $sth->errstr if $sth->err != 0;
+    die $sth->errstr if $sth->err; # defined and != 0 and ne ''
 
     $settings = {
         map { $_->{setting_key} => $_->{value} }
