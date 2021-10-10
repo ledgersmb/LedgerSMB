@@ -6,14 +6,20 @@ Unreleased
 Changelog for 1.10.0
 
 Added functionalities
+* Example hierarchical chart of accounts, US General
 
 Changed functionalities
+* Overpayment section in payment screen hidden on missing configuration
 
 Removed functionalities
 
 Bugs fixed
+* Better logging on authentication failure
 
 Code cleanup
+* Fewer warnings from old code
+* Remove unused defaults table settings 'revtrans', 'yearend' and 'closedto'
+* Complete replacement of Log::Log4perl with Log::Any in library code
 
 Dependency updates
 * Perl 5.32 (updated from 5.24)
