@@ -392,6 +392,10 @@ Dependency updates
 Changelog for 1.7 Series
 Released 2019-10-04
 
+Changelog for 1.7.36
+* Fix manual taxes on credit invoices (#5721)
+
+
 Changelog for 1.7.35
 * Fix for chart of accounts headings import from CSV (#5987)
 * Correctly set the payment account in invoices and transactions (#5801)
