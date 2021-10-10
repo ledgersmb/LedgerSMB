@@ -36,6 +36,7 @@ use warnings;
 use parent qw ( Plack::Middleware );
 
 use HTTP::Status qw/ is_server_error /;
+use Log::Any qw($log);
 use Plack::Request;
 use Plack::Util;
 use Plack::Util::Accessor
@@ -73,6 +74,9 @@ sub _connect {
             LedgerSMB::Database->require_version($dbh, $self->require_version);
         if ($version) {
             $env->{'lsmb.session.expire'} = 1;
+            $log->fatalf(
+                'Database version mismatch for "%s""; found %s; expected %s',
+                $dbh->{pg_db}, $version, $self->require_version);
             return (undef, LedgerSMB::PSGI::Util::incompatible_database(
                         $self->require_version, $version));
         }
@@ -81,9 +85,16 @@ sub _connect {
     if ($env->{'lsmb.session'}->{username}) {
         $dbh->do(q{SET SESSION AUTHORIZATION ?}, {},
                  $env->{'lsmb.session'}->{username})
-            or die 'Unable to switch to authenticated user: ' . $dbh->errstr;
+            or do {
+                $log->fatalf( 'Unable to switch to authenticated user %s@%s',
+                              $dbh->{pg_user}, $dbh->{pg_db} );
+                die 'Unable to switch to authenticated user: ' . $dbh->errstr;
+        };
     }
     else {
+        $log->fatal(
+            q{Can't set db authorization: username missing in session}
+            );
         die 'Unable to switch to authenticated user: none supplied';
     }
 
@@ -193,6 +204,9 @@ sub _verify_session {
     $dbh->commit or die $dbh->errstr;
 
     if (not defined $extended_session->{session_id}) {
+        $log->infof( 'Session %s(token: %s) expired for %s@%s',
+                     $session->{session_id}, $session->{token},
+                     $dbh->{pg_user}, $dbh->{pg_db} );
         $env->{'lsmb.session.expire'} = 1;
         return LedgerSMB::PSGI::Util::session_timed_out();
     }

@@ -429,7 +429,7 @@ sub require_version {
         return '';
     }
     else {
-        return $settings->{version};
+        return $settings->{version}->{value};
     }
 }
 
