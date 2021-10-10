@@ -2019,7 +2019,7 @@ sub create_links {
         }
 
         foreach my $key (keys %$ref) {
-            $self->{$key} = $ref->{$key};
+            $self->{$key} = $ref->{$key} unless defined $self->{$key};
         }
 
         $sth->finish;
