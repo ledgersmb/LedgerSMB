@@ -251,6 +251,7 @@ var pluginsProd = [
 
     // Handle CSS
     new MiniCssExtractPlugin({
+        experimentalUseImportModule: false,
         filename: "css/[name].css",
         chunkFilename: "css/[id].css"
     }),
