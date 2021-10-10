@@ -4,6 +4,7 @@ Changelog for 1.7 Series
 
 Changelog for 1.7.36
 * Fix manual taxes on credit invoices (#5721)
+* Improve configuring acceptable reverse proxy addresses
 
 
 Changelog for 1.7.35
