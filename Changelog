@@ -3,6 +3,11 @@
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.22
+* Fix sending mail with multiple Bcc addresses (#6087)
+* Fix manual taxes on credit invoices (#5721)
+
+
 Changelog for 1.8.21
 * Prevent draft approval by user without permission (#5984)
 * Fix UI consistency (missing CSS class) in purchase invoice (#5988)
