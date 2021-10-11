@@ -106,6 +106,7 @@ commands:
           name: Make Dojo
           command: |
             make dojo
+            make readme
 
       - save_cache:
           key: v1-npm-deps-{{ checksum "package-lock.json" }}
