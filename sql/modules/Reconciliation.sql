@@ -427,8 +427,10 @@ DROP FUNCTION IF EXISTS
                                        in_report_id integer,
                                        in_their_total numeric);
 CREATE OR REPLACE FUNCTION reconciliation__pending_transactions(
-                      in_report_id integer, in_their_total numeric)
-  RETURNS integer AS
+    in_report_id integer,
+    in_their_total numeric
+)
+RETURNS integer AS
 $$
 
     DECLARE
@@ -437,11 +439,16 @@ $$
         t_chart_id       integer;
         t_end_date       date;
         t_report_line_id integer;
+        t_uid int;
     BEGIN
         SELECT end_date, recon_fx, chart_id
          INTO t_end_date, t_recon_fx, t_chart_id
          FROM cr_report
         WHERE id = in_report_id;
+
+        SELECT entity_id INTO t_uid
+        FROM users
+        WHERE username = CURRENT_USER;
 
         /*
 
@@ -477,19 +484,19 @@ $$
            select payment_id, array_agg(ac.entry_id) as entries,
                   sum(case when t_recon_fx then amount_tc
                            else amount_bc end) as our_balance,
-                  payment_date
+                  payment_date,
+                  source, case when source is null then ac.entry_id else null end
              from payment_links pl
              join acc_trans ac on pl.entry_id = ac.entry_id
              join payment p on p.id = pl.payment_id
             where ac.chart_id = t_chart_id
                   and pl.entry_id in (select entry_id from lines_to_be_added)
-           group by payment_id, payment_date
+           group by payment_id, payment_date,
+                source, case when source is null then ac.entry_id else null end
         loop
-           insert into cr_report_line (report_id, their_balance,
+            insert into cr_report_line (report_id, scn, their_balance,
                                        our_balance, post_date, "user")
-              values (in_report_id, 0, t_row.our_balance, t_row.payment_date,
-                      (select entity_id from users
-                        where username = CURRENT_USER))
+            values (in_report_id, t_row.source, 0, t_row.our_balance, t_row.payment_date, t_uid)
            returning id into t_report_line_id;
 
            update lines_to_be_added
@@ -540,10 +547,8 @@ $$
         loop
            insert into cr_report_line (report_id, scn, their_balance,
                                       our_balance, post_date, "user")
-              values (in_report_id, t_row.source, 0,
-                      t_row.our_balance, t_row.transdate,
-                      (select entity_id from users
-                        where username = CURRENT_USER))
+            values (in_report_id, t_row.source, 0,
+                      t_row.our_balance, t_row.transdate, t_uid)
            returning id into t_report_line_id;
 
            update lines_to_be_added
