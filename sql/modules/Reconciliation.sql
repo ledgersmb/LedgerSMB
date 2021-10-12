@@ -261,7 +261,6 @@ CREATE OR REPLACE FUNCTION reconciliation__add_entry(
         in_account int;
         la RECORD;
         t_errorcode INT;
-        our_value NUMERIC;
         lid INT;
         in_count int;
         t_scn TEXT;
@@ -304,7 +303,7 @@ CREATE OR REPLACE FUNCTION reconciliation__add_entry(
                                 in_type)
                         RETURNING id INTO lid;
                 ELSIF in_count = 1 THEN
-                        SELECT id INTO lid
+                        SELECT id INTO lid FROM cr_report_line
                         WHERE t_scn = scn AND report_id = in_report_id
                                 AND their_balance = 0 AND post_date = in_date;
                         UPDATE cr_report_line
@@ -314,7 +313,7 @@ CREATE OR REPLACE FUNCTION reconciliation__add_entry(
                 ELSE
                         SELECT count(*) INTO in_count FROM cr_report_line
                         WHERE t_scn ilike scn AND report_id = in_report_id
-                                AND our_value = t_amount and their_balance = 0
+                                AND our_balance = t_amount and their_balance = 0
                                 AND post_date = in_date;
 
                         IF in_count = 0 THEN -- no match among many of values
@@ -334,7 +333,7 @@ CREATE OR REPLACE FUNCTION reconciliation__add_entry(
                         ELSIF in_count = 1 THEN -- EXECT MATCH
                                 SELECT id INTO lid FROM cr_report_line
                                 WHERE t_scn = scn AND report_id = in_report_id
-                                        AND our_value = t_amount
+                                        AND our_balance = t_amount
                                         AND their_balance = 0
                                         AND post_date = in_date;
                                 UPDATE cr_report_line
@@ -346,7 +345,7 @@ CREATE OR REPLACE FUNCTION reconciliation__add_entry(
                         ELSE -- More than one match
                                 SELECT id INTO lid FROM cr_report_line
                                 WHERE t_scn ilike scn AND report_id = in_report_id
-                                        AND our_value = t_amount
+                                        AND our_balance = t_amount
                                         AND post_date = in_date
                                 ORDER BY id ASC limit 1;
 
@@ -374,7 +373,7 @@ CREATE OR REPLACE FUNCTION reconciliation__add_entry(
                         in_type)
                         RETURNING id INTO lid;
                 ELSIF in_count = 1 THEN -- perfect match
-                        SELECT id INTO lid
+                        SELECT id INTO lid FROM cr_report_line
                         WHERE report_id = in_report_id
                                 AND our_balance = t_amount
                                 AND their_balance = 0
