@@ -452,15 +452,39 @@ $$
 
         /*
 
-        Approach:
+        Approach in 4 steps:
          1. Identify lines to be added *somewhere*
+            That is: all lines before the reconcilation date which
+            are not yet part of any other reconciliation; lines come
+            from two sources: payment transactions and others (the second
+            are usually GL transactions)
          2. Identify lines part of a payment
-            (always added as new lines: payments are natural groupings)
-         3. Identify non-payment lines to be added to existing
-            recon lines due to the same source system reference
-         4. Remaining lines added as new lines, either by source or
-            as individual ones.
-
+            Lines in this category are grouped by payment and added as a
+            single reconciliation line, irrespective of the number of lines
+            identified, *unless* lines have explicitly different 'Source'
+            values - which is weird and unexpected, but possible when the
+            user sets a specific value on each payment line separately - in
+            which case, the lines in the payment will be grouped by the value
+            of the Source field
+         3. Identify non-payment lines that adjust payments
+            When a payment has been entered wrongly or the bank has withheld
+            transaction fees, the payment of the invoice does not correspond
+            to the actual amount on the bank statement - meaning adjustment
+            is required; GL transactions can be used to enter adjustments by
+            listing the same date and the same source as used for the payment
+            transaction. The lines in this category will be added as an
+            adjustment to the existing (coming from the payment) reconciliation
+            line
+         4. Remaining lines added as new lines, either by source (if they
+            have one) or as individual ones.
+            Note that the lines in this category - by logical reasoning - can
+            **not** be payments lines, because those were handled in step 2.
+            Also note that it's not an option to lump all lines without a source
+            into a single line, because that way all lines without a Source
+            would end up as a single reconciliation line, while unknowing users
+            are expected to post GL lines without Source numbers; to help these
+            users, we present lines from non-payment (GL) transactions as
+            individual lines
          */
 
         -- step 1: identify lines to be added somehow
@@ -484,15 +508,13 @@ $$
            select payment_id, array_agg(ac.entry_id) as entries,
                   sum(case when t_recon_fx then amount_tc
                            else amount_bc end) as our_balance,
-                  payment_date,
-                  source, case when source is null then ac.entry_id else null end
+                  payment_date, source
              from payment_links pl
              join acc_trans ac on pl.entry_id = ac.entry_id
              join payment p on p.id = pl.payment_id
             where ac.chart_id = t_chart_id
                   and pl.entry_id in (select entry_id from lines_to_be_added)
-           group by payment_id, payment_date,
-                source, case when source is null then ac.entry_id else null end
+           group by payment_id, payment_date, source
         loop
             insert into cr_report_line (report_id, scn, their_balance,
                                        our_balance, post_date, "user")
