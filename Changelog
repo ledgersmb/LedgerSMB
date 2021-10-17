@@ -24,6 +24,7 @@ Code cleanup
 Dependency updates
 * Perl 5.32 (updated from 5.24)
 * PostgreSQL 13 (updated from 10)
+* Workflow 1.57 (upadted from 1.56)
 
 
 Changelog for 1.9 Series
