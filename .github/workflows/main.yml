@@ -60,10 +60,12 @@ jobs:
         uses: actions/cache@v2
         with:
           path: UI/js
-          key: dojo-${{ hashFiles('UI/{js-src,css}/**','UI/**/*.html') }}
+          key: dojo-${{ hashFiles('UI/{js-src,css}/**','UI/**/*.html','doc/sources/**') }}
 
       - name: Build Dojo
-        run: npm run build
+        run: |
+          make dojo
+          make readme
         if: steps.cache-dojo.outputs.cache-hit != 'true' ||
             steps.cache-node_modules.outputs.cache-hit != 'true'
 

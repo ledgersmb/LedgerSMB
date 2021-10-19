@@ -46,6 +46,7 @@ Help on using this Makefile
                      (without rebuilding the inputs)
     - pod          : Builds POD documentation
     - pot          : Builds LedgerSMB.pot translation lexicon
+	- readme	   : Builds the README.md
     - test         : Runs tests (TESTS='t/')
     - devtest      : Runs all tests including development tests (TESTS='t/ xt/')
     - pherkin      : Runs all BDD tests with 'pherkin' (instead of 'prove')
@@ -74,16 +75,17 @@ dbdocs:
 	$(DOCKER_CMD) dot -Tsvg doc/database/ledgersmb.dot -o doc/database/ledgersmb.svg
 	$(DOCKER_CMD) dot -Tpdf doc/database/ledgersmb.dot -o doc/database/ledgersmb.pdf
 
-
-dojo:
-	$(DOCKER_CMD) rm -rf UI/js/*
+npm_install:
 	$(DOCKER_CMD) npm $(NPM_COMMAND) --no-save
+
+dojo: npm_install
 	$(DOCKER_CMD) npm run build
 
-devdojo:
-	$(DOCKER_CMD) rm -rf UI/js/*
-	$(DOCKER_CMD) npm $(NPM_COMMAND) --no-save
+devdojo: npm_install
 	$(DOCKER_CMD) npm run build:dev
+
+readme: npm_install
+	$(DOCKER_CMD) npm run readme
 
 # TravisCI specific target -- need to find a way to get rid of it
 dojo_archive: dojo
