@@ -92,7 +92,7 @@
     "path-browserify": "1.0.1",
     "prettier": "2.4.1",
     "stylelint": "13.13.1",
-    "stylelint-config-standard": "22.0.0",
+    "stylelint-config-standard": "23.0.0",
     "stylelint-no-unsupported-browser-features": "5.0.2",
     "stylelint-order": "4.1.0",
     "stylelint-order-config-standard": "0.1.3",
