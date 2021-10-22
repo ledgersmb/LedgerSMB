@@ -20,7 +20,7 @@ if (TARGET !== 'readme') {
     const HtmlWebpackPlugin = require("html-webpack-plugin");
     const MiniCssExtractPlugin = require("mini-css-extract-plugin");
     //const ObsoleteWebpackPlugin = require("obsolete-webpack-plugin");
-    const StylelintPlugin = require("stylelint-webpack-plugin");
+    const StylelintPlugin = require("stylelint-bare-webpack-plugin");
     const TerserPlugin = require("terser-webpack-plugin");
     const UnusedWebpackPlugin = require("unused-webpack-plugin");
 
