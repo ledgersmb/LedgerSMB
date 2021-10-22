@@ -119,7 +119,7 @@ commands:
       - save_cache:
           key: v1-npm-deps-{{ checksum "package-lock.json" }}
           paths:
-            - node_modules
+            - $HOME/.npm
 
       - run:
           name: Set up dirs and files
