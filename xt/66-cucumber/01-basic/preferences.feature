@@ -24,6 +24,11 @@ Scenario: I change user preferences to the <selection> language
     | selection            | translation           | language |
     | American English     | American English      | Language |
     | Brazilian Portuguese | português - Brasil    | Idioma   |
+
+  @extended
+  Examples:
+  Non UTF8 accented characters are confirmed working
+    | selection            | translation           | language |
     | British English      | British English       | Language |
     | Canadian English     | Canadian English      | Language |
     | Canadian French      | français canadien     | Langue   |

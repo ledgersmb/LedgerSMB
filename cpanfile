@@ -192,7 +192,7 @@ on 'develop' => sub {
     requires 'Test::Pod::Coverage';
     requires 'Test2::Harness';
     requires 'Test2::V0';
-    requires 'Test2::Plugin::Feature', '0.001111';
+    requires 'Test2::Plugin::Feature', '0.001112';
     requires 'Test2::Plugin::pgTAP';
     requires 'Text::Diff';
     requires 'Weasel', '0.29';
