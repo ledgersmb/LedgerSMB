@@ -46,7 +46,7 @@ Help on using this Makefile
                      (without rebuilding the inputs)
     - pod          : Builds POD documentation
     - pot          : Builds LedgerSMB.pot translation lexicon
-	- readme	   : Builds the README.md
+    - readme       : Builds the README.md
     - test         : Runs tests (TESTS='t/')
     - devtest      : Runs all tests including development tests (TESTS='t/ xt/')
     - pherkin      : Runs all BDD tests with 'pherkin' (instead of 'prove')
@@ -140,6 +140,7 @@ else
             --pgtap-dbname=lsmb_test --pgtap-username=postgres \
             --pgtap-psql=.circleci/psql-wrap \
             --Feature-tags=~@wip \
+            --Feature-tags=~@extended \
             $(TESTS)
 endif
 
