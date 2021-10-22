@@ -191,7 +191,7 @@ sub fetch_extra_workflow_data {
     my ($self, $wf) = @_;
     my $ctx = $wf->context;
     $self->SUPER::fetch_extra_workflow_data($wf);
-    $self->context->param(
+    $ctx->param(
         '_email_data',
         { map { $_ => $ctx->param( $_ ) }
           qw(from to cc bcc notify subject body expansions)
