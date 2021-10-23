@@ -50,7 +50,7 @@
     "@bcox280/markdown-spellcheck": "2.0.1",
     "autoprefixer": "10.3.7",
     "babel-loader": "8.2.3",
-    "browserslist": "4.17.4",
+    "browserslist": "4.17.5",
     "buffer": "6.0.3",
     "caniuse-lite": "1.0.30001271",
     "clean-webpack-plugin": "4.0.0",
