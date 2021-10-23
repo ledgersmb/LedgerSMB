@@ -333,8 +333,11 @@ sub setup_url_space {
             $router->hooks('before' => \&_hook_psgi_logger);
             $router->hooks(
                 'before' => sub {
-                    my ($env, $settings) = @_;
+                    my ($env) = @_;
+                    $env->{'lsmb.settings'} =
+                        LedgerSMB::Company_Config::initialize($env->{'lsmb.db'});
                     $env->{wire} = $wire;
+                    return;
                 });
             sub { return $router->dispatch(@_); };
         };
