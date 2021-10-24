@@ -188,7 +188,7 @@ post api '/gl/gifi' => sub {
         $response ];
 };
 
-del api '/gl/gifi/:id' => sub {
+del api '/gl/gifi/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my $response = _del_sic( $c, $params->{id} );
@@ -197,7 +197,7 @@ del api '/gl/gifi/:id' => sub {
     return $response && [ HTTP_OK, [ ], [ '' ] ];
 };
 
-get api '/gl/gifi/:id' => sub {
+get api '/gl/gifi/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($response, $meta) = _get_gifi( $c, $params->{id} );
@@ -209,7 +209,7 @@ get api '/gl/gifi/:id' => sub {
 };
 
 
-put api '/gl/gifi/:id' => sub {
+put api '/gl/gifi/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
@@ -231,7 +231,7 @@ put api '/gl/gifi/:id' => sub {
              $response ];
 };
 
-patch api '/gl/gifi/:id' => sub {
+patch api '/gl/gifi/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
     my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
     my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;

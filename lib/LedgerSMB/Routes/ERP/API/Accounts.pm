@@ -59,7 +59,7 @@ get '/accounts/', sub {
 };
 
 
-get '/accounts/:id', sub {
+get '/accounts/{id}', sub {
     my ($env, %p) = @_;
 };
 
@@ -67,7 +67,7 @@ post '/accounts/', sub {
 
 };
 
-del '/accounts/:id', sub {
+del '/accounts/{id}', sub {
 
 };
 

@@ -189,7 +189,7 @@ post api '/contacts/sic' => sub {
         $response ];
 };
 
-del api '/contacts/sic/:id' => sub {
+del api '/contacts/sic/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my $response = _del_sic( $c, $params->{id} );
@@ -198,7 +198,7 @@ del api '/contacts/sic/:id' => sub {
     return $response && [ HTTP_OK, [ ], [ '' ] ];
 };
 
-get api '/contacts/sic/:id' => sub {
+get api '/contacts/sic/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($response, $meta) = _get_sic( $c, $params->{id} );
@@ -210,7 +210,7 @@ get api '/contacts/sic/:id' => sub {
 };
 
 
-put api '/contacts/sic/:id' => sub {
+put api '/contacts/sic/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
@@ -232,7 +232,7 @@ put api '/contacts/sic/:id' => sub {
              $response ];
 };
 
-patch api '/contacts/sic/:id' => sub {
+patch api '/contacts/sic/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
     my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
     my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;
@@ -406,7 +406,7 @@ post api '/contacts/business-types' => sub {
         $response ];
 };
 
-del api '/contacts/business-types/:id' => sub {
+del api '/contacts/business-types/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my $response = _del_businesstype( $c, $params->{id} );
@@ -415,7 +415,7 @@ del api '/contacts/business-types/:id' => sub {
     return $response && [ HTTP_OK, [ ], [ '' ] ];
 };
 
-get api '/contacts/business-types/:id' => sub {
+get api '/contacts/business-types/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($response, $meta) = _get_businesstype( $c, $params->{id} );
@@ -427,7 +427,7 @@ get api '/contacts/business-types/:id' => sub {
 };
 
 
-put api '/contacts/business-types/:id' => sub {
+put api '/contacts/business-types/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
@@ -450,7 +450,7 @@ put api '/contacts/business-types/:id' => sub {
              $response ];
 };
 
-patch api '/contacts/business-types/:id' => sub {
+patch api '/contacts/business-types/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
     my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
     my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;

@@ -189,7 +189,7 @@ post api '/languages' => sub {
         $response ];
 };
 
-del api '/languages/:id' => sub {
+del api '/languages/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my $response = _del_language( $c, $params->{id} );
@@ -198,7 +198,7 @@ del api '/languages/:id' => sub {
     return $response && [ HTTP_OK, [ ], [ '' ] ];
 };
 
-get api '/languages/:id' => sub {
+get api '/languages/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($response, $meta) = _get_language( $c, $params->{id} );
@@ -210,7 +210,7 @@ get api '/languages/:id' => sub {
 };
 
 
-put api '/languages/:id' => sub {
+put api '/languages/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
@@ -232,7 +232,7 @@ put api '/languages/:id' => sub {
              $response ];
 };
 
-patch api '/languages/:id' => sub {
+patch api '/languages/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
     my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
     my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;
