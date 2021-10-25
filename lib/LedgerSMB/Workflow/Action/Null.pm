@@ -35,7 +35,7 @@ use LedgerSMB::File::Email;
 use LedgerSMB::Magic qw(FC_EMAIL);
 
 
-my @PROPS = qw( description );
+my @PROPS = qw( description order );
 __PACKAGE__->mk_accessors(@PROPS);
 
 =head2 init($wf, $params)
@@ -49,6 +49,7 @@ sub init {
     $self->SUPER::init($wf, $params);
 
     $self->description( $params->{description} );
+    $self->order( $params->{order} );
 }
 
 =head2 execute($wf)

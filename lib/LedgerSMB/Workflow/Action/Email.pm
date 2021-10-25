@@ -81,6 +81,7 @@ sub init {
     $self->SUPER::init($wf, $params);
 
     $self->action( $params->{action} );
+    $self->order( $params->{order} );
 }
 
 =head2 execute($wf)
