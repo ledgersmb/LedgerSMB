@@ -87,8 +87,13 @@ END ;
         END;
         ?>
         <tr>
-          <?lsmb IF path_prefix_len > 0 ?>
-          <th colspan="<?lsmb path_prefix_len ?>" class="indent"></th><?lsmb END ?>
+          <?lsmb
+           colspan = 1;
+           WHILE colspan < path_prefix_len;
+           colspan = colspan + 1;
+           -?>
+           <th class="indent">&nbsp;</th>
+           <?lsmb- END -?>
           <th colspan="<?lsmb path_suffix_len ?>">
           <?lsmb IF report.rheads.ids.$row.props.section_for ;
           head_id = report.rheads.ids.$row.props.section_for;
