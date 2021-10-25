@@ -9,8 +9,7 @@ Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
 -?>
-<?lsmb FILTER latex { format="$FORMAT(pdflatex)" };
-       INCLUDE "preamble-pdflatex.tex"; -?>
+<?lsmb FILTER latex { format="$FORMAT(pdflatex)" } -?>
 
 <?lsmb
   IF hierarchy == 'flat-hierarchy';
@@ -32,8 +31,9 @@ releases. No explicit versioning was applied before 2021-01-04.
 
  -?>
 
-\documentclass[12pt]{article}
+\documentclass[10pt]{article}
 \usepackage{longtable}
+\usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
 \begin{document}
 \renewcommand\baselinestretch{1.2}\selectfont
 \begin{center}
@@ -96,7 +96,7 @@ releases. No explicit versioning was applied before 2021-01-04.
   END;
 -?>%
 <?lsmb
-   j = 1;
+   j = 0;
    WHILE j < path_prefix_len ;
     '& ';
     j = j + 1;
