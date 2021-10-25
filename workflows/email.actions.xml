@@ -4,7 +4,7 @@
           class="LedgerSMB::Workflow::Action::Email"
           action="save" order="1" />
   <action name="Cancel"
-          class="Workflow::Action::Null"
+          class="LedgerSMB::Workflow::Action::Null"
           action="cancel" order="2" />
   <action name="Queue"
           class="LedgerSMB::Workflow::Action::Email"

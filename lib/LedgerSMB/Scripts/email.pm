@@ -88,7 +88,9 @@ sub render {
         ( map { $_ => $wf->context->param($_) }
           qw( from to cc bcc notify subject body sent_date
               attachments expansions ) ),
-        actions     => [ $wf->get_current_actions ]
+        actions     => [ map { $_->name }
+                         sort { $a->{order} <=> $b->{order} }
+                         map { $wf->get_action($_) } $wf->get_current_actions ]
     });
 }
 
