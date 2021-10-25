@@ -34,12 +34,14 @@ define([
                     /* eslint no-alert:0 */
                     if (status === 454) {
                         alert("Company does not exist");
-                    } else {
+                    } else if (status === 401) {
                         alert(
                             "Access denied (" +
                                 status +
                                 "): Bad username/password"
                         );
+                    } else {
+                        alert("Unknown error: " + status);
                     }
                 }
             );

@@ -42,11 +42,7 @@ define([
                         content: "Company does not exist.",
                         style: "width: 300px"
                     }).show();
-                } else if (
-                    status === 400 &&
-                    err.response.text ===
-                        "Credentials invalid or session expired"
-                ) {
+                } else if (status === 401) {
                     new dialog({
                         title: "Error",
                         content: "Access denied: Bad username/password",
