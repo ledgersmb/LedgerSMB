@@ -72,9 +72,13 @@ END ;
                      report.rheads.ids.$row.props.account_number;
                      '"';
                   END %]>
-  [% IF path_prefix_len > 0 %]
-  <th colspan="[% path_prefix_len %]" class="indent"></th>
-  [% END %]
+  [%
+    colspan = 1;
+  WHILE colspan < path_prefix_len;
+    colspan = colspan + 1;
+  -%]
+    <th class="indent">&nbsp;</th>
+    [%- END -%]
   <th colspan="[% path_suffix_len %]" [% class %]>
 [% IF report.rheads.ids.$row.props.section_for ;
   head_id = report.rheads.ids.$row.props.section_for;
@@ -114,6 +118,9 @@ END ;
   <div class="export-link"
        ><a target="_blank" rel="noopener noreferrer"
            href="[% LINK %]&amp;format=PDF">[[% text('PDF') %]]</a></div>
+  <div class="export-link"
+       ><a target="_blank" rel="noopener noreferrer"
+           href="[% LINK %]&amp;format=HTML">[[% text('HTML') %]]</a></div>
   <div class="export-link"
        ><a target="_blank" rel="noopener noreferrer"
            href="[% LINK %]&amp;format=CSV">[[% text('CSV') %]]</a></div>
