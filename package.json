@@ -73,7 +73,7 @@
     "eslint-plugin-compat": "3.13.0",
     "eslint-plugin-html": "6.2.0",
     "eslint-plugin-import": "2.25.2",
-    "eslint-plugin-jsdoc": "37.0.0",
+    "eslint-plugin-jsdoc": "37.0.1",
     "eslint-plugin-json": "3.1.0",
     "eslint-plugin-markdown": "2.2.1",
     "eslint-plugin-node": "11.1.0",
