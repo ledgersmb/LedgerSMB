@@ -33,8 +33,7 @@
     ],
     "timezone": "Etc/Greenwich",
     "schedule": [
-        "after 11pm every weekday",
-        "before 7am every weekday",
-        "every weekend"
+        "after 11pm on friday",
+        "before 7am on saturday"
     ]
 }
