@@ -237,11 +237,6 @@ h2 {
   </style>
 </head><?lsmb 
 
-DRILLBASE = 'journal.pl?sort=transdate&amp;&amp;category=X'
-       _ '&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y'
-       _ '&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y'
-       _ '&amp;col_accno=Y&amp;action=search&amp;col_running_balance=Y';
-
 max_path_depth = 0;
 FOREACH row IN report.sorted_row_ids ;
    IF max_path_depth < report.rheads.ids.$row.path.size ;
@@ -319,9 +314,7 @@ END ;
           <?lsmb ELSE -?><?lsmb IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -?><?lsmb report.rheads.ids.$row.props.account_number ?>&nbsp;-&nbsp;<?lsmb END; -?>
           <?lsmb report.rheads.ids.$row.props.account_description ?></th><?lsmb FOREACH col IN report.sorted_col_ids -?>
           <td class="amount <?lsmb clazz ?>">
-            <a href=
-            "<?lsmb DRILLBASE _ '&accno=' _ report.rheads.ids.$row.props.account_number _ '&to_date=' _ report.cheads.ids.$col.props.to_date ?>">
-            <?lsmb report.cells.$row.$col ?></a>
+            <?lsmb report.cells.$row.$col ?>
           </td><?lsmb END ?><?lsmb END ?>
         </tr><?lsmb END ?><!--
 <h2><?lsmb text('Key Ratios'); ?></h2>
