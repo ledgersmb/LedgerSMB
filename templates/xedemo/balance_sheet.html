@@ -17,13 +17,225 @@ releases. No explicit versioning was applied before 2021-01-04.
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <style type="text/css">
   table.c1 {border-collapse: collapse}
+
+.flat-hierarchy .balancesheet .report-head th {
+    font-weight: bold;
+    text-align: right;
+    white-space: pre;
+}
+
+.flat-hierarchy .balancesheet .section1.QL,
+.flat-hierarchy .income_statement .section1 {
+    border: none;
+    display: none;
+}
+
+.flat-hierarchy .balancesheet .section1,
+.flat-hierarchy .balancesheet .section2,
+.flat-hierarchy .income_statement .section2 {
+    border-bottom: 3px double black;
+    font-size: large;
+}
+
+.financial-statement.flat-hierarchy .heading1,
+.financial-statement.flat-hierarchy .balancesheet .heading2 {
+    border-top: 1px solid black;
+    font-weight: bold;
+    height: 2em;
+    vertical-align: top;
+}
+
+.financial-statement.flat-hierarchy .income_statement .heading2 {
+    border-top: 1px solid black;
+    font-size: bigger;
+    font-style: italic;
+    height: 2em;
+    vertical-align: top;
+}
+
+.financial-statement.flat-hierarchy table {
+    margin-top: 3em;
+    min-width: 60ex;
+}
+
+.financial-statement.flat-hierarchy table td,
+.financial-statement.flat-hierarchy table th {
+    padding-bottom: 3px; /* add space for the dashed line underlining hovered amounts */
+}
+
+.financial-statement .company-name {
+    font-family: monospace;
+    margin-top: 2em;
+    text-align: center;
+}
+
+.financial-statement .company-address {
+    font-family: monospace;
+    font-size: smaller;
+    text-align: center;
+}
+
+#PNL a {
+    background-color: inherit;
+    color: inherit;
+    text-decoration: none;
+}
+
+#PNL a:link {
+    background-color: inherit;
+    color: inherit;
+    text-decoration: none;
+}
+
+#PNL a:visited {
+    background-color: inherit;
+    color: inherit;
+    text-decoration: none;
+}
+
+#PNL a:hover {
+    background-color: inherit;
+    border-bottom: thin dashed;
+    color: inherit;
+    text-decoration: none;
+}
+
+#PNL td.amount {
+    padding-left: 0.5em;
+    text-align: right;
+}
+
+#PNL tr.separator {
+    min-height: 1em;
+}
+
+#PNL tr.sectionhead th {
+    font-weight: bold;
+    margin-top: 4em;
+    padding-top: 2em;
+    text-align: right;
+}
+
+#PNL td.total {
+    border: 0;
+    border-color: black;
+    border-style: solid;
+    border-top: 1px;
+}
+
+#PNL th {
+    padding-left: 5px;
+}
+
+#PNL table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#PNL h1,
+h2 {
+    text-align: center;
+}
+
+#PNL th[colspan="1"].indent {
+    width: 1em;
+}
+
+#PNL th[colspan="2"].indent {
+    width: 2em;
+}
+
+#PNL th[colspan="3"].indent {
+    width: 3em;
+}
+
+#PNL th[colspan="4"].indent {
+    width: 4em;
+}
+
+#PNL th[colspan="5"].indent {
+    width: 5em;
+}
+
+#PNL th[colspan="6"].indent {
+    width: 6em;
+}
+
+#PNL th[colspan="7"].indent {
+    width: 7em;
+}
+
+#PNL th[colspan="8"].indent {
+    width: 8em;
+}
+
+#PNL th[colspan="9"].indent {
+    width: 9em;
+}
+
+#PNL td.heading1,
+#PNL th.heading1 {
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    font-weight: bold;
+    padding-bottom: 1em;
+}
+
+#PNL td.heading2,
+#PNL th.heading2 {
+    font-style: italic;
+    font-weight: bold;
+}
+
+#PNL table.balancesheet {
+    border-top: 1px solid black;
+    margin-top: 2em;
+}
+
+#PNL .amount {
+    padding-left: 0.5em;
+}
+
+.financial-statement h1,
+.financial-statement h2 {
+    text-align: center;
+}
+
+.financial-statement table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.financial-statement td.amount {
+    padding-left: 4em;
+    text-align: right;
+}
+
+.financial-statement tr.total td,
+.financial-statement tr.total th {
+    padding-bottom: 2em;
+}
+
+.financial-statement tr.total td.amount {
+    border-top: thick double black;
+}
+
+.financial-statement th {
+    text-align: left;
+}
+
+.financial-statement tr.section-head th,
+.financial-statement tr.total th {
+    text-align: center;
+}
+
+.financial-statement a,
+.financial-statement a:visited {
+    color: black;
+    text-decoration: none;
+}
   </style>
 </head><?lsmb 
-
-DRILLBASE = 'journal.pl?sort=transdate&amp;&amp;category=X'
-       _ '&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y'
-       _ '&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y'
-       _ '&amp;col_accno=Y&amp;action=search&amp;col_running_balance=Y';
 
 max_path_depth = 0;
 FOREACH row IN report.sorted_row_ids ;
@@ -87,8 +299,13 @@ END ;
         END;
         ?>
         <tr>
-          <?lsmb IF path_prefix_len > 0 ?>
-          <th colspan="<?lsmb path_prefix_len ?>" class="indent"></th><?lsmb END ?>
+          <?lsmb
+           colspan = 1;
+           WHILE colspan < path_prefix_len;
+           colspan = colspan + 1;
+           -?>
+           <th class="indent">&nbsp;</th>
+           <?lsmb- END -?>
           <th colspan="<?lsmb path_suffix_len ?>">
           <?lsmb IF report.rheads.ids.$row.props.section_for ;
           head_id = report.rheads.ids.$row.props.section_for;
@@ -97,9 +314,7 @@ END ;
           <?lsmb ELSE -?><?lsmb IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -?><?lsmb report.rheads.ids.$row.props.account_number ?>&nbsp;-&nbsp;<?lsmb END; -?>
           <?lsmb report.rheads.ids.$row.props.account_description ?></th><?lsmb FOREACH col IN report.sorted_col_ids -?>
           <td class="amount <?lsmb clazz ?>">
-            <a href=
-            "<?lsmb DRILLBASE _ '&accno=' _ report.rheads.ids.$row.props.account_number _ '&to_date=' _ report.cheads.ids.$col.props.to_date ?>">
-            <?lsmb report.cells.$row.$col ?></a>
+            <?lsmb report.cells.$row.$col ?>
           </td><?lsmb END ?><?lsmb END ?>
         </tr><?lsmb END ?><!--
 <h2><?lsmb text('Key Ratios'); ?></h2>
