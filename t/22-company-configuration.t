@@ -7,6 +7,7 @@ use strict;
 use DBD::Mock::Session;
 use DBD::Mock;
 use DBI;
+use List::Util qw( any );
 
 use LedgerSMB::Company;
 my $mock;
@@ -21,11 +22,12 @@ $mock    = DBI->connect('dbi:Mock:', '', '', { PrintError => 1 });
 $company = LedgerSMB::Company->new( dbh => $mock );
 $conf    = $company->configuration;
 
-$mock->{mock_add_resultset} =
-    [
-     ['proname', 'pronargs', 'proargnames', 'argtypes'],
-     ['config_gifi__save', 2, ['code', 'description'], ['text', 'text ']]
-    ];
+$mock->{mock_add_resultset} = {
+    results => [
+        ['proname', 'pronargs', 'proargnames', 'argtypes'],
+        ['config_gifi__save', 2, ['code', 'description'], ['text', 'text ']]
+        ],
+        };
 $mock->{mock_add_resultset} = {
     results => [ ['config_gifi__save'], ['ok'] ],
     execute_attributes => {
@@ -35,14 +37,14 @@ $mock->{mock_add_resultset} = {
 $mock->{mock_add_resultset} =
     [
      ['proname', 'pronargs', 'proargnames', 'argtypes'],
-     ['config_curr__save', 2, ['code', 'description'], ['text', 'text ']]
+     ['config_currency__save', 2, ['code', 'description'], ['text', 'text ']]
     ];
 $mock->{mock_add_resultset} = {
-    results => [ ['config_curr__save'], ['EUR'] ],
+    results => [ ['config_currency__save'], ['EUR'] ],
     execute_attributes => {
         pg_type => [ qw/text/ ],
     },
-}; # config_curr__save returned row
+}; # config_currency__save returned row
 
 ok lives {
 $conf->from_xml(<<XML);
@@ -66,12 +68,17 @@ or diag $@;
 
 $history = $mock->{mock_all_history};
 
-@queries = grep { $_->{statement} =~ m/config_gifi__save/ } $history->@*;
+@queries = grep {
+    my $stmt = $_;
+    any { $_ eq 'config_gifi__save' } @{ $_->{bound_params} // [] };
+    } $history->@*;
 is(scalar(@queries), 1, 'Test 1: config_gifi__save');
-is($queries[0]->{bound_params}, [ 'ok', 'oh nee' ],
+is($queries[0]->{bound_params}, [ 'config_gifi__save', 'public' ],
    'Test 1: config_gifi__save() arguments');
 
-@queries = grep { $_->{statement} =~ m/config_currency__save/ } $history->@*;
+@queries = grep {
+    $_->{statement} =~ m/config_currency__save/
+    } $history->@*;
 is(scalar(@queries), 1, 'Test 1: config_currency__save');
 is($queries[0]->{bound_params}, [ 'EUR', 'EURO payment area currency' ],
    'Test 1: config_currency__save() arguments');
