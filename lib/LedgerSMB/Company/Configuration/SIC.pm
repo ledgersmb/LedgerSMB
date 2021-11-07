@@ -29,7 +29,7 @@ use strict;
 
 use Moose;
 use namespace::autoclean;
-with 'PGObject::Simple::Role';
+with 'LedgerSMB::PGObject::Role';
 
 =head1 ATTRIBUTES
 
