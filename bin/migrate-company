@@ -109,7 +109,6 @@ Directory to retrieve and store additional migration data
 use strict;
 use warnings;
 
-use Carp::Always;
 use Digest::MD5 qw(md5_hex);
 use File::Basename qw(dirname);
 use File::Spec;
