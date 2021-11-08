@@ -56,10 +56,13 @@ sub _build_admin_dbh {
     my ($self) = @_;
 
     my $db = LedgerSMB::Database->new(
-        dbname    => $self->last_scenario_stash->{"the company"},
-        username  => $self->admin_user_name,
-        password  => $self->admin_user_password,
-        host      => $self->host);
+        connect_data => {
+            dbname    => $self->last_scenario_stash->{"the company"},
+            user      => $self->admin_user_name,
+            password  => $self->admin_user_password,
+            host      => $self->host,
+        },
+        schema    => 'xyz');
 
     my $dbh = $db->connect({ PrintError => 0,
                              RaiseError => 1,
@@ -90,10 +93,13 @@ sub post_execute {
     my $t2_harness_job_name = $ENV{T2_HARNESS_JOB_NAME} // '';
     if ($$ != $startup_pid || $job_name eq $t2_harness_job_name) {
         my $db = LedgerSMB::Database->new(
-            dbname   => $self->db_name,
-            username => $self->username,
-            password => $self->password,
-            host     => $self->host);
+            connect_data => {
+                dbname   => $self->db_name,
+                user     => $self->username,
+                password => $self->password,
+                host     => $self->host,
+            },
+            schema   => 'xyz');
 
         my $dbh = $db->connect({ PrintError => 0,
                                  RaiseError => 1,
@@ -119,10 +125,13 @@ sub pre_feature {
         $self->admin_user_name($self->admin_user_name . "-$$" . "-" . $job_name);
     }
     my $db = LedgerSMB::Database->new(
-        dbname   => $self->db_name,
-        username => $self->username,
-        password => $self->password,
-        host     => $self->host);
+        connect_data => {
+            dbname   => $self->db_name,
+            user     => $self->username,
+            password => $self->password,
+            host     => $self->host,
+        },
+        schema   => 'xyz');
 
     my $dbh = $db->connect({ PrintError => 0,
                              RaiseError => 1,
@@ -229,10 +238,13 @@ sub create_template {
     $self->super_dbh->do(qq(DROP ROLE IF EXISTS "$admin"));
 
     my $db = LedgerSMB::Database->new(
-        dbname   => $self->template_db_name,
-        username => $self->username,
-        password => $self->password,
-        host     => $self->host);
+        connect_data => {
+            dbname   => $self->template_db_name,
+            user     => $self->username,
+            password => $self->password,
+            host     => $self->host,
+        },
+        schema   => 'xyz');
 
     $db->create_and_load;
     my $c = LedgerSMB::Company->new(

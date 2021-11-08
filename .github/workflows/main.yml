@@ -164,6 +164,7 @@ jobs:
         run: |
           mkdir screens logs
           cp doc/conf/ledgersmb.conf.default ledgersmb.conf
+          sed -i -e 's/db_namespace = public/db_namespace = xyz/' ledgersmb.conf
 
       - name: Setup Perl environment
         uses: shogo82148/actions-setup-perl@v1

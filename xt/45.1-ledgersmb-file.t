@@ -21,8 +21,10 @@ my $dbh = DBI->connect(
     undef,
     undef,
     { AutoCommit => 1, PrintError => 0 }
-) or die "Can't connect to template database: " . DBI->errstr;
-
+    ) or die "Can't connect to template database: " . DBI->errstr;
+$dbh->{private_LedgerSMB} = { schema => 'xyz' };
+$dbh->do(q{set search_path=xyz})
+    or die "Can't set search path: " . $dbh->errstr;;
 
 
 

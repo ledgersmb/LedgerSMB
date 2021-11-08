@@ -39,19 +39,21 @@ my $lsmb_db = LedgerSMB::Database->new(
         dbname       => $db,
         user         => $ENV{PGUSER},
         password     => $ENV{PGPASSWORD},
-    });
+    },
+    schema => 'xyz',
+    );
 my $dbh = $lsmb_db->connect;
 die $DBI::errstr if $DBI::errstr;
 my $sth = $dbh->prepare(q{SELECT COUNT(*), 'TESTRESULT' from account})
     or die $dbh->errstr;
-
 
 for my $xmlfile (@files) {
     subtest "$xmlfile" => sub {
         my $company = LedgerSMB::Company->new(dbh => $dbh);
         open my $fh, '<:encoding(utf-8)', $xmlfile
             or die "Unable to open $xmlfile: $!";
-        ok lives { $company->configuration->from_xml($fh); };
+        ok( lives { $company->configuration->from_xml($fh); } )
+            or diag $@;
         close $fh or warn "Unable to close $xmlfile: $!";
 
         $sth->execute or die 'Failed to query test result: ' . $sth->errstr;

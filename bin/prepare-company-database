@@ -65,6 +65,7 @@ my $coa="$srcdir/sql/coa/us/chart/General.sql";
 my $gifi=undef;
 my $progress=0;
 my $help=0;
+my $schema='public';
 
 my $script_name = 'tools/prepare-company-database.pl';
 
@@ -121,6 +122,7 @@ GetOptions(
    'cc=s'            => \$cc,
    'coa=s'           => \$coa,
    'gifi=s'          => \$gifi,
+   'schema=s'        => \$schema,
    'help'            => \$help
 );
 
@@ -143,7 +145,8 @@ my $database = LedgerSMB::Database->new(
      chart_name => $coa, 
    company_name => $company, 
        username => $owner, 
-       password => $pass}
+         password => $pass},
+    schema => $schema,
 );
 
 $database->create_and_load();
@@ -156,7 +159,7 @@ $database->create_and_load();
 # returned by LedgerSMB::Database, but that is not done yet.
 
 my $lsmb = LedgerSMB->new() || die 'could not create new LedgerSMB object';
-$lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}",
+$lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE};options='-c ''search_path=$schema'''",
                                        undef, undef, { AutoCommit => 0 });
 
 # We also have to retrieve the country ID which requires a database query

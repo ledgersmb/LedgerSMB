@@ -196,6 +196,8 @@ GRANT SELECT ON location_class_to_entity_class TO PUBLIC;
 
 \echo BASE ROLES
 SELECT lsmb__create_role('base_user');
+SELECT lsmb__grant_schema('base_user', :'lsmb_schema');
+
 
 \echo BUDGETS
 SELECT lsmb__create_role('budget_enter');

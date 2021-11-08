@@ -416,8 +416,10 @@ Given qr/(a batch|batches) with these properties:$/, sub {
 
 Given qr/^(a reconciliation report|reconciliation reports) with these properties:$/, sub {
 
-    my $db = PGObject::Simple->new();
-    $db->set_dbh(S->{ext_lsmb}->admin_dbh);
+    my $db = PGObject::Simple->new(
+        dbh => S->{ext_lsmb}->admin_dbh,
+        _funcschema => 'xyz',
+        );
 
     foreach my $report_spec (@{C->data}) {
 
@@ -542,10 +544,13 @@ Given qr/a customer named "(.*)"/, sub {
     #  the environment contains PGUSER='postgres', but the username
     #  was set to 'test-user-admin' -- yet the postgres value is used
     my $dbh = LedgerSMB::Database->new(
-        dbname => S->{"the company"},
-        usermame => $ENV{PGUSER},     ###TODO: we had 'S->{"the admin"}
-        password => $ENV{PGPASSWORD}, ### but that didn't work
-        host => 'localhost')
+        connect_data => {
+            dbname => S->{"the company"},
+            user     => $ENV{PGUSER},     ###TODO: we had 'S->{"the admin"}
+            password => $ENV{PGPASSWORD}, ### but that didn't work
+            host     => 'localhost',
+        },
+        schema => 'xyz')
         ->connect({ PrintError => 0, RaiseError => 1, AutoCommit => 0 });
 
     my $company = LedgerSMB::Entity::Company->new(

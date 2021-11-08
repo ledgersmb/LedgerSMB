@@ -39,7 +39,7 @@ use DBD::Pg;
 use DBI;
 use File::Spec;
 use File::Temp;
-use PGObject::Util::DBAdmin 'v1.4.0';
+use PGObject::Util::DBAdmin 'v1.6.1';
 
 use Moose;
 use namespace::autoclean;
@@ -50,6 +50,24 @@ use LedgerSMB::Database::Loadorder;
 
 our $VERSION = '1.2';
 
+
+
+around BUILDARGS => sub {
+    my $orig  = shift;
+    my $class = shift;
+    my %args  = @_;
+
+    if ($args{schema} && $args{connect_data}) {
+        $args{connect_data}->{options} //= '';
+
+        my $enc_schema = ($args{schema} =~ s/['\\]/$1$1/gr);
+        $args{connect_data}->{options} .= qq{-c search_path=$enc_schema};
+    }
+    elsif ($args{schema}) {
+        die q{Missing 'connect_data' arg; expected to set default schema};
+    }
+    return $class->$orig( %args );
+};
 
 =head1 PROPERTIES
 
@@ -469,19 +487,27 @@ tag in the LOADORDER file will be applied (the main use-case being migrations).
 sub load_base_schema {
     my ($self, %args) = @_;
 
+    my $dbh = $self->connect({ AutoCommit => 1 });
+    $dbh->do(
+        q|CREATE SCHEMA IF NOT EXISTS | . $dbh->quote_identifier($self->schema)
+        )
+        or die $dbh->errstr;
+    $self->logger->infof('Created schema "%s"', $self->schema);
     $self->run_file(
         file       => "$self->{source_dir}/Pg-database.sql",
+        vars       => {
+            lsmb_schema => $self->schema,
+        },
     );
-    my $dbh = $self->connect({ AutoCommit => 1 });
     my $sth = $dbh->prepare(
         q|select true
             from pg_class cls
             join pg_namespace nsp
                  on nsp.oid = cls.relnamespace
            where cls.relname = 'defaults'
-                 and nsp.nspname = 'public'
+                 and nsp.nspname = ?
              |);
-    $sth->execute();
+    $sth->execute($self->schema);
     my ($success) = $sth->fetchrow_array();
     $sth->finish();
 
@@ -522,6 +548,9 @@ sub _load_module {
 
     my ($success, $stdout, $stderr) = $self->run_file_with_logs(
         file => "$self->{source_dir}/modules/$module",
+        vars => {
+            lsmb_schema => $self->schema,
+        },
         );
     $success or die $stderr;
 
@@ -587,7 +616,7 @@ sub create_and_load {
     my ($self, $args) = @_;
     $self->logger->info('Creating database');
     $self->create;
-    $self->logger->info('Loading schema');
+    $self->logger->info('Loading schema into ' . $self->schema);
     $self->load_base_schema(
         log_stdout     => $args->{log},
         errlog  => $args->{errlog},

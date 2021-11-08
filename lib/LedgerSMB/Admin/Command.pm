@@ -68,10 +68,14 @@ sub connect_data_from_arg {
          (?<host>\[[:0-9a-zA-Z]+\]|[\w.]+)
          (:(?<port>\d+))?/)?
         ((?<dbname>[a-z0-9A-Z_% -]+)
+         (\#(?<schema>[a-z0-9A-Z_% -]+))?
          (\?(?<queryparameters>.+))?
         )
     $!x or die "'$arg' doesn't parse as a connection URI";
     my %r = %+;
+    my $schema = delete $r{schema} // 'public';
+
+    $self->config->config->{schema} = $schema;
     my $rv = {
         map { $_ => _decode($r{$_}) }
         grep { $_ ne 'queryparameters' }

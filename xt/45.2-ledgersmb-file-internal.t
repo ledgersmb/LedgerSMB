@@ -46,6 +46,9 @@ $dbh = DBI->connect(
     undef,
     { AutoCommit => 1, PrintError => 0 }
 ) or die "Can't connect to working database: " . DBI->errstr;
+$dbh->{private_LedgerSMB} = { schema => 'xyz' };
+$dbh->do(q{set search_path=xyz})
+    or die "Can't set search path: " . $dbh->errstr;;
 
 # Include plain text files in file output for invoice templates
 $dbh->do("UPDATE mime_type SET invoice_include = TRUE WHERE mime_type='text/plain'")

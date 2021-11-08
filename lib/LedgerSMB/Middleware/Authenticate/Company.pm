@@ -84,19 +84,23 @@ sub _connect {
 
     my $session = $env->{'lsmb.session'};
     my %creds;
-    @creds{qw/dbname username password/} = (! $login)
+    @creds{qw/dbname user password/} = (! $login)
         ? (@{$session}{qw/company login password/})
         : ($company, $login, $password);
 
-    unless ($creds{username} && $creds{password}) {
+    unless ($creds{user} && $creds{password}) {
         if (! wantarray) {
             die q{Expected username and password};
         }
         return (undef, LedgerSMB::PSGI::Util::unauthorized());
     }
 
+    my $schema = $self->schema =~ s/'/''/gr;
     my $dbh = $env->{'lsmb.db'} =
-        LedgerSMB::Database->new(schema => $self->schema, %creds)->connect;
+        LedgerSMB::Database->new(
+            schema => $schema,
+            connect_data => \%creds
+        )->connect;
 
     if (! defined $dbh) {
         $env->{'psgix.logger'}->(

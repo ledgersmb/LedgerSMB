@@ -57,6 +57,7 @@ use LedgerSMB::Template::DB;
 use LedgerSMB::Database::Upgrade;
 
 
+
 my $logger = Log::Any->get_logger(category => 'LedgerSMB::Scripts::setup');
 my $CURRENT_MINOR_VERSION;
 if ( $LedgerSMB::VERSION =~ /(\d+\.\d+)./ ) {
@@ -114,9 +115,11 @@ sub _get_database {
 
     return (undef,
             LedgerSMB::Database->new(
-                username => $creds->{login},
-                password => $creds->{password},
-                dbname   => $request->{database},
+                connect_data => {
+                    user     => $creds->{login},
+                    password => $creds->{password},
+                    dbname   => $request->{database},
+                },
                 schema   => LedgerSMB::Sysconfig::db_namespace(),
     ));
 }
