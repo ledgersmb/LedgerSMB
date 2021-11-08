@@ -100,7 +100,6 @@ blessed reference.  All return results are objects.
 
 dbmethod list => (funcname => 'list_bank_account',
                    arg_list => ['entity_id'],
-               funcschema => 'public',
            returns_objects => 1 );
 
 =item save()
