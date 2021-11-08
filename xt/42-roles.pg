@@ -26,6 +26,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'can create normal role');
     DEALLOCATE test;
 
+    SELECT lsmb__grant_role('42_working_role', 'base_user');
+
     -- Check with an invalid role name of 86 characters total
     PREPARE test AS SELECT
                  lsmb__create_role('42_failing_with_a_much_too_long_role_that_will_have_more_then_63_bytes');
@@ -157,14 +159,12 @@ BEGIN;
     returns bool language plpgsql as
     $$
     BEGIN
-       EXECUTE 'SET SESSION AUTHORIZATION ' || lsmb__role(rolname);
-       EXECUTE 'SELECT * FROM '  || relspec || ' LIMIT 1';
-       RESET SESSION AUTHORIZATION;
-       RETURN TRUE;
-    EXCEPTION
-       WHEN insufficient_privilege THEN
-           RESET SESSION AUTHORIZATION;
-           RETURN FALSE;
+       PERFORM * FROM information_schema.role_table_grants
+         WHERE table_schema = 'xyz'
+               AND table_name = relspec
+               AND privilege_type = 'SELECT';
+
+       RETURN FOUND;
     END;
     $$;
 
