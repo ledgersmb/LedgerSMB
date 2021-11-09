@@ -15,6 +15,7 @@ Removed functionalities
 
 Bugs fixed
 * Better logging on authentication failure
+* Full support for running from a schema other than 'public'
 
 Code cleanup
 * Fewer warnings from old code
@@ -23,6 +24,10 @@ Code cleanup
 
 Dependency updates
 * Perl 5.32 (updated from 5.24)
+* PGObject 2.3.2 (updated from 2.2.0)
+* PGObject::Simple 3.1.0 (updated from 3.0.2)
+* PGObject::Simple::Role 2.1.1 (updated from 2.0.2)
+* PGObject::Util::DBAdmin 1.6.1 (updated from 1.4.0)
 * PostgreSQL 13 (updated from 10)
 * Workflow 1.57 (upadted from 1.56)
 
