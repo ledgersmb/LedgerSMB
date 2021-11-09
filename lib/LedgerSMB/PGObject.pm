@@ -26,7 +26,7 @@ This module doesn't specify any (public) methods.
 
 use Moose::Role;
 use namespace::autoclean;
-with 'PGObject::Simple::Role' => { -excludes => [qw(_get_dbh _get_schema _get_prefix)], };
+with 'LedgerSMB::PGObject::Role' => { -excludes => [ '_get_dbh' ], };
 
 use LedgerSMB::App_State;
 
@@ -49,13 +49,6 @@ around BUILDARGS => sub {
 };
 
 sub _get_dbh { return LedgerSMB::App_State::DBH() }
-
-sub _get_schema {
-    my $self = shift;
-    return $self->dbh->{private_LedgerSMB}->{schema};
-}
-
-sub _get_prefix { return '' } # can be overridden
 
 
 =head1 LICENSE AND COPYRIGHT

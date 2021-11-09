@@ -28,7 +28,7 @@ my $dbh = DBI->connect("dbi:Pg:dbname=$ENV{LSMB_NEW_DB}", undef, undef,
 $dbh->do(qq{CREATE DATABASE $ENV{LSMB_NEW_DB}_41_dbchange});
 my $chg_db = DBI->connect(qq{dbi:Pg:dbname=$ENV{LSMB_NEW_DB}_41_dbchange},
                           undef, undef, { AutoCommit => 0, PrintError => 0 });
-
+$chg_db->do(q{CREATE SCHEMA xyz});
 my $change = LedgerSMB::Database::Change->new();
 LedgerSMB::Database::Change::init($chg_db);
 $chg_db->commit;

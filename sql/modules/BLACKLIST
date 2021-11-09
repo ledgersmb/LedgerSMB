@@ -304,6 +304,7 @@ lsmb__global_role
 lsmb__grant_exec
 lsmb__grant_menu
 lsmb__grant_role
+lsmb__grant_schema
 lsmb__is_allowed_role
 lsmb__max_date
 lsmb__min_date

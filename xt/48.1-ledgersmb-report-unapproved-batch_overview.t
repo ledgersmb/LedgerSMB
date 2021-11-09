@@ -24,6 +24,9 @@ my $dbh = DBI->connect(
     undef,
     { AutoCommit => 0, PrintError => 0 }
 ) or die q{Can't connect to template database: } . DBI->errstr;
+$dbh->{private_LedgerSMB} = { schema => 'xyz' };
+$dbh->do(q{set search_path=xyz})
+    or die "Can't set search path: " . $dbh->errstr;;
 
 
 # Create test batches in database for us to query

@@ -49,6 +49,11 @@ sub new {
     return $self;
 }
 
+sub funcschema {
+    my $self = shift;
+    return $self->dbh->{private_LedgerSMB}->{schema};
+}
+
 =back
 
 =cut

@@ -30,6 +30,7 @@ sub run {
     $self->db(LedgerSMB::Database->new(
                   connect_data => $connect_data,
                   source_dir   => $self->config->sql_directory,
+                  schema       => $self->config->get('schema'),
               ));
     ###TODO shouldn't we want to generate the logging output as part of
     ## the the regular logging output ? Meaning that STDERR gets logged

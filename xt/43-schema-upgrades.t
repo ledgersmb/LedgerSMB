@@ -43,13 +43,18 @@ $dbh->do(qq{DROP DATABASE IF EXISTS $ENV{LSMB_NEW_DB}_43_upgrades})
     or die "Can't drop old test database: " . DBI->errstr;
 $dbh->disconnect;
 
-LedgerSMB::Database->new(dbname => "$ENV{LSMB_NEW_DB}_43_upgrades")
+LedgerSMB::Database->new(
+    connect_data => {
+        dbname => "$ENV{LSMB_NEW_DB}_43_upgrades",
+    },
+    schema => 'xyz',
+    )
     ->create_and_load;
 
 $dbh = DBI->connect(qq{dbi:Pg:dbname=$ENV{LSMB_NEW_DB}_43_upgrades},
               undef, undef, { AutoCommit => 0, PrintError => 0 })
     or die "Can't connect to test database";
-
+$dbh->{private_LedgerSMB} = { schema => 'xyz' };
 ####### End: Create test run conditions
 
 

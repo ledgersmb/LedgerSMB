@@ -23,6 +23,9 @@ my $dbh = DBI->connect(
     undef,
     { AutoCommit => 0, PrintError => 1, RaiseError => 1 }
 ) or die "Can't connect to template database: " . DBI->errstr;
+$dbh->{private_LedgerSMB} = { schema => 'xyz' };
+$dbh->do(q{set search_path=xyz})
+    or die "Can't set search path: " . $dbh->errstr;;
 
 # Needed until LedgerSMB::Setting->get() is refactored to use its
 # class dbh, rather than App_State

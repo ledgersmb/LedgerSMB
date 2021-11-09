@@ -9,6 +9,7 @@ use LedgerSMB::Database;
 use LedgerSMB::Database::SchemaChecks::JSON qw( json_formatter_context );
 
 my $user;
+my $schema = 'public';
 my $script_name = `basename $0`; chomp $script_name;
 my $data_dir = '.';
 my $usage = qq|
@@ -35,11 +36,12 @@ This is to prevent passwords being saved into the history file.
 sub rebuild_modules {
 
     my $database = LedgerSMB::Database->new(
-        {
-            username => $ENV{PGUSER},
+        connect_data => {
+            user   => $ENV{PGUSER},
             dbname => $ENV{PGDATABASE},
             password => $ENV{PGPASSWORD},
-        })
+        },
+        schema => $schema)
         or die "No database connection.";
 
     my $out = json_formatter_context {
@@ -62,6 +64,7 @@ sub usage { print $usage; exit; }
 GetOptions(
     'help'      => \&usage,
     'user=s'    => \$user,
+    'schema=s'  => \$schema,
     'data-dir=s'=> \$data_dir,
     );
 

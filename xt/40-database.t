@@ -42,7 +42,8 @@ $db = LedgerSMB::Database->new(
         user       => $ENV{PGUSER},
         password   => $ENV{PGPASSWORD},
     },
-    source_dir => './xt/data'
+    source_dir => './xt/data',
+    schema => 'xyz',
     );
 like( dies { $db->create_and_load; },
           qr/(APPLICATION ERROR|Specified file does not exist)/,
@@ -58,7 +59,8 @@ $db = LedgerSMB::Database->new(
         user       => $ENV{PGUSER},
         password   => $ENV{PGPASSWORD},
     },
-    source_dir => './xt/data/missing-directory'
+    source_dir => './xt/data/missing-directory',
+    schema => 'xyz',
     );
 like( dies { $db->create_and_load; },
           qr/(APPLICATION ERROR|Specified file does not exist)/,
@@ -81,7 +83,8 @@ $db = LedgerSMB::Database->new(
         user       => $ENV{PGUSER},
         password   => $ENV{PGPASSWORD},
     },
-    source_dir => './xt/data/40-database/no-defaults-table'
+    source_dir => './xt/data/40-database/no-defaults-table',
+    schema => 'xyz',
     );
 like( dies { $db->create_and_load; }, qr/Base schema failed to load/,
     'Database creation fails on missing defaults table');
@@ -101,7 +104,8 @@ $db = LedgerSMB::Database->new(
         user       => $ENV{PGUSER},
         password   => $ENV{PGPASSWORD},
     },
-    source_dir => './xt/data/40-database/schema-failure'
+    source_dir => './xt/data/40-database/schema-failure',
+    schema => 'xyz',
     );
 like( dies { $db->create_and_load; },
           qr/(ERROR:\s*relation "defal" does not exist|error running (command|file))/,
@@ -123,7 +127,8 @@ $db = LedgerSMB::Database->new(
         user       => $ENV{PGUSER},
         password   => $ENV{PGPASSWORD},
     },
-    source_dir => './xt/data/40-database/module-failure-1'
+    source_dir => './xt/data/40-database/module-failure-1',
+    schema => 'xyz',
     );
 like( dies { $db->create_and_load; }, qr/Module FaultyModule.sql failed to load/,
     'Database creation fails when a module fails to load (empty module)');
@@ -137,7 +142,8 @@ $db = LedgerSMB::Database->new(
         user       => $ENV{PGUSER},
         password   => $ENV{PGPASSWORD},
     },
-    source_dir => './xt/data/40-database/module-failure-2'
+    source_dir => './xt/data/40-database/module-failure-2',
+    schema => 'xyz',
     );
 like( dies { $db->create_and_load; },
         qr/(ERROR:\s*function "fail_me" already exists|error running command)/,

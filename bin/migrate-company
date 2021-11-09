@@ -109,7 +109,6 @@ Directory to retrieve and store additional migration data
 use strict;
 use warnings;
 
-use Carp::Always;
 use Digest::MD5 qw(md5_hex);
 use File::Basename qw(dirname);
 use File::Spec;
@@ -156,6 +155,7 @@ my $loglevel = 'error';
 my $logconf  = './migrate-company.log.conf';
 
 my $cfg;
+my $schema = 'public';
 
 GetOptions(
     'help'   => \&help,
@@ -163,6 +163,7 @@ GetOptions(
     'user|U=s'    => \$user,
     'dbname|d=s'    => \$dbname,
     'data=s' => \$data,
+    'schema=s' => \$schema,
     'log=s'  => \$loglevel,
     'logconf'=> \$logconf,
     )
@@ -388,9 +389,12 @@ sub migrate {
         return 2;
     }
     my $db = LedgerSMB::Database->new(
-        username    => $user,
-        password    => $ENV{PGPASSWORD},
-        dbname      => $dbname
+        connect_data => {
+            user        => $user,
+            password    => $ENV{PGPASSWORD},
+            dbname      => $dbname,
+        },
+        schema       => $schema,
         );
     my $dbinfo = $db->get_info;
     if (not $dbinfo->{status}

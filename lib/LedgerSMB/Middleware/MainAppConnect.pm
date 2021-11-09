@@ -90,6 +90,14 @@ sub _connect {
                               $dbh->{pg_user}, $dbh->{pg_db} );
                 die 'Unable to switch to authenticated user: ' . $dbh->errstr;
         };
+        $dbh->do(q{SET SEARCH_PATH TO }
+                 . $dbh->{private_LedgerSMB}->{schema})
+            or do {
+                $log->fatalf( 'Unable to set schema resolution: %s',
+                              $dbh->errstr );
+                die $dbh->errstr;
+        };
+#        $log->infof( 'Schema resolution set to %s', $dbh->quote
     }
     else {
         $log->fatal(
@@ -218,8 +226,15 @@ sub _verify_session {
 sub _create_session {
     my ($dbh, $company, $session) = @_;
 
+    $log->info('Session database schema: ' . $dbh->{private_LedgerSMB}->{schema});
+    $log->info('Session database pg_options: ' . $dbh->{pg_options});
+    my ($current_schemas) = $dbh->selectall_array(
+        q{SHOW search_path}, { },
+        ) or die $dbh->errstr;
+    $log->info("Current schema settings: $current_schemas->[0]");
+
     my ($created_session) = $dbh->selectall_array(
-        q{SELECT * FROM session_create();}, { Slice => {} },
+        q{SELECT * FROM session_create()}, { Slice => {} },
         ) or die $dbh->errstr;
     $dbh->commit if $created_session->{session_id};
 

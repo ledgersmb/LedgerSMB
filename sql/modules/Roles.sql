@@ -178,12 +178,26 @@ BEGIN
 END;
 $$;
 
+
+CREATE OR REPLACE FUNCTION lsmb__grant_schema
+(in_role text, in_schema text)
+RETURNS BOOL
+LANGUAGE PLPGSQL SECURITY INVOKER AS
+$$
+BEGIN
+  EXECUTE 'GRANT USAGE ON SCHEMA ' || quote_ident(in_schema) || ' TO ' || quote_ident(lsmb__role('base_user'));
+  RETURN true;
+END;
+$$;
+
 GRANT SELECT ON periods TO public; -- 'periods' is a view in Pg-database
 GRANT SELECT ON location_class_to_entity_class TO PUBLIC;
 
 
 \echo BASE ROLES
 SELECT lsmb__create_role('base_user');
+SELECT lsmb__grant_schema('base_user', :'lsmb_schema');
+
 
 \echo BUDGETS
 SELECT lsmb__create_role('budget_enter');
