@@ -588,7 +588,7 @@ group by v.credit_id, v.fax;
 
 -- addresses
 
-INSERT INTO public.country (id, name, short_name) VALUES (-1, 'Invalid Country', 'XX');
+INSERT INTO country (id, name, short_name) VALUES (-1, 'Invalid Country', 'XX');
 
 INSERT INTO eca_to_location(credit_id, location_class, location_id)
 SELECT eca.id, 1,
@@ -747,14 +747,14 @@ drawing, microfiche, partsgroup_id, avgcost)
  SELECT id, partnumber, description, unit,
 listprice, sellprice, lastcost, priceupdate, weight, onhand, notes,
 makemodel, assembly, alternate, rop, (select id
-          from public.account
+          from account
          where accno = (select accno from :slschema.chart
                          where id = inventory_accno_id)),
 (select id
-          from public.account
+          from account
          where accno = (select accno from :slschema.chart
                          where id = income_accno_id)), (select id
-          from public.account
+          from account
          where accno = (select accno from :slschema.chart
                          where id = expense_accno_id)),
  bin, obsolete, bom, image,
@@ -1072,7 +1072,7 @@ FROM :slschema.payment p;
 INSERT INTO cr_coa_to_account(chart_id, account)
 SELECT DISTINCT pc.id, c.description FROM :slschema.acc_trans ac
 JOIN :slschema.chart c ON ac.chart_id = c.id
-JOIN public.account pc on pc.accno = c.accno
+JOIN account pc on pc.accno = c.accno
 WHERE ac.cleared IS NOT NULL
 AND c.link ~ 'paid'
 AND NOT EXISTS (SELECT 1 FROM cr_coa_to_account WHERE chart_id=pc.id);
