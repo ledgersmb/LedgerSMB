@@ -912,9 +912,6 @@ insert into ar
         id, invnumber, transdate, crdate, taxincluded,
         amount_bc, netamount_bc,
         amount_tc, netamount_tc,
-[% IF VERSION_COMPARE(lsmbversion,'1.6') < 0; %]
-        paid, datepaid,
-[% END; %]
         duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
         shipvia, language_code, ponumber, shippingpoint,
         on_hold, approved, reverse, terms, description)
@@ -924,9 +921,6 @@ SELECT
         ar.id, invnumber, transdate, transdate, ar.taxincluded, amount, netamount,
         CASE WHEN exchangerate IS NOT NULL THEN amount/exchangerate ELSE 0 END,
         CASE WHEN exchangerate IS NOT NULL THEN netamount/exchangerate ELSE 0 END,
-[% IF VERSION_COMPARE(lsmbversion,'1.6') < 0; %]
-        paid, datepaid,
-[% END; %]
         duedate, invoice, ordnumber, ar.curr, ar.notes, quonumber,
         intnotes,
         shipvia, ar.language_code, ponumber, shippingpoint,
@@ -942,9 +936,6 @@ insert into ap
 (entity_credit_account, person_id,
         id, invnumber, transdate, crdate, taxincluded, amount_bc, netamount_bc,
         amount_tc, netamount_tc,
-[% IF VERSION_COMPARE(lsmbversion,'1.6') < 0; %]
-        paid, datepaid,
-[% END; %]
         duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
         shipvia, language_code, ponumber, shippingpoint,
         on_hold, approved, reverse, terms, description)
@@ -955,9 +946,6 @@ SELECT
         ap.id, invnumber, transdate, transdate, ap.taxincluded, amount, netamount,
         CASE WHEN exchangerate IS NOT NULL THEN amount/exchangerate ELSE 0 END,
         CASE WHEN exchangerate IS NOT NULL THEN netamount/exchangerate ELSE 0 END,
-[% IF VERSION_COMPARE(lsmbversion,'1.6') < 0; %]
-        paid, datepaid,
-[% END; %]
         duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber,
         intnotes,
         shipvia, ap.language_code, ponumber, shippingpoint,
