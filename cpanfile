@@ -108,7 +108,6 @@ requires 'Template::Provider';
 requires 'Text::CSV';
 requires 'Text::Markdown';
 requires 'URI::Escape';
-requires 'Version::Compare';
 requires 'Workflow::Context', '1.57';
 requires 'Workflow::Exception', '1.57';
 requires 'Workflow::Factory', '1.57';

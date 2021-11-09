@@ -20,7 +20,6 @@ use File::Temp;
 use List::Util qw( first );
 use Scope::Guard qw( guard );
 use Template;
-use Version::Compare;
 
 use Moose;
 use namespace::autoclean;
@@ -277,7 +276,6 @@ sub run_upgrade_script {
     my $tempfile = File::Temp->new();
     $engine->process("$template.sql",
                      {
-                         VERSION_COMPARE => \&Version::Compare::version_compare,
                          %$vars
                      },
                      $tempfile)
