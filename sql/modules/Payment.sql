@@ -560,7 +560,7 @@ BEGIN
                             WHERE in_account_class = 1
                               AND bpi.id = ap.id);
 
-        CREATE TABLE eca_payments_in AS
+        CREATE TEMPORARY TABLE eca_payments_in AS
         SELECT eca_id, nextval('payment_id_seq') as payment_id,
                        -- this logic is reversed, but mirrors what's been
                        -- incorrect in payment post since 12 years...
