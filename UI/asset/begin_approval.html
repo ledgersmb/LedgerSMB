@@ -1,7 +1,7 @@
 \[% PROCESS "elements.html" -%]
 <body class="lsmb [% dojo_theme %]">
 <div id="assets">
-<form data-dojo-type="lsmb/Form" action="[% request.script %]" method="post">
+<form data-dojo-type="lsmb/Form" action="[% request.script %]" method="GET">
 <div class="listtop">[% text('New Asset Report Search') %]</div>
 <div class="inputrow" id="classrow"><div class="inputgroup" id="classgrp">
 [% PROCESS select element_data = {
