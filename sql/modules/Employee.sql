@@ -76,8 +76,6 @@ create view employees as
     JOIN entity_employee ee USING (entity_id)
     LEFT JOIN salutation s ON (p.salutation_id = s.id);
 
-GRANT select ON employees TO public;
-
 DROP TYPE IF EXISTS employee_result CASCADE;
 
 CREATE TYPE employee_result AS (

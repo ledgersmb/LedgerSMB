@@ -412,6 +412,8 @@ SELECT lsmb__grant_perms('employees_manage', 'payroll_wage', 'ALL');
 SELECT lsmb__grant_perms('employees_manage', 'payroll_deduction', 'ALL');
 SELECT lsmb__grant_menu('employees_manage', 48, 'allow');
 SELECT lsmb__grant_menu('employees_manage', 49, 'allow');
+GRANT select ON employees TO public;
+
 
 SELECT lsmb__create_role('contact_edit');
 SELECT lsmb__grant_role('contact_edit', 'contact_read');
@@ -788,6 +790,11 @@ SELECT lsmb__grant_menu('reconciliation_approve', 44, 'allow');
 SELECT lsmb__grant_menu('reconciliation_approve', 211, 'allow');
 SELECT lsmb__grant_exec('reconciliation_approve', 'reconciliation__reject_set(in_report_id int)');
 SELECT lsmb__grant_exec('reconciliation_approve', 'reconciliation__delete_unapproved(in_report_id int)');
+-- Granting execute permission to public because everyone has an ability to
+-- delete their own reconciliation reports provided they have not been
+-- submitted.  --CT
+GRANT EXECUTE ON FUNCTION reconciliation__delete_my_report(in_report_id int)
+TO PUBLIC;
 
 SELECT lsmb__create_role('reconciliation_all');
 SELECT lsmb__grant_role('reconciliation_all', 'reconciliation_approve');

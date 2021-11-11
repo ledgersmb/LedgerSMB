@@ -123,11 +123,6 @@ $$
     RETURNING TRUE;
 $$ LANGUAGE SQL SECURITY DEFINER;
 
--- Granting execute permission to public because everyone has an ability to
--- delete their own reconciliation reports provided they have not been
--- submitted.  --CT
-GRANT EXECUTE ON FUNCTION reconciliation__delete_my_report(in_report_id int)
-TO PUBLIC;
 
 COMMENT ON FUNCTION reconciliation__delete_my_report(in_report_id int) IS
 $$This function allows a user to delete his or her own unsubmitted, unapproved
