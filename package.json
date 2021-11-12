@@ -64,7 +64,7 @@
     "dojo-webpack-plugin": "3.0.3",
     "ejs-loader": "0.5.0",
     "eslint": "7.32.0",
-    "eslint-config-airbnb-base": "14.2.1",
+    "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-eslint": "7.0.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-standard": "16.0.3",
