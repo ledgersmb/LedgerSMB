@@ -2,7 +2,7 @@
 <body class="lsmb [% dojo_theme %]">
 <div id="assetclass-search">
 <div class="listtop">[% text('Search Asset Class') %]</div>
-<form data-dojo-type="lsmb/Form" action="[% request.script %]" method="post">
+<form data-dojo-type="lsmb/Form" action="[% request.script %]" method="GET">
 <div class="inputrow" id="labelrow">
 [% PROCESS input element_data = {
         type = "text"
