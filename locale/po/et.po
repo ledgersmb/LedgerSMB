@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.9.3-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2021-10-12 20:39+0000\n"
+"POT-Creation-Date: 2021-11-14 10:26+0000\n"
 "Last-Translator: Peeter Pärtel <peeter@sigma.ee>, 2021\n"
 "Language-Team: Estonian (https://www.transifex.com/ledgersmb/teams/58325/"
 "et/)\n"
@@ -940,13 +940,13 @@ msgstr "Vara silt"
 msgid "Assets"
 msgstr "Varad"
 
-#: templates/demo/balance_sheet.html:111 templates/xedemo/balance_sheet.html:111
-#: UI/Reports/balance_sheet.html:102
+#: templates/demo/balance_sheet.html:326 templates/xedemo/balance_sheet.html:326
+#: UI/Reports/balance_sheet.html:106
 msgid "Assets to Equity"
 msgstr "Varad omakapitali suhe"
 
-#: templates/demo/balance_sheet.html:108 templates/xedemo/balance_sheet.html:108
-#: UI/Reports/balance_sheet.html:99
+#: templates/demo/balance_sheet.html:323 templates/xedemo/balance_sheet.html:323
+#: UI/Reports/balance_sheet.html:103
 msgid "Assets to Liabilities"
 msgstr "Varad kohustustesse suhe"
 
@@ -1120,8 +1120,8 @@ msgstr "Varundus rollid"
 msgid "Balance"
 msgstr "Bilanss"
 
-#: templates/demo/balance_sheet.html:43 templates/demo/balance_sheet.tex:40
-#: templates/xedemo/balance_sheet.html:43 templates/xedemo/balance_sheet.tex:40
+#: templates/demo/balance_sheet.html:255 templates/demo/balance_sheet.tex:40
+#: templates/xedemo/balance_sheet.html:255 templates/xedemo/balance_sheet.tex:40
 #: UI/Reports/balance_sheet.html:25 UI/Reports/filters/balance_sheet.html:7
 #: sql/Pg-database.sql:2620
 msgid "Balance Sheet"
@@ -1368,8 +1368,8 @@ msgid "COGS Lots Report"
 msgstr ""
 
 #: UI/Contact/pricelist.html:125 UI/Reports/aging_report.html:102
-#: UI/Reports/balance_sheet.html:119 UI/Reports/display_report.html:76
-#: UI/Reports/PNL.html:105
+#: UI/Reports/balance_sheet.html:126 UI/Reports/display_report.html:76
+#: UI/Reports/PNL.html:113
 msgid "CSV"
 msgstr "CSV"
 
@@ -3142,8 +3142,8 @@ msgstr "Omakapital & Kohustused"
 msgid "Equity (Temporary)"
 msgstr ""
 
-#: templates/demo/balance_sheet.html:114 templates/xedemo/balance_sheet.html:114
-#: UI/Reports/balance_sheet.html:105
+#: templates/demo/balance_sheet.html:329 templates/xedemo/balance_sheet.html:329
+#: UI/Reports/balance_sheet.html:109
 msgid "Equity to Liabilities"
 msgstr ""
 
@@ -3377,8 +3377,8 @@ msgstr ""
 msgid "First Name"
 msgstr "Eesnimi"
 
-#: templates/demo/balance_sheet.html:106 templates/xedemo/balance_sheet.html:106
-#: UI/Reports/balance_sheet.html:97
+#: templates/demo/balance_sheet.html:321 templates/xedemo/balance_sheet.html:321
+#: UI/Reports/balance_sheet.html:101
 msgid "First column only"
 msgstr ""
 
@@ -3650,6 +3650,10 @@ msgstr "Gtalk"
 msgid "HR"
 msgstr "Personal"
 
+#: UI/Reports/balance_sheet.html:123 UI/Reports/PNL.html:109
+msgid "HTML"
+msgstr ""
+
 #: sql/Pg-database.sql:2659
 msgid "HTML Templates"
 msgstr "HTML dokumendipõhjad"
@@ -3818,8 +3822,8 @@ msgstr "Tulu"
 msgid "Income Class"
 msgstr ""
 
-#: lib/LedgerSMB/Report/PNL/Income_Statement.pm:47 templates/demo/PNL.tex:39
-#: templates/xedemo/PNL.tex:39 UI/Reports/filters/income_statement.html:15
+#: lib/LedgerSMB/Report/PNL/Income_Statement.pm:47 templates/demo/PNL.tex:40
+#: templates/xedemo/PNL.tex:40 UI/Reports/filters/income_statement.html:15
 #: sql/Pg-database.sql:2647
 msgid "Income Statement"
 msgstr "Kasumiaruanne"
@@ -4137,8 +4141,8 @@ msgstr "Juun"
 msgid "June"
 msgstr "Juuni"
 
-#: templates/demo/balance_sheet.html:105 templates/xedemo/balance_sheet.html:105
-#: UI/Reports/balance_sheet.html:96
+#: templates/demo/balance_sheet.html:320 templates/xedemo/balance_sheet.html:320
+#: UI/Reports/balance_sheet.html:100
 msgid "Key Ratios"
 msgstr ""
 
@@ -5221,8 +5225,8 @@ msgstr ""
 
 #: old/bin/am.pl:978 old/lib/LedgerSMB/Form.pm:1178
 #: UI/Contact/pricelist.html:103 UI/Reports/aging_report.html:97
-#: UI/Reports/balance_sheet.html:116 UI/Reports/display_report.html:72
-#: UI/Reports/PNL.html:101
+#: UI/Reports/balance_sheet.html:120 UI/Reports/display_report.html:72
+#: UI/Reports/PNL.html:105
 msgid "PDF"
 msgstr "PDF"
 
