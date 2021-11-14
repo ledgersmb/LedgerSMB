@@ -150,6 +150,11 @@ Dependency updates (Perl)
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.23
+* Use a temp table to prevent bulk payments trampling on each other
+* Fix sorting on fixed asset searches (#6151)
+
+
 Changelog for 1.8.22
 * Fix sending mail with multiple Bcc addresses (#6087)
 * Fix manual taxes on credit invoices (#5721)
