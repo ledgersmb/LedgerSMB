@@ -3,6 +3,18 @@
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.3
+* Sort the buttons on the e-mail entry screen
+* Fix issues with the PDF output for PNL and Balance sheet reports
+* Fix indenting on the hierarchical PNL and balance sheet HTML reports
+* Add link to download HTML PNL and balance sheet reports
+* Add rudimentary CSS to HTML PNL and balance sheet reports
+* Fix off-by-one column on the PNL and balance sheet total lines
+* Remove application links on downloaded HTML PNL and balance sheet reports
+* Use a temp table to prevent bulk payments trampling on each other
+* Fix sorting on fixed asset searches (#6151)
+
+
 Changelog for 1.9.2
 * Fix sending mail with multiple Bcc addresses (#6087)
 * Fix manual taxes on credit invoices (#5721)
