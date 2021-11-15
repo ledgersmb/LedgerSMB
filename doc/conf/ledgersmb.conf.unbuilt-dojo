@@ -66,6 +66,7 @@ localepath = locale/po
 
 [programs]
 
+
 [mail]
 # The sendmail command is used to send mail unless smtphost is set.
 # sendmail   = /usr/bin/sendmail
