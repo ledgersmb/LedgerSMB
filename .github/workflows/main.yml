@@ -57,7 +57,7 @@ jobs:
         uses: actions/setup-node@v2.1.2
         with:
           # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
-          node-version: 12.x
+          node-version: 16
 
       - name: Cache node modules
         uses: actions/cache@v2
