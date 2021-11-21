@@ -555,8 +555,7 @@ $$
 
         -- step 4: add new lines not part of payments
         for t_row in
-           select source, case when source is null then entry_id
-                               else null end, array_agg(entry_id) as entries,
+           select source, array_agg(entry_id) as entries,
                   sum(case when t_recon_fx then amount_tc
                            else amount_bc end) as our_balance,
                   transdate

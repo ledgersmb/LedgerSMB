@@ -108,7 +108,7 @@ INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc
 values (-208, test_get_account_id('-11111'), '1000-01-01', -10, 'XTS', -10,'2');
 
 
--- Test Act 1; 1000-01-03; source '1'
+-- Test Act 1; 1000-01-03; source '1' (both AR and GL lines)
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
 values (-201, test_get_account_id('-11111'), '1000-01-03', -10, 'XTS', -10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
@@ -133,35 +133,37 @@ INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc
 values (-209, test_get_account_id('-11111'), '1000-01-03', -10, 'XTS', -10, '2');
 
 
--- Test Act 2; presented as a single line
+-- Test Act 2; presented as a single line,
+--   because all part of the same payment (AR)
+--   or with the same source and transdate==payment_date (GL)
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
 values (-200, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
 values (-201, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-202, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10,'t gl 1');
-INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-203, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10,'t gl 1');
-INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
 values (-204, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10, '1');
+-- id -206 intentionally left out to create a different number of rows in accounts -11111 and -11112
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-206, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10, '1');
-INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-208, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10,'2');
-INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-205, test_get_account_id('-11111'), '1000-01-03', -10, 'XTS', -10, '1');
+values (-208, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10,'1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
 values (-205, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
 values (-207, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-209, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10,'2');
+values (-209, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10,'1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
 values (-210, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-211, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10,'t gl 1');
-INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source, cleared)
-values (-213, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10, '1', false);
+values (-211, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10,'1');
+INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
+values (-213, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10, '1');
+-- Don't include GL transactions with the same source, but with a transdate unequal to the payment_date
+INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
+values (-202, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10,'1');
+INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
+values (-203, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10,'1');
+
+
 -- Don't include cleared or unapproved transactions
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source, cleared, approved)
 values (-200, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10, '1', true, false);
@@ -174,5 +176,8 @@ values (-214, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10, '1', f
 
 insert into payment_links (payment_id, entry_id, type)
 select -201, entry_id, 1
-  from acc_trans where trans_id < 0 and chart_id = test_get_account_id('-11112');
+  from acc_trans
+ where trans_id < 0
+       and chart_id = test_get_account_id('-11112')
+       and exists (select 1 from ar where ar.id = acc_trans.trans_id);
 
