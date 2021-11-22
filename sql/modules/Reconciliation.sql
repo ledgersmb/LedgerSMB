@@ -236,11 +236,15 @@ $$Marks the report approved and marks all cleared transactions in it cleared.$$;
 
 
 -- XXX Badly named, rename for 1.4.  --CT
-CREATE OR REPLACE FUNCTION reconciliation__new_report_id
-(in_chart_id int, in_total numeric, in_end_date date, in_recon_fx bool) returns INT as $$
+CREATE OR REPLACE FUNCTION reconciliation__new_report_id(
+    in_chart_id int,
+    in_total numeric,
+    in_end_date date,
+    in_recon_fx bool
+) returns INT as $$
 
     INSERT INTO cr_report(chart_id, their_total, end_date, recon_fx)
-    values ($1, $2, $3, $4);
+    values (in_chart_id, in_total, in_end_date, in_recon_fx);
     SELECT currval('cr_report_id_seq')::int;
 
 $$ language 'sql';
@@ -261,7 +265,6 @@ CREATE OR REPLACE FUNCTION reconciliation__add_entry(
         in_account int;
         la RECORD;
         t_errorcode INT;
-        our_value NUMERIC;
         lid INT;
         in_count int;
         t_scn TEXT;
@@ -304,7 +307,7 @@ CREATE OR REPLACE FUNCTION reconciliation__add_entry(
                                 in_type)
                         RETURNING id INTO lid;
                 ELSIF in_count = 1 THEN
-                        SELECT id INTO lid
+                        SELECT id INTO lid FROM cr_report_line
                         WHERE t_scn = scn AND report_id = in_report_id
                                 AND their_balance = 0 AND post_date = in_date;
                         UPDATE cr_report_line
@@ -314,7 +317,7 @@ CREATE OR REPLACE FUNCTION reconciliation__add_entry(
                 ELSE
                         SELECT count(*) INTO in_count FROM cr_report_line
                         WHERE t_scn ilike scn AND report_id = in_report_id
-                                AND our_value = t_amount and their_balance = 0
+                                AND our_balance = t_amount and their_balance = 0
                                 AND post_date = in_date;
 
                         IF in_count = 0 THEN -- no match among many of values
@@ -334,7 +337,7 @@ CREATE OR REPLACE FUNCTION reconciliation__add_entry(
                         ELSIF in_count = 1 THEN -- EXECT MATCH
                                 SELECT id INTO lid FROM cr_report_line
                                 WHERE t_scn = scn AND report_id = in_report_id
-                                        AND our_value = t_amount
+                                        AND our_balance = t_amount
                                         AND their_balance = 0
                                         AND post_date = in_date;
                                 UPDATE cr_report_line
@@ -346,7 +349,7 @@ CREATE OR REPLACE FUNCTION reconciliation__add_entry(
                         ELSE -- More than one match
                                 SELECT id INTO lid FROM cr_report_line
                                 WHERE t_scn ilike scn AND report_id = in_report_id
-                                        AND our_value = t_amount
+                                        AND our_balance = t_amount
                                         AND post_date = in_date
                                 ORDER BY id ASC limit 1;
 
@@ -374,7 +377,7 @@ CREATE OR REPLACE FUNCTION reconciliation__add_entry(
                         in_type)
                         RETURNING id INTO lid;
                 ELSIF in_count = 1 THEN -- perfect match
-                        SELECT id INTO lid
+                        SELECT id INTO lid FROM cr_report_line
                         WHERE report_id = in_report_id
                                 AND our_balance = t_amount
                                 AND their_balance = 0
@@ -428,8 +431,10 @@ DROP FUNCTION IF EXISTS
                                        in_report_id integer,
                                        in_their_total numeric);
 CREATE OR REPLACE FUNCTION reconciliation__pending_transactions(
-                      in_report_id integer, in_their_total numeric)
-  RETURNS integer AS
+    in_report_id integer,
+    in_their_total numeric
+)
+RETURNS integer AS
 $$
 
     DECLARE
@@ -438,23 +443,52 @@ $$
         t_chart_id       integer;
         t_end_date       date;
         t_report_line_id integer;
+        t_uid int;
     BEGIN
         SELECT end_date, recon_fx, chart_id
          INTO t_end_date, t_recon_fx, t_chart_id
          FROM cr_report
         WHERE id = in_report_id;
 
+        SELECT entity_id INTO t_uid
+        FROM users
+        WHERE username = CURRENT_USER;
+
         /*
 
-        Approach:
+        Approach in 4 steps:
          1. Identify lines to be added *somewhere*
+            That is: all lines before the reconcilation date which
+            are not yet part of any other reconciliation; lines come
+            from two sources: payment transactions and others (the second
+            are usually GL transactions)
          2. Identify lines part of a payment
-            (always added as new lines: payments are natural groupings)
-         3. Identify non-payment lines to be added to existing
-            recon lines due to the same source system reference
-         4. Remaining lines added as new lines, either by source or
-            as individual ones.
-
+            Lines in this category are grouped by payment and added as a
+            single reconciliation line, irrespective of the number of lines
+            identified, *unless* lines have explicitly different 'Source'
+            values - which is weird and unexpected, but possible when the
+            user sets a specific value on each payment line separately - in
+            which case, the lines in the payment will be grouped by the value
+            of the Source field
+         3. Identify non-payment lines that adjust payments
+            When a payment has been entered wrongly or the bank has withheld
+            transaction fees, the payment of the invoice does not correspond
+            to the actual amount on the bank statement - meaning adjustment
+            is required; GL transactions can be used to enter adjustments by
+            listing the same date and the same source as used for the payment
+            transaction. The lines in this category will be added as an
+            adjustment to the existing (coming from the payment) reconciliation
+            line
+         4. Remaining lines added as new lines, either by source (if they
+            have one) or as individual ones.
+            Note that the lines in this category - by logical reasoning - can
+            **not** be payments lines, because those were handled in step 2.
+            Also note that it's not an option to lump all lines without a source
+            into a single line, because that way all lines without a Source
+            would end up as a single reconciliation line, while unknowing users
+            are expected to post GL lines without Source numbers; to help these
+            users, we present lines from non-payment (GL) transactions as
+            individual lines
          */
 
         -- step 1: identify lines to be added somehow
@@ -478,19 +512,17 @@ $$
            select payment_id, array_agg(ac.entry_id) as entries,
                   sum(case when t_recon_fx then amount_tc
                            else amount_bc end) as our_balance,
-                  payment_date
+                  payment_date, source
              from payment_links pl
              join acc_trans ac on pl.entry_id = ac.entry_id
              join payment p on p.id = pl.payment_id
             where ac.chart_id = t_chart_id
                   and pl.entry_id in (select entry_id from lines_to_be_added)
-           group by payment_id, payment_date
+           group by payment_id, payment_date, source
         loop
-           insert into cr_report_line (report_id, their_balance,
+            insert into cr_report_line (report_id, scn, their_balance,
                                        our_balance, post_date, "user")
-              values (in_report_id, 0, t_row.our_balance, t_row.payment_date,
-                      (select entity_id from users
-                        where username = CURRENT_USER))
+            values (in_report_id, t_row.source, 0, t_row.our_balance, t_row.payment_date, t_uid)
            returning id into t_report_line_id;
 
            update lines_to_be_added
@@ -527,8 +559,7 @@ $$
 
         -- step 4: add new lines not part of payments
         for t_row in
-           select source, case when source is null then entry_id
-                               else null end, array_agg(entry_id) as entries,
+           select source, array_agg(entry_id) as entries,
                   sum(case when t_recon_fx then amount_tc
                            else amount_bc end) as our_balance,
                   transdate
@@ -541,10 +572,8 @@ $$
         loop
            insert into cr_report_line (report_id, scn, their_balance,
                                       our_balance, post_date, "user")
-              values (in_report_id, t_row.source, 0,
-                      t_row.our_balance, t_row.transdate,
-                      (select entity_id from users
-                        where username = CURRENT_USER))
+            values (in_report_id, t_row.source, 0,
+                      t_row.our_balance, t_row.transdate, t_uid)
            returning id into t_report_line_id;
 
            update lines_to_be_added
@@ -685,9 +714,11 @@ account.  For asset and expense accounts this is the debit balance, for others
 this is the credit balance.$$;
 
 CREATE OR REPLACE VIEW recon_payee AS
- SELECT n.name AS payee, rr.id, rr.report_id, rr.scn, rr.their_balance, rr.our_balance, rr.errorcode, rr."user", rr.clear_time, rr.insert_time, rr.trans_type, rr.post_date, rr.ledger_id, ac.voucher_id, rr.overlook, rr.cleared
+ SELECT DISTINCT ON (rr.id)
+   n.name AS payee, rr.id, rr.report_id, rr.scn, rr.their_balance, rr.our_balance, rr.errorcode, rr."user", rr.clear_time, rr.insert_time, rr.trans_type, rr.post_date, rr.ledger_id, ac.voucher_id, rr.overlook, rr.cleared
    FROM cr_report_line rr
-   LEFT JOIN acc_trans ac ON rr.ledger_id = ac.entry_id
+   LEFT JOIN cr_report_line_links rll ON rr.id = rll.report_line_id
+   LEFT JOIN acc_trans ac ON rll.entry_id = ac.entry_id
    LEFT JOIN gl ON ac.trans_id = gl.id
    LEFT JOIN (( SELECT ap.id, e.name
    FROM ap
