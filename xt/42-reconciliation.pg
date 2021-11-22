@@ -99,7 +99,7 @@ BEGIN;
                       JOIN cr_report_line_links rll on ac.entry_id = rll.entry_id
                       JOIN cr_report_line rl ON rll.report_line_id = rl.id
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',Array[12],'Correct number of transactions 1');
+    SELECT results_eq('test',Array[11],'Correct number of transactions 1');
     DEALLOCATE test;
 
     PREPARE test AS SELECT count(*)::int
@@ -140,7 +140,9 @@ BEGIN;
     SELECT results_eq('test',ARRAY[2],'1 Transactions closed');
     DEALLOCATE test;
 
-    -- all items on account -11112 are part of the same payment
+    -- all items on account -11112 are part of the same payment AR payment,
+    --   except a few GL items, some of which have the same source and transdate == payment_date
+    --   and a few others which have the same source but transdate != payment_date
     PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11112'), 100, now()::date, false) > 0;
     SELECT results_eq('test',ARRAY[true],'1 Create Recon Report');
     DEALLOCATE test;
@@ -149,37 +151,37 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'1 Pending Transactions Ran');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT count(*)::int
-                      FROM cr_report_line
+    PREPARE test AS SELECT count(distinct ac.trans_id)::int
+                      FROM acc_trans ac
+                      JOIN cr_report_line_links rll on ac.entry_id = rll.entry_id
+                      JOIN cr_report_line rl ON rll.report_line_id = rl.id
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    -- 1 payment
-    SELECT results_eq('test',ARRAY[1],'Correct number of transactions 2');
+    SELECT results_eq('test',ARRAY[11],'Correct number of transactions 2');
     DEALLOCATE test;
+
+
+    update gl set approved = true where id = -214;
+    update acc_trans set approved = true
+     where trans_id = -214
+           and chart_id = test_get_account_id('-11112');
 
     PREPARE test AS SELECT reconciliation__pending_transactions(currval('cr_report_id_seq')::int, 110);
     SELECT results_eq('test',$$ SELECT id+3 FROM test_parameters $$,'1 Pending Transactions Ran');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT count(*)::int
-                      FROM cr_report_line
+    PREPARE test AS SELECT count(distinct ac.trans_id)::int
+                      FROM acc_trans ac
+                      JOIN cr_report_line_links rll on ac.entry_id = rll.entry_id
+                      JOIN cr_report_line rl ON rll.report_line_id = rl.id
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    -- 1 payment
-    SELECT results_eq('test',ARRAY[1],'Correct number of transactions 3');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*)::int
-                      FROM cr_report_line
-                      WHERE scn like '% gl %'
-                      AND report_id = currval('cr_report_id_seq')::int;
-    -- part of a payment means source doesn't matter in the gl lines
-    SELECT results_eq('test',ARRAY[0],'1 Correct number of GL groups');
+    SELECT results_eq('test',ARRAY[12],'Correct number of transactions 3');
     DEALLOCATE test;
 
     PREPARE test AS SELECT count(*)::int
                       FROM cr_report_line
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    -- 1 payment
-    SELECT results_eq('test',ARRAY[1],'1 Correct number of report lines');
+    -- 1 payment, with GL adjustment and two GL lines with the same source (but different date) == 2
+    SELECT results_eq('test',ARRAY[2],'1 Correct number of report lines');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__submit_set(currval('cr_report_id_seq')::int, '{}');
@@ -199,7 +201,7 @@ BEGIN;
                       JOIN account ON (acc_trans.chart_id = account.id)
                       WHERE accno = '-11112'
                       AND NOT cleared;
-    SELECT results_eq('test',ARRAY[14],'1 Transactions open');
+    SELECT results_eq('test',ARRAY[13],'1 Transactions open');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11112')) = -10;
@@ -214,11 +216,20 @@ BEGIN;
     SELECT results_eq('test',$$ SELECT id+4 FROM test_parameters $$,'1 Pending Transactions Ran');
     DEALLOCATE test;
 
+    -- 1 payment, with GL adjustment and two GL lines with the same source (but different date) == 2
     PREPARE test AS SELECT count(*)::int
                       FROM cr_report_line
                       WHERE report_id = currval('cr_report_id_seq')::int;
+    SELECT results_eq('test',ARRAY[2],'Correct number of report lines 4');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(distinct ac.trans_id)::int
+                      FROM acc_trans ac
+                      JOIN cr_report_line_links rll on ac.entry_id = rll.entry_id
+                      JOIN cr_report_line rl ON rll.report_line_id = rl.id
+                      WHERE report_id = currval('cr_report_id_seq')::int;
     -- 1 payment
-    SELECT results_eq('test',ARRAY[1],'Correct number of transactions 4');
+    SELECT results_eq('test',ARRAY[12],'Correct number of transactions 4');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__submit_set(currval('cr_report_id_seq')::int, (select as_array(id::int)
@@ -250,7 +261,7 @@ BEGIN;
                       JOIN account a ON (acc_trans.chart_id = a.id)
                       WHERE accno = '-11112'
                       AND NOT cleared;
-    SELECT results_eq('test',ARRAY[2],'Transactions closed');
+    SELECT results_eq('test',ARRAY[1],'Transactions closed');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11112'));
