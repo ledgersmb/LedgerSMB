@@ -256,7 +256,7 @@ CREATE OR REPLACE FUNCTION reconciliation__add_entry(
                                 in_type)
                         RETURNING id INTO lid;
                 ELSIF in_count = 1 THEN
-                        SELECT id INTO lid
+                        SELECT id INTO lid FROM cr_report_line
                         WHERE t_scn = scn AND report_id = in_report_id
                                 AND their_balance = 0 AND post_date = in_date;
                         UPDATE cr_report_line
@@ -326,7 +326,7 @@ CREATE OR REPLACE FUNCTION reconciliation__add_entry(
                         in_type)
                         RETURNING id INTO lid;
                 ELSIF in_count = 1 THEN -- perfect match
-                        SELECT id INTO lid
+                        SELECT id INTO lid FROM cr_report_line
                         WHERE report_id = in_report_id
                                 AND our_balance = t_amount
                                 AND their_balance = 0
