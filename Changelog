@@ -3,6 +3,14 @@
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.4
+* Fix balance sheet printing template listing account descriptions (#6203)
+* Fix reconciliations to include Source value from transactions (#6122)
+* Fix error thrown from CSV export function (#6140)
+* Fix reporting of login problems due to e.g. version mismatch (#5976)
+* Fix 'import' of username on HR > Employee menu | User tab (#5287)
+
+
 Changelog for 1.9.3
 * Sort the buttons on the e-mail entry screen
 * Fix issues with the PDF output for PNL and Balance sheet reports
