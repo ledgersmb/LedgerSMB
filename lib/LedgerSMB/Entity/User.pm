@@ -141,6 +141,17 @@ sub create {
     return;
 }
 
+=item delete
+
+Deletes the user.
+
+=cut
+
+sub delete {
+    my ($self) = @_;
+    $self->call_dbmethod(funcname => 'admin__delete_user');
+}
+
 =item save_roles($role_list)
 
 Saves (grants) roles requested.

@@ -916,6 +916,28 @@ sub create_user {
     return get($request);
 }
 
+=item delete_user
+
+This removes the user from the company.
+
+=cut
+
+sub delete_user {
+    my ($request) = @_;
+    $request->{target_div} = 'user_div';
+    if ($request->close_form){
+       my $user = LedgerSMB::Entity::User->new(%$request);
+       delete $request->{pls_import}; ## remove after user-object instantiation
+       try {
+           $user->delete;
+       }
+       catch ($err) {
+           $request->{dbh}->rollback;
+       }
+    }
+    return get($request);
+}
+
 =item reset_password
 
 This resets the user's password

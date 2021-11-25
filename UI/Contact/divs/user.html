@@ -32,7 +32,14 @@
                             name  = 'username'
                             type  = 'hidden'
                             value = user.username
-                    } %]
+                    };
+                    PROCESS button element_data  = {
+                         text = text('Delete User') #'
+                         name = 'action'
+                         type = 'submit'
+                        class = 'submit'
+                        value = 'delete_user'
+                }; %]
                 </td>
             </tr>
 
