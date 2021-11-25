@@ -895,11 +895,12 @@ This turns the employee into a user.
 sub create_user {
     my ($request) = @_;
     $request->{target_div} = 'user_div';
-    delete $request->{pls_import};
     if ($request->close_form){
        $request->{password} = $request->{reset_password};
        my $user = LedgerSMB::Entity::User->new(%$request);
        my $return_with_import;
+
+       delete $request->{pls_import}; ## remove after user-object instantiation
        try {
            $user->create($request->{reset_password});
        }
