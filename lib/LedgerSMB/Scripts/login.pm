@@ -79,10 +79,10 @@ sub authenticate {
         return LedgerSMB::PSGI::Util::unauthorized();
     }
     $r->{company} ||= LedgerSMB::Sysconfig::default_db();
-    if ($request->{_create_session}->($r->{login},
+    if (my $r = $request->{_create_session}->($r->{login},
                                       $r->{password},
                                       $r->{company})) {
-        return LedgerSMB::PSGI::Util::unauthorized();
+        return $r;
     }
 
     return [ HTTP_OK,
