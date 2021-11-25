@@ -1,4 +1,8 @@
 [%- BLOCK escape;
+value = VALUE.to_output();
+IF value.defined();
+  VALUE = value;
+END;
 
 IF VALUE.match('[^0-9.+-]'); # any non-digit means run escaping
    '"' _ VALUE.replace('"', '""') _ '"';
