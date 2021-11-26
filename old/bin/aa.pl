@@ -777,8 +777,9 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 
         $form->hide_form(
             "${item}_rate",      "${item}_description",
-            "${item}_taxnumber", "select$form->{ARAP}_tax_$item"
-        );
+            "${item}_taxnumber", "select$form->{ARAP}_tax_$item",
+            "taxsource_$item"
+            );
     }
 
     my $formatted_invtotal =

@@ -1188,16 +1188,17 @@ sub post_invoice {
                 $query = qq|
                     INSERT INTO acc_trans
                            (trans_id, chart_id, amount_bc, curr, amount_tc,
-                                transdate, approved)
+                                transdate, approved, source)
                     VALUES (?, (SELECT id FROM account
                                  WHERE accno = ?),
-                      ?, ?, ?, ?, ?)|;
+                      ?, ?, ?, ?, ?, ?)|;
 
                 $sth = $dbh->prepare($query)
                     || $form->dberror($dbh->errstr);
                 $sth->execute( $trans_id, $accno,
                                $amount, $form->{defaultcurrency}, $amount,
-                               $form->{transdate}, $approved )
+                               $form->{transdate}, $approved,
+                               $form->{acc_trans}{$trans_id}{$accno}{source} )
                   || $form->dberror($query);
             }
         }
