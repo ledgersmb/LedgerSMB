@@ -90,7 +90,7 @@ define([
             /* eslint no-cond-assign: 0 */
             on(
                 this.domNode,
-                "keypress",
+                "keyup",
                 lang.hitch(this, function (e) {
                     let value = domAttr.get(e.target, "value");
 
