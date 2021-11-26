@@ -351,7 +351,7 @@ sub create_links {
     }
     delete $form->{selectcurrency};
     #$form->generate_selects(\%myconfig);
-    $form->{$form->{ARAP}} = $form->{"$form->{ARAP}_1"} unless $form->{$form->{ARAP}};
+    $form->{$form->{ARAP}} = $form->{"$form->{ARAP}_1"} unless $form->{$form->{ARAP}} and $form->{action} eq 'update';
 
 }
 
