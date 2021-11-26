@@ -1248,13 +1248,16 @@ sub update {
         $form->{"calctax_$_"} = 1 if !$form->{invtotal};
     }
 
-    my $tax_base = $form->{invtotal};
-    foreach my $item ( split / /, $form->{taxaccounts} ) {
-        if($form->{"calctax_$item"} && $is_update){
-            $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
+    my @taxaccounts = Tax::init_taxes($form, $form->{taxaccounts});
+    my $tax = Tax::calculate_taxes( \@taxaccounts, $form, $form->{invtotal}, 0 );
+    for (@taxaccounts) {
+        if ($form->{'calctax_' . $_->account} && $is_update) {
+            $form->{'tax_' . $_->account} = $_->value;
         }
-        $form->{invtotal} += $form->{"tax_$item"};
+        $form->{invtotal} += $_->value;
     }
+
+
 
     my $j = 1;
     my $totalpaid = LedgerSMB::PGNumber->bzero();
