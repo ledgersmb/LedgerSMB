@@ -49,7 +49,9 @@ sub init_taxes {
     my @taxes = ();
     do { $_ = '' unless defined $_ } for ($taxaccounts, $taxaccounts2);
     my @accounts = split / /, $taxaccounts;
-    if ( defined $taxaccounts2 ) {
+
+    $logger->debug('Initializing taxes');
+    if ( $taxaccounts2 ) {
         #my @tmpaccounts = @accounts;#unused var
         @accounts=(); # empty @accounts
         for my $acct ( split / /, $taxaccounts2 ) {
@@ -61,6 +63,7 @@ sub init_taxes {
     else{
      $logger->trace('taxaccounts2 undefined');
     }
+    $logger->debug(scalar(@accounts) . ' tax accounts configured');
     my $query = q{
         SELECT t.taxnumber, c.description,
             t.rate, t.chart_id, t.pass, m.taxmodulename, t.minvalue
@@ -76,7 +79,7 @@ sub init_taxes {
     my $sth = $dbh->prepare($query);
     foreach my $taxaccount (@accounts) {
         next if ( !defined $taxaccount );
-        if ( defined $taxaccounts2 ) {
+        if ( $taxaccounts2 ) {
             next if $taxaccounts2 !~ /\b$taxaccount\b/;
         }
         $form->{transdate} = undef unless $form->{transdate};

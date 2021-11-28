@@ -1445,20 +1445,27 @@ sub get_name {
     my $query = qq/
         SELECT c.*, coalesce(ecl.address, el.address) as address,
                        coalesce(ecl.city, el.city) as city,
+                       coalesce(ecl.zipcode, el.zipcode) as zipcode,
+                       coalesce(ecl.state, el.state) as state,
+                       coalesce(ecl.country, el.country) as country,
                        e.name, e.control_code,
                        ctf.default_reportable
                   FROM entity_credit_account c
           JOIN entity e ON (c.entity_id = e.id)
              LEFT JOIN (SELECT coalesce(line_one, '')
                                || ' ' || coalesce(line_two, '') as address,
-                               l.city, etl.credit_id
+                               l.city, etl.credit_id, mail_code as zipcode,
+                               state, (select short_name from country
+                                        where id=l.country_id) as country
                           FROM eca_to_location etl
                           JOIN location l ON etl.location_id = l.id
                           WHERE etl.location_class = 1) ecl
                         ON (c.id = ecl.credit_id)
              LEFT JOIN (SELECT coalesce(line_one, '')
                                || ' ' || coalesce(line_two, '') as address,
-                               l.city, etl.entity_id
+                               l.city, etl.entity_id, mail_code as zipcode,
+                               state, (select short_name from country
+                                        where id=l.country_id) as country
                           FROM entity_to_location etl
                           JOIN location l ON etl.location_id = l.id
                           WHERE etl.location_class = 1) el

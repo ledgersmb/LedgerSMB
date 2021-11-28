@@ -508,7 +508,8 @@ $form->open_status_div($status_div_id) . qq|
     $form->hide_form(
         qw(batch_id approved id printed emailed sort
            oldtransdate audittrail recurring checktax reverse batch_id subtype
-           entity_control_code tax_id meta_number default_reportable address city)
+           entity_control_code tax_id meta_number default_reportable
+           address city zipcode state country)
     );
 
     if ( $form->{vc} eq 'customer' ) {
@@ -776,8 +777,9 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 
         $form->hide_form(
             "${item}_rate",      "${item}_description",
-            "${item}_taxnumber", "select$form->{ARAP}_tax_$item"
-        );
+            "${item}_taxnumber", "select$form->{ARAP}_tax_$item",
+            "taxsource_$item"
+            );
     }
 
     my $formatted_invtotal =
@@ -1247,13 +1249,16 @@ sub update {
         $form->{"calctax_$_"} = 1 if !$form->{invtotal};
     }
 
-    my $tax_base = $form->{invtotal};
-    foreach my $item ( split / /, $form->{taxaccounts} ) {
-        if($form->{"calctax_$item"} && $is_update){
-            $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
+    my @taxaccounts = Tax::init_taxes($form, $form->{taxaccounts});
+    my $tax = Tax::calculate_taxes( \@taxaccounts, $form, $form->{invtotal}, 0 );
+    for (@taxaccounts) {
+        if ($form->{'calctax_' . $_->account} && $is_update) {
+            $form->{'tax_' . $_->account} = $_->value;
         }
-        $form->{invtotal} += $form->{"tax_$item"};
+        $form->{invtotal} += $_->value;
     }
+
+
 
     my $j = 1;
     my $totalpaid = LedgerSMB::PGNumber->bzero();

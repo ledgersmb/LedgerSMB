@@ -383,8 +383,8 @@ sub form_header {
     $form->hide_form(
         qw(id title vc type terms creditlimit creditremaining
            shipped oldtransdate recurring reverse batch_id subtype form_id
-           separate_duties nextsub default_reportable address city is_return
-           cash_accno)
+           separate_duties nextsub default_reportable address city zipcode
+           state country is_return cash_accno)
     );
 
     print qq|

@@ -570,7 +570,7 @@ sub form_header {
     if ($form->{notice}){
          print qq|$form->{notice}<br/>|;
     }
-    $form->hide_form(qw(entity_control_code meta_number tax_id address city));
+    $form->hide_form(qw(entity_control_code meta_number tax_id address city zipcode state country));
     $form->hide_form(
         qw(id type printed emailed vc title discount creditlimit creditremaining tradediscount business recurring form_id nextsub
    lock_description)

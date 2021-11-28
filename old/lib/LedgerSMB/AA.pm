@@ -137,11 +137,12 @@ sub post_transaction {
 
             push @{ $form->{acc_trans}{taxes} },
               {
-                accno          => $accno,
-            amount_bc      => $tax{amount}{$accno},
-            amount_tc      => $tax{fxamount}{$accno},
-            curr           => $form->{currency},
-                project_id     => undef,
+                  accno          => $accno,
+                  source         => $form->{"taxsource_$accno"},
+                  amount_bc      => $tax{amount}{$accno},
+                  amount_tc      => $tax{fxamount}{$accno},
+                  curr           => $form->{currency},
+                  project_id     => undef,
               };
 
     }
@@ -452,15 +453,15 @@ sub post_transaction {
             $query = qq|
                 INSERT INTO acc_trans
                         (trans_id, chart_id, amount_bc, curr, amount_tc,
-                            transdate, approved)
+                            transdate, approved, source)
                      VALUES (?, (SELECT id FROM account
                               WHERE accno = ?),
-                        ?, ?, ?, ?, ?)|;
+                        ?, ?, ?, ?, ?, ?)|;
 
             @queryargs = (
                 $form->{id}, $ref->{accno}, $ref->{amount_bc} * $ml,
                 $form->{currency}, $ref->{amount_tc} * $ml,
-                $form->{transdate}, $form->{approved}
+                $form->{transdate}, $form->{approved}, $ref->{source}
             );
             $dbh->prepare($query)->execute(@queryargs)
               || $form->dberror($query);
@@ -619,7 +620,10 @@ sub get_name {
                           c.cash_account_id, ca.accno as cash_accno,
                           c.id as eca_id,
                           coalesce(ecl.address, el.address) as address,
-                          coalesce(ecl.city, el.city) as city
+                          coalesce(ecl.city, el.city) as city,
+                          coalesce(ecl.zipcode, el.zipcode) as zipcode,
+                          coalesce(ecl.state, el.state) as state,
+                          coalesce(ecl.country, el.country) as country
              FROM entity_credit_account c
              JOIN entity ON (entity.id = c.entity_id)
                 LEFT JOIN account ca ON c.cash_account_id = ca.id
@@ -629,14 +633,18 @@ sub get_name {
                 LEFT JOIN company co ON co.entity_id = c.entity_id
                 LEFT JOIN (SELECT coalesce(line_one, '')
                                || ' ' || coalesce(line_two, '') as address,
-                               l.city, etl.credit_id
+                               l.city, etl.credit_id, mail_code as zipcode,
+                               state, (select short_name from country
+                                        where id=l.country_id) as country
                           FROM eca_to_location etl
                           JOIN location l ON etl.location_id = l.id
                           WHERE etl.location_class = 1) ecl
                         ON (c.id = ecl.credit_id)
                 LEFT JOIN (SELECT coalesce(line_one, '')
                                || ' ' || coalesce(line_two, '') as address,
-                               l.city, etl.entity_id
+                               l.city, etl.entity_id, mail_code as zipcode,
+                               state, (select short_name from country
+                                        where id=l.country_id) as country
                           FROM entity_to_location etl
                           JOIN location l ON etl.location_id = l.id
                           WHERE etl.location_class = 1) el
