@@ -45,7 +45,7 @@ define([
             var self = this;
             this.inherited(arguments);
 
-            var mainDiv = registry.byId("maindiv");
+/*            var mainDiv = registry.byId("maindiv");
             if (mainDiv != null) {
                 if (window.location.hash) {
                     let h = hash();
@@ -68,7 +68,7 @@ define([
                         mainDiv.load_link(h);
                     }
                 });
-            }
+            }*/
 
             query("#loading").forEach(function (node) {
                 domStyle.set(node, "display", "none");

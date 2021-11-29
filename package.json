@@ -101,7 +101,7 @@
     "unused-webpack-plugin": "2.4.0",
     "vue": "^3.2.23",
     "vue-loader": "^16.8.3",
-    "vue-router": "^3.5.3",
+    "vue-router": "^4.0.12",
     "webpack": "5.64.4",
     "webpack-bundle-analyzer": "4.5.0",
     "webpack-cli": "4.9.1",
@@ -111,9 +111,11 @@
     "yargs": "17.3.0"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "content-disposition": "0.5.3",
     "dijit": "1.16.4",
-    "dojo": "1.16.4"
+    "dojo": "1.16.4",
+    "vue-axios": "^3.4.0"
   },
   "homepage": "http://ledgersmb.org/",
   "scripts": {
