@@ -228,7 +228,9 @@ if (TARGET !== 'readme') {
     };
 
     var pluginsProd = [
+        // Add Vue
         new VueLoaderPlugin(),
+
         // Clean UI/js before building
         new CleanWebpackPlugin(CleanWebpackPluginOptions),
 
@@ -273,6 +275,7 @@ if (TARGET !== 'readme') {
             filename: "ui-header.html",
             mode: prodMode ? "production" : "development",
             excludeChunks: [...Object.keys(lsmbCSS)],
+            chunksSortMode: 'manual',
             template: "lib/ui-header.html"
         }),
 
@@ -315,7 +318,12 @@ if (TARGET !== 'readme') {
     var pluginsDev = [
         ...pluginsProd,
 
-        new UnusedWebpackPlugin(UnusedWebpackPluginOptions)
+        new UnusedWebpackPlugin(UnusedWebpackPluginOptions),
+
+        new webpack.DefinePlugin({
+            "__VUE_OPTIONS_API__": true,
+            "__VUE_PROD_DEVTOOLS__": true
+        })
     ];
 
     var pluginsList = prodMode ? pluginsProd : pluginsDev;
@@ -371,9 +379,9 @@ if (TARGET !== 'readme') {
             main: {
                 filename: "lsmb/main.js",
                 import: "lsmb/main",
-                dependOn: 'shared'
+                dependOn: "dojo-shared"
             },
-            shared: [ ...includedRequires ],
+            "dojo-shared": [ ...includedRequires ],
             ...lsmbCSS
         },
 
@@ -393,8 +401,9 @@ if (TARGET !== 'readme') {
 
         resolve: {
             alias: {
-//                "vue$": "vue/dist/vue.esm.js"
-                "vue$": "vue/dist/vue.esm-bundler.js"
+                // "vue": "@vue/runtime-dom",
+                "vue$": "vue/dist/vue.esm-bundler.js",
+                "@": path.join(__dirname, "UI/js-src/lsmb")
             },
             extensions: [ ".js", ".vue" ],
             fallback: {

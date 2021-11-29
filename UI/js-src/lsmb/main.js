@@ -8,7 +8,7 @@ define([
     "dojo/query",
     "dijit/registry",
     "dojo/hash",
-    "dojo/topic",
+    // "dojo/topic",
     "dojo/dom-class",
     "dojo/dom-style"
 ], function (
@@ -19,7 +19,7 @@ define([
     query,
     registry,
     hash,
-    topic,
+    // topic,
     domClass,
     domStyle
 ) {
@@ -32,20 +32,20 @@ define([
             for (var i = 0; i < 25; i++) {
                 h += chars.charAt(Math.floor(Math.random() * chars.length));
             }
-            if (options.data && options.data instanceof FormData) {
+            // if (options.data && options.data instanceof FormData) {
                 registry.byId("maindiv")._load_form(url, options);
-            } else {
+            /*} else {
                 var q = { url: url, options: options };
                 this.history[h] = q;
                 sessionStorage[h] = JSON.stringify(q);
                 hash(h);
-            }
+            }*/
         },
         startup: function () {
-            var self = this;
+            // var self = this;
             this.inherited(arguments);
 
-/*            var mainDiv = registry.byId("maindiv");
+            /*            var mainDiv = registry.byId("maindiv");
             if (mainDiv != null) {
                 if (window.location.hash) {
                     let h = hash();
@@ -68,7 +68,7 @@ define([
                         mainDiv.load_link(h);
                     }
                 });
-            }*/
+            } */
 
             query("#loading").forEach(function (node) {
                 domStyle.set(node, "display", "none");
