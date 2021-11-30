@@ -4,7 +4,7 @@
        PROCESS "elements.html";
        PROCESS "dynatable.html"; %]
 <body id="setup-list-users" class="[% dojo_theme %]">
-    <div class="setupconsole" data-dojo-type="lsmb/main">
+    <div id="main"><div class="setupconsole" data-dojo-type="lsmb/main">
         <div class="listtop">[% text('Available Users') %]</div>
         [% INCLUDE dynatable
                     columns = [{col_id = 'name',
@@ -16,6 +16,6 @@
                                   id = 'user_list'
                               }
         %]
-    </div>
+    </div></div>
 </body>
 [% end_html %]

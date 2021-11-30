@@ -3,7 +3,7 @@
        include_stylesheet=["setup.css"] ;
     PROCESS "elements.html"
 %]<body id="setup-template-info" class="lsmb [% dojo_theme %]">
-<div class="setupconsole" data-dojo-type="lsmb/main">
+<div id="main"><div class="setupconsole" data-dojo-type="lsmb/main">
 <h2>[% text('Database Management Console') %]</h2>
 <form data-dojo-type="lsmb/SimpleForm" action="setup.pl" method="post">
 <div class="listtop">[% text('Select Templates to Load') %]</div>
@@ -29,6 +29,6 @@ PROCESS select element_data = {
       text = text('Load Templates') #'
 } %]
 </form>
-</div>
+</div></div>
 </body>
 [% end_html %]

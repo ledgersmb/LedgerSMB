@@ -4,7 +4,7 @@
        PROCESS 'dynatable.html' %]
 
 <body id="setup-migration_step" class="lsmb [% dojo_theme%]">
-  <div class="setupconsole" data-dojo-type="lsmb/main">
+  <div id="main"><div class="setupconsole" data-dojo-type="lsmb/main">
     <h1 style="font-weight: bold; margin-bottom: 1em; text-align: center">
         [% text('Database Management Console') %]
     </h1>
@@ -30,6 +30,6 @@
             }; END %]
     [% FOREACH button IN buttons; PROCESS button element_data=button; END %]
     </form>
-  </div>
+  </div></div>
 </body>
 [% end_html %]

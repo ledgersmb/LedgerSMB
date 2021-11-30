@@ -4,7 +4,7 @@
        %]
 [% PROCESS elements.html %]
 <body id="setup-operation-complete" class="lsmb [% dojo_theme %]">
-<div class="setupconsole" data-dojo-type="lsmb/main">
+<div id="main"><div class="setupconsole" data-dojo-type="lsmb/main">
 <h2>[% text('Database Management Console') %]</h2>
 [% INCLUDE 'setup/ui-db-credentials.html' %]
 <div class="listtop">[% text('Database Operation Complete') %]</div>
@@ -28,6 +28,6 @@
   </tbody>
 </table>
 [% END %]
-</div>
+</div></div>
 </body>
 [% end_html %]

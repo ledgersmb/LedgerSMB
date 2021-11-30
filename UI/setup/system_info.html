@@ -4,7 +4,7 @@
        %]
 [% PROCESS elements.html %]
 <body id="setup-system-info" class="lsmb [% dojo_theme %]">
-<div class="setupconsole" data-dojo-type="lsmb/main">
+<div id="main"><div class="setupconsole" data-dojo-type="lsmb/main">
 <h2>[% text('System Information') %]</h2>
 [% INCLUDE 'setup/ui-db-credentials.html' %]
 <p>[% text('LedgerSMB has detected the following system components'); %]</p>
@@ -43,6 +43,6 @@
 </table>
 
 
-</div>
+</div></div>
 </body>
 [% end_html %]

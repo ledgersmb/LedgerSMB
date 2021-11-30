@@ -4,11 +4,11 @@ include_stylesheet=["setup.css"]
        %]
 [% PROCESS elements.html %]
 <body id="setup-operation-complete-revert" class="lsmb [% dojo_theme %]">
-<div class="setupconsole" data-dojo-type="lsmb/main">
+<div id="main"><div class="setupconsole" data-dojo-type="lsmb/main">
 <h2>[% text('Database Management Console') %]</h2>
 <div class="listtop">[% text('Database Operation Complete') %]</div>
 <p>[% text('This database operation has completed successfully.'); %]</p>
 <p><a href="setup.pl">[% text('Return to setup') %]</a></p>
-</div>
+</div></div>
 </body>
 [% end_html %]

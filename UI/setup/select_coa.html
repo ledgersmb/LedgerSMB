@@ -5,7 +5,7 @@ include_stylesheet=["setup.css"] %]
 <body id="setup-select-coa" class="lsmb [% dojo_theme %]">
 <div class="setupconsole" data-dojo-type="lsmb/main">
 <h2>[% text('Database Management Console') %]</h2>
-<div class="listtop">[% title %]</div>
+<div id="main"><div class="listtop">[% title %]</div>
 <form data-dojo-type="lsmb/SimpleForm" action="setup.pl" method="POST" name="credentials">
   <div id="sep" class="listheading">
     Pre-defined Chart-of-Accounts selection
@@ -102,6 +102,6 @@ END %]
 } %]
 </div>
 </form>
-</div>
+</div></div>
 </body>
 [% end_html %]

@@ -4,7 +4,7 @@ include_stylesheet=["setup.css"];
        PROCESS "elements.html";
        PROCESS "dynatable.html"; %]
 <body id="setup-edit-user" class="[% dojo_theme %]">
- <div class="setupconsole" data-dojo-type="lsmb/main">
+ <div id="main"><div class="setupconsole" data-dojo-type="lsmb/main">
         <div class="listtop">
             [%
                IF request.pls_import;
@@ -154,6 +154,6 @@ include_stylesheet=["setup.css"];
             </table></div>
         </form>
 [% END %]
-</div>
+</div></div>
 </body>
 [% end_html %]

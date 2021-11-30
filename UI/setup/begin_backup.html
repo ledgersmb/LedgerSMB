@@ -3,7 +3,7 @@ stylesheet="ledgersmb.css"
 include_stylesheet=["setup.css"] %]
 [% PROCESS elements.html %]
 <body id="setup-begin-backup" class="lsmb [% dojo_theme %]">
-<div class="setupconsole" data-dojo-type="lsmb/main">
+<div id="main"><div class="setupconsole" data-dojo-type="lsmb/main">
 <h2>[% text('Database Management Console') %]</h2>
 <div class="listtop">[% text('Where shall we send the backup?') %]</div>
 [% # notice, message, and operation are all localized. %]
@@ -71,6 +71,6 @@ disabled = "disabled"
 } %]
 </div>
 </form>
-</div>
+</div></div>
 </body>
 [% end_html %]

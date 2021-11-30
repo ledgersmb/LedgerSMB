@@ -4,13 +4,13 @@
        %]
 [% PROCESS elements.html %]
 <body id="setup-system-info" class="lsmb [% dojo_theme %]">
-<div class="setupconsole" data-dojo-type="lsmb/main">
+<div id="main"><div class="setupconsole" data-dojo-type="lsmb/main">
 <h2>[% text('Database Server version Mismatch') %]</h2>
 [% INCLUDE 'setup/ui-db-credentials.html' %]
 <p style="background:red;color:yellow;font-weight:bold">[%
   text('Your database server version ([_1]) is incompatible with this LedgerSMB version, which requires [_2]', found, required);
   %]</p>
 
-</div>
+</div></div>
 </body>
 [% end_html %]
