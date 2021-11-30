@@ -60,7 +60,7 @@ define([
                         }
                     }
                 }
-                topic.subscribe("/dojo/hashchange", function (h) {
+ /*               topic.subscribe("/dojo/hashchange", function (h) {
                     if (h in self.history) {
                         var hist = self.history[h];
                         mainDiv._load_form(hist.url, hist.options);

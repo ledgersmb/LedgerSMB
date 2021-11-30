@@ -3,6 +3,7 @@
 import { createApp } from "vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 
+const registry   = require("dijit/registry");
 const dojoParser = require("dojo/parser");
 const dojoDOM    = require("dojo/dom");
 
@@ -11,7 +12,8 @@ import ServerUI from './ServerUI';
 
 const routes = [
     { name: "home", path: "/", component: Home },
-    { name: "default", path: "/:pathMatch(.*)", component: ServerUI }
+    { name: "default", path: "/:pathMatch(.*)", component: ServerUI,
+      props: route => ({ uiURL: route.fullPath }) }
 ];
 
 const router = createRouter({
@@ -21,9 +23,14 @@ const router = createRouter({
 
 
 export const app = createApp({
+    components: [
+        Home, ServerUI
+    ],
     mounted() {
         let m = dojoDOM.byId("main");
         dojoParser.parse(m);
+        registry.byId("top_menu").load_link =
+            url => this.$router.push(url);
     }
 }).use(router)
    .mount('#main');

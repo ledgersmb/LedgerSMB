@@ -73,6 +73,7 @@ define([
         model: model,
         showRoot: false,
         openOnClick: true,
+        load_link: null,
         postCreate: function () {
             this.inherited(arguments);
 
@@ -148,8 +149,9 @@ define([
                 // function).
                 url += "#" + Date.now();
 
-                var mainDiv = registry.byId("maindiv");
-                mainDiv.load_link(url);
+                if (this.load_link) {
+                    this.load_link(url);
+                }
             }
         },
         __onClick: function (e) {
