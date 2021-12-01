@@ -154,11 +154,11 @@ $$
              1
          ELSE
              (SELECT coalesce(rate, 'NaN'::numeric) AS rate
-                FROM exchangerate_default
-               WHERE rate_type = 1
-                 AND current_date BETWEEN valid_from AND valid_to
-                 AND curr = (SELECT curr FROM entity_credit_account
-                              WHERE id = in_eca))
+                FROM exchangerate__get(
+                      (SELECT curr FROM entity_credit_account
+                      WHERE id = in_eca),
+                      1,
+                      current_date))
          END AS used_tc
    FROM (
      SELECT sum(ac.amount_bc *
