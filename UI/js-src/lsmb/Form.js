@@ -52,7 +52,7 @@ define([
                     "&" +
                     qobj;
                 url = url + "?" + qobj + "#" + c.toString(16);
-                registry.byId("maindiv").load_link(url); // add GET forms to the back button history
+                window.__lsmbLoadLink(url); // add GET forms to the back button history
             } else {
                 options.method = method;
                 if (this.domNode.enctype === "multipart/form-data") {
@@ -74,7 +74,7 @@ define([
                         "&" +
                         domform.toQuery(this.domNode);
                 }
-                registry.byId("maindiv").load_form(url, options);
+                window.__lsmbSubmitForm({url, options});
             }
         }
     });

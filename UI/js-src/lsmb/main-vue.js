@@ -31,6 +31,8 @@ export const app = createApp({
         dojoParser.parse(m);
         registry.byId("top_menu").load_link =
             url => this.$router.push(url);
+        window.__lsmbLoadLink =
+            url => this.$router.push(url);
     }
 }).use(router)
    .mount('#main');
