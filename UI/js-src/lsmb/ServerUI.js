@@ -12,6 +12,17 @@ const mouse    = require("dojo/mouse");
 const event    = require("dojo/_base/event");
 const query    = require("dojo/query");
 
+
+function domReject(request) {
+    return (
+        request.getResponseHeader("X-LedgerSMB-App-Content") !== "yes" ||
+            (request.getResponseHeader("Content-Disposition") || "").startsWith(
+                "attachment"
+            )
+    );
+};
+
+
 export default {
     data() {
         return {
@@ -37,7 +48,7 @@ export default {
                 req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
                 req.addEventListener("load", () => {
                     if (req.status >= 400) {
-                        ; // throw an error?!
+                        this._report_error(req);
                     } else {
                         this.content = req.response;
                     }
@@ -45,8 +56,28 @@ export default {
                 req.send(options.data || "");
             }
             catch (e) {
-                console.log(e);
+                this._report_error(e);
             }
+        },
+        _report_error(errOrReq) {
+            let errstr;
+            if (errOrReq instanceof Error) {
+                errstr = "JavaScript error: " + errOrReq.toString();
+            } else if (errOrReq instanceof XMLHttpRequest) {
+                if (errOrReq.status === 0) {
+                    errstr = "Could not connect to server";
+                } else if (domReject(errOrReq)) {
+                    errstr = "Server returned insecure response";
+                } else {
+                    errstr = errOrReq.response;
+                }
+            } else {
+                errstr = "Unknown (JavaScript) error";
+            }
+
+            let d = registry.byId("errorDialog");
+            d.set("content", errstr);
+            d.show();
         },
         _interceptClick(dnode) {
             var self = this;
