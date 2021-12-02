@@ -119,8 +119,13 @@ export default {
         array.forEach(widgets, w => w.destroyRecursive ? w.destroyRecursive(true) : w.destroy());
     },
     updated() {
-        return parser.parse(dojoDOM.byId("maindiv"))
-            .then(() => query("a", dojoDOM.byId("maindiv")).forEach(node => this._interceptClick(node)));
+//        this.$nextTick(function () {
+            parser.parse(dojoDOM.byId("maindiv"))
+                .then((children) => {
+                    array.forEach(children, child => child.resize());
+                    query("a", dojoDOM.byId("maindiv")).forEach(node => this._interceptClick(node));
+                });
+//        });
     },
     render() {
         return h("div", { innerHTML: this.content });
