@@ -94,6 +94,11 @@ sub content_test {
                     return 0;
                 }
             },
+            'elem-unknown' => sub {
+                my $param = shift;
+                return 1 if $param->{tag} =~ /.+-.+/;
+                return 0;
+            },
             'text-use-entity' => sub {
                 # As per W3C guidance, prefer characters in their normal form
                 # rather than requiring named or numeric character references.
