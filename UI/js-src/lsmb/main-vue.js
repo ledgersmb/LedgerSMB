@@ -35,14 +35,16 @@ export const app = createApp({
         this.$nextTick(() => {
             dojoParser
                 .parse(m)
-                .then(() => domClass.add(document.body, "done-parsing"));
+                .then(() => {
+                    domClass.add(document.body, "done-parsing");
+                    let r = registry.byId("top_menu");
+                    if (r) {
+                        // Setup doesn't have top_menu
+                        r.load_link = (url) => this.$router.push(url);
+                    }
+                });
         });
         window.__lsmbLoadLink = (url) => this.$router.push(url);
-        let r = registry.byId("top_menu");
-        if (r) {
-            // Setup doesn't have top_menu
-            r.load_link = (url) => this.$router.push(url);
-        }
     },
     beforeUpdate() {
         domClass.remove(document.body, "done-parsing");

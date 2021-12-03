@@ -101,10 +101,9 @@ export default {
     beforeRouteUpdate() {},
     beforeRouteLeave() {},
     mounted() {
-        let self = this;
         this.$nextTick(() => this.updateContent(this.uiURL));
         window.__lsmbSubmitForm = (req) =>
-            self.updateContent(req.url, req.options);
+            this.updateContent(req.url, req.options);
     },
     beforeUpdate() {
         try {
@@ -134,9 +133,6 @@ export default {
     },
     render() {
         let body = this.content.match(/<body[^>]*>([\s\S]*)(<\/body>)?/i);
-        return h("div", {
-            id: "maindiv",
-            innerHTML: body ? body[1] : this.content
-        });
+        return h("div", { innerHTML: body ? body[1] : this.content });
     }
 };

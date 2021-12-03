@@ -66,7 +66,7 @@ sub _build_content {
 
     $self->_wait_for_valid_content;
 
-    my @found = $self->find_all('./*'); # find any immediate child
+    my @found = $self->find_all('./div/*'); # find any immediate child
     die "#maindiv is expected to have exactly one child node, found " . scalar(@found) .
         '(' . join(',',map {ref $_} @found) . ')'
         unless scalar(@found) == 1;
