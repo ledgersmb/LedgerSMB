@@ -1,10 +1,11 @@
 [% INCLUDE "ui-header.html"
+dojoAutoLoad=1
                stylesheet="ledgersmb.css"
                include_stylesheet=["setup.css"];
        PROCESS "elements.html";
        PROCESS "dynatable.html"; %]
 <body id="setup-list-users" class="[% dojo_theme %]">
-    <div id="main"><div class="setupconsole" data-dojo-type="lsmb/main">
+    <div><div class="setupconsole" data-dojo-type="lsmb/main">
         <div class="listtop">[% text('Available Users') %]</div>
         [% INCLUDE dynatable
                     columns = [{col_id = 'name',

@@ -1,11 +1,12 @@
 [% INCLUDE "ui-header.html"
+dojoAutoLoad=1
 stylesheet="ledgersmb.css"
 include_stylesheet=["setup.css"] %]
 [% PROCESS elements.html %]
 <body id="setup-select-coa" class="lsmb [% dojo_theme %]">
 <div class="setupconsole" data-dojo-type="lsmb/main">
 <h2>[% text('Database Management Console') %]</h2>
-<div id="main"><div class="listtop">[% title %]</div>
+<div><div class="listtop">[% title %]</div>
 <form data-dojo-type="lsmb/SimpleForm" action="setup.pl" method="POST" name="credentials">
   <div id="sep" class="listheading">
     Pre-defined Chart-of-Accounts selection

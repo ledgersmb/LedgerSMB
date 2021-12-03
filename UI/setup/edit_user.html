@@ -1,10 +1,11 @@
 [% INCLUDE "ui-header.html"
+dojoAutoLoad=1
 stylesheet="ledgersmb.css"
 include_stylesheet=["setup.css"];
        PROCESS "elements.html";
        PROCESS "dynatable.html"; %]
 <body id="setup-edit-user" class="[% dojo_theme %]">
- <div id="main"><div class="setupconsole" data-dojo-type="lsmb/main">
+ <div><div class="setupconsole" data-dojo-type="lsmb/main">
         <div class="listtop">
             [%
                IF request.pls_import;

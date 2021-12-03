@@ -1,9 +1,10 @@
 [% INCLUDE "ui-header.html"
+dojoAutoLoad=1
 stylesheet="ledgersmb.css"
 include_stylesheet=["setup.css"] %]
 [% PROCESS elements.html %]
 <body id="setup-confirm-operation" class="lsmb [% dojo_theme %]">
-<div id="main"><div class="setupconsole" data-dojo-type="lsmb/main">
+<div><div class="setupconsole" data-dojo-type="lsmb/main">
 <h2>[% text('Database Management Console') %]</h2>
 [% # notice, message, and operation are all localized. %]
 [% INCLUDE 'setup/ui-db-credentials.html' %]
