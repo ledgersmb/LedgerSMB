@@ -73,7 +73,7 @@ define([
                         "&" +
                         domform.toQuery(this.domNode);
                 }
-                window.__lsmbSubmitForm({url, options});
+                window.__lsmbSubmitForm({ url, options });
             }
         }
     });
