@@ -11,6 +11,7 @@ const on       = require("dojo/on");
 const mouse    = require("dojo/mouse");
 const event    = require("dojo/_base/event");
 const query    = require("dojo/query");
+const domClass = require("dojo/dom-class");
 
 
 function domReject(request) {
@@ -53,6 +54,8 @@ export default {
                         this.content = req.response;
                     }
                 });
+                let div = dojoDOM.byId("maindiv");
+                if (div) { domClass.remove(div,"done-parsing"); }
                 req.send(options.data || "");
             }
             catch (e) {
@@ -115,19 +118,23 @@ export default {
             req => self.updateContent(req.url, req.options);
     },
     beforeUpdate() {
-        let widgets = registry.findWidgets(dojoDOM.byId("maindiv"));
-        array.forEach(widgets, w => w.destroyRecursive ? w.destroyRecursive(true) : w.destroy());
+        try {
+            let widgets = registry.findWidgets(dojoDOM.byId("maindiv"));
+            array.forEach(widgets, w => w.destroyRecursive ? w.destroyRecursive(true) : w.destroy());
+        }
+        catch (e) { }
     },
     updated() {
-//        this.$nextTick(function () {
-            parser.parse(dojoDOM.byId("maindiv"))
-                .then((children) => {
-                    array.forEach(children, child => child.resize());
-                    query("a", dojoDOM.byId("maindiv")).forEach(node => this._interceptClick(node));
-                });
-//        });
+        if (! dojoDOM.byId("maindiv")) return;
+        parser.parse(dojoDOM.byId("maindiv"))
+            .then((children) => {
+                array.forEach(children, child => { if (child.resize) { child.resize(); }});
+                query("a", dojoDOM.byId("maindiv")).forEach(node => this._interceptClick(node));
+                domClass.add(dojoDOM.byId("maindiv"), "done-parsing");
+            });
     },
     render() {
-        return h("div", { innerHTML: this.content });
+        let body = this.content.match(/<body[^>]*>([\s\S]*)(<\/body>)?/i);
+        return h("div", { id: "maindiv", innerHTML: body ? body[1] : this.content });
     }
 };

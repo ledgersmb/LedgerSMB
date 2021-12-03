@@ -30,6 +30,8 @@ export const app = createApp({
     mounted() {
         let m = dojoDOM.byId("main");
         dojoParser.parse(m);
+        window.__lsmbLoadLink =
+            url => this.$router.push(url);
         let r = registry.byId("top_menu");
         if ( r ) { // Setup doesn't have top_menu
             r.load_link =
