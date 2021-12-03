@@ -228,15 +228,15 @@ if (TARGET !== 'readme') {
     };
 
     var pluginsProd = [
-        // Add Vue
-        new VueLoaderPlugin(),
-
         // Clean UI/js before building
         new CleanWebpackPlugin(CleanWebpackPluginOptions),
 
         // Lint the sources
         new ESLintPlugin(ESLintPluginOptions),
         new StylelintPlugin(StylelintPluginOptions),
+
+        // Add Vue
+        new VueLoaderPlugin(),
 
         // Add Dojo
         new DojoWebpackPlugin(DojoWebpackPluginOptions),
