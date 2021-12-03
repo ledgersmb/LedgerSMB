@@ -63,6 +63,12 @@ export default {
                 this._report_error(e);
             }
         },
+        _recursively_resize(widget) {
+            array.forEach(widget.getChildren(), (child) => this._recursively_resize(child));
+            if (widget.resize) {
+                widget.resize();
+            }
+        },
         _report_error(errOrReq) {
             let errstr;
             if (errOrReq instanceof Error) {
@@ -101,6 +107,7 @@ export default {
     beforeRouteUpdate() {},
     beforeRouteLeave() {},
     mounted() {
+        domClass.add(dojoDOM.byId("maindiv"), "done-parsing");
         this.$nextTick(() => this.updateContent(this.uiURL));
         window.__lsmbSubmitForm = (req) =>
             this.updateContent(req.url, req.options);
@@ -119,20 +126,20 @@ export default {
         if (!dojoDOM.byId("maindiv")) {
             return;
         }
-        parser.parse(dojoDOM.byId("maindiv")).then((children) => {
-            array.forEach(children, (child) => {
-                if (child.resize) {
-                    child.resize();
-                }
+        this.$nextTick(() => {
+            parser.parse(dojoDOM.byId("maindiv")).then(() => {
+                array.forEach(registry.findWidgets(dojoDOM.byId("maindiv")), (child) => {
+                    this._recursively_resize(child);
+                });
+                domClass.add(dojoDOM.byId("maindiv"), "done-parsing");
             });
             query("a", dojoDOM.byId("maindiv")).forEach((node) =>
                 this._interceptClick(node)
             );
-            domClass.add(dojoDOM.byId("maindiv"), "done-parsing");
         });
     },
     render() {
         let body = this.content.match(/<body[^>]*>([\s\S]*)(<\/body>)?/i);
-        return h("div", { innerHTML: body ? body[1] : this.content });
+        return h("div", { innerHTML: body ? body[1] : this.content, style: "height:100%" });
     }
 };
