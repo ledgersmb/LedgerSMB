@@ -27,11 +27,11 @@ function getConfig(env) {
             // An array of objects which provide the package name and location
             {
                 name: "dojo",
-                location: path.resolve(__dirname,"../../../node_modules/dojo")
+                location: path.resolve(__dirname, "../../../node_modules/dojo")
             },
             {
                 name: "dijit",
-                location: path.resolve(__dirname,"../../../node_modules/dijit")
+                location: path.resolve(__dirname, "../../../node_modules/dijit")
             },
             {
                 name: "lsmb", // the name of the package

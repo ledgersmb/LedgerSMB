@@ -12,7 +12,6 @@ define([
     "dojo/store/Memory",
     "dijit/Tree",
     "dijit/tree/ObjectStoreModel",
-    "dijit/registry",
     "dojo/topic"
 ], function (
     declare,
@@ -25,7 +24,6 @@ define([
     Memory,
     Tree,
     ObjectStoreModel,
-    registry,
     topic
 ) {
     // set up the store to get the tree data, plus define the method

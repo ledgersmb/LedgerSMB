@@ -7,9 +7,8 @@ define([
     "dojo/on",
     "dojo/dom-attr",
     "dojo/dom-form",
-    "dojo/query",
-    "dijit/registry"
-], function (Form, declare, event, on, domattr, domform, query, registry) {
+    "dojo/query"
+], function (Form, declare, event, on, domattr, domform, query) {
     var c = 0;
     return declare("lsmb/Form", [Form], {
         clickedAction: null,

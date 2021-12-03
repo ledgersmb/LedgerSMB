@@ -7,7 +7,7 @@ define([
     // "dojo/parser",
     "dojo/query",
     "dijit/registry",
-    "dojo/hash",
+    // "dojo/hash",
     // "dojo/topic",
     "dojo/dom-class",
     "dojo/dom-style"
@@ -18,7 +18,7 @@ define([
     // parser,
     query,
     registry,
-    hash,
+    // hash,
     // topic,
     domClass,
     domStyle
@@ -26,20 +26,22 @@ define([
     return declare("lsmb/main", [_WidgetBase, _Container], {
         history: {},
         navigateTo: function (url, options) {
+            /*
             var h = "__";
             var chars =
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             for (var i = 0; i < 25; i++) {
                 h += chars.charAt(Math.floor(Math.random() * chars.length));
             }
+            */
             // if (options.data && options.data instanceof FormData) {
-                registry.byId("maindiv")._load_form(url, options);
-            /*} else {
+            registry.byId("maindiv")._load_form(url, options);
+            /* } else {
                 var q = { url: url, options: options };
                 this.history[h] = q;
                 sessionStorage[h] = JSON.stringify(q);
                 hash(h);
-            }*/
+            } */
         },
         startup: function () {
             // var self = this;
