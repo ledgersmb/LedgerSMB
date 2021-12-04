@@ -41,7 +41,7 @@ function getConfig(env) {
 
         async: true, // Defines if Dojo core should be loaded asynchronously
         blankGif: "./js/dojo/resources/blank.gif",
-        deps: ["lsmb/main"], // An array of resource paths which should load immediately once Dojo has loaded:
+        deps: [], // An array of resource paths which should load immediately once Dojo has loaded:
 
         has: {
             "dojo-config-api": 1, // Ensures that the build is configurable
