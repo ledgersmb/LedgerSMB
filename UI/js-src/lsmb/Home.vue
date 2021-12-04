@@ -1,4 +1,5 @@
 <template>
+<div>
   <div id="welcome" style="width:100%">
     <h1 style="margin-bottom: 3em">Welcome to LedgerSMB</h1>
     <div style="float:left; width:calc(33.3% - 1em); padding: 1em; margin: 0.5em; border: 1px solid black; border-radius: 0.5em; min-width: 300px; box-sizing: border-box">
@@ -58,8 +59,20 @@
       </ul>
     </div>
   </div>
+</div>
 </template>
 
 <script>
-export default {};
+
+const domClass = require("dojo/dom-class");
+const dojoDOM = require("dojo/dom");
+
+export default {
+    mounted() {
+        domClass.add(dojoDOM.byId("maindiv"), "done-parsing");
+    },
+    updated() {
+        domClass.add(dojoDOM.byId("maindiv"), "done-parsing");
+    }
+};
 </script>
