@@ -33,16 +33,14 @@ export const app = createApp({
         let m = dojoDOM.byId("main");
 
         this.$nextTick(() => {
-            dojoParser
-                .parse(m)
-                .then(() => {
-                    domClass.add(document.body, "done-parsing");
-                    let r = registry.byId("top_menu");
-                    if (r) {
-                        // Setup doesn't have top_menu
-                        r.load_link = (url) => this.$router.push(url);
-                    }
-                });
+            dojoParser.parse(m).then(() => {
+                domClass.add(document.body, "done-parsing");
+                let r = registry.byId("top_menu");
+                if (r) {
+                    // Setup doesn't have top_menu
+                    r.load_link = (url) => this.$router.push(url);
+                }
+            });
         });
         window.__lsmbLoadLink = (url) => this.$router.push(url);
     },

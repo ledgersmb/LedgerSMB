@@ -64,7 +64,9 @@ export default {
             }
         },
         _recursively_resize(widget) {
-            array.forEach(widget.getChildren(), (child) => this._recursively_resize(child));
+            array.forEach(widget.getChildren(), (child) => {
+                this._recursively_resize(child);
+            });
             if (widget.resize) {
                 widget.resize();
             }
@@ -128,9 +130,12 @@ export default {
         }
         this.$nextTick(() => {
             parser.parse(dojoDOM.byId("maindiv")).then(() => {
-                array.forEach(registry.findWidgets(dojoDOM.byId("maindiv")), (child) => {
-                    this._recursively_resize(child);
-                });
+                array.forEach(
+                    registry.findWidgets(dojoDOM.byId("maindiv")),
+                    (child) => {
+                        this._recursively_resize(child);
+                    }
+                );
                 domClass.add(dojoDOM.byId("maindiv"), "done-parsing");
             });
             query("a", dojoDOM.byId("maindiv")).forEach((node) =>
@@ -140,6 +145,9 @@ export default {
     },
     render() {
         let body = this.content.match(/<body[^>]*>([\s\S]*)(<\/body>)?/i);
-        return h("div", { innerHTML: body ? body[1] : this.content, style: "height:100%" });
+        return h("div", {
+            innerHTML: body ? body[1] : this.content,
+            style: "height:100%"
+        });
     }
 };
