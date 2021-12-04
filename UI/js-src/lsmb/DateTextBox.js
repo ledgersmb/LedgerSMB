@@ -14,6 +14,7 @@ define([
     return declare("lsmb/DateTextBox", [DateTextBox], {
         _formattedValue: null,
         defaultIsToday: false,
+        _oldValue: "",
         constructor: function (params, srcNodeRef) {
             this._formattedValue = srcNodeRef.value;
 
@@ -90,10 +91,21 @@ define([
             /* eslint no-cond-assign: 0 */
             on(
                 this.domNode,
+                "keydown",
+                lang.hitch(this, function (e) {
+                    this.oldValue = domAttr.get(e.target, "value");
+                })
+            );
+            on(
+                this.domNode,
                 "keyup",
                 lang.hitch(this, function (e) {
                     let value = domAttr.get(e.target, "value");
 
+                    if (this.oldValue.length > value.length) {
+                        // allow removing characters; separators and others alike
+                        return;
+                    }
                     /* Extract the separator and location into an array and if
                      * needed add the separator. */
                     const re = /[^a-z]/gi;
