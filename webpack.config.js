@@ -23,6 +23,7 @@ if (TARGET !== 'readme') {
     const StylelintPlugin = require("stylelint-bare-webpack-plugin");
     const TerserPlugin = require("terser-webpack-plugin");
     const UnusedWebpackPlugin = require("unused-webpack-plugin");
+    const { VueLoaderPlugin } = require("vue-loader");
 
     const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via npm
 
@@ -104,12 +105,19 @@ if (TARGET !== 'readme') {
                 }
             }
         ],
-        exclude: /node_modules/
+        exclude: file => {
+            return /node_modules/.test(file) || /_scripts/.test(file);
+        }
+    };
+
+    const vue = {
+        test: /\.vue$/,
+        loader: "vue-loader"
     };
 
     const css = {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"]
+        use: [ MiniCssExtractPlugin.loader, "css-loader"]
     };
 
     const images = {
@@ -227,6 +235,9 @@ if (TARGET !== 'readme') {
         new ESLintPlugin(ESLintPluginOptions),
         new StylelintPlugin(StylelintPluginOptions),
 
+        // Add Vue
+        new VueLoaderPlugin(),
+
         // Add Dojo
         new DojoWebpackPlugin(DojoWebpackPluginOptions),
 
@@ -264,6 +275,7 @@ if (TARGET !== 'readme') {
             filename: "ui-header.html",
             mode: prodMode ? "production" : "development",
             excludeChunks: [...Object.keys(lsmbCSS)],
+            chunksSortMode: 'manual',
             template: "lib/ui-header.html"
         }),
 
@@ -299,13 +311,19 @@ if (TARGET !== 'readme') {
             test: /\.js$|\.css$|\.html$/,
             threshold: 10240,
             minRatio: 0.8
-        })
+        }),
+
     ];
 
     var pluginsDev = [
         ...pluginsProd,
 
-        new UnusedWebpackPlugin(UnusedWebpackPluginOptions)
+        new UnusedWebpackPlugin(UnusedWebpackPluginOptions),
+
+        new webpack.DefinePlugin({
+            "__VUE_OPTIONS_API__": true,
+            "__VUE_PROD_DEVTOOLS__": true
+        })
     ];
 
     var pluginsList = prodMode ? pluginsProd : pluginsDev;
@@ -346,7 +364,7 @@ if (TARGET !== 'readme') {
                         )[1];
                         return `npm.${packageName.replace("@", "")}`;
                     },
-                    chunks: "all",
+                    chunks: "all"
                 }
             }
         }
@@ -361,9 +379,9 @@ if (TARGET !== 'readme') {
             main: {
                 filename: "lsmb/main.js",
                 import: "lsmb/main",
-                dependOn: 'shared'
+                dependOn: "dojo-shared"
             },
-            shared: [ ...includedRequires ],
+            "dojo-shared": [ ...includedRequires ],
             ...lsmbCSS
         },
 
@@ -376,12 +394,18 @@ if (TARGET !== 'readme') {
         },
 
         module: {
-            rules: [javascript, css, images, svg, html]
+            rules: [vue, javascript, css, images, svg, html]
         },
 
         plugins: pluginsList,
 
         resolve: {
+            alias: {
+                // "vue": "@vue/runtime-dom",
+                "vue$": "vue/dist/vue.esm-bundler.js",
+                "@": path.join(__dirname, "UI/js-src/lsmb")
+            },
+            extensions: [ ".js", ".vue" ],
             fallback: {
                 buffer: require.resolve("buffer/"),
                 path: require.resolve("path-browserify")

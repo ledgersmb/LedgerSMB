@@ -37,20 +37,21 @@ When qr/I navigate to the (.*) page/, sub {
 };
 
 When qr/^I update the page$/, sub {
-    my $maindiv = S->{ext_wsl}->page->body->maindiv->find('./*');
-    S->{ext_wsl}->page->body->maindiv
-        ->find('*button', text => 'Update')->click;
-    S->{ext_wsl}->page->body->maindiv->wait_for_content(replaces => $maindiv);
+    my $button = S->{ext_wsl}->page->body->maindiv
+        ->find('*button', text => 'Update');
+
+    $button->click;
+    S->{ext_wsl}->page->body->maindiv->wait_for_content(replaces => $button);
 };
 
 When qr/^I (click "(.+)" to )?save the page( as new)?$/, sub {
-    my $maindiv = S->{ext_wsl}->page->body->maindiv->find('./*');
     my $text = ($3) ? 'Save as new' :
                ($1) ? $2
                     : 'Save';
-    S->{ext_wsl}->page->body->maindiv
-        ->find('*button', text => $text)->click;
-    S->{ext_wsl}->page->body->maindiv->wait_for_content(replaces => $maindiv);
+    my $button = S->{ext_wsl}->page->body->maindiv
+        ->find('*button', text => $text);
+    $button->click;
+    S->{ext_wsl}->page->body->maindiv->wait_for_content(replaces => $button);
 };
 
 Then qr/I should see the (.*) page/, sub {

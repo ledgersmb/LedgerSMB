@@ -1,14 +1,15 @@
 [% INCLUDE "ui-header.html" %]
 <body id="app-main"
       class="lsmb [% dojo_theme %]">
-  <div id="main" data-dojo-type="lsmb/main" style="width:100%;height:100%">
+  <div id="main" style="width:100%;height:100%">
   <div id="console-container"
        data-dojo-type="dijit/layout/BorderContainer"
        data-dojo-props="persist: true"
        style="width: 100%; height: 100%">
-    <div id="maindiv" class="mainpanel"
-         data-dojo-type="lsmb/MainContentPane"
-         data-dojo-props="region: 'center', href:'welcome.html'">
+    <div data-dojo-type="dijit/layout/ContentPane"
+         data-dojo-props="region:'center'"
+         id="maindiv">
+      <router-view></router-view>
     </div>
     <div id="menudiv" class="edgePanel"
          style="width:30ex"

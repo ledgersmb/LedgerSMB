@@ -1,11 +1,11 @@
-<html>
-<body>
+<template>
+<div>
   <div id="welcome" style="width:100%">
     <h1 style="margin-bottom: 3em">Welcome to LedgerSMB</h1>
     <div style="float:left; width:calc(33.3% - 1em); padding: 1em; margin: 0.5em; border: 1px solid black; border-radius: 0.5em; min-width: 300px; box-sizing: border-box">
       <h2>What is LedgerSMB</h2>
       <p>LedgerSMB is a double entry accounting system offering a wide
-        variety of related functionalities, such as<p>
+        variety of related functionalities, such as</p>
         <ul>
           <li>invoicing</li>
           <li>bank reconciliation</li>
@@ -59,5 +59,21 @@
       </ul>
     </div>
   </div>
-</body>
-</html>
+</div>
+</template>
+
+<script>
+
+function markDone() {
+    document.getElementById("maindiv").classList.add("done-parsing");
+}
+
+export default {
+    mounted() {
+        markDone();
+    },
+    updated() {
+        markDone();
+    }
+};
+</script>

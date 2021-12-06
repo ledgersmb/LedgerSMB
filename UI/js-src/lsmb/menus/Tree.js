@@ -12,7 +12,6 @@ define([
     "dojo/store/Memory",
     "dijit/Tree",
     "dijit/tree/ObjectStoreModel",
-    "dijit/registry",
     "dojo/topic"
 ], function (
     declare,
@@ -25,7 +24,6 @@ define([
     Memory,
     Tree,
     ObjectStoreModel,
-    registry,
     topic
 ) {
     // set up the store to get the tree data, plus define the method
@@ -73,6 +71,7 @@ define([
         model: model,
         showRoot: false,
         openOnClick: true,
+        load_link: null,
         postCreate: function () {
             this.inherited(arguments);
 
@@ -148,8 +147,9 @@ define([
                 // function).
                 url += "#" + Date.now();
 
-                var mainDiv = registry.byId("maindiv");
-                mainDiv.load_link(url);
+                if (this.load_link) {
+                    this.load_link(url);
+                }
             }
         },
         __onClick: function (e) {

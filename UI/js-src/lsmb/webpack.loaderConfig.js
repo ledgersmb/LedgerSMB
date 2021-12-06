@@ -27,11 +27,11 @@ function getConfig(env) {
             // An array of objects which provide the package name and location
             {
                 name: "dojo",
-                location: path.resolve(__dirname,"../../../node_modules/dojo")
+                location: path.resolve(__dirname, "../../../node_modules/dojo")
             },
             {
                 name: "dijit",
-                location: path.resolve(__dirname,"../../../node_modules/dijit")
+                location: path.resolve(__dirname, "../../../node_modules/dijit")
             },
             {
                 name: "lsmb", // the name of the package
@@ -41,7 +41,7 @@ function getConfig(env) {
 
         async: true, // Defines if Dojo core should be loaded asynchronously
         blankGif: "./js/dojo/resources/blank.gif",
-        deps: ["lsmb/main"], // An array of resource paths which should load immediately once Dojo has loaded:
+        deps: [], // An array of resource paths which should load immediately once Dojo has loaded:
 
         has: {
             "dojo-config-api": 1, // Ensures that the build is configurable
