@@ -365,6 +365,13 @@ $$
         WHERE id IN (select trans_id FROM voucher
                 WHERE batch_id = in_batch_id);
 
+        -- When approving the AR/AP batch import,
+        -- we need to approve the acc_trans line also.
+        UPDATE acc_trans SET approved = true
+        WHERE trans_id IN (select trans_id FROM voucher
+                WHERE batch_id = in_batch_id
+                AND batch_class IN (1, 2));
+
         UPDATE acc_trans SET approved = true
         WHERE voucher_id IN (select id FROM voucher
                 WHERE batch_id = in_batch_id
