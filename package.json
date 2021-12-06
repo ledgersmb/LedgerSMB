@@ -41,7 +41,7 @@
     }
   ],
   "browserslist": [
-    "supports es6-module and supports async-functions and supports xhr2 and supports bloburls and supports css-variables and supports css3-boxsizing and supports border-radius"
+    "supports es6-module and supports async-functions and supports xhr2 and supports bloburls and supports css-variables and supports css3-boxsizing and supports border-radius and supports fetch and supports classlist"
   ],
   "devDependencies": {
     "@babel/eslint-parser": "7.16.3",

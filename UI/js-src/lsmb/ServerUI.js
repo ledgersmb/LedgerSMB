@@ -5,18 +5,11 @@ import { h } from "vue";
 
 const registry = require("dijit/registry");
 const parser = require("dojo/parser");
-const dojoDOM = require("dojo/dom");
-const array = require("dojo/_base/array");
-const on = require("dojo/on");
-const mouse = require("dojo/mouse");
-const event = require("dojo/_base/event");
-const query = require("dojo/query");
-const domClass = require("dojo/dom-class");
 
-function domReject(request) {
+function domReject(response) {
     return (
-        request.getResponseHeader("X-LedgerSMB-App-Content") !== "yes" ||
-        (request.getResponseHeader("Content-Disposition") || "").startsWith(
+        response.headers.get("X-LedgerSMB-App-Content") !== "yes" ||
+        (response.headers.get("Content-Disposition") || "").startsWith(
             "attachment"
         )
     );
@@ -35,36 +28,34 @@ export default {
         }
     },
     methods: {
-        updateContent(tgt, options) {
-            let req = new XMLHttpRequest();
-            let _options = options || {};
+        async updateContent(tgt, options = {}) {
             try {
-                req.open(_options.method || "GET", tgt);
-                var headers = _options.headers || {};
-                for (var hdr in headers) {
-                    if ({}.hasOwnProperty.call(headers, hdr)) {
-                        req.setRequestHeader(hdr, headers[hdr]);
-                    }
-                }
-                req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-                req.addEventListener("load", () => {
-                    if (req.status >= 400) {
-                        this._report_error(req);
-                    } else {
-                        this.content = req.response;
-                    }
+                let headers = new Headers(options.headers);
+                headers.set("X-Requested-With", "XMLHttpRequest");
+
+                document
+                    .getElementById("maindiv")
+                    .classList.remove("done-parsing");
+                let r = await fetch(tgt, {
+                    method: options.method,
+                    body: options.data,
+                    headers: headers
+                    // additional parameters to consider:
+                    // mode(cors?), credentials, referrerPolicy?
                 });
-                let div = dojoDOM.byId("maindiv");
-                if (div) {
-                    domClass.remove(div, "done-parsing");
+
+                let b = await r.text();
+                if (r.ok && !domReject(r)) {
+                    this.content = b;
+                } else {
+                    this._report_error(r);
                 }
-                req.send(_options.data || "");
             } catch (e) {
                 this._report_error(e);
             }
         },
         _recursively_resize(widget) {
-            array.forEach(widget.getChildren(), (child) => {
+            widget.getChildren().forEach((child) => {
                 this._recursively_resize(child);
             });
             if (widget.resize) {
@@ -75,7 +66,7 @@ export default {
             let errstr;
             if (errOrReq instanceof Error) {
                 errstr = "JavaScript error: " + errOrReq.toString();
-            } else if (errOrReq instanceof XMLHttpRequest) {
+            } else if (errOrReq instanceof Response) {
                 if (errOrReq.status === 0) {
                     errstr = "Could not connect to server";
                 } else if (domReject(errOrReq)) {
@@ -97,9 +88,9 @@ export default {
             }
 
             var href = dnode.href;
-            on(dnode, "click", function (e) {
-                if (!e.ctrlKey && !e.shiftKey && mouse.isLeft(e)) {
-                    event.stop(e);
+            dnode.addEventListener("click", function (e) {
+                if (!e.ctrlKey && !e.shiftKey && e.button === 0) {
+                    e.preventDefault();
                     window.__lsmbLoadLink(href);
                 }
             });
@@ -109,15 +100,17 @@ export default {
     beforeRouteUpdate() {},
     beforeRouteLeave() {},
     mounted() {
-        domClass.add(dojoDOM.byId("maindiv"), "done-parsing");
+        document.getElementById("maindiv").classList.add("done-parsing");
         this.$nextTick(() => this.updateContent(this.uiURL));
         window.__lsmbSubmitForm = (req) =>
             this.updateContent(req.url, req.options);
     },
     beforeUpdate() {
         try {
-            let widgets = registry.findWidgets(dojoDOM.byId("maindiv"));
-            array.forEach(widgets, (w) =>
+            let widgets = registry.findWidgets(
+                document.getElementById("maindiv")
+            );
+            widgets.forEach((w) =>
                 w.destroyRecursive ? w.destroyRecursive(true) : w.destroy()
             );
         } catch (e) {
@@ -125,22 +118,20 @@ export default {
         }
     },
     updated() {
-        if (!dojoDOM.byId("maindiv")) {
+        if (!document.getElementById("maindiv")) {
             return;
         }
         this.$nextTick(() => {
-            parser.parse(dojoDOM.byId("maindiv")).then(() => {
-                array.forEach(
-                    registry.findWidgets(dojoDOM.byId("maindiv")),
-                    (child) => {
-                        this._recursively_resize(child);
-                    }
-                );
-                domClass.add(dojoDOM.byId("maindiv"), "done-parsing");
+            let maindiv = document.getElementById("maindiv");
+            parser.parse(maindiv).then(() => {
+                registry.findWidgets(maindiv).forEach((child) => {
+                    this._recursively_resize(child);
+                });
+                maindiv.classList.add("done-parsing");
             });
-            query("a", dojoDOM.byId("maindiv")).forEach((node) =>
-                this._interceptClick(node)
-            );
+            maindiv
+                .querySelectorAll("a")
+                .forEach((node) => this._interceptClick(node));
         });
     },
     render() {

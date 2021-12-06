@@ -64,15 +64,16 @@
 
 <script>
 
-const domClass = require("dojo/dom-class");
-const dojoDOM = require("dojo/dom");
+function markDone() {
+    document.getElementById("maindiv").classList.add("done-parsing");
+}
 
 export default {
     mounted() {
-        domClass.add(dojoDOM.byId("maindiv"), "done-parsing");
+        markDone();
     },
     updated() {
-        domClass.add(dojoDOM.byId("maindiv"), "done-parsing");
+        markDone();
     }
 };
 </script>
