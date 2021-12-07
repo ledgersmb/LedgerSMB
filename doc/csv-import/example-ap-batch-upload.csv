@@ -1,0 +1,3 @@
+vendor,amount,curr,fx_rate,account,ap,description,invnumber,transdate
+00123(Vendor Credit Account Number),10,USD,1(Assume Base Currency is USD),5010--Purchases,2100--Accounts Payable,Line description example,AP001,2021-12-31
+00456(Vendor Credit Account Number),15,CAD,0.78((Assume Base Currency is USD),5010--Purchases,2100--Accounts Payable,Line description example,AP002,2021-12-31

@@ -43,10 +43,10 @@ our $cols = {
     gl_multi        =>  ['debit_accno', 'credit_accno', 'amount', 'curr',
                          'amount_fx', 'reference', 'transdate', 'description',
                          'source_debit', 'source_credit', 'memo'],
-    ap_multi        =>  ['vendor', 'amount', 'account', 'ap', 'description',
-                        'invnumber', 'transdate'],
-    ar_multi        =>  ['customer', 'amount', 'account', 'ar', 'description',
-                        'invnumber', 'transdate'],
+    ap_multi        =>  ['vendor', 'amount', 'curr', 'fx_rate', 'account', 'ap',
+                        'description', 'invnumber', 'transdate'],
+    ar_multi        =>  ['customer', 'amount', 'curr', 'fx_rate', 'account', 'ar',
+                        'description', 'invnumber', 'transdate'],
     timecard        =>  ['employee', 'business_unit_id', 'transdate',
                         'partnumber', 'description', 'qty', 'non_billable',
                         'sellprice', 'allocated', 'notes', 'jctype', 'curr'],
@@ -132,56 +132,92 @@ sub _aa_multi {
     my $vcst = $request->{dbh}->prepare(
         'select count(*) from entity_credit_account where meta_number = ?'
         );
+    my $currst = $request->{dbh}->prepare(
+        'select count(*) from currency where curr = ?'
+    );
     for my $ref (@$entries){
+        my %entry;
+        # Reference with name instead of index for better readability
+        if((scalar @$ref) > 7) {
+            @entry{qw( vc amount curr fx_rate account arap
+                    description invnumber transdate )} = @$ref;
+        } else {
+        # Check for backward compatibility
+            @entry{qw( vc amount account arap
+                    description invnumber transdate )} = @$ref;
+        }
         my $pass;
-        next if $ref->[1] !~ /\d/;
-        my ($acct) = split /--/, $ref->[2];
+        next if $entry{amount} !~ /\d/;
+        my ($acct) = split /--/, $entry{account};
         $acst->execute($acct);
         ($pass) = $acst->fetchrow_array;
         $request->error("Account $acct not found") if !$pass;
-        ($acct) = split /--/, $ref->[3];  ## no critic (ProhibitMagicNumbers) sniff
+        ($acct) = split /--/, $entry{arap};  ## no critic (ProhibitMagicNumbers) sniff
         $acst->execute($acct);
         ($pass) = $acst->fetchrow_array;
         $request->error("Account $acct not found") if !$pass;
-        $vcst->execute(uc($ref->[0]));
+        $vcst->execute($entry{vc});
         ($pass) = $vcst->fetchrow_array;
         if (! $pass) {
             if ($arap eq 'ar') {
-                $request->error("Customer $ref->[0] not found");
+                $request->error("Customer $entry{vc} not found");
             } else {
-                $request->error("Vendor $ref->[0] not found");
+                $request->error("Vendor $entry{vc} not found");
             }
+        }
+        if((scalar @$ref) > 7) {
+            # Check currency is defined in the system
+            $currst->execute($entry{curr});
+            ($pass) = $currst->fetchrow_array;
+            $request->error("Currency $entry{curr} not found") if !$pass;
         }
     }
     for my $ref (@$entries){
+        my %entry;
+        if((scalar @$ref) > 7) {
+            @entry{qw( vc amount curr fx_rate account arap
+                    description invnumber transdate )} = @$ref;
+        } else {
+            @entry{qw( vc amount account arap
+                    description invnumber transdate )} = @$ref;
+        }
+
         my $form = Form->new(); ## no critic
         $form->{dbh} = $request->{dbh};
         my $default_currency = $request->setting->get('curr');
         $form->{rowcount} = 1;
         $form->{ARAP} = uc($arap);
         $form->{batch_id} = $batch->{id};
-        $form->{customernumber} = $form->{vendornumber} = shift @$ref;
-        $form->{amount_1} = shift @$ref;
+        $form->{customernumber} = $form->{vendornumber} = $entry{vc};
+        $form->{amount_1} = $entry{amount};
         next if $form->{amount_1} !~ /\d/;
         $form->{amount_1} = $form->parse_amount(
             $request->{_user}, $form->{amount_1});
-        $form->{"$form->{ARAP}_amount_1"} = shift @$ref;
+        $form->{"$form->{ARAP}_amount_1"} = $entry{account};
         $form->{vc} = ($arap eq 'ar') ? 'customer' : 'vendor';
         $form->{arap} = $arap;
-        $form->{uc($arap)} = shift @$ref;
-        $form->{description_1} = shift @$ref;
-        $form->{invnumber} = shift @$ref;
-        $form->{transdate} = shift @$ref;
-        $form->{currency} = $default_currency;
+        $form->{uc($arap)} = $entry{arap};
+        $form->{description_1} = $entry{description};
+        $form->{invnumber} = $entry{invnumber};
+        $form->{transdate} = $entry{transdate};
+        $form->{currency} = ((scalar @$ref) > 7) ? $entry{curr} : $default_currency;
+        $form->{exchangerate} = ((scalar @$ref) > 7) ? $entry{fx_rate} : '1';
         $form->{approved} = '0';
         $form->{defaultcurrency} = $default_currency;
+        # need to fetch due date by terms set on the ECA
+        # otherwise transaction posted with empty due date
         my $sth = $form->{dbh}->prepare(
-            'SELECT id FROM entity_credit_account
+            'SELECT id,
+              (?::date + (concat(
+                  (CASE WHEN terms IS NULL THEN 1 ELSE terms END),
+                  \' days\'))::interval) as duedate
+              FROM entity_credit_account
               WHERE entity_class = ? and meta_number = ?'
             );
-        $sth->execute( ($arap eq 'ar') ? 2 : 1,
-                       uc($form->{vendornumber}));
-        ($form->{vendor_id}) = $sth->fetchrow_array;
+        $sth->execute( $form->{transdate},
+            ($arap eq 'ar') ? 2 : 1,
+            $form->{vendornumber} );
+        ($form->{vendor_id}, $form->{duedate}) = $sth->fetchrow_array;
         $form->{customer_id} = $form->{vendor_id};
 
         # The 'AA' package is used as 'LedgerSMB::AA'
