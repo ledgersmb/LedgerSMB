@@ -138,8 +138,14 @@ sub _aa_multi {
     for my $ref (@$entries){
         my %entry;
         # Reference with name instead of index for better readability
-        @entry{qw( vc amount curr fx_rate account arap
+        if((scalar @$ref) > 7) {
+            @entry{qw( vc amount curr fx_rate account arap
                     description invnumber transdate )} = @$ref;
+        } else {
+        # Check for backward compatibility
+            @entry{qw( vc amount account arap
+                    description invnumber transdate )} = @$ref;
+        }
         my $pass;
         next if $entry{amount} !~ /\d/;
         my ($acct) = split /--/, $entry{account};
@@ -159,15 +165,22 @@ sub _aa_multi {
                 $request->error("Vendor $entry{vc} not found");
             }
         }
-        # Check currency is defined in the system
-        $currst->execute($entry{curr});
-        ($pass) = $currst->fetchrow_array;
-        $request->error("Currency $entry{curr} not found") if !$pass;
+        if((scalar @$ref) > 7) {
+            # Check currency is defined in the system
+            $currst->execute($entry{curr});
+            ($pass) = $currst->fetchrow_array;
+            $request->error("Currency $entry{curr} not found") if !$pass;
+        }
     }
     for my $ref (@$entries){
         my %entry;
-        @entry{qw( vc amount curr fx_rate account arap
+        if((scalar @$ref) > 7) {
+            @entry{qw( vc amount curr fx_rate account arap
                     description invnumber transdate )} = @$ref;
+        } else {
+            @entry{qw( vc amount account arap
+                    description invnumber transdate )} = @$ref;
+        }
 
         my $form = Form->new(); ## no critic
         $form->{dbh} = $request->{dbh};
@@ -187,8 +200,8 @@ sub _aa_multi {
         $form->{description_1} = $entry{description};
         $form->{invnumber} = $entry{invnumber};
         $form->{transdate} = $entry{transdate};
-        $form->{currency} = $entry{curr};
-        $form->{exchangerate} = $entry{fx_rate};
+        $form->{currency} = ((scalar @$ref) > 7) ? $entry{curr} : $default_currency;
+        $form->{exchangerate} = ((scalar @$ref) > 7) ? $entry{fx_rate} : '1';
         $form->{approved} = '0';
         $form->{defaultcurrency} = $default_currency;
         # need to fetch due date by terms set on the ECA
