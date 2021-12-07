@@ -56,7 +56,8 @@ sub internal_server_error {
     push @body_lines, '</body></html>';
 
     return [ HTTP_INTERNAL_SERVER_ERROR,
-             [ 'Content-Type' => 'text/html; charset=UTF-8' ],
+             [ 'Content-Type' => 'text/html; charset=UTF-8',
+               'X-LedgerSMB-App-Content' => 'yes' ],
              \@body_lines ];
 }
 
@@ -100,7 +101,8 @@ sub incompatible_database {
 
     return
         [ 521, ## no critic
-          [ 'Content-Type' => 'text/html; charset=utf-8' ],
+          [ 'Content-Type' => 'text/html; charset=utf-8',
+            'X-LedgerSMB-App-Content' => 'yes' ],
           [ 'Database is not the expected version.  ' .
             "Was $actual, expected $expected.  " .
             'Please re-run <a href="setup.pl">setup.pl</a> to correct.' ] ];
