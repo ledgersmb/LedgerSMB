@@ -28,6 +28,10 @@ $$ language plpgsql;
 
 
 select menu_insert(73, 3, 'Import Batch');
+insert into menu_acl (role_name, acl_type, node_id)
+select role_name, acl_type, currval('menu_node_id_seq')
+  from menu_acl
+ where node_id = 245;
 
 update menu_node
    set url = 'import_csv.pl?action=begin_import&type=gl_multi'
