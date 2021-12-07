@@ -976,7 +976,7 @@ SELECT lsmb__grant_perms('gl_transaction_create', obj, 'ALL')
                    'journal_entry_id_seq', 'journal_line_id_seq'])obj;
 
 SELECT lsmb__grant_menu('gl_transaction_create', node_id, 'allow')
-  FROM unnest(array[74,40,245]) node_id;
+  FROM unnest(array[74,40,245,262]) node_id;
 
 SELECT lsmb__create_role('gl_voucher_create');
 SELECT lsmb__grant_perms('gl_voucher_create', obj, 'INSERT')
