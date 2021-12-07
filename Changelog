@@ -20,6 +20,7 @@ Bugs fixed
 
 Code cleanup
 * Fewer warnings from old code
+* Start refactoring of client side code (JavaScript) to run on Vue3
 * Remove unused defaults table settings 'revtrans', 'yearend' and 'closedto'
 * Complete replacement of Log::Log4perl with Log::Any in library code
 
