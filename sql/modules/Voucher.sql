@@ -489,11 +489,11 @@ BEGIN
 
         DELETE FROM invoice WHERE trans_id = ANY(t_transaction_ids);
         DELETE FROM acc_trans WHERE trans_id = ANY(t_transaction_ids);
+        DELETE FROM voucher WHERE batch_id = in_batch_id;
+        DELETE FROM batch WHERE id = in_batch_id;
         DELETE FROM ar WHERE id = ANY(t_transaction_ids);
         DELETE FROM ap WHERE id = ANY(t_transaction_ids);
         DELETE FROM gl WHERE id = ANY(t_transaction_ids);
-        DELETE FROM voucher WHERE batch_id = in_batch_id;
-        DELETE FROM batch WHERE id = in_batch_id;
         DELETE FROM transactions WHERE id = ANY(t_transaction_ids);
 
         RETURN 1;
