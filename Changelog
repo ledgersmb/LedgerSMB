@@ -3,6 +3,18 @@
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.5
+* Fix correct AR/AP account being selected on Update and when editing (#6191)
+* On date-entry, add the separator character immediatly when possible (#6121)
+* Fix the end date on credit accounts being shown correctly (#6235)
+* Fix calculation of credit limit remaining shown on transactions and invoices
+* Fix credit limit remaining calculation for foreign currency transactions
+* Extend AR/AP batch import to support multi currency imports (#6250)
+* Fix login errors being hidden behind an "insecure response" error (#6251)
+* Fix deletion of unapproved batches failing (#6252)
+* Fix GL batch import menu item missing, even with appropriate permissions (#6248)
+
+
 Changelog for 1.9.4
 * Fix balance sheet printing template listing account descriptions (#6203)
 * Fix reconciliations to include Source value from transactions (#6122)
