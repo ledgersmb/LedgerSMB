@@ -11,6 +11,7 @@ Added functionalities
 
 Changed functionalities
 * Overpayment section in payment screen hidden on missing configuration
+* Batch AR/AP upload changed to support foreign currency transactions
 
 Removed functionalities
 
