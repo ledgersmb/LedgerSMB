@@ -1,7 +1,7 @@
 [% PROCESS 'elements.html' %]
 <body class="lsmb [% dojo_theme %]">
-<div class="listtop">[% title %]</div>
-<div class="info">[% info %]</div>
+<div class="listtop">[% request.title %]</div>
+<div class="info">[% request.info %]</div>
 <form data-dojo-type="lsmb/Form" action="[% request.script %]" method="post" enctype="multipart/form-data">
 <div class="inputrow" id="ar-account-row">
 [% PROCESS select element_data = {

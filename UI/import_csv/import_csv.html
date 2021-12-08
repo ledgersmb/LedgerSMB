@@ -13,9 +13,10 @@
              name = "type"
              value = request.type
              } %]
-      [% IF request.multi %]
+      [% IF request.show_batch_title %]
       <div class="listtop">[% text('Batch Information') %]</div>
       [% END %]
+      [% IF request.show_input %]
       <div data-dojo-type="lsmb/layout/TableContainer"
            data-dojo-props="cols:1">
         <div class="inputrow" id = "referencerow">
@@ -54,6 +55,7 @@
                  } %]
         </div>
       </div>
+      [% END %]
       <div class="inputrow" id="filerow">
         [% PROCESS input element_data = {
                name = "import_file"

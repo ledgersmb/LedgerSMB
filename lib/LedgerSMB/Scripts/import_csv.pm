@@ -106,7 +106,7 @@ my $header_info = {
         title => 'Inventory Batch Import',
         info => ''
     },
-    goods => {
+    parts => {
         title => 'Goods Import',
         info => ''
     },
@@ -648,7 +648,8 @@ sub begin_import {
 
     $request->{title} = $header_info->{$request->{type}}->{title};
     $request->{info} = $header_info->{$request->{type}}->{info};
-    $request->{multi} = 1 if $request->{type} =~ s/multi$//;
+    $request->{show_batch_title} = 1 if $request->{type} =~ m/multi$/;
+    $request->{show_input} = 1 if ($request->{type} =~ m/multi$/ or $request->{type} eq 'gl');
 
     # $request->{page_id} = $request->{type};
     # $request->{page_id} =~ s/_/-/;
