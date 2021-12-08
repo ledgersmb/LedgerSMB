@@ -150,7 +150,6 @@ Dependency updates (Perl)
 Changelog for 1.8 Series
 Released 2020-09-04
 
-
 Changelog for 1.8.24
 * Fix multiple issues with bank account reconciliation (#6122)
 * Fix correct AR/AP account being selected on Update and when editing (#6191)
