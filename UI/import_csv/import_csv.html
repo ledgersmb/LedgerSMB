@@ -13,7 +13,7 @@
              name = "type"
              value = request.type
              } %]
-      [% IF multi %]
+      [% IF request.multi %]
       <div class="listtop">[% text('Batch Information') %]</div>
       [% END %]
       <div data-dojo-type="lsmb/layout/TableContainer"
@@ -27,6 +27,7 @@
                  label = "_none_"
                  value = request.reference
                  size  = 15
+                 required = "true"
                  } %]
         </div>
         <div class="inputrow" id = "descriptionrow">
@@ -37,6 +38,7 @@
                  title = text('Description')
                  label = "_none_"
                  value = request.description
+                 required = "true"
                  } %]
         </div>
         <div class="inputrow" id="daterow">
@@ -48,6 +50,7 @@
                  name = "transdate"
                  value = request.transdate
                  size = 12
+                 required = "true"
                  } %]
         </div>
       </div>
@@ -58,6 +61,7 @@
                label = text('From File') #'
                class = "file"
                accept = ".csv"
+               required = "true"
                } %]
       </div>
       <div class="inputrow" id="buttonrow">

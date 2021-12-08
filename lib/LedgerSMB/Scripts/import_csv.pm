@@ -65,6 +65,61 @@ our $cols = {
                          bom partsgroup / ],
 };
 
+my $header_info = {
+    gl => {
+        title => 'Journal Import',
+        info => ''
+    },
+    gl_multi => {
+        title => 'Journal Batch Import',
+        info => ''
+    },
+    ap_multi => {
+        title => 'AP Transaction Batch Import',
+        info => "CSV file should contain @{$cols->{gl_multi}}"
+    },
+    ar_multi => {
+        title => 'AR Transaction Batch Import',
+        info => ''
+    },
+    chart => {
+        title => 'Chart of Accounts Import',
+        info => ''
+    },
+    gifi => {
+        title => 'GIFI Import',
+        info => ''
+    },
+    sic => {
+        title => 'SIC Import',
+        info => ''
+    },
+    timecard => {
+        title => 'Timecard Import',
+        info => ''
+    },
+    inventory => {
+        title => 'Inventory Import',
+        info => ''
+    },
+    inventory_multi => {
+        title => 'Inventory Batch Import',
+        info => ''
+    },
+    goods => {
+        title => 'Goods Import',
+        info => ''
+    },
+    services => {
+        title => 'Services Import',
+        info => ''
+    },
+    overhead => {
+        title => 'Overhead Import',
+        info => ''
+    }
+};
+
 my %template_file = (
    inventory => 'import_inventory_csv',
    inventory_multi => 'import_inventory_csv',
@@ -590,6 +645,10 @@ sub begin_import {
     if (ref($template_setup->{$request->{type}}) eq 'CODE') {
         $template_setup->{$request->{type}}($request);
     }
+
+    $request->{title} = $header_info->{$request->{type}}->{title};
+    $request->{info} = $header_info->{$request->{type}}->{info};
+    $request->{multi} = 1 if $request->{type} =~ s/multi$//;
 
     # $request->{page_id} = $request->{type};
     # $request->{page_id} =~ s/_/-/;
