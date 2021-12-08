@@ -138,6 +138,17 @@ Dependency updates (Perl)
 Changelog for 1.8 Series
 Released 2020-09-04
 
+
+Changelog for 1.8.24
+* Fix multiple issues with bank account reconciliation (#6122)
+* Fix correct AR/AP account being selected on Update and when editing (#6191)
+* Fix the end date on credit accounts being shown correctly (#6235)
+* Fix calculation of credit limit remaining shown on transactions and invoices
+* Fix credit limit remaining calculation for foreign currency transactions
+* Fix login errors being hidden behind an "insecure response" error (#6251)
+* Fix GL batch import menu item missing, even with appropriate permissions (#6248)
+
+
 Changelog for 1.8.23
 * Use a temp table to prevent bulk payments trampling on each other
 * Fix sorting on fixed asset searches (#6151)
