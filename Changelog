@@ -2,6 +2,10 @@
 Changelog for 1.7 Series
 2019-10-04
 
+Changelog for 1.7.37
+* Fix login errors being hidden behind an "insecure response" error (#6251)
+
+
 Changelog for 1.7.36
 * Fix manual taxes on credit invoices (#5721)
 * Improve configuring acceptable reverse proxy addresses
