@@ -78,7 +78,7 @@ $$
                                         WHERE class = 'ar')
                 UNION ALL
                 -- TODO:  Add the class labels to the class table.
-                SELECT v.id, ap.voucher, a.source,
+                SELECT v.id, ap.invoice, a.source,
                         eca.meta_number || '--'  || e.name,
                         v.batch_id, v.trans_id,
                         sum(CASE WHEN bc.class LIKE 'payment%' THEN a.amount_bc * -1
@@ -107,7 +107,7 @@ $$
                 -- Memo will always empty for batch receipt/payment
                 -- since there is no input field for memo in screen
                 -- selecting and grouping with memo make no sense here
-                SELECT v.id, ar.voucher, a.source,
+                SELECT v.id, ar.invoice, a.source,
                         eca.meta_number || '--'  || e.name,
                         v.batch_id, v.trans_id,
                         CASE WHEN bc.class LIKE 'receipt%' THEN sum(a.amount_bc) * -1
