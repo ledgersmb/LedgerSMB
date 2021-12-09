@@ -51,7 +51,8 @@ CREATE TYPE voucher_list AS (
 CREATE OR REPLACE FUNCTION voucher__list (in_batch_id integer)
 RETURNS SETOF voucher_list AS
 $$
-                SELECT v.id, a.invoice, a.invnumber, e.name,
+                SELECT v.id, a.invoice, a.invnumber,
+                        eca.meta_number || '--' || e.name,
                         v.batch_id, v.trans_id,
                         a.amount_bc, a.transdate, 'Payable', v.batch_class
                 FROM voucher v
@@ -63,7 +64,8 @@ $$
                         AND v.batch_class = (select id from batch_class
                                         WHERE class = 'ap')
                 UNION
-                SELECT v.id, a.invoice, a.invnumber, e.name,
+                SELECT v.id, a.invoice, a.invnumber,
+                        eca.meta_number || '--' || e.name,
                         v.batch_id, v.trans_id,
                         a.amount_bc, a.transdate, 'Receivable', v.batch_class
                 FROM voucher v
@@ -76,8 +78,8 @@ $$
                                         WHERE class = 'ar')
                 UNION ALL
                 -- TODO:  Add the class labels to the class table.
-                SELECT v.id, false, a.source,
-                        cr.meta_number || '--'  || co.legal_name ,
+                SELECT v.id, ap.invoice, a.source,
+                        eca.meta_number || '--'  || e.name,
                         v.batch_id, v.trans_id,
                         sum(CASE WHEN bc.class LIKE 'payment%' THEN a.amount_bc * -1
                              ELSE a.amount_bc  END), a.transdate,
@@ -90,17 +92,23 @@ $$
                 JOIN batch_class bc ON (bc.id = v.batch_class)
                 JOIN account_link l ON (a.chart_id = l.account_id)
                 JOIN ap ON (ap.id = a.trans_id)
-                JOIN entity_credit_account cr
-                        ON (ap.entity_credit_account = cr.id)
-                JOIN company co ON (cr.entity_id = co.entity_id)
+                JOIN entity_credit_account eca
+                        ON (ap.entity_credit_account = eca.id)
+                -- If join only with Company, we can't show correct data for person
+                -- the best way is join with entity instead of joining both person and company
+                JOIN entity e ON (eca.entity_id = e.id)
                 WHERE v.batch_id = in_batch_id
                         AND a.voucher_id = v.id
                         AND (bc.class like 'payment%' AND l.description = 'AP')
-                GROUP BY v.id, a.source, cr.meta_number, co.legal_name ,
+                GROUP BY v.id, ap.invoice, a.source, eca.meta_number, e.name,
                         v.batch_id, v.trans_id, a.transdate, bc.class
 
                 UNION ALL
-                SELECT v.id, false, a.source, a.memo,
+                -- Memo will always empty for batch receipt/payment
+                -- since there is no input field for memo in screen
+                -- selecting and grouping with memo make no sense here
+                SELECT v.id, ar.invoice, a.source,
+                        eca.meta_number || '--'  || e.name,
                         v.batch_id, v.trans_id,
                         CASE WHEN bc.class LIKE 'receipt%' THEN sum(a.amount_bc) * -1
                              ELSE sum(a.amount_bc)  END, a.transdate,
@@ -113,14 +121,14 @@ $$
                 JOIN batch_class bc ON (bc.id = v.batch_class)
                 JOIN account_link l ON (a.chart_id = l.account_id)
                 JOIN ar ON (ar.id = a.trans_id)
-                JOIN entity_credit_account cr
-                        ON (ar.entity_credit_account = cr.id)
-                JOIN company co ON (cr.entity_id = co.entity_id)
+                JOIN entity_credit_account eca
+                        ON (ar.entity_credit_account = eca.id)
+                JOIN entity e ON (eca.entity_id = e.id)
                 WHERE v.batch_id = in_batch_id
                         AND a.voucher_id = v.id
                         AND (bc.class like 'receipt%' AND l.description = 'AR')
-                GROUP BY v.id, a.source, cr.meta_number, co.legal_name ,
-                        a.memo, v.batch_id, v.trans_id, a.transdate, bc.class
+                GROUP BY v.id, ar.invoice, a.source, eca.meta_number, e.name,
+                        v.batch_id, v.trans_id, a.transdate, bc.class
                 UNION ALL
                 SELECT v.id, false, g.reference, g.description,
                         v.batch_id, v.trans_id,
