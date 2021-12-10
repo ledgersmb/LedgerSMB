@@ -1371,6 +1371,7 @@ decimal_places|2
 disable_back|0
 dojo_theme|claro
 vclimit|9999
+check_max_invoices|45
 \.
 
 -- Sequence handling
