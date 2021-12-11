@@ -474,7 +474,8 @@ sub print {
             my $inv_count;
             my $check_max_invoices = $request->setting->get(
                          'check_max_invoices'
-            );
+                );
+            $check_max_invoices ||= scalar(@{$contact->{invoices}});
             if ($check_max_invoices > scalar(@{$contact->{invoices}})) {
                 $inv_count = scalar(@{$contact->{invoices}});
             } else {
@@ -482,6 +483,7 @@ sub print {
             }
 
             for my $invoice (@{$contact->{invoices}}) {
+                last if scalar(@{$check->{invoices}}) > $inv_count;
                 if ($contact->{paid} eq 'some'){
                     $invoice->{paid} = LedgerSMB::PGNumber
                         ->from_input($invoice->{payment});
@@ -496,8 +498,7 @@ sub print {
                     format => '1000.00',
                     money => 1
                 );
-                push @{$check->{invoices}}, $invoice
-                    if scalar(@{$check->{invoices}}) <= $inv_count;
+                push @{$check->{invoices}}, $invoice;
             }
             my $amt = $check->{amount}->copy;
             $amt->bfloor();
