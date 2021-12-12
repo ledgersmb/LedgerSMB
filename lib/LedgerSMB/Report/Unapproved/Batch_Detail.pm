@@ -109,12 +109,12 @@ sub columns {
        type => 'text',
      pwidth => 2, },
 
-    {col_id => 'default_date',
+    {col_id => 'transaction_date',
        name => $self->Text('Date'),
        type => 'text',
      pwidth => '4', },
 
-    {col_id => 'Reference',
+    {col_id => 'reference',
        name => $self->Text('Reference'),
        type => 'href',
   href_base => '',
@@ -236,6 +236,7 @@ Runs the report, and assigns rows to $self->rows.
 
 sub run_report{
     my ($self) = @_;
+    ###TODO: This should be language for print language options, currently this return country.
     my $locales =
         LedgerSMB::I18N::get_country_list($self->{_user}->{language});
     my $printer = [ {text => 'Screen', value => 'zip'},
@@ -254,10 +255,14 @@ sub run_report{
     },
     ]);
 
+    # Currently AR/AP screen is the only way to check receipt and payment
+    ###TODO: Need to consider for receipt/payment reversal
     my $class_to_script = {
         '1' => 'ap',
         '2' => 'ar',
-        '3' => 'gl',
+        '3' => 'ap',
+        '5' => 'gl',
+        '6' => 'ar',
         '8' => 'is',
         '9' => 'ir',
     };
@@ -266,7 +271,14 @@ sub run_report{
         $ref->{row_id} = $ref->{id};
 
         my $script = $class_to_script->{lc($ref->{batch_class_id})};
-        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}"
+        # Receipt/Payment can include both AR/AP Transaction and Invoice
+        # if the row is an AR/AP invoice(not AR/AP Transaction)
+        # script should be 'ir' or 'is'
+        # This is different with batch class 8 and 9
+        $script = 'ir' if ($ref->{invoice} and $ref->{batch_class_id} == 3);
+        $script = 'is' if ($ref->{invoice} and $ref->{batch_class_id} == 6);
+
+        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{transaction_id}"
             if $script;
     }
     return $self->rows(\@rows);
