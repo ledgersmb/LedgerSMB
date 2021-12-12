@@ -7,8 +7,8 @@ import { createRouter, createWebHashHistory } from "vue-router";
 const registry = require("dijit/registry");
 const dojoParser = require("dojo/parser");
 
-import Home from "./Home.vue";
-import ServerUI from "./ServerUI";
+import Home from "./components/Home.vue";
+import ServerUI from "./components/ServerUI";
 
 const routes = [
     { name: "home", path: "/", component: Home },
