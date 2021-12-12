@@ -83,8 +83,8 @@ if (TARGET !== 'readme') {
     includedRequires = includedRequires
         .concat(
             glob
-                .sync("lsmb/**/!(webpack.loaderConfig|main).js", {
-                    cwd: "UI/js-src/"
+                .sync("{js-src/lsmb/**/!(webpack.loaderConfig|main).js,src/*.js}", {
+                    cwd: "UI"
                 })
                 .map(function (file) {
                     return file.replace(/\.js$/, "");
