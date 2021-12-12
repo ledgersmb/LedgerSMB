@@ -109,8 +109,6 @@ sub columns {
        type => 'text',
      pwidth => 2, },
 
-    # Correct variable name for date is transaction_date
-    # default_date doesn't exist
     {col_id => 'transaction_date',
        name => $self->Text('Date'),
        type => 'text',
