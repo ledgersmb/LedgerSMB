@@ -94,8 +94,6 @@ $$
                 JOIN ap ON (ap.id = a.trans_id)
                 JOIN entity_credit_account eca
                         ON (ap.entity_credit_account = eca.id)
-                -- If join only with Company, we can't show correct data for person
-                -- the best way is join with entity instead of joining both person and company
                 JOIN entity e ON (eca.entity_id = e.id)
                 WHERE v.batch_id = in_batch_id
                         AND a.voucher_id = v.id
@@ -104,9 +102,6 @@ $$
                         v.batch_id, v.trans_id, a.transdate, bc.class
 
                 UNION ALL
-                -- Memo will always empty for batch receipt/payment
-                -- since there is no input field for memo in screen
-                -- selecting and grouping with memo make no sense here
                 SELECT v.id, ar.invoice, a.source,
                         eca.meta_number || '--'  || e.name,
                         v.batch_id, v.trans_id,
