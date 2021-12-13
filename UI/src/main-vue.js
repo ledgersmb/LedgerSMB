@@ -7,11 +7,17 @@ import { createRouter, createWebHashHistory } from "vue-router";
 const registry = require("dijit/registry");
 const dojoParser = require("dojo/parser");
 
-import Home from "./components/Home.vue";
+import Home from "./components/Home";
 import ServerUI from "./components/ServerUI";
+// import ImportCSV from "./components/ImportCSV";
+
+import { LsmbText } from "./elements/lsmb-text";
+//window.customElements.define("lsmb-text", LsmbText, { extends: "span" });
+
 
 const routes = [
     { name: "home", path: "/", component: Home },
+//    { name: "importCSV", path: "/import-csv/:type", component: ImportCSV, props: true },
     {
         name: "default",
         path: "/:pathMatch(.*)",
@@ -53,6 +59,7 @@ export const app = createApp({
         document.body.classList.add("done-parsing");
     }
 }).use(router);
+app.config.compilerOptions.isCustomElement = (tag) => tag.startsWith("lsmb-");
 
 if (document.getElementById("main")) {
     app.mount("#main");

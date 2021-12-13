@@ -111,7 +111,12 @@ if (TARGET !== 'readme') {
 
     const vue = {
         test: /\.vue$/,
-        loader: "vue-loader"
+        loader: "vue-loader",
+        options: {
+            compilerOptions: {
+                isCustomElement: (tag) => tag.startsWith("lsmb-")
+            }
+        }
     };
 
     const css = {
