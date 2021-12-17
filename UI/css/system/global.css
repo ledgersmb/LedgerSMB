@@ -668,3 +668,19 @@ h2 {
 #email #body {
     min-height: 8em;
 }
+
+
+#logindiv #company_div {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+#logindiv #company_div lsmb-text,
+#logindiv #company_div lsmb-password {
+    display: contents;
+}
+
+#logindiv #company_div label {
+    text-align: left;
+}
+

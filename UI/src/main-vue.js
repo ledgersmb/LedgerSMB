@@ -1,5 +1,5 @@
 /** @format */
-/* eslint-disable no-console */
+/* eslint-disable no-console, import/no-unresolved */
 
 import { createApp } from "vue";
 import { createRouter, createWebHashHistory } from "vue-router";
@@ -11,13 +11,9 @@ import Home from "./components/Home";
 import ServerUI from "./components/ServerUI";
 // import ImportCSV from "./components/ImportCSV";
 
-import { LsmbText } from "./elements/lsmb-text";
-//window.customElements.define("lsmb-text", LsmbText, { extends: "span" });
-
-
 const routes = [
     { name: "home", path: "/", component: Home },
-//    { name: "importCSV", path: "/import-csv/:type", component: ImportCSV, props: true },
+    //    { name: "importCSV", path: "/import-csv/:type", component: ImportCSV, props: true },
     {
         name: "default",
         path: "/:pathMatch(.*)",

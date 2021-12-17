@@ -43,47 +43,17 @@
             LedgerSMB [% version %]
           </h1>
           <div align="center">
-            <div id="company_div"
-                 data-dojo-type="lsmb/layout/TableContainer"
-                 data-dojo-props="cols:1">
-              <div class="noshow">
-                <div>
-                  [% PROCESS input
-                         element_data = {
-                         type="text"
-                         name="login"
-                         size="20"
-                         id="username"
-                         label='_none_'
-                         title=text('User Name')
-                         value = login
-                         tabindex=1,
-                         attributes = { autocomplete = 'off'} } #' %]
-                </div>
-                <div>
-                  [% PROCESS input
-                         element_data = {
-                         type="password"
-                         name="password"
-                         size="20"
-                         id="password"
-                         label='_none_'
-                         title=text('Password')
-                         value = ''
-                         tabindex=2,
-                         attributes = { autocomplete = 'off'} } %]
-                </div>
-              </div>
-              [% PROCESS input
-                     element_data = {
-                     type="text"
-                     name="company"
-                     size="20"
-                     id="company"
-                     label='_none_'
-                     title=text('Company')
-                     value = company
-                     tabindex=3 } %]
+            <div id="company_div">
+              <lsmb-text type="text" name="login" size="20"
+                         id="username" title="[% text('User Name') %]"
+                         tabindex="1"
+                         autocomplete="off"></lsmb-text>
+              <lsmb-password type="password" name="password"
+                             id="password" size="20"
+                             title="[% text('Password') %]"
+                             tabindex="2" autocomplete="off"></lsmb-password>
+              <lsmb-text type="text" name="company" size="20"
+                         title="[% text('Company') %]" tabindex="3"></lsmb-text>
             </div>
           </div>
           [% PROCESS button
