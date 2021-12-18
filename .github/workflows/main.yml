@@ -142,7 +142,7 @@ jobs:
           access_token: ${{ github.token }}
 
       - name: Install TinyTex
-        uses: r-lib/actions/setup-tinytex@v1
+        uses: r-lib/actions/setup-tinytex@v2
 
       - name: Install missing TeX packages
         run: |
