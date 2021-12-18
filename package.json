@@ -101,7 +101,7 @@
     "unix-timestamp": "0.2.0",
     "unused-webpack-plugin": "2.4.0",
     "vue": "3.2.26",
-    "vue-loader": "16.8.3",
+    "vue-loader": "17.0.0",
     "vue-router": "4.0.12",
     "webpack": "5.65.0",
     "webpack-bundle-analyzer": "4.5.0",
