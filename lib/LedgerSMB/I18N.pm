@@ -20,6 +20,7 @@ we look only to the current locale.
 #use v5.24.0;
 
 use Locale::CLDR;
+use Locales unicode => 1;
 use Moose::Role;
 use namespace::autoclean;
 use LedgerSMB::App_State;
@@ -135,7 +136,29 @@ sub get_country_list {
     ];
 }
 
-=item location_list_country_localized($request,$language)
+=item get_language_list($request, $language)
+
+Get a language localized list to allow user selection
+
+=cut
+
+sub get_language_list {
+    my ($request, $language) = @_;
+    my $locale = Locales->new($language);
+    my @rows = $request->call_dbmethod(funcname => 'person__list_languages');
+    my @languages;
+    for (@rows) {
+        my $text = $locale->get_language_from_code(lc($_->{code}));
+        push @languages, {
+            value => $_->{code},
+            text => ucfirst($text // $_->{description})
+        }
+    }
+    @languages = sort { $a->{text} cmp $b->{text} } @languages;
+    return @languages;
+}
+
+=item location_list_country_localized($request, $language)
 
 Get the country list, localized according to the desired language
 

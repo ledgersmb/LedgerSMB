@@ -235,10 +235,9 @@ Runs the report, and assigns rows to $self->rows.
 =cut
 
 sub run_report{
-    my ($self) = @_;
-    ###TODO: This should be language for print language options, currently this return country.
-    my $locales =
-        LedgerSMB::I18N::get_country_list($self->{_user}->{language});
+    my ($self,$request) = @_;
+    my @languages =
+        LedgerSMB::I18N::get_language_list($self,$request->{_user}->{language});
     my $printer = [ {text => 'Screen', value => 'zip'},
                     map { {
                         text  => $_,
@@ -247,7 +246,7 @@ sub run_report{
                   keys LedgerSMB::Sysconfig::printer()->%*];
     $self->options([{
        name => 'language',
-       options => $locales,
+       options => \@languages,
        default_value => [$self->default_language],
     }, {
        name => 'media',
