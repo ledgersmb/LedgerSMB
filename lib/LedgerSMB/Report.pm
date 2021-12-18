@@ -344,7 +344,7 @@ sub render {
     my $self = shift;
     my $request = shift;
 
-    $self->run_report if not defined $self->rows;
+    $self->run_report($request) if not defined $self->rows;
     return $self->_render($request, renderer => 'render', @_);
 }
 

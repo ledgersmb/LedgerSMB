@@ -113,7 +113,7 @@ sub generate_statement {
         my $aging_report = LedgerSMB::Report::Aging->new(
             (ref $filters{$eca}) ? (details_filter => $filters{$eca}) : (),
             %$request);
-        $aging_report->run_report;
+        $aging_report->run_report($request);
         my $statement = {
               aging => $aging_report,
              entity => $company,

@@ -134,7 +134,7 @@ sub name {
 =cut
 
 sub run_report{
-    my ($self) = @_;
+    my ($self,$request) = @_;
     my @rows = $self->call_dbmethod(funcname => 'asset_nbv_report');
     for my $row(@rows){
         $row->{row_id} = $row->{id};

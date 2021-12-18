@@ -275,7 +275,7 @@ Runs the report, populates rows.
 =cut
 
 sub run_report {
-    my ($self) = @_;
+    my ($self,$request) = @_;
     my @rows;
     if ($self->summarize){
        @rows = $self->call_dbmethod(

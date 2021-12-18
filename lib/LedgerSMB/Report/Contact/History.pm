@@ -331,7 +331,7 @@ Runs the report, populates rows.
 =cut
 
 sub run_report {
-    my ($self) = @_;
+    my ($self,$request) = @_;
     my $proc = 'eca__history';
     $proc .= '_summary' if $self->is_summary;
     my @rows = $self->call_dbmethod(funcname => $proc);

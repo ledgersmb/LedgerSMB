@@ -208,7 +208,7 @@ Runs the report
 =cut
 
 sub run_report{
-    my ($self) = @_;
+    my ($self,$request) = @_;
     my @rows = $self->call_dbmethod(funcname => 'budget__search');
     for my $r(@rows){
         $r->{row_id} = $r->{id};

@@ -245,7 +245,7 @@ Runs the report, and assigns rows to $self->rows.
 =cut
 
 sub run_report{
-    my ($self) = @_;
+    my ($self,$request) = @_;
     my @rows = $self->call_dbmethod(funcname => 'draft__search');
     for my $ref (@rows){
         my $script = $ref->{type};

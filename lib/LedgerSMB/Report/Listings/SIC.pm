@@ -70,7 +70,7 @@ sub name {
 =cut
 
 sub run_report{
-    my ($self) = @_;
+    my ($self,$request) = @_;
     my @rows = $self->call_dbmethod(funcname => 'sic__list');
     for my $row(@rows){
         $row->{row_id} = $row->{code};

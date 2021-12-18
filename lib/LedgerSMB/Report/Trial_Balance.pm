@@ -14,13 +14,13 @@ Unlike other reports, trial balance reports can be saved:
 
 We can then run it:
 
- $report->run_report;
+ $report->run_report($request);
  $report->render($request);
 
 We can also retrieve a previous report from the database and run it:
 
  my $report = LedgerSMB::Report::Trial_Balance->get($id);
- $report->run_report;
+ $report->run_report($request);
  $report->render($request);
 
 =cut
@@ -214,7 +214,7 @@ Runs the trial balance report.
 =cut
 
 sub run_report {
-    my ($self) = @_;
+    my ($self,$request) = @_;
     $self->manual_totals('1');
     $self->approved;
     my @rawrows = $self->call_dbmethod(funcname => 'trial_balance__generate');

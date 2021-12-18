@@ -91,7 +91,7 @@ Populates rows
 =cut
 
 sub run_report {
-    my ($self) = @_;
+    my ($self,$request) = @_;
     my @rows = $self->call_dbmethod(funcname => 'partsgroup__search');
     $_->{row_id} = $_->{id} for (@rows);
     return $self->rows(\@rows);

@@ -95,7 +95,7 @@ Sets the rows.  This is just a wrapper around LedgerSMB::Report::File->list
 =cut
 
 sub run_report {
-    my ($self) = $_;
+    my ($self,$request) = $_;
     my @rows = $self->list;
     $_->{row_id} = $_->{id} for @rows;
     return $self->rows(\@rows);

@@ -78,7 +78,7 @@ Runs the report and returns the results for rendering.
 =cut
 
 sub run_report {
-    my ($self) = @_;
+    my ($self,$request) = @_;
     $self->manual_totals(1); #don't display totals
     my @rows = $self->call_dbmethod(funcname => 'business_type__list');
     for my $ref(@rows){

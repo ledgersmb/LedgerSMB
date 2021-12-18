@@ -90,7 +90,7 @@ sub name {
 =cut
 
 sub run_report {
-    my $self = shift;
+    my ($self,$request) = @_;
     return $self->rows([
       map { +{ %$_, row_id => $_->{id}, } }
        $self->call_dbmethod(funcname => 'business_unit__list_by_class',

@@ -112,7 +112,7 @@ has unit => (is => 'ro', isa => 'Str', required => '0');
 =cut
 
 sub run_report {
-    my ($self) = $_;
+    my ($self,$request) = $_;
     my @rows = $self->call_dbmethod(funcname => 'payroll_income_type__search');
     $_->{row_id} = $_->{id} for @rows;
     return $self->rows(@rows);
