@@ -68,7 +68,7 @@ When qr/I select the payment line with these values:$/, sub {
     my $wanted = shift @{$data};
 
     my $row = $page->find_payment_row($wanted);
-    my $checkbox = $row->find('./td[@class="account_number"]/div/input[@type="checkbox"]');
+    my $checkbox = $row->find('./td[@class="account_number"]//input[@type="checkbox"]');
     my $checked = $checkbox->get_attribute('checked');
 
     $checked && $checked eq 'true' or $checkbox->click();
@@ -101,7 +101,7 @@ When qr/^I enter "(.*)" into "To Pay" for the invoice from "(.*)" with these val
     });
 
     my $input_field = $row->find(
-        './td[@class="to_pay_list"]/div/div/input[contains(@name, "payment_")]'
+        './td[@class="to_pay_list"]//input[contains(@name, "payment_")]'
     );
 
     $input_field->click;

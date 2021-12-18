@@ -16,8 +16,6 @@
     END ;
     %]</strong></div>
 <form data-dojo-type="lsmb/Form" id="company" method="post" action="[% request.script %]">
-<div data-dojo-type="lsmb/layout/TableContainer"
-     data-dojo-props="cols:2">
 [% PROCESS input element_data = {
                   id = 'company-target-div'
                 type = "hidden"
@@ -48,12 +46,9 @@
                 name = "account_class"
                 value = account_class
         } %]
-<div class=" col-2 ">
-<div class="input_line">
-<div class="input_group1">
+  <div class="four-column-grid">
         [% PROCESS input element_data = {
-                label = '_none_'
-                title = text('Control Code') #'
+                label = text('Control Code') #'
                   id = 'company-control-code'
                 type = "text"
                 name = "control_code"
@@ -63,8 +58,6 @@
         [% IF !created_as_class;
                 created_as_class = entity_class;
         END; # IF !created_as_class %]
-</div>
-<div class="input_group2">
         [% company_entity_class = company.entity_class;
         IF !company_entity_class;
               company_entity_class = request.entity_class;
@@ -76,24 +69,16 @@
                 default_values = [company_entity_class]
                 text_attr = 'class'
                 value_attr = 'id'
-                title = text('Class')
-                label = '_none_'
+                label = text('Class')
         } %]
-</div>
-</div>
-<div class="input_line">
-<div class="input_group1">
         [% PROCESS input element_data = {
-                title = text('Name')
-                label = '_none_'
+                label = text('Name')
                 type= "text"
                 name = "legal_name"
                 value = company.legal_name
                 size = "20"
                 required = 'true'
         } %]
-</div>
-<div class="input_group2">
        [%
                 company_country_id = company.country_id;
                 IF !company_country_id;
@@ -106,55 +91,37 @@
                         default_values = [company_country_id]
                         options = country_list
                         name = "country_id"
-                        title = text('Country')
-                        label = '_none_'
+                        label = text('Country')
                         required = 'true'
                         default_blank = 1
         } %]
-</div>
-</div>
-<div class="input_line">
-<div class="input_group1">
                 [% INCLUDE input element_data = {
-                        label = '_none_'
-                        title = text('Tax Number/SSN'),
+                        label = text('Tax Number/SSN'),
                         name = "tax_id",
                         value = company.tax_id,
                         type = "text",
                         size = "19"
                 } #' %]
-</div>
 [% IF sic_list.size > 0 %]
-<div class="input_group2">
                 [% INCLUDE select element_data = {
-                        label = '_none_'
-                        title = text('SIC'),
+                        label = text('SIC'),
                         name = "sic_code",
                         options = sic_list
                         default_values = [ company.sic_code ],
                         default_blank = 1
                         class = 'sic'
                 } %]
-</div>
 [% END %]
-</div>
-<div class="input_line"
-     id="sales-tax-info">
-<div class="input_group1">
      [% INCLUDE input element_data = {
-         label = '_none_'
-         title = text('Sales Tax ID') #'
+         label = text('Sales Tax ID')
           name = 'sales_tax_id'
           type = 'text'
          class = 'taxnumber'
           size = '19'
          value = company.sales_tax_id
      } %]
-</div>
-<div class="input_group2">
      [% INCLUDE input element_data = {
-         title = text('License Number') #'
-         label = '_none_'
+         label = text('License Number')
           name = 'license_number'
           type = 'text'
          class = 'taxnumber'
@@ -162,11 +129,7 @@
          value = company.license_number
      } %]
 </div>
-</div>
-</div>
-</div>
-<div class="input_line">
-            <hr/>
+  <hr/>
 <div class="input_group1">
         [% PROCESS button element_data = {
                 text = text('Generate Control Code')
@@ -192,7 +155,6 @@
                         name="action"
                         value="save_company"
                 } %]
-</div>
 </div>
 </form>
 [% FOREACH n = notes %]

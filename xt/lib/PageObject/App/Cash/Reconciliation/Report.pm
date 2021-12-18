@@ -28,7 +28,7 @@ sub find_heading {
         $xpath = (
             '//table[@id="report_headings"]/tbody'.
             qq{/tr[th[normalize-space(.)="$heading->{Heading}:"]]}.
-            q{/td/div[@id="widget_their-total"]/div/}.
+            q{/td/span/div[@id="widget_their-total"]/div/}.
             qq{/input[\@value="$heading->{Contents}"]}
         );
     }

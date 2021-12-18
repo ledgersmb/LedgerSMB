@@ -45,13 +45,10 @@
                 name = "account_class"
                 value = account_class
         } %]
-<div data-dojo-type="lsmb/layout/TableContainer" data-dojo-props="cols:1">
-<div class="input_line">
-<div class="input_group1">
+<div class="two-column-grid" style="width:fit-content">
         [% PROCESS input element_data = {
                   id = 'person-control-code'
-                title = text('Control Code')
-                label = "_none_"
+                label = text('Control Code')
                 type= "text"
                 name = "control_code"
                 value = person.control_code
@@ -60,8 +57,6 @@
         [% IF !created_as_class;
                 created_as_class = entity_class;
         END; # IF !created_as_class %]
-</div>
-<div class="input_group2">
         [%
         PROCESS select element_data = {
                 id = 'person-entity-class'
@@ -70,17 +65,12 @@
                 default_values = [entity_class]
                 text_attr = 'class'
                 value_attr = 'id'
-                title = text('Class')
-                label = "_none_"
+                label = text('Class')
         } %]
-</div>
-</div>
-<div class="input_line">
-<div class="input_group1">
-     [%
+
+  [%
         PROCESS select element_data = {
-                  title = text('Salutation')
-                  label = "_none_"
+                  label = text('Salutation')
                    name = 'salutation_id'
          default_values = [person.salutation_id]
           default_blank = 1
@@ -90,48 +80,29 @@
              value_attr = 'id'
                required = 'true'
     } %]
-</div>
-</div>
-<div class="input_line">
-<div class="input_group1">
         [% PROCESS input element_data = {
-                title = text('Given Name')
-                label = "_none_"
+                label = text('Given Name')
                 type= "text"
                 name = "first_name"
                 value = person.first_name
                 size = "20"
             required = 'true'
         } %]
-</div>
-</div>
-<div class="input_line">
-<div class="input_group1">
         [% PROCESS input element_data = {
-                title = text('Middle Name')
-                label = "_none_"
+                label = text('Middle Name')
                 type= "text"
                 name = "middle_name"
                 value = person.middle_name
                 size = "20"
         } %]
-</div>
-</div>
-<div class="input_line">
-<div class="input_group1">
         [% PROCESS input element_data = {
-                title = text('Surname')
-                label = "_none_"
+                label = text('Surname')
                 type= "text"
                 name = "last_name"
                 value = person.last_name
                 size = "20"
             required = 'true'
         } %]
-</div>
-</div>
-<div class="input_line">
-<div class="input_group1">
        [%
                 person_country_id = person.country_id;
                 IF !person_country_id;
@@ -144,44 +115,28 @@
                         default_values = [person_country_id]
                         options = country_list
                         name = "country_id"
-                        title = text('Country')
-                        label = "_none_"
+                        label = text('Country')
                         required = 'true'
         } %]
-</div>
-</div>
-<div class="input_line">
-<div class="input_group1">
     [% INCLUDE input element_data = {
            name  = 'personal_id',
            type  = 'text',
            size  = '20',
            value = person.personal_id,
-           title = text('Personal ID')
-           label = "_none_"
+           label = text('Personal ID')
            class = 'id',
-                          required = 'true'
+           required = 'true'
     } %]
-</div>
-</div>
-<div class="input_line">
-<div class="input_group1">
     [% INCLUDE input element_data = {
            name  = 'birthdate',
            type  = 'text',
            value = person.birthdate,
-           title = text('Birthdate'),
-           label = "_none_"
+           label = text('Birthdate'),
            size  = '11',
            class = 'date',
                           required = 'true'
-    } %]
+  } %]
 </div>
-</div>
-</div>
-<div class="input_line">
-            <hr/>
-<div class="buttonrow">
         [% PROCESS button element_data = {
                  id = 'person-generate-control-code'
                 text = text('Generate Control Code')

@@ -55,7 +55,6 @@ if (TARGET !== 'readme') {
         "dijit/form/ValidationTextBox",
         "dijit/layout/BorderContainer",
         "dijit/layout/ContentPane",
-        "dijit/layout/TabContainer",
         "dijit/Tooltip",
         "lsmb/ToggleIncludeButton"
     ];

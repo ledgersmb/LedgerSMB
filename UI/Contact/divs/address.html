@@ -90,8 +90,9 @@
                 name="location_id"
                 value= DISPLAY.id
         };
-       %] <div data-dojo-type="lsmb/layout/TableContainer" data-dojo-props="cols:1"><div>
-             [% IF credit_act.id;
+%]
+<div class="two-column-grid" style="width:fit-content">
+  [% IF credit_act.id;
                     IF DISPLAY.is_for_credit;
                        attach_to = 3;
                     ELSE;
@@ -106,10 +107,8 @@
                           label = "_none_"
                        };
                      ELSE %]
-         </div>
-        <div>
-             <label>[% text('Attach to Entity');
-                    END; %]</label>
+  <label>[% text('Attach to Entity'); %]</label>
+                   [% END; %]
                 [% INCLUDE select element_data = {
                        name           = "location_class"
                        default_values = [DISPLAY.location_class]
@@ -118,20 +117,15 @@
                        value_attr     = "id"
                        title = text('Type')
                        label = "_none_"
-                } %]
-        </div>
-        <div>
+  } %]
+  <label style="grid-row: span 3">[% text('Address') %]</label>
                 [% INCLUDE input element_data = {
                         title = text('Address'),
-                        label = "_none_"
-                        name = "line_one",
                         value = DISPLAY.line_one,
                         type = "text",
                         size = "20",
-                        required = 'true',
+  required = 'true',
                 } %]
-        </div>
-        <div>
                 [% PROCESS input element_data = {
                         name = "line_two"
                         class = "addl-address"
@@ -139,8 +133,6 @@
                         type = "text"
                         size = "20"
                 } %]
-        </div>
-        <div>
                 [% PROCESS input element_data = {
                         name = "line_three"
                         class = "addl-address"
@@ -148,39 +140,27 @@
                         type = "text"
                         size = "20"
                 } %]
-        </div>
-        <div>
                 [% PROCESS input element_data = {
-                        title = text('City'),
-                        label = "_none_"
-                        name = "city",
+                        label = text('City'),
                         value = DISPLAY.city,
                         type = "text",
                         required = 'true',
                         size = "20"
                 } %]
-        </div>
-        <div>
                 [% PROCESS input element_data = {
-                        title = text('State/Province'),
-                        label = "_none_"
+                        label = text('State/Province'),
                         name = "state",
                         value = DISPLAY.state,
                         type = "text",
                         size = "20"
                 } %]
-        </div>
-        <div>
                 [% PROCESS input element_data = {
-                        title = text('Zip/Post Code'),
-                        label = "_none_"
+                        label = text('Zip/Post Code'),
                         name = "mail_code",
                         value = DISPLAY.mail_code,
                         type = "text",
                         size = "20"
-                } #' %]
-        </div>
-        <div>
+                } %]
                 [% IF !DISPLAY.country_id; DISPLAY.country_id = default_country; END -%]
                 [% INCLUDE select_country element_data = {
                         id = "address-country-select"
@@ -189,11 +169,10 @@
                         default_values = [DISPLAY.country_id]
                         options = country_list
                         name = "country_id"
-                        title = text('Country')
-                        label = "_none_"
+                        label = text('Country')
                         required = 'true'
                 } %]
-        </div></div>
+</div>
         <div>
              [%
               IF request.location_class;

@@ -49,7 +49,7 @@ export class LsmbBaseInput extends HTMLElement {
         const labelBefore =
             !this.hasAttribute("label-pos") ||
             this.getAttribute("label-pos") !== "after";
-        if (labelBefore) {
+        if (labelBefore && this.dojoLabel) {
             root.appendChild(this.dojoLabel);
         }
 

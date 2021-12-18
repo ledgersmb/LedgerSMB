@@ -16,40 +16,30 @@
       [% IF multi %]
       <div class="listtop">[% text('Batch Information') %]</div>
       [% END %]
-      <div data-dojo-type="lsmb/layout/TableContainer"
-           data-dojo-props="cols:1">
-        <div class="inputrow" id = "referencerow">
+      <div class="two-column-grid" style="width: fit-content">
           [% PROCESS input element_data = {
                  type  = "text"
                  class = "reference"
                  name  = "reference"
-                 title = text('Reference')
-                 label = "_none_"
+                 label = text('Reference')
                  value = request.reference
                  size  = 15
                  } %]
-        </div>
-        <div class="inputrow" id = "descriptionrow">
           [% PROCESS input element_data = {
                  type  = "text"
                  class = "description"
                  name  = "description"
-                 title = text('Description')
-                 label = "_none_"
+                 label = text('Description')
                  value = request.description
                  } %]
-        </div>
-        <div class="inputrow" id="daterow">
           [% PROCESS input element_data = {
                  type = "text"
                  class = "date"
-                 title = text("Transaction Date") #'
-                 label = "_none_"
+                 label = text("Transaction Date") #'
                  name = "transdate"
                  value = request.transdate
                  size = 12
                  } %]
-        </div>
       </div>
       <div class="inputrow" id="filerow">
         [% PROCESS input element_data = {
