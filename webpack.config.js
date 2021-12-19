@@ -19,7 +19,6 @@ if (TARGET !== 'readme') {
     const ESLintPlugin = require("eslint-webpack-plugin");
     const HtmlWebpackPlugin = require("html-webpack-plugin");
     const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-    //const ObsoleteWebpackPlugin = require("obsolete-webpack-plugin");
     const StylelintPlugin = require("stylelint-bare-webpack-plugin");
     const TerserPlugin = require("terser-webpack-plugin");
     const UnusedWebpackPlugin = require("unused-webpack-plugin");
@@ -279,13 +278,6 @@ if (TARGET !== 'readme') {
             template: "lib/ui-header.html"
         }),
 
-        // Add obsoleted browser warning on application start
-        // Not yet webpack5 ready
-    /*
-        new ObsoleteWebpackPlugin({
-            name: "obsolete"
-        }),
-    */
         // Analyze the generated JS code. Use `npm run analyzer` to view
         new BundleAnalyzerPlugin({
             analyzerHost: "0.0.0.0",
