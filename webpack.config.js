@@ -398,7 +398,6 @@ if (TARGET !== 'readme') {
             },
             extensions: [ ".js", ".vue" ],
             fallback: {
-                buffer: require.resolve("buffer/"),
                 path: require.resolve("path-browserify")
             }
         },
