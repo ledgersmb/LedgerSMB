@@ -34,7 +34,7 @@ if (TARGET !== 'readme') {
 
     // Make sure all modules follow desired mode
     process.env.NODE_ENV = prodMode ? "production" : "development";
-    const parallelJobs = process.env.CI || process.env.TRAVIS ? 2 : true;
+    const parallelJobs = process.env.CI ? 2 : true;
 
     /* FUNCTIONS */
 
