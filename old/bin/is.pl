@@ -829,7 +829,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
                            $form->round_amount( $form->{taxes}{$item}, 2 ), LedgerSMB::Setting->new(%$form)->get('decimal_places') );
                 next if !$form->{"${taccno}_total"};
                 $tax .= qq|
-                <tr class="invoice-auto-tax">
+                <tr class="invoice-auto-tax" title="Source: $form->{acc_trans}{ $form->{id} }{ $taccno }{source}">
                   <th align=right>$form->{"${taccno}_description"}</th>
                   <td align=right>$form->{"${taccno}_total"}</td>
                   <td>$form->{currency}</td>
