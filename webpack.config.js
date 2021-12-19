@@ -227,7 +227,7 @@ if (TARGET !== 'readme') {
     };
 
     var pluginsProd = [
-        // Clean UI/js before building
+        // Clean UI/js before building (must be first)
         new CleanWebpackPlugin(CleanWebpackPluginOptions),
 
         // Lint the sources
