@@ -87,7 +87,7 @@ if (TARGET !== 'readme') {
                     cwd: "UI"
                 })
                 .map(function (file) {
-                    return file.replace(/\.js$/, "");
+                    return file.replace(/\.js$/, "").replace(/js-src\//, "");
                 })
         )
         .filter((x, i, a) => a.indexOf(x) === i)
