@@ -19,7 +19,6 @@ if (TARGET !== 'readme') {
     const ESLintPlugin = require("eslint-webpack-plugin");
     const HtmlWebpackPlugin = require("html-webpack-plugin");
     const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-    //const ObsoleteWebpackPlugin = require("obsolete-webpack-plugin");
     const StylelintPlugin = require("stylelint-bare-webpack-plugin");
     const TerserPlugin = require("terser-webpack-plugin");
     const UnusedWebpackPlugin = require("unused-webpack-plugin");
@@ -35,7 +34,7 @@ if (TARGET !== 'readme') {
 
     // Make sure all modules follow desired mode
     process.env.NODE_ENV = prodMode ? "production" : "development";
-    const parallelJobs = process.env.CI || process.env.TRAVIS ? 2 : true;
+    const parallelJobs = process.env.CI ? 2 : true;
 
     /* FUNCTIONS */
 
@@ -87,7 +86,7 @@ if (TARGET !== 'readme') {
                     cwd: "UI"
                 })
                 .map(function (file) {
-                    return file.replace(/\.js$/, "");
+                    return file.replace(/\.js$/, "").replace(/js-src\//, "");
                 })
         )
         .filter((x, i, a) => a.indexOf(x) === i)
@@ -228,7 +227,7 @@ if (TARGET !== 'readme') {
     };
 
     var pluginsProd = [
-        // Clean UI/js before building
+        // Clean UI/js before building (must be first)
         new CleanWebpackPlugin(CleanWebpackPluginOptions),
 
         // Lint the sources
@@ -275,17 +274,9 @@ if (TARGET !== 'readme') {
             filename: "ui-header.html",
             mode: prodMode ? "production" : "development",
             excludeChunks: [...Object.keys(lsmbCSS)],
-            chunksSortMode: 'manual',
             template: "lib/ui-header.html"
         }),
 
-        // Add obsoleted browser warning on application start
-        // Not yet webpack5 ready
-    /*
-        new ObsoleteWebpackPlugin({
-            name: "obsolete"
-        }),
-    */
         // Analyze the generated JS code. Use `npm run analyzer` to view
         new BundleAnalyzerPlugin({
             analyzerHost: "0.0.0.0",
@@ -407,7 +398,6 @@ if (TARGET !== 'readme') {
             },
             extensions: [ ".js", ".vue" ],
             fallback: {
-                buffer: require.resolve("buffer/"),
                 path: require.resolve("path-browserify")
             }
         },
