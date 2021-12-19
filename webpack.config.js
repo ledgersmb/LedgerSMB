@@ -17,7 +17,6 @@ const { DuplicatesPlugin } = require("inspectpack/plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-//const ObsoleteWebpackPlugin = require("obsolete-webpack-plugin");
 const StylelintPlugin = require("stylelint-bare-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const UnusedWebpackPlugin = require("unused-webpack-plugin");
@@ -219,7 +218,7 @@ const lsmbCSS = {
 };
 
 var pluginsProd = [
-    // Clean UI/js before building
+    // Clean UI/js before building (must be first)
     new CleanWebpackPlugin(CleanWebpackPluginOptions),
 
     // Lint the sources
@@ -266,13 +265,6 @@ var pluginsProd = [
         template: "lib/ui-header.html"
     }),
 
-    // Add obsoleted browser warning on application start
-    // Not yet webpack5 ready
-/*
-    new ObsoleteWebpackPlugin({
-        name: "obsolete"
-    }),
-*/
     // Analyze the generated JS code. Use `npm run analyzer` to view
     new BundleAnalyzerPlugin({
         analyzerHost: "0.0.0.0",
@@ -326,29 +318,29 @@ const optimizationList = {
     moduleIds: 'deterministic',
     runtimeChunk: "multiple",
     splitChunks: {
-              cacheGroups: {
-                  node_modules: {
+        cacheGroups: {
+            node_modules: {
                 test(module) {
-                          // `module.resource` contains the absolute path of the file on disk.
-                          // Note the usage of `path.sep` instead of / or \, for cross-platform compatibility.
-                          return (
-                              module.resource &&
-                              !module.resource.endsWith(".css") &&
-                              module.resource.includes(
-                                  `${path.sep}node_modules${path.sep}`
-                              )
-                          );
-                      },
-                      name(module) {
-                          const packageName = module.context.match(
-                              /[\\/]node_modules[\\/](.*?)([\\/]|$)/
-                          )[1];
-                          return `npm.${packageName.replace("@", "")}`;
-                      },
+                    // `module.resource` contains the absolute path of the file on disk.
+                    // Note the usage of `path.sep` instead of / or \, for cross-platform compatibility.
+                    return (
+                        module.resource &&
+                        !module.resource.endsWith(".css") &&
+                        module.resource.includes(
+                            `${path.sep}node_modules${path.sep}`
+                        )
+                    );
+                },
+                name(module) {
+                    const packageName = module.context.match(
+                        /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+                    )[1];
+                    return `npm.${packageName.replace("@", "")}`;
+                },
                 chunks: "all",
-                  }
-              }
-                }
+            }
+        }
+    }
 };
 
 /* WEBPACK CONFIG */
@@ -382,7 +374,6 @@ const webpackConfigs = {
 
     resolve: {
         fallback: {
-            buffer: require.resolve("buffer/"),
             path: require.resolve("path-browserify")
         }
     },
