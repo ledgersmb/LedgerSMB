@@ -274,7 +274,6 @@ if (TARGET !== 'readme') {
             filename: "ui-header.html",
             mode: prodMode ? "production" : "development",
             excludeChunks: [...Object.keys(lsmbCSS)],
-            chunksSortMode: 'manual',
             template: "lib/ui-header.html"
         }),
 
