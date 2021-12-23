@@ -701,10 +701,16 @@ h2 {
 
 .two-column-grid lsmb-text,
 .two-column-grid lsmb-password,
+.two-column-grid lsmb-date,
+.two-column-grid lsmb-file,
 .four-column-grid lsmb-text,
 .four-column-grid lsmb-password,
+.four-column-grid lsmb-date,
+.four-column-grid lsmb-file,
 .six-column-grid lsmb-text,
-.six-column-grid lsmb-password {
+.six-column-grid lsmb-password,
+.six-column-grid lsmb-date,
+.six-column-grid lsmb-file {
     display: contents;
 }
 

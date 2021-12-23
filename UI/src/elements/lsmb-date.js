@@ -1,0 +1,30 @@
+/** @format */
+/* eslint-disable class-methods-use-this, max-classes-per-file */
+
+import { LsmbBaseInput } from "./lsmb-base-input";
+
+const dojoDateBox = require("lsmb/DateTextBox");
+
+export class LsmbDate extends LsmbBaseInput {
+    widgetWrapper = null;
+
+    _stdProps() {
+        return { size: 10 };
+    }
+
+    _widgetRoot() {
+        if (this.widgetWrapper) {
+            return this.widgetWrapper;
+        }
+        this.widgetWrapper = document.createElement("span");
+        this.appendChild(this.widgetWrapper);
+
+        return this.widgetWrapper;
+    }
+
+    _widgetClass() {
+        return dojoDateBox;
+    }
+}
+
+customElements.define("lsmb-date", LsmbDate);

@@ -8,8 +8,6 @@ export class LsmbBaseInput extends HTMLElement {
 
     dojoLabel = null;
 
-    oops = false;
-
     constructor() {
         super();
 
@@ -45,17 +43,16 @@ export class LsmbBaseInput extends HTMLElement {
             this.dojoLabel.innerHTML = this.getAttribute("label");
             this.dojoLabel.classList.add("label");
         }
-        let root = this;
         const labelBefore =
             !this.hasAttribute("label-pos") ||
             this.getAttribute("label-pos") !== "after";
         if (labelBefore && this.dojoLabel) {
-            root.appendChild(this.dojoLabel);
+            this._labelRoot().appendChild(this.dojoLabel);
         }
 
-        this.dojoWidget.placeAt(root);
+        this.dojoWidget.placeAt(this._widgetRoot());
         if (!labelBefore && this.dojoLabel) {
-            this.appendChild(this.dojoLabel);
+            this._labelRoot().appendChild(this.dojoLabel);
         }
         if (this.dojoLabel) {
             this.dojoLabel.setAttribute("for", this.dojoWidget.id);
@@ -72,6 +69,14 @@ export class LsmbBaseInput extends HTMLElement {
 
     _stdProps() {
         return {};
+    }
+
+    _labelRoot() {
+        return this;
+    }
+
+    _widgetRoot() {
+        return this;
     }
 
     _widgetClass() {

@@ -16,7 +16,11 @@ define([
         defaultIsToday: false,
         _oldValue: "",
         constructor: function (params, srcNodeRef) {
-            this._formattedValue = srcNodeRef.value;
+            if (srcNodeRef) {
+                this._formattedValue = srcNodeRef.value;
+            } else {
+                this._formattedValue = "";
+            }
 
             /* eslint no-param-reassign:0 */
             /* Provide default 'old code' doesn't include in its templates */

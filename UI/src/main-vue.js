@@ -9,11 +9,16 @@ const dojoParser = require("dojo/parser");
 
 import Home from "./components/Home";
 import ServerUI from "./components/ServerUI";
-// import ImportCSV from "./components/ImportCSV";
+import ImportCSV from "./components/ImportCSV";
 
 const routes = [
     { name: "home", path: "/", component: Home },
-    //    { name: "importCSV", path: "/import-csv/:type", component: ImportCSV, props: true },
+    {
+        name: "importCSV",
+        path: "/import-csv/:type",
+        component: ImportCSV,
+        props: true
+    },
     {
         name: "default",
         path: "/:pathMatch(.*)",
