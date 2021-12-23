@@ -5,6 +5,7 @@ import { h } from "vue";
 
 const registry = require("dijit/registry");
 const parser = require("dojo/parser");
+const query = require("dojo/query");
 
 function domReject(response) {
     return (
@@ -112,6 +113,15 @@ export default {
             );
             widgets.forEach((w) =>
                 w.destroyRecursive ? w.destroyRecursive(true) : w.destroy()
+            );
+            // when the BODY-bound mouse-over handler finds a node which has a
+            // _cssState prop after the widget that node belongs to was unregistered
+            // an error is thrown. Make sure the props are gone right after unregistering
+            // the widgets. (it may take a bit for the new content to overwrite the old
+            // content...)
+            query("*", document.getElementById("maindiv")).forEach(
+                /* eslint-disable no-param-reassign */
+                (n) => delete n._cssState
             );
         } catch (e) {
             this._report_error(e);
