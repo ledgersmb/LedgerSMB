@@ -148,7 +148,7 @@ define([
                 url += "#" + Date.now();
 
                 if (this.load_link) {
-                    this.load_link(url);
+                    this.load_link("/" + url);
                 }
             }
         },
