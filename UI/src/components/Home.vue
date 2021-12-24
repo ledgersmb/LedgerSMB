@@ -64,16 +64,6 @@
 
 <script>
 
-function markDone() {
-    document.getElementById("maindiv").classList.add("done-parsing");
-}
-
 export default {
-    mounted() {
-        markDone();
-    },
-    updated() {
-        markDone();
-    }
 };
 </script>

@@ -23,7 +23,10 @@ const routes = [
         name: "default",
         path: "/:pathMatch(.*)",
         component: ServerUI,
-        props: (route) => ({ uiURL: route.fullPath })
+        props: (route) => ({ uiURL: route.fullPath }),
+        meta: {
+            managesDone: true
+        }
     }
 ];
 
@@ -31,6 +34,16 @@ const router = createRouter({
     history: createWebHashHistory(),
     routes
 });
+
+const maindiv = document.getElementById("maindiv");
+
+router.beforeEach(() => maindiv.classList.remove("done-parsing"));
+router.afterEach((to) => {
+    if (!to.meta.managesDone) {
+        maindiv.classList.add("done-parsing");
+    }
+});
+
 
 export const app = createApp({
     components: [Home, ServerUI],

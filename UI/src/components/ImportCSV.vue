@@ -35,16 +35,7 @@
 
 <script>
 
-function markDone() {
-}
-
 export default {
     props: [ "multi", "info", "title", "type" ],
-    mounted() {
-        markDone();
-    },
-    updated() {
-        markDone();
-    }
 };
 </script>
