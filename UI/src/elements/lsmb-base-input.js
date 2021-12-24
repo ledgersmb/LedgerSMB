@@ -11,6 +11,41 @@ export class LsmbBaseInput extends HTMLElement {
     constructor() {
         super();
 
+    }
+
+    _boolAttrs() {
+        return ["disabled", "readonly", "required"];
+    }
+
+    _valueAttrs() {
+        return ["title", "name", "value", "tabindex"];
+    }
+
+    _stdProps() {
+        return {};
+    }
+
+    _labelRoot() {
+        return this;
+    }
+
+    _widgetRoot() {
+        return this;
+    }
+
+    _widgetClass() {
+        throw new Error(
+            "lsmb-base-input is an abstract base class! don't use directly!"
+        );
+    }
+
+    adoptedCallback() {
+        if (this.dojoWidget && this.dojoWidget.resize) {
+            this.dojoWidget.resize();
+        }
+    }
+
+    connectedCallback() {
         /* eslint-disable no-eval */
         let extra = this.hasAttribute("dojo-props")
             ? eval("({" + this.getAttribute("dojo-props") + "})")
@@ -58,40 +93,6 @@ export class LsmbBaseInput extends HTMLElement {
             this.dojoLabel.setAttribute("for", this.dojoWidget.id);
         }
     }
-
-    _boolAttrs() {
-        return ["disabled", "readonly", "required"];
-    }
-
-    _valueAttrs() {
-        return ["title", "name", "value", "tabindex"];
-    }
-
-    _stdProps() {
-        return {};
-    }
-
-    _labelRoot() {
-        return this;
-    }
-
-    _widgetRoot() {
-        return this;
-    }
-
-    _widgetClass() {
-        throw new Error(
-            "lsmb-base-input is an abstract base class! don't use directly!"
-        );
-    }
-
-    adoptedCallback() {
-        if (this.dojoWidget && this.dojoWidget.resize) {
-            this.dojoWidget.resize();
-        }
-    }
-
-    connectedCallback() {}
 
     disconnectedCallback() {
         if (this.dojoWidget) {

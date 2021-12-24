@@ -5,7 +5,9 @@ let lblCounter = 0;
 export class LsmbFile extends HTMLElement {
     constructor() {
         super();
+    }
 
+    connectedCallback() {
         let elmId = `/lsmb/form/file-${lblCounter++}`;
         let options = 'type="file" id="${elmId}"';
         let label = "";
