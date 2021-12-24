@@ -9,7 +9,7 @@ export class LsmbFile extends HTMLElement {
 
     connectedCallback() {
         let elmId = `/lsmb/form/file-${lblCounter++}`;
-        let options = 'type="file" id="${elmId}"';
+        let options = `type="file" id="${elmId}"`;
         let label = "";
         if (this.hasAttribute("name")) {
             options += ` name="${this.getAttribute("name")}"`;

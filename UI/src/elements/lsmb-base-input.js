@@ -10,7 +10,6 @@ export class LsmbBaseInput extends HTMLElement {
 
     constructor() {
         super();
-
     }
 
     _boolAttrs() {
@@ -79,7 +78,9 @@ export class LsmbBaseInput extends HTMLElement {
             this.dojoLabel.classList.add("label");
 
             // without this handler, we bubble 2 events "to the outside"
-            this.dojoLabel.addEventListener('click', (e) => e.stopPropagation());
+            this.dojoLabel.addEventListener("click", (e) =>
+                e.stopPropagation()
+            );
         }
         const labelBefore =
             !this.hasAttribute("label-pos") ||
