@@ -49,7 +49,6 @@ router.afterEach((to) => {
 });
 
 export const app = createApp({
-    components: [Home, ServerUI],
     mounted() {
         let m = document.getElementById("main");
 
