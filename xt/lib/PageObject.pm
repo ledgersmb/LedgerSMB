@@ -63,7 +63,7 @@ sub wait_for_page {
             }
             else {
                 $self->session->page
-                    ->find('body.done-parsing', scheme => 'css');
+                    ->find('body[data-lsmb-done]', scheme => 'css');
             }
         });
 }

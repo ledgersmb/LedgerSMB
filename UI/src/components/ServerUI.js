@@ -36,7 +36,7 @@ export default {
 
                 document
                     .getElementById("maindiv")
-                    .classList.remove("done-parsing");
+                    .removeAttribute("data-lsmb-done");
                 let r = await fetch(tgt, {
                     method: options.method,
                     body: options.data,
@@ -101,7 +101,9 @@ export default {
     beforeRouteUpdate() {},
     beforeRouteLeave() {},
     mounted() {
-        document.getElementById("maindiv").classList.add("done-parsing");
+        document
+            .getElementById("maindiv")
+            .setAttribute("data-lsmb-done", "true");
         this.$nextTick(() => this.updateContent(this.uiURL));
         window.__lsmbSubmitForm = (req) =>
             this.updateContent(req.url, req.options);
@@ -137,7 +139,7 @@ export default {
                 registry.findWidgets(maindiv).forEach((child) => {
                     this._recursively_resize(child);
                 });
-                maindiv.classList.add("done-parsing");
+                maindiv.setAttribute("data-lsmb-done", "true");
             });
             maindiv
                 .querySelectorAll("a")

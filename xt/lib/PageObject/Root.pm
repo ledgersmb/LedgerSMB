@@ -18,7 +18,7 @@ has body => (is => 'rw',
 sub _build_body {
     my ($self) = @_;
 
-    return $self->find('body.done-parsing', scheme => 'css');
+    return $self->find('body[data-lsmb-done]', scheme => 'css');
 }
 
 sub wait_for_body {
@@ -38,7 +38,7 @@ sub wait_for_body {
                 return 0;
             }
             else {
-                return $self->session->page->find('body.done-parsing', scheme => 'css');
+                return $self->session->page->find('body[data-lsmb-done]', scheme => 'css');
             }
         });
 

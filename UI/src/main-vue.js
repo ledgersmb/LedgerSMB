@@ -35,15 +35,18 @@ const router = createRouter({
     routes
 });
 
-const maindiv = document.getElementById("maindiv");
-
-router.beforeEach(() => maindiv.classList.remove("done-parsing"));
-router.afterEach((to) => {
-    if (!to.meta.managesDone) {
-        maindiv.classList.add("done-parsing");
+router.beforeEach(() => {
+    let maindiv = document.getElementById("maindiv");
+    if (maindiv) {
+        maindiv.removeAttribute("data-lsmb-done");
     }
 });
-
+router.afterEach((to) => {
+    let maindiv = document.getElementById("maindiv");
+    if (!to.meta.managesDone && maindiv) {
+        maindiv.setAttribute("data-lsmb-done", "true");
+    }
+});
 
 export const app = createApp({
     components: [Home, ServerUI],
@@ -52,25 +55,25 @@ export const app = createApp({
 
         this.$nextTick(() => {
             dojoParser.parse(m).then(() => {
-                const l = document.getElementById("loading");
-                if (l) {
-                    l.style.display = "none";
-                }
-                document.body.classList.add("done-parsing");
                 let r = registry.byId("top_menu");
                 if (r) {
                     // Setup doesn't have top_menu
                     r.load_link = (url) => this.$router.push(url);
                 }
+                const l = document.getElementById("loading");
+                if (l) {
+                    l.style.display = "none";
+                }
+                document.body.setAttribute("data-lsmb-done", "true");
             });
         });
         window.__lsmbLoadLink = (url) => this.$router.push(url);
     },
     beforeUpdate() {
-        document.body.classList.remove("done-parsing");
+        document.body.removeAttribute("data-lsmb-done");
     },
     updated() {
-        document.body.classList.add("done-parsing");
+        document.body.setAttribute("data-lsmb-done", "true");
     }
 }).use(router);
 app.config.compilerOptions.isCustomElement = (tag) => tag.startsWith("lsmb-");
@@ -84,6 +87,6 @@ if (document.getElementById("main")) {
         if (l) {
             l.style.display = "none";
         }
-        document.body.classList.add("done-parsing");
+        document.body.setAttribute("data-lsmb-done", "true");
     });
 }
