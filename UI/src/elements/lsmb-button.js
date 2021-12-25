@@ -22,8 +22,15 @@ export class LsmbButton extends HTMLElement {
         this.innerHTML = "";
         let props = { label: this.label };
 
+        if (this.hasAttribute("type")) {
+            props.type = this.getAttribute("type");
+        }
+
         this.dojoWidget = new Button(props);
         this.appendChild(this.dojoWidget.domNode);
+        this.addEventListener("focus", () => {
+            this.dojoWidget.focus();
+        });
     }
 
     disconnetedCallback() {

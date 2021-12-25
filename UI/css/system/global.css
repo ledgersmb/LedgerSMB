@@ -669,10 +669,16 @@ h2 {
     min-height: 8em;
 }
 
+#app-login {
+    margin-top: 2em;
+}
 
 #logindiv #company_div {
     display: grid;
     grid-template-columns: auto auto;
+    grid-row-gap: 4px;
+    margin-bottom: 1em;
+    margin-top: 2em;
 }
 
 #logindiv #company_div lsmb-text,

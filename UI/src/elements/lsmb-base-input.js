@@ -8,6 +8,8 @@ export class LsmbBaseInput extends HTMLElement {
 
     dojoLabel = null;
 
+    connected = false;
+
     constructor() {
         super();
     }
@@ -38,13 +40,35 @@ export class LsmbBaseInput extends HTMLElement {
         );
     }
 
+    static get observedAttributes() {
+        return ["value"];
+    }
+
+    get value() {
+        return this.getAttribute("value");
+    }
+
+    set value(newValue) {
+        this.setAttribute("value", newValue);
+    }
+
     adoptedCallback() {
         if (this.dojoWidget && this.dojoWidget.resize) {
             this.dojoWidget.resize();
         }
     }
 
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (oldValue === newValue || !this.dojoWidget) return;
+        this.dojoWidget.set(name, newValue);
+    }
+
     connectedCallback() {
+        if (this.connected) {
+            return;
+        }
+        this.connected = true;
+
         /* eslint-disable no-eval */
         let extra = this.hasAttribute("dojo-props")
             ? eval("({" + this.getAttribute("dojo-props") + "})")
@@ -60,11 +84,7 @@ export class LsmbBaseInput extends HTMLElement {
                 props[prop] = true;
             }
         });
-        if (props.name && !props.id) {
-            props.id = props.name.replace(/[^a-zA-Z0-9]/, "-");
-        }
         this.dojoWidget = new (this._widgetClass())(props);
-        ["name", "id", "tabindex"].forEach((att) => this.removeAttribute(att));
 
         if (this.hasAttribute("title") && !this.hasAttribute("label")) {
             this.setAttribute("label", this.getAttribute("title"));
@@ -96,11 +116,30 @@ export class LsmbBaseInput extends HTMLElement {
         if (this.dojoLabel) {
             this.dojoLabel.setAttribute("for", this.dojoWidget.id);
         }
+        this.dojoWidget.on("input", (e) => {
+            let evt = new InputEvent("input", {
+                data: e.charOrCode
+            });
+            this.dispatchEvent(evt);
+        });
+        this.dojoWidget.on("change", () => {
+            let evt = new Event("change");
+            this.dispatchEvent(evt);
+        });
+        this.addEventListener("focus", () => {
+            this.dojoWidget.focus();
+        });
     }
 
     disconnectedCallback() {
+        this.connected = false;
         if (this.dojoWidget) {
             registry.remove(this.dojoWidget.id);
+            this.dojoWidget.destroy(false);
+            this.dojoWidget = null;
+
+            this.dojoLabel.remove();
+            this.dojoLabel = null;
         }
     }
 }

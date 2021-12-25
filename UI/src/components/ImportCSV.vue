@@ -26,7 +26,7 @@
       </div>
       <div class="inputrow" id="buttonrow">
         <input type="hidden" name="trans_type" />
-        <button type="submit" class="submit"
+        <button class="submit"
                 name="action" value="run_import">{{ "Save" }}</button>
       </div>
     </form>
