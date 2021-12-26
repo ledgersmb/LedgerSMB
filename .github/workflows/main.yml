@@ -60,7 +60,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: UI/js
-          key: dojo-${{ hashFiles('UI/js-src/**', 'UI/css/**','UI/**/*.html','doc/sources/**') }}
+          key: dojo-${{ hashFiles('UI/js-src/**', 'UI/src/**', 'UI/css/**','UI/**/*.html','doc/sources/**') }}
 
       - name: Build Dojo
         run: |
