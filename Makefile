@@ -131,7 +131,7 @@ else
                 OSDISTRO := SUSE
             endif
     endif
-    ifneq (,$(filter DEBIAN UBUNTU LINUXMINT, $(OSDISTRO)))
+    ifneq (,$(filter DEBIAN UBUNTU LINUXMINT UOS, $(OSDISTRO)))
         OSTYPE := DEBIAN
     endif
     ifneq (,$(filter SUSE, $(OSDISTRO)))
