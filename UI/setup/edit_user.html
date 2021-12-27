@@ -50,9 +50,12 @@ include_stylesheet=["setup.css"];
                 <td><label for="password">[% text('Password') %]</label>
                 </td>
                 <td>
-                    <input type="password"
-                           id="password" name="password" value=""
-                           autocomplete="off" />
+                  [% PROCESS input element_data = {
+                               type = "password"
+                               id   = "password"
+                               name = "password"
+                               autocomplete = "off"
+                  } %]
                 </td>
             </tr>
 
