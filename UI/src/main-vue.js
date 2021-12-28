@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 
 import { createApp } from "vue";
-import { createRouter, createWebHashHistory } from "vue-router";
+import { setupRouter } from './router'
 
 const registry = require("dijit/registry");
 const dojoParser = require("dojo/parser");
@@ -10,20 +10,7 @@ const dojoParser = require("dojo/parser");
 import Home from "./components/Home.vue";
 import ServerUI from "./components/ServerUI";
 
-const routes = [
-    { name: "home", path: "/", component: Home },
-    {
-        name: "default",
-        path: "/:pathMatch(.*)",
-        component: ServerUI,
-        props: (route) => ({ uiURL: route.fullPath })
-    }
-];
-
-const router = createRouter({
-    history: createWebHashHistory(),
-    routes
-});
+const router = setupRouter;
 
 export const app = createApp({
     components: [Home, ServerUI],
