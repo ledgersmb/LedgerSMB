@@ -112,11 +112,9 @@
     "yargs": "17.3.1"
   },
   "dependencies": {
-    "axios": "0.24.0",
     "content-disposition": "0.5.4",
     "dijit": "1.16.4",
-    "dojo": "1.16.4",
-    "vue-axios": "3.4.0"
+    "dojo": "1.16.4"
   },
   "homepage": "http://ledgersmb.org/",
   "scripts": {
