@@ -367,11 +367,6 @@ if (TARGET !== 'readme') {
         context: path.join(__dirname, "UI"),
 
         entry: {
-            main: {
-                filename: "lsmb/main.js",
-                import: "lsmb/main",
-                dependOn: "dojo-shared"
-            },
             "dojo-shared": [ ...includedRequires ],
             ...lsmbCSS
         },
