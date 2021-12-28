@@ -10,15 +10,14 @@ const dojoParser = require("dojo/parser");
 import Home from "./components/Home";
 import LoginPage from "./components/LoginPage";
 import ServerUI from "./components/ServerUI";
-import ImportCSV from "./components/ImportCSV";
+import ImportCsvGl from "./components/ImportCSV-GL";
 
 const routes = [
     { name: "home", path: "/", component: Home },
     {
-        name: "importCSV",
-        path: "/import-csv/:type",
-        component: ImportCSV,
-        props: true
+        name: "importCSV-GL",
+        path: "/import-csv/gl",
+        component: ImportCsvGl
     },
     {
         name: "default",
