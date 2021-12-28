@@ -57,9 +57,6 @@ export default {
    },
    methods: {
       async login() {
-          let headers = new Headers();
-          headers.set("X-Requested-With", "XMLHttpRequest");
-          headers.set("Content-Type", "application/json");
           this.inProgress = true;
           let r = await fetch("login.pl?action=authenticate&company=" + encodeURI(this.company), {
              method: "POST",
@@ -68,7 +65,10 @@ export default {
                 password: this.password,
                 login: this.username
              }),
-             headers: headers
+             headers: new Headers({
+                "X-Requested-With": "XMLHttpRequest",
+                "Content-Type": "application/json"
+             })
          });
          if (r.ok) {
             let data = await r.json();
