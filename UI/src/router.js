@@ -39,7 +39,7 @@ export function setupRouter(i18n) {
             // set i18n language
             setI18nLanguage(i18n, paramsLocale);
         }
-        return to.params.path;
+        return to.params.fullPath;
     });
 
     return router;
