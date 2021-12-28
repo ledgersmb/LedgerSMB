@@ -12,13 +12,13 @@ export function setupRouter(i18n) {
 
     // setup routes
     const routes = [
-        { name: "home", path: "/:locale/", component: Home },
+        { name: "home", path: "/", component: Home },
         {
             name: "default",
             path: "/:pathMatch(.*)",
             component: ServerUI,
             props: (route) => ({ uiURL: route.fullPath }),
-            redirect: () => `/${locale}`
+            //redirect: () => `/${locale}`
         }
     ];
 
@@ -30,12 +30,10 @@ export function setupRouter(i18n) {
 
     // navigation guards
     router.beforeEach(async (to) => {
-        const paramsLocale = to.params.locale;
+      const paramsLocale = to.params.locale;
 
-        // use locale if paramsLocale is not in SUPPORT_LOCALES
-        if (!SUPPORT_LOCALES.includes(paramsLocale)) {
-            return `/${locale}`;
-        }
+      // use locale if paramsLocale is in SUPPORT_LOCALES
+      if (SUPPORT_LOCALES.includes(paramsLocale)) {
 
         // load locale messages
         if (!i18n.global.availableLocales.includes(paramsLocale)) {
@@ -44,7 +42,8 @@ export function setupRouter(i18n) {
 
         // set i18n language
         setI18nLanguage(i18n, paramsLocale);
-        return `/${paramsLocale}`;
+      }
+      return to.params.path;
     });
 
     return router;
