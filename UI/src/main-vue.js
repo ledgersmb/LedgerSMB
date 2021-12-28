@@ -32,6 +32,10 @@ export const app = createApp({
 
         this.$nextTick(() => {
             dojoParser.parse(m).then(() => {
+                const l = document.getElementById("loading");
+                if (l) {
+                    l.style.display = "none";
+                }
                 document.body.classList.add("done-parsing");
                 let r = registry.byId("top_menu");
                 if (r) {
@@ -52,4 +56,13 @@ export const app = createApp({
 
 if (document.getElementById("main")) {
     app.mount("#main");
+} else {
+    /* In case we're running a "setup.pl" page */
+    dojoParser.parse(document.body).then(() => {
+        const l = document.getElementById("loading");
+        if (l) {
+            l.style.display = "none";
+        }
+        document.body.classList.add("done-parsing");
+    });
 }
