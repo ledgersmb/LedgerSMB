@@ -90,6 +90,7 @@ sub authenticate {
 sub __default {
 
     my ($request) = @_;
+    $request->{user} //= { language => LedgerSMB::Sysconfig::language() };
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'setup/credentials', $request);
 }

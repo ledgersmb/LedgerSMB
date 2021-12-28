@@ -39,6 +39,7 @@ sub __default {
     $request->{_req}->env->{'lsmb.session.expire'} = 1;
     $request->{stylesheet} = 'ledgersmb.css';
     $request->{titlebar} = "LedgerSMB $request->{version}";
+    $request->{user} //= { language => LedgerSMB::Sysconfig::language() };
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'login', $request);
 }

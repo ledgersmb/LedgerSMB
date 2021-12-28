@@ -32,7 +32,7 @@ our $singleton;
 our @pre_render_cbs = (
     sub {
         my ($request, $template, $vars, $cvars) = @_;
-        $vars->{USER} = $request->{_user};
+        $vars->{USER} = $request->{_user} // { language => LedgerSMB::Sysconfig::language() };
         $vars->{DBNAME} = $request->{company};
         $vars->{locale} = $vars->{language} // $vars->{locale};
         $cvars->{locale} = $cvars->{language} // $cvars->{locale};
