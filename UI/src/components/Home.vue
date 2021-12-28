@@ -197,3 +197,20 @@ export default {
     width: calc(33.3% - 1em);
 }
 </style>
+
+<!-- Local overrides -->
+<i18n lang="json" global>
+{
+  "en": {
+    "Welcome to LedgerSMB": "Welcome to LedgerSMB",
+    "invoicing": "invoicing",
+    "bank reconciliation": "bank reconciliation",
+    "ordering": "ordering",
+  },
+  "fr_CA": {
+    "Welcome to LedgerSMB": "Bienvenue à LedgerSMB",
+    "invoicing": "facturation",
+    "bank reconciliation": "concilliation bancaire",
+  }
+}
+</i18n>
