@@ -1,10 +1,10 @@
 /** @format */
 /* eslint-disable no-console */
+/* global lsmbConfig */
 
 import { createApp } from "vue";
 import { setupRouter } from "./router";
 import { setupI18n } from "./i18n";
-import fr from "./locales/fr_CA.json";
 
 const registry = require("dijit/registry");
 const dojoParser = require("dojo/parser");
@@ -12,9 +12,9 @@ const dojoParser = require("dojo/parser");
 const i18n = setupI18n({
     globalInjection: true,
     legacy: false,
-    locale: "fr_CA",
+    locale: window.lsmbConfig.language,
     fallbackLocale: "en",
-    messages: { fr_CA: fr }
+    messages: {}
 });
 
 import Home from "./components/Home.vue";
