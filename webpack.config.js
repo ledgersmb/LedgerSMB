@@ -69,6 +69,17 @@ if (TARGET !== 'readme') {
         ).filter((x, i, a) => a.indexOf(x) === i);
     }
 
+    function getPOFilenames(_path, extension) {
+        return fs
+            .readdirSync(_path)
+            .filter(
+                item =>
+                    fs.statSync(path.join(_path, item)).isFile() &&
+                    (extension === undefined || path.extname(item) === extension)
+            ).map(item => path.basename(item,extension))
+            .sort();
+    }
+
     // Compute used data-dojo-type
     glob.sync("**/*.html", {
         ignore: ["lib/ui-header.html", "js/**", "js-src/{dojo,dijit,util}/**"],
@@ -189,7 +200,7 @@ if (TARGET !== 'readme') {
         loaderConfig: require("./UI/js-src/lsmb/webpack.loaderConfig.js"),
         environment: { dojoRoot: "UI/js" }, // used at run time for non-packed resources (e.g. blank.gif)
         buildEnvironment: { dojoRoot: "node_modules" }, // used at build time
-        locales: ["en"],
+        locales: getPOFilenames('locale/po','.po'),
         noConsole: true
     };
 
@@ -322,7 +333,7 @@ if (TARGET !== 'readme') {
         // The first one should come from user runtime environment instead.
         // See https://stackoverflow.com/questions/53010064/pass-environment-variable-into-a-vue-app-at-runtime
         new webpack.DefinePlugin({
-            "process.env.VUE_APP_I18N_LOCALE": "fr_CA",
+            "process.env.VUE_APP_I18N_LOCALE": "en",
             "process.env.VUE_APP_I18N_FALLBACK_LOCALE": "en"
         })
     ];
