@@ -3,6 +3,7 @@
 
 import { createApp } from "vue";
 import router from "./router";
+import i18n from "./i18n";
 import LoginPage from "./components/LoginPage";
 
 const registry = require("dijit/registry");
@@ -43,7 +44,10 @@ if (document.getElementById("main")) {
         updated() {
             document.body.setAttribute("data-lsmb-done", "true");
         }
-    }).use(router);
+    })
+        .use(router)
+        .use(i18n);
+
     app.config.compilerOptions.isCustomElement = (tag) =>
         tag.startsWith("lsmb-");
     app.directive("update", lsmbDirective);
