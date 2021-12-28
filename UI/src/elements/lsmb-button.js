@@ -1,30 +1,27 @@
 /** @format */
+/* eslint-disable class-methods-use-this */
+
+import { LsmbDijit } from "./lsmb-dijit";
+
 const Button = require("dijit/form/Button");
 const registry = require("dijit/registry");
 
-export class LsmbButton extends HTMLElement {
-    dojoWidget = null;
-
+export class LsmbButton extends LsmbDijit {
     label = null;
 
     constructor() {
         super();
     }
 
-    adoptedCallback() {
-        if (this.dojoWidget && this.dojoWidget.resize) {
-            this.dojoWidget.resize();
-        }
+    _valueAttrs() {
+        return ["type"];
     }
 
     connectedCallback() {
         this.label = this.innerHTML;
         this.innerHTML = "";
-        let props = { label: this.label };
-
-        if (this.hasAttribute("type")) {
-            props.type = this.getAttribute("type");
-        }
+        let props = this._collectProps();
+        props.label = this.label;
 
         this.dojoWidget = new Button(props);
         this.appendChild(this.dojoWidget.domNode);
@@ -33,7 +30,7 @@ export class LsmbButton extends HTMLElement {
         });
     }
 
-    disconnetedCallback() {
+    disconnectedCallback() {
         if (this.dojoWidget) {
             registry.remove(this.dojoWidget.id);
         }

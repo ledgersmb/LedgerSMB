@@ -31,7 +31,7 @@
                              :value="company"
                              v-update:company="" />
                 </div>
-                <lsmb-button tabindex="4" id="login" :disabled="password===''" @click="login">Login</lsmb-button>
+                <lsmb-button tabindex="4" id="login" @click="login">Login</lsmb-button>
               </div>
             </div>
           </div>

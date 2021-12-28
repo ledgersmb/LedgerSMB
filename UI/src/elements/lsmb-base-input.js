@@ -1,11 +1,11 @@
 /** @format */
 /* eslint-disable class-methods-use-this */
 
+import { LsmbDijit } from "./lsmb-dijit";
+
 const registry = require("dijit/registry");
 
-export class LsmbBaseInput extends HTMLElement {
-    dojoWidget = null;
-
+export class LsmbBaseInput extends LsmbDijit {
     dojoLabel = null;
 
     connected = false;
@@ -19,11 +19,7 @@ export class LsmbBaseInput extends HTMLElement {
     }
 
     _valueAttrs() {
-        return ["title", "name", "value", "tabindex"];
-    }
-
-    _stdProps() {
-        return {};
+        return ["title", "name", "value"];
     }
 
     _labelRoot() {
@@ -41,7 +37,32 @@ export class LsmbBaseInput extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ["value"];
+        /* "disabled" prop is inherited */
+        return ["disabled", "readonly", "required", "value"];
+    }
+
+    get readonly() {
+        return this.hasAttribute("readonly");
+    }
+
+    set readonly(newValue) {
+        if (newValue) {
+            this.setAttribute("readonly", "");
+        } else {
+            this.removeAttribute("readonly");
+        }
+    }
+
+    get required() {
+        return this.hasAttribute("required");
+    }
+
+    set required(newValue) {
+        if (newValue) {
+            this.setAttribute("required", "");
+        } else {
+            this.removeAttribute("required");
+        }
     }
 
     get value() {
@@ -52,39 +73,13 @@ export class LsmbBaseInput extends HTMLElement {
         this.setAttribute("value", newValue);
     }
 
-    adoptedCallback() {
-        if (this.dojoWidget && this.dojoWidget.resize) {
-            this.dojoWidget.resize();
-        }
-    }
-
-    attributeChangedCallback(name, oldValue, newValue) {
-        if (oldValue === newValue || !this.dojoWidget) return;
-        this.dojoWidget.set(name, newValue);
-    }
-
     connectedCallback() {
         if (this.connected) {
             return;
         }
         this.connected = true;
 
-        /* eslint-disable no-eval */
-        let extra = this.hasAttribute("dojo-props")
-            ? eval("({" + this.getAttribute("dojo-props") + "})")
-            : {};
-        let props = { ...extra, ...this._stdProps() };
-        this._valueAttrs().forEach((prop) => {
-            if (this.hasAttribute(prop)) {
-                props[prop] = this.getAttribute(prop);
-            }
-        });
-        this._boolAttrs().forEach((prop) => {
-            if (this.hasAttribute(prop)) {
-                props[prop] = true;
-            }
-        });
-        this.dojoWidget = new (this._widgetClass())(props);
+        this.dojoWidget = new (this._widgetClass())(this._collectProps());
 
         if (this.hasAttribute("title") && !this.hasAttribute("label")) {
             this.setAttribute("label", this.getAttribute("title"));
