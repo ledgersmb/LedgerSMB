@@ -1,6 +1,5 @@
 /** @format */
 /* eslint-disable no-console */
-/* global lsmbConfig */
 
 import { createApp } from "vue";
 import { setupRouter } from "./router";
