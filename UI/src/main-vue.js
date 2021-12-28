@@ -2,15 +2,25 @@
 /* eslint-disable no-console */
 
 import { createApp } from "vue";
-import { setupRouter } from './router'
+import { setupRouter } from "./router";
+import { setupI18n } from "./i18n";
+import fr from "./locales/fr_CA.json";
 
 const registry = require("dijit/registry");
 const dojoParser = require("dojo/parser");
 
+const i18n = setupI18n({
+    globalInjection: true,
+    legacy: false,
+    locale: "fr_CA",
+    fallbackLocale: "en",
+    messages: { fr_CA: fr }
+});
+
 import Home from "./components/Home.vue";
 import ServerUI from "./components/ServerUI";
 
-const router = setupRouter;
+const router = setupRouter(i18n);
 
 export const app = createApp({
     components: [Home, ServerUI],
@@ -39,7 +49,9 @@ export const app = createApp({
     updated() {
         document.body.classList.add("done-parsing");
     }
-}).use(router);
+})
+    .use(router)
+    .use(i18n);
 
 if (document.getElementById("main")) {
     app.mount("#main");

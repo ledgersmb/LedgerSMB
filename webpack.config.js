@@ -114,6 +114,20 @@ if (TARGET !== 'readme') {
         loader: "vue-loader"
     };
 
+    const json = {
+        test: /\.(json5?|ya?ml)$/, // target json, json5, yaml and yml files
+        type: 'javascript/auto',
+        // Use `Rule.include` to specify the files of locale messages to be pre-compiled
+        include: [path.resolve(__dirname, './src/locales')],
+        loader: '@intlify/vue-i18n-loader'
+    };
+
+    const vuei18n = {
+        resourceQuery: /blockType=i18n/,
+        type: 'javascript/auto',
+        loader: '@intlify/vue-i18n-loader',
+    };
+
     const css = {
         test: /\.css$/i,
         use: [ MiniCssExtractPlugin.loader, "css-loader"]
@@ -304,6 +318,13 @@ if (TARGET !== 'readme') {
             minRatio: 0.8
         }),
 
+        // Statics from build.
+        // The first one should come from user runtime environment instead.
+        // See https://stackoverflow.com/questions/53010064/pass-environment-variable-into-a-vue-app-at-runtime
+        new webpack.DefinePlugin({
+            "process.env.VUE_APP_I18N_LOCALE": "fr_CA",
+            "process.env.VUE_APP_I18N_FALLBACK_LOCALE": "en"
+        })
     ];
 
     var pluginsDev = [
@@ -380,16 +401,15 @@ if (TARGET !== 'readme') {
         },
 
         module: {
-            rules: [vue, javascript, css, images, svg, html]
+            rules: [vue, json, vuei18n, javascript, css, images, svg, html]
         },
 
         plugins: pluginsList,
 
         resolve: {
             alias: {
-                // "vue": "@vue/runtime-dom",
                 "vue$": "vue/dist/vue.esm-bundler.js",
-                "@": path.join(__dirname, "UI/js-src/lsmb")
+                "@": path.join(__dirname, "UI/src")
             },
             extensions: [ ".js", ".vue" ],
             fallback: {

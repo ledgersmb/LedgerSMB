@@ -48,6 +48,9 @@
     "@babel/plugin-proposal-object-rest-spread": "7.16.5",
     "@babel/preset-env": "7.16.5",
     "@bcox280/markdown-spellcheck": "2.0.1",
+    "@intlify/vue-i18n-loader": "next",
+    "@vue/cli": "next",
+    "@vue/cli-service": "next",
     "@vue/compiler-sfc": "3.2.26",
     "@vue/test-utils": "2.0.0-rc.18",
     "autoprefixer": "10.4.0",
@@ -115,7 +118,8 @@
   "dependencies": {
     "content-disposition": "0.5.4",
     "dijit": "1.16.4",
-    "dojo": "1.16.4"
+    "dojo": "1.16.4",
+    "vue-i18n": "^9.1.9"
   },
   "homepage": "http://ledgersmb.org/",
   "scripts": {
@@ -154,13 +158,10 @@
       "sort-dojo-dependency",
       "prettier"
     ],
-    "parser": "@babel/eslint-parser",
     "parserOptions": {
+      "parser": "@babel/eslint-parser",
       "ecmaVersion": 6,
       "sourceType": "module",
-      "ecmaFeatures": {
-        "jsx": true
-      },
       "requireConfigFile": false,
       "templateSettings": {
         "evaluate": [
@@ -185,11 +186,12 @@
     },
     "extends": [
       "airbnb-base/legacy",
-      "prettier",
       "eslint:recommended",
       "plugin:import/errors",
       "plugin:import/warnings",
-      "plugin:markdown/recommended"
+      "plugin:markdown/recommended",
+      "plugin:vue/vue3-recommended",
+      "prettier"
     ],
     "ignorePatterns": [
       "dojo/",
