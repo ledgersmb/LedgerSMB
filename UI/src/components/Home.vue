@@ -105,7 +105,6 @@
                 </ul>
             </div>
         </div>
-    </div>
       <form class="language">
         <label for="locale-select">{{ $t('Languages') }}</label>
         <select id="locale-select" v-model="currentLocale">
@@ -118,6 +117,7 @@
           </option>
         </select>
       </form>
+    </div>
 </template>
 
 <script>
@@ -151,11 +151,6 @@ export default {
          */
         const currentLocale = ref(locale.value)
 
-        // sync to switch locale from router locale path
-        watch(router.currentRoute, route => {
-        currentLocale.value = route.params.locale
-        })
-
         /**
          * when change the locale, go to locale route
          *
@@ -164,7 +159,7 @@ export default {
          */
         watch(currentLocale, val => {
             router.push({
-                name: router.currentRoute.value.name,
+                name: 'home',
                 params: { locale: val }
             })
         })

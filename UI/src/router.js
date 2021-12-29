@@ -15,7 +15,6 @@ export function setupRouter(i18n) {
             path: "/:pathMatch(.*)",
             component: ServerUI,
             props: (route) => ({ uiURL: route.fullPath })
-            // redirect: () => `/${locale}`
         }
     ];
 
@@ -30,17 +29,14 @@ export function setupRouter(i18n) {
         const paramsLocale = to.params.locale;
 
         // use locale if paramsLocale is in SUPPORT_LOCALES
-        if (SUPPORT_LOCALES.includes(paramsLocale)) {
+        if (paramsLocale && SUPPORT_LOCALES.includes(paramsLocale)) {
             // load locale messages
             if (!i18n.global.availableLocales.includes(paramsLocale)) {
                 await loadLocaleMessages(i18n, paramsLocale);
             }
-
             // set i18n language
             setI18nLanguage(i18n, paramsLocale);
         }
-        return to.params.fullPath;
     });
-
     return router;
 }
