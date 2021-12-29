@@ -329,8 +329,6 @@ PROCESS dynatable
                         type="submit"
                         name="action"
                         value="save_credit"
-                        accesskey="C"
-                        title="Save Credit Account[Alt-C]"
                 };
                 END;
                 INCLUDE button element_data = {
@@ -345,37 +343,29 @@ PROCESS dynatable
         IF (entity_class == 1); %]
         <button data-dojo-type="lsmb/JumpScreenButton"
                 data-dojo-props="url:'ap.pl?type=transaction&amp;action=add&amp;vc=vendor&amp;vendor_id=[% credit_act.id %]'"
-                accesskey="A"
-                title="Transaction [Alt-A]">[% text('AP Transaction') %]</button>
+                title="Transaction">[% text('AP Transaction') %]</button>
         <button data-dojo-type="lsmb/JumpScreenButton"
                 data-dojo-props="url:'ir.pl?type=invoice&amp;action=add&amp;vc=vendor&amp;vendor_id=[% credit_act.id %]'"
-                accesskey="I"
-                title="Invoice [Alt-I]">[% text('Vendor Invoice') %]</button>
+                title="Invoice">[% text('Vendor Invoice') %]</button>
         <button data-dojo-type="lsmb/JumpScreenButton"
                 data-dojo-props="url:'oe.pl?type=purchase_order&amp;action=add&amp;vc=vendor&amp;vendor_id=[% credit_act.id %]'"
-                accesskey="O"
-                title="Order [Alt-O]">[% text('Purchase Order') %]</button>
+                title="Order">[% text('Purchase Order') %]</button>
         <button data-dojo-type="lsmb/JumpScreenButton"
                 data-dojo-props="url:'oe.pl?type=request_quotation&amp;action=add&amp;vc=vendor&amp;vendor_id=[% credit_act.id %]'"
-                accesskey="O"
-                title="Order [Alt-O]">[% text('RFQ') %]</button>
+                title="Order">[% text('RFQ') %]</button>
 [% ELSE %]
         <button data-dojo-type="lsmb/JumpScreenButton"
                 data-dojo-props="url:'ar.pl?type=transaction&amp;action=add&amp;vc=customer&amp;customer_id=[% credit_act.id %]'"
-                accesskey="A"
-                title="Transaction [Alt-A]">[% text('AR Transaction') %]</button>
+                title="Transaction">[% text('AR Transaction') %]</button>
         <button data-dojo-type="lsmb/JumpScreenButton"
                 data-dojo-props="url:'is.pl?type=invoice&amp;action=add&amp;vc=customer&amp;customer_id=[% credit_act.id %]'"
-                accesskey="I"
-                title="Invoice [Alt-I]">[% text('Customer Invoice') %]</button>
+                title="Invoice">[% text('Customer Invoice') %]</button>
         <button data-dojo-type="lsmb/JumpScreenButton"
                 data-dojo-props="url:'oe.pl?type=sales_order&amp;action=add&amp;vc=customer&amp;customer_id=[% credit_act.id %]'"
-                accesskey="O"
-                title="Order [Alt-O]">[% text('Sales Order') %]</button>
+                title="Order">[% text('Sales Order') %]</button>
         <button data-dojo-type="lsmb/JumpScreenButton"
                 data-dojo-props="url:'oe.pl?type=sales_quotation&amp;action=add&amp;vc=customer&amp;customer_id=[% credit_act.id %]'"
-                accesskey="O"
-                title="Order [Alt-O]">[% text('Quotation') %]</button>
+                title="Order">[% text('Quotation') %]</button>
         [% END %]
         <button data-dojo-type="lsmb/JumpScreenButton"
                 data-dojo-props="url:'contact.pl?action=get_pricelist&amp;credit_id=[% credit_act.id %]'"

@@ -236,25 +236,27 @@ sub display_form
 
       $i=1;
       @buttons = (
-          { action => 'update', key => 'U', value => $locale->text('Update') },
-          { action => 'post', key => 'O', value =>
+          { action => 'update',
+            value => $locale->text('Update') },
+          { action => 'post',
+            value =>
                 ($form->{separate_duties}
                  ? $locale->text('Save') : $locale->text('Post')),
             class => 'post' },
-          { action => 'approve', key => 'S', value => $locale->text('Post'),
+          { action => 'approve', value => $locale->text('Post'),
             class => 'post' },
-          { action => 'edit_and_save', key => 'V',
+          { action => 'edit_and_save',
             value => $locale->text('Save Draft') },
-          { action => 'save_temp', key   => 'T',
+          { action => 'save_temp',
             value => $locale->text('Save Template') },
           { action => 'save_as_new',
-            key => 'N', value => $locale->text('Save as new') },
+            value => $locale->text('Save as new') },
           { action => 'schedule',
-            key => 'H', value => $locale->text('Schedule') },
+            value => $locale->text('Schedule') },
           { action => 'new',
-            key => 'N', value => $locale->text('New') },
+            value => $locale->text('New') },
           { action => 'copy_to_new',
-            key => 'C', value => $locale->text('Copy to New') },
+            value => $locale->text('Copy to New') },
           );
 
       %a = ();
@@ -289,7 +291,6 @@ sub display_form
               text => $_->{value},
               type => 'submit',
               class => $_->{class} // 'submit',
-              accesskey => $_->{key},
               order => $i++
           }
       }

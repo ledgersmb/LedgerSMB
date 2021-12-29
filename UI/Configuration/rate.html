@@ -60,8 +60,6 @@
              type="submit"
              name="action"
              value="save_exchangerate"
-             accesskey="S"
-             title="Save [Alt-S]"
          } %]
 
       [% FOREACH button IN buttons;
@@ -79,7 +77,7 @@
       [% PROCESS input element_data = {
              name = "import_file"
              type = "file"
-             label = text('From File') #'
+             label = text('From File')
              class = "file"
          } %]
 
@@ -89,8 +87,6 @@
              type="submit"
              name="action"
              value="upload_exchangerates"
-             accesskey="U"
-             title="Upload [Alt-U]"
          } %]
 
     </form>

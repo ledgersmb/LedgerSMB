@@ -1321,7 +1321,7 @@ sub assembly_row {
             }
 
             $column_data{qty} =
-qq|<td><input data-dojo-type="dijit/form/TextBox" name="qty_$i" size=6 value="$form->{"qty_$i"}" accesskey="$i" title="[Alt-$i]"></td>|;
+qq|<td><input data-dojo-type="dijit/form/TextBox" name="qty_$i" size=6 value="$form->{"qty_$i"}"></td>|;
             $column_data{partnumber} =
 qq|<td><input data-dojo-type="lsmb/parts/PartSelector" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" data-dojo-props="required:false,channel: '/part/part-select/$i'"></td>|;
             $column_data{description} =
@@ -1339,7 +1339,7 @@ qq|<td><a href="ic.pl?action=edit&id=$form->{"id_$i"}" target="new">$form->{"par
             $column_data{runningnumber} =
               qq|<td><input data-dojo-type="dijit/form/TextBox" name="runningnumber_$i" size=3 value="$i"></td>|;
             $column_data{qty} =
-qq|<td><input data-dojo-type="dijit/form/TextBox" name="qty_$i" size=6 value="$form->{"qty_$i"}" accesskey="$i" title="[Alt-$i]"></td>|;
+qq|<td><input data-dojo-type="dijit/form/TextBox" name="qty_$i" size=6 value="$form->{"qty_$i"}"></td>|;
 
             for (qw(bom adj)) {
                 $form->{"${_}_$i"} = ( $form->{"${_}_$i"} ) ? "checked" : "";

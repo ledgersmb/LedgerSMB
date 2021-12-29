@@ -70,26 +70,25 @@ sub form_footer_buttons {
 
     if ( $form->{id} ) {
         $button{'save'} =
-          { ndx => 3, key => 'S', value => $locale->text('Save') };
+          { ndx => 3, value => $locale->text('Save') };
         $button{'save_as_new'} =
-          { ndx => 7, key => 'N', value => $locale->text('Save as new') };
+          { ndx => 7, value => $locale->text('Save as new') };
 
         if ( $form->{orphaned} ) {
             $button{'delete'} =
-              { ndx => 16, key => 'D', value => $locale->text('Delete') };
+              { ndx => 16, value => $locale->text('Delete') };
         }
     }
     else {
         $button{'save'} =
-          { ndx => 3, key => 'S', value => $locale->text('Save') };
+          { ndx => 3, value => $locale->text('Save') };
     }
 
     for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
         push @{$buttons}, {
             name => 'action',
             value => $_,
-            accesskey => $button{$_}{key},
-            title => "$button{$_}{value} [Alt-$button{$_}{key}]",
+            title => $button{$_}{value},
             text => $button{$_}{value},
             };
     }
@@ -172,12 +171,12 @@ sub gifi_footer {
 
     my %button = ();
 
-    $button{'save'} = { ndx => 3, key => 'S', value => $locale->text('Save') };
+    $button{'save'} = { ndx => 3, value => $locale->text('Save') };
 
     if ( $form->{accno} ) {
         if ( $form->{orphaned} ) {
             $button{'delete'} =
-              { ndx => 16, key => 'D', value => $locale->text('Delete') };
+              { ndx => 16, value => $locale->text('Delete') };
         }
     }
 
@@ -185,8 +184,7 @@ sub gifi_footer {
         push @{$buttons}, {
             name => 'action',
             value => $_,
-            accesskey => $button{$_}{key},
-            title => "$button{$_}{value} [Alt-$button{$_}{key}]",
+            title => $button{$_}{value},
             text => $button{$_}{value},
             };
     }
