@@ -50,7 +50,7 @@
 <div class="input_group1">
         [% PROCESS input element_data = {
                   id = 'person-control-code'
-                title = text('Control Code') #'
+                title = text('Control Code')
                 label = "_none_"
                 type= "text"
                 name = "control_code"
@@ -95,7 +95,7 @@
 <div class="input_line">
 <div class="input_group1">
         [% PROCESS input element_data = {
-                title = text('Given Name') #'
+                title = text('Given Name')
                 label = "_none_"
                 type= "text"
                 name = "first_name"
@@ -108,7 +108,7 @@
 <div class="input_line">
 <div class="input_group1">
         [% PROCESS input element_data = {
-                title = text('Middle Name') #'
+                title = text('Middle Name')
                 label = "_none_"
                 type= "text"
                 name = "middle_name"
@@ -157,7 +157,7 @@
            type  = 'text',
            size  = '20',
            value = person.personal_id,
-           title = text('Personal ID') #'
+           title = text('Personal ID')
            label = "_none_"
            class = 'id',
                           required = 'true'
@@ -184,7 +184,7 @@
 <div class="buttonrow">
         [% PROCESS button element_data = {
                  id = 'person-generate-control-code'
-                text = text('Generate Control Code') #'
+                text = text('Generate Control Code')
                 type = "submit"
                 name = "action"
                 value = "generate_control_code"
@@ -204,8 +204,6 @@
                         type="submit"
                         name="action"
                         value="save_person"
-                        accesskey="S"
-                        title="Save [Alt-S]"
                 } %]
 </div>
 </div>
