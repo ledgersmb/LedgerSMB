@@ -11,6 +11,8 @@ const dojoParser = require("dojo/parser");
 const i18n = setupI18n({
     globalInjection: true,
     legacy: false,
+    fallbackWarn: false,
+    missingWarn: false, // warning off
     locale: window.lsmbConfig.language,
     fallbackLocale: "en",
     messages: {}
