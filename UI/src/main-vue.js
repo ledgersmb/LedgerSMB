@@ -6,6 +6,8 @@ import router from "./router";
 import i18n, { loadLocaleMessages } from "./i18n";
 import LoginPage from "./components/LoginPage";
 
+import { createPinia } from "pinia";
+
 const registry = require("dijit/registry");
 const dojoParser = require("dojo/parser");
 
@@ -50,7 +52,9 @@ if (document.getElementById("main")) {
         }
     })
         .use(router)
-        .use(i18n);
+        .use(i18n)
+        .use(router)
+        .use(createPinia());
 
     app.config.compilerOptions.isCustomElement = (tag) =>
         tag.startsWith("lsmb-");

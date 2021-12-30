@@ -13,9 +13,11 @@ import ImportCsvGSO from "./components/ImportCSV-GSO";
 import ImportCsvInventory from "./components/ImportCSV-Inventory";
 import ImportCsvSic from "./components/ImportCSV-SIC";
 import ImportCsvTimecard from "./components/ImportCSV-Timecard";
+import Warehouses from "./components/Warehouses.vue";
 
 const routes = [
     { name: "home", path: "/", component: Home },
+    { name: "warehouses", path: "/warehouses", component: Warehouses },
     {
         name: "importCSV-AR-Batch",
         path: "/import-csv/ar_multi",
