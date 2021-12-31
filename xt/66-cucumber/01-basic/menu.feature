@@ -34,11 +34,11 @@ Scenario Outline: Navigate to menu "<path>" and open screen "<screen>"
     | AP > Add Transaction                       | AP transaction entry     |
     | AP > Debit Invoice                         | AP debit invoice entry   |
     | AP > Debit Note                            | AP note entry            |
-    | AP > Import Batch                          | Batch import             |
 
   @wip
   Examples:
     | path                                       | screen                   |
+    | AP > Import Batch                          | Batch import             |
     | AP > Reports > AP Aging                    |                          |
     | AP > Reports > Customer History            |                          |
     | AP > Reports > Outstanding                 |                          |
@@ -62,11 +62,11 @@ Scenario Outline: Navigate to menu "<path>" and open screen "<screen>"
     | AR > Add Transaction                       | AR transaction entry     |
     | AR > Credit Invoice                        | AR credit invoice entry  |
     | AR > Credit Note                           | AR note entry            |
-    | AR > Import Batch                          | Batch import             |
 
   @wip
   Examples:
     | path                                       | screen                   |
+    | AR > Import Batch                          | Batch import             |
     | AR > Reports > AR Aging                    |                          |
   Examples:
     | path                                       | screen                   |

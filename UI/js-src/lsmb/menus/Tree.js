@@ -148,7 +148,10 @@ define([
                 url += "#" + Date.now();
 
                 if (this.load_link) {
-                    this.load_link("/" + url);
+                    if (url.charAt(0) !== "/") {
+                        url = "/" + url;
+                    }
+                    this.load_link(url);
                 }
             }
         },

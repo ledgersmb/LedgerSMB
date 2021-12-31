@@ -5,7 +5,7 @@
     <form name="csvupload">
       <input type="hidden" name="type" :value="type">
       <div v-if="multi"
-           class="listtop">Batch Information')</div>
+           class="listheading">Batch Information</div>
       <div class="two-column-grid" style="width:fit-content;grid-gap:4px">
         <lsmb-text class="reference"
                  name="reference"
