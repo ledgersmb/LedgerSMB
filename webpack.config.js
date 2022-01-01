@@ -393,7 +393,7 @@ if (TARGET !== 'readme') {
             alias: {
                 // "vue": "@vue/runtime-dom",
                 "vue$": "vue/dist/vue.esm-bundler.js",
-                "@": path.join(__dirname, "UI/js-src/lsmb")
+                "@": path.join(__dirname, "UI/src/")
             },
             extensions: [ ".js", ".vue" ],
             fallback: {

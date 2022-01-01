@@ -69,10 +69,10 @@
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-eslint": "7.0.0",
     "eslint-config-prettier": "8.3.0",
+    "eslint-import-resolver-webpack": "0.13.2",
     "eslint-friendly-formatter": "4.0.1",
     "eslint-plugin-amd": "1.1.0",
     "eslint-plugin-compat": "4.0.0",
-    "eslint-plugin-html": "6.2.0",
     "eslint-plugin-import": "2.25.3",
     "eslint-plugin-jsdoc": "37.5.0",
     "eslint-plugin-json": "3.1.0",
@@ -138,19 +138,15 @@
   },
   "eslintConfig": {
     "settings": {
-      "import/resolver": {
-        "node": {
-          "paths": [
-            "UI"
-          ]
-        }
-      }
+      "import/resolver": "webpack"
     },
     "plugins": [
       "amd",
       "compat",
+      "import",
       "markdown",
       "sort-dojo-dependency",
+      "vue",
       "prettier"
     ],
     "parser": "@babel/eslint-parser",
@@ -188,7 +184,8 @@
       "eslint:recommended",
       "plugin:import/errors",
       "plugin:import/warnings",
-      "plugin:markdown/recommended"
+      "plugin:markdown/recommended",
+      "plugin:vue/vue3-recommended"
     ],
     "ignorePatterns": [
       "dojo/",
