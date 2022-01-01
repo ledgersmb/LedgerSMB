@@ -22,28 +22,28 @@ let lsmbDirective = {
 
 if (document.getElementById("main")) {
     app = createApp({
-    mounted() {
-        let m = document.getElementById("main");
+        mounted() {
+            let m = document.getElementById("main");
 
-        this.$nextTick(() => {
-            dojoParser.parse(m).then(() => {
-                let r = registry.byId("top_menu");
-                if (r) {
-                    // Setup doesn't have top_menu
-                    r.load_link = (url) => this.$router.push(url);
-                }
+            this.$nextTick(() => {
+                dojoParser.parse(m).then(() => {
+                    let r = registry.byId("top_menu");
+                    if (r) {
+                        // Setup doesn't have top_menu
+                        r.load_link = (url) => this.$router.push(url);
+                    }
                     document.body.setAttribute("data-lsmb-done", "true");
+                });
             });
-        });
-        window.__lsmbLoadLink = (url) => this.$router.push(url);
-    },
-    beforeUpdate() {
+            window.__lsmbLoadLink = (url) => this.$router.push(url);
+        },
+        beforeUpdate() {
             document.body.removeAttribute("data-lsmb-done");
-    },
-    updated() {
+        },
+        updated() {
             document.body.setAttribute("data-lsmb-done", "true");
-    }
-}).use(router);
+        }
+    }).use(router);
     app.config.compilerOptions.isCustomElement = (tag) =>
         tag.startsWith("lsmb-");
     app.directive("update", lsmbDirective);
