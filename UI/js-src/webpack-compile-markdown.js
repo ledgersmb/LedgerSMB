@@ -49,9 +49,10 @@ MarkdownInclude.registerPlugin({
 
                 if (time !== null) {
                     // Unreleased versions have time === null; exclude them
-                    if (earliest[category][browser].time === null ||
+                    if (
+                        earliest[category][browser].time === null ||
                         earliest[category][browser].time > time
-                       ) {
+                    ) {
                         earliest[category][browser].version = version;
 
                         if (time) {
