@@ -575,31 +575,6 @@ sub _parse_file {
     return ([$csv->fields], @{$self->{import_entries}});
 }
 
-=head2 begin_import
-
-This displays the begin data entry screen.
-
-=cut
-
-sub begin_import {
-    my ($request) = @_;
-    my $template_file =
-        ($template_file{$request->{type}}) ?
-        $template_file{$request->{type}} : 'import_csv';
-
-    if (ref($template_setup->{$request->{type}}) eq 'CODE') {
-        $template_setup->{$request->{type}}($request);
-    }
-
-    # $request->{page_id} = $request->{type};
-    # $request->{page_id} =~ s/_/-/;
-    # $request->{page_id} .= '-import';
-    $request->{page_id} = 'batch-import';
-    my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($request, 'import_csv/' . $template_file,
-                             { request => $request });
-}
-
 =head2 run_import
 
 run_import is the routine responsible for the primary work.  It accepts the

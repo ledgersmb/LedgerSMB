@@ -88,14 +88,14 @@ sub create_database {
     $page->find('*button', text => "Yes")->click;
     ok('Yes-button clicked on initial confirmation');
 
-    $page->find('#setup-select-coa.done-parsing', scheme => 'css');
+    $page->find('#setup-select-coa[data-lsmb-done]', scheme => 'css');
     $page->find('*labeled', text => "Country")
         ->find_option($param{"Country"})
         ->click;
     $page->find('*button', text => "Next")->click;
     ok('Next-button clicked after country selection');
 
-    $page->find('#setup-select-coa.done-parsing', scheme => 'css');
+    $page->find('#setup-select-coa[data-lsmb-done]', scheme => 'css');
     $page->find('*labeled', text => "Chart of accounts")
         ->find_option($param{"Chart of accounts"})
         ->click;
@@ -103,7 +103,7 @@ sub create_database {
     ok('Next-button clicked after CoA selection');
 
     # assert we're on the "Load Templates" page now
-    $page->find('#setup-template-info.done-parsing', scheme => 'css');
+    $page->find('#setup-template-info[data-lsmb-done]', scheme => 'css');
     $page->find('*contains', text => "Select Templates to Load");
     $page->find('*button', text => $_) for ("Load Templates");
 

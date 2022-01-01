@@ -128,7 +128,9 @@
          IF label_pos == -1;
             PROCESS auto_label;
          END;
-         "<input$all_attributes />";
+
+         # wrap the input in a span so grids don't stretch it
+         "<span><input$all_attributes /></span>";
          IF label_pos == 1;
            PROCESS auto_label;
          END;
@@ -171,7 +173,8 @@
 
         PROCESS auto_label;
 
-        "<select$all_attributes >";
+        # wrap all SELECTs in SPANs so grids don't stretch the selects
+        "<span><select$all_attributes >";
         IF element_data.default_blank;
            # loop.count starts at 1, so using index 0 here is safe: it won't overlap below
            PROCESS option
@@ -193,7 +196,7 @@
                text_attr   = text_attr,
                value_attr  = value_attr;
         END;
-        "</select>";
+        "</select></span>";
       END %]
 [% END %]
 

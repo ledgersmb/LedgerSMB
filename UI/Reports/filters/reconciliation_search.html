@@ -4,12 +4,9 @@
 <div id="reconciliation_report_search">
     <form data-dojo-type="lsmb/Form" method="get" action="recon.pl">
         <div class="listtop">[% text('Search Reconciliation Reports') %]</div>
-        <div data-dojo-type="lsmb/layout/TableContainer"
-             data-dojo-props="cols:1">
-
-            <div class="input">
+        <div class="two-column-grid" style="width: fit-content">
                 [% INCLUDE input element_data = {
-                        title = text('Statement Date From'),
+                        label = text('Statement Date From'),
                         type = 'text',
                         class = 'date',
                         size = 12,
@@ -17,18 +14,16 @@
                         name = 'date_from'
                 } %]
                 [% INCLUDE input element_data = {
-                        title = text('Statement Date To'),
+                        label = text('Statement Date To'),
                         type = 'text',
                         class = 'date',
                         size = 12,
                         value = date_to,
                         name = 'date_to'
                 } %]
-            </div>
 
-            <div class="input">
                 [% INCLUDE input element_data = {
-                        title = text('Amount From'),
+                        label = text('Amount From'),
                         type = 'text',
                         class = 'money',
                         size = 12,
@@ -36,18 +31,15 @@
                         name = 'balance_from'
                 } %]
                 [% INCLUDE input element_data = {
-                        title = text('Amount To'),
+                        label = text('Amount To'),
                         type = 'text',
                         class = 'money',
                         size = 12,
                         value = balance_to,
                         name = 'balance_to'
                 } %]
-            </div>
-
-            <div class="input">
                 [% INCLUDE select element_data = {
-                        title = text('Account'),
+                        label = text('Account'),
                         class = "chart_id",
                         name = "account_id",
                         options = recon_accounts,
@@ -55,39 +47,32 @@
                         value_attr = 'id'
                         default_blank = "true"
                 } %]
-            </div>
-
-            <div class="input">
                         [%- approved_options = [
                                 {id = '1', label = text('Approved') },
                                 {id = '0', label = text('Not Approved') }
                         ];
                         PROCESS select element_data = {
                                 name = 'approved',
-                                title = text('Approval Status'),
+                                label = text('Approval Status'),
                                 options = approved_options
                                 text_attr = 'label',
                                 value_attr = 'id',
                                 class = 'status'
                                 default_blank = "true"
                         } -%]
-            </div>
-
-            <div class="input">
                         [%- submitted_options = [
                                 {id = '1', label = text('Submitted') },
                                 {id = '0', label = text('Not Submitted') }
                         ];
                         PROCESS select element_data = {
                                 name = 'submitted',
-                                title = text('Submission Status'),
+                                label = text('Submission Status'),
                                 options = submitted_options
                                 text_attr = 'label',
                                 value_attr = 'id',
                                 class = 'status'
                                 default_blank = "true"
                         } -%]
-            </div>
         </div>
 
         <div class="input" id="buttons_div">

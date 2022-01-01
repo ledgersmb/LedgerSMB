@@ -32,40 +32,45 @@ PROCESS dynatable
          {col_id='edit', type='href', href_base='', name='' }
          {col_id='delete', type='href', href_base='', name='' }
         ] %]
-        <form data-dojo-type="lsmb/Form" action="[% request.script %]" method="post">
-[% PROCESS input element_data = {
+<form data-dojo-type="lsmb/Form" action="[% request.script %]" method="post">
+  [%
+  PROCESS input element_data = {
                 type = "hidden"
                 name = "form_id"
                 value = form_id
-        } %]
-        [% PROCESS input element_data = {
+        };
+
+  PROCESS input element_data = {
                 type="hidden"
                 name="entity_id"
                 value=entity_id
-        } %]
-        [% PROCESS input element_data = {
+  };
+
+  PROCESS input element_data = {
                 type="hidden"
                 name="credit_id"
                 value=credit_act.id
-        } %]
-        [% PROCESS input element_data = {
+  };
+
+  PROCESS input element_data = {
                 type="hidden"
                 name="old_class_id"
                 value=request.class_id
-        } %]
-        [% PROCESS input element_data = {
+  };
+
+  PROCESS input element_data = {
                 type="hidden"
                 name="old_contact"
                 value=request.contact
-        } %]
-        [% PROCESS input element_data = {
+  };
+
+  PROCESS input element_data = {
                 type="hidden"
                 name="contact_id"
                 value=request.contact_id
-        } %]
-        <div data-dojo-type="lsmb/layout/TableContainer" data-dojo-props="cols:1">
-        <div>
-
+  };
+  %]
+  <div class="two-column-grid" style="width: fit-content">
              [% IF credit_act.id;
                     IF request.for_credit;
                        attach_to = 3;
@@ -81,42 +86,33 @@ PROCESS dynatable
                           label = "_none_"
                        };
                      ELSE %]
-             <label>[% text('Attach to Entity');
-                    END; %]</label>
-        </div>
-        <div>
+             <label>[% text('Attach to Entity'); %]</label><div>&nbsp;</div>
+                   [% END; %]
                 [% PROCESS select element_data = {
                         name = "class_id"
-                        title = "Type"
-                        label = "_none_"
+                        label = "Type"
                         text_attr = "class"
                         value_attr = "id"
                         default_values = [request.class_id]
                         options = contact_class_list
                 } %]
-        </div>
-        <div>
                 [% PROCESS input element_data = {
-                        title = text('Description'),
-                        label = "_none_"
+                        label = text('Description'),
                         name = "description"
                         id   = 'contact_description'
                         value = request.description
                         type = "text"
                         size = "20"
                 }  %]
-        </div>
-        <div>
                 [% PROCESS input element_data = {
-                        title = text('Contact Info'),
-                        label = "_none_"
+                        label = text('Contact Info'),
                         name = "contact"
                         value = request.contact
                         type = "text"
                         size = "20"
                         required = 'true'
                 } #' %]
-        </div></div>
+</div>
         <div>[% PROCESS button element_data = {
                 name = "action",
                 value = "save_contact",

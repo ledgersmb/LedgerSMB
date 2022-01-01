@@ -55,7 +55,6 @@ if (TARGET !== 'readme') {
         "dijit/form/ValidationTextBox",
         "dijit/layout/BorderContainer",
         "dijit/layout/ContentPane",
-        "dijit/layout/TabContainer",
         "dijit/Tooltip",
         "lsmb/ToggleIncludeButton"
     ];
@@ -82,7 +81,7 @@ if (TARGET !== 'readme') {
     includedRequires = includedRequires
         .concat(
             glob
-                .sync("{js-src/lsmb/**/!(webpack.loaderConfig|main).js,src/*.js}", {
+                .sync("{js-src/lsmb/**/!(webpack.loaderConfig|main).js,src/*.js,src/elements/*.js}", {
                     cwd: "UI"
                 })
                 .map(function (file) {
@@ -111,7 +110,12 @@ if (TARGET !== 'readme') {
 
     const vue = {
         test: /\.vue$/,
-        loader: "vue-loader"
+        loader: "vue-loader",
+        options: {
+            compilerOptions: {
+                isCustomElement: (tag) => tag.startsWith("lsmb-")
+            }
+        }
     };
 
     const css = {

@@ -94,10 +94,7 @@ sub post_step {
             eval {
                 $w->wait_for(
                     sub {
-                        my $rv = (any { $_ eq 'done-parsing' }
-                                  split( /\s+/,
-                                         $maindiv->get_attribute('class')));
-                        return $rv;
+                        return $maindiv->get_attribute('data-lsmb-done');
                     });
             };
         }

@@ -25,52 +25,37 @@
                 name="credit_id"
                 value=credit_act.id
         } %]
-<div data-dojo-type="lsmb/layout/TableContainer" data-dojo-props="cols:1">
-<div class="input">
-   [% PROCESS input element_data = {
-      title = text('Subject'),
-      label = "_none_"
-      name = "subject"
-      value = subject
-      type = "text"
-      size = "20"
-        } %]
-</div>
-<div class="input">
+<div class="two-column-grid">
 [%
 IF credit_act.id;
     PROCESS select element_data = {
                         name = "note_class"
                         default_values = [note_class]
                         options = attach_level_options
-                        title = text("Note Class") #"
-                        label = "_none_"
+                        title = text("Note Class")
                         value_attr = "value"
         };
-ELSE;
-    PROCESS input element_data = {
-          type = "hidden"
-          name = "note_class"
-         value = "1"
-} %]
-<label>[% text('Note Class') %]</label>[% text('Entity');
+ELSE; %]
+<label>[% text('Note Class') %]</label><span><input type="hidden" name="note_class" value="1">[% text('Entity'); %]</span>[%
 END; %]
-</div>
-<div class="input">[% PROCESS textarea element_data = {
+  <lsmb-text title="[% text('Subject') %]"
+             label="[% text('Subject') %]"
+             name = "subject"
+             value = "[% subject %]"></lsmb-text>
+  [% PROCESS textarea element_data = {
         title = text('Notes')
-        label = "_none_"
+        label = text('Notes')
         name = 'note'
          required = 'true'
           id = 'note_entry_note'
-} %]</div></div>
-<div class="input">
+    } %]
+</div>
 [% PROCESS button element_data = {
         text = text('Save')
         class = 'submit'
         name = 'action'
         value = 'save_notes'
 } %]
-</div>
 </form>
 [% FOREACH n = notes %]
 <div class="note[% IF n.note_class == 3; ' eca_note'; END %]">

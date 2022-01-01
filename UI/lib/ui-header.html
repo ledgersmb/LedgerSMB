@@ -61,8 +61,9 @@
         };
         var lsmbConfig = {
             [% IF USER.dateformat %]
-            "dateformat": '[% USER.dateformat %]'
+            "dateformat": '[% USER.dateformat %]',
             [% END %]
+            version: "[% version %]"
         };
     </script>
     ${htmlWebpackPlugin.tags.bodyTags}

@@ -153,3 +153,4 @@ mc/delete-migration-validation-data.sql
 1.9/workflow-email-expansion.sql
 # 1.10 changes
 1.10/old-defaults-cleanup.sql
+1.10/vue-import-csv-routes.sql

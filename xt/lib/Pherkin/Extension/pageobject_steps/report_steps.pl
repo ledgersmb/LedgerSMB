@@ -21,7 +21,7 @@ When qr/^I select the rows? where "(.*)" is "(.*)"$/, sub {
     foreach my $row(@rows) {
         if ($row->{$column} eq $value) {
             my $checkbox = $row->{_element}->find(
-                './td/div/input[@type="checkbox"]'
+                './td//input[@type="checkbox"]'
             );
             my $checked = $checkbox->get_attribute('checked');
             $checked && $checked eq 'true' or $checkbox->click;
