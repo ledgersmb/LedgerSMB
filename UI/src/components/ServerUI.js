@@ -1,7 +1,6 @@
 /** @format */
 
 import { h } from "vue";
-// import axios from "axios";
 
 const registry = require("dijit/registry");
 const parser = require("dojo/parser");
