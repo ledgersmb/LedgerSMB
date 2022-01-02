@@ -129,7 +129,7 @@ if (TARGET !== 'readme') {
         }
     };
 
-    const json = {
+    const vueTranslations = {
         test: /\.(json5?|ya?ml)$/, // target json, json5, yaml and yml files
         type: 'javascript/auto',
         // Use `Rule.include` to specify the files of locale messages to be pre-compiled
@@ -418,7 +418,7 @@ if (TARGET !== 'readme') {
         },
 
         module: {
-            rules: [vue, json, vuei18n, javascript, css, images, svg, html]
+            rules: [vue, vueTranslations, vuei18n, javascript, css, images, svg, html]
         },
 
         plugins: pluginsList,
