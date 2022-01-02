@@ -18,7 +18,6 @@ const i18n = createI18n({
 function setI18nLanguage(locale) {
     // Update document
     document.querySelector("html").setAttribute("lang", locale);
-    document.querySelector("html").setAttribute("xml:lang", locale);
 }
 
 export async function loadLocaleMessages(locale) {
