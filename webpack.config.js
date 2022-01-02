@@ -334,8 +334,6 @@ if (TARGET !== 'readme') {
         }),
 
         // Statics from build.
-        // The first one should come from user runtime environment instead.
-        // See https://stackoverflow.com/questions/53010064/pass-environment-variable-into-a-vue-app-at-runtime
         new webpack.DefinePlugin({
             "process.env.VUE_APP_I18N_LOCALE": "en",
             "process.env.VUE_APP_I18N_FALLBACK_LOCALE": "en",
