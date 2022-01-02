@@ -3,7 +3,6 @@
 
 export const SUPPORT_LOCALES = __SUPPORTED_LOCALES;
 
-import { nextTick } from "vue";
 import { createI18n } from "vue-i18n";
 
 const i18n = createI18n({
@@ -37,7 +36,6 @@ export async function loadLocaleMessages(locale) {
         }
         setI18nLanguage(locale);
     }
-    return nextTick();
 }
 
 // Load the user desired language if not default
