@@ -3,7 +3,7 @@
 
 import { createApp } from "vue";
 import router from "./router";
-import i18n from "./i18n";
+import i18n, { loadLocaleMessages } from "./i18n";
 import LoginPage from "./components/LoginPage";
 
 const registry = require("dijit/registry");
@@ -23,6 +23,10 @@ let lsmbDirective = {
 
 if (document.getElementById("main")) {
     app = createApp({
+        created() {
+            // Load the user desired language if not default
+            loadLocaleMessages(window.lsmbConfig.language);
+        },
         mounted() {
             let m = document.getElementById("main");
 

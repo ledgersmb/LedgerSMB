@@ -37,7 +37,4 @@ export async function loadLocaleMessages(locale) {
     }
 }
 
-// Load the user desired language if not default
-loadLocaleMessages(window.lsmbConfig.language);
-
 export default i18n;
