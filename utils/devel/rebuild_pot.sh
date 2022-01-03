@@ -39,13 +39,24 @@ find UI/ templates/ t/data/ \
 
 utils/devel/extract-sql < sql/Pg-database.sql >> locale/LedgerSMB.pot
 
-msguniq -s --width=80 -o locale/LedgerSMB.pot locale/LedgerSMB.pot \
+msguniq --sort-output --width=80 --output-file=locale/LedgerSMB.pot locale/LedgerSMB.pot \
   || exit 1
+
+utils/devel/extract-vue-template-translations.sh
 
 # Merge with .po files
 
-for pofile in `find . -name '*.po'`
+for pofile in `find ./locale -name '*.po' | sort`
 do
-    msgmerge -s --width=80 --backup=off --update $pofile locale/LedgerSMB.pot \
+    msgmerge --quiet --sort-output --width=80 --backup=off \
+             --no-fuzzy-matching \
+             --update $pofile locale/LedgerSMB.pot \
       || (echo "failed $pofile" ;  exit 1)
+done
+
+# Extract Vue strings which came back from Transifex
+for json in `find UI/src/locales/ -name "*.json" -exec basename {} .json \; | sort`; do
+    # Convert updated locale/po/, keeping Vue added data and only non-empty strings
+    i18next-conv --quiet --skipUntranslated --language "$json" \
+        --source locale/po/$json.po --target UI/src/locales/$json.json
 done

@@ -20,6 +20,7 @@ requires 'Email::Sender::Transport::SMTP';
 requires 'Email::Stuffer';
 requires 'Feature::Compat::Try';
 requires 'File::Find::Rule';
+requires 'File::Grep';
 requires 'Hash::Merge';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
