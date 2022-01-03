@@ -184,7 +184,7 @@ sub run_report{
     my $locales = [ map { { text => $lhash{$_}, value => $_ } }
                     sort {$lhash{$a} cmp $lhash{$b}} keys %lhash
                   ];
-    my $printer = [ {text => 'Screen', value => 'zip'},
+    my $printer = [ {text => 'Screen', value => 'screen'},
                     map { {
                          text => $_, value => $LedgerSMB::Sysconfig::printer{$_}
                           } }
@@ -231,6 +231,8 @@ sub run_report{
                     text  => $self->Text('Print Batch'),
                     value => 'print_batch',
                     class => 'submit',
+                    'data-dojo-type' => 'lsmb/PrintButton',
+                    'data-dojo-props' => 'minimalGET: false',
                 }, ]);
     my $class_to_script = {
         '1' => 'ap',
