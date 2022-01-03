@@ -1559,6 +1559,8 @@ sub invoice {
               $form->format_amount( \%myconfig, $form->{"${_}_$i"} );
         }
     }
+    $form->{duedate} = $form->current_date( \%myconfig, $form->{transdate},
+                                            $form->{terms} * 1 );
 
     for (qw(id subject message printed emailed queued audittrail)) {
         delete $form->{$_};
