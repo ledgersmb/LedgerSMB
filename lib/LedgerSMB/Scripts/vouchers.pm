@@ -545,9 +545,8 @@ sub print_batch {
                     $_,
                     $request
                 );
-                return 1;
             }
-            return ();
+            $entry ? 1 : ();
         }
         @{$report->rows};
 
