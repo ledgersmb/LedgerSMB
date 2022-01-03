@@ -39,6 +39,8 @@ find UI/ templates/ t/data/ \
 
 utils/devel/extract-sql < sql/Pg-database.sql >> locale/LedgerSMB.pot
 
+utils/devel/extract-vue-template-translations.sh
+
 msguniq -s --width=80 -o locale/LedgerSMB.pot locale/LedgerSMB.pot \
   || exit 1
 
