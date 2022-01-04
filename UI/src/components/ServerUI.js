@@ -1,10 +1,10 @@
 /** @format */
 
 import { h } from "vue";
-// import axios from "axios";
 
 const registry = require("dijit/registry");
 const parser = require("dojo/parser");
+const query = require("dojo/query");
 
 function domReject(response) {
     return (
@@ -35,7 +35,7 @@ export default {
 
                 document
                     .getElementById("maindiv")
-                    .classList.remove("done-parsing");
+                    .removeAttribute("data-lsmb-done");
                 let r = await fetch(tgt, {
                     method: options.method,
                     body: options.data,
@@ -94,28 +94,44 @@ export default {
                     window.__lsmbLoadLink(href);
                 }
             });
+        },
+        _cleanWidgets() {
+            try {
+                let widgets = registry.findWidgets(
+                    document.getElementById("maindiv")
+                );
+                widgets.forEach((w) =>
+                    w.destroyRecursive ? w.destroyRecursive(true) : w.destroy()
+                );
+                // when the BODY-bound mouse-over handler finds a node which has a
+                // _cssState prop after the widget that node belongs to was unregistered
+                // an error is thrown. Make sure the props are gone right after unregistering
+                // the widgets. (it may take a bit for the new content to overwrite the old
+                // content...)
+                query("*", document.getElementById("maindiv")).forEach(
+                    /* eslint-disable no-param-reassign */
+                    (n) => delete n._cssState
+                );
+            } catch (e) {
+                this._report_error(e);
+            }
         }
     },
     beforeRouteEnter() {},
     beforeRouteUpdate() {},
-    beforeRouteLeave() {},
+    beforeRouteLeave() {
+        this._cleanWidgets();
+    },
     mounted() {
-        document.getElementById("maindiv").classList.add("done-parsing");
+        document
+            .getElementById("maindiv")
+            .setAttribute("data-lsmb-done", "true");
         this.$nextTick(() => this.updateContent(this.uiURL));
         window.__lsmbSubmitForm = (req) =>
             this.updateContent(req.url, req.options);
     },
     beforeUpdate() {
-        try {
-            let widgets = registry.findWidgets(
-                document.getElementById("maindiv")
-            );
-            widgets.forEach((w) =>
-                w.destroyRecursive ? w.destroyRecursive(true) : w.destroy()
-            );
-        } catch (e) {
-            this._report_error(e);
-        }
+        this._cleanWidgets();
     },
     updated() {
         if (!document.getElementById("maindiv")) {
@@ -127,7 +143,7 @@ export default {
                 registry.findWidgets(maindiv).forEach((child) => {
                     this._recursively_resize(child);
                 });
-                maindiv.classList.add("done-parsing");
+                maindiv.setAttribute("data-lsmb-done", "true");
             });
             maindiv
                 .querySelectorAll("a")

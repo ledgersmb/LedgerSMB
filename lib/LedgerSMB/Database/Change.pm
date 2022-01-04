@@ -338,7 +338,7 @@ sub _split_statements {
    (?<QuotedIdentifier>"[^\"]+")
    (?<SingularIdentifier>(?&BareIdentifier)|(?&QuotedIdentifier)|\*)
    (?<Identifier>(?&SingularIdentifier)(\.(?&SingularIdentifier))*)
-   (?<QuotedString>'[^\\']* (?: \\. [^\\']* )*')
+   (?<QuotedString>'([^\\']|\\.)*')
    (?<DollarQString>\$(?<_dollar_block>(?&BareIdentifier)?)\$
                       [^\$]* (?: \$(?!\g{_dollar_block}\$) [^\$]*+)*
                       \$\g{_dollar_block}\$)
@@ -371,7 +371,7 @@ sub _split_statements {
    (?<Statement> (?&BareIdentifier) (?&WhiteSp)
                  (?: (?&ComplexTokenSequence) (?&WhiteSp) )? ; )
 )
-    /gxms) {
+           /gxms) {
         push @statements, $1;
     }
     return @statements;

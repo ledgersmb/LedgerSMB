@@ -55,7 +55,6 @@ if (TARGET !== 'readme') {
         "dijit/form/ValidationTextBox",
         "dijit/layout/BorderContainer",
         "dijit/layout/ContentPane",
-        "dijit/layout/TabContainer",
         "dijit/Tooltip",
         "lsmb/ToggleIncludeButton"
     ];
@@ -67,6 +66,17 @@ if (TARGET !== 'readme') {
             content.match(/(?<=['"]?data-dojo-type['"]?\s*=\s*")([^"]+)(?=")/gi) ||
             []
         ).filter((x, i, a) => a.indexOf(x) === i);
+    }
+
+    function getPOFilenames(_path, extension) {
+        return fs
+            .readdirSync(_path)
+            .filter(
+                item =>
+                    fs.statSync(path.join(_path, item)).isFile() &&
+                    (extension === undefined || path.extname(item) === extension)
+            ).map(item => path.basename(item,extension))
+            .sort();
     }
 
     // Compute used data-dojo-type
@@ -82,7 +92,7 @@ if (TARGET !== 'readme') {
     includedRequires = includedRequires
         .concat(
             glob
-                .sync("{js-src/lsmb/**/!(webpack.loaderConfig|main).js,src/*.js}", {
+                .sync("{js-src/lsmb/**/!(webpack.loaderConfig|main).js,src/*.js,src/elements/*.js}", {
                     cwd: "UI"
                 })
                 .map(function (file) {
@@ -111,7 +121,26 @@ if (TARGET !== 'readme') {
 
     const vue = {
         test: /\.vue$/,
-        loader: "vue-loader"
+        loader: "vue-loader",
+        options: {
+            compilerOptions: {
+                isCustomElement: (tag) => tag.startsWith("lsmb-")
+            }
+        }
+    };
+
+    const vueTranslations = {
+        test: /\.(json5?|ya?ml)$/, // target json, json5, yaml and yml files
+        type: 'javascript/auto',
+        // Use `Rule.include` to specify the files of locale messages to be pre-compiled
+        include: [path.resolve(__dirname, './src/locales')],
+        loader: '@intlify/vue-i18n-loader'
+    };
+
+    const vuei18n = {
+        resourceQuery: /blockType=i18n/,
+        type: 'javascript/auto',
+        loader: '@intlify/vue-i18n-loader',
     };
 
     const css = {
@@ -175,7 +204,7 @@ if (TARGET !== 'readme') {
         loaderConfig: require("./UI/js-src/lsmb/webpack.loaderConfig.js"),
         environment: { dojoRoot: "UI/js" }, // used at run time for non-packed resources (e.g. blank.gif)
         buildEnvironment: { dojoRoot: "node_modules" }, // used at build time
-        locales: ["en"],
+        locales: getPOFilenames('locale/po','.po'),
         noConsole: true
     };
 
@@ -304,6 +333,15 @@ if (TARGET !== 'readme') {
             minRatio: 0.8
         }),
 
+        // Statics from build.
+        new webpack.DefinePlugin({
+            "process.env.VUE_APP_I18N_LOCALE": "en",
+            "process.env.VUE_APP_I18N_FALLBACK_LOCALE": "en",
+            "__SUPPORTED_LOCALES":
+                getPOFilenames('locale/po','.po').map(function(po){
+                    return "'"+po+"'"
+                })
+        })
     ];
 
     var pluginsDev = [
@@ -367,11 +405,6 @@ if (TARGET !== 'readme') {
         context: path.join(__dirname, "UI"),
 
         entry: {
-            main: {
-                filename: "lsmb/main.js",
-                import: "lsmb/main",
-                dependOn: "dojo-shared"
-            },
             "dojo-shared": [ ...includedRequires ],
             ...lsmbCSS
         },
@@ -385,16 +418,15 @@ if (TARGET !== 'readme') {
         },
 
         module: {
-            rules: [vue, javascript, css, images, svg, html]
+            rules: [vue, vueTranslations, vuei18n, javascript, css, images, svg, html]
         },
 
         plugins: pluginsList,
 
         resolve: {
             alias: {
-                // "vue": "@vue/runtime-dom",
                 "vue$": "vue/dist/vue.esm-bundler.js",
-                "@": path.join(__dirname, "UI/js-src/lsmb")
+                "@": path.join(__dirname, "UI/src/")
             },
             extensions: [ ".js", ".vue" ],
             fallback: {

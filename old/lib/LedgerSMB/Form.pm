@@ -995,8 +995,7 @@ about buttons, $name is the key for the element in $button to output.  Each
 value in $button is a reference to a hash of two elements, 'key' and 'value'.
 
 $name is the value of the button that gets sent to the server when clicked,
-$button->{$name}{key} is the accesskey, and $button->{$name}{value} is the label
-for the button.
+$button->{$name}{value} is the label for the button.
 
 =cut
 
@@ -1008,7 +1007,7 @@ sub print_button {
     my $type = $button->{$name}{type} // 'dijit/form/Button';
     $btn++;
     print
-qq|<button data-dojo-type="$type" class="submit" type="submit" name="action" value="$name" id="action-$name-$btn" accesskey="$button->{$name}{key}" title="$button->{$name}{value} [Alt-$button->{$name}{key}]">$button->{$name}{value}</button>\n|;
+qq|<button data-dojo-type="$type" class="submit" type="submit" name="action" value="$name" id="action-$name-$btn" title="$button->{$name}{value}">$button->{$name}{value}</button>\n|;
 }
 
 

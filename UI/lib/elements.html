@@ -19,12 +19,11 @@
 
 
   textarea_keys           = default_input_keys.merge(['cols', 'rows',
-                                                      'readonly', 'accesskey',
-                                                      'style', 'wrap' ])
-  select_keys             = default_input_keys.merge(['multiple', 'accesskey'])
+                                                      'readonly', 'style', 'wrap' ])
+  select_keys             = default_input_keys.merge(['multiple'])
   option_keys             = default_keys.merge(['tabindex', 'disabled', 'value', 'selected'])
-  button_keys             = default_input_keys.merge(['accesskey'])
-  toggle_keys             = default_input_keys.merge(['accesskey', 'showLabel', 'label'])
+  button_keys             = default_input_keys
+  toggle_keys             = default_input_keys.merge(['showLabel', 'label'])
   for_keys                = default_keys.merge(['for'])
 
   # ELEMENT DEFAULTS
@@ -129,7 +128,9 @@
          IF label_pos == -1;
             PROCESS auto_label;
          END;
-         "<input$all_attributes />";
+
+         # wrap the input in a span so grids don't stretch it
+         "<span><input$all_attributes /></span>";
          IF label_pos == 1;
            PROCESS auto_label;
          END;
@@ -172,7 +173,8 @@
 
         PROCESS auto_label;
 
-        "<select$all_attributes >";
+        # wrap all SELECTs in SPANs so grids don't stretch the selects
+        "<span><select$all_attributes >";
         IF element_data.default_blank;
            # loop.count starts at 1, so using index 0 here is safe: it won't overlap below
            PROCESS option
@@ -194,7 +196,7 @@
                text_attr   = text_attr,
                value_attr  = value_attr;
         END;
-        "</select>";
+        "</select></span>";
       END %]
 [% END %]
 

@@ -11,7 +11,6 @@
       END ;
       %]</strong></div>
 <form data-dojo-type="lsmb/Form" name="hr" action="[% request.script %]" method="post">
-<div data-dojo-type="lsmb/layout/TableContainer" data-dojo-props="cols:3">
 [% PROCESS input element_data = {
                 type = "hidden"
                 name = "target_div"
@@ -27,12 +26,10 @@
                 name = "entity_id"
                value = entity_id
 } %]
-<div class="input_line">
-<div class="input_group g1">
+<div class="six-column-grid">
      [%
         PROCESS select element_data = {
-                  title = text('Salutation')
-                  label = "_none_"
+                  label = text('Salutation')
                    name = 'salutation_id'
          default_values = [employee.salutation_id]
           default_blank = 1
@@ -40,85 +37,55 @@
                   class = 'salutations'
               text_attr = 'salutation'
              value_attr = 'id'
-    } %]
-</div>
-</div>
-<div class="input_line" id="person_name_div">[% #text('Name:')%]&nbsp;
-<div class="input_group g1">
-[% PROCESS input element_data = {
-        title = text('First Name') #'
-        label = "_none_"
+     } %]
+  [% PROCESS input element_data = {
+        label = text('First Name')
         name = "first_name"
         value = employee.first_name
         type = "text"
         size = 20
    required = 'true'
 } %]
-</div>
-<div class="input_group g2">
 [% PROCESS input element_data = {
-        title = text('Middle Name') #'
-        label = "_none_"
+        label = text('Middle Name')
         name = "middle_name"
         value = employee.middle_name
         type = "text"
         size = 20
 } %]
-</div>
-</div>
-<div class="input_line" id='person_name2_div'>
-<div class="input_group g1">
 [% PROCESS input element_data = {
-        title = text('Last Name') #'
-        label = "_none_"
+        label = text('Last Name')
         name = "last_name"
         value = employee.last_name
         type = "text"
         size = 20
    required = 'true'
 } %]
-</div>
-<!-- Note that the strange # ' constructs are only necessary to help VIM avoid
-problems with multi-word single-quoted constructs in PI tags. -CT  -->
-<div class="input_group g2">
 [% PROCESS input element_data = {
-        title = text('Job Title')
-        label = "_none_"
+        label = text('Job Title')
         name = "role"
         value = employee.role
         type = "text"
         size = 20
-} # ' %]
-</div>
-</div>
-<div class="input_line" id="person-role-div">
-<div class="input_group g1">
+} %]
 [%
 IF employee.sales; checked = "CHECKED"; ELSE; checked = undef; END;
 PROCESS input element_data = {
-        title = text('Sales')
-        label = "_none_"
+        label = text('Sales')
         value = 1
         type = "checkbox"
         checked = checked
         name = "sales"
 } %]
-</div>
-<div class="input_group g2">
 [%
 IF employee.is_manager; checked = "CHECKED"; ELSE; checked = undef; END;
  PROCESS input element_data = {
-        title = text('Manager')
-        label = "_none_"
+        label = text('Manager')
         value = '1'
         type = "checkbox"
         checked = checked
         name = "is_manager"
 } %]
-</div>
-</div>
-<div class="input_line" id="person-country-div">
-<div class="input_group solo">
                 [% INCLUDE select_country element_data = {
                         text_attr = "name"
                         value_attr = "id"
@@ -126,27 +93,18 @@ IF employee.is_manager; checked = "CHECKED"; ELSE; checked = undef; END;
                         options = country_list
                         name = "country_id"
                         required = 'true'
-                        title = text('Country')
-                        label = "_none_"
+                        label = text('Country')
                         default_blank = 1
         } %]
-</div>
-</div>
-<div id="employeenumber_div" class="input_line">
-<div class="input_group g1">
 [% PROCESS input element_data = {
-        title = text('Employee Number') #'
-        label = "_none_"
+        label = text('Employee Number')
         value = employee.employeenumber
         name = "employeenumber"
         type = "text"
         size = 20
 }  %]
-</div>
-<div class="input_group g2">
 [% PROCESS select element_data = {
-         title = text('Manager')
-         label = "_none_"
+         label = text('Manager')
           name = 'manager_id'
        options = all_managers
 default_values = [employee.manager_id]
@@ -154,54 +112,38 @@ default_values = [employee.manager_id]
     value_attr = 'entity_id'
  default_blank = 1
 } %]
-</div>
-<div class="input_group g3">
 [% PROCESS input element_data = {
-        title = text('Tax ID/SSN') #'
-        label = "_none_"
+        label = text('Tax ID/SSN') #'
          name = "ssn"
         value = employee.ssn
          type = "text"
         class = "tax_id"
          size = "16"
 } %]
-</div>
-</div>
-<div class="input_line" id="hr_dates_div">
-<div class="input_group g1">
 [% PROCESS input element_data = {
-        title = text('DOB')
-        label = "_none_"
+        label = text('DOB')
         name = "dob"
         value = employee.dob
         type = "text"
         class = "date"
         size = 10
 }  %]
-</div>
-<div class="input_group g2">
 [% PROCESS input element_data = {
-        title = text('Start Date')
-        label = "_none_"
+        label = text('Start Date')
         name = "start_date"
         value = employee.start_date
         type = "text"
         class = "date"
         size = 10
 } # '  %]
-</div>
-<div class="input_group g3">
 [% PROCESS input element_data = {
-        title = text('End Date')
-        label = "_none_"
+        label = text('End Date')
         name = "end_date"
         value = employee.end_date
         class = "date"
         type = "text"
         size = 10
 } # ' %]
-</div>
-</div>
 </div>
 <div>
 [% PROCESS button element_data = {

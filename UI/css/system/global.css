@@ -668,3 +668,61 @@ h2 {
 #email #body {
     min-height: 8em;
 }
+
+#app-login {
+    margin-top: 2em;
+}
+
+#logindiv #company_div {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-row-gap: 4px;
+    margin-bottom: 1em;
+    margin-top: 2em;
+}
+
+#logindiv #company_div lsmb-text,
+#logindiv #company_div lsmb-password {
+    display: contents;
+}
+
+#logindiv #company_div label {
+    text-align: left;
+}
+
+.two-column-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.four-column-grid {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+
+.six-column-grid {
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+}
+
+.two-column-grid lsmb-text,
+.two-column-grid lsmb-password,
+.two-column-grid lsmb-date,
+.two-column-grid lsmb-file,
+.four-column-grid lsmb-text,
+.four-column-grid lsmb-password,
+.four-column-grid lsmb-date,
+.four-column-grid lsmb-file,
+.six-column-grid lsmb-text,
+.six-column-grid lsmb-password,
+.six-column-grid lsmb-date,
+.six-column-grid lsmb-file {
+    display: contents;
+}
+
+.two-column-grid label,
+.four-column-grid label,
+.six-column-grid label {
+    text-align: left;
+}
+

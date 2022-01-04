@@ -11,9 +11,7 @@ use Test::BDD::Cucumber::StepFile;
 When qr/I select "(Approved|Unapproved)"$/, sub {
     my $label_text = $1;
     my $page = S->{ext_wsl}->page->body->maindiv;
-    my $radio_button = $page->find(
-         qq{//tr[td/label[.="$label_text"]]/td/div/input[\@type="radio"]}
-    );
+    my $radio_button = $page->find('*labeled', text => $label_text);
     $radio_button->click;
 };
 

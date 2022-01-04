@@ -1,11 +1,10 @@
 [% INCLUDE "ui-header.html"
-dojoAutoLoad=1
 stylesheet="ledgersmb.css"
 include_stylesheet=["setup.css"];
        PROCESS "elements.html";
        PROCESS "dynatable.html"; %]
 <body id="setup-edit-user" class="[% dojo_theme %]">
- <div><div class="setupconsole" data-dojo-type="lsmb/main">
+ <div><div class="setupconsole">
         <div class="listtop">
             [%
                IF request.pls_import;
@@ -50,9 +49,12 @@ include_stylesheet=["setup.css"];
                 <td><label for="password">[% text('Password') %]</label>
                 </td>
                 <td>
-                    <input type="password"
-                           id="password" name="password" value=""
-                           autocomplete="off" />
+                  [% PROCESS input element_data = {
+                               type = "password"
+                               id   = "password"
+                               name = "password"
+                               autocomplete = "off"
+                  } %]
                 </td>
             </tr>
 

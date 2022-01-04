@@ -222,6 +222,8 @@ sub set_buttons {
             text  => $self->Text('Print Batch'),
             value => 'print_batch',
             class => 'submit',
+            'data-dojo-type' => 'lsmb/PrintButton',
+            'data-dojo-props' => 'minimalGET: false',
         },
         ];
 }
@@ -238,7 +240,7 @@ sub run_report{
     my ($self,$request) = @_;
     my @languages =
         LedgerSMB::I18N::get_language_list($self,$request->{_user}->{language});
-    my $printer = [ {text => 'Screen', value => 'zip'},
+    my $printer = [ {text => 'Screen', value => 'screen'},
                     map { {
                         text  => $_,
                         value => LedgerSMB::Sysconfig::printer()->{$_}

@@ -402,19 +402,19 @@ $check = qq{<table id="grid"
   </thead>
   <tbody>
    <tr class=" 0">
-      <input id="grid-row-1" type="hidden" name="grid_row_1" value="0" />
-      <input id="grid---pk-0" type="hidden" name="grid_--pk_0" value="Y29sMQ== Y29sMg==" />
+      <span><input id="grid-row-1" type="hidden" name="grid_row_1" value="0" /></span>
+      <span><input id="grid---pk-0" type="hidden" name="grid_--pk_0" value="Y29sMQ== Y29sMg==" /></span>
       <td class="a  text">col1</td>
       <td class="b  text">col2</td>
-      <td class="c  input_text"><input id="grid_c-1" type="text" name="grid_c_0" size="60" value="col3" data-dojo-type="dijit/form/ValidationTextBox" maxlength="255" /></td>
+      <td class="c  input_text"><span><input id="grid_c-1" type="text" name="grid_c_0" size="60" value="col3" data-dojo-type="dijit/form/ValidationTextBox" maxlength="255" /></span></td>
    </tr>
   </tbody>
-  <input id="rowcount-grid" type="hidden" name="rowcount_grid" value="1" />
+  <span><input id="rowcount-grid" type="hidden" name="rowcount_grid" value="1" /></span>
  </table>};
 
 $check =~ s|\n+\s*|\n|g;
 
 ok( index($out,$check)>0, 'Render a grid (2-column p-key)')
-    or diff( $out,[ split /\n/, $check ],{ STYLE => 'Table', CONTEXT => 2 });
+    or diag diff( [ split /\n/, $out ],[ split /\n/, $check ],{ STYLE => 'Table', CONTEXT => 2 });
 
 done_testing;

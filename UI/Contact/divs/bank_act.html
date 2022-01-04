@@ -26,65 +26,53 @@ PROCESS dynatable
    ];
 %]
 <form data-dojo-type="lsmb/Form" name="bank_acct" action="[% request.script %]" method="post">
-<div data-dojo-type="lsmb/layout/TableContainer" data-dojo-props="cols:1">
-[% PROCESS input element_data = {
+  [%
+  PROCESS input element_data = {
                 type = "hidden"
                 name = "form_id"
                 value = form_id
-        } %]
-        [% PROCESS input element_data = {
+  };
+
+  PROCESS input element_data = {
                 type="hidden"
                 name="entity_id"
                 value=entity_id
-        } %]
-        [% PROCESS input element_data = {
+  };
+
+  PROCESS input element_data = {
                 type="hidden"
                 name="credit_id"
                 value=credit_id
-        } %]
-        [% PROCESS input element_data = {
+  };
+
+  PROCESS input element_data = {
                 type="hidden"
                 name="bank_account_id"
                 value=request.id
-        } %]
-        <div>
-        [% INCLUDE input element_data = {
-                type="text"
-                title = text('BIC/SWIFT Code')
-                label = "_none_"
-                name="bic"
-                value=request.bic
-                size=20
-        } #' %]
-        </div>
-        <div>
-        [% PROCESS input element_data = {
-                type="text"
-                title = text('Bank Account')
-                label = "_none_"
-                name="iban"
-                value=request.iban
-                size=20
-                required = 'true'
-        } #' %]
-        </div>
-        <div>
-        [% PROCESS input element_data = {
-                type="text"
-                title = text('Remark')
-                label = "_none_"
-                name="remark"
-                value=request.remark
-                size=30
-        } # %]
-        </div>
-</div>
-        <div>[% PROCESS button element_data = {
+  };
+  %]
+  <div class="two-column-grid" style="width: fit-content">
+    <lsmb-text title="[% text('BIC/SWIFT Code') %]"
+               name="bic"
+               value="[% request.bic %]"
+               size="20" ></lsmb-text>
+    <lsmb-text title="[% text('Bank Account') %]"
+               name="iban"
+               value="[% request.iban %]"
+               size="20"
+               required ></lsmb-text>
+    <lsmb-text title="[% text('Remark') %]"
+               name="remark"
+               value="[% request.remark %]"
+               size="30" ></lsmb-text>
+  </div>
+  <div>
+    [% PROCESS button element_data = {
                 name="action"
                 value="save_bank_account"
                 class="submit"
                 text = text('Save')
                 } %]
-        </div>
+  </div>
 </form>
 </div>

@@ -137,7 +137,7 @@ sub parse_invoice_detail_row {
         'Discount' => $row->find('./td[@class="discount_list"]')->get_text,
         'Net Due' => $row->find('./td[@class="net_due_list"]')->get_text,
         'To Pay' => $row->find(
-            './td[@class="to_pay_list"]/div/div/input[contains(@name, "payment_")]'
+            './td[@class="to_pay_list"]//input[contains(@name, "payment_")]'
         )->get_attribute('value'),
     };
 

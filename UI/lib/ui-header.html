@@ -12,7 +12,7 @@
    #       comments like this one.
 -%]
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="[% USER.language %]">
 <head>
     <title>[% title %]</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
@@ -54,15 +54,17 @@
     <script>
         var dojoConfig = {
             async: 1,
-            parseOnLoad: [% dojoAutoLoad ? 'true' : 'false' %],
+            parseOnLoad: false,
             locale: "[% USER.language.lower().replace('_','-') %]",
             packages: [{"name":"lsmb","location":"../lsmb"}],
             mode: "<%= htmlWebpackPlugin.options.mode %>"
         };
         var lsmbConfig = {
+            language: "[% USER.language %]",
             [% IF USER.dateformat %]
-            "dateformat": '[% USER.dateformat %]'
+            "dateformat": '[% USER.dateformat %]',
             [% END %]
+            version: "[% version %]"
         };
     </script>
     ${htmlWebpackPlugin.tags.bodyTags}

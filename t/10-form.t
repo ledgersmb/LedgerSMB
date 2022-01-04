@@ -266,7 +266,7 @@ is($form->sort_order($aryref, {name => 0, projectnumber => 3, startdate => 1}),
 ## $form->print_button checks
 $form = Form->new;
 is(capture_stdout {$form->print_button({'pear' => {'key' => 'P', 'value' => 'Pears'}}, 'pear');},
-   "<button data-dojo-type=\"dijit/form/Button\" class=\"submit\" type=\"submit\" name=\"action\" value=\"pear\" id=\"action-pear-1\" accesskey=\"P\" title=\"Pears [Alt-P]\">Pears</button>\n", 'print_button');
+   "<button data-dojo-type=\"dijit/form/Button\" class=\"submit\" type=\"submit\" name=\"action\" value=\"pear\" id=\"action-pear-1\" title=\"Pears\">Pears</button>\n", 'print_button');
 
 ## $form->like checks
 $form = Form->new;

@@ -1,55 +1,76 @@
 /** @format */
-/* eslint-disable no-console */
+/* eslint-disable no-console, import/no-unresolved */
 
 import { createApp } from "vue";
-import { createRouter, createWebHashHistory } from "vue-router";
+import router from "./router";
+import i18n, { loadLocaleMessages } from "./i18n";
+import LoginPage from "./components/LoginPage";
 
 const registry = require("dijit/registry");
 const dojoParser = require("dojo/parser");
 
-import Home from "./components/Home.vue";
-import ServerUI from "./components/ServerUI";
-
-const routes = [
-    { name: "home", path: "/", component: Home },
-    {
-        name: "default",
-        path: "/:pathMatch(.*)",
-        component: ServerUI,
-        props: (route) => ({ uiURL: route.fullPath })
+let app;
+let lsmbDirective = {
+    beforeMount(el, binding /* , vnode */) {
+        let handler = (event) => {
+            /* eslint-disable no-param-reassign */
+            binding.instance[binding.arg] = event.target.value;
+        };
+        el.addEventListener("input", handler);
+        el.addEventListener("change", handler);
     }
-];
-
-const router = createRouter({
-    history: createWebHashHistory(),
-    routes
-});
-
-export const app = createApp({
-    components: [Home, ServerUI],
-    mounted() {
-        let m = document.getElementById("main");
-
-        this.$nextTick(() => {
-            dojoParser.parse(m).then(() => {
-                document.body.classList.add("done-parsing");
-                let r = registry.byId("top_menu");
-                if (r) {
-                    // Setup doesn't have top_menu
-                    r.load_link = (url) => this.$router.push(url);
-                }
-            });
-        });
-        window.__lsmbLoadLink = (url) => this.$router.push(url);
-    },
-    beforeUpdate() {
-        document.body.classList.remove("done-parsing");
-    },
-    updated() {
-        document.body.classList.add("done-parsing");
-    }
-}).use(router);
+};
 
 if (document.getElementById("main")) {
+    app = createApp({
+        created() {
+            // Load the user desired language if not default
+            loadLocaleMessages(window.lsmbConfig.language);
+        },
+        mounted() {
+            let m = document.getElementById("main");
+
+            this.$nextTick(() => {
+                dojoParser.parse(m).then(() => {
+                    let r = registry.byId("top_menu");
+                    if (r) {
+                        // Setup doesn't have top_menu
+                        r.load_link = (url) => this.$router.push(url);
+                    }
+                    document.body.setAttribute("data-lsmb-done", "true");
+                });
+            });
+            window.__lsmbLoadLink = (url) => this.$router.push(url);
+        },
+        beforeUpdate() {
+            document.body.removeAttribute("data-lsmb-done");
+        },
+        updated() {
+            document.body.setAttribute("data-lsmb-done", "true");
+        }
+    })
+        .use(router)
+        .use(i18n);
+
+    app.config.compilerOptions.isCustomElement = (tag) =>
+        tag.startsWith("lsmb-");
+    app.directive("update", lsmbDirective);
+
     app.mount("#main");
+} else if (document.getElementById("login")) {
+    app = createApp(LoginPage);
+    app.config.compilerOptions.isCustomElement = (tag) =>
+        tag.startsWith("lsmb-");
+    app.directive("update", lsmbDirective);
+
+    app.mount("#login");
+} else {
+    /* In case we're running a "setup.pl" page */
+    dojoParser.parse(document.body).then(() => {
+        const l = document.getElementById("loading");
+        if (l) {
+            l.style.display = "none";
+        }
+        document.body.setAttribute("data-lsmb-done", "true");
+    });
 }

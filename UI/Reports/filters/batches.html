@@ -7,61 +7,49 @@
 <div id="batch_search">
 <form data-dojo-type="lsmb/Form" action="vouchers.pl" method="get">
     <div class="listtop" id="title_div">[% text('Search Batches') %]</div>
-    <div data-dojo-type="lsmb/layout/TableContainer" data-dojo-props="cols:1">
-
-        <div class="input" id="batch_class_div">
+    <div class="two-column-grid" style="width: fit-content">
             [% INCLUDE select element_data = {
-                title = text('Transaction Type') #'
+                label = text('Transaction Type')
                 options = batch_classes
                 value_attr = "id"
                 text_attr = "class"
                 name = "class_id"
                 default_blank = "true"
             } %]
-        </div>
-
-        <div class="input" id="approved_div">
             [% INCLUDE input element_data = {
                 name = "approved"
                 id = "approved-1"
                 value = "1"
-                title = text("Approved")
+                label = text("Approved")
                 type = "radio"
            }; %]
            [% INCLUDE input element_data = {
                 name = "approved"
                 id = "approved-0"
                 value = "0"
-                title = text("Unapproved")
+                label = text("Unapproved")
                 type = "radio"
                 checked = "CHECKED"
            }; %]
-        </div>
-
-        <div class="input" id="description_div">
             [% INCLUDE input element_data = {
-                title = text('Description')
+                label = text('Description')
                 size = 20
                 name = "description"
             } %]
-        </div>
-
-        <div class="input" id="amounts_div">
             [% INCLUDE input element_data = {
-                title = "Minimum Value"
+                label = "Minimum Value"
                 name = "amount_gt"
                 class = "numeric"
                 size = 20
                 type = "text"
             } %]
             [% INCLUDE input element_data = {
-                title = "Maximum Value"
+                label = "Maximum Value"
                 name = "amount_lt"
                 size = 20
                 class = "numeric"
                 type = "text"
             } %]
-        </div>
 
     </div>
 
