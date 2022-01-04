@@ -51,7 +51,7 @@ sub init_taxes {
     my @accounts = split / /, $taxaccounts;
 
     $logger->debug('Initializing taxes');
-    if ( $taxaccounts2 ) {
+    if ( scalar(@_) == 3 ) { # 3-argument call; sometimes we only have 2...
         #my @tmpaccounts = @accounts;#unused var
         @accounts=(); # empty @accounts
         for my $acct ( split / /, $taxaccounts2 ) {
