@@ -77,6 +77,7 @@ sub dispatch {
             local *STDOUT = $stdout;
             $lsmb_legacy::form = Form->new();
             $lsmb_legacy::form->{$_} = $form_args->{$_} for (keys %$form_args);
+            $lsmb_legacy::form->{script} = $script;
             $lsmb_legacy::locale = $LedgerSMB::App_State::Locale;
             %lsmb_legacy::myconfig = %$LedgerSMB::App_State::User;
 
