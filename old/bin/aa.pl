@@ -517,7 +517,7 @@ $form->open_status_div($status_div_id) . qq|
     }
     $form->hide_form(
         qw(batch_id approved id printed emailed sort closedto locked
-           oldtransdate audittrail recurring checktax reverse batch_id subtype
+           oldtransdate audittrail recurring checktax reverse subtype
            entity_control_code tax_id meta_number default_reportable address city)
     );
 
