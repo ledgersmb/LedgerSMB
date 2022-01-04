@@ -224,6 +224,8 @@ sub set_buttons {
             text  => $self->Text('Print Batch'),
             value => 'print_batch',
             class => 'submit',
+            'data-dojo-type' => 'lsmb/PrintButton',
+            'data-dojo-props' => 'minimalGET: false',
         },
         ];
 }
@@ -241,7 +243,7 @@ sub run_report{
     my $locales = [ map { { text => code2country($_), value => $_ } }
                     sort { $a cmp $b } (all_country_codes(), )
                   ];
-    my $printer = [ {text => 'Screen', value => 'zip'},
+    my $printer = [ {text => 'Screen', value => 'screen'},
                     map { {
                          text => $_, value => $LedgerSMB::Sysconfig::printer{$_}
                           } }
