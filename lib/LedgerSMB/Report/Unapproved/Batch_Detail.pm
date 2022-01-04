@@ -222,6 +222,8 @@ sub set_buttons {
             text  => $self->Text('Print Batch'),
             value => 'print_batch',
             class => 'submit',
+            'data-dojo-type' => 'lsmb/PrintButton',
+            'data-dojo-props' => 'minimalGET: false',
         },
         ];
 }
@@ -239,7 +241,7 @@ sub run_report{
     ###TODO: This should be language for print language options, currently this return country.
     my $locales =
         LedgerSMB::I18N::get_country_list($self->{_user}->{language});
-    my $printer = [ {text => 'Screen', value => 'zip'},
+    my $printer = [ {text => 'Screen', value => 'screen'},
                     map { {
                         text  => $_,
                         value => LedgerSMB::Sysconfig::printer()->{$_}
