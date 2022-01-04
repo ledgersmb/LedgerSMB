@@ -49,7 +49,7 @@ sub init_taxes {
     my @taxes = ();
     do { $_ = '' unless defined $_ } for ($taxaccounts, $taxaccounts2);
     my @accounts = split / /, $taxaccounts;
-    if ( defined $taxaccounts2 ) {
+    if ( scalar(@_) == 3 ) { # 3-argument call; sometimes we only have 2...
         #my @tmpaccounts = @accounts;#unused var
         @accounts=(); # empty @accounts
         for my $acct ( split / /, $taxaccounts2 ) {
