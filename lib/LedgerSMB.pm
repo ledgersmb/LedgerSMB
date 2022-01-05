@@ -208,7 +208,7 @@ use LedgerSMB::Setting;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 
-our $VERSION = '1.9.6';
+our $VERSION = '1.9.7-dev';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 my $expiration_parser = DateTime::Format::Duration::ISO8601->new;
