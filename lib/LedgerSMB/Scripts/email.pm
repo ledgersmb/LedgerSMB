@@ -44,8 +44,14 @@ sub render {
     my $wf = FACTORY()->fetch_workflow('Email', $request->{id});
 
     if ($request->{wf_action}) {
-        $wf->context->param( $_ => $request->{$_} )
-            for qw( from to cc bcc subject body );
+        for my $field (qw( from to cc bcc subject body )) {
+            if (defined $request->{$field}) {
+                $wf->context->param( $_ => $request->{$field} );
+            }
+            else {
+                $wf->context->delete_param( $field );
+            }
+        }
 
         my $upload = $request->{_uploads}->{attachment_content};
         if ($upload) {
