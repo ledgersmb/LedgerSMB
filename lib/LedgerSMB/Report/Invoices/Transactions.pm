@@ -342,7 +342,7 @@ This runs the report and sets the $report->rows.
 
 
 sub run_report {
-    my $self = shift;
+    my ($self,$request) = @_;
     $self->approved;
     my @rows = $self->call_dbmethod(funcname => 'report__aa_transactions');
     for my $r(@rows){

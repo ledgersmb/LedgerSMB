@@ -315,7 +315,7 @@ sub name {
 =cut
 
 sub run_report {
-    my $self = shift;
+    my ($self,$request) = @_;
     my $procname = 'report__aa_outstanding';
     if ($self->is_detailed){
        $procname .= '_details';

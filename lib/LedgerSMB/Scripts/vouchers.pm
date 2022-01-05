@@ -168,7 +168,7 @@ C<$request> is a L<LedgerSMB> object reference, which must contain:
 
 =item * batch_type
 
-Must be one of: 
+Must be one of:
 C<ap>, C<ar>, C<gl>, C<sales_invoice>, C<vendor_invoice>, C<receipt>,
 C<payment>, C<payment_reversal>, C<receipt_reversal>.
 
@@ -530,7 +530,7 @@ sub print_batch {
     # zipdir gets consumed by io.pl and arapprn.pl
     $request->{zipdir} = $dirname;
 
-    $report->run_report;
+    $report->run_report($request);
 
     my @files =
         map {

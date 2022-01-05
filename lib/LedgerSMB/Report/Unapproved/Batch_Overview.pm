@@ -206,7 +206,7 @@ properties.
 =cut
 
 sub run_report{
-    my ($self) = @_;
+    my ($self,$request) = @_;
     $self->get_rows();
     return;
 }

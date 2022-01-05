@@ -323,7 +323,7 @@ sub _exclude_from_totals {
 }
 
 sub run_report{
-    my ($self) = @_;
+    my ($self,$request) = @_;
     my $accno = $self->accno;
     $accno =~ s/--.*//;
     $self->accno($accno);

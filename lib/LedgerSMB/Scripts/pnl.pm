@@ -58,7 +58,7 @@ sub generate_income_statement {
         $rpt = LedgerSMB::Report::PNL::Income_Statement->new(
             %$request,
             column_path_prefix => [ 0 ]);
-        $rpt->run_report;
+        $rpt->run_report($request);
 
         for my $key (qw(from_month from_year from_date to_date interval)) {
             delete $request->{$_} for (grep { /^$key/ } keys %$request);
@@ -67,7 +67,7 @@ sub generate_income_statement {
         for my $cmp_dates (@{$rpt->comparisons}) {
             my $cmp = LedgerSMB::Report::PNL::Income_Statement->new(
                 %$request, %$cmp_dates);
-            $cmp->run_report;
+            $cmp->run_report($request);
             $rpt->add_comparison($cmp);
         }
     }

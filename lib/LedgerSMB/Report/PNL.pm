@@ -107,7 +107,7 @@ sub columns {
 =cut
 
 sub run_report {
-    my ($self) = @_;
+    my ($self,$request) = @_;
 
     my @lines = $self->report_base();
     my $row_map = ($self->gifi) ?

@@ -9,7 +9,7 @@ inventory adjustments
 =head1 SYNPOSIS
 
  my $rpt = LedgerSMB::Report::Inventory::Search_Adj->new(%$request);
- $rpt->run_report;
+ $rpt->run_report($request);
  $rpt->render($request);
 
 =cut
@@ -126,7 +126,7 @@ sub columns {
 =cut
 
 sub run_report {
-    my ($self) = @_;
+    my ($self,$request) = @_;
     my @rows = $self->call_dbmethod(funcname => 'inventory_adjust__search');
     for my $row (@rows) {
         $row->{ar_invnumber_suffix} = $row->{ar_invoice_id};

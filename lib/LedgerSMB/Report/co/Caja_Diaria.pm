@@ -186,7 +186,7 @@ Runs the report, and assigns rows to $self->rows.
 =cut
 
 sub run_report{
-    my ($self) = @_;
+    my ($self,$request) = @_;
     my @rows = $self->call_dbmethod(funcname => 'report__cash_summary');
     for my $ref(@rows){
         $ref->{document_type} = $doctypes->{$ref->{document_type}}

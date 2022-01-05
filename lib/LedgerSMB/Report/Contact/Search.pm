@@ -269,7 +269,7 @@ Runs the report, populates rows.
 =cut
 
 sub run_report {
-    my ($self) = @_;
+    my ($self,$request) = @_;
     my @contact_info;
     push @contact_info, $self->phone if $self->phone;
     push @contact_info, $self->email if $self->email;

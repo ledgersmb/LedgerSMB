@@ -91,7 +91,7 @@ Populates the $report->rows.
 =cut
 
 sub run_report {
-    my ($self) = @_;
+    my ($self,$request) = @_;
     my @rows = $self->call_dbmethod(funcname => 'templates__list');
     for my $ref(@rows){
         $ref->{row_id} =

@@ -82,7 +82,7 @@ the balance sheet.
 =cut
 
 sub run_report {
-    my ($self) = @_;
+    my ($self,$request) = @_;
 
     die $self->Text('Required period type')
            if $self->comparison_periods and $self->interval eq 'none';

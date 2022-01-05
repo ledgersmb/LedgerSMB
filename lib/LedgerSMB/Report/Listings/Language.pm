@@ -72,7 +72,7 @@ sub name {
 =cut
 
 sub run_report {
-    my ($self) = @_;
+    my ($self,$request) = @_;
     my @rows = $self->call_dbmethod(funcname => 'person__list_languages');
     for my $row(@rows){
         $row->{row_id} = $row->{code};
