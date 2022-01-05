@@ -40,6 +40,13 @@ Dependency updates
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.6
+* Populate more fields in batch approval details report (#6271)
+* Fix error when posting an invoice created from an order (#6280)
+* Fix saving invoices and transactions as part of vouchers (#6327)
+* Fix printing batch details from batch details approval screen (#6324)
+
+
 Changelog for 1.9.5
 * Fix correct AR/AP account being selected on Update and when editing (#6191)
 * On date-entry, add the separator character immediatly when possible (#6121)
