@@ -37,5 +37,5 @@ sub content_test {
         if @trailing_space_lines;
 }
 
-lives { content_test($_) } for @on_disk;
+ok( lives { content_test($_) } ) for @on_disk;
 done_testing;
