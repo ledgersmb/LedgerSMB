@@ -1573,6 +1573,8 @@ sub invoice {
 
         # $lib contains either 'IS' or 'IR': the sales and purchase invoice libs
         $lib->post_invoice(\%myconfig, $form);
+        $lib->retrieve_invoice(\%myconfig, $form);
+        &prepare_invoice;
     }
     $wf->context->param( 'spawned_id'   => $form->{workflow_id} );
     $wf->context->param( 'spawned_type' => 'AR/AP' );
