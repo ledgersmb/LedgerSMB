@@ -112,6 +112,9 @@ sub post_invoice {
     my $invoice_id;
     my $fxdiff = 0;
 
+    $form->{acc_trans} = ();
+
+
     ( $null, $form->{employee_id} ) = split /--/, $form->{employee}
         if $form->{employee};
 
