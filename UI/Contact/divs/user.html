@@ -166,7 +166,7 @@
                 <!-- Groups section -->
                 <tr>
                 [% FOREACH role IN roles %]
-                [% IF loop.count % 2 == 0%]
+                [% IF loop.even() %]
                 </tr>
                 <tr>
                 [% END %]
