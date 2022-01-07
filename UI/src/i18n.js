@@ -1,5 +1,6 @@
 /** @format */
 /* global __SUPPORTED_LOCALES */
+/* eslint-disable global-require */
 
 export const SUPPORT_LOCALES = __SUPPORTED_LOCALES;
 
@@ -13,7 +14,7 @@ const i18n = createI18n({
     locale: window.lsmbConfig.language,
     fallbackLocale: "en",
     messages: {
-        en: require('./locales/en.json'),
+        en: require("./locales/en.json")
     }
 });
 
