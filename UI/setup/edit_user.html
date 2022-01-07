@@ -123,10 +123,6 @@ include_stylesheet=["setup.css"];
                 <!-- Groups section -->
                 <tr>
                 [% FOREACH role IN roles %]
-                [% IF loop.even() %]
-                </tr>
-                <tr>
-                [% END %]
                     <td>
                         [% rolcheck = undef;
                            IF user.roles.grep(role.name).size;
@@ -141,6 +137,10 @@ include_stylesheet=["setup.css"];
                                checked = rolcheck
                          }, label_pos = 1 %]
                     </td>
+                [% IF loop.even() %]
+                </tr>
+                <tr>
+                [% END %]
                 [% END %]
                 </tr>
             </table>

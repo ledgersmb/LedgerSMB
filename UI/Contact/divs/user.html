@@ -166,10 +166,6 @@
                 <!-- Groups section -->
                 <tr>
                 [% FOREACH role IN roles %]
-                [% IF loop.even() %]
-                </tr>
-                <tr>
-                [% END %]
                     <td>
                         [% rolcheck = undef;
                            IF user.role_list.grep(role.rolname).size;
@@ -185,6 +181,10 @@
                                checked = rolcheck
                          }, label_pos = 1 %]
                     </td>
+                [% IF loop.even() %]
+                </tr>
+                <tr>
+                [% END %]
                 [% END %]
                 </tr>
             </table>
