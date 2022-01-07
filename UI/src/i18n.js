@@ -12,7 +12,9 @@ const i18n = createI18n({
     missingWarn: false, // warning off
     locale: window.lsmbConfig.language,
     fallbackLocale: "en",
-    messages: {}
+    messages: {
+        en: require('./locales/en.json'),
+    }
 });
 
 function setI18nLanguage(locale) {
