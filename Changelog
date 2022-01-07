@@ -14,18 +14,21 @@ Changed functionalities
 * Batch AR/AP upload changed to support foreign currency transactions
 
 Removed functionalities
+* Removed 'accesskey' HTML attribute, based on WebAIM.org guidance
 
 Bugs fixed
 * Better logging on authentication failure
 * Full support for running from a schema other than 'public'
 * Printing checks fails to include invoices on the check's voucher (#6253)
+* Languages in language selection drop down now in user's language (#6289)
 
 Code cleanup
 * Fewer warnings from old code
-* Start refactoring of client side code (JavaScript) to run on Vue3
+* Start changing client to use Vue3, vue-router and vue-i18n
 * Remove unused defaults table settings 'revtrans', 'yearend' and 'closedto'
 * Complete replacement of Log::Log4perl with Log::Any in library code
 * Remove unused UI templates
+* Encapsulate Dijit (Dojo) widgets in Web Components / Custom Elements
 
 Dependency updates
 * Perl 5.32 (updated from 5.24)
