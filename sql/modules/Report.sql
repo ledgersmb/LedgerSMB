@@ -53,6 +53,7 @@ CREATE TYPE report_aging_item AS (
         account_number varchar(24),
         name text,
         contact_name text,
+        "language" text,
         invnumber text,
         transdate date,
         till varchar(20),
@@ -92,7 +93,7 @@ $$
                   JOIN bu_tree ON bu_tree.id = bu.parent_id
                        )
                 SELECT c.entity_id, c.meta_number, e.name,
-                       e.name as contact_name,
+                       e.name as contact_name, c.language_code as "language",
                        a.invnumber, a.transdate, a.till, a.ordnumber,
                        a.ponumber, a.notes,
                        CASE WHEN a.age/30 = 0
@@ -164,7 +165,7 @@ $$
                        AND a.force_closed IS NOT TRUE
                        AND (in_name_part IS NULL
                             OR e.name like '%' || in_name_part || '%')
-              GROUP BY c.entity_id, c.meta_number, e.name,
+              GROUP BY c.entity_id, c.meta_number, e.name, c.language_code,
                        l.line_one, l.line_two, l.line_three,
                        l.city, l.state, l.mail_code, country.name,
                        a.invnumber, a.transdate, a.till, a.ordnumber,
@@ -185,12 +186,13 @@ CREATE OR REPLACE FUNCTION report__invoice_aging_summary
  in_business_units int[], in_use_duedate bool, in_name_part text)
 RETURNS SETOF report_aging_item
 AS $$
-SELECT entity_id, account_number, name, contact_name, null::text, null::date,
+SELECT entity_id, account_number, name, contact_name, "language",
+       null::text, null::date,
        null::text, null::text, null::text, null::text,
        sum(c0), sum(c30), sum(c60), sum(c90), null::date, null::int, curr,
        null::numeric, null::text[], null::int
   FROM report__invoice_aging_detail($1, $2, $3, $4, $5, $6, $7)
- GROUP BY entity_id, account_number, name, contact_name, curr
+ GROUP BY entity_id, account_number, name, contact_name, "language", curr
  ORDER BY account_number
 $$ LANGUAGE SQL;
 
