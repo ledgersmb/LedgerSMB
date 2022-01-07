@@ -101,7 +101,7 @@ releases. No explicit versioning was applied before 2021-01-04.
             <th><span class="c2"><?lsmb text('Price') ?></span></th>
             <th><span class="c2">%</span></th>
             <th><span class="c2"><?lsmb text('Amount') ?></span></th>
-          </tr><?lsmb FOREACH number ?><?lsmb loop_count = loop.count - 1 ?>
+          </tr><?lsmb FOREACH number ?><?lsmb loop_count = loop.index ?>
           <tr valign="top">
             <td align="right"><?lsmb runningnumber.${loop_count} ?>.</td>
             <td><?lsmb number.${loop_count} ?></td>
@@ -123,7 +123,7 @@ releases. No explicit versioning was applied before 2021-01-04.
             <th colspan="1" align="right"><?lsmb ordtotal ?></th><?lsmb ELSE ?>
             <th colspan="7" align="right"><?lsmb text('Subtotal') ?></th>
             <td colspan="1" align="right"><?lsmb subtotal ?></td><?lsmb END ?>
-          </tr><?lsmb FOREACH tax ?><?lsmb loop_count = loop.count - 1 ?>
+          </tr><?lsmb FOREACH tax ?><?lsmb loop_count = loop.index ?>
           <tr>
             <th colspan="7" align="right">
             <?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?>on

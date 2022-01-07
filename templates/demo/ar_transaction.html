@@ -86,7 +86,7 @@ releases. No explicit versioning was applied before 2021-01-04.
     <tr>
       <td>
         <table>
-          <?lsmb FOREACH account ?><?lsmb loop_count = loop.count - 1 ?>
+          <?lsmb FOREACH account ?><?lsmb loop_count = loop.index ?>
           <tr valign="top">
             <td><?lsmb accno.${loop_count} ?></td>
             <td><?lsmb account.${loop_count} ?></td>
@@ -105,7 +105,7 @@ releases. No explicit versioning was applied before 2021-01-04.
             <th colspan="2" align="right"><?lsmb text('Subtotal') ?></th>
             <td width="10">&nbsp;</td>
             <td align="right"><?lsmb subtotal ?></td><?lsmb END ?>
-          </tr><?lsmb FOREACH tax ?><?lsmb loop_count = loop.count - 1 ?>
+          </tr><?lsmb FOREACH tax ?><?lsmb loop_count = loop.index ?>
           <tr>
             <th colspan="2" align="right">
             <?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?>@
@@ -149,7 +149,7 @@ releases. No explicit versioning was applied before 2021-01-04.
                   <th>&nbsp;</th>
                   <th><?lsmb text('Source') ?></th>
                   <th><?lsmb text('Amount') ?></th>
-                </tr><?lsmb END ?><?lsmb FOREACH payment ?><?lsmb loop_count = loop.count - 1 ?>
+                </tr><?lsmb END ?><?lsmb FOREACH payment ?><?lsmb loop_count = loop.index ?>
                 <tr>
                   <td><?lsmb paymentdate.${loop_count} ?></td>
                   <td><?lsmb paymentaccount.${loop_count} ?></td>
@@ -164,7 +164,7 @@ releases. No explicit versioning was applied before 2021-01-04.
     </tr><?lsmb END ?>
     <tr>
       <td></td>
-    </tr><?lsmb FOREACH tax ?><?lsmb loop_count = loop.count - 1 ?>
+    </tr><?lsmb FOREACH tax ?><?lsmb loop_count = loop.index ?>
     <tr>
       <th colspan="9" align="left"><span class=
       "c2"><?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?>

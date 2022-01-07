@@ -95,7 +95,7 @@ releases. No explicit versioning was applied before 2021-01-04.
             <th><span class="c2"><?lsmb text('Qty') ?></span></th>
             <th><span class="c2"><?lsmb text('Ship') ?></span></th>
             <th>&nbsp;</th>
-          </tr><?lsmb FOREACH number ?><?lsmb loop_count = loop.count - 1 ?>
+          </tr><?lsmb FOREACH number ?><?lsmb loop_count = loop.index ?>
           <tr valign="top">
             <td><?lsmb runningnumber.${loop_count} ?></td>
             <td><?lsmb number.${loop_count} ?></td>
