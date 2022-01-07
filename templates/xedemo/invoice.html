@@ -108,7 +108,7 @@ releases. No explicit versioning was applied before 2021-01-04.
             <th align="right"><span class="c2"><?lsmb text('Unit Price') ?></span></th>
             <th align="right"><span class="c2"><?lsmb text('Disc %') ?></span></th>
             <th align="right"><span class="c2"><?lsmb text('Extended') ?></span></th>
-          </tr><?lsmb FOREACH number ?><?lsmb loop_count = loop.count - 1 ?>
+          </tr><?lsmb FOREACH number ?><?lsmb loop_count = loop.index ?>
           <tr valign="top">
             <td align="right"><?lsmb runningnumber.${loop_count} ?>.</td>
             <td><?lsmb number.${loop_count} ?></td>
@@ -128,7 +128,7 @@ releases. No explicit versioning was applied before 2021-01-04.
           <tr>
             <th colspan="7" align="right"><?lsmb text('Subtotal') ?></th>
             <td colspan="2" align="right"><?lsmb subtotal ?></td>
-          </tr><?lsmb FOREACH tax ?><?lsmb loop_count = loop.count - 1 ?>
+          </tr><?lsmb FOREACH tax ?><?lsmb loop_count = loop.index ?>
           <tr>
             <th colspan="7" align="right">
             <?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?>on
@@ -188,7 +188,7 @@ releases. No explicit versioning was applied before 2021-01-04.
             <th align="left"><?lsmb text('Account') ?></th>
             <th align="left"><?lsmb text('Source') ?></th>
             <th align="left"><?lsmb text('Amount') ?></th>
-          </tr><?lsmb FOREACH payment ?><?lsmb loop_count = loop.count - 1 ?>
+          </tr><?lsmb FOREACH payment ?><?lsmb loop_count = loop.index ?>
           <tr>
             <td><?lsmb paymentdate.${loop_count} ?></td>
             <td><?lsmb paymentaccount.${loop_count} ?></td>
@@ -217,7 +217,7 @@ releases. No explicit versioning was applied before 2021-01-04.
           </tr>
         </table>
       </td>
-    </tr><?lsmb FOREACH tax ?><?lsmb loop_count = loop.count - 1 ?>
+    </tr><?lsmb FOREACH tax ?><?lsmb loop_count = loop.index ?>
     <tr>
       <th colspan="9" align="left"><span class=
       "c5"><?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?>

@@ -70,7 +70,7 @@ releases. No explicit versioning was applied before 2021-01-04.
 \textbf{<?lsmb text('Invoice No.') ?>} & \textbf{<?lsmb text('Invoice Date') ?>}
   & \textbf{<?lsmb text('Due') ?>} & \textbf{<?lsmb text('Applied') ?>} \\
 <?lsmb FOREACH invnumber ?>
-<?lsmb lc = loop.count - 1 ?>
+<?lsmb lc = loop.index ?>
 <?lsmb invnumber.${lc} ?> & <?lsmb invdate.${lc} ?> \dotfill
   & <?lsmb due.${lc} ?> & <?lsmb paid.${lc} ?> \\
 <?lsmb END ?>

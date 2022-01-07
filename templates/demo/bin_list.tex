@@ -115,7 +115,7 @@ releases. No explicit versioning was applied before 2021-01-04.
     & \textbf{<?lsmb text('Bin') ?>} \\
 
 <?lsmb FOREACH number ?>
-<?lsmb lc = loop.count - 1 ?>
+<?lsmb lc = loop.index ?>
   <?lsmb runningnumber.${lc} ?> &
   <?lsmb number.${lc} ?> &
   <?lsmb item_description.${lc} ?> &

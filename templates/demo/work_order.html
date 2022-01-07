@@ -102,7 +102,7 @@ releases. No explicit versioning was applied before 2021-01-04.
             <th>&nbsp;</th>
             <th><span class="c2"><?lsmb text('Bin') ?></span></th>
             <th><span class="c2"><?lsmb text('Serial #') ?></span></th>
-          </tr><?lsmb FOREACH number ?><?lsmb loop_count = loop.count - 1 ?>
+          </tr><?lsmb FOREACH number ?><?lsmb loop_count = loop.index ?>
           <tr valign="top">
             <td align="right"><?lsmb runningnumber.${loop_count} ?>.</td>
             <td><?lsmb number.${loop_count} ?></td>

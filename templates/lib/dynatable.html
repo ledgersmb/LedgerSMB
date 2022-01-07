@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.0
-   Date:     2021-01-04
+   Version:  1.1
+   Date:     2021-01-07
    File:     dynatable.html
    Set:      none; shared
 
@@ -67,6 +67,8 @@ releases. No explicit versioning was applied before 2021-01-04.
    #                              href_base value specified by ${col_id}
    #                              when that's an 'href' typed column
    #    - ${col_id}_NOHREF     : boolean suppressing 'href'; using 'text'
+   #    - ${col_id}_ROWSPAN    : integer number of rows to span
+   #    - ${col_id}_ROWSPANNED : boolean indicating cell is spanned by a prior row
 
    # the elements in the 'tfoot' hash support these attributes:
    #  - rows         : an array of hashes with the values for each column
@@ -98,12 +100,22 @@ END; ?>
 </thead>
 <?lsmb- END -?>
 <tbody>
-   <?lsmb- ROWCOUNT = 0;
+   <?lsmb-
    PFX = attributes.input_prefix;
-   FOREACH ROW IN tbody.rows;
-   ROWCOUNT = ROWCOUNT + 1 -?>
+   FOREACH ROW IN tbody.rows; -?>
    <tr class="<?lsmb ROW.html_class _ ' ' _ ROW.row_id ?>">
       <?lsmb- FOREACH COL IN columns;
+            ROWSPANNED = COL.col_id _ "_ROWSPANNED";
+            IF ROW.$ROWSPANNED;
+               NEXT;
+            END;
+            ROWSPAN = COL.col_id _ "_ROWSPAN";
+            IF ROW.$ROWSPAN;
+               ROWSPAN=" rowspan=\"" _ ROW.$ROWSPAN _ "\"";
+            ELSE;
+               ROWSPAN="";
+            END;
+
             TYPE = COL.type;
             NOHREF = COL.col_id _ "_NOHREF";
             IF (ROW.NOINPUT AND TYPE != 'href' AND TYPE != 'hidden')
@@ -112,7 +124,7 @@ END; ?>
             END;
 
             NEXT IF TYPE == 'hidden';
-      <td class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>">
+      <td class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>"[% ROWSPAN %]>
           <?lsmb- IF TYPE == 'boolean_checkmark' OR TYPE == 'checkbox' OR TYPE == 'radio';
                    IF ROW.${COL.col_id};
                        ?>✓<?lsmb
@@ -156,8 +168,7 @@ END; ?>
 <?lsmb- IF tfoot -?>
 <tfoot>
    <?lsmb- FOREACH ROW IN tfoot.rows;
-    SPACECOUNT = 0;
-    ROWCOUNT = ROWCOUNT + 1; -?>
+    SPACECOUNT = 0 -?>
    <tr>
      <?lsmb- FOREACH COL IN columns;
              COL_ID = COL.col_id;
