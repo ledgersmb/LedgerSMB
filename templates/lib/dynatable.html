@@ -100,10 +100,9 @@ END; ?>
 </thead>
 <?lsmb- END -?>
 <tbody>
-   <?lsmb- ROWCOUNT = 0;
+   <?lsmb-
    PFX = attributes.input_prefix;
-   FOREACH ROW IN tbody.rows;
-   ROWCOUNT = ROWCOUNT + 1 -?>
+   FOREACH ROW IN tbody.rows; -?>
    <tr class="<?lsmb ROW.html_class _ ' ' _ ROW.row_id ?>">
       <?lsmb- FOREACH COL IN columns;
             ROWSPANNED = COL.col_id _ "_ROWSPANNED";
@@ -169,8 +168,7 @@ END; ?>
 <?lsmb- IF tfoot -?>
 <tfoot>
    <?lsmb- FOREACH ROW IN tfoot.rows;
-    SPACECOUNT = 0;
-    ROWCOUNT = ROWCOUNT + 1; -?>
+    SPACECOUNT = 0 -?>
    <tr>
      <?lsmb- FOREACH COL IN columns;
              COL_ID = COL.col_id;
