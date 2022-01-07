@@ -53,30 +53,26 @@ END;
 <?lsmb- END ?>
 <?lsmb IF head; head ?>\\<?lsmb- END ?>
 <?lsmb- -?>
-<?lsmb 
-ADD_SEP = 0;
+<?lsmb
 FOREACH COL IN columns;
     IF 0 == SKIP_TYPES.grep(COL.type).size() AND ! COL.html_only;
-        IF ADD_SEP;
+        UNLESS loop.first();
            ' & ';
         END;
         COL.name;
-        ADD_SEP = 1;
     END;
 END;
 -?>\tabularnewline
 \hline\hline
 \endfirsthead
-<?lsmb 
+<?lsmb
 
-ADD_SEP = 0;
 FOREACH COL IN columns;
     IF 0 == SKIP_TYPES.grep(COL.type).size() AND ! COL.html_only;
-        IF ADD_SEP;
+        UNLESS loop.first() ;
            ' & ';
         END;
         COL.name;
-        ADD_SEP = 1;
     END;
 END;
 -?>\tabularnewline
@@ -85,14 +81,12 @@ END;
 <?lsmb
 
 FOREACH ROW IN tbody.rows;
-    ADD_SEP=0;
     FOREACH COL IN columns;
         COLID =  COL.col_id.replace('\\\\');
         IF 0 == SKIP_TYPES.grep(COL.type).size() AND ! COL.html_only;
-            IF ADD_SEP;
+            UNLESS loop.first();
                ' & ';
             END;
-            ADD_SEP = 1;
             ?>\begin{minipage}{<?lsmb (COL.pwidth * WIDTH_PER_P) _ "cm"; ?>}<?lsmb
                 ROW.${COLID}; #$
             ?>\end{minipage}<?lsmb
