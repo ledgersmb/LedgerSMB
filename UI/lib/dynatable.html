@@ -57,6 +57,8 @@
    #                              href_base value specified by ${col_id}
    #                              when that's an 'href' typed column
    #    - ${col_id}_NOHREF     : boolean suppressing 'href'; using 'text'
+   #    - ${col_id}_ROWSPAN    : integer number of rows to span
+   #    - ${col_id}_ROWSPANNED : boolean indicating cell is spanned by a prior row
 
    # the elements in the 'tfoot' hash support these attributes:
    #  - rows         : an array of hashes with the values for each column
@@ -101,6 +103,17 @@ END; %]</th>
                     value=ROW.row_id };
          "\n";
          FOREACH COL IN columns;
+            ROWSPANNED = COL.col_id _ "_ROWSPANNED";
+            IF ROW.$ROWSPANNED;
+               NEXT;
+            END;
+            ROWSPAN = COL.col_id _ "_ROWSPAN";
+            IF ROW.$ROWSPAN;
+               ROWSPAN=" rowspan=\"" _ ROW.$ROWSPAN _ "\"";
+            ELSE;
+               ROWSPAN="";
+            END;
+
             TYPE = COL.type;
             NOHREF = COL.col_id _ "_NOHREF";
             IF (ROW.NOINPUT AND TYPE != 'href' AND TYPE != 'hidden')
@@ -117,7 +130,7 @@ END; %]</th>
                };
                "\n";
             ELSE; -%]
-      <td class="[% COL.col_id %] [% COL.class %] [% COL.type %]">[%
+      <td class="[% COL.col_id %] [% COL.class %] [% COL.type %]"[% ROWSPAN %]>[%
                IF TYPE == 'text';
                  ROW.${COL.col_id};
                ELSIF TYPE == 'input_text';
