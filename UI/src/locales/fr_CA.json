@@ -112,6 +112,7 @@
     "Closed": "Clôturé",
     "Code": "Code",
     "Code missing!": "Code manquant!",
+    "Community resources": "Communauté d'usagers",
     "Company": "Société",
     "Company Address": "Adresse",
     "Company Fax": "Télécopieur",
@@ -123,6 +124,7 @@
     "Contacts": "Contacts",
     "Continue": "Continuer",
     "Contra": "Contrepartie",
+    "Contributing": "Contribuer",
     "Copy": "Copier",
     "Copy to COA": "Copier dans le plan comptable",
     "Cost": "Coût",
@@ -633,6 +635,8 @@
     "Weeks": "Semaines",
     "Weight": "Poids",
     "Weight Unit": "Unité de poids",
+    "Welcome to LedgerSMB": "Bienvenue à LedgerSMB",
+    "What is LedgerSMB": "Qu'est-ce que LedgerSMB",
     "What type of item is this?": "De quel type est cet objet?",
     "Work Order": "Fiche de traitement",
     "XLS": "XLS",
@@ -660,14 +664,56 @@
     "done": "fait",
     "ea": "pièce(s)",
     "failed": "échec",
+    "i18n": {
+        "home": {
+            "FAQ": {
+                "link": "foire aux questions",
+                "text": "La {url}"
+            },
+            "communitySupport": "Le support de la communauté pour LedgerSMB est disponible via divers canaux, allant du statique jusqu'au quasi-temps réel (en fonction de la disponibilité des personnes):",
+            "contributions": "Le projet est toujours à la recherche de contributions. Les moyens les plus simples de contribuer au projet sont:",
+            "experience": {
+                "link": "listes de distribution",
+                "text": "Pour une expérience plus interactive, veuillez vous joindre à l'une des {url}"
+            },
+            "mailingListsArchives": {
+                "link": "archives des listes de distribution",
+                "text": "Les {url}"
+            },
+            "nearRealtime": {
+                "link": "chambre matrix «LedgerSMB»",
+                "text": "Il y a aussi l'expérience de chat en temps quasi réel dans la {url}"
+            },
+            "projectWebsite": {
+                "link": "site web du projet",
+                "text": "Le {url}"
+            },
+            "reportBugs": {
+                "link1": "la plateforme de développement GitHub du projet",
+                "link2": "listes de distribution",
+                "text": "Signalez vos bogues et problèmes à {url1} ou aux {url2}"
+            },
+            "translate": {
+                "link": "outil de traduction web Transifex",
+                "text": "Aidez à traduire le logiciel LedgerSMB via l'{url}"
+            },
+            "fixBugs": {
+                "link": "bogue",
+                "text": "Corrigez un {url} et soumettez une 'Pull Request'. Lorsque vous le faites, veuillez commencer par un « petit format » et contactez l'équipe de développement via IRC ou matrix pour obtenir de l'aide pour démarrer."
+            },
+            "ledgersmbIntro": "LedgerSMB est un système de comptabilité en partie double offrant une grande variété de fonctionnalités connexes, telles que"
+        }
+    },
     "in months": "en mois",
     "in years": "en années",
     "invoicing": "facturation",
     "is lesser than 0": "est inférieur à 0",
     "is null": "est nul",
-    "mailing lists": "listes de distribution",
+    "keeping stock": "suivi de l'inventaire",
     "ordering": "commandes",
     "permalink": "lien permanent",
+    "sent": "envoyé",
+    "shipping & receiving": "expédition et réception",
     "tracking hours (timecards)": "suivi des heures (cartes de temps)",
     "tracking of unpaid invoices": "suivi des factures impayées"
 }

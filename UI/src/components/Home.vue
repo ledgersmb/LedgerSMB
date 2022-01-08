@@ -4,8 +4,7 @@
             <h1 style="margin-bottom: 3em">{{ $t(`Welcome to LedgerSMB`) }}</h1>
             <div class="welcomed w1">
                 <h2>{{ $t(`What is LedgerSMB`) }}</h2>
-                <p>{{ $t(`LedgerSMB is a double entry accounting system offering a wide
-                  variety of related functionalities, such as`) }}</p>
+                <p>{{ $t(`i18n.home.ledgersmbIntro`) }}</p>
                 <ul>
                     <li>{{ $t(`invoicing`) }}</li>
                     <li>{{ $t(`bank reconciliation`) }}</li>
@@ -18,44 +17,59 @@
             </div>
             <div class="welcomed w2">
                 <h2>{{ $t(`Community resources`) }}</h2>
-                <p>{{ $t(`Community support for LedgerSMB is a available through various
-                  channels, ranging from static all the way to near-realtime (depending
-                  on availability of people):`) }}</p>
+                <p>{{ $t(`i18n.home.communitySupport`) }}</p>
                 <ul>
-                  <li>The <a href="https://ledgersmb.org" target="_blank"
-                            rel="noopener noreferrer">project
-                      website</a></li>
-                  <li>The <a href="https://ledgersmb.org/FAQ" target="_blank"
-                            rel="noopener noreferrer">{{ $t(`FAQ`) }}</a></li>
-                  <li>The <a href="http://archive.ledgersmb.org/" target="_blank"
-                            rel="noopener noreferrer">mailing list
-                      archives</a></li>
+                  <i18n-t keypath="i18n.home.projectWebsite.text" tag="li" scope="global">
+                    <template #url><a :href="website_url" target="_blank" rel="noopener noreferrer">
+                        {{ $t("i18n.home.projectWebsite.link") }}
+                    </a></template>
+                  </i18n-t>
+                  <i18n-t keypath="i18n.home.FAQ.text" tag="li" scope="global">
+                    <template #url><a :href="faq_url" target="_blank" rel="noopener noreferrer">
+                        {{ $t("i18n.home.FAQ.link") }}
+                    </a></template>
+                  </i18n-t>
+                  <i18n-t keypath="i18n.home.mailingListsArchives.text" tag="li" scope="global">
+                    <template #url><a :href="mailingListsArchives_url" target="_blank" rel="noopener noreferrer">
+                        {{ $t("i18n.home.mailingListsArchives.link") }}
+                    </a></template>
+                  </i18n-t>
                 </ul>
-                <p>For a more interactive experience, please join
-                  one of the <a href="http://lists.ledgersmb.org/" target="_blank"
-                                rel="noopener noreferrer">{{ $t(`mailing lists`) }}</a></p>
 
-                <p>There's also the near-realtime chat experience in the
-                  <a href="https://app.element.io/%23/room/%23ledgersmb:matrix.org"
-                    target="_blank" rel="noopener noreferrer">matrix
-                      &quot;LedgerSMB&quot; room</a></p>
+                <i18n-t keypath="i18n.home.experience.text" tag="p" scope="global">
+                  <template #url><a :href="experience_url" target="_blank" rel="noopener noreferrer">
+                      {{ $t("i18n.home.experience.link") }}
+                  </a></template>
+                </i18n-t>
+
+                <i18n-t keypath="i18n.home.nearRealtime.text" tag="p" scope="global">
+                  <template #url><a :href="nearRealtime_url" target="_blank" rel="noopener noreferrer">
+                    {{ $t("i18n.home.nearRealtime.link") }}
+                  </a></template>
+                </i18n-t>
             </div>
             <div class="welcomed w3">
                 <h2>{{ $t(`Contributing`) }}</h2>
-                <p>{{ $t(`The project is always looking for contributions. The easiest ways to
-                  contribute to the project are:`) }}</p>
+                <p>{{ $t("i18n.home.contributions") }}</p>
                 <ul>
-                  <li>Report your bugs and problems
-                    to <a href="https://github.com/ledgersmb/LedgerSMB/issues/">the
-                      project's GitHub bug tracker</a> or
-                    <a href="https://lists.ledgersmb.org/">{{ $t(`mailing lists`) }}</a></li>
-                  <li>Help translate the software through the <a href="https://www.transifex.com/ledgersmb/ledgersmb/">LedgerSMB
-                      project Transifex web-based translation project</a></li>
-                  <li>Fix a <a href="https://github.com/ledgersmb/LedgerSMB/issues?q=is%3aopen%20is%3aissue%20label%3abite-sized%20-label%3aenhancement">{{ $t(`bug`) }}</a> and
-                    submit a &quot;Pull Request&quot;<br />
-                    When you do, please start with one marked 'bite-sized' and contact
-                    the development team through IRC and/or matrix for help getting
-                    started.</li>
+                  <i18n-t keypath="i18n.home.reportBugs.text" tag="li" scope="global">
+                    <template #url1><a :href="reportBugs_url1" target="_blank" rel="noopener noreferrer">
+                        {{ $t("i18n.home.reportBugs.link1") }}
+                    </a></template>
+                    <template #url2><a :href="reportBugs_url2" target="_blank" rel="noopener noreferrer">
+                        {{ $t("i18n.home.reportBugs.link2") }}
+                    </a></template>
+                  </i18n-t>
+                <i18n-t keypath="i18n.home.translate.text" tag="li" scope="global">
+                    <template #url><a :href="translate_url" target="_blank" rel="noopener noreferrer">
+                        {{ $t("i18n.home.translate.link") }}
+                    </a></template>
+                  </i18n-t>
+                  <i18n-t keypath="i18n.home.fixBugs.text" tag="li" scope="global">
+                    <template #url><a :href="fixBugs_url" target="_blank" rel="noopener noreferrer">
+                        {{ $t("i18n.home.fixBugs.link") }}
+                    </a></template>
+                  </i18n-t>
                 </ul>
             </div>
         </div>
@@ -65,7 +79,21 @@
 <script>
 
 export default {
+  data() {
+    return {
+      experience_url: "http://lists.ledgersmb.org/",
+      faq_url: "https://ledgersmb.org/FAQ",
+      fixBugs_url: "https://github.com/ledgersmb/LedgerSMB/issues?q=is%3aopen%20is%3aissue%20label%3abite-sized%20-label%3aenhancement",
+      mailingListsArchives_url: "http://archive.ledgersmb.org/",
+      nearRealtime_url: "https://app.element.io/%23/room/%23ledgersmb:matrix.org",
+      reportBugs_url1: "https://github.com/ledgersmb/LedgerSMB/issues/",
+      reportBugs_url2: "https://lists.ledgersmb.org/",
+      translate_url: "https://www.transifex.com/ledgersmb/ledgersmb/",
+      website_url: "https://ledgersmb.org"
+    }
+  }
 };
+
 </script>
 
 <style scoped>

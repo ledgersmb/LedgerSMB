@@ -1,1 +1,42 @@
-{}
+{
+    "i18n": {
+        "home": {
+            "FAQ": {
+                "link": "FAQ",
+                "text": "The {url}"
+            },
+            "communitySupport": "Community support for LedgerSMB is a available through various channels, ranging from static all the way to near-realtime (depending on availability of people):",
+            "contributions": "The project is always looking for contributions. The easiest ways to contribute to the project are:",
+            "experience": {
+                "link": "mailing lists",
+                "text": "For a more interactive experience, please join one of the {url}"
+            },
+            "mailingListsArchives": {
+                "link": "mailing list archives",
+                "text": "The {url}"
+            },
+            "nearRealtime": {
+                "link": "matrix 'LedgerSMB' room",
+                "text": "There's also the near-realtime chat experience in the {url}"
+            },
+            "projectWebsite": {
+                "link": "project website",
+                "text": "The {url}"
+            },
+            "reportBugs": {
+                "link1": "the project's GitHub bug tracker",
+                "link2": "mailing lists",
+                "text": "Report your bugs and problems to {url1} or {url2}"
+            },
+            "translate": {
+                "link": "LedgerSMB project Transifex web-based translation project",
+                "text": "Help translate the software through the {url}"
+            },
+            "fixBugs": {
+                "link": "bug",
+                "text": "Fix a {url} and submit a 'Pull Request'. When you do, please start with one marked 'bite-sized' and contact the development team through IRC and/or matrix for help getting started."
+            },
+            "ledgersmbIntro": "LedgerSMB is a double entry accounting system offering a wide variety of related functionalities, such as"
+        }
+    }
+}

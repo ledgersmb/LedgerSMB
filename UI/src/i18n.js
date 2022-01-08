@@ -1,6 +1,7 @@
 /** @format */
 /* global __SUPPORTED_LOCALES */
-/* eslint-disable global-require */
+// See https://vue-i18n.intlify.dev/guide/
+// And https://vue-i18n.intlify.dev/guide/advanced/wc.html#make-preparetion-for-web-components-to-host-the-i18n-instance
 
 export const SUPPORT_LOCALES = __SUPPORTED_LOCALES;
 
@@ -21,6 +22,7 @@ const i18n = createI18n({
 function setI18nLanguage(locale) {
     // Update document
     document.querySelector("html").setAttribute("lang", locale);
+    i18n.global.locale = locale;
 }
 
 export async function loadLocaleMessages(locale) {
@@ -34,7 +36,6 @@ export async function loadLocaleMessages(locale) {
 
             // set locale and locale message
             i18n.global.setLocaleMessage(locale, messages);
-            i18n.global.locale = locale;
         }
         setI18nLanguage(locale);
     }
