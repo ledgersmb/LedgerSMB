@@ -1,6 +1,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
+"#-#-#-#-#  en.po (i18next-conv)  #-#-#-#-#\n"
 "Project-Id-Version: i18next-conv\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
 "POT-Creation-Date: 2022-01-09 21:20+0000\n"
@@ -12,6 +13,15 @@ msgstr ""
 "#-#-#-#-#  en.po (LedgerSMB 1.1.1)  #-#-#-#-#\n"
 "#-#-#-#-#  _en.po (i18next-conv)  #-#-#-#-#\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"#-#-#-#-#  _en.po (i18next-conv)  #-#-#-#-#\n"
+"Project-Id-Version: i18next-conv\n"
+"mime-version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"POT-Creation-Date: 2022-01-09T21:34:57.304Z\n"
+"PO-Revision-Date: 2022-01-09T21:34:57.304Z\n"
+"Language: en\n"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:174
 msgid "# Invoices"
@@ -191,9 +201,9 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:220
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:137
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:69
-#: lib/LedgerSMB/Report/co/Caja_Diaria.pm:70 old/bin/aa.pl:603 old/bin/aa.pl:674
-#: old/bin/aa.pl:842 old/bin/ic.pl:1109 old/bin/ir.pl:438 old/bin/ir.pl:883
-#: old/bin/is.pl:472 old/bin/is.pl:995 old/bin/oe.pl:446
+#: lib/LedgerSMB/Report/co/Caja_Diaria.pm:70 old/bin/aa.pl:603
+#: old/bin/aa.pl:674 old/bin/aa.pl:842 old/bin/ic.pl:1109 old/bin/ir.pl:438
+#: old/bin/ir.pl:883 old/bin/is.pl:472 old/bin/is.pl:995 old/bin/oe.pl:446
 #: t/data/04-complex_template.html:27 templates/demo/invoice.html:188
 #: templates/demo/printPayment.html:46 templates/xedemo/invoice.html:188
 #: templates/xedemo/printPayment.html:46 UI/accounts/edit.html:115
@@ -205,7 +215,8 @@ msgstr ""
 #: UI/payments/payments_filter.html:62 UI/payroll/deduction.html:45
 #: UI/payroll/income.html:46 UI/reconciliation/new_report.html:18
 #: UI/Reports/filters/aging.html:24 UI/Reports/filters/gl.html:31
-#: UI/Reports/filters/gl.html:274 UI/Reports/filters/invoice_outstanding.html:26
+#: UI/Reports/filters/gl.html:274
+#: UI/Reports/filters/invoice_outstanding.html:26
 #: UI/Reports/filters/invoice_search.html:29 UI/Reports/filters/orders.html:29
 #: UI/Reports/filters/orders.html:164
 #: UI/Reports/filters/reconciliation_search.html:42
@@ -633,11 +644,13 @@ msgid "Aging statement"
 msgstr ""
 
 #: UI/payments/payments_detail.html:298 UI/Reports/filters/gl.html:127
-#: UI/Reports/filters/gl.html:186 UI/Reports/filters/invoice_outstanding.html:73
+#: UI/Reports/filters/gl.html:186
+#: UI/Reports/filters/invoice_outstanding.html:73
 #: UI/Reports/filters/invoice_search.html:173
 #: UI/Reports/filters/invoice_search.html:220
-#: UI/Reports/filters/invoice_search.html:241 UI/Reports/filters/orders.html:106
-#: UI/Reports/filters/search_goods.html:17 UI/Reports/filters/timecards.html:42
+#: UI/Reports/filters/invoice_search.html:241
+#: UI/Reports/filters/orders.html:106 UI/Reports/filters/search_goods.html:17
+#: UI/Reports/filters/timecards.html:42
 #: UI/Reports/filters/trial_balance.html:61
 msgid "All"
 msgstr ""
@@ -691,14 +704,15 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:129 old/bin/aa.pl:672
 #: old/bin/aa.pl:839 old/bin/am.pl:779 old/bin/ir.pl:661 old/bin/ir.pl:880
 #: old/bin/is.pl:772 old/bin/is.pl:992 old/bin/pe.pl:1039
-#: templates/demo/ap_transaction.html:155 templates/demo/ar_transaction.html:151
-#: templates/demo/ar_transaction.tex:135 templates/demo/invoice.html:190
-#: templates/demo/invoice.tex:154 templates/demo/invoice.tex:218
-#: templates/demo/printPayment.html:52 templates/demo/product_receipt.html:101
-#: templates/demo/product_receipt.tex:127 templates/demo/purchase_order.html:103
-#: templates/demo/purchase_order.tex:127 templates/demo/sales_order.html:106
-#: templates/demo/sales_order.tex:129 templates/demo/sales_quotation.html:88
-#: templates/demo/sales_quotation.tex:97
+#: templates/demo/ap_transaction.html:155
+#: templates/demo/ar_transaction.html:151 templates/demo/ar_transaction.tex:135
+#: templates/demo/invoice.html:190 templates/demo/invoice.tex:154
+#: templates/demo/invoice.tex:218 templates/demo/printPayment.html:52
+#: templates/demo/product_receipt.html:101
+#: templates/demo/product_receipt.tex:127
+#: templates/demo/purchase_order.html:103 templates/demo/purchase_order.tex:127
+#: templates/demo/sales_order.html:106 templates/demo/sales_order.tex:129
+#: templates/demo/sales_quotation.html:88 templates/demo/sales_quotation.tex:97
 #: templates/xedemo/ap_transaction.html:155
 #: templates/xedemo/ar_transaction.html:151
 #: templates/xedemo/ar_transaction.tex:133 templates/xedemo/invoice.html:190
@@ -707,12 +721,14 @@ msgstr ""
 #: templates/xedemo/product_receipt.html:101
 #: templates/xedemo/product_receipt.tex:125
 #: templates/xedemo/purchase_order.html:103
-#: templates/xedemo/purchase_order.tex:125 templates/xedemo/sales_order.html:106
-#: templates/xedemo/sales_order.tex:127 templates/xedemo/sales_quotation.html:88
+#: templates/xedemo/purchase_order.tex:125
+#: templates/xedemo/sales_order.html:106 templates/xedemo/sales_order.tex:127
+#: templates/xedemo/sales_quotation.html:88
 #: templates/xedemo/sales_quotation.tex:95 UI/payments/payment2.html:349
 #: UI/Reports/filters/gl.html:100 UI/Reports/filters/gl.html:106
 #: UI/Reports/filters/invoice_outstanding.html:192
-#: UI/Reports/filters/invoice_search.html:317 UI/Reports/filters/orders.html:177
+#: UI/Reports/filters/invoice_search.html:317
+#: UI/Reports/filters/orders.html:177
 msgid "Amount"
 msgstr ""
 
@@ -762,9 +778,9 @@ msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:897
 msgid ""
-"An account can either be a summary account (which have a# link of \"AR\", \"AP"
-"\" or \"IC\" value) or be linked to dropdowns (having any# number of \"AR_*"
-"\", \"AP_*\" and/or \"IC_*\" links concatenated by colons (:)."
+"An account can either be a summary account (which have a# link of \"AR\", "
+"\"AP\" or \"IC\" value) or be linked to dropdowns (having any# number of "
+"\"AR_*\", \"AP_*\" and/or \"IC_*\" links concatenated by colons (:)."
 msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:758
@@ -925,13 +941,13 @@ msgstr ""
 msgid "Assets"
 msgstr ""
 
-#: templates/demo/balance_sheet.html:326 templates/xedemo/balance_sheet.html:326
-#: UI/Reports/balance_sheet.html:106
+#: templates/demo/balance_sheet.html:326
+#: templates/xedemo/balance_sheet.html:326 UI/Reports/balance_sheet.html:106
 msgid "Assets to Equity"
 msgstr ""
 
-#: templates/demo/balance_sheet.html:323 templates/xedemo/balance_sheet.html:323
-#: UI/Reports/balance_sheet.html:103
+#: templates/demo/balance_sheet.html:323
+#: templates/xedemo/balance_sheet.html:323 UI/Reports/balance_sheet.html:103
 msgid "Assets to Liabilities"
 msgstr ""
 
@@ -1001,10 +1017,11 @@ msgstr ""
 
 #: templates/demo/bin_list.html:50 templates/demo/bin_list.html:61
 #: templates/demo/packing_list.html:51 templates/demo/pick_list.html:51
-#: templates/demo/product_receipt.html:50 templates/demo/product_receipt.html:60
-#: templates/demo/product_receipt.tex:54 templates/demo/product_receipt.tex:89
-#: templates/demo/purchase_order.html:50 templates/demo/purchase_order.html:60
-#: templates/demo/purchase_order.tex:54 templates/demo/purchase_order.tex:89
+#: templates/demo/product_receipt.html:50
+#: templates/demo/product_receipt.html:60 templates/demo/product_receipt.tex:54
+#: templates/demo/product_receipt.tex:89 templates/demo/purchase_order.html:50
+#: templates/demo/purchase_order.html:60 templates/demo/purchase_order.tex:54
+#: templates/demo/purchase_order.tex:89
 #: templates/demo/request_quotation.html:50
 #: templates/demo/request_quotation.html:60 templates/demo/sales_order.html:51
 #: templates/demo/sales_quotation.html:47 templates/demo/work_order.html:50
@@ -1016,11 +1033,12 @@ msgstr ""
 #: templates/xedemo/product_receipt.tex:87
 #: templates/xedemo/purchase_order.html:50
 #: templates/xedemo/purchase_order.html:60
-#: templates/xedemo/purchase_order.tex:52 templates/xedemo/purchase_order.tex:87
+#: templates/xedemo/purchase_order.tex:52
+#: templates/xedemo/purchase_order.tex:87
 #: templates/xedemo/request_quotation.html:50
 #: templates/xedemo/request_quotation.html:60
-#: templates/xedemo/sales_order.html:51 templates/xedemo/sales_quotation.html:47
-#: templates/xedemo/work_order.html:50
+#: templates/xedemo/sales_order.html:51
+#: templates/xedemo/sales_quotation.html:47 templates/xedemo/work_order.html:50
 msgid "Attn: [_1]"
 msgstr ""
 
@@ -1106,9 +1124,9 @@ msgid "Balance"
 msgstr ""
 
 #: templates/demo/balance_sheet.html:255 templates/demo/balance_sheet.tex:40
-#: templates/xedemo/balance_sheet.html:255 templates/xedemo/balance_sheet.tex:40
-#: UI/Reports/balance_sheet.html:25 UI/Reports/filters/balance_sheet.html:7
-#: sql/Pg-database.sql:2618
+#: templates/xedemo/balance_sheet.html:255
+#: templates/xedemo/balance_sheet.tex:40 UI/Reports/balance_sheet.html:25
+#: UI/Reports/filters/balance_sheet.html:7 sql/Pg-database.sql:2618
 msgid "Balance Sheet"
 msgstr ""
 
@@ -1191,8 +1209,8 @@ msgstr ""
 msgid "Batch Name"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:143 UI/create_batch.html:10
-#: UI/create_batch.html:70
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:143
+#: UI/create_batch.html:10 UI/create_batch.html:70
 msgid "Batch Number"
 msgstr ""
 
@@ -1339,8 +1357,8 @@ msgstr ""
 msgid "CC"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Invoices/COGS.pm:132 old/bin/ic.pl:523 old/bin/ic.pl:692
-#: UI/accounts/edit.html:432
+#: lib/LedgerSMB/Report/Invoices/COGS.pm:132 old/bin/ic.pl:523
+#: old/bin/ic.pl:692 UI/accounts/edit.html:432
 msgid "COGS"
 msgstr ""
 
@@ -1592,7 +1610,8 @@ msgid "Close books"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Orders.pm:234 old/bin/oe.pl:329
-#: UI/Reports/filters/invoice_search.html:214 UI/Reports/filters/orders.html:100
+#: UI/Reports/filters/invoice_search.html:214
+#: UI/Reports/filters/orders.html:100
 #: UI/Reports/filters/purchase_history.html:209
 #: UI/Reports/filters/timecards.html:35
 msgid "Closed"
@@ -1770,10 +1789,11 @@ msgstr ""
 #: UI/Reports/filters/income_statement.html:278
 #: UI/Reports/filters/inventory_activity.html:30
 #: UI/Reports/filters/invoice_outstanding.html:289
-#: UI/Reports/filters/invoice_search.html:412 UI/Reports/filters/orders.html:209
+#: UI/Reports/filters/invoice_search.html:412
+#: UI/Reports/filters/orders.html:209
 #: UI/Reports/filters/purchase_history.html:360
-#: UI/Reports/filters/taxforms.html:57 UI/Reports/filters/trial_balance.html:127
-#: UI/timecards/entry_filter.html:41
+#: UI/Reports/filters/taxforms.html:57
+#: UI/Reports/filters/trial_balance.html:127 UI/timecards/entry_filter.html:41
 msgid "Continue"
 msgstr ""
 
@@ -1788,8 +1808,8 @@ msgstr ""
 #: lib/LedgerSMB/Upgrade_Tests.pm:1035
 msgid ""
 "Contrary to SQL-ledger, LedgerSMB invoices numbers must be unique. Please "
-"review suggestions to make all AP invoice numbers unique. Conflicting entries "
-"are presented by pairs, with a suffix added to the invoice number"
+"review suggestions to make all AP invoice numbers unique. Conflicting "
+"entries are presented by pairs, with a suffix added to the invoice number"
 msgstr ""
 
 #: UI/src/components/Home.vue:44
@@ -1798,11 +1818,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/Search.pm:67
 #: lib/LedgerSMB/Report/Listings/Business_Unit.pm:59
-#: lib/LedgerSMB/Report/PNL/ECA.pm:90 lib/LedgerSMB/Report/Taxform/Summary.pm:86
-#: old/bin/arap.pl:165 UI/business_units/edit.html:27
-#: UI/business_units/filter.html:16 UI/Contact/divs/company.html:51
-#: UI/Contact/divs/person.html:51 UI/payroll/income.html:57
-#: UI/Reports/filters/contact_search.html:39
+#: lib/LedgerSMB/Report/PNL/ECA.pm:90
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:86 old/bin/arap.pl:165
+#: UI/business_units/edit.html:27 UI/business_units/filter.html:16
+#: UI/Contact/divs/company.html:51 UI/Contact/divs/person.html:51
+#: UI/payroll/income.html:57 UI/Reports/filters/contact_search.html:39
 #: UI/Reports/filters/overpayments.html:9
 msgid "Control Code"
 msgstr ""
@@ -1991,8 +2011,9 @@ msgstr ""
 #: UI/payments/payment2.html:128 UI/payments/payments_filter.html:72
 #: UI/payments/use_overpayment1.html:42 UI/payments/use_overpayment2.html:90
 #: UI/Reports/filters/invoice_outstanding.html:213
-#: UI/Reports/filters/invoice_search.html:336 UI/Reports/filters/orders.html:192
-#: UI/Reports/filters/overpayments.html:43 UI/Reports/filters/payments.html:108
+#: UI/Reports/filters/invoice_search.html:336
+#: UI/Reports/filters/orders.html:192 UI/Reports/filters/overpayments.html:43
+#: UI/Reports/filters/payments.html:108
 #: UI/Reports/filters/purchase_history.html:272
 #: UI/Reports/filters/search_goods.html:422 UI/timecards/timecard.html:120
 #: UI/timecards/timecard-week.html:76
@@ -2432,7 +2453,8 @@ msgid "Delete Vouchers"
 msgstr ""
 
 #: old/bin/am.pl:473
-msgid "Deleting a language will also delete the templates for the language [_1]"
+msgid ""
+"Deleting a language will also delete the templates for the language [_1]"
 msgstr ""
 
 #: templates/demo/invoice.tex:149 templates/demo/request_quotation.html:110
@@ -2553,16 +2575,16 @@ msgstr ""
 #: templates/demo/packing_list.tex:120 templates/demo/pick_list.html:92
 #: templates/demo/pick_list.tex:106 templates/demo/printPayment.html:48
 #: templates/demo/product_receipt.html:96 templates/demo/purchase_order.html:98
-#: templates/demo/request_quotation.html:107 templates/demo/sales_order.html:101
-#: templates/demo/sales_order.tex:126 templates/demo/sales_quotation.html:83
-#: templates/demo/timecard.html:91 templates/demo/timecard.html:99
-#: templates/demo/timecard.tex:45 templates/demo/timecard.tex:47
-#: templates/demo/work_order.html:100 templates/demo/work_order.tex:131
-#: templates/xedemo/bin_list.html:100 templates/xedemo/bin_list.tex:110
-#: templates/xedemo/invoice.html:104 templates/xedemo/invoice.tex:146
-#: templates/xedemo/packing_list.html:92 templates/xedemo/packing_list.tex:118
-#: templates/xedemo/pick_list.html:92 templates/xedemo/pick_list.tex:104
-#: templates/xedemo/printPayment.html:48
+#: templates/demo/request_quotation.html:107
+#: templates/demo/sales_order.html:101 templates/demo/sales_order.tex:126
+#: templates/demo/sales_quotation.html:83 templates/demo/timecard.html:91
+#: templates/demo/timecard.html:99 templates/demo/timecard.tex:45
+#: templates/demo/timecard.tex:47 templates/demo/work_order.html:100
+#: templates/demo/work_order.tex:131 templates/xedemo/bin_list.html:100
+#: templates/xedemo/bin_list.tex:110 templates/xedemo/invoice.html:104
+#: templates/xedemo/invoice.tex:146 templates/xedemo/packing_list.html:92
+#: templates/xedemo/packing_list.tex:118 templates/xedemo/pick_list.html:92
+#: templates/xedemo/pick_list.tex:104 templates/xedemo/printPayment.html:48
 #: templates/xedemo/product_receipt.html:96
 #: templates/xedemo/purchase_order.html:98
 #: templates/xedemo/request_quotation.html:107
@@ -2571,8 +2593,8 @@ msgstr ""
 #: templates/xedemo/timecard.html:99 templates/xedemo/timecard.tex:43
 #: templates/xedemo/timecard.tex:45 templates/xedemo/work_order.html:100
 #: templates/xedemo/work_order.tex:129 UI/accounts/edit.html:53
-#: UI/accounts/edit.html:154 UI/accounts/yearend.html:41 UI/am-gifi-form.html:15
-#: UI/am-language-form.html:15 UI/am-sic-form.html:19
+#: UI/accounts/edit.html:154 UI/accounts/yearend.html:41
+#: UI/am-gifi-form.html:15 UI/am-language-form.html:15 UI/am-sic-form.html:19
 #: UI/am-warehouse-form.html:11 UI/budgetting/budget_entry.html:26
 #: UI/budgetting/budget_entry.html:63 UI/Contact/divs/contact_info.html:30
 #: UI/Contact/divs/contact_info.html:100 UI/Contact/divs/credit.html:28
@@ -2631,7 +2653,8 @@ msgstr ""
 #: templates/demo/sales_order.html:105 templates/demo/sales_order.tex:128
 #: templates/demo/sales_quotation.html:87 templates/xedemo/invoice.html:109
 #: templates/xedemo/invoice.tex:151 templates/xedemo/sales_order.html:105
-#: templates/xedemo/sales_order.tex:126 templates/xedemo/sales_quotation.html:87
+#: templates/xedemo/sales_order.tex:126
+#: templates/xedemo/sales_quotation.html:87
 msgid "Disc %"
 msgstr ""
 
@@ -2972,15 +2995,17 @@ msgstr ""
 #: templates/demo/ap_transaction.tex:74 templates/demo/ar_transaction.tex:91
 #: templates/demo/timecard.html:40 templates/demo/timecard.tex:29
 #: templates/xedemo/ap_transaction.html:76
-#: templates/xedemo/ap_transaction.tex:72 templates/xedemo/ar_transaction.tex:89
-#: templates/xedemo/timecard.html:40 templates/xedemo/timecard.tex:27
-#: UI/Contact/divs/employee.html:2 UI/Reports/filters/contact_search.html:64
-#: UI/timecards/entry_filter.html:12 sql/Pg-database.sql:535
+#: templates/xedemo/ap_transaction.tex:72
+#: templates/xedemo/ar_transaction.tex:89 templates/xedemo/timecard.html:40
+#: templates/xedemo/timecard.tex:27 UI/Contact/divs/employee.html:2
+#: UI/Reports/filters/contact_search.html:64 UI/timecards/entry_filter.html:12
+#: sql/Pg-database.sql:535
 msgid "Employee"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/configuration.pm:124 t/data/04-complex_template.html:92
-#: UI/Contact/divs/employee.html:100 UI/setup/new_user.html:134
+#: lib/LedgerSMB/Scripts/configuration.pm:124
+#: t/data/04-complex_template.html:92 UI/Contact/divs/employee.html:100
+#: UI/setup/new_user.html:134
 msgid "Employee Number"
 msgstr ""
 
@@ -2990,7 +3015,8 @@ msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:462
 msgid ""
-"Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"
+"Employee name doesn't meet minimal requirements (e.g. non-empty, "
+"alphanumeric)"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:156
@@ -3029,10 +3055,11 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:160
 #: lib/LedgerSMB/Report/Listings/Business_Unit.pm:71
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:139
-#: lib/LedgerSMB/Report/co/Caja_Diaria.pm:131 UI/budgetting/budget_entry.html:48
-#: UI/business_units/edit.html:63 UI/Contact/divs/credit.html:31
-#: UI/Contact/divs/credit.html:121 UI/Contact/divs/credit.html:122
-#: UI/Contact/divs/employee.html:140 UI/Reports/filters/budget_search.html:51
+#: lib/LedgerSMB/Report/co/Caja_Diaria.pm:131
+#: UI/budgetting/budget_entry.html:48 UI/business_units/edit.html:63
+#: UI/Contact/divs/credit.html:31 UI/Contact/divs/credit.html:121
+#: UI/Contact/divs/credit.html:122 UI/Contact/divs/employee.html:140
+#: UI/Reports/filters/budget_search.html:51
 msgid "End Date"
 msgstr ""
 
@@ -3138,8 +3165,8 @@ msgstr ""
 msgid "Equity (Temporary)"
 msgstr ""
 
-#: templates/demo/balance_sheet.html:329 templates/xedemo/balance_sheet.html:329
-#: UI/Reports/balance_sheet.html:109
+#: templates/demo/balance_sheet.html:329
+#: templates/xedemo/balance_sheet.html:329 UI/Reports/balance_sheet.html:109
 msgid "Equity to Liabilities"
 msgstr ""
 
@@ -3261,7 +3288,8 @@ msgstr ""
 #: templates/demo/product_receipt.html:62 templates/demo/product_receipt.tex:63
 #: templates/demo/product_receipt.tex:98 templates/demo/purchase_order.html:52
 #: templates/demo/purchase_order.html:62 templates/demo/purchase_order.tex:63
-#: templates/demo/purchase_order.tex:98 templates/demo/request_quotation.html:52
+#: templates/demo/purchase_order.tex:98
+#: templates/demo/request_quotation.html:52
 #: templates/demo/request_quotation.html:62
 #: templates/demo/request_quotation.tex:63
 #: templates/demo/request_quotation.tex:98 templates/demo/sales_order.html:53
@@ -3280,7 +3308,8 @@ msgstr ""
 #: templates/xedemo/product_receipt.tex:96
 #: templates/xedemo/purchase_order.html:52
 #: templates/xedemo/purchase_order.html:62
-#: templates/xedemo/purchase_order.tex:61 templates/xedemo/purchase_order.tex:96
+#: templates/xedemo/purchase_order.tex:61
+#: templates/xedemo/purchase_order.tex:96
 #: templates/xedemo/request_quotation.html:52
 #: templates/xedemo/request_quotation.html:62
 #: templates/xedemo/request_quotation.tex:61
@@ -3375,8 +3404,8 @@ msgstr ""
 msgid "First Name"
 msgstr ""
 
-#: templates/demo/balance_sheet.html:321 templates/xedemo/balance_sheet.html:321
-#: UI/Reports/balance_sheet.html:101
+#: templates/demo/balance_sheet.html:321
+#: templates/xedemo/balance_sheet.html:321 UI/Reports/balance_sheet.html:101
 msgid "First column only"
 msgstr ""
 
@@ -3703,7 +3732,8 @@ msgstr ""
 #: templates/xedemo/timecard.html:44 templates/xedemo/timecard.tex:28
 #: UI/business_units/list_classes.html:8 UI/Reports/filters/gl.html:196
 #: UI/Reports/filters/invoice_outstanding.html:131
-#: UI/Reports/filters/invoice_search.html:255 UI/Reports/filters/orders.html:121
+#: UI/Reports/filters/invoice_search.html:255
+#: UI/Reports/filters/orders.html:121
 msgid "ID"
 msgstr ""
 
@@ -3936,8 +3966,8 @@ msgstr ""
 #: templates/demo/invoice.html:16 templates/demo/invoice.tex:124
 #: templates/demo/printPayment.html:44 templates/xedemo/invoice.html:16
 #: templates/xedemo/invoice.tex:122 templates/xedemo/printPayment.html:44
-#: UI/templates/widget.html:47 sql/Pg-database.sql:1058 sql/Pg-database.sql:2629
-#: sql/Pg-database.sql:2728
+#: UI/templates/widget.html:47 sql/Pg-database.sql:1058
+#: sql/Pg-database.sql:2629 sql/Pg-database.sql:2728
 msgid "Invoice"
 msgstr ""
 
@@ -4081,10 +4111,10 @@ msgstr ""
 #: templates/demo/invoice.html:212 templates/demo/packing_list.html:135
 #: templates/xedemo/invoice.html:212 templates/xedemo/packing_list.html:135
 msgid ""
-"Items returned are subject to a 10% restocking charge. A return authorization "
-"must be obtained from [_1] before goods are returned. Returns must be shipped "
-"prepaid and properly insured. [_1] will not be responsible for damages during "
-"transit."
+"Items returned are subject to a 10% restocking charge. A return "
+"authorization must be obtained from [_1] before goods are returned. Returns "
+"must be shipped prepaid and properly insured. [_1] will not be responsible "
+"for damages during transit."
 msgstr ""
 
 #: old/bin/aa.pl:81 old/bin/gl.pl:76 old/bin/io.pl:81
@@ -4133,8 +4163,8 @@ msgstr ""
 msgid "June"
 msgstr ""
 
-#: templates/demo/balance_sheet.html:320 templates/xedemo/balance_sheet.html:320
-#: UI/Reports/balance_sheet.html:100
+#: templates/demo/balance_sheet.html:320
+#: templates/xedemo/balance_sheet.html:320 UI/Reports/balance_sheet.html:100
 msgid "Key Ratios"
 msgstr ""
 
@@ -4305,7 +4335,8 @@ msgstr ""
 msgid "Less Outstanding Checks:"
 msgstr ""
 
-#: UI/templates/widget.html:49 sql/Pg-database.sql:2741 sql/Pg-database.sql:2756
+#: UI/templates/widget.html:49 sql/Pg-database.sql:2741
+#: sql/Pg-database.sql:2756
 msgid "Letterhead"
 msgstr ""
 
@@ -4753,7 +4784,8 @@ msgstr ""
 msgid "No File Class Specified"
 msgstr ""
 
-#: old/lib/LedgerSMB/DBObject/Draft.pm:59 old/lib/LedgerSMB/DBObject/Draft.pm:77
+#: old/lib/LedgerSMB/DBObject/Draft.pm:59
+#: old/lib/LedgerSMB/DBObject/Draft.pm:77
 msgid "No ID Set"
 msgstr ""
 
@@ -4806,8 +4838,8 @@ msgid "No tax form selected"
 msgstr ""
 
 #: UI/Reports/filters/invoice_outstanding.html:125
-#: UI/Reports/filters/invoice_search.html:249 UI/Reports/filters/orders.html:115
-#: UI/Reports/filters/search_goods.html:255
+#: UI/Reports/filters/invoice_search.html:249
+#: UI/Reports/filters/orders.html:115 UI/Reports/filters/search_goods.html:255
 msgid "No."
 msgstr ""
 
@@ -4881,7 +4913,8 @@ msgstr ""
 #: t/data/04-complex_template.html:33 t/data/04-complex_template.html:626
 #: templates/demo/printPayment.html:99 templates/demo/product_receipt.html:162
 #: templates/demo/purchase_order.html:164 templates/demo/sales_order.html:159
-#: templates/demo/sales_quotation.html:141 templates/xedemo/printPayment.html:99
+#: templates/demo/sales_quotation.html:141
+#: templates/xedemo/printPayment.html:99
 #: templates/xedemo/product_receipt.html:162
 #: templates/xedemo/purchase_order.html:164
 #: templates/xedemo/sales_order.html:159
@@ -4938,15 +4971,17 @@ msgstr ""
 #: old/bin/pe.pl:378 templates/demo/bin_list.html:99
 #: templates/demo/invoice.html:103 templates/demo/invoice.tex:147
 #: templates/demo/packing_list.html:91 templates/demo/pick_list.html:91
-#: templates/demo/product_receipt.html:95 templates/demo/product_receipt.tex:124
-#: templates/demo/purchase_order.html:97 templates/demo/purchase_order.tex:124
+#: templates/demo/product_receipt.html:95
+#: templates/demo/product_receipt.tex:124 templates/demo/purchase_order.html:97
+#: templates/demo/purchase_order.tex:124
 #: templates/demo/request_quotation.html:106
 #: templates/demo/request_quotation.tex:129 templates/demo/sales_order.html:100
-#: templates/demo/sales_quotation.html:59 templates/demo/sales_quotation.html:82
-#: templates/demo/sales_quotation.tex:94 templates/demo/work_order.html:99
-#: templates/xedemo/bin_list.html:99 templates/xedemo/invoice.html:103
-#: templates/xedemo/invoice.tex:145 templates/xedemo/packing_list.html:91
-#: templates/xedemo/pick_list.html:91 templates/xedemo/product_receipt.html:95
+#: templates/demo/sales_quotation.html:59
+#: templates/demo/sales_quotation.html:82 templates/demo/sales_quotation.tex:94
+#: templates/demo/work_order.html:99 templates/xedemo/bin_list.html:99
+#: templates/xedemo/invoice.html:103 templates/xedemo/invoice.tex:145
+#: templates/xedemo/packing_list.html:91 templates/xedemo/pick_list.html:91
+#: templates/xedemo/product_receipt.html:95
 #: templates/xedemo/product_receipt.tex:122
 #: templates/xedemo/purchase_order.html:97
 #: templates/xedemo/purchase_order.tex:122
@@ -5013,8 +5048,8 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:129
 #: lib/LedgerSMB/Report/Inventory/Search.pm:205
-#: lib/LedgerSMB/Report/Invoices/COGS.pm:112 old/bin/ic.pl:469 old/bin/ic.pl:678
-#: UI/inventory/adjustment_entry.html:27
+#: lib/LedgerSMB/Report/Invoices/COGS.pm:112 old/bin/ic.pl:469
+#: old/bin/ic.pl:678 UI/inventory/adjustment_entry.html:27
 msgid "On Hand"
 msgstr ""
 
@@ -5215,7 +5250,8 @@ msgid "PDF"
 msgstr ""
 
 #: templates/demo/ap_transaction.html:68 templates/demo/ap_transaction.tex:69
-#: templates/demo/ar_transaction.html:66 templates/xedemo/ap_transaction.html:68
+#: templates/demo/ar_transaction.html:66
+#: templates/xedemo/ap_transaction.html:68
 #: templates/xedemo/ap_transaction.tex:67
 #: templates/xedemo/ar_transaction.html:66
 msgid "PO #"
@@ -5706,10 +5742,10 @@ msgid "Prefix"
 msgstr ""
 
 #: old/bin/io.pl:243 templates/demo/invoice.tex:152
-#: templates/demo/product_receipt.html:99 templates/demo/purchase_order.html:101
-#: templates/demo/sales_order.html:104 templates/demo/sales_quotation.html:86
-#: templates/demo/sales_quotation.tex:96 templates/xedemo/invoice.tex:150
-#: templates/xedemo/product_receipt.html:99
+#: templates/demo/product_receipt.html:99
+#: templates/demo/purchase_order.html:101 templates/demo/sales_order.html:104
+#: templates/demo/sales_quotation.html:86 templates/demo/sales_quotation.tex:96
+#: templates/xedemo/invoice.tex:150 templates/xedemo/product_receipt.html:99
 #: templates/xedemo/purchase_order.html:101
 #: templates/xedemo/sales_order.html:104
 #: templates/xedemo/sales_quotation.html:86
@@ -5848,7 +5884,8 @@ msgid "Process Transactions"
 msgstr ""
 
 #: old/bin/ir.pl:973 templates/demo/product_receipt.html:16
-#: templates/demo/product_receipt.html:32 templates/demo/product_receipt.tex:107
+#: templates/demo/product_receipt.html:32
+#: templates/demo/product_receipt.tex:107
 #: templates/xedemo/product_receipt.html:16
 #: templates/xedemo/product_receipt.html:32
 #: templates/xedemo/product_receipt.tex:105 sql/Pg-database.sql:2757
@@ -5911,7 +5948,8 @@ msgstr ""
 #: old/bin/ir.pl:997 old/bin/oe.pl:1287 old/bin/oe.pl:273 old/bin/oe.pl:678
 #: old/bin/oe.pl:923 old/bin/printer.pl:82 t/data/04-complex_template.html:343
 #: templates/demo/purchase_order.html:16 templates/demo/purchase_order.html:32
-#: templates/demo/purchase_order.tex:107 templates/xedemo/purchase_order.html:16
+#: templates/demo/purchase_order.tex:107
+#: templates/xedemo/purchase_order.html:16
 #: templates/xedemo/purchase_order.html:32
 #: templates/xedemo/purchase_order.tex:105 UI/Contact/divs/credit.html:352
 #: sql/Pg-database.sql:1904 sql/Pg-database.sql:2594 sql/Pg-database.sql:2735
@@ -5930,7 +5968,8 @@ msgid "Purchase Orders"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Asset.pm:100
-#: lib/LedgerSMB/Report/Listings/Asset.pm:132 lib/LedgerSMB/Scripts/asset.pm:341
+#: lib/LedgerSMB/Report/Listings/Asset.pm:132
+#: lib/LedgerSMB/Scripts/asset.pm:341
 msgid "Purchase Value"
 msgstr ""
 
@@ -6004,7 +6043,8 @@ msgstr ""
 msgid "Quotation"
 msgstr ""
 
-#: templates/demo/sales_quotation.tex:82 templates/xedemo/sales_quotation.tex:80
+#: templates/demo/sales_quotation.tex:82
+#: templates/xedemo/sales_quotation.tex:80
 msgid "Quotation #"
 msgstr ""
 
@@ -6109,7 +6149,8 @@ msgstr ""
 msgid "Recd"
 msgstr ""
 
-#: UI/templates/widget.html:61 sql/Pg-database.sql:2583 sql/Pg-database.sql:2752
+#: UI/templates/widget.html:61 sql/Pg-database.sql:2583
+#: sql/Pg-database.sql:2752
 msgid "Receipt"
 msgstr ""
 
@@ -6293,10 +6334,10 @@ msgstr ""
 msgid "Reporting unit filters"
 msgstr ""
 
-#: UI/templates/widget.html:77 sql/Pg-database.sql:2595 sql/Pg-database.sql:2608
-#: sql/Pg-database.sql:2637 sql/Pg-database.sql:2641 sql/Pg-database.sql:2666
-#: sql/Pg-database.sql:2677 sql/Pg-database.sql:2705 sql/Pg-database.sql:2720
-#: sql/Pg-database.sql:2761
+#: UI/templates/widget.html:77 sql/Pg-database.sql:2595
+#: sql/Pg-database.sql:2608 sql/Pg-database.sql:2637 sql/Pg-database.sql:2641
+#: sql/Pg-database.sql:2666 sql/Pg-database.sql:2677 sql/Pg-database.sql:2705
+#: sql/Pg-database.sql:2720 sql/Pg-database.sql:2761
 msgid "Reports"
 msgstr ""
 
@@ -6536,7 +6577,8 @@ msgstr ""
 #: templates/demo/work_order.html:79 templates/xedemo/ar_transaction.html:74
 #: templates/xedemo/invoice.html:82 templates/xedemo/invoice.tex:131
 #: templates/xedemo/sales_order.html:80 templates/xedemo/sales_order.tex:112
-#: templates/xedemo/work_order.html:79 UI/Reports/filters/contact_search.html:61
+#: templates/xedemo/work_order.html:79
+#: UI/Reports/filters/contact_search.html:61
 #: UI/Reports/filters/invoice_outstanding.html:178
 #: UI/Reports/filters/invoice_search.html:303
 msgid "Salesperson"
@@ -7170,9 +7212,9 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:136
 #: lib/LedgerSMB/Scripts/payment.pm:199 lib/LedgerSMB/Scripts/recon.pm:489
 #: old/bin/aa.pl:843 old/bin/ir.pl:884 old/bin/is.pl:996
-#: templates/demo/ap_transaction.html:153 templates/demo/ar_transaction.html:150
-#: templates/demo/invoice.html:189 templates/demo/printPayment.html:50
-#: templates/xedemo/ap_transaction.html:153
+#: templates/demo/ap_transaction.html:153
+#: templates/demo/ar_transaction.html:150 templates/demo/invoice.html:189
+#: templates/demo/printPayment.html:50 templates/xedemo/ap_transaction.html:153
 #: templates/xedemo/ar_transaction.html:150 templates/xedemo/invoice.html:189
 #: templates/xedemo/printPayment.html:50 UI/inventory/adjustment_setup.html:26
 #: UI/journal/journal_entry.html:145 UI/payments/payment2.html:113
@@ -7203,7 +7245,8 @@ msgstr ""
 msgid "Special order items are subject to a 10% order cancellation fee."
 msgstr ""
 
-#: templates/demo/sales_quotation.tex:30 templates/xedemo/sales_quotation.tex:28
+#: templates/demo/sales_quotation.tex:30
+#: templates/xedemo/sales_quotation.tex:28
 msgid "Special order items are subject to a 10\\% cancellation fee."
 msgstr ""
 
@@ -7223,9 +7266,10 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:158
 #: lib/LedgerSMB/Report/Listings/Business_Unit.pm:67
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:137
-#: lib/LedgerSMB/Report/co/Caja_Diaria.pm:129 UI/budgetting/budget_entry.html:38
-#: UI/business_units/edit.html:55 UI/Contact/divs/credit.html:30
-#: UI/Contact/divs/employee.html:132 UI/Reports/filters/budget_search.html:41
+#: lib/LedgerSMB/Report/co/Caja_Diaria.pm:129
+#: UI/budgetting/budget_entry.html:38 UI/business_units/edit.html:55
+#: UI/Contact/divs/credit.html:30 UI/Contact/divs/employee.html:132
+#: UI/Reports/filters/budget_search.html:41
 msgid "Start Date"
 msgstr ""
 
@@ -7246,7 +7290,8 @@ msgid "Startdate"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:164
-#: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:80 UI/Reports/co/filter_bm.html:91
+#: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:80
+#: UI/Reports/co/filter_bm.html:91
 msgid "Starting Balance"
 msgstr ""
 
@@ -7345,9 +7390,9 @@ msgid "Submitted"
 msgstr ""
 
 #: old/bin/io.pl:1297 old/bin/ir.pl:747 old/bin/is.pl:845 old/bin/oe.pl:808
-#: templates/demo/ap_transaction.html:107 templates/demo/ar_transaction.html:105
-#: templates/demo/invoice.html:129 templates/demo/invoice.tex:171
-#: templates/demo/product_receipt.html:122
+#: templates/demo/ap_transaction.html:107
+#: templates/demo/ar_transaction.html:105 templates/demo/invoice.html:129
+#: templates/demo/invoice.tex:171 templates/demo/product_receipt.html:122
 #: templates/demo/purchase_order.html:124 templates/demo/sales_order.html:127
 #: templates/demo/sales_quotation.html:109
 #: templates/demo/sales_quotation.tex:114
@@ -7361,8 +7406,8 @@ msgstr ""
 #: UI/payments/payment2.html:477 UI/payments/use_overpayment2.html:138
 #: UI/payments/use_overpayment2.html:326 UI/Reports/filters/gl.html:300
 #: UI/Reports/filters/invoice_outstanding.html:275
-#: UI/Reports/filters/invoice_search.html:398 UI/Reports/filters/orders.html:200
-#: UI/Reports/filters/search_goods.html:436
+#: UI/Reports/filters/invoice_search.html:398
+#: UI/Reports/filters/orders.html:200 UI/Reports/filters/search_goods.html:436
 msgid "Subtotal"
 msgstr ""
 
@@ -7427,9 +7472,10 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:234
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:284 old/bin/ic.pl:535
 #: old/bin/ic.pl:664 UI/accounts/edit.html:256 UI/accounts/edit.html:341
-#: UI/accounts/edit.html:392 UI/accounts/edit.html:441 UI/accounts/edit.html:480
-#: UI/Reports/filters/invoice_outstanding.html:199
-#: UI/Reports/filters/invoice_search.html:323 UI/Reports/filters/orders.html:185
+#: UI/accounts/edit.html:392 UI/accounts/edit.html:441
+#: UI/accounts/edit.html:480 UI/Reports/filters/invoice_outstanding.html:199
+#: UI/Reports/filters/invoice_search.html:323
+#: UI/Reports/filters/orders.html:185
 msgid "Tax"
 msgstr ""
 
@@ -7533,17 +7579,20 @@ msgstr ""
 msgid "Taxes saved!"
 msgstr ""
 
-#: templates/demo/ap_transaction.html:178 templates/demo/ar_transaction.html:178
-#: templates/demo/invoice.html:231 templates/xedemo/ap_transaction.html:178
+#: templates/demo/ap_transaction.html:178
+#: templates/demo/ar_transaction.html:178 templates/demo/invoice.html:231
+#: templates/xedemo/ap_transaction.html:178
 #: templates/xedemo/ar_transaction.html:178 templates/xedemo/invoice.html:231
 msgid "Taxes shown are included in price."
 msgstr ""
 
-#: templates/demo/ar_transaction.html:50 templates/xedemo/ar_transaction.html:50
+#: templates/demo/ar_transaction.html:50
+#: templates/xedemo/ar_transaction.html:50
 msgid "Taxnumber:"
 msgstr ""
 
-#: templates/demo/ap_transaction.html:51 templates/xedemo/ap_transaction.html:51
+#: templates/demo/ap_transaction.html:51
+#: templates/xedemo/ap_transaction.html:51
 msgid "Taxnumber: [_1]"
 msgstr ""
 
@@ -7558,10 +7607,11 @@ msgstr ""
 #: templates/demo/invoice.html:52 templates/demo/invoice.html:64
 #: templates/demo/letterhead.html:47 templates/demo/packing_list.html:52
 #: templates/demo/pick_list.html:52 templates/demo/printPayment.html:34
-#: templates/demo/product_receipt.html:51 templates/demo/product_receipt.html:61
-#: templates/demo/product_receipt.tex:59 templates/demo/product_receipt.tex:94
-#: templates/demo/purchase_order.html:51 templates/demo/purchase_order.html:61
-#: templates/demo/purchase_order.tex:59 templates/demo/purchase_order.tex:94
+#: templates/demo/product_receipt.html:51
+#: templates/demo/product_receipt.html:61 templates/demo/product_receipt.tex:59
+#: templates/demo/product_receipt.tex:94 templates/demo/purchase_order.html:51
+#: templates/demo/purchase_order.html:61 templates/demo/purchase_order.tex:59
+#: templates/demo/purchase_order.tex:94
 #: templates/demo/request_quotation.html:51
 #: templates/demo/request_quotation.html:61
 #: templates/demo/request_quotation.tex:59
@@ -7582,7 +7632,8 @@ msgstr ""
 #: templates/xedemo/product_receipt.tex:92
 #: templates/xedemo/purchase_order.html:51
 #: templates/xedemo/purchase_order.html:61
-#: templates/xedemo/purchase_order.tex:57 templates/xedemo/purchase_order.tex:92
+#: templates/xedemo/purchase_order.tex:57
+#: templates/xedemo/purchase_order.tex:92
 #: templates/xedemo/request_quotation.html:51
 #: templates/xedemo/request_quotation.html:61
 #: templates/xedemo/request_quotation.tex:57
@@ -7811,7 +7862,8 @@ msgstr ""
 msgid "Time or Materials Card"
 msgstr ""
 
-#: UI/templates/widget.html:73 sql/Pg-database.sql:2740 sql/Pg-database.sql:2755
+#: UI/templates/widget.html:73 sql/Pg-database.sql:2740
+#: sql/Pg-database.sql:2755
 msgid "Timecard"
 msgstr ""
 
@@ -7915,15 +7967,18 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:239
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:287
 #: lib/LedgerSMB/Report/Taxform/Details.pm:103
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:99 lib/LedgerSMB/Scripts/asset.pm:493
-#: lib/LedgerSMB/Scripts/payment.pm:936 old/bin/ir.pl:811 old/bin/is.pl:924
-#: old/bin/oe.pl:840 templates/demo/ap_transaction.html:104
-#: templates/demo/ap_transaction.html:119 templates/demo/ar_transaction.html:102
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:99
+#: lib/LedgerSMB/Scripts/asset.pm:493 lib/LedgerSMB/Scripts/payment.pm:936
+#: old/bin/ir.pl:811 old/bin/is.pl:924 old/bin/oe.pl:840
+#: templates/demo/ap_transaction.html:104
+#: templates/demo/ap_transaction.html:119
+#: templates/demo/ar_transaction.html:102
 #: templates/demo/ar_transaction.html:117 templates/demo/invoice.html:139
 #: templates/demo/invoice.tex:180 templates/demo/product_receipt.html:120
 #: templates/demo/product_receipt.html:138
 #: templates/demo/product_receipt.html:143
-#: templates/demo/purchase_order.html:122 templates/demo/purchase_order.html:140
+#: templates/demo/purchase_order.html:122
+#: templates/demo/purchase_order.html:140
 #: templates/demo/purchase_order.html:145 templates/demo/sales_order.html:125
 #: templates/demo/sales_order.html:145 templates/demo/sales_quotation.html:107
 #: templates/demo/sales_quotation.html:127
@@ -8516,23 +8571,28 @@ msgstr ""
 msgid "Warning!"
 msgstr ""
 
-#: UI/js/ui-header.html:45 UI/lib/ui-header.html:45 UI/users/preferences.html:58
+#: UI/js/ui-header.html:45 UI/lib/ui-header.html:45
+#: UI/users/preferences.html:58
 msgid "Warning: Your password will expire in [_1] days"
 msgstr ""
 
-#: UI/js/ui-header.html:41 UI/lib/ui-header.html:41 UI/users/preferences.html:54
+#: UI/js/ui-header.html:41 UI/lib/ui-header.html:41
+#: UI/users/preferences.html:54
 msgid "Warning: Your password will expire in [_1] months"
 msgstr ""
 
-#: UI/js/ui-header.html:43 UI/lib/ui-header.html:43 UI/users/preferences.html:56
+#: UI/js/ui-header.html:43 UI/lib/ui-header.html:43
+#: UI/users/preferences.html:56
 msgid "Warning: Your password will expire in [_1] weeks"
 msgstr ""
 
-#: UI/js/ui-header.html:39 UI/lib/ui-header.html:39 UI/users/preferences.html:52
+#: UI/js/ui-header.html:39 UI/lib/ui-header.html:39
+#: UI/users/preferences.html:52
 msgid "Warning: Your password will expire in [_1] years"
 msgstr ""
 
-#: UI/js/ui-header.html:47 UI/lib/ui-header.html:47 UI/users/preferences.html:60
+#: UI/js/ui-header.html:47 UI/lib/ui-header.html:47
+#: UI/users/preferences.html:60
 msgid "Warning: Your password will expire today"
 msgstr ""
 
@@ -8594,11 +8654,12 @@ msgstr ""
 msgid "Widgit Themes"
 msgstr ""
 
-#: old/bin/am.pl:1432 old/bin/io.pl:1156 old/bin/oe.pl:260 old/bin/printer.pl:69
-#: templates/demo/work_order.html:16 templates/demo/work_order.html:32
-#: templates/demo/work_order.tex:115 templates/xedemo/work_order.html:16
-#: templates/xedemo/work_order.html:32 templates/xedemo/work_order.tex:113
-#: sql/Pg-database.sql:2734 sql/Pg-database.sql:2747
+#: old/bin/am.pl:1432 old/bin/io.pl:1156 old/bin/oe.pl:260
+#: old/bin/printer.pl:69 templates/demo/work_order.html:16
+#: templates/demo/work_order.html:32 templates/demo/work_order.tex:115
+#: templates/xedemo/work_order.html:16 templates/xedemo/work_order.html:32
+#: templates/xedemo/work_order.tex:113 sql/Pg-database.sql:2734
+#: sql/Pg-database.sql:2747
 msgid "Work Order"
 msgstr ""
 
@@ -8802,6 +8863,96 @@ msgstr ""
 #: UI/templates/widget.html:95
 msgid "html"
 msgstr ""
+
+#: UI/src/components/Home.vue:29
+msgid "i18n##home##FAQ##link"
+msgstr "FAQ"
+
+#: UI/src/components/Home.vue:27
+msgid "i18n##home##FAQ##text"
+msgstr "The {url}"
+
+#: UI/src/components/Home.vue:20
+msgid "i18n##home##communitySupport"
+msgstr ""
+"Community support for LedgerSMB is a available through various channels, "
+"ranging from static all the way to near-realtime (depending on availability "
+"of people):"
+
+#: UI/src/components/Home.vue:53
+msgid "i18n##home##contributions"
+msgstr ""
+"The project is always looking for contributions. The easiest ways to "
+"contribute to the project are:"
+
+#: UI/src/components/Home.vue:41
+msgid "i18n##home##experience##link"
+msgstr "mailing lists"
+
+#: UI/src/components/Home.vue:39
+msgid "i18n##home##experience##text"
+msgstr "For a more interactive experience, please join one of the {url}"
+
+#: UI/src/components/Home.vue:70
+msgid "i18n##home##fixBugs##link"
+msgstr "bug"
+
+#: UI/src/components/Home.vue:68
+msgid "i18n##home##fixBugs##text"
+msgstr ""
+"Fix a {url} and submit a 'Pull Request'. When you do, please start with one "
+"marked 'bite-sized' and contact the development team through IRC and/or "
+"matrix for help getting started."
+
+#: UI/src/components/Home.vue:7
+msgid "i18n##home##ledgersmbIntro"
+msgstr ""
+"LedgerSMB is a double entry accounting system offering a wide variety of "
+"related functionalities, such as"
+
+#: UI/src/components/Home.vue:34
+msgid "i18n##home##mailingListsArchives##link"
+msgstr "mailing list archives"
+
+#: UI/src/components/Home.vue:32
+msgid "i18n##home##mailingListsArchives##text"
+msgstr "The {url}"
+
+#: UI/src/components/Home.vue:47
+msgid "i18n##home##nearRealtime##link"
+msgstr "matrix 'LedgerSMB' room"
+
+#: UI/src/components/Home.vue:45
+msgid "i18n##home##nearRealtime##text"
+msgstr "There's also the near-realtime chat experience in the {url}"
+
+#: UI/src/components/Home.vue:24
+msgid "i18n##home##projectWebsite##link"
+msgstr "project website"
+
+#: UI/src/components/Home.vue:22
+msgid "i18n##home##projectWebsite##text"
+msgstr "The {url}"
+
+#: UI/src/components/Home.vue:57
+msgid "i18n##home##reportBugs##link1"
+msgstr "the project's GitHub bug tracker"
+
+#: UI/src/components/Home.vue:60
+msgid "i18n##home##reportBugs##link2"
+msgstr "mailing lists"
+
+#: UI/src/components/Home.vue:55
+msgid "i18n##home##reportBugs##text"
+msgstr "Report your bugs and problems to {url1} or {url2}"
+
+#: UI/src/components/Home.vue:65
+msgid "i18n##home##translate##link"
+msgstr "LedgerSMB project Transifex web-based translation project"
+
+#: UI/src/components/Home.vue:63
+msgid "i18n##home##translate##text"
+msgstr "Help translate the software through the {url}"
 
 #: sql/Pg-database.sql:3587
 msgid "import"
