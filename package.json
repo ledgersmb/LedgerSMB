@@ -133,8 +133,7 @@
     "lint:js": "eslint --ext .js ./",
     "lint:markdown": "markdownlint --config .markdownlint.json --ignore ./node_modules .",
     "profile": "webpack --progress=profile --json > logs/stats.json",
-    "readme": "webpack --mode=production --stats errors-warnings",
-    "vue-i18n-extract-translations": "vue-i18n-extract-translations -v './UI/src/**/*.?(js|vue)' -l './UI/src/locales/' --def-locale 'en' --key 'i18n' --keep-unused"
+    "readme": "webpack --mode=production --stats errors-warnings"
   },
   "babel": {
     "presets": [
