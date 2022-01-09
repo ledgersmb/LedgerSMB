@@ -11,6 +11,11 @@
                 "link": "mailing lists",
                 "text": "For a more interactive experience, please join one of the {url}"
             },
+            "fixBugs": {
+                "link": "bug",
+                "text": "Fix a {url} and submit a 'Pull Request'. When you do, please start with one marked 'bite-sized' and contact the development team through IRC and/or matrix for help getting started."
+            },
+            "ledgersmbIntro": "LedgerSMB is a double entry accounting system offering a wide variety of related functionalities, such as",
             "mailingListsArchives": {
                 "link": "mailing list archives",
                 "text": "The {url}"
@@ -31,12 +36,7 @@
             "translate": {
                 "link": "LedgerSMB project Transifex web-based translation project",
                 "text": "Help translate the software through the {url}"
-            },
-            "fixBugs": {
-                "link": "bug",
-                "text": "Fix a {url} and submit a 'Pull Request'. When you do, please start with one marked 'bite-sized' and contact the development team through IRC and/or matrix for help getting started."
-            },
-            "ledgersmbIntro": "LedgerSMB is a double entry accounting system offering a wide variety of related functionalities, such as"
+            }
         }
     }
 }

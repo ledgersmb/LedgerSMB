@@ -560,6 +560,18 @@
     "done": "valmis",
     "ea": "kpl",
     "failed": "epäonnistui",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "time(s)": "kertaa",
     "unexpected error!": "odottamaton virhe"
 }

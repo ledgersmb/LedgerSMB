@@ -533,6 +533,18 @@
     "done": "feito",
     "ea": "cada",
     "failed": "falhou",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "time": "hora",
     "time(s)": "vêz(es)",
     "to_date": "para_data",

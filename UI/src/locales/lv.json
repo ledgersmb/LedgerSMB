@@ -400,5 +400,17 @@
     "Yes": "Jā",
     "days": "dienas",
     "done": "izdarīts",
-    "ea": "gb"
+    "ea": "gb",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    }
 }

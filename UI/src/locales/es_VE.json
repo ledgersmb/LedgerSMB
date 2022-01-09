@@ -528,6 +528,18 @@
     "done": "hecho",
     "ea": "c/u",
     "failed": "falló",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "time(s)": "veces",
     "unexpected error!": "Error inesperado!"
 }

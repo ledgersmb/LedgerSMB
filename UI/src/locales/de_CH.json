@@ -525,6 +525,18 @@
     "done": "fertig",
     "ea": "pro",
     "failed": "fehlgeschlagen",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "time(s)": "mal",
     "unexpected error!": "unerwarteter Fehler!"
 }

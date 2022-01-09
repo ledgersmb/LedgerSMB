@@ -254,5 +254,17 @@
     "What type of item is this?": "Hvernig hlutur er þetta?",
     "Yes": "Já",
     "days": "dagar",
-    "ea": "stk"
+    "ea": "stk",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    }
 }

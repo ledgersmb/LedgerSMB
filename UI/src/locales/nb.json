@@ -1683,6 +1683,18 @@
     "ea": "stk",
     "failed": "feilet",
     "from_date": "fra_dato",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "import": "import",
     "in months": "i måneder",
     "in years": "i år",

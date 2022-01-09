@@ -219,5 +219,17 @@
     "Yes": "Sí",
     "Zero": "cero",
     "days": "dies",
-    "ea": "unit."
+    "ea": "unit.",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    }
 }

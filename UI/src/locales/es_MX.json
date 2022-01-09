@@ -467,5 +467,17 @@
     "Zero": "cero",
     "days": "días",
     "done": "listo",
-    "ea": "pza"
+    "ea": "pza",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    }
 }

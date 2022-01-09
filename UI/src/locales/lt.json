@@ -252,5 +252,17 @@
     "What type of item is this?": "Koks šio dalyko tipas?",
     "Yes": "Taip",
     "days": "dienos",
-    "ea": "kk"
+    "ea": "kk",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    }
 }

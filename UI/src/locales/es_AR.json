@@ -544,6 +544,18 @@
     "delete": "eliminar",
     "done": "hecho",
     "failed": "fallado",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "is bigger than the amount available": "es mayor que el monto disponible",
     "is lesser than 0": "es menor que 0",
     "is lesser than the amount to be paid": "es menor que el monto a ser pagado",

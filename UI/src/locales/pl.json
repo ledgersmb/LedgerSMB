@@ -419,5 +419,17 @@
     "Yes": "Tak",
     "days": "dni",
     "done": "wykonane",
-    "ea": "szt"
+    "ea": "szt",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    }
 }

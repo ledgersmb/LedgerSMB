@@ -2,5 +2,17 @@
     "A return authorization must be obtained from [_1] before goods are returned. Returns must be shipped prepaid and properly insured. [_1] will not be responsible for damages during transit.": "A return authorisation must be obtained from [_1] before goods are returned. Returns must be shipped prepaid and properly insured. [_1] will not be responsible for damages during transit.",
     "Amount Budgetted": "Amount Budgeted",
     "Are you sure you want to delete Order Number": "Are you sure you want to delete Order Number?",
-    "Are you sure you want to delete Quotation Number": "Are you sure you want to delete Quotation Number?"
+    "Are you sure you want to delete Quotation Number": "Are you sure you want to delete Quotation Number?",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    }
 }

@@ -417,5 +417,17 @@
     "Yes": "Tak",
     "days": "днів",
     "done": "завершено",
-    "ea": "шт."
+    "ea": "шт.",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    }
 }

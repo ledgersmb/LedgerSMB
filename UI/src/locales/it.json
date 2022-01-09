@@ -924,6 +924,18 @@
     "ea": "ci",
     "failed": "fallito",
     "from_date": "da_data",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "import": "importa",
     "in months": "in mesi",
     "in years": "in anni",

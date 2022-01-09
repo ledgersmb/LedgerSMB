@@ -1121,6 +1121,18 @@
     "done": "elvégezve",
     "ea": "db",
     "failed": "nem sikerült",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "is bigger than the amount available": "nagyobb, mint a rendelkezésre álló összeg",
     "is lesser than 0": "kevesebb mint 0",
     "is lesser than the amount to be paid": "kevesebb, mint a valós fizetés értéke",

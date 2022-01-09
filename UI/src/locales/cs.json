@@ -185,5 +185,17 @@
     "What type of item is this?": "O jaký typ položky se jedná?",
     "Yes": "Ano",
     "days": "dní",
-    "ea": "m.j."
+    "ea": "m.j.",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    }
 }

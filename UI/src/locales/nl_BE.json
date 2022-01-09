@@ -425,5 +425,17 @@
     "Zero": "nul",
     "days": "dagen",
     "done": "gebeurd",
-    "ea": "voor"
+    "ea": "voor",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    }
 }

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.0-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-01-09 21:20+0000\n"
+"POT-Creation-Date: 2022-01-09 22:19+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1630,15 +1630,8 @@ msgstr ""
 msgid "Combine Sales Orders"
 msgstr ""
 
-#: UI/src/components/Home.vue:20 UI/src/components/Home.vue:19
+#: UI/src/components/Home.vue:19
 msgid "Community resources"
-msgstr ""
-
-msgid ""
-"Community support for LedgerSMB is a available through various\n"
-"                  channels, ranging from static all the way to near-realtime "
-"(depending\n"
-"                  on availability of people):"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:79
@@ -1786,7 +1779,7 @@ msgid ""
 "are presented by pairs, with a suffix added to the invoice number"
 msgstr ""
 
-#: UI/src/components/Home.vue:44 UI/src/components/Home.vue:52
+#: UI/src/components/Home.vue:52
 msgid "Contributing"
 msgstr ""
 
@@ -3224,10 +3217,6 @@ msgstr ""
 msgid "Extra Used"
 msgstr ""
 
-#: UI/src/components/Home.vue:29
-msgid "FAQ"
-msgstr ""
-
 #: UI/budgetting/budget_entry.html:59 UI/journal/journal_entry.html:116
 #: UI/journal/journal_entry.html:142
 msgid "FX"
@@ -4274,11 +4263,6 @@ msgstr ""
 
 #: UI/setup/upgrade_info.html:29
 msgid "LedgerSMB has introduced three new system wide default values which "
-msgstr ""
-
-msgid ""
-"LedgerSMB is a double entry accounting system offering a wide\n"
-"                  variety of related functionalities, such as"
 msgstr ""
 
 #: UI/setup/upgrade_info.html:72
@@ -7661,11 +7645,6 @@ msgid ""
 "this e-mail"
 msgstr ""
 
-msgid ""
-"The project is always looking for contributions. The easiest ways to\n"
-"                  contribute to the project are:"
-msgstr ""
-
 #: lib/LedgerSMB/Scripts/recon.pm:501
 msgid "Their Balance"
 msgstr ""
@@ -8729,12 +8708,8 @@ msgstr ""
 msgid "balance"
 msgstr ""
 
-#: UI/src/components/Home.vue:11 UI/src/components/Home.vue:10
+#: UI/src/components/Home.vue:10
 msgid "bank reconciliation"
-msgstr ""
-
-#: UI/src/components/Home.vue:54
-msgid "bug"
 msgstr ""
 
 #: old/bin/io.pl:1641
@@ -8893,7 +8868,7 @@ msgstr ""
 msgid "in years"
 msgstr ""
 
-#: UI/src/components/Home.vue:10 UI/src/components/Home.vue:9
+#: UI/src/components/Home.vue:9
 msgid "invoicing"
 msgstr ""
 
@@ -8913,7 +8888,7 @@ msgstr ""
 msgid "is null"
 msgstr ""
 
-#: UI/src/components/Home.vue:13 UI/src/components/Home.vue:12
+#: UI/src/components/Home.vue:12
 msgid "keeping stock"
 msgstr ""
 
@@ -8921,11 +8896,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/components/Home.vue:51 UI/src/components/Home.vue:36
-msgid "mailing lists"
-msgstr ""
-
-#: UI/src/components/Home.vue:12 UI/src/components/Home.vue:11
+#: UI/src/components/Home.vue:11
 msgid "ordering"
 msgstr ""
 
@@ -8941,7 +8912,7 @@ msgstr ""
 msgid "production"
 msgstr ""
 
-#: UI/src/components/Home.vue:15 UI/src/components/Home.vue:14
+#: UI/src/components/Home.vue:14
 msgid "shipping &amp; receiving"
 msgstr ""
 
@@ -8965,11 +8936,11 @@ msgstr ""
 msgid "to_date"
 msgstr ""
 
-#: UI/src/components/Home.vue:14 UI/src/components/Home.vue:13
+#: UI/src/components/Home.vue:13
 msgid "tracking hours (timecards)"
 msgstr ""
 
-#: UI/src/components/Home.vue:16 UI/src/components/Home.vue:15
+#: UI/src/components/Home.vue:15
 msgid "tracking of unpaid invoices"
 msgstr ""
 

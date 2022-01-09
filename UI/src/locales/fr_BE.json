@@ -519,6 +519,18 @@
     "done": "fait",
     "ea": "ch",
     "failed": "échec",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "time(s)": "temps",
     "unexpected error!": "Erreur inattendue!"
 }

@@ -1591,6 +1591,18 @@
     "done": "gebeurd",
     "ea": "p.st.",
     "failed": "mislukt",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "import": "importeren",
     "in months": "in maanden",
     "in years": "in jaren",
