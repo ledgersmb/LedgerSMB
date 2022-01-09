@@ -145,7 +145,7 @@ keys:
 sub attach {
     my ($self, $wf) = @_;
     my $persister   = FACTORY()->get_persister( $wf->type );
-    my $att         = $wf->context->param( 'attachment' );
+    my $att         = $wf->context->delete_param( 'attachment' );
 
     $persister->attach( $wf, $att );
     $persister->fetch_extra_workflow_data( $wf );
