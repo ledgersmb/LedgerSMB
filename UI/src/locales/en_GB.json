@@ -30,5 +30,17 @@
     "Vendor Invoice": "Creditor Invoice",
     "Vendor Number": "Creditor Number",
     "Vendor missing!": "Creditor missing!",
-    "Vendor not on file!": "Creditor not on file!"
+    "Vendor not on file!": "Creditor not on file!",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    }
 }

@@ -1398,6 +1398,18 @@
     "done": "Erledigt",
     "ea": "ea",
     "failed": "fehlgeschlagen",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "import": "importieren",
     "in months": "in Monaten",
     "in years": "in Jahren",

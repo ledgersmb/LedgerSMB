@@ -547,6 +547,18 @@
     "done": "نفذ",
     "ea": "قطعة",
     "failed": "فشل",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "import": "استيراد",
     "in months": "في شهور",
     "in years": "في سنوات",

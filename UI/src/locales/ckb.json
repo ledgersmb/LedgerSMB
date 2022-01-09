@@ -2,6 +2,18 @@
     "30": "30",
     "60": "60",
     "90": "90",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "label": "ناونیشان",
     "time": "کات",
     "time(s)": "کات(ەکان)"

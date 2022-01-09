@@ -444,5 +444,17 @@
     "Zero": "cero",
     "days": "días",
     "done": "hecho",
-    "ea": "unid."
+    "ea": "unid.",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    }
 }

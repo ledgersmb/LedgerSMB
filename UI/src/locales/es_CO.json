@@ -515,6 +515,18 @@
     "done": "hecho",
     "ea": "unid.",
     "failed": "falló",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "is lesser than 0": "Es menor a 0",
     "time(s)": "vez/veces",
     "unexpected error!": "¡Error inesperado!"

@@ -610,6 +610,18 @@
     "done": "выполнено",
     "ea": "шт.",
     "failed": "ошибка",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "time(s)": "раз",
     "unexpected error!": "неожиданная ошибка"
 }

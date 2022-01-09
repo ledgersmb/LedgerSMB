@@ -6,5 +6,17 @@
     "E-mail message": "Email message",
     "E-mailed": "Emailed",
     "Labor/Overhead": "Labour/Overhead",
-    "SSN": "SIN"
+    "SSN": "SIN",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    }
 }

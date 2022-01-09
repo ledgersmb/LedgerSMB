@@ -791,6 +791,18 @@
     "delete": "padam",
     "done": "selesai",
     "failed": "gagal",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "is bigger than the amount available": "lebih besar daripada jumlah yang tersedia",
     "is lesser than 0": "kurang daripada 0",
     "is lesser than the amount to be paid": "kurang daripada jumlah perlu dibayar",

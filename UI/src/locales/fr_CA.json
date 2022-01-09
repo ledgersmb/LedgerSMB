@@ -656,7 +656,6 @@
     "[_1] Credit Note": "Note de crédit",
     "[_1] Debit Note": "Note de débit",
     "bank reconciliation": "concilliation bancaire",
-    "bug": "bogue",
     "city": "ville",
     "days": "jours",
     "debits": "débits",
@@ -676,6 +675,11 @@
                 "link": "listes de distribution",
                 "text": "Pour une expérience plus interactive, veuillez vous joindre à l'une des {url}"
             },
+            "fixBugs": {
+                "link": "bogue",
+                "text": "Corrigez un {url} et soumettez une 'Pull Request'. Lorsque vous le faites, veuillez commencer par un « petit format » et contactez l'équipe de développement via IRC ou matrix pour obtenir de l'aide pour démarrer."
+            },
+            "ledgersmbIntro": "LedgerSMB est un système de comptabilité en partie double offrant une grande variété de fonctionnalités connexes, telles que",
             "mailingListsArchives": {
                 "link": "archives des listes de distribution",
                 "text": "Les {url}"
@@ -696,12 +700,7 @@
             "translate": {
                 "link": "outil de traduction web Transifex",
                 "text": "Aidez à traduire le logiciel LedgerSMB via l'{url}"
-            },
-            "fixBugs": {
-                "link": "bogue",
-                "text": "Corrigez un {url} et soumettez une 'Pull Request'. Lorsque vous le faites, veuillez commencer par un « petit format » et contactez l'équipe de développement via IRC ou matrix pour obtenir de l'aide pour démarrer."
-            },
-            "ledgersmbIntro": "LedgerSMB est un système de comptabilité en partie double offrant une grande variété de fonctionnalités connexes, telles que"
+            }
         }
     },
     "in months": "en mois",
@@ -712,8 +711,6 @@
     "keeping stock": "suivi de l'inventaire",
     "ordering": "commandes",
     "permalink": "lien permanent",
-    "sent": "envoyé",
-    "shipping & receiving": "expédition et réception",
     "tracking hours (timecards)": "suivi des heures (cartes de temps)",
     "tracking of unpaid invoices": "suivi des factures impayées"
 }

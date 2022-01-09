@@ -492,6 +492,18 @@
     "done": "Готов",
     "ea": "бр.",
     "failed": "грешка",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "time(s)": "път(и)",
     "unexpected error!": "Необяснима грешка!"
 }

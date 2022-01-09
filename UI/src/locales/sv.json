@@ -489,6 +489,18 @@
     "done": "Färdigt",
     "ea": "st",
     "failed": "misslyckats",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "time(s)": "gång(er)",
     "unexpected error!": "oförberett fel!"
 }

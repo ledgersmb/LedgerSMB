@@ -485,6 +485,18 @@
     "done": "完成",
     "ea": "個",
     "failed": "失敗",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "time(s)": "次",
     "unexpected error!": "沒有預期的錯誤！"
 }

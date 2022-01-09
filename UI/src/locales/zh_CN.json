@@ -445,6 +445,18 @@
     "done": "完成",
     "ea": "个",
     "failed": "失败",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "time(s)": "次",
     "unexpected error!": "意外错误!"
 }

@@ -245,5 +245,17 @@
     "What type of item is this?": "Que tipo de Item é este?",
     "Yes": "Sim",
     "days": "dias",
-    "ea": "cd"
+    "ea": "cd",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    }
 }

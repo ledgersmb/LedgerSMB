@@ -321,5 +321,17 @@
     "Zero": "cero",
     "days": "Días",
     "done": "Hecho",
-    "ea": "c/u"
+    "ea": "c/u",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    }
 }

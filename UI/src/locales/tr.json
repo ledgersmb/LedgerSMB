@@ -161,5 +161,17 @@
     "What type of item is this?": "Bu ne çeşit bir kalemdir?",
     "Yes": "Evet",
     "days": "gün. ",
-    "ea": "ad"
+    "ea": "ad",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    }
 }

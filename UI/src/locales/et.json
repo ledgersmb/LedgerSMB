@@ -1012,6 +1012,18 @@
     "done": "tehtud",
     "ea": "tk",
     "failed": "nurjus",
+    "i18n": {
+        "home": {
+            "FAQ": {},
+            "experience": {},
+            "fixBugs": {},
+            "mailingListsArchives": {},
+            "nearRealtime": {},
+            "projectWebsite": {},
+            "reportBugs": {},
+            "translate": {}
+        }
+    },
     "is lesser than 0": "on vähem kui 0",
     "is null": "on tühi",
     "label": "silt",
