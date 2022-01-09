@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.0-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-01-09 20:18+0000\n"
+"POT-Creation-Date: 2022-01-09 21:20+0000\n"
 "PO-Revision-Date: 2019-01-21 05:20+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Icelandic (http://www.transifex.com/ledgersmb/ledgersmb/"
@@ -1645,6 +1645,17 @@ msgstr ""
 msgid "Combine Sales Orders"
 msgstr ""
 
+#: UI/src/components/Home.vue:20
+msgid "Community resources"
+msgstr ""
+
+msgid ""
+"Community support for LedgerSMB is a available through various\n"
+"                  channels, ranging from static all the way to near-realtime "
+"(depending\n"
+"                  on availability of people):"
+msgstr ""
+
 #: lib/LedgerSMB/Report/Taxform/Details.pm:79
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:74
 #: lib/LedgerSMB/Scripts/contact.pm:186 templates/demo/display_report.html:33
@@ -1788,6 +1799,10 @@ msgid ""
 "Contrary to SQL-ledger, LedgerSMB invoices numbers must be unique. Please "
 "review suggestions to make all AP invoice numbers unique. Conflicting entries "
 "are presented by pairs, with a suffix added to the invoice number"
+msgstr ""
+
+#: UI/src/components/Home.vue:44
+msgid "Contributing"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/Search.pm:67
@@ -3226,6 +3241,10 @@ msgstr "Framlengt"
 msgid "Extra Used"
 msgstr ""
 
+#: UI/src/components/Home.vue:29
+msgid "FAQ"
+msgstr ""
+
 #: UI/budgetting/budget_entry.html:59 UI/journal/journal_entry.html:116
 #: UI/journal/journal_entry.html:142
 msgid "FX"
@@ -4273,6 +4292,11 @@ msgstr ""
 
 #: UI/setup/upgrade_info.html:29
 msgid "LedgerSMB has introduced three new system wide default values which "
+msgstr ""
+
+msgid ""
+"LedgerSMB is a double entry accounting system offering a wide\n"
+"                  variety of related functionalities, such as"
 msgstr ""
 
 #: UI/setup/upgrade_info.html:72
@@ -7668,6 +7692,11 @@ msgid ""
 "this e-mail"
 msgstr ""
 
+msgid ""
+"The project is always looking for contributions. The easiest ways to\n"
+"                  contribute to the project are:"
+msgstr ""
+
 #: lib/LedgerSMB/Scripts/recon.pm:501
 msgid "Their Balance"
 msgstr ""
@@ -8568,6 +8597,14 @@ msgstr "Vigt"
 msgid "Weight Unit"
 msgstr "Vigtareining"
 
+#: UI/src/components/Home.vue:4
+msgid "Welcome to LedgerSMB"
+msgstr ""
+
+#: UI/src/components/Home.vue:6
+msgid "What is LedgerSMB"
+msgstr ""
+
 #: old/bin/io.pl:618
 msgid "What type of item is this?"
 msgstr "Hvernig hlutur er þetta?"
@@ -8725,6 +8762,14 @@ msgstr ""
 msgid "balance"
 msgstr ""
 
+#: UI/src/components/Home.vue:11
+msgid "bank reconciliation"
+msgstr ""
+
+#: UI/src/components/Home.vue:54
+msgid "bug"
+msgstr ""
+
 #: old/bin/io.pl:1641
 msgid "city"
 msgstr ""
@@ -8801,6 +8846,10 @@ msgstr ""
 msgid "in years"
 msgstr ""
 
+#: UI/src/components/Home.vue:10
+msgid "invoicing"
+msgstr ""
+
 #: lib/LedgerSMB/Scripts/payment.pm:2036
 msgid "is bigger than the amount available"
 msgstr ""
@@ -8817,8 +8866,20 @@ msgstr ""
 msgid "is null"
 msgstr ""
 
+#: UI/src/components/Home.vue:13
+msgid "keeping stock"
+msgstr ""
+
 #: UI/Configuration/sequence.html:9
 msgid "label"
+msgstr ""
+
+#: UI/src/components/Home.vue:51 UI/src/components/Home.vue:36
+msgid "mailing lists"
+msgstr ""
+
+#: UI/src/components/Home.vue:12
+msgid "ordering"
 msgstr ""
 
 #: sql/Pg-database.sql:3588
@@ -8831,6 +8892,10 @@ msgstr ""
 
 #: sql/Pg-database.sql:3473
 msgid "production"
+msgstr ""
+
+#: UI/src/components/Home.vue:15
+msgid "shipping &amp; receiving"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/currency.pm:152
@@ -8851,6 +8916,14 @@ msgstr ""
 
 #: UI/lib/report_base.html:219
 msgid "to_date"
+msgstr ""
+
+#: UI/src/components/Home.vue:14
+msgid "tracking hours (timecards)"
+msgstr ""
+
+#: UI/src/components/Home.vue:16
+msgid "tracking of unpaid invoices"
 msgstr ""
 
 #: old/bin/ic.pl:1426

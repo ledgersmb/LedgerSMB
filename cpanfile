@@ -163,6 +163,7 @@ on 'develop' => sub {
     requires 'App::Prove', '3.41'; # parallel testing of pipe and socket sources
     requires 'Capture::Tiny';
     requires 'DBD::Mock', '1.58';
+    requires 'File::Grep';
     requires 'File::Util';
     requires 'HTML::Lint';
     requires 'HTML::Lint::Parser', '2.26';
