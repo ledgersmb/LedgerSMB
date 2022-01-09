@@ -22,7 +22,6 @@ push @on_disk, 'bin/ledgersmb-server.psgi';
 ok_dependencies($file, \@on_disk,
                 phases => 'runtime',
                 ignores => [
-                    'File::Grep', # used to make PO from JSON
                     'LaTeX::Driver',
                     'LedgerSMB',
                     'Locale::CLDR::Locales',
