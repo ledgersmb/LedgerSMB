@@ -1,5 +1,6 @@
 /** @format */
 /* global __SUPPORTED_LOCALES */
+/* eslint-disable global-require */
 // See https://vue-i18n.intlify.dev/guide/
 // And https://vue-i18n.intlify.dev/guide/advanced/wc.html#make-preparetion-for-web-components-to-host-the-i18n-instance
 
