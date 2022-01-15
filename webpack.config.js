@@ -20,7 +20,6 @@ if (TARGET !== 'readme') {
     const HtmlWebpackPlugin = require("html-webpack-plugin");
     const MiniCssExtractPlugin = require("mini-css-extract-plugin");
     const StylelintPlugin = require("stylelint-bare-webpack-plugin");
-    const TerserPlugin = require("terser-webpack-plugin");
     const UnusedWebpackPlugin = require("unused-webpack-plugin");
     const { VueLoaderPlugin } = require("vue-loader");
 
@@ -364,9 +363,7 @@ if (TARGET !== 'readme') {
         emitOnErrors: false,
         minimize: prodMode,
         minimizer: [
-            new TerserPlugin({
-                parallel: parallelJobs
-            }),
+            `...`,
             new CssMinimizerPlugin({
                 parallel: parallelJobs
             })
