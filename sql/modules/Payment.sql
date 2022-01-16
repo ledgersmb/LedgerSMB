@@ -547,6 +547,7 @@ BEGIN
             disc_amount_tc numeric,
             fxrate numeric,
             gain_loss_accno int,
+            want_gain_loss_accno boolean,
             invoice_date date);
 
         FOR out_count IN
@@ -611,19 +612,27 @@ BEGIN
                    WHERE a.id = bulk_payments_in.id);
 
             UPDATE bulk_payments_in
-               SET gain_loss_accno =
+               SET want_gain_loss_accno = true,
+                   gain_loss_accno =
                 (SELECT value::int FROM defaults
                   WHERE setting_key = 'fxgain_accno_id')
              WHERE ((t_exchangerate - bulk_payments_in.fxrate)
                     * t_cash_sign) < 0;
 
             UPDATE bulk_payments_in
-               SET gain_loss_accno = (SELECT value::int FROM defaults
+               SET want_gain_loss_accno = true,
+                   gain_loss_accno = (SELECT value::int FROM defaults
                   WHERE setting_key = 'fxloss_accno_id')
              WHERE ((t_exchangerate - bulk_payments_in.fxrate)
                     * t_cash_sign) > 0;
             -- explicitly leave zero gain/loss accno_id entries at NULL
             -- so we have an easy check later
+        END IF;
+
+        PERFORM * FROM bulk_payments_in
+                  WHERE want_gain_loss_accno AND gain_loss_accno IS NULL;
+        IF FOUND THEN
+           RAISE 'Missing gain/loss account while posting FX difference';
         END IF;
 
         UPDATE bulk_payments_in bpi
@@ -988,7 +997,7 @@ BEGIN
             FROM defaults
            WHERE setting_key = 'fxloss_accno_id';
         END IF;
-        IF gain_loss_accno_id IS NOT NULL THEN
+        IF fx_gain_loss_amount <> 0.00 THEN
           INSERT INTO acc_trans
                    (chart_id, amount_bc, curr, amount_tc,
                     trans_id, transdate, approved, source)
