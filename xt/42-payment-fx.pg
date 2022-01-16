@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(13);
+    SELECT plan(17);
 
     -- Add data
 
@@ -26,6 +26,13 @@ BEGIN;
     -- Validate required functions
 
 --    SELECT has_function('business_type__list','{}'::text[]);
+
+
+    -- Validate ledger being balanced
+    SELECT ok( coalesce(abs(sum(amount_bc)),0) < 0.01,
+               'base currency is balanced' )
+      FROM acc_trans
+     WHERE approved;
 
     --- COMMON SETUP
 
@@ -71,7 +78,8 @@ BEGIN;
     INSERT INTO ap (id, transdate, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
          VALUES (-11, '1901-01-01', 100, 110, 'inv_test1', 'xts', -101);
     INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id)
-         VALUES (-11, '1901-01-01', 100, 'xts', 110, 't', (select id from account where accno = '00001'));
+         VALUES (-11, '1901-01-01', 100, 'xts', 110, 't', (select id from account where accno = '00001')),
+                (-11, '1901-01-01', -100, 'xts', -110, 't', (select id from account where accno = '00002'));
 
     -- Pay the invoice in full
     SELECT * FROM
@@ -120,7 +128,8 @@ BEGIN;
     INSERT INTO ap (id, transdate, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
          VALUES (-12, '1901-01-02', 100, 110, 'inv_test2', 'xts', -101);
     INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id)
-         VALUES (-12, '1901-01-02', 100, 'xts', 110, 't', (select id from account where accno = '00001'));
+         VALUES (-12, '1901-01-02', 100, 'xts', 110, 't', (select id from account where accno = '00001')),
+                (-12, '1901-01-02', -100, 'xts', -110, 't', (select id from account where accno = '00002'));
 
 
     SELECT payment_bulk_post(ARRAY[ARRAY[-12,110]],
@@ -143,6 +152,75 @@ BEGIN;
                          and chart_id = (select id from account where accno = '00001');
     SELECT results_eq('test',ARRAY[true],'Foreign currency marks fully paid');
     DEALLOCATE test;
+
+
+
+   -- Test 3 + 4: payment without fx accounts set
+   DELETE FROM defaults
+         WHERE setting_key IN ('fxgain_accno_id', 'fxloss_accno_id');
+
+
+    -- Test 3: Single payment
+    INSERT INTO ap (id, transdate, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
+         VALUES (-13, '1901-01-01', 100, 110, 'inv_test1', 'xts', -101);
+    INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id)
+         VALUES (-13, '1901-01-01', 100, 'xts', 110, 't', (select id from account where accno = '00001')),
+                (-13, '1901-01-01', -100, 'xts', -110, 't', (select id from account where accno = '00002'));
+
+
+    PREPARE test AS
+        SELECT * FROM
+        payment_post('1901-01-01', -- datepaid
+                     1,            -- account_class
+                     -101,         -- entity_credit_id
+                     'xts',
+                     1.10,
+                     NULL,         -- notes
+                     'This gl movement is a consequence of a payment transaction',
+                     ARRAY[(SELECT id FROM account WHERE accno = '00003')], -- cash_account_id
+                     ARRAY[110],       -- amount
+                     ARRAY['cash '],   -- source
+                     ARRAY[NULL],      -- memo
+                     ARRAY[-13],       -- transaction_id
+                     NULL,  -- op_amount
+                     NULL,  -- op_cash_account_id
+                     NULL,  -- op_source
+                     NULL,  -- op_memo
+                     NULL,  -- op_account_id
+                     NULL,  -- ovp_payment_id
+                     't');  -- approved
+
+    SELECT throws_ok('test', null,
+                     'single payment should throw an exception without gain/loss account');
+    DEALLOCATE test;
+
+
+    -- Test 4: Bulk payment
+    INSERT INTO ap (id, transdate, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
+         VALUES (-14, '1901-01-02', 100, 110, 'inv_test2', 'xts', -101);
+    INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id)
+         VALUES (-14, '1901-01-02', 100, 'xts', 110, 't', (select id from account where accno = '00001')),
+                (-14, '1901-01-02', -100, 'xts', -110, 't', (select id from account where accno = '00002'));
+
+
+    PREPARE test AS
+        SELECT payment_bulk_post(ARRAY[ARRAY[-14,110]],
+                             batch_create('TestBatch', 'TestBatch',
+                             'payment', -- payment
+                             '1901-01-03'::date), 'source',
+                             '00001', '00003',
+                             '1901-01-03'::date, 1, 1.10, 'xts');
+    SELECT throws_ok('test', null,
+                     'bulk payment should throw an exception without gain/loss account');
+    DEALLOCATE test;
+
+
+
+    -- Still balanced?
+    SELECT ok( abs(sum(amount_bc)) < 0.01,
+               'base currency is balanced; ' || abs(sum(amount_bc)) )
+      FROM acc_trans
+     WHERE approved;
 
 
     -- Finish the tests and clean up.
