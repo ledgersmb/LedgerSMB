@@ -448,17 +448,17 @@ BEGIN
                        (select id from voucher where batch_id = in_batch_id)
                );
 
+        WITH deleted_payment_ids AS (
+           DELETE FROM payment_links p
+            WHERE EXISTS (select 1 from acc_trans a
+                           where p.entry_id = a.entry_id
+                                 and a.voucher_id IN (select id from voucher
+                                                       where batch_id = in_batch_id))
+         RETURNING p.payment_id
+        )
         SELECT as_array(payment_id) INTO t_payment_ids
-          FROM payment_links
-         WHERE EXISTS (select 1 from payment_links p join acc_trans a
-                           on p.entry_id = a.entry_id
-                        where a.voucher_id IN (select id from voucher
-                                                where batch_id = in_batch_id));
-        DELETE FROM payment_links
-         WHERE EXISTS (select 1 from payment_links p join acc_trans a
-                           on p.entry_id = a.entry_id
-                        where a.voucher_id IN (select id from voucher
-                                                where batch_id = in_batch_id));
+          FROM deleted_payment_ids;
+
         DELETE FROM payment
          WHERE id = any(t_payment_ids)
                AND NOT EXISTS (select 1 from payment_links
