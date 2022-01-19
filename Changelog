@@ -497,6 +497,12 @@ Dependency updates
 Changelog for 1.7 Series
 Released 2019-10-04
 
+Changelog for 1.7.38
+* Fix batch details printing throwing a PSGI error (#6325)
+* Fix saving of AR/AP vouchers throwing errors (#6327)
+* Fix account initialization in tax calculation module (#6335)
+
+
 Changelog for 1.7.37
 * Fix login errors being hidden behind an "insecure response" error (#6251)
 
