@@ -157,6 +157,14 @@ Dependency updates (Perl)
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.25
+* Fix batch details printing throwing a PSGI error (#6325)
+* Fix saving of AR/AP vouchers throwing errors (#6327)
+* Fix account initialization in tax calculation module (#6335)
+* Require gain/loss account setup to post FX transaction payments (#6360)
+* [DATALOSS] Fix deletion of any batch removing payment information (#6368)
+
+
 Changelog for 1.8.24
 * Fix multiple issues with bank account reconciliation (#6122)
 * Fix correct AR/AP account being selected on Update and when editing (#6191)
