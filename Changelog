@@ -43,6 +43,14 @@ Dependency updates
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.7
+* Fix clearing To/Cc/Bcc/... fields which were cleared in the UI (#6168)
+* Fix invoice amounts for invoices generated from orders (#6125)
+* Fix saving purchase orders as invoices (#6341)
+* Require gain/loss account setup to post FX transaction payments #6360)
+* [DATALOSS] Fix deletion of any batch removing payment information (#6368)
+
+
 Changelog for 1.9.6
 * Populate more fields in batch approval details report (#6271)
 * Fix error when posting an invoice created from an order (#6280)
