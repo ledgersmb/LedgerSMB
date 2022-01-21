@@ -1,23 +1,23 @@
 <template>
     <div>
         <div id="welcome" class="width100">
-            <h1 style="margin-bottom: 3em">{{ $t(`Welcome to LedgerSMB`) }}</h1>
+            <h1 style="margin-bottom: 3em">{{ $t("Welcome to LedgerSMB") }}</h1>
             <div class="welcomed w1">
-                <h2>{{ $t(`What is LedgerSMB`) }}</h2>
-                <p>{{ $t(`i18n.home.ledgersmbIntro`) }}</p>
+                <h2>{{ $t("What is LedgerSMB") }}</h2>
+                <p>{{ $t("i18n.home.ledgersmbIntro") }}</p>
                 <ul>
-                    <li>{{ $t(`invoicing`) }}</li>
-                    <li>{{ $t(`bank reconciliation`) }}</li>
-                    <li>{{ $t(`ordering`) }}</li>
-                    <li>{{ $t(`keeping stock`) }}</li>
-                    <li>{{ $t(`tracking hours (timecards)`) }}</li>
-                    <li>{{ $t(`shipping &amp; receiving`) }}</li>
-                    <li>{{ $t(`tracking of unpaid invoices`) }}</li>
+                    <li>{{ $t("invoicing") }}</li>
+                    <li>{{ $t("bank reconciliation") }}</li>
+                    <li>{{ $t("ordering") }}</li>
+                    <li>{{ $t("keeping stock") }}</li>
+                    <li>{{ $t("tracking hours (timecards)") }}</li>
+                    <li>{{ $t("shipping &amp; receiving") }}</li>
+                    <li>{{ $t("tracking of unpaid invoices") }}</li>
                 </ul>
             </div>
             <div class="welcomed w2">
-                <h2>{{ $t(`Community resources`) }}</h2>
-                <p>{{ $t(`i18n.home.communitySupport`) }}</p>
+                <h2>{{ $t("Community resources") }}</h2>
+                <p>{{ $t("i18n.home.communitySupport") }}</p>
                 <ul>
                   <i18n-t keypath="i18n.home.projectWebsite.text" tag="li" scope="global">
                     <template #url><a :href="website_url" target="_blank" rel="noopener noreferrer">
@@ -49,7 +49,7 @@
                 </i18n-t>
             </div>
             <div class="welcomed w3">
-                <h2>{{ $t(`Contributing`) }}</h2>
+                <h2>{{ $t("Contributing") }}</h2>
                 <p>{{ $t("i18n.home.contributions") }}</p>
                 <ul>
                   <i18n-t keypath="i18n.home.reportBugs.text" tag="li" scope="global">
