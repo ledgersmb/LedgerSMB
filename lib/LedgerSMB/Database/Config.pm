@@ -18,7 +18,7 @@ use namespace::autoclean;
 
 use File::Find::Rule;
 use File::Spec;
-use Locale::CLDR;
+use Locales;
 
 use LedgerSMB::Sysconfig;
 
@@ -114,16 +114,16 @@ sub charts_of_accounts {
     ###TODO: Define a parameter to the SQL directory!!
     my $basedir = File::Spec->catfile('.', 'locale', 'coa');
     my $countries = _list_directory($basedir);
-    my %regions = %{Locale::CLDR
+    my %regions = Locales
                     ->new(LedgerSMB::Sysconfig::language() || 'en')
-                    ->all_regions};
+                    ->get_territory_lookup();
 
     return {
         map {
             my $dir = File::Spec->catfile($basedir, $_);
             $_ => {
                 code => $_,
-                name => $regions{uc($_)},
+                name => $regions{lc($_)},
                 chart => _list_directory($dir),
                 sic => _list_directory(File::Spec->catfile('.', 'sql', 'coa',
                                                            $_, 'sic')),

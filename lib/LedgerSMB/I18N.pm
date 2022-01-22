@@ -19,7 +19,6 @@ we look only to the current locale.
 
 #use v5.24.0;
 
-use Locale::CLDR;
 use Locales unicode => 1;
 use Moose::Role;
 use namespace::autoclean;
@@ -127,11 +126,12 @@ Get a country localized list to allow user selection
 
 sub get_country_list {
     my $language = shift;
-    my %regions = Locale::CLDR->new($language)->all_regions->%*;
+    my $locale = Locales->new($language);
+    my %regions = $locale->get_territory_lookup();
     return [
         sort { $a->{text} cmp $b->{text} }
         map { +{ value => uc($_),
-                 text  => $regions{$_} }
+                 text  => $regions{lc($_)} }
         } (keys %regions)
     ];
 }
@@ -172,10 +172,11 @@ sub location_list_country_localized {
     my @country_list = $request->call_procedure(
                      funcname => 'location_list_country'
     );
-    my %regions = %{Locale::CLDR->new($language)->all_regions};
+    my $locale = Locales->new($language);
+    my %regions = $locale->get_territory_lookup();
     foreach (@country_list) {
-      $_->{name} = $regions{$_->{short_name}}
-        if defined $regions{$_->{short_name}};
+      $_->{name} = $regions{lc($_->{short_name})}
+        if defined $regions{lc($_->{short_name})};
     }
     return @country_list;
 }

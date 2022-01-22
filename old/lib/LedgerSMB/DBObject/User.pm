@@ -11,7 +11,7 @@ use warnings;
 
 use base qw(LedgerSMB::PGOld);
 
-use Locale::CLDR;
+use Locales unicode => 1;
 
 use Log::Any;
 
@@ -83,10 +83,10 @@ Sets the options for the user preference screen.
 
 sub get_option_data {
     my $self = shift @_;
-    # Load localized data from current locale
-    my $locale = Locale::CLDR->new($self->{prefs}{language});
+
     $self->{dateformats} = [];
     $self->{numberformats} = [];
+
     for my $opt (qw(mm-dd-yyyy mm/dd/yyyy dd-mm-yyyy dd/mm/yyyy dd.mm.yyyy yyyy-mm-dd)){
         push @{$self->{dateformats}}, {format => $opt};
     }
@@ -99,8 +99,10 @@ sub get_option_data {
     # Pull supported languages codes
     my @rows = $self->call_dbmethod(funcname => 'person__list_languages');
 
-    my %regions = %{$locale->all_regions}; # Localized countries
-    my %languages = %{$locale->all_languages()}; # Localized languages
+    # Load localized data from current locale
+    my $locale = Locales->new($self->{prefs}{language});
+    my %regions = $locale->get_territory_lookup();
+    my %languages = $locale->get_language_lookup(); # Localized languages
 
     # Localize the list, making sure to keep the language key as is
     foreach my $row ( @rows ) {
@@ -108,7 +110,7 @@ sub get_option_data {
         # 'Language(_country)?' where country is set when there is a variant
         # for a specific country.
         my ($language,$region) = split /_/, $row->{code};
-        # Locale::CLDR defines all language and country codes and some variants
+        # Locales defines all language and country codes and some variants
         # have their name defined in specific
         # For example, fr_CA (French Canadian) has a translation available in
         # Spanish and French languages but nowhere else, so we need to compose
@@ -116,7 +118,7 @@ sub get_option_data {
         # Use the language_country localized version if available
         my $label = $languages{$row->{code}} // $languages{$language};
         # Append the country if required
-        $label .= ' - ' . $regions{$region}
+        $label .= ' - ' . $regions{lc($region)}
             if $region && !$languages{$row->{code}};
         push @{$self->{language_codes}}, {
             label => $label,

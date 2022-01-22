@@ -30,35 +30,6 @@ requires 'JSON::MaybeXS';
 recommends 'Cpanel::JSON::XS', '3.0206'; # 3.0206 adds 'allow_bignum' option
 recommends 'JSON::PP', '2.00'; # 1.99_01 adds 'allow_bignum'
 requires 'List::MoreUtils';
-requires 'Locale::CLDR';
-# Keep thoss in sync with the languages defined in Pg-database.sql
-requires 'Locale::CLDR::Locales::Ar';
-requires 'Locale::CLDR::Locales::Bg';
-requires 'Locale::CLDR::Locales::Ca';
-requires 'Locale::CLDR::Locales::Cs';
-requires 'Locale::CLDR::Locales::Da';
-requires 'Locale::CLDR::Locales::De';
-requires 'Locale::CLDR::Locales::El';
-requires 'Locale::CLDR::Locales::En';
-requires 'Locale::CLDR::Locales::Es';
-requires 'Locale::CLDR::Locales::Et';
-requires 'Locale::CLDR::Locales::Fi';
-requires 'Locale::CLDR::Locales::Fr';
-requires 'Locale::CLDR::Locales::Hu';
-requires 'Locale::CLDR::Locales::Id';
-requires 'Locale::CLDR::Locales::Is';
-requires 'Locale::CLDR::Locales::It';
-requires 'Locale::CLDR::Locales::Lt';
-requires 'Locale::CLDR::Locales::Ms';
-requires 'Locale::CLDR::Locales::Nb';
-requires 'Locale::CLDR::Locales::Nl';
-requires 'Locale::CLDR::Locales::Pl';
-requires 'Locale::CLDR::Locales::Pt';
-requires 'Locale::CLDR::Locales::Ru';
-requires 'Locale::CLDR::Locales::Sv';
-requires 'Locale::CLDR::Locales::Tr';
-requires 'Locale::CLDR::Locales::Uk';
-requires 'Locale::CLDR::Locales::Zh';
 requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Locales';
 requires 'Log::Any';
@@ -74,9 +45,6 @@ requires 'MooX::Types::MooseLike::Base';  # for Email::Sender::Transport::SMTP w
 requires 'Moose';
 requires 'Moose::Role';
 requires 'Moose::Util::TypeConstraints';
-# Locale::CLDR depends on MooX::ClassAttribute, but our classes are Moose
-# classes which means MooX::* gets upgraded to MooseX::*
-requires 'MooseX::ClassAttribute';
 requires 'MooseX::NonMoose';
 requires 'Number::Format';
 requires 'PGObject', '2.3.2';

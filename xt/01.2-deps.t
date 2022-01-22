@@ -24,7 +24,6 @@ ok_dependencies($file, \@on_disk,
                 ignores => [
                     'LaTeX::Driver',
                     'LedgerSMB',
-                    'Locale::CLDR::Locales',
                     'Log::Any::Adapter::Log4perl', # used as plugin
                     'MooseX::ClassAttribute',
                     'PageObject',
