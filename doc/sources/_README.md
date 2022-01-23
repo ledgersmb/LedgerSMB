@@ -59,7 +59,7 @@ and a range of versions.
 
 <<browsers_list>>
 
-**Note: Earliest dates and versions come from http://caniuse.com. Only the most
+**Note:** Earliest dates and versions come from http://caniuse.com. Only the most
 recent data is available for Mobile browsers other than Safari, because they
 are pushed out to the devices as soon as they are releases, so the number of
 devices running old browsers is negligible.**
