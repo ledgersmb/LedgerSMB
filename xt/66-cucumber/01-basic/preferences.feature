@@ -22,51 +22,46 @@ Scenario: I change user preferences to the <selection> language
   Examples:
   Non UTF8 accented characters are confirmed working
     | selection            | translation           | language |
-    | American English     | American English      | Language |
-    | Brazilian Portuguese | português - Brasil    | Idioma   |
+    | English              | English               | Language |
+    | Portuguese - Brazil  | português - Brasil    | Idioma   |
 
   @extended
   Examples:
   Non UTF8 accented characters are confirmed working
     | selection            | translation           | language |
-    | British English      | British English       | Language |
-    | Canadian English     | Canadian English      | Language |
-    | Canadian French      | français canadien     | Langue   |
+    | English - United Kingdom | English - United Kingdom | Language |
+    | English - Canada     |English - Canada      | Language |
     | Catalan              | català                | Idioma   |
     | Danish               | dansk                 | Sprog    |
     | Dutch                | Nederlands            | Taal     |
     | Estonian             | eesti                 | Keel     |
     | Finnish              | suomi                 | Kieli    |
-    | Flemish              | Nederlands - België   | Taal     |
+    | Dutch - Belgium      | Nederlands - België   | Taal     |
     | French               | français              | Langue   |
     | French - Belgium     | français - Belgique   | Langue   |
+    | French - Canada      | français - Canada     | Langue   |
     | German               | Deutsch               | Sprache  |
     | Hungarian            | magyar                | Nyelv    |
     | Icelandic            | íslenska              | Túngumál |
-    | Indonesian           | Indonesia             | Bahasa   |
+    | Indonesian           | Bahasa Indonesia      | Bahasa   |
     | Italian              | italiano              | Lingua   |
-    | Malay - Malaysia     | Melayu - Malaysia     | Bahasa   |
-    | Mexican Spanish      | español de México     | Lenguaje |
+    | Malay - Malaysia     | Bahasa Melayu - Malaysia | Bahasa   |
     | Norwegian Bokmål     | norsk bokmål          | Språk    |
     | Portuguese           | português             | Língua   |
     | Spanish              | español               | Lenguaje |
     | Spanish - Argentina  | español - Argentina   | Idioma   |
     | Spanish - Colombia   | español - Colombia    | Idioma   |
     | Spanish - Ecuador    | español - Ecuador     | Lenguaje |
+    | Spanish - Mexico     | español - México      | Lenguaje |
     | Spanish - Panama     | español - Panamá      | Idioma   |
     | Spanish - Paraguay   | español - Paraguay    | Idioma   |
     | Spanish - Venezuela  | español - Venezuela   | Idioma   |
     | Swedish              | svenska               | Språk    |
-    | Swiss High German    | Schweizer Hochdeutsch | Sprache  |
-
-  @wip
-  Examples:
-  prove has problems displaying UTF8, even though tests works
-    | selection        | translation | language      |
-    | Arabic - Egypt   | اللغة       | العربية - مصر |
+    | German - Switzerland | Deutsch - Schweiz     | Sprache  |
+    | Arabic - Egypt   | العربية - مصر| اللغة |
     | Bulgarian        | български   | Език          |
     | Chinese - China  | 中文 - 中国 | 语言          |
-    | Chinese - Taiwan | 中文 - 台灣 | 語言          |
+    | Chinese - Taiwan | 中文 - 台湾 | 語言          |
     | Czech            | čeština     | Jazyk         |
     | Greek            | Ελληνικά    | Γλώσσα        |
     | Lithuanian       | lietuvių    | Kalba         |
