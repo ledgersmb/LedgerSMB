@@ -59,10 +59,10 @@ and a range of versions.
 
 <<browsers_list>>
 
-**Note:** Earliest dates and versions come from http://caniuse.com. Only the most
+**Note**: Earliest dates and versions come from http://caniuse.com. Only the most
 recent data is available for Mobile browsers other than Safari, because they
 are pushed out to the devices as soon as they are releases, so the number of
-devices running old browsers is negligible.**
+devices running old browsers is negligible.
 
 # Quick start
 
@@ -86,9 +86,9 @@ because it lacks secure connections to protect your users' passwords.
 
 The system is installed and should be available for evaluation through
 
-* `http://localhost:5762/setup.pl`  
+* `http://localhost:5762/setup.pl`
   Creation and privileged management of company databases
-* `http://localhost:5762/login.pl`  
+* `http://localhost:5762/login.pl`
   Normal login for the application
 
 The system is ready for [preparation for first
