@@ -109,9 +109,9 @@ because it lacks secure connections to protect your users' passwords.
 
 The system is installed and should be available for evaluation through
 
-* `http://localhost:5762/setup.pl`
+* `http://localhost:5762/setup.pl`  
   Creation and privileged management of company databases
-* `http://localhost:5762/login.pl`
+* `http://localhost:5762/login.pl`  
   Normal login for the application
 
 The system is ready for [preparation for first
