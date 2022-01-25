@@ -45,7 +45,6 @@ if (TARGET !== 'readme') {
         "dijit/form/CurrencyTextBox",
         "dijit/form/MultiSelect",
         "dijit/form/NumberSpinner",
-        "dijit/form/NumberTextBox",
         "dijit/form/RadioButton",
         "dijit/form/Select",
         "dijit/form/Textarea",
