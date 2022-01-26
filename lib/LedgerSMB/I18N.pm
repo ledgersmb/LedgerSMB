@@ -131,7 +131,7 @@ sub get_country_list {
     return [
         sort { $a->{text} cmp $b->{text} }
         map { +{ value => uc($_),
-                 text  => $regions{lc($_)} }
+                 text  => $regions{$_} }
         } (keys %regions)
     ];
 }
