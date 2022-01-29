@@ -46,7 +46,7 @@ sub render {
     if ($request->{wf_action}) {
         for my $field (qw( from to cc bcc subject body )) {
             if (defined $request->{$field}) {
-                $wf->context->param( $_ => $request->{$field} );
+                $wf->context->param( $field => $request->{$field} );
             }
             else {
                 $wf->context->delete_param( $field );
