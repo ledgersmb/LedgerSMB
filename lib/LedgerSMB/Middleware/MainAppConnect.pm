@@ -61,7 +61,10 @@ sub _connect {
     if (!$dbh) {
         my $cb = $env->{'lsmb.db_cb'};
         if ($cb) {
-            $dbh = $cb->($env, @_);
+            my ($r, $e) = $cb->($env, @_);
+
+            return (undef, $e) if $e;
+            $dbh = $r;
         }
         else {
             die q{Environment contains neither 'db' nor 'db_cb'};
