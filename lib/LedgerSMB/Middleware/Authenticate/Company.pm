@@ -96,13 +96,16 @@ sub _connect {
     }
 
     my $schema = $self->schema =~ s/'/''/gr;
-    my $dbh = $env->{'lsmb.db'} =
-        LedgerSMB::Database->new(
-            schema => $schema,
-            connect_data => \%creds
-        )->connect;
+    my $dbh = eval {
+        $env->{'lsmb.db'} =
+            LedgerSMB::Database->new(
+                schema => $schema,
+                connect_data => \%creds
+            )->connect;
+    };
 
-    if (! defined $dbh) {
+    if (not defined $dbh
+        and DBI->errstr) {
         $env->{'psgix.logger'}->(
             {
                 level => 'error',
@@ -113,6 +116,9 @@ sub _connect {
             die q{Invalid credentials};
         }
         return (undef, LedgerSMB::PSGI::Util::unauthorized());
+    }
+    elsif (not defined $dbh) {
+        die $@;
     }
 
     if (! $session->{login}) {
