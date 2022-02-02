@@ -120,9 +120,10 @@ sub get {
         $args{id} ? ($args{id})
         : (@args{qw/template_name language_code format /});
     my ($temp) = __PACKAGE__->call_procedure(
-        dbh      => $args{dbh},
-        funcname => ($args{id} ? 'template__get_by_id' : 'template__get'),
-        args     => \@args,
+        dbh        => $args{dbh},
+        funcname   => ($args{id} ? 'template__get_by_id' : 'template__get'),
+        funcschema => $args{dbh}->{private_LedgerSMB}->{schema},
+        args       => \@args,
     );
     die text('Could Not Load Template from DB') unless $temp;
     for (keys (%$temp)){
