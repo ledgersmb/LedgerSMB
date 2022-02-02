@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.0
-   Date:     2021-01-04
+   Version:  1.1
+   Date:     2022-02-02
    File:     dynatable.csv
    Set:      none; shared
 
@@ -9,28 +9,30 @@ Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
 -?>
-<?lsmb- BLOCK escape;
-value = VALUE.to_output();
-IF value.defined();
-  VALUE = value;
-END;
-
-IF VALUE.match('[^0-9.+-]'); # any non-digit means run escaping
-   '"' _ VALUE.replace('"', '""') _ '"';
+<?lsmb- BLOCK do_quote ;
+IF VALUE.to_output.defined();
+  value = VALUE.to_output();
 ELSE;
-   VALUE;
+  value = VALUE;
 END;
 
-END -?>
-<?lsmb- BLOCK dynatable;
+IF value.match('[^0-9.+-]'); # any non-digit means run escaping
+   '"'; value.replace('"', '""'); '"'; # " balance the double quotes
+ELSE;
+   value;
+END;
+
+END;
+
+BLOCK dynatable;
 SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
 
 FOREACH COL IN columns;
-    IF 0 == SKIP_TYPES.grep(COL.type).size();
+    IF SKIP_TYPES.grep(COL.type).empty();
         UNLESS loop.first();
            ',';
         END;
-        INCLUDE escape VALUE = COL.name;
+        INCLUDE do_quote VALUE = COL.name;
     END;
 END;
 ?>
@@ -38,11 +40,11 @@ END;
 
     FOREACH COL IN columns;
         COL_ID = COL.col_id;
-        IF 0 == SKIP_TYPES.grep(COL.type).size();
+        IF SKIP_TYPES.grep(COL.type).empty();
             UNLESS loop.first();
                ',';
             END;
-            INCLUDE escape VALUE = ROW.$COL_ID;
+            INCLUDE do_quote VALUE = ROW.$COL_ID;
         END;
     END;
 ?>
