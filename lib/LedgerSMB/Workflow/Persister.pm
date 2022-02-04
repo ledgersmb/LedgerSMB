@@ -28,6 +28,9 @@ use warnings;
 use strict;
 use base qw( Workflow::Persister::DBI );
 
+use JSON::MaybeXS;
+use Workflow::Context;
+
 use LedgerSMB::App_State;
 
 =head2 create_handle()
@@ -52,6 +55,102 @@ sub handle {
         if LedgerSMB::App_State::DBH();
     return LedgerSMB::App_State::DBH();
 }
+
+=head2 fetch_workflow( $wf_id )
+
+Implements Workflow::Persister protocol; in addition to restoring the
+workflow state (as per the parent persister Workflow::Persister::DBI),
+also restores the workflow context.
+
+=cut
+
+
+my $json = JSON::MaybeXS->new(
+    pretty => 0, indent => 0, convert_blessed => 0,
+    allow_bignum => 1, utf8 => 0, space_before => 0,
+    space_after => 0, canonical => 0, allow_barekey => 0,
+    allow_singlequote => 0 );
+
+sub fetch_workflow {
+    my ($self, $wf_id) = @_;
+
+    my $wf_info = $self->SUPER::fetch_workflow( $wf_id );
+    if ($wf_info) { # found
+        my $dbh = $self->handle;
+        my $sth = $dbh->prepare(
+            q{SELECT * FROM workflow_context WHERE workflow_id = ?}
+            )
+            or die $dbh->errstr;
+
+        $sth->execute( $wf_id )
+            or die $sth->errstr;
+        if (my $row = $sth->fetchrow_hashref( 'NAME_lc' )) {
+            $wf_info->{context} =
+                Workflow::Context->new(
+                    $json->decode( $row->{context} )->%*
+                );
+        }
+        else {
+            $sth->err and die $sth->errstr;
+        }
+    }
+
+    return $wf_info;
+}
+
+
+=head2 create_workflow( $wf )
+
+Implements Workflow::Persister protocol; in addition to initializing
+the workflow state (as pertheparent persister Workflow::Persister::DBI),
+also persists the workflow context.
+
+=cut
+
+sub _persist_context {
+    my ($self, $wf) = @_;
+    my $dbh = $self->handle;
+    my $sth = $dbh->prepare(
+        q{
+        INSERT INTO workflow_context (workflow_id, context) VALUES ($1, $2)
+            ON CONFLICT (workflow_id) DO UPDATE SET context = $2 }
+        ) or die $dbh->errstr;
+
+    my $params = $wf->context->{PARAMS};
+    my $ctx = {
+        map { $_ => $params->{$_} }
+        grep { ! /^_/ }
+        keys $params->%*
+    };
+    $sth->execute( $wf->id, $json->encode($ctx) )
+        or die $sth->errstr;
+}
+
+
+sub create_workflow {
+    my ($self, $wf) = @_;
+    my $id = $self->SUPER::create_workflow( $wf );
+    $self->_persist_context( $wf );
+
+    return $id;
+}
+
+=head2 update_workflow( $wf )
+
+Implements Workflow::Persister protocol; in addition to updating
+the workflow state (as pertheparent persister Workflow::Persister::DBI),
+also updates the workflow context.
+
+=cut
+
+sub update_workflow {
+    my ($self, $wf) = @_;
+
+    $self->SUPER::update_workflow( $wf );
+    $self->_persist_context( $wf );
+}
+
+
 
 1;
 

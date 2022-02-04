@@ -1285,11 +1285,11 @@ SELECT lsmb__grant_menu('assets_approve', id, 'allow')
 SELECT lsmb__grant_perms('base_user', obj, 'ALL')
   FROM unnest(array['workflow_seq'::text, 'workflow_history_seq']) obj;
 SELECT lsmb__grant_perms('base_user', obj, 'INSERT')
-  FROM unnest(array['workflow'::text, 'workflow_history']) obj;
+  FROM unnest(array['workflow'::text, 'workflow_history', 'workflow_context']) obj;
 SELECT lsmb__grant_perms('base_user', obj, 'UPDATE')
-  FROM unnest(array['workflow'::text, 'workflow_history']) obj;
+  FROM unnest(array['workflow'::text, 'workflow_history', 'workflow_context']) obj;
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
-  FROM unnest(array['workflow'::text, 'workflow_history']) obj;
+  FROM unnest(array['workflow'::text, 'workflow_history', 'workflow_context']) obj;
 SELECT lsmb__grant_perms('base_user', obj, 'ALL')
   FROM unnest(array['email'::text, 'file_email']) obj;
 
