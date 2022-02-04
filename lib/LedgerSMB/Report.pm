@@ -542,7 +542,8 @@ Returns a list of columns based on selected ones from the report
 sub show_cols {
     my ($self, $request) = @_;
     my @retval;
-    for my $ref (@{$self->columns($request)}){
+    my @columns = @{$self->columns($request)};
+    for my $ref (@columns){
         if ($request->{"col_$ref->{col_id}"}){
             push @retval, $ref;
         }
@@ -551,7 +552,7 @@ sub show_cols {
         }
     }
     if (scalar @retval == 0){
-       @retval = @{$self->columns};
+        @retval = @columns;
     }
     return \@retval;
 }
