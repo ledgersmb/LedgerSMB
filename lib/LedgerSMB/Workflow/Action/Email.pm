@@ -277,8 +277,10 @@ sub save {
     my ($self, $wf) = @_;
     my $dbh = $self->_factory->get_persister_for_workflow_type('Email')->handle;
 
-    my @values =
-        map { $wf->context->param($_) } qw(from to cc bcc notify subject body);
+    my @values = (
+        map { scalar $wf->context->param($_) }
+        qw(from to cc bcc notify subject body)
+        );
 
     if ( my $expansions = $wf->context->param( 'expansions' ) ) {
         push @values, $json->encode( $expansions );
