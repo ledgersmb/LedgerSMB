@@ -42,7 +42,7 @@ sub _save_email_data {
     my $expansions  = $ctx->param( 'expansions' );
     my $data        = {
         expansions  => ( $expansions ? $json->encode( $expansions ) : undef ),
-        ( map { $_ => $ctx->param( $_ ) }
+        ( map { $_ => scalar $ctx->param( $_ ) }
           qw(from to cc bcc notify subject body) )
     };
 
