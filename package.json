@@ -55,7 +55,7 @@
     "@vue/test-utils": "2.0.0-rc.18",
     "autoprefixer": "10.4.2",
     "babel-loader": "8.2.3",
-    "browserslist": "4.19.2",
+    "browserslist": "4.19.3",
     "buffer": "6.0.3",
     "caniuse-lite": "1.0.30001312",
     "clean-webpack-plugin": "4.0.0",
