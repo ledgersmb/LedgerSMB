@@ -91,7 +91,7 @@ sub render {
     return $template->render($request, 'email', {
         callback    => $request->{callback},
         id          => $wf->id,
-        ( map { $_ => $wf->context->param($_) }
+        ( map { $_ => scalar $wf->context->param($_) }
           qw( from to cc bcc notify subject body sent_date
               attachments expansions ) ),
         actions     => [ map { $_->name }
