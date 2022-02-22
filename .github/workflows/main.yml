@@ -160,6 +160,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.4.0
 
+      - name: Install GNU gettext
+        run: sudo apt install gettext
+
       - name: Create logging directories
         run: |
           mkdir screens logs
