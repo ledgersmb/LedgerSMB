@@ -1350,7 +1350,7 @@ sinumber|1
 sonumber|1
 yearend|1
 businessnumber|1
-version|1.9.10
+version|1.9.11-dev
 closedto|\N
 revtrans|1
 ponumber|1
