@@ -2,16 +2,16 @@
 # Translators:
 # Mikkel Høgh <mikkel@hoegh.org>, 2021
 # e t <contacts@ethnoco.ch>, 2021
-# Erik Huelsmann <ehuels@gmail.com>, 2021
 # Mikael Arhelger <mikaelarhelger@gmail.com>, 2021
 # E, 2021
+# Erik Huelsmann <ehuels@gmail.com>, 2022
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.9.10-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-02-18 23:29+0000\n"
-"Last-Translator: E, 2021\n"
+"POT-Creation-Date: 2022-02-22 21:19+0000\n"
+"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: German (https://www.transifex.com/ledgersmb/teams/58325/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -4868,7 +4868,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:459
 msgid "Non-tracking Items"
-msgstr ""
+msgstr "Nicht lagernde Artikel"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1006
 msgid "Non-unique invoice numbers"
@@ -5236,7 +5236,7 @@ msgstr ""
 
 #: UI/Reports/filters/aging.html:88
 msgid "Overdue"
-msgstr ""
+msgstr "Überfällig"
 
 #: UI/Reports/filters/search_goods.html:20
 msgid "Overhead"
@@ -5970,7 +5970,7 @@ msgstr "Einkaufsauftrag"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:120
 msgid "Purchase Order Number"
-msgstr ""
+msgstr "Einkaufsbestellnummer"
 
 #: lib/LedgerSMB/Report/Orders.pm:181 lib/LedgerSMB/Report/Orders.pm:273
 #: old/bin/am.pl:794 UI/Reports/filters/search_goods.html:163
@@ -6202,7 +6202,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2591 sql/Pg-database.sql:2644 sql/Pg-database.sql:2656
 msgid "Reconciliation"
-msgstr ""
+msgstr "Kontenabgleich"
 
 #: UI/reconciliation/report.html:31
 msgid "Reconciliation Report"
@@ -8566,11 +8566,11 @@ msgstr "Warenlager"
 
 #: old/bin/am.pl:732
 msgid "Warehouse deleted!"
-msgstr ""
+msgstr "Warenlager gelöscht!"
 
 #: old/bin/am.pl:725
 msgid "Warehouse saved!"
-msgstr ""
+msgstr "Warenlager gespeichert!"
 
 #: lib/LedgerSMB/Report/Listings/Warehouse.pm:58 sql/Pg-database.sql:2664
 msgid "Warehouses"
