@@ -43,6 +43,10 @@ Dependency updates
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.10
+* Second fix for sending e-mail due to the incompatibility in Workflow 1.59
+
+
 Changelog for 1.9.9
 * Fix sending e-mail due to an incompatibility in Workflow 1.59 (#6413)
 
