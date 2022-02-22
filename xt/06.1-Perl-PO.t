@@ -22,7 +22,8 @@ if ($ENV{COVERAGE} && $ENV{CI}) {
 
 my @on_disk;
 sub collect {
-    return if $File::Find::dir  =~ m(^blib|xt/lib/|xt/66-cucumber/|LaTex|.local/);
+
+    return if $File::Find::dir  =~ m!^\./(blib|xt/lib/|xt/66-cucumber/|LaTex|node_modules|local/lib/perl5|\..+)!;
 
     my $module = $File::Find::name;
     return if $module !~ m(\.(pl|pm|t)$);
