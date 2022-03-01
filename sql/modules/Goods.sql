@@ -171,6 +171,7 @@ LANGUAGE SQL STABLE AS $$
                       (select parts_id from invoice
                         where serialnumber = in_serialnumber))
               AND (in_parttype IS NULL
+                   OR in_parttype = 'all'
                    OR (in_parttype = 'assemblies' and p.assembly)
                    OR (in_parttype = 'services'
                        and p.inventory_accno_id IS NULL)
