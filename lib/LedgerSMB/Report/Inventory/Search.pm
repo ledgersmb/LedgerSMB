@@ -42,6 +42,28 @@ Prefix search on partnumber.
 
 has partnumber => (is => 'ro', isa => 'Str', required => 0);
 
+=item parttype string
+
+Restriction on part type. Possible values:
+
+=over
+
+=item * all
+
+=item * parts
+
+=item * services
+
+=item * overhead
+
+=item * assemblies
+
+=back
+
+=cut
+
+has parttype => (is => 'ro', isa => 'Str', required => 0);
+
 =item description string
 
 Full text search on description of part
