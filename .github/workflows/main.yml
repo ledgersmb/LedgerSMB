@@ -72,7 +72,7 @@ jobs:
       - name: 'Tar files'
         run: tar -cf ~/webpacked_js.tar UI/js
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: webpacked_js
           path: ~/webpacked_js.tar
@@ -264,7 +264,7 @@ jobs:
         if: always()
 
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: logs-and-screens ${{ matrix.perl }} ${{ matrix.BROWSER }}
           path: |
