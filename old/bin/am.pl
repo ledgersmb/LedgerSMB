@@ -38,6 +38,7 @@ use LedgerSMB::Form;
 use LedgerSMB::User;
 use LedgerSMB::GL;
 use LedgerSMB::Legacy_Util;
+use LedgerSMB::PGDate;
 use LedgerSMB::Template::UI;
 use LedgerSMB::Sysconfig;
 
@@ -1091,6 +1092,8 @@ sub process_transactions {
                     $form->{duedate} =
                       $form->add_date( \%myconfig, $form->{transdate},
                         $pt->{overdue}, "days" );
+                    # set create date
+                    $form->{crdate} = LedgerSMB::PGDate->now->to_output();
 
                     if ( $pt->{payment} ) {
 
