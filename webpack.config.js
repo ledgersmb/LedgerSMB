@@ -37,25 +37,7 @@ if (TARGET !== 'readme') {
 
     /* FUNCTIONS */
 
-    var includedRequires = [
-        "dijit/Dialog",
-        "dijit/form/Button",
-        "dijit/form/CheckBox",
-        "dijit/form/ComboBox",
-        "dijit/form/CurrencyTextBox",
-        "dijit/form/MultiSelect",
-        "dijit/form/NumberSpinner",
-        "dijit/form/RadioButton",
-        "dijit/form/Select",
-        "dijit/form/Textarea",
-        "dijit/form/TextBox",
-        "dijit/form/ToggleButton",
-        "dijit/form/ValidationTextBox",
-        "dijit/layout/BorderContainer",
-        "dijit/layout/ContentPane",
-        "dijit/Tooltip",
-        "lsmb/ToggleIncludeButton"
-    ];
+    var includedRequires = [];
 
     function findDataDojoTypes(fileName) {
         var content = "" + fs.readFileSync(fileName);
@@ -83,6 +65,11 @@ if (TARGET !== 'readme') {
         cwd: "UI"
     }).map(function (filename) {
         const requires = findDataDojoTypes("UI/" + filename);
+        return includedRequires.push(...requires);
+    });
+
+    glob.sync("old/bin/*.pl").map(function (filename) {
+        const requires = findDataDojoTypes(filename);
         return includedRequires.push(...requires);
     });
 
