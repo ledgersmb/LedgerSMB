@@ -187,7 +187,7 @@ jobs:
             --with-feature=xls
             --with-feature=edi
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: webpacked_js
 
