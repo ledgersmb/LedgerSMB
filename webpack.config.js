@@ -35,27 +35,7 @@ const parallelJobs = process.env.CI ? 2 : true;
 
 /* FUNCTIONS */
 
-var includedRequires = [
-    "dijit/Dialog",
-    "dijit/form/Button",
-    "dijit/form/CheckBox",
-    "dijit/form/ComboBox",
-    "dijit/form/CurrencyTextBox",
-    "dijit/form/MultiSelect",
-    "dijit/form/NumberSpinner",
-    "dijit/form/NumberTextBox",
-    "dijit/form/RadioButton",
-    "dijit/form/Select",
-    "dijit/form/Textarea",
-    "dijit/form/TextBox",
-    "dijit/form/ToggleButton",
-    "dijit/form/ValidationTextBox",
-    "dijit/layout/BorderContainer",
-    "dijit/layout/ContentPane",
-    "dijit/layout/TabContainer",
-    "dijit/Tooltip",
-    "lsmb/ToggleIncludeButton"
-];
+var includedRequires = [];
 
 function findDataDojoTypes(fileName) {
     var content = "" + fs.readFileSync(fileName);
@@ -72,6 +52,11 @@ glob.sync("**/*.html", {
     cwd: "UI"
 }).map(function (filename) {
     const requires = findDataDojoTypes("UI/" + filename);
+    return includedRequires.push(...requires);
+});
+
+glob.sync("old/bin/*.pl").map(function (filename) {
+    const requires = findDataDojoTypes(filename);
     return includedRequires.push(...requires);
 });
 
