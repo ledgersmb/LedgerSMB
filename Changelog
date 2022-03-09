@@ -3401,6 +3401,7 @@ Changelog for LedgerSMB 1.3.0
 
 Security:
 * Security is now robustly enforced on the db level (Chris T and Josh D)
+  Fixes CVE-2007-1923
 * New user interface to manage users (Chris T and Aurynn)
 * Framework in place, used to prevent XSRF attacks (Chris T)
 
