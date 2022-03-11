@@ -1,13 +1,15 @@
 #
 # Translators:
 # paul bolger <pbolger@gmail.com>, 2020
+# Nick Prater <nick.github@npbroadcast.com>, 2022
+# Erik Huelsmann <ehuels@gmail.com>, 2022
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.26-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-01-19 22:04+0000\n"
-"Last-Translator: paul bolger <pbolger@gmail.com>, 2020\n"
+"POT-Creation-Date: 2022-03-11 13:33+0000\n"
+"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: English (New Zealand) (https://www.transifex.com/ledgersmb/"
 "teams/58325/en_NZ/)\n"
 "Language: en_NZ\n"
@@ -93,11 +95,11 @@ msgstr ""
 #: UI/setup/complete.html:21 UI/setup/confirm_operation.html:119
 #: sql/Pg-database.sql:2736
 msgid "AP"
-msgstr ""
+msgstr "Purchases"
 
 #: sql/Pg-database.sql:2685
 msgid "AP Aging"
-msgstr ""
+msgstr "Creditor Aging"
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:113
 msgid "AP Invoice"
@@ -122,7 +124,7 @@ msgstr ""
 #: templates/xedemo/ap_transaction.tex:18 UI/Contact/divs/credit.html:347
 #: sql/Pg-database.sql:2834 sql/Pg-database.sql:2847
 msgid "AP Transaction"
-msgstr ""
+msgstr "Purchase Transaction"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:131 old/bin/aa.pl:1493
 msgid "AP Transactions"
@@ -148,11 +150,11 @@ msgstr ""
 #: UI/setup/complete.html:22 UI/setup/confirm_operation.html:120
 #: sql/Pg-database.sql:2735
 msgid "AR"
-msgstr ""
+msgstr "Sales"
 
 #: sql/Pg-database.sql:2682
 msgid "AR Aging"
-msgstr ""
+msgstr "Debtor Aging"
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:109
 msgid "AR Invoice"
@@ -177,7 +179,7 @@ msgstr ""
 #: templates/xedemo/ar_transaction.tex:33 UI/Contact/divs/credit.html:364
 #: sql/Pg-database.sql:2833 sql/Pg-database.sql:2846
 msgid "AR Transaction"
-msgstr ""
+msgstr "Sales Transaction"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:133 old/bin/aa.pl:1492
 msgid "AR Transactions"
@@ -437,7 +439,7 @@ msgstr ""
 
 #: t/data/04-complex_template.html:16 UI/Contact/contact.html:26
 msgid "Add Customer"
-msgstr ""
+msgstr "Add Debtor"
 
 #: old/bin/is.pl:102
 msgid "Add Customer Return"
@@ -470,7 +472,7 @@ msgstr ""
 
 #: old/bin/ic.pl:63
 msgid "Add Labor/Overhead"
-msgstr ""
+msgstr "Add Labour/Overhead"
 
 #: old/bin/am.pl:423 sql/Pg-database.sql:2729
 msgid "Add Language"
@@ -555,7 +557,7 @@ msgstr ""
 
 #: t/data/04-complex_template.html:18 UI/Contact/contact.html:28
 msgid "Add Vendor"
-msgstr ""
+msgstr "Add Creditor"
 
 #: old/bin/ir.pl:116 old/bin/oe.pl:1424
 msgid "Add Vendor Invoice"
@@ -1618,7 +1620,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2855
 msgid "Check"
-msgstr ""
+msgstr "Cheque"
 
 #: UI/templates/widget.html:41
 msgid "Check (base)"
@@ -1630,7 +1632,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:137
 msgid "Check Prefix"
-msgstr ""
+msgstr "Cheque Prefix"
 
 #: UI/payments/payment1_5.html:22
 msgid "Choose a company"
@@ -2132,7 +2134,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:10 UI/Reports/filters/orders.html:7
 #: sql/Pg-database.sql:532
 msgid "Customer"
-msgstr ""
+msgstr "Debtor"
 
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:250
 msgid "Customer Account"
@@ -2160,7 +2162,7 @@ msgstr ""
 #: UI/Reports/filters/overpayments.html:20 UI/Reports/filters/payments.html:14
 #: UI/Reports/filters/purchase_history.html:56
 msgid "Customer Number"
-msgstr ""
+msgstr "Debtor Number"
 
 #: UI/Reports/filters/contact_search.html:11
 msgid "Customer Search"
@@ -2168,7 +2170,7 @@ msgstr ""
 
 #: old/bin/aa.pl:1306 old/bin/is.pl:1374 old/bin/oe.pl:1210 old/bin/pe.pl:1240
 msgid "Customer missing!"
-msgstr ""
+msgstr "Debtor missing!"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:883 lib/LedgerSMB/Upgrade_Tests.pm:929
 msgid "Customer not in a business"
@@ -2176,7 +2178,7 @@ msgstr ""
 
 #: old/bin/arap.pl:142 old/bin/pe.pl:1215
 msgid "Customer not on file!"
-msgstr ""
+msgstr "Debtor not on file!"
 
 #: UI/setup/complete.html:26 UI/setup/confirm_operation.html:124
 msgid "Customer/Vendor Accounts"
@@ -2216,7 +2218,7 @@ msgstr ""
 
 #: UI/setup/credentials.html:80 UI/setup/list_databases.html:13
 msgid "Database"
-msgstr ""
+msgstr "Database"
 
 #: UI/setup/ui-db-credentials.html:7
 msgid "Database "
@@ -2940,7 +2942,7 @@ msgstr ""
 #: old/bin/oe.pl:1947 old/bin/oe.pl:642 old/bin/oe.pl:869 UI/io-email.html:15
 #: UI/Reports/filters/contact_search.html:48
 msgid "E-mail"
-msgstr ""
+msgstr "Email"
 
 #: UI/io-email.html:6
 msgid "E-mail [_1]"
@@ -2948,15 +2950,15 @@ msgstr ""
 
 #: old/bin/am.pl:1383 old/bin/io.pl:1269
 msgid "E-mail address missing!"
-msgstr ""
+msgstr "Email address missing"
 
 #: old/bin/arap.pl:436
 msgid "E-mail message"
-msgstr ""
+msgstr "Email message"
 
 #: old/bin/printer.pl:173
 msgid "E-mailed"
-msgstr ""
+msgstr "Emailed"
 
 #: lib/LedgerSMB/Report/PNL/ECA.pm:77
 msgid "ECA Income Statement"
@@ -3006,7 +3008,7 @@ msgstr ""
 
 #: t/data/04-complex_template.html:17 UI/Contact/contact.html:27
 msgid "Edit Customer"
-msgstr ""
+msgstr "Edit Debtor"
 
 #: old/bin/is.pl:126
 msgid "Edit Customer Return"
@@ -3034,7 +3036,7 @@ msgstr ""
 
 #: old/bin/ic.pl:97
 msgid "Edit Labor/Overhead"
-msgstr ""
+msgstr "Edit Labour/Overhead"
 
 #: old/bin/am.pl:424
 msgid "Edit Language"
@@ -3086,15 +3088,15 @@ msgstr ""
 
 #: UI/Contact/divs/employee.html:213
 msgid "Edit User"
-msgstr ""
+msgstr "Edit User"
 
 #: t/data/04-complex_template.html:19 UI/Contact/contact.html:29
 msgid "Edit Vendor"
-msgstr ""
+msgstr "Edit Creditor"
 
 #: old/bin/ir.pl:141
 msgid "Edit Vendor Invoice"
-msgstr ""
+msgstr "Edit Creditor Invoice"
 
 #: old/bin/ir.pl:135
 msgid "Edit Vendor Return"
@@ -4437,7 +4439,7 @@ msgstr ""
 
 #: old/bin/ic.pl:686
 msgid "Labor/Overhead"
-msgstr ""
+msgstr "Labour/Overhead"
 
 #: templates/demo/timecard.html:86 templates/demo/timecard.tex:39
 #: templates/demo_with_images/timecard.html:86
@@ -4573,7 +4575,7 @@ msgstr ""
 
 #: UI/reconciliation/report.html:64
 msgid "Less Outstanding Checks:"
-msgstr ""
+msgstr "Less Outstanding Cheques:"
 
 #: UI/templates/widget.html:49 sql/Pg-database.sql:2845 sql/Pg-database.sql:2860
 msgid "Letterhead"
@@ -4787,7 +4789,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:140
 msgid "Max Invoices per Check Stub"
-msgstr ""
+msgstr "Max Invoices per Cheque Stub"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:138
 msgid "Max per dropdown"
@@ -6879,7 +6881,7 @@ msgstr ""
 
 #: UI/payments/payment1.html:55
 msgid "SSN"
-msgstr ""
+msgstr "SIN"
 
 #: sql/Pg-database.sql:955
 msgid "Salary"
@@ -9002,7 +9004,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:5 UI/Reports/filters/orders.html:4
 #: sql/Pg-database.sql:531
 msgid "Vendor"
-msgstr ""
+msgstr "Creditor"
 
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:247
 msgid "Vendor Account"
@@ -9015,7 +9017,7 @@ msgstr ""
 #: old/bin/oe.pl:666 old/bin/oe.pl:872 t/data/04-complex_template.html:334
 #: UI/Contact/divs/credit.html:351 sql/Pg-database.sql:2785
 msgid "Vendor Invoice"
-msgstr ""
+msgstr "Creditor Invoice"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:121
 msgid "Vendor Invoice/AP Transaction Number"
@@ -9037,7 +9039,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:54
 #: UI/Reports/filters/taxforms.html:33
 msgid "Vendor Number"
-msgstr ""
+msgstr "Creditor Number"
 
 #: UI/Contact/pricelist.csv:20 UI/Contact/pricelist.html:34
 #: UI/Contact/pricelist.tex:29
@@ -9054,7 +9056,7 @@ msgstr ""
 
 #: old/bin/aa.pl:1307 old/bin/ir.pl:1257 old/bin/oe.pl:1211
 msgid "Vendor missing!"
-msgstr ""
+msgstr "Creditor missing!"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:860 lib/LedgerSMB/Upgrade_Tests.pm:906
 msgid "Vendor not in a business"
@@ -9062,7 +9064,7 @@ msgstr ""
 
 #: old/bin/arap.pl:143 old/bin/pe.pl:1216
 msgid "Vendor not on file!"
-msgstr ""
+msgstr "Creditor not on file!"
 
 #: lib/LedgerSMB/Report/GL.pm:103 lib/LedgerSMB/Report/Unapproved/Drafts.pm:106
 #: UI/Reports/filters/gl.html:217

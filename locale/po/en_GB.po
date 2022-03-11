@@ -1,14 +1,15 @@
 #
 # Translators:
 # Nick Prater <nick.github@npbroadcast.com>, 2020
-# Erik Huelsmann <ehuels@gmail.com>, 2020
+# paul bolger <pbolger@gmail.com>, 2022
+# Erik Huelsmann <ehuels@gmail.com>, 2022
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.26-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-01-19 22:04+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2020\n"
+"POT-Creation-Date: 2022-03-11 13:33+0000\n"
+"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: English (United Kingdom) (https://www.transifex.com/ledgersmb/"
 "teams/58325/en_GB/)\n"
 "Language: en_GB\n"
@@ -82,6 +83,9 @@ msgid ""
 "Returns must be shipped prepaid and properly insured. [_1] will not be "
 "responsible for damages during transit."
 msgstr ""
+"A return authorisation must be obtained from [_1] before goods are returned. "
+"Returns must be shipped prepaid and properly insured. [_1] will not be "
+"responsible for damages during transit."
 
 #: sql/Pg-database.sql:799
 msgid "AIM"
@@ -468,7 +472,7 @@ msgstr ""
 
 #: old/bin/ic.pl:63
 msgid "Add Labor/Overhead"
-msgstr ""
+msgstr "Add Labour/Overhead"
 
 #: old/bin/am.pl:423 sql/Pg-database.sql:2729
 msgid "Add Language"
@@ -775,7 +779,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:85
 msgid "Amount Budgetted"
-msgstr ""
+msgstr "Amount Budgeted"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:249
 #: lib/LedgerSMB/Scripts/payment.pm:918 lib/LedgerSMB/Scripts/payment.pm:923
@@ -911,11 +915,11 @@ msgstr ""
 
 #: old/bin/oe.pl:1310
 msgid "Are you sure you want to delete Order Number"
-msgstr ""
+msgstr "Are you sure you want to delete Order Number?"
 
 #: old/bin/oe.pl:1315
 msgid "Are you sure you want to delete Quotation Number"
-msgstr ""
+msgstr "Are you sure you want to delete Quotation Number?"
 
 #: UI/Reports/filters/balance_sheet.html:92
 msgid "As per"
@@ -6877,7 +6881,7 @@ msgstr ""
 
 #: UI/payments/payment1.html:55
 msgid "SSN"
-msgstr ""
+msgstr "SIN"
 
 #: sql/Pg-database.sql:955
 msgid "Salary"

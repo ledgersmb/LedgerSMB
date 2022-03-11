@@ -1,14 +1,14 @@
 #
 # Translators:
 # ylavoie <ylavoie@yveslavoie.com>, 2020
-# Erik Huelsmann <ehuels@gmail.com>, 2020
+# Erik Huelsmann <ehuels@gmail.com>, 2022
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.26-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-01-19 22:04+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2020\n"
+"POT-Creation-Date: 2022-03-11 13:33+0000\n"
+"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: French (Canada) (https://www.transifex.com/ledgersmb/"
 "teams/58325/fr_CA/)\n"
 "Language: fr_CA\n"
@@ -648,7 +648,7 @@ msgstr ""
 
 #: UI/Reports/filters/aging.html:79
 msgid "Aged"
-msgstr ""
+msgstr "Âgé"
 
 #: lib/LedgerSMB/Report/Aging.pm:182 UI/Reports/filters/aging.html:6
 msgid "Aging Report"
@@ -718,7 +718,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:127 UI/timecards/timecard.html:132
 msgid "Allocated"
-msgstr ""
+msgstr "Attribué"
 
 #: UI/Configuration/sequence.html:8
 msgid "Allow Input"
@@ -1148,7 +1148,7 @@ msgstr ""
 
 #: old/bin/ic.pl:443 UI/Reports/filters/search_goods.html:310
 msgid "Average Cost"
-msgstr ""
+msgstr "Coût moyen"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:241
 msgid "Avg. Cost"
@@ -1602,7 +1602,7 @@ msgstr "Modifier mot de passe"
 
 #: UI/timecards/timecard.html:105
 msgid "Chargeable"
-msgstr ""
+msgstr "À facturer"
 
 #: lib/LedgerSMB/Report/GL.pm:150
 msgid "Chart ID"
@@ -1680,7 +1680,7 @@ msgstr "Transactions compensées"
 
 #: UI/timecards/timecard.html:101
 msgid "Clocked"
-msgstr ""
+msgstr "Pointé"
 
 #: UI/accounts/yearend.html:96
 msgid "Close As-Of"
@@ -3415,7 +3415,7 @@ msgstr "Devises"
 
 #: old/bin/pe.pl:1308
 msgid "Failed to save order!"
-msgstr ""
+msgstr "Impossible d'enregister la commande!"
 
 #: sql/Pg-database.sql:804
 msgid "Fax"
@@ -3684,7 +3684,7 @@ msgstr ""
 
 #: old/bin/oe.pl:2136
 msgid "From Warehouse"
-msgstr ""
+msgstr "Du entrepôt"
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:205
 msgid "From date"
@@ -3738,7 +3738,7 @@ msgstr "Grand-livre"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:115
 msgid "GL Reference Number"
-msgstr ""
+msgstr "Numéro de réf. Grand-livre"
 
 #: UI/accounts/edit.html:519
 msgid "Gain"
@@ -3775,7 +3775,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/order.pm:124 UI/Reports/aging_report.html:84
 #: sql/Pg-database.sql:2666 sql/Pg-database.sql:2704
 msgid "Generate"
-msgstr ""
+msgstr "Générer"
 
 #: UI/Contact/divs/company.html:166 UI/Contact/divs/person.html:182
 msgid "Generate Control Code"
@@ -3783,11 +3783,11 @@ msgstr ""
 
 #: old/bin/oe.pl:2503
 msgid "Generate Orders"
-msgstr ""
+msgstr "Générer commandes"
 
 #: old/bin/oe.pl:2408
 msgid "Generate Purchase Orders"
-msgstr ""
+msgstr "Générer commandes d'achat"
 
 #: lib/LedgerSMB/Scripts/order.pm:66
 msgid "Generate Purchase Orders from Sales Orders"
@@ -3795,7 +3795,7 @@ msgstr ""
 
 #: old/bin/pe.pl:1042 old/bin/pe.pl:1132 old/bin/pe.pl:867
 msgid "Generate Sales Orders"
-msgstr ""
+msgstr "Générer commandes de ventes"
 
 #: lib/LedgerSMB/Scripts/order.pm:79
 msgid "Generate Sales Orders from Purchase Orders"
@@ -4478,7 +4478,7 @@ msgstr ""
 #: old/bin/ic.pl:630 UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:31
 #: UI/Contact/pricelist.tex:25 UI/Reports/filters/search_goods.html:302
 msgid "Last Cost"
-msgstr ""
+msgstr "Dernier prix"
 
 #: UI/Contact/divs/employee.html:67
 msgid "Last Name"
@@ -4494,7 +4494,7 @@ msgstr "Nom"
 
 #: old/bin/oe.pl:2404 sql/Pg-database.sql:535
 msgid "Lead"
-msgstr ""
+msgstr "Délai"
 
 #: UI/Contact/pricelist.csv:23 UI/Contact/pricelist.html:37
 #: UI/Contact/pricelist.tex:33
@@ -5010,7 +5010,7 @@ msgstr "Prochaine date"
 
 #: old/bin/am.pl:833
 msgid "Next Number"
-msgstr ""
+msgstr "Prochain numéro"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:113
 #: lib/LedgerSMB/Scripts/configuration.pm:333
@@ -5083,7 +5083,7 @@ msgstr ""
 
 #: old/bin/pe.pl:849
 msgid "No open Projects!"
-msgstr ""
+msgstr "Aucun projet ouvert!"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1394
 msgid "No overpayment account selected.  Was one set up?"
@@ -5125,7 +5125,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:456
 msgid "Non-tracking Items"
-msgstr ""
+msgstr "Objets non-référencés"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1101
 msgid "Non-unique invoice numbers"
@@ -5299,7 +5299,7 @@ msgstr ""
 
 #: old/bin/io.pl:244
 msgid "OH"
-msgstr ""
+msgstr "OH"
 
 #: UI/payments/payment2.html:317
 msgid "OVERPAYMENT / ADVANCE PAYMENT / PREPAYMENT"
@@ -5477,7 +5477,7 @@ msgstr "Commande supprimée!"
 
 #: old/bin/oe.pl:2526
 msgid "Order generation failed!"
-msgstr ""
+msgstr "Génération commande échouée!"
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:141
 msgid "Order/Invoice"
@@ -5494,7 +5494,7 @@ msgstr ""
 
 #: old/bin/pe.pl:1315
 msgid "Orders generated!"
-msgstr ""
+msgstr "Commandes générées!"
 
 #: UI/setup/confirm_operation.html:32
 msgid "Other Actions"
@@ -5533,7 +5533,7 @@ msgstr ""
 
 #: UI/Reports/filters/aging.html:88
 msgid "Overdue"
-msgstr ""
+msgstr "En retard"
 
 #: UI/Reports/filters/search_goods.html:37
 msgid "Overhead"
@@ -6147,7 +6147,7 @@ msgstr "Imprimer et sauver"
 
 #: old/bin/oe.pl:654 old/bin/oe.pl:868
 msgid "Print and Save as new"
-msgstr ""
+msgstr "Imprimer et enregister comme nouveau"
 
 #: old/bin/printer.pl:172
 msgid "Printed"
@@ -6712,7 +6712,7 @@ msgstr ""
 
 #: old/bin/oe.pl:2399
 msgid "Req"
-msgstr ""
+msgstr "Exigence"
 
 #: old/bin/oe.pl:1253 templates/demo/request_quotation.html:4
 #: templates/demo/request_quotation.html:17
@@ -6903,7 +6903,7 @@ msgstr "Facture de vente"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:117
 msgid "Sales Invoice/AR Transaction Number"
-msgstr ""
+msgstr "Numéro facture de vente/écriture recette"
 
 #: old/bin/am.pl:1189 old/bin/am.pl:1418 old/bin/io.pl:1161 old/bin/is.pl:1059
 #: old/bin/is.pl:593 old/bin/oe.pl:1230 old/bin/oe.pl:252 old/bin/oe.pl:660
@@ -7230,7 +7230,7 @@ msgstr ""
 
 #: old/bin/pe.pl:1137
 msgid "Select Customer"
-msgstr ""
+msgstr "Séléctionner client"
 
 #: UI/setup/template_info.html:9
 msgid "Select Templates to Load"
@@ -7238,11 +7238,11 @@ msgstr ""
 
 #: old/bin/oe.pl:2508
 msgid "Select Vendor"
-msgstr ""
+msgstr "Sélectionner vendeur"
 
 #: old/bin/arapprn.pl:349 old/bin/is.pl:1433 old/bin/oe.pl:1293
 msgid "Select a Printer!"
-msgstr ""
+msgstr "Sélectionner une imprimante!"
 
 #: UI/taxform/add_taxform.html:58
 msgid "Select by Default:"
@@ -7389,7 +7389,7 @@ msgstr "Prestation de service"
 
 #: old/bin/pe.pl:1027
 msgid "Service Code"
-msgstr ""
+msgstr "Compte de prestation"
 
 #: UI/Reports/filters/search_goods.html:31
 msgid "Services"
@@ -8362,11 +8362,11 @@ msgstr ""
 
 #: UI/timecards/timecard.html:68
 msgid "Time In"
-msgstr ""
+msgstr "Temps de début"
 
 #: UI/timecards/timecard.html:84
 msgid "Time Out"
-msgstr ""
+msgstr "Temps de fin"
 
 #: UI/Reports/filters/timecards.html:5
 msgid "Time and Material Cards"
@@ -8390,7 +8390,7 @@ msgstr "Cartes de temps"
 
 #: old/bin/am.pl:772
 msgid "Times"
-msgstr ""
+msgstr "Temps"
 
 #: old/bin/ic.pl:1113 old/bin/oe.pl:2126 old/bin/pe.pl:835
 #: templates/demo/invoice.html:25 templates/demo/request_quotation.tex:27
@@ -8434,7 +8434,7 @@ msgstr ""
 
 #: old/bin/oe.pl:2141
 msgid "To Warehouse"
-msgstr ""
+msgstr "Vers entrepôt"
 
 #: t/data/04-strings-for-translation.html:7
 msgid "To [_1]"
@@ -8556,7 +8556,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:417
 msgid "Tracking Items"
-msgstr ""
+msgstr "Objets référencés"
 
 #: old/bin/is.pl:367 old/bin/oe.pl:379
 msgid "Trade Discount"
@@ -8583,7 +8583,7 @@ msgstr "Date d'écriture manquante!"
 
 #: old/bin/pe.pl:830
 msgid "Transaction Dates"
-msgstr ""
+msgstr "Dates de transactions"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:190
 #: UI/reconciliation/report.html:111 UI/reconciliation/report.html:234
@@ -9021,7 +9021,7 @@ msgstr "Facture d'achat"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:121
 msgid "Vendor Invoice/AP Transaction Number"
-msgstr ""
+msgstr "Numéro facture d'achat/écriture achat"
 
 #: UI/payments/payment1.html:45 UI/payments/payment2.html:29
 #: UI/Reports/filters/orders.html:5
@@ -9457,7 +9457,7 @@ msgstr ""
 
 #: old/bin/arap.pl:544
 msgid "time(s)"
-msgstr ""
+msgstr "temps"
 
 #: UI/lib/report_base.html:220
 msgid "to_date"
@@ -9465,7 +9465,7 @@ msgstr ""
 
 #: old/bin/ic.pl:1421
 msgid "unexpected error!"
-msgstr ""
+msgstr "Erreur inattendue!"
 
 #: lib/LedgerSMB/Scripts/payment.pm:2021 lib/LedgerSMB/Scripts/payment.pm:2040
 msgid "use of an overpayment"

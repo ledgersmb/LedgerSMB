@@ -1,9 +1,14 @@
 #
+# Translators:
+# ylavoie <ylavoie@yveslavoie.com>, 2022
+# Erik Huelsmann <ehuels@gmail.com>, 2022
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.26-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-01-19 22:04+0000\n"
+"POT-Creation-Date: 2022-03-11 13:33+0000\n"
+"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: French (France) (https://www.transifex.com/ledgersmb/"
 "teams/58325/fr_FR/)\n"
 "Language: fr_FR\n"
@@ -14,7 +19,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:174
 msgid "# Invoices"
-msgstr ""
+msgstr "# Factures"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:115
 msgid "% Dep."
@@ -86,11 +91,11 @@ msgstr ""
 #: UI/setup/complete.html:21 UI/setup/confirm_operation.html:119
 #: sql/Pg-database.sql:2736
 msgid "AP"
-msgstr ""
+msgstr "Dépenses"
 
 #: sql/Pg-database.sql:2685
 msgid "AP Aging"
-msgstr ""
+msgstr "Dépenses exigibles"
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:113
 msgid "AP Invoice"
@@ -103,7 +108,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:301 old/bin/aa.pl:1537
 #: UI/Reports/filters/invoice_outstanding.html:4
 msgid "AP Outstanding"
-msgstr ""
+msgstr "Dépenses en retard"
 
 #: t/data/04-complex_template.html:325 templates/demo/ap_transaction.html:4
 #: templates/demo/ap_transaction.html:17 templates/demo/ap_transaction.tex:18
@@ -115,11 +120,11 @@ msgstr ""
 #: templates/xedemo/ap_transaction.tex:18 UI/Contact/divs/credit.html:347
 #: sql/Pg-database.sql:2834 sql/Pg-database.sql:2847
 msgid "AP Transaction"
-msgstr ""
+msgstr "Écriture dépenses"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:131 old/bin/aa.pl:1493
 msgid "AP Transactions"
-msgstr ""
+msgstr "Mouvements - Dépenses"
 
 #: sql/Pg-database.sql:2799
 msgid "AP Voucher"
@@ -141,11 +146,11 @@ msgstr ""
 #: UI/setup/complete.html:22 UI/setup/confirm_operation.html:120
 #: sql/Pg-database.sql:2735
 msgid "AR"
-msgstr ""
+msgstr "Recettes"
 
 #: sql/Pg-database.sql:2682
 msgid "AR Aging"
-msgstr ""
+msgstr "Recettes exigibles"
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:109
 msgid "AR Invoice"
@@ -158,7 +163,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:303 old/bin/aa.pl:1536
 #: UI/Reports/filters/invoice_outstanding.html:8
 msgid "AR Outstanding"
-msgstr ""
+msgstr "Recettes en retard"
 
 #: templates/demo/ar_transaction.html:4 templates/demo/ar_transaction.html:17
 #: templates/demo/ar_transaction.tex:33
@@ -170,11 +175,11 @@ msgstr ""
 #: templates/xedemo/ar_transaction.tex:33 UI/Contact/divs/credit.html:364
 #: sql/Pg-database.sql:2833 sql/Pg-database.sql:2846
 msgid "AR Transaction"
-msgstr ""
+msgstr "Écriture recettes"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:133 old/bin/aa.pl:1492
 msgid "AR Transactions"
-msgstr ""
+msgstr "Mouvements - Recettes"
 
 #: sql/Pg-database.sql:2798
 msgid "AR Voucher"
@@ -204,7 +209,7 @@ msgstr ""
 #: lib/LedgerSMB.pm:439 lib/LedgerSMB.pm:440
 #: lib/LedgerSMB/Scripts/configuration.pm:357
 msgid "Access Denied"
-msgstr ""
+msgstr "Accès refusé"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:220
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:137
@@ -231,7 +236,7 @@ msgstr ""
 #: UI/Reports/filters/orders.html:164
 #: UI/Reports/filters/reconciliation_search.html:50
 msgid "Account"
-msgstr ""
+msgstr "Compte"
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:161
 #: UI/payments/use_overpayment2.html:122
@@ -265,7 +270,7 @@ msgstr ""
 #: UI/payments/use_overpayment2.html:121 UI/Reports/co/filter_bm.html:77
 #: UI/Reports/co/filter_cd.html:61 UI/Reports/filters/contact_search.html:84
 msgid "Account Number"
-msgstr ""
+msgstr "Numéro de compte"
 
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:135
 msgid "Account Number End"
@@ -282,7 +287,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/Details.pm:83
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:78 UI/accounts/edit.html:206
 msgid "Account Type"
-msgstr ""
+msgstr "Type de compte"
 
 #: old/bin/gl.pl:575 old/lib/LedgerSMB/GL.pm:224
 msgid "Account [_1] not found"
@@ -295,7 +300,7 @@ msgstr ""
 
 #: old/bin/am.pl:128
 msgid "Account does not exist!"
-msgstr ""
+msgstr "Compte non existant!"
 
 #: UI/Contact/divs/credit.html:470 UI/Reports/filters/balance_sheet.html:176
 #: UI/Reports/filters/income_statement.html:223
@@ -304,11 +309,11 @@ msgstr ""
 
 #: UI/reconciliation/report.html:31
 msgid "Account:"
-msgstr ""
+msgstr "Compte:"
 
 #: UI/lib/report_base.html:64
 msgid "Accounts"
-msgstr ""
+msgstr "Comptes"
 
 #: UI/Reports/co/filter_cd.html:23
 msgid "Accounts From"
@@ -332,7 +337,7 @@ msgstr ""
 
 #: UI/Reports/filters/income_statement.html:28
 msgid "Accrual"
-msgstr ""
+msgstr "Accumulation"
 
 #: UI/taxform/add_taxform.html:73
 msgid "Accrual Basis:"
@@ -360,7 +365,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:181
 #: UI/Reports/filters/search_goods.html:135
 msgid "Active"
-msgstr ""
+msgstr "Actif"
 
 #: UI/business_units/filter.html:31
 msgid "Active On"
@@ -368,29 +373,29 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/admin.pm:72
 msgid "Active Sessions"
-msgstr ""
+msgstr "Sessions actives"
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:96
 #: lib/LedgerSMB/Report/File/Internal.pm:84 old/bin/ic.pl:2086
 #: UI/Configuration/currency.html:35 UI/Configuration/ratetype.html:28
 msgid "Add"
-msgstr ""
+msgstr "Ajouter"
 
 #: old/bin/aa.pl:380 old/bin/aa.pl:419
 msgid "Add AP Transaction"
-msgstr ""
+msgstr "Ajouter une dépense"
 
 #: old/bin/aa.pl:379
 msgid "Add AR Transaction"
-msgstr ""
+msgstr "Ajouter une recette"
 
 #: sql/Pg-database.sql:2678
 msgid "Add Accounts"
-msgstr ""
+msgstr "Ajouter comptes"
 
 #: old/bin/ic.pl:62 sql/Pg-database.sql:2753
 msgid "Add Assembly"
-msgstr ""
+msgstr "Ajouter produit"
 
 #: lib/LedgerSMB/Scripts/asset.pm:156
 msgid "Add Asset"
@@ -410,7 +415,7 @@ msgstr ""
 
 #: old/bin/am.pl:258 sql/Pg-database.sql:2727
 msgid "Add Business"
-msgstr ""
+msgstr "Ajouter type d'affaire"
 
 #: sql/Pg-database.sql:2773
 msgid "Add Class"
@@ -430,7 +435,7 @@ msgstr ""
 
 #: t/data/04-complex_template.html:16 UI/Contact/contact.html:26
 msgid "Add Customer"
-msgstr ""
+msgstr "Ajouter client"
 
 #: old/bin/is.pl:102
 msgid "Add Customer Return"
@@ -447,27 +452,27 @@ msgstr ""
 #: t/data/04-complex_template.html:20 UI/Contact/contact.html:30
 #: sql/Pg-database.sql:2695
 msgid "Add Employee"
-msgstr ""
+msgstr "Ajouter employé"
 
 #: old/bin/oe.pl:1503
 msgid "Add Exchange Rate"
-msgstr ""
+msgstr "Ajouter taux de change"
 
 #: old/bin/am.pl:150 sql/Pg-database.sql:2794
 msgid "Add GIFI"
-msgstr ""
+msgstr "Ajouter code d'identification comptable ou fiscale"
 
 #: old/bin/pe.pl:102 sql/Pg-database.sql:2820
 msgid "Add Group"
-msgstr ""
+msgstr "Ajouter groupe"
 
 #: old/bin/ic.pl:63
 msgid "Add Labor/Overhead"
-msgstr ""
+msgstr "Ajouter coût de production"
 
 #: old/bin/am.pl:423 sql/Pg-database.sql:2729
 msgid "Add Language"
-msgstr ""
+msgstr "Ajouter langue"
 
 #: UI/budgetting/budget_entry.html:169
 msgid "Add Note"
@@ -479,19 +484,19 @@ msgstr ""
 
 #: old/bin/ic.pl:60 sql/Pg-database.sql:2751
 msgid "Add Part"
-msgstr ""
+msgstr "Ajouter marchandise"
 
 #: old/bin/pe.pl:187 sql/Pg-database.sql:2821
 msgid "Add Pricegroup"
-msgstr ""
+msgstr "Ajouter groupe de prix"
 
 #: old/bin/io.pl:943 old/bin/oe.pl:63
 msgid "Add Purchase Order"
-msgstr ""
+msgstr "Établir commande d'achat"
 
 #: old/bin/io.pl:976 old/bin/oe.pl:75
 msgid "Add Quotation"
-msgstr ""
+msgstr "Établir devis"
 
 #: UI/business_units/edit.html:12
 msgid "Add Reporting Unit"
@@ -499,7 +504,7 @@ msgstr ""
 
 #: old/bin/io.pl:965 old/bin/oe.pl:71
 msgid "Add Request for Quotation"
-msgstr ""
+msgstr "Établir demande de devis"
 
 #: sql/Pg-database.sql:2863
 msgid "Add Return"
@@ -507,19 +512,19 @@ msgstr ""
 
 #: old/bin/am.pl:340 sql/Pg-database.sql:2731
 msgid "Add SIC"
-msgstr ""
+msgstr "Ajouter code secteur économique"
 
 #: old/bin/is.pl:107 old/bin/oe.pl:1432
 msgid "Add Sales Invoice"
-msgstr ""
+msgstr "Établir facture de vente"
 
 #: old/bin/io.pl:954 old/bin/oe.pl:67
 msgid "Add Sales Order"
-msgstr ""
+msgstr "Établir commande de vente"
 
 #: old/bin/ic.pl:61 sql/Pg-database.sql:2752
 msgid "Add Service"
-msgstr ""
+msgstr "Ajouter prestation"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:80 sql/Pg-database.sql:2759
 msgid "Add Tax Form"
@@ -535,7 +540,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2681 sql/Pg-database.sql:2684
 msgid "Add Transaction"
-msgstr ""
+msgstr "Saisie d'écriture"
 
 #: UI/business_units/list_classes.html:103
 msgid "Add Unit"
@@ -544,15 +549,15 @@ msgstr ""
 #: UI/Contact/divs/employee.html:220 UI/Contact/divs/user.html:129
 #: UI/setup/confirm_operation.html:56 UI/setup/edit_user.html:98
 msgid "Add User"
-msgstr ""
+msgstr "Ajouter utilisateur"
 
 #: t/data/04-complex_template.html:18 UI/Contact/contact.html:28
 msgid "Add Vendor"
-msgstr ""
+msgstr "Ajouter fournisseur"
 
 #: old/bin/ir.pl:116 old/bin/oe.pl:1424
 msgid "Add Vendor Invoice"
-msgstr ""
+msgstr "Établir facture d'achat"
 
 #: old/bin/ir.pl:111
 msgid "Add Vendor Return"
@@ -560,7 +565,7 @@ msgstr ""
 
 #: old/bin/am.pl:695 sql/Pg-database.sql:2725
 msgid "Add Warehouse"
-msgstr ""
+msgstr "Ajouter entrepôt"
 
 #: old/bin/io.pl:1612
 msgid "Add line1"
@@ -596,7 +601,7 @@ msgstr ""
 #: UI/Reports/filters/contact_search.html:89
 #: UI/Reports/filters/purchase_history.html:67
 msgid "Address"
-msgstr ""
+msgstr "Adresse"
 
 #: t/data/04-complex_template.html:385
 msgid "Address1"
@@ -643,7 +648,7 @@ msgstr ""
 
 #: UI/Reports/filters/aging.html:79
 msgid "Aged"
-msgstr ""
+msgstr "Âgé"
 
 #: lib/LedgerSMB/Report/Aging.pm:182 UI/Reports/filters/aging.html:6
 msgid "Aging Report"
@@ -661,7 +666,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:19 UI/Reports/filters/timecards.html:42
 #: UI/Reports/filters/trial_balance.html:61
 msgid "All"
-msgstr ""
+msgstr "Tous"
 
 #: old/bin/aa.pl:1702
 msgid "All Invoices"
@@ -713,7 +718,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:127 UI/timecards/timecard.html:132
 msgid "Allocated"
-msgstr ""
+msgstr "Attribué"
 
 #: UI/Configuration/sequence.html:8
 msgid "Allow Input"
@@ -766,7 +771,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:196
 #: UI/Reports/filters/invoice_search.html:317 UI/Reports/filters/orders.html:177
 msgid "Amount"
-msgstr ""
+msgstr "Montant"
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:85
 msgid "Amount Budgetted"
@@ -780,7 +785,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:244
 #: UI/Reports/filters/invoice_search.html:363
 msgid "Amount Due"
-msgstr ""
+msgstr "Montant dû"
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:108
 #: UI/Reports/filters/reconciliation_search.html:31
@@ -870,12 +875,12 @@ msgstr ""
 #: UI/Reports/filters/reconciliation_search.html:62
 #: UI/Reports/filters/trial_balance.html:48
 msgid "Approved"
-msgstr ""
+msgstr "Approuvé"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:96
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:160
 msgid "Approved By"
-msgstr ""
+msgstr "Approuvé par"
 
 #: lib/LedgerSMB/Scripts/asset.pm:487
 msgid "Approved at"
@@ -889,11 +894,11 @@ msgstr ""
 
 #: old/bin/aa.pl:85 old/bin/gl.pl:80 old/bin/io.pl:82
 msgid "Apr"
-msgstr ""
+msgstr "Avril"
 
 #: lib/LedgerSMB.pm:521 old/bin/aa.pl:71 old/bin/gl.pl:66 old/bin/io.pl:68
 msgid "April"
-msgstr ""
+msgstr "Avril"
 
 #: lib/LedgerSMB/Scripts/asset.pm:578 lib/LedgerSMB/Scripts/asset.pm:687
 #: lib/LedgerSMB/Scripts/asset.pm:810
@@ -906,11 +911,11 @@ msgstr ""
 
 #: old/bin/oe.pl:1310
 msgid "Are you sure you want to delete Order Number"
-msgstr ""
+msgstr "Êtes vous sûr de vouloir supprimer la commande n°"
 
 #: old/bin/oe.pl:1315
 msgid "Are you sure you want to delete Quotation Number"
-msgstr ""
+msgstr "Êtes vous sûr de vouloir supprimer le devis n°"
 
 #: UI/Reports/filters/balance_sheet.html:92
 msgid "As per"
@@ -926,23 +931,23 @@ msgstr ""
 
 #: old/bin/ic.pl:2206
 msgid "Assemblies restocked!"
-msgstr ""
+msgstr "Renvoyer produits vers stock!"
 
 #: UI/accounts/edit.html:210 UI/Reports/filters/gl.html:135
 #: sql/Pg-database.sql:3680
 msgid "Asset"
-msgstr ""
+msgstr "Actif"
 
 #: lib/LedgerSMB/Report/Listings/Asset_Class.pm:81 UI/asset/edit_asset.html:154
 #: UI/asset/edit_class.html:37 UI/asset/search_asset.html:140
 #: UI/asset/search_class.html:44
 msgid "Asset Account"
-msgstr ""
+msgstr "Compte d'actif"
 
 #: lib/LedgerSMB/Scripts/asset.pm:476 UI/asset/begin_approval.html:14
 #: UI/asset/begin_report.html:13
 msgid "Asset Class"
-msgstr ""
+msgstr "Classe d'actif"
 
 #: lib/LedgerSMB/Report/Listings/Asset_Class.pm:114
 msgid "Asset Class List"
@@ -950,11 +955,11 @@ msgstr ""
 
 #: UI/asset/edit_asset.html:49 UI/asset/search_asset.html:48
 msgid "Asset Class:"
-msgstr ""
+msgstr "Classe d'actif:"
 
 #: sql/Pg-database.sql:2771
 msgid "Asset Classes"
-msgstr ""
+msgstr "Classes d'actif"
 
 #: lib/LedgerSMB/Scripts/asset.pm:362
 msgid "Asset Depreciation Report"
@@ -980,7 +985,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:204 lib/LedgerSMB/Report/PNL.pm:203
 #: lib/LedgerSMB/Report/PNL.pm:205 sql/Pg-database.sql:2772
 msgid "Assets"
-msgstr ""
+msgstr "Actifs"
 
 #: templates/demo/balance_sheet.html:99
 #: templates/demo_with_images/balance_sheet.html:99
@@ -1060,7 +1065,7 @@ msgstr ""
 
 #: old/bin/printer.pl:118
 msgid "Attachment"
-msgstr ""
+msgstr "Pièce jointe"
 
 #: templates/demo/bin_list.html:49 templates/demo/bin_list.html:82
 #: templates/demo/packing_list.html:50 templates/demo/pick_list.html:49
@@ -1106,11 +1111,11 @@ msgstr ""
 
 #: old/bin/aa.pl:89 old/bin/gl.pl:84 old/bin/io.pl:86
 msgid "Aug"
-msgstr ""
+msgstr "Août"
 
 #: lib/LedgerSMB.pm:525 old/bin/aa.pl:75 old/bin/gl.pl:70 old/bin/io.pl:72
 msgid "August"
-msgstr ""
+msgstr "Août"
 
 #: UI/Contact/divs/notes.html:80
 msgid "Author: [_1]"
@@ -1123,7 +1128,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:149
 #: UI/payments/use_overpayment2.html:123
 msgid "Available"
-msgstr ""
+msgstr "Disponible"
 
 #: UI/setup/list_databases.html:9
 msgid "Available Databases"
@@ -1143,7 +1148,7 @@ msgstr ""
 
 #: old/bin/ic.pl:443 UI/Reports/filters/search_goods.html:310
 msgid "Average Cost"
-msgstr ""
+msgstr "Coût moyen"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:241
 msgid "Avg. Cost"
@@ -1151,7 +1156,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:811
 msgid "BCC"
-msgstr ""
+msgstr "CCI"
 
 #: t/data/04-complex_template.html:557 UI/Contact/divs/bank_act.html:22
 #: UI/Contact/divs/bank_act.html:54
@@ -1164,11 +1169,11 @@ msgstr ""
 
 #: old/bin/ic.pl:1260
 msgid "BOM"
-msgstr ""
+msgstr "Nomenclature composantes"
 
 #: UI/setup/confirm_operation.html:83
 msgid "Backup"
-msgstr ""
+msgstr "Sauvegarder"
 
 #: UI/setup/confirm_operation.html:90
 msgid "Backup DB"
@@ -1184,7 +1189,7 @@ msgstr ""
 #: templates/demo_with_images/invoice.tex:177 templates/xedemo/invoice.html:199
 #: templates/xedemo/invoice.tex:172 UI/Reports/filters/gl.html:292
 msgid "Balance"
-msgstr ""
+msgstr "Solde"
 
 #: templates/demo/balance_sheet.html:22 templates/demo/balance_sheet.tex:28
 #: templates/demo_with_images/balance_sheet.html:22
@@ -1193,7 +1198,7 @@ msgstr ""
 #: UI/Reports/balance_sheet.html:25 UI/Reports/filters/balance_sheet.html:7
 #: sql/Pg-database.sql:2722
 msgid "Balance Sheet"
-msgstr ""
+msgstr "Bilan"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:291 UI/templates/widget.html:33
 msgid "Balance sheet"
@@ -1289,11 +1294,11 @@ msgstr ""
 
 #: UI/io-email.html:23
 msgid "Bcc"
-msgstr ""
+msgstr "Copie cachée"
 
 #: old/bin/arap.pl:778 old/bin/io.pl:1432
 msgid "Bcc: [_1]"
-msgstr ""
+msgstr "Cci: [_1]"
 
 #: UI/reconciliation/report.html:38
 msgid "Beginning Statement Balance:"
@@ -1317,7 +1322,7 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:114
 msgid "Billion"
-msgstr ""
+msgstr "Milliard"
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:137
 #: lib/LedgerSMB/Report/Inventory/Search.pm:217 old/bin/ic.pl:2079
@@ -1334,7 +1339,7 @@ msgstr ""
 #: templates/xedemo/pick_list.tex:102 templates/xedemo/work_order.html:129
 #: UI/io-email.html:104 UI/Reports/filters/search_goods.html:331
 msgid "Bin"
-msgstr ""
+msgstr "Lieu stockage"
 
 #: old/bin/am.pl:1421 old/bin/io.pl:1216 old/bin/oe.pl:267 old/bin/oe.pl:279
 #: old/bin/printer.pl:101 old/bin/printer.pl:87 templates/demo/bin_list.html:4
@@ -1345,7 +1350,7 @@ msgstr ""
 #: templates/xedemo/bin_list.html:17 templates/xedemo/bin_list.tex:74
 #: sql/Pg-database.sql:2840 sql/Pg-database.sql:2853
 msgid "Bin List"
-msgstr ""
+msgstr "Liste des emplacements"
 
 #: UI/templates/widget.html:37
 msgid "Bin list"
@@ -1369,7 +1374,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2113
 msgid "Budget"
-msgstr ""
+msgstr "Budget"
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:119
 msgid "Budget Number"
@@ -1389,11 +1394,11 @@ msgstr ""
 
 #: old/bin/is.pl:364 old/bin/oe.pl:375 UI/payments/payments_detail.html:171
 msgid "Business"
-msgstr ""
+msgstr "Type d'affaire"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:42
 msgid "Business Number"
-msgstr ""
+msgstr "Numéro d'enregistrement société"
 
 #: lib/LedgerSMB/Report/Contact/Search.pm:80 UI/Contact/divs/credit.html:235
 #: UI/Contact/divs/credit.html:236
@@ -1419,11 +1424,11 @@ msgstr ""
 
 #: old/bin/am.pl:282
 msgid "Business deleted!"
-msgstr ""
+msgstr "Type d'affaire effacé!"
 
 #: old/bin/am.pl:275
 msgid "Business saved!"
-msgstr ""
+msgstr "Type d'affaire enregistré!"
 
 #: sql/Pg-database.sql:810
 msgid "CC"
@@ -1432,7 +1437,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:132 old/bin/ic.pl:522 old/bin/ic.pl:691
 #: UI/accounts/edit.html:432
 msgid "COGS"
-msgstr ""
+msgstr "Coût des produits vendus"
 
 #: UI/Reports/filters/cogs_lines.html:4
 msgid "COGS Lots Report"
@@ -1442,7 +1447,7 @@ msgstr ""
 #: UI/Reports/balance_sheet.html:119 UI/Reports/display_report.html:76
 #: UI/Reports/PNL.html:105
 msgid "CSV"
-msgstr ""
+msgstr "CSV"
 
 #: UI/reconciliation/report.html:80
 msgid "CSV File:"
@@ -1507,11 +1512,11 @@ msgstr ""
 
 #: old/bin/ic.pl:1977
 msgid "Cannot delete item!"
-msgstr ""
+msgstr "Impossible de supprimer l'objet!"
 
 #: old/bin/oe.pl:1348
 msgid "Cannot delete order!"
-msgstr ""
+msgstr "Impossible de supprimer la commande!"
 
 #: old/bin/gl.pl:641
 msgid "Cannot delete posted transaction"
@@ -1519,36 +1524,38 @@ msgstr ""
 
 #: old/bin/oe.pl:1352
 msgid "Cannot delete quotation!"
-msgstr ""
+msgstr "Impossible de supprimer le devis!"
 
 #: old/bin/ir.pl:1269 old/bin/is.pl:1386
 msgid "Cannot post invoice for a closed period!"
-msgstr ""
+msgstr "Impossible d'enregistrer la facture sur un exercice clos!"
 
 #: old/bin/aa.pl:1338 old/bin/ir.pl:1284 old/bin/is.pl:1401
 msgid "Cannot post payment for a closed period!"
-msgstr ""
+msgstr "Impossible d'enregistrer le paiement sur un exercice clos!"
 
 #: old/bin/aa.pl:1324 old/bin/gl.pl:624
 msgid "Cannot post transaction for a closed period!"
-msgstr ""
+msgstr "Impossible d'enregistrer l'écriture sur un exercice clos!"
 
 #: old/bin/gl.pl:663
 msgid ""
 "Cannot post transaction with a debit and credit entry for the same account!"
 msgstr ""
+"Impossible d'enregistrer l'écriture avec un débit et un crédit sur le même "
+"compte!"
 
 #: old/bin/aa.pl:1383
 msgid "Cannot post transaction!"
-msgstr ""
+msgstr "Impossible d'enregistrer l'écriture!"
 
 #: old/bin/oe.pl:1242
 msgid "Cannot save order!"
-msgstr ""
+msgstr "Impossible d'enregistrer la commande!"
 
 #: old/bin/oe.pl:1259
 msgid "Cannot save quotation!"
-msgstr ""
+msgstr "Impossible d'enregistrer le devis!"
 
 #: old/bin/am.pl:641
 msgid "Cannot save taxes!"
@@ -1556,7 +1563,7 @@ msgstr ""
 
 #: old/bin/ic.pl:2209
 msgid "Cannot stock assemblies!"
-msgstr ""
+msgstr "Impossible de stocker l'assemblage!"
 
 #: templates/demo/timecard.html:42 templates/demo/timecard.tex:27
 #: templates/demo_with_images/timecard.html:42
@@ -1567,19 +1574,19 @@ msgstr ""
 
 #: UI/Reports/filters/income_statement.html:40 sql/Pg-database.sql:2737
 msgid "Cash"
-msgstr ""
+msgstr "Financier"
 
 #: UI/payments/payment2.html:322 UI/Reports/filters/payments.html:50
 msgid "Cash Account"
-msgstr ""
+msgstr "Compte comptant"
 
 #: UI/timecards/timecard.html:16
 msgid "Category"
-msgstr ""
+msgstr "Catégorie"
 
 #: UI/io-email.html:17
 msgid "Cc"
-msgstr ""
+msgstr "Copie"
 
 #: old/bin/arap.pl:777 old/bin/io.pl:1431
 msgid "Cc: [_1]"
@@ -1587,15 +1594,15 @@ msgstr ""
 
 #: sql/Pg-database.sql:798
 msgid "Cell Phone"
-msgstr ""
+msgstr "Cellulaire"
 
 #: UI/users/preferences.html:14 UI/users/preferences.html:18
 msgid "Change Password"
-msgstr ""
+msgstr "Modifier mot de passe"
 
 #: UI/timecards/timecard.html:105
 msgid "Chargeable"
-msgstr ""
+msgstr "À facturer"
 
 #: lib/LedgerSMB/Report/GL.pm:150
 msgid "Chart ID"
@@ -1603,7 +1610,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/COA.pm:139 sql/Pg-database.sql:2677
 msgid "Chart of Accounts"
-msgstr ""
+msgstr "Plan Comptable"
 
 #: UI/setup/select_coa.html:41
 msgid "Chart of accounts"
@@ -1611,7 +1618,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2855
 msgid "Check"
-msgstr ""
+msgstr "Chèque"
 
 #: UI/templates/widget.html:41
 msgid "Check (base)"
@@ -1619,11 +1626,11 @@ msgstr ""
 
 #: old/bin/ic.pl:2015
 msgid "Check Inventory"
-msgstr ""
+msgstr "Listing chèques"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:137
 msgid "Check Prefix"
-msgstr ""
+msgstr "Préfixe"
 
 #: UI/payments/payment1_5.html:22
 msgid "Choose a company"
@@ -1638,11 +1645,11 @@ msgstr ""
 #: UI/Reports/filters/contact_search.html:94
 #: UI/Reports/filters/purchase_history.html:75
 msgid "City"
-msgstr ""
+msgstr "Ville"
 
 #: t/data/04-complex_template.html:445
 msgid "City:"
-msgstr ""
+msgstr "Ville"
 
 #: UI/Contact/divs/company.html:76 UI/Contact/divs/credit.html:72
 #: UI/Contact/divs/person.html:68
@@ -1665,15 +1672,15 @@ msgstr ""
 #: UI/reconciliation/report.html:235 UI/reconciliation/report.html:295
 #: UI/Reports/filters/gl.html:259
 msgid "Cleared"
-msgstr ""
+msgstr "Lettré"
 
 #: UI/reconciliation/report.html:101
 msgid "Cleared Transactions"
-msgstr ""
+msgstr "Transactions compensées"
 
 #: UI/timecards/timecard.html:101
 msgid "Clocked"
-msgstr ""
+msgstr "Pointé"
 
 #: UI/accounts/yearend.html:96
 msgid "Close As-Of"
@@ -1696,7 +1703,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:210
 #: UI/Reports/filters/timecards.html:35
 msgid "Closed"
-msgstr ""
+msgstr "Clôturé"
 
 #: UI/accounts/yearend.html:14
 msgid "Closing data"
@@ -1706,11 +1713,11 @@ msgstr ""
 #: lib/LedgerSMB/Report/Listings/SIC.pm:47 UI/am-language-form.html:11
 #: UI/am-sic-form.html:11
 msgid "Code"
-msgstr ""
+msgstr "Code"
 
 #: old/bin/am.pl:356 old/bin/am.pl:435
 msgid "Code missing!"
-msgstr ""
+msgstr "Code manquant!"
 
 #: sql/Pg-database.sql:538
 msgid "Cold Lead"
@@ -1739,19 +1746,19 @@ msgstr ""
 #: UI/Contact/divs/company.html:3 UI/login.html:86 UI/main.html:30
 #: UI/Reports/aging_report.html:14 UI/Reports/display_report.html:28
 msgid "Company"
-msgstr ""
+msgstr "Société"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:39
 msgid "Company Address"
-msgstr ""
+msgstr "Adresse"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:41
 msgid "Company Fax"
-msgstr ""
+msgstr "Télécopieur"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:34
 msgid "Company Information"
-msgstr ""
+msgstr "Information"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:54
 msgid "Company License Number"
@@ -1760,11 +1767,11 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:142
 #: lib/LedgerSMB/Scripts/configuration.pm:36
 msgid "Company Name"
-msgstr ""
+msgstr "Nom de société"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:40
 msgid "Company Phone"
-msgstr ""
+msgstr "Téléphone"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:52
 msgid "Company Sales Tax ID"
@@ -1784,7 +1791,7 @@ msgstr ""
 
 #: old/bin/am.pl:448 old/bin/oe.pl:1329
 msgid "Confirm!"
-msgstr ""
+msgstr "Confirmer!"
 
 #: lib/LedgerSMB.pm:445
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
@@ -1811,7 +1818,7 @@ msgstr ""
 #: templates/xedemo/sales_quotation.html:71
 #: UI/Reports/filters/contact_search.html:56 sql/Pg-database.sql:534
 msgid "Contact"
-msgstr ""
+msgstr "Contact"
 
 #: lib/LedgerSMB/Scripts/contact.pm:192 t/data/04-complex_template.html:31
 #: UI/Contact/divs/contact_info.html:3 UI/Contact/divs/contact_info.html:32
@@ -1839,7 +1846,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2738
 msgid "Contacts"
-msgstr ""
+msgstr "Contacts"
 
 #: UI/budgetting/budget_entry.html:159 UI/budgetting/budget_entry.html:182
 msgid "Content"
@@ -1864,7 +1871,7 @@ msgstr ""
 #: UI/Reports/filters/taxforms.html:56 UI/Reports/filters/trial_balance.html:152
 #: UI/timecards/entry_filter.html:41
 msgid "Continue"
-msgstr ""
+msgstr "Continuer"
 
 #: old/bin/ic.pl:862
 msgid "Continue Previous Workflow"
@@ -1872,7 +1879,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:235
 msgid "Contra"
-msgstr ""
+msgstr "Contrepartie"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1130
 msgid ""
@@ -1894,15 +1901,15 @@ msgstr ""
 
 #: UI/io-email.html:64
 msgid "Copies"
-msgstr ""
+msgstr "Copies"
 
 #: UI/setup/confirm_operation.html:46
 msgid "Copy"
-msgstr ""
+msgstr "Copier"
 
 #: old/bin/am.pl:168
 msgid "Copy to COA"
-msgstr ""
+msgstr "Copier dans le plan comptable"
 
 #: old/bin/aa.pl:963 old/bin/gl.pl:258 old/bin/ir.pl:520 old/bin/is.pl:583
 msgid "Copy to New"
@@ -1915,11 +1922,11 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:127 old/bin/ic.pl:1015
 #: old/bin/ic.pl:1259 old/bin/oe.pl:2401
 msgid "Cost"
-msgstr ""
+msgstr "Coût"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:105
 msgid "Cost of Goods Sold"
-msgstr ""
+msgstr "Coût des produits vendus"
 
 #: lib/LedgerSMB/Template/DB.pm:127 lib/LedgerSMB/Template/DB.pm:77
 msgid "Could Not Load Template from DB"
@@ -1931,11 +1938,11 @@ msgstr ""
 
 #: old/bin/oe.pl:1994
 msgid "Could not save!"
-msgstr ""
+msgstr "Enregistrement impossible!"
 
 #: old/bin/oe.pl:2264
 msgid "Could not transfer Inventory!"
-msgstr ""
+msgstr "Impossible de transférer l'inventaire!"
 
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:101
 #: UI/inventory/adjustment_entry.html:26
@@ -1945,7 +1952,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:137
 #: lib/LedgerSMB/Report/Listings/TemplateTrans.pm:102
 msgid "Counterparty"
-msgstr ""
+msgstr "Contrepartie"
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:105
 msgid "Counterparty Code"
@@ -1960,15 +1967,15 @@ msgstr ""
 #: UI/Reports/filters/contact_search.html:109
 #: UI/Reports/filters/purchase_history.html:99 UI/setup/select_coa.html:75
 msgid "Country"
-msgstr ""
+msgstr "Pays"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:55
 msgid "Country Name"
-msgstr ""
+msgstr "Nom du pays"
 
 #: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:30
 msgid "Country:"
-msgstr ""
+msgstr "Pays:"
 
 #: UI/setup/credentials.html:95 UI/templates/widget.html:120
 msgid "Create"
@@ -2020,19 +2027,19 @@ msgstr ""
 #: UI/Reports/co/filter_bm.html:105 UI/Reports/filters/gl.html:240
 #: UI/Reports/filters/trial_balance.html:5
 msgid "Credit"
-msgstr ""
+msgstr "Crédit"
 
 #: lib/LedgerSMB/Scripts/contact.pm:295
 msgid "Credit Account"
-msgstr ""
+msgstr "Compte de crédit"
 
 #: lib/LedgerSMB/Report/Contact/Search.pm:72
 msgid "Credit Account Number"
-msgstr ""
+msgstr "Numéro de compte de crédit"
 
 #: lib/LedgerSMB/Scripts/contact.pm:190 UI/Contact/divs/credit.html:3
 msgid "Credit Accounts"
-msgstr ""
+msgstr "Comptes de crédit"
 
 #: old/bin/am.pl:1414 templates/demo/invoice.html:16
 #: templates/demo/invoice.tex:114 templates/demo_with_images/invoice.html:16
@@ -2045,15 +2052,15 @@ msgstr ""
 #: UI/Contact/divs/credit.html:30 UI/Contact/divs/credit.html:145
 #: UI/Contact/divs/credit.html:146 UI/orders/order.html:33
 msgid "Credit Limit"
-msgstr ""
+msgstr "Encours autorisé"
 
 #: t/data/04-complex_template.html:201
 msgid "Credit Limit:"
-msgstr ""
+msgstr "Encours autorisé:"
 
 #: sql/Pg-database.sql:2790
 msgid "Credit Note"
-msgstr ""
+msgstr "Note de crédit"
 
 #: lib/LedgerSMB/Report/COA.pm:112 lib/LedgerSMB/Report/GL.pm:124
 #: lib/LedgerSMB/Report/Trial_Balance.pm:185
@@ -2066,7 +2073,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:278 old/bin/ic.pl:1004
 #: old/bin/ic.pl:1098 old/bin/oe.pl:2406
 msgid "Curr"
-msgstr ""
+msgstr "Dev."
 
 #: lib/LedgerSMB/Report/Contact/History.pm:74
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:80
@@ -2090,7 +2097,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:403 UI/timecards/timecard.html:121
 #: UI/timecards/timecard-week.html:76
 msgid "Currency"
-msgstr ""
+msgstr "Devise"
 
 #: lib/LedgerSMB/Report/Aging.pm:131 old/bin/aa.pl:1575 old/bin/pe.pl:816
 #: templates/demo/statement.html:60 templates/demo/statement.tex:38
@@ -2100,13 +2107,13 @@ msgstr ""
 #: UI/lib/report_base.html:160 UI/lib/report_base.html:253
 #: UI/Reports/co/filter_bm.html:52 UI/Reports/filters/aging.html:98
 msgid "Current"
-msgstr ""
+msgstr "En cours"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:237
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:239 lib/LedgerSMB/Report/PNL.pm:225
 #: lib/LedgerSMB/Report/PNL.pm:227 lib/LedgerSMB/Scripts/configuration.pm:96
 msgid "Current earnings"
-msgstr ""
+msgstr "Bénéfice de l'exercice"
 
 #: UI/accounts/edit.html:263
 msgid "Custom Flags"
@@ -2125,15 +2132,15 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:10 UI/Reports/filters/orders.html:7
 #: sql/Pg-database.sql:532
 msgid "Customer"
-msgstr ""
+msgstr "Client"
 
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:250
 msgid "Customer Account"
-msgstr ""
+msgstr "Compte client"
 
 #: sql/Pg-database.sql:2675
 msgid "Customer History"
-msgstr ""
+msgstr "Historique client"
 
 #: UI/Contact/divs/credit.html:368
 msgid "Customer Invoice"
@@ -2142,7 +2149,7 @@ msgstr ""
 #: UI/payments/payment1.html:44 UI/payments/payment2.html:28
 #: UI/Reports/filters/orders.html:8
 msgid "Customer Name"
-msgstr ""
+msgstr "Nom du client"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:117
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:180
@@ -2153,15 +2160,15 @@ msgstr ""
 #: UI/Reports/filters/overpayments.html:20 UI/Reports/filters/payments.html:14
 #: UI/Reports/filters/purchase_history.html:56
 msgid "Customer Number"
-msgstr ""
+msgstr "Numéro de client"
 
 #: UI/Reports/filters/contact_search.html:11
 msgid "Customer Search"
-msgstr ""
+msgstr "Recherche client"
 
 #: old/bin/aa.pl:1306 old/bin/is.pl:1374 old/bin/oe.pl:1210 old/bin/pe.pl:1240
 msgid "Customer missing!"
-msgstr ""
+msgstr "Client manquant!"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:883 lib/LedgerSMB/Upgrade_Tests.pm:929
 msgid "Customer not in a business"
@@ -2169,11 +2176,11 @@ msgstr ""
 
 #: old/bin/arap.pl:142 old/bin/pe.pl:1215
 msgid "Customer not on file!"
-msgstr ""
+msgstr "Client absent du fichier!"
 
 #: UI/setup/complete.html:26 UI/setup/confirm_operation.html:124
 msgid "Customer/Vendor Accounts"
-msgstr ""
+msgstr "Comptes Clients/Fournisseurs"
 
 #: lib/LedgerSMB/Scripts/asset.pm:805
 msgid "D M"
@@ -2185,11 +2192,11 @@ msgstr ""
 
 #: UI/Contact/divs/employee.html:168
 msgid "DOB"
-msgstr ""
+msgstr "Date de naissance"
 
 #: t/data/04-complex_template.html:106
 msgid "DOB:"
-msgstr ""
+msgstr "Date de naissance:"
 
 #: UI/reconciliation/report.html:150
 msgid "Data from your bank statement"
@@ -2209,7 +2216,7 @@ msgstr ""
 
 #: UI/setup/credentials.html:80 UI/setup/list_databases.html:13
 msgid "Database"
-msgstr ""
+msgstr "Base de données"
 
 #: UI/setup/ui-db-credentials.html:7
 msgid "Database "
@@ -2241,7 +2248,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:255
 msgid "Database does not exist."
-msgstr ""
+msgstr "Base de données inexistante."
 
 #: lib/LedgerSMB/Scripts/setup.pm:967
 msgid "Database exists."
@@ -2317,15 +2324,15 @@ msgstr ""
 #: UI/payments/payments_detail.html:333 UI/payments/use_overpayment2.html:85
 #: UI/Reports/filters/gl.html:203 UI/Reports/filters/orders.html:134
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: UI/users/preferences.html:50
 msgid "Date Format"
-msgstr ""
+msgstr "Format de date"
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:106 old/bin/ic.pl:940
 msgid "Date From"
-msgstr ""
+msgstr "De"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:104
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:258
@@ -2334,7 +2341,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:223
 #: UI/Reports/filters/invoice_search.html:342
 msgid "Date Paid"
-msgstr ""
+msgstr "Date de paiement"
 
 #: UI/lib/report_base.html:197
 msgid "Date Range"
@@ -2342,7 +2349,7 @@ msgstr ""
 
 #: old/bin/oe.pl:1725
 msgid "Date Received"
-msgstr ""
+msgstr "Date de réception"
 
 #: UI/Reports/filters/payments.html:90
 msgid "Date Reversed"
@@ -2350,7 +2357,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:107 old/bin/ic.pl:943
 msgid "Date To"
-msgstr ""
+msgstr "À"
 
 #: UI/timecards/timecard.html:56
 msgid "Date Worked"
@@ -2358,15 +2365,15 @@ msgstr ""
 
 #: UI/payments/payment1.html:73
 msgid "Date from"
-msgstr ""
+msgstr "De"
 
 #: UI/setup/new_user.html:145
 msgid "Date of Birth"
-msgstr ""
+msgstr "Date de naissance"
 
 #: old/bin/oe.pl:1979
 msgid "Date received missing!"
-msgstr ""
+msgstr "Date de réception manquante!"
 
 #: UI/Reports/filters/balance_sheet.html:44
 msgid "Date selection"
@@ -2375,7 +2382,7 @@ msgstr ""
 #: old/bin/aa.pl:1692 UI/payments/payment1.html:85
 #: UI/Reports/filters/contact_search.html:122
 msgid "Date to"
-msgstr ""
+msgstr "À"
 
 #: UI/payments/payment2.html:107
 msgid "Date to register payment"
@@ -2391,7 +2398,7 @@ msgstr ""
 
 #: old/bin/arap.pl:784 old/bin/io.pl:1451
 msgid "Date: [_1]"
-msgstr ""
+msgstr "Date: [_1]"
 
 #: UI/Contact/divs/credit.html:416 UI/Reports/filters/balance_sheet.html:67
 #: UI/Reports/filters/income_statement.html:99
@@ -2401,22 +2408,22 @@ msgstr ""
 #: old/bin/am.pl:725 UI/lib/report_base.html:166
 #: UI/timecards/entry_filter.html:22
 msgid "Day"
-msgstr ""
+msgstr "Jour"
 
 #: old/bin/arap.pl:514
 msgid "Day(s)"
-msgstr ""
+msgstr "JOur(s)"
 
 #: old/bin/am.pl:726
 msgid "Days"
-msgstr ""
+msgstr "Jours"
 
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:86
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:86 UI/budgetting/budget_entry.html:61
 #: UI/journal/journal_entry.html:131 UI/Reports/filters/gl.html:233
 #: UI/Reports/filters/trial_balance.html:4
 msgid "Debit"
-msgstr ""
+msgstr "Débit"
 
 #: old/bin/am.pl:1415 sql/Pg-database.sql:2787
 msgid "Debit Invoice"
@@ -2424,22 +2431,22 @@ msgstr ""
 
 #: sql/Pg-database.sql:2786
 msgid "Debit Note"
-msgstr ""
+msgstr "Note de débit"
 
 #: lib/LedgerSMB/Report/COA.pm:105 lib/LedgerSMB/Report/GL.pm:118
 #: lib/LedgerSMB/Report/Trial_Balance.pm:179
 #: lib/LedgerSMB/Scripts/payment.pm:204 UI/reconciliation/report.html:155
 #: UI/reconciliation/report.html:157 UI/Reports/co/filter_cd.html:82
 msgid "Debits"
-msgstr ""
+msgstr "Débits"
 
 #: old/bin/aa.pl:93 old/bin/gl.pl:88 old/bin/io.pl:90
 msgid "Dec"
-msgstr ""
+msgstr "Déc."
 
 #: lib/LedgerSMB.pm:529 old/bin/aa.pl:79 old/bin/gl.pl:74 old/bin/io.pl:76
 msgid "December"
-msgstr ""
+msgstr "Décembre"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:142
 msgid "Decimal Places for Money"
@@ -2472,31 +2479,31 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:60 UI/setup/upgrade_info.html:43
 msgid "Default Country"
-msgstr ""
+msgstr "Pays par défaut"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:48
 msgid "Default Email BCC"
-msgstr ""
+msgstr "CCI par défaut"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:46
 msgid "Default Email CC"
-msgstr ""
+msgstr "CC par défaut"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:50
 msgid "Default Email From"
-msgstr ""
+msgstr "Courriel émetteur par défaut"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:44
 msgid "Default Email To"
-msgstr ""
+msgstr "Courriel destinaire par défaut"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:67
 msgid "Default Format"
-msgstr ""
+msgstr "Format par défaut"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:63
 msgid "Default Language"
-msgstr ""
+msgstr "Langue par défaut"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:59
 msgid "Default Reportable"
@@ -2508,7 +2515,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2724
 msgid "Defaults"
-msgstr ""
+msgstr "Valeurs par défaut"
 
 #: lib/LedgerSMB/Scripts/currency.pm:79
 msgid "Defined currencies"
@@ -2533,7 +2540,7 @@ msgstr ""
 #: UI/Contact/pricelist.html:66 UI/file/internal-file-list.html:31
 #: UI/reconciliation/report.html:410
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:203
 msgid "Delete Batch"
@@ -2541,11 +2548,11 @@ msgstr ""
 
 #: old/bin/am.pl:456
 msgid "Delete Language"
-msgstr ""
+msgstr "Supprimer la langue"
 
 #: old/bin/arap.pl:616 old/bin/arap.pl:622
 msgid "Delete Schedule"
-msgstr ""
+msgstr "Effacer transaction planifiée"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:210
 msgid "Delete Vouchers"
@@ -2553,19 +2560,19 @@ msgstr ""
 
 #: old/bin/am.pl:466
 msgid "Deleting a language will also delete the templates for the language [_1]"
-msgstr ""
+msgstr "Supprimer une langue effacera aussi les squelettes pour la langue [_1]"
 
 #: templates/demo/invoice.tex:141 templates/demo/request_quotation.html:139
 #: templates/demo_with_images/invoice.tex:141
 #: templates/demo_with_images/request_quotation.html:139
 #: templates/xedemo/invoice.tex:136 templates/xedemo/request_quotation.html:139
 msgid "Delivery"
-msgstr ""
+msgstr "Livraison"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:108 old/bin/io.pl:261
 #: UI/Reports/filters/purchase_history.html:315
 msgid "Delivery Date"
-msgstr ""
+msgstr "Date de livraison"
 
 #: lib/LedgerSMB/Scripts/asset.pm:595
 msgid "Dep. Basis"
@@ -2596,11 +2603,11 @@ msgstr ""
 #: UI/asset/edit_asset.html:147 UI/asset/search_asset.html:133
 #: UI/payments/payment2.html:76 UI/payments/payments_detail.html:129
 msgid "Department"
-msgstr ""
+msgstr "Service"
 
 #: UI/payments/payment1.html:30
 msgid "Departments"
-msgstr ""
+msgstr "Services"
 
 #: sql/Pg-database.sql:2778
 msgid "Depreciate"
@@ -2737,15 +2744,15 @@ msgstr ""
 #: UI/timecards/timecard-week.html:112 sql/Pg-database.sql:2716
 #: sql/Pg-database.sql:2721
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #: old/bin/pe.pl:259
 msgid "Description Translations"
-msgstr ""
+msgstr "Description traductions"
 
 #: old/bin/am.pl:273 old/bin/am.pl:357 old/bin/am.pl:436 old/bin/am.pl:710
 msgid "Description missing!"
-msgstr ""
+msgstr "Description manquante!"
 
 #: UI/asset/edit_asset.html:57 UI/asset/search_asset.html:53
 #: UI/business_units/edit.html:71 UI/business_units/filter.html:22
@@ -2756,12 +2763,12 @@ msgstr ""
 #: old/bin/aa.pl:1548 old/bin/pe.pl:897 UI/Reports/filters/aging.html:63
 #: UI/Reports/filters/purchase_history.html:229
 msgid "Detail"
-msgstr ""
+msgstr "Détail"
 
 #: UI/payments/payments_detail.html:228
 #: UI/Reports/filters/invoice_outstanding.html:121
 msgid "Details"
-msgstr ""
+msgstr "Détails"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:72
 msgid "Disable Back Button"
@@ -2791,7 +2798,7 @@ msgstr ""
 #: UI/Contact/divs/credit.html:168 UI/payments/payments_detail.html:340
 #: UI/Reports/filters/purchase_history.html:304
 msgid "Discount"
-msgstr ""
+msgstr "Remise"
 
 #: lib/LedgerSMB/Report/Listings/Business_Type.pm:57
 msgid "Discount (%)"
@@ -2844,7 +2851,7 @@ msgstr ""
 
 #: old/bin/oe.pl:1940 old/bin/oe.pl:1948
 msgid "Done"
-msgstr ""
+msgstr "Fait!"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1010
 msgid "Double customernumbers"
@@ -2878,7 +2885,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:108
 #: UI/Reports/filters/search_goods.html:367
 msgid "Drawing"
-msgstr ""
+msgstr "Dessin"
 
 #: lib/LedgerSMB/Report/COA.pm:119
 msgid "Dropdowns"
@@ -2915,11 +2922,11 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:238
 #: UI/Reports/filters/invoice_search.html:357
 msgid "Due Date"
-msgstr ""
+msgstr "Échéance"
 
 #: old/bin/aa.pl:1311
 msgid "Due Date missing!"
-msgstr ""
+msgstr "Date d'échéance manquante!"
 
 #: UI/Contact/divs/user.html:11 UI/setup/edit_user.html:11
 msgid "Duplicate User Found: Importing User"
@@ -2933,23 +2940,23 @@ msgstr ""
 #: old/bin/oe.pl:1947 old/bin/oe.pl:642 old/bin/oe.pl:869 UI/io-email.html:15
 #: UI/Reports/filters/contact_search.html:48
 msgid "E-mail"
-msgstr ""
+msgstr "E-mail"
 
 #: UI/io-email.html:6
 msgid "E-mail [_1]"
-msgstr ""
+msgstr "E-mail [_1]"
 
 #: old/bin/am.pl:1383 old/bin/io.pl:1269
 msgid "E-mail address missing!"
-msgstr ""
+msgstr "Adresse e-mail manquante!"
 
 #: old/bin/arap.pl:436
 msgid "E-mail message"
-msgstr ""
+msgstr "Message e-mail"
 
 #: old/bin/printer.pl:173
 msgid "E-mailed"
-msgstr ""
+msgstr "E-mail envoyé"
 
 #: lib/LedgerSMB/Report/PNL/ECA.pm:77
 msgid "ECA Income Statement"
@@ -2967,19 +2974,19 @@ msgstr ""
 #: UI/Contact/divs/address.html:52 UI/Contact/divs/contact_info.html:11
 #: UI/templates/widget.html:125
 msgid "Edit"
-msgstr ""
+msgstr "Modifier"
 
 #: old/bin/aa.pl:382 old/bin/aa.pl:420
 msgid "Edit AP Transaction"
-msgstr ""
+msgstr "Modifier une dépense"
 
 #: old/bin/aa.pl:381
 msgid "Edit AR Transaction"
-msgstr ""
+msgstr "Modifier une recette"
 
 #: old/bin/ic.pl:712 old/bin/ic.pl:96
 msgid "Edit Assembly"
-msgstr ""
+msgstr "Modifier produit fini / transformé"
 
 #: lib/LedgerSMB/Scripts/asset.pm:53
 msgid "Edit Asset Class"
@@ -2987,7 +2994,7 @@ msgstr ""
 
 #: old/bin/am.pl:259
 msgid "Edit Business"
-msgstr ""
+msgstr "Modifier type d'affaire"
 
 #: old/bin/is.pl:129
 msgid "Edit Credit Invoice"
@@ -2999,7 +3006,7 @@ msgstr ""
 
 #: t/data/04-complex_template.html:17 UI/Contact/contact.html:27
 msgid "Edit Customer"
-msgstr ""
+msgstr "Modifier client"
 
 #: old/bin/is.pl:126
 msgid "Edit Customer Return"
@@ -3011,43 +3018,43 @@ msgstr ""
 
 #: old/bin/pe.pl:506
 msgid "Edit Description Translations"
-msgstr ""
+msgstr "Modifier traductions description"
 
 #: t/data/04-complex_template.html:21 UI/Contact/contact.html:31
 msgid "Edit Employee"
-msgstr ""
+msgstr "Modifier employé"
 
 #: old/bin/am.pl:151
 msgid "Edit GIFI"
-msgstr ""
+msgstr "Modifier code d'identification comptable ou fiscale"
 
 #: old/bin/pe.pl:103
 msgid "Edit Group"
-msgstr ""
+msgstr "Modifier groupe"
 
 #: old/bin/ic.pl:97
 msgid "Edit Labor/Overhead"
-msgstr ""
+msgstr "Modifier coût de production"
 
 #: old/bin/am.pl:424
 msgid "Edit Language"
-msgstr ""
+msgstr "Modifier langue"
 
 #: old/bin/ic.pl:710 old/bin/ic.pl:94
 msgid "Edit Part"
-msgstr ""
+msgstr "Modifier marchandise"
 
 #: old/bin/pe.pl:188
 msgid "Edit Pricegroup"
-msgstr ""
+msgstr "Modifier groupe de prix"
 
 #: old/bin/oe.pl:93
 msgid "Edit Purchase Order"
-msgstr ""
+msgstr "Modifier commande d'achat"
 
 #: old/bin/oe.pl:107
 msgid "Edit Quotation"
-msgstr ""
+msgstr "Modifier devis"
 
 #: UI/business_units/edit.html:10
 msgid "Edit Reporting Unit"
@@ -3055,23 +3062,23 @@ msgstr ""
 
 #: old/bin/oe.pl:103
 msgid "Edit Request for Quotation"
-msgstr ""
+msgstr "Modifier demande de devis"
 
 #: old/bin/am.pl:341
 msgid "Edit SIC"
-msgstr ""
+msgstr "Modifier code de secteur économique"
 
 #: old/bin/is.pl:132
 msgid "Edit Sales Invoice"
-msgstr ""
+msgstr "Modifier facture de vente"
 
 #: old/bin/oe.pl:98
 msgid "Edit Sales Order"
-msgstr ""
+msgstr "Modifier commande de vente"
 
 #: old/bin/ic.pl:711 old/bin/ic.pl:95
 msgid "Edit Service"
-msgstr ""
+msgstr "Modifier service"
 
 #: UI/taxform/add_taxform.html:4
 msgid "Edit Tax Form"
@@ -3079,15 +3086,15 @@ msgstr ""
 
 #: UI/Contact/divs/employee.html:213
 msgid "Edit User"
-msgstr ""
+msgstr "Modifier utilisateur"
 
 #: t/data/04-complex_template.html:19 UI/Contact/contact.html:29
 msgid "Edit Vendor"
-msgstr ""
+msgstr "Modifier fournisseur"
 
 #: old/bin/ir.pl:141
 msgid "Edit Vendor Invoice"
-msgstr ""
+msgstr "Modifier facture de fournisseur"
 
 #: old/bin/ir.pl:135
 msgid "Edit Vendor Return"
@@ -3095,7 +3102,7 @@ msgstr ""
 
 #: old/bin/am.pl:696
 msgid "Edit Warehouse"
-msgstr ""
+msgstr "Modifier entrepôt"
 
 #: UI/Contact/divs/user.html:14 UI/setup/edit_user.html:14
 msgid "Editing User"
@@ -3103,19 +3110,19 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:77
 msgid "Eight"
-msgstr ""
+msgstr "Huit"
 
 #: old/lib/LedgerSMB/Num2text.pm:88
 msgid "Eighteen"
-msgstr ""
+msgstr "Dix-huit"
 
 #: old/lib/LedgerSMB/Num2text.pm:106
 msgid "Eighty"
-msgstr ""
+msgstr "Quatre-vingt"
 
 #: old/lib/LedgerSMB/Num2text.pm:80
 msgid "Eleven"
-msgstr ""
+msgstr "Onze"
 
 #: old/lib/LedgerSMB/Num2text.pm:81
 msgid "Eleven-o"
@@ -3141,12 +3148,12 @@ msgstr ""
 #: UI/Contact/divs/employee.html:3 UI/Reports/filters/contact_search.html:64
 #: UI/timecards/entry_filter.html:12 sql/Pg-database.sql:533
 msgid "Employee"
-msgstr ""
+msgstr "Employé"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:126 t/data/04-complex_template.html:92
 #: UI/Contact/divs/employee.html:133 UI/setup/new_user.html:134
 msgid "Employee Number"
-msgstr ""
+msgstr "Numéro d'employé"
 
 #: UI/Reports/filters/contact_search.html:13
 msgid "Employee Search"
@@ -3163,7 +3170,7 @@ msgstr ""
 
 #: UI/lib/report_base.html:303 sql/Pg-database.sql:2694
 msgid "Employees"
-msgstr ""
+msgstr "Employés"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:728
 msgid "Empty AP account"
@@ -3222,7 +3229,7 @@ msgstr ""
 
 #: old/bin/am.pl:766
 msgid "Ends"
-msgstr ""
+msgstr "Se termine"
 
 #: UI/inventory/adjustment_entry.html:7 sql/Pg-database.sql:2671
 msgid "Enter Inventory"
@@ -3294,7 +3301,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/PNL.pm:219 UI/accounts/edit.html:212
 #: UI/Reports/filters/gl.html:151
 msgid "Equity"
-msgstr ""
+msgstr "Capital"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:210
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:212
@@ -3333,12 +3340,12 @@ msgstr ""
 
 #: old/bin/am.pl:771 old/bin/arap.pl:537
 msgid "Every"
-msgstr ""
+msgstr "Chaque"
 
 #: old/bin/aa.pl:836 old/bin/ir.pl:838 old/bin/is.pl:940
 #: UI/orders/order.html:250
 msgid "Exch"
-msgstr ""
+msgstr "Change"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:118
 #: lib/LedgerSMB/Scripts/payment.pm:922 old/bin/aa.pl:438 old/bin/ir.pl:334
@@ -3348,11 +3355,11 @@ msgstr ""
 #: UI/payments/use_overpayment2.html:98 UI/Reports/filters/overpayments.html:50
 #: UI/Reports/filters/payments.html:113
 msgid "Exchange Rate"
-msgstr ""
+msgstr "Taux de change"
 
 #: old/bin/aa.pl:1345 old/bin/ir.pl:1291 old/bin/is.pl:1408
 msgid "Exchange rate for payment missing!"
-msgstr ""
+msgstr "Taux de change manquant pour le paiement!"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1236
 msgid "Exchange rate hasn't been defined!"
@@ -3360,7 +3367,7 @@ msgstr ""
 
 #: old/bin/aa.pl:1327 old/bin/ir.pl:1272 old/bin/is.pl:1389 old/bin/oe.pl:1214
 msgid "Exchange rate missing!"
-msgstr ""
+msgstr "Taux de change manquant!"
 
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:104
 msgid "Expected"
@@ -3369,7 +3376,7 @@ msgstr ""
 #: old/bin/ic.pl:655 UI/accounts/edit.html:215 UI/accounts/edit.html:471
 #: UI/accounts/edit.html:510 UI/Reports/filters/gl.html:167
 msgid "Expense"
-msgstr ""
+msgstr "Dépenses"
 
 #: UI/asset/edit_asset.html:189
 msgid "Expense Account"
@@ -3377,7 +3384,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:374
 msgid "Expense/Asset"
-msgstr ""
+msgstr "Dépenses/actif"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:187
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:189 lib/LedgerSMB/Report/PNL.pm:188
@@ -3395,7 +3402,7 @@ msgstr ""
 #: templates/demo_with_images/request_quotation.html:141
 #: templates/xedemo/invoice.html:144 templates/xedemo/request_quotation.html:141
 msgid "Extended"
-msgstr ""
+msgstr "Prix total"
 
 #: UI/timecards/timecard-week.html:106
 msgid "Extra Used"
@@ -3404,15 +3411,15 @@ msgstr ""
 #: UI/budgetting/budget_entry.html:59 UI/journal/journal_entry.html:104
 #: UI/journal/journal_entry.html:130
 msgid "FX"
-msgstr ""
+msgstr "Devises"
 
 #: old/bin/pe.pl:1308
 msgid "Failed to save order!"
-msgstr ""
+msgstr "Impossible d'enregister la commande!"
 
 #: sql/Pg-database.sql:804
 msgid "Fax"
-msgstr ""
+msgstr "Fax"
 
 #: templates/demo/ar_transaction.html:51 templates/demo/ar_transaction.tex:27
 #: templates/demo/letterhead.tex:14
@@ -3499,19 +3506,19 @@ msgstr ""
 
 #: old/bin/aa.pl:83 old/bin/gl.pl:78 old/bin/io.pl:80
 msgid "Feb"
-msgstr ""
+msgstr "Fév."
 
 #: lib/LedgerSMB.pm:519 old/bin/aa.pl:69 old/bin/gl.pl:64 old/bin/io.pl:66
 msgid "February"
-msgstr ""
+msgstr "Février"
 
 #: old/lib/LedgerSMB/Num2text.pm:85
 msgid "Fifteen"
-msgstr ""
+msgstr "Quinze"
 
 #: old/lib/LedgerSMB/Num2text.pm:103
 msgid "Fifty"
-msgstr ""
+msgstr "Cinquante"
 
 #: UI/file/attachment_screen.html:36 UI/file/internal-file-list.html:65
 msgid "File"
@@ -3576,7 +3583,7 @@ msgstr ""
 
 #: UI/Contact/divs/employee.html:44 UI/setup/new_user.html:113
 msgid "First Name"
-msgstr ""
+msgstr "Prénom"
 
 #: templates/demo/balance_sheet.html:94
 #: templates/demo_with_images/balance_sheet.html:94
@@ -3586,7 +3593,7 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:74
 msgid "Five"
-msgstr ""
+msgstr "Cinq"
 
 #: old/lib/LedgerSMB/Num2text.pm:109
 msgid "Five Hundred"
@@ -3602,15 +3609,15 @@ msgstr ""
 
 #: old/bin/arap.pl:542
 msgid "For"
-msgstr ""
+msgstr "Pour"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:108
 msgid "Foreign Exchange Gain"
-msgstr ""
+msgstr "Produit conversion devises"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:111
 msgid "Foreign Exchange Loss"
-msgstr ""
+msgstr "Perte conversion devises"
 
 #: UI/Reports/filters/taxforms.html:22
 msgid "Form"
@@ -3626,15 +3633,15 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:102
 msgid "Forty"
-msgstr ""
+msgstr "Quarante"
 
 #: old/lib/LedgerSMB/Num2text.pm:73
 msgid "Four"
-msgstr ""
+msgstr "Quatre"
 
 #: old/lib/LedgerSMB/Num2text.pm:84
 msgid "Fourteen"
-msgstr ""
+msgstr "Quatorze"
 
 #: lib/LedgerSMB/Report/Timecards.pm:130
 msgid "Fri"
@@ -3653,7 +3660,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:118
 #: UI/Reports/filters/purchase_history.html:138
 msgid "From"
-msgstr ""
+msgstr "De"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:186
 msgid "From Amount"
@@ -3677,7 +3684,7 @@ msgstr ""
 
 #: old/bin/oe.pl:2136
 msgid "From Warehouse"
-msgstr ""
+msgstr "Du entrepôt"
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:205
 msgid "From date"
@@ -3705,7 +3712,7 @@ msgstr ""
 #: UI/Reports/filters/income_statement.html:65 UI/setup/select_coa.html:53
 #: sql/Pg-database.sql:2740
 msgid "GIFI"
-msgstr ""
+msgstr "Code d'identification comptable ou fiscale"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:587 lib/LedgerSMB/Upgrade_Tests.pm:649
 #: lib/LedgerSMB/Upgrade_Tests.pm:668
@@ -3714,24 +3721,24 @@ msgstr ""
 
 #: old/bin/am.pl:205
 msgid "GIFI deleted!"
-msgstr ""
+msgstr "Code d'identification comptable ou fiscale supprimé!"
 
 #: old/bin/am.pl:196
 msgid "GIFI missing!"
-msgstr ""
+msgstr "Code d'identification comptable ou fiscale manquant!"
 
 #: old/bin/am.pl:198
 msgid "GIFI saved!"
-msgstr ""
+msgstr "Code d'identification comptable ou fiscale enregistré!"
 
 #: old/bin/am.pl:780 UI/Reports/filters/unapproved.html:8
 #: UI/setup/complete.html:23 UI/setup/confirm_operation.html:121
 msgid "GL"
-msgstr ""
+msgstr "Grand-livre"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:115
 msgid "GL Reference Number"
-msgstr ""
+msgstr "Numéro de réf. Grand-livre"
 
 #: UI/accounts/edit.html:519
 msgid "Gain"
@@ -3768,7 +3775,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/order.pm:124 UI/Reports/aging_report.html:84
 #: sql/Pg-database.sql:2666 sql/Pg-database.sql:2704
 msgid "Generate"
-msgstr ""
+msgstr "Générer"
 
 #: UI/Contact/divs/company.html:166 UI/Contact/divs/person.html:182
 msgid "Generate Control Code"
@@ -3776,11 +3783,11 @@ msgstr ""
 
 #: old/bin/oe.pl:2503
 msgid "Generate Orders"
-msgstr ""
+msgstr "Générer commandes"
 
 #: old/bin/oe.pl:2408
 msgid "Generate Purchase Orders"
-msgstr ""
+msgstr "Générer commandes d'achat"
 
 #: lib/LedgerSMB/Scripts/order.pm:66
 msgid "Generate Purchase Orders from Sales Orders"
@@ -3788,7 +3795,7 @@ msgstr ""
 
 #: old/bin/pe.pl:1042 old/bin/pe.pl:1132 old/bin/pe.pl:867
 msgid "Generate Sales Orders"
-msgstr ""
+msgstr "Générer commandes de ventes"
 
 #: lib/LedgerSMB/Scripts/order.pm:79
 msgid "Generate Sales Orders from Purchase Orders"
@@ -3822,27 +3829,27 @@ msgstr ""
 #: old/bin/ic.pl:418 old/bin/io.pl:264 old/bin/oe.pl:2046 old/bin/oe.pl:2119
 #: old/bin/oe.pl:2154 old/bin/pe.pl:141 UI/io-email.html:86
 msgid "Group"
-msgstr ""
+msgstr "Groupe"
 
 #: old/bin/pe.pl:271
 msgid "Group Translations"
-msgstr ""
+msgstr "Grouper traductions"
 
 #: UI/io-email.html:80 UI/orders/order.html:296
 msgid "Group by"
-msgstr ""
+msgstr "Groupé par"
 
 #: old/bin/pe.pl:89
 msgid "Group deleted!"
-msgstr ""
+msgstr "Groupe effacé!"
 
 #: old/bin/pe.pl:66
 msgid "Group missing!"
-msgstr ""
+msgstr "Groupe absent!"
 
 #: old/bin/pe.pl:68
 msgid "Group saved!"
-msgstr ""
+msgstr "Groupe enregistré!"
 
 #: sql/Pg-database.sql:801
 msgid "Gtalk"
@@ -3850,16 +3857,16 @@ msgstr ""
 
 #: t/data/04-complex_template.html:25 sql/Pg-database.sql:2803
 msgid "HR"
-msgstr ""
+msgstr "Ressources humaines"
 
 #: sql/Pg-database.sql:2761
 msgid "HTML Templates"
-msgstr ""
+msgstr "Squelettes HTML"
 
 #: UI/accounts/edit.html:21 UI/accounts/edit.html:67 UI/accounts/edit.html:171
 #: UI/am-sic-form.html:16
 msgid "Heading"
-msgstr ""
+msgstr "En-tête"
 
 #: UI/Contact/divs/credit.html:480 UI/Reports/filters/balance_sheet.html:186
 #: UI/Reports/filters/income_statement.html:233
@@ -3868,11 +3875,11 @@ msgstr ""
 
 #: t/data/04-complex_template.html:35
 msgid "History"
-msgstr ""
+msgstr "Historique"
 
 #: sql/Pg-database.sql:806
 msgid "Home Phone"
-msgstr ""
+msgstr "Téléphone privé"
 
 #: sql/Pg-database.sql:537
 msgid "Hot Lead"
@@ -3880,18 +3887,18 @@ msgstr ""
 
 #: sql/Pg-database.sql:956
 msgid "Hourly"
-msgstr ""
+msgstr "Horaire"
 
 #: templates/demo/timecard.html:58 templates/demo/timecard.tex:31
 #: templates/demo_with_images/timecard.html:58
 #: templates/demo_with_images/timecard.tex:31 templates/xedemo/timecard.html:58
 #: templates/xedemo/timecard.tex:31
 msgid "Hours"
-msgstr ""
+msgstr "Heures"
 
 #: old/lib/LedgerSMB/Num2text.pm:108
 msgid "Hundred"
-msgstr ""
+msgstr "Cent"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:70
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:60 lib/LedgerSMB/Report/GL.pm:87
@@ -3914,7 +3921,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:135
 #: UI/Reports/filters/invoice_search.html:255 UI/Reports/filters/orders.html:121
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: sql/Pg-database.sql:803
 msgid "IRC"
@@ -3939,7 +3946,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Search.pm:261 old/bin/ic.pl:495
 #: UI/Reports/filters/search_goods.html:360
 msgid "Image"
-msgstr ""
+msgstr "Image"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:144
 msgid "Images in Templates"
@@ -3995,11 +4002,11 @@ msgstr ""
 
 #: old/bin/printer.pl:120
 msgid "In-line"
-msgstr ""
+msgstr "En ligne"
 
 #: old/bin/arap.pl:364
 msgid "Include Payment"
-msgstr ""
+msgstr "Inclure paiement"
 
 #: old/bin/aa.pl:1713 UI/Reports/co/filter_bm.html:67
 #: UI/Reports/co/filter_cd.html:53 UI/Reports/filters/aging.html:70
@@ -4009,11 +4016,11 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:161
 #: UI/Reports/filters/search_goods.html:223
 msgid "Include in Report"
-msgstr ""
+msgstr "Inclure dans l'état"
 
 #: UI/accounts/edit.html:312
 msgid "Include in drop-down menus"
-msgstr ""
+msgstr "Inclure dans les menus déroulants"
 
 #: UI/Reports/filters/inventory_adj.html:23
 msgid "Includes Part"
@@ -4030,7 +4037,7 @@ msgstr ""
 #: UI/accounts/edit.html:321 UI/accounts/edit.html:423 UI/accounts/edit.html:462
 #: UI/Reports/filters/gl.html:159
 msgid "Income"
-msgstr ""
+msgstr "Recettes"
 
 #: lib/LedgerSMB/Report/Payroll/Income_Types.pm:38 UI/payroll/income.html:29
 msgid "Income Class"
@@ -4040,7 +4047,7 @@ msgstr ""
 #: templates/demo_with_images/PNL.tex:28 templates/xedemo/PNL.tex:28
 #: UI/Reports/filters/income_statement.html:15 sql/Pg-database.sql:2749
 msgid "Income Statement"
-msgstr ""
+msgstr "Compte de résultat"
 
 #: UI/payroll/income.html:3
 msgid "Income Type"
@@ -4064,7 +4071,7 @@ msgstr ""
 
 #: old/bin/ic.pl:1269
 msgid "Individual Items"
-msgstr ""
+msgstr "Composition en marchandises individuelles"
 
 #: templates/demo/invoice.tex:31 templates/demo_with_images/invoice.tex:31
 #: templates/xedemo/invoice.tex:30
@@ -4085,7 +4092,7 @@ msgstr ""
 #: old/bin/aa.pl:806 old/bin/ir.pl:775 old/bin/ir.pl:783 old/bin/is.pl:878
 #: old/bin/is.pl:886 old/bin/oe.pl:816 UI/orders/order.html:199
 msgid "Internal Notes"
-msgstr ""
+msgstr "Notes internes"
 
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:83
 msgid "Invalid Reporting Basis"
@@ -4114,7 +4121,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/configuration.pm:99 old/bin/ic.pl:514
 #: UI/accounts/edit.html:287 sql/Pg-database.sql:2830
 msgid "Inventory"
-msgstr ""
+msgstr "Inventaire"
 
 #: UI/Reports/filters/inventory_activity.html:5 sql/Pg-database.sql:2668
 msgid "Inventory Activity"
@@ -4140,18 +4147,20 @@ msgstr ""
 msgid ""
 "Inventory quantity must be zero before you can set this assembly obsolete!"
 msgstr ""
+"La quantité en stock doit être zéro avant de pouvoir annuler cet assemblage!"
 
 #: old/bin/ic.pl:1794
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
 msgstr ""
+"La quantité en stock doit être zero avant de pouvoir annuler cette pièce!"
 
 #: old/bin/oe.pl:1991
 msgid "Inventory saved!"
-msgstr ""
+msgstr "Inventaire enregistré!"
 
 #: old/bin/oe.pl:2261
 msgid "Inventory transferred!"
-msgstr ""
+msgstr "Inventaire transféré!"
 
 #: lib/LedgerSMB/Report/Aging.pm:108
 #: lib/LedgerSMB/Report/Inventory/Search.pm:281
@@ -4170,7 +4179,7 @@ msgstr ""
 #: UI/templates/widget.html:47 sql/Pg-database.sql:1056 sql/Pg-database.sql:2733
 #: sql/Pg-database.sql:2832
 msgid "Invoice"
-msgstr ""
+msgstr "Facture"
 
 #: templates/demo/ap_transaction.html:67 templates/demo/ap_transaction.tex:59
 #: templates/demo/ar_transaction.html:66 templates/demo/ar_transaction.tex:76
@@ -4206,15 +4215,15 @@ msgstr ""
 #: templates/xedemo/product_receipt.tex:105 templates/xedemo/statement.html:56
 #: templates/xedemo/statement.tex:36
 msgid "Invoice #"
-msgstr ""
+msgstr "Facture #"
 
 #: old/bin/aa.pl:1644 old/bin/aa.pl:642 old/bin/ir.pl:482 old/bin/is.pl:530
 msgid "Invoice Created"
-msgstr ""
+msgstr "Facture créée"
 
 #: old/bin/aa.pl:1312
 msgid "Invoice Created Date missing!"
-msgstr ""
+msgstr "Date de création de facture manquante!"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:126
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:96 old/bin/aa.pl:1618 old/bin/aa.pl:646
@@ -4222,16 +4231,16 @@ msgstr ""
 #: UI/orders/order.html:89 UI/Reports/filters/invoice_outstanding.html:162
 #: UI/Reports/filters/invoice_search.html:283
 msgid "Invoice Date"
-msgstr ""
+msgstr "Date de facturation"
 
 #: old/bin/aa.pl:1310 old/bin/io.pl:1272 old/bin/ir.pl:1256 old/bin/is.pl:1373
 msgid "Invoice Date missing!"
-msgstr ""
+msgstr "Date de facture manquante!"
 
 #: templates/demo/receipt.tex:63 templates/demo_with_images/receipt.tex:63
 #: templates/xedemo/receipt.tex:63
 msgid "Invoice No."
-msgstr ""
+msgstr "N° de Facture"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:70
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:68
@@ -4246,11 +4255,11 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:89
 #: UI/Reports/filters/invoice_search.html:262
 msgid "Invoice Number"
-msgstr ""
+msgstr "Numéro de facture"
 
 #: old/bin/io.pl:1282
 msgid "Invoice Number missing!"
-msgstr ""
+msgstr "Numéro de facture manquant!"
 
 #: lib/LedgerSMB/Report/PNL/Invoice.pm:72
 msgid "Invoice Profit/Loss"
@@ -4288,7 +4297,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:94
 #: UI/Reports/filters/purchase_history.html:172
 msgid "Invoices"
-msgstr ""
+msgstr "Factures"
 
 #: old/bin/ic.pl:1243 old/bin/io.pl:225 templates/demo/bin_list.html:142
 #: templates/demo/bin_list.tex:105 templates/demo/invoice.html:135
@@ -4327,15 +4336,15 @@ msgstr ""
 #: templates/xedemo/work_order.tex:124 UI/io-email.html:95
 #: UI/payments/payment2.html:320
 msgid "Item"
-msgstr ""
+msgstr "Article"
 
 #: old/bin/ic.pl:1974
 msgid "Item deleted!"
-msgstr ""
+msgstr "Objet supprimé!"
 
 #: old/bin/io.pl:597
 msgid "Item not on file!"
-msgstr ""
+msgstr "Objet non-listé!"
 
 #: UI/Reports/filters/search_goods.html:171
 msgid "Items Found In"
@@ -4360,11 +4369,11 @@ msgstr ""
 
 #: old/bin/aa.pl:82 old/bin/gl.pl:77 old/bin/io.pl:79
 msgid "Jan"
-msgstr ""
+msgstr "Jan."
 
 #: lib/LedgerSMB.pm:518 old/bin/aa.pl:68 old/bin/gl.pl:63 old/bin/io.pl:65
 msgid "January"
-msgstr ""
+msgstr "Janvier"
 
 #: UI/Contact/divs/employee.html:80
 msgid "Job Title"
@@ -4391,20 +4400,20 @@ msgstr ""
 
 #: old/bin/aa.pl:88 old/bin/gl.pl:83 old/bin/io.pl:85
 msgid "Jul"
-msgstr ""
+msgstr "Juill."
 
 #: lib/LedgerSMB.pm:524 old/bin/aa.pl:74 old/bin/gl.pl:69 old/bin/io.pl:71
 msgid "July"
-msgstr ""
+msgstr "Juillet"
 
 #: old/bin/aa.pl:87 old/bin/gl.pl:82 old/bin/io.pl:84
 msgid "Jun"
-msgstr ""
+msgstr "Juin"
 
 #: lib/LedgerSMB.pm:523 old/bin/aa.pl:73 old/bin/gl.pl:68 old/bin/io.pl:70
 #: t/data/04-strings-for-translation.html:6
 msgid "June"
-msgstr ""
+msgstr "Juin"
 
 #: templates/demo/balance_sheet.html:93
 #: templates/demo_with_images/balance_sheet.html:93
@@ -4414,7 +4423,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2760
 msgid "LaTeX Templates"
-msgstr ""
+msgstr "Squelettes LaTeX"
 
 #: lib/LedgerSMB/Report/Listings/Asset_Class.pm:74
 #: lib/LedgerSMB/Report/Listings/Asset_Class.pm:99
@@ -4430,7 +4439,7 @@ msgstr ""
 
 #: old/bin/ic.pl:686
 msgid "Labor/Overhead"
-msgstr ""
+msgstr "Coût de production"
 
 #: templates/demo/timecard.html:86 templates/demo/timecard.tex:39
 #: templates/demo_with_images/timecard.html:86
@@ -4447,19 +4456,19 @@ msgstr ""
 #: UI/Reports/filters/income_statement.html:287 UI/users/preferences.html:70
 #: sql/Pg-database.sql:2763
 msgid "Language"
-msgstr ""
+msgstr "Langue"
 
 #: old/bin/am.pl:475
 msgid "Language deleted!"
-msgstr ""
+msgstr "Langue effacée!"
 
 #: old/bin/am.pl:442
 msgid "Language saved!"
-msgstr ""
+msgstr "Langue enregistrée!"
 
 #: old/bin/pe.pl:482
 msgid "Languages not defined!"
-msgstr ""
+msgstr "Langues non définis!"
 
 #: t/data/04-complex_template.html:67
 msgid "Last"
@@ -4469,7 +4478,7 @@ msgstr ""
 #: old/bin/ic.pl:630 UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:31
 #: UI/Contact/pricelist.tex:25 UI/Reports/filters/search_goods.html:302
 msgid "Last Cost"
-msgstr ""
+msgstr "Dernier prix"
 
 #: UI/Contact/divs/employee.html:67
 msgid "Last Name"
@@ -4481,11 +4490,11 @@ msgstr ""
 
 #: UI/setup/new_user.html:124
 msgid "Last name"
-msgstr ""
+msgstr "Nom"
 
 #: old/bin/oe.pl:2404 sql/Pg-database.sql:535
 msgid "Lead"
-msgstr ""
+msgstr "Délai"
 
 #: UI/Contact/pricelist.csv:23 UI/Contact/pricelist.html:37
 #: UI/Contact/pricelist.tex:33
@@ -4494,7 +4503,7 @@ msgstr ""
 
 #: old/bin/ic.pl:1017
 msgid "Leadtime"
-msgstr ""
+msgstr "Délai"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:95
 msgid "Ledger sum"
@@ -4580,7 +4589,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:211 UI/Reports/filters/gl.html:143
 msgid "Liability"
-msgstr ""
+msgstr "Passif"
 
 #: UI/Contact/divs/company.html:150
 msgid "License Number"
@@ -4596,19 +4605,19 @@ msgstr ""
 
 #: UI/Reports/filters/search_goods.html:317
 msgid "Line Total"
-msgstr ""
+msgstr "Total ligne"
 
 #: old/bin/ic.pl:758
 msgid "Link Accounts"
-msgstr ""
+msgstr "Lier comptes"
 
 #: old/bin/ic.pl:1257
 msgid "List"
-msgstr ""
+msgstr "Liste"
 
 #: sql/Pg-database.sql:2728
 msgid "List Businesses"
-msgstr ""
+msgstr "Liste types d'affaire"
 
 #: sql/Pg-database.sql:2774
 msgid "List Classes"
@@ -4616,11 +4625,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:2795
 msgid "List GIFI"
-msgstr ""
+msgstr "Afficher la liste des codes d'identification comptable ou fiscale"
 
 #: sql/Pg-database.sql:2730
 msgid "List Languages"
-msgstr ""
+msgstr "Liste des langues"
 
 #: UI/Reports/filters/overpayments.html:4
 msgid "List Overpayments"
@@ -4629,11 +4638,11 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Search.pm:226 old/bin/ic.pl:435
 #: UI/Reports/filters/search_goods.html:286
 msgid "List Price"
-msgstr ""
+msgstr "Prix de revient"
 
 #: sql/Pg-database.sql:2732
 msgid "List SIC"
-msgstr ""
+msgstr "Liste des codes secteur économique"
 
 #: sql/Pg-database.sql:2768
 msgid "List Tax Forms"
@@ -4686,7 +4695,7 @@ msgstr ""
 
 #: UI/login.html:99 UI/setup/credentials.html:90
 msgid "Login"
-msgstr ""
+msgstr "Login"
 
 #: lib/LedgerSMB/Scripts/setup.pm:969
 msgid "Login?"
@@ -4694,7 +4703,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2813
 msgid "Logout"
-msgstr ""
+msgstr "Déconnexion"
 
 #: UI/logout.html:8
 msgid "Logout Successful"
@@ -4720,7 +4729,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:90
 #: UI/Reports/filters/search_goods.html:382
 msgid "Make"
-msgstr ""
+msgstr "Marque"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:494
 msgid "Make employee numbers unique"
@@ -4755,7 +4764,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:188
 #: UI/Reports/filters/invoice_search.html:309
 msgid "Manager"
-msgstr ""
+msgstr "Gestionnaire"
 
 #: t/data/04-complex_template.html:98
 msgid "Manager:"
@@ -4767,16 +4776,16 @@ msgstr ""
 
 #: old/bin/aa.pl:84 old/bin/gl.pl:79 old/bin/io.pl:81
 msgid "Mar"
-msgstr ""
+msgstr "Mars"
 
 #: lib/LedgerSMB.pm:520 old/bin/aa.pl:70 old/bin/gl.pl:65 old/bin/io.pl:67
 msgid "March"
-msgstr ""
+msgstr "Mars"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:245 old/bin/ic.pl:458
 #: old/bin/ic.pl:636 UI/Reports/filters/search_goods.html:324
 msgid "Markup"
-msgstr ""
+msgstr "Majoration"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:140
 msgid "Max Invoices per Check Stub"
@@ -4788,11 +4797,11 @@ msgstr ""
 
 #: lib/LedgerSMB.pm:522 old/bin/aa.pl:86 old/bin/gl.pl:81 old/bin/io.pl:83
 msgid "May"
-msgstr ""
+msgstr "Mai"
 
 #: old/bin/aa.pl:72 old/bin/gl.pl:67 old/bin/io.pl:69
 msgid "May "
-msgstr ""
+msgstr "Mai "
 
 #: lib/LedgerSMB/Report/GL.pm:135 lib/LedgerSMB/Scripts/payment.pm:917
 #: old/bin/aa.pl:840 old/bin/ir.pl:662 old/bin/ir.pl:842 old/bin/is.pl:763
@@ -4802,7 +4811,7 @@ msgstr ""
 #: UI/orders/order.html:247 UI/payments/payment2.html:324
 #: UI/Reports/filters/gl.html:73 UI/Reports/filters/gl.html:253
 msgid "Memo"
-msgstr ""
+msgstr "Mémo"
 
 #: UI/payments/payment2.html:219
 msgid "Memo to help retrieval"
@@ -4810,15 +4819,15 @@ msgstr ""
 
 #: old/bin/io.pl:1456 UI/io-email.html:33
 msgid "Message"
-msgstr ""
+msgstr "Message"
 
 #: old/bin/arap.pl:789
 msgid "Message: "
-msgstr ""
+msgstr "Message: "
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:87
 msgid "Method"
-msgstr ""
+msgstr "Méthode"
 
 #: UI/asset/edit_asset.html:101
 msgid "Method Default"
@@ -4828,7 +4837,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:116
 #: UI/Reports/filters/search_goods.html:374
 msgid "Microfiche"
-msgstr ""
+msgstr "Microfiche"
 
 #: t/data/04-complex_template.html:60
 msgid "Middle"
@@ -4840,7 +4849,7 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:113
 msgid "Million"
-msgstr ""
+msgstr "Million"
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:56
 #: lib/LedgerSMB/Report/File/Internal.pm:54
@@ -4862,7 +4871,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:130
 msgid "Misc Settings"
-msgstr ""
+msgstr "Réglages divers"
 
 #: UI/reconciliation/report.html:225
 msgid "Mismatched Transactions (From Upload)"
@@ -4876,7 +4885,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:98
 #: UI/Reports/filters/search_goods.html:389
 msgid "Model"
-msgstr ""
+msgstr "Modèle"
 
 #: lib/LedgerSMB/Report/Timecards.pm:114
 msgid "Mon"
@@ -4886,15 +4895,15 @@ msgstr ""
 #: UI/lib/report_base.html:178 UI/lib/report_base.html:260
 #: UI/Reports/co/filter_bm.html:57
 msgid "Month"
-msgstr ""
+msgstr "Mois"
 
 #: old/bin/arap.pl:516
 msgid "Month(s)"
-msgstr ""
+msgstr "Mois"
 
 #: old/bin/am.pl:728
 msgid "Months"
-msgstr ""
+msgstr "Mois"
 
 #: lib/LedgerSMB.pm:454
 msgid "More information has been reported in the error logs"
@@ -4902,15 +4911,15 @@ msgstr ""
 
 #: sql/Pg-database.sql:726
 msgid "Mr."
-msgstr ""
+msgstr "M."
 
 #: sql/Pg-database.sql:727
 msgid "Mrs."
-msgstr ""
+msgstr "Mme."
 
 #: sql/Pg-database.sql:728
 msgid "Ms."
-msgstr ""
+msgstr "Mlle."
 
 #: UI/templates/widget.html:43
 msgid "Multiple checks"
@@ -4946,12 +4955,12 @@ msgstr ""
 #: UI/Reports/filters/contact_search.html:33
 #: UI/Reports/filters/overpayments.html:31
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/divs/employee.html:41
 msgid "Name:"
-msgstr ""
+msgstr "Nom:"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:127 sql/Pg-database.sql:2779
 msgid "Net Book Value"
@@ -4964,7 +4973,7 @@ msgstr ""
 #: old/bin/aa.pl:478 old/bin/aa.pl:982 old/bin/gl.pl:256 old/bin/ir.pl:351
 #: old/bin/ir.pl:539 old/bin/is.pl:348 old/bin/is.pl:603 old/bin/oe.pl:513
 msgid "New"
-msgstr ""
+msgstr "Nouveau"
 
 #: UI/asset/begin_report.html:5
 msgid "New Asset Report"
@@ -4984,7 +4993,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2814
 msgid "New Window"
-msgstr ""
+msgstr "Nouvelle fenêtre"
 
 #: UI/users/preferences.html:16
 msgid "New password"
@@ -4993,15 +5002,15 @@ msgstr ""
 #: old/bin/am.pl:762 UI/inventory/adjustment_entry.html:82
 #: UI/setup/select_coa.html:92
 msgid "Next"
-msgstr ""
+msgstr "Prochain"
 
 #: old/bin/arap.pl:373
 msgid "Next Date"
-msgstr ""
+msgstr "Prochaine date"
 
 #: old/bin/am.pl:833
 msgid "Next Number"
-msgstr ""
+msgstr "Prochain numéro"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:113
 #: lib/LedgerSMB/Scripts/configuration.pm:333
@@ -5010,7 +5019,7 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:78
 msgid "Nine"
-msgstr ""
+msgstr "Neuf"
 
 #: old/lib/LedgerSMB/Num2text.pm:111
 msgid "Nine Hundred"
@@ -5018,15 +5027,15 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:89
 msgid "Nineteen"
-msgstr ""
+msgstr "Dix-neuf"
 
 #: old/lib/LedgerSMB/Num2text.pm:107
 msgid "Ninety"
-msgstr ""
+msgstr "Nonante"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:101 UI/Configuration/settings.html:45
 msgid "No"
-msgstr ""
+msgstr "Non"
 
 #: lib/LedgerSMB/Scripts/contact.pm:602
 msgid "No AR or AP Account Selected"
@@ -5074,7 +5083,7 @@ msgstr ""
 
 #: old/bin/pe.pl:849
 msgid "No open Projects!"
-msgstr ""
+msgstr "Aucun projet ouvert!"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1394
 msgid "No overpayment account selected.  Was one set up?"
@@ -5096,7 +5105,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:249 UI/Reports/filters/orders.html:115
 #: UI/Reports/filters/search_goods.html:232
 msgid "No."
-msgstr ""
+msgstr "N°"
 
 #: UI/timecards/timecard.html:113
 msgid "Non-Chargeable"
@@ -5116,7 +5125,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:456
 msgid "Non-tracking Items"
-msgstr ""
+msgstr "Objets non-référencés"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1101
 msgid "Non-unique invoice numbers"
@@ -5192,31 +5201,31 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:370
 #: UI/Reports/filters/search_goods.html:353 UI/timecards/timecard.html:135
 msgid "Notes"
-msgstr ""
+msgstr "Notes"
 
 #: t/data/04-complex_template.html:639
 msgid "Notes:<br />"
-msgstr ""
+msgstr "Notes:<br />"
 
 #: old/bin/oe.pl:1988
 msgid "Nothing entered!"
-msgstr ""
+msgstr "Rien n'a été saisi!"
 
 #: old/bin/oe.pl:2279 old/bin/oe.pl:2537 old/bin/pe.pl:1157
 msgid "Nothing selected!"
-msgstr ""
+msgstr "Pas de sélection!"
 
 #: old/bin/oe.pl:2005
 msgid "Nothing to transfer!"
-msgstr ""
+msgstr "Rien à transférer!"
 
 #: old/bin/aa.pl:92 old/bin/gl.pl:87 old/bin/io.pl:89
 msgid "Nov"
-msgstr ""
+msgstr "Nov."
 
 #: lib/LedgerSMB.pm:528 old/bin/aa.pl:78 old/bin/gl.pl:73 old/bin/io.pl:75
 msgid "November"
-msgstr ""
+msgstr "Novembre"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1061 lib/LedgerSMB/Upgrade_Tests.pm:1080
 msgid "Null employee numbers"
@@ -5273,11 +5282,11 @@ msgstr ""
 #: templates/xedemo/sales_quotation.tex:88 templates/xedemo/work_order.html:125
 #: UI/am-taxes.html:16 UI/Contact/divs/credit.html:27 UI/io-email.html:98
 msgid "Number"
-msgstr ""
+msgstr "Numéro"
 
 #: UI/users/preferences.html:60
 msgid "Number Format"
-msgstr ""
+msgstr "Format des numéros"
 
 #: old/bin/io.pl:936
 msgid "Number missing in Row [_1]"
@@ -5290,7 +5299,7 @@ msgstr ""
 
 #: old/bin/io.pl:244
 msgid "OH"
-msgstr ""
+msgstr "OH"
 
 #: UI/payments/payment2.html:317
 msgid "OVERPAYMENT / ADVANCE PAYMENT / PREPAYMENT"
@@ -5299,7 +5308,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/budgets.pm:128 old/bin/ic.pl:702
 #: UI/accounts/edit.html:142 UI/Reports/filters/search_goods.html:156
 msgid "Obsolete"
-msgstr ""
+msgstr "Obsolète"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:100
 msgid "Obsolete By"
@@ -5307,11 +5316,11 @@ msgstr ""
 
 #: old/bin/aa.pl:91 old/bin/gl.pl:86 old/bin/io.pl:88
 msgid "Oct"
-msgstr ""
+msgstr "Oct."
 
 #: lib/LedgerSMB.pm:527 old/bin/aa.pl:77 old/bin/gl.pl:72 old/bin/io.pl:74
 msgid "October"
-msgstr ""
+msgstr "Octobre"
 
 #: old/bin/aa.pl:954 old/bin/ir.pl:508 old/bin/is.pl:571 old/bin/is.pl:859
 msgid "Off Hold"
@@ -5327,7 +5336,7 @@ msgstr ""
 #: UI/inventory/adjustment_entry.html:27
 #: UI/Reports/filters/search_goods.html:142
 msgid "On Hand"
-msgstr ""
+msgstr "En Stock / disponible"
 
 #: old/bin/aa.pl:1704 old/bin/aa.pl:956 old/bin/ir.pl:510 old/bin/is.pl:573
 #: old/bin/is.pl:861 UI/Reports/filters/invoice_outstanding.html:93
@@ -5341,7 +5350,7 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:69
 msgid "One"
-msgstr ""
+msgstr "Un"
 
 #: old/lib/LedgerSMB/Num2text.pm:70
 msgid "One-o"
@@ -5372,7 +5381,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:201
 #: UI/Reports/filters/timecards.html:28
 msgid "Open"
-msgstr ""
+msgstr "Ouvert"
 
 #: UI/accounts/edit.html:226
 msgid "Options"
@@ -5391,7 +5400,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:272 old/bin/io.pl:1043
 #: old/bin/io.pl:1047 old/bin/oe.pl:2397
 msgid "Order"
-msgstr ""
+msgstr "Commande"
 
 #: templates/demo/ap_transaction.html:86 templates/demo/ap_transaction.tex:66
 #: templates/demo/ar_transaction.html:85 templates/demo/ar_transaction.tex:83
@@ -5438,15 +5447,15 @@ msgstr ""
 #: templates/demo/work_order.html:100 templates/xedemo/purchase_order.html:97
 #: templates/xedemo/sales_order.html:100 templates/xedemo/work_order.html:100
 msgid "Order Date"
-msgstr ""
+msgstr "Date de commande"
 
 #: old/bin/io.pl:1274 old/bin/oe.pl:1200 old/bin/oe.pl:1370
 msgid "Order Date missing!"
-msgstr ""
+msgstr "Date de commande manquante!"
 
 #: sql/Pg-database.sql:2804
 msgid "Order Entry"
-msgstr ""
+msgstr "Commandes"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:72 old/bin/aa.pl:1501
 #: old/bin/aa.pl:1614 old/bin/aa.pl:638 old/bin/ir.pl:477 old/bin/is.pl:525
@@ -5456,19 +5465,19 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:269 UI/Reports/filters/orders.html:39
 #: UI/Reports/filters/orders.html:128
 msgid "Order Number"
-msgstr ""
+msgstr "Numéro de commande"
 
 #: old/bin/io.pl:1284 old/bin/oe.pl:1369
 msgid "Order Number missing!"
-msgstr ""
+msgstr "Numéro de commande manquant!"
 
 #: old/bin/oe.pl:1347
 msgid "Order deleted!"
-msgstr ""
+msgstr "Commande supprimée!"
 
 #: old/bin/oe.pl:2526
 msgid "Order generation failed!"
-msgstr ""
+msgstr "Génération commande échouée!"
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:141
 msgid "Order/Invoice"
@@ -5485,7 +5494,7 @@ msgstr ""
 
 #: old/bin/pe.pl:1315
 msgid "Orders generated!"
-msgstr ""
+msgstr "Commandes générées!"
 
 #: UI/setup/confirm_operation.html:32
 msgid "Other Actions"
@@ -5512,11 +5521,11 @@ msgstr ""
 
 #: old/bin/gl.pl:672
 msgid "Out of balance transaction!"
-msgstr ""
+msgstr "Écriture non-soldée!"
 
 #: sql/Pg-database.sql:2817 sql/Pg-database.sql:2818
 msgid "Outstanding"
-msgstr ""
+msgstr "En retard"
 
 #: UI/reconciliation/report.html:287
 msgid "Outstanding Transactions"
@@ -5524,7 +5533,7 @@ msgstr ""
 
 #: UI/Reports/filters/aging.html:88
 msgid "Overdue"
-msgstr ""
+msgstr "En retard"
 
 #: UI/Reports/filters/search_goods.html:37
 msgid "Overhead"
@@ -5547,7 +5556,7 @@ msgstr ""
 #: UI/Reports/balance_sheet.html:116 UI/Reports/display_report.html:72
 #: UI/Reports/PNL.html:101
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #: templates/demo/ap_transaction.html:80 templates/demo/ap_transaction.tex:63
 #: templates/demo/ar_transaction.html:79
@@ -5570,7 +5579,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:275 UI/Reports/filters/orders.html:49
 #: UI/Reports/filters/orders.html:141
 msgid "PO Number"
-msgstr ""
+msgstr "Numéro de référence"
 
 #: UI/payments/use_overpayment2.html:351
 msgid "POST"
@@ -5591,15 +5600,15 @@ msgstr ""
 #: templates/xedemo/packing_list.tex:81 sql/Pg-database.sql:2835
 #: sql/Pg-database.sql:2848
 msgid "Packing List"
-msgstr ""
+msgstr "Liste d'envoi"
 
 #: old/bin/io.pl:1273
 msgid "Packing List Date missing!"
-msgstr ""
+msgstr "La liste d'envoi n'a pas de date!"
 
 #: old/bin/io.pl:1283
 msgid "Packing List Number missing!"
-msgstr ""
+msgstr "Le numéro de la liste d'envoi est manquant!"
 
 #: UI/templates/widget.html:51
 msgid "Packing list"
@@ -5617,7 +5626,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:231
 #: UI/Reports/filters/invoice_search.html:350
 msgid "Paid"
-msgstr ""
+msgstr "Total payé"
 
 #: old/bin/pe.pl:129 UI/business_units/edit.html:41
 msgid "Parent"
@@ -5625,7 +5634,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:107 old/bin/io.pl:611
 msgid "Part"
-msgstr ""
+msgstr "Marchandise"
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:164
 msgid "Part Description"
@@ -5651,7 +5660,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:49
 #: UI/Reports/filters/search_goods.html:240
 msgid "Part Number"
-msgstr ""
+msgstr "Numéro marchandise"
 
 #: UI/asset/begin_report.html:43
 msgid "Partial"
@@ -5670,7 +5679,7 @@ msgstr ""
 #: UI/Reports/filters/timecards.html:9 UI/timecards/timecard.html:33
 #: UI/timecards/timecard-week.html:88
 msgid "Partnumber"
-msgstr ""
+msgstr "Numéro de marchandise"
 
 #: UI/Reports/filters/search_goods.html:25
 msgid "Parts"
@@ -5689,7 +5698,7 @@ msgstr ""
 #: UI/Contact/divs/user.html:49 UI/login.html:72 UI/setup/credentials.html:67
 #: UI/setup/edit_user.html:49 UI/setup/new_user.html:29
 msgid "Password"
-msgstr ""
+msgstr "Mot de passe"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:75
 msgid "Password Duration (days)"
@@ -5697,7 +5706,7 @@ msgstr ""
 
 #: old/lib/LedgerSMB/DBObject/User.pm:62
 msgid "Passwords must match."
-msgstr ""
+msgstr "Mots de passes non-identiques"
 
 #: UI/payments/payments_detail.html:195 UI/payments/payments_filter.html:83
 msgid "Pay From"
@@ -5716,7 +5725,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:368
 msgid "Payables"
-msgstr ""
+msgstr "À payer"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1152 t/data/04-complex_template.html:282
 #: UI/accounts/edit.html:331 UI/accounts/edit.html:383
@@ -5724,7 +5733,7 @@ msgstr ""
 #: UI/payments/payments_detail.html:227 UI/templates/widget.html:55
 #: sql/Pg-database.sql:2688
 msgid "Payment"
-msgstr ""
+msgstr "Paiement"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:160
 msgid "Payment Amount"
@@ -5762,7 +5771,7 @@ msgstr ""
 
 #: old/bin/aa.pl:1335 old/bin/ir.pl:1281 old/bin/is.pl:1398
 msgid "Payment date missing!"
-msgstr ""
+msgstr "Date de paiement manquante!"
 
 #: templates/demo/invoice.tex:30 templates/demo_with_images/invoice.tex:30
 #: templates/xedemo/invoice.tex:29
@@ -5792,7 +5801,7 @@ msgstr ""
 #: UI/payments/payment1.html:22 UI/payments/payments_detail.html:6
 #: sql/Pg-database.sql:2692 sql/Pg-database.sql:2755
 msgid "Payments"
-msgstr ""
+msgstr "Paiements"
 
 #: old/bin/is.pl:691
 msgid "Payments associated with voided invoice may need to be reversed."
@@ -5813,7 +5822,7 @@ msgstr ""
 #: old/bin/aa.pl:1570 old/bin/pe.pl:811 UI/lib/report_base.html:135
 #: UI/lib/report_base.html:231
 msgid "Period"
-msgstr ""
+msgstr "Période"
 
 #: UI/Contact/divs/credit.html:396 UI/Reports/filters/income_statement.html:79
 msgid "Period selection"
@@ -5834,7 +5843,7 @@ msgstr ""
 
 #: UI/Reports/filters/contact_search.html:52
 msgid "Phone"
-msgstr ""
+msgstr "Tél."
 
 #: sql/Pg-database.sql:663
 msgid "Physical"
@@ -5849,7 +5858,7 @@ msgstr ""
 #: templates/xedemo/pick_list.html:17 templates/xedemo/pick_list.tex:74
 #: sql/Pg-database.sql:2836 sql/Pg-database.sql:2849
 msgid "Pick List"
-msgstr ""
+msgstr "Liste de sélection"
 
 #: UI/templates/widget.html:53
 msgid "Pick list"
@@ -5984,7 +5993,7 @@ msgstr ""
 #: old/bin/is.pl:1053 old/bin/is.pl:587 old/bin/is.pl:626
 #: UI/payments/payment2.html:475
 msgid "Post"
-msgstr ""
+msgstr "Enregistrer"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:196
 msgid "Post Batch"
@@ -6000,7 +6009,7 @@ msgstr ""
 
 #: old/bin/aa.pl:941 old/bin/ir.pl:526 old/bin/ir.pl:948 old/bin/is.pl:1056
 msgid "Post as new"
-msgstr ""
+msgstr "Enregistrer comme nouveau"
 
 #: UI/reconciliation/report.html:127 UI/reconciliation/report.html:237
 #: UI/reconciliation/report.html:297
@@ -6029,7 +6038,7 @@ msgstr ""
 
 #: old/bin/am.pl:964 old/bin/printer.pl:150 old/lib/LedgerSMB/Form.pm:1183
 msgid "Postscript"
-msgstr ""
+msgstr "Postcript"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1323
 msgid ""
@@ -6042,19 +6051,19 @@ msgstr ""
 
 #: sql/Pg-database.sql:2815
 msgid "Preferences"
-msgstr ""
+msgstr "Préférences"
 
 #: UI/users/preferences.html:30
 msgid "Preferences Saved"
-msgstr ""
+msgstr "Préférences enregistrées"
 
 #: UI/users/preferences.html:28
 msgid "Preferences for "
-msgstr ""
+msgstr "Préférences de "
 
 #: UI/Configuration/sequence.html:11
 msgid "Prefix"
-msgstr ""
+msgstr "Préfixe"
 
 #: old/bin/io.pl:237 templates/demo/invoice.tex:144
 #: templates/demo/product_receipt.html:127
@@ -6072,17 +6081,17 @@ msgstr ""
 #: templates/xedemo/sales_quotation.html:98
 #: templates/xedemo/sales_quotation.tex:90
 msgid "Price"
-msgstr ""
+msgstr "Prix"
 
 #: lib/LedgerSMB/Report/Inventory/Pricegroups.pm:55
 #: lib/LedgerSMB/Report/Inventory/Pricegroups.pm:71
 #: UI/Reports/filters/search_pricegroups.html:11
 msgid "Price Group"
-msgstr ""
+msgstr "Groupe de prix"
 
 #: lib/LedgerSMB/Report/Inventory/Pricegroups.pm:82
 msgid "Price Groups"
-msgstr ""
+msgstr "Groupes de prix"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:249
 #: UI/Reports/filters/search_goods.html:272
@@ -6092,32 +6101,32 @@ msgstr ""
 #: old/bin/ic.pl:1093 old/bin/pe.pl:213 UI/Contact/divs/credit.html:246
 #: UI/Contact/divs/credit.html:247
 msgid "Pricegroup"
-msgstr ""
+msgstr "Groupe de prix"
 
 #: old/bin/pe.pl:93
 msgid "Pricegroup deleted!"
-msgstr ""
+msgstr "Groupe de prix supprimé!"
 
 #: old/bin/pe.pl:72
 msgid "Pricegroup missing!"
-msgstr ""
+msgstr "Groupe de prix manquant!"
 
 #: old/bin/pe.pl:74
 msgid "Pricegroup saved!"
-msgstr ""
+msgstr "Groupe de prix enregistré!"
 
 #: t/data/04-complex_template.html:361 UI/Contact/divs/credit.html:380
 #: UI/Contact/pricelist.html:15
 msgid "Pricelist"
-msgstr ""
+msgstr "Liste de prix"
 
 #: UI/Contact/pricelist.tex:69
 msgid "Pricelist for [_1]"
-msgstr ""
+msgstr "Groupe de prix de [_1]"
 
 #: sql/Pg-database.sql:796
 msgid "Primary Phone"
-msgstr ""
+msgstr "Téléphone principal"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:138
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:133 old/bin/aa.pl:937
@@ -6126,7 +6135,7 @@ msgstr ""
 #: old/bin/oe.pl:862 UI/payments/payments_detail.html:510
 #: UI/timecards/timecard.html:160
 msgid "Print"
-msgstr ""
+msgstr "Imprimer"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:224
 msgid "Print Batch"
@@ -6134,19 +6143,19 @@ msgstr ""
 
 #: old/bin/oe.pl:646 old/bin/oe.pl:865
 msgid "Print and Save"
-msgstr ""
+msgstr "Imprimer et sauver"
 
 #: old/bin/oe.pl:654 old/bin/oe.pl:868
 msgid "Print and Save as new"
-msgstr ""
+msgstr "Imprimer et enregister comme nouveau"
 
 #: old/bin/printer.pl:172
 msgid "Printed"
-msgstr ""
+msgstr "Imprimé"
 
 #: UI/users/preferences.html:92
 msgid "Printer"
-msgstr ""
+msgstr "Imprimante"
 
 #: old/bin/am.pl:1325
 msgid "Printing Bin List [_1]"
@@ -6202,7 +6211,7 @@ msgstr ""
 
 #: old/bin/am.pl:893 UI/am-list-recurring.html:64
 msgid "Process Transactions"
-msgstr ""
+msgstr "Traiter transactions"
 
 #: old/bin/ir.pl:925 templates/demo/product_receipt.html:4
 #: templates/demo/product_receipt.html:17 templates/demo/product_receipt.tex:100
@@ -6234,20 +6243,20 @@ msgstr ""
 #: old/bin/io.pl:263 old/bin/pe.pl:887 UI/io-email.html:82
 #: UI/journal/journal_entry.html:136
 msgid "Project"
-msgstr ""
+msgstr "Projet"
 
 #: old/bin/pe.pl:276
 msgid "Project Description Translations"
-msgstr ""
+msgstr "Traductions description de projet"
 
 #: old/bin/pe.pl:1032 old/bin/pe.pl:281
 #: UI/Reports/filters/purchase_history.html:324
 msgid "Project Number"
-msgstr ""
+msgstr "Numéro de projet"
 
 #: old/bin/aa.pl:1622
 msgid "Project Numbers"
-msgstr ""
+msgstr "Numéros de projet"
 
 #: lib/LedgerSMB/Report/Timecards.pm:89
 msgid "Project/Department Number"
@@ -6255,7 +6264,7 @@ msgstr ""
 
 #: UI/payments/payment2.html:66
 msgid "Projects"
-msgstr ""
+msgstr "Projets"
 
 #: lib/LedgerSMB/Report/Listings/Asset.pm:130
 #: lib/LedgerSMB/Report/Listings/Asset.pm:97 lib/LedgerSMB/Scripts/asset.pm:336
@@ -6286,17 +6295,17 @@ msgstr ""
 #: sql/Pg-database.sql:1903 sql/Pg-database.sql:2698 sql/Pg-database.sql:2839
 #: sql/Pg-database.sql:2852
 msgid "Purchase Order"
-msgstr ""
+msgstr "Commande d'achat"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:122
 msgid "Purchase Order Number"
-msgstr ""
+msgstr "Numéro de commande"
 
 #: lib/LedgerSMB/Report/Orders.pm:181 lib/LedgerSMB/Report/Orders.pm:273
 #: old/bin/am.pl:782 UI/Reports/filters/search_goods.html:210
 #: sql/Pg-database.sql:2701 sql/Pg-database.sql:2703 sql/Pg-database.sql:2706
 msgid "Purchase Orders"
-msgstr ""
+msgstr "Commandes d'achat"
 
 #: lib/LedgerSMB/Report/Listings/Asset.pm:100
 #: lib/LedgerSMB/Report/Listings/Asset.pm:132 lib/LedgerSMB/Scripts/asset.pm:341
@@ -6363,7 +6372,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:284
 #: UI/timecards/timecard-week.html:100
 msgid "Qty"
-msgstr ""
+msgstr "Qté"
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:117
 msgid "Quantity"
@@ -6371,12 +6380,12 @@ msgstr ""
 
 #: old/bin/ic.pl:2199
 msgid "Quantity exceeds available units to stock!"
-msgstr ""
+msgstr "La quantité dépasse le nombre d'unités en stock"
 
 #: old/bin/aa.pl:1579 old/bin/pe.pl:820 UI/lib/report_base.html:184
 #: UI/lib/report_base.html:267 UI/Reports/co/filter_bm.html:62
 msgid "Quarter"
-msgstr ""
+msgstr "Trimestre"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:289
 #: lib/LedgerSMB/Report/Orders.pm:242 old/bin/io.pl:1223 old/bin/io.pl:1230
@@ -6392,7 +6401,7 @@ msgstr ""
 #: sql/Pg-database.sql:1904 sql/Pg-database.sql:2710 sql/Pg-database.sql:2842
 #: sql/Pg-database.sql:2857
 msgid "Quotation"
-msgstr ""
+msgstr "Devis"
 
 #: templates/demo/sales_quotation.tex:75
 #: templates/demo_with_images/sales_quotation.tex:75
@@ -6402,37 +6411,37 @@ msgstr ""
 
 #: old/bin/oe.pl:487
 msgid "Quotation Date"
-msgstr ""
+msgstr "Date de devis"
 
 #: old/bin/io.pl:1275 old/bin/oe.pl:1203 old/bin/oe.pl:1376
 msgid "Quotation Date missing!"
-msgstr ""
+msgstr "Date de devis manqante!"
 
 #: old/bin/oe.pl:464
 msgid "Quotation Number"
-msgstr ""
+msgstr "Numéro de devis"
 
 #: old/bin/io.pl:1285 old/bin/oe.pl:1375
 msgid "Quotation Number missing!"
-msgstr ""
+msgstr "Numéro de devis manquant!"
 
 #: old/bin/oe.pl:1351
 msgid "Quotation deleted!"
-msgstr ""
+msgstr "Devis effacé!"
 
 #: lib/LedgerSMB/Report/Orders.pm:184 lib/LedgerSMB/Report/Orders.pm:275
 #: UI/Reports/filters/purchase_history.html:190
 #: UI/Reports/filters/search_goods.html:194 sql/Pg-database.sql:2713
 #: sql/Pg-database.sql:2806
 msgid "Quotations"
-msgstr ""
+msgstr "Devis"
 
 #: old/bin/oe.pl:241 old/bin/oe.pl:673 old/bin/oe.pl:874 old/bin/printer.pl:61
 #: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:359
 #: sql/Pg-database.sql:1905 sql/Pg-database.sql:2711 sql/Pg-database.sql:2843
 #: sql/Pg-database.sql:2858
 msgid "RFQ"
-msgstr ""
+msgstr "Demande de devis"
 
 #: templates/demo/request_quotation.html:100
 #: templates/demo/request_quotation.tex:106
@@ -6441,21 +6450,21 @@ msgstr ""
 #: templates/xedemo/request_quotation.html:100
 #: templates/xedemo/request_quotation.tex:106
 msgid "RFQ #"
-msgstr ""
+msgstr "No. de demande de devis"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:123 old/bin/oe.pl:475
 msgid "RFQ Number"
-msgstr ""
+msgstr "Numéro de demande de devis"
 
 #: lib/LedgerSMB/Report/Orders.pm:187 lib/LedgerSMB/Report/Orders.pm:277
 #: UI/Reports/filters/search_goods.html:217 sql/Pg-database.sql:2714
 msgid "RFQs"
-msgstr ""
+msgstr "Demandes de devis"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:213 old/bin/ic.pl:2084
 #: old/bin/ic.pl:478 UI/Reports/filters/search_goods.html:338
 msgid "ROP"
-msgstr ""
+msgstr "Seuil réapprovisionnement"
 
 #: lib/LedgerSMB/Scripts/currency.pm:256 old/bin/ir.pl:659 old/bin/is.pl:760
 #: templates/demo/timecard.html:98 templates/demo/timecard.tex:44
@@ -6463,11 +6472,11 @@ msgstr ""
 #: templates/demo_with_images/timecard.tex:44 templates/xedemo/timecard.html:98
 #: templates/xedemo/timecard.tex:44 UI/Configuration/rate.html:49
 msgid "Rate"
-msgstr ""
+msgstr "Taux"
 
 #: UI/am-taxes.html:14
 msgid "Rate (%)"
-msgstr ""
+msgstr "Taux (%)"
 
 #: lib/LedgerSMB/Scripts/currency.pm:244
 msgid "Rate Type"
@@ -6498,11 +6507,11 @@ msgstr ""
 #: templates/demo_with_images/bin_list.html:148
 #: templates/xedemo/bin_list.html:148
 msgid "Recd"
-msgstr ""
+msgstr "Reçu"
 
 #: UI/templates/widget.html:61 sql/Pg-database.sql:2687 sql/Pg-database.sql:2856
 msgid "Receipt"
-msgstr ""
+msgstr "Reçu"
 
 #: templates/demo_with_images/product_receipt.html:100
 msgid "Receipt Date"
@@ -6515,19 +6524,19 @@ msgstr ""
 #: UI/payments/payment1.html:21 sql/Pg-database.sql:2691
 #: sql/Pg-database.sql:2769
 msgid "Receipts"
-msgstr ""
+msgstr "Reçus"
 
 #: UI/accounts/edit.html:315
 msgid "Receivables"
-msgstr ""
+msgstr "À recevoir"
 
 #: lib/LedgerSMB/Scripts/order.pm:81 sql/Pg-database.sql:2708
 msgid "Receive"
-msgstr ""
+msgstr "Réception"
 
 #: old/bin/oe.pl:1723
 msgid "Receive Merchandise"
-msgstr ""
+msgstr "Réception marchandise"
 
 #: lib/LedgerSMB/Scripts/payment.pm:979
 msgid "Received"
@@ -6543,19 +6552,19 @@ msgstr ""
 
 #: sql/Pg-database.sql:2693 sql/Pg-database.sql:2746 sql/Pg-database.sql:2758
 msgid "Reconciliation"
-msgstr ""
+msgstr "Rapprochement"
 
 #: UI/reconciliation/report.html:28
 msgid "Reconciliation Report"
-msgstr ""
+msgstr "Rapport de rapprochement"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:200
 msgid "Reconciliation Reports"
-msgstr ""
+msgstr "Rapports de rapprochement"
 
 #: old/bin/ir.pl:457 old/bin/is.pl:494 UI/orders/order.html:41
 msgid "Record in"
-msgstr ""
+msgstr "Enregistrer dans"
 
 #: UI/timecards/entry_filter.html:16
 msgid "Recording time for"
@@ -6567,7 +6576,7 @@ msgstr ""
 
 #: old/bin/am.pl:738 UI/am-list-recurring.html:11 sql/Pg-database.sql:2810
 msgid "Recurring Transactions"
-msgstr ""
+msgstr "Transactions périodiques"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:131
 #: lib/LedgerSMB/Report/Budget/Search.pm:83 lib/LedgerSMB/Report/GL.pm:221
@@ -6582,7 +6591,7 @@ msgstr ""
 #: UI/Reports/filters/gl.html:23 UI/Reports/filters/gl.html:210
 #: UI/Reports/filters/unapproved.html:33
 msgid "Reference"
-msgstr ""
+msgstr "Référence"
 
 #: old/bin/io.pl:1286
 msgid "Reference Number Missing"
@@ -6621,7 +6630,7 @@ msgstr ""
 #: old/bin/aa.pl:562 old/bin/ir.pl:423 old/bin/is.pl:457 old/bin/oe.pl:424
 #: UI/orders/order.html:35
 msgid "Remaining"
-msgstr ""
+msgstr "Restant"
 
 #: t/data/04-complex_template.html:559 UI/Contact/divs/bank_act.html:25
 #: UI/Contact/divs/bank_act.html:75
@@ -6634,7 +6643,7 @@ msgstr ""
 
 #: old/bin/arap.pl:533
 msgid "Repeat"
-msgstr ""
+msgstr "Répéter"
 
 #: UI/reconciliation/approved.html:3
 msgid "Report Approved"
@@ -6695,7 +6704,7 @@ msgstr ""
 #: sql/Pg-database.sql:2781 sql/Pg-database.sql:2809 sql/Pg-database.sql:2824
 #: sql/Pg-database.sql:2865
 msgid "Reports"
-msgstr ""
+msgstr "Rapports"
 
 #: old/bin/arap.pl:336
 msgid "Reposting Not Allowed"
@@ -6703,7 +6712,7 @@ msgstr ""
 
 #: old/bin/oe.pl:2399
 msgid "Req"
-msgstr ""
+msgstr "Exigence"
 
 #: old/bin/oe.pl:1253 templates/demo/request_quotation.html:4
 #: templates/demo/request_quotation.html:17
@@ -6715,7 +6724,7 @@ msgstr ""
 #: templates/xedemo/request_quotation.html:17
 #: templates/xedemo/request_quotation.tex:100
 msgid "Request for Quotation"
-msgstr ""
+msgstr "Demande de devis"
 
 #: UI/templates/widget.html:63
 msgid "Request for quotation"
@@ -6727,7 +6736,7 @@ msgstr ""
 
 #: UI/Reports/filters/orders.html:150
 msgid "Required By"
-msgstr ""
+msgstr "Requis pour"
 
 #: lib/LedgerSMB/Report/Orders.pm:213
 msgid "Required Date"
@@ -6754,7 +6763,7 @@ msgstr ""
 #: templates/xedemo/sales_order.html:101 templates/xedemo/sales_order.tex:106
 #: templates/xedemo/work_order.html:101
 msgid "Required by"
-msgstr ""
+msgstr "Requis pour"
 
 #: lib/LedgerSMB.pm:443 lib/LedgerSMB.pm:444
 msgid "Required input not provided"
@@ -6771,7 +6780,7 @@ msgstr ""
 
 #: UI/accounts/yearend.html:49
 msgid "Retained Earnings"
-msgstr ""
+msgstr "Éxcédents non distribués"
 
 #: UI/Contact/divs/company.html:175 UI/Contact/divs/person.html:190
 msgid "Retrieve"
@@ -6840,15 +6849,15 @@ msgstr ""
 #: UI/Contact/divs/company.html:126 UI/setup/select_coa.html:66
 #: sql/Pg-database.sql:2762
 msgid "SIC"
-msgstr ""
+msgstr "Code secteur économique"
 
 #: old/bin/am.pl:366
 msgid "SIC deleted!"
-msgstr ""
+msgstr "Code secteur économique effacé!"
 
 #: old/bin/am.pl:359
 msgid "SIC saved!"
-msgstr ""
+msgstr "Code secteur économique enregistré!"
 
 #: t/data/04-complex_template.html:259
 msgid "SIC:"
@@ -6856,7 +6865,7 @@ msgstr ""
 
 #: old/bin/io.pl:265 old/bin/oe.pl:1832 old/bin/oe.pl:2389
 msgid "SKU"
-msgstr ""
+msgstr "SKU"
 
 #: old/bin/ir.pl:494
 msgid "SO Number"
@@ -6872,29 +6881,29 @@ msgstr ""
 
 #: UI/payments/payment1.html:55
 msgid "SSN"
-msgstr ""
+msgstr "Numéro d'assurance sociale"
 
 #: sql/Pg-database.sql:955
 msgid "Salary"
-msgstr ""
+msgstr "Salaire"
 
 #: sql/Pg-database.sql:3644
 msgid "Sale"
-msgstr ""
+msgstr "Vente"
 
 #: UI/Contact/divs/address.html:43 UI/Contact/divs/employee.html:94
 #: sql/Pg-database.sql:661
 msgid "Sales"
-msgstr ""
+msgstr "Ventes"
 
 #: old/bin/is.pl:1029 old/bin/oe.pl:658 old/bin/oe.pl:871
 #: sql/Pg-database.sql:2789
 msgid "Sales Invoice"
-msgstr ""
+msgstr "Facture de vente"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:117
 msgid "Sales Invoice/AR Transaction Number"
-msgstr ""
+msgstr "Numéro facture de vente/écriture recette"
 
 #: old/bin/am.pl:1189 old/bin/am.pl:1418 old/bin/io.pl:1161 old/bin/is.pl:1059
 #: old/bin/is.pl:593 old/bin/oe.pl:1230 old/bin/oe.pl:252 old/bin/oe.pl:660
@@ -6908,22 +6917,22 @@ msgstr ""
 #: sql/Pg-database.sql:1902 sql/Pg-database.sql:2697 sql/Pg-database.sql:2837
 #: sql/Pg-database.sql:2850
 msgid "Sales Order"
-msgstr ""
+msgstr "Commande de vente"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:118
 msgid "Sales Order Number"
-msgstr ""
+msgstr "Numéro de commande de vente"
 
 #: lib/LedgerSMB/Report/Orders.pm:178 lib/LedgerSMB/Report/Orders.pm:271
 #: old/bin/am.pl:781 UI/Reports/filters/search_goods.html:187
 #: sql/Pg-database.sql:2700 sql/Pg-database.sql:2702 sql/Pg-database.sql:2705
 #: sql/Pg-database.sql:2719
 msgid "Sales Orders"
-msgstr ""
+msgstr "Commandes de vente"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:119
 msgid "Sales Quotation Number"
-msgstr ""
+msgstr "Numéro de devis de vente"
 
 #: UI/Contact/divs/company.html:140
 msgid "Sales Tax ID"
@@ -6939,7 +6948,7 @@ msgstr ""
 
 #: t/data/04-complex_template.html:85
 msgid "Sales:"
-msgstr ""
+msgstr "Ventes:"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:122
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:274
@@ -6962,7 +6971,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:182
 #: UI/Reports/filters/invoice_search.html:303
 msgid "Salesperson"
-msgstr ""
+msgstr "Vendeur"
 
 #: UI/Contact/divs/employee.html:29 UI/Contact/divs/person.html:77
 msgid "Salutation"
@@ -6974,7 +6983,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:134
 msgid "Sat"
-msgstr ""
+msgstr "Sam."
 
 #: lib/LedgerSMB/Scripts/asset.pm:354 lib/LedgerSMB/Scripts/budgets.pm:104
 #: old/bin/aa.pl:1003 old/bin/am.pl:167 old/bin/am.pl:173 old/bin/am.pl:65
@@ -6999,7 +7008,7 @@ msgstr ""
 #: UI/templates/widget.html:156 UI/timecards/timecard.html:169
 #: UI/timecards/timecard-week.html:126 UI/users/preferences.html:122
 msgid "Save"
-msgstr ""
+msgstr "Enregistrer"
 
 #: UI/Contact/divs/contact_info.html:131
 msgid "Save As New"
@@ -7043,7 +7052,7 @@ msgstr ""
 
 #: old/bin/arap.pl:615 old/bin/arap.pl:620
 msgid "Save Schedule"
-msgstr ""
+msgstr "Enregistrer transaction planifiée"
 
 #: old/bin/aa.pl:980 old/bin/gl.pl:250
 msgid "Save Template"
@@ -7061,7 +7070,7 @@ msgstr ""
 #: old/bin/ic.pl:843 old/bin/oe.pl:650 old/bin/oe.pl:867
 #: UI/accounts/edit.html:95 UI/accounts/edit.html:555
 msgid "Save as new"
-msgstr ""
+msgstr "Enregistrer comme nouveau"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:217
 msgid "Save the fixes provided and attempt to continue migration"
@@ -7083,16 +7092,16 @@ msgstr ""
 #: old/bin/ir.pl:949 old/bin/is.pl:1054 old/bin/is.pl:595 old/bin/oe.pl:676
 #: old/bin/oe.pl:863
 msgid "Schedule"
-msgstr ""
+msgstr "Planification"
 
 #: old/bin/printer.pl:174 UI/journal/journal_entry.html:342
 msgid "Scheduled"
-msgstr ""
+msgstr "Planifié"
 
 #: lib/LedgerSMB/Scripts/payment.pm:668 lib/LedgerSMB/Template/UI.pm:157
 #: old/bin/printer.pl:130 UI/lib/utilities.html:45
 msgid "Screen"
-msgstr ""
+msgstr "Écran"
 
 #: UI/asset/search_asset.html:183 UI/asset/search_class.html:66
 #: UI/business_units/filter.html:41 UI/Reports/filters/batches.html:70
@@ -7109,7 +7118,7 @@ msgstr ""
 #: sql/Pg-database.sql:2696 sql/Pg-database.sql:2754 sql/Pg-database.sql:2801
 #: sql/Pg-database.sql:2864
 msgid "Search"
-msgstr ""
+msgstr "Recherche"
 
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:330
 msgid "Search AP"
@@ -7213,7 +7222,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:69
 msgid "Security Settings"
-msgstr ""
+msgstr "Réglages de sécurité"
 
 #: UI/reconciliation/report.html:374
 msgid "Select All"
@@ -7221,7 +7230,7 @@ msgstr ""
 
 #: old/bin/pe.pl:1137
 msgid "Select Customer"
-msgstr ""
+msgstr "Séléctionner client"
 
 #: UI/setup/template_info.html:9
 msgid "Select Templates to Load"
@@ -7229,11 +7238,11 @@ msgstr ""
 
 #: old/bin/oe.pl:2508
 msgid "Select Vendor"
-msgstr ""
+msgstr "Sélectionner vendeur"
 
 #: old/bin/arapprn.pl:349 old/bin/is.pl:1433 old/bin/oe.pl:1293
 msgid "Select a Printer!"
-msgstr ""
+msgstr "Sélectionner une imprimante!"
 
 #: UI/taxform/add_taxform.html:58
 msgid "Select by Default:"
@@ -7241,7 +7250,7 @@ msgstr ""
 
 #: old/bin/arap.pl:178 old/bin/ic.pl:1670 old/bin/pe.pl:668
 msgid "Select from one of the names below"
-msgstr ""
+msgstr "Sélectionner un des noms ci-dessous"
 
 #: UI/payments/use_overpayment2.html:146
 msgid "Select invoices"
@@ -7254,11 +7263,11 @@ msgstr ""
 #: old/bin/arapprn.pl:347 old/bin/arapprn.pl:85 old/bin/is.pl:1431
 #: old/bin/oe.pl:1291
 msgid "Select postscript or PDF!"
-msgstr ""
+msgstr "Sélectionner Postscript ou PDF!"
 
 #: old/bin/io.pl:1131
 msgid "Select txt, postscript or PDF!"
-msgstr ""
+msgstr "Sélectionner Txt, Postscript ou PDF!"
 
 #: UI/Contact/divs/credit.html:399 UI/Reports/filters/balance_sheet.html:47
 #: UI/Reports/filters/income_statement.html:82
@@ -7271,7 +7280,7 @@ msgstr ""
 
 #: old/bin/ic.pl:1255
 msgid "Sell"
-msgstr ""
+msgstr "Vente"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:99
 #: lib/LedgerSMB/Report/Inventory/History.pm:154
@@ -7280,7 +7289,7 @@ msgstr ""
 #: UI/Contact/pricelist.tex:42 UI/Reports/filters/purchase_history.html:264
 #: UI/Reports/filters/search_goods.html:294
 msgid "Sell Price"
-msgstr ""
+msgstr "Prix de vente"
 
 #: old/bin/am.pl:1370
 msgid "Sending Bin List [_1]"
@@ -7324,7 +7333,7 @@ msgstr ""
 
 #: old/bin/aa.pl:90 old/bin/gl.pl:85 old/bin/io.pl:87
 msgid "Sep"
-msgstr ""
+msgstr "Sept."
 
 #: lib/LedgerSMB/Scripts/configuration.pm:83
 msgid "Separate Duties"
@@ -7332,7 +7341,7 @@ msgstr ""
 
 #: lib/LedgerSMB.pm:526 old/bin/aa.pl:76 old/bin/gl.pl:71 old/bin/io.pl:73
 msgid "September"
-msgstr ""
+msgstr "Septembre"
 
 #: UI/Configuration/sequence.html:12
 msgid "Sequence"
@@ -7352,7 +7361,7 @@ msgstr ""
 
 #: old/bin/io.pl:262 old/bin/oe.pl:1853
 msgid "Serial No."
-msgstr ""
+msgstr "N° série"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:112
 #: lib/LedgerSMB/Report/Inventory/History.pm:167
@@ -7367,7 +7376,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:80
 #: UI/Reports/filters/search_goods.html:410
 msgid "Serial Number"
-msgstr ""
+msgstr "Numéro de série"
 
 #: templates/demo/bin_list.html:145 templates/demo_with_images/bin_list.html:145
 #: templates/xedemo/bin_list.html:145
@@ -7376,11 +7385,11 @@ msgstr ""
 
 #: old/bin/io.pl:613
 msgid "Service"
-msgstr ""
+msgstr "Prestation de service"
 
 #: old/bin/pe.pl:1027
 msgid "Service Code"
-msgstr ""
+msgstr "Compte de prestation"
 
 #: UI/Reports/filters/search_goods.html:31
 msgid "Services"
@@ -7392,19 +7401,19 @@ msgstr ""
 
 #: sql/Pg-database.sql:2767
 msgid "Sessions"
-msgstr ""
+msgstr "Sessions"
 
 #: UI/Configuration/sequence.html:10
 msgid "Setting"
-msgstr ""
+msgstr "Réglage"
 
 #: UI/users/preferences.html:47
 msgid "Settings"
-msgstr ""
+msgstr "Réglages"
 
 #: old/lib/LedgerSMB/Num2text.pm:76
 msgid "Seven"
-msgstr ""
+msgstr "Sept"
 
 #: old/lib/LedgerSMB/Num2text.pm:110
 msgid "Seven Hundred"
@@ -7412,11 +7421,11 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:87
 msgid "Seventeen"
-msgstr ""
+msgstr "Dix-sept"
 
 #: old/lib/LedgerSMB/Num2text.pm:105
 msgid "Seventy"
-msgstr ""
+msgstr "Soixante-dix"
 
 #: lib/LedgerSMB/Scripts/order.pm:70 old/bin/io.pl:167 old/bin/oe.pl:1826
 #: templates/demo/packing_list.html:120 templates/demo/pick_list.html:110
@@ -7425,11 +7434,11 @@ msgstr ""
 #: templates/xedemo/packing_list.html:120 templates/xedemo/pick_list.html:110
 #: sql/Pg-database.sql:2707
 msgid "Ship"
-msgstr ""
+msgstr "Expédier"
 
 #: old/bin/oe.pl:1718
 msgid "Ship Merchandise"
-msgstr ""
+msgstr "Expédier marchandise"
 
 #: templates/demo/bin_list.html:28 templates/demo/bin_list.tex:53
 #: templates/demo/invoice.html:26 templates/demo/invoice.tex:76
@@ -7460,7 +7469,7 @@ msgstr ""
 #: templates/xedemo/purchase_order.html:26
 #: templates/xedemo/request_quotation.html:28
 msgid "Ship To:"
-msgstr ""
+msgstr "Expédier à:"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:120
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:286
@@ -7483,12 +7492,12 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:390 UI/Reports/filters/orders.html:59
 #: UI/Reports/filters/orders.html:170
 msgid "Ship Via"
-msgstr ""
+msgstr "Expédier via"
 
 #: old/bin/aa.pl:940 old/bin/io.pl:1555 old/bin/is.pl:1055 old/bin/is.pl:589
 #: old/bin/oe.pl:1946 old/bin/oe.pl:640 old/bin/oe.pl:866
 msgid "Ship to"
-msgstr ""
+msgstr "Expédier à"
 
 #: old/bin/aa.pl:1656 old/bin/aa.pl:1686 old/bin/is.pl:510 old/bin/oe.pl:1779
 #: old/bin/oe.pl:599 templates/demo/bin_list.html:112
@@ -7522,20 +7531,20 @@ msgstr ""
 #: templates/xedemo/sales_quotation.html:73
 #: templates/xedemo/sales_quotation.tex:79 UI/orders/order.html:67
 msgid "Ship via"
-msgstr ""
+msgstr "Expédier via"
 
 #: UI/Contact/divs/address.html:45 sql/Pg-database.sql:662
 #: sql/Pg-database.sql:2805
 msgid "Shipping"
-msgstr ""
+msgstr "Expédition"
 
 #: old/bin/oe.pl:1720
 msgid "Shipping Date"
-msgstr ""
+msgstr "Date d'expédition"
 
 #: old/bin/oe.pl:1975
 msgid "Shipping Date missing!"
-msgstr ""
+msgstr "Date d'expédition manquante!"
 
 #: old/bin/is.pl:1032 old/bin/printer.pl:110
 msgid "Shipping Label"
@@ -7591,7 +7600,7 @@ msgstr ""
 #: UI/orders/order.html:61 UI/Reports/filters/invoice_outstanding.html:265
 #: UI/Reports/filters/invoice_search.html:384
 msgid "Shipping Point"
-msgstr ""
+msgstr "Expéditeur"
 
 #: UI/templates/widget.html:69
 msgid "Shipping label"
@@ -7599,7 +7608,7 @@ msgstr ""
 
 #: UI/Reports/filters/search_goods.html:149
 msgid "Short"
-msgstr ""
+msgstr "Court"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:133
 msgid "Show Credit Limit"
@@ -7609,7 +7618,7 @@ msgstr ""
 #: templates/demo_with_images/printPayment.html:77
 #: templates/xedemo/printPayment.html:77
 msgid "Signature"
-msgstr ""
+msgstr "Signature"
 
 #: sql/Pg-database.sql:2433
 msgid "Simple"
@@ -7629,15 +7638,15 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:75
 msgid "Six"
-msgstr ""
+msgstr "Six"
 
 #: old/lib/LedgerSMB/Num2text.pm:86
 msgid "Sixteen"
-msgstr ""
+msgstr "Seize"
 
 #: old/lib/LedgerSMB/Num2text.pm:104
 msgid "Sixty"
-msgstr ""
+msgstr "Soixante"
 
 #: UI/setup/select_coa.html:101
 msgid "Skip"
@@ -7653,7 +7662,7 @@ msgstr ""
 
 #: UI/io-email.html:93 UI/orders/order.html:305
 msgid "Sort by"
-msgstr ""
+msgstr "Trier par"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:133 lib/LedgerSMB/Report/GL.pm:130
 #: lib/LedgerSMB/Report/GL.pm:223
@@ -7679,7 +7688,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:130
 #: UI/Reports/filters/payments.html:64
 msgid "Source"
-msgstr ""
+msgstr "Source"
 
 #: UI/payments/payment2.html:122
 msgid "Source documentation"
@@ -7709,11 +7718,11 @@ msgstr ""
 
 #: UI/lib/report_base.html:71
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #: lib/LedgerSMB/Report/Listings/SIC.pm:63
 msgid "Standard Industrial Codes"
-msgstr ""
+msgstr "Code secteur économique"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:125
 #: lib/LedgerSMB/Report/Budget/Search.pm:73
@@ -7727,11 +7736,11 @@ msgstr ""
 #: UI/business_units/edit.html:55 UI/Contact/divs/credit.html:31
 #: UI/Contact/divs/employee.html:179 UI/Reports/filters/budget_search.html:41
 msgid "Start Date"
-msgstr ""
+msgstr "Date de début"
 
 #: t/data/04-complex_template.html:114
 msgid "Start Date:"
-msgstr ""
+msgstr "Date de début:"
 
 #: UI/payments/payments_filter.html:123
 msgid "Start Source Numbering At"
@@ -7743,7 +7752,7 @@ msgstr ""
 
 #: old/bin/arap.pl:574 UI/Reports/filters/purchase_history.html:111
 msgid "Startdate"
-msgstr ""
+msgstr "Date de début"
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:173
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:80 UI/Reports/co/filter_bm.html:91
@@ -7761,13 +7770,13 @@ msgstr ""
 
 #: old/bin/io.pl:1625
 msgid "State"
-msgstr ""
+msgstr "État"
 
 #: t/data/04-complex_template.html:387 UI/Contact/divs/address.html:83
 #: UI/Contact/divs/address.html:166 UI/Reports/filters/contact_search.html:99
 #: UI/Reports/filters/purchase_history.html:83
 msgid "State/Province"
-msgstr ""
+msgstr "Région/État"
 
 #: t/data/04-complex_template.html:454
 msgid "State/Province:"
@@ -7780,12 +7789,12 @@ msgstr ""
 #: templates/xedemo/statement.html:18 templates/xedemo/statement.tex:29
 #: sql/Pg-database.sql:2841 sql/Pg-database.sql:2854
 msgid "Statement"
-msgstr ""
+msgstr "Relevé"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:144
 #: UI/reconciliation/new_report.html:28
 msgid "Statement Balance"
-msgstr ""
+msgstr "Solde relevé de compte"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:140
 #: UI/reconciliation/new_report.html:38 UI/reconciliation/report.html:35
@@ -7802,11 +7811,11 @@ msgstr ""
 
 #: old/bin/ic.pl:622
 msgid "Stock"
-msgstr ""
+msgstr "Stock"
 
 #: old/bin/ic.pl:1984 old/bin/ic.pl:2091 sql/Pg-database.sql:2822
 msgid "Stock Assembly"
-msgstr ""
+msgstr "Stock de produits"
 
 #: UI/users/preferences.html:20
 msgid "Strength"
@@ -7814,20 +7823,20 @@ msgstr ""
 
 #: UI/users/preferences.html:81
 msgid "Stylesheet"
-msgstr ""
+msgstr "Feuille de style"
 
 #: t/data/04-complex_template.html:231
 msgid "Subcontract GIFI:"
-msgstr ""
+msgstr "Code d'identification comptable ou fiscale - Sous-traitance"
 
 #: UI/budgetting/budget_entry.html:149 UI/budgetting/budget_entry.html:177
 #: UI/Contact/divs/notes.html:32 UI/io-email.html:21
 msgid "Subject"
-msgstr ""
+msgstr "Objet"
 
 #: old/bin/arap.pl:787 old/bin/io.pl:1454 UI/Contact/divs/notes.html:78
 msgid "Subject: [_1]"
-msgstr ""
+msgstr "Objet: [_1]"
 
 #: UI/Reports/filters/reconciliation_search.html:83
 msgid "Submission Status"
@@ -7870,7 +7879,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:279
 #: UI/Reports/filters/invoice_search.html:398 UI/Reports/filters/orders.html:200
 msgid "Subtotal"
-msgstr ""
+msgstr "Sous total"
 
 #: UI/Configuration/sequence.html:13
 msgid "Suffix"
@@ -7880,7 +7889,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:114
 #: UI/Reports/filters/purchase_history.html:219
 msgid "Summary"
-msgstr ""
+msgstr "Résumé"
 
 #: UI/accounts/edit.html:278
 msgid "Summary account for"
@@ -7888,7 +7897,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:110
 msgid "Sun"
-msgstr ""
+msgstr "Dim."
 
 #: UI/Contact/divs/person.html:118
 msgid "Surname"
@@ -7896,11 +7905,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:2816
 msgid "System"
-msgstr ""
+msgstr "Système"
 
 #: UI/Configuration/settings.html:8
 msgid "System Defaults"
-msgstr ""
+msgstr "Préférences système"
 
 #: UI/setup/confirm_operation.html:107
 msgid "System Info"
@@ -7918,7 +7927,7 @@ msgstr ""
 #: templates/demo_with_images/printPayment.html:61
 #: templates/xedemo/printPayment.html:61
 msgid "TOTAL"
-msgstr ""
+msgstr "TOTAL"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:75
 #: lib/LedgerSMB/Report/Listings/Asset.pm:128
@@ -7939,11 +7948,11 @@ msgstr ""
 #: UI/accounts/edit.html:480 UI/Reports/filters/invoice_outstanding.html:203
 #: UI/Reports/filters/invoice_search.html:323 UI/Reports/filters/orders.html:185
 msgid "Tax"
-msgstr ""
+msgstr "Taxe"
 
 #: UI/Reports/filters/invoice_search.html:73
 msgid "Tax Account"
-msgstr ""
+msgstr "Compte de taxe"
 
 #: old/bin/ir.pl:661 old/bin/is.pl:762
 msgid "Tax Code"
@@ -7991,21 +8000,21 @@ msgstr ""
 #: UI/Contact/divs/credit.html:314 UI/Contact/divs/credit.html:315
 #: UI/orders/order.html:232
 msgid "Tax Included"
-msgstr ""
+msgstr "Taxe incluse"
 
 #: UI/Contact/divs/company.html:116
 msgid "Tax Number/SSN"
-msgstr ""
+msgstr "Numéro de taxe"
 
 #: t/data/04-complex_template.html:222
 msgid "Tax Number/SSN:"
-msgstr ""
+msgstr "Numéro de taxe/Assurance sociale"
 
 #: templates/demo/ar_transaction.tex:71
 #: templates/demo_with_images/ar_transaction.tex:71
 #: templates/xedemo/ar_transaction.tex:71
 msgid "Tax Number: [_1]"
-msgstr ""
+msgstr "Numéro de taxe: [_1]"
 
 #: UI/am-taxes.html:19
 msgid "Tax Rules"
@@ -8022,7 +8031,7 @@ msgstr ""
 #: templates/xedemo/product_receipt.html:190
 #: templates/xedemo/purchase_order.html:186
 msgid "Tax included"
-msgstr ""
+msgstr "Taxes incluses"
 
 #: old/bin/io.pl:246
 msgid "TaxForm"
@@ -8030,15 +8039,15 @@ msgstr ""
 
 #: UI/Reports/filters/invoice_search.html:67
 msgid "Taxable"
-msgstr ""
+msgstr "Imposable"
 
 #: old/bin/am.pl:509 UI/Contact/divs/credit.html:287 sql/Pg-database.sql:2723
 msgid "Taxes"
-msgstr ""
+msgstr "Taxes"
 
 #: old/bin/am.pl:638
 msgid "Taxes saved!"
-msgstr ""
+msgstr "Taxes enregistrées!"
 
 #: templates/demo/ap_transaction.html:222 templates/demo/ar_transaction.html:227
 #: templates/demo/invoice.html:308
@@ -8054,13 +8063,13 @@ msgstr ""
 #: templates/demo_with_images/ar_transaction.html:59
 #: templates/xedemo/ar_transaction.html:59
 msgid "Taxnumber:"
-msgstr ""
+msgstr "Numéro de taxe:"
 
 #: templates/demo/ap_transaction.html:60
 #: templates/demo_with_images/ap_transaction.html:60
 #: templates/xedemo/ap_transaction.html:60
 msgid "Taxnumber: [_1]"
-msgstr ""
+msgstr "Numéro de taxe: [_1]"
 
 #: templates/demo/ar_transaction.html:47 templates/demo/ar_transaction.tex:26
 #: templates/demo/letterhead.tex:13
@@ -8070,7 +8079,7 @@ msgstr ""
 #: templates/xedemo/ar_transaction.html:47
 #: templates/xedemo/ar_transaction.tex:26 templates/xedemo/letterhead.tex:13
 msgid "Tel:"
-msgstr ""
+msgstr "Tél:"
 
 #: templates/demo/ap_transaction.html:48 templates/demo/ar_transaction.tex:61
 #: templates/demo/bin_list.html:53 templates/demo/bin_list.html:86
@@ -8146,7 +8155,7 @@ msgstr ""
 #: templates/xedemo/work_order.html:78 templates/xedemo/work_order.tex:61
 #: templates/xedemo/work_order.tex:96
 msgid "Tel: [_1]"
-msgstr ""
+msgstr "Tél: [_1]"
 
 #: UI/templates/widget.html:21
 msgid "Template"
@@ -8158,7 +8167,7 @@ msgstr ""
 
 #: old/bin/aa.pl:1156 old/bin/gl.pl:354
 msgid "Template Saved!"
-msgstr ""
+msgstr "Squelette enregistré!"
 
 #: lib/LedgerSMB/Report/Listings/TemplateTrans.pm:139
 msgid "Template Transactions"
@@ -8166,15 +8175,15 @@ msgstr ""
 
 #: UI/setup/confirm_operation.html:67 UI/setup/template_info.html:24
 msgid "Templates"
-msgstr ""
+msgstr "Squelettes"
 
 #: old/lib/LedgerSMB/Num2text.pm:79
 msgid "Ten"
-msgstr ""
+msgstr "Dix"
 
 #: old/bin/oe.pl:365
 msgid "Terms"
-msgstr ""
+msgstr "Crédit limité à"
 
 #: templates/demo/product_receipt.html:180
 #: templates/demo/purchase_order.html:178 templates/demo/sales_order.html:179
@@ -8263,11 +8272,11 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:83
 msgid "Thirteen"
-msgstr ""
+msgstr "Treize"
 
 #: old/lib/LedgerSMB/Num2text.pm:101
 msgid "Thirty"
-msgstr ""
+msgstr "Trente"
 
 #: UI/Contact/divs/address.html:79 UI/Contact/divs/contact_info.html:29
 msgid "This Account"
@@ -8311,11 +8320,11 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:112
 msgid "Thousand"
-msgstr ""
+msgstr "Mille"
 
 #: old/lib/LedgerSMB/Num2text.pm:72
 msgid "Three"
-msgstr ""
+msgstr "Trois"
 
 #: t/data/04-complex_template.html:302 UI/Contact/divs/credit.html:139
 #: UI/Contact/divs/credit.html:140
@@ -8328,7 +8337,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:126
 msgid "Thu"
-msgstr ""
+msgstr "Jeu."
 
 #: lib/LedgerSMB/Report/GL.pm:145
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:270
@@ -8337,7 +8346,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:257
 #: UI/Reports/filters/invoice_search.html:376
 msgid "Till"
-msgstr ""
+msgstr "Caisse"
 
 #: templates/demo/timecard.html:4 templates/demo/timecard.html:17
 #: templates/demo/timecard.tex:17 templates/demo_with_images/timecard.html:4
@@ -8345,7 +8354,7 @@ msgstr ""
 #: templates/demo_with_images/timecard.tex:17 templates/xedemo/timecard.html:4
 #: templates/xedemo/timecard.html:17 templates/xedemo/timecard.tex:17
 msgid "Time Card"
-msgstr ""
+msgstr "Carte de temps"
 
 #: UI/timecards/entry_filter.html:25
 msgid "Time Frame"
@@ -8353,11 +8362,11 @@ msgstr ""
 
 #: UI/timecards/timecard.html:68
 msgid "Time In"
-msgstr ""
+msgstr "Temps de début"
 
 #: UI/timecards/timecard.html:84
 msgid "Time Out"
-msgstr ""
+msgstr "Temps de fin"
 
 #: UI/Reports/filters/timecards.html:5
 msgid "Time and Material Cards"
@@ -8369,7 +8378,7 @@ msgstr ""
 
 #: UI/templates/widget.html:73 sql/Pg-database.sql:2844 sql/Pg-database.sql:2859
 msgid "Timecard"
-msgstr ""
+msgstr "Carte de temps"
 
 #: UI/timecards/entry_filter.html:5 UI/timecards/entry_filter.html:6
 msgid "Timecard Criteria"
@@ -8377,11 +8386,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:161 sql/Pg-database.sql:2825
 msgid "Timecards"
-msgstr ""
+msgstr "Cartes de temps"
 
 #: old/bin/am.pl:772
 msgid "Times"
-msgstr ""
+msgstr "Temps"
 
 #: old/bin/ic.pl:1113 old/bin/oe.pl:2126 old/bin/pe.pl:835
 #: templates/demo/invoice.html:25 templates/demo/request_quotation.tex:27
@@ -8401,7 +8410,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:126
 #: UI/Reports/filters/purchase_history.html:146
 msgid "To"
-msgstr ""
+msgstr "Jusqu'au"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:188
 msgid "To Amount"
@@ -8425,11 +8434,11 @@ msgstr ""
 
 #: old/bin/oe.pl:2141
 msgid "To Warehouse"
-msgstr ""
+msgstr "Vers entrepôt"
 
 #: t/data/04-strings-for-translation.html:7
 msgid "To [_1]"
-msgstr ""
+msgstr "À [_1]"
 
 #: UI/payments/use_overpayment2.html:124
 msgid "To be used"
@@ -8456,11 +8465,11 @@ msgstr ""
 #: templates/xedemo/purchase_order.html:25
 #: templates/xedemo/request_quotation.html:26
 msgid "To:"
-msgstr ""
+msgstr "À:"
 
 #: old/bin/arap.pl:785 old/bin/io.pl:1452
 msgid "To: [_1]"
-msgstr ""
+msgstr "À [_1]"
 
 #: UI/payments/payment2.html:175
 msgid "Toggle all removal checkboxes"
@@ -8468,7 +8477,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2679
 msgid "Top-level"
-msgstr ""
+msgstr "Description principale"
 
 #: lib/LedgerSMB/Report/Aging.pm:155
 #: lib/LedgerSMB/Report/Inventory/History.pm:163
@@ -8529,7 +8538,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:210
 #: UI/Reports/filters/invoice_search.html:329
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #: lib/LedgerSMB/Scripts/asset.pm:625
 msgid "Total Accum. Dep."
@@ -8547,15 +8556,15 @@ msgstr ""
 
 #: UI/accounts/edit.html:417
 msgid "Tracking Items"
-msgstr ""
+msgstr "Objets référencés"
 
 #: old/bin/is.pl:367 old/bin/oe.pl:379
 msgid "Trade Discount"
-msgstr ""
+msgstr "Escompte commercial"
 
 #: old/bin/aa.pl:948 old/bin/am.pl:1412
 msgid "Transaction"
-msgstr ""
+msgstr "Écriture"
 
 #: sql/Pg-database.sql:2734
 msgid "Transaction Approval"
@@ -8570,11 +8579,11 @@ msgstr ""
 
 #: old/bin/gl.pl:618
 msgid "Transaction Date missing!"
-msgstr ""
+msgstr "Date d'écriture manquante!"
 
 #: old/bin/pe.pl:830
 msgid "Transaction Dates"
-msgstr ""
+msgstr "Dates de transactions"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:190
 #: UI/reconciliation/report.html:111 UI/reconciliation/report.html:234
@@ -8585,80 +8594,80 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:90
 #: UI/setup/confirm_operation.html:125
 msgid "Transactions"
-msgstr ""
+msgstr "Mouvements"
 
 #: old/bin/oe.pl:2130 old/bin/oe.pl:2246 sql/Pg-database.sql:2709
 #: sql/Pg-database.sql:2744
 msgid "Transfer"
-msgstr ""
+msgstr "Transfert"
 
 #: old/bin/oe.pl:2012 old/bin/oe.pl:2157
 msgid "Transfer Inventory"
-msgstr ""
+msgstr "Transfert inventaire"
 
 #: old/bin/oe.pl:2030
 msgid "Transfer from"
-msgstr ""
+msgstr "Transférer de"
 
 #: old/bin/oe.pl:2034
 msgid "Transfer to"
-msgstr ""
+msgstr "Transférer vers"
 
 #: old/bin/pe.pl:390 old/bin/pe.pl:560
 msgid "Translation"
-msgstr ""
+msgstr "Traduction"
 
 #: old/bin/pe.pl:82
 msgid "Translation deleted!"
-msgstr ""
+msgstr "Traduction supprimée!"
 
 #: UI/accounts/edit.html:577 sql/Pg-database.sql:2720 sql/Pg-database.sql:2823
 msgid "Translations"
-msgstr ""
+msgstr "Traductions"
 
 #: old/bin/pe.pl:61
 msgid "Translations saved!"
-msgstr ""
+msgstr "Traductions enregistrées"
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:142 sql/Pg-database.sql:2748
 msgid "Trial Balance"
-msgstr ""
+msgstr "Balance Globale"
 
 #: old/lib/LedgerSMB/Num2text.pm:115
 msgid "Trillion"
-msgstr ""
+msgstr "Billion"
 
 #: lib/LedgerSMB/Report/Timecards.pm:118
 msgid "Tue"
-msgstr ""
+msgstr "Mar."
 
 #: old/lib/LedgerSMB/Num2text.pm:82
 msgid "Twelve"
-msgstr ""
+msgstr "Douze"
 
 #: old/lib/LedgerSMB/Num2text.pm:90
 msgid "Twenty"
-msgstr ""
+msgstr "Vingt"
 
 #: old/lib/LedgerSMB/Num2text.pm:99
 msgid "Twenty Eight"
-msgstr ""
+msgstr "Vingt-huit"
 
 #: old/lib/LedgerSMB/Num2text.pm:96
 msgid "Twenty Five"
-msgstr ""
+msgstr "Vingt-cinq"
 
 #: old/lib/LedgerSMB/Num2text.pm:95
 msgid "Twenty Four"
-msgstr ""
+msgstr "Vingt-quatre"
 
 #: old/lib/LedgerSMB/Num2text.pm:100
 msgid "Twenty Nine"
-msgstr ""
+msgstr "Vingt-neuf"
 
 #: old/lib/LedgerSMB/Num2text.pm:91
 msgid "Twenty One"
-msgstr ""
+msgstr "Vingt-et-un"
 
 #: old/lib/LedgerSMB/Num2text.pm:92
 msgid "Twenty One-o"
@@ -8666,23 +8675,23 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:98
 msgid "Twenty Seven"
-msgstr ""
+msgstr "Vingt-sept"
 
 #: old/lib/LedgerSMB/Num2text.pm:97
 msgid "Twenty Six"
-msgstr ""
+msgstr "Vingt-six"
 
 #: old/lib/LedgerSMB/Num2text.pm:94
 msgid "Twenty Three"
-msgstr ""
+msgstr "Vingt-trois"
 
 #: old/lib/LedgerSMB/Num2text.pm:93
 msgid "Twenty Two"
-msgstr ""
+msgstr "Vingt-deux"
 
 #: old/lib/LedgerSMB/Num2text.pm:71
 msgid "Two"
-msgstr ""
+msgstr "Deux"
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:149
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:129
@@ -8697,7 +8706,7 @@ msgstr ""
 
 #: UI/am-business-form.html:11 sql/Pg-database.sql:2764
 msgid "Type of Business"
-msgstr ""
+msgstr "Type d'affaire"
 
 #: t/data/04-complex_template.html:411 t/data/04-complex_template.html:494
 #: t/data/04-complex_template.html:526
@@ -8760,7 +8769,7 @@ msgstr ""
 #: UI/payroll/income.html:68 UI/Reports/filters/purchase_history.html:294
 #: UI/Reports/filters/search_goods.html:264
 msgid "Unit"
-msgstr ""
+msgstr "Unité"
 
 #: templates/demo/invoice.html:141 templates/demo/request_quotation.html:140
 #: templates/demo/request_quotation.tex:124
@@ -8770,7 +8779,7 @@ msgstr ""
 #: templates/xedemo/invoice.html:142 templates/xedemo/request_quotation.html:140
 #: templates/xedemo/request_quotation.tex:124
 msgid "Unit Price"
-msgstr ""
+msgstr "Prix unitaire"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1250
 msgid "Unknown "
@@ -8846,19 +8855,19 @@ msgstr ""
 #: UI/payroll/deduction.html:85 UI/payroll/income.html:90
 #: UI/reconciliation/report.html:368
 msgid "Update"
-msgstr ""
+msgstr "Mettre à jour"
 
 #: old/bin/ic.pl:775
 msgid "Updated"
-msgstr ""
+msgstr "Mis à jour"
 
 #: UI/setup/upgrade_info.html:98
 msgid "Upgrade"
-msgstr ""
+msgstr "Mise à jour"
 
 #: UI/setup/upgrade_info.html:8
 msgid "Upgrade Info"
-msgstr ""
+msgstr "Information de mise à jour"
 
 #: UI/Configuration/rate.html:86 UI/file/attachment_screen.html:45
 #: UI/file/internal-file-list.html:74 UI/templates/widget.html:130
@@ -8881,7 +8890,7 @@ msgstr ""
 
 #: UI/file/attachment_screen.html:23 UI/file/internal-file-list.html:52
 msgid "Url"
-msgstr ""
+msgstr "Url"
 
 #: lib/LedgerSMB/Report/Listings/Asset.pm:103 UI/asset/edit_asset.html:91
 #: UI/asset/search_asset.html:85
@@ -8916,7 +8925,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/contact.pm:188 t/data/04-complex_template.html:36
 #: UI/Contact/divs/user.html:4 UI/main.html:26
 msgid "User"
-msgstr ""
+msgstr "Utilisateur"
 
 #: UI/login.html:58
 msgid "User Name"
@@ -8948,12 +8957,12 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/currency.pm:250 UI/Contact/pricelist.csv:34
 #: UI/Contact/pricelist.html:46 UI/Contact/pricelist.tex:46
 msgid "Valid From"
-msgstr ""
+msgstr "Valable depuis"
 
 #: UI/am-taxes.html:17 UI/Contact/pricelist.csv:37 UI/Contact/pricelist.html:49
 #: UI/Contact/pricelist.tex:50
 msgid "Valid To"
-msgstr ""
+msgstr "Valable au"
 
 #: UI/Configuration/rate.html:43
 msgid "Valid from"
@@ -8966,7 +8975,7 @@ msgstr ""
 #: templates/xedemo/sales_quotation.html:70
 #: templates/xedemo/sales_quotation.tex:77
 msgid "Valid until"
-msgstr ""
+msgstr "Valable jusqu'au"
 
 #: UI/Reports/filters/income_statement.html:20
 msgid "Valuation"
@@ -8995,7 +9004,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:5 UI/Reports/filters/orders.html:4
 #: sql/Pg-database.sql:531
 msgid "Vendor"
-msgstr ""
+msgstr "Fournisseur"
 
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:247
 msgid "Vendor Account"
@@ -9003,21 +9012,21 @@ msgstr ""
 
 #: sql/Pg-database.sql:2676
 msgid "Vendor History"
-msgstr ""
+msgstr "Historique fournisseurs"
 
 #: old/bin/oe.pl:666 old/bin/oe.pl:872 t/data/04-complex_template.html:334
 #: UI/Contact/divs/credit.html:351 sql/Pg-database.sql:2785
 msgid "Vendor Invoice"
-msgstr ""
+msgstr "Facture d'achat"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:121
 msgid "Vendor Invoice/AP Transaction Number"
-msgstr ""
+msgstr "Numéro facture d'achat/écriture achat"
 
 #: UI/payments/payment1.html:45 UI/payments/payment2.html:29
 #: UI/Reports/filters/orders.html:5
 msgid "Vendor Name"
-msgstr ""
+msgstr "Nom du fournisseur"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:115
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:178
@@ -9030,7 +9039,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:54
 #: UI/Reports/filters/taxforms.html:33
 msgid "Vendor Number"
-msgstr ""
+msgstr "Numéro de fournisseur"
 
 #: UI/Contact/pricelist.csv:20 UI/Contact/pricelist.html:34
 #: UI/Contact/pricelist.tex:29
@@ -9047,7 +9056,7 @@ msgstr ""
 
 #: old/bin/aa.pl:1307 old/bin/ir.pl:1257 old/bin/oe.pl:1211
 msgid "Vendor missing!"
-msgstr ""
+msgstr "Fournisseur manquant!"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:860 lib/LedgerSMB/Upgrade_Tests.pm:906
 msgid "Vendor not in a business"
@@ -9055,7 +9064,7 @@ msgstr ""
 
 #: old/bin/arap.pl:143 old/bin/pe.pl:1216
 msgid "Vendor not on file!"
-msgstr ""
+msgstr "Fournisseur absent du fichier!"
 
 #: lib/LedgerSMB/Report/GL.pm:103 lib/LedgerSMB/Report/Unapproved/Drafts.pm:106
 #: UI/Reports/filters/gl.html:217
@@ -9100,44 +9109,44 @@ msgstr ""
 #: templates/xedemo/pick_list.html:78 templates/xedemo/pick_list.tex:82
 #: UI/Reports/filters/search_goods.html:396
 msgid "Warehouse"
-msgstr ""
+msgstr "Entrepôt"
 
 #: old/bin/am.pl:720
 msgid "Warehouse deleted!"
-msgstr ""
+msgstr "Entrepôt supprimé"
 
 #: old/bin/am.pl:713
 msgid "Warehouse saved!"
-msgstr ""
+msgstr "Entrepôt enregistré"
 
 #: lib/LedgerSMB/Report/Listings/Warehouse.pm:58 sql/Pg-database.sql:2766
 msgid "Warehouses"
-msgstr ""
+msgstr "Entrepôts"
 
 #: UI/oe-save-warn.html:4
 msgid "Warning!"
-msgstr ""
+msgstr "Attention!"
 
 #: UI/lib/ui-header.html:35
 msgid "Warning:  Your password will expire in [_1]"
-msgstr ""
+msgstr "Attention:  Votre mot de passe expirera dans [_1]"
 
 #: lib/LedgerSMB/Report/Timecards.pm:122
 msgid "Wed"
-msgstr ""
+msgstr "Mer."
 
 #: old/bin/am.pl:729 UI/lib/report_base.html:172
 #: UI/timecards/entry_filter.html:23
 msgid "Week"
-msgstr ""
+msgstr "Semaine"
 
 #: lib/LedgerSMB/Report/Timecards.pm:85
 msgid "Week Starting"
-msgstr ""
+msgstr "Semaine débutant le"
 
 #: old/bin/arap.pl:515
 msgid "Week(s)"
-msgstr ""
+msgstr "Semaine(s)"
 
 #: UI/timecards/timecard-week.html:49
 msgid "Weekly Time and Materials Entry"
@@ -9145,20 +9154,20 @@ msgstr ""
 
 #: old/bin/am.pl:730
 msgid "Weeks"
-msgstr ""
+msgstr "Semaines"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:221 old/bin/ic.pl:542
 #: old/bin/ic.pl:569 old/bin/ic.pl:591 UI/Reports/filters/search_goods.html:346
 msgid "Weight"
-msgstr ""
+msgstr "Poids"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:58
 msgid "Weight Unit"
-msgstr ""
+msgstr "Unité de poids"
 
 #: old/bin/io.pl:604
 msgid "What type of item is this?"
-msgstr ""
+msgstr "De quel type est cet objet?"
 
 #: UI/setup/begin_backup.html:8
 msgid "Where shall we send the backup?"
@@ -9181,7 +9190,7 @@ msgstr ""
 #: templates/xedemo/work_order.html:17 templates/xedemo/work_order.tex:109
 #: sql/Pg-database.sql:2838 sql/Pg-database.sql:2851
 msgid "Work Order"
-msgstr ""
+msgstr "Fiche de traitement"
 
 #: UI/templates/widget.html:75
 msgid "Work order"
@@ -9198,7 +9207,7 @@ msgstr ""
 #: UI/Contact/pricelist.html:109 UI/Reports/aging_report.html:106
 #: UI/Reports/display_report.html:84
 msgid "XLS"
-msgstr ""
+msgstr "XLS"
 
 #: UI/Contact/pricelist.html:115 UI/Reports/aging_report.html:110
 #: UI/Reports/display_report.html:88
@@ -9207,12 +9216,12 @@ msgstr ""
 
 #: sql/Pg-database.sql:800
 msgid "Yahoo"
-msgstr ""
+msgstr "Yahoo"
 
 #: old/bin/aa.pl:1581 old/bin/am.pl:731 old/bin/pe.pl:822
 #: UI/lib/report_base.html:190 UI/lib/report_base.html:275
 msgid "Year"
-msgstr ""
+msgstr "Année"
 
 #: sql/Pg-database.sql:2747
 msgid "Year End"
@@ -9220,24 +9229,24 @@ msgstr ""
 
 #: old/bin/arap.pl:517
 msgid "Year(s)"
-msgstr ""
+msgstr "Année(s)"
 
 #: UI/accounts/yearend.html:21 UI/accounts/yearend.html:37
 msgid "Yearend"
-msgstr ""
+msgstr "Écriture de fin d'exercice"
 
 #: UI/accounts/yearend_complete.html:3
 msgid "Yearend complete"
-msgstr ""
+msgstr "Écriture de fin d'exercice complétée"
 
 #: old/bin/am.pl:732
 msgid "Years"
-msgstr ""
+msgstr "Années"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:100 old/bin/oe.pl:1334
 #: UI/Configuration/settings.html:37 UI/setup/confirm_operation.html:29
 msgid "Yes"
-msgstr ""
+msgstr "Oui"
 
 #: UI/users/preferences.html:35
 msgid "Your password will expire in "
@@ -9245,28 +9254,28 @@ msgstr ""
 
 #: t/data/04-complex_template.html:388
 msgid "ZIP/Post Code"
-msgstr ""
+msgstr "Code Postal"
 
 #: old/lib/LedgerSMB/Num2text.pm:68
 msgid "Zero"
-msgstr ""
+msgstr "Zéro"
 
 #: old/bin/io.pl:1628
 msgid "Zip Code"
-msgstr ""
+msgstr "Code Postal"
 
 #: UI/Contact/divs/address.html:84 UI/Contact/divs/address.html:176
 msgid "Zip/Post Code"
-msgstr ""
+msgstr "Code Postal"
 
 #: t/data/04-complex_template.html:463
 msgid "Zip/Post Code:"
-msgstr ""
+msgstr "Code Postal:"
 
 #: UI/Reports/filters/contact_search.html:104
 #: UI/Reports/filters/purchase_history.html:91
 msgid "Zip/Postal Code"
-msgstr ""
+msgstr "Code Postal"
 
 #: lib/LedgerSMB/Report/PNL.pm:159
 msgid ""
@@ -9280,11 +9289,11 @@ msgstr ""
 
 #: old/bin/aa.pl:399
 msgid "[_1] Credit Note"
-msgstr ""
+msgstr "Note de crédit"
 
 #: old/bin/aa.pl:403
 msgid "[_1] Debit Note"
-msgstr ""
+msgstr "Note de débit"
 
 #: old/bin/gl.pl:180
 msgid "[_1] General Ledger Transaction"
@@ -9320,7 +9329,7 @@ msgstr ""
 
 #: old/bin/io.pl:1622
 msgid "city"
-msgstr ""
+msgstr "ville"
 
 #: UI/templates/widget.html:94
 msgid "csv"
@@ -9330,11 +9339,11 @@ msgstr ""
 #: t/data/04-complex_template.html:255 UI/Contact/divs/credit.html:163
 #: UI/Contact/divs/credit.html:181
 msgid "days"
-msgstr ""
+msgstr "jours"
 
 #: UI/Reports/co/filter_bm.html:98
 msgid "debits"
-msgstr ""
+msgstr "débits"
 
 #: lib/LedgerSMB/Scripts/currency.pm:67
 msgid "default"
@@ -9347,7 +9356,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:3689
 msgid "depreciation"
-msgstr ""
+msgstr "dépréciation"
 
 #: sql/Pg-database.sql:3690
 msgid "disposal"
@@ -9356,7 +9365,7 @@ msgstr ""
 #: old/bin/am.pl:1168 old/bin/am.pl:1239 old/bin/am.pl:1296 old/bin/am.pl:1346
 #: old/bin/am.pl:1396
 msgid "done"
-msgstr ""
+msgstr "fait"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:706
 msgid "e"
@@ -9364,11 +9373,11 @@ msgstr ""
 
 #: old/bin/ir.pl:1220 old/bin/is.pl:1341 old/bin/oe.pl:1181
 msgid "ea"
-msgstr ""
+msgstr "pièce(s)"
 
 #: old/bin/am.pl:1242 old/bin/am.pl:1399
 msgid "failed"
-msgstr ""
+msgstr "échec"
 
 #: UI/lib/report_base.html:209
 msgid "from_date"
@@ -9384,7 +9393,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:3616
 msgid "in months"
-msgstr ""
+msgstr "en mois"
 
 #: lib/LedgerSMB/Scripts/currency.pm:157 lib/LedgerSMB/Scripts/currency.pm:72
 msgid "in use"
@@ -9392,7 +9401,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:3613 sql/Pg-database.sql:3619
 msgid "in years"
-msgstr ""
+msgstr "en années"
 
 #: lib/LedgerSMB/Scripts/payment.pm:2012
 msgid "is bigger than the amount available"
@@ -9400,7 +9409,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1713
 msgid "is lesser than 0"
-msgstr ""
+msgstr "est inférieur à 0"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1707
 msgid "is lesser than the amount to be paid"
@@ -9408,7 +9417,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1969
 msgid "is null"
-msgstr ""
+msgstr "est nul"
 
 #: UI/Configuration/sequence.html:9
 msgid "label"
@@ -9420,7 +9429,7 @@ msgstr ""
 
 #: UI/Reports/aging_report.html:93 UI/Reports/display_report.html:69
 msgid "permalink"
-msgstr ""
+msgstr "lien permanent"
 
 #: sql/Pg-database.sql:3577
 msgid "production"
@@ -9428,11 +9437,11 @@ msgstr ""
 
 #: old/bin/arap.pl:792 old/bin/io.pl:1458
 msgid "sent"
-msgstr ""
+msgstr "envoyé"
 
 #: UI/Reports/filters/search_goods.html:418
 msgid "subtotal"
-msgstr ""
+msgstr "sous total"
 
 #: lib/LedgerSMB/Scripts/currency.pm:152
 msgid "system type"
@@ -9448,7 +9457,7 @@ msgstr ""
 
 #: old/bin/arap.pl:544
 msgid "time(s)"
-msgstr ""
+msgstr "temps"
 
 #: UI/lib/report_base.html:220
 msgid "to_date"
@@ -9456,7 +9465,7 @@ msgstr ""
 
 #: old/bin/ic.pl:1421
 msgid "unexpected error!"
-msgstr ""
+msgstr "Erreur inattendue!"
 
 #: lib/LedgerSMB/Scripts/payment.pm:2021 lib/LedgerSMB/Scripts/payment.pm:2040
 msgid "use of an overpayment"

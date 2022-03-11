@@ -1,13 +1,14 @@
 #
 # Translators:
 # Erik Huelsmann <ehuels@gmail.com>, 2020
+# pasman pasmański, 2022
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.26-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-01-19 22:04+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2020\n"
+"POT-Creation-Date: 2022-03-11 13:33+0000\n"
+"Last-Translator: pasman pasmański, 2022\n"
 "Language-Team: Polish (https://www.transifex.com/ledgersmb/teams/58325/pl/)\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +20,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:174
 msgid "# Invoices"
-msgstr ""
+msgstr "# Faktury"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:115
 msgid "% Dep."
@@ -337,7 +338,7 @@ msgstr ""
 
 #: UI/Reports/filters/income_statement.html:28
 msgid "Accrual"
-msgstr ""
+msgstr "Narzut"
 
 #: UI/taxform/add_taxform.html:73
 msgid "Accrual Basis:"
@@ -508,7 +509,7 @@ msgstr "Dodaj Prośbę o Ofertę"
 
 #: sql/Pg-database.sql:2863
 msgid "Add Return"
-msgstr ""
+msgstr "Dodaj zwrot"
 
 #: old/bin/am.pl:340 sql/Pg-database.sql:2731
 msgid "Add SIC"
@@ -1686,11 +1687,11 @@ msgstr ""
 
 #: UI/accounts/yearend.html:85 UI/accounts/yearend.html:112
 msgid "Close Period"
-msgstr ""
+msgstr "Zamknij Okres"
 
 #: UI/accounts/yearend.html:11
 msgid "Close Year"
-msgstr ""
+msgstr "Zamknij Rok"
 
 #: UI/accounts/yearend.html:91
 msgid "Close books"
@@ -1752,7 +1753,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:41
 msgid "Company Fax"
-msgstr ""
+msgstr "Faks firmowy"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:34
 msgid "Company Information"
@@ -1977,7 +1978,7 @@ msgstr ""
 
 #: UI/setup/credentials.html:95 UI/templates/widget.html:120
 msgid "Create"
-msgstr ""
+msgstr "Utwórz"
 
 #: lib/LedgerSMB/Report/COA.pm:196
 msgid "Create Account"
@@ -2406,7 +2407,7 @@ msgstr ""
 #: old/bin/am.pl:725 UI/lib/report_base.html:166
 #: UI/timecards/entry_filter.html:22
 msgid "Day"
-msgstr ""
+msgstr "Dzień"
 
 #: old/bin/arap.pl:514
 msgid "Day(s)"
@@ -3231,7 +3232,7 @@ msgstr ""
 
 #: UI/inventory/adjustment_entry.html:7 sql/Pg-database.sql:2671
 msgid "Enter Inventory"
-msgstr ""
+msgstr "Rozpocznij Remanent"
 
 #: UI/setup/new_user.html:8
 msgid "Enter User"
@@ -3603,7 +3604,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:486 sql/Pg-database.sql:2812
 msgid "Fixed Assets"
-msgstr ""
+msgstr "Środki Trwałe"
 
 #: old/bin/arap.pl:542
 msgid "For"
@@ -4429,7 +4430,7 @@ msgstr "Szablony LaTeX"
 #: lib/LedgerSMB/Report/Payroll/Income_Types.pm:41
 #: UI/business_units/list_classes.html:9
 msgid "Label"
-msgstr ""
+msgstr "Etykieta"
 
 #: UI/asset/edit_class.html:18 UI/asset/search_class.html:13
 msgid "Label:"
@@ -4631,7 +4632,7 @@ msgstr "Wykaz Języków"
 
 #: UI/Reports/filters/overpayments.html:4
 msgid "List Overpayments"
-msgstr ""
+msgstr "Wykaz Nadpłat"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:226 old/bin/ic.pl:435
 #: UI/Reports/filters/search_goods.html:286
@@ -5017,7 +5018,7 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:78
 msgid "Nine"
-msgstr ""
+msgstr "Dziewięć"
 
 #: old/lib/LedgerSMB/Num2text.pm:111
 msgid "Nine Hundred"
@@ -5025,7 +5026,7 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:89
 msgid "Nineteen"
-msgstr ""
+msgstr "Dziewiętnaście"
 
 #: old/lib/LedgerSMB/Num2text.pm:107
 msgid "Ninety"
@@ -5488,7 +5489,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:181 UI/setup/complete.html:25
 #: UI/setup/confirm_operation.html:123
 msgid "Orders"
-msgstr ""
+msgstr "Zamówienia"
 
 #: old/bin/pe.pl:1315
 msgid "Orders generated!"
@@ -5628,7 +5629,7 @@ msgstr "Zapłacono"
 
 #: old/bin/pe.pl:129 UI/business_units/edit.html:41
 msgid "Parent"
-msgstr ""
+msgstr "Rodzic"
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:107 old/bin/io.pl:611
 msgid "Part"
@@ -5829,7 +5830,7 @@ msgstr ""
 #: UI/Contact/divs/credit.html:429 UI/Reports/filters/balance_sheet.html:80
 #: UI/Reports/filters/income_statement.html:112
 msgid "Periods"
-msgstr ""
+msgstr "Okresy"
 
 #: lib/LedgerSMB/Scripts/contact.pm:186 UI/Contact/divs/person.html:3
 msgid "Person"
@@ -7830,7 +7831,7 @@ msgstr ""
 #: UI/budgetting/budget_entry.html:149 UI/budgetting/budget_entry.html:177
 #: UI/Contact/divs/notes.html:32 UI/io-email.html:21
 msgid "Subject"
-msgstr ""
+msgstr "Temat"
 
 #: old/bin/arap.pl:787 old/bin/io.pl:1454 UI/Contact/divs/notes.html:78
 msgid "Subject: [_1]"
@@ -7842,7 +7843,7 @@ msgstr ""
 
 #: UI/reconciliation/report.html:386
 msgid "Submit"
-msgstr ""
+msgstr "Wyślij"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:151
 #: UI/Reports/filters/reconciliation_search.html:78
@@ -8605,7 +8606,7 @@ msgstr "Przeniesienie Inventarza"
 
 #: old/bin/oe.pl:2030
 msgid "Transfer from"
-msgstr ""
+msgstr "Przenieś z"
 
 #: old/bin/oe.pl:2034
 msgid "Transfer to"
@@ -9140,7 +9141,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:85
 msgid "Week Starting"
-msgstr ""
+msgstr "Tydzień początkowy"
 
 #: old/bin/arap.pl:515
 msgid "Week(s)"
