@@ -225,7 +225,7 @@ Dependency updates (Perl)
 Changelog for 1.8 Series
 Released 2020-09-04
 
-Changelog for 1.8.25
+Changelog for 1.8.26
 * Fix double-counting of lines with business units in the trial balance (#6402)
 
 
