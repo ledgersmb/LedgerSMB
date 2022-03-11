@@ -186,6 +186,10 @@ Changelog for 1.8 Series
 Released 2020-09-04
 
 Changelog for 1.8.25
+* Fix double-counting of lines with business units in the trial balance (#6402)
+
+
+Changelog for 1.8.25
 * Fix batch details printing throwing a PSGI error (#6325)
 * Fix saving of AR/AP vouchers throwing errors (#6327)
 * Fix account initialization in tax calculation module (#6335)
