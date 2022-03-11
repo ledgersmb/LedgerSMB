@@ -110,21 +110,21 @@ BEGIN
             SELECT bu.id, bu_tree.path || ',' || bu.id
               FROM business_unit bu
               JOIN bu_tree ON bu_tree.id = bu.parent_id
-            )
+           )
        SELECT ac.transdate, ac.amount_bc, ac.chart_id
-         FROM acc_trans ac
-         JOIN (SELECT id, approved FROM transactions) gl
-                   ON ac.trans_id = gl.id
-                     AND (in_approved is null
-                          OR (gl.approved = in_approved
-                             and (ac.approved OR in_approved is false)))
-    LEFT JOIN business_unit_ac buac ON ac.entry_id = buac.entry_id
-    LEFT JOIN bu_tree ON buac.bu_id = bu_tree.id
-        WHERE ac.transdate BETWEEN t_roll_forward + '1 day'::interval
-                                    AND t_end_date
+         FROM (select * from acc_trans
+                where in_business_units = '{}' OR in_business_units IS NULL
+                      OR EXISTS (
+                            select 1 from business_unit_ac buac
+                              join bu_tree on bu_tree.id = buac.bu_id
+                             where buac.entry_id = acc_trans.entry_id
+                           )) ac
+         JOIN (SELECT id, approved FROM transactions
+                WHERE (in_approved is null OR approved = in_approved)) gl
+              ON ac.trans_id = gl.id
+        WHERE ac.transdate BETWEEN t_roll_forward + '1 day'::interval AND t_end_date
+              AND (in_approved is null or ac.approved or in_approved is false)
               AND (ignore_trans is null or ac.trans_id <> ALL(ignore_trans))
-              AND ((in_business_units = '{}' OR in_business_units IS NULL)
-               OR bu_tree.id IS NOT NULL)
        )
        SELECT a.id, a.accno,
          COALESCE(at.description, a.description) as description, a.gifi_accno,
