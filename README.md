@@ -62,25 +62,26 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome              | 2017-09  | 61-81, 83-96                                |
-| Edge                | 2017-10  | 16-18, 79-81, 83-96                         |
-| Firefox             | 2018-05  | 60-94                                       |
-| Opera               | 2017-09  | 48-58, 60, 62-81                            |
+| Chrome              | 2017-09  | 61-81, 83-99                                |
+| Edge                | 2017-10  | 16-18, 79-81, 83-98                         |
+| Firefox             | 2018-05  | 60-97                                       |
+| Opera               | 2017-09  | 48-58, 60, 62-83                            |
 | Safari              | 2017-09  | 11, 11.1, 12, 12.1, 13, 13.1, 14, 14.1,     |
-|                     |          | 15, 15.1                                    |
+|                     |          | 15, 15.1, 15.2-15.3                         |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome for Android  | 2021-11  | 96                                          |
-| Firefox for Android | 2021-11  | 94                                          |
-| Android Browser     | 2021-11  | 96                                          |
+| Chrome for Android  | 2022-02  | 98                                          |
+| Firefox for Android | 2022-01  | 96                                          |
+| Android Browser     | 2022-02  | 98                                          |
 | Safari on iOS       | 2017-09  | 11.0-11.4, 12.0-12.5, 13.0-13.7,            |
-|                     |          | 14.0-14.8, 15.0-15.1                        |
+|                     |          | 14.0-14.8, 15.0-15.3                        |
 | Opera Mobile        | 2021-02  | 64                                          |
 | Samsung Internet    | 2018-12  | 8.2, 9.2, 10.1, 11.1-11.2, 12.0, 13.0,      |
-|                     |          | 14.0, 15.0                                  |
+|                     |          | 14.0, 15.0, 16.0                            |
+
 
 **Note**: Earliest dates and versions come from http://caniuse.com. Only the most
 recent data is available for Mobile browsers other than Safari, because they
