@@ -3,6 +3,12 @@
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.11
+* Fix Goods > Search filters to honor selected part type (#6428)
+* Update invoice creation date when posting recurring invoices (#6432)
+* Fix double-counting of lines with business units in the trial balance (#6402)
+
+
 Changelog for 1.9.10
 * Second fix for sending e-mail due to the incompatibility in Workflow 1.59
 
