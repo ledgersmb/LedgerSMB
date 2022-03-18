@@ -9,9 +9,16 @@
 # Description:       Enable service provided by daemon.
 ### END INIT INFO
 
-dir=""
-cmd=""
-user=""
+user="ledgersmb"
+dir="/opt/local/ledgersmb"
+cmd="LSMB_WORKINGDIR=${dir} \
+    /usr/bin/starman \
+    --preload-app \
+    --listen localhost:5762 \
+    -I lib/ \
+    -I old/lib/ \
+    -I local/lib/perl5 \
+    bin/ledgersmb-server.psgi"
 
 name=`basename $0`
 pid_file="/var/run/$name.pid"
