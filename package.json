@@ -117,8 +117,8 @@
   },
   "dependencies": {
     "content-disposition": "0.5.4",
-    "dijit": "~1.17.2",
-    "dojo": "~1.17.2",
+    "dijit": "1.17.2",
+    "dojo": "1.17.2",
     "vue-i18n": "9.1.9"
   },
   "homepage": "http://ledgersmb.org/",
