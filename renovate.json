@@ -21,14 +21,6 @@
             "allowedVersions": "<4"
         },
         {
-            "packagePatterns": ["^dojo"],
-            "allowedVersions": "<1.17"
-        },
-        {
-            "packagePatterns": ["^dijit"],
-            "allowedVersions": "<1.17"
-        },
-        {
             "matchPackagePatterns": [
                 "*"
             ],
