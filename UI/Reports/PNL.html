@@ -72,6 +72,11 @@ END ;
                      report.rheads.ids.$row.props.account_number;
                      '"';
                   END %]>
+  [% IF report.legacy_hierarchy %]
+    [% IF path_prefix_len > 0 %]
+    <th colspan="[% path_prefix_len %]" class="indent"></th>
+    [% END %]
+  [% ELSE %]
   [%
     colspan = 1;
   WHILE colspan <= path_prefix_len;
@@ -79,6 +84,7 @@ END ;
   -%]
     <th class="indent">&nbsp;</th>
     [%- END -%]
+  [% END %]
   <th colspan="[% path_suffix_len %]" [% class %]>
 [% IF report.rheads.ids.$row.props.section_for ;
   head_id = report.rheads.ids.$row.props.section_for;

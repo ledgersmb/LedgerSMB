@@ -19,7 +19,7 @@ IF report.legacy_hierarchy ;
 ELSE ;
    hierarchy = 'full-hierarchy';
 END ;
- %]
+%]
 <body class="financial-statement [% dojo_theme %] [% hierarchy %]">
 <div id="PNL" class="financial-statement [% hierarchy %] balance-sheet">  <!-- TODO: Find better name!! -->
 <h1>[% text('Balance Sheet') %]</h1>
@@ -71,14 +71,20 @@ END ;
                      ' data-lsmb-account="';
                      report.rheads.ids.$row.props.account_number;
                      '"';
-                  END %]>
-  [%
-    colspan = 1;
-  WHILE colspan < path_prefix_len;
-    colspan = colspan + 1;
-  -%]
-    <th class="indent">&nbsp;</th>
+              END %]>
+  [% IF report.legacy_hierarchy %]
+    [% IF path_prefix_len > 0 %]
+    <th colspan="[% path_prefix_len %]" class="indent"></th>
+    [% END %]
+  [% ELSE %]
+    [%
+      colspan = 1;
+      WHILE colspan < path_prefix_len;
+        colspan = colspan + 1;
+    -%]
+        <th class="indent">&nbsp;</th>
     [%- END -%]
+  [% END %]
   <th colspan="[% path_suffix_len %]" [% class %]>
 [% IF report.rheads.ids.$row.props.section_for ;
   head_id = report.rheads.ids.$row.props.section_for;
@@ -96,20 +102,6 @@ END ;
 </tr>
 [% END %]
 
-<!--
-<h2>[% text('Key Ratios'); %]</h2>
-<h2>[% text('First column only') %]</h2>
-<table>
-<tr><th>[% text('Assets to Liabilities') %]</th>
-    <td>[% report.balance_sheet.ratios.AL %]</td>
-</tr>
-<tr><th>[% text('Assets to Equity') %]</th>
-    <td>[% report.balance_sheet.ratios.AQ %]</td>
-</tr>
-<tr><th>[% text('Equity to Liabilities') %]</th>
-    <td>[% report.balance_sheet.ratios.QL %]</td>
-</tr>
--->
 </tbody>
 </table>
 
