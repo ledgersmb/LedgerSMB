@@ -2,6 +2,8 @@
 #
 # Vim swap files
 *.swp
+# Visual Studio swap files
+.vscode
 #
 # Perl Module::Build, Module::Install, ExtUtils::MakeMaker
 META.yml
@@ -50,4 +52,3 @@ ledgersmb.conf
 /.cache
 /.config
 /.npm
-
