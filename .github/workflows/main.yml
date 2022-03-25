@@ -296,7 +296,7 @@ jobs:
           fi
 
       - name: Repository Dispatch to the Development image
-        uses: peter-evans/repository-dispatch@v1
+        uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.DOCKER_TOKEN }}
           repository: ${{ github.repository_owner }}/ledgersmb-dev-docker
