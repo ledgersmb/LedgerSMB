@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.9.12-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-03-11 14:04+0000\n"
+"POT-Creation-Date: 2022-03-26 21:13+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: Dutch (Belgium) (https://www.transifex.com/ledgersmb/"
 "teams/58325/nl_BE/)\n"
@@ -251,8 +251,8 @@ msgstr "Rekeninghouder"
 #: lib/LedgerSMB/Report/Contact/Search.pm:107 lib/LedgerSMB/Report/GL.pm:155
 #: lib/LedgerSMB/Report/GL.pm:219 lib/LedgerSMB/Report/Invoices/Payments.pm:186
 #: lib/LedgerSMB/Report/PNL/ECA.pm:88
-#: lib/LedgerSMB/Report/Taxform/Details.pm:117
-#: lib/LedgerSMB/Report/Taxform/Details.pm:87
+#: lib/LedgerSMB/Report/Taxform/Details.pm:119
+#: lib/LedgerSMB/Report/Taxform/Details.pm:89
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:82
 #: lib/LedgerSMB/Report/Trial_Balance.pm:146
 #: lib/LedgerSMB/Scripts/payment.pm:183 old/bin/ic.pl:1013 old/bin/ic.pl:1661
@@ -275,7 +275,7 @@ msgstr "Rekeningnummer Begin"
 msgid "Account Title"
 msgstr "Rekeningtitel"
 
-#: lib/LedgerSMB/Report/Taxform/Details.pm:83
+#: lib/LedgerSMB/Report/Taxform/Details.pm:85
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:78 UI/accounts/edit.html:209
 msgid "Account Type"
 msgstr "Rekeningtype"
@@ -1660,7 +1660,7 @@ msgstr "Inkooporders combineren"
 msgid "Combine Sales Orders"
 msgstr "Verkooporders combineren"
 
-#: lib/LedgerSMB/Report/Taxform/Details.pm:79
+#: lib/LedgerSMB/Report/Taxform/Details.pm:81
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:74
 #: lib/LedgerSMB/Scripts/contact.pm:186 templates/demo/display_report.html:33
 #: templates/demo/display_report.tex:35 templates/xedemo/display_report.html:33
@@ -3466,7 +3466,7 @@ msgstr "Vanaf bedrag"
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:167
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:188
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:182
-#: lib/LedgerSMB/Report/Taxform/Details.pm:114
+#: lib/LedgerSMB/Report/Taxform/Details.pm:116
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:110
 #: lib/LedgerSMB/Report/Timecards.pm:147
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:149
@@ -4009,7 +4009,7 @@ msgstr "Factuurnr"
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:68
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:90
 #: lib/LedgerSMB/Report/PNL/Invoice.pm:83
-#: lib/LedgerSMB/Report/Taxform/Details.pm:91 old/bin/aa.pl:633
+#: lib/LedgerSMB/Report/Taxform/Details.pm:93 old/bin/aa.pl:633
 #: old/bin/ir.pl:478 old/bin/is.pl:529 UI/asset/edit_asset.html:205
 #: UI/asset/search_asset.html:177 UI/orders/order.html:77
 #: UI/payments/payments_detail.html:336 UI/payments/use_overpayment2.html:148
@@ -4052,7 +4052,7 @@ msgstr "Factuur verschuldigd"
 msgid "Invoice not found"
 msgstr "Factuur niet gevonden"
 
-#: lib/LedgerSMB/Report/Taxform/Details.pm:99
+#: lib/LedgerSMB/Report/Taxform/Details.pm:101
 msgid "Invoice sum"
 msgstr ""
 
@@ -4246,7 +4246,7 @@ msgstr "Levertijd"
 msgid "Leadtime"
 msgstr "Levertijd"
 
-#: lib/LedgerSMB/Report/Taxform/Details.pm:95
+#: lib/LedgerSMB/Report/Taxform/Details.pm:97
 msgid "Ledger sum"
 msgstr ""
 
@@ -5813,7 +5813,7 @@ msgstr "Prijslijst voor [_1]"
 msgid "Primary Phone"
 msgstr "Eerste telefoonnummer"
 
-#: lib/LedgerSMB/Report/Taxform/Details.pm:138
+#: lib/LedgerSMB/Report/Taxform/Details.pm:140
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:133 old/bin/aa.pl:938
 #: old/bin/aa.pl:966 old/bin/am.pl:787 old/bin/arap.pl:471 old/bin/ir.pl:528
 #: old/bin/is.pl:1104 old/bin/is.pl:593 old/bin/oe.pl:2045 old/bin/oe.pl:643
@@ -7505,7 +7505,7 @@ msgstr "Belastingrekening"
 msgid "Tax Code"
 msgstr "BTW Code"
 
-#: lib/LedgerSMB/Report/Taxform/Details.pm:116
+#: lib/LedgerSMB/Report/Taxform/Details.pm:118
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:112 UI/Contact/divs/credit.html:264
 #: UI/Contact/divs/credit.html:265
 msgid "Tax Form"
@@ -7515,7 +7515,7 @@ msgstr "Belastingformulier"
 msgid "Tax Form Applied"
 msgstr "Belasting formulier toegepast"
 
-#: lib/LedgerSMB/Report/Taxform/Details.pm:127
+#: lib/LedgerSMB/Report/Taxform/Details.pm:129
 msgid "Tax Form Details Report"
 msgstr "Detailoverzicht belastingformulier"
 
@@ -7917,7 +7917,7 @@ msgstr "Tot bedrag"
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:168
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:190
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:184
-#: lib/LedgerSMB/Report/Taxform/Details.pm:115
+#: lib/LedgerSMB/Report/Taxform/Details.pm:117
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:111
 #: lib/LedgerSMB/Report/Timecards.pm:149
 #: lib/LedgerSMB/Report/Trial_Balance.pm:198
@@ -7976,7 +7976,7 @@ msgstr "Hoogste Niveau"
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:122
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:239
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:287
-#: lib/LedgerSMB/Report/Taxform/Details.pm:103
+#: lib/LedgerSMB/Report/Taxform/Details.pm:105
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:99 lib/LedgerSMB/Scripts/asset.pm:493
 #: lib/LedgerSMB/Scripts/payment.pm:935 old/bin/ir.pl:815 old/bin/is.pl:923
 #: old/bin/oe.pl:840 templates/demo/ap_transaction.html:104
