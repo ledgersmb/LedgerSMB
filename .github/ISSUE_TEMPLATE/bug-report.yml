@@ -1,0 +1,55 @@
+name: Bug Report
+description: File a bug report
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+        
+        Please be extensive in the description you provide and include
+        steps leading up to the observed behaviour.
+        
+        Example: When I select the values ... and ... for the balance
+        sheet report, the report doesn't show the values I expect.
+        (As opposed to: "the balance sheet doesn't look good")
+  - type: textarea
+    id: version
+    attributes:
+      label: Version
+      description: What version of our software are you running?
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What browsers are you seeing the problem on?
+      multiple: true
+      options:
+        - Firefox
+        - Firefox Mobile
+        - Chrome
+        - Chrome Mobile
+        - Safari (MacOS X)
+        - Safari (iPadOS)
+        - Microsoft Edge
+        - Other
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Tell us what you observed that happened?
+      placeholder: |
+        Tell us the steps you went through and what you see at each step (use screenshots, if possible).
+        Please include at least 3 steps leading up to the unexpected results - in other words: be as extensive as possible, so we have better chances to reproduce your problem.
+    validations:
+      required: true
+  - type: textarea
+    id: expectation
+    attributes:
+      label: What should have happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: |
+        Please describe what you expected that would happen by going through the steps you described before.
+    validations:
+      required: true
