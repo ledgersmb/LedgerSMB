@@ -32,7 +32,7 @@ FOREACH COL IN columns;
         IF ADD_COMMA;
            ',';
         END;
-        INCLUDE escape VALUE = COL.name;
+        INCLUDE do_quote VALUE = COL.name;
         ADD_COMMA = 1;
     END;
 END;
@@ -48,7 +48,7 @@ ADD_COMMA=0;
                ',';
             END;
             ADD_COMMA = 1;
-            INCLUDE escape VALUE = ROW.$COL_ID;
+            INCLUDE do_quote VALUE = ROW.$COL_ID;
         END;
     END; 
 ?>
