@@ -47,7 +47,6 @@
     "@babel/eslint-parser": "7.17.0",
     "@babel/plugin-proposal-object-rest-spread": "7.17.3",
     "@babel/preset-env": "7.16.11",
-    "@bcox280/markdown-spellcheck": "2.0.1",
     "@intlify/vue-i18n-loader": "4.1.0",
     "@vue/cli": "5.0.4",
     "@vue/cli-service": "5.0.4",
