@@ -44,7 +44,7 @@ jobs:
 
       - name: Cache node modules
         id: cache-node_modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.npm
           key: |
@@ -56,7 +56,7 @@ jobs:
 
       - name: Cache Dojo
         id: cache-dojo
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: UI/js
           key: dojo-${{ hashFiles('UI/{js-src,css}/**','UI/**/*.html') }}
