@@ -34,6 +34,7 @@ body:
         - Safari (iPadOS)
         - Microsoft Edge
         - Other
+        - This problem isn't browser related
   - type: textarea
     id: what-happened
     attributes:
