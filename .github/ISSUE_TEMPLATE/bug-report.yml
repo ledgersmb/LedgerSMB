@@ -13,7 +13,7 @@ body:
         Example: When I select the values ... and ... for the balance
         sheet report, the report doesn't show the values I expect.
         (As opposed to: "the balance sheet doesn't look good")
-  - type: textarea
+  - type: input
     id: version
     attributes:
       label: Version
