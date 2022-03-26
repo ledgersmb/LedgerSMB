@@ -39,6 +39,8 @@ This is the id of the taxform.
 
 has tax_form_id => (is => 'ro', isa => 'Int', required => '1');
 
+has taxform => (is => 'rw', isa => 'Str', required => 0);
+
 =head2 meta_number
 
 This is the vendor number.
