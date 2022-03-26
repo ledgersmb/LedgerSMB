@@ -43,6 +43,12 @@ Dependency updates
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.12
+* Fix CSV export regression since 1.9.8 throwing an error (#6474)
+* Remove runtime Javascript dependencies with security issues [CVE] (#6475)
+* Fix tax form details reports throwing an error (#6458)
+
+
 Changelog for 1.9.11
 * Fix Goods > Search filters to honor selected part type (#6428)
 * Update invoice creation date when posting recurring invoices (#6432)
