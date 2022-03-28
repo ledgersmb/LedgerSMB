@@ -8,10 +8,12 @@ Changelog for 1.10.0
 Added functionalities
 * Example hierarchical chart of accounts, US General
 * Ability to delete user login accounts (#1135)
+* SysV init script for managing 'starman' process (#6455)
 
 Changed functionalities
 * Overpayment section in payment screen hidden on missing configuration
 * Batch AR/AP upload changed to support foreign currency transactions
+* Line description on AR/AP transactions renamed to 'linedescription' (#6482)
 
 Removed functionalities
 * Removed 'accesskey' HTML attribute, based on WebAIM.org guidance
@@ -29,9 +31,12 @@ Code cleanup
 * Complete replacement of Log::Log4perl with Log::Any in library code
 * Remove unused UI templates
 * Encapsulate Dijit (Dojo) widgets in Web Components / Custom Elements
+* Remove unused Dijit widget(s)
+* Use more idiomatic Template Toolkit coding style for templates
 
 Dependency updates
 * Perl 5.32 (updated from 5.24)
+* Dojo and Dijit 1.17.2 (from 1.16)
 * PGObject 2.3.2 (updated from 2.2.0)
 * PGObject::Simple 3.1.0 (updated from 3.0.2)
 * PGObject::Simple::Role 2.1.1 (updated from 2.0.2)
