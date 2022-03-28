@@ -157,6 +157,7 @@ sub print_transaction {
         push( @{ $form->{accno} },         $form->{tempaccno} );
         push( @{ $form->{account} },       $form->{tempaccount} );
         push( @{ $form->{description} },   $form->{tempdescription} );
+        push( @{ $form->{linedescription} },   $form->{tempdescription} );
         push( @{ $form->{projectnumber} }, $form->{tempprojectnumber} );
 
         push( @{ $form->{amount} }, $form->{"amount_$i"} );
