@@ -185,6 +185,7 @@ sub postprocess {
 
     if ($config->{_output_extension} eq 'xlsx') {
         $workbook  = Excel::Writer::XLSX->new($output);
+        $workbook->set_optimization(); # reduce memory consumption
     }
     else {
         $workbook = Spreadsheet::WriteExcel->new($output);
@@ -218,7 +219,7 @@ sub mimetype {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2016-2018 The LedgerSMB Core Team
+Copyright (C) 2016-2022 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
