@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.0
-   Date:     2021-01-04
+   Version:  1.1
+   Date:     2022-03-28
    File:     ap_transaction.html
    Set:      xedemo
 
@@ -95,7 +95,7 @@ releases. No explicit versioning was applied before 2021-01-04.
             <td width="10"></td>
             <td align="right"><?lsmb amount.${loop_count} ?></td>
             <td width="10"></td>
-            <td><?lsmb description.${loop_count}.replace("\n","<br />") ?></td>
+            <td><?lsmb linedescription.${loop_count}.replace("\n","<br />") ?></td>
             <td width="10"></td>
             <td><?lsmb projectnumber.${loop_count} ?></td>
           </tr><?lsmb END ?>
