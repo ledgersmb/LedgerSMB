@@ -95,8 +95,8 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                                   OR (gl.invoice is false
                                      and ac.relation='acc_trans')))
                 JOIN (SELECT ac.trans_id, sum(ac.amount_bc) as amount_bc,
-                             as_array(entry_id) as entry_ids,
-                             as_array(chart_id) as chart_ids,
+                             array_agg(entry_id) as entry_ids,
+                             array_agg(chart_id) as chart_ids,
                              count(*) as num
                         FROM acc_trans ac
                        where chart_id in (select account_id
@@ -177,8 +177,8 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                 JOIN company ON (entity.id = company.entity_id)
                 JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
                 JOIN (SELECT ac.trans_id, sum(ac.amount_bc) as amount_bc,
-                             as_array(entry_id) as entry_ids,
-                             as_array(chart_id) as chart_ids,
+                             array_agg(entry_id) as entry_ids,
+                             array_agg(chart_id) as chart_ids,
                              count(*) as num
                         FROM acc_trans ac
                        where chart_id in (select account_id

@@ -100,7 +100,7 @@ SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
      JOIN invoice i ON i.id = ac.invoice_id
      JOIN account_link l ON l.account_id = ac.chart_id
      JOIN ar ON ar.id = ac.trans_id
-LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
+LEFT JOIN (select array_agg(bu.path) as bu_ids, entry_id
              from business_unit_inv bui
              JOIN bu_tree bu ON bui.bu_id = bu.id
          GROUP BY entry_id) bui ON bui.entry_id = i.id
@@ -118,7 +118,7 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
      FROM invoice i
      JOIN acc_trans ac ON ac.invoice_id = i.id
      JOIN ar ON ar.id = ac.trans_id
-LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
+LEFT JOIN (select array_agg(bu.path) as bu_ids, entry_id
              from business_unit_inv bui
              JOIN bu_tree bu ON bui.bu_id = bu.id
          GROUP BY entry_id) bui ON bui.entry_id = i.id

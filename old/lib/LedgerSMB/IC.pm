@@ -940,7 +940,7 @@ sub create_links {
     my $ref;
 
     my $query = qq|
-        SELECT a.accno, a.description, as_array(l.description) as link
+        SELECT a.accno, a.description, array_agg(l.description) as link
           FROM account a
           JOIN account_link l ON a.id = l.account_id
          WHERE l.description LIKE ?

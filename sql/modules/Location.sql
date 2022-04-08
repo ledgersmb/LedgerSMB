@@ -18,7 +18,7 @@ DROP FUNCTION IF EXISTS location_list_class();
 CREATE OR REPLACE FUNCTION location_list_class()
 RETURNS SETOF location_class_item AS
 $$
-                SELECT l.*, as_array(e.entity_class)
+                SELECT l.*, array_agg(e.entity_class)
                   FROM location_class l
                   JOIN location_class_to_entity_class e
                        ON (l.id = e.location_class)

@@ -1932,7 +1932,7 @@ sub create_links {
     }
 
     # now get the account numbers
-    $query = qq|SELECT a.accno, a.description, as_array(l.description) as link
+    $query = qq|SELECT a.accno, a.description, array_agg(l.description) as link
                   FROM account a
                   JOIN account_link l ON a.id = l.account_id AND NOT a.obsolete
                  WHERE (l.description LIKE ? OR a.tax)

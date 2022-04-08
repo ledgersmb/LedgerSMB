@@ -939,7 +939,7 @@ sub item_links {
     my $dbh = $form->{dbh};
 
     my $query = qq|
-           SELECT accno, description, as_array(l.description) as link
+           SELECT accno, description, array_agg(l.description) as link
              FROM account a
              JOIN account_link l ON a.id = l.account-id
             WHERE l.description like 'IC%'
