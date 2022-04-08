@@ -38,27 +38,6 @@ CREATE TABLE language (
 COMMENT ON TABLE language IS
 $$ Languages for manual translations and so forth.$$;
 
-CREATE OR REPLACE FUNCTION concat_colon(TEXT, TEXT) returns TEXT as
-$$
-select CASE WHEN $1 IS NULL THEN $2 ELSE $1 || ':' || $2 END;
-$$ language sql;
-
-COMMENT ON FUNCTION concat_colon(TEXT, TEXT) IS $$
-This function takes two arguments and creates a list out  of them.  It's useful
-as an aggregate base (see aggregate concat_colon).  However this is a temporary
-function only and should not be relied upon.$$; --'
-
-CREATE AGGREGATE concat_colon (
-        BASETYPE = text,
-        STYPE = text,
-        SFUNC = concat_colon
-);
-
-COMMENT ON AGGREGATE concat_colon(text) IS
-$$ This is a sumple aggregate to return values from the database in a
-colon-separated list.  Other programs probably should not rely on this since
-it is primarily included for the chart view.$$;
-
 CREATE TABLE account_heading (
   id serial not null unique,
   accno text primary key,
@@ -3409,29 +3388,6 @@ CREATE INDEX menu_acl_node_id_idx ON menu_acl (node_id);
 --
 -- PostgreSQL database dump complete
 --
-
-CREATE OR REPLACE FUNCTION lsmb_array_append(ary anyarray, elm anyelement)
-RETURNS anyarray
-AS $$
-   SELECT array_append(ary, elm);
-$$ LANGUAGE sql;
-
-COMMENT ON FUNCTION lsmb_array_append(anyarray, anyelement)
-IS $$PostgreSQL 14 vs pre-14 compatibility measure.$$;
-
-CREATE AGGREGATE as_array (
-        BASETYPE = ANYELEMENT,
-        STYPE = ANYARRAY,
-        SFUNC = LSMB_ARRAY_APPEND,
-        INITCOND = '{}'
-);
-
-COMMENT ON AGGREGATE as_array(ANYELEMENT) IS
-$$ A basic array aggregate to take elements and return a one-dimensional array.
-
-Example:  SELECT as_array(id) from entity_class;
-$$;
-
 
 CREATE OR REPLACE FUNCTION compound_array(ary anyarray, elm anyarray)
 RETURNS anyarray
