@@ -69,14 +69,14 @@ $$
 LEFT JOIN account_link l ON l.account_id = act.id
                           AND l.description IN ('AR', 'AP')
 LEFT JOIN invoice inv ON gl.id = inv.trans_id
-LEFT JOIN (SELECT compound_array(ARRAY[ARRAY[buc.label, bu.control_code]])
+LEFT JOIN (SELECT array_agg(ARRAY[buc.label, bu.control_code])
                   as business_units, entry_id
              FROM business_unit_class buc
              JOIN business_unit bu ON bu.class_id = buc.id
              JOIN business_unit_ac buac ON buac.bu_id = bu.id
          GROUP BY buac.entry_id) bua
                                  ON bua.entry_id = ac.entry_id
-LEFT JOIN (SELECT compound_array(ARRAY[ARRAY[buc.label, bu.control_code]])
+LEFT JOIN (SELECT array_agg(ARRAY[buc.label, bu.control_code])
                   as business_units, entry_id
              FROM business_unit_class buc
              JOIN business_unit bu ON bu.class_id = buc.id
