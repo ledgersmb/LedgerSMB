@@ -94,14 +94,17 @@ jobs:
       matrix:
         include:
           - perl: "5.34"
+            postgres: "13"
             BROWSER: "chrome"
             COVERAGE: 1
 
           - perl: "5.32"
+            postgres: "latest"
             BROWSER: "firefox"
             COA_TESTING: 1
 
           - perl: "5.32"
+            postgres: "12"
             BROWSER: "operablink"
             DB_TESTING: 1
 
@@ -109,7 +112,7 @@ jobs:
       # Label used to access the service container
       postgres:
         # Docker database image
-        image: ledgersmbdev/ledgersmb-dev-postgres
+        image: ghcr.io/ledgersmb/dev-postgres:${{ matrix.postgres }}
         # Maps tcp port 5432 on service container to the host
         ports:
           - 5432:5432
