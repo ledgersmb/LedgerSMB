@@ -48,6 +48,14 @@ Dependency updates
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.13
+* Fix line descriptions missing on AP transaction prints (#6482)
+    Requires templates update.
+* Support PostgreSQL 14 (#6500)
+* Fix saving of vendor invoices (#6507)
+* Allow deletion of transactions with shipto address (#6509)
+
+
 Changelog for 1.9.12
 * Fix CSV export regression since 1.9.8 throwing an error (#6474)
 * Remove runtime Javascript dependencies with security issues [CVE] (#6475)
