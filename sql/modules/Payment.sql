@@ -345,7 +345,7 @@ $$
                               END
                              ELSE 0::numeric
                              END) AS total_due,
-                         compound_array(ARRAY[[
+                         array_agg(ARRAY[
                               a.id::text, a.invnumber, a.transdate::text,
                               a.amount_bc::text, (a.amount_bc - p.due)::text,
                               (CASE WHEN (c.discount_terms||' days')::interval
@@ -365,7 +365,7 @@ $$
                                      ELSE 1::text
                                 END,
                                 COALESCE(u.username, 0::text)
-                                ]]),
+                                ]),
                               sum(case when a.batch_id = in_batch_id then 1
                                   else 0 END),
                               bool_and(lock_record(a.id, (select max(session_id)
@@ -1207,8 +1207,8 @@ $$
    select p.id, sum(case when c.entity_class = 1 then a.amount_bc
                     else -1*a.amount_bc end),
           c.meta_number, c.id, e.name,
-          compound_array(array[array[act.id::text, act.accno,
-                                     act.description]]),
+          array_agg(array[act.id::text, act.accno,
+                                     act.description]),
           a.source, b.control_code, b.description,
           v.id, p.payment_date,
           (select r.id from payment r where r.reversing = p.id)

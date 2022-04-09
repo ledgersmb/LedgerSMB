@@ -530,7 +530,9 @@ $$
                         join acc_trans ac on ac.source = rl.scn
                                              and ac.transdate = rl.post_date
                        where la.entry_id = ac.entry_id
-                             and rl.report_id = in_report_id)
+                             and rl.report_id = in_report_id
+                             and not exists (select 1 from payment_links pl
+                                              where pl.entry_id = ac.entry_id))
             where la.report_line_id is null
            returning report_line_id, entry_id
         )

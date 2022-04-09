@@ -1932,7 +1932,7 @@ sub create_links {
     }
 
     # now get the account numbers
-    $query = qq|SELECT a.accno, a.description, as_array(l.description) as link
+    $query = qq|SELECT a.accno, a.description, array_agg(l.description) as link
                   FROM account a
                   JOIN account_link l ON a.id = l.account_id AND NOT a.obsolete
                  WHERE (l.description LIKE ? OR a.tax)
@@ -2093,7 +2093,7 @@ sub create_links {
          SELECT c.accno, c.description, a.source, a.amount_tc as amount,
                 case when a.amount_tc = 0 then 0 else (a.amount_bc/a.amount_tc)::numeric end as exchangerate,
                 a.memo,a.entry_id, a.transdate, a.cleared,
-                                compound_array(ARRAY[ARRAY[bul.class_id, bul.bu_id]])
+                                array_agg(ARRAY[bul.class_id, bul.bu_id])
                                 AS bu_lines,
                (exists (select 1 from payment_links pl
                          where a.entry_id = pl.entry_id)) AS payment_line

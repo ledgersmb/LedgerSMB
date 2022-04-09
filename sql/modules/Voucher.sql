@@ -466,7 +466,7 @@ BEGIN
                                                        where batch_id = in_batch_id))
          RETURNING p.payment_id
         )
-        SELECT as_array(payment_id) INTO t_payment_ids
+        SELECT array_agg(payment_id) INTO t_payment_ids
           FROM deleted_payment_ids;
 
         DELETE FROM payment
@@ -480,7 +480,7 @@ BEGIN
         -- The rest of this function involves the deletion of actual
         -- transactions, vouchers, and batches, and jobs which are in progress.
         -- -CT
-        SELECT as_array(trans_id) INTO t_transaction_ids
+        SELECT array_agg(trans_id) INTO t_transaction_ids
         FROM voucher WHERE batch_id = in_batch_id AND batch_class IN (1, 2, 5, 8, 9);
 
         DELETE FROM ac_tax_form WHERE entry_id in

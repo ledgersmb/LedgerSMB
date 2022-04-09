@@ -677,8 +677,8 @@ LEFT JOIN asset_report r on (rl.report_id = r.id)
     WHERE r.id IS NULL OR r.approved_at IS NOT NULL
  GROUP BY ai.id, ai.tag, ai.description, ai.start_depreciation, ai.purchase_date,
           adm.short_name, ai.usable_life, ai.purchase_value, salvage_value
-   HAVING (NOT 2 = ANY(as_array(r.report_class)))
-          AND (NOT 4 = ANY(as_array(r.report_class)))
+   HAVING (NOT 2 = ANY(array_agg(r.report_class)))
+          AND (NOT 4 = ANY(array_agg(r.report_class)))
           OR max(r.report_class) IS NULL
  ORDER BY ai.id, ai.tag, ai.description;
 $$ language sql;
@@ -970,8 +970,8 @@ LEFT JOIN asset_report ar ON (arl.report_id = ar.id)
           ai.dep_account_id, ai.asset_class_id, ai.start_depreciation,
           ai.salvage_value, ai.department_id, ai.exp_account_id, ai.obsolete_by
    HAVING (count(ar.report_class) = 0 OR
-          (2 <> ALL(as_array(ar.report_class))
-          and 4 <> ALL(as_array(ar.report_class))))
+          (2 <> ALL(array_agg(ar.report_class))
+          and 4 <> ALL(array_agg(ar.report_class))))
           AND ((ai.purchase_value - coalesce(sum(arl.amount), 0)
                > ai.salvage_value) and ai.obsolete_by is null)
                OR in_depreciation is not true;

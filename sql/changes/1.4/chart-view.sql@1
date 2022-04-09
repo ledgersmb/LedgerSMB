@@ -14,7 +14,7 @@ SELECT ah.id, ah.accno, coalesce(ht.description, ah.description) as description,
          ON ah.id = ht.trans_id
 UNION
 select c.id, c.accno, coalesce(at.description, c.description),
-       'A' as charttype, c.category, string_agg(l.description, ':') as link,
+       'A' as charttype, c.category, concat_colon(l.description) as link,
        heading, gifi_accno, contra,
        tax
   from account c

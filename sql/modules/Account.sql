@@ -270,7 +270,7 @@ CREATE TYPE account_config AS (
 DROP FUNCTION IF EXISTS account_get(int);
 CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS account_config AS
 $$
-select c.*, concat_colon(l.description) as link
+select c.*, string_agg(l.description, ':') as link
   from account c
   left join account_link l
     ON (c.id = l.account_id)

@@ -82,12 +82,12 @@ RETURNS SETOF report_aging_item
 AS
 $$
      WITH RECURSIVE bu_tree (id, path) AS (
-                SELECT id, id::text AS path
+                SELECT id, ARRAY[id]::int[] AS path
                   FROM business_unit
                  WHERE id = any(in_business_units)
                        OR in_business_units IS NULL
                  UNION
-                SELECT bu.id, bu_tree.path || ',' || bu.id
+                SELECT bu.id, array_append(bu_tree.path, bu.id)
                   FROM business_unit bu
                   JOIN bu_tree ON bu_tree.id = bu.parent_id
                        )
@@ -113,8 +113,8 @@ $$
                             as c90,
                        a.duedate, a.id, a.curr,
                        null::numeric AS exchangerate,
-                        (SELECT compound_array(ARRAY[[p.partnumber,
-                                        i.description, i.qty::text]])
+                        (SELECT array_agg(ARRAY[p.partnumber,
+                                        i.description, i.qty::text])
                                 FROM parts p
                                 JOIN invoice i ON (i.parts_id = p.id)
                                 WHERE i.trans_id = a.id) AS line_items,
@@ -170,9 +170,8 @@ $$
                        a.invnumber, a.transdate, a.till, a.ordnumber,
                        a.ponumber, a.notes, a.amount_bc, a.sign,
                        a.duedate, a.id, a.curr, a.age
-                HAVING (in_business_units is null or in_business_units
-                       <@ compound_array(string_to_array(bu_tree.path,
-                                         ',')::int[]))
+                HAVING (in_business_units is null
+                        or in_business_units <@ compound_array(bu_tree.path))
                        AND sum(ac.amount_bc::numeric(20,2)) <> 0
               ORDER BY entity_id, curr, transdate, invnumber
 $$ language sql;
@@ -247,11 +246,11 @@ END IF;
 
 FOR retval IN
        WITH RECURSIVE bu_tree (id, path) AS (
-            SELECT id, id::text AS path
+            SELECT id, ARRAY[id]::int[] AS path
               FROM business_unit
              WHERE parent_id is null
             UNION
-            SELECT bu.id, bu_tree.path || ',' || bu.id
+            SELECT bu.id, array_append(bu_tree.path, bu.id)
               FROM business_unit bu
               JOIN bu_tree ON bu_tree.id = bu.parent_id
             )
@@ -263,7 +262,7 @@ FOR retval IN
                                             c.accno, ac.entry_id)
                 + t_balance
                 as running_balance,
-              compound_array(ARRAY[ARRAY[bac.class_id, bac.bu_id]])
+              array_agg(ARRAY[bac.class_id, bac.bu_id])
          FROM (select id, 'gl' as type, false as invoice, reference,
                       null::text as eca_name, description, approved,
                       null::text as till
@@ -314,8 +313,8 @@ FOR retval IN
               ac.source, ac.amount_bc, c.accno, c.gifi_accno,
               g.till, ac.cleared, ac.memo, c.description,
               ac.chart_id, ac.entry_id, ac.trans_id
-       HAVING in_business_units is null or in_business_units
-                <@ compound_array(string_to_array(bu_tree.path, ',')::int[])
+       HAVING in_business_units is null
+              or in_business_units <@ compound_array(bu_tree.path)
      ORDER BY ac.transdate, ac.trans_id, c.accno, ac.entry_id
 LOOP
    RETURN NEXT retval;
