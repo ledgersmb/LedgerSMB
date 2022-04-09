@@ -562,6 +562,12 @@ Dependency updates
 Changelog for 1.7 Series
 Released 2019-10-04
 
+Changelog for 1.7.39
+* Fix tax form details reports throwing an error (#6458)
+* Support PostgreSQL 14 (#6500)
+* Allow deletion of transactions with shipto address (#6509)
+
+
 Changelog for 1.7.38
 * Fix batch details printing throwing a PSGI error (#6325)
 * Fix saving of AR/AP vouchers throwing errors (#6327)
