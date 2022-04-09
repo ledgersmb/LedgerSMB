@@ -112,3 +112,4 @@ mc/delete-migration-validation-data.sql
 1.7/to-location-pkeys-optimization.sql
 1.7/create-trans_id-index.sql
 1.7/fix-oe-person_id-fkey.sql
+1.7/new_shipto-fkey.sql
