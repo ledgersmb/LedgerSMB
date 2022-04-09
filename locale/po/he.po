@@ -1,30 +1,28 @@
 #
 # Translators:
-# Rami Assi <ramiassi@gmail.com>, 2019
-# Erik Huelsmann <ehuels@gmail.com>, 2019
+# Amir Inbar <amir@srvit.co.il>, 2022
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.7.39-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
 "POT-Creation-Date: 2022-04-09 14:21+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2019\n"
-"Language-Team: Arabic (Egypt) (https://www.transifex.com/ledgersmb/"
-"teams/58325/ar_EG/)\n"
-"Language: ar_EG\n"
+"Last-Translator: Amir Inbar <amir@srvit.co.il>, 2022\n"
+"Language-Team: Hebrew (https://www.transifex.com/ledgersmb/teams/58325/he/)\n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && "
-"n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % "
+"1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:174
 msgid "# Invoices"
-msgstr ""
+msgstr "# חשבוניות"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:115
 msgid "% Dep."
-msgstr ""
+msgstr "% מח'"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:99
 msgid "(+) Salvage Value"
@@ -41,7 +39,7 @@ msgstr ""
 #: lib/LedgerSMB/Upgrade_Tests.pm:261 lib/LedgerSMB/Upgrade_Tests.pm:282
 #: lib/LedgerSMB/Upgrade_Tests.pm:479 lib/LedgerSMB/Upgrade_Tests.pm:500
 msgid "."
-msgstr ""
+msgstr "."
 
 #: lib/LedgerSMB/Report/Aging.pm:134 templates/demo/statement.html:61
 #: templates/demo_with_images/statement.html:61
@@ -79,24 +77,24 @@ msgstr ""
 #: UI/setup/complete.html:21 UI/setup/confirm_operation.html:119
 #: sql/Pg-database.sql:2849
 msgid "AP"
-msgstr "موردين"
+msgstr ""
 
 #: sql/Pg-database.sql:2798
 msgid "AP Aging"
-msgstr "كشف حساب موردين"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:113
 msgid "AP Invoice"
-msgstr ""
+msgstr "חשבונית AP"
 
 #: UI/Reports/filters/search_goods.html:165
 msgid "AP Invoices"
-msgstr ""
+msgstr "חשבוניות AP"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:301 old/bin/aa.pl:1537
 #: UI/Reports/filters/invoice_outstanding.html:4
 msgid "AP Outstanding"
-msgstr "ارصدة موردين متبقية"
+msgstr ""
 
 #: t/data/04-complex_template.html:325 templates/demo/ap_transaction.html:4
 #: templates/demo/ap_transaction.html:17 templates/demo/ap_transaction.tex:18
@@ -108,11 +106,11 @@ msgstr "ارصدة موردين متبقية"
 #: templates/xedemo/ap_transaction.tex:18 UI/Contact/divs/credit.html:348
 #: sql/Pg-database.sql:2947 sql/Pg-database.sql:2960
 msgid "AP Transaction"
-msgstr "حركة حساب مورد"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:131 old/bin/aa.pl:1493
 msgid "AP Transactions"
-msgstr "حركات حساب الموردين"
+msgstr ""
 
 #: sql/Pg-database.sql:2912
 msgid "AP Voucher"
@@ -120,7 +118,7 @@ msgstr ""
 
 #: UI/import_csv/import_inventory_csv.html:17
 msgid "AP account"
-msgstr "حساب مورد"
+msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:280 lib/LedgerSMB/Upgrade_Tests.pm:498
 msgid "AP account available when vendors defined"
@@ -130,24 +128,24 @@ msgstr ""
 #: UI/setup/complete.html:22 UI/setup/confirm_operation.html:120
 #: sql/Pg-database.sql:2848
 msgid "AR"
-msgstr "موردين"
+msgstr ""
 
 #: sql/Pg-database.sql:2795
 msgid "AR Aging"
-msgstr "كشوفات حسابات الموردين"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:109
 msgid "AR Invoice"
-msgstr "فاتورة مورد"
+msgstr ""
 
 #: UI/Reports/filters/search_goods.html:142
 msgid "AR Invoices"
-msgstr "فواتير الموردين"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:303 old/bin/aa.pl:1536
 #: UI/Reports/filters/invoice_outstanding.html:8
 msgid "AR Outstanding"
-msgstr "ارصدة عملاء "
+msgstr ""
 
 #: templates/demo/ar_transaction.html:4 templates/demo/ar_transaction.html:17
 #: templates/demo/ar_transaction.tex:33
@@ -159,11 +157,11 @@ msgstr "ارصدة عملاء "
 #: templates/xedemo/ar_transaction.tex:33 UI/Contact/divs/credit.html:365
 #: sql/Pg-database.sql:2946 sql/Pg-database.sql:2959
 msgid "AR Transaction"
-msgstr "حركة حساب عميل"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:133 old/bin/aa.pl:1492
 msgid "AR Transactions"
-msgstr "حركات حساب العملاء"
+msgstr ""
 
 #: sql/Pg-database.sql:2911
 msgid "AR Voucher"
@@ -171,7 +169,7 @@ msgstr ""
 
 #: UI/import_csv/import_inventory_csv.html:8
 msgid "AR account"
-msgstr "حساب مورد"
+msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:259 lib/LedgerSMB/Upgrade_Tests.pm:477
 msgid "AR account available when customers defined"
@@ -184,7 +182,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:3809
 msgid "Abandonment"
-msgstr ""
+msgstr "נטישה"
 
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:90
 msgid "Acc_trans Sum"
@@ -193,7 +191,7 @@ msgstr ""
 #: lib/LedgerSMB.pm:404 lib/LedgerSMB.pm:405
 #: lib/LedgerSMB/Scripts/configuration.pm:354
 msgid "Access Denied"
-msgstr "الوصول ممنوع"
+msgstr "גישה נדחתה"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:220
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:137
@@ -220,25 +218,25 @@ msgstr "الوصول ممنوع"
 #: UI/Reports/filters/orders.html:158
 #: UI/Reports/filters/reconciliation_search.html:49
 msgid "Account"
-msgstr "حساب"
+msgstr "חשבון"
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:162
 #: UI/payments/use_overpayment2.html:122
 msgid "Account Description"
-msgstr "وصف الحساب"
+msgstr "תיאור חשבון"
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:80
 msgid "Account Label"
-msgstr ""
+msgstr "תווית חשבון"
 
 #: lib/LedgerSMB/Report/GL.pm:153 UI/Reports/co/filter_bm.html:84
 #: UI/Reports/co/filter_cd.html:68 UI/Reports/filters/gl.html:279
 msgid "Account Name"
-msgstr "اسم الحساب"
+msgstr "שםחשבון"
 
 #: lib/LedgerSMB/Report/GL.pm:148
 msgid "Account No."
-msgstr "رقم الحساب"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:129
 #: lib/LedgerSMB/Report/Budget/Variance.pm:76 lib/LedgerSMB/Report/COA.pm:88
@@ -258,28 +256,28 @@ msgstr "رقم الحساب"
 #: UI/payments/use_overpayment2.html:121 UI/Reports/co/filter_bm.html:77
 #: UI/Reports/co/filter_cd.html:61 UI/Reports/filters/contact_search.html:84
 msgid "Account Number"
-msgstr "رقم حساب"
+msgstr "מספר חשבון"
 
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:135
 msgid "Account Number End"
-msgstr ""
+msgstr "תחילת מספר חשבון"
 
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:133
 msgid "Account Number Start"
-msgstr ""
+msgstr "תחילת מספר חשבון"
 
 #: lib/LedgerSMB/Scripts/payment.pm:186
 msgid "Account Title"
-msgstr ""
+msgstr "כותרת חשבון"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:85
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:78 UI/accounts/edit.html:205
 msgid "Account Type"
-msgstr "نوع الحساب"
+msgstr "סוג חשבון"
 
 #: old/lib/LedgerSMB/GL.pm:224
 msgid "Account [_1] not found"
-msgstr ""
+msgstr "חשבון [_1] לא נמצא"
 
 #: old/bin/gl.pl:580
 msgid "Account [_1] not found."
@@ -288,32 +286,32 @@ msgstr ""
 #: UI/Reports/filters/balance_sheet.html:223
 #: UI/Reports/filters/income_statement.html:270
 msgid "Account category"
-msgstr "فئة الحساب"
+msgstr "קטגוריית חשבון"
 
 #: old/bin/am.pl:132
 msgid "Account does not exist!"
-msgstr "الحساب غير موجود"
+msgstr "חשבון אינו קיים!"
 
 #: UI/Reports/filters/balance_sheet.html:176
 #: UI/Reports/filters/income_statement.html:223
 msgid "Account numbers"
-msgstr ""
+msgstr "מספרי חשבון"
 
 #: UI/reconciliation/report.html:31
 msgid "Account:"
-msgstr "حساب:"
+msgstr "חשבון:"
 
 #: UI/lib/report_base.html:64
 msgid "Accounts"
-msgstr "حسابات"
+msgstr "חשבונות"
 
 #: UI/Reports/co/filter_cd.html:23
 msgid "Accounts From"
-msgstr "الحسابات من"
+msgstr "חשבונות מ"
 
 #: UI/Reports/co/filter_cd.html:28
 msgid "Accounts To"
-msgstr "الحسابات إلى"
+msgstr "חשבונות עד"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:558
 msgid "Accounts marked for recon -- once"
@@ -325,7 +323,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:659 lib/LedgerSMB/Upgrade_Tests.pm:862
 msgid "Accounts without heading"
-msgstr "الحسابات بدون ترويسة"
+msgstr "חשבונות ללא כותרת"
 
 #: UI/Reports/filters/income_statement.html:28
 msgid "Accrual"
@@ -341,15 +339,15 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Form.pm:577 UI/lib/elements.html:441
 msgid "Action: [_1], ID: [_2]"
-msgstr ""
+msgstr "פעולה:[_1], ID: [_2]"
 
 #: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
 msgid "Actions"
-msgstr ""
+msgstr "פעולות"
 
 #: t/data/04-complex_template.html:496
 msgid "Actions:"
-msgstr ""
+msgstr "פעולות:"
 
 #: old/bin/aa.pl:1703 UI/business_units/list_classes.html:10
 #: UI/Reports/filters/contact_search.html:114
@@ -357,22 +355,22 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:181
 #: UI/Reports/filters/search_goods.html:97
 msgid "Active"
-msgstr "فعال"
+msgstr "פעיל"
 
 #: UI/business_units/filter.html:31
 msgid "Active On"
-msgstr ""
+msgstr "פעיל ב"
 
 #: lib/LedgerSMB/Scripts/admin.pm:67
 msgid "Active Sessions"
-msgstr ""
+msgstr "מופעים פעילים"
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:96
 #: lib/LedgerSMB/Report/File/Internal.pm:84 old/bin/am.pl:1499
 #: old/bin/ic.pl:2099 UI/Configuration/currency.html:35
 #: UI/Configuration/rate.html:62 UI/Configuration/ratetype.html:28
 msgid "Add"
-msgstr "اضافة"
+msgstr "הוסף"
 
 #: old/bin/aa.pl:382 old/bin/aa.pl:421
 msgid "Add AP Transaction"
@@ -384,55 +382,55 @@ msgstr ""
 
 #: sql/Pg-database.sql:2791
 msgid "Add Accounts"
-msgstr "إضافة حسابات"
+msgstr "הוסף חשבונות"
 
 #: old/bin/ic.pl:62 sql/Pg-database.sql:2866
 msgid "Add Assembly"
-msgstr "اضافة تجميع"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:197
 msgid "Add Asset"
-msgstr "إضافة ملكية"
+msgstr "הוספת נכס"
 
 #: lib/LedgerSMB/Scripts/asset.pm:97
 msgid "Add Asset Class"
-msgstr ""
+msgstr "הוספת מחלקת נכסים"
 
 #: sql/Pg-database.sql:2888
 msgid "Add Assets"
-msgstr ""
+msgstr "הוספת נכסים"
 
 #: sql/Pg-database.sql:2913
 msgid "Add Budget"
-msgstr "إضافة ميزانية"
+msgstr "הוספת תקציב"
 
 #: old/bin/am.pl:274 sql/Pg-database.sql:2840
 msgid "Add Business"
-msgstr "اضافة نوع عمل"
+msgstr "הוספת עסק"
 
 #: sql/Pg-database.sql:2886
 msgid "Add Class"
-msgstr ""
+msgstr "הוספת מחלקה"
 
 #: sql/Pg-database.sql:2787
 msgid "Add Contact"
-msgstr "إضافة شخص الاتصال"
+msgstr "הוספת איש קשר"
 
 #: old/bin/is.pl:99
 msgid "Add Credit Invoice"
-msgstr ""
+msgstr "הוספת חשבונית זיכוי"
 
 #: old/bin/aa.pl:419
 msgid "Add Credit Note"
-msgstr ""
+msgstr "הוספת הערת זיכוי"
 
 #: t/data/04-complex_template.html:16 UI/Contact/contact.html:25
 msgid "Add Customer"
-msgstr "اضافة عميل"
+msgstr "הוספת לקוח"
 
 #: old/bin/is.pl:103
 msgid "Add Customer Return"
-msgstr ""
+msgstr "הוספת החזרת לקוח"
 
 #: old/bin/ir.pl:108 old/bin/ir.pl:139
 msgid "Add Debit Invoice"
@@ -445,11 +443,11 @@ msgstr ""
 #: t/data/04-complex_template.html:20 UI/Contact/contact.html:29
 #: sql/Pg-database.sql:2808
 msgid "Add Employee"
-msgstr "اضافة موظف"
+msgstr "הוספת עובד"
 
 #: old/bin/oe.pl:1512
 msgid "Add Exchange Rate"
-msgstr ""
+msgstr "הוספת שער חליפין"
 
 #: old/bin/am.pl:158 sql/Pg-database.sql:2907
 msgid "Add GIFI"
@@ -457,7 +455,7 @@ msgstr ""
 
 #: old/bin/pe.pl:103 sql/Pg-database.sql:2933
 msgid "Add Group"
-msgstr "اضافة مجموعة"
+msgstr "הוספת קבוצה"
 
 #: old/bin/ic.pl:63
 msgid "Add Labor/Overhead"
@@ -465,15 +463,15 @@ msgstr ""
 
 #: old/bin/am.pl:456 sql/Pg-database.sql:2842
 msgid "Add Language"
-msgstr "اضافة لغة"
+msgstr "הוספת שפה"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:80
 msgid "Add New Tax Form"
-msgstr "إضافة نمط ضرائب جديد"
+msgstr ""
 
 #: UI/budgetting/budget_entry.html:169
 msgid "Add Note"
-msgstr "إضافة ملاحظة"
+msgstr "הוספת הערה"
 
 #: sql/Pg-database.sql:2932
 msgid "Add Overhead"
@@ -481,100 +479,100 @@ msgstr ""
 
 #: old/bin/ic.pl:60 sql/Pg-database.sql:2864
 msgid "Add Part"
-msgstr "اضافة جزء"
+msgstr "הוספת חלק"
 
 #: old/bin/pe.pl:188 sql/Pg-database.sql:2934
 msgid "Add Pricegroup"
-msgstr "إضافة مجموعة سعرية"
+msgstr "הוספת קבוצתמחיר"
 
 #: old/bin/io.pl:945 old/bin/oe.pl:62
 msgid "Add Purchase Order"
-msgstr "اضافة طلب شراء"
+msgstr "הוספת הזמנת מכר"
 
 #: old/bin/io.pl:978 old/bin/oe.pl:74
 msgid "Add Quotation"
-msgstr "اضافة عرض سعر "
+msgstr "הוספת הצעת מחיר"
 
 #: UI/business_units/edit.html:12
 msgid "Add Reporting Unit"
-msgstr ""
+msgstr "הוספת יחידת דיווח"
 
 #: old/bin/io.pl:967 old/bin/oe.pl:70
 msgid "Add Request for Quotation"
-msgstr "اضافة عرض سعر مورد"
+msgstr "הוספת בקשה להצעת מחיר"
 
 #: sql/Pg-database.sql:2976
 msgid "Add Return"
-msgstr ""
+msgstr "הוספת החזר"
 
 #: old/bin/am.pl:364 sql/Pg-database.sql:2844
 msgid "Add SIC"
-msgstr "اضافة كود صناعى قياسى"
+msgstr ""
 
 #: old/bin/is.pl:108 old/bin/oe.pl:1436
 msgid "Add Sales Invoice"
-msgstr "اضافة فاتورة بيع"
+msgstr "הוספת חשבונית מכירה"
 
 #: old/bin/io.pl:956 old/bin/oe.pl:66
 msgid "Add Sales Order"
-msgstr "اضافة طلب بيع"
+msgstr "הוספת הזמנת מכירה"
 
 #: old/bin/ic.pl:61 sql/Pg-database.sql:2865
 msgid "Add Service"
-msgstr "اضافة خدمة"
+msgstr "הוספת שרות"
 
 #: sql/Pg-database.sql:2872
 msgid "Add Tax Form"
-msgstr ""
+msgstr "הוספת טופס מס"
 
 #: sql/Pg-database.sql:2831
 msgid "Add Timecard"
-msgstr "إضافة بطاقة زمنية"
+msgstr ""
 
 #: old/bin/io.pl:1802
 msgid "Add To List"
-msgstr "إضافة إلى القائمة"
+msgstr "הוספה לרשימה"
 
 #: sql/Pg-database.sql:2794 sql/Pg-database.sql:2797
 msgid "Add Transaction"
-msgstr "اضافة حركة"
+msgstr "הוספת טרנזאקציה"
 
 #: UI/business_units/list_classes.html:103
 msgid "Add Unit"
-msgstr "إضافة وحدة"
+msgstr "הוספת יחידה"
 
 #: UI/Contact/divs/employee.html:220 UI/Contact/divs/user.html:127
 #: UI/setup/confirm_operation.html:56 UI/setup/edit_user.html:96
 msgid "Add User"
-msgstr "اضافة مستخدم"
+msgstr "הוספת משתמש"
 
 #: t/data/04-complex_template.html:18 UI/Contact/contact.html:27
 msgid "Add Vendor"
-msgstr "اضافة مورد"
+msgstr "הוספת יצרן"
 
 #: old/bin/ir.pl:117 old/bin/oe.pl:1428
 msgid "Add Vendor Invoice"
-msgstr "اضافة فاتورة المورد"
+msgstr "הוספת חשבונית ספק"
 
 #: old/bin/ir.pl:112
 msgid "Add Vendor Return"
-msgstr ""
+msgstr "הוספת החזרה לספק"
 
 #: old/bin/am.pl:743 sql/Pg-database.sql:2838
 msgid "Add Warehouse"
-msgstr "اضافة مخزن"
+msgstr "הוספת מחסן"
 
 #: old/bin/io.pl:1615
 msgid "Add line1"
-msgstr ""
+msgstr "הוספת שורה1"
 
 #: old/bin/io.pl:1618
 msgid "Add line2"
-msgstr ""
+msgstr "הוספת שורה2"
 
 #: old/bin/io.pl:1622
 msgid "Add line3 "
-msgstr ""
+msgstr "הוספת שורה3"
 
 #: UI/Contact/divs/wage.html:73
 msgid "Add/Change Deductions"
@@ -582,7 +580,7 @@ msgstr ""
 
 #: UI/Contact/divs/wage.html:44
 msgid "Add/Change Wage"
-msgstr "إضافة\\تعديل الأجرة"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/business_unit.pm:179
 msgid "Added id [_1]"
@@ -594,34 +592,34 @@ msgstr ""
 #: UI/Reports/filters/contact_search.html:89
 #: UI/Reports/filters/purchase_history.html:67
 msgid "Address"
-msgstr "العنوان"
+msgstr "כתובת"
 
 #: t/data/04-complex_template.html:385
 msgid "Address1"
-msgstr "العنوان1"
+msgstr "כתובת1"
 
 #: t/data/04-complex_template.html:420
 msgid "Address:"
-msgstr "العنوان:"
+msgstr "כתובת:"
 
 #: templates/demo/printPayment.html:21
 #: templates/demo_with_images/printPayment.html:21
 #: templates/xedemo/printPayment.html:21
 msgid "Address: [_1]"
-msgstr ""
+msgstr "כתובת: [_1]"
 
 #: lib/LedgerSMB/Scripts/contact.pm:188 t/data/04-complex_template.html:30
 #: UI/Contact/divs/address.html:3
 msgid "Addresses"
-msgstr "العناوين"
+msgstr "כתובות"
 
 #: old/bin/ic.pl:1273
 msgid "Adj"
-msgstr ""
+msgstr "כון"
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:140
 msgid "Adjusted"
-msgstr ""
+msgstr "כוון"
 
 #: lib/LedgerSMB/Scripts/asset.pm:724
 msgid "Adjusted Basis"
@@ -629,15 +627,15 @@ msgstr ""
 
 #: UI/inventory/adjustment_entry.html:28
 msgid "Adjustment"
-msgstr ""
+msgstr "כיוון"
 
 #: UI/inventory/adjustment_entry.html:9
 msgid "Adjustment Date"
-msgstr ""
+msgstr "תאריך כיוון"
 
 #: UI/inventory/adjustment_setup.html:13
 msgid "Adjustment Details"
-msgstr ""
+msgstr "פרטי כיוון"
 
 #: UI/Reports/filters/aging.html:79
 msgid "Aged"
@@ -653,24 +651,24 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:235
 #: UI/Reports/filters/trial_balance.html:61
 msgid "All"
-msgstr "الكل"
+msgstr "הכל"
 
 #: old/bin/aa.pl:1702
 msgid "All Invoices"
-msgstr "كافة الفواتير"
+msgstr "כל החשבוניות"
 
 #: UI/Reports/filters/trial_balance.html:36
 msgid "All accounts"
-msgstr "كافة الحسابات"
+msgstr "כל החשבונות"
 
 #: UI/Reports/co/filter_cd.html:14
 msgid "All fields are required"
-msgstr "جميع الحقول مطلوبة"
+msgstr "כל השדות נדרשים"
 
 #: templates/demo/invoice.html:221 templates/demo_with_images/invoice.html:224
 #: templates/xedemo/invoice.html:223
 msgid "All prices in [_1]"
-msgstr ""
+msgstr "בל המחירים ב [_1]"
 
 #: templates/demo/sales_order.html:206 templates/demo/sales_quotation.html:174
 #: templates/demo_with_images/sales_order.html:206
@@ -701,7 +699,7 @@ msgstr ""
 #: templates/xedemo/purchase_order.tex:153 templates/xedemo/sales_order.tex:158
 #: templates/xedemo/sales_quotation.tex:125
 msgid "All prices in [_1]."
-msgstr ""
+msgstr "כל המחירים ב [_1]."
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:127 UI/timecards/timecard.html:132
 msgid "Allocated"
@@ -758,11 +756,11 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:196
 #: UI/Reports/filters/invoice_search.html:310 UI/Reports/filters/orders.html:171
 msgid "Amount"
-msgstr "الكمية"
+msgstr "סכום"
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:85
 msgid "Amount Budgetted"
-msgstr ""
+msgstr "סכום מתוקצב"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:249
 #: lib/LedgerSMB/Scripts/payment.pm:878 lib/LedgerSMB/Scripts/payment.pm:883
@@ -772,7 +770,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:244
 #: UI/Reports/filters/invoice_search.html:356
 msgid "Amount Due"
-msgstr "الرصيد "
+msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:108
 #: UI/Reports/filters/reconciliation_search.html:30
@@ -800,11 +798,11 @@ msgstr ""
 
 #: UI/payments/payment2.html:240
 msgid "Amount to pay"
-msgstr ""
+msgstr "סכום לתשלום"
 
 #: UI/Contact/divs/wage.html:9
 msgid "Amount/Rate"
-msgstr ""
+msgstr "סכום/תעריף"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:844
 msgid ""
@@ -830,11 +828,11 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Batch.pm:142
 msgid "Any"
-msgstr ""
+msgstr "כל"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1299
 msgid "Applied discount"
-msgstr "خصومات مطبقة"
+msgstr "הנחה מוחלת"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1947
 msgid "Applied discount by an overpayment"
@@ -842,11 +840,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:876
 msgid "Apply Disc"
-msgstr "تطبيق الخصم"
+msgstr ""
 
 #: UI/Reports/filters/reconciliation_search.html:66
 msgid "Approval Status"
-msgstr "حالة القبول"
+msgstr "מצב אישור"
 
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:125
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:224
@@ -854,7 +852,7 @@ msgstr "حالة القبول"
 #: lib/LedgerSMB/Scripts/asset.pm:677 lib/LedgerSMB/Scripts/asset.pm:738
 #: lib/LedgerSMB/Scripts/budgets.pm:114 UI/reconciliation/report.html:394
 msgid "Approve"
-msgstr "موافقة"
+msgstr "אישור"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:148
 #: UI/Reports/filters/batches.html:28 UI/Reports/filters/gl.html:176
@@ -862,32 +860,32 @@ msgstr "موافقة"
 #: UI/Reports/filters/reconciliation_search.html:61
 #: UI/Reports/filters/trial_balance.html:48
 msgid "Approved"
-msgstr "تمت الموافقة"
+msgstr "אושר"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:96
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:160
 msgid "Approved By"
-msgstr "تمت الموافقة بواسطة"
+msgstr "אושר על ידי"
 
 #: lib/LedgerSMB/Scripts/asset.pm:502
 msgid "Approved at"
-msgstr "تمت الموافقة في"
+msgstr "אושר ב"
 
 #: templates/demo/printPayment.html:112
 #: templates/demo_with_images/printPayment.html:112
 #: templates/xedemo/printPayment.html:112
 msgid "Approved signature"
-msgstr "توقيع الموافقة"
+msgstr "חתימת אישור"
 
 #: lib/LedgerSMB/App_State.pm:236 old/bin/aa.pl:89 old/bin/gl.pl:83
 #: old/bin/io.pl:84
 msgid "Apr"
-msgstr "ابريل"
+msgstr "אפר"
 
 #: old/bin/aa.pl:75 old/bin/gl.pl:69 old/bin/io.pl:70
 #: old/lib/LedgerSMB/DBObject/Date.pm:65
 msgid "April"
-msgstr "ابريل"
+msgstr "אפריל"
 
 #: lib/LedgerSMB/Scripts/asset.pm:596 lib/LedgerSMB/Scripts/asset.pm:654
 #: lib/LedgerSMB/Scripts/asset.pm:720
@@ -900,11 +898,11 @@ msgstr ""
 
 #: old/bin/oe.pl:1314
 msgid "Are you sure you want to delete Order Number"
-msgstr "هل انت متأكد انك تريد الغاء رقم الطلب"
+msgstr "בטוח למחוק מספר הזמנה"
 
 #: old/bin/oe.pl:1319
 msgid "Are you sure you want to delete Quotation Number"
-msgstr ""
+msgstr "בטוח שברצונך למחוק מספר הצעה"
 
 #: UI/Reports/filters/balance_sheet.html:92
 msgid "As per"
@@ -912,7 +910,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:135
 msgid "Assembled"
-msgstr ""
+msgstr "הורכב"
 
 #: old/bin/ic.pl:2219
 msgid "Assemblies restocked!"
@@ -921,42 +919,42 @@ msgstr ""
 #: UI/accounts/edit.html:209 UI/Reports/filters/gl.html:135
 #: sql/Pg-database.sql:3847
 msgid "Asset"
-msgstr "أصول"
+msgstr "נכס"
 
 #: lib/LedgerSMB/Report/Listings/Asset_Class.pm:81 UI/asset/edit_asset.html:154
 #: UI/asset/edit_class.html:37 UI/asset/search_asset.html:140
 #: UI/asset/search_class.html:44
 msgid "Asset Account"
-msgstr "حساب أصول"
+msgstr "חשבון נכס"
 
 #: lib/LedgerSMB/Scripts/asset.pm:500 UI/asset/begin_approval.html:14
 #: UI/asset/begin_report.html:13
 msgid "Asset Class"
-msgstr ""
+msgstr "מחלקת נכס"
 
 #: lib/LedgerSMB/Report/Listings/Asset_Class.pm:114
 msgid "Asset Class List"
-msgstr ""
+msgstr "רשימת מחלקת נכס"
 
 #: UI/asset/edit_asset.html:49 UI/asset/search_asset.html:48
 msgid "Asset Class:"
-msgstr ""
+msgstr "מחלקת נכס:"
 
 #: sql/Pg-database.sql:2884
 msgid "Asset Classes"
-msgstr ""
+msgstr "מחלקות נכס"
 
 #: lib/LedgerSMB/Scripts/asset.pm:430
 msgid "Asset Depreciation Report"
-msgstr ""
+msgstr "דוח בלאי נכס"
 
 #: lib/LedgerSMB/Scripts/asset.pm:432
 msgid "Asset Disposal Report"
-msgstr ""
+msgstr "דוח גריטת נכס"
 
 #: lib/LedgerSMB/Report/Listings/Asset.pm:144
 msgid "Asset Listing"
-msgstr ""
+msgstr "רשימת נכס"
 
 #: lib/LedgerSMB/Scripts/asset.pm:437
 msgid "Asset Partial Disposal Report"
@@ -964,13 +962,13 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:366
 msgid "Asset Tag"
-msgstr ""
+msgstr "תג נכס"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:202
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:204 lib/LedgerSMB/Report/PNL.pm:203
 #: lib/LedgerSMB/Report/PNL.pm:205 sql/Pg-database.sql:2885
 msgid "Assets"
-msgstr "الأصول"
+msgstr "נכסים"
 
 #: UI/Reports/balance_sheet.html:102
 msgid "Assets to Equity"
@@ -984,64 +982,64 @@ msgstr ""
 #: old/bin/ic.pl:922 old/bin/ir.pl:1012 old/bin/is.pl:1125 old/bin/oe.pl:936
 #: UI/journal/journal_entry.html:397
 msgid "Attach"
-msgstr "إرفاق"
+msgstr "צרף"
 
 #: UI/file/attachment_screen.html:19
 msgid "Attach File"
-msgstr "إرفاق ملف"
+msgstr "צרף קובץ"
 
 #: UI/Contact/divs/address.html:106 UI/Contact/divs/contact_info.html:81
 msgid "Attach To"
-msgstr "إرفاق إلى"
+msgstr "צרף אל"
 
 #: UI/Contact/divs/address.html:112 UI/Contact/divs/contact_info.html:85
 msgid "Attach to"
-msgstr "إرفاق إلى"
+msgstr ""
 
 #: UI/Contact/divs/files.html:59
 msgid "Attach to Credit Account"
-msgstr ""
+msgstr "צרף אל חשבון זיכוי"
 
 #: UI/Contact/divs/files.html:55
 msgid "Attach to Entity"
-msgstr ""
+msgstr "צרף אל ישות"
 
 #: UI/Contact/divs/files.html:14
 msgid "Attached At"
-msgstr ""
+msgstr "צורף ב"
 
 #: UI/Contact/divs/files.html:16
 msgid "Attached By"
-msgstr "تم الإرفاق بواسطة"
+msgstr "צורף על ידי"
 
 #: old/bin/aa.pl:1071 old/bin/ic.pl:894 old/bin/ir.pl:986 old/bin/is.pl:1099
 #: old/bin/oe.pl:910 UI/journal/journal_entry.html:374
 msgid "Attached To"
-msgstr "تم الإرفاق إلى"
+msgstr "צורף אל"
 
 #: old/bin/aa.pl:1070 old/bin/ic.pl:893 old/bin/ir.pl:985 old/bin/is.pl:1098
 #: old/bin/oe.pl:909 UI/journal/journal_entry.html:373
 msgid "Attached To Type"
-msgstr ""
+msgstr "צורף אל סוג"
 
 #: old/bin/aa.pl:1047 old/bin/ic.pl:870 old/bin/ir.pl:962 old/bin/is.pl:1075
 #: old/bin/oe.pl:886 UI/journal/journal_entry.html:350
 msgid "Attached and Linked Files"
-msgstr ""
+msgstr "קבצים מצורפים ומקושרים"
 
 #: old/bin/aa.pl:1051 old/bin/aa.pl:1072 old/bin/ic.pl:874 old/bin/ic.pl:895
 #: old/bin/ir.pl:966 old/bin/ir.pl:987 old/bin/is.pl:1079 old/bin/is.pl:1100
 #: old/bin/oe.pl:890 old/bin/oe.pl:911 UI/journal/journal_entry.html:355
 #: UI/journal/journal_entry.html:375
 msgid "Attached at"
-msgstr ""
+msgstr "צורף ב"
 
 #: old/bin/aa.pl:1052 old/bin/aa.pl:1073 old/bin/ic.pl:875 old/bin/ic.pl:896
 #: old/bin/ir.pl:967 old/bin/ir.pl:988 old/bin/is.pl:1080 old/bin/is.pl:1101
 #: old/bin/oe.pl:891 old/bin/oe.pl:912 UI/journal/journal_entry.html:356
 #: UI/journal/journal_entry.html:376
 msgid "Attached by"
-msgstr "تم الإرفاق بواسطة"
+msgstr "צורף על ידי"
 
 #: old/bin/io.pl:1069
 msgid "Attached document for [_1] [_2]"
@@ -1049,7 +1047,7 @@ msgstr ""
 
 #: old/bin/printer.pl:118
 msgid "Attachment"
-msgstr "مرفقات"
+msgstr "צרופה"
 
 #: templates/demo/bin_list.html:49 templates/demo/bin_list.html:82
 #: templates/demo/packing_list.html:50 templates/demo/pick_list.html:49
@@ -1096,12 +1094,12 @@ msgstr ""
 #: lib/LedgerSMB/App_State.pm:242 old/bin/aa.pl:93 old/bin/gl.pl:87
 #: old/bin/io.pl:88
 msgid "Aug"
-msgstr "اغسطس"
+msgstr "אוג"
 
 #: old/bin/aa.pl:79 old/bin/gl.pl:73 old/bin/io.pl:74
 #: old/lib/LedgerSMB/DBObject/Date.pm:69
 msgid "August"
-msgstr "اغسطس"
+msgstr "אוגוסט"
 
 #: UI/Contact/divs/notes.html:80
 msgid "Author: [_1]"
@@ -1109,24 +1107,24 @@ msgstr ""
 
 #: old/bin/ir.pl:616 old/bin/is.pl:423 old/bin/is.pl:718
 msgid "Automatic"
-msgstr "أوتوماتيكي"
+msgstr "אוטומטי"
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:149
 #: UI/payments/use_overpayment2.html:123
 msgid "Available"
-msgstr "متوفر"
+msgstr "זמין"
 
 #: UI/setup/list_databases.html:9
 msgid "Available Databases"
-msgstr "قواعد البيانات المتوفرة"
+msgstr "בסיסי נתונים זמינים"
 
 #: UI/setup/list_users.html:8
 msgid "Available Users"
-msgstr "المستخدمين المتوفرين"
+msgstr "משתמשים זמינים"
 
 #: lib/LedgerSMB/Scripts/currency.pm:200
 msgid "Available exchange rates"
-msgstr ""
+msgstr "שערי חליפין זמינים"
 
 #: UI/payments/use_overpayment2.html:119
 msgid "Available overpayments"
@@ -1134,15 +1132,15 @@ msgstr ""
 
 #: old/bin/ic.pl:444 UI/Reports/filters/search_goods.html:272
 msgid "Average Cost"
-msgstr "الكلفة الوسطية"
+msgstr "עלות ממוצעת"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:241
 msgid "Avg. Cost"
-msgstr "الكلفة الوسطية"
+msgstr "עלות ממצ."
 
 #: sql/Pg-database.sql:821
 msgid "BCC"
-msgstr ""
+msgstr "BCC"
 
 #: t/data/04-complex_template.html:557 UI/Contact/divs/bank_act.html:21
 #: UI/Contact/divs/bank_act.html:53
@@ -1159,15 +1157,15 @@ msgstr ""
 
 #: UI/setup/confirm_operation.html:83
 msgid "Backup"
-msgstr "نسخة احتياطية "
+msgstr "גיבוי"
 
 #: UI/setup/confirm_operation.html:90
 msgid "Backup DB"
-msgstr "قاعدة بيانات احتياطية"
+msgstr "גיבוי בסיס נתונים"
 
 #: UI/setup/confirm_operation.html:97
 msgid "Backup Roles"
-msgstr "أدوار النسخ الاحتياطي"
+msgstr "תפקידי גיבוי"
 
 #: lib/LedgerSMB/Report/GL.pm:163 lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:97
 #: templates/demo/invoice.html:197 templates/demo/invoice.tex:178
@@ -1175,55 +1173,55 @@ msgstr "أدوار النسخ الاحتياطي"
 #: templates/demo_with_images/invoice.tex:177 templates/xedemo/invoice.html:199
 #: templates/xedemo/invoice.tex:172 UI/Reports/filters/gl.html:285
 msgid "Balance"
-msgstr "رصيد"
+msgstr "יתרה"
 
 #: UI/Reports/balance_sheet.html:25 UI/Reports/balance_sheet.tex:28
 #: UI/Reports/filters/balance_sheet.html:7 sql/Pg-database.sql:2835
 msgid "Balance Sheet"
-msgstr "الميزانية"
+msgstr "דף יתרה"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:291
 msgid "Balance sheet"
-msgstr "الميزانية"
+msgstr "דף יתרה"
 
 #: UI/Reports/filters/trial_balance.html:92
 msgid "Balances as"
-msgstr ""
+msgstr "יתרות כ"
 
 #: UI/reconciliation/report.html:145
 msgid "Bank"
-msgstr ""
+msgstr "בנק"
 
 #: UI/Contact/divs/bank_act.html:63
 msgid "Bank Account"
-msgstr "حساب بنكي"
+msgstr "חשבון בנק"
 
 #: t/data/04-complex_template.html:601
 msgid "Bank Account:"
-msgstr "حساب بنكي:"
+msgstr "חשבון בנק:"
 
 #: lib/LedgerSMB/Scripts/contact.pm:190 t/data/04-complex_template.html:32
 #: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:3
 #: UI/Contact/divs/bank_act.html:7
 msgid "Bank Accounts"
-msgstr ""
+msgstr "חשבונות בנק"
 
 #: old/bin/ic.pl:976
 msgid "Bar Code"
-msgstr "باركود"
+msgstr "ברקוד"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:58
 msgid "Base Currency"
-msgstr ""
+msgstr "שער בסיס"
 
 #: UI/setup/system_info.html:24
 msgid "Base system"
-msgstr ""
+msgstr "מערכת בסיס"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:95 old/bin/ir.pl:656
 #: old/bin/is.pl:762
 msgid "Basis"
-msgstr ""
+msgstr "בסיס"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:156
 msgid "Batch"
@@ -1276,7 +1274,7 @@ msgstr ""
 
 #: UI/io-email.html:23
 msgid "Bcc"
-msgstr "نسخة غير مرئية"
+msgstr ""
 
 #: old/bin/arap.pl:777 old/bin/io.pl:1437
 msgid "Bcc: [_1]"
@@ -1284,12 +1282,12 @@ msgstr ""
 
 #: UI/reconciliation/report.html:37
 msgid "Beginning Statement Balance:"
-msgstr ""
+msgstr "תחילת הצהרת יתרה:"
 
 #: lib/LedgerSMB/Entity/Location.pm:114 UI/Contact/divs/address.html:41
 #: sql/Pg-database.sql:670
 msgid "Billing"
-msgstr ""
+msgstr "בילינג"
 
 #: sql/Pg-database.sql:824
 msgid "Billing BCC"
@@ -1301,11 +1299,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:822
 msgid "Billing Email"
-msgstr ""
+msgstr "כתובת מייל לבילינג"
 
 #: old/lib/LedgerSMB/Num2text.pm:118
 msgid "Billion"
-msgstr "مليار"
+msgstr "ביליון"
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:137
 #: lib/LedgerSMB/Report/Inventory/Search.pm:217 old/bin/ic.pl:2092
@@ -1337,15 +1335,15 @@ msgstr ""
 
 #: UI/Contact/divs/person.html:168
 msgid "Birthdate"
-msgstr ""
+msgstr "תאריך לידה"
 
 #: UI/reconciliation/report.html:137
 msgid "Books"
-msgstr ""
+msgstr "ספרים"
 
 #: UI/accounts/yearend.html:131
 msgid "Books closed on"
-msgstr ""
+msgstr "ספרים נסגרו ב"
 
 #: UI/accounts/yearend.html:92
 msgid "Books closed up to"
@@ -1353,15 +1351,15 @@ msgstr ""
 
 #: sql/Pg-database.sql:2140
 msgid "Budget"
-msgstr "ميزانية"
+msgstr "ב"
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:119
 msgid "Budget Number"
-msgstr ""
+msgstr "מספר תקציב"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:113
 msgid "Budget Search Results"
-msgstr ""
+msgstr "תוצאות חיפוש תקציב"
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:107
 msgid "Budget Variance Report"
@@ -1369,24 +1367,24 @@ msgstr ""
 
 #: sql/Pg-database.sql:2915
 msgid "Budgets"
-msgstr ""
+msgstr "תקציבים"
 
 #: old/bin/is.pl:368 old/bin/oe.pl:375 UI/payments/payments_detail.html:171
 msgid "Business"
-msgstr ""
+msgstr "עסק"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:44
 msgid "Business Number"
-msgstr "الرقم الضريبى"
+msgstr "מספר עסק"
 
 #: lib/LedgerSMB/Report/Contact/Search.pm:80 UI/Contact/divs/credit.html:236
 #: UI/Contact/divs/credit.html:237
 msgid "Business Type"
-msgstr ""
+msgstr "סוג עסק"
 
 #: t/data/04-complex_template.html:294
 msgid "Business Type:"
-msgstr ""
+msgstr "סוג עסק:"
 
 #: lib/LedgerSMB/Report/Listings/Business_Unit.pm:83
 msgid "Business Unit List"
@@ -1403,20 +1401,20 @@ msgstr ""
 
 #: old/bin/am.pl:298
 msgid "Business deleted!"
-msgstr ""
+msgstr "עסק נמחק!"
 
 #: old/bin/am.pl:291
 msgid "Business saved!"
-msgstr ""
+msgstr "עסק נשמר!"
 
 #: sql/Pg-database.sql:820
 msgid "CC"
-msgstr "نسخة كربونية"
+msgstr "CC"
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:132 old/bin/ic.pl:523 old/bin/ic.pl:692
 #: UI/accounts/edit.html:431
 msgid "COGS"
-msgstr "تكلفة البضاعة المباعة"
+msgstr ""
 
 #: UI/Reports/filters/cogs_lines.html:4
 msgid "COGS Lots Report"
@@ -1430,11 +1428,11 @@ msgstr ""
 
 #: UI/reconciliation/report.html:79
 msgid "CSV File:"
-msgstr "ملف CSV:"
+msgstr ""
 
 #: old/bin/ir.pl:797 old/bin/is.pl:421 old/bin/is.pl:904
 msgid "Calculate Taxes"
-msgstr "احتساب الضرائب"
+msgstr "חישוב מיסים"
 
 #: old/lib/LedgerSMB/GL.pm:199
 msgid "Can't post credits and debits on one line."
@@ -1447,7 +1445,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/setup.pm:200 lib/LedgerSMB/Scripts/setup.pm:236
 #: old/bin/io.pl:1806
 msgid "Cancel"
-msgstr "إلغاء الأمر"
+msgstr "ביטול"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:217
 msgid "Cancel the <b>whole migration</b>"
@@ -1455,7 +1453,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:287
 msgid "Cancel?"
-msgstr "إلغاء الأمر؟"
+msgstr "לבטל?"
 
 #: old/bin/gl.pl:617
 msgid "Cannot Repost Transaction"
@@ -1491,11 +1489,11 @@ msgstr ""
 
 #: old/bin/ic.pl:1990
 msgid "Cannot delete item!"
-msgstr "لا يمكن الغاء الوحدة"
+msgstr ""
 
 #: old/bin/oe.pl:1352
 msgid "Cannot delete order!"
-msgstr "لا يمكن الغاء الطلب"
+msgstr ""
 
 #: old/bin/gl.pl:646
 msgid "Cannot delete posted transaction"
@@ -1511,11 +1509,11 @@ msgstr ""
 
 #: old/bin/aa.pl:1338 old/bin/ir.pl:1280 old/bin/is.pl:1402
 msgid "Cannot post payment for a closed period!"
-msgstr "لا يمكن تسجيل المدفوعات لفترة مغلقة"
+msgstr ""
 
 #: old/bin/aa.pl:1324 old/bin/gl.pl:629
 msgid "Cannot post transaction for a closed period!"
-msgstr "لا يمكن تسجيل الحركة لفترة مغلقة"
+msgstr ""
 
 #: old/bin/gl.pl:668
 msgid ""
@@ -1524,19 +1522,19 @@ msgstr ""
 
 #: old/bin/aa.pl:1383
 msgid "Cannot post transaction!"
-msgstr "لا يمكن تسجيل الحركة"
+msgstr ""
 
 #: old/bin/oe.pl:1242
 msgid "Cannot save order!"
-msgstr "لا يمكن تخزين الطلب"
+msgstr "לא יכול לשמור הזמנה!"
 
 #: old/bin/oe.pl:1259
 msgid "Cannot save quotation!"
-msgstr ""
+msgstr "לא יכול לשמור הצעה!"
 
 #: old/bin/am.pl:681
 msgid "Cannot save taxes!"
-msgstr ""
+msgstr "לא יכול לשמור מיסים!"
 
 #: old/bin/ic.pl:2222
 msgid "Cannot stock assemblies!"
@@ -1547,23 +1545,23 @@ msgstr ""
 #: templates/demo_with_images/timecard.tex:27 templates/xedemo/timecard.html:42
 #: templates/xedemo/timecard.tex:27
 msgid "Card ID"
-msgstr "معرّف البطاقة"
+msgstr ""
 
 #: UI/Reports/filters/income_statement.html:40 sql/Pg-database.sql:2850
 msgid "Cash"
-msgstr "النقدية"
+msgstr "מזומן"
 
 #: UI/payments/payment2.html:338 UI/Reports/filters/payments.html:50
 msgid "Cash Account"
-msgstr ""
+msgstr "חשבון מזומן"
 
 #: UI/timecards/timecard.html:16
 msgid "Category"
-msgstr ""
+msgstr "קטגוריה"
 
 #: UI/io-email.html:17
 msgid "Cc"
-msgstr "نسخة اخرى"
+msgstr ""
 
 #: old/bin/arap.pl:776 old/bin/io.pl:1436
 msgid "Cc: [_1]"
@@ -1571,11 +1569,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:808
 msgid "Cell Phone"
-msgstr "هاتف جوال"
+msgstr "סלולרי"
 
 #: UI/users/preferences.html:14 UI/users/preferences.html:18
 msgid "Change Password"
-msgstr "تغيير كلمة المرور"
+msgstr "החלפת סיסמא"
 
 #: UI/timecards/timecard.html:105
 msgid "Chargeable"
@@ -1587,19 +1585,19 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/COA.pm:139 sql/Pg-database.sql:2790
 msgid "Chart of Accounts"
-msgstr "قائمة الحسابات"
+msgstr "טבלת חשבונות"
 
 #: UI/setup/select_coa.html:41
 msgid "Chart of accounts"
-msgstr ""
+msgstr "טבלת חשבונות"
 
 #: sql/Pg-database.sql:2968
 msgid "Check"
-msgstr "شيك"
+msgstr "שיק"
 
 #: old/bin/ic.pl:2028
 msgid "Check Inventory"
-msgstr "مراجعة مخزون"
+msgstr "מלאי שיקים"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:139
 msgid "Check Prefix"
@@ -1607,7 +1605,7 @@ msgstr ""
 
 #: UI/payments/payment1_5.html:22
 msgid "Choose a company"
-msgstr ""
+msgstr "בחר חברה"
 
 #: sql/Pg-database.sql:967
 msgid "Chord"
@@ -1618,16 +1616,16 @@ msgstr ""
 #: UI/Reports/filters/contact_search.html:94
 #: UI/Reports/filters/purchase_history.html:75
 msgid "City"
-msgstr "مدينة"
+msgstr "עיר"
 
 #: t/data/04-complex_template.html:445
 msgid "City:"
-msgstr "مدينة:"
+msgstr "עיר:"
 
 #: UI/Contact/divs/company.html:76 UI/Contact/divs/credit.html:73
 #: UI/Contact/divs/person.html:68
 msgid "Class"
-msgstr ""
+msgstr "מחלקה"
 
 #: lib/LedgerSMB/Scripts/recon.pm:461
 msgid "Clear date"
@@ -1645,7 +1643,7 @@ msgstr ""
 #: UI/reconciliation/report.html:234 UI/reconciliation/report.html:294
 #: UI/Reports/filters/gl.html:252
 msgid "Cleared"
-msgstr "مغلق"
+msgstr ""
 
 #: UI/reconciliation/report.html:100
 msgid "Cleared Transactions"
@@ -1665,32 +1663,32 @@ msgstr ""
 
 #: UI/accounts/yearend.html:11
 msgid "Close Year"
-msgstr ""
+msgstr "סגור שנה"
 
 #: UI/accounts/yearend.html:91
 msgid "Close books"
-msgstr ""
+msgstr "סגור ספר"
 
 #: lib/LedgerSMB/Report/Orders.pm:246 old/bin/aa.pl:1528 old/bin/oe.pl:322
 #: UI/Reports/filters/invoice_search.html:214 UI/Reports/filters/orders.html:100
 #: UI/Reports/filters/purchase_history.html:208
 #: UI/Reports/filters/timecards.html:35
 msgid "Closed"
-msgstr "مغلق"
+msgstr "סגור"
 
 #: UI/accounts/yearend.html:14
 msgid "Closing data"
-msgstr ""
+msgstr "מיגע סגירה"
 
 #: lib/LedgerSMB/Report/Listings/Language.pm:49
 #: lib/LedgerSMB/Report/Listings/SIC.pm:47 UI/am-language-form.html:11
 #: UI/am-sic-form.html:11
 msgid "Code"
-msgstr "كود"
+msgstr "קוד"
 
 #: old/bin/am.pl:380 old/bin/am.pl:468
 msgid "Code missing!"
-msgstr "كود غير موجود!"
+msgstr "חסר קוד!"
 
 #: sql/Pg-database.sql:548
 msgid "Cold Lead"
@@ -1715,56 +1713,56 @@ msgstr ""
 #: UI/Reports/aging_report.html:17 UI/Reports/display_report.html:31
 #: UI/Reports/display_report.tex:24
 msgid "Company"
-msgstr "شركة"
+msgstr "חברה"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:41
 msgid "Company Address"
-msgstr "عنوان الشركة"
+msgstr "כתובת חברה"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:43
 msgid "Company Fax"
-msgstr "فاكس الشركة"
+msgstr "פקס חברה"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:36
 msgid "Company Information"
-msgstr "معلومات الشركة"
+msgstr "מידע חברה"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:56
 msgid "Company License Number"
-msgstr "رقم ترخيص الشركة"
+msgstr "מספר רשיון חברה"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:150
 #: lib/LedgerSMB/Scripts/configuration.pm:38
 msgid "Company Name"
-msgstr "اسم  الشركة"
+msgstr "שם חברה"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:42
 msgid "Company Phone"
-msgstr "تلفون الشركة"
+msgstr "טלפון חברה"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:54
 msgid "Company Sales Tax ID"
-msgstr ""
+msgstr "מספר ח.פ או עוסק מורשה של החברה"
 
 #: UI/Reports/filters/balance_sheet.html:141
 msgid "Comparison Dates"
-msgstr ""
+msgstr "תאריכי השוואה"
 
 #: UI/Reports/filters/income_statement.html:184
 msgid "Comparison Periods"
-msgstr ""
+msgstr "תקופות השוואה"
 
 #: UI/setup/confirm_operation.html:10
 msgid "Confirm Operation"
-msgstr "تأكيد العملية"
+msgstr "פעולת אישור"
 
 #: old/bin/am.pl:481 old/bin/oe.pl:1333
 msgid "Confirm!"
-msgstr "تاكيد"
+msgstr "אישור!"
 
 #: lib/LedgerSMB.pm:410
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
-msgstr "تعارض مع بيانات موجودة، ربما أدخلت هذا من قبل؟"
+msgstr ""
 
 #: old/bin/io.pl:1692 templates/demo/bin_list.html:107
 #: templates/demo/packing_list.html:78 templates/demo/pick_list.html:77
@@ -1787,27 +1785,27 @@ msgstr "تعارض مع بيانات موجودة، ربما أدخلت هذا �
 #: templates/xedemo/sales_quotation.html:71
 #: UI/Reports/filters/contact_search.html:56 sql/Pg-database.sql:544
 msgid "Contact"
-msgstr "شخص الاتصال"
+msgstr "איש קשר"
 
 #: lib/LedgerSMB/Scripts/contact.pm:189 t/data/04-complex_template.html:31
 #: UI/Contact/divs/contact_info.html:3 UI/Contact/divs/contact_info.html:32
 #: UI/Contact/divs/contact_info.html:112
 #: UI/Reports/filters/purchase_history.html:28
 msgid "Contact Info"
-msgstr ""
+msgstr "מידע איש קשר"
 
 #: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
 msgid "Contact Info:"
-msgstr ""
+msgstr "מידע איש קשר:"
 
 #: t/data/04-complex_template.html:491 UI/Contact/divs/contact_info.html:7
 msgid "Contact Information"
-msgstr ""
+msgstr "מידע איש קשר"
 
 #: lib/LedgerSMB/Report/Contact/Search.pm:94
 #: UI/Reports/filters/contact_search.html:7
 msgid "Contact Search"
-msgstr ""
+msgstr "חיפוש איש קשר"
 
 #: UI/payments/payments_detail.html:435
 msgid "Contact Total (if paying \"some\")"
@@ -1815,11 +1813,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:2851
 msgid "Contacts"
-msgstr ""
+msgstr "אנשי קשר"
 
 #: UI/budgetting/budget_entry.html:159 UI/budgetting/budget_entry.html:182
 msgid "Content"
-msgstr ""
+msgstr "תוכן"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1493 lib/LedgerSMB/Scripts/payment.pm:707
 #: lib/LedgerSMB/Scripts/payment.pm:769 old/bin/aa.pl:1751 old/bin/arap.pl:266
@@ -1841,15 +1839,15 @@ msgstr ""
 #: UI/Reports/filters/taxforms.html:56 UI/Reports/filters/trial_balance.html:152
 #: UI/timecards/entry_filter.html:41
 msgid "Continue"
-msgstr "تابع"
+msgstr "המשך"
 
 #: old/bin/ic.pl:863
 msgid "Continue Previous Workflow"
-msgstr ""
+msgstr "המשך זרימת עבודה קודמת"
 
 #: UI/accounts/edit.html:234
 msgid "Contra"
-msgstr ""
+msgstr "קונטרה"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1001
 msgid ""
@@ -1867,15 +1865,15 @@ msgstr ""
 #: UI/Reports/filters/contact_search.html:39
 #: UI/Reports/filters/overpayments.html:9
 msgid "Control Code"
-msgstr ""
+msgstr "קוד שליטה"
 
 #: UI/io-email.html:64
 msgid "Copies"
-msgstr "نسخ"
+msgstr "עותקים"
 
 #: UI/setup/confirm_operation.html:46
 msgid "Copy"
-msgstr "نسخ"
+msgstr "העתק"
 
 #: old/bin/am.pl:176
 msgid "Copy to COA"
@@ -1883,24 +1881,24 @@ msgstr ""
 
 #: old/bin/aa.pl:962 old/bin/gl.pl:264 old/bin/ir.pl:521 old/bin/is.pl:587
 msgid "Copy to New"
-msgstr ""
+msgstr "העתק לחדש"
 
 #: UI/setup/confirm_operation.html:39
 msgid "Copy to New Name"
-msgstr ""
+msgstr "העתק לשם חדש"
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:125 old/bin/ic.pl:1019
 #: old/bin/ic.pl:1271 old/bin/oe.pl:2410
 msgid "Cost"
-msgstr "تكلفة"
+msgstr "עלות"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:107
 msgid "Cost of Goods Sold"
-msgstr "تكلفة البضائع المباعة"
+msgstr "עלות טובין נמכרים"
 
 #: lib/LedgerSMB/Template/DB.pm:123 lib/LedgerSMB/Template/DB.pm:79
 msgid "Could Not Load Template from DB"
-msgstr "لم نتمكن من تحميل القالب من قاعدة البيانات"
+msgstr ""
 
 #: old/bin/ir.pl:1243 old/bin/is.pl:1366 old/bin/oe.pl:1278
 msgid "Could not save the data.  Please try again"
@@ -1908,7 +1906,7 @@ msgstr ""
 
 #: old/bin/oe.pl:2003
 msgid "Could not save!"
-msgstr "لم نتمكن من الحفظ!"
+msgstr "לא הצלחתי לשמור!"
 
 #: old/bin/oe.pl:2273
 msgid "Could not transfer Inventory!"
@@ -1917,7 +1915,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:101
 #: UI/inventory/adjustment_entry.html:26
 msgid "Counted"
-msgstr ""
+msgstr "נספר"
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:137
 #: lib/LedgerSMB/Report/Listings/TemplateTrans.pm:102
@@ -1937,27 +1935,27 @@ msgstr ""
 #: UI/Reports/filters/contact_search.html:109
 #: UI/Reports/filters/purchase_history.html:99
 msgid "Country"
-msgstr "دولة"
+msgstr "מדינה"
 
 #: UI/setup/select_coa.html:75
 msgid "Country Code"
-msgstr "كود الدولة"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:55
 msgid "Country Name"
-msgstr "اسم الدولة"
+msgstr "שם מדינה"
 
 #: t/data/04-complex_template.html:477 UI/taxform/add_taxform.html:30
 msgid "Country:"
-msgstr "الدولة:"
+msgstr "מדינה:"
 
 #: UI/setup/credentials.html:93
 msgid "Create"
-msgstr ""
+msgstr "צור"
 
 #: lib/LedgerSMB/Report/COA.pm:196
 msgid "Create Account"
-msgstr ""
+msgstr "צור חשבון"
 
 #: UI/create_batch.html:2
 msgid "Create Batch"
@@ -1965,11 +1963,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:268
 msgid "Create Database?"
-msgstr "إنشاء قاعدة البيانات؟"
+msgstr ""
 
 #: lib/LedgerSMB/Report/COA.pm:203
 msgid "Create Heading"
-msgstr ""
+msgstr "צור כותרת"
 
 #: UI/create_batch.html:12
 msgid "Create New Batch"
@@ -1977,27 +1975,27 @@ msgstr ""
 
 #: UI/reconciliation/new_report.html:62
 msgid "Create New Report"
-msgstr ""
+msgstr "צור דוח חדש"
 
 #: UI/taxform/add_taxform.html:6
 msgid "Create New Tax Form"
-msgstr ""
+msgstr "יצירת טופס מס חדש"
 
 #: UI/setup/new_user.html:186
 msgid "Create User"
-msgstr "إنشاء مستخدم"
+msgstr "צור משתמש"
 
 #: UI/Contact/divs/user.html:72 UI/setup/new_user.html:42
 msgid "Create new user"
-msgstr ""
+msgstr "צור משתמש חדש"
 
 #: UI/create_batch.html:79
 msgid "Created By"
-msgstr ""
+msgstr "נוצר על ידי"
 
 #: UI/create_batch.html:80
 msgid "Created On"
-msgstr ""
+msgstr "נוצר ב"
 
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:92
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:92 templates/xedemo/invoice.html:16
@@ -2005,40 +2003,40 @@ msgstr ""
 #: UI/Reports/co/filter_bm.html:105 UI/Reports/filters/gl.html:233
 #: UI/Reports/filters/trial_balance.html:5
 msgid "Credit"
-msgstr "دائن"
+msgstr "זכות"
 
 #: lib/LedgerSMB/Scripts/contact.pm:292
 msgid "Credit Account"
-msgstr ""
+msgstr "חשבון זכות"
 
 #: lib/LedgerSMB/Report/Contact/Search.pm:72
 msgid "Credit Account Number"
-msgstr ""
+msgstr "מספר חשבון זכות"
 
 #: lib/LedgerSMB/Scripts/contact.pm:187 UI/Contact/divs/credit.html:3
 msgid "Credit Accounts"
-msgstr ""
+msgstr "חשבונות זכות"
 
 #: old/bin/am.pl:1469 templates/demo/invoice.html:16
 #: templates/demo/invoice.tex:114 templates/demo_with_images/invoice.html:16
 #: templates/demo_with_images/invoice.tex:114 templates/xedemo/invoice.tex:111
 #: sql/Pg-database.sql:2904
 msgid "Credit Invoice"
-msgstr ""
+msgstr "חשבונית זיכוי"
 
 #: old/bin/aa.pl:562 old/bin/ir.pl:419 old/bin/is.pl:456 old/bin/oe.pl:419
 #: UI/Contact/divs/credit.html:30 UI/Contact/divs/credit.html:146
 #: UI/Contact/divs/credit.html:147 UI/orders/order.html:33
 msgid "Credit Limit"
-msgstr "حد الائتمان"
+msgstr "מגבלת אשראי"
 
 #: t/data/04-complex_template.html:201
 msgid "Credit Limit:"
-msgstr ""
+msgstr "מגלבת אשראי:"
 
 #: sql/Pg-database.sql:2903
 msgid "Credit Note"
-msgstr ""
+msgstr "הערת אשראי"
 
 #: lib/LedgerSMB/Report/COA.pm:112 lib/LedgerSMB/Report/GL.pm:117
 #: lib/LedgerSMB/Report/Trial_Balance.pm:186
@@ -2050,7 +2048,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:254 old/bin/ic.pl:1005
 #: old/bin/ic.pl:1105 old/bin/oe.pl:2415
 msgid "Curr"
-msgstr "عملة"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/History.pm:74
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:80
@@ -2074,7 +2072,7 @@ msgstr "عملة"
 #: UI/Reports/filters/search_goods.html:365 UI/timecards/timecard.html:121
 #: UI/timecards/timecard-week.html:76
 msgid "Currency"
-msgstr "عملة"
+msgstr "שער חליפין"
 
 #: lib/LedgerSMB/Report/Aging.pm:128 old/bin/aa.pl:1575 old/bin/pe.pl:817
 #: old/lib/LedgerSMB/DBObject/Date.pm:79 templates/demo/statement.html:60
@@ -2084,7 +2082,7 @@ msgstr "عملة"
 #: UI/lib/report_base.html:160 UI/lib/report_base.html:253
 #: UI/Reports/co/filter_bm.html:52 UI/Reports/filters/aging.html:98
 msgid "Current"
-msgstr "الحالي"
+msgstr "נוכחי"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:237
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:239 lib/LedgerSMB/Report/PNL.pm:225
@@ -2109,24 +2107,24 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:10 UI/Reports/filters/orders.html:7
 #: sql/Pg-database.sql:542
 msgid "Customer"
-msgstr "العميل"
+msgstr "לקוח"
 
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:260
 msgid "Customer Account"
-msgstr ""
+msgstr "חשבון לקוח"
 
 #: sql/Pg-database.sql:2788
 msgid "Customer History"
-msgstr "بيانات تاريخية للعميل"
+msgstr "היסטוריית לקוח"
 
 #: UI/Contact/divs/credit.html:369
 msgid "Customer Invoice"
-msgstr ""
+msgstr "חשבונית לקוח"
 
 #: UI/payments/payment1.html:40 UI/payments/payment2.html:28
 #: UI/Reports/filters/orders.html:8
 msgid "Customer Name"
-msgstr "اسم العميل"
+msgstr "שם לקוח"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:117
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:188
@@ -2137,23 +2135,23 @@ msgstr "اسم العميل"
 #: UI/Reports/filters/overpayments.html:20 UI/Reports/filters/payments.html:14
 #: UI/Reports/filters/purchase_history.html:56
 msgid "Customer Number"
-msgstr "رقم العميل"
+msgstr "מספר לקוח"
 
 #: UI/Reports/filters/contact_search.html:11
 msgid "Customer Search"
-msgstr "البحث عن عميل"
+msgstr "חיפוש לקוח"
 
 #: old/bin/aa.pl:1306 old/bin/is.pl:1375 old/bin/oe.pl:1210 old/bin/pe.pl:1241
 msgid "Customer missing!"
-msgstr "عميل غير موجود"
+msgstr "לקוח חסר!"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:755 lib/LedgerSMB/Upgrade_Tests.pm:801
 msgid "Customer not in a business"
-msgstr ""
+msgstr "לקוח לא בעסק"
 
 #: old/bin/arap.pl:145 old/bin/pe.pl:1216
 msgid "Customer not on file!"
-msgstr " عميل غير موجود في الملف"
+msgstr "לקוח לא בקובץ!"
 
 #: UI/setup/complete.html:26 UI/setup/confirm_operation.html:124
 msgid "Customer/Vendor Accounts"
@@ -2193,7 +2191,7 @@ msgstr ""
 
 #: UI/setup/credentials.html:78 UI/setup/list_databases.html:13
 msgid "Database"
-msgstr "قواعد البيانات"
+msgstr ""
 
 #: UI/setup/ui-db-credentials.html:7
 msgid "Database "
@@ -2213,7 +2211,7 @@ msgstr ""
 
 #: UI/setup/complete.html:10 UI/setup/complete_migration_revert.html:9
 msgid "Database Operation Complete"
-msgstr "انتهت عملية قاعدة البيانات"
+msgstr ""
 
 #: UI/setup/credentials.html:30
 msgid "Database administrator credentials"
@@ -2225,7 +2223,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:267
 msgid "Database does not exist."
-msgstr "قاعدة البيانات غير موجودة"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:958
 msgid "Database exists."
@@ -2302,15 +2300,15 @@ msgstr ""
 #: UI/payments/use_overpayment2.html:85 UI/Reports/filters/gl.html:203
 #: UI/Reports/filters/orders.html:128
 msgid "Date"
-msgstr "التاريخ"
+msgstr "תאריך"
 
 #: UI/users/preferences.html:50
 msgid "Date Format"
-msgstr "تنسيق التاريخ"
+msgstr "פורמט תאריך"
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:106 old/bin/ic.pl:941
 msgid "Date From"
-msgstr ""
+msgstr "מתאריך"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:104
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:258
@@ -2319,15 +2317,15 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:223
 #: UI/Reports/filters/invoice_search.html:335
 msgid "Date Paid"
-msgstr "تاريخ الدفع"
+msgstr "תאריך תשלום"
 
 #: UI/lib/report_base.html:197
 msgid "Date Range"
-msgstr ""
+msgstr "טווח תאריכים"
 
 #: old/bin/oe.pl:1734
 msgid "Date Received"
-msgstr ""
+msgstr "תאריך קבלה"
 
 #: UI/Reports/filters/payments.html:90
 msgid "Date Reversed"
@@ -2335,7 +2333,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:107 old/bin/ic.pl:944
 msgid "Date To"
-msgstr ""
+msgstr "עד תאריך"
 
 #: UI/timecards/timecard.html:56
 msgid "Date Worked"
@@ -2343,11 +2341,11 @@ msgstr ""
 
 #: UI/payments/payment1.html:66
 msgid "Date from"
-msgstr ""
+msgstr "מתאריך"
 
 #: UI/setup/new_user.html:143
 msgid "Date of Birth"
-msgstr ""
+msgstr "תאריך לידה"
 
 #: old/bin/oe.pl:1988
 msgid "Date received missing!"
@@ -2360,11 +2358,11 @@ msgstr ""
 #: old/bin/aa.pl:1692 UI/payments/payment1.html:77
 #: UI/Reports/filters/contact_search.html:122
 msgid "Date to"
-msgstr ""
+msgstr "עד תאריך"
 
 #: UI/payments/payment2.html:104
 msgid "Date to register payment"
-msgstr ""
+msgstr "תאריך לרישום התשלום"
 
 #: UI/reconciliation/report.html:118
 msgid "Date when the transaction was cleared at your bank"
@@ -2381,56 +2379,56 @@ msgstr ""
 #: UI/Reports/filters/balance_sheet.html:67
 #: UI/Reports/filters/income_statement.html:99
 msgid "Dates"
-msgstr ""
+msgstr "תאריכים"
 
 #: old/bin/am.pl:773 UI/lib/report_base.html:166
 #: UI/timecards/entry_filter.html:22
 msgid "Day"
-msgstr "يوم"
+msgstr "יום"
 
 #: old/bin/arap.pl:513
 msgid "Day(s)"
-msgstr "يوم(أيام)"
+msgstr "יומ(ים)"
 
 #: old/bin/am.pl:774
 msgid "Days"
-msgstr "أيام"
+msgstr "ימים"
 
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:86
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:86 UI/budgetting/budget_entry.html:61
 #: UI/journal/journal_entry.html:131 UI/Reports/filters/gl.html:226
 #: UI/Reports/filters/trial_balance.html:4
 msgid "Debit"
-msgstr "مدين"
+msgstr "חוב"
 
 #: old/bin/am.pl:1470 sql/Pg-database.sql:2900
 msgid "Debit Invoice"
-msgstr ""
+msgstr "חשבונית חוב"
 
 #: sql/Pg-database.sql:2899
 msgid "Debit Note"
-msgstr ""
+msgstr "הערת חוב"
 
 #: lib/LedgerSMB/Report/COA.pm:105 lib/LedgerSMB/Report/GL.pm:111
 #: lib/LedgerSMB/Report/Trial_Balance.pm:180
 #: lib/LedgerSMB/Scripts/payment.pm:190 UI/reconciliation/report.html:154
 #: UI/reconciliation/report.html:156 UI/Reports/co/filter_cd.html:82
 msgid "Debits"
-msgstr ""
+msgstr "חובות"
 
 #: lib/LedgerSMB/App_State.pm:246 old/bin/aa.pl:97 old/bin/gl.pl:91
 #: old/bin/io.pl:92
 msgid "Dec"
-msgstr "ديسمبر"
+msgstr "דצמ"
 
 #: old/bin/aa.pl:83 old/bin/gl.pl:77 old/bin/io.pl:78
 #: old/lib/LedgerSMB/DBObject/Date.pm:73
 msgid "December"
-msgstr "ديسمبر"
+msgstr "דצמבר"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:144
 msgid "Decimal Places for Money"
-msgstr "المنازل العشرية للعملة"
+msgstr "מקומות נקודה דצימלית לכסף"
 
 #: lib/LedgerSMB/Report/Payroll/Deduction_Types.pm:38
 #: UI/payroll/deduction.html:28
@@ -2455,11 +2453,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:94
 msgid "Default Accounts"
-msgstr ""
+msgstr "חשבונות ברירת מחדל"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:62 UI/setup/upgrade_info.html:45
 msgid "Default Country"
-msgstr ""
+msgstr "מדינת ברירת מחדל"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:50
 msgid "Default Email BCC"
@@ -2479,11 +2477,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:69
 msgid "Default Format"
-msgstr ""
+msgstr "שפת ברירת מחדל"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:65
 msgid "Default Language"
-msgstr ""
+msgstr "שפת ברירת מחדל"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:59
 msgid "Default Reportable"
@@ -2495,15 +2493,15 @@ msgstr ""
 
 #: sql/Pg-database.sql:2837
 msgid "Defaults"
-msgstr "معطيات النظام"
+msgstr "ברירות מחדל"
 
 #: lib/LedgerSMB/Scripts/currency.pm:71
 msgid "Defined currencies"
-msgstr ""
+msgstr "שערים מוגדרים"
 
 #: lib/LedgerSMB/Scripts/currency.pm:142
 msgid "Defined exchange rate types"
-msgstr ""
+msgstr "סוגי שערי חליפין מוגדרים"
 
 #: lib/LedgerSMB/Report/COA.pm:124 lib/LedgerSMB/Report/COA.pm:163
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:131
@@ -2519,7 +2517,7 @@ msgstr ""
 #: UI/Contact/divs/bank_act.html:15 UI/Contact/divs/contact_info.html:12
 #: UI/Contact/pricelist.html:66 UI/reconciliation/report.html:409
 msgid "Delete"
-msgstr "الغاء"
+msgstr "מחק"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:211
 msgid "Delete Batch"
@@ -2527,7 +2525,7 @@ msgstr ""
 
 #: old/bin/am.pl:489
 msgid "Delete Language"
-msgstr "حذف اللغة"
+msgstr "מחק שפה"
 
 #: old/bin/arap.pl:615 old/bin/arap.pl:621
 msgid "Delete Schedule"
@@ -2546,12 +2544,12 @@ msgstr ""
 #: templates/demo_with_images/request_quotation.html:139
 #: templates/xedemo/invoice.tex:136 templates/xedemo/request_quotation.html:139
 msgid "Delivery"
-msgstr ""
+msgstr "משלוח"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:108 old/bin/io.pl:263
 #: UI/Reports/filters/purchase_history.html:313
 msgid "Delivery Date"
-msgstr "تاريخ الوصول"
+msgstr "תאריך משלוח"
 
 #: lib/LedgerSMB/Scripts/asset.pm:599
 msgid "Dep. Basis"
@@ -2582,11 +2580,11 @@ msgstr ""
 #: UI/asset/edit_asset.html:147 UI/asset/search_asset.html:133
 #: UI/payments/payment2.html:75 UI/payments/payments_detail.html:129
 msgid "Department"
-msgstr "قسم"
+msgstr "מחלקה"
 
 #: UI/payments/payment1.html:27
 msgid "Departments"
-msgstr ""
+msgstr "מחלקות"
 
 #: sql/Pg-database.sql:2891
 msgid "Depreciate"
@@ -2730,31 +2728,31 @@ msgstr ""
 #: UI/timecards/timecard-week.html:112 sql/Pg-database.sql:2829
 #: sql/Pg-database.sql:2834
 msgid "Description"
-msgstr "وصف"
+msgstr "תיאור"
 
 #: old/bin/pe.pl:260
 msgid "Description Translations"
-msgstr "ترجمة مواصفات"
+msgstr "תרגומי תיאור"
 
 #: old/bin/am.pl:289 old/bin/am.pl:381 old/bin/am.pl:469 old/bin/am.pl:758
 msgid "Description missing!"
-msgstr ""
+msgstr "תיאור חסר!"
 
 #: UI/asset/edit_asset.html:57 UI/asset/search_asset.html:53
 #: UI/business_units/edit.html:71 UI/business_units/filter.html:22
 #: UI/taxform/add_taxform.html:43
 msgid "Description:"
-msgstr ""
+msgstr "תיאור:"
 
 #: old/bin/aa.pl:1548 old/bin/pe.pl:898 UI/Reports/filters/aging.html:63
 #: UI/Reports/filters/purchase_history.html:227
 msgid "Detail"
-msgstr "تفصيلى"
+msgstr "פרט"
 
 #: UI/payments/payments_detail.html:228
 #: UI/Reports/filters/invoice_outstanding.html:121
 msgid "Details"
-msgstr "تفاصيل"
+msgstr "פרטים"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:74
 msgid "Disable Back Button"
@@ -2784,15 +2782,15 @@ msgstr ""
 #: UI/Contact/divs/credit.html:169 UI/payments/payments_detail.html:340
 #: UI/Reports/filters/purchase_history.html:302
 msgid "Discount"
-msgstr "خصم"
+msgstr "הנחה"
 
 #: lib/LedgerSMB/Report/Listings/Business_Type.pm:57
 msgid "Discount (%)"
-msgstr ""
+msgstr "הנחה (%)"
 
 #: t/data/04-complex_template.html:242
 msgid "Discount:"
-msgstr ""
+msgstr "הנחה:"
 
 #: lib/LedgerSMB/Scripts/asset.pm:657
 msgid "Disp. Aquired Value"
@@ -2800,20 +2798,20 @@ msgstr ""
 
 #: UI/templates/preview.html:66
 msgid "Display"
-msgstr "عرض"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:546 sql/Pg-database.sql:2893
 #: sql/Pg-database.sql:2896
 msgid "Disposal"
-msgstr ""
+msgstr "גריטה"
 
 #: lib/LedgerSMB/Scripts/asset.pm:719
 msgid "Disposal Date"
-msgstr ""
+msgstr "תאריך גריטה"
 
 #: lib/LedgerSMB/Scripts/asset.pm:371
 msgid "Disposal Method"
-msgstr ""
+msgstr "שיטת גריטה"
 
 #: lib/LedgerSMB/Scripts/asset.pm:713
 msgid "Disposal Report [_1] on date [_2]"
@@ -2821,7 +2819,7 @@ msgstr ""
 
 #: lib/LedgerSMB.pm:407
 msgid "Division by 0 error"
-msgstr ""
+msgstr "שגיאת חלוקה ב 0"
 
 #: old/bin/io.pl:1920
 msgid "Do not keep field empty [_1]"
@@ -2829,11 +2827,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:81
 msgid "Document"
-msgstr "مستند"
+msgstr "מסמך"
 
 #: UI/Reports/co/filter_cd.html:75
 msgid "Document Type"
-msgstr "نوع المستند"
+msgstr "סוג מסמך"
 
 #: lib/LedgerSMB/Scripts/setup.pm:478
 msgid "Don't know what to do with backup"
@@ -2841,7 +2839,7 @@ msgstr ""
 
 #: old/bin/oe.pl:1949 old/bin/oe.pl:1957
 msgid "Done"
-msgstr "نفذ"
+msgstr "בוצע"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:882
 msgid "Double customernumbers"
@@ -2853,29 +2851,29 @@ msgstr ""
 
 #: lib/LedgerSMB/Entity/Person.pm:111 sql/Pg-database.sql:734
 msgid "Dr."
-msgstr "د."
+msgstr "דר."
 
 #: old/bin/aa.pl:1184 old/bin/aa.pl:1427 old/bin/gl.pl:114 old/bin/ir.pl:89
 msgid "Draft Posted"
-msgstr ""
+msgstr "טיוטא הוגשה"
 
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:128
 msgid "Draft Search"
-msgstr ""
+msgstr "חיפוש טיוטא"
 
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:140
 msgid "Draft Type"
-msgstr ""
+msgstr "סוג טיוטא"
 
 #: sql/Pg-database.sql:2870
 msgid "Drafts"
-msgstr "مسودات"
+msgstr "טיוטות"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:265 old/bin/ic.pl:502
 #: UI/Reports/filters/search_goods.html:70
 #: UI/Reports/filters/search_goods.html:329
 msgid "Drawing"
-msgstr "رسم"
+msgstr "שרטוט"
 
 #: lib/LedgerSMB/Report/COA.pm:119
 msgid "Dropdowns"
@@ -2912,11 +2910,11 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:238
 #: UI/Reports/filters/invoice_search.html:350
 msgid "Due Date"
-msgstr "تاريخ الاستحقاق"
+msgstr ""
 
 #: old/bin/aa.pl:1311
 msgid "Due Date missing!"
-msgstr "تاريخ الاستحقاق غير موجود"
+msgstr ""
 
 #: UI/Contact/divs/user.html:11 UI/setup/edit_user.html:11
 msgid "Duplicate User Found: Importing User"
@@ -2930,7 +2928,7 @@ msgstr ""
 #: old/bin/oe.pl:1956 old/bin/oe.pl:642 old/bin/oe.pl:869 UI/io-email.html:15
 #: UI/Reports/filters/contact_search.html:48
 msgid "E-mail"
-msgstr "بريد الكتروني"
+msgstr ""
 
 #: UI/io-email.html:6
 msgid "E-mail [_1]"
@@ -2938,11 +2936,11 @@ msgstr ""
 
 #: old/bin/am.pl:1438 old/bin/io.pl:1274
 msgid "E-mail address missing!"
-msgstr "عنوان البريد الالكتروني غير موجود"
+msgstr ""
 
 #: old/bin/arap.pl:435
 msgid "E-mail message"
-msgstr "رسالة البريد الالكتروني"
+msgstr ""
 
 #: old/bin/printer.pl:173
 msgid "E-mailed"
@@ -2964,7 +2962,7 @@ msgstr ""
 #: UI/Contact/divs/address.html:52 UI/Contact/divs/contact_info.html:11
 #: UI/templates/preview.html:72
 msgid "Edit"
-msgstr "تعديل"
+msgstr "עריכה"
 
 #: old/bin/aa.pl:384 old/bin/aa.pl:422
 msgid "Edit AP Transaction"
@@ -2984,35 +2982,35 @@ msgstr ""
 
 #: old/bin/am.pl:275
 msgid "Edit Business"
-msgstr ""
+msgstr "עריכת עסק"
 
 #: old/bin/is.pl:131
 msgid "Edit Credit Invoice"
-msgstr ""
+msgstr "עריכת חשבונית זיכוי"
 
 #: old/bin/aa.pl:420
 msgid "Edit Credit Note"
-msgstr ""
+msgstr "עריכת הערת זיכוי"
 
 #: t/data/04-complex_template.html:17 UI/Contact/contact.html:26
 msgid "Edit Customer"
-msgstr "تعديل بيانات العميل"
+msgstr "עריכת לקוח"
 
 #: old/bin/is.pl:128
 msgid "Edit Customer Return"
-msgstr ""
+msgstr "עריכת החזרת לקוח"
 
 #: old/bin/aa.pl:418
 msgid "Edit Debit Note"
-msgstr ""
+msgstr "ערכית הערת חוב"
 
 #: old/bin/pe.pl:507
 msgid "Edit Description Translations"
-msgstr ""
+msgstr "עריכת תרגומי תיאור"
 
 #: t/data/04-complex_template.html:21 UI/Contact/contact.html:30
 msgid "Edit Employee"
-msgstr ""
+msgstr "עריכת עובד"
 
 #: old/bin/am.pl:159
 msgid "Edit GIFI"
@@ -3020,7 +3018,7 @@ msgstr ""
 
 #: old/bin/pe.pl:104
 msgid "Edit Group"
-msgstr "تعديل مجموعة"
+msgstr "עריכת קבוצה"
 
 #: old/bin/ic.pl:98
 msgid "Edit Labor/Overhead"
@@ -3028,11 +3026,11 @@ msgstr ""
 
 #: old/bin/am.pl:457
 msgid "Edit Language"
-msgstr "تعديل اللغة"
+msgstr "עריכת שפה"
 
 #: old/bin/ic.pl:711 old/bin/ic.pl:95
 msgid "Edit Part"
-msgstr "تعديل جزء"
+msgstr "עריכת חלק"
 
 #: old/bin/pe.pl:189
 msgid "Edit Pricegroup"
@@ -3040,11 +3038,11 @@ msgstr ""
 
 #: old/bin/oe.pl:93
 msgid "Edit Purchase Order"
-msgstr "تعديل امر شراء"
+msgstr ""
 
 #: old/bin/oe.pl:107
 msgid "Edit Quotation"
-msgstr ""
+msgstr "עריכת הצעה"
 
 #: UI/business_units/edit.html:10
 msgid "Edit Reporting Unit"
@@ -3060,39 +3058,39 @@ msgstr ""
 
 #: old/bin/is.pl:134
 msgid "Edit Sales Invoice"
-msgstr ""
+msgstr "עריכת חשבונית מכירה"
 
 #: old/bin/oe.pl:98
 msgid "Edit Sales Order"
-msgstr "تعديل امر مبيعات"
+msgstr "עריכת הזמנת מכירה"
 
 #: old/bin/ic.pl:712 old/bin/ic.pl:96
 msgid "Edit Service"
-msgstr "تعديل خدمة"
+msgstr "עריכת שרות"
 
 #: UI/taxform/add_taxform.html:4
 msgid "Edit Tax Form"
-msgstr ""
+msgstr "עריכת טופס מס"
 
 #: UI/Contact/divs/employee.html:213
 msgid "Edit User"
-msgstr "تعديل مستخدم "
+msgstr "עריכת משתמש"
 
 #: t/data/04-complex_template.html:19 UI/Contact/contact.html:28
 msgid "Edit Vendor"
-msgstr "تعديل مورد"
+msgstr "עריכת ספק"
 
 #: old/bin/ir.pl:142
 msgid "Edit Vendor Invoice"
-msgstr "تعديل فاتورة مورد"
+msgstr "עריכת חשבונית ספק"
 
 #: old/bin/ir.pl:136
 msgid "Edit Vendor Return"
-msgstr ""
+msgstr "עריכת החזרה לספק"
 
 #: old/bin/am.pl:744
 msgid "Edit Warehouse"
-msgstr ""
+msgstr "עריכת מחסן"
 
 #: UI/Contact/divs/user.html:14 UI/setup/edit_user.html:14
 msgid "Editing User"
@@ -3100,27 +3098,27 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:81
 msgid "Eight"
-msgstr "ثمانية"
+msgstr "שמונה"
 
 #: old/lib/LedgerSMB/Num2text.pm:92
 msgid "Eighteen"
-msgstr "ثمانية عشر"
+msgstr "שמונה עשרה"
 
 #: old/lib/LedgerSMB/Num2text.pm:110
 msgid "Eighty"
-msgstr "ثمانون"
+msgstr "שמונים"
 
 #: old/lib/LedgerSMB/Num2text.pm:84
 msgid "Eleven"
-msgstr "أحد عشر"
+msgstr "אחד עשרה"
 
 #: old/lib/LedgerSMB/Num2text.pm:85
 msgid "Eleven-o"
-msgstr ""
+msgstr "אחד-עשר"
 
 #: UI/Reports/aging_report.html:68 sql/Pg-database.sql:819
 msgid "Email"
-msgstr "بريد الكتروني"
+msgstr "Email"
 
 #: lib/LedgerSMB/Report/Orders.pm:266 lib/LedgerSMB/Scripts/contact.pm:184
 #: old/bin/aa.pl:1473 old/bin/aa.pl:490 old/bin/oe.pl:542 old/bin/pe.pl:862
@@ -3138,16 +3136,16 @@ msgstr "بريد الكتروني"
 #: UI/Contact/divs/employee.html:3 UI/Reports/filters/contact_search.html:64
 #: UI/timecards/entry_filter.html:12 sql/Pg-database.sql:543
 msgid "Employee"
-msgstr "الموظف"
+msgstr "עובד"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:128 t/data/04-complex_template.html:92
 #: UI/Contact/divs/employee.html:133 UI/setup/new_user.html:132
 msgid "Employee Number"
-msgstr ""
+msgstr "מספר עובד"
 
 #: UI/Reports/filters/contact_search.html:13
 msgid "Employee Search"
-msgstr ""
+msgstr "חיפוש עובד"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:350
 msgid ""
@@ -3156,7 +3154,7 @@ msgstr ""
 
 #: UI/lib/report_base.html:303 sql/Pg-database.sql:2807
 msgid "Employees"
-msgstr "العاملين"
+msgstr "עובדים"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:600
 msgid "Empty AP account"
@@ -3203,7 +3201,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:192
 msgid "Ending Balance"
-msgstr ""
+msgstr "יתרת סיום"
 
 #: UI/reconciliation/report.html:67
 msgid "Ending GL Balance:"
@@ -3248,15 +3246,15 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/contact.pm:290 sql/Pg-database.sql:1065
 msgid "Entity"
-msgstr ""
+msgstr "ישות"
 
 #: UI/lib/report_base.html:48
 msgid "Entity Class"
-msgstr ""
+msgstr "מחלקת ישות"
 
 #: old/bin/ir.pl:436 old/bin/is.pl:473 old/bin/oe.pl:436
 msgid "Entity Code"
-msgstr ""
+msgstr "קוד ישות"
 
 #: old/bin/aa.pl:600
 msgid "Entity Control Code"
@@ -3268,7 +3266,7 @@ msgstr ""
 
 #: UI/Reports/filters/purchase_history.html:20
 msgid "Entity Name"
-msgstr ""
+msgstr "שם ישות"
 
 #: lib/LedgerSMB/Report/GL.pm:106
 msgid "Entry ID"
@@ -3276,18 +3274,18 @@ msgstr ""
 
 #: old/bin/is.pl:1032 old/bin/printer.pl:106
 msgid "Envelope"
-msgstr ""
+msgstr "מעטפת"
 
 #: UI/setup/system_info.html:35
 msgid "Environment"
-msgstr ""
+msgstr "סביבה"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:228
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:230 lib/LedgerSMB/Report/PNL.pm:217
 #: lib/LedgerSMB/Report/PNL.pm:219 UI/accounts/edit.html:211
 #: UI/Reports/filters/gl.html:151
 msgid "Equity"
-msgstr "رأس المال"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:210
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:212
@@ -3324,12 +3322,12 @@ msgstr ""
 
 #: old/bin/am.pl:819 old/bin/arap.pl:536
 msgid "Every"
-msgstr ""
+msgstr "כל"
 
 #: old/bin/aa.pl:836 old/bin/ir.pl:834 old/bin/is.pl:941
 #: UI/orders/order.html:250
 msgid "Exch"
-msgstr "سعر  الصرف"
+msgstr "שעח"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:118
 #: lib/LedgerSMB/Scripts/payment.pm:882 old/bin/aa.pl:440 old/bin/ir.pl:335
@@ -3339,42 +3337,42 @@ msgstr "سعر  الصرف"
 #: UI/payments/use_overpayment2.html:98 UI/Reports/filters/overpayments.html:50
 #: UI/Reports/filters/payments.html:113
 msgid "Exchange Rate"
-msgstr "سعر الصرف"
+msgstr "שערי חליפין"
 
 #: old/bin/aa.pl:1345 old/bin/ir.pl:1287 old/bin/is.pl:1409
 msgid "Exchange rate for payment missing!"
-msgstr "سعر الصرف للمدفوعات غير موجود"
+msgstr "שערי חליפין לתשלום חסרים!"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1199
 msgid "Exchange rate hasn't been defined!"
-msgstr ""
+msgstr "שער חליפין לא הוגדר!"
 
 #: old/bin/aa.pl:1327 old/bin/ir.pl:1268 old/bin/is.pl:1390 old/bin/oe.pl:1214
 msgid "Exchange rate missing!"
-msgstr "سعر الصرف غير موجود"
+msgstr "שער חליפין חסר!"
 
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:104
 msgid "Expected"
-msgstr ""
+msgstr "מצופה"
 
 #: old/bin/ic.pl:656 UI/accounts/edit.html:214 UI/accounts/edit.html:470
 #: UI/accounts/edit.html:509 UI/Reports/filters/gl.html:167
 msgid "Expense"
-msgstr "المصروفات"
+msgstr "הוצאה"
 
 #: UI/asset/edit_asset.html:189
 msgid "Expense Account"
-msgstr ""
+msgstr "חשבון הוצאות"
 
 #: UI/accounts/edit.html:373
 msgid "Expense/Asset"
-msgstr "الخصوم/الأصول"
+msgstr "הוצאה/נכס"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:187
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:189 lib/LedgerSMB/Report/PNL.pm:188
 #: lib/LedgerSMB/Report/PNL.pm:190
 msgid "Expenses"
-msgstr ""
+msgstr "הוצאות"
 
 #: old/bin/io.pl:242 templates/demo/invoice.html:143
 #: templates/demo/request_quotation.html:141
@@ -3382,7 +3380,7 @@ msgstr ""
 #: templates/demo_with_images/request_quotation.html:141
 #: templates/xedemo/invoice.html:144 templates/xedemo/request_quotation.html:141
 msgid "Extended"
-msgstr "اجمالى"
+msgstr "מורחב"
 
 #: UI/timecards/timecard-week.html:106
 msgid "Extra Used"
@@ -3399,7 +3397,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:814
 msgid "Fax"
-msgstr "الفاكس"
+msgstr "פקס"
 
 #: templates/demo/ar_transaction.html:51 templates/demo/ar_transaction.tex:27
 #: templates/demo/letterhead.tex:14
@@ -3409,7 +3407,7 @@ msgstr "الفاكس"
 #: templates/xedemo/ar_transaction.html:51
 #: templates/xedemo/ar_transaction.tex:27 templates/xedemo/letterhead.tex:14
 msgid "Fax:"
-msgstr ""
+msgstr "פקס:"
 
 #: templates/demo/ap_transaction.html:52 templates/demo/ar_transaction.tex:65
 #: templates/demo/bin_list.html:57 templates/demo/bin_list.html:90
@@ -3487,56 +3485,56 @@ msgstr ""
 #: lib/LedgerSMB/App_State.pm:234 old/bin/aa.pl:87 old/bin/gl.pl:81
 #: old/bin/io.pl:82
 msgid "Feb"
-msgstr "فبراير"
+msgstr "פב"
 
 #: old/bin/aa.pl:73 old/bin/gl.pl:67 old/bin/io.pl:68
 #: old/lib/LedgerSMB/DBObject/Date.pm:63
 msgid "February"
-msgstr "فبراير"
+msgstr "פברואר"
 
 #: old/lib/LedgerSMB/Num2text.pm:89
 msgid "Fifteen"
-msgstr ""
+msgstr "חמש עשרה"
 
 #: old/lib/LedgerSMB/Num2text.pm:107
 msgid "Fifty"
-msgstr ""
+msgstr "חמישים"
 
 #: UI/file/attachment_screen.html:36
 msgid "File"
-msgstr ""
+msgstr "בץ"
 
 #: lib/LedgerSMB/Scripts/asset.pm:948
 msgid "File Imported"
-msgstr ""
+msgstr "קובץ יובא"
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:50
 #: lib/LedgerSMB/Report/File/Internal.pm:48
 #: lib/LedgerSMB/Report/Listings/Templates.pm:53
 msgid "File Name"
-msgstr ""
+msgstr "שם קובץ"
 
 #: UI/Contact/divs/files.html:12
 msgid "File Type"
-msgstr ""
+msgstr "סוג קובץ"
 
 #: old/bin/aa.pl:1049 old/bin/aa.pl:1068 old/bin/ic.pl:872 old/bin/ic.pl:891
 #: old/bin/ir.pl:964 old/bin/ir.pl:983 old/bin/is.pl:1077 old/bin/is.pl:1096
 #: old/bin/oe.pl:888 old/bin/oe.pl:907 UI/Contact/divs/files.html:10
 #: UI/journal/journal_entry.html:353 UI/journal/journal_entry.html:371
 msgid "File name"
-msgstr ""
+msgstr "שם קובץ"
 
 #: old/bin/aa.pl:1050 old/bin/aa.pl:1069 old/bin/ic.pl:873 old/bin/ic.pl:892
 #: old/bin/ir.pl:965 old/bin/ir.pl:984 old/bin/is.pl:1078 old/bin/is.pl:1097
 #: old/bin/oe.pl:889 old/bin/oe.pl:908 UI/journal/journal_entry.html:354
 #: UI/journal/journal_entry.html:372
 msgid "File type"
-msgstr ""
+msgstr "סוג קובץ"
 
 #: lib/LedgerSMB/Scripts/contact.pm:192 UI/Contact/divs/files.html:3
 msgid "Files"
-msgstr ""
+msgstr "קבצים"
 
 #: UI/Contact/divs/files.html:36
 msgid "Files attached to Credit Account"
@@ -3560,11 +3558,11 @@ msgstr ""
 
 #: t/data/04-complex_template.html:53
 msgid "First"
-msgstr ""
+msgstr "ראשון"
 
 #: UI/Contact/divs/employee.html:44 UI/setup/new_user.html:111
 msgid "First Name"
-msgstr ""
+msgstr "שם פרטי"
 
 #: UI/Reports/balance_sheet.html:97
 msgid "First column only"
@@ -3572,35 +3570,35 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:78
 msgid "Five"
-msgstr ""
+msgstr "חמש"
 
 #: old/lib/LedgerSMB/Num2text.pm:113
 msgid "Five Hundred"
-msgstr ""
+msgstr "חמש מאות"
 
 #: UI/accounts/edit.html:491
 msgid "Fixed Asset"
-msgstr ""
+msgstr "נכס קבוע"
 
 #: UI/accounts/edit.html:485 sql/Pg-database.sql:2925
 msgid "Fixed Assets"
-msgstr ""
+msgstr "נכסים קבועים"
 
 #: old/bin/arap.pl:541
 msgid "For"
-msgstr ""
+msgstr "בשביל"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:110
 msgid "Foreign Exchange Gain"
-msgstr "ارباح التحويل الاجنبي"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:113
 msgid "Foreign Exchange Loss"
-msgstr "خسائر التحويل الاجنبي"
+msgstr ""
 
 #: UI/Reports/filters/taxforms.html:22
 msgid "Form"
-msgstr ""
+msgstr "מאת"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:51
 msgid "Form Name"
@@ -3612,19 +3610,19 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:106
 msgid "Forty"
-msgstr ""
+msgstr "ארבעים"
 
 #: old/lib/LedgerSMB/Num2text.pm:77
 msgid "Four"
-msgstr ""
+msgstr "ארבע"
 
 #: old/lib/LedgerSMB/Num2text.pm:88
 msgid "Fourteen"
-msgstr ""
+msgstr "ארבע עשרה"
 
 #: lib/LedgerSMB/Report/Timecards.pm:144
 msgid "Fri"
-msgstr ""
+msgstr "שיש"
 
 #: old/bin/aa.pl:1690 old/bin/ic.pl:1124 old/bin/oe.pl:2132 old/bin/pe.pl:833
 #: templates/demo/bin_list.html:26 templates/demo/bin_list.tex:35
@@ -3639,7 +3637,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:116
 #: UI/Reports/filters/purchase_history.html:136
 msgid "From"
-msgstr "من"
+msgstr "מאת"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:186
 msgid "From Amount"
@@ -3654,30 +3652,30 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:144
 #: UI/Reports/filters/unapproved.html:40
 msgid "From Date"
-msgstr ""
+msgstr "מתאריך"
 
 #: UI/asset/import_asset.html:20 UI/Configuration/rate.html:80
 #: UI/import_csv/import_csv.html:58 UI/import_csv/import_inventory_csv.html:70
 msgid "From File"
-msgstr ""
+msgstr "קובץ"
 
 #: old/bin/oe.pl:2145
 msgid "From Warehouse"
-msgstr ""
+msgstr "ממחסן"
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:206
 msgid "From date"
-msgstr ""
+msgstr "מתאריך"
 
 #: UI/asset/begin_report.html:31 UI/Reports/filters/balance_sheet.html:204
 #: UI/Reports/filters/income_statement.html:251
 #: UI/Reports/filters/trial_balance.html:9
 msgid "Full"
-msgstr ""
+msgstr "מלא"
 
 #: lib/LedgerSMB/Scripts/setup.pm:1074
 msgid "Full Permissions"
-msgstr ""
+msgstr "הרשאות מלאות"
 
 #: lib/LedgerSMB/Report/COA.pm:100 lib/LedgerSMB/Report/GL.pm:158
 #: lib/LedgerSMB/Report/Listings/GIFI.pm:48
@@ -3720,15 +3718,15 @@ msgstr ""
 
 #: UI/accounts/edit.html:518
 msgid "Gain"
-msgstr ""
+msgstr "רווח"
 
 #: lib/LedgerSMB/Scripts/asset.pm:725
 msgid "Gain (Loss)"
-msgstr ""
+msgstr "רווח (הפסד)"
 
 #: UI/asset/begin_approval.html:45
 msgid "Gain Account"
-msgstr ""
+msgstr "חשבון רווח"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:91
 msgid "Gapless AR"
@@ -3803,27 +3801,27 @@ msgstr ""
 #: old/bin/ic.pl:419 old/bin/io.pl:266 old/bin/oe.pl:2055 old/bin/oe.pl:2128
 #: old/bin/oe.pl:2163 old/bin/pe.pl:142 UI/io-email.html:86
 msgid "Group"
-msgstr "مجموعة"
+msgstr "קבוצה"
 
 #: old/bin/pe.pl:272
 msgid "Group Translations"
-msgstr "ترجمة مجوعات"
+msgstr "תרגומי קבוצה"
 
 #: UI/io-email.html:80 UI/orders/order.html:296
 msgid "Group by"
-msgstr ""
+msgstr "קבץ על פי"
 
 #: old/bin/pe.pl:90
 msgid "Group deleted!"
-msgstr "الغيت المجموعة"
+msgstr "קבוצה נמחקה!"
 
 #: old/bin/pe.pl:67
 msgid "Group missing!"
-msgstr "مجموعة غير موجودة"
+msgstr "קבוצה חסרה!"
 
 #: old/bin/pe.pl:69
 msgid "Group saved!"
-msgstr "تخزين المجموعة"
+msgstr ""
 
 #: sql/Pg-database.sql:811
 msgid "Gtalk"
@@ -3831,7 +3829,7 @@ msgstr ""
 
 #: t/data/04-complex_template.html:25 sql/Pg-database.sql:2916
 msgid "HR"
-msgstr "موارد بشرية"
+msgstr ""
 
 #: sql/Pg-database.sql:2874
 msgid "HTML Templates"
@@ -3840,7 +3838,7 @@ msgstr ""
 #: UI/accounts/edit.html:20 UI/accounts/edit.html:66 UI/accounts/edit.html:170
 #: UI/am-sic-form.html:16
 msgid "Heading"
-msgstr "عنوان"
+msgstr ""
 
 #: UI/Reports/filters/balance_sheet.html:186
 #: UI/Reports/filters/income_statement.html:233
@@ -3849,11 +3847,11 @@ msgstr ""
 
 #: t/data/04-complex_template.html:35
 msgid "History"
-msgstr ""
+msgstr "היסטוריה"
 
 #: sql/Pg-database.sql:816
 msgid "Home Phone"
-msgstr "تلفون المنزل"
+msgstr "טלפון בבית"
 
 #: sql/Pg-database.sql:547
 msgid "Hot Lead"
@@ -3861,18 +3859,18 @@ msgstr ""
 
 #: sql/Pg-database.sql:966
 msgid "Hourly"
-msgstr ""
+msgstr "שעתי"
 
 #: templates/demo/timecard.html:58 templates/demo/timecard.tex:31
 #: templates/demo_with_images/timecard.html:58
 #: templates/demo_with_images/timecard.tex:31 templates/xedemo/timecard.html:58
 #: templates/xedemo/timecard.tex:31
 msgid "Hours"
-msgstr ""
+msgstr "שעות"
 
 #: old/lib/LedgerSMB/Num2text.pm:112
 msgid "Hundred"
-msgstr ""
+msgstr "מאה"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:70
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:60 lib/LedgerSMB/Report/GL.pm:85
@@ -3895,7 +3893,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:135
 #: UI/Reports/filters/invoice_search.html:249 UI/Reports/filters/orders.html:115
 msgid "ID"
-msgstr "البطاقة الشخصية"
+msgstr ""
 
 #: sql/Pg-database.sql:813
 msgid "IRC"
@@ -3920,7 +3918,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Search.pm:261 old/bin/ic.pl:496
 #: UI/Reports/filters/search_goods.html:322
 msgid "Image"
-msgstr "صورة"
+msgstr "תמונה"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:146
 msgid "Images in Templates"
@@ -3929,7 +3927,7 @@ msgstr ""
 #: UI/setup/edit_user.html:59 sql/Pg-database.sql:2780 sql/Pg-database.sql:2890
 #: sql/Pg-database.sql:2905 sql/Pg-database.sql:2910
 msgid "Import"
-msgstr ""
+msgstr "ייבוא"
 
 #: sql/Pg-database.sql:2783
 msgid "Import AP Batch"
@@ -3964,7 +3962,7 @@ msgstr ""
 #: templates/demo_with_images/timecard.tex:29 templates/xedemo/timecard.html:50
 #: templates/xedemo/timecard.tex:29
 msgid "In"
-msgstr ""
+msgstr "ב"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:83
 msgid "In Svc"
@@ -3976,11 +3974,11 @@ msgstr ""
 
 #: old/bin/printer.pl:120
 msgid "In-line"
-msgstr "في الصف"
+msgstr ""
 
 #: old/bin/arap.pl:363
 msgid "Include Payment"
-msgstr ""
+msgstr "כלול תשלום"
 
 #: old/bin/aa.pl:1713 UI/Reports/co/filter_bm.html:67
 #: UI/Reports/co/filter_cd.html:53 UI/Reports/filters/aging.html:70
@@ -3990,15 +3988,15 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:159
 #: UI/Reports/filters/search_goods.html:185
 msgid "Include in Report"
-msgstr "ارفق في التقرير ------"
+msgstr "כלול בדוח"
 
 #: UI/accounts/edit.html:311
 msgid "Include in drop-down menus"
-msgstr "ضع الحساب فى قائمة الخيارات ---"
+msgstr ""
 
 #: UI/Reports/filters/inventory_adj.html:23
 msgid "Includes Part"
-msgstr ""
+msgstr "כולל חלק"
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:87
 msgid "Including partnumber"
@@ -4011,37 +4009,37 @@ msgstr ""
 #: UI/accounts/edit.html:320 UI/accounts/edit.html:422 UI/accounts/edit.html:461
 #: UI/Reports/filters/gl.html:159
 msgid "Income"
-msgstr "الربح"
+msgstr "הכנסה"
 
 #: lib/LedgerSMB/Report/Payroll/Income_Types.pm:38 UI/payroll/income.html:29
 msgid "Income Class"
-msgstr ""
+msgstr "מחלקת הכנסה"
 
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:61
 #: UI/Reports/filters/income_statement.html:15 UI/Reports/PNL.tex:28
 #: sql/Pg-database.sql:2862
 msgid "Income Statement"
-msgstr "قائمة الدخل"
+msgstr "הצהרת הכנסה"
 
 #: UI/payroll/income.html:3
 msgid "Income Type"
-msgstr ""
+msgstr "סוג הכנסה"
 
 #: lib/LedgerSMB/Report/Payroll/Income_Types.pm:53
 msgid "Income Types"
-msgstr ""
+msgstr "סוגי הכנסות"
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:72
 msgid "Incoming Files"
-msgstr ""
+msgstr "קבצים נכנסים"
 
 #: old/lib/LedgerSMB/DBObject/User.pm:103
 msgid "Incorrect Password"
-msgstr ""
+msgstr "סיסמא לא נכונה"
 
 #: old/bin/ic.pl:1281
 msgid "Individual Items"
-msgstr "وحدات فردية"
+msgstr "פריטים נפרדים"
 
 #: templates/demo/invoice.tex:31 templates/demo_with_images/invoice.tex:31
 #: templates/xedemo/invoice.tex:30
@@ -4061,12 +4059,12 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/File/Internal.pm:70
 msgid "Internal Files"
-msgstr ""
+msgstr "פרטים פנימיים"
 
 #: old/bin/aa.pl:806 old/bin/ir.pl:771 old/bin/ir.pl:779 old/bin/is.pl:879
 #: old/bin/is.pl:887 old/bin/oe.pl:816 UI/orders/order.html:199
 msgid "Internal Notes"
-msgstr "ملاحظات داخلية"
+msgstr ""
 
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:89
 msgid "Invalid Reporting Basis"
@@ -4090,7 +4088,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:992 lib/LedgerSMB/Scripts/setup.pm:999
 msgid "Invalid request"
-msgstr ""
+msgstr "בקשה לא תקינה"
 
 #: lib/LedgerSMB/Scripts/recon.pm:309
 msgid "Invalid statement balance.  Hint: Try entering a number"
@@ -4099,19 +4097,19 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/configuration.pm:101 old/bin/ic.pl:515
 #: UI/accounts/edit.html:286 sql/Pg-database.sql:2943
 msgid "Inventory"
-msgstr "مخزون"
+msgstr "מלאי"
 
 #: UI/Reports/filters/inventory_activity.html:5 sql/Pg-database.sql:2781
 msgid "Inventory Activity"
-msgstr ""
+msgstr "פעילות מלאי"
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:179
 msgid "Inventory Activity Report"
-msgstr ""
+msgstr "דוח פעילות מלאי"
 
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:72
 msgid "Inventory Adjustment Details"
-msgstr ""
+msgstr "פרטי כיול מלאי"
 
 #: UI/inventory/adjustment_setup.html:2
 msgid "Inventory Adjustment Setup"
@@ -4119,7 +4117,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:73
 msgid "Inventory Adjustments"
-msgstr ""
+msgstr "כיול מלאי"
 
 #: sql/Pg-database.sql:2944
 msgid "Inventory and COGS"
@@ -4136,11 +4134,11 @@ msgstr ""
 
 #: old/bin/oe.pl:2000
 msgid "Inventory saved!"
-msgstr ""
+msgstr "מלאי נשמר!"
 
 #: old/bin/oe.pl:2270
 msgid "Inventory transferred!"
-msgstr ""
+msgstr "מלאי הועבר!"
 
 #: lib/LedgerSMB/Report/Aging.pm:105
 #: lib/LedgerSMB/Report/Inventory/Search.pm:281
@@ -4158,7 +4156,7 @@ msgstr ""
 #: templates/xedemo/invoice.tex:112 templates/xedemo/printPayment.html:36
 #: sql/Pg-database.sql:1066 sql/Pg-database.sql:2846 sql/Pg-database.sql:2945
 msgid "Invoice"
-msgstr "فاتورة"
+msgstr "חשבונית"
 
 #: templates/demo/ap_transaction.html:67 templates/demo/ap_transaction.tex:59
 #: templates/demo/ar_transaction.html:66 templates/demo/ar_transaction.tex:76
@@ -4194,15 +4192,15 @@ msgstr "فاتورة"
 #: templates/xedemo/product_receipt.tex:105 templates/xedemo/statement.html:56
 #: templates/xedemo/statement.tex:36
 msgid "Invoice #"
-msgstr ""
+msgstr "חשבונית #"
 
 #: old/bin/aa.pl:1644 old/bin/aa.pl:644 old/bin/ir.pl:483 old/bin/is.pl:534
 msgid "Invoice Created"
-msgstr ""
+msgstr "חשבונית נוצרה"
 
 #: old/bin/aa.pl:1312
 msgid "Invoice Created Date missing!"
-msgstr ""
+msgstr "חסר תאריך יצירת החשבונית!"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:126
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:96 old/bin/aa.pl:1618 old/bin/aa.pl:648
@@ -4210,16 +4208,16 @@ msgstr ""
 #: UI/orders/order.html:89 UI/Reports/filters/invoice_outstanding.html:162
 #: UI/Reports/filters/invoice_search.html:276
 msgid "Invoice Date"
-msgstr "تاريخ الفاتورة"
+msgstr "תאריך חשבונית"
 
 #: old/bin/aa.pl:1310 old/bin/io.pl:1277 old/bin/ir.pl:1252 old/bin/is.pl:1374
 msgid "Invoice Date missing!"
-msgstr "تاريخ الفاتورة غير موجود"
+msgstr "תאריך חשבונית חסר!"
 
 #: templates/demo/receipt.tex:63 templates/demo_with_images/receipt.tex:63
 #: templates/xedemo/receipt.tex:63
 msgid "Invoice No."
-msgstr ""
+msgstr "חשבונית מס."
 
 #: lib/LedgerSMB/Report/Contact/History.pm:70
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:68
@@ -4234,20 +4232,20 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:89
 #: UI/Reports/filters/invoice_search.html:255
 msgid "Invoice Number"
-msgstr "رقم الفاتورة"
+msgstr "מספר חשבונית"
 
 #: old/bin/io.pl:1287
 msgid "Invoice Number missing!"
-msgstr "رقم الفاتورة غير موجود"
+msgstr "מספר חשבונית חסר!"
 
 #: lib/LedgerSMB/Report/PNL/Invoice.pm:78
 msgid "Invoice Profit/Loss"
-msgstr ""
+msgstr "רווח/הפסד בחשבונית"
 
 #: UI/Reports/filters/invoice_outstanding.html:75
 #: UI/Reports/filters/invoice_search.html:171
 msgid "Invoice Status"
-msgstr ""
+msgstr "מצב חשבונית"
 
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:94
 msgid "Invoice Sum"
@@ -4255,31 +4253,31 @@ msgstr ""
 
 #: UI/payments/payments_detail.html:226
 msgid "Invoice Total"
-msgstr ""
+msgstr "סך הכל חשבונית"
 
 #: sql/Pg-database.sql:2793 sql/Pg-database.sql:2796
 msgid "Invoice Vouchers"
-msgstr ""
+msgstr "ואוצ'רים בחשבונית"
 
 #: UI/payments/use_overpayment2.html:150
 msgid "Invoice date"
-msgstr ""
+msgstr "תאריףך חשבונית"
 
 #: UI/payments/use_overpayment2.html:151
 msgid "Invoice due"
-msgstr ""
+msgstr "חשבונית לשתלום עד"
 
 #: old/lib/LedgerSMB/DBObject/Asset.pm:255
 msgid "Invoice not found"
-msgstr ""
+msgstr "חשבונית לא נמצאה"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:101
 msgid "Invoice sum"
-msgstr ""
+msgstr "סך הכל חשבונית"
 
 #: UI/Reports/filters/purchase_history.html:170
 msgid "Invoices"
-msgstr ""
+msgstr "חשבוניות"
 
 #: old/bin/ic.pl:1255 old/bin/io.pl:227 templates/demo/bin_list.html:142
 #: templates/demo/bin_list.tex:105 templates/demo/invoice.html:135
@@ -4318,25 +4316,25 @@ msgstr ""
 #: templates/xedemo/work_order.tex:124 UI/io-email.html:95
 #: UI/payments/payment2.html:336
 msgid "Item"
-msgstr ""
+msgstr "פריט"
 
 #: old/bin/ic.pl:1987
 msgid "Item deleted!"
-msgstr "الغيت الوحدة"
+msgstr "פריט נמחק!"
 
 #: old/bin/io.pl:599
 msgid "Item not on file!"
-msgstr "الوحدة غير موجودة في الملف"
+msgstr "פריט לא בקובץ!"
 
 #: UI/Reports/filters/search_goods.html:133
 msgid "Items Found In"
-msgstr ""
+msgstr "פריטים נמצטו ב"
 
 #: templates/demo/packing_list.tex:21
 #: templates/demo_with_images/packing_list.tex:21
 #: templates/xedemo/packing_list.tex:21
 msgid "Items returned are subject to a 10% restocking charge."
-msgstr ""
+msgstr "פריטים שהוחזרו מחוייבים ב 10% חיוב החזרה."
 
 #: templates/demo/invoice.html:282 templates/demo/packing_list.html:169
 #: templates/demo_with_images/invoice.html:285
@@ -4352,20 +4350,20 @@ msgstr ""
 #: lib/LedgerSMB/App_State.pm:233 old/bin/aa.pl:86 old/bin/gl.pl:80
 #: old/bin/io.pl:81
 msgid "Jan"
-msgstr "يناير"
+msgstr "ינו"
 
 #: old/bin/aa.pl:72 old/bin/gl.pl:66 old/bin/io.pl:67
 #: old/lib/LedgerSMB/DBObject/Date.pm:62
 msgid "January"
-msgstr "يناير"
+msgstr "ינואר"
 
 #: UI/Contact/divs/employee.html:80
 msgid "Job Title"
-msgstr ""
+msgstr "כותרת תפקיד"
 
 #: t/data/04-complex_template.html:78
 msgid "Job Title:"
-msgstr ""
+msgstr "כותרת תפקיד:"
 
 #: templates/demo/timecard.html:78 templates/demo/timecard.tex:37
 #: templates/demo_with_images/timecard.html:78
@@ -4385,23 +4383,23 @@ msgstr ""
 #: lib/LedgerSMB/App_State.pm:241 old/bin/aa.pl:92 old/bin/gl.pl:86
 #: old/bin/io.pl:87
 msgid "Jul"
-msgstr "يولية"
+msgstr "יול"
 
 #: old/bin/aa.pl:78 old/bin/gl.pl:72 old/bin/io.pl:73
 #: old/lib/LedgerSMB/DBObject/Date.pm:68
 msgid "July"
-msgstr "يولية"
+msgstr "יולי"
 
 #: lib/LedgerSMB/App_State.pm:240 old/bin/aa.pl:91 old/bin/gl.pl:85
 #: old/bin/io.pl:86
 msgid "Jun"
-msgstr "يونية"
+msgstr "ינו"
 
 #: old/bin/aa.pl:77 old/bin/gl.pl:71 old/bin/io.pl:72
 #: old/lib/LedgerSMB/DBObject/Date.pm:67
 #: t/data/04-strings-for-translation.html:6
 msgid "June"
-msgstr "يونية"
+msgstr "יוני"
 
 #: UI/Reports/balance_sheet.html:96
 msgid "Key Ratios"
@@ -4417,15 +4415,15 @@ msgstr ""
 #: lib/LedgerSMB/Report/Payroll/Income_Types.pm:41
 #: UI/business_units/list_classes.html:9
 msgid "Label"
-msgstr ""
+msgstr "תוות"
 
 #: UI/asset/edit_class.html:18 UI/asset/search_class.html:13
 msgid "Label:"
-msgstr ""
+msgstr "תווית:"
 
 #: old/bin/ic.pl:687
 msgid "Labor/Overhead"
-msgstr "تكلفة عمالة"
+msgstr ""
 
 #: templates/demo/timecard.html:86 templates/demo/timecard.tex:39
 #: templates/demo_with_images/timecard.html:86
@@ -4441,54 +4439,54 @@ msgstr ""
 #: UI/Reports/filters/income_statement.html:285 UI/users/preferences.html:70
 #: sql/Pg-database.sql:2876
 msgid "Language"
-msgstr "اللغة"
+msgstr "שפה"
 
 #: old/bin/am.pl:511
 msgid "Language deleted!"
-msgstr ""
+msgstr "שפה נמחקה!"
 
 #: old/bin/am.pl:475
 msgid "Language saved!"
-msgstr ""
+msgstr "שפה נשמרה!"
 
 #: old/bin/pe.pl:483
 msgid "Languages not defined!"
-msgstr ""
+msgstr "שפות לא הוגדרות!"
 
 #: t/data/04-complex_template.html:67
 msgid "Last"
-msgstr ""
+msgstr "אחרון"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:236 old/bin/ic.pl:453
 #: old/bin/ic.pl:631 UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:31
 #: UI/Contact/pricelist.tex:25 UI/Reports/filters/search_goods.html:264
 msgid "Last Cost"
-msgstr ""
+msgstr "עלות אחרונה"
 
 #: UI/Contact/divs/employee.html:67
 msgid "Last Name"
-msgstr ""
+msgstr "שם משפחה"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:154
 msgid "Last Updated"
-msgstr ""
+msgstr "עודכן לאחרונה"
 
 #: UI/setup/new_user.html:122
 msgid "Last name"
-msgstr ""
+msgstr "שם משפחה"
 
 #: old/bin/oe.pl:2413 sql/Pg-database.sql:545
 msgid "Lead"
-msgstr ""
+msgstr "ליד"
 
 #: UI/Contact/pricelist.csv:23 UI/Contact/pricelist.html:37
 #: UI/Contact/pricelist.tex:33
 msgid "Lead Time"
-msgstr ""
+msgstr "זמן ליד"
 
 #: old/bin/ic.pl:1021
 msgid "Leadtime"
-msgstr "مدة التسليم"
+msgstr "זמןליד"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:97
 msgid "Ledger sum"
@@ -4570,11 +4568,11 @@ msgstr ""
 
 #: UI/accounts/edit.html:210 UI/Reports/filters/gl.html:143
 msgid "Liability"
-msgstr "التزامات"
+msgstr ""
 
 #: UI/Contact/divs/company.html:150
 msgid "License Number"
-msgstr ""
+msgstr "רשיון מספר"
 
 #: UI/asset/search_class.html:31
 msgid "Lifetime Measured In"
@@ -4586,23 +4584,23 @@ msgstr ""
 
 #: UI/Reports/filters/search_goods.html:279
 msgid "Line Total"
-msgstr "اجمالى السطر"
+msgstr "סך הכל שורה"
 
 #: old/bin/ic.pl:759
 msgid "Link Accounts"
-msgstr "ربط الحسابات"
+msgstr "קישור חשבונות"
 
 #: old/bin/ic.pl:1269
 msgid "List"
-msgstr ""
+msgstr "רשימה"
 
 #: sql/Pg-database.sql:2841
 msgid "List Businesses"
-msgstr "قائمةانواع  العمل"
+msgstr "רשימת עסקים"
 
 #: sql/Pg-database.sql:2887
 msgid "List Classes"
-msgstr ""
+msgstr "רשימת מחלקות"
 
 #: sql/Pg-database.sql:2908
 msgid "List GIFI"
@@ -4610,7 +4608,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2843
 msgid "List Languages"
-msgstr "قائمة اللغات"
+msgstr "רישום שפות"
 
 #: UI/Reports/filters/overpayments.html:4
 msgid "List Overpayments"
@@ -4619,84 +4617,84 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Search.pm:226 old/bin/ic.pl:436
 #: UI/Reports/filters/search_goods.html:248
 msgid "List Price"
-msgstr "قائمة الاسعار"
+msgstr "מחיר מחירון"
 
 #: sql/Pg-database.sql:2845
 msgid "List SIC"
-msgstr "قائمة الاكواد الصناعية القياسية"
+msgstr ""
 
 #: sql/Pg-database.sql:2881
 msgid "List Tax Forms"
-msgstr ""
+msgstr "רישום טפסי מס"
 
 #: UI/business_units/list_classes.html:111
 msgid "List Units"
-msgstr ""
+msgstr "רישום יחידות"
 
 #: UI/setup/confirm_operation.html:63
 msgid "List Users"
-msgstr ""
+msgstr "רישום משתמשים"
 
 #: sql/Pg-database.sql:2839
 msgid "List Warehouse"
-msgstr ""
+msgstr "רישום מחסן"
 
 #: lib/LedgerSMB/Report/Listings/Business_Type.pm:67
 msgid "List of Business Types"
-msgstr ""
+msgstr "רשימה של סוגי עסקים"
 
 #: UI/setup/confirm_operation.html:73 UI/setup/template_info.html:29
 msgid "Load Templates"
-msgstr ""
+msgstr "טען תבנית"
 
 #: UI/asset/edit_asset.html:137 UI/asset/search_asset.html:123
 #: UI/payments/payment2.html:36 UI/payments/use_overpayment2.html:32
 msgid "Location"
-msgstr ""
+msgstr "מיקום"
 
 #: t/data/04-complex_template.html:368 UI/Contact/divs/address.html:7
 msgid "Locations"
-msgstr ""
+msgstr "מיקומים"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:88
 msgid "Lock Item Description"
-msgstr ""
+msgstr "נעילת תיאור פריט"
 
 #: UI/payments/payments_detail.html:420
 msgid "Locked by [_1]"
-msgstr ""
+msgstr "ננעל על ידי [_1]"
 
 #: UI/logout.html:26
 msgid "Logged out due to inactivity"
-msgstr ""
+msgstr "התנתקות בשל חוסר פעילות"
 
 #: UI/login.html:103
 msgid "Logging in.  Please wait."
-msgstr ""
+msgstr "מתחברים. נא להמתין."
 
 #: UI/login.html:97 UI/setup/credentials.html:88
 msgid "Login"
-msgstr "دخول"
+msgstr "התחברות"
 
 #: lib/LedgerSMB/Scripts/setup.pm:960
 msgid "Login?"
-msgstr ""
+msgstr "התחברות?"
 
 #: sql/Pg-database.sql:2926
 msgid "Logout"
-msgstr "خروج"
+msgstr "התנתקות"
 
 #: UI/logout.html:28
 msgid "Logout Successful"
-msgstr ""
+msgstr "התנתקות בוצעה בהצלחה"
 
 #: UI/accounts/edit.html:527
 msgid "Loss"
-msgstr ""
+msgstr "הפסד"
 
 #: UI/asset/begin_approval.html:55
 msgid "Loss Account"
-msgstr ""
+msgstr "חשבון הפסד"
 
 #: sql/Pg-database.sql:812
 msgid "MSN"
@@ -4710,7 +4708,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:52
 #: UI/Reports/filters/search_goods.html:344
 msgid "Make"
-msgstr "افعل"
+msgstr "צור"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:370
 msgid "Make employee numbers unique"
@@ -4736,7 +4734,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:1073
 msgid "Manage Users"
-msgstr ""
+msgstr "ניהול משתמשים"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:278
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:312
@@ -4745,30 +4743,30 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:188
 #: UI/Reports/filters/invoice_search.html:302
 msgid "Manager"
-msgstr "مدير"
+msgstr "מנהל"
 
 #: t/data/04-complex_template.html:98
 msgid "Manager:"
-msgstr ""
+msgstr "הל:"
 
 #: old/bin/ir.pl:620 old/bin/is.pl:427 old/bin/is.pl:722
 msgid "Manual"
-msgstr ""
+msgstr "ידני"
 
 #: lib/LedgerSMB/App_State.pm:235 old/bin/aa.pl:88 old/bin/gl.pl:82
 #: old/bin/io.pl:83
 msgid "Mar"
-msgstr "مارس"
+msgstr "מרץ"
 
 #: old/bin/aa.pl:74 old/bin/gl.pl:68 old/bin/io.pl:69
 #: old/lib/LedgerSMB/DBObject/Date.pm:64
 msgid "March"
-msgstr "مارس"
+msgstr "מרץ"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:245 old/bin/ic.pl:459
 #: old/bin/ic.pl:637 UI/Reports/filters/search_goods.html:286
 msgid "Markup"
-msgstr "نسبة الربح"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:142
 msgid "Max Invoices per Check Stub"
@@ -4781,11 +4779,11 @@ msgstr ""
 #: lib/LedgerSMB/App_State.pm:239 old/bin/aa.pl:90 old/bin/gl.pl:84
 #: old/bin/io.pl:85 old/lib/LedgerSMB/DBObject/Date.pm:66
 msgid "May"
-msgstr "مايو"
+msgstr "מאי"
 
 #: old/bin/aa.pl:76 old/bin/gl.pl:70 old/bin/io.pl:71
 msgid "May "
-msgstr "مايو"
+msgstr ""
 
 #: lib/LedgerSMB/Report/GL.pm:128 lib/LedgerSMB/Scripts/payment.pm:189
 #: lib/LedgerSMB/Scripts/payment.pm:877 old/bin/aa.pl:840 old/bin/ir.pl:658
@@ -4796,7 +4794,7 @@ msgstr "مايو"
 #: UI/orders/order.html:247 UI/payments/payment2.html:340
 #: UI/Reports/filters/gl.html:73 UI/Reports/filters/gl.html:246
 msgid "Memo"
-msgstr "ملاحظات"
+msgstr "פתקית"
 
 #: UI/payments/payment2.html:228
 msgid "Memo to help retrieval"
@@ -4804,7 +4802,7 @@ msgstr ""
 
 #: old/bin/io.pl:1461 UI/io-email.html:33
 msgid "Message"
-msgstr "رسالة"
+msgstr ""
 
 #: old/bin/arap.pl:788
 msgid "Message: "
@@ -4812,11 +4810,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:87
 msgid "Method"
-msgstr "طريقة"
+msgstr "שיטה"
 
 #: UI/asset/edit_asset.html:101
 msgid "Method Default"
-msgstr ""
+msgstr "ברירת מחדל לשטיה"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:269 old/bin/ic.pl:498
 #: UI/Reports/filters/search_goods.html:78
@@ -4826,15 +4824,15 @@ msgstr ""
 
 #: t/data/04-complex_template.html:60
 msgid "Middle"
-msgstr ""
+msgstr "אמצע"
 
 #: UI/Contact/divs/employee.html:55 UI/Contact/divs/person.html:106
 msgid "Middle Name"
-msgstr ""
+msgstr "שם אמצעי"
 
 #: old/lib/LedgerSMB/Num2text.pm:117
 msgid "Million"
-msgstr ""
+msgstr "מליון"
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:56
 #: lib/LedgerSMB/Report/File/Internal.pm:54
@@ -4848,7 +4846,7 @@ msgstr ""
 #: old/bin/ic.pl:1126 UI/Contact/pricelist.csv:40 UI/Contact/pricelist.html:52
 #: UI/Contact/pricelist.tex:54
 msgid "Min Qty"
-msgstr ""
+msgstr "כמות מינ'"
 
 #: UI/am-taxes.html:15
 msgid "Min Taxable"
@@ -4856,7 +4854,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:132
 msgid "Misc Settings"
-msgstr ""
+msgstr "הגדרות שונות"
 
 #: UI/reconciliation/report.html:224
 msgid "Mismatched Transactions (From Upload)"
@@ -4870,45 +4868,45 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:60
 #: UI/Reports/filters/search_goods.html:351
 msgid "Model"
-msgstr "موديل"
+msgstr "מודל"
 
 #: lib/LedgerSMB/Report/Timecards.pm:128
 msgid "Mon"
-msgstr ""
+msgstr "שני"
 
 #: old/bin/aa.pl:1577 old/bin/am.pl:775 old/bin/pe.pl:819
 #: old/lib/LedgerSMB/DBObject/Date.pm:84 UI/lib/report_base.html:178
 #: UI/lib/report_base.html:260 UI/Reports/co/filter_bm.html:57
 msgid "Month"
-msgstr ""
+msgstr "חודש"
 
 #: old/bin/arap.pl:515
 msgid "Month(s)"
-msgstr ""
+msgstr "חודש/ים"
 
 #: old/bin/am.pl:776
 msgid "Months"
-msgstr ""
+msgstr "חודשים"
 
 #: lib/LedgerSMB.pm:419
 msgid "More information has been reported in the error logs"
-msgstr ""
+msgstr "מידע נוסף דווח בלוג השגיאה"
 
 #: lib/LedgerSMB/Entity/Person.pm:113 sql/Pg-database.sql:736
 msgid "Mr."
-msgstr ""
+msgstr "מר."
 
 #: lib/LedgerSMB/Entity/Person.pm:114 sql/Pg-database.sql:737
 msgid "Mrs."
-msgstr ""
+msgstr "גב."
 
 #: lib/LedgerSMB/Entity/Person.pm:115 sql/Pg-database.sql:738
 msgid "Ms."
-msgstr ""
+msgstr "גב."
 
 #: UI/import_csv/import_inventory_csv.html:63
 msgid "Multiple dates"
-msgstr ""
+msgstr "כמה תאריכים"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1163
 msgid ""
@@ -4926,7 +4924,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:11
 msgid "NONE"
-msgstr ""
+msgstr "ללא"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:148
 #: lib/LedgerSMB/Report/Contact/History.pm:58
@@ -4940,12 +4938,12 @@ msgstr ""
 #: UI/Reports/filters/contact_search.html:33
 #: UI/Reports/filters/overpayments.html:31
 msgid "Name"
-msgstr "الاسم"
+msgstr "שם"
 
 #: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 #: UI/Contact/divs/employee.html:41
 msgid "Name:"
-msgstr ""
+msgstr "שם:"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:127 sql/Pg-database.sql:2892
 msgid "Net Book Value"
@@ -4958,11 +4956,11 @@ msgstr ""
 #: old/bin/aa.pl:480 old/bin/aa.pl:981 old/bin/gl.pl:262 old/bin/ir.pl:352
 #: old/bin/ir.pl:540 old/bin/is.pl:352 old/bin/is.pl:607 old/bin/oe.pl:513
 msgid "New"
-msgstr ""
+msgstr "חדש"
 
 #: UI/asset/begin_report.html:5
 msgid "New Asset Report"
-msgstr ""
+msgstr "דוח נכס חדש"
 
 #: UI/asset/begin_approval.html:5
 msgid "New Asset Report Search"
@@ -4974,53 +4972,53 @@ msgstr ""
 
 #: UI/Contact/divs/user.html:17 UI/setup/edit_user.html:17
 msgid "New User"
-msgstr ""
+msgstr "משתמש חדש"
 
 #: sql/Pg-database.sql:2927
 msgid "New Window"
-msgstr ""
+msgstr "חלון חדש"
 
 #: UI/users/preferences.html:16
 msgid "New password"
-msgstr ""
+msgstr "סיסמא חדשה"
 
 #: old/bin/am.pl:810 UI/inventory/adjustment_entry.html:82
 #: UI/setup/select_coa.html:92
 msgid "Next"
-msgstr ""
+msgstr "הבא"
 
 #: old/bin/arap.pl:372
 msgid "Next Date"
-msgstr ""
+msgstr "תאריך הבא"
 
 #: old/bin/am.pl:881
 msgid "Next Number"
-msgstr ""
+msgstr "מספר הבא"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:115
 #: lib/LedgerSMB/Scripts/configuration.pm:330
 msgid "Next in Sequence"
-msgstr ""
+msgstr "הבא בתור"
 
 #: old/lib/LedgerSMB/Num2text.pm:82
 msgid "Nine"
-msgstr ""
+msgstr "תשע"
 
 #: old/lib/LedgerSMB/Num2text.pm:115
 msgid "Nine Hundred"
-msgstr ""
+msgstr "תשע מאות"
 
 #: old/lib/LedgerSMB/Num2text.pm:93
 msgid "Nineteen"
-msgstr ""
+msgstr "תשע עשרה"
 
 #: old/lib/LedgerSMB/Num2text.pm:111
 msgid "Ninety"
-msgstr ""
+msgstr "תשעים"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:101 UI/Configuration/settings.html:45
 msgid "No"
-msgstr "لا"
+msgstr "לא"
 
 #: lib/LedgerSMB/Scripts/contact.pm:594
 msgid "No AR or AP Account Selected"
@@ -5048,11 +5046,11 @@ msgstr ""
 
 #: UI/users/preferences.html:19
 msgid "No Old Password"
-msgstr ""
+msgstr "אין סיסמא ישנה"
 
 #: lib/LedgerSMB/Scripts/setup.pm:1075
 msgid "No changes"
-msgstr ""
+msgstr "ללא שינויים"
 
 #: old/bin/aa.pl:214 old/bin/ir.pl:162 old/bin/is.pl:155
 msgid "No currencies defined.  Please set these up under System/Defaults."
@@ -5064,7 +5062,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/file.pm:109
 msgid "No file uploaded"
-msgstr ""
+msgstr "לא הועלה קובץ"
 
 #: UI/templates/edit.html:4 UI/templates/preview.html:47
 msgid "No language"
@@ -5072,7 +5070,7 @@ msgstr ""
 
 #: old/bin/pe.pl:850
 msgid "No open Projects!"
-msgstr ""
+msgstr "אין פרוייקטים פתוחים!"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1355
 msgid "No overpayment account selected.  Was one set up?"
@@ -5094,7 +5092,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:243 UI/Reports/filters/orders.html:109
 #: UI/Reports/filters/search_goods.html:194
 msgid "No."
-msgstr "رقم"
+msgstr "מס."
 
 #: UI/timecards/timecard.html:113
 msgid "Non-Chargeable"
@@ -5102,7 +5100,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:968
 msgid "Non-cash"
-msgstr ""
+msgstr "לא-מזומן"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1069
 msgid "Non-existing customer pricegroups in partscustomer"
@@ -5130,15 +5128,15 @@ msgstr ""
 
 #: UI/Reports/filters/trial_balance.html:6
 msgid "Normal"
-msgstr ""
+msgstr "רגיל"
 
 #: UI/Reports/filters/reconciliation_search.html:62
 msgid "Not Approved"
-msgstr ""
+msgstr "לא אושר"
 
 #: UI/Reports/filters/reconciliation_search.html:78
 msgid "Not Submitted"
-msgstr ""
+msgstr "לא נשלח"
 
 #: UI/Reports/filters/balance_sheet.html:216
 #: UI/Reports/filters/income_statement.html:263
@@ -5147,7 +5145,7 @@ msgstr ""
 
 #: UI/Contact/divs/notes.html:47 UI/Contact/divs/notes.html:57
 msgid "Note Class"
-msgstr ""
+msgstr "מחלקת פתק"
 
 #: UI/setup/upgrade_info.html:99
 msgid "Note that the process invoked by hitting the button below might "
@@ -5186,33 +5184,33 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:363
 #: UI/Reports/filters/search_goods.html:315 UI/timecards/timecard.html:135
 msgid "Notes"
-msgstr "ملاحظات"
+msgstr "פתקים"
 
 #: t/data/04-complex_template.html:639
 msgid "Notes:<br />"
-msgstr ""
+msgstr "פתקים:<br />"
 
 #: old/bin/oe.pl:1997
 msgid "Nothing entered!"
-msgstr ""
+msgstr "לא הוכנס כלום!"
 
 #: old/bin/oe.pl:2288 old/bin/oe.pl:2546 old/bin/pe.pl:1158
 msgid "Nothing selected!"
-msgstr "لم يتم الاختيار"
+msgstr "לא נבחר כלום!"
 
 #: old/bin/oe.pl:2014
 msgid "Nothing to transfer!"
-msgstr ""
+msgstr "אין מה להעביר!"
 
 #: lib/LedgerSMB/App_State.pm:245 old/bin/aa.pl:96 old/bin/gl.pl:90
 #: old/bin/io.pl:91
 msgid "Nov"
-msgstr "نوفمبر"
+msgstr "נוב"
 
 #: old/bin/aa.pl:82 old/bin/gl.pl:76 old/bin/io.pl:77
 #: old/lib/LedgerSMB/DBObject/Date.pm:72
 msgid "November"
-msgstr "نوفمبر"
+msgstr "נובמבר"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:933 lib/LedgerSMB/Upgrade_Tests.pm:952
 msgid "Null employee numbers"
@@ -5269,11 +5267,11 @@ msgstr ""
 #: templates/xedemo/sales_quotation.tex:88 templates/xedemo/work_order.html:125
 #: UI/am-taxes.html:16 UI/Contact/divs/credit.html:27 UI/io-email.html:98
 msgid "Number"
-msgstr "الرقم"
+msgstr "מספר"
 
 #: UI/users/preferences.html:60
 msgid "Number Format"
-msgstr ""
+msgstr "פורמט מספר"
 
 #: old/bin/io.pl:938
 msgid "Number missing in Row [_1]"
@@ -5304,12 +5302,12 @@ msgstr ""
 #: lib/LedgerSMB/App_State.pm:244 old/bin/aa.pl:95 old/bin/gl.pl:89
 #: old/bin/io.pl:90
 msgid "Oct"
-msgstr "اكتوبر"
+msgstr "אוק"
 
 #: old/bin/aa.pl:81 old/bin/gl.pl:75 old/bin/io.pl:76
 #: old/lib/LedgerSMB/DBObject/Date.pm:71
 msgid "October"
-msgstr "اكتوبر"
+msgstr "אוקטובר"
 
 #: old/bin/aa.pl:954 old/bin/ir.pl:509 old/bin/is.pl:575 old/bin/is.pl:860
 msgid "Off Hold"
@@ -5317,7 +5315,7 @@ msgstr ""
 
 #: UI/users/preferences.html:15
 msgid "Old Password"
-msgstr ""
+msgstr "סיסמא ישנה"
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:129
 #: lib/LedgerSMB/Report/Inventory/Search.pm:205
@@ -5325,7 +5323,7 @@ msgstr ""
 #: UI/inventory/adjustment_entry.html:27
 #: UI/Reports/filters/search_goods.html:104
 msgid "On Hand"
-msgstr "بالمخزن"
+msgstr ""
 
 #: old/bin/aa.pl:1704 old/bin/aa.pl:956 old/bin/ir.pl:511 old/bin/is.pl:577
 #: old/bin/is.pl:862 UI/Reports/filters/invoice_outstanding.html:93
@@ -5339,7 +5337,7 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:73
 msgid "One"
-msgstr ""
+msgstr "אחד"
 
 #: old/lib/LedgerSMB/Num2text.pm:74
 msgid "One-o"
@@ -5359,11 +5357,11 @@ msgstr ""
 
 #: UI/Reports/filters/contact_search.html:69
 msgid "Only Users"
-msgstr ""
+msgstr "רק משתמשים"
 
 #: UI/Reports/filters/contact_search.html:72
 msgid "Only for Employees"
-msgstr ""
+msgstr "רק לעובדים"
 
 #: UI/payments/payment2.html:122
 msgid "Only for documentation"
@@ -5374,7 +5372,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:199
 #: UI/Reports/filters/timecards.html:28
 msgid "Open"
-msgstr "فتح"
+msgstr "פתוח"
 
 #: UI/logout.html:16
 msgid ""
@@ -5384,11 +5382,11 @@ msgstr ""
 
 #: UI/accounts/edit.html:225
 msgid "Options"
-msgstr ""
+msgstr "אפשרויות"
 
 #: UI/file/attachment_screen.html:32
 msgid "Or"
-msgstr ""
+msgstr "או"
 
 #: UI/create_batch.html:64
 msgid "Or Add To Batch"
@@ -5398,7 +5396,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:212 old/bin/io.pl:1045
 #: old/bin/io.pl:1049 old/bin/oe.pl:2406
 msgid "Order"
-msgstr "امر"
+msgstr "סדר"
 
 #: templates/demo/ap_transaction.html:86 templates/demo/ap_transaction.tex:66
 #: templates/demo/ar_transaction.html:85 templates/demo/ar_transaction.tex:83
@@ -5431,11 +5429,11 @@ msgstr "امر"
 #: templates/xedemo/sales_order.tex:105 templates/xedemo/statement.html:57
 #: templates/xedemo/work_order.html:99
 msgid "Order #"
-msgstr ""
+msgstr "סדר #"
 
 #: UI/reconciliation/report.html:358
 msgid "Order By"
-msgstr ""
+msgstr "הזמנה על ידי"
 
 #: old/bin/oe.pl:1804 old/bin/oe.pl:396 templates/demo/purchase_order.html:97
 #: templates/demo/sales_order.html:100
@@ -5445,15 +5443,15 @@ msgstr ""
 #: templates/demo/work_order.html:100 templates/xedemo/purchase_order.html:97
 #: templates/xedemo/sales_order.html:100 templates/xedemo/work_order.html:100
 msgid "Order Date"
-msgstr "تاريخ الامر"
+msgstr "תאריך הזמנה"
 
 #: old/bin/io.pl:1279 old/bin/oe.pl:1200 old/bin/oe.pl:1374
 msgid "Order Date missing!"
-msgstr "تاريخ الامر غير موجود"
+msgstr "תאריך הזמנה חסר!"
 
 #: sql/Pg-database.sql:2917
 msgid "Order Entry"
-msgstr "ادخال الامر"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:72 old/bin/aa.pl:1501
 #: old/bin/aa.pl:1614 old/bin/aa.pl:640 old/bin/ir.pl:478 old/bin/is.pl:529
@@ -5463,23 +5461,23 @@ msgstr "ادخال الامر"
 #: UI/Reports/filters/invoice_search.html:262 UI/Reports/filters/orders.html:39
 #: UI/Reports/filters/orders.html:122
 msgid "Order Number"
-msgstr "رقم الامر"
+msgstr "מספר הזמנה"
 
 #: old/bin/io.pl:1289 old/bin/oe.pl:1373
 msgid "Order Number missing!"
-msgstr "رقم الامر غير موجود"
+msgstr "מספר הזמנה חסר!"
 
 #: old/bin/oe.pl:1351
 msgid "Order deleted!"
-msgstr "الغي الامر"
+msgstr "הזמנה נמחקה!"
 
 #: old/bin/oe.pl:2535
 msgid "Order generation failed!"
-msgstr ""
+msgstr "יצירת הזמנה נכשלה!"
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:141
 msgid "Order/Invoice"
-msgstr ""
+msgstr "הזמנה/חשבונית"
 
 #: UI/am-taxes.html:18 UI/business_units/list_classes.html:11
 msgid "Ordering"
@@ -5488,34 +5486,34 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:179 UI/setup/complete.html:25
 #: UI/setup/confirm_operation.html:123
 msgid "Orders"
-msgstr ""
+msgstr "הזמנות"
 
 #: old/bin/pe.pl:1316
 msgid "Orders generated!"
-msgstr ""
+msgstr "הזמנות נוצרו!"
 
 #: UI/setup/confirm_operation.html:32
 msgid "Other Actions"
-msgstr ""
+msgstr "פעולות אחרות"
 
 #: lib/LedgerSMB/Scripts/recon.pm:464
 msgid "Our Balance"
-msgstr ""
+msgstr "היתרה שלנו"
 
 #: UI/reconciliation/report.html:239 UI/reconciliation/report.html:299
 msgid "Our Credits"
-msgstr ""
+msgstr "הזיכויים שלנו"
 
 #: UI/reconciliation/report.html:238 UI/reconciliation/report.html:298
 msgid "Our Debits"
-msgstr ""
+msgstr "החובות שלנו"
 
 #: templates/demo/timecard.html:54 templates/demo/timecard.tex:30
 #: templates/demo_with_images/timecard.html:54
 #: templates/demo_with_images/timecard.tex:30 templates/xedemo/timecard.html:54
 #: templates/xedemo/timecard.tex:30
 msgid "Out"
-msgstr ""
+msgstr "החוצה"
 
 #: old/bin/gl.pl:677
 msgid "Out of balance transaction!"
@@ -5523,7 +5521,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2930 sql/Pg-database.sql:2931
 msgid "Outstanding"
-msgstr "ارصدة"
+msgstr ""
 
 #: UI/reconciliation/report.html:286
 msgid "Outstanding Transactions"
@@ -5550,7 +5548,7 @@ msgstr ""
 #: UI/Reports/balance_sheet.html:115 UI/Reports/display_report.html:75
 #: UI/Reports/PNL.html:100
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #: templates/demo/ap_transaction.html:80 templates/demo/ap_transaction.tex:63
 #: templates/demo/ar_transaction.html:79
@@ -5593,15 +5591,15 @@ msgstr ""
 #: templates/xedemo/packing_list.tex:81 sql/Pg-database.sql:2948
 #: sql/Pg-database.sql:2961
 msgid "Packing List"
-msgstr "قائمة تعبئة"
+msgstr "רשימת אריזה"
 
 #: old/bin/io.pl:1278
 msgid "Packing List Date missing!"
-msgstr "تاريخ بوليصة الشحن غير موجود"
+msgstr "תאריך רשימת אריזה חסר!"
 
 #: old/bin/io.pl:1288
 msgid "Packing List Number missing!"
-msgstr "رقم بوليصة الشحن غير موجود"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:95
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:244
@@ -5615,24 +5613,24 @@ msgstr "رقم بوليصة الشحن غير موجود"
 #: UI/Reports/filters/invoice_outstanding.html:231
 #: UI/Reports/filters/invoice_search.html:343
 msgid "Paid"
-msgstr "المدفوع"
+msgstr "שולם"
 
 #: old/bin/pe.pl:130 UI/business_units/edit.html:41
 msgid "Parent"
-msgstr ""
+msgstr "אב"
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:107 old/bin/io.pl:613
 msgid "Part"
-msgstr "جزء"
+msgstr "חלק"
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:164
 msgid "Part Description"
-msgstr ""
+msgstr "תיאור חלק"
 
 #: UI/Reports/filters/search_goods.html:31
 #: UI/Reports/filters/search_goods.html:241
 msgid "Part Group"
-msgstr ""
+msgstr "קבוצת חלק"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:81
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:95
@@ -5649,11 +5647,11 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:11
 #: UI/Reports/filters/search_goods.html:202
 msgid "Part Number"
-msgstr ""
+msgstr "מספר חלק"
 
 #: UI/asset/begin_report.html:43
 msgid "Partial"
-msgstr ""
+msgstr "חלקי"
 
 #: lib/LedgerSMB/Scripts/asset.pm:648
 msgid "Partial Disposal Report [_1] on date [_2]"
@@ -5668,26 +5666,26 @@ msgstr ""
 #: UI/Reports/filters/timecards.html:9 UI/timecards/timecard.html:33
 #: UI/timecards/timecard-week.html:88
 msgid "Partnumber"
-msgstr ""
+msgstr "מספרחלק"
 
 #: lib/LedgerSMB/Report/Inventory/Partsgroups.pm:71
 #: lib/LedgerSMB/Report/Inventory/Search.pm:277
 #: UI/Reports/filters/search_partsgroups.html:11 sql/Pg-database.sql:2830
 msgid "Partsgroup"
-msgstr ""
+msgstr "קבוצתחלקים"
 
 #: lib/LedgerSMB/Report/Inventory/Partsgroups.pm:82
 msgid "Partsgroups"
-msgstr ""
+msgstr "קבוצתחלקים"
 
 #: UI/Contact/divs/user.html:49 UI/login.html:71 UI/setup/credentials.html:66
 #: UI/setup/edit_user.html:49 UI/setup/new_user.html:29
 msgid "Password"
-msgstr "كلمة السر"
+msgstr "סיסמא"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:77
 msgid "Password Duration (days)"
-msgstr ""
+msgstr "תוקף סיסמא (ימים)"
 
 #: old/lib/LedgerSMB/DBObject/User.pm:183
 msgid "Password required"
@@ -5695,37 +5693,37 @@ msgstr ""
 
 #: old/lib/LedgerSMB/DBObject/User.pm:90
 msgid "Passwords must match."
-msgstr ""
+msgstr "סיסמאות חייבוןת להתאים."
 
 #: UI/payments/payments_detail.html:195 UI/payments/payments_filter.html:83
 msgid "Pay From"
-msgstr ""
+msgstr "תשלום מ"
 
 #: lib/LedgerSMB/Scripts/payment.pm:184 UI/Contact/divs/credit.html:98
 #: UI/Contact/divs/credit.html:99 UI/payments/payments_filter.html:84
 msgid "Pay To"
-msgstr ""
+msgstr "תשלום ל"
 
 #: templates/demo/printPayment.html:90
 #: templates/demo_with_images/printPayment.html:90
 #: templates/xedemo/printPayment.html:90
 msgid "Pay in behalf of"
-msgstr ""
+msgstr "תשלום בשם"
 
 #: UI/accounts/edit.html:367
 msgid "Payables"
-msgstr "المدفوعات"
+msgstr "לתשלום"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1112 t/data/04-complex_template.html:282
 #: UI/accounts/edit.html:330 UI/accounts/edit.html:382
 #: UI/Contact/divs/credit.html:210 UI/Contact/divs/credit.html:211
 #: UI/payments/payments_detail.html:227 sql/Pg-database.sql:2801
 msgid "Payment"
-msgstr "الدفع النقدى"
+msgstr "שלום"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:160
 msgid "Payment Amount"
-msgstr ""
+msgstr "סכום תשלום"
 
 #: templates/demo/printPayment.html:27
 #: templates/demo_with_images/printPayment.html:27
@@ -5735,27 +5733,27 @@ msgstr ""
 
 #: UI/payments/payments_filter.html:80
 msgid "Payment Processing"
-msgstr ""
+msgstr "עיבוד תשלום"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:210
 msgid "Payment Results"
-msgstr ""
+msgstr "תוצאות תשלום"
 
 #: UI/Reports/filters/payments.html:79
 msgid "Payment Reversal Information"
-msgstr ""
+msgstr "מידע היפוך תשלום"
 
 #: UI/Contact/divs/credit.html:158 UI/Contact/divs/credit.html:159
 msgid "Payment Terms"
-msgstr ""
+msgstr "תנאי תשלום"
 
 #: UI/payments/payments_detail.html:184 UI/payments/payments_filter.html:105
 msgid "Payment Type"
-msgstr ""
+msgstr "סוג תשלום"
 
 #: old/bin/aa.pl:1335 old/bin/ir.pl:1277 old/bin/is.pl:1399
 msgid "Payment date missing!"
-msgstr "تاريخ الدفع غير موجود"
+msgstr "תאריך תשלום חסר!"
 
 #: templates/demo/invoice.tex:30 templates/demo_with_images/invoice.tex:30
 #: templates/xedemo/invoice.tex:29
@@ -5785,7 +5783,7 @@ msgstr ""
 #: UI/payments/payment1.html:19 UI/payments/payments_detail.html:6
 #: sql/Pg-database.sql:2805 sql/Pg-database.sql:2868
 msgid "Payments"
-msgstr "المدفوعات"
+msgstr "תשלומים"
 
 #: old/bin/is.pl:692
 msgid "Payments associated with voided invoice may need to be reversed."
@@ -5793,7 +5791,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:372
 msgid "Percent"
-msgstr ""
+msgstr "אחוז"
 
 #: lib/LedgerSMB/Scripts/asset.pm:655
 msgid "Percent Disposed"
@@ -5801,37 +5799,37 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:658
 msgid "Percent Remaining"
-msgstr ""
+msgstr "אחוז נותר"
 
 #: old/bin/aa.pl:1570 old/bin/pe.pl:812 UI/lib/report_base.html:135
 #: UI/lib/report_base.html:231
 msgid "Period"
-msgstr ""
+msgstr "תקופה"
 
 #: UI/Reports/filters/income_statement.html:79
 msgid "Period selection"
-msgstr ""
+msgstr "בחירת תקופה"
 
 #: UI/Reports/filters/balance_sheet.html:80
 #: UI/Reports/filters/income_statement.html:112
 msgid "Periods"
-msgstr ""
+msgstr "תקופות"
 
 #: lib/LedgerSMB/Scripts/contact.pm:183 UI/Contact/divs/person.html:3
 msgid "Person"
-msgstr ""
+msgstr "איש"
 
 #: UI/Contact/divs/person.html:155
 msgid "Personal ID"
-msgstr ""
+msgstr "תעודת זהות"
 
 #: UI/Reports/filters/contact_search.html:52
 msgid "Phone"
-msgstr "تليفون"
+msgstr "טלפון"
 
 #: sql/Pg-database.sql:673
 msgid "Physical"
-msgstr ""
+msgstr "פיזי"
 
 #: old/bin/am.pl:1472 old/bin/io.pl:1203 old/bin/is.pl:256 old/bin/oe.pl:254
 #: old/bin/oe.pl:273 old/bin/printer.pl:74 old/bin/printer.pl:92
@@ -5842,7 +5840,7 @@ msgstr ""
 #: templates/xedemo/pick_list.html:17 templates/xedemo/pick_list.tex:74
 #: sql/Pg-database.sql:2949 sql/Pg-database.sql:2962
 msgid "Pick List"
-msgstr ""
+msgstr "רשימת בחירה"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1143
 msgid ""
@@ -5894,15 +5892,15 @@ msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:303 lib/LedgerSMB/Upgrade_Tests.pm:886
 msgid "Please make all customer numbers unique"
-msgstr ""
+msgstr "נא ליצור את כל מספרי הלקוח כייחודיים"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:957
 msgid "Please make all employee numbers unique"
-msgstr ""
+msgstr "נא ליצור את כל מספרי העובד כייחודיים"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:322 lib/LedgerSMB/Upgrade_Tests.pm:921
 msgid "Please make all vendor numbers unique"
-msgstr ""
+msgstr "נא ליצור את כל מספרי הספק כייחודיים"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:622 lib/LedgerSMB/Upgrade_Tests.pm:826
 msgid ""
@@ -5912,11 +5910,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:937
 msgid "Please make sure all employees have an employee number"
-msgstr ""
+msgstr "נא לוודא שלכל העובדים יש מספר עובד"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1054
 msgid "Please make sure all make numbers are non-empty"
-msgstr ""
+msgstr "נא לוודא שכל המספרים ליצירה אינם ריקים"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1036
 msgid "Please make sure all modelsnumbers are non-empty"
@@ -5924,11 +5922,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:679
 msgid "Please make sure there are no empty customer numbers."
-msgstr ""
+msgstr "נא לוודא שאין מספרי לקוח ריקים"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:902
 msgid "Please make sure there are no empty vendor numbers."
-msgstr ""
+msgstr "נא לוודא שאעין מספרי ספק ריקים"
 
 #: templates/demo/request_quotation.html:124
 #: templates/demo/request_quotation.tex:117
@@ -5937,7 +5935,7 @@ msgstr ""
 #: templates/xedemo/request_quotation.html:124
 #: templates/xedemo/request_quotation.tex:117
 msgid "Please provide price and delivery time for the following items:"
-msgstr ""
+msgstr "נא לספק מחיר וזמן משלוח עבור הפריטים הבאים:"
 
 #: UI/payments/use_overpayment1.html:17
 msgid "Please select a customer with unused overpayments"
@@ -5945,7 +5943,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/account.pm:111
 msgid "Please select a valid heading"
-msgstr ""
+msgstr "נא לבחור כותרת תקינה"
 
 #: UI/payments/use_overpayment1.html:15
 msgid "Please select a vendor with unused overpayments"
@@ -5973,7 +5971,7 @@ msgstr ""
 #: old/bin/is.pl:1054 old/bin/is.pl:591 old/bin/is.pl:629
 #: UI/payments/payment2.html:505
 msgid "Post"
-msgstr "تسجيل"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:205
 msgid "Post Batch"
@@ -5989,7 +5987,7 @@ msgstr ""
 
 #: old/bin/aa.pl:941 old/bin/ir.pl:527 old/bin/ir.pl:944 old/bin/is.pl:1057
 msgid "Post as new"
-msgstr "سجل كجديد"
+msgstr ""
 
 #: UI/reconciliation/report.html:126 UI/reconciliation/report.html:236
 #: UI/reconciliation/report.html:296
@@ -6022,11 +6020,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:2928
 msgid "Preferences"
-msgstr ""
+msgstr "העדפות"
 
 #: UI/users/preferences.html:30
 msgid "Preferences Saved"
-msgstr ""
+msgstr "העדפות נשמרו"
 
 #: UI/users/preferences.html:28
 msgid "Preferences for "
@@ -6034,7 +6032,7 @@ msgstr ""
 
 #: UI/Configuration/sequence.html:11
 msgid "Prefix"
-msgstr ""
+msgstr "קידומת"
 
 #: old/bin/io.pl:239 templates/demo/invoice.tex:144
 #: templates/demo/product_receipt.html:127
@@ -6052,52 +6050,52 @@ msgstr ""
 #: templates/xedemo/sales_quotation.html:98
 #: templates/xedemo/sales_quotation.tex:90
 msgid "Price"
-msgstr "سعر"
+msgstr "מחיר"
 
 #: lib/LedgerSMB/Report/Inventory/Pricegroups.pm:55
 #: lib/LedgerSMB/Report/Inventory/Pricegroups.pm:71
 #: UI/Reports/filters/search_pricegroups.html:11
 msgid "Price Group"
-msgstr ""
+msgstr "קבוצת מחיר"
 
 #: lib/LedgerSMB/Report/Inventory/Pricegroups.pm:82
 msgid "Price Groups"
-msgstr ""
+msgstr "קבוצת מחיר"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:249
 #: UI/Reports/filters/search_goods.html:234
 msgid "Price Updated"
-msgstr ""
+msgstr "מחיר עודכן"
 
 #: old/bin/ic.pl:1097 old/bin/pe.pl:214 UI/Contact/divs/credit.html:247
 #: UI/Contact/divs/credit.html:248
 msgid "Pricegroup"
-msgstr "مجموعة سعرية"
+msgstr "קבוצתמחיר"
 
 #: old/bin/pe.pl:94
 msgid "Pricegroup deleted!"
-msgstr ""
+msgstr "קבוצת מחיר נמחקה!"
 
 #: old/bin/pe.pl:73
 msgid "Pricegroup missing!"
-msgstr ""
+msgstr "קבוצתמחיר חסרה!"
 
 #: old/bin/pe.pl:75
 msgid "Pricegroup saved!"
-msgstr ""
+msgstr "קבוצתמחיר נשמרה!"
 
 #: t/data/04-complex_template.html:361 UI/Contact/divs/credit.html:381
 #: UI/Contact/pricelist.html:15
 msgid "Pricelist"
-msgstr ""
+msgstr "מחירון"
 
 #: UI/Contact/pricelist.tex:69
 msgid "Pricelist for [_1]"
-msgstr ""
+msgstr "מחירון עבור [_1]"
 
 #: sql/Pg-database.sql:806
 msgid "Primary Phone"
-msgstr ""
+msgstr "טלפון ראשי"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:140
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:133 old/bin/aa.pl:937
@@ -6106,7 +6104,7 @@ msgstr ""
 #: old/bin/oe.pl:862 UI/payments/payments_detail.html:510
 #: UI/timecards/timecard.html:160
 msgid "Print"
-msgstr "طباعة"
+msgstr "הדפס"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:231
 msgid "Print Batch"
@@ -6114,19 +6112,19 @@ msgstr ""
 
 #: old/bin/oe.pl:646 old/bin/oe.pl:865
 msgid "Print and Save"
-msgstr ""
+msgstr "הדפס ושמור"
 
 #: old/bin/oe.pl:654 old/bin/oe.pl:868
 msgid "Print and Save as new"
-msgstr ""
+msgstr "הדפס ושמור כחדש"
 
 #: old/bin/printer.pl:172
 msgid "Printed"
-msgstr ""
+msgstr "הודפס"
 
 #: UI/users/preferences.html:92
 msgid "Printer"
-msgstr "طابعة"
+msgstr "מדפסת"
 
 #: old/bin/am.pl:1380
 msgid "Printing Bin List [_1]"
@@ -6142,23 +6140,23 @@ msgstr ""
 
 #: old/bin/am.pl:1372
 msgid "Printing Invoice [_1]"
-msgstr ""
+msgstr "מדפיס חשבונית [_1]"
 
 #: old/bin/am.pl:1375
 msgid "Printing Packing List [_1]"
-msgstr ""
+msgstr "מדפיס רשימת אריזה [_1]"
 
 #: old/bin/am.pl:1376
 msgid "Printing Pick List [_1]"
-msgstr ""
+msgstr "מדפיס רשימת איסוף [_1]"
 
 #: old/bin/am.pl:1379
 msgid "Printing Purchase Order [_1]"
-msgstr ""
+msgstr "מדפיס הזמנת רכש [_1]"
 
 #: old/bin/am.pl:1377
 msgid "Printing Sales Order [_1]"
-msgstr ""
+msgstr "מדפיס הזמנת מכירה [_1]"
 
 #: old/bin/am.pl:1371
 msgid "Printing Transaction [_1]"
@@ -6197,29 +6195,29 @@ msgstr ""
 
 #: UI/Contact/divs/credit.html:386
 msgid "Profit and Loss"
-msgstr ""
+msgstr "רווח והפסד"
 
 #: old/bin/aa.pl:1044 old/bin/ic.pl:938 old/bin/ir.pl:959 old/bin/is.pl:1072
 msgid "Profit/Loss"
-msgstr ""
+msgstr "רווח/הפסד"
 
 #: lib/LedgerSMB/Report/PNL/Product.pm:73
 msgid "Proft/Loss on Inventory Sales"
-msgstr ""
+msgstr "רווח/הפסד על מכירות מלאי"
 
 #: old/bin/io.pl:265 old/bin/pe.pl:888 UI/io-email.html:82
 #: UI/journal/journal_entry.html:136
 msgid "Project"
-msgstr "مشروع"
+msgstr "פרוייקט"
 
 #: old/bin/pe.pl:277
 msgid "Project Description Translations"
-msgstr "ترجمة وصف المشروع"
+msgstr "תרגומי תיאור פרוייקט"
 
 #: old/bin/pe.pl:1033 old/bin/pe.pl:282
 #: UI/Reports/filters/purchase_history.html:322
 msgid "Project Number"
-msgstr "رقم المشروع"
+msgstr "מספר פרוייקט"
 
 #: old/bin/aa.pl:1622
 msgid "Project Numbers"
@@ -6231,21 +6229,21 @@ msgstr ""
 
 #: UI/payments/payment2.html:65
 msgid "Projects"
-msgstr "مشروعات"
+msgstr "פרוייקטים"
 
 #: lib/LedgerSMB/Report/Listings/Asset.pm:130
 #: lib/LedgerSMB/Report/Listings/Asset.pm:97 lib/LedgerSMB/Scripts/asset.pm:368
 msgid "Purchase Date"
-msgstr ""
+msgstr "תאריך רכישה"
 
 #: UI/asset/edit_asset.html:67 UI/asset/search_asset.html:63
 msgid "Purchase Date:"
-msgstr ""
+msgstr "תאריך רכישה:"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:137
 #: UI/Reports/filters/purchase_history.html:9
 msgid "Purchase History"
-msgstr ""
+msgstr "היסטוריית רכישה"
 
 #: old/bin/am.pl:1249 old/bin/am.pl:1475 old/bin/io.pl:1214 old/bin/ir.pl:531
 #: old/bin/ir.pl:946 old/bin/oe.pl:1236 old/bin/oe.pl:266 old/bin/oe.pl:671
@@ -6262,30 +6260,30 @@ msgstr ""
 #: sql/Pg-database.sql:1930 sql/Pg-database.sql:2811 sql/Pg-database.sql:2952
 #: sql/Pg-database.sql:2965
 msgid "Purchase Order"
-msgstr "امر شراء"
+msgstr "הזמנת רכישה"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:124
 msgid "Purchase Order Number"
-msgstr "رقم أمر الشراء"
+msgstr "מספר הזמנת רכישה"
 
 #: lib/LedgerSMB/Report/Orders.pm:193 lib/LedgerSMB/Report/Orders.pm:285
 #: old/bin/am.pl:830 UI/Reports/filters/search_goods.html:172
 #: sql/Pg-database.sql:2814 sql/Pg-database.sql:2816 sql/Pg-database.sql:2819
 msgid "Purchase Orders"
-msgstr "اوامر شراء"
+msgstr "הזמנות רכישה"
 
 #: lib/LedgerSMB/Report/Listings/Asset.pm:100
 #: lib/LedgerSMB/Report/Listings/Asset.pm:132 lib/LedgerSMB/Scripts/asset.pm:369
 msgid "Purchase Value"
-msgstr "قيمة أمر الشراء"
+msgstr "ערך רכישה"
 
 #: UI/asset/edit_asset.html:78 UI/asset/search_asset.html:73
 msgid "Purchase Value:"
-msgstr "قيمة أمر الشراء:"
+msgstr "ערך רכישה:"
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:115
 msgid "Purchased"
-msgstr "تم الشراء"
+msgstr "נרכש"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:89
 #: lib/LedgerSMB/Report/Inventory/History.pm:158
@@ -6335,21 +6333,21 @@ msgstr "تم الشراء"
 #: UI/Reports/filters/purchase_history.html:282
 #: UI/timecards/timecard-week.html:100
 msgid "Qty"
-msgstr "الكمية"
+msgstr "כמו"
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:117
 msgid "Quantity"
-msgstr "الكمية"
+msgstr "כמות"
 
 #: old/bin/ic.pl:2212
 msgid "Quantity exceeds available units to stock!"
-msgstr "الكمية تتجاوز عدد الوحدات المتوفرة في المستودع!"
+msgstr ""
 
 #: old/bin/aa.pl:1579 old/bin/pe.pl:821 old/lib/LedgerSMB/DBObject/Date.pm:90
 #: UI/lib/report_base.html:184 UI/lib/report_base.html:267
 #: UI/Reports/co/filter_bm.html:62
 msgid "Quarter"
-msgstr "ربع"
+msgstr "רבעון"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:289
 #: lib/LedgerSMB/Report/Orders.pm:254 old/bin/io.pl:1228 old/bin/io.pl:1235
@@ -6365,47 +6363,47 @@ msgstr "ربع"
 #: sql/Pg-database.sql:1931 sql/Pg-database.sql:2823 sql/Pg-database.sql:2955
 #: sql/Pg-database.sql:2970
 msgid "Quotation"
-msgstr "عروض اسعار للعملاء"
+msgstr "הצעת מחיר"
 
 #: templates/demo/sales_quotation.tex:75
 #: templates/demo_with_images/sales_quotation.tex:75
 #: templates/xedemo/sales_quotation.tex:76
 msgid "Quotation #"
-msgstr ""
+msgstr "הצעת מחיר #"
 
 #: old/bin/oe.pl:487
 msgid "Quotation Date"
-msgstr "تاريخ عرض السعر"
+msgstr "תאריך הצעת מחיר"
 
 #: old/bin/io.pl:1280 old/bin/oe.pl:1203 old/bin/oe.pl:1380
 msgid "Quotation Date missing!"
-msgstr "تاريخ عرض السعر غير موجود!"
+msgstr "תאריך הצעת מחיר חסר!"
 
 #: old/bin/oe.pl:464
 msgid "Quotation Number"
-msgstr "رقم عرض السعر"
+msgstr "מספר הצעת מחליר"
 
 #: old/bin/io.pl:1290 old/bin/oe.pl:1379
 msgid "Quotation Number missing!"
-msgstr "رقم عرض السعر غير موجود!"
+msgstr "מספר הצעת מחיר חסר!"
 
 #: old/bin/oe.pl:1355
 msgid "Quotation deleted!"
-msgstr "تم حذف عرض السعر!"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Orders.pm:196 lib/LedgerSMB/Report/Orders.pm:287
 #: UI/Reports/filters/purchase_history.html:188
 #: UI/Reports/filters/search_goods.html:156 sql/Pg-database.sql:2826
 #: sql/Pg-database.sql:2919
 msgid "Quotations"
-msgstr "عروض اسعار"
+msgstr ""
 
 #: old/bin/oe.pl:241 old/bin/oe.pl:673 old/bin/oe.pl:874 old/bin/printer.pl:61
 #: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:360
 #: sql/Pg-database.sql:1932 sql/Pg-database.sql:2824 sql/Pg-database.sql:2956
 #: sql/Pg-database.sql:2971
 msgid "RFQ"
-msgstr "عرض أسعار مورد"
+msgstr ""
 
 #: templates/demo/request_quotation.html:100
 #: templates/demo/request_quotation.tex:106
@@ -6418,12 +6416,12 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:125 old/bin/oe.pl:475
 msgid "RFQ Number"
-msgstr "رقم  عرض السعر"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Orders.pm:199 lib/LedgerSMB/Report/Orders.pm:289
 #: UI/Reports/filters/search_goods.html:179 sql/Pg-database.sql:2827
 msgid "RFQs"
-msgstr "عروض اسعار موردين"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:213 old/bin/ic.pl:2097
 #: old/bin/ic.pl:479 UI/Reports/filters/search_goods.html:300
@@ -6435,15 +6433,15 @@ msgstr ""
 #: templates/demo_with_images/timecard.tex:44 templates/xedemo/timecard.html:98
 #: templates/xedemo/timecard.tex:44 UI/Configuration/rate.html:57
 msgid "Rate"
-msgstr "النسبة"
+msgstr "תעריף"
 
 #: UI/am-taxes.html:14
 msgid "Rate (%)"
-msgstr "النسبة (%)"
+msgstr "תעריף (%)"
 
 #: UI/Configuration/rate.html:35
 msgid "Rate type"
-msgstr ""
+msgstr "סוג תעריף"
 
 #: UI/accounts/yearend.html:135
 msgid "Re-Open As Of"
@@ -6470,36 +6468,36 @@ msgstr ""
 
 #: sql/Pg-database.sql:2800 sql/Pg-database.sql:2969
 msgid "Receipt"
-msgstr "الوارد"
+msgstr "קבלה"
 
 #: templates/demo_with_images/product_receipt.html:100
 msgid "Receipt Date"
-msgstr ""
+msgstr "תאריך קבלה"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:211
 msgid "Receipt Results"
-msgstr ""
+msgstr "תוצאות קבלה"
 
 #: UI/payments/payment1.html:18 sql/Pg-database.sql:2804
 #: sql/Pg-database.sql:2882
 msgid "Receipts"
-msgstr "الواردات"
+msgstr "קבלות"
 
 #: UI/accounts/edit.html:314
 msgid "Receivables"
-msgstr "المقبوضات"
+msgstr "לקבל"
 
 #: lib/LedgerSMB/Scripts/order.pm:81 sql/Pg-database.sql:2821
 msgid "Receive"
-msgstr "شحن وارد"
+msgstr "קבל"
 
 #: old/bin/oe.pl:1732
 msgid "Receive Merchandise"
-msgstr "استلام بضاعة"
+msgstr "קבל סחורה"
 
 #: lib/LedgerSMB/Scripts/payment.pm:939
 msgid "Received"
-msgstr ""
+msgstr "התקבל"
 
 #: UI/accounts/edit.html:244
 msgid "Recon"
@@ -6511,7 +6509,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2806 sql/Pg-database.sql:2859 sql/Pg-database.sql:2871
 msgid "Reconciliation"
-msgstr "تسويات"
+msgstr ""
 
 #: UI/reconciliation/report.html:28
 msgid "Reconciliation Report"
@@ -6530,7 +6528,7 @@ msgstr ""
 
 #: old/bin/ir.pl:458 old/bin/is.pl:498 UI/orders/order.html:41
 msgid "Record in"
-msgstr "في السجل"
+msgstr ""
 
 #: UI/timecards/entry_filter.html:16
 msgid "Recording time for"
@@ -6557,7 +6555,7 @@ msgstr ""
 #: UI/Reports/filters/gl.html:23 UI/Reports/filters/gl.html:210
 #: UI/Reports/filters/unapproved.html:32
 msgid "Reference"
-msgstr "مرجع"
+msgstr ""
 
 #: old/bin/io.pl:1291
 msgid "Reference Number Missing"
@@ -6573,7 +6571,7 @@ msgstr ""
 #: templates/xedemo/ar_transaction.html:217
 #: templates/xedemo/ar_transaction.tex:143
 msgid "Registration"
-msgstr ""
+msgstr "רישום"
 
 #: templates/demo/invoice.html:298 templates/demo_with_images/invoice.html:301
 #: templates/xedemo/invoice.html:300
@@ -6583,7 +6581,7 @@ msgstr ""
 #: UI/Reports/filters/balance_sheet.html:17
 #: UI/Reports/filters/income_statement.html:53
 msgid "Regular"
-msgstr ""
+msgstr "רגיל"
 
 #: lib/LedgerSMB/Scripts/budgets.pm:120 UI/reconciliation/report.html:401
 msgid "Reject"
@@ -6596,49 +6594,49 @@ msgstr ""
 #: old/bin/aa.pl:564 old/bin/ir.pl:424 old/bin/is.pl:461 old/bin/oe.pl:424
 #: UI/orders/order.html:35
 msgid "Remaining"
-msgstr "متبقى"
+msgstr "נותר"
 
 #: t/data/04-complex_template.html:559 UI/Contact/divs/bank_act.html:24
 #: UI/Contact/divs/bank_act.html:74
 msgid "Remark"
-msgstr ""
+msgstr "הערה"
 
 #: t/data/04-complex_template.html:610
 msgid "Remark:"
-msgstr ""
+msgstr "הערה:"
 
 #: old/bin/arap.pl:532
 msgid "Repeat"
-msgstr "تكرار"
+msgstr "חזור"
 
 #: UI/reconciliation/approved.html:3
 msgid "Report Approved"
-msgstr ""
+msgstr "דוח אושר"
 
 #: UI/reconciliation/report.html:72
 msgid "Report Generated By:"
-msgstr ""
+msgstr "דוח הופק על ידי:"
 
 #: UI/Reports/aging_report.html:14 UI/Reports/display_report.html:28
 #: UI/Reports/display_report.tex:22
 msgid "Report Name"
-msgstr "اسم التقرير"
+msgstr "שם דוח"
 
 #: lib/LedgerSMB/Scripts/asset.pm:491
 msgid "Report Results"
-msgstr "نتائج التقرير"
+msgstr "תוצאות דוח"
 
 #: UI/reconciliation/submitted.html:3
 msgid "Report Submitted"
-msgstr ""
+msgstr "דוח הוגש"
 
 #: UI/Reports/filters/trial_balance.html:100
 msgid "Report Type"
-msgstr "نوع التقرير"
+msgstr "סוג דוח"
 
 #: lib/LedgerSMB/Scripts/asset.pm:591
 msgid "Report [_1] on date [_2]"
-msgstr ""
+msgstr "דוח [_1] בתאריך [_2]"
 
 #: UI/timecards/timecard-week.html:65
 msgid "Report in"
@@ -6647,25 +6645,25 @@ msgstr ""
 #: UI/Reports/filters/balance_sheet.html:10
 #: UI/Reports/filters/income_statement.html:18
 msgid "Report type"
-msgstr ""
+msgstr "סוג דוח"
 
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:70
 msgid "Reporting Basis"
-msgstr ""
+msgstr "בסיס דיווח"
 
 #: sql/Pg-database.sql:2878
 msgid "Reporting Units"
-msgstr ""
+msgstr "יחידות דיווח"
 
 #: UI/Reports/filters/income_statement.html:297
 msgid "Reporting unit filters"
-msgstr ""
+msgstr "מסנני יחידות דיווח"
 
 #: sql/Pg-database.sql:2812 sql/Pg-database.sql:2825 sql/Pg-database.sql:2854
 #: sql/Pg-database.sql:2858 sql/Pg-database.sql:2883 sql/Pg-database.sql:2894
 #: sql/Pg-database.sql:2922 sql/Pg-database.sql:2937 sql/Pg-database.sql:2978
 msgid "Reports"
-msgstr "تقارير"
+msgstr "דוחות"
 
 #: old/bin/arap.pl:339
 msgid "Reposting Not Allowed"
@@ -6685,7 +6683,7 @@ msgstr ""
 #: templates/xedemo/request_quotation.html:17
 #: templates/xedemo/request_quotation.tex:100
 msgid "Request for Quotation"
-msgstr "طلب عرض سعر"
+msgstr "בקשה להצעת מחיר"
 
 #: UI/io-email.html:73
 msgid "Request read receipt"
@@ -6693,11 +6691,11 @@ msgstr ""
 
 #: UI/Reports/filters/orders.html:144
 msgid "Required By"
-msgstr ""
+msgstr "נדרש על ידי"
 
 #: lib/LedgerSMB/Report/Orders.pm:225
 msgid "Required Date"
-msgstr ""
+msgstr "נדרש בתאריך"
 
 #: old/bin/io.pl:272 old/bin/oe.pl:400 old/bin/oe.pl:459
 #: templates/demo/purchase_order.html:98 templates/demo/purchase_order.tex:106
@@ -6720,7 +6718,7 @@ msgstr ""
 #: templates/xedemo/sales_order.html:101 templates/xedemo/sales_order.tex:106
 #: templates/xedemo/work_order.html:101
 msgid "Required by"
-msgstr "مطلوب من قبل"
+msgstr "נדרש על ידי"
 
 #: lib/LedgerSMB.pm:408 lib/LedgerSMB.pm:409
 msgid "Required input not provided"
@@ -6729,15 +6727,15 @@ msgstr ""
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:78
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:91
 msgid "Required period type"
-msgstr ""
+msgstr "סוג תקופה נדרשת"
 
 #: UI/Contact/divs/user.html:119 UI/setup/edit_user.html:88
 msgid "Reset Password"
-msgstr "إعادة تعيين كلمة المرور"
+msgstr "איפוס סיסמא"
 
 #: UI/accounts/yearend.html:49
 msgid "Retained Earnings"
-msgstr "ارباح محجوزة"
+msgstr ""
 
 #: UI/Contact/divs/company.html:175 UI/Contact/divs/person.html:190
 msgid "Retrieve"
@@ -6753,7 +6751,7 @@ msgstr ""
 
 #: old/bin/ic.pl:527 UI/accounts/edit.html:449
 msgid "Returns"
-msgstr ""
+msgstr "החזרים"
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:111
 msgid "Revenue"
@@ -6789,24 +6787,24 @@ msgstr ""
 
 #: sql/Pg-database.sql:2481
 msgid "Rounded"
-msgstr ""
+msgstr "עוגל"
 
 #: UI/setup/complete.html:18 UI/setup/confirm_operation.html:116
 msgid "Row counts"
-msgstr ""
+msgstr "מספרי שורה"
 
 #: UI/setup/begin_backup.html:70
 msgid "Run Backup"
-msgstr ""
+msgstr "הפעל גיבוי"
 
 #: UI/Reports/filters/inventory_adj.html:38
 msgid "Run Report"
-msgstr ""
+msgstr "הפעל דוח"
 
 #: UI/Contact/divs/company.html:126 UI/setup/select_coa.html:66
 #: sql/Pg-database.sql:2875
 msgid "SIC"
-msgstr "الاكواد الصناعية القياسية"
+msgstr ""
 
 #: old/bin/am.pl:390
 msgid "SIC deleted!"
@@ -6842,21 +6840,21 @@ msgstr ""
 
 #: sql/Pg-database.sql:965
 msgid "Salary"
-msgstr ""
+msgstr "משכורת"
 
 #: sql/Pg-database.sql:3811
 msgid "Sale"
-msgstr "بيع"
+msgstr "מכירה"
 
 #: lib/LedgerSMB/Entity/Location.pm:115 UI/Contact/divs/address.html:43
 #: UI/Contact/divs/employee.html:94 sql/Pg-database.sql:671
 msgid "Sales"
-msgstr "مبيعات"
+msgstr "מכירות"
 
 #: old/bin/is.pl:1030 old/bin/oe.pl:658 old/bin/oe.pl:871
 #: sql/Pg-database.sql:2902
 msgid "Sales Invoice"
-msgstr "فاتورة المبيعات"
+msgstr "חשבונית מכירה"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:119
 msgid "Sales Invoice/AR Transaction Number"
@@ -6874,30 +6872,30 @@ msgstr ""
 #: sql/Pg-database.sql:1929 sql/Pg-database.sql:2810 sql/Pg-database.sql:2950
 #: sql/Pg-database.sql:2963
 msgid "Sales Order"
-msgstr "امر بيع"
+msgstr "הזמנת מכירה"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:120
 msgid "Sales Order Number"
-msgstr "رقم أمر البيع"
+msgstr "מספר הזמנת מכירה"
 
 #: lib/LedgerSMB/Report/Orders.pm:190 lib/LedgerSMB/Report/Orders.pm:283
 #: old/bin/am.pl:829 UI/Reports/filters/search_goods.html:149
 #: sql/Pg-database.sql:2813 sql/Pg-database.sql:2815 sql/Pg-database.sql:2818
 #: sql/Pg-database.sql:2832
 msgid "Sales Orders"
-msgstr "اوامر بيع"
+msgstr "הזמנות מכירה"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:121
 msgid "Sales Quotation Number"
-msgstr ""
+msgstr "מספר הצעת מחיר מכירה"
 
 #: UI/Contact/divs/company.html:140
 msgid "Sales Tax ID"
-msgstr ""
+msgstr "חפ או עוסק מורשה"
 
 #: t/data/04-complex_template.html:85
 msgid "Sales:"
-msgstr "المبيعات:"
+msgstr "מכירות:"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:122
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:274
@@ -6920,7 +6918,7 @@ msgstr "المبيعات:"
 #: UI/Reports/filters/invoice_outstanding.html:182
 #: UI/Reports/filters/invoice_search.html:296
 msgid "Salesperson"
-msgstr "مندوب مبيعات"
+msgstr "סוכן"
 
 #: UI/Contact/divs/employee.html:29 UI/Contact/divs/person.html:77
 msgid "Salutation"
@@ -6932,7 +6930,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:148
 msgid "Sat"
-msgstr "السبت"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:423 lib/LedgerSMB/Scripts/budgets.pm:105
 #: old/bin/aa.pl:998 old/bin/am.pl:175 old/bin/am.pl:181 old/bin/am.pl:65
@@ -6957,69 +6955,69 @@ msgstr "السبت"
 #: UI/timecards/timecard.html:169 UI/timecards/timecard-week.html:126
 #: UI/users/preferences.html:122
 msgid "Save"
-msgstr "تخزين"
+msgstr "שמור"
 
 #: UI/Contact/divs/contact_info.html:131
 msgid "Save As New"
-msgstr ""
+msgstr "שמור כחדש"
 
 #: lib/LedgerSMB/Scripts/payment.pm:249
 msgid "Save Batch"
-msgstr ""
+msgstr "שמור הכל"
 
 #: UI/Contact/divs/credit.html:326
 msgid "Save Changes"
-msgstr ""
+msgstr "שמור שינויים"
 
 #: t/data/04-complex_template.html:546 UI/Contact/divs/contact_info.html:124
 msgid "Save Contact"
-msgstr ""
+msgstr "שמור איש קשר"
 
 #: old/bin/aa.pl:966 old/bin/gl.pl:254 old/bin/ir.pl:564 old/bin/is.pl:634
 msgid "Save Draft"
-msgstr "حفظ مسودة"
+msgstr "שמור טיויטא"
 
 #: UI/Contact/divs/user.html:187 UI/setup/edit_user.html:146
 msgid "Save Groups"
-msgstr "حفظ المجموعات"
+msgstr "שמור קבוצה"
 
 #: old/bin/aa.pl:977 old/bin/ir.pl:538 old/bin/is.pl:605
 msgid "Save Info"
-msgstr ""
+msgstr "שמור מידע"
 
 #: t/data/04-complex_template.html:485 UI/Contact/divs/address.html:206
 msgid "Save Location"
-msgstr ""
+msgstr "שמור מיקום"
 
 #: UI/Contact/divs/credit.html:336
 msgid "Save New"
-msgstr ""
+msgstr "שמור חדש"
 
 #: UI/Contact/divs/address.html:214
 msgid "Save New Location"
-msgstr ""
+msgstr "שמור מיקום חדש"
 
 #: old/bin/arap.pl:614 old/bin/arap.pl:619
 msgid "Save Schedule"
-msgstr ""
+msgstr "שמור תזמון"
 
 #: old/bin/aa.pl:979 old/bin/gl.pl:256
 msgid "Save Template"
-msgstr "قالب الحفظ"
+msgstr "שמור תבנית"
 
 #: UI/accounts/edit.html:628
 msgid "Save Translations"
-msgstr ""
+msgstr "שמור תרגום"
 
 #: old/bin/aa.pl:999
 msgid "Save as New"
-msgstr ""
+msgstr "שמור כחדש"
 
 #: old/bin/am.pl:66 old/bin/am.pl:75 old/bin/gl.pl:258 old/bin/ic.pl:827
 #: old/bin/ic.pl:844 old/bin/oe.pl:650 old/bin/oe.pl:867
 #: UI/accounts/edit.html:94 UI/accounts/edit.html:554
 msgid "Save as new"
-msgstr "خزن كجديد"
+msgstr "שמור כחדש"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:216
 msgid "Save the fixes provided and attempt to continue migration"
@@ -7051,7 +7049,7 @@ msgstr ""
 #: lib/LedgerSMB/Template/UI.pm:95 old/bin/printer.pl:130
 #: UI/lib/utilities.html:45
 msgid "Screen"
-msgstr "الشاشة"
+msgstr "מסך"
 
 #: UI/asset/search_asset.html:183 UI/asset/search_class.html:66
 #: UI/business_units/filter.html:41 UI/Reports/filters/batches.html:70
@@ -7068,15 +7066,15 @@ msgstr "الشاشة"
 #: sql/Pg-database.sql:2809 sql/Pg-database.sql:2867 sql/Pg-database.sql:2914
 #: sql/Pg-database.sql:2977
 msgid "Search"
-msgstr "بحث"
+msgstr "חיפוש"
 
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:331
 msgid "Search AP"
-msgstr "البحث عن مورد"
+msgstr ""
 
 #: UI/Reports/filters/invoice_search.html:4
 msgid "Search AP Invoices"
-msgstr "البحث عن فواتير مورد"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:332
 msgid "Search AR"
@@ -7092,7 +7090,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2889
 msgid "Search Assets"
-msgstr ""
+msgstr "חיפוש נכסים"
 
 #: UI/Reports/filters/batches.html:9
 msgid "Search Batches"
@@ -7100,47 +7098,47 @@ msgstr ""
 
 #: UI/Reports/filters/budget_search.html:8
 msgid "Search Budgets"
-msgstr ""
+msgstr "חיפוש תקציבים"
 
 #: UI/Reports/filters/search_goods.html:8
 msgid "Search Goods and Services"
-msgstr ""
+msgstr "חיפוש סחורה ושרותים"
 
 #: sql/Pg-database.sql:2775
 msgid "Search Groups"
-msgstr "البحث في المجموعات"
+msgstr "קבוצות חיפוש"
 
 #: UI/Reports/filters/inventory_adj.html:9
 msgid "Search Inventory Entry"
-msgstr ""
+msgstr "חיפוש כניסה למלאי"
 
 #: UI/Reports/filters/search_partsgroups.html:3
 msgid "Search Partsgroups"
-msgstr ""
+msgstr "חיפוש קבוצתחלק"
 
 #: UI/Reports/filters/payments.html:10
 msgid "Search Payments"
-msgstr ""
+msgstr "חיפוש תשלומים"
 
 #: UI/Reports/filters/search_pricegroups.html:3
 msgid "Search Price Groups"
-msgstr ""
+msgstr "חיפוש קבוצות מחיר"
 
 #: sql/Pg-database.sql:2776
 msgid "Search Pricegroups"
-msgstr ""
+msgstr "חיפוש קבוצותמחיר"
 
 #: lib/LedgerSMB/Scripts/order.pm:74
 msgid "Search Purchase Orders"
-msgstr ""
+msgstr "חיפוש הזמנות רכש"
 
 #: lib/LedgerSMB/Scripts/order.pm:85
 msgid "Search Quotations"
-msgstr ""
+msgstr "חיפוש הצעות מחיר"
 
 #: UI/Reports/filters/payments.html:7
 msgid "Search Receipts"
-msgstr ""
+msgstr "חיפוש קבלות"
 
 #: UI/Reports/filters/reconciliation_search.html:6
 msgid "Search Reconciliation Reports"
@@ -7152,11 +7150,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/order.pm:63
 msgid "Search Sales Orders"
-msgstr ""
+msgstr "חיפוש הצעות מכירה"
 
 #: UI/Reports/filters/unapproved.html:18
 msgid "Search Unapproved Transactions"
-msgstr ""
+msgstr "חיפוש פעולות לא מאושרות"
 
 #: sql/Pg-database.sql:2906
 msgid "Search and GL"
@@ -7164,51 +7162,51 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:469
 msgid "Search reports"
-msgstr "البحث في التقارير"
+msgstr "שוחות חיפוש"
 
 #: sql/Pg-database.sql:807
 msgid "Secondary Phone"
-msgstr ""
+msgstr "טלפון משני"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:71
 msgid "Security Settings"
-msgstr ""
+msgstr "הגדרות אבטחה"
 
 #: UI/reconciliation/report.html:373 UI/Reports/aging_report.html:56
 msgid "Select All"
-msgstr "اختر الكل"
+msgstr "בחירת הכל"
 
 #: old/bin/pe.pl:1138
 msgid "Select Customer"
-msgstr "اختر العميل"
+msgstr "בחירת לקוח"
 
 #: UI/setup/template_info.html:9
 msgid "Select Templates to Load"
-msgstr ""
+msgstr "בחירת תבנית לטעינה"
 
 #: old/bin/oe.pl:2517
 msgid "Select Vendor"
-msgstr "اختر المورد"
+msgstr "בחירת ספק"
 
 #: old/bin/arapprn.pl:351 old/bin/is.pl:1434 old/bin/oe.pl:1297
 msgid "Select a Printer!"
-msgstr "اختر طابعة"
+msgstr "בחירת מדפסת!"
 
 #: UI/taxform/add_taxform.html:58
 msgid "Select by Default:"
-msgstr ""
+msgstr "בחירת ברירת מחדל:"
 
 #: old/bin/arap.pl:181 old/bin/ic.pl:1682 old/bin/pe.pl:669
 msgid "Select from one of the names below"
-msgstr "اختر اسم من الاسماء"
+msgstr "בחירה מתוך אחד מהשמות למטה"
 
 #: UI/payments/use_overpayment2.html:146
 msgid "Select invoices"
-msgstr ""
+msgstr "בחירת חשבוניות"
 
 #: UI/setup/credentials.html:40
 msgid "Select or Enter User"
-msgstr ""
+msgstr "בחר או הקלד משתמש"
 
 #: old/bin/arapprn.pl:349 old/bin/arapprn.pl:88 old/bin/is.pl:1432
 #: old/bin/oe.pl:1295
@@ -7226,11 +7224,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:123
 msgid "Selected"
-msgstr ""
+msgstr "נבחר"
 
 #: old/bin/ic.pl:1267
 msgid "Sell"
-msgstr "بيع"
+msgstr "מכירה"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:99
 #: lib/LedgerSMB/Report/Inventory/History.pm:154
@@ -7239,7 +7237,7 @@ msgstr "بيع"
 #: UI/Contact/pricelist.tex:42 UI/Reports/filters/purchase_history.html:262
 #: UI/Reports/filters/search_goods.html:256
 msgid "Sell Price"
-msgstr "سعر البيع"
+msgstr "מחיר מכירה"
 
 #: old/bin/am.pl:1425
 msgid "Sending Bin List [_1]"
@@ -7284,7 +7282,7 @@ msgstr ""
 #: lib/LedgerSMB/App_State.pm:243 old/bin/aa.pl:94 old/bin/gl.pl:88
 #: old/bin/io.pl:89
 msgid "Sep"
-msgstr "سبتمبر"
+msgstr "ספט"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:85
 msgid "Separate Duties"
@@ -7293,15 +7291,15 @@ msgstr ""
 #: old/bin/aa.pl:80 old/bin/gl.pl:74 old/bin/io.pl:75
 #: old/lib/LedgerSMB/DBObject/Date.pm:70
 msgid "September"
-msgstr "سبتمبر"
+msgstr "ספטמבר"
 
 #: UI/Configuration/sequence.html:12
 msgid "Sequence"
-msgstr ""
+msgstr "רצף"
 
 #: UI/Configuration/sequence.html:3 sql/Pg-database.sql:2939
 msgid "Sequences"
-msgstr ""
+msgstr "רצפים"
 
 #: templates/demo/packing_list.html:117
 #: templates/demo_with_images/packing_list.html:117
@@ -7309,11 +7307,11 @@ msgstr ""
 #: templates/demo/work_order.html:130 templates/xedemo/packing_list.html:117
 #: templates/xedemo/work_order.html:130
 msgid "Serial #"
-msgstr ""
+msgstr "סיריאלי #"
 
 #: old/bin/io.pl:264 old/bin/oe.pl:1862
 msgid "Serial No."
-msgstr "رقم تسلسلي"
+msgstr "מס. סידורי"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:112
 #: lib/LedgerSMB/Report/Inventory/History.pm:167
@@ -7328,20 +7326,20 @@ msgstr "رقم تسلسلي"
 #: UI/Reports/filters/search_goods.html:42
 #: UI/Reports/filters/search_goods.html:372
 msgid "Serial Number"
-msgstr "رقم تسلسلي"
+msgstr "מספר סיריאלי"
 
 #: templates/demo/bin_list.html:145 templates/demo_with_images/bin_list.html:145
 #: templates/xedemo/bin_list.html:145
 msgid "Serialnumber"
-msgstr ""
+msgstr "מספרסיריאלי"
 
 #: old/bin/io.pl:615
 msgid "Service"
-msgstr "خدمة"
+msgstr "שרות"
 
 #: old/bin/pe.pl:1028
 msgid "Service Code"
-msgstr "كود الخدمة"
+msgstr "קוד שרות"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:80
 msgid "Session Timeout"
@@ -7353,27 +7351,27 @@ msgstr ""
 
 #: UI/Configuration/sequence.html:10
 msgid "Setting"
-msgstr ""
+msgstr "הגדרות"
 
 #: UI/users/preferences.html:47
 msgid "Settings"
-msgstr "الإعدادات"
+msgstr "הגדרות"
 
 #: old/lib/LedgerSMB/Num2text.pm:80
 msgid "Seven"
-msgstr "سبعة"
+msgstr "שבע"
 
 #: old/lib/LedgerSMB/Num2text.pm:114
 msgid "Seven Hundred"
-msgstr "سبعمئة"
+msgstr "שבע מאות"
 
 #: old/lib/LedgerSMB/Num2text.pm:91
 msgid "Seventeen"
-msgstr "سبعة عشر"
+msgstr "בע עשרה"
 
 #: old/lib/LedgerSMB/Num2text.pm:109
 msgid "Seventy"
-msgstr "سبعون"
+msgstr "שבעים"
 
 #: lib/LedgerSMB/Scripts/order.pm:70 old/bin/io.pl:169 old/bin/oe.pl:1835
 #: templates/demo/packing_list.html:120 templates/demo/pick_list.html:110
@@ -7382,11 +7380,11 @@ msgstr "سبعون"
 #: templates/xedemo/packing_list.html:120 templates/xedemo/pick_list.html:110
 #: sql/Pg-database.sql:2820
 msgid "Ship"
-msgstr "شحن صادر"
+msgstr "משלוח"
 
 #: old/bin/oe.pl:1727
 msgid "Ship Merchandise"
-msgstr "شحن بضاعة للخارج"
+msgstr "משלוח סחורה"
 
 #: templates/demo/bin_list.html:28 templates/demo/bin_list.tex:53
 #: templates/demo/invoice.html:26 templates/demo/invoice.tex:76
@@ -7402,7 +7400,7 @@ msgstr "شحن بضاعة للخارج"
 #: templates/xedemo/invoice.tex:75 templates/xedemo/sales_order.html:27
 #: templates/xedemo/work_order.html:27
 msgid "Ship To"
-msgstr "شحن إلى"
+msgstr "משלוח אל"
 
 #: templates/demo/packing_list.html:27 templates/demo/pick_list.html:26
 #: templates/demo/product_receipt.html:28 templates/demo/purchase_order.html:26
@@ -7417,7 +7415,7 @@ msgstr "شحن إلى"
 #: templates/xedemo/purchase_order.html:26
 #: templates/xedemo/request_quotation.html:28
 msgid "Ship To:"
-msgstr "شحن إلى:"
+msgstr "משלוח אל:"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:120
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:286
@@ -7440,12 +7438,12 @@ msgstr "شحن إلى:"
 #: UI/Reports/filters/invoice_search.html:383 UI/Reports/filters/orders.html:59
 #: UI/Reports/filters/orders.html:164
 msgid "Ship Via"
-msgstr "شحن بواسطة"
+msgstr "משלוח באמצעות"
 
 #: old/bin/aa.pl:940 old/bin/io.pl:1558 old/bin/is.pl:1056 old/bin/is.pl:593
 #: old/bin/oe.pl:1955 old/bin/oe.pl:640 old/bin/oe.pl:866
 msgid "Ship to"
-msgstr "شحن الى"
+msgstr "משלוח אל"
 
 #: old/bin/aa.pl:1656 old/bin/aa.pl:1686 old/bin/is.pl:514 old/bin/oe.pl:1788
 #: old/bin/oe.pl:599 templates/demo/bin_list.html:112
@@ -7479,24 +7477,24 @@ msgstr "شحن الى"
 #: templates/xedemo/sales_quotation.html:73
 #: templates/xedemo/sales_quotation.tex:79 UI/orders/order.html:67
 msgid "Ship via"
-msgstr "شحن بواسطة"
+msgstr "משלוח באמצעות"
 
 #: lib/LedgerSMB/Entity/Location.pm:116 UI/Contact/divs/address.html:45
 #: sql/Pg-database.sql:672 sql/Pg-database.sql:2918
 msgid "Shipping"
-msgstr "شحن"
+msgstr "משלוח"
 
 #: old/bin/oe.pl:1729
 msgid "Shipping Date"
-msgstr "تاريخ الشحن"
+msgstr "תאריח משלוח"
 
 #: old/bin/oe.pl:1984
 msgid "Shipping Date missing!"
-msgstr "تاريخ الشحن غير موجود!"
+msgstr "תאריך משלוח חסר!"
 
 #: old/bin/is.pl:1033 old/bin/printer.pl:110
 msgid "Shipping Label"
-msgstr ""
+msgstr "תווית משלוח"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:116
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:282
@@ -7548,29 +7546,29 @@ msgstr ""
 #: UI/orders/order.html:61 UI/Reports/filters/invoice_outstanding.html:265
 #: UI/Reports/filters/invoice_search.html:377
 msgid "Shipping Point"
-msgstr "نقطة الشحن"
+msgstr "הקודת משלוח"
 
 #: UI/Reports/filters/search_goods.html:111
 msgid "Short"
-msgstr "قصير"
+msgstr "קצר"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:135
 msgid "Show Credit Limit"
-msgstr ""
+msgstr "הצג גבולות אשראי"
 
 #: templates/demo/printPayment.html:77
 #: templates/demo_with_images/printPayment.html:77
 #: templates/xedemo/printPayment.html:77
 msgid "Signature"
-msgstr "امضاء"
+msgstr "חתימה"
 
 #: sql/Pg-database.sql:2480
 msgid "Simple"
-msgstr "بسيط"
+msgstr "פשוט"
 
 #: UI/import_csv/import_inventory_csv.html:56
 msgid "Single date"
-msgstr ""
+msgstr "תאריך יחיד"
 
 #: lib/LedgerSMB/Entity/Person.pm:116 sql/Pg-database.sql:739
 msgid "Sir."
@@ -7578,31 +7576,31 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:79
 msgid "Six"
-msgstr "ستة"
+msgstr "שש"
 
 #: old/lib/LedgerSMB/Num2text.pm:90
 msgid "Sixteen"
-msgstr "ستة عشر"
+msgstr "שש עשרה"
 
 #: old/lib/LedgerSMB/Num2text.pm:108
 msgid "Sixty"
-msgstr "ستون"
+msgstr "שישים"
 
 #: UI/setup/select_coa.html:101
 msgid "Skip"
-msgstr "تجاوز"
+msgstr "דלג"
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:101
 msgid "Sold"
-msgstr ""
+msgstr "נמכר"
 
 #: UI/payments/payments_detail.html:285
 msgid "Some"
-msgstr "بعض"
+msgstr ""
 
 #: UI/io-email.html:93 UI/orders/order.html:305
 msgid "Sort by"
-msgstr ""
+msgstr "מיין לפי"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:133 lib/LedgerSMB/Report/GL.pm:123
 #: lib/LedgerSMB/Report/GL.pm:216
@@ -7628,11 +7626,11 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:130
 #: UI/Reports/filters/payments.html:64
 msgid "Source"
-msgstr "مصدر"
+msgstr "מקור"
 
 #: UI/payments/payment2.html:133
 msgid "Source documentation"
-msgstr ""
+msgstr "תיעוד מקור"
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:89
 msgid "Source starting with"
@@ -7658,11 +7656,11 @@ msgstr ""
 
 #: UI/lib/report_base.html:71
 msgid "Standard"
-msgstr "معيار"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/SIC.pm:63
 msgid "Standard Industrial Codes"
-msgstr "الاكواد الصناعية القياسية"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:125
 #: lib/LedgerSMB/Report/Budget/Search.pm:73
@@ -7676,11 +7674,11 @@ msgstr "الاكواد الصناعية القياسية"
 #: UI/business_units/edit.html:55 UI/Contact/divs/credit.html:31
 #: UI/Contact/divs/employee.html:179 UI/Reports/filters/budget_search.html:41
 msgid "Start Date"
-msgstr "تاريخ البدء"
+msgstr "תאריך התחלה"
 
 #: t/data/04-complex_template.html:114
 msgid "Start Date:"
-msgstr "تاريخ البدء:"
+msgstr "תאריך התחלה:"
 
 #: UI/payments/payments_filter.html:123
 msgid "Start Source Numbering At"
@@ -7692,12 +7690,12 @@ msgstr ""
 
 #: old/bin/arap.pl:573 UI/Reports/filters/purchase_history.html:109
 msgid "Startdate"
-msgstr "تاريخ يدء العمل"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:174
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:80 UI/Reports/co/filter_bm.html:91
 msgid "Starting Balance"
-msgstr ""
+msgstr "התחלת יתרה"
 
 #: UI/Contact/divs/credit.html:111 UI/Contact/divs/credit.html:112
 #: UI/timecards/entry_filter.html:32
@@ -7710,13 +7708,13 @@ msgstr ""
 
 #: old/bin/io.pl:1628
 msgid "State"
-msgstr "الولاية"
+msgstr "מצב"
 
 #: t/data/04-complex_template.html:387 UI/Contact/divs/address.html:83
 #: UI/Contact/divs/address.html:166 UI/Reports/filters/contact_search.html:99
 #: UI/Reports/filters/purchase_history.html:83
 msgid "State/Province"
-msgstr "محافظة"
+msgstr ""
 
 #: t/data/04-complex_template.html:454
 msgid "State/Province:"
@@ -7729,12 +7727,12 @@ msgstr ""
 #: templates/xedemo/statement.html:18 templates/xedemo/statement.tex:29
 #: sql/Pg-database.sql:2954 sql/Pg-database.sql:2967
 msgid "Statement"
-msgstr "كشف حساب"
+msgstr "הצהרה"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:144
 #: UI/reconciliation/new_report.html:27
 msgid "Statement Balance"
-msgstr "رصيد كشف حساب"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:140
 #: UI/reconciliation/new_report.html:37 UI/reconciliation/report.html:34
@@ -7751,15 +7749,15 @@ msgstr ""
 
 #: old/bin/ic.pl:623
 msgid "Stock"
-msgstr "مخزون"
+msgstr "מלאי"
 
 #: old/bin/ic.pl:1997 old/bin/ic.pl:2104 sql/Pg-database.sql:2935
 msgid "Stock Assembly"
-msgstr "تجميع مخزون"
+msgstr ""
 
 #: UI/users/preferences.html:20
 msgid "Strength"
-msgstr ""
+msgstr "חוזק"
 
 #: UI/users/preferences.html:81
 msgid "Stylesheet"
@@ -7772,7 +7770,7 @@ msgstr ""
 #: UI/budgetting/budget_entry.html:149 UI/budgetting/budget_entry.html:177
 #: UI/Contact/divs/notes.html:32 UI/io-email.html:21
 msgid "Subject"
-msgstr "موضوع"
+msgstr "נושא"
 
 #: old/bin/arap.pl:786 old/bin/io.pl:1459 UI/Contact/divs/notes.html:78
 msgid "Subject: [_1]"
@@ -7780,16 +7778,16 @@ msgstr ""
 
 #: UI/Reports/filters/reconciliation_search.html:82
 msgid "Submission Status"
-msgstr ""
+msgstr "מצב הגשה"
 
 #: UI/reconciliation/report.html:385
 msgid "Submit"
-msgstr "تسليم"
+msgstr "הגש"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:151
 #: UI/Reports/filters/reconciliation_search.html:77
 msgid "Submitted"
-msgstr "تم التسليم"
+msgstr "הוגש"
 
 #: old/bin/aa.pl:1734 old/bin/io.pl:1317 old/bin/ir.pl:740 old/bin/is.pl:833
 #: old/bin/oe.pl:797 templates/demo/ap_transaction.html:127
@@ -7819,17 +7817,17 @@ msgstr "تم التسليم"
 #: UI/Reports/filters/invoice_outstanding.html:279
 #: UI/Reports/filters/invoice_search.html:391 UI/Reports/filters/orders.html:194
 msgid "Subtotal"
-msgstr "إجمالى فرعي"
+msgstr "סיכום ביניים"
 
 #: UI/Configuration/sequence.html:13
 msgid "Suffix"
-msgstr "لاحقة"
+msgstr "סיומת"
 
 #: old/bin/aa.pl:1545 old/bin/pe.pl:896 UI/Reports/filters/aging.html:56
 #: UI/Reports/filters/invoice_outstanding.html:114
 #: UI/Reports/filters/purchase_history.html:217
 msgid "Summary"
-msgstr "ملخص"
+msgstr "סיכום"
 
 #: UI/accounts/edit.html:277
 msgid "Summary account for"
@@ -7837,11 +7835,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:124
 msgid "Sun"
-msgstr "الأحد"
+msgstr ""
 
 #: UI/Contact/divs/person.html:118
 msgid "Surname"
-msgstr "الكنية"
+msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1186
 msgid ""
@@ -7851,40 +7849,40 @@ msgstr ""
 
 #: sql/Pg-database.sql:2929
 msgid "System"
-msgstr "نظام"
+msgstr "מערכת"
 
 #: UI/Configuration/settings.html:8
 msgid "System Defaults"
-msgstr "معطيات النظام"
+msgstr "ברירת מחדל מערכת"
 
 #: UI/setup/confirm_operation.html:107
 msgid "System Info"
-msgstr ""
+msgstr "מידע מערכת"
 
 #: UI/setup/system_info.html:8
 msgid "System Information"
-msgstr ""
+msgstr "מידע מערכת"
 
 #: UI/setup/confirm_operation.html:100
 msgid "System diagnostics"
-msgstr ""
+msgstr "בדיקת מערכת"
 
 #: templates/demo/printPayment.html:61
 #: templates/demo_with_images/printPayment.html:61
 #: templates/xedemo/printPayment.html:61
 msgid "TOTAL"
-msgstr "الإجمالي"
+msgstr "סך הכל"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:75
 #: lib/LedgerSMB/Report/Listings/Asset.pm:128
 #: lib/LedgerSMB/Report/Listings/Asset.pm:90 lib/LedgerSMB/Scripts/asset.pm:594
 #: lib/LedgerSMB/Scripts/asset.pm:651 lib/LedgerSMB/Scripts/asset.pm:716
 msgid "Tag"
-msgstr ""
+msgstr "טג"
 
 #: UI/asset/edit_asset.html:36 UI/asset/search_asset.html:36
 msgid "Tag:"
-msgstr ""
+msgstr "ג:"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:90
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:234
@@ -7894,25 +7892,25 @@ msgstr ""
 #: UI/accounts/edit.html:479 UI/Reports/filters/invoice_outstanding.html:203
 #: UI/Reports/filters/invoice_search.html:316 UI/Reports/filters/orders.html:179
 msgid "Tax"
-msgstr "ضريبة"
+msgstr "מס"
 
 #: UI/Reports/filters/invoice_search.html:73
 msgid "Tax Account"
-msgstr "حساب الضريبة"
+msgstr "חשבון מס"
 
 #: old/bin/ir.pl:657 old/bin/is.pl:763
 msgid "Tax Code"
-msgstr "كود الضريبة"
+msgstr "קוד מס"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:118
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:112 UI/Contact/divs/credit.html:264
 #: UI/Contact/divs/credit.html:265
 msgid "Tax Form"
-msgstr "استمارة ضريبة"
+msgstr "ס מס"
 
 #: old/bin/aa.pl:676
 msgid "Tax Form Applied"
-msgstr ""
+msgstr "טופס מס הוחל"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:129
 msgid "Tax Form Details Report"
@@ -7932,11 +7930,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:2924
 msgid "Tax Forms"
-msgstr ""
+msgstr "טפסי מס"
 
 #: old/bin/aa.pl:605 old/bin/ir.pl:444 old/bin/is.pl:481
 msgid "Tax ID"
-msgstr ""
+msgstr "מספר עוסק"
 
 #: UI/Contact/divs/employee.html:155 UI/setup/new_user.html:154
 msgid "Tax ID/SSN"
@@ -7946,7 +7944,7 @@ msgstr ""
 #: UI/Contact/divs/credit.html:315 UI/Contact/divs/credit.html:316
 #: UI/orders/order.html:232
 msgid "Tax Included"
-msgstr "الضريبة داخلة"
+msgstr "כולל מס"
 
 #: UI/Contact/divs/company.html:116
 msgid "Tax Number/SSN"
@@ -7964,11 +7962,11 @@ msgstr ""
 
 #: UI/am-taxes.html:19
 msgid "Tax Rules"
-msgstr ""
+msgstr "חוקי מס"
 
 #: UI/Reports/filters/invoice_search.html:63
 msgid "Tax Status"
-msgstr ""
+msgstr "מצב מס"
 
 #: templates/demo/product_receipt.html:188
 #: templates/demo/purchase_order.html:186
@@ -7977,23 +7975,23 @@ msgstr ""
 #: templates/xedemo/product_receipt.html:190
 #: templates/xedemo/purchase_order.html:186
 msgid "Tax included"
-msgstr ""
+msgstr "מס כלול"
 
 #: old/bin/io.pl:248
 msgid "TaxForm"
-msgstr "استمارة ضريبة"
+msgstr "טופסמס"
 
 #: UI/Reports/filters/invoice_search.html:67
 msgid "Taxable"
-msgstr "خاضع للضريبة"
+msgstr ""
 
 #: old/bin/am.pl:545 UI/Contact/divs/credit.html:288 sql/Pg-database.sql:2836
 msgid "Taxes"
-msgstr ""
+msgstr "מיסים"
 
 #: old/bin/am.pl:678
 msgid "Taxes saved!"
-msgstr ""
+msgstr "מיסים נשמרו!"
 
 #: templates/demo/ap_transaction.html:222 templates/demo/ar_transaction.html:227
 #: templates/demo/invoice.html:308
@@ -8025,7 +8023,7 @@ msgstr ""
 #: templates/xedemo/ar_transaction.html:47
 #: templates/xedemo/ar_transaction.tex:26 templates/xedemo/letterhead.tex:13
 msgid "Tel:"
-msgstr "تلفون:"
+msgstr "טל:"
 
 #: templates/demo/ap_transaction.html:48 templates/demo/ar_transaction.tex:61
 #: templates/demo/bin_list.html:53 templates/demo/bin_list.html:86
@@ -8101,7 +8099,7 @@ msgstr "تلفون:"
 #: templates/xedemo/work_order.html:78 templates/xedemo/work_order.tex:61
 #: templates/xedemo/work_order.tex:96
 msgid "Tel: [_1]"
-msgstr ""
+msgstr "טל:[_1]"
 
 #: lib/LedgerSMB/Report/Listings/Templates.pm:82
 msgid "Template Listing"
@@ -8113,7 +8111,7 @@ msgstr ""
 
 #: old/bin/aa.pl:1156 old/bin/gl.pl:359
 msgid "Template Saved!"
-msgstr ""
+msgstr "תבנית נשמרה!"
 
 #: lib/LedgerSMB/Report/Listings/TemplateTrans.pm:139
 msgid "Template Transactions"
@@ -8121,15 +8119,15 @@ msgstr ""
 
 #: UI/setup/confirm_operation.html:67 UI/setup/template_info.html:24
 msgid "Templates"
-msgstr ""
+msgstr "תבניות"
 
 #: old/lib/LedgerSMB/Num2text.pm:83
 msgid "Ten"
-msgstr "عشرة"
+msgstr "עשר"
 
 #: old/bin/oe.pl:365
 msgid "Terms"
-msgstr "شروط "
+msgstr "תנאים"
 
 #: templates/demo/product_receipt.html:180
 #: templates/demo/purchase_order.html:178 templates/demo/sales_order.html:179
@@ -8147,7 +8145,7 @@ msgstr ""
 
 #: t/data/04-complex_template.html:210
 msgid "Terms:"
-msgstr ""
+msgstr "תנאים:"
 
 #: templates/demo/sales_order.tex:161
 #: templates/demo_with_images/sales_order.tex:161
@@ -8171,25 +8169,25 @@ msgstr ""
 #: templates/demo/invoice.html:271 templates/demo_with_images/invoice.html:274
 #: templates/xedemo/invoice.html:273
 msgid "Thank you for your valued business!"
-msgstr ""
+msgstr "תודה לך על עשיית עסקים איתנו!"
 
 #: templates/demo/printPayment.html:97
 #: templates/demo_with_images/printPayment.html:97
 #: templates/xedemo/printPayment.html:97
 msgid "The amount of"
-msgstr ""
+msgstr "הסכום של"
 
 #: lib/LedgerSMB/Scripts/recon.pm:465
 msgid "Their Balance"
-msgstr ""
+msgstr "היתרה שלהם"
 
 #: UI/reconciliation/report.html:241
 msgid "Their Credits"
-msgstr ""
+msgstr "הזיכויים שלהם"
 
 #: UI/reconciliation/report.html:240
 msgid "Their Debits"
-msgstr ""
+msgstr "החובות שלהם"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:423
 msgid ""
@@ -8218,15 +8216,15 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:87
 msgid "Thirteen"
-msgstr "ثلاثة عشر"
+msgstr "שלוש עשרה"
 
 #: old/lib/LedgerSMB/Num2text.pm:105
 msgid "Thirty"
-msgstr "ثلاثون"
+msgstr "שלושים"
 
 #: UI/Contact/divs/address.html:79 UI/Contact/divs/contact_info.html:29
 msgid "This Account"
-msgstr "هذا الحساب"
+msgstr "חשבון זה"
 
 #: UI/setup/complete_migration_revert.html:10
 msgid "This database operation has completed successfully."
@@ -8271,16 +8269,16 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:116
 msgid "Thousand"
-msgstr "ألف"
+msgstr "אלף"
 
 #: old/lib/LedgerSMB/Num2text.pm:76
 msgid "Three"
-msgstr "ثلاثة"
+msgstr "שלוש"
 
 #: t/data/04-complex_template.html:302 UI/Contact/divs/credit.html:140
 #: UI/Contact/divs/credit.html:141
 msgid "Threshold"
-msgstr "عتبة"
+msgstr ""
 
 #: UI/Reports/filters/balance_sheet.html:156
 msgid "Through date"
@@ -8288,7 +8286,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:140
 msgid "Thu"
-msgstr "الخميس"
+msgstr "חמי"
 
 #: lib/LedgerSMB/Report/GL.pm:138
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:270
@@ -8297,7 +8295,7 @@ msgstr "الخميس"
 #: UI/Reports/filters/invoice_outstanding.html:257
 #: UI/Reports/filters/invoice_search.html:369
 msgid "Till"
-msgstr "إلى"
+msgstr "עד"
 
 #: templates/demo/timecard.html:4 templates/demo/timecard.html:17
 #: templates/demo/timecard.tex:17 templates/demo_with_images/timecard.html:4
@@ -8305,19 +8303,19 @@ msgstr "إلى"
 #: templates/demo_with_images/timecard.tex:17 templates/xedemo/timecard.html:4
 #: templates/xedemo/timecard.html:17 templates/xedemo/timecard.tex:17
 msgid "Time Card"
-msgstr ""
+msgstr "כרטיס זמן"
 
 #: UI/timecards/entry_filter.html:25
 msgid "Time Frame"
-msgstr "الإطار الزمني"
+msgstr "מן"
 
 #: UI/timecards/timecard.html:68
 msgid "Time In"
-msgstr ""
+msgstr "זמן ב"
 
 #: UI/timecards/timecard.html:84
 msgid "Time Out"
-msgstr ""
+msgstr "זמן יציאה"
 
 #: UI/Reports/filters/timecards.html:5
 msgid "Time and Material Cards"
@@ -8341,7 +8339,7 @@ msgstr ""
 
 #: old/bin/am.pl:820
 msgid "Times"
-msgstr ""
+msgstr "זמנים"
 
 #: old/bin/ic.pl:1125 old/bin/oe.pl:2135 old/bin/pe.pl:836
 #: templates/demo/invoice.html:25 templates/demo/request_quotation.tex:27
@@ -8360,11 +8358,11 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:124
 #: UI/Reports/filters/purchase_history.html:144
 msgid "To"
-msgstr "إلى"
+msgstr "אל"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:188
 msgid "To Amount"
-msgstr ""
+msgstr "עד סכום"
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:166
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:198
@@ -8376,19 +8374,19 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:146
 #: UI/Reports/filters/unapproved.html:48
 msgid "To Date"
-msgstr "حتى تاريخ"
+msgstr "עד תאריך"
 
 #: UI/payments/payments_detail.html:342
 msgid "To Pay"
-msgstr ""
+msgstr "לתשלום"
 
 #: old/bin/oe.pl:2150
 msgid "To Warehouse"
-msgstr ""
+msgstr "אל מחסן"
 
 #: t/data/04-strings-for-translation.html:7
 msgid "To [_1]"
-msgstr ""
+msgstr "אל [_1]"
 
 #: UI/payments/use_overpayment2.html:124
 msgid "To be used"
@@ -8396,15 +8394,15 @@ msgstr ""
 
 #: UI/setup/begin_backup.html:27 UI/setup/begin_backup.html:41
 msgid "To email"
-msgstr ""
+msgstr "אל כתובת מייל"
 
 #: UI/setup/begin_backup.html:59
 msgid "To my browser"
-msgstr ""
+msgstr "אל הדפדפן שלי"
 
 #: lib/LedgerSMB/Scripts/payment.pm:931
 msgid "To pay"
-msgstr ""
+msgstr "לתשלום"
 
 #: templates/demo/product_receipt.html:27 templates/demo/purchase_order.html:25
 #: templates/demo/request_quotation.html:26
@@ -8415,7 +8413,7 @@ msgstr ""
 #: templates/xedemo/purchase_order.html:25
 #: templates/xedemo/request_quotation.html:26
 msgid "To:"
-msgstr ""
+msgstr "אל:"
 
 #: old/bin/arap.pl:784 old/bin/io.pl:1457
 msgid "To: [_1]"
@@ -8489,7 +8487,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:210
 #: UI/Reports/filters/invoice_search.html:322
 msgid "Total"
-msgstr "مجموع"
+msgstr "סך הכל"
 
 #: lib/LedgerSMB/Scripts/asset.pm:604
 msgid "Total Accum. Dep."
@@ -8503,7 +8501,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:141
 msgid "Total Paid"
-msgstr "إجمالي المدفوعات"
+msgstr "סך הכל שולם"
 
 #: UI/accounts/edit.html:416
 msgid "Tracking Items"
@@ -8515,41 +8513,41 @@ msgstr ""
 
 #: old/bin/aa.pl:948 old/bin/am.pl:1467
 msgid "Transaction"
-msgstr "حركة"
+msgstr "עסקה"
 
 #: sql/Pg-database.sql:2847
 msgid "Transaction Approval"
-msgstr "الموافقة على الحركة"
+msgstr "אישור עסקה"
 
 #: lib/LedgerSMB/Report/PNL/Invoice.pm:91 UI/import_csv/import_csv.html:46
 #: UI/import_csv/import_inventory_csv.html:28
 #: UI/Reports/filters/purchase_history.html:128
 #: UI/Reports/filters/purchase_history.html:341
 msgid "Transaction Date"
-msgstr "تاريخ الحركة"
+msgstr "תאריך עסקה"
 
 #: old/bin/gl.pl:623
 msgid "Transaction Date missing!"
-msgstr "تاريخ الحركة غير موجود"
+msgstr "תאריך עסקה חסר!"
 
 #: old/bin/pe.pl:831
 msgid "Transaction Dates"
-msgstr ""
+msgstr "תאריכי עסקה"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:190
 #: UI/reconciliation/report.html:110 UI/reconciliation/report.html:233
 #: UI/Reports/filters/batches.html:14 UI/Reports/filters/unapproved.html:22
 msgid "Transaction Type"
-msgstr "نوع الحركة"
+msgstr "סוג עסקה"
 
 #: UI/setup/confirm_operation.html:125
 msgid "Transactions"
-msgstr "حركات"
+msgstr "עסקאות"
 
 #: old/bin/oe.pl:2139 old/bin/oe.pl:2255 sql/Pg-database.sql:2822
 #: sql/Pg-database.sql:2857
 msgid "Transfer"
-msgstr "تحويل"
+msgstr "העברה"
 
 #: old/bin/oe.pl:2021 old/bin/oe.pl:2166
 msgid "Transfer Inventory"
@@ -8557,67 +8555,67 @@ msgstr ""
 
 #: old/bin/oe.pl:2039
 msgid "Transfer from"
-msgstr "تحويل من"
+msgstr "העברה מאת"
 
 #: old/bin/oe.pl:2043
 msgid "Transfer to"
-msgstr "تحويل إلى"
+msgstr "העברה אל"
 
 #: old/bin/pe.pl:391 old/bin/pe.pl:561
 msgid "Translation"
-msgstr "ترجمة"
+msgstr "תרגום"
 
 #: old/bin/pe.pl:83
 msgid "Translation deleted!"
-msgstr "تم حذف الترجمة!"
+msgstr "תרגום נמחק!"
 
 #: UI/accounts/edit.html:576 sql/Pg-database.sql:2833 sql/Pg-database.sql:2936
 msgid "Translations"
-msgstr "ترجمات"
+msgstr "תרגומים"
 
 #: old/bin/pe.pl:62
 msgid "Translations saved!"
-msgstr "تم حفظ الترجمات!"
+msgstr "תרגומים נשמרו!"
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:143 sql/Pg-database.sql:2861
 msgid "Trial Balance"
-msgstr "ميزان المراجعة"
+msgstr "יתרה לנסיון"
 
 #: old/lib/LedgerSMB/Num2text.pm:119
 msgid "Trillion"
-msgstr ""
+msgstr "טריליון"
 
 #: lib/LedgerSMB/Report/Timecards.pm:132
 msgid "Tue"
-msgstr "الثلاثاء"
+msgstr "שלי"
 
 #: old/lib/LedgerSMB/Num2text.pm:86
 msgid "Twelve"
-msgstr "اثنا عشر"
+msgstr "שתים עשרה"
 
 #: old/lib/LedgerSMB/Num2text.pm:94
 msgid "Twenty"
-msgstr "عشرون"
+msgstr "עשרים"
 
 #: old/lib/LedgerSMB/Num2text.pm:103
 msgid "Twenty Eight"
-msgstr "ثمان وعشرون"
+msgstr "עשרים ושמונה"
 
 #: old/lib/LedgerSMB/Num2text.pm:100
 msgid "Twenty Five"
-msgstr "خمس وعشرون"
+msgstr "עשרים וחמש"
 
 #: old/lib/LedgerSMB/Num2text.pm:99
 msgid "Twenty Four"
-msgstr "أربع وعشرون"
+msgstr "עשרים וארבע"
 
 #: old/lib/LedgerSMB/Num2text.pm:104
 msgid "Twenty Nine"
-msgstr "تسع وعشرون"
+msgstr "עשרים ותשע"
 
 #: old/lib/LedgerSMB/Num2text.pm:95
 msgid "Twenty One"
-msgstr "واحد وعشرون"
+msgstr "עשרים ואחד"
 
 #: old/lib/LedgerSMB/Num2text.pm:96
 msgid "Twenty One-o"
@@ -8625,23 +8623,23 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:102
 msgid "Twenty Seven"
-msgstr "سبع وعشرون"
+msgstr "עשרים ושבע"
 
 #: old/lib/LedgerSMB/Num2text.pm:101
 msgid "Twenty Six"
-msgstr "ست وعشرون"
+msgstr "עשרים ושש"
 
 #: old/lib/LedgerSMB/Num2text.pm:98
 msgid "Twenty Three"
-msgstr "ثلاث وعشرون"
+msgstr "עשרים ושלוש"
 
 #: old/lib/LedgerSMB/Num2text.pm:97
 msgid "Twenty Two"
-msgstr "اثنان وعشرون"
+msgstr "עשרים ושתים"
 
 #: old/lib/LedgerSMB/Num2text.pm:75
 msgid "Two"
-msgstr "اثنان"
+msgstr "שתיים"
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:149
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:129
@@ -8651,30 +8649,30 @@ msgstr "اثنان"
 #: UI/Contact/divs/address.html:120 UI/Contact/divs/contact_info.html:30
 #: UI/Contact/divs/credit.html:26 UI/Contact/divs/wage.html:8
 msgid "Type"
-msgstr ""
+msgstr "סוג"
 
 #: UI/am-business-form.html:11 sql/Pg-database.sql:2877
 msgid "Type of Business"
-msgstr "نوع العمل"
+msgstr "סוג עסק"
 
 #: t/data/04-complex_template.html:411 t/data/04-complex_template.html:494
 #: t/data/04-complex_template.html:526
 msgid "Type:"
-msgstr ""
+msgstr "סוג:"
 
 #: UI/payments/use_overpayment2.html:345
 msgid "UPDATE"
-msgstr "تعديل"
+msgstr "עדכון"
 
 #: UI/Reports/filters/batches.html:35 UI/Reports/filters/gl.html:181
 #: UI/Reports/filters/invoice_search.html:229
 #: UI/Reports/filters/trial_balance.html:55
 msgid "Unapproved"
-msgstr ""
+msgstr "לא מאושר"
 
 #: UI/payments/payment2.html:321
 msgid "Uncheck to remove entry from payment"
-msgstr ""
+msgstr "בטל סימון להסרת רישום מתשלום"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:702
 msgid ""
@@ -8718,7 +8716,7 @@ msgstr ""
 #: UI/payroll/income.html:68 UI/Reports/filters/purchase_history.html:292
 #: UI/Reports/filters/search_goods.html:226
 msgid "Unit"
-msgstr "وحدة"
+msgstr "יחידה"
 
 #: templates/demo/invoice.html:141 templates/demo/request_quotation.html:140
 #: templates/demo/request_quotation.tex:124
@@ -8728,11 +8726,11 @@ msgstr "وحدة"
 #: templates/xedemo/invoice.html:142 templates/xedemo/request_quotation.html:140
 #: templates/xedemo/request_quotation.tex:124
 msgid "Unit Price"
-msgstr "سعر الوحدة"
+msgstr "מחיר יחידה"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1120
 msgid "Unknown "
-msgstr ""
+msgstr "לא ידוע"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1102
 msgid ""
@@ -8746,11 +8744,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:285
 msgid "Unknown database found."
-msgstr ""
+msgstr "בסיס נתונים לא ידוע נמצא."
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:252
 msgid "Unlock"
-msgstr "فك القفل"
+msgstr "שחרור נעילה"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:224
 msgid "Unlock Batch"
@@ -8766,7 +8764,7 @@ msgstr ""
 
 #: UI/Reports/filters/payments.html:16
 msgid "Unsupported Number"
-msgstr ""
+msgstr "מספר לא נתמך"
 
 #: lib/LedgerSMB/Scripts/setup.pm:198
 msgid "Unsupported SQL-Ledger version detected."
@@ -8774,7 +8772,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:618 lib/LedgerSMB/Upgrade_Tests.pm:822
 msgid "Unsupported account categories"
-msgstr ""
+msgstr "קטגוריות חשבון לא נתמכות"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:637 lib/LedgerSMB/Upgrade_Tests.pm:840
 msgid "Unsupported account link combinations"
@@ -8782,7 +8780,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/contact.pm:441
 msgid "Unsupported account type"
-msgstr ""
+msgstr "סוג חשבון לא נתמך"
 
 #: UI/Reports/filters/contact_search.html:15
 msgid "Unsupported.  Expect errors"
@@ -8790,11 +8788,11 @@ msgstr ""
 
 #: UI/Reports/filters/search_goods.html:125
 msgid "Unused"
-msgstr "غير مستخدم"
+msgstr "לא בשימוש"
 
 #: UI/payments/payment2.html:258
 msgid "Up"
-msgstr ""
+msgstr "למעלה"
 
 #: lib/LedgerSMB/Scripts/budgets.pm:99 old/bin/aa.pl:936 old/bin/aa.pl:961
 #: old/bin/gl.pl:246 old/bin/ic.pl:825 old/bin/ic.pl:834 old/bin/ir.pl:517
@@ -8804,34 +8802,34 @@ msgstr ""
 #: UI/payments/payments_detail.html:483 UI/payroll/deduction.html:85
 #: UI/payroll/income.html:90 UI/reconciliation/report.html:367
 msgid "Update"
-msgstr "تعديل"
+msgstr "עדכון"
 
 #: old/bin/ic.pl:776
 msgid "Updated"
-msgstr "معدل"
+msgstr "עודכן"
 
 #: UI/setup/upgrade_info.html:104
 msgid "Upgrade"
-msgstr "ترقية"
+msgstr "שודרג"
 
 #: UI/setup/upgrade_info.html:8
 msgid "Upgrade Info"
-msgstr ""
+msgstr "מידע שדרוג"
 
 #: UI/Configuration/rate.html:85 UI/file/attachment_screen.html:45
 #: UI/templates/preview.html:40
 msgid "Upload"
-msgstr "رفع ملفات"
+msgstr "העלאה"
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:59
 #: lib/LedgerSMB/Report/File/Internal.pm:57
 msgid "Uploaded At"
-msgstr ""
+msgstr "עוןדכן ב"
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:62
 #: lib/LedgerSMB/Report/File/Internal.pm:60
 msgid "Uploaded By"
-msgstr "تم الرفع بواسطة"
+msgstr "הועלה על ידי"
 
 #: lib/LedgerSMB/Scripts/currency.pm:334
 msgid "Uploaded rates"
@@ -8839,7 +8837,7 @@ msgstr ""
 
 #: UI/file/attachment_screen.html:23
 msgid "Url"
-msgstr "رابط"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Asset.pm:103 UI/asset/edit_asset.html:91
 #: UI/asset/search_asset.html:85
@@ -8874,15 +8872,15 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/contact.pm:185 t/data/04-complex_template.html:36
 #: UI/Contact/divs/user.html:4 UI/main.html:26
 msgid "User"
-msgstr "مستخدم"
+msgstr "משתמש"
 
 #: UI/login.html:58
 msgid "User Name"
-msgstr "اسم المستخدم"
+msgstr "שם משתמש"
 
 #: lib/LedgerSMB/Scripts/setup.pm:1147
 msgid "User already exists. Import?"
-msgstr "المستخدم موجود، هل تريد استيراده؟"
+msgstr ""
 
 #: UI/Contact/divs/user.html:60 UI/setup/new_user.html:37
 msgid "User creation"
@@ -8892,7 +8890,7 @@ msgstr ""
 #: UI/setup/edit_user.html:29 UI/setup/edit_user.html:42
 #: UI/setup/list_users.html:11 UI/setup/new_user.html:21
 msgid "Username"
-msgstr "اسم المستخدم"
+msgstr ""
 
 #: UI/setup/ui-db-credentials.html:5
 msgid "Username "
@@ -8901,21 +8899,21 @@ msgstr ""
 #: UI/setup/complete.html:27 UI/setup/confirm_operation.html:50
 #: UI/setup/confirm_operation.html:126
 msgid "Users"
-msgstr "مستخدمين"
+msgstr "משתמשים"
 
 #: UI/Contact/pricelist.csv:34 UI/Contact/pricelist.html:46
 #: UI/Contact/pricelist.tex:46
 msgid "Valid From"
-msgstr "ساري من"
+msgstr "בתוקף מ"
 
 #: UI/am-taxes.html:17 UI/Contact/pricelist.csv:37 UI/Contact/pricelist.html:49
 #: UI/Contact/pricelist.tex:50
 msgid "Valid To"
-msgstr "ساري إلى"
+msgstr "בתוקף עד"
 
 #: UI/Configuration/rate.html:41
 msgid "Valid from"
-msgstr ""
+msgstr "בתוקף מ"
 
 #: old/bin/oe.pl:458 templates/demo/sales_quotation.html:70
 #: templates/demo/sales_quotation.tex:76
@@ -8924,7 +8922,7 @@ msgstr ""
 #: templates/xedemo/sales_quotation.html:70
 #: templates/xedemo/sales_quotation.tex:77
 msgid "Valid until"
-msgstr "سارى حتى"
+msgstr "בתוקף עד"
 
 #: UI/Reports/filters/income_statement.html:20
 msgid "Valuation"
@@ -8953,20 +8951,20 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:5 UI/Reports/filters/orders.html:4
 #: sql/Pg-database.sql:541
 msgid "Vendor"
-msgstr "المورد"
+msgstr "ספק"
 
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:257
 msgid "Vendor Account"
-msgstr ""
+msgstr "בון ספק"
 
 #: sql/Pg-database.sql:2789
 msgid "Vendor History"
-msgstr "بيانات تاريخية عن مورد"
+msgstr "היסטוריית ספק"
 
 #: old/bin/oe.pl:666 old/bin/oe.pl:872 t/data/04-complex_template.html:334
 #: UI/Contact/divs/credit.html:352 sql/Pg-database.sql:2898
 msgid "Vendor Invoice"
-msgstr "فاتورة المورد "
+msgstr "חשבונית ספק"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:123
 msgid "Vendor Invoice/AP Transaction Number"
@@ -8975,7 +8973,7 @@ msgstr ""
 #: UI/payments/payment1.html:41 UI/payments/payment2.html:29
 #: UI/Reports/filters/orders.html:5
 msgid "Vendor Name"
-msgstr ""
+msgstr "שם ספק"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:115
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:186
@@ -8988,7 +8986,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:54
 #: UI/Reports/filters/taxforms.html:33
 msgid "Vendor Number"
-msgstr "رقم المورد"
+msgstr "מספר ספק"
 
 #: UI/Contact/pricelist.csv:20 UI/Contact/pricelist.html:34
 #: UI/Contact/pricelist.tex:29
@@ -9001,23 +8999,23 @@ msgstr ""
 
 #: UI/Reports/filters/contact_search.html:9
 msgid "Vendor Search"
-msgstr "البحث عن مورد"
+msgstr "חיפוש ספק"
 
 #: old/bin/aa.pl:1307 old/bin/ir.pl:1253 old/bin/oe.pl:1211
 msgid "Vendor missing!"
-msgstr "مورد غير موجود"
+msgstr "ספק חסר!"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:732 lib/LedgerSMB/Upgrade_Tests.pm:778
 msgid "Vendor not in a business"
-msgstr ""
+msgstr "ספק לא בעסק"
 
 #: old/bin/arap.pl:146 old/bin/pe.pl:1217
 msgid "Vendor not on file!"
-msgstr "مورد غير موجود في الملف"
+msgstr "ספק לא בקובץ!"
 
 #: UI/users/preferences.html:17
 msgid "Verify"
-msgstr ""
+msgstr "בדיקה"
 
 #: old/bin/is.pl:603
 msgid "Void"
@@ -9025,11 +9023,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:137
 msgid "Voucher List"
-msgstr ""
+msgstr "רשימת ואצ'רים"
 
 #: sql/Pg-database.sql:2855 sql/Pg-database.sql:2856 sql/Pg-database.sql:2979
 msgid "Vouchers"
-msgstr ""
+msgstr "ואוצ'רים"
 
 #: UI/Contact/divs/wage.html:3
 msgid "Wages and Deductions"
@@ -9053,23 +9051,23 @@ msgstr ""
 #: templates/xedemo/pick_list.html:78 templates/xedemo/pick_list.tex:82
 #: UI/Reports/filters/search_goods.html:358
 msgid "Warehouse"
-msgstr ""
+msgstr "מחסן"
 
 #: old/bin/am.pl:768
 msgid "Warehouse deleted!"
-msgstr ""
+msgstr "מחסן נמחק!"
 
 #: old/bin/am.pl:761
 msgid "Warehouse saved!"
-msgstr ""
+msgstr "מחסן נשמר!"
 
 #: lib/LedgerSMB/Report/Listings/Warehouse.pm:58 sql/Pg-database.sql:2879
 msgid "Warehouses"
-msgstr "مخازن"
+msgstr "מחסנים"
 
 #: UI/oe-save_warn.html:4
 msgid "Warning!"
-msgstr ""
+msgstr "אזהרה!"
 
 #: UI/lib/ui-header.html:35
 msgid "Warning:  Your password will expire in [_1]"
@@ -9077,20 +9075,20 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:136
 msgid "Wed"
-msgstr "الأربعاء"
+msgstr "רבי"
 
 #: old/bin/am.pl:777 UI/lib/report_base.html:172
 #: UI/timecards/entry_filter.html:23
 msgid "Week"
-msgstr "أسبوع"
+msgstr "בוע"
 
 #: lib/LedgerSMB/Report/Timecards.pm:99
 msgid "Week Starting"
-msgstr "الأسبوع يبدأ في"
+msgstr "שבוע מתחיל"
 
 #: old/bin/arap.pl:514
 msgid "Week(s)"
-msgstr "أسبوع(أسابيع)"
+msgstr "שבוע(ות)"
 
 #: UI/timecards/timecard-week.html:49
 msgid "Weekly Time and Materials Entry"
@@ -9098,28 +9096,28 @@ msgstr ""
 
 #: old/bin/am.pl:778
 msgid "Weeks"
-msgstr "أسابيع"
+msgstr "שבועות"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:221 old/bin/ic.pl:543
 #: old/bin/ic.pl:570 old/bin/ic.pl:592 UI/Reports/filters/search_goods.html:308
 msgid "Weight"
-msgstr "وزن"
+msgstr "משקל"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:60
 msgid "Weight Unit"
-msgstr "وزن الوحدة"
+msgstr "יחידת משקל"
 
 #: old/bin/io.pl:606
 msgid "What type of item is this?"
-msgstr "ما نوع هذة الوحدة؟"
+msgstr "אזיה סוג פריט זה?"
 
 #: UI/setup/begin_backup.html:8
 msgid "Where shall we send the backup?"
-msgstr ""
+msgstr "לאן לשלוח את הגיבוי?"
 
 #: sql/Pg-database.sql:3781
 msgid "Whole Month Straight Line"
-msgstr ""
+msgstr "כל החודש קו ישר"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:138
 msgid "Widgit Themes"
@@ -9134,7 +9132,7 @@ msgstr ""
 #: templates/xedemo/work_order.html:17 templates/xedemo/work_order.tex:109
 #: sql/Pg-database.sql:2951 sql/Pg-database.sql:2964
 msgid "Work Order"
-msgstr "امر شغل"
+msgstr "הזמנת עבודה"
 
 #: lib/LedgerSMB/Scripts/setup.pm:169
 msgid "Would you like to migrate the database?"
@@ -9147,34 +9145,34 @@ msgstr ""
 #: UI/Contact/pricelist.html:109 UI/Reports/aging_report.html:120
 #: UI/Reports/display_report.html:87
 msgid "XLS"
-msgstr ""
+msgstr "XLS"
 
 #: UI/Contact/pricelist.html:115 UI/Reports/aging_report.html:124
 #: UI/Reports/display_report.html:91
 msgid "XLSX"
-msgstr ""
+msgstr "XLSX"
 
 #: sql/Pg-database.sql:810
 msgid "Yahoo"
-msgstr ""
+msgstr "Yahoo"
 
 #: old/bin/aa.pl:1581 old/bin/am.pl:779 old/bin/pe.pl:823
 #: old/lib/LedgerSMB/DBObject/Date.pm:95 UI/lib/report_base.html:190
 #: UI/lib/report_base.html:275
 msgid "Year"
-msgstr "سنة"
+msgstr "שנה"
 
 #: sql/Pg-database.sql:2860
 msgid "Year End"
-msgstr "نهاية العام المالى"
+msgstr "סוף שנה"
 
 #: old/bin/arap.pl:516
 msgid "Year(s)"
-msgstr ""
+msgstr "שנ(ים)"
 
 #: UI/accounts/yearend.html:21 UI/accounts/yearend.html:37
 msgid "Yearend"
-msgstr ""
+msgstr "סופשנה"
 
 #: UI/accounts/yearend_complete.html:3
 msgid "Yearend complete"
@@ -9182,12 +9180,12 @@ msgstr ""
 
 #: old/bin/am.pl:780
 msgid "Years"
-msgstr "سنوات"
+msgstr "שנים"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:100 old/bin/oe.pl:1338
 #: UI/Configuration/settings.html:37 UI/setup/confirm_operation.html:29
 msgid "Yes"
-msgstr "نعم"
+msgstr "כן"
 
 #: UI/users/preferences.html:35
 msgid "Your password will expire in "
@@ -9199,11 +9197,11 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:72
 msgid "Zero"
-msgstr "صفر"
+msgstr "אפס"
 
 #: old/bin/io.pl:1631
 msgid "Zip Code"
-msgstr ""
+msgstr "מיקוד"
 
 #: UI/Contact/divs/address.html:84 UI/Contact/divs/address.html:176
 msgid "Zip/Post Code"
@@ -9222,7 +9220,7 @@ msgstr ""
 msgid ""
 "[_1]\n"
 "[_2]"
-msgstr ""
+msgstr "[_1][_2]"
 
 #: old/bin/gl.pl:181
 msgid "[_1] Cash Transfer Transaction"
@@ -9266,11 +9264,11 @@ msgstr ""
 
 #: UI/Reports/co/filter_bm.html:112
 msgid "balance"
-msgstr "رصيد"
+msgstr "יתרה"
 
 #: old/lib/LedgerSMB/DBObject/Payment.pm:512
 msgid "cash"
-msgstr "النقدية"
+msgstr ""
 
 #: old/lib/LedgerSMB/DBObject/Payment.pm:513
 msgid "check"
@@ -9278,26 +9276,26 @@ msgstr ""
 
 #: old/bin/io.pl:1625
 msgid "city"
-msgstr "مدينة"
+msgstr "עיר"
 
 #: old/bin/ic.pl:1077 old/bin/oe.pl:367 t/data/04-complex_template.html:215
 #: t/data/04-complex_template.html:255 UI/Contact/divs/credit.html:164
 #: UI/Contact/divs/credit.html:182
 msgid "days"
-msgstr "ايام"
+msgstr "ימים"
 
 #: UI/Reports/co/filter_bm.html:98
 msgid "debits"
-msgstr "مدين"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/currency.pm:59
 msgid "default"
-msgstr ""
+msgstr "ברירת מחדל"
 
 #: lib/LedgerSMB/Scripts/admin.pm:62 lib/LedgerSMB/Scripts/currency.pm:137
 #: lib/LedgerSMB/Scripts/currency.pm:235 lib/LedgerSMB/Scripts/currency.pm:65
 msgid "delete"
-msgstr "الغاء"
+msgstr "מחק"
 
 #: old/lib/LedgerSMB/DBObject/Payment.pm:514
 msgid "deposit"
@@ -9314,7 +9312,7 @@ msgstr ""
 #: old/bin/am.pl:1222 old/bin/am.pl:1293 old/bin/am.pl:1350 old/bin/am.pl:1401
 #: old/bin/am.pl:1451
 msgid "done"
-msgstr "نفذ"
+msgstr "בוצע"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:578
 msgid "e"
@@ -9322,11 +9320,11 @@ msgstr ""
 
 #: old/bin/ir.pl:1216 old/bin/is.pl:1342 old/bin/oe.pl:1181
 msgid "ea"
-msgstr "قطعة"
+msgstr ""
 
 #: old/bin/am.pl:1296 old/bin/am.pl:1454
 msgid "failed"
-msgstr "فشل"
+msgstr "נכשל"
 
 #: UI/lib/report_base.html:209
 msgid "from_date"
@@ -9334,15 +9332,15 @@ msgstr ""
 
 #: sql/Pg-database.sql:3858
 msgid "import"
-msgstr "استيراد"
+msgstr "יבוא"
 
 #: sql/Pg-database.sql:3783
 msgid "in months"
-msgstr "في شهور"
+msgstr "בחודשים"
 
 #: sql/Pg-database.sql:3780 sql/Pg-database.sql:3786
 msgid "in years"
-msgstr "في سنوات"
+msgstr "בשנים"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1962
 msgid "is bigger than the amount available"
@@ -9350,11 +9348,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1663
 msgid "is lesser than 0"
-msgstr "أصغر من الصفر0"
+msgstr "נמוך מ 0"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1657
 msgid "is lesser than the amount to be paid"
-msgstr "أصغر من الكمية الواجب دفعها"
+msgstr "נמוך מהסכום לתשלום"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1919
 msgid "is null"
@@ -9362,7 +9360,7 @@ msgstr ""
 
 #: UI/Configuration/sequence.html:9
 msgid "label"
-msgstr ""
+msgstr "תווית"
 
 #: old/lib/LedgerSMB/DBObject/Payment.pm:515
 msgid "other"
@@ -9390,7 +9388,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:3743
 msgid "time"
-msgstr ""
+msgstr "זמן"
 
 #: old/bin/arap.pl:543
 msgid "time(s)"
@@ -9402,7 +9400,7 @@ msgstr ""
 
 #: old/bin/ic.pl:1433
 msgid "unexpected error!"
-msgstr "خطأ غير متوقع!"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1971 lib/LedgerSMB/Scripts/payment.pm:1990
 msgid "use of an overpayment"
