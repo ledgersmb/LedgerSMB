@@ -520,7 +520,7 @@ sub post_invoice {
                                 transdate, approved)
                             VALUES (?, (SELECT id FROM account
                                 WHERE accno = ?),
-                           ?, ?, ?, ?)|;
+                           ?, ?, ?, ?, ?)|;
                 $sth = $dbh->prepare($query)
                     || $form->dberror($dbh->errstr);
                 $sth->execute( $trans_id, $accno,
