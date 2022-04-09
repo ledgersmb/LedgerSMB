@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.9.13-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-03-26 21:13+0000\n"
+"POT-Creation-Date: 2022-04-09 14:49+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: German (Switzerland) (https://www.transifex.com/ledgersmb/"
 "teams/58325/de_CH/)\n"
@@ -196,7 +196,7 @@ msgstr "Forderungsbuchung"
 msgid "AR/AP/GL Amount"
 msgstr "Forderungen/Verbindlichkeiten/Hauptbuch Betrag"
 
-#: sql/Pg-database.sql:3540
+#: sql/Pg-database.sql:3560
 msgid "Abandonment"
 msgstr "Verzicht"
 
@@ -793,11 +793,11 @@ msgid ""
 "\"AP_*\" and/or \"IC_*\" links concatenated by colons (:)."
 msgstr ""
 
-#: sql/Pg-database.sql:3509
+#: sql/Pg-database.sql:3529
 msgid "Annual Straight Line Daily"
 msgstr "Lineare Abschreibung täglich"
 
-#: sql/Pg-database.sql:3515
+#: sql/Pg-database.sql:3535
 msgid "Annual Straight Line Monthly"
 msgstr "Lineare Abschreibung monatlich"
 
@@ -892,7 +892,7 @@ msgid "Assemblies restocked!"
 msgstr "Erzeugnisse wieder eingelagert!"
 
 #: UI/accounts/edit.html:213 UI/Reports/filters/gl.html:135
-#: sql/Pg-database.sql:3578
+#: sql/Pg-database.sql:3598
 msgid "Asset"
 msgstr "Aktiva/Mittelverwendung"
 
@@ -6522,7 +6522,7 @@ msgstr "SSN"
 msgid "Salary"
 msgstr "Gehalt"
 
-#: sql/Pg-database.sql:3542
+#: sql/Pg-database.sql:3562
 msgid "Sale"
 msgstr "Verkauf"
 
@@ -6864,7 +6864,7 @@ msgstr "Wähle Vorlage aus"
 msgid "Select Vendor"
 msgstr "Lieferant auswählen"
 
-#: old/bin/arapprn.pl:351 old/bin/is.pl:1512 old/bin/oe.pl:1366
+#: old/bin/arapprn.pl:352 old/bin/is.pl:1512 old/bin/oe.pl:1366
 msgid "Select a Printer!"
 msgstr "Drucker auswählen!"
 
@@ -6884,7 +6884,7 @@ msgstr "Wähle Rechnung aus"
 msgid "Select or Enter User"
 msgstr "Wähle aus oder gebe Benutzer an"
 
-#: old/bin/arapprn.pl:349 old/bin/arapprn.pl:86 old/bin/is.pl:1510
+#: old/bin/arapprn.pl:350 old/bin/arapprn.pl:86 old/bin/is.pl:1510
 #: old/bin/oe.pl:1364
 msgid "Select postscript or PDF!"
 msgstr "Postscript oder PDF auswählen!"
@@ -8646,7 +8646,7 @@ msgstr "Welche Artikelart ist das?"
 msgid "Where shall we send the backup?"
 msgstr "Wohin sollen wir die Datensicherung schicken?"
 
-#: sql/Pg-database.sql:3512
+#: sql/Pg-database.sql:3532
 msgid "Whole Month Straight Line"
 msgstr "Ganzer Monat geradlinig"
 
@@ -8824,11 +8824,11 @@ msgstr "default"
 msgid "delete"
 msgstr "löschen"
 
-#: sql/Pg-database.sql:3587
+#: sql/Pg-database.sql:3607
 msgid "depreciation"
 msgstr "Abschreibung"
 
-#: sql/Pg-database.sql:3588
+#: sql/Pg-database.sql:3608
 msgid "disposal"
 msgstr "Disposition"
 
@@ -8857,11 +8857,11 @@ msgstr ""
 msgid "html"
 msgstr "html"
 
-#: sql/Pg-database.sql:3589
+#: sql/Pg-database.sql:3609
 msgid "import"
 msgstr "importieren"
 
-#: sql/Pg-database.sql:3514
+#: sql/Pg-database.sql:3534
 msgid "in months"
 msgstr "in Monaten"
 
@@ -8869,7 +8869,7 @@ msgstr "in Monaten"
 msgid "in use"
 msgstr "in Gebrauch"
 
-#: sql/Pg-database.sql:3511 sql/Pg-database.sql:3517
+#: sql/Pg-database.sql:3531 sql/Pg-database.sql:3537
 msgid "in years"
 msgstr "in Jahren"
 
@@ -8893,7 +8893,7 @@ msgstr "ist null"
 msgid "label"
 msgstr "Label"
 
-#: sql/Pg-database.sql:3590
+#: sql/Pg-database.sql:3610
 msgid "partial disposal"
 msgstr "teilweisige Entsorgung"
 
@@ -8901,7 +8901,7 @@ msgstr "teilweisige Entsorgung"
 msgid "permalink"
 msgstr "Permalink"
 
-#: sql/Pg-database.sql:3475
+#: sql/Pg-database.sql:3495
 msgid "production"
 msgstr "Produktion"
 
@@ -8913,7 +8913,7 @@ msgstr "Systemtyp"
 msgid "tex"
 msgstr ""
 
-#: sql/Pg-database.sql:3474
+#: sql/Pg-database.sql:3494
 msgid "time"
 msgstr "Zeit"
 

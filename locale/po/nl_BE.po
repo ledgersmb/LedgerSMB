@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.9.13-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-03-26 21:13+0000\n"
+"POT-Creation-Date: 2022-04-09 14:49+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: Dutch (Belgium) (https://www.transifex.com/ledgersmb/"
 "teams/58325/nl_BE/)\n"
@@ -195,7 +195,7 @@ msgstr ""
 msgid "AR/AP/GL Amount"
 msgstr "Debiteuren/Crediteuren/Grootboek Bedrag"
 
-#: sql/Pg-database.sql:3540
+#: sql/Pg-database.sql:3560
 msgid "Abandonment"
 msgstr "Afschrijving"
 
@@ -792,11 +792,11 @@ msgid ""
 "\"AP_*\" and/or \"IC_*\" links concatenated by colons (:)."
 msgstr ""
 
-#: sql/Pg-database.sql:3509
+#: sql/Pg-database.sql:3529
 msgid "Annual Straight Line Daily"
 msgstr "Lineaire afschrijving, per dag"
 
-#: sql/Pg-database.sql:3515
+#: sql/Pg-database.sql:3535
 msgid "Annual Straight Line Monthly"
 msgstr "Lineaire afschrijving, per maand"
 
@@ -891,7 +891,7 @@ msgid "Assemblies restocked!"
 msgstr "Assemblage naar voorraad geboekt"
 
 #: UI/accounts/edit.html:213 UI/Reports/filters/gl.html:135
-#: sql/Pg-database.sql:3578
+#: sql/Pg-database.sql:3598
 msgid "Asset"
 msgstr "Activa (bezittingen)"
 
@@ -6520,7 +6520,7 @@ msgstr "SSN"
 msgid "Salary"
 msgstr "Salaris"
 
-#: sql/Pg-database.sql:3542
+#: sql/Pg-database.sql:3562
 msgid "Sale"
 msgstr "Verkoopfactuur"
 
@@ -6862,7 +6862,7 @@ msgstr "Kies sjablonen om te laden"
 msgid "Select Vendor"
 msgstr "Selecteer Leverancier"
 
-#: old/bin/arapprn.pl:351 old/bin/is.pl:1512 old/bin/oe.pl:1366
+#: old/bin/arapprn.pl:352 old/bin/is.pl:1512 old/bin/oe.pl:1366
 msgid "Select a Printer!"
 msgstr "Selecteer een Printer"
 
@@ -6882,7 +6882,7 @@ msgstr "Kies facturen"
 msgid "Select or Enter User"
 msgstr "Selecteer gebruiker of voer een gebruiker in"
 
-#: old/bin/arapprn.pl:349 old/bin/arapprn.pl:86 old/bin/is.pl:1510
+#: old/bin/arapprn.pl:350 old/bin/arapprn.pl:86 old/bin/is.pl:1510
 #: old/bin/oe.pl:1364
 msgid "Select postscript or PDF!"
 msgstr "Kies postscript of PDF"
@@ -8647,7 +8647,7 @@ msgstr "Wat voor soort artikel is dit?"
 msgid "Where shall we send the backup?"
 msgstr "Waarheen sturen wij de backup?"
 
-#: sql/Pg-database.sql:3512
+#: sql/Pg-database.sql:3532
 msgid "Whole Month Straight Line"
 msgstr "Maandelijks lineair"
 
@@ -8825,11 +8825,11 @@ msgstr ""
 msgid "delete"
 msgstr "verwijderen"
 
-#: sql/Pg-database.sql:3587
+#: sql/Pg-database.sql:3607
 msgid "depreciation"
 msgstr "afschrijving"
 
-#: sql/Pg-database.sql:3588
+#: sql/Pg-database.sql:3608
 msgid "disposal"
 msgstr "verwijdering"
 
@@ -8858,11 +8858,11 @@ msgstr ""
 msgid "html"
 msgstr ""
 
-#: sql/Pg-database.sql:3589
+#: sql/Pg-database.sql:3609
 msgid "import"
 msgstr "importeren"
 
-#: sql/Pg-database.sql:3514
+#: sql/Pg-database.sql:3534
 msgid "in months"
 msgstr "in maanden"
 
@@ -8870,7 +8870,7 @@ msgstr "in maanden"
 msgid "in use"
 msgstr ""
 
-#: sql/Pg-database.sql:3511 sql/Pg-database.sql:3517
+#: sql/Pg-database.sql:3531 sql/Pg-database.sql:3537
 msgid "in years"
 msgstr "in jaren"
 
@@ -8894,7 +8894,7 @@ msgstr "is nihiel"
 msgid "label"
 msgstr "label"
 
-#: sql/Pg-database.sql:3590
+#: sql/Pg-database.sql:3610
 msgid "partial disposal"
 msgstr "gedeeltelijke verwijdering"
 
@@ -8902,7 +8902,7 @@ msgstr "gedeeltelijke verwijdering"
 msgid "permalink"
 msgstr "permanente URL"
 
-#: sql/Pg-database.sql:3475
+#: sql/Pg-database.sql:3495
 msgid "production"
 msgstr "productie"
 
@@ -8914,7 +8914,7 @@ msgstr ""
 msgid "tex"
 msgstr ""
 
-#: sql/Pg-database.sql:3474
+#: sql/Pg-database.sql:3494
 msgid "time"
 msgstr "tijd"
 

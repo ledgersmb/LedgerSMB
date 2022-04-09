@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.9.13-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-03-26 21:13+0000\n"
+"POT-Creation-Date: 2022-04-09 14:49+0000\n"
 "Last-Translator: Håvard Sørli <havard@sorli.no>, 2021\n"
 "Language-Team: Norwegian Bokmål (https://www.transifex.com/ledgersmb/"
 "teams/58325/nb/)\n"
@@ -196,7 +196,7 @@ msgstr "Kunde postering"
 msgid "AR/AP/GL Amount"
 msgstr "Kunde/Leverandør/Hovedbok Beløp"
 
-#: sql/Pg-database.sql:3540
+#: sql/Pg-database.sql:3560
 msgid "Abandonment"
 msgstr "Skrinlagt"
 
@@ -799,11 +799,11 @@ msgstr ""
 "\" or \"IC\" value) or be linked to dropdowns (having anynumber of \"AR_*\", "
 "\"AP_*\" and/or \"IC_*\" links concatenated by colons (:)."
 
-#: sql/Pg-database.sql:3509
+#: sql/Pg-database.sql:3529
 msgid "Annual Straight Line Daily"
 msgstr "Årlig rett linje daglig"
 
-#: sql/Pg-database.sql:3515
+#: sql/Pg-database.sql:3535
 msgid "Annual Straight Line Monthly"
 msgstr "Årlig rett linje månedlig"
 
@@ -898,7 +898,7 @@ msgid "Assemblies restocked!"
 msgstr "Monterte omplassert!"
 
 #: UI/accounts/edit.html:213 UI/Reports/filters/gl.html:135
-#: sql/Pg-database.sql:3578
+#: sql/Pg-database.sql:3598
 msgid "Asset"
 msgstr "Eiendel"
 
@@ -6538,7 +6538,7 @@ msgstr "SSN"
 msgid "Salary"
 msgstr "Lønn"
 
-#: sql/Pg-database.sql:3542
+#: sql/Pg-database.sql:3562
 msgid "Sale"
 msgstr "Salg"
 
@@ -6880,7 +6880,7 @@ msgstr "Velg Maler for å vise"
 msgid "Select Vendor"
 msgstr "Velg leverandør"
 
-#: old/bin/arapprn.pl:351 old/bin/is.pl:1512 old/bin/oe.pl:1366
+#: old/bin/arapprn.pl:352 old/bin/is.pl:1512 old/bin/oe.pl:1366
 msgid "Select a Printer!"
 msgstr "Velg en skriver!"
 
@@ -6900,7 +6900,7 @@ msgstr "Velg Fakturaer"
 msgid "Select or Enter User"
 msgstr "Velg eller skriv inn bruker"
 
-#: old/bin/arapprn.pl:349 old/bin/arapprn.pl:86 old/bin/is.pl:1510
+#: old/bin/arapprn.pl:350 old/bin/arapprn.pl:86 old/bin/is.pl:1510
 #: old/bin/oe.pl:1364
 msgid "Select postscript or PDF!"
 msgstr "Velg postscript eller PDF!"
@@ -8679,7 +8679,7 @@ msgstr "Hvilken type ting er dette?"
 msgid "Where shall we send the backup?"
 msgstr "Hvor skal vi sende sikkerhetskopien?"
 
-#: sql/Pg-database.sql:3512
+#: sql/Pg-database.sql:3532
 msgid "Whole Month Straight Line"
 msgstr "Hele Måneden i rett linje"
 
@@ -8857,11 +8857,11 @@ msgstr "standard"
 msgid "delete"
 msgstr "slett"
 
-#: sql/Pg-database.sql:3587
+#: sql/Pg-database.sql:3607
 msgid "depreciation"
 msgstr "nedskrivning"
 
-#: sql/Pg-database.sql:3588
+#: sql/Pg-database.sql:3608
 msgid "disposal"
 msgstr "disposisjon"
 
@@ -8890,11 +8890,11 @@ msgstr "fra_dato"
 msgid "html"
 msgstr "html"
 
-#: sql/Pg-database.sql:3589
+#: sql/Pg-database.sql:3609
 msgid "import"
 msgstr "import"
 
-#: sql/Pg-database.sql:3514
+#: sql/Pg-database.sql:3534
 msgid "in months"
 msgstr "i måneder"
 
@@ -8902,7 +8902,7 @@ msgstr "i måneder"
 msgid "in use"
 msgstr "i bruk"
 
-#: sql/Pg-database.sql:3511 sql/Pg-database.sql:3517
+#: sql/Pg-database.sql:3531 sql/Pg-database.sql:3537
 msgid "in years"
 msgstr "i år"
 
@@ -8926,7 +8926,7 @@ msgstr "er null"
 msgid "label"
 msgstr "Etikett"
 
-#: sql/Pg-database.sql:3590
+#: sql/Pg-database.sql:3610
 msgid "partial disposal"
 msgstr "delvis til rådighet"
 
@@ -8934,7 +8934,7 @@ msgstr "delvis til rådighet"
 msgid "permalink"
 msgstr "permalink"
 
-#: sql/Pg-database.sql:3475
+#: sql/Pg-database.sql:3495
 msgid "production"
 msgstr "produksjon"
 
@@ -8946,7 +8946,7 @@ msgstr "system type"
 msgid "tex"
 msgstr "tex"
 
-#: sql/Pg-database.sql:3474
+#: sql/Pg-database.sql:3494
 msgid "time"
 msgstr "gang"
 
