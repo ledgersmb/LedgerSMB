@@ -51,7 +51,7 @@
     "babel-loader": "8.2.4",
     "browserslist": "4.20.2",
     "buffer": "6.0.3",
-    "caniuse-lite": "1.0.30001327",
+    "caniuse-lite": "1.0.30001331",
     "clean-webpack-plugin": "4.0.0",
     "compression-webpack-plugin": "9.2.0",
     "copy-webpack-plugin": "10.2.4",
@@ -70,7 +70,7 @@
     "eslint-plugin-compat": "4.0.2",
     "eslint-plugin-html": "6.2.0",
     "eslint-plugin-import": "2.26.0",
-    "eslint-plugin-jsdoc": "39.0.1",
+    "eslint-plugin-jsdoc": "39.2.1",
     "eslint-plugin-json": "3.1.0",
     "eslint-plugin-markdown": "2.2.1",
     "eslint-plugin-node": "11.1.0",
@@ -100,7 +100,7 @@
     "webpack-cli": "4.9.2",
     "webpack-merge": "5.8.0",
     "webpack-sources": "3.2.3",
-    "yargs": "17.4.0"
+    "yargs": "17.4.1"
   },
   "dependencies": {
     "content-disposition": "0.5.4",
