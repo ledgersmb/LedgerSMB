@@ -99,7 +99,7 @@ sub run_report {
               return ($line->{account_type} eq 'H')
                   ? []
                   : [ [ $line->{account_category},
-                        $line->{gifi_accno} ],
+                        $line->{gifi} ],
                       [ $line->{account_category} ],
                   ];
         } : ($self->legacy_hierarchy) ?
@@ -153,8 +153,8 @@ sub run_report {
         };
     my $row_props = ($self->gifi) ?
         sub { my ($line) = @_;
-              $line->{account_number} = $line->{gifi_accno};
-              $line->{account_desc} = $line->{gifi_description};
+              $line->{account_number} = $line->{gifi};
+              $line->{account_description} = $line->{gifi_description};
               return $line;
         } : ($self->legacy_hierarchy) ?
         sub { my ($line) = @_;
