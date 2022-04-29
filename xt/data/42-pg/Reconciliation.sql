@@ -69,8 +69,10 @@ INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
                 entity_credit_account, transdate, curr)
 values (-209, '-2007', '10', '10', 10, 10, -201, '1000-01-03', 'XTS');
 
+
 insert into payment (id, reference, payment_class, payment_date, entity_credit_id, currency)
 values (-201, 'reference-test', 2, '1000-01-03', -201, 'XTS');
+
 
 INSERT INTO gl (id, reference, transdate) values (-202, 'Recon gl test 1', '1000-01-01');
 INSERT INTO gl (id, reference, transdate) values (-203, 'Recon gl test 2', '1000-01-01');
@@ -180,4 +182,40 @@ select -201, entry_id, 1
  where trans_id < 0
        and chart_id = test_get_account_id('-11112')
        and exists (select 1 from ar where ar.id = acc_trans.trans_id);
+
+-- Test Act 3 - 2 payments and an adjustment, all with the same source
+
+INSERT INTO account(id, accno, description, category, heading, contra)
+values (-202, '-11113', 'Test Act 3', 'A',
+        (select id from account_heading WHERE accno  = '000000000000000000000'), false);
+
+
+INSERT INTO entity (id, control_code, name, entity_class, country_id)
+values (-202, '-11113', 'Test 1', 1, 242);
+INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id, curr)
+values (-202, -202, 'T-11113', 1, -1000, 'XTS');
+
+
+insert into payment (id, reference, payment_class, payment_date, entity_credit_id, currency)
+values (-220, 'equal-reference', 2, '1000-01-01', -202, 'XTS');
+insert into payment (id, reference, payment_class, payment_date, entity_credit_id, currency)
+values (-221, 'equal-reference', 2, '1000-01-01', -202, 'XTS');
+
+
+INSERT INTO gl (id, reference, transdate) values (-220, 'Recon adjustment test (act 3)', '1000-01-01');
+
+
+INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
+values (-200, test_get_account_id('-11113'), '1000-01-01', 10, 'XTS', 10, '1');
+INSERT INTO payment_links (payment_id, entry_id, type)
+values (-220, currval('acc_trans_entry_id_seq'), 1);
+
+INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
+values (-201, test_get_account_id('-11113'), '1000-01-01', 10, 'XTS', 10, '1');
+INSERT INTO payment_links (payment_id, entry_id, type)
+values (-221, currval('acc_trans_entry_id_seq'), 1);
+
+
+INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
+values (-220, test_get_account_id('-11113'), '1000-01-01', 10, 'XTS', 10, '1');
 

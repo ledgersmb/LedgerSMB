@@ -535,7 +535,18 @@ $$
                         join acc_trans ac on ac.source = rl.scn
                                              and ac.transdate = rl.post_date
                        where la.entry_id = ac.entry_id
-                             and rl.report_id = in_report_id)
+                             and rl.report_id = in_report_id
+                             -- exclude 'scn' values associated with more than one
+                             -- report line: the gl line can't be unambiguously
+                             -- combined with a payment; hence it can't serve as
+                             -- a correction...
+                             and not exists (select 1 from cr_report_line rli
+                                              where rl.post_date = rli.post_date
+                                                    and rl.report_id = rli.report_id
+                                                    and rli.scn = rl.scn
+                                                    and rl.id <> rli.id)
+                             and not exists (select 1 from payment_links pl
+                                              where pl.entry_id = ac.entry_id))
             where la.report_line_id is null
            returning report_line_id, entry_id
         )

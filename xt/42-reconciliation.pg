@@ -6,7 +6,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(63);
+    SELECT plan(65);
 
     -- Add data
 
@@ -273,6 +273,21 @@ BEGIN;
     PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11112'));
     SELECT results_eq('test',ARRAY[-130.],'Cleared balance post-approval is 130');
     DEALLOCATE test;
+
+
+    -- there are 3 items on account -11113, 2 are part of one payment each, the third is a GL transaction
+    --   all have the same 'source' value, which means that the GL entry will be considered a correction
+    --   to *both* payments. Because that's ambiguous, the GL item should be presented as a separate recon
+    --   line instead.
+    PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11113'), 100, now()::date, false) > 0;
+    SELECT results_eq('test',ARRAY[true],'3 Create Recon Report');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT reconciliation__pending_transactions(currval('cr_report_id_seq')::int, 110) > 0;
+    SELECT results_eq('test',ARRAY[true],'3 Pending Transactions Ran');
+    DEALLOCATE test;
+
+
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
