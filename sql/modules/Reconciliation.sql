@@ -540,9 +540,20 @@ $$
            set our_balance = (select sum(case when t_recon_fx then ac.amount_tc
                                               else ac.amount_bc end)
                                 from (
+                                     -- lines that were already there
                                      select report_line_id, entry_id
                                        from cr_report_line_links
                                      union all
+                                     -- lines identified in step (2)
+                                     -- (does not include 'matched_entries', because
+                                     -- the default transaction isolation [read
+                                     -- committed] freezes our view at query start,
+                                     -- which means lines_to_be_added isn't updated
+                                     -- by 'matched_entries', as we see it)
+                                     select report_line_id, entry_id
+                                       from lines_to_be_added
+                                     union all
+                                     -- lines identidief in this step
                                      select report_line_id, entry_id
                                        from matched_entries
                                 ) rll
