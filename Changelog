@@ -48,6 +48,11 @@ Dependency updates
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.14
+* Fix reconciliation for multiple payments with the same Source (#6526)
+* Fix reconciliation for payments with GL corrections (#6533)
+
+
 Changelog for 1.9.13
 * Fix line descriptions missing on AP transaction prints (#6482)
     Requires templates update.
