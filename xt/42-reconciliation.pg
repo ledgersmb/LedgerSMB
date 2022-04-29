@@ -6,7 +6,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(62);
+    SELECT plan(63);
 
     -- Add data
 
@@ -150,6 +150,12 @@ BEGIN;
     PREPARE test AS SELECT reconciliation__pending_transactions(currval('cr_report_id_seq')::int, 110) > 0;
     SELECT results_eq('test',ARRAY[true],'1 Pending Transactions Ran');
     DEALLOCATE test;
+
+    select is(
+       ARRAY(SELECT our_balance FROM cr_report_line WHERE report_id = currval('cr_report_id_seq') order by our_balance),
+       ARRAY[20, 90]::numeric[],
+       'There are two recon lines; with balances [20 (gl), 90(payments)]'
+       );
 
     PREPARE test AS SELECT count(distinct ac.trans_id)::int
                       FROM acc_trans ac
