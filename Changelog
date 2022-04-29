@@ -249,7 +249,11 @@ Dependency updates (Perl)
 Changelog for 1.8 Series
 Released 2020-09-04
 
-Changelog for 1.8.28
+Changelog for 1.8.29
+* Fix the 1.8 Changelog which had been replaced with the 1.9 Changelog
+
+
+Changelog for 1.8.28 (not released)
 * Fix reconciliation for multiple payments with the same Source (#6526)
 * Fix reconciliation for payments with GL corrections (#6533)
 
