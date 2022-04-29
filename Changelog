@@ -244,6 +244,11 @@ Dependency updates (Perl)
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.28
+* Fix reconciliation for multiple payments with the same Source (#6526)
+* Fix reconciliation for payments with GL corrections (#6533)
+
+
 Changelog for 1.8.27
 * Fix tax form details reports throwing an error (#6458)
 * Support PostgreSQL 14 (#6500)
