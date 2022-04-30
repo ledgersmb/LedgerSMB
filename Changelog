@@ -48,9 +48,15 @@ Dependency updates
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.15 (to be released)
+* Fix Changelog for 1.9.14 - add two missing entries
+
+
 Changelog for 1.9.14
 * Fix reconciliation for multiple payments with the same Source (#6526)
 * Fix reconciliation for payments with GL corrections (#6533)
+* Fix GIFI account numbers not presented in the balance sheet report (#6520)
+* Fix typo in the invoice TeX templates: acrue -> accrue (#6532)
 
 
 Changelog for 1.9.13
