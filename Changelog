@@ -11,7 +11,7 @@ Added functionalities
 * SysV init script for managing 'starman' process (#6455)
 
 Changed functionalities
-* Overpayment section in payment screen hidden on missing configuration
+* Overpayment section in payment screen hidden on missing configuration (#2512)
 * Batch AR/AP upload changed to support foreign currency transactions
 * Line description on AR/AP transactions renamed to 'linedescription' (#6482)
 
