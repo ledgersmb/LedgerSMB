@@ -9,20 +9,29 @@ Added functionalities
 * Example hierarchical chart of accounts, US General
 * Ability to delete user login accounts (#1135)
 * SysV init script for managing 'starman' process (#6455)
+* US/Washington tax module, doubling as an example for custom modules
+* Customer address data passed to Tax modules
+* Support for custom Tax modules adding a Source value on output lines
+* Possibility to add Vue component based pages
+* User-modified workflows through "custom_workflows" config path setting
 
 Changed functionalities
 * Overpayment section in payment screen hidden on missing configuration (#2512)
 * Batch AR/AP upload changed to support foreign currency transactions
 * Line description on AR/AP transactions renamed to 'linedescription' (#6482)
+* Some existing pages (including login.pl) converted to Vue.js v3
 
 Removed functionalities
 * Removed 'accesskey' HTML attribute, based on WebAIM.org guidance
+* Removed DojoToolkit's TableContainerWidget converting its use to CSS3 Grid
 
 Bugs fixed
 * Better logging on authentication failure
 * Full support for running from a schema other than 'public'
 * Printing checks fails to include invoices on the check's voucher (#6253)
 * Languages in language selection drop down now in user's language (#6289)
+* Tax module initialization, in support of the US/Washington implementation
+* B/S and PnL PDF templates cleaned up and alignment fixed
 
 Code cleanup
 * Fewer warnings from old code
@@ -30,9 +39,11 @@ Code cleanup
 * Remove unused defaults table settings 'revtrans', 'yearend' and 'closedto'
 * Complete replacement of Log::Log4perl with Log::Any in library code
 * Remove unused UI templates
+* Simplify non-UI templates created from UI templates, removing UI remnants
 * Encapsulate Dijit (Dojo) widgets in Web Components / Custom Elements
 * Remove unused Dijit widget(s)
 * Use more idiomatic Template Toolkit coding style for templates
+* Remove duplicated (buggy) function from sql/moduls/Parts.sql
 
 Dependency updates
 * Perl 5.32 (updated from 5.24)
@@ -42,7 +53,7 @@ Dependency updates
 * PGObject::Simple::Role 2.1.1 (updated from 2.0.2)
 * PGObject::Util::DBAdmin 1.6.1 (updated from 1.4.0)
 * PostgreSQL 13 (updated from 10)
-* Workflow 1.57 (upadted from 1.56)
+* Workflow 1.59 (upadted from 1.56)
 
 
 Changelog for 1.9 Series
