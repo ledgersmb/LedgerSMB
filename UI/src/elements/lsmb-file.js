@@ -2,6 +2,18 @@
 
 let lblCounter = 0;
 
+function escHTML(s) {
+    return s.replace(/[<>&"']/g, function (m) {
+        return {
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&dquot;",
+            "&": "&amp;",
+            "'": "&#39;"
+        }[m];
+    });
+}
+
 export class LsmbFile extends HTMLElement {
     elmId = `/lsmb/form/file-${lblCounter++}`;
 
@@ -52,17 +64,17 @@ export class LsmbFile extends HTMLElement {
     }
 
     connectedCallback() {
-        let options = `type="file" id="${this.elmId}"`;
+        let options = `type="file" id="${escHTML(this.elmId)}"`;
         let label = "";
         if (this.hasAttribute("name")) {
-            options += ` name="${this.getAttribute("name")}"`;
+            options += ` name="${escHTML(this.getAttribute("name"))}"`;
         }
         if (this.hasAttribute("accept")) {
-            options += ` accept="${this.getAttribute("accept")}"`;
+            options += ` accept="${escHTML(this.getAttribute("accept"))}"`;
         }
         if (this.hasAttribute("label")) {
-            label = `<label for="${this.elmId}">${this.getAttribute(
-                "label"
+            label = `<label for="${escHTML(this.elmId)}">${escHTML(
+                this.getAttribute("label")
             )}</label>`;
         }
         this.innerHTML = `${label}<span><input ${options}></span>`;
