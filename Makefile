@@ -147,3 +147,13 @@ endif
 pherkin: TESTS ?= xt/
 pherkin:
 	$(DOCKER_CMD) pherkin $(PHERKIN_OPTS) $(TESTS)
+
+docker-run:
+	$(DOCKER_CMD) bash
+
+docker-restart:
+ifneq ($(origin CONTAINER),undefined)
+	docker restart $(CONTAINER)
+else
+	echo No idea which container to restart...
+endif
