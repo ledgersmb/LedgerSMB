@@ -51,7 +51,7 @@
     "babel-loader": "8.2.5",
     "browserslist": "4.20.3",
     "buffer": "6.0.3",
-    "caniuse-lite": "1.0.30001338",
+    "caniuse-lite": "1.0.30001341",
     "clean-webpack-plugin": "4.0.0",
     "compression-webpack-plugin": "9.2.0",
     "copy-webpack-plugin": "10.2.4",
@@ -95,12 +95,12 @@
     "stylelint-order": "5.0.0",
     "unix-timestamp": "1.0.2",
     "unused-webpack-plugin": "2.4.0",
-    "webpack": "5.72.0",
+    "webpack": "5.72.1",
     "webpack-bundle-analyzer": "4.5.0",
     "webpack-cli": "4.9.2",
     "webpack-merge": "5.8.0",
     "webpack-sources": "3.2.3",
-    "yargs": "17.4.1"
+    "yargs": "17.5.0"
   },
   "dependencies": {
     "content-disposition": "0.5.4",
