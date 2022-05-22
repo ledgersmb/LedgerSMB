@@ -59,7 +59,7 @@
     "caniuse-lite": "1.0.30001341",
     "clean-webpack-plugin": "4.0.0",
     "compression-webpack-plugin": "10.0.0",
-    "copy-webpack-plugin": "10.2.4",
+    "copy-webpack-plugin": "11.0.0",
     "css-loader": "6.7.1",
     "css-minimizer-webpack-plugin": "4.0.0",
     "cssnano": "5.1.9",
