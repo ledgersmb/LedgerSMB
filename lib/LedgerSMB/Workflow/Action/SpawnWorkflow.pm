@@ -97,7 +97,7 @@ sub execute {
     }
     my $new_wf = FACTORY()->create_workflow( $self->spawn_type, $context );
     my $wf_id  = $new_wf->id;
-    $wf->context->param( spawned_workflow => $new_wf );
+    $wf->context->param( spawned_workflow => $wf_id );
     $wf->add_history(
         {
             action      => $self->name,

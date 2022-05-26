@@ -1,5 +1,6 @@
 <workflow>
   <type>Email</type>
+  <class>LedgerSMB::Workflow::Email</class>
   <persister>Email</persister>
  <description>Handles lifecycle of e-mail</description>
  <state name="INITIAL" autorun="yes">
