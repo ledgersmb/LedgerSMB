@@ -215,7 +215,7 @@ sub send {
     }
 
     for my $att ( ($ctx->param( 'attachments' ) // [])->@* ) {
-        $mail->attach($att->{content}->(disable_cache => 1),
+        $mail->attach($wf->attachment_content($att->{id}, disable_cache => 1),
                       content_type => $att->{mime_type},
                       disposition  => 'attachment',
                       filename     => $att->{file_name});

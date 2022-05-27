@@ -84,26 +84,6 @@ sub _fetch_attachments {
     $sth->finish;
 
     $wf->context->param( 'attachments' => $rows);
-    for my $row ($rows->@*) {
-        $row->{content} = sub {
-            my %args = @_;
-            return $row->{_content} if $row->{_content};
-
-            my $sth = $dbh->prepare(
-                q{select content from file_email where id = ?})
-                or die $sth->errstr;
-            $sth->execute( $row->{id} )
-                or die $sth->errstr;
-            ($row->{_content}) = $sth->fetchrow_array();
-            if (not defined $row->{_content} and $sth->err) {
-                die $sth->errstr;
-            }
-            $sth->finish;
-
-            return $args{disable_cache} ?
-                delete $row->{_content} : $row->{_content};
-        };
-    }
 }
 
 

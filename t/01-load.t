@@ -239,6 +239,7 @@ my @modules =
      'LedgerSMB::Workflow::Action::Null',
      'LedgerSMB::Workflow::Action::RecordSpawnedWorkflow',
      'LedgerSMB::Workflow::Action::SpawnWorkflow',
+     'LedgerSMB::Workflow::Email',
      'LedgerSMB::Workflow::Persister',
      'LedgerSMB::Workflow::Persister::Email',
      'LedgerSMB::Workflow::Persister::ExtraData',
