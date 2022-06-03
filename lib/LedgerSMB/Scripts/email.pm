@@ -90,7 +90,7 @@ sub render {
 
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'email', {
-        callback    => $request->{callback},
+        callback    => uri_unescape($request->{callback}),
         id          => $wf->id,
         ( map { $_ => scalar $wf->context->param($_) }
           qw( from to cc bcc notify subject body sent_date
