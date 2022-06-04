@@ -21,6 +21,7 @@ use warnings;
 
 use HTTP::Status qw(HTTP_SEE_OTHER);
 use Log::Any;
+use URI::Escape qw(uri_unescape);
 use Workflow::Factory qw(FACTORY);
 
 
@@ -81,7 +82,7 @@ sub render {
         if ($wf->state eq 'SUCCESS'
             or $request->{wf_action} eq 'Cancel') {
             return [ HTTP_SEE_OTHER,
-                     [ Location => $request->{callback} ],
+                     [ Location => uri_unescape($request->{callback}) ],
                      [ '' ]];
         }
     }
@@ -89,7 +90,7 @@ sub render {
 
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'email', {
-        callback    => $request->{callback},
+        callback    => uri_unescape($request->{callback}),
         id          => $wf->id,
         ( map { $_ => scalar $wf->context->param($_) }
           qw( from to cc bcc notify subject body sent_date

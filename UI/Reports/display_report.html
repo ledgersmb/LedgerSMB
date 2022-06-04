@@ -32,7 +32,9 @@ LINK = request.script _ '?' _ QSTRING;
     <div class="report_header"><label>[% LINE.text %]:</label>
       <span class="report_header">
         [%
-           IF request.${LINE.name};
+           IF LINE.value;
+              LINE.value;
+           ELSIF request.${LINE.name};
               request.${LINE.name};
            ELSE;
               report.${LINE.name};
@@ -46,12 +48,20 @@ LINK = request.script _ '?' _ QSTRING;
          name = 'form_id'
          value = request.form_id
          type = 'hidden'
-         } %]
-  [% FOREACH K IN request.hiddens.keys;
+      } %]
+  [% # legacy... we want explicit 'hiddens'...
+     FOREACH K IN request.hiddens.keys;
          PROCESS input element_data = {
          name = K
          type = 'hidden'
          value = request.hiddens.$K
+         };
+         END; %]
+  [% FOREACH K IN hiddens.keys;
+         PROCESS input element_data = {
+         name = K
+         type = 'hidden'
+         value = hiddens.$K
          };
          END; %]
   [% PROCESS dynatable tbody = {rows = rows }

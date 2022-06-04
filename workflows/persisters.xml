@@ -1,0 +1,7 @@
+<persisters>
+  <persister
+      name="common"
+      class="LedgerSMB::Workflow::Persister"
+      driver="Pg"
+      />
+</persisters>

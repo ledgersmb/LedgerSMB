@@ -27,6 +27,7 @@ extends 'LedgerSMB::Report';
 
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
+use LedgerSMB::I18N;
 
 use List::Util qw(none);
 
@@ -74,7 +75,7 @@ Read-only accessor, returns a list of columns.
 
 
 sub columns {
-    my ($self) = @_;
+    my ($self, $request) = @_;
     our @COLUMNS = ();
     my $credit_label;
     my $base_href;
@@ -85,6 +86,13 @@ sub columns {
         $credit_label = $self->Text('Customer');
         $base_href = 'ar.pl?action=edit&id='; # for details
     }
+
+
+    ###BUG: This is bleeding abstractions like crazy: the Report class itself
+    # already *has* LedgerSMB::I18N mixed in (::I18N is a role!)
+    my @languages =
+        LedgerSMB::I18N::get_language_list($self,$request->{_user}->{language});
+
     push @COLUMNS,
       {col_id => 'select',
          type => 'checkbox',
@@ -100,6 +108,7 @@ sub columns {
       {col_id => 'language',
          name => $self->Text('Language'),
          type => 'select',
+      options => \@languages,
        pwidth => '0', };
 
    if ($self->report_type eq 'detail'){
@@ -282,12 +291,16 @@ sub run_report{
     my @rows = $self->call_dbmethod(funcname => 'report__invoice_aging_' .
                                                 $self->report_type);
     my @result;
+    my %row_span;
     for my $row (@rows) {
         next if ($self->has_details_filter
                  and none { $_ == $row->{id} } $self->details_filter->@*);
+        $row->{language} //= $request->{_user}->{language};
         push @result, $row;
 
         if ($self->report_type eq 'detail') {
+            $row_span{$row->{entity_id}} //= 0;
+            $row_span{$row->{entity_id}}++;
             $row->{row_id} =
                 "$row->{account_number}:$row->{entity_id}:$row->{id}";
         } else {
@@ -299,6 +312,17 @@ sub run_report{
         $self->c90total($self->c90total + $row->{c90});
         $row->{total} = $row->{c0} + $row->{c30} + $row->{c60} + $row->{c90};
         $self->total($self->total + $row->{total});
+    }
+    if (%row_span) {
+        for my $row (@result) {
+            if ($row_span{$row->{entity_id}} > 1) {
+                $row->{language_ROWSPAN} = $row_span{$row->{entity_id}};
+                $row_span{$row->{entity_id}} *= -1;
+            }
+            elsif ($row_span{$row->{entity_id}} < 0) {
+                $row->{language_ROWSPANNED} = 1;
+            }
+        }
     }
     return $self->rows(\@result);
 }
