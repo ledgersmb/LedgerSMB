@@ -32,6 +32,8 @@ Bugs fixed
 * Languages in language selection drop down now in user's language (#6289)
 * Tax module initialization, in support of the US/Washington implementation
 * B/S and PnL PDF templates cleaned up and alignment fixed
+* Aging statements language selector restored (#6353)
+* Multiple aging statements generation and e-mailing restored (#6353)
 
 Code cleanup
 * Fewer warnings from old code
