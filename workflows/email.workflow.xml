@@ -4,19 +4,19 @@
   <persister>Email</persister>
  <description>Handles lifecycle of e-mail</description>
  <state name="INITIAL" autorun="yes">
-   <action name="Send"    resulting_state="EXPANDED">
+   <action name="send"    resulting_state="EXPANDED">
      <condition name="sendImmediately" />
    </action>
    <!-- Save data as provided at workflow creation time -->
-   <action name="Update" resulting_state="CREATED">
+   <action name="update" resulting_state="CREATED">
      <condition name="!sendImmediately"/>
    </action>
  </state>
  <state name="CREATED">
-   <action name="Attach" resulting_state="NOCHANGE"/>
-   <action name="Update" resulting_state="NOCHANGE" />
-   <action name="Send"   resulting_state="EXPANDED" />
-   <action name="Cancel" resulting_state="CANCELLED"/>
+   <action name="attach" resulting_state="NOCHANGE"/>
+   <action name="update" resulting_state="NOCHANGE" />
+   <action name="send"   resulting_state="EXPANDED" />
+   <action name="cancel" resulting_state="CANCELLED"/>
 
  <!--
       Commented out in anticipation of functionality to manage the queue
@@ -28,10 +28,10 @@
  </state>
  <!--
  <state name="QUEUED">
-   <action name="Send"   resulting_state="SENT">
+   <action name="send"   resulting_state="SENT">
      <condition name="Complete" />
   </action>
-   <action name="Cancel" resulting_state="CANCELLED"/>
+   <action name="cancel" resulting_state="CANCELLED"/>
  </state>
  -->
 

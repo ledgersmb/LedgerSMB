@@ -1,8 +1,8 @@
 <actions type="Aging statement batch">
   <action name="complete"
-          description="Complete"
+          text="Complete"
           class="LedgerSMB::Workflow::Action::Null" />
   <action name="cancel"
-          description="Cancel"
+          text="Cancel"
           class="LedgerSMB::Workflow::Action::Null" />
 </actions>

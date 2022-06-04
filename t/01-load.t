@@ -239,6 +239,7 @@ my @modules =
           'LedgerSMB::Template::DB', 'LedgerSMB::Timecard::Type',
           'LedgerSMB::Database::Loadorder', 'LedgerSMB::Database::Change',
      'LedgerSMB::Magic',
+     'LedgerSMB::Workflow::Action',
      'LedgerSMB::Workflow::Action::Email',
      'LedgerSMB::Workflow::Action::Null',
      'LedgerSMB::Workflow::Action::RecordSpawnedWorkflow',

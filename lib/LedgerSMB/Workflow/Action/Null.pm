@@ -9,7 +9,7 @@ LedgerSMB::Workflow::Action::Null - Workflow 'empty' Action
   # action configuration
   <actions>
     <action name="Send" class="LedgerSMB::Workflow::Action::Null"
-            description="Some description for the workflow history" />
+            history-text="Some description for the workflow history" />
   </actions>
 
 
@@ -25,17 +25,13 @@ a description provided in the action configuration to the history table.
 
 use strict;
 use warnings;
-use parent qw( Workflow::Action );
+use parent qw( LedgerSMB::Workflow::Action );
 
 use DateTime;
 use Log::Any qw($log);
 use Workflow::Factory qw(FACTORY);
 
-use LedgerSMB::File::Email;
-use LedgerSMB::Magic qw(FC_EMAIL);
-
-
-my @PROPS = qw( description order );
+my @PROPS = qw( history_text );
 __PACKAGE__->mk_accessors(@PROPS);
 
 =head2 init($wf, $params)
@@ -48,8 +44,7 @@ sub init {
     my ($self, $wf, $params) = @_;
     $self->SUPER::init($wf, $params);
 
-    $self->description( $params->{description} );
-    $self->order( $params->{order} );
+    $self->history_text( $params->{'history-text'} );
 }
 
 =head2 execute($wf)
@@ -66,7 +61,7 @@ sub execute {
         $wf->add_history(
             {
                 action      => $self->name,
-                description => $self->description,
+                description => $self->history_text,
                 date        => DateTime->now(),
                 state       => $wf->state,
             });
@@ -77,7 +72,7 @@ sub execute {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2020 The LedgerSMB Core Team
+Copyright (C) 2020-2022 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
