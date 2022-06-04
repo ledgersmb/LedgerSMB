@@ -111,7 +111,7 @@ sub _billing_mail_addresses {
 
 sub _render_statement_batch {
     my ($request, $wf) = @_;
-
+    my $locale = $request->{_locale};
     my $results = $wf->context->param( 'results' );
     if (scalar($results->@*) == 1) {
         my ($result) = $results->@*;
@@ -125,26 +125,46 @@ sub _render_statement_batch {
     my @columns = (
         {
             col_id    => 'id',
-            name      => $request->{_locale}->text('ID'),
+            name      => $locale->text('ID'),
             type      => 'href',
             href_base => "email.pl?action=render&callback=report_aging.pl%3Faction%3Drender_statement_batch%26workflow_id%3D$wf_id&id=",
         },
         {
             col_id => 'name',
-            name   => $request->{_locale}->text('Entity'),
+            name   => $locale->text('Entity'),
             type   => 'text',
         },
         {
             col_id => 'credit_account',
-            name   => $request->{_locale}->text('Account'),
+            name   => $locale->text('Account'),
             type   => 'text',
         },
         {
             col_id => 'status',
-            name   => $request->{_locale}->text('Status'),
+            name   => $locale->text('Status'),
             type   => 'text',
         },
         );
+
+    my @buttons = ();
+
+    if (grep { $_ eq 'cancel' } $wf->get_current_actions) {
+        push @buttons, {
+            name => 'action',
+            type => 'submit',
+            text => $locale->text('Cancel'),
+            value => 'cancel',
+        };
+    }
+
+    if (grep { $_ eq 'complete' } $wf->get_current_actions) {
+        push @buttons, {
+            name => 'action',
+            type => 'submit',
+            text => $locale->text('Complete'),
+            value => 'mark_complete',
+        };
+    }
 
     my $template = LedgerSMB::Template::UI->new_UI;
     my $rows = [ $results->@* ];
@@ -153,16 +173,71 @@ sub _render_statement_batch {
         my $nested_wf = FACTORY()->fetch_workflow( 'Email' => $row->{id} );
         $row->{status} = $nested_wf->state;
     }
-    return $template->render($request,
-                             'Reports/display_report',
-                             {
-                                 columns => \@columns,
-                                 rows    => $rows,
-                                 name    => 'Aging reminder status',
-                                 request => $request,
+    return $template->render(
+        $request,
+        'Reports/display_report',
+        {
+            buttons => \@buttons,
+            columns => \@columns,
+            hiddens => {
+                workflow_id => $wf_id,
+            },
+            hlines => [
+                {
+                    text => $locale->text('Status'),
+                    value => $wf->state,
+                },
+            ],
+            rows    => $rows,
+            name    => $locale->text('E-mail aging reminder status'),
+            request => $request,
+            DBNAME  => $request->{company},
+        });
+}
 
-                                 DBNAME  => $request->{company},
-                             });
+=item cancel
+
+Cancels the batch processing by cancelling all non-terminated
+sub-workflows and renders an overview page.
+
+=cut
+
+sub cancel {
+    my ($request) = @_;
+    my $wf = FACTORY()->fetch_workflow(
+        'Aging statement batch' => $request->{workflow_id}
+        );
+
+    for my $result ($wf->context->param( 'results' )->@*) {
+        my $nested_wf = FACTORY()->fetch_workflow(
+            'Email' => $result->{id}
+            );
+
+        if ($nested_wf and
+            grep { $_ eq 'Cancel' } $nested_wf->get_current_actions
+            ) {
+            $nested_wf->execute_action( 'Cancel' );
+        }
+    }
+
+    $wf->execute_action( 'cancel' );
+    return _render_statement_batch( $request, $wf );
+}
+
+=item mark_complete
+
+Marks the batch processing completed and renders an overview page.
+
+=cut
+
+sub mark_complete {
+    my ($request) = @_;
+    my $wf = FACTORY()->fetch_workflow(
+        'Aging statement batch' => $request->{workflow_id}
+        );
+
+    $wf->execute_action( 'complete' );
+    return _render_statement_batch( $request, $wf );
 }
 
 =item render_statement_batch

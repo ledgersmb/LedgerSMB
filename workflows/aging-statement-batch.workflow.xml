@@ -3,7 +3,9 @@
   <persister>common</persister>
   <description>Handles the lifecycle of a batch of aging reminders</description>
   <state name="INITIAL">
-    <action name="complete" resulting_state="SUCCESS" />
+    <action name="complete" resulting_state="SUCCESS">
+      <!--TODO: we need a condition checking all workflows being complete...-->
+    </action>
     <action name="cancel"   resulting_state="CANCELLED"/>
   </state>
   <state name="SUCCESS" />
