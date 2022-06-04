@@ -49,7 +49,7 @@ This action adds the following key to the workflow context:
 
 use strict;
 use warnings;
-use parent qw( Workflow::Action );
+use parent qw( LedgerSMB::Workflow::Action );
 
 use Log::Any qw($log);
 use Workflow::Context;
@@ -113,7 +113,7 @@ sub execute {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2020-2021 The LedgerSMB Core Team
+Copyright (C) 2020-2022 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

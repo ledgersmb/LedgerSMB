@@ -52,7 +52,7 @@ This set of actions operates on the following keys in the workflow context:
 
 use strict;
 use warnings;
-use parent qw( Workflow::Action );
+use parent qw( LedgerSMB::Workflow::Action );
 
 use Authen::SASL;
 
@@ -67,7 +67,7 @@ use LedgerSMB::Mailer::TransportSMTP;
 use LedgerSMB::Sysconfig;
 
 
-my @PROPS = qw( action order );
+my @PROPS = qw( action );
 __PACKAGE__->mk_accessors(@PROPS);
 
 =head2 init($wf, $params)
@@ -81,7 +81,6 @@ sub init {
     $self->SUPER::init($wf, $params);
 
     $self->action( $params->{action} );
-    $self->order( $params->{order} );
 }
 
 =head2 execute($wf)
@@ -313,7 +312,7 @@ sub _configure_smtp {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2020 The LedgerSMB Core Team
+Copyright (C) 2020-2022 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

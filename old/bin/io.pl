@@ -1493,7 +1493,7 @@ sub print_form {
         }
 
         $trans_wf->context->param( 'email-data' => $email_data );
-        $trans_wf->execute_action( 'E-mail' );
+        $trans_wf->execute_action( 'e_mail' );
         my $id = $trans_wf->context->param( 'spawned_workflow' );
         if (not $form->{header}) {
             print "Location: email.pl?id=$id&action=render&callback=$form->{script}%3F"

@@ -1,23 +1,25 @@
 <actions type="Email">
   <description>Actions for Email workflow</description>
-  <action name="Update"
+  <action name="update"
+          text="Update"
           class="LedgerSMB::Workflow::Action::Email"
           action="save" order="1" />
-  <action name="Cancel"
+  <action name="cancel"
+          text="Cancel"
           class="LedgerSMB::Workflow::Action::Null"
           action="cancel" order="2" />
-  <action name="Queue"
+  <action name="queue"
+          text="Queue"
           class="LedgerSMB::Workflow::Action::Email"
           action="queue" order="3" />
-  <action name="Send"
+  <action name="send"
+          text="Send"
           class="LedgerSMB::Workflow::Action::Email"
           action="expand" order="4" />
-  <action name="Attach"
+  <action name="attach"
+          text="Attach"
           class="LedgerSMB::Workflow::Action::Email"
           action="attach" order="5" />
-  <action name="Load"
-          class="LedgerSMB::Workflow::Action::Email"
-          action="load" order="6" />
   <action name="do-send"
           class="LedgerSMB::Workflow::Action::Email"
           action="send" />

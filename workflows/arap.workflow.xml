@@ -25,7 +25,7 @@ TODO! Check workflow when 'separate duties' is false!
   <state name="POSTED">
     <action name="save_as_new" resulting_state="NOCHANGE" />
     <action name="void" resulting_state="VOIDED" />
-    <action name="E-mail" resulting_state="NOCHANGE">
+    <action name="e_mail" resulting_state="NOCHANGE">
       <!-- condition name="configuredEmailFrom" / -->
     </action>
     <action name="sales_order" resulting_state="NOCHANGE">

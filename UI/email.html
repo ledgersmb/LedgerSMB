@@ -80,9 +80,9 @@
 FOR action IN actions ;
 PROCESS button element_data = {
 name = 'wf_action'
-text = maketext(action)
-value = action
-id = 'wf-action-' _ action
+text = maketext(action.text)
+value = action.value
+id = 'wf-action-' _ action.value
 };
 END
 
