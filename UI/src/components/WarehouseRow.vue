@@ -1,70 +1,43 @@
 <template>
-  <tr>
-      <td v-for="column in columns">
-          <input :type="column.type" :value="values[column.key]"
-                 :name="column.key"
-                 :readonly="!editing"
-                 @input="update"
-                 @click="checkClick"
-                 style="background-color:transparent"
-                    /></td>
-    <td><button :disabled="editing" @click="edit">Edit</button>
-        <button :disabled="!editing" @click="save">Save</button>
-        <button :disabled="!editing" @click="cancel">Cancel</button>
-    </td>
-  </tr>
+    <tr>
+        <td v-for="column in columns">
+            <input
+                :type="column.type"
+                :value="props.data[column.key]"
+                :name="column.key"
+                :readonly="!editing || !editable"
+                @input="(e) => emit('update', { key: column.key, value: e.target.value })"
+                style="background-color:transparent"
+                :class="editing ? 'editing':'neutral'"
+            />
+        </td>
+        <td>
+            <template v-if="props.type === 'existing'">
+                <button :disabled="!editable || editing"
+                        @click="emit('edit')">Edit</button>
+                <button :disabled="!editable || !editing"
+                        @click="emit('save')">Save</button>
+                <button :disabled="!editable || !editing"
+                        @click="emit('cancel')">Cancel</button>
+                <button :disabled="!editable || editing"
+                        @click="emit('delete')">Delete</button>
+            </template>
+            <button v-else
+                    :disabled="!editable || !editing"
+                    @click="emit('add')">Add</button>
+        </td>
+    </tr>
 </template>
 
+<style local>
+.neutral {
+    border-color: transparent;
+}
+</style>
 
-<script>
+<script setup>
 
-import { cloneDeep } from "lodash";
-import { mapActions } from "pinia";
-
-export default {
-   props: ["columns", "storeData"],
-   data() {
-      return {
-         editing: false,
-         values: null
-      }
-   },
-   methods: {
-      ...mapActions("config/warehouses", {
-            "saveWarehouse": "save"
-      }),
-      cancel() {
-         this.reset();
-         this.editing = false;
-      },
-      checkClick(event) {
-         if (!this.editing) {
-            event.preventDefault();
-         }
-      },
-      edit() {
-         this.editing = true;
-      },
-      reset() {
-         this.values = cloneDeep(this.storeData);
-      },
-      save() {
-         this.$parent.save(this.values);
-         this.editing = false;
-      },
-      update(event) {
-         this.values[event.target.name] = event.target.value;
-      }
-   },
-   beforeMount() {
-      this.reset();
-   },
-   watch: {
-      storeData() {
-         this.reset();
-      }
-   }
-};
-
+const props = defineProps(["columns", "data", "editable", "editing", "type"]);
+const emit = defineEmits(["edit", "cancel", "save", "delete", "update", "add"]);
 
 </script>
