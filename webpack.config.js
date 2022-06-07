@@ -169,7 +169,7 @@ if (TARGET !== "readme") {
         files: "**/*.js",
         emitError: prodMode,
         emitWarning: !prodMode,
-        extensions: [ ".js", ".vue", ".jsx", ".ts", ".tsx" ]
+        extensions: [ ".js", ".vue", ".jsx", ".ts", ".tsx", ".mjs" ]
     };
 
     const StylelintPluginOptions = {
@@ -428,10 +428,9 @@ if (TARGET !== "readme") {
         resolve: {
             alias: {
                 vue$: "vue/dist/vue.esm-bundler.js",
-                pinia$: "pinia/dist/pinia.esm-browser.js",
                 "@": path.join(__dirname, "UI/src/")
             },
-            extensions: [ ".js", ".vue", ".ts", ".jsx", ".tsx" ],
+            extensions: [ ".js", ".vue", ".ts", ".jsx", ".tsx", ".mjs" ],
             fallback: {
                 path: require.resolve("path-browserify")
             }
