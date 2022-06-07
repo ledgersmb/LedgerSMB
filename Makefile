@@ -41,7 +41,11 @@ Help on using this Makefile
   The following make targets are available
     - help         : This help text
     - dist         : Builds the release distribution archive
-    - dojo         : Builds the minified dojo blob we serve to clients
+    - dojo         : Builds the minified dojo blob we serve to clients (legacy)
+    - js           : Builds the minified dojo blob we serve to clients
+    - devdojo      : Builds JS assets with Vue debugger enabled (legacy)
+    - jsdev        : Builds JS assets with Vue debugger enabled
+    - jslint       : Runs 'eslint' on the JS code (FIX=1 reformats)
     - dbdocs       : Builds the PDF, SVG and PNG schema documentation
                      (without rebuilding the inputs)
     - pod          : Builds POD documentation
@@ -83,6 +87,19 @@ dojo: npm_install
 
 devdojo: npm_install
 	$(DOCKER_CMD) npm run build:dev
+
+js: npm_install
+	$(DOCKER_CMD) npm run build
+
+jsdev: npm_install
+	$(DOCKER_CMD) npm run build:dev
+
+jslint:
+ifneq ($(origin FIX),undefined)
+	$(DOCKER_CMD) npm run lint:js:fix
+else
+	$(DOCKER_CMD) npm run lint:js
+endif
 
 readme: npm_install
 	$(DOCKER_CMD) npm run readme

@@ -128,6 +128,7 @@
     "lint": "npm run lint:css;npm run lint:js;npm run lint:markdown",
     "lint:css": "stylelint UI/css/*.css",
     "lint:js": "eslint --ext .js ./",
+    "lint:js:fix": "eslint --fix --ext .js ./",
     "lint:markdown": "markdownlint --config .markdownlint.json --ignore ./node_modules .",
     "profile": "webpack --progress=profile --json > logs/stats.json",
     "readme": "webpack --mode=production --stats errors-warnings"
