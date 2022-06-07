@@ -4,13 +4,35 @@
 
 const TARGET = process.env.npm_lifecycle_event;
 
-if (TARGET !== 'readme') {
-    const fs = require("fs");
-    const glob = require("glob");
-    const path = require("path");
-    const webpack = require("webpack");
+const fs = require("fs");
+const glob = require("glob");
+const path = require("path");
+const webpack = require("webpack");
 
-    const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+function findDataDojoTypes(fileName) {
+    var content = "" + fs.readFileSync(fileName);
+    // Return unique data-dojo-type refereces
+    return (
+        content.match(/(?<=['"]?data-dojo-type['"]?\s*=\s*")([^"]+)(?=")/gi) ||
+        []
+    ).filter((x, i, a) => a.indexOf(x) === i);
+}
+
+function getPOFilenames(_path, extension) {
+    return fs
+        .readdirSync(_path)
+        .filter(
+            (item) =>
+                fs.statSync(path.join(_path, item)).isFile() &&
+                (extension === undefined || path.extname(item) === extension)
+        )
+        .map((item) => path.basename(item, extension))
+        .sort();
+}
+
+if (TARGET !== "readme") {
+    const BundleAnalyzerPlugin =
+        require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
     const CompressionPlugin = require("compression-webpack-plugin");
     const CopyWebpackPlugin = require("copy-webpack-plugin");
     const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
@@ -35,29 +57,7 @@ if (TARGET !== 'readme') {
     process.env.NODE_ENV = prodMode ? "production" : "development";
     const parallelJobs = process.env.CI ? 2 : true;
 
-    /* FUNCTIONS */
-
     var includedRequires = [];
-
-    function findDataDojoTypes(fileName) {
-        var content = "" + fs.readFileSync(fileName);
-        // Return unique data-dojo-type refereces
-        return (
-            content.match(/(?<=['"]?data-dojo-type['"]?\s*=\s*")([^"]+)(?=")/gi) ||
-            []
-        ).filter((x, i, a) => a.indexOf(x) === i);
-    }
-
-    function getPOFilenames(_path, extension) {
-        return fs
-            .readdirSync(_path)
-            .filter(
-                item =>
-                    fs.statSync(path.join(_path, item)).isFile() &&
-                    (extension === undefined || path.extname(item) === extension)
-            ).map(item => path.basename(item,extension))
-            .sort();
-    }
 
     // Compute used data-dojo-type
     glob.sync("**/*.html", {
@@ -77,9 +77,12 @@ if (TARGET !== 'readme') {
     includedRequires = includedRequires
         .concat(
             glob
-                .sync("{js-src/lsmb/**/!(webpack.loaderConfig|main).js,src/*.js,src/elements/*.js}", {
-                    cwd: "UI"
-                })
+                .sync(
+                    "{js-src/lsmb/**/!(webpack.loaderConfig|main).js,src/*.js,src/elements/*.js}",
+                    {
+                        cwd: "UI"
+                    }
+                )
                 .map(function (file) {
                     return file.replace(/\.js$/, "").replace(/js-src\//, "");
                 })
@@ -99,7 +102,7 @@ if (TARGET !== 'readme') {
                 }
             }
         ],
-        exclude: file => {
+        exclude: (file) => {
             return /node_modules/.test(file) || /_scripts/.test(file);
         }
     };
@@ -116,26 +119,26 @@ if (TARGET !== 'readme') {
 
     const vueTranslations = {
         test: /\.(json5?|ya?ml)$/, // target json, json5, yaml and yml files
-        type: 'javascript/auto',
+        type: "javascript/auto",
         // Use `Rule.include` to specify the files of locale messages to be pre-compiled
-        include: [path.resolve(__dirname, './src/locales')],
-        loader: '@intlify/vue-i18n-loader'
+        include: [path.resolve(__dirname, "./src/locales")],
+        loader: "@intlify/vue-i18n-loader"
     };
 
     const vuei18n = {
         resourceQuery: /blockType=i18n/,
-        type: 'javascript/auto',
-        loader: '@intlify/vue-i18n-loader',
+        type: "javascript/auto",
+        loader: "@intlify/vue-i18n-loader"
     };
 
     const css = {
         test: /\.css$/i,
-        use: [ MiniCssExtractPlugin.loader, "css-loader"]
+        use: [MiniCssExtractPlugin.loader, "css-loader"]
     };
 
     const images = {
         test: /\.(png|jpe?g|gif)$/i,
-        type: 'asset'
+        type: "asset"
     };
 
     const html = {
@@ -152,7 +155,7 @@ if (TARGET !== 'readme') {
 
     const svg = {
         test: /\.svg$/,
-        type: 'asset/resource'
+        type: "asset/resource"
     };
 
     /* PLUGINS */
@@ -189,7 +192,7 @@ if (TARGET !== 'readme') {
         loaderConfig: require("./UI/js-src/lsmb/webpack.loaderConfig.js"),
         environment: { dojoRoot: "UI/js" }, // used at run time for non-packed resources (e.g. blank.gif)
         buildEnvironment: { dojoRoot: "node_modules" }, // used at build time
-        locales: getPOFilenames('locale/po','.po'),
+        locales: getPOFilenames("locale/po", ".po"),
         noConsole: true
     };
 
@@ -260,9 +263,14 @@ if (TARGET !== 'readme') {
             NormalModuleReplacementPluginOptionsDomReady
         ),
 
-        new webpack.NormalModuleReplacementPlugin(/^dojo\/text!/, function (data) {
+        new webpack.NormalModuleReplacementPlugin(/^dojo\/text!/, function (
+            data
+        ) {
             /* eslint-disable-next-line no-param-reassign */
-            data.request = data.request.replace(/^dojo\/text!/, "!!raw-loader!");
+            data.request = data.request.replace(
+                /^dojo\/text!/,
+                "!!raw-loader!"
+            );
         }),
 
         // Copy a few Dojo ressources
@@ -322,10 +330,11 @@ if (TARGET !== 'readme') {
         new webpack.DefinePlugin({
             "process.env.VUE_APP_I18N_LOCALE": "en",
             "process.env.VUE_APP_I18N_FALLBACK_LOCALE": "en",
-            "__SUPPORTED_LOCALES":
-                getPOFilenames('locale/po','.po').map(function(po){
-                    return "'"+po+"'"
-                })
+            __SUPPORTED_LOCALES: getPOFilenames("locale/po", ".po").map(
+                function (po) {
+                    return "'" + po + "'";
+                }
+            )
         })
     ];
 
@@ -335,8 +344,8 @@ if (TARGET !== 'readme') {
         new UnusedWebpackPlugin(UnusedWebpackPluginOptions),
 
         new webpack.DefinePlugin({
-            "__VUE_OPTIONS_API__": true,
-            "__VUE_PROD_DEVTOOLS__": true
+            __VUE_OPTIONS_API__: true,
+            __VUE_PROD_DEVTOOLS__: true
         })
     ];
 
@@ -354,7 +363,7 @@ if (TARGET !== 'readme') {
                 parallel: parallelJobs
             })
         ],
-        moduleIds: 'deterministic',
+        moduleIds: "deterministic",
         runtimeChunk: "multiple",
         splitChunks: {
             cacheGroups: {
@@ -388,7 +397,7 @@ if (TARGET !== 'readme') {
         context: path.join(__dirname, "UI"),
 
         entry: {
-            "dojo-shared": [ ...includedRequires ],
+            "dojo-shared": [...includedRequires],
             ...lsmbCSS
         },
 
@@ -401,17 +410,26 @@ if (TARGET !== 'readme') {
         },
 
         module: {
-            rules: [vue, vueTranslations, vuei18n, javascript, css, images, svg, html]
+            rules: [
+                vue,
+                vueTranslations,
+                vuei18n,
+                javascript,
+                css,
+                images,
+                svg,
+                html
+            ]
         },
 
         plugins: pluginsList,
 
         resolve: {
             alias: {
-                "vue$": "vue/dist/vue.esm-bundler.js",
+                vue$: "vue/dist/vue.esm-bundler.js",
                 "@": path.join(__dirname, "UI/src/")
             },
-            extensions: [ ".js", ".vue" ],
+            extensions: [".js", ".vue"],
             fallback: {
                 path: require.resolve("path-browserify")
             }
@@ -425,17 +443,20 @@ if (TARGET !== 'readme') {
 
         optimization: optimizationList,
 
-        performance: { hints: prodMode ? false : "warning" },
+        performance: {
+            hints: prodMode ? false : "warning",
+            maxAssetSize: prodMode ? 250000 /* the default */ : 10000000,
+            maxEntrypointSize: prodMode ? 250000 /* the default */ : 10000000
+        },
 
         devtool: prodMode ? "hidden-source-map" : "source-map"
     };
 
     module.exports = webpackConfigs;
-}
-else{
+} else {
     const { merge } = require("webpack-merge");
 
     /* Include Markdown compiling for README.md */
     const WebpackCompileMarkdown = require("./UI/js-src/webpack-compile-markdown.js");
-    module.exports = merge({ entry: {}}, WebpackCompileMarkdown);
+    module.exports = merge({ entry: {} }, WebpackCompileMarkdown);
 }
