@@ -126,6 +126,7 @@
     "content-disposition": "0.5.4",
     "dijit": "1.17.2",
     "dojo": "1.17.2",
+    "robot3": "^0.3.1",
     "vue-i18n": "9.1.10"
   },
   "homepage": "http://ledgersmb.org/",
