@@ -443,7 +443,11 @@ if (TARGET !== "readme") {
 
         optimization: optimizationList,
 
-        performance: { hints: prodMode ? false : "warning" },
+        performance: {
+            hints: prodMode ? false : "warning",
+            maxAssetSize: prodMode ? 250000 /* the default */ : 10000000,
+            maxEntrypointSize: prodMode ? 250000 /* the default */ : 10000000
+        },
 
         devtool: prodMode ? "hidden-source-map" : "source-map"
     };
