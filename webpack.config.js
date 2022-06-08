@@ -168,8 +168,7 @@ if (TARGET !== "readme") {
     const ESLintPluginOptions = {
         files: "**/*.js",
         emitError: prodMode,
-        emitWarning: !prodMode,
-        extensions: [ ".js", ".vue", ".jsx", ".ts", ".tsx", ".mjs" ]
+        emitWarning: !prodMode
     };
 
     const StylelintPluginOptions = {
@@ -430,7 +429,7 @@ if (TARGET !== "readme") {
                 vue$: "vue/dist/vue.esm-bundler.js",
                 "@": path.join(__dirname, "UI/src/")
             },
-            extensions: [ ".js", ".vue", ".ts", ".jsx", ".tsx", ".mjs" ],
+            extensions: [".js", ".vue", ".ts", ".jsx", ".tsx", ".mjs"],
             fallback: {
                 path: require.resolve("path-browserify")
             }

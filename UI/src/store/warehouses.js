@@ -5,9 +5,8 @@ import { defineStore } from "pinia";
 export const useWarehousesStore = defineStore("warehouses", {
     state: () => {
         return {
-            fields: [ "id", "description" ],
-            warehouses: [
-            ]
+            fields: ["id", "description"],
+            warehouses: []
         };
     },
     actions: {
@@ -18,8 +17,10 @@ export const useWarehousesStore = defineStore("warehouses", {
             return Promise.resolve();
         },
         async add(adding) {
-            this.warehouses.push({ id: this.warehouses.length*2,
-                                   description: adding.description });
+            this.warehouses.push({
+                id: this.warehouses.length * 2,
+                description: adding.description
+            });
         },
         async del(id) {
             let index = this.warehouses.findIndex((w) => w.id === id);
@@ -32,8 +33,10 @@ export const useWarehousesStore = defineStore("warehouses", {
         },
         async save(id, data) {
             let warehouse = this.warehouses.find((w) => w.id === id);
-            data["id"] = id; // prevent overwriting 'id'
-            this.fields.forEach((f) => warehouse[f] = data[f]);
+            this.fields.forEach((f) => {
+                warehouse[f] = data[f];
+            });
+            warehouse.id = id; // prevent overwriting 'id'
         }
     }
 });

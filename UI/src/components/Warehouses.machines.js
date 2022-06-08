@@ -1,7 +1,6 @@
 /** @format */
 
 import {
-    action,
     createMachine,
     interpret,
     invoke,
@@ -10,16 +9,12 @@ import {
     transition
 } from "@/robot-vue";
 
-
-import { reactive } from "vue";
-import { cloneDeep } from "lodash";
-
 function handleError(ctx, error) {
     return { ...ctx, error };
 }
 
 function clearEditBuffer(ctx) {
-    return { ...ctx, "editData": {} };
+    return { ...ctx, editData: {} };
 }
 
 function updateEditBuffer(ctx, { data }) {
@@ -28,7 +23,7 @@ function updateEditBuffer(ctx, { data }) {
 }
 
 function clearNewBuffer(ctx) {
-    return { ...ctx, "newData": {} };
+    return { ...ctx, newData: {} };
 }
 
 function updateNewBuffer(ctx, { data }) {
@@ -43,11 +38,11 @@ function markRowEditing(ctx, { rowId }) {
 
 async function initializeWarehouses(ctx) {
     return ctx.warehousesStore.initialize();
-};
+}
 
 async function addWarehouse(ctx) {
     return ctx.warehousesStore.add(ctx.newData);
-};
+}
 
 async function deleteWarehouse(ctx, { rowId }) {
     return ctx.warehousesStore.del(rowId);
@@ -55,48 +50,51 @@ async function deleteWarehouse(ctx, { rowId }) {
 
 async function saveWarehouse(ctx) {
     return ctx.warehousesStore.save(ctx.rowId, ctx.editData);
-};
+}
 
-const machine = createMachine({
-    loading: invoke(
-        initializeWarehouses,
-        transition("done", "idle"),
-        transition("error", "error")
-    ),
-    idle: state(
-        transition("edit", "editing", reduce(markRowEditing)),
-        transition("delete", "deleting"),
-        transition("add", "adding"),
-        transition("updateNew", "idle", reduce(updateNewBuffer))
-    ),
-    editing: state(
-        transition("cancel", "idle"),
-        transition("save", "saving"),
-        transition("updateEdit", "editing", reduce(updateEditBuffer))
-    ),
-    saving: invoke(
-        // the event which triggered the 'saving' state
-        // is passed as the event to the 'saveWarehouse' function
-        saveWarehouse,
-        transition("error", "error", reduce(handleError)),
-        transition("done", "idle", reduce(clearEditBuffer))
-    ),
-    deleting: invoke(
-        // the event which triggered the 'deleting' state
-        // is passed as the event to the 'deleteWarehouse' function
-        deleteWarehouse,
-        transition("error", "error", reduce(handleError)),
-        transition("done", "idle")
-    ),
-    adding: invoke(
-        // the event which triggered the 'adding' state
-        // is passed as the event to the 'addWarehouse' function
-        addWarehouse,
-        transition("error", "error", reduce(handleError)),
-        transition("done", "idle", reduce(clearNewBuffer))
-    ),
-    error: state()
-}, (initialContext) => ({ rowId: "", ...initialContext }));
+const machine = createMachine(
+    {
+        loading: invoke(
+            initializeWarehouses,
+            transition("done", "idle"),
+            transition("error", "error")
+        ),
+        idle: state(
+            transition("edit", "editing", reduce(markRowEditing)),
+            transition("delete", "deleting"),
+            transition("add", "adding"),
+            transition("updateNew", "idle", reduce(updateNewBuffer))
+        ),
+        editing: state(
+            transition("cancel", "idle"),
+            transition("save", "saving"),
+            transition("updateEdit", "editing", reduce(updateEditBuffer))
+        ),
+        saving: invoke(
+            // the event which triggered the 'saving' state
+            // is passed as the event to the 'saveWarehouse' function
+            saveWarehouse,
+            transition("error", "error", reduce(handleError)),
+            transition("done", "idle", reduce(clearEditBuffer))
+        ),
+        deleting: invoke(
+            // the event which triggered the 'deleting' state
+            // is passed as the event to the 'deleteWarehouse' function
+            deleteWarehouse,
+            transition("error", "error", reduce(handleError)),
+            transition("done", "idle")
+        ),
+        adding: invoke(
+            // the event which triggered the 'adding' state
+            // is passed as the event to the 'addWarehouse' function
+            addWarehouse,
+            transition("error", "error", reduce(handleError)),
+            transition("done", "idle", reduce(clearNewBuffer))
+        ),
+        error: state()
+    },
+    (initialContext) => ({ rowId: "", ...initialContext })
+);
 
 function cbStateEntry(service) {
     let current = service.machine.current;
@@ -108,12 +106,11 @@ function cbStateEntry(service) {
 }
 
 function warehousesMachine(warehousesStore) {
-    return interpret(
-        machine,
-        cbStateEntry,
-        { warehousesStore, editData: {}, newData: {} });
+    return interpret(machine, cbStateEntry, {
+        warehousesStore,
+        editData: {},
+        newData: {}
+    });
 }
 
-export {
-    warehousesMachine
-};
+export { warehousesMachine };

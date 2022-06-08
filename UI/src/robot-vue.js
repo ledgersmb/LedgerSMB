@@ -10,50 +10,51 @@ import {
     state,
     transition
 } from "robot3";
-import { ref } from "vue";
+import { ref as allocRef } from "vue";
 
 function nil() {}
 
-function allocateOnChange(state, onChange) {
-    onChange = onChange || nil;
-    return function(service) {
-        onChange(service);
+function allocateOnChange(s, onChange) {
+    const cb = onChange || nil;
+    const sb = s;
+    return function (service) {
+        cb(service);
 
-        state.value = service.machine.current;
-        let ctx = service.context;
-        service._contextRefs.forEach(
-            ({key, ref}) => {
-                ref.value = ctx[key];
-            });
+        sb.value = service.machine.current;
+        const ctx = service.context;
+        service._contextRefs.forEach(({ key, ref }) => {
+            const rb = ref;
+            rb.value = ctx[key];
+        });
     };
 }
 
 function interpret(machine, onChange, initialContext, event) {
-    let state = ref("");
-    let service = interpretRobot(
+    const s = allocRef("");
+    const service = interpretRobot(
         machine,
-        allocateOnChange(state, onChange),
+        allocateOnChange(s, onChange),
         initialContext,
-        event);
+        event
+    );
     service._contextRefs = [];
-    state.value = service.machine.current;
+    s.value = service.machine.current;
 
     return {
-        service,
+        service: service,
         send: service.send,
-        state
+        state: s
     };
 }
 
 function contextRef(service, key) {
-    let ctxRef = {
+    const ctxRef = {
         key: key,
-        ref: ref(service.context[key])
+        ref: allocRef(service.context[key])
     };
     service._contextRefs.push(ctxRef);
     return ctxRef.ref;
 }
-
 
 export {
     action,
