@@ -4,33 +4,12 @@
 
 const TARGET = process.env.npm_lifecycle_event;
 
-const fs = require("fs");
-const glob = require("glob");
-const path = require("path");
-const webpack = require("webpack");
-
-function findDataDojoTypes(fileName) {
-    var content = "" + fs.readFileSync(fileName);
-    // Return unique data-dojo-type refereces
-    return (
-        content.match(/(?<=['"]?data-dojo-type['"]?\s*=\s*")([^"]+)(?=")/gi) ||
-        []
-    ).filter((x, i, a) => a.indexOf(x) === i);
-}
-
-function getPOFilenames(_path, extension) {
-    return fs
-        .readdirSync(_path)
-        .filter(
-            (item) =>
-                fs.statSync(path.join(_path, item)).isFile() &&
-                (extension === undefined || path.extname(item) === extension)
-        )
-        .map((item) => path.basename(item, extension))
-        .sort();
-}
-
 if (TARGET !== "readme") {
+    const fs = require("fs");
+    const glob = require("glob");
+    const path = require("path");
+    const webpack = require("webpack");
+
     const BundleAnalyzerPlugin =
         require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
     const CompressionPlugin = require("compression-webpack-plugin");
@@ -43,6 +22,7 @@ if (TARGET !== "readme") {
     const MiniCssExtractPlugin = require("mini-css-extract-plugin");
     const StylelintPlugin = require("stylelint-webpack-plugin");
     const UnusedWebpackPlugin = require("unused-webpack-plugin");
+    const VirtualModulesPlugin = require("webpack-virtual-modules");
     const { VueLoaderPlugin } = require("vue-loader");
 
     const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via npm
@@ -57,8 +37,33 @@ if (TARGET !== "readme") {
     process.env.NODE_ENV = prodMode ? "production" : "development";
     const parallelJobs = process.env.CI ? 2 : true;
 
+    /* FUNCTIONS */
     var includedRequires = [];
 
+    /* eslint-disable-next-line no-inner-declarations */
+    function findDataDojoTypes(fileName) {
+        var content = "" + fs.readFileSync(fileName);
+        // Return unique data-dojo-type refereces
+        return (
+            content.match(
+                /(?<=['"]?data-dojo-type['"]?\s*=\s*")([^"]+)(?=")/gi
+            ) || []
+        ).filter((x, i, a) => a.indexOf(x) === i);
+    }
+
+    /* eslint-disable-next-line no-inner-declarations */
+    function getPOFilenames(_path, extension) {
+        return fs
+            .readdirSync(_path)
+            .filter(
+                (item) =>
+                    fs.statSync(path.join(_path, item)).isFile() &&
+                    (extension === undefined ||
+                        path.extname(item) === extension)
+            )
+            .map((item) => path.basename(item, extension))
+            .sort();
+    }
     // Compute used data-dojo-type
     glob.sync("**/*.html", {
         ignore: ["lib/ui-header.html", "js/**", "js-src/{dojo,dijit,util}/**"],
@@ -167,6 +172,7 @@ if (TARGET !== "readme") {
 
     const ESLintPluginOptions = {
         files: "**/*.js",
+        exclude: ["node_modules", "./bootstrap.js"],
         emitError: prodMode,
         emitWarning: !prodMode
     };
@@ -192,6 +198,7 @@ if (TARGET !== "readme") {
         loaderConfig: require("./UI/js-src/lsmb/webpack.loaderConfig.js"),
         environment: { dojoRoot: "UI/js" }, // used at run time for non-packed resources (e.g. blank.gif)
         buildEnvironment: { dojoRoot: "node_modules" }, // used at build time
+        //locales: ["en"],
         locales: getPOFilenames("locale/po", ".po"),
         noConsole: true
     };
@@ -243,6 +250,19 @@ if (TARGET !== "readme") {
         )
     };
 
+    // Compile bootstrap module as a virtual one
+    const VirtualModulesPluginOptions = {
+        "./bootstrap.js":
+            `/* eslint-disable */\n` +
+            `define(["dojo/parser","dojo/ready","` +
+            includedRequires.join('","') +
+            `"], function(parser, ready) {\n` +
+            `    ready(function() {\n` +
+            `        console.log('Bootstrapped');\n` +
+            `    });\n` +
+            `    return {};\n` +
+            `});`
+    };
     var pluginsProd = [
         // Clean UI/js before building (must be first)
         new CleanWebpackPlugin(CleanWebpackPluginOptions),
@@ -272,6 +292,7 @@ if (TARGET !== "readme") {
                 "!!raw-loader!"
             );
         }),
+        new VirtualModulesPlugin(VirtualModulesPluginOptions),
 
         // Copy a few Dojo ressources
         new CopyWebpackPlugin(CopyWebpackPluginOptions),
@@ -379,12 +400,23 @@ if (TARGET !== "readme") {
                         );
                     },
                     name(module) {
+                        // const nlsName = module.context.match(
+                        //     /[\\/]dojo[\\/]cldr[\\/]nls[\\/]([a-zA-Z0-9]+)/
+                        // );
+                        // if (nlsName) {
+                        //     return `npm.dojo-nls`;
+                        // }
+                        if (module.context.match(/.+cldr[\\/]/)) {
+                            return `npm.dojo-cldr`;
+                        }
                         const packageName = module.context.match(
                             /[\\/]node_modules[\\/](.*?)([\\/]|$)/
                         )[1];
                         return `npm.${packageName.replace("@", "")}`;
                     },
                     chunks: "all"
+                    //,
+                    //enforce: true
                 }
             }
         }
@@ -400,7 +432,7 @@ if (TARGET !== "readme") {
         context: path.join(__dirname, "UI"),
 
         entry: {
-            "dojo-shared": [...includedRequires],
+            bootstrap: "./bootstrap.js", // Virtual file
             ...lsmbCSS
         },
 
@@ -453,7 +485,28 @@ if (TARGET !== "readme") {
             maxEntrypointSize: prodMode ? 250000 /* the default */ : 10000000
         },
 
-        devtool: prodMode ? "hidden-source-map" : "source-map"
+        devtool: prodMode ? "hidden-source-map" : "source-map",
+
+        devServer: {
+            allowedHosts: "all", // Replace with docker parent and localhost
+            client: {
+                logging: "info",
+                overlay: false  // true would be nice when duplicates sources is fixed
+            },
+            compress: true,
+            devMiddleware: {
+                publicPath: 'js/',
+                writeToDisk: true,
+            },
+            hot: true,
+            port: 9000,
+            proxy: {
+                '/': 'http://localhost:5762',
+            },
+            static: {
+                directory: path.join(__dirname, "/UI")
+            }
+        }
     };
 
     module.exports = webpackConfigs;

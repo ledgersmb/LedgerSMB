@@ -116,6 +116,7 @@
     "webpack-cli": "4.10.0",
     "webpack-merge": "5.8.0",
     "webpack-sources": "3.2.3",
+    "webpack-virtual-modules": "0.4.3",
     "yargs": "17.5.1"
   },
   "dependencies": {
@@ -133,12 +134,12 @@
     "build:dev": "webpack --progress --mode=development --stats errors-warnings",
     "lint": "npm run lint:css;npm run lint:js;npm run lint:markdown",
     "lint:css": "stylelint UI/css/*.css",
-    "lint:js": "eslint --ext .js,.mjs ./",
-    "lint:js:fix": "eslint --fix --ext .js,.mjs ./",
+    "lint:js": "eslint --ext .js ./",
+    "lint:js:fix": "eslint --fix --ext .js ./",
     "lint:markdown": "markdownlint --config .markdownlint.json --ignore ./node_modules .",
     "profile": "webpack --progress=profile --json > logs/stats.json",
     "readme": "webpack --mode=production --stats errors-warnings",
-    "serve": "webpack --mode=development serve --progress --hot"
+    "serve": "npx webpack serve --progress --mode=development --stats errors-warnings"
   },
   "babel": {
     "presets": [
