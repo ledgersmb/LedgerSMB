@@ -101,7 +101,7 @@
     "prettier": "2.6.2",
     "stylelint": "14.9.0",
     "stylelint-bare-webpack-plugin": "2.1.0",
-    "stylelint-config-standard": "25.0.0",
+    "stylelint-config-standard": "26.0.0",
     "stylelint-no-unsupported-browser-features": "5.0.3",
     "stylelint-order": "5.0.0",
     "unix-timestamp": "1.0.2",
