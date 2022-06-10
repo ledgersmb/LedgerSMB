@@ -31,10 +31,7 @@ div.warning {
     color: black;
     float: right;
     margin-right: 10%;
-    padding-bottom: 1em;
-    padding-left: 5em;
-    padding-right: 5em;
-    padding-top: 1em;
+    padding: 1em 5em;
     text-align: center;
     width: 60%;
 }
@@ -575,10 +572,7 @@ h2 {
 .header_table {
     border: none;
     border-collapse: collapse;
-    margin-bottom: 0;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 0;
+    margin: 0 auto;
     padding-bottom: 0;
     padding-top: 0;
 }
@@ -659,10 +653,7 @@ h2 {
 }
 
 #email td {
-    padding-bottom: 3px;
-    padding-left: 3px;
-    padding-right: 15px;
-    padding-top: 3px;
+    padding: 3px 15px 3px 3px;
 }
 
 #email #body {
@@ -675,8 +666,8 @@ h2 {
 
 #logindiv #company_div {
     display: grid;
-    grid-template-columns: auto auto;
     grid-row-gap: 4px;
+    grid-template-columns: auto auto;
     margin-bottom: 1em;
     margin-top: 2em;
 }
@@ -725,4 +716,3 @@ h2 {
 .six-column-grid label {
     text-align: left;
 }
-

@@ -1,8 +1,9 @@
 /* stylesheet for ledger-smb */
 
-@import url("ledgersmb-common.css");
+@import "ledgersmb-common.css";
 
 /* CSS3 Variables */
+
 :root {
     /* Backgrounds */
     --a-hover-bg-clr: transparent;

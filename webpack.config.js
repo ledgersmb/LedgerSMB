@@ -41,7 +41,7 @@ if (TARGET !== "readme") {
     const ESLintPlugin = require("eslint-webpack-plugin");
     const HtmlWebpackPlugin = require("html-webpack-plugin");
     const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-    const StylelintPlugin = require("stylelint-bare-webpack-plugin");
+    const StylelintPlugin = require("stylelint-webpack-plugin");
     const UnusedWebpackPlugin = require("unused-webpack-plugin");
     const { VueLoaderPlugin } = require("vue-loader");
 
