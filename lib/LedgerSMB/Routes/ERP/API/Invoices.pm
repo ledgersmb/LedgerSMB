@@ -34,12 +34,13 @@ use warnings;
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_FOUND
     HTTP_NOT_FOUND HTTP_BAD_REQUEST HTTP_UNSUPPORTED_MEDIA_TYPE
     HTTP_NOT_IMPLEMENTED );
-use Plack::Request::WithEncoding;
+use JSONSchema::Validator;
 use List::Util qw( reduce );
+use Plack::Request::WithEncoding;
 use Scalar::Util qw( blessed reftype );
 use Workflow::Context;
 use Workflow::Factory qw( FACTORY );
-
+use YAML::PP;
 
 use LedgerSMB::Company;
 use LedgerSMB::Entity::Credit_Account;
@@ -417,6 +418,16 @@ patch '/invoices/{id}' => sub {
 
 =cut
 
+    my $reader = YAML::PP->new(boolean => 'JSON::PP');
+my $schema = $reader->load_string(
+    do {
+        # slurp __DATA__ section
+        local $/; <DATA>;
+    });
+my $validator = JSONSchema::Validator->new(
+    schema => $schema,
+    specification => 'OAS30');
+
 
 post '/invoices/' => sub {
     my ($env) = @_;
@@ -436,61 +447,41 @@ post '/invoices/' => sub {
         }
     }
     my $body = json()->decode($r->content);
+    my ($result, $errors, $warnings) =
+        $validator->validate_request(
+            method => 'POST',
+            openapi_path => '/erp/api/invoices',
+            parameters => {
+                body => [1, 'application/json', $body]
+            });
+
+    return error($r, HTTP_BAD_REQUEST, [], @$errors)
+        if scalar(@$errors) > 0;
+
     my @errors;
-
-    foreach my $req (qw( eca account currency )) {
-        if (not exists $body->{$req}
-            or not defined $body->{$req}) {
-            push @errors, {
-                msg => "Missing key '$req'",
-            };
-        }
-    }
-
     my $inv = {};
     # lookup the required fields: eca
-    if (reftype $body->{eca} eq 'HASH') {
+    {
         my %map = ( 'customer' => EC_CUSTOMER(),
                     'vendor' => EC_VENDOR());
         my $eca = LedgerSMB::Entity::Credit_Account->new(
             _dbh => $env->{'lsmb.db'},
             entity_class => $map{$body->{eca}->{type}},
             );
-        if (defined $body->{eca}->{id}
-            and $body->{eca}->{id} ne '') {
+        if (exists $body->{eca}->{id}) {
             $inv->{eca} = $eca->get_by_id($body->{eca}->{id});
         }
-        elsif (defined $body->{eca}->{number}
-               and $body->{eca}->{number} ne '') {
-            if (defined $body->{eca}->{type}
-                and exists $map{$body->{eca}->{type}}) {
-                $inv->{eca} = $eca->get_by_meta_number(
-                    $body->{eca}->{number},
-                    $map{$body->{eca}->{type}},
-                    );
-            }
-            else {
-                push @errors, {
-                    msg => q|Expecting either 'customer' or 'vendor' in key 'eca.number'; found| . $body->{eca}->{number},
-                };
-            }
-        }
         else {
-            push @errors, {
-                msg => q|Expecting 'eca' object to hold either an 'id' key or 'number'+'type' keys|,
-            };
+            $inv->{eca} = $eca->get_by_meta_number(
+                $body->{eca}->{number},
+                $map{$body->{eca}->{type}},
+                );
         }
-
         unless ($inv->{eca}->{id}) {
             push @errors, {
                 msg => q|Specified customer/vendor not found|,
             };
         }
-    }
-    else {
-        push @errors, {
-            msg => q|Expecting toplevel 'eca' key with object value specifying the customer/vendor|,
-        };
     }
 
     {
@@ -514,11 +505,7 @@ post '/invoices/' => sub {
     }
 
     # look up the AR/AP account by accno
-    if (exists $body->{account}
-        and defined $body->{account}
-        and reftype $body->{account} eq 'HASH'
-        and defined $body->{account}->{accno}
-        and $body->{account}->{accno} ne '') {
+    {
         my $account = $c->configuration->coa_nodes
             ->get(by => (accno => $body->{account}->{accno}));
         if (blessed $account) {
@@ -529,11 +516,6 @@ post '/invoices/' => sub {
                 msg => qq|Specified account ($body->{account}->{accno}) not found|,
             };
         }
-    }
-    else {
-        push @errors, {
-            msg => q|Expecting toplevel 'account' key with object value specifying the receivables/payables account|,
-        };
     }
 
     # set the optional fields
@@ -559,160 +541,69 @@ post '/invoices/' => sub {
     }
 
     # process optional nested fields
-    if (exists $body->{'ship-to'}
-        and defined $body->{'ship-to'}) {
-        if (reftype $body->{'ship-to'} eq 'HASH') {
-            ...;
-        }
-        else {
-            push @errors, {
-                msg => q|Expecting toplevel 'ship-to' key with object value specifying a shipping address|,
-            };
+    if (exists $body->{'ship-to'}) {
+        ...;
+    }
+
+    {
+        my %map = ('due'     => 'duedate',
+                   'book'    => 'transdate',
+                   'created' => 'crdate');
+        foreach my $d (qw( due book created )) {
+            # due|created|book
+            next if not $body->{dates}->{$d};
+            $inv->{$map{$d}} = $body->{dates}->{$d};
         }
     }
 
-    if (exists $body->{dates}
-        and defined $body->{dates}) {
-        if (reftype $body->{dates} eq 'HASH') {
-            my %map = ('due'     => 'duedate',
-                       'book'    => 'transdate',
-                       'created' => 'crdate');
-            foreach my $d (qw( due book created )) {
-                # due|created|book
-                next if not $body->{dates}->{$d};
-                if ($body->{dates}->{$d} =~ m/^\d{4,4}-\d\d-\d\d$/) {
-                    $inv->{$map{$d}} = $body->{dates}->{$d};
+    {
+        $inv->{lines} = [];
+        for my $line ($body->{lines}->@*) {
+            # set the optional fields
+            my $inv_line = {};
+            push $inv->{lines}->@*, $inv_line;
+
+            foreach my $field (qw( description price price_fixated unit qty
+                               discount discount_type taxform delivery_date note
+                               serialnumber group )) {
+                if (exists $line->{$field}
+                    and defined $line->{$field}
+                    and $line->{$field} ne '') {
+                    $inv_line->{$field} = $line->{$field};
                 }
-                else {
+            }
+            $inv_line->{qty}   = $inv_line->{qty} // 1;
+
+            # determine price and description
+            {
+                my $part = LedgerSMB::Part->new(
+                    _dbh => $env->{'lsmb.db'}
+                    );
+                $inv_line->{part} = $part->get_by_partnumber(
+                    $line->{part}->{number}
+                    );
+                unless ($inv_line->{part}->{id}) {
                     push @errors, {
-                        msg => qq|Incorrect date format for key dates.$d; expecting 'YYYY-MM-DD', found $body->{dates}->{$d}|,
+                        msg => q|Specified part not found|,
+                        val => $line->{part}->{number},
                     };
                 }
-            }
-        }
-        else {
-            push @errors, {
-                msg => q|Expecting toplevel 'dates' key with object value specifying invoice related dates 'created'/'book'/'due'|,
-            };
-        }
-    }
-
-    if (exists $body->{lines}
-        and defined $body->{lines}) {
-        if (reftype $body->{lines} eq 'ARRAY') {
-            my @lines;
-            $inv->{lines} = \@lines;
-            for my $line ($body->{lines}->@*) {
-                # set the optional fields
-                my $inv_line = {};
-                push @lines, $inv_line;
-
-                foreach my $field (qw( description price price_fixated unit qty
-                                   discount discount_type taxform delivery_date note
-                                   serialnumber group )) {
-                    if (exists $line->{$field}
-                        and defined $line->{$field}
-                        and $line->{$field} ne '') {
-                        $inv_line->{$field} = $line->{$field};
-                    }
-                }
-                if (defined $inv_line->{qty}) {
-                    if ($inv_line->{qty} !~ m/^\d+([.]\d+)?$/) {
-                        push @errors, {
-                            msg => q|Non-numeric data in 'qty' field|,
-                            val => $inv_line->{qty},
-                        };
-                    }
+                # "lastcost" is the price to put on
+                # a vendor invoice, whereas "sellprice" goes
+                # into the sales invoice....
+                # Map either into the 'price' field, so we
+                # can have unified handling from here.
+                if ($inv->{eca}->entity_class == EC_CUSTOMER()) {
+                    $inv_line->{part}->{price} =
+                        delete $inv_line->{part}->{sellprice};
                 }
                 else {
-                    $inv_line->{qty} = 1;
+                    $inv_line->{part}->{price} =
+                        delete $inv_line->{part}->{lastcost};
                 }
-                if (defined $inv_line->{price}) {
-                    if ($inv_line->{price} !~ m/^\d+([.]\d+)?$/) {
-                        push @errors, {
-                            msg => q|Non-numeric data in 'price' field|,
-                            val => $inv_line->{price},
-                        };
-                    }
-                }
-                if (defined $inv_line->{discount}) {
-                    if ($inv_line->{discount} !~ m/^\d+([.]\d+)?$/) {
-                        push @errors, {
-                            msg => q|Non-numeric data in 'discount' field|,
-                            val => $inv_line->{discount},
-                        };
-                    }
-                }
-                if (defined $inv_line->{discount_type}) {
-                    if ($inv_line->{discount_type} !~ m/^(%)$/) {
-                        push @errors, {
-                            msg => q|Unexpected value in 'discount_type' field; expected '%'|,
-                            val => $inv_line->{discount_type},
-                        };
-                    }
-                }
-                if (defined $inv_line->{delivery_date}) {
-                    if ($inv_line->{delivery_date} !~  m/^\d{4,4}-\d\d-\d\d$/) {
-                        push @errors, {
-                            msg => q|Non-date value in 'delivery_date' field|,
-                            val => $inv_line->{delivery_date},
-                        };
-                    }
-                }
-                if (exists $line->{part}
-                    and defined $line->{part}) {
-                    if (reftype $line->{part} eq 'HASH') {
-                        if (exists $line->{part}->{number}
-                            and defined $line->{part}->{number}
-                            and $line->{part}->{number} ne '') {
-                            my $part = LedgerSMB::Part->new(
-                                _dbh => $env->{'lsmb.db'}
-                                );
-                            $inv_line->{part} = $part->get_by_partnumber(
-                                $line->{part}->{number}
-                                );
-                            unless ($inv_line->{part}->{id}) {
-                                push @errors, {
-                                    msg => q|Specified part not found|,
-                                    val => $line->{part}->{number},
-                                };
-                            }
-                            # "lastcost" is the price to put on
-                            # a vendor invoice, whereas "sellprice" goes
-                            # into the sales invoice....
-                            # Map either into the 'price' field, so we
-                            # can have unified handling from here.
-                            if ($inv->{eca}->entity_class == EC_CUSTOMER()) {
-                                $inv_line->{part}->{price} =
-                                    delete $inv_line->{part}->{sellprice};
-                            }
-                            else {
-                                $inv_line->{part}->{price} =
-                                    delete $inv_line->{part}->{lastcost};
-                            }
 
-                            $inv_line->{$_} //= $inv_line->{part}->{$_}
-                                for (qw( price description ));
-                        }
-                        else {
-                            push @errors, {
-                                msg => q|Line fails to specify part number in 'number' key of the 'part' object|,
-                                val => $line,
-                            };
-                        }
-                    }
-                    else {
-                        push @errors, {
-                            msg => q|Unexpected type for 'part' key; object expected|,
-                            val => $line,
-                        };
-                    }
-                }
-            }
-        }
-        else {
-            push @errors, {
-                msg => q|Expected toplevel key 'lines' with array value|,
+                $inv_line->{$_} //=
+                    $inv_line->{part}->{$_} for (qw( price description ));
             }
         }
     }
@@ -777,67 +668,32 @@ post '/invoices/' => sub {
     }
 
     if (exists $body->{taxes}) {
-        if (not defined $body->{taxes}
-            or not ref $body->{taxes}
-            or reftype $body->{taxes} ne 'HASH') {
-            push @errors, {
-                msg => q|Unexpected type for toplevel key 'taxes'; object value expected|,
-            };
-        }
-        else {
+        my %taxes;
+        $inv->{taxes} = \%taxes;
+        foreach my $tax (values $body->{taxes}->%*) {
+            if (exists $taxes{$tax->{tax}->{category}}) {
+                push @errors, {
+                    msg => q|Expecting each tax category to be specified exactly once; second or later occurrance found|,                                                           val => $tax,
+                };
+                next;
+            }
 
-            my %taxes;
-            $inv->{taxes} = \%taxes;
-            foreach my $tax (values $body->{taxes}->%*) {
-                if (not exists $tax->{tax}) {
-                    push @errors, {
-                        msg => q|Expecting 'tax' key in tax, but none found|,
-                        val => $tax,
-                    };
-                    next;
-                }
-                if (not defined $tax->{tax}
-                    or not ref $tax->{tax}
-                    or ref $tax->{tax} ne 'HASH') {
-                    push @errors, {
-                        msg => q|Expecting 'tax' value in tax to contain an object, but different value found|,
-                        val => $tax,
-                    };
-                    next;
-                }
-                if (not exists $tax->{tax}->{category}
-                    or not defined $tax->{tax}->{category}
-                    or $tax->{tax}->{category} eq '') {
-                    push @errors, {
-                        msg => q|Expected (non-empty) 'category' key in tax specification|,
-                        val => $tax,
-                    };
-                    next;
-                }
-                if (exists $taxes{$tax->{tax}->{category}}) {
-                    push @errors, {
-                        msg => q|Expecting each tax category to be specified exactly once; second or later occurrance found|,                                                           val => $tax,
-                    };
-                    next;
-                }
+            my $inv_tax = {};
+            $taxes{$tax->{tax}->{category}} = $inv_tax;
 
-                my $inv_tax = {};
-                $taxes{$tax->{tax}->{category}} = $inv_tax;
-
-                foreach my $field (qw(base-amount amount source memo
-                                   calculated-amount)) {
-                    if (exists $tax->{$field}
-                        and defined $tax->{$field}
-                        and $tax->{$field} ne '') {
-                        $inv_tax->{$field} = $tax->{$field};
-                    }
+            foreach my $field (qw(base-amount amount source memo)) {
+                if (exists $tax->{$field}
+                    and defined $tax->{$field}
+                    and $tax->{$field} ne '') {
+                    $inv_tax->{$field} = $tax->{$field};
                 }
+            }
 
-                # Note: a tax needs to be enabled for the
-                # customer/vendor!
-                #
-                my $sth = $env->{'lsmb.db'}->prepare(
-                    q|
+            # Note: a tax needs to be enabled for the
+            # customer/vendor!
+            #
+            my $sth = $env->{'lsmb.db'}->prepare(
+                q|
    SELECT a.accno as category, a.description, t.rate, a.id
      FROM account a JOIN tax t ON t.chart_id = a.id
     WHERE a.accno = ?
@@ -845,44 +701,42 @@ post '/invoices/' => sub {
              >= coalesce(?::timestamp, now())
    ORDER BY validto ASC
    LIMIT 1
-                    |
-                    )
-                    or die $env->{'lsmb.db'}->errstr;
-                $sth->execute($tax->{tax}->{category},
-                              $inv->{transdate})
-                    or die $sth->errstr;
-                $inv_tax->{tax} = $sth->fetchrow_hashref;
-                die $sth->errstr
-                    if $sth->err;
+                |
+                )
+                or die $env->{'lsmb.db'}->errstr;
+            $sth->execute($tax->{tax}->{category}, $inv->{transdate})
+                or die $sth->errstr;
+            $inv_tax->{tax} = $sth->fetchrow_hashref;
+            die $sth->errstr
+                if $sth->err;
 
-                unless ($inv_tax->{tax}) {
-                    push @errors, {
-                        msg => q|Tax category not found for given transaction date|,
-                        val => {
-                            tax       => $tax->{tax},
-                            transdate => $inv->{transdate},
-                        },
-                    };
-                    next;
-                }
+            unless ($inv_tax->{tax}) {
+                push @errors, {
+                    msg => q|Tax category not found for given transaction date|,
+                    val => {
+                        tax       => $tax->{tax},
+                        transdate => $inv->{transdate},
+                    },
+                };
+                next;
+            }
 
-                $sth = $env->{'lsmb.db'}->prepare(
-                    q|
+            $sth = $env->{'lsmb.db'}->prepare(
+                q|
    SELECT 1 FROM eca_tax et
             JOIN entity_credit_account eca ON et.eca_id = eca.id
             JOIN account a ON a.id = et.chart_id
             WHERE accno = ?
-                    |
+                |
                     )
-                    or die $env->{'lsmb.db'}->errstr;
-                $sth->execute($tax->{tax}->{category})
-                    or die $sth->errstr;
+                or die $env->{'lsmb.db'}->errstr;
+            $sth->execute($tax->{tax}->{category})
+                or die $sth->errstr;
 
-                unless ($sth->rows) {
-                    push @errors, {
-                        msg => q|Tax category not enabled for this customer/vendor|,
-                        val => $tax->{tax},
-                    }
+            unless ($sth->rows) {
+                push @errors, {
+                    msg => q|Tax category not enabled for this customer/vendor|,
+                    val => $tax->{tax},
                 }
             }
         }
@@ -1260,3 +1114,299 @@ your software.
 
 
 1;
+
+__DATA__
+openapi: 3.0.0
+info:
+  title: ...
+  version: 0.0.1
+paths:
+  /erp/api/invoices:
+    get:
+      responses:
+        200:
+          description: ...
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice'
+        default:
+          description: ...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+    post:
+      requestBody:
+        description: ...
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newInvoice'
+      responses:
+        201:
+          description: Created
+          headers:
+            Location:
+              description: ...
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+  /erp/api/invoices/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      responses:
+        200:
+          description: ...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newInvoice'
+      responses:
+        200:
+          description: ...
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+components:
+  schemas:
+    error:
+      type: object
+    newInvoice:
+      type: object
+      required:
+        - eca
+        - account
+        - currency
+        - dates
+        - lines
+      properties:
+        eca:
+          anyOf:
+            - type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: integer
+                  format: int64
+                  minimum: 1
+            - type: object
+              required:
+                - number
+                - type
+              properties:
+                number:
+                  type: string
+                  minLength: 1
+                type:
+                  type: string
+                  enum:
+                    - customer
+                    - vendor
+        account:
+          type: object
+          properties:
+            accno:
+              type: string
+              minLength: 1
+        currency:
+          type: string
+          minLength: 3
+          maxLength: 3
+        description:
+          type: string
+        notes:
+          type: string
+        internal-notes:
+          type: string
+        invoice-number:
+          type: string
+        order-number:
+          type: string
+        po-number:
+          type: string
+        ship-via:
+          type: string
+        shipping-point:
+          type: string
+        ship-to:
+          type: object
+        dates:
+          type: object
+          required:
+            - book
+          properties:
+            due:
+              type: string
+              format: date
+            book:
+              type: string
+              format: date
+            created:
+              type: string
+              format: date
+        lines:
+          type: array
+          items:
+            type: object
+            required:
+              - part
+            properties:
+              description:
+                type: string
+              price:
+                type: number
+              price_fixated:
+                type: boolean
+                default: false
+              unit:
+                type: string
+              qty:
+                type: number
+                default: 1
+              taxform:
+                type: boolean
+                default: false
+              serialnumber:
+                type: string
+              discount:
+                type: number
+              discount_type:
+                type: string
+                enum:
+                  - '%'
+              delivery_date:
+                type: string
+                format: date
+              part:
+                type: object
+                required:
+                  - number
+                properties:
+                  number:
+                    type: string
+                    minLength: 1
+        taxes:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              tax:
+                type: object
+                required:
+                  - category
+                properties:
+                  category:
+                    type: string
+              base-amount:
+                type: number
+              amount:
+                type: number
+              source:
+                type: string
+              memo:
+                type: string
+        payments:
+          type: array
+          items:
+            type: object
+            required:
+              - account
+              - amount
+              - date
+            properties:
+              date:
+                type: string
+                format: date
+              source:
+                type: string
+              memo:
+                type: string
+              amount:
+                type: number
+              account:
+                type: object
+                properties:
+                  accno:
+                    type: string
+    Invoice:
+      description: ...
+      allOf:
+        - $ref: '#/components/schemas/newInvoice'
+        - type: object
+          properties:
+            eca:
+              type: object
+              properties:
+                entity:
+                  type: object
+                  properties:
+                    credit_limit:
+                      type: object
+                      properties:
+                        total:
+                          type: number
+                        used:
+                          type: number
+                        available:
+                          type: number
+            account:
+              type: object
+              properties:
+                description:
+                  type: string
+            lines:
+              type: array
+              items:
+                type: object
+                properties:
+                  part:
+                    type: object
+                    properties:
+                      _self:
+                        type: string
+                  total:
+                    type: number
+            taxes:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  rate:
+                    type: number
+                    minimum: 0
+                    maximum: 1
+                  calculated-amount:
+                    type: number
+            payments:
+              type: array
+              items:
+                type: object
+                properties:
+                  account:
+                    type: object
+                    properties:
+                      description:
+                        type: string
