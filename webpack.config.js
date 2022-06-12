@@ -16,7 +16,6 @@ if (TARGET !== "readme") {
     const CopyWebpackPlugin = require("copy-webpack-plugin");
     const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
     const DojoWebpackPlugin = require("dojo-webpack-plugin");
-    const { DuplicatesPlugin } = require("inspectpack/plugin");
     const ESLintPlugin = require("eslint-webpack-plugin");
     const HtmlWebpackPlugin = require("html-webpack-plugin");
     const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -24,6 +23,7 @@ if (TARGET !== "readme") {
     const UnusedWebpackPlugin = require("unused-webpack-plugin");
     const VirtualModulesPlugin = require("webpack-virtual-modules");
     const { VueLoaderPlugin } = require("vue-loader");
+    const { WebpackDeduplicationPlugin } = require('webpack-deduplication-plugin');
 
     const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via npm
 
@@ -64,6 +64,7 @@ if (TARGET !== "readme") {
             .map((item) => path.basename(item, extension))
             .sort();
     }
+
     // Compute used data-dojo-type
     glob.sync("**/*.html", {
         ignore: ["lib/ui-header.html", "js/**", "js-src/{dojo,dijit,util}/**"],
@@ -263,6 +264,7 @@ if (TARGET !== "readme") {
             `    return {};\n` +
             `});`
     };
+
     var pluginsProd = [
         // Clean UI/js before building (must be first)
         new CleanWebpackPlugin(CleanWebpackPluginOptions),
@@ -292,6 +294,7 @@ if (TARGET !== "readme") {
                 "!!raw-loader!"
             );
         }),
+
         new VirtualModulesPlugin(VirtualModulesPluginOptions),
 
         // Copy a few Dojo ressources
@@ -329,13 +332,7 @@ if (TARGET !== "readme") {
             reportFilename: "../../logs/report.json"
         }),
 
-        // Warn on duplication of code
-        new DuplicatesPlugin({
-            // Emit compilation warning or error? (Default: `false`)
-            emitErrors: false,
-            // Display full duplicates information? (Default: `false`)
-            verbose: true
-        }),
+        new WebpackDeduplicationPlugin({}),
 
         // Generate GZ versions of compiled code to sppedup download
         new CompressionPlugin({
