@@ -24,6 +24,7 @@ use warnings;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
+use LedgerSMB::Company_Config;
 use LedgerSMB::oldHandler;
 use LedgerSMB::Magic qw( SCRIPT_NEWSCRIPTS );
 use LedgerSMB::PSGI::Util;

@@ -42,9 +42,11 @@ use Workflow::Context;
 use Workflow::Factory qw( FACTORY );
 use YAML::PP;
 
+use LedgerSMB::App_State;
 use LedgerSMB::Company;
 use LedgerSMB::Entity::Credit_Account;
 use LedgerSMB::Magic qw( EC_CUSTOMER EC_VENDOR );
+use LedgerSMB::PGNumber;
 use LedgerSMB::Part;
 use LedgerSMB::Setting;
 
@@ -263,7 +265,7 @@ SELECT 'vendor' as type,
     $inv{eca} = {
         id     => $eca->{id},
         number => $eca->{meta_number},
-        type   => ($eca->{entity_class} == EC_CUSTOMER) ? "customer" : "vendor",
+        type   => ($eca->{entity_class} == EC_CUSTOMER) ? 'customer' : 'vendor',
         description => $eca->{description},
         pay_to_name => $eca->{pay_to_name},
         credit_limit => {
@@ -422,7 +424,8 @@ patch '/invoices/{id}' => sub {
 my $schema = $reader->load_string(
     do {
         # slurp __DATA__ section
-        local $/; <DATA>;
+        local $/ = undef;
+        <DATA>;
     });
 my $validator = JSONSchema::Validator->new(
     schema => $schema,
