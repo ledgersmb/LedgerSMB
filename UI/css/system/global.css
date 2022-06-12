@@ -667,7 +667,7 @@ h2 {
 #logindiv #company_div {
     display: grid;
     grid-row-gap: 4px;
-    grid-template-columns: auto auto;
+    grid-template: none / auto auto;
     margin-bottom: 1em;
     margin-top: 2em;
 }
@@ -683,17 +683,17 @@ h2 {
 
 .two-column-grid {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template: none / auto auto;
 }
 
 .four-column-grid {
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template: none / auto auto auto auto;
 }
 
 .six-column-grid {
     display: grid;
-    grid-template-columns: repeat(6, auto);
+    grid-template: none / repeat(6, auto);
 }
 
 .two-column-grid lsmb-text,
