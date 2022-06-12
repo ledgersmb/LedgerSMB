@@ -54,6 +54,22 @@ use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.invoices';
 
+sub _create_validator {
+    my $reader = YAML::PP->new(boolean => 'JSON::PP');
+    my $schema = $reader->load_string(
+        do {
+            # slurp __DATA__ section
+            local $/ = undef;
+            <DATA>;
+        });
+    return JSONSchema::Validator->new(
+        schema => $schema,
+        specification => 'OAS30');
+}
+
+my $validator = _create_validator();
+
+
 
 get '/invoices/' => sub {
     return [ HTTP_NOT_IMPLEMENTED, [], [] ];
@@ -420,16 +436,6 @@ patch '/invoices/{id}' => sub {
 
 =cut
 
-    my $reader = YAML::PP->new(boolean => 'JSON::PP');
-my $schema = $reader->load_string(
-    do {
-        # slurp __DATA__ section
-        local $/ = undef;
-        <DATA>;
-    });
-my $validator = JSONSchema::Validator->new(
-    schema => $schema,
-    specification => 'OAS30');
 
 
 post '/invoices/' => sub {
