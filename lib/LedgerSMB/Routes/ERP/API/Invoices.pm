@@ -35,7 +35,7 @@ use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_FOUND
     HTTP_NOT_FOUND HTTP_BAD_REQUEST HTTP_UNSUPPORTED_MEDIA_TYPE
     HTTP_NOT_IMPLEMENTED );
 use JSONSchema::Validator;
-use List::Util qw( reduce );
+use List::Util qw( reduce sum0 uniq );
 use Plack::Request::WithEncoding;
 use Scalar::Util qw( blessed reftype );
 use Workflow::Context;
@@ -507,61 +507,32 @@ sub _post_invoices {
         }
     }
 
-    if (exists $body->{payments}
-        and defined $body->{payments}) {
-        if (reftype $body->{payments} eq 'ARRAY') {
-            my @payments;
-            $inv->{payments} = \@payments;
-            foreach my $payment ($body->{payments}->@*) {
-                my $inv_payment = {};
-                push @payments, $inv_payment;
+    if (exists $body->{payments}) {
+        $inv->{payments} = [];
+        foreach my $payment ($body->{payments}->@*) {
+            my $inv_payment = {};
+            push $inv->{payments}->@*, $inv_payment;
 
-                foreach my $field (qw( date source memo amount )) {
-                    if (exists $payment->{$field}
-                        and defined $payment->{$field}
-                        and $payment->{$field} ne '') {
-                        $inv_payment->{$field} = $payment->{$field};
-                    }
-                }
-
-                if (exists $payment->{account}
-                    and defined $payment->{account}) {
-                    if (reftype $payment->{account} eq 'HASH') {
-                        if (exists $payment->{account}->{accno}
-                            and defined $payment->{account}->{accno}
-                            and $payment->{account}->{accno} ne '') {
-
-                            ###TODO: Payment account lookup
-                            ...;
-                            my $account = $c->configuration->coa_nodes
-                                ->get(by => (accno => $payment->{account}->{accno}));
-                            $inv_payment->{account} = $account;
-                            unless (blessed $account) {
-                                push @errors, {
-                                    msg => 'Payment account not found',
-                                    val => $payment->{account}->{accno},
-                                };
-                            }
-                        }
-                        else {
-                            push @errors, {
-                                msg => q|Expected (non-empty) 'account.accno' key in payment line|,
-                                val => $payment,
-                            };
-                        }
-                    }
-                    else {
-                        push @errors, {
-                            msg => q|Expected 'account' key with object value in payment line|,
-                            val => $payment,
-                        };
-                    }
+            foreach my $field (qw( date source memo amount )) {
+                if (exists $payment->{$field}
+                    and defined $payment->{$field}
+                    and $payment->{$field} ne '') {
+                    $inv_payment->{$field} = $payment->{$field};
                 }
             }
-        }
-        else {
-            push @errors, {
-                msg => q|Expected toplevel key 'payments' with array value|,
+
+            if ($payment->{account}->{accno} ne '') {
+                ###TODO: Payment account lookup
+                ...;
+                my $account = $c->configuration->coa_nodes
+                    ->get(by => (accno => $payment->{account}->{accno}));
+                $inv_payment->{account} = $account;
+                unless (blessed $account) {
+                    push @errors, {
+                        msg => 'Payment account not found',
+                        val => $payment->{account}->{accno},
+                    };
+                }
             }
         }
     }
@@ -656,14 +627,17 @@ sub _post_invoices {
     #  8. Apply the tax rate to the rate total
     #  9. Calculate the totals of the lines and taxes
 
+    # Step 1: Totalize the quantities on the rows per part into %part_qty
     my %part_qty = (
-        map { $_->{part}->{id} => 0 } $inv->{lines}->@*
+        map { my $id = $_;
+              $id => (sum0 grep { not $_->{price_fixated}
+                                  and $_->{part}->{id} eq $id }
+                      $inv->{lines}->@*) }
+        uniq map { $_->{part}->{id} } $inv->{lines}->@*
         );
-    for my $line (grep { not $_->{price_fixated} }
-                  $inv->{lines}->@*) {
-        $part_qty{$line->{part}->{id}} += $line->{qty};
-    }
 
+
+    # Step 2: Run the price matrix
     if (keys %part_qty) {
         my $sth;
 
@@ -697,12 +671,15 @@ sub _post_invoices {
             }
 
             my $ref = $sth->fetchrow_hashref('NAME_lc');
-            # an empty ref means either an error, or no results...
-            if (not $ref and $sth->err) {
-                die $sth->errstr;
-            }
-            else {
+            die $sth->errstr
+                if $sth->err;
+
+            # Step 3: Apply the price matrix to the lines
+            if ($ref) {
                 # apply the price matrix to the rows in the invoice
+                my $price_frac = ( 1 - ($ref->{pricebreak} // 0)/100 );
+                my $eca_price = # customer // vendor
+                    $ref->{sellprice} // $ref->{lastcost};
 
                 for my $line (grep { not $_->{price_fixated}
                                      and $_->{part}->{id} eq $part_id }
@@ -711,28 +688,24 @@ sub _post_invoices {
                     ###TODO: Round price due to price matrix?
                     # Note: when we do, we need to round to the same number
                     # of digits as the precision in the database.
+                    #
+                    # $line->{part}->{price} is the part's default, not
+                    # the value provided in the UI.
                     $line->{price} =
-                        ( 1 - ($ref->{pricebreak} // 0)/100 )
-                        * ($ref->{sellprice}               # customer
-                           // $ref->{lastcost}             # vendor
-                           // $line->{part}->{price});     # part's default
+                        $price_frac * ($eca_price // $line->{part}->{price});
                 }
             }
         }
     }
 
+    # Step 4: Calculate the line totals
     for my $line ($inv->{lines}->@*) {
+        ###TODO: Verify that 'sellprice' isn't actually ever occurring
         my $total = $line->{qty} * ($line->{price} // $line->{sellprice});
 
+        # Step 5: Calculate discounts
         if ($line->{discount_type}) {
-            if ($line->{discount_type} eq '%') {
-                $total *= (1 - $line->{discount}/100);
-            }
-            else {
-                # This should not be reachable:
-                #  We verified allowed values above
-                die 'Unexpected value for "discount_type"';
-            }
+            $total *= (1 - $line->{discount});
         }
         # is a no-no due to its global state. We need access to the company
         # settings from the $env somehow
@@ -762,8 +735,7 @@ sub _post_invoices {
                AND (validto IS NULL OR $2 <= validto)
             |)
             or die $env->{'lsmb.db'}->errstr;
-        $sth->execute($inv->{eca}->{id},
-                      $inv->{transdate})
+        $sth->execute($inv->{eca}->{id}, $inv->{transdate})
             or die $sth->errstr;
         $inv->{taxes} = $sth->fetchall_hashref('accno');
         die $sth->errstr
@@ -778,21 +750,37 @@ sub _post_invoices {
              WHERE pt.parts_id = ?
                 |)
                 or die $env->{'lsmb.db'}->errstr;
-            for my $part_id (keys %part_qty) {
-                $sth->execute($part_id)
-                    or die $sth->errstr;
 
-                my $ref = $sth->fetchall_hashref('accno');
-                die $sth->errstr
-                    if $sth->err;
-                for my $taxno (keys $inv->{taxes}->%*) {
-                    if (exists $ref->{$taxno}) {
-                        $part_tax{$part_id}->{$taxno} = $ref->{$taxno};
+            # intersect taxes applicable for the part with those
+            # for the ECA
+            my %part_tax = (
+                map {
+                    my $taxes = $_->{taxes};
+                    $_->{part_id} =>
+                    {
+                        map {
+                            $_ => $taxes->{$_}
+                        }
+                        grep { exists $taxes->{$_} }
+                        keys $inv->{taxes}->%*
                     }
                 }
-            }
+                grep { $_->{taxes} }
+                map {
+                    my $part_id = $_;
+                    $sth->execute($part_id)
+                        or die $sth->errstr;
 
+                    my $ref = $sth->fetchall_hashref('accno');
+                    die $sth->errstr
+                        if $sth->err;
 
+                    { part_id => $part_id,
+                      taxes => $ref }
+                }
+                keys %part_qty);
+
+            # Apply the tax calculation
             for my $line ($inv->{lines}->@*) {
                 next unless exists $part_tax{$line->{part}->{id}};
 
@@ -834,17 +822,15 @@ sub _post_invoices {
         reduce { $a + $b->{amount} } LedgerSMB::PGNumber->new(0), values $inv->{taxes}->%*;
     $inv->{netamount} = $inv->{lines_total};
     $inv->{amount}    = $inv->{netamount} + $inv->{taxes_total};
-    ###TODO: Where do we apply the type-of-business-based discount???
+    ###TODO: We need to apply the type-of-business-based discount here
+    # (on the totals, that is) -- how to work that into the line-items??
 
 
-    ###TODO: create and save the invoice; optionally followed by posting it
     ###TODO: Add multi-currency support
     $inv->{amount_tc}    = $inv->{amount};
     $inv->{netamount_tc} = $inv->{netamount};
 
     ###BUG: Assert that the invoice is posted in functional currency
-    ###BUG: Assert that taxincluded is false/not supplied
-
 
     if (not LedgerSMB::Setting->new(dbh => $env->{'lsmb.db'})->get('gapless_ar')
         and not $inv->{invnumber}) {
@@ -876,6 +862,7 @@ sub _post_invoices {
     }
     my $sth = $env->{'lsmb.db'}->prepare(
         # What to do with 'setting_sequence' (for 'ar')?
+        # and why does that not exist for 'ap'??
         q|
         INSERT INTO ar (invoice, approved,
             invnumber, ordnumber, quonumber, ponumber,
@@ -1302,7 +1289,12 @@ components:
               serialnumber:
                 type: string
               discount:
+                description: |
+                  A value of 10 means the customer gets a 10% discount,
+                  if discount_type has a value of '%'
                 type: number
+                minimum: 0
+                maximum: 100
               discount_type:
                 type: string
                 enum:
@@ -1358,9 +1350,12 @@ components:
                 type: number
               account:
                 type: object
+                required:
+                  - accno
                 properties:
                   accno:
                     type: string
+                    minLength: 1
     Invoice:
       description: ...
       allOf:
