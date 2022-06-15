@@ -45,7 +45,7 @@
       "fails to exclude Edge 16-18"
   ],
   "browserslist": [
-    "supports es6-module and supports async-functions and supports xhr2 and supports bloburls and supports css-variables and supports css3-boxsizing and supports border-radius and supports fetch and supports classlist and not edge <= 18"
+    "supports es6-module and supports async-functions and supports xhr2 and supports bloburls and supports css-variables and supports css3-boxsizing and supports border-radius and supports fetch and supports classlist and supports multicolumn and not edge <= 18"
   ],
   "devDependencies": {
     "@babel/eslint-parser": "7.18.2",
@@ -100,10 +100,14 @@
     "path-browserify": "1.0.1",
     "prettier": "2.7.0",
     "stylelint": "14.9.1",
-    "stylelint-bare-webpack-plugin": "2.1.0",
     "stylelint-config-standard": "26.0.0",
+    "stylelint-declaration-block-no-ignored-properties": "2.5.0",
+    "stylelint-no-browser-hacks": "1.2.1",
+    "stylelint-no-nested-media": "0.1.0",
     "stylelint-no-unsupported-browser-features": "5.0.3",
     "stylelint-order": "5.0.0",
+    "stylelint-webpack-plugin": "3.3.0",
+    "stylelint-z-index-value-constraint": "1.2.0",
     "unix-timestamp": "1.0.2",
     "unused-webpack-plugin": "2.4.0",
     "vue": "3.2.37",
@@ -278,6 +282,9 @@
     "defaultSeverity": "warning",
     "extends": "stylelint-config-standard",
     "plugins": [
+      "stylelint-declaration-block-no-ignored-properties",
+      "stylelint-no-browser-hacks/lib",
+      "stylelint-no-nested-media",
       "stylelint-no-unsupported-browser-features",
       "stylelint-order"
     ],
@@ -300,7 +307,18 @@
         "declarations"
       ],
       "order/properties-alphabetical-order": true,
-      "plugin/no-unsupported-browser-features": true
+      "plugin/no-unsupported-browser-features": true,
+      "plugin/no-browser-hacks": [true, {
+        "browsers": [
+            "last 2 versions",
+            "not ie",
+            "edge >= 18"
+      ]}],
+      "plugin/declaration-block-no-ignored-properties": true,
+      "pitcher/no-nested-media": true,
+      "selector-class-pattern": null,
+      "custom-property-pattern": null,
+      "selector-id-pattern": null
     }
   }
 }

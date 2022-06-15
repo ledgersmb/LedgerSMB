@@ -1,21 +1,13 @@
+/* stylelint-disable max-line-length */
+
 /*
  * This file relies on CSS3 variables defined in the main CSS version, ledgersmb.css
  * or any of the colored versions, ledgersmb-color.css
  */
+
 /* stylelint-disable no-descending-specificity */
 
-/*
-TODO: remaining issues:
- 229:1  ✖  Expected selector "thead th" to come before selector "table.form th"                                     no-descending-specificity
- 239:1  ✖  Expected selector "thead a:link" to come before selector ".submenu a:hover"                              no-descending-specificity
- 371:1  ✖  Expected selector "#company_div div.note" to come before selector "#notes_div div.note:hover"            no-descending-specificity
- 461:1  ✖  Expected selector "div.autocomplete ul" to come before selector "#top_menu ul"                           no-descending-specificity
- 509:1  ✖  Expected selector ".financial-statement th" to come before selector "table.form th"                      no-descending-specificity
- 509:1  ✖  Expected selector ".financial-statement th" to come before selector ".financial-statement tr.total th"   no-descending-specificity
- 518:1  ✖  Expected selector ".financial-statement a" to come before selector ".submenu a:hover"                    no-descending-specificity
- 518:1  ✖  Expected selector ".financial-statement a" to come before selector "thead a:link"                        no-descending-specificity
-*/
-@import url("system/global.css");
+@import "system/global.css";
 
 td.money {
     text-align: right;
@@ -38,20 +30,43 @@ th.header {
 }
 
 /* general stuff */
-a:link { text-decoration: none; }
-a:visited { text-decoration: none; }
-a:active { text-decoration: underline; }
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: underline;
+}
 
 a:hover {
     background-color: var(--a-hover-bg-clr);
     text-decoration: underline;
 }
 
-#pwfeedback.success { background-color: var(--pwfeedback-success-bg-clr); }
-#pwfeedback.failure { background-color: var(--pwfeedback-failure-bg-clr); }
-#pw-strength.weak { background-color: var(--pw-strength-weak-bg-clr); }
-#pw-strength.good { background-color: var(--pw-strength-good-bg-clr); }
-#pw-strength.strong { background-color: var(--pw-strength-strong-bg-clr); }
+#pwfeedback.success {
+    background-color: var(--pwfeedback-success-bg-clr);
+}
+
+#pwfeedback.failure {
+    background-color: var(--pwfeedback-failure-bg-clr);
+}
+
+#pw-strength.weak {
+    background-color: var(--pw-strength-weak-bg-clr);
+}
+
+#pw-strength.good {
+    background-color: var(--pw-strength-good-bg-clr);
+}
+
+#pw-strength.strong {
+    background-color: var(--pw-strength-strong-bg-clr);
+}
 
 body {
     background-color: var(--body-bg-clr);
@@ -103,6 +118,7 @@ table.warning {
 }
 
 /* login and admin */
+
 .login {
     font-family: var(--login-font-family);
 }
@@ -198,14 +214,14 @@ body.menu,
 }
 
 .menu_open {
-    background-image: url('../images/up.gif');
+    background-image: url("../images/up.gif");
     background-position: 0 0;
     background-repeat: no-repeat;
     padding-left: 12px;
 }
 
 .menu_closed {
-    background-image: url('../images/down.gif');
+    background-image: url("../images/down.gif");
     background-position: 0 0;
     background-repeat: no-repeat;
     padding-left: 12px;
@@ -338,7 +354,8 @@ select {
     font-size: var(--checkbox-font-size);
 }
 
-.plus0 {    /* font color for negative numbers */
+.plus0 {
+    /* font color for negative numbers */
     color: var(--plus0-clr);
 }
 
@@ -409,7 +426,7 @@ span.no-submit {
 }
 
 td.cleared-future {
-    background: wvar(--td-cleared-future-bg);
+    background: var(--td-cleared-future-bg);
     color: var(--td-cleared-future-clr);
     font-weight: bold;
 }
@@ -420,16 +437,16 @@ td.cleared-past {
     font-weight: bold;
 }
 
-input[type=checkbox].remove::before {
+input[type="checkbox"].remove::before {
     background: var(--input-remove-before-bg);
     color: var(--input-remove--before-clr);
-    content: ' X ';
+    content: " X ";
     display: inline-block;
     text-align: center;
     width: 12px;
 }
 
-input[type=checkbox].remove:checked::before {
+input[type="checkbox"].remove:checked::before {
     background: var(--input-remove-checked-before-bg);
 }
 
@@ -450,11 +467,17 @@ input[type=checkbox].remove:checked::before {
 /* media stuff */
 
 @media screen {
-    .noscreen { /* items with this class won't display */ display: none; }
+    .noscreen {
+        /* items with this class won't display */
+        display: none;
+    }
 }
 
 @media print {
-    .noprint { /* items with this class won't print */ display: none; }
+    .noprint {
+        /* items with this class won't print */
+        display: none;
+    }
 }
 
 /* ajax-specific styling */
@@ -473,7 +496,10 @@ div.autocomplete ul {
     margin: 0;
     padding: 0;
 }
-div.autocomplete ul li.selected { background-color: var(--div-autocomplete-bg-clr); }
+
+div.autocomplete ul li.selected {
+    background-color: var(--div-autocomplete-bg-clr);
+}
 
 div.autocomplete ul li {
     cursor: pointer;
