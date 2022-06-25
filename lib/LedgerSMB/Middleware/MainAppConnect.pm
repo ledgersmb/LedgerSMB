@@ -191,16 +191,24 @@ sub call {
         if ($dbh and $dbh->{Active}) {
             $dbh->rollback;
             $dbh->disconnect;
+            $log->warn('Unexpected exit; rolling back current db transaction');
         }
     };
     return Plack::Util::response_cb(
         $self->app->($env), sub {
-            if ($dbh and $dbh->{Active}
-                and not is_server_error($_[0])) {
-                $env->{__app_guard__}->dismiss;
-                $dbh->commit;
+            $log->info("Server response: $_[0]->[0]");
+            if ($dbh and $dbh->{Active}) {
+                if (is_server_error($_[0]->[0])) {
+                    $dbh->rollback;
+                    $log->info('Rolling back current db transaction');
+                }
+                else {
+                    $dbh->commit;
+                    $log->debug('Committing current db transaction');
+                }
                 $dbh->disconnect;
-            }
+                $env->{__app_guard__}->dismiss;
+             }
         });
 }
 

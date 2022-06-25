@@ -67,6 +67,11 @@ else {
 }
 Log::Any::Adapter->set('Log4perl');
 
+# Make sure to get the correct logging order on console logging
+# (which mixes request logging with Log4perl logging)
+STDOUT->autoflush(1);
+STDERR->autoflush(1);
+
 LedgerSMB::PSGI::setup_url_space(
         development => ($ENV{PLACK_ENV} eq 'development'),
         );
