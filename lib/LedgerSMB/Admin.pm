@@ -25,7 +25,7 @@ use Log::Any::Adapter::Log4perl;
 use Log::Log4perl qw(:easy);
 use Module::Runtime qw(use_module compose_module_name);
 use Pod::Usage qw(pod2usage);
-use YAML qw(LoadFile);
+use YAML::PP qw(LoadFile);
 
 our $VERSION = '0.0.1';
 
