@@ -174,12 +174,16 @@ sub call {
     };
     return Plack::Util::response_cb(
         $self->app->($env), sub {
-            if ($dbh and $dbh->{Active}
-                and not is_server_error($_[0])) {
-                $env->{__app_guard__}->dismiss;
-                $dbh->commit;
+            if ($dbh and $dbh->{Active}) {
+                if (is_server_error($_[0]->[0])) {
+                    $dbh->rollback;
+                }
+                else {
+                    $dbh->commit;
+                }
                 $dbh->disconnect;
-            }
+                $env->{__app_guard__}->dismiss;
+             }
         });
 }
 
