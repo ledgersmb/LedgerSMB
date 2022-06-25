@@ -118,7 +118,7 @@ requires 'Workflow::Persister::DBI', '1.59';
 requires 'Workflow::Persister::DBI::ExtraData', '1.59';
 requires 'XML::LibXML';
 requires 'XML::LibXML::XPathContext';
-requires 'YAML';
+requires 'YAML::PP';
 requires 'namespace::autoclean';
 
 recommends 'Math::BigInt::GMP';
