@@ -53,6 +53,8 @@ use warnings;
 use parent 'Exporter';
 
 use Carp;
+use HTML::Escape qw( escape_html );
+use HTTP::Negotiate qw( choose );
 use HTTP::Status qw( HTTP_NOT_FOUND );
 use JSON::MaybeXS;
 use List::Util qw( reduce );
@@ -76,7 +78,7 @@ my $router = {};
 our @EXPORT = ## no critic (ProhibitAutomaticExportation)
     qw(
     del get head patch post put
-    json locale set user
+    error json locale set user
     );
 our @EXPORT_OK = qw(router);
 our %EXPORT_TAGS = (
@@ -355,6 +357,14 @@ sub _add_mapping {
 =head2 post $path => \&code
 =head2 put $path => \&code
 
+The code reference is a function of 3 parameters
+C<handler($env, $url_values, $wildcard_segments)> where C<$env> is
+the PSGI environment, C<$url_values> is a hashref holding values of
+the URL parameters and C<$wildcard_segments> is an arrayref with the
+URL segments matched by the terminating wildcard.
+
+
+=head2 error $req, $status_code, $headers, @errors
 =head2 hook $name => \&hook
 =head2 json
 =head2 locale $env
@@ -372,6 +382,56 @@ sub post    { _add_mapping(['post'], @_); }
 sub put     { _add_mapping(['put'], @_); }
 
 
+
+my $variants = [
+    ['json', 1.000, 'application/json' ],
+    ['html', 0.950, 'text/html' ]
+    ];
+
+sub error {
+    my $req = shift;
+    my $code = shift;
+    my $headers = shift;
+    my @errors = @_;
+
+    my $result_type = choose($variants, $req->headers) // 'json';
+    my $text;
+    if ($result_type eq 'html') {
+        my $body =
+            join('',
+                 map {
+                     my $msg = escape_html($_->{msg});
+                     my $details = escape_html($_->{details});
+                     qq|<h2>$msg</h2>
+<p>Details:</p>
+<pre>$details</pre>
+|
+                 } @errors);
+        $text = qq|
+<html>
+  <head>
+    <title>LedgerSMB API Error</title>
+  </head>
+  <body>
+     <h1>LedgerSMB API Error</h1>
+$body
+  </body>
+</html>
+|;
+    }
+    else {
+        $text = json()->encode({ error => 1,
+                                 msg => 'LedgerSMB API errors',
+                                 errors => \@errors });
+    }
+    return [
+        $code,
+        [ 'Content-Type' => ($result_type eq 'html'
+                             ? 'text/html' : 'application/json') ],
+        [ $text ]
+        ];
+}
+
 sub hook {
     my ($name, $hook) = @_;
 
@@ -379,6 +439,7 @@ sub hook {
 
     return;
 }
+
 
 my $json = JSON::MaybeXS->new( pretty => 1,
                                utf8 => 1,
