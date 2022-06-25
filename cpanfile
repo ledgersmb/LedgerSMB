@@ -29,6 +29,7 @@ requires 'HTTP::Negotiate';
 requires 'HTTP::Status';
 requires 'IO::Scalar';
 requires 'JSON::MaybeXS';
+requires 'JSONSchema::Validator', '0.010';
 recommends 'Cpanel::JSON::XS', '3.0206'; # 3.0206 adds 'allow_bignum' option
 recommends 'JSON::PP', '2.00'; # 1.99_01 adds 'allow_bignum'
 requires 'List::MoreUtils';

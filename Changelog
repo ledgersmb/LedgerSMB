@@ -58,6 +58,7 @@ Dependency updates
 * Workflow 1.59 (upadted from 1.56)
 * YAML::PP (new)
 * YAML (dropped)
+* JSONSchema::Validator (new)
 
 
 Changelog for 1.9 Series
