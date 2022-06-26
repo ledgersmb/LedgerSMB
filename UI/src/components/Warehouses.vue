@@ -46,7 +46,7 @@ function rowData(data) {
 
 <template>
     <div>
-        <table class="dynatable report">
+        <table class="dynatable">
             <thead>
                 <tr>
                     <th v-for="column in COLUMNS"
