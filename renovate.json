@@ -35,5 +35,8 @@
     "schedule": [
         "after 11pm on friday",
         "before 7am on saturday"
-    ]
+    ],
+    "vulnerabilityAlerts": {
+        "schedule": null
+    }
 }
