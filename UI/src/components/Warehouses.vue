@@ -50,7 +50,7 @@ function rowData(data) {
             <thead>
                 <tr>
                     <th v-for="column in COLUMNS"
-                        :class="column.key">{{ column.head }}</th>
+                        :key="column.key">{{ column.head }}</th>
                     <th></th>
                 </tr>
             </thead>
