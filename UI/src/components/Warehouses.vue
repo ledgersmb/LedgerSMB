@@ -1,7 +1,7 @@
 <script setup>
 
 import { storeToRefs } from "pinia";
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { contextRef } from "@/robot-vue";
 
 import { warehousesMachine } from "./Warehouses.machines.js";
