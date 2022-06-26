@@ -14,17 +14,17 @@
         <td>
             <template v-if="props.type === 'existing'">
                 <button :disabled="!editable || editing"
-                        @click="emit('edit')">Edit</button>
+                        @click="emit('edit')">{{$t('Edit')}}</button>
                 <button :disabled="!editable || !editing"
-                        @click="emit('save')">Save</button>
+                        @click="emit('save')">{{$t('Save')}}</button>
                 <button :disabled="!editable || !editing"
-                        @click="emit('cancel')">Cancel</button>
+                        @click="emit('cancel')">{{$t('Cancel')}}</button>
                 <button :disabled="!editable || editing"
-                        @click="emit('delete')">Delete</button>
+                        @click="emit('delete')">{{$t('Delete')}}</button>
             </template>
             <button v-else
                     :disabled="!editable || !editing"
-                    @click="emit('add')">Add</button>
+                    @click="emit('add')">{{$t('Add')}}</button>
         </td>
     </tr>
 </template>

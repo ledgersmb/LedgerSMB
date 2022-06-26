@@ -36,7 +36,6 @@ function rowEditing(id) {
 function rowData(data) {
     return editingRow.value===data.id ? editBuffer.value : data;
 }
-
 </script>
 
 <style local>
@@ -87,12 +86,11 @@ function rowData(data) {
             <tbody v-else>
                 <tr>
                     <th :colspan="COLUMNS.length + 1">
-                        Loading...
+                        {{ $t(`Loading...`)}}
                     </th>
                 </tr>
             </tbody>
         </table>
     </div>
 </template>
-
 
