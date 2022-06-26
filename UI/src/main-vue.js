@@ -52,9 +52,8 @@ if (document.getElementById("main")) {
         }
     })
         .use(router)
-        .use(i18n)
-        .use(router)
-        .use(createPinia());
+        .use(createPinia())
+        .use(i18n);
 
     app.config.compilerOptions.isCustomElement = (tag) =>
         tag.startsWith("lsmb-");
