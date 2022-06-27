@@ -21,7 +21,7 @@ This module doesn't export any methods.
 use strict;
 use warnings;
 
-use HTTP::Status qw( HTTP_OK HTTP_BAD_REQUEST
+use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_BAD_REQUEST HTTP_NOT_FOUND
     HTTP_UNSUPPORTED_MEDIA_TYPE HTTP_INTERNAL_SERVER_ERROR );
 use JSONSchema::Validator;
 use Plack::Request::WithEncoding;
@@ -194,7 +194,10 @@ post '/products/warehouses/' => sub {
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _add_warehouse( $c, $body );
-    my $triplet = [ 209, [ 'Content-Type' => 'application/json; charset=UTF-8' ],
+    my $triplet = [ HTTP_CREATED,
+                    [ 'Content-Type' => 'application/json; charset=UTF-8',
+                      'ETag' => 'wazzzda'
+                    ],
                     [ json()->encode( $response ) ] ];
     ($result, $errors, $warnings) =
         $validator->validate_response(
@@ -234,11 +237,11 @@ del '/products/warehouses/:id' => sub {
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _del_warehouse( $c, $params->{id} );
 
-    return [ 404, [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
+    return [ HTTP_NOT_FOUND, [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
              [ 'Not found' ] ]
         unless defined $response;
 
-    my $triplet = [ 200, [ ],
+    my $triplet = [ HTTP_OK, [ ],
                     [ '' ] ];
     my ($result, $errors, $warnings) =
         $validator->validate_response(
@@ -277,11 +280,13 @@ get '/products/warehouses/:id' => sub {
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _get_warehouse( $c, $params->{id} );
 
-    return [ 404, [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
+    return [ HTTP_NOT_FOUND, [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
              [ 'Not found' ] ]
         unless defined $response;
 
-    my $triplet = [ 201, [ 'Content-Type' => 'application/json; charset=UTF-8' ],
+    my $triplet = [ HTTP_OK,
+                    [ 'Content-Type' => 'application/json; charset=UTF-8',
+                      'ETag' => 'abc-def' ],
                     [ json()->encode( $response ) ] ];
     my ($result, $errors, $warnings) =
         $validator->validate_response(
@@ -340,11 +345,13 @@ put '/products/warehouses/:id' => sub {
                                           description => $body->{description}
                                       } );
 
-    return [ 404, [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
+    return [ HTTP_NOT_FOUND, [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
              [ 'Not found' ] ]
         unless defined $response;
 
-    my $triplet = [ 200, [ 'Content-Type' => 'application/json; charset=UTF-8' ],
+    my $triplet = [ HTTP_OK,
+                    [ 'Content-Type' => 'application/json; charset=UTF-8',
+                      'ETag' => '"quazar"' ],
                     [ json()->encode( $response ) ] ];
     my ($result, $errors, $warnings) =
         $validator->validate_response(
@@ -370,7 +377,7 @@ patch '/products/warehouses/:id' => sub {
     my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;
     my $description = ($r->parameters->{description} // '') =~ s/[*]//gr;
 
-    return [ 200, [ 'Content-Type' => 'application/json; charset=UTF-8' ],
+    return [ HTTP_OK, [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              [ json()->encode(
                    0
                ) ] ];
