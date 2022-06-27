@@ -147,8 +147,8 @@ get '/products/warehouses/' => sub {
                     [ json()->encode( $response ) ] ];
     ($result, $errors, $warnings) =
         $validator->validate_response(
-            method => 'POST',
-            openapi_path => '/products/warehouses',
+            method => 'GET',
+            openapi_path => '/products/warehouses/',
             status => $triplet->[0],
             parameters => {
                 header => { $triplet->[1]->@* },
@@ -413,7 +413,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Warehouse'
+              $ref: '#/components/schemas/NewWarehouse'
       responses:
         201:
           description: ...
@@ -529,13 +529,19 @@ components:
       format: int64
       minimum: 1
     Warehouse:
+      allOf:
+        - $ref: '#/components/schemas/NewWarehouse'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              $ref: '#/components/schemas/warehouse-id'
+    NewWarehouse:
       type: object
       required:
-        - id
         - description
       properties:
-        id:
-          $ref: '#/components/schemas/warehouse-id'
         name:
           type: string
   responses:
