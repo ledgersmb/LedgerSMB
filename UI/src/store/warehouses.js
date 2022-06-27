@@ -22,7 +22,6 @@ export const useWarehousesStore = defineStore("warehouses", {
             } else {
                 throw new Error(`HTTP Error: ${response.status}`);
             }
-            return;
         },
         async add(adding) {
             const response = await fetch("./erp/api/v0/products/warehouses/", {
@@ -35,8 +34,8 @@ export const useWarehousesStore = defineStore("warehouses", {
 
             if (response.ok) {
                 const added = await response.json();
-                added["_meta"] = {
-                    "ETag": response.headers.get("ETag")
+                added._meta = {
+                    ETag: response.headers.get("ETag")
                 };
                 this.warehouses.push(added);
             } else {
@@ -46,10 +45,11 @@ export const useWarehousesStore = defineStore("warehouses", {
         async del(id) {
             const warehouse = this.getById(id);
             const response = await fetch(
-                `./erp/api/v0/products/warehouses/${id}`, {
+                `./erp/api/v0/products/warehouses/${id}`,
+                {
                     method: "DELETE",
                     headers: {
-                        "If-Match": warehouse["_meta"]["ETag"]
+                        "If-Match": warehouse._meta.ETag
                     }
                 }
             );
@@ -64,8 +64,7 @@ export const useWarehousesStore = defineStore("warehouses", {
         async get(id) {
             const index = this.warehouses.findIndex((w) => w.id === id);
             const warehouse = this.warehouses[index];
-            if ((!warehouse.hasOwnProperty("_meta"))
-                || warehouse["_meta"]["invalidated"]) {
+            if (!warehouse._meta || warehouse._meta.invalidated) {
                 const response = await fetch(
                     `./erp/api/v0/products/warehouses/${id}`,
                     { method: "GET" }
@@ -73,9 +72,9 @@ export const useWarehousesStore = defineStore("warehouses", {
 
                 if (response.ok) {
                     const newData = await response.json();
-                    newData["id"] = id;
-                    newData["_meta"] = {
-                        "ETag": response.headers.get('ETag')
+                    newData.id = id;
+                    newData._meta = {
+                        ETag: response.headers.get("ETag")
                     };
                     this.warehouses[index] = newData;
                 }
@@ -84,7 +83,7 @@ export const useWarehousesStore = defineStore("warehouses", {
             return this.warehouses[index];
         },
         getById(id) {
-            return (id === -1) ? {} : this.warehouses.find((w) => w.id === id);
+            return id === -1 ? {} : this.warehouses.find((w) => w.id === id);
         },
         async save(id, data) {
             const warehouse = this.getById(id);
@@ -94,7 +93,7 @@ export const useWarehousesStore = defineStore("warehouses", {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
-                        "If-Match": warehouse["_meta"]["ETag"]
+                        "If-Match": warehouse._meta.ETag
                     },
                     body: JSON.stringify(data)
                 }

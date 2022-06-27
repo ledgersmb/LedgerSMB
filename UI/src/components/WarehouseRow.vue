@@ -64,7 +64,6 @@ const { service, send, state } = createWarehouseMachine(warehousesStore, {
     ctx: {
         rowId: props.id,
         adding: props.type === "new",
-        //data: warehousesStore.getById(props.id)
     },
     cb: {
         modifying: () => emit("modifying"),

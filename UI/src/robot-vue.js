@@ -16,13 +16,13 @@ import { ref as allocRef } from "vue";
 function nil() {}
 
 function allocateStateCB(map) {
-    if (typeof(map) === "function") {
+    if (typeof map === "function") {
         return map;
     }
 
     return function (service) {
-        const state = service.machine.current;
-        (map[state] || nil)(service);
+        const s = service.machine.current;
+        (map[s] || nil)(service);
     };
 }
 

@@ -59,28 +59,28 @@ const warehousesMachine = createMachine(
             transition("done", "idle"),
             transition("error", "error")
         ),
-        idle: state(
-            transition("modify", "modifying", reduce(markRowEditing)),
-        ),
-        modifying: state(
-            transition("complete", "idle", reduce(markIdle))
-        ),
+        idle: state(transition("modify", "modifying", reduce(markRowEditing))),
+        modifying: state(transition("complete", "idle", reduce(markIdle))),
         error: state()
     },
     (initialContext) => ({ rowId: undefined, ...initialContext })
 );
 
-
 const warehouseMachine = createMachine(
     {
-        initializing: state(
-            immediate("idle", reduce(initializeWarehouse))
-        ),
+        initializing: state(immediate("idle", reduce(initializeWarehouse))),
         idle: state(
-            transition("update", "idle",
-                       guard((ctx) => ctx.adding),
-                       reduce(handleInput)),
-            transition("add", "adding", guard((ctx) => ctx.adding)),
+            transition(
+                "update",
+                "idle",
+                guard((ctx) => ctx.adding),
+                reduce(handleInput)
+            ),
+            transition(
+                "add",
+                "adding",
+                guard((ctx) => ctx.adding)
+            ),
             transition("modify", "acquiring"),
             transition("disable", "unmodifiable")
         ),
@@ -111,14 +111,11 @@ const warehouseMachine = createMachine(
             transition("done", "initializing"),
             transition("error", "error", reduce(handleError))
         ),
-        unmodifiable: state(
-            transition("enable", "idle")
-        ),
+        unmodifiable: state(transition("enable", "idle")),
         error: state()
     },
     (ctx) => ({ ...ctx })
 );
-
 
 function cbStateEntry(service) {
     let current = service.machine.current;
@@ -136,13 +133,11 @@ function createWarehousesMachine(warehousesStore) {
     });
 }
 
-
 function createWarehouseMachine(warehousesStore, { ctx, cb }) {
     return interpret(warehouseMachine, cb, {
         store: warehousesStore,
         ...ctx
     });
 }
-
 
 export { createWarehousesMachine, createWarehouseMachine };
