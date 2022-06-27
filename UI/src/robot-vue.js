@@ -15,8 +15,19 @@ import { ref as allocRef } from "vue";
 
 function nil() {}
 
+function allocateStateCB(map) {
+    if (typeof(map) === "function") {
+        return map;
+    }
+
+    return function (service) {
+        const state = service.machine.current;
+        (map[state] || nil)(service);
+    };
+}
+
 function allocateOnChange(s, onChange) {
-    const cb = onChange || nil;
+    const cb = allocateStateCB(onChange || nil);
     const sb = s;
     return function (service) {
         cb(service);
