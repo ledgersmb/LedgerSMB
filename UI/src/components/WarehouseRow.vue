@@ -4,28 +4,28 @@
             class="data-entry">
             <input
                 :type="column.type"
-                :value="props.data[column.key]"
+                :value="data[column.key]"
                 :name="column.key"
-                :readonly="!editing || !editable"
-                @input="(e) => emit('update', { key: column.key, value: e.target.value })"
+                :readonly="!editing"
+                @input="(e) => send({ type: 'update', key: column.key, value: e.target.value })"
                 :class="editing ? 'editing':'neutral'"
                 class="input-box"
             />
         </td>
         <td>
             <template v-if="props.type === 'existing'">
-                <lsmb-button :disabled="!editable || editing"
-                        @click="emit('edit')">{{$t('Edit')}}</lsmb-button>
-                <lsmb-button :disabled="!editable || !editing"
-                        @click="emit('save')">{{$t('Save')}}</lsmb-button>
-                <lsmb-button :disabled="!editable || !editing"
-                        @click="emit('cancel')">{{$t('Cancel')}}</lsmb-button>
-                <lsmb-button :disabled="!editable || editing"
-                        @click="emit('delete')">{{$t('Delete')}}</lsmb-button>
+                <lsmb-button :disabled="!modifiable"
+                        @click="send('modify')">{{$t('Modify')}}</lsmb-button>
+                <lsmb-button :disabled="!editing"
+                        @click="send('save')">{{$t('Save')}}</lsmb-button>
+                <lsmb-button :disabled="!editing"
+                        @click="send('cancel')">{{$t('Cancel')}}</lsmb-button>
+                <lsmb-button :disabled="!editing"
+                        @click="send('delete')">{{$t('Delete')}}</lsmb-button>
             </template>
             <lsmb-button v-else
-                    :disabled="!editable || !editing"
-                    @click="emit('add')">{{$t('Add')}}</lsmb-button>
+                    :disabled="state !== 'idle'"
+                    @click="send('add')">{{$t('Add')}}</lsmb-button>
         </td>
     </tr>
 </template>
@@ -52,7 +52,40 @@
 
 <script setup>
 
-const props = defineProps(["columns", "data", "editable", "editing", "type"]);
-const emit = defineEmits(["edit", "cancel", "save", "delete", "update", "add"]);
+import { createWarehouseMachine } from "./Warehouses.machines.js";
+import { computed, inject, watch } from "vue";
+import { contextRef } from "@/robot-vue";
+
+const props = defineProps(["columns", "id", "editingId", "type"]);
+const emit = defineEmits(["modifying", "idle"]);
+const warehousesStore = inject("configStore");
+
+const { service, send, state } = createWarehouseMachine(warehousesStore, {
+    ctx: {
+        rowId: props.id,
+        adding: props.type === "new",
+        //data: warehousesStore.getById(props.id)
+    },
+    cb: {
+        modifying: () => emit("modifying"),
+        idle: () => emit("idle")
+    }
+});
+const data = contextRef(service, "data");
+const editing = computed(() => (state.value === "modifying" || props.type === "new"));
+const modifiable = computed(() => state.value === "idle");
+
+watch(() => props.editingId,
+      (oldValue, newValue) => {
+          if (! newValue) {
+              // ignored when not applicable to the current state
+              // meaning: ignored when we're the cause of this value-change
+              send("enable");
+          }
+          else if (newValue !== props.id) {
+              send('disable');
+          }
+      }
+);
 
 </script>

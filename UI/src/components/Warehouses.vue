@@ -1,10 +1,10 @@
 <script setup>
 
 import { storeToRefs } from "pinia";
-import { computed } from "vue";
+import { computed, provide } from "vue";
 import { contextRef } from "@/robot-vue";
 
-import { warehousesMachine } from "./Warehouses.machines.js";
+import { createWarehousesMachine } from "./Warehouses.machines.js";
 import { useWarehousesStore } from "@/store/warehouses";
 import WarehouseRow from "./WarehouseRow.vue";
 
@@ -15,27 +15,11 @@ const COLUMNS = [
 const warehousesStore = useWarehousesStore();
 const { warehouses } = storeToRefs(warehousesStore);
 
-const { service, send, state } = warehousesMachine(warehousesStore);
-const editingRow = contextRef(service, "rowId");
-const newBuffer = contextRef(service, "newData");
-const editBuffer = contextRef(service, "editData");
+const { service, send, state } = createWarehousesMachine(warehousesStore);
+const editingId = contextRef(service, "editingId");
 
-const updating = computed(
-    () => (state.value==="adding"
-        || state.value==="saving"
-        || state.value==="deleting"));
+provide("configStore", warehousesStore);
 
-function rowEditable(id) {
-    return (editingRow.value===id || !editingRow.value) && !updating.value;
-}
-
-function rowEditing(id) {
-    return editingRow.value===id;
-}
-
-function rowData(data) {
-    return editingRow.value===data.id ? editBuffer.value : data;
-}
 </script>
 
 <style local>
@@ -59,28 +43,23 @@ function rowData(data) {
                     <WarehouseRow
                         v-for="warehouse in warehouses"
                         :columns="COLUMNS"
-                        :data="rowData(warehouse)"
-                        :editable="rowEditable(warehouse.id)"
-                        :editing="rowEditing(warehouse.id)"
                         :key="warehouse.id"
+                        :id="warehouse.id"
+                        :editingId="editingId"
                         type="existing"
-                        @edit="send({ type: 'edit', rowId: warehouse.id })"
-                        @cancel="send('cancel')"
-                        @save="send('save')"
-                        @update="(data) => send({ type: 'updateEdit', data })"
-                        @delete="send({ type: 'delete', rowId: warehouse.id })"
+                        @modifying="send({ type: 'modify', rowId: warehouse.id })"
+                        @idle="send('complete')"
                     />
                 </tbody>
                 <tfoot>
                     <WarehouseRow
                         :columns="COLUMNS"
-                        :data="newBuffer"
-                        :editable="!editingRow && !updating"
-                        :editing="true"
+                        :id="-1"
+                        :editingId="editingId"
                         type="new"
-                        @update="(data) => send({ type: 'updateNew', data })"
-                        @add="send({ type: 'add' })"
-                        />
+                        @modifying="send({ type: 'modify', rowId: -1 })"
+                        @idle="send('complete')"
+                    />
                 </tfoot>
             </template>
             <tbody v-else>

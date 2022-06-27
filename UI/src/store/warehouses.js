@@ -22,7 +22,7 @@ export const useWarehousesStore = defineStore("warehouses", {
             } else {
                 throw new Error(`HTTP Error: ${response.status}`);
             }
-            return Promise.resolve();
+            return;
         },
         async add(adding) {
             const response = await fetch("./erp/api/v0/products/warehouses/", {
@@ -84,7 +84,7 @@ export const useWarehousesStore = defineStore("warehouses", {
             return this.warehouses[index];
         },
         getById(id) {
-            return this.warehouses.find((w) => w.id === id);
+            return (id === -1) ? {} : this.warehouses.find((w) => w.id === id);
         },
         async save(id, data) {
             const warehouse = this.getById(id);
@@ -102,11 +102,9 @@ export const useWarehousesStore = defineStore("warehouses", {
 
             if (response.ok) {
                 const newData = await response.json();
-                const warehouse = this.warehouses.find((w) => w.id === id);
-                this.fields.forEach((f) => {
-                    warehouse[f] = newData[f];
-                });
-                warehouse.id = id; // prevent overwriting 'id'
+                const index = this.warehouses.findIndex((w) => w.id === id);
+                newData.id = id; // prevent overwriting 'id'
+                this.warehouses[index] = newData;
             }
         }
     }

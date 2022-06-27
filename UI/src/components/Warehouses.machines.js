@@ -2,8 +2,10 @@
 
 import {
     createMachine,
+    immediate,
     interpret,
     invoke,
+    guard,
     reduce,
     state,
     transition
@@ -13,46 +15,44 @@ function handleError(ctx, error) {
     return { ...ctx, error };
 }
 
-function clearEditBuffer(ctx) {
-    return { ...ctx, editData: {} };
-}
-
-function updateEditBuffer(ctx, { data }) {
-    ctx.editData[data.key] = data.value;
-    return ctx;
-}
-
-function clearNewBuffer(ctx) {
-    return { ...ctx, newData: {} };
-}
-
-function updateNewBuffer(ctx, { data }) {
-    ctx.newData[data.key] = data.value;
-    return ctx;
-}
-
 function markRowEditing(ctx, { rowId }) {
-    Object.assign(ctx.editData, ctx.warehousesStore.getById(rowId));
     return { ...ctx, rowId };
+}
+
+function markIdle(ctx) {
+    return { ...ctx, rowId: -1 };
 }
 
 async function initializeWarehouses(ctx) {
     return ctx.warehousesStore.initialize();
 }
 
-async function addWarehouse(ctx) {
-    return ctx.warehousesStore.add(ctx.newData);
+function initializeWarehouse(ctx) {
+    return { ...ctx, data: ctx.store.getById(ctx.rowId) };
 }
 
-async function deleteWarehouse(ctx, { rowId }) {
-    return ctx.warehousesStore.del(rowId);
+function handleInput(ctx, { key, value }) {
+    ctx.data[key] = value;
+    return ctx;
+}
+
+async function addWarehouse(ctx) {
+    return ctx.store.add(ctx.data);
+}
+
+async function deleteWarehouse(ctx) {
+    return ctx.store.del(ctx.rowId);
+}
+
+async function acquireWarehouse(ctx) {
+    return ctx.store.get(ctx.rowId);
 }
 
 async function saveWarehouse(ctx) {
-    return ctx.warehousesStore.save(ctx.rowId, ctx.editData);
+    return ctx.store.save(ctx.rowId, ctx.data);
 }
 
-const machine = createMachine(
+const warehousesMachine = createMachine(
     {
         loading: invoke(
             initializeWarehouses,
@@ -60,41 +60,65 @@ const machine = createMachine(
             transition("error", "error")
         ),
         idle: state(
-            transition("edit", "editing", reduce(markRowEditing)),
-            transition("delete", "deleting"),
-            transition("add", "adding"),
-            transition("updateNew", "idle", reduce(updateNewBuffer))
+            transition("modify", "modifying", reduce(markRowEditing)),
         ),
-        editing: state(
-            transition("cancel", "idle"),
-            transition("save", "saving"),
-            transition("updateEdit", "editing", reduce(updateEditBuffer))
-        ),
-        saving: invoke(
-            // the event which triggered the 'saving' state
-            // is passed as the event to the 'saveWarehouse' function
-            saveWarehouse,
-            transition("error", "error", reduce(handleError)),
-            transition("done", "idle", reduce(clearEditBuffer))
-        ),
-        deleting: invoke(
-            // the event which triggered the 'deleting' state
-            // is passed as the event to the 'deleteWarehouse' function
-            deleteWarehouse,
-            transition("error", "error", reduce(handleError)),
-            transition("done", "idle")
-        ),
-        adding: invoke(
-            // the event which triggered the 'adding' state
-            // is passed as the event to the 'addWarehouse' function
-            addWarehouse,
-            transition("error", "error", reduce(handleError)),
-            transition("done", "idle", reduce(clearNewBuffer))
+        modifying: state(
+            transition("complete", "idle", reduce(markIdle))
         ),
         error: state()
     },
-    (initialContext) => ({ rowId: "", ...initialContext })
+    (initialContext) => ({ rowId: undefined, ...initialContext })
 );
+
+
+const warehouseMachine = createMachine(
+    {
+        initializing: state(
+            immediate("idle", reduce(initializeWarehouse))
+        ),
+        idle: state(
+            transition("update", "idle",
+                       guard((ctx) => ctx.adding),
+                       reduce(handleInput)),
+            transition("add", "adding", guard((ctx) => ctx.adding)),
+            transition("modify", "acquiring"),
+            transition("disable", "unmodifiable")
+        ),
+        acquiring: invoke(
+            acquireWarehouse,
+            transition("done", "modifying"),
+            transition("error", "error", reduce(handleError))
+        ),
+        modifying: state(
+            transition("update", "modifying", reduce(handleInput)),
+            transition("save", "saving"),
+            transition("delete", "deleting"),
+            transition("cancel", "initializing")
+        ),
+        saving: invoke(
+            saveWarehouse,
+            transition("done", "initializing"),
+            transition("error", "error", reduce(handleError))
+        ),
+        deleting: invoke(
+            deleteWarehouse,
+            transition("done", "deleted"),
+            transition("error", "error", reduce(handleError))
+        ),
+        deleted: state(),
+        adding: invoke(
+            addWarehouse,
+            transition("done", "initializing"),
+            transition("error", "error", reduce(handleError))
+        ),
+        unmodifiable: state(
+            transition("enable", "idle")
+        ),
+        error: state()
+    },
+    (ctx) => ({ ...ctx })
+);
+
 
 function cbStateEntry(service) {
     let current = service.machine.current;
@@ -105,12 +129,20 @@ function cbStateEntry(service) {
     }
 }
 
-function warehousesMachine(warehousesStore) {
-    return interpret(machine, cbStateEntry, {
+function createWarehousesMachine(warehousesStore) {
+    return interpret(warehousesMachine, cbStateEntry, {
         warehousesStore,
-        editData: {},
-        newData: {}
+        editingId: -1
     });
 }
 
-export { warehousesMachine };
+
+function createWarehouseMachine(warehousesStore, { ctx, cb }) {
+    return interpret(warehouseMachine, cb, {
+        store: warehousesStore,
+        ...ctx
+    });
+}
+
+
+export { createWarehousesMachine, createWarehouseMachine };
