@@ -35,15 +35,23 @@ export const useWarehousesStore = defineStore("warehouses", {
 
             if (response.ok) {
                 const added = await response.json();
+                added["_meta"] = {
+                    "ETag": response.headers.get("ETag")
+                };
                 this.warehouses.push(added);
             } else {
                 throw new Error(`HTTP Error: ${response.status}`);
             }
         },
         async del(id) {
+            const warehouse = this.getById(id);
             const response = await fetch(
-                `./erp/api/v0/products/warehouses/${id}`,
-                { method: "DELETE" }
+                `./erp/api/v0/products/warehouses/${id}`, {
+                    method: "DELETE",
+                    headers: {
+                        "If-Match": warehouse["_meta"]["ETag"]
+                    }
+                }
             );
 
             if (response.ok) {
@@ -79,12 +87,14 @@ export const useWarehousesStore = defineStore("warehouses", {
             return this.warehouses.find((w) => w.id === id);
         },
         async save(id, data) {
+            const warehouse = this.getById(id);
             const response = await fetch(
                 `./erp/api/v0/products/warehouses/${id}`,
                 {
                     method: "PUT",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        "If-Match": warehouse["_meta"]["ETag"]
                     },
                     body: JSON.stringify(data)
                 }
