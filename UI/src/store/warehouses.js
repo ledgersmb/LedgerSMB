@@ -53,6 +53,28 @@ export const useWarehousesStore = defineStore("warehouses", {
                 }
             }
         },
+        async get(id) {
+            const index = this.warehouses.findIndex((w) => w.id === id);
+            const warehouse = this.warehouses[index];
+            if ((!warehouse.hasOwnProperty("_meta"))
+                || warehouse["_meta"]["invalidated"]) {
+                const response = await fetch(
+                    `./erp/api/v0/products/warehouses/${id}`,
+                    { method: "GET" }
+                );
+
+                if (response.ok) {
+                    const newData = await response.json();
+                    newData["id"] = id;
+                    newData["_meta"] = {
+                        "ETag": response.headers.get('ETag')
+                    };
+                    this.warehouses[index] = newData;
+                }
+            }
+
+            return this.warehouses[index];
+        },
         getById(id) {
             return this.warehouses.find((w) => w.id === id);
         },
