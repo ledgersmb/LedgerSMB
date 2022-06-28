@@ -12,6 +12,7 @@ if (TARGET !== "readme") {
 
     const BundleAnalyzerPlugin =
         require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+    const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via npm
     const CompressionPlugin = require("compression-webpack-plugin");
     const CopyWebpackPlugin = require("copy-webpack-plugin");
     const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
@@ -23,9 +24,8 @@ if (TARGET !== "readme") {
     const UnusedWebpackPlugin = require("unused-webpack-plugin");
     const VirtualModulesPlugin = require("webpack-virtual-modules");
     const { VueLoaderPlugin } = require("vue-loader");
-    const { WebpackDeduplicationPlugin } = require('webpack-deduplication-plugin');
-
-    const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via npm
+    // eslint-disable-next-line
+    const { WebpackDeduplicationPlugin } = require("webpack-deduplication-plugin");
 
     const argv = require("yargs").argv;
     const prodMode =
@@ -166,11 +166,6 @@ if (TARGET !== "readme") {
 
     /* PLUGINS */
 
-    const CleanWebpackPluginOptions = {
-        dry: !prodMode,
-        verbose: false
-    }; // delete all files in the js directory without deleting this folder
-
     const ESLintPluginOptions = {
         files: "**/*.js",
         exclude: ["node_modules", "./bootstrap.js"],
@@ -199,7 +194,6 @@ if (TARGET !== "readme") {
         loaderConfig: require("./UI/js-src/lsmb/webpack.loaderConfig.js"),
         environment: { dojoRoot: "UI/js" }, // used at run time for non-packed resources (e.g. blank.gif)
         buildEnvironment: { dojoRoot: "node_modules" }, // used at build time
-        //locales: ["en"],
         locales: getPOFilenames("locale/po", ".po"),
         noConsole: true
     };
@@ -223,7 +217,7 @@ if (TARGET !== "readme") {
 
     const UnusedWebpackPluginOptions = {
         // Source directories
-        directories: ["js-src/lsmb"],
+        directories: ["js-src/lsmb", "src"],
         // Exclude patterns
         exclude: ["*.test.js"],
         // Root directory (optional)
@@ -266,8 +260,6 @@ if (TARGET !== "readme") {
     };
 
     var pluginsProd = [
-        // Clean UI/js before building (must be first)
-        new CleanWebpackPlugin(CleanWebpackPluginOptions),
 
         // Lint the sources
         new ESLintPlugin(ESLintPluginOptions),
@@ -366,7 +358,13 @@ if (TARGET !== "readme") {
         })
     ];
 
-    var pluginsList = prodMode ? pluginsProd : pluginsDev;
+    var pluginsList = prodMode
+        ? [
+              // Clean UI/js before building (must be first)
+              new CleanWebpackPlugin(CleanWebpackPluginOptions),
+              ...pluginsProd
+          ]
+        : pluginsDev;
 
     /* OPTIMIZATIONS */
 
@@ -397,23 +395,12 @@ if (TARGET !== "readme") {
                         );
                     },
                     name(module) {
-                        // const nlsName = module.context.match(
-                        //     /[\\/]dojo[\\/]cldr[\\/]nls[\\/]([a-zA-Z0-9]+)/
-                        // );
-                        // if (nlsName) {
-                        //     return `npm.dojo-nls`;
-                        // }
-                        if (module.context.match(/.+cldr[\\/]/)) {
-                            return `npm.dojo-cldr`;
-                        }
                         const packageName = module.context.match(
                             /[\\/]node_modules[\\/](.*?)([\\/]|$)/
                         )[1];
                         return `npm.${packageName.replace("@", "")}`;
                     },
                     chunks: "all"
-                    //,
-                    //enforce: true
                 }
             }
         }
@@ -487,23 +474,41 @@ if (TARGET !== "readme") {
         devServer: {
             allowedHosts: "all", // Replace with docker parent and localhost
             client: {
-                logging: "info",
-                overlay: false  // true would be nice when duplicates sources is fixed
+                logging: "verbose",
+                overlay: {
+                    errors: true,
+                    warnings: false
+                },
+                progress: true
             },
             compress: true,
             devMiddleware: {
-                publicPath: 'js/',
-                writeToDisk: true,
+                index: false,
+                serverSideRender: true,
+                writeToDisk: true // Required for Perl TT
             },
             hot: true,
             port: 9000,
             proxy: {
-                '/': 'http://localhost:5762',
+                "/*.pl": {
+                    target: "http://localhost:5762"
+                },
+                "/erp/api": {
+                    target: "http://localhost:5762"
+                }
             },
             static: {
                 directory: path.join(__dirname, "/UI")
-            }
-        }
+            },
+            watchFiles: [
+                "webpack.config.js",
+                "UI/**/*",
+                "!UI/js/*",
+                "node_modules/**/*"
+            ]
+        },
+
+        target: "web"
     };
 
     module.exports = webpackConfigs;
