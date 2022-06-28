@@ -59,6 +59,8 @@ export const useWarehousesStore = defineStore("warehouses", {
                 if (index !== -1) {
                     this.warehouses.splice(index, 1);
                 }
+            } else {
+                throw new Error(`HTTP Error: ${response.status}`);
             }
         },
         async get(id) {
@@ -77,6 +79,8 @@ export const useWarehousesStore = defineStore("warehouses", {
                         ETag: response.headers.get("ETag")
                     };
                     this.warehouses[index] = newData;
+                } else {
+                    throw new Error(`HTTP Error: ${response.status}`);
                 }
             }
 
@@ -104,6 +108,8 @@ export const useWarehousesStore = defineStore("warehouses", {
                 const index = this.warehouses.findIndex((w) => w.id === id);
                 newData.id = id; // prevent overwriting 'id'
                 this.warehouses[index] = newData;
+            } else {
+                throw new Error(`HTTP Error: ${response.status}`);
             }
         }
     }
