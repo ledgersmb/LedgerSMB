@@ -54,16 +54,22 @@
 
 <script setup>
 
-import { createWarehouseMachine } from "./Warehouses.machines.js";
+import { createRowMachine } from "./ConfigTable.machines.js";
 import { computed, inject, watch } from "vue";
 import { contextRef } from "@/robot-vue";
 
-const props = defineProps(["columns", "id", "editingId", "type", "deletable"]);
+const props = defineProps([
+    "columns",
+    "deletable",
+    "editingId",
+    "id",
+    "store",
+    "type"
+]);
 const emit = defineEmits(["modifying", "idle"]);
-const warehousesStore = inject("configStore");
 const notify = inject("notify");
 
-const { service, send, state } = createWarehouseMachine(warehousesStore, {
+const { service, send, state } = createRowMachine(props.store, {
     ctx: {
         rowId: props.id,
         adding: props.type === "new",

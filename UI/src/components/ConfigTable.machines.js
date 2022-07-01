@@ -54,11 +54,11 @@ function markIdle(ctx) {
     return { ...ctx, editingId: "" };
 }
 
-async function initializeWarehouses(ctx) {
-    return ctx.warehousesStore.initialize();
+async function initializeTable(ctx) {
+    return ctx.store.initialize();
 }
 
-function initializeWarehouse(ctx) {
+function initializeRow(ctx) {
     return { ...ctx, data: ctx.store.getById(ctx.rowId) };
 }
 
@@ -67,26 +67,26 @@ function handleInput(ctx, { key, value }) {
     return ctx;
 }
 
-async function addWarehouse(ctx) {
+async function addItem(ctx) {
     return ctx.store.add(ctx.data);
 }
 
-async function deleteWarehouse(ctx) {
+async function deleteItem(ctx) {
     return ctx.store.del(ctx.rowId);
 }
 
-async function acquireWarehouse(ctx) {
+async function acquireItem(ctx) {
     return ctx.store.get(ctx.rowId);
 }
 
-async function saveWarehouse(ctx) {
+async function saveItem(ctx) {
     return ctx.store.save(ctx.rowId, ctx.data);
 }
 
 const warehousesMachine = createMachine(
     {
         loading: invoke(
-            initializeWarehouses,
+            initializeTable,
             transition("done", "idle"),
             transition("error", "error")
         ),
@@ -99,7 +99,7 @@ const warehousesMachine = createMachine(
 
 const warehouseMachine = createMachine(
     {
-        initializing: state(immediate("idle", reduce(initializeWarehouse))),
+        initializing: state(immediate("idle", reduce(initializeRow))),
         idle: state(
             transition(
                 "update",
@@ -116,7 +116,7 @@ const warehouseMachine = createMachine(
             transition("disable", "unmodifiable")
         ),
         acquiring: invoke(
-            progressNotify(acquireWarehouse, "acquiring"),
+            progressNotify(acquireItem, "acquiring"),
             transition("done", "modifying"),
             transition("error", "error", reduce(handleError))
         ),
@@ -127,18 +127,18 @@ const warehouseMachine = createMachine(
             transition("cancel", "initializing")
         ),
         saving: invoke(
-            progressNotify(saveWarehouse, "saving"),
+            progressNotify(saveItem, "saving"),
             transition("done", "initializing", action(notify("saved"))),
             transition("error", "error", reduce(handleError))
         ),
         deleting: invoke(
-            progressNotify(deleteWarehouse, "deleting"),
+            progressNotify(deleteItem, "deleting"),
             transition("done", "deleted", action(notify("deleted"))),
             transition("error", "error", reduce(handleError))
         ),
         deleted: state(),
         adding: invoke(
-            progressNotify(addWarehouse, "adding"),
+            progressNotify(addItem, "adding"),
             transition("done", "initializing", action(notify("added"))),
             transition("error", "error", reduce(handleError))
         ),
@@ -151,18 +151,18 @@ const warehouseMachine = createMachine(
 function cbStateEntry(service) {
 }
 
-function createWarehousesMachine(warehousesStore) {
+function createTableMachine(store) {
     return interpret(warehousesMachine, cbStateEntry, {
-        warehousesStore,
+        store,
         editingId: ""
     });
 }
 
-function createWarehouseMachine(warehousesStore, { ctx, cb }) {
+function createRowMachine(store, { ctx, cb }) {
     return interpret(warehouseMachine, cb, {
-        store: warehousesStore,
+        store,
         ...ctx
     });
 }
 
-export { createWarehousesMachine, createWarehouseMachine };
+export { createTableMachine, createRowMachine };
