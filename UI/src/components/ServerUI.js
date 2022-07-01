@@ -1,6 +1,6 @@
 /** @format */
 
-import { h } from "vue";
+import { h, inject, ref } from "vue";
 
 const registry = require("dijit/registry");
 const parser = require("dojo/parser");
@@ -16,9 +16,11 @@ function domReject(response) {
 }
 
 export default {
-    data() {
+    setup() {
+        const notify = inject("notify");
         return {
-            content: "Loading..."
+            notify,
+            content: ref("Loading...")
         };
     },
     props: ["uiURL"],
@@ -30,6 +32,14 @@ export default {
     methods: {
         async updateContent(tgt, options = {}) {
             try {
+                let dismiss;
+                this.notify({
+                    title: "Loading...",
+                    type: "info",
+                    dismissReceiver: (cb) => {
+                        dismiss = cb;
+                    }
+                });
                 let headers = new Headers(options.headers);
                 headers.set("X-Requested-With", "XMLHttpRequest");
 
@@ -50,6 +60,10 @@ export default {
                 } else {
                     this._report_error(r);
                 }
+                if (dismiss) {
+                    dismiss();
+                }
+                this.notify({ title: "Loaded" });
             } catch (e) {
                 this._report_error(e);
             }

@@ -1,10 +1,12 @@
 /** @format */
-/* eslint-disable no-console, import/no-unresolved */
+/* eslint-disable no-console, import/no-unresolved, vue/multi-word-component-names */
 
 import { createApp } from "vue";
 import router from "./router";
 import i18n, { loadLocaleMessages } from "./i18n";
 import LoginPage from "./components/LoginPage";
+import Toaster from "./components/Toaster";
+import { createToasterMachine } from "./components/Toaster.machines";
 
 import { createPinia } from "pinia";
 
@@ -58,6 +60,14 @@ if (document.getElementById("main")) {
     app.config.compilerOptions.isCustomElement = (tag) =>
         tag.startsWith("lsmb-");
     app.directive("update", lsmbDirective);
+
+    app.component("Toaster", Toaster);
+    const toasterMachine = createToasterMachine({ items: [] }, {});
+    app.provide("toaster-machine", toasterMachine);
+    const { send } = toasterMachine;
+    app.provide("notify", (notification) => {
+        send({ type: "add", item: notification });
+    });
 
     app.mount("#main");
 } else if (document.getElementById("login")) {
