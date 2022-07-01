@@ -1,6 +1,7 @@
 /** @format */
 
 import {
+    action,
     createMachine,
     immediate,
     interpret,
@@ -10,6 +11,35 @@ import {
     state,
     transition
 } from "@/robot-vue";
+
+function progressNotify(fn, progress) {
+    return async (ctx) => {
+        let dismiss;
+
+        if (progress) {
+            let cbp = ctx.notifications[progress];
+            if (cbp) {
+                cbp(ctx, (d) => {
+                    dismiss = d;
+                });
+            }
+        }
+        return fn(ctx).finally(() => {
+            if (dismiss) {
+                dismiss();
+            }
+        });
+    };
+}
+
+function notify(notification) {
+    return (ctx) => {
+        let cb = ctx.notifications[notification];
+        if (cb) {
+            cb(ctx);
+        }
+    };
+}
 
 function handleError(ctx, error) {
     return { ...ctx, error };
@@ -85,7 +115,7 @@ const warehouseMachine = createMachine(
             transition("disable", "unmodifiable")
         ),
         acquiring: invoke(
-            acquireWarehouse,
+            progressNotify(acquireWarehouse, "acquiring"),
             transition("done", "modifying"),
             transition("error", "error", reduce(handleError))
         ),
@@ -96,23 +126,23 @@ const warehouseMachine = createMachine(
             transition("cancel", "initializing")
         ),
         saving: invoke(
-            saveWarehouse,
-            transition("done", "initializing"),
+            progressNotify(saveWarehouse, "saving"),
+            transition("done", "initializing", action(notify("saved"))),
             transition("error", "error", reduce(handleError))
         ),
         deleting: invoke(
-            deleteWarehouse,
-            transition("done", "deleted"),
+            progressNotify(deleteWarehouse, "deleting"),
+            transition("done", "deleted", action(notify("deleted"))),
             transition("error", "error", reduce(handleError))
         ),
         deleted: state(),
         adding: invoke(
-            addWarehouse,
-            transition("done", "initializing"),
+            progressNotify(addWarehouse, "adding"),
+            transition("done", "initializing", action(notify("added"))),
             transition("error", "error", reduce(handleError))
         ),
         unmodifiable: state(transition("enable", "idle")),
-        error: state()
+        error: state(transition("restart", "initializing"))
     },
     (ctx) => ({ ...ctx })
 );

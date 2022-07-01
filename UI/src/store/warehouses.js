@@ -87,7 +87,9 @@ export const useWarehousesStore = defineStore("warehouses", {
             return this.warehouses[index];
         },
         getById(id) {
-            return id === -1 ? {} : this.warehouses.find((w) => w.id === id);
+            return id === -1
+                ? { id: undefined, description: undefined }
+                : this.warehouses.find((w) => w.id === id);
         },
         async save(id, data) {
             const warehouse = this.getById(id);

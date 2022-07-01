@@ -59,13 +59,39 @@ import { contextRef } from "@/robot-vue";
 const props = defineProps(["columns", "id", "editingId", "type"]);
 const emit = defineEmits(["modifying", "idle"]);
 const warehousesStore = inject("configStore");
+const notify = inject("notify");
 
 const { service, send, state } = createWarehouseMachine(warehousesStore, {
     ctx: {
         rowId: props.id,
         adding: props.type === "new",
+        notifications: {
+            "acquiring": (ctx, cb) => {
+                notify({
+                    title: "Getting latest data",
+                    type: "info",
+                    dismissReceiver: cb
+                });
+            },
+            "adding": (ctx, cb) => {
+                notify({ title: "Adding", type: "info", dismissReceiver: cb });
+            },
+            "added": (ctx) => { notify({ title: "Added" }); },
+            "deleting": (ctx, cb) => {
+                notify({ title: "Deleting", type: "info", dismissReceiver: cb });
+            },
+            "deleted": (ctx) => { notify({ title: "Deleted" }); },
+            "saving": (ctx, cb) => {
+                notify({ title: "Saving", type: "info", dismissReceiver: cb });
+            },
+            "saved": (ctx) => { notify({ title: "Saved" }); },
+        }
     },
     cb: {
+        error: () => {
+            notify({ title: "Failed", type: "error" });
+            send("restart");
+        },
         modifying: () => emit("modifying"),
         idle: () => emit("idle")
     }

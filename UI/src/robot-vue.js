@@ -11,7 +11,7 @@ import {
     state,
     transition
 } from "robot3";
-import { reactive, ref as allocRef } from "vue";
+import { isRef, reactive, ref as allocRef } from "vue";
 
 function nil() {}
 
@@ -21,6 +21,9 @@ function allocateStateCB(map) {
     }
 
     return function (service) {
+        if (map.__all__) {
+            map.__all__(service);
+        }
         const s = service.machine.current;
         (map[s] || nil)(service);
     };
@@ -34,17 +37,16 @@ function allocateOnChange(s, onChange) {
 
         sb.value = service.machine.current;
         const ctx = service.context;
-        service._contextRefs.forEach(({ key, ref }) => {
-            const rb = ref;
-            rb.value = ctx[key];
-            // objects and arrays are converted to reactive()s
-            // upon assignment to a ref's value attribute. We want
-            // the context value to be reactive too, so sync back
-            // in case this happened.
-            if (ctx[key] !== rb.value) {
-                ctx[key] = rb.value;
-            }
-        });
+        if (service._contextRefs) {
+            service._contextRefs.forEach(({ key, ref }) => {
+                if (isRef(ctx[key])) {
+                    const rb = ref;
+                    rb.value = ctx[key];
+                } else {
+                    Object.assign(ref, ctx[key]);
+                }
+            });
+        }
     };
 }
 
