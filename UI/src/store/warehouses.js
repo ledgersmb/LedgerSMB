@@ -6,7 +6,7 @@ export const useWarehousesStore = defineStore("warehouses", {
     state: () => {
         return {
             fields: ["id", "description"],
-            warehouses: []
+            items: []
         };
     },
     actions: {
@@ -16,8 +16,8 @@ export const useWarehousesStore = defineStore("warehouses", {
             });
 
             if (response.ok) {
-                this.warehouses = (await response.json()).sort(
-                    (a, b) => b.id - a.id
+                this.items = (await response.json()).sort(
+                    (a, b) => a.id - b.id
                 );
             } else {
                 throw new Error(`HTTP Error: ${response.status}`);
@@ -37,7 +37,7 @@ export const useWarehousesStore = defineStore("warehouses", {
                 added._meta = {
                     ETag: response.headers.get("ETag")
                 };
-                this.warehouses.push(added);
+                this.items.push(added);
             } else {
                 throw new Error(`HTTP Error: ${response.status}`);
             }
@@ -55,17 +55,17 @@ export const useWarehousesStore = defineStore("warehouses", {
             );
 
             if (response.ok) {
-                let index = this.warehouses.findIndex((w) => w.id === id);
+                let index = this.items.findIndex((w) => w.id === id);
                 if (index !== -1) {
-                    this.warehouses.splice(index, 1);
+                    this.items.splice(index, 1);
                 }
             } else {
                 throw new Error(`HTTP Error: ${response.status}`);
             }
         },
         async get(id) {
-            const index = this.warehouses.findIndex((w) => w.id === id);
-            const warehouse = this.warehouses[index];
+            const index = this.items.findIndex((w) => w.id === id);
+            const warehouse = this.items[index];
             if (!warehouse._meta || warehouse._meta.invalidated) {
                 const response = await fetch(
                     `./erp/api/v0/products/warehouses/${id}`,
@@ -78,18 +78,18 @@ export const useWarehousesStore = defineStore("warehouses", {
                     newData._meta = {
                         ETag: response.headers.get("ETag")
                     };
-                    this.warehouses[index] = newData;
+                    this.items[index] = newData;
                 } else {
                     throw new Error(`HTTP Error: ${response.status}`);
                 }
             }
 
-            return this.warehouses[index];
+            return this.items[index];
         },
         getById(id) {
-            return id === -1
+            return id === ""
                 ? { id: undefined, description: undefined }
-                : this.warehouses.find((w) => w.id === id);
+                : this.items.find((w) => w.id === id);
         },
         async save(id, data) {
             const warehouse = this.getById(id);
@@ -107,9 +107,9 @@ export const useWarehousesStore = defineStore("warehouses", {
 
             if (response.ok) {
                 const newData = await response.json();
-                const index = this.warehouses.findIndex((w) => w.id === id);
+                const index = this.items.findIndex((w) => w.id === id);
                 newData.id = id; // prevent overwriting 'id'
-                this.warehouses[index] = newData;
+                this.items[index] = newData;
             } else {
                 throw new Error(`HTTP Error: ${response.status}`);
             }

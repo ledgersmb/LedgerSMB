@@ -13,7 +13,7 @@ const COLUMNS = [
 ];
 
 const warehousesStore = useWarehousesStore();
-const { warehouses } = storeToRefs(warehousesStore);
+const { items } = storeToRefs(warehousesStore);
 
 const { service, send, state } = createWarehousesMachine(warehousesStore);
 const editingId = contextRef(service, "editingId");
