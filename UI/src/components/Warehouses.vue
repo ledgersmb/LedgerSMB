@@ -46,6 +46,7 @@ provide("configStore", warehousesStore);
                         :key="warehouse.id"
                         :id="warehouse.id"
                         :editingId="editingId"
+                        :deletable="false"
                         type="existing"
                         @modifying="send({ type: 'modify', rowId: warehouse.id })"
                         @idle="send('complete')"
@@ -54,7 +55,7 @@ provide("configStore", warehousesStore);
                 <tfoot>
                     <WarehouseRow
                         :columns="COLUMNS"
-                        :id="-1"
+                        id=""
                         :editingId="editingId"
                         type="new"
                         @modifying="send({ type: 'modify', rowId: -1 })"

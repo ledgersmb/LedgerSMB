@@ -25,7 +25,7 @@ function removeItem(ctx, { item }) {
 }
 
 function delayRemoval(ctx) {
-    const duration = ctx.duration && ctx.duration === "short" ? 3 : 10;
+    const duration = ctx.duration && ctx.duration === "short" ? 2 : 10;
     return Promise.any([
         new Promise((resolve) => {
             ctx.dismiss = resolve;

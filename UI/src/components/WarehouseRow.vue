@@ -20,8 +20,10 @@
                         @click="send('save')">{{$t('Save')}}</lsmb-button>
                 <lsmb-button :disabled="!editing"
                         @click="send('cancel')">{{$t('Cancel')}}</lsmb-button>
-                <lsmb-button :disabled="!editing"
-                        @click="send('delete')">{{$t('Delete')}}</lsmb-button>
+                <lsmb-button
+                    v-if="props.deletable"
+                    :disabled="!editing"
+                    @click="send('delete')">{{$t('Delete')}}</lsmb-button>
             </template>
             <lsmb-button v-else
                     :disabled="state !== 'idle'"
@@ -56,7 +58,7 @@ import { createWarehouseMachine } from "./Warehouses.machines.js";
 import { computed, inject, watch } from "vue";
 import { contextRef } from "@/robot-vue";
 
-const props = defineProps(["columns", "id", "editingId", "type"]);
+const props = defineProps(["columns", "id", "editingId", "type", "deletable"]);
 const emit = defineEmits(["modifying", "idle"]);
 const warehousesStore = inject("configStore");
 const notify = inject("notify");
@@ -97,11 +99,13 @@ const { service, send, state } = createWarehouseMachine(warehousesStore, {
     }
 });
 const data = contextRef(service, "data");
-const editing = computed(() => (state.value === "modifying" || props.type === "new"));
+const editing = computed(
+    () => (state.value === "modifying" || props.type === "new")
+);
 const modifiable = computed(() => state.value === "idle");
 
 watch(() => props.editingId,
-      (oldValue, newValue) => {
+      (newValue) => {
           if (! newValue) {
               // ignored when not applicable to the current state
               // meaning: ignored when we're the cause of this value-change

@@ -24,10 +24,11 @@ function progressNotify(fn, progress) {
                 });
             }
         }
-        return fn(ctx).finally(() => {
+        return fn(ctx).finally((value) => {
             if (dismiss) {
                 dismiss();
             }
+            return value;
         });
     };
 }
@@ -46,11 +47,11 @@ function handleError(ctx, error) {
 }
 
 function markRowEditing(ctx, { rowId }) {
-    return { ...ctx, rowId };
+    return { ...ctx, editingId: rowId };
 }
 
 function markIdle(ctx) {
-    return { ...ctx, rowId: -1 };
+    return { ...ctx, editingId: "" };
 }
 
 async function initializeWarehouses(ctx) {
@@ -148,18 +149,12 @@ const warehouseMachine = createMachine(
 );
 
 function cbStateEntry(service) {
-    let current = service.machine.current;
-    let ctx = service.context;
-
-    if (current === "idle") {
-        ctx.rowId = "";
-    }
 }
 
 function createWarehousesMachine(warehousesStore) {
     return interpret(warehousesMachine, cbStateEntry, {
         warehousesStore,
-        editingId: -1
+        editingId: ""
     });
 }
 

@@ -39,7 +39,7 @@ function allocateOnChange(s, onChange) {
         const ctx = service.context;
         if (service._contextRefs) {
             service._contextRefs.forEach(({ key, ref }) => {
-                if (isRef(ctx[key])) {
+                if (isRef(ref)) {
                     const rb = ref;
                     rb.value = ctx[key];
                 } else {
