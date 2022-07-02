@@ -94,9 +94,15 @@ sub content_test {
                     return 0;
                 }
             },
+            'elem-unclosed' => sub {
+                my $param = shift;
+                return 1 if $param->{tag} eq 'toaster';
+                return 0;
+            },
             'elem-unknown' => sub {
                 my $param = shift;
                 return 1 if $param->{tag} =~ /.+-.+/;
+                return 1 if $param->{tag} eq 'toaster';
                 return 0;
             },
             'text-use-entity' => sub {
