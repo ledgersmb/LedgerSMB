@@ -126,7 +126,7 @@ sub _update_warehouse {
           RETURNING *, md5(last_updated::text) as etag|
         ) or die $c->dbh->errstr;
 
-    $sth->execute( $w->{description}, $w->{id}, $m->{etag} ) or die $sth->errstr;
+    $sth->execute( $w->{description}, $w->{id}, $m->{ETag} ) or die $sth->errstr;
     if ($sth->rows == 0) {
         my ($response, $meta) = _get_warehouse($c, $w->{id});
         return (undef, {}) unless $response;
@@ -362,11 +362,15 @@ put '/products/warehouses/:id' => sub {
 
     my $body = json()->decode($r->content);
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
+    my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
     my ($response, $meta) = _update_warehouse(
         $c, {
             id => $params->{id},
             description => $body->{description}
-        } );
+        },
+        {
+            ETag => $ETag
+        });
 
     return [ HTTP_CONFLICT, [], [ '' ] ]
         if ($meta->{conflict});
