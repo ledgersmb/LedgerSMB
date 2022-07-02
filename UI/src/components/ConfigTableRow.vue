@@ -57,6 +57,9 @@
 import { createRowMachine } from "./ConfigTable.machines.js";
 import { computed, inject, watch } from "vue";
 import { contextRef } from "@/robot-vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const props = defineProps([
     "columns",
@@ -76,28 +79,36 @@ const { service, send, state } = createRowMachine(props.store, {
         notifications: {
             "acquiring": (ctx, cb) => {
                 notify({
-                    title: "Getting latest data",
+                    title: t("Getting latest data"),
                     type: "info",
                     dismissReceiver: cb
                 });
             },
             "adding": (ctx, cb) => {
-                notify({ title: "Adding", type: "info", dismissReceiver: cb });
+                notify({
+                    title: t("Adding"),
+                    type: "info",
+                    dismissReceiver: cb
+                });
             },
-            "added": (ctx) => { notify({ title: "Added" }); },
+            "added": (ctx) => { notify({ title: t("Added") }); },
             "deleting": (ctx, cb) => {
-                notify({ title: "Deleting", type: "info", dismissReceiver: cb });
+                notify({
+                    title: t("Deleting"),
+                    type: "info",
+                    dismissReceiver: cb
+                });
             },
-            "deleted": (ctx) => { notify({ title: "Deleted" }); },
+            "deleted": (ctx) => { notify({ title: t("Deleted") }); },
             "saving": (ctx, cb) => {
-                notify({ title: "Saving", type: "info", dismissReceiver: cb });
+                notify({ title: t("Saving"), type: "info", dismissReceiver: cb });
             },
-            "saved": (ctx) => { notify({ title: "Saved" }); },
+            "saved": (ctx) => { notify({ title: t("Saved") }); },
         }
     },
     cb: {
         error: () => {
-            notify({ title: "Failed", type: "error" });
+            notify({ title: t("Failed"), type: "error" });
             send("restart");
         },
         modifying: () => emit("modifying"),
