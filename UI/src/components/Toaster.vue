@@ -1,6 +1,6 @@
 <script setup>
 
-import { computed, getCurrentInstance, inject } from "vue";
+import { inject } from "vue";
 import { contextRef } from "@/robot-vue";
 
 import { createToasterMachine } from "./Toaster.machines";

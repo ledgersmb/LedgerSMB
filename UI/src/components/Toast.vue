@@ -1,6 +1,5 @@
 <script setup>
 
-import { contextRef } from "@/robot-vue";
 import { createToastMachine } from "./Toaster.machines";
 
 const props = defineProps({"data": { }, "type": { default: "success" }});
@@ -9,7 +8,7 @@ const emit = defineEmits(["remove"]);
 const title = props.data.title || "Title";
 const text = props.data.text;
 
-const { service, send, state } = createToastMachine(
+const { send } = createToastMachine(
     {
         item: props.data,
         duration: text ? "long" : "short"
