@@ -310,7 +310,9 @@
         "declarations"
       ],
       "order/properties-alphabetical-order": true,
-      "plugin/no-unsupported-browser-features": true,
+      "plugin/no-unsupported-browser-features": [true, {
+        "ignorePartialSupport": true
+      }],
       "plugin/no-browser-hacks": [true, {
         "browsers": [
             "last 2 versions",

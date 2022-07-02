@@ -13,12 +13,6 @@ const warehousesStore = useWarehousesStore();
 
 </script>
 
-<style local>
-.neutral {
-    border-color: transparent;
-}
-</style>
-
 <template>
     <ConfigTable
         :columns="COLUMNS"

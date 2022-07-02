@@ -11,25 +11,7 @@ const { service, send, state } = (inject("toaster-machine") || createToasterMach
     items: []
 }, {}));
 const items = contextRef(service, "items");
-
-
 </script>
-
-<style local>
-.toaster {
-    position: absolute;
-    right: 5%;
-    top: 20px;
-    z-index: 2;
-    width: 50em;
-    max-width: 60%;
-    box-sizing: border-box;
-}
-
-.toaster.hidden {
-    display: none;
-}
-</style>
 
 <template>
     <div class="toaster"

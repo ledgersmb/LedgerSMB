@@ -14,12 +14,6 @@ const editingId = contextRef(service, "editingId");
 
 </script>
 
-<style local>
-.neutral {
-    border-color: transparent;
-}
-</style>
-
 <template>
     <div>
         <table class="dynatable">

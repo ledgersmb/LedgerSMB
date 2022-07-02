@@ -32,26 +32,6 @@
     </tr>
 </template>
 
-<style local>
-.data-entry {
-    vertical-align: middle;
-    padding: 0.1em 0.5ex;
-}
-.input-box {
-    box-sizing: border-box;
-    padding: 0.1em 0.3ex;
-    width: 100%;
-}
-.neutral {
-    border-color: transparent;
-    background-color: transparent;
-}
-.editing {
-    background-color: white;
-    border-color: black;
-}
-</style>
-
 <script setup>
 
 import { createRowMachine } from "./ConfigTable.machines.js";

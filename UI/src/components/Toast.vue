@@ -25,40 +25,8 @@ if (props.data.dismissReceiver) {
 
 </script>
 
-
-
-<style local>
-.toast.dijitBorderContainerPane {
-    width:100%;
-    text-align:center;
-    box-shadow: 6px 6px 6px lightgray;
-    box-sizing: border-box;
-    overflow: hidden;
-    overflow-wrap: normal;
-    position: relative !important;
-    margin: 1ex 0;
-}
-
-.toast.error {
-    background: linear-gradient(to right bottom, #d88, #eaa);
-}
-
-.toast.success {
-    background: linear-gradient(to right bottom, #8d8, #fff);
-}
-
-.toast.info {
-    background: linear-gradient(to right bottom, #bcd8f4, #fff);
-}
-
-.title {
-    font-weight: bold;
-}
-
-</style>
-
 <template>
-    <div class="toast dijitContentPane dijitBorderContainerPane dijitBorderContainer-child edgePanel"
+    <div class="toast dijitContentPane dijitBorderContainer-child edgePanel"
          :class="type"
          @click="send('dismiss')">
         <div class="title" >{{ title }}</div>
