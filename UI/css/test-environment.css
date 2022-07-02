@@ -160,7 +160,7 @@ body.menu a:visited {
     list-style: none;
     margin: 10px 0 0;
     padding: 0;
-    -webkit-padding-start: 0;
+    padding-inline-start: 0;
 }
 
 #top_menu ul {
