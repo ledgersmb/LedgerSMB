@@ -22,7 +22,7 @@ use strict;
 use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_BAD_REQUEST HTTP_NOT_FOUND
-    HTTP_UNSUPPORTED_MEDIA_TYPE HTTP_INTERNAL_SERVER_ERROR );
+    HTTP_CONFLICT HTTP_UNSUPPORTED_MEDIA_TYPE HTTP_INTERNAL_SERVER_ERROR );
 use JSONSchema::Validator;
 use Plack::Request::WithEncoding;
 use YAML::PP;
@@ -48,17 +48,22 @@ my $validator = JSONSchema::Validator->new(
 sub _add_warehouse {
     my ($c, $w) = @_;
     my $sth = $c->dbh->prepare(
-        q|INSERT INTO warehouse (description) VALUES (?) RETURNING *|
+        q|INSERT INTO warehouse (description) VALUES (?)
+          RETURNING *, md5(last_updated::text) as etag|
         ) or die $c->dbh->errstr;
 
     $sth->execute( $w->{description} ) or die $sth->errstr;
     my $row = $sth->fetchrow_hashref('NAME_lc');
     die $sth->errstr if $sth->err;
 
-    return {
-        id => $row->{id},
-        description => $row->{description}
-    };
+    return (
+        {
+            id => $row->{id},
+            description => $row->{description}
+        },
+        {
+            ETag => $row->{etag}
+        });
 }
 
 sub _del_warehouse {
@@ -76,19 +81,22 @@ sub _del_warehouse {
 sub _get_warehouse {
     my ($c, $id) = @_;
     my $sth = $c->dbh->prepare(
-        q|SELECT * FROM warehouse WHERE id = ?|
+        q|SELECT *, md5(last_updated::text) as etag FROM warehouse WHERE id = ?|
         ) or die $c->dbh->errstr;
 
     $sth->execute($id) or die $sth->errstr;
-    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-        return {
-            id => $row->{id},
-            description => $row->{description},
-        };
-    }
+    my $row = $sth->fetchrow_hashref('NAME_lc');
     die $sth->errstr if $sth->err;
 
-    return undef;
+    return undef unless $row;
+    return (
+        {
+            id => $row->{id},
+            description => $row->{description},
+        },
+        {
+            ETag => $row->{etag}
+        });
 }
 
 sub _get_warehouses {
@@ -111,18 +119,33 @@ sub _get_warehouses {
 }
 
 sub _update_warehouse {
-    my ($c, $w) = @_;
+    my ($c, $w, $m) = @_;
     my $sth = $c->dbh->prepare(
-        q|UPDATE warehouse SET description = ? WHERE id = ? RETURNING *|
+        q|UPDATE warehouse SET description = ?
+           WHERE id = ? AND md5(last_updated::text) = ?
+          RETURNING *, md5(last_updated::text) as etag|
         ) or die $c->dbh->errstr;
 
-    $sth->execute( $w->{description}, $w->{id} ) or die $sth->errstr;
-    return undef unless $sth->rows > 0;
+    $sth->execute( $w->{description}, $w->{id}, $m->{etag} ) or die $sth->errstr;
+    if ($sth->rows == 0) {
+        my ($response, $meta) = _get_warehouse($c, $w->{id});
+        return (undef, {}) unless $response;
+
+        # Obviously, the hashes must have mismatched
+        return (undef, { conflict => 1 });
+    }
 
     my $row = $sth->fetchrow_hashref('NAME_lc');
     die $sth->errstr if $sth->err;
 
-    return $row;
+    return (
+        {
+            id => $row->{id},
+            description => $row->{description}
+        },
+        {
+            ETag => $row->{etag}
+        });
 }
 
 
@@ -193,10 +216,10 @@ post '/products/warehouses/' => sub {
         if scalar(@$errors) > 0;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
-    my $response = _add_warehouse( $c, $body );
+    my ($response, $meta) = _add_warehouse( $c, $body );
     my $triplet = [ HTTP_CREATED,
                     [ 'Content-Type' => 'application/json; charset=UTF-8',
-                      'ETag' => 'wazzzda'
+                      'ETag' => qq|"$meta->{ETag}"|
                     ],
                     [ json()->encode( $response ) ] ];
     ($result, $errors, $warnings) =
@@ -278,7 +301,7 @@ get '/products/warehouses/:id' => sub {
     }
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
-    my $response = _get_warehouse( $c, $params->{id} );
+    my ($response, $meta) = _get_warehouse( $c, $params->{id} );
 
     return [ HTTP_NOT_FOUND, [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
              [ 'Not found' ] ]
@@ -286,7 +309,7 @@ get '/products/warehouses/:id' => sub {
 
     my $triplet = [ HTTP_OK,
                     [ 'Content-Type' => 'application/json; charset=UTF-8',
-                      'ETag' => 'abc-def' ],
+                      'ETag' => qq|"$meta->{ETag}"| ],
                     [ json()->encode( $response ) ] ];
     my ($result, $errors, $warnings) =
         $validator->validate_response(
@@ -339,11 +362,14 @@ put '/products/warehouses/:id' => sub {
 
     my $body = json()->decode($r->content);
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
-    my $response = _update_warehouse( $c,
-                                      {
-                                          id => $params->{id},
-                                          description => $body->{description}
-                                      } );
+    my ($response, $meta) = _update_warehouse(
+        $c, {
+            id => $params->{id},
+            description => $body->{description}
+        } );
+
+    return [ HTTP_CONFLICT, [], [ '' ] ]
+        if ($meta->{conflict});
 
     return [ HTTP_NOT_FOUND, [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
              [ 'Not found' ] ]
@@ -351,7 +377,7 @@ put '/products/warehouses/:id' => sub {
 
     my $triplet = [ HTTP_OK,
                     [ 'Content-Type' => 'application/json; charset=UTF-8',
-                      'ETag' => '"quazar"' ],
+                      'ETag' => qq|"$meta->{ETag}"| ],
                     [ json()->encode( $response ) ] ];
     my ($result, $errors, $warnings) =
         $validator->validate_response(
