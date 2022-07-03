@@ -7,6 +7,7 @@ import i18n, { loadLocaleMessages } from "./i18n";
 import LoginPage from "./components/LoginPage";
 import Toaster from "./components/Toaster";
 import { createToasterMachine } from "./components/Toaster.machines";
+import { useSessionUserStore } from "./store/sessionUser";
 
 import { createPinia } from "pinia";
 
@@ -61,6 +62,7 @@ if (document.getElementById("main")) {
         tag.startsWith("lsmb-");
     app.directive("update", lsmbDirective);
 
+    useSessionUserStore().initialize();
     app.component("Toaster", Toaster);
     const toasterMachine = createToasterMachine({ items: [] }, {});
     app.provide("toaster-machine", toasterMachine);

@@ -25,7 +25,7 @@
                     :disabled="!editing"
                     @click="send('delete')">{{$t('Delete')}}</lsmb-button>
             </template>
-            <lsmb-button v-else
+            <lsmb-button v-if="props.type === 'new'"
                     :disabled="state !== 'idle'"
                     @click="send('add')">{{$t('Add')}}</lsmb-button>
         </td>

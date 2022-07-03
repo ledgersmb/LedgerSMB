@@ -16,6 +16,8 @@ const warehousesStore = useWarehousesStore();
 <template>
     <ConfigTable
         :columns="COLUMNS"
-        :store="warehousesStore" />
+        :store="warehousesStore"
+        editRole="warehouse_edit"
+        createRole="warehouse_create" />
 </template>
 
