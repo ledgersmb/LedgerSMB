@@ -55,6 +55,7 @@
     "@vue/cli": "5.0.8",
     "@vue/cli-service": "5.0.8",
     "@vue/compiler-sfc": "3.2.37",
+    "@vue/vue3-jest":"28.0.1",
     "@vue/test-utils": "2.0.2",
     "autoprefixer": "10.4.7",
     "babel-loader": "8.2.5",
@@ -397,17 +398,6 @@
     }
   },
   "jest": {
-    "moduleFileExtensions": ["js", "json", "vue"],
-    "transform": {
-      "^.+\\.js$": "babel-jest",
-      "^.+\\.vue$": "@vue/vue3-jest"
-    },
-    "reporters": [
-      ["jest-tap-reporter", {
-        "logLevel": "INFO",
-        "showInternalStackTraces": false
-      }]
-    ],
     "automock": "false",
     "bail": "0",
     "cacheDirectory": "/tmp/jest_rs",
@@ -437,12 +427,19 @@
     "moduleDirectories": [
       "node_modules"
     ],
+    "moduleFileExtensions": ["js", "json", "vue"],
     "moduleNameMapper": "{}",
     "modulePathIgnorePatterns": "[]",
     "notify": false,
     "notifyMode": "failure-change",
     "preset": "undefined",
     "projects": "undefined",
+    "reporters": [
+      ["jest-tap-reporter", {
+        "logLevel": "INFO",
+        "showInternalStackTraces": false
+      }]
+    ],
     "resetMocks": false,
     "resetModules": "false",
     "resolver": "undefined",
@@ -469,6 +466,10 @@
     "testRegex": "[]",
     "testResultsProcessor": "undefined",
     "testRunner": "jest-circus/runner",
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.vue$": "@vue/vue3-jest"
+    },
     "transformIgnorePatterns": [
       "/node_modules/",
       "\\.pnp\\.[^\\/]+$"
