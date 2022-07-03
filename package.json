@@ -398,42 +398,51 @@
     }
   },
   "jest": {
-    "automock": "false",
-    "bail": "0",
+    "automock": false,
+    "bail": 0,
     "cacheDirectory": "/tmp/jest_rs",
     "clearMocks": true,
     "collectCoverage": true,
-    "collectCoverageFrom": "undefined",
+    "collectCoverageFrom": [],
     "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
-     "/node_modules/"
+      "/node_modules/"
     ],
     "coverageProvider": "babel",
     "coverageReporters": [
-     "json",
-     "text"
+      "json",
+      "text"
     ],
-    "coverageThreshold": "undefined",
-    "dependencyExtractor": "undefined",
-    "errorOnDeprecated": "false",
+    "coverageThreshold":   {
+      "coverageThreshold": {
+        "global": {
+          "branches": 50,
+          "functions": 100,
+          "lines": 100,
+          "statements": 100
+        }
+      }
+    },
+    "dependencyExtractor": "",
+    "errorOnDeprecated": false,
     "fakeTimers": {
      "enableGlobally": false
     },
-    "forceCoverageMatch": "[]",
-    "globalSetup": "undefined",
-    "globalTeardown": "undefined",
-    "globals": "{}",
+    "forceCoverageMatch": [],
+    "globalSetup": "",
+    "globalTeardown": "",
+    "globals": {},
     "maxWorkers": "50%",
     "moduleDirectories": [
       "node_modules"
     ],
     "moduleFileExtensions": ["js", "json", "vue"],
-    "moduleNameMapper": "{}",
-    "modulePathIgnorePatterns": "[]",
+    "moduleNameMapper": {},
+    "modulePathIgnorePatterns": [],
     "notify": false,
     "notifyMode": "failure-change",
-    "preset": "undefined",
-    "projects": "undefined",
+    "preset": "",
+    "projects": [],
     "reporters": [
       ["jest-tap-reporter", {
         "logLevel": "INFO",
@@ -441,20 +450,20 @@
       }]
     ],
     "resetMocks": false,
-    "resetModules": "false",
-    "resolver": "undefined",
-    "restoreMocks": "false",
+    "resetModules": false,
+    "resolver": "",
+    "restoreMocks": false,
     "rootDir": "UI",
     "roots": [
-      "UI"
+      "test"
     ],
     "runner": "jest-runner",
-    "setupFiles": "[]",
-    "setupFilesAfterEnv": "[]",
+    "setupFiles": [],
+    "setupFilesAfterEnv": [],
     "slowTestThreshold": 5,
-    "snapshotSerializers": "[]",
+    "snapshotSerializers": [],
     "testEnvironment": "jsdom",
-    "testEnvironmentOptions": "{}",
+    "testEnvironmentOptions": {},
     "testLocationInResults": false,
     "testMatch": [
       "**/__tests__/**/*.[jt]s?(x)",
@@ -463,8 +472,8 @@
     "testPathIgnorePatterns": [
       "/node_modules/"
     ],
-    "testRegex": "[]",
-    "testResultsProcessor": "undefined",
+    "testRegex": [],
+    "testResultsProcessor": "",
     "testRunner": "jest-circus/runner",
     "transform": {
       "^.+\\.js$": "babel-jest",
@@ -474,9 +483,11 @@
       "/node_modules/",
       "\\.pnp\\.[^\\/]+$"
     ],
-    "unmockedModulePathPatterns": "undefined",
-    "verbose": "undefined",
-    "watchPathIgnorePatterns": "[]",
-    "watchman": "true"
+    "unmockedModulePathPatterns": [
+      "mock"
+    ],
+    "verbose": true,
+    "watchPathIgnorePatterns": [],
+    "watchman": true
   }
 }

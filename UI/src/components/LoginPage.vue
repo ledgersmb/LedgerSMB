@@ -88,6 +88,7 @@ export default {
    },
    mounted() {
      document.body.setAttribute("data-lsmb-done", "true");
-   }
+   },
+   name: 'loginpage'
 }
 </script>
