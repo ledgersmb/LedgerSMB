@@ -83,6 +83,7 @@
     "eslint-plugin-json": "3.1.0",
     "eslint-plugin-markdown": "2.2.1",
     "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-package-json": "0.1.4",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-promise": "6.0.0",
     "eslint-plugin-snakecasejs": "2.2.0",
@@ -92,13 +93,20 @@
     "html-webpack-plugin": "5.5.0",
     "i18next-conv": "13.0.0",
     "inspectpack": "4.7.1",
+    "jest": "28.1.2",
+    "jest-cucumber": "3.0.2",
+    "jest-tap-reporter": "1.9.0",
     "markdown-include": "0.4.3",
     "markdownlint": "0.26.0",
     "markdownlint-cli": "0.31.1",
     "mini-css-extract-plugin": "2.6.1",
     "npm-run-all": "4.1.5",
     "path-browserify": "1.0.1",
-    "pinia": "2.0.16",
+    "pinia": "^2.0.16",
+    "postcss": "8.4.14",
+    "postcss-loader": "7.0.0",
+    "postcss-preset-env": "7.7.2",
+    "postcss-reporter": "7.0.5",
     "prettier": "2.7.1",
     "stylelint": "14.9.1",
     "stylelint-config-standard": "26.0.0",
@@ -118,8 +126,11 @@
     "webpack": "5.73.0",
     "webpack-bundle-analyzer": "4.5.0",
     "webpack-cli": "4.10.0",
+    "webpack-deduplication-plugin": "0.0.8",
+    "webpack-dev-server": "4.9.2",
     "webpack-merge": "5.8.0",
     "webpack-sources": "3.2.3",
+    "webpack-virtual-modules": "0.4.3",
     "yargs": "17.5.1"
   },
   "dependencies": {
@@ -142,7 +153,8 @@
     "lint:markdown": "markdownlint --config .markdownlint.json --ignore ./node_modules .",
     "profile": "webpack --progress=profile --json > logs/stats.json",
     "readme": "webpack --mode=production --stats errors-warnings",
-    "serve": "webpack --mode=development serve --progress --hot"
+    "serve": "webpack --mode=development serve --progress --hot",
+    "test": "jest"
   },
   "babel": {
     "presets": [
@@ -155,11 +167,26 @@
     "settings": {
       "import/resolver": "webpack"
     },
+    "overrides": [
+      {
+        "files": [
+          "package.json"
+        ],
+        "rules": {
+          "package-json/sort-collections": "error",
+            "indent": [
+                "error",
+                2
+            ]
+        }
+      }
+    ],
     "plugins": [
       "amd",
       "compat",
       "import",
       "markdown",
+      "package-json",
       "sort-dojo-dependency",
       "vue",
       "prettier"
@@ -257,6 +284,49 @@
       "amd/no-unused-dependencies": "error",
       "amd/obsolete-dependencies": "error",
       "amd/sane-dependency-names": "error",
+            "package-json/order-properties": [
+                "error",
+                [
+                    "name",
+                    "version",
+                    "lockfileVersion",
+                    "private",
+                    "publishConfig",
+                    "description",
+                    "keywords",
+                    "author",
+                    "license",
+                    "maintainers",
+                    "contributors",
+                    "bundlesize",
+                    "main",
+                    "browser",
+                    "_browserslist-comment",
+                    "browserslist",
+                    "bugs",
+                    "repository",
+                    "files",
+                    "bin",
+                    "directories",
+                    "man",
+                    "config",
+                    "dependencies",
+                    "devDependencies",
+                    "peerDependencies",
+                    "optionalDependencies",
+                    "bundledDependencies",
+                    "homepage",
+                    "scripts",
+                    "engines",
+                    "os",
+                    "cpu",
+                    "babel",
+                    "eslintConfig",
+                    "prettier",
+                    "stylelint",
+                    "lint-staged"
+                ]
+            ],
       "prettier/prettier": [
         "error",
         {
@@ -325,5 +395,87 @@
       "custom-property-pattern": null,
       "selector-id-pattern": null
     }
+  },
+  "jest": {
+    "moduleFileExtensions": ["js", "json", "vue"],
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      "^.+\\.vue$": "@vue/vue3-jest"
+    },
+    "reporters": [
+      ["jest-tap-reporter", {
+        "logLevel": "INFO",
+        "showInternalStackTraces": false
+      }]
+    ],
+    "automock": "false",
+    "bail": "0",
+    "cacheDirectory": "/tmp/jest_rs",
+    "clearMocks": true,
+    "collectCoverage": true,
+    "collectCoverageFrom": "undefined",
+    "coverageDirectory": "coverage",
+    "coveragePathIgnorePatterns": [
+     "/node_modules/"
+    ],
+    "coverageProvider": "babel",
+    "coverageReporters": [
+     "json",
+     "text"
+    ],
+    "coverageThreshold": "undefined",
+    "dependencyExtractor": "undefined",
+    "errorOnDeprecated": "false",
+    "fakeTimers": {
+     "enableGlobally": false
+    },
+    "forceCoverageMatch": "[]",
+    "globalSetup": "undefined",
+    "globalTeardown": "undefined",
+    "globals": "{}",
+    "maxWorkers": "50%",
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "moduleNameMapper": "{}",
+    "modulePathIgnorePatterns": "[]",
+    "notify": false,
+    "notifyMode": "failure-change",
+    "preset": "undefined",
+    "projects": "undefined",
+    "resetMocks": false,
+    "resetModules": "false",
+    "resolver": "undefined",
+    "restoreMocks": "false",
+    "rootDir": "UI",
+    "roots": [
+      "UI"
+    ],
+    "runner": "jest-runner",
+    "setupFiles": "[]",
+    "setupFilesAfterEnv": "[]",
+    "slowTestThreshold": 5,
+    "snapshotSerializers": "[]",
+    "testEnvironment": "jsdom",
+    "testEnvironmentOptions": "{}",
+    "testLocationInResults": false,
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[tj]s?(x)"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "testRegex": "[]",
+    "testResultsProcessor": "undefined",
+    "testRunner": "jest-circus/runner",
+    "transformIgnorePatterns": [
+      "/node_modules/",
+      "\\.pnp\\.[^\\/]+$"
+    ],
+    "unmockedModulePathPatterns": "undefined",
+    "verbose": "undefined",
+    "watchPathIgnorePatterns": "[]",
+    "watchman": "true"
   }
 }
