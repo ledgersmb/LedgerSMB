@@ -5,10 +5,8 @@ import { defineStore } from "pinia";
 export const useSessionUserStore = defineStore("sessionUser", {
     state: () => {
         return {
-            session: {
-                roles: [],
-                preferences: {}
-            }
+            roles: [],
+            preferences: {}
         };
     },
     actions: {
@@ -19,8 +17,10 @@ export const useSessionUserStore = defineStore("sessionUser", {
 
             if (response.ok) {
                 let data = await response.json();
-                console.log(data);
-                this.session = data;
+                this.$patch({
+                    roles: data.roles,
+                    preferences: data.preferences
+                });
             } else {
                 throw new Error(`HTTP Error: ${response.status}`);
             }
@@ -28,8 +28,7 @@ export const useSessionUserStore = defineStore("sessionUser", {
     },
     getters: {
         hasRole: (state) => {
-            return (role) =>
-                state.session.roles.find(r => r === role) !== undefined;
+            return (role) => state.roles.find((r) => r === role) !== undefined;
         }
     }
 });

@@ -266,8 +266,10 @@ sub create_template {
                              AutoCommit => 0 });
     $dbh->do(q{set client_min_messages = 'warning'});
 
+    # Disable the toaster for more immediate page interaction
+    $dbh->do(q|insert into defaults values ('__disableToaster', 'yes')|);
     # Set up sequence randomization
-$dbh->do(q|
+    $dbh->do(q|
 do
 $$
 declare
@@ -283,7 +285,7 @@ begin
   end loop;
 end;
 $$;
-|);
+             |);
 
     $dbh->do(q|
 UPDATE business_unit_class SET active = true WHERE id = 2; -- project

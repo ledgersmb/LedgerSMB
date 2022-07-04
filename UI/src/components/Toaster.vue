@@ -1,20 +1,25 @@
 <script setup>
 
-import { inject } from "vue";
+import { computed, inject } from "vue";
 import { contextRef } from "@/robot-vue";
+import { useSessionUserStore } from "@/store/sessionUser";
 
 import { createToasterMachine } from "./Toaster.machines";
 import Toast from "./Toast.vue";
 
+const user = useSessionUserStore();
+const wantToaster = computed(() => !user.preferences.__disableToaster);
 
 const { service, send, state } = (inject("toaster-machine") || createToasterMachine({
     items: []
 }, {}));
 const items = contextRef(service, "items");
+
 </script>
 
 <template>
-    <div class="toaster"
+    <div v-if="wantToaster"
+         class="toaster"
          :class="{ hidden: state !== 'showing' }" >
         <Toast v-for="item in items"
                :key="item.id"

@@ -39,7 +39,7 @@ get '/session' => sub {
         q|SELECT * FROM admin__get_roles_for_user_by_entity(person__get_my_entity_id())|
         );
     $sth->execute;
-    $result->{roles} = [ map { $_->[0] } @{$sth->fetchall_arrayref() // []} ];
+    $result->{roles} = [ sort map { $_->[0] } @{$sth->fetchall_arrayref() // []} ];
     die $sth->errstr if $sth->err;
 
     $sth = $dbh->prepare(q|SELECT user__check_my_expiration()|);
@@ -56,9 +56,17 @@ get '/session' => sub {
         q|SELECT * FROM user__get_preferences((select id from employee__get_user(person__get_my_entity_id())))|
         ) or die $dbh->errstr;
     $sth->execute;
-    $result->{preferences} = $sth->fetchrow_hashref('NAME_lc');
-#    die $sth->errstr if $sth->err;
+    $result->{preferences} = $sth->fetchrow_hashref('NAME_lc')
+        or die $sth->errstr;
+    $result->{preferences} //= {};
 
+    $sth = $dbh->prepare(
+        q|SELECT * FROM defaults WHERE setting_key = '__disableToaster'|
+        );
+    $sth->execute;
+    if ($sth->fetchrow_arrayref) {
+        $result->{preferences}->{__disableToaster} = 1;
+    }
 
     return [ 200, [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              [ json()->encode( $result ) ] ];
