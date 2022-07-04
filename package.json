@@ -52,6 +52,8 @@
     "@babel/plugin-proposal-object-rest-spread": "7.18.6",
     "@babel/preset-env": "7.18.6",
     "@intlify/vue-i18n-loader": "4.2.0",
+    "@testing-library/jest-dom": "5.16.4",
+    "@testing-library/vue": "6.6.0",
     "@vue/cli": "5.0.8",
     "@vue/cli-service": "5.0.8",
     "@vue/compiler-sfc": "3.2.37",
@@ -96,7 +98,9 @@
     "inspectpack": "4.7.1",
     "jest": "28.1.2",
     "jest-cucumber": "3.0.2",
+    "jest-environment-jsdom": "28.1.2",
     "jest-tap-reporter": "1.9.0",
+    "jsdom":"20.0.0",
     "markdown-include": "0.4.3",
     "markdownlint": "0.26.0",
     "markdownlint-cli": "0.31.1",
@@ -402,47 +406,27 @@
     "bail": 0,
     "cacheDirectory": "/tmp/jest_rs",
     "clearMocks": true,
-    "collectCoverage": true,
-    "collectCoverageFrom": [],
-    "coverageDirectory": "coverage",
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ],
-    "coverageProvider": "babel",
-    "coverageReporters": [
-      "json",
-      "text"
-    ],
-    "coverageThreshold":   {
-      "coverageThreshold": {
-        "global": {
-          "branches": 50,
-          "functions": 100,
-          "lines": 100,
-          "statements": 100
-        }
-      }
-    },
-    "dependencyExtractor": "",
     "errorOnDeprecated": false,
     "fakeTimers": {
      "enableGlobally": false
     },
-    "forceCoverageMatch": [],
-    "globalSetup": "",
-    "globalTeardown": "",
-    "globals": {},
+    "globals": {
+      "vue-jest": {
+        "compilerOptions": {
+          "isCustomElement()": "(tag) => tag.startsWith('lsmb-')"
+        }
+      }
+    },
     "maxWorkers": "50%",
     "moduleDirectories": [
       "node_modules"
     ],
     "moduleFileExtensions": ["js", "json", "vue"],
-    "moduleNameMapper": {},
-    "modulePathIgnorePatterns": [],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
     "notify": false,
     "notifyMode": "failure-change",
-    "preset": "",
-    "projects": [],
     "reporters": [
       ["jest-tap-reporter", {
         "logLevel": "INFO",
@@ -451,20 +435,12 @@
     ],
     "resetMocks": false,
     "resetModules": false,
-    "resolver": "",
     "restoreMocks": false,
     "rootDir": "UI",
-    "roots": [
-      "test"
-    ],
-    "runner": "jest-runner",
-    "setupFiles": [],
-    "setupFilesAfterEnv": [],
-    "slowTestThreshold": 5,
-    "snapshotSerializers": [],
     "testEnvironment": "jsdom",
-    "testEnvironmentOptions": {},
-    "testLocationInResults": false,
+    "testEnvironmentOptions": {
+      "customExportConditions": ["node", "node-addons"]
+    },
     "testMatch": [
       "**/__tests__/**/*.[jt]s?(x)",
       "**/?(*.)+(spec|test).[tj]s?(x)"
@@ -473,8 +449,6 @@
       "/node_modules/"
     ],
     "testRegex": [],
-    "testResultsProcessor": "",
-    "testRunner": "jest-circus/runner",
     "transform": {
       "^.+\\.js$": "babel-jest",
       "^.+\\.vue$": "@vue/vue3-jest"
@@ -483,10 +457,6 @@
       "/node_modules/",
       "\\.pnp\\.[^\\/]+$"
     ],
-    "unmockedModulePathPatterns": [
-      "mock"
-    ],
-    "verbose": true,
     "watchPathIgnorePatterns": [],
     "watchman": true
   }
