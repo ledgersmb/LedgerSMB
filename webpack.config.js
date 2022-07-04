@@ -427,9 +427,10 @@ if (TARGET !== "readme") {
         resolve: {
             alias: {
                 vue$: "vue/dist/vue.esm-bundler.js",
+                pinia$: "pinia/dist/pinia.esm-browser.js",
                 "@": path.join(__dirname, "UI/src/")
             },
-            extensions: [".js", ".vue"],
+            extensions: [".js", ".vue", ".ts", ".jsx", ".tsx", ".mjs"],
             fallback: {
                 path: require.resolve("path-browserify")
             }

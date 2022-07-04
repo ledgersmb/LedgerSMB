@@ -54,6 +54,9 @@
     --td-cleared-future-bg: white;
     --td-cleared-past-bg: yellow;
     --textarea-bg-clr: initial;
+    --toast-error-bg: linear-gradient(to right bottom, #d88, #eaa);
+    --toast-info-bg: linear-gradient(to right bottom, #bcd8f4, white);
+    --toast-success-bg: linear-gradient(to right bottom, #8d8, white);
     --top_menu-bg: none;
     --tr-active-bg-clr: #ddd;
     --tr-record-bg-clr: pink;

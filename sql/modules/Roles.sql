@@ -950,11 +950,11 @@ SELECT lsmb__grant_menu('inventory_transfer', 66, 'allow');
 SELECT lsmb__create_role('warehouse_create');
 SELECT lsmb__grant_perms('warehouse_create', 'warehouse', 'INSERT');
 SELECT lsmb__grant_perms('warehouse_create', 'warehouse_id_seq', 'ALL');
-SELECT lsmb__grant_menu('warehouse_create', 142, 'allow');
+SELECT lsmb__grant_menu('warehouse_create', 141, 'allow');
 
 SELECT lsmb__create_role('warehouse_edit');
 SELECT lsmb__grant_perms('warehouse_edit', 'warehouse', 'UPDATE');
-SELECT lsmb__grant_menu('warehouse_edit', 143, 'allow');
+SELECT lsmb__grant_menu('warehouse_edit', 141, 'allow');
 
 SELECT lsmb__create_role('inventory_all');
 SELECT lsmb__grant_role('inventory_all', rname)

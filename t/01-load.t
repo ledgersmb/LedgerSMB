@@ -207,6 +207,8 @@ my @modules =
           'LedgerSMB::Routes::ERP::API::Accounts',
           'LedgerSMB::Routes::ERP::API::Goods',
           'LedgerSMB::Routes::ERP::API::MenuNodes',
+          'LedgerSMB::Routes::ERP::API::Products',
+          'LedgerSMB::Routes::ERP::API::Session',
           'LedgerSMB::Routes::ERP::API::Templates',
           'LedgerSMB::Scripts::budget_reports',
           'LedgerSMB::Scripts::currency',

@@ -597,3 +597,52 @@ span.indicator {
     margin-bottom: 2em;
     margin-top: 2em;
 }
+
+.toast.error {
+    background-image:
+        var(
+            --toast-error-bg,
+            linear-gradient(to right bottom, #d88, #eaa)
+        );
+}
+
+.toast.info {
+    background-image:
+        var(
+            --toast-info-bg,
+            linear-gradient(to right bottom, #bcd8f4, white)
+        );
+}
+
+.toast.success {
+    background-image:
+        var(
+            --toast-success-bg,
+            linear-gradient(to right bottom, #8d8, white)
+        );
+}
+
+.toast .title {
+    font-weight: bold;
+}
+
+td.data-entry {
+    padding: 0.1em 0.5ex;
+    vertical-align: middle;
+}
+
+td.data-entry .input-box {
+    box-sizing: border-box;
+    padding: 0.1em 0.3ex;
+    width: 100%;
+}
+
+td.data-entry .neutral {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+td.data-entry .editing {
+    background-color: white;
+    border-color: black;
+}

@@ -716,3 +716,27 @@ h2 {
 .six-column-grid label {
     text-align: left;
 }
+
+.toast {
+    box-shadow: 6px 6px 6px gray;
+    box-sizing: border-box;
+    margin: 10px 0;
+    overflow: hidden;
+    overflow-wrap: normal;
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+
+.toaster {
+    box-sizing: border-box;
+    max-width: 60%;
+    position: absolute;
+    right: 5%;
+    top: 20px;
+    width: 50em;
+}
+
+.toaster.hidden {
+    display: none;
+}
