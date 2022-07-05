@@ -19,7 +19,7 @@ export class LsmbBaseInput extends LsmbDijit {
     }
 
     _valueAttrs() {
-        return ["title", "name", "value"];
+        return ["title", "name", "value", "tabindex"];
     }
 
     _labelRoot() {
