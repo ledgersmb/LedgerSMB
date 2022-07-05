@@ -4,7 +4,6 @@ import {
     createMachine,
     immediate,
     interpret,
-    invoke,
     guard,
     reduce,
     state,
@@ -22,29 +21,6 @@ function removeItem(ctx, { item }) {
     const index = ctx.items.findIndex((w) => w.id === item.id);
     ctx.items.splice(index, 1);
     return ctx;
-}
-
-function delayRemoval(ctx) {
-    const duration = ctx.duration && ctx.duration === "short" ? 2 : 10;
-    return Promise.any([
-        new Promise((resolve) => {
-            ctx.dismiss = resolve;
-        }),
-        new Promise((resolve) => {
-            window.setTimeout(() => {
-                resolve(1);
-            }, duration * 1000);
-        })
-    ]);
-}
-
-function handleDismiss(ctx) {
-    ctx.dismiss(1);
-    return ctx;
-}
-
-function handleError(ctx, error) {
-    return { ...ctx, error: error };
 }
 
 const toasterMachine = createMachine(
@@ -67,11 +43,19 @@ const toasterMachine = createMachine(
 
 const toastMachine = createMachine(
     {
-        showing: invoke(
-            delayRemoval,
-            transition("done", "removing"),
-            transition("error", "error", reduce(handleError)),
-            transition("dismiss", "removing", reduce(handleDismiss))
+        showing: state(
+            transition("dismiss", "removing"),
+            transition("dismiss-immediate", "removing"),
+            transition("hold", "holding")
+        ),
+        holding: state(
+            transition("dismiss", "holdingDone"),
+            transition("dismiss-immediate", "removing"),
+            transition("release", "showing")
+        ),
+        holdingDone: state(
+            transition("dismiss-immediate", "removing"),
+            transition("release", "removing")
         ),
         removing: state(immediate("removed")),
         removed: state(),

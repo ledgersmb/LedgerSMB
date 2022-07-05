@@ -7,11 +7,12 @@ const emit = defineEmits(["remove"]);
 
 const title = props.data.title || "Title";
 const text = props.data.text;
+const duration = text ? 10 : 2;
+
 
 const { send } = createToastMachine(
     {
-        item: props.data,
-        duration: text ? "long" : "short"
+        item: props.data
     },
     {
         cb: {
@@ -19,6 +20,7 @@ const { send } = createToastMachine(
         }
     });
 
+window.setTimeout(() => { send('dismiss') }, duration * 1000);
 if (props.data.dismissReceiver) {
     props.data.dismissReceiver( () => send('dismiss') );
 }
@@ -28,7 +30,9 @@ if (props.data.dismissReceiver) {
 <template>
     <div class="toast dijitContentPane dijitBorderContainer-child edgePanel"
          :class="type"
-         @click="send('dismiss')">
+         @click="send('dismiss-immediate')"
+         @mouseenter="send('hold')"
+         @mouseleave="send('release')">
         <div class="title" >{{ title }}</div>
         <div v-if="text">{{ text }}</div>
     </div>
