@@ -911,7 +911,7 @@ SELECT lsmb__grant_perms('pricegroup_create', 'entity_credit_account', 'UPDATE')
 
 SELECT lsmb__create_role('pricegroup_edit');
 SELECT lsmb__grant_role('pricegroup_edit', 'contact_read');
-SELECT lsmb__grant_menu('pricegroup_edit', 92, 'allow');
+SELECT lsmb__grant_menu('pricegroup_edit', 83, 'allow');
 SELECT lsmb__grant_perms('pricegroup_edit', 'pricegroup', 'UPDATE');
 SELECT lsmb__grant_perms('pricegroup_edit', 'entity_credit_account', 'UPDATE');
 

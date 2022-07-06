@@ -31,6 +31,228 @@ set logger => 'erp.api.products';
 set api_schema => openapi_schema(\*DATA);
 
 
+##############################################################################
+#
+#
+#     PRICEGROUPS
+#
+#
+#############################################################################
+
+sub _add_pricegroup {
+    my ($c, $w) = @_;
+    my $sth = $c->dbh->prepare(
+        q|INSERT INTO pricegroup (pricegroup) VALUES (?)
+          RETURNING id, pricegroup as description, md5(last_updated::text) as etag|
+        ) or die $c->dbh->errstr;
+
+    $sth->execute( $w->{description} ) or die $sth->errstr;
+    my $row = $sth->fetchrow_hashref('NAME_lc');
+    die $sth->errstr if $sth->err;
+
+    return (
+        {
+            id => $row->{id},
+            description => $row->{description}
+        },
+        {
+            ETag => $row->{etag}
+        });
+}
+
+sub _del_pricegroup {
+    my ($c, $id) = @_;
+    my $sth = $c->dbh->prepare(
+        q|DELETE FROM pricegroup WHERE id = ?|
+        ) or die $c->dbh->errstr;
+
+    $sth->execute( $id ) or die $sth->errstr;
+    return undef unless $sth->rows > 0;
+
+    return 1;
+}
+
+sub _get_pricegroup {
+    my ($c, $id) = @_;
+    my $sth = $c->dbh->prepare(
+        q|SELECT id, pricegroup as description,
+                 md5(last_updated::text) as etag FROM pricegroup WHERE id = ?|
+        ) or die $c->dbh->errstr;
+
+    $sth->execute($id) or die $sth->errstr;
+    my $row = $sth->fetchrow_hashref('NAME_lc');
+    die $sth->errstr if $sth->err;
+
+    return undef unless $row;
+    return (
+        {
+            id => $row->{id},
+            description => $row->{description},
+        },
+        {
+            ETag => $row->{etag}
+        });
+}
+
+sub _get_pricegroups {
+    my ($c) = @_;
+    my $sth = $c->dbh->prepare(
+        q|SELECT id, pricegroup as description FROM pricegroup ORDER BY id|
+        ) or die $c->dbh->errstr;
+
+    $sth->execute() or die $sth->errstr;
+    my @results;
+    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+        push @results, {
+            id => $row->{id},
+            description => $row->{description},
+        };
+    }
+    die $sth->errstr if $sth->err;
+
+    return \@results;
+}
+
+sub _update_pricegroup {
+    my ($c, $w, $m) = @_;
+    my $sth = $c->dbh->prepare(
+        q|UPDATE pricegroup SET pricegroup = ?
+           WHERE id = ? AND md5(last_updated::text) = ?
+          RETURNING id, pricegroup as description, md5(last_updated::text) as etag|
+        ) or die $c->dbh->errstr;
+
+    $sth->execute( $w->{description}, $w->{id}, $m->{ETag} ) or die $sth->errstr;
+    if ($sth->rows == 0) {
+        my ($response, $meta) = _get_warehouse($c, $w->{id});
+        return (undef, {}) unless $response;
+
+        # Obviously, the hashes must have mismatched
+        return (undef, { conflict => 1 });
+    }
+
+    my $row = $sth->fetchrow_hashref('NAME_lc');
+    die $sth->errstr if $sth->err;
+
+    return (
+        {
+            id => $row->{id},
+            description => $row->{description}
+        },
+        {
+            ETag => $row->{etag}
+        });
+}
+
+
+
+get api '/products/pricegroups/' => sub {
+    my ($env, $body, $params) = @_;
+    my $r = Plack::Request::WithEncoding->new($env);
+
+    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
+    my $response = _get_pricegroups( $c );
+    return [ 200,
+             [ 'Content-Type' => 'application/json; charset=UTF-8' ],
+             $response  ];
+};
+
+post api '/products/pricegroups/' => sub {
+    my ($env, $body, $params) = @_;
+    my $r = Plack::Request::WithEncoding->new($env);
+
+    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
+    my ($response, $meta) = _add_pricegroup( $c, $body );
+    return [
+        HTTP_CREATED,
+        [ 'Content-Type' => 'application/json; charset=UTF-8',
+          'ETag' => qq|"$meta->{ETag}"|
+        ],
+        $response ];
+};
+
+del api '/products/pricegroups/:id' => sub {
+    my ($env, $body, $params) = @_;
+    my $r = Plack::Request::WithEncoding->new($env);
+
+    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
+    my $response = _del_pricegroup( $c, $params->{id} );
+
+    return [ HTTP_NOT_FOUND, [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
+             [ 'Not found' ] ]
+        unless defined $response;
+
+    return [ HTTP_OK, [ ], [ '' ] ];
+};
+
+get api '/products/pricegroups/:id' => sub {
+    my ($env, $body, $params) = @_;
+    my $r = Plack::Request::WithEncoding->new($env);
+
+    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
+    my ($response, $meta) = _get_pricegroup( $c, $params->{id} );
+
+    return [ HTTP_NOT_FOUND, [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
+             [ 'Not found' ] ]
+        unless defined $response;
+
+    return [ HTTP_OK,
+             [ 'Content-Type' => 'application/json; charset=UTF-8',
+               'ETag' => qq|"$meta->{ETag}"| ],
+             $response ];
+};
+
+
+put api '/products/pricegroups/:id' => sub {
+    my ($env, $body, $params) = @_;
+    my $r = Plack::Request::WithEncoding->new($env);
+
+    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
+    my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
+    my ($response, $meta) = _update_pricegroup(
+        $c, {
+            id => $params->{id},
+            description => $body->{description}
+        },
+        {
+            ETag => $ETag
+        });
+
+    return [ HTTP_CONFLICT, [], [ '' ] ]
+        if ($meta->{conflict});
+
+    return [ HTTP_NOT_FOUND, [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
+             [ 'Not found' ] ]
+        unless defined $response;
+
+    return [ HTTP_OK,
+             [ 'Content-Type' => 'application/json; charset=UTF-8',
+               'ETag' => qq|"$meta->{ETag}"| ],
+             $response ];
+};
+
+patch api '/products/pricegroups/:id' => sub {
+    my ($env, $body, $params) = @_;
+    my $r = Plack::Request::WithEncoding->new($env);
+    my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
+    my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;
+    my $description = ($r->parameters->{description} // '') =~ s/[*]//gr;
+
+    return [ HTTP_OK, [ 'Content-Type' => 'application/json; charset=UTF-8' ],
+             [ json()->encode(
+                   0
+               ) ] ];
+};
+
+
+##############################################################################
+#
+#
+#     WAREHOUSES
+#
+#
+#############################################################################
+
+
 sub _add_warehouse {
     my ($c, $w) = @_;
     my $sth = $c->dbh->prepare(
@@ -88,7 +310,7 @@ sub _get_warehouse {
 sub _get_warehouses {
     my ($c) = @_;
     my $sth = $c->dbh->prepare(
-        q|SELECT * FROM warehouse|
+        q|SELECT * FROM warehouse ORDER BY id|
         ) or die $c->dbh->errstr;
 
     $sth->execute() or die $sth->errstr;
@@ -160,7 +382,7 @@ post api '/products/warehouses/' => sub {
         $response ];
 };
 
-del '/products/warehouses/:id' => sub {
+del api '/products/warehouses/:id' => sub {
     my ($env, $body, $params) = @_;
     my $r = Plack::Request::WithEncoding->new($env);
 
@@ -174,7 +396,7 @@ del '/products/warehouses/:id' => sub {
     return [ HTTP_OK, [ ], [ '' ] ];
 };
 
-get '/products/warehouses/:id' => sub {
+get api '/products/warehouses/:id' => sub {
     my ($env, $body, $params) = @_;
     my $r = Plack::Request::WithEncoding->new($env);
 
@@ -192,7 +414,7 @@ get '/products/warehouses/:id' => sub {
 };
 
 
-put '/products/warehouses/:id' => sub {
+put api '/products/warehouses/:id' => sub {
     my ($env, $body, $params) = @_;
     my $r = Plack::Request::WithEncoding->new($env);
 
@@ -220,7 +442,7 @@ put '/products/warehouses/:id' => sub {
              $response ];
 };
 
-patch '/products/warehouses/:id' => sub {
+patch api '/products/warehouses/:id' => sub {
     my ($env, $body, $params) = @_;
     my $r = Plack::Request::WithEncoding->new($env);
     my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
@@ -254,6 +476,120 @@ info:
   title: Retrieval of warehouse configuration
   version: 0.0.1
 paths:
+  /products/pricegroups/:
+    get:
+      responses:
+        200:
+          description: ...
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pricegroup'
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewPricegroup'
+      responses:
+        201:
+          description: ...
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+            Location:
+              schema:
+                type: string
+                format: uri-reference
+  /products/pricegroups/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/pricegroup-id'
+        style: simple
+    get:
+      responses:
+        200:
+          description: ...
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Pricegroup'
+        304:
+          description: ...
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
+    put:
+      parameters:
+        - name: If-Match
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pricegroup'
+      responses:
+        200:
+          description: ...
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Pricegroup'
+        304:
+          description: ...
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
+        412:
+          $ref: '#/components/responses/412'
+        413:
+          $ref: '#/components/responses/413'
+        428:
+          $ref: '#/components/responses/428'
+    delete:
+      parameters:
+        - name: 'If-Match'
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: ...
+    patch:
+      parameters:
+        - name: 'If-Match'
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: ...
   /products/warehouses/:
     get:
       responses:
@@ -381,10 +717,30 @@ components:
       schema:
         type: string
   schemas:
-    warehouse-id:
+    common-id:
       type: integer
       format: int64
       minimum: 1
+    pricegroup-id:
+      $ref: '#/components/schemas/common-id'
+    Pricegroup:
+      allOf:
+        - $ref: '#/components/schemas/NewPricegroup'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              $ref: '#/components/schemas/pricegroup-id'
+    NewPricegroup:
+      type: object
+      required:
+        - description
+      properties:
+        description:
+          type: string
+    warehouse-id:
+      $ref: '#/components/schemas/common-id'
     Warehouse:
       allOf:
         - $ref: '#/components/schemas/NewWarehouse'
@@ -399,7 +755,7 @@ components:
       required:
         - description
       properties:
-        name:
+        description:
           type: string
   responses:
     400:

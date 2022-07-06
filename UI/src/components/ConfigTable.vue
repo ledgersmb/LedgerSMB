@@ -8,7 +8,13 @@ import { useSessionUserStore } from "@/store/sessionUser";
 import { createTableMachine } from "./ConfigTable.machines.js";
 import ConfigTableRow from "./ConfigTableRow.vue";
 
-const props = defineProps(["columns", "store", "createRole", "editRole"]);
+const props = defineProps([
+    "columns",
+    "store",
+    "createRole",
+    "editRole",
+    "deletable"
+]);
 const user = useSessionUserStore();
 const hasRole = user.hasRole; // import the function from the store's getter
 
@@ -37,7 +43,7 @@ const hasCreate = computed(() => hasRole(props.createRole));
                         v-for="item in items"
                         :key="item.id"
                         :columns="props.columns"
-                        :deletable="false"
+                        :deletable="props.deletable"
                         :editingId="editingId"
                         :id="item.id"
                         :store="props.store"
