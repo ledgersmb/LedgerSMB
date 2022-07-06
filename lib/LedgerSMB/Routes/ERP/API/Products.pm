@@ -21,28 +21,14 @@ This module doesn't export any methods.
 use strict;
 use warnings;
 
-use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_BAD_REQUEST HTTP_NOT_FOUND
-    HTTP_CONFLICT HTTP_UNSUPPORTED_MEDIA_TYPE HTTP_INTERNAL_SERVER_ERROR );
-use JSONSchema::Validator;
+use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_NOT_FOUND HTTP_CONFLICT );
 use Plack::Request::WithEncoding;
-use YAML::PP;
 
 use LedgerSMB::Company;
 use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.products';
-
-
-my $reader = YAML::PP->new(boolean => 'JSON::PP');
-my $schema = $reader->load_string(
-    do {
-        # slurp __DATA__ section
-        local $/ = undef;
-        <DATA>;
-    });
-my $validator = JSONSchema::Validator->new(
-    schema => $schema,
-    specification => 'OAS30');
+set api_schema => openapi_schema(\*DATA);
 
 
 sub _add_warehouse {
@@ -149,113 +135,34 @@ sub _update_warehouse {
 }
 
 
-get '/products/warehouses/' => sub {
-    my ($env, $params) = @_;
+get api '/products/warehouses/' => sub {
+    my ($env, $body, $params) = @_;
     my $r = Plack::Request::WithEncoding->new($env);
-    my ($result, $errors, $warnings) =
-        $validator->validate_request(
-            method => 'GET',
-            openapi_path => '/products/warehouses/',
-            parameters => {
-                path => $params,
-                header => { $r->headers->psgi_flatten->@* },
-                query => $r->query_parameters->as_hashref_mixed,
-            });
-    return error($r, HTTP_BAD_REQUEST, [], @$errors)
-        if scalar(@$errors) > 0;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _get_warehouses( $c );
-    my $triplet = [ 200, [ 'Content-Type' => 'application/json; charset=UTF-8' ],
-                    [ json()->encode( $response ) ] ];
-    ($result, $errors, $warnings) =
-        $validator->validate_response(
-            method => 'GET',
-            openapi_path => '/products/warehouses/',
-            status => $triplet->[0],
-            parameters => {
-                header => { $triplet->[1]->@* },
-                path => $params,
-                query => $r->query_parameters->as_hashref_mixed,
-                body => [1, 'application/json', $response]
-            });
-    return error($r, HTTP_INTERNAL_SERVER_ERROR, [], @$errors)
-        if scalar(@$errors) > 0;
-
-    return $triplet;
+    return [ 200,
+             [ 'Content-Type' => 'application/json; charset=UTF-8' ],
+             $response  ];
 };
 
-post '/products/warehouses/' => sub {
-    my ($env, $params) = @_;
+post api '/products/warehouses/' => sub {
+    my ($env, $body, $params) = @_;
     my $r = Plack::Request::WithEncoding->new($env);
-
-    {
-        my $ct = $r->headers->content_type;
-        unless ($ct eq 'application/json') {
-            return error(
-                $r,
-                HTTP_UNSUPPORTED_MEDIA_TYPE,
-                {
-                    msg     => 'Unexpected Content-Type header',
-                    details => "Content-Type value '$ct' provided, but 'application/json expected"
-                });
-        }
-    }
-    my $body = json()->decode($r->content);
-    my ($result, $errors, $warnings) =
-        $validator->validate_request(
-            method => 'POST',
-            openapi_path => '/products/warehouses/',
-            parameters => {
-                path => $params,
-                query => $r->query_parameters->as_hashref_mixed,
-                header => { $r->headers->psgi_flatten->@* },
-                body => [1, 'application/json', $body]
-            });
-    return error($r, HTTP_BAD_REQUEST, [], @$errors)
-        if scalar(@$errors) > 0;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($response, $meta) = _add_warehouse( $c, $body );
-    my $triplet = [ HTTP_CREATED,
-                    [ 'Content-Type' => 'application/json; charset=UTF-8',
-                      'ETag' => qq|"$meta->{ETag}"|
-                    ],
-                    [ json()->encode( $response ) ] ];
-    ($result, $errors, $warnings) =
-        $validator->validate_response(
-            method => 'POST',
-            openapi_path => '/products/warehouses/',
-            status => $triplet->[0],
-            parameters => {
-                header => { $triplet->[1]->@* },
-                path => $params,
-                query => $r->query_parameters->as_hashref_mixed,
-                body => [1, 'application/json', $response]
-            });
-    return error($r, HTTP_INTERNAL_SERVER_ERROR, [], @$errors)
-        if scalar(@$errors) > 0;
-
-    return $triplet;
+    return [
+        HTTP_CREATED,
+        [ 'Content-Type' => 'application/json; charset=UTF-8',
+          'ETag' => qq|"$meta->{ETag}"|
+        ],
+        $response ];
 };
 
 del '/products/warehouses/:id' => sub {
-    my ($env, $params) = @_;
+    my ($env, $body, $params) = @_;
     my $r = Plack::Request::WithEncoding->new($env);
-
-    {
-        my ($result, $errors, $warnings) =
-            $validator->validate_request(
-                method => 'DELETE',
-                openapi_path => '/products/warehouses/{id}',
-                parameters => {
-                    path => $params,
-                    header => { $r->headers->psgi_flatten->@* },
-                    query => $r->query_parameters->as_hashref_mixed,
-                });
-        return error($r, HTTP_BAD_REQUEST, [], @$errors)
-            if scalar(@$errors) > 0;
-    }
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _del_warehouse( $c, $params->{id} );
@@ -264,41 +171,12 @@ del '/products/warehouses/:id' => sub {
              [ 'Not found' ] ]
         unless defined $response;
 
-    my $triplet = [ HTTP_OK, [ ],
-                    [ '' ] ];
-    my ($result, $errors, $warnings) =
-        $validator->validate_response(
-            method => 'DELETE',
-            openapi_path => '/products/warehouses/{id}',
-            status => $triplet->[0],
-            parameters => {
-                header => { $triplet->[1]->@* },
-                path => $params,
-                query => $r->query_parameters->as_hashref_mixed,
-                body => [1, 'application/json', $response]
-            });
-    return error($r, HTTP_INTERNAL_SERVER_ERROR, [], @$errors)
-        if scalar(@$errors) > 0;
-
-    return $triplet;
+    return [ HTTP_OK, [ ], [ '' ] ];
 };
 
 get '/products/warehouses/:id' => sub {
-    my ($env, $params) = @_;
+    my ($env, $body, $params) = @_;
     my $r = Plack::Request::WithEncoding->new($env);
-    {
-        my ($result, $errors, $warnings) =
-            $validator->validate_request(
-                method => 'GET',
-                openapi_path => '/products/warehouses/{id}',
-                parameters => {
-                    path => $params,
-                    header => { $r->headers->psgi_flatten->@* },
-                    query => $r->query_parameters->as_hashref_mixed,
-                });
-        return error($r, HTTP_BAD_REQUEST, [], @$errors)
-            if scalar(@$errors) > 0;
-    }
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($response, $meta) = _get_warehouse( $c, $params->{id} );
@@ -307,60 +185,17 @@ get '/products/warehouses/:id' => sub {
              [ 'Not found' ] ]
         unless defined $response;
 
-    my $triplet = [ HTTP_OK,
-                    [ 'Content-Type' => 'application/json; charset=UTF-8',
-                      'ETag' => qq|"$meta->{ETag}"| ],
-                    [ json()->encode( $response ) ] ];
-    my ($result, $errors, $warnings) =
-        $validator->validate_response(
-            method => 'GET',
-            openapi_path => '/products/warehouses/{id}',
-            status => $triplet->[0],
-            parameters => {
-                header => { $triplet->[1]->@* },
-                path => $params,
-                query => $r->query_parameters->as_hashref_mixed,
-                body => [1, 'application/json', $response]
-            });
-    return error($r, HTTP_INTERNAL_SERVER_ERROR, [], @$errors)
-        if scalar(@$errors) > 0;
-
-    return $triplet;
+    return [ HTTP_OK,
+             [ 'Content-Type' => 'application/json; charset=UTF-8',
+               'ETag' => qq|"$meta->{ETag}"| ],
+             $response ];
 };
 
 
 put '/products/warehouses/:id' => sub {
-    my ($env, $params) = @_;
+    my ($env, $body, $params) = @_;
     my $r = Plack::Request::WithEncoding->new($env);
 
-    {
-        my $ct = $r->headers->content_type;
-        unless ($ct eq 'application/json') {
-            return error(
-                $r,
-                HTTP_UNSUPPORTED_MEDIA_TYPE,
-                {
-                    msg     => 'Unexpected Content-Type header',
-                    details => "Content-Type value '$ct' provided, but 'application/json expected"
-                });
-        }
-    }
-
-    {
-        my ($result, $errors, $warnings) =
-            $validator->validate_request(
-                method => 'PUT',
-                openapi_path => '/products/warehouses/{id}',
-                parameters => {
-                    path => $params,
-                    header => { $r->headers->psgi_flatten->@* },
-                    query => $r->query_parameters->as_hashref_mixed,
-                });
-        return error($r, HTTP_BAD_REQUEST, [], @$errors)
-            if scalar(@$errors) > 0;
-    }
-
-    my $body = json()->decode($r->content);
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
     my ($response, $meta) = _update_warehouse(
@@ -379,29 +214,14 @@ put '/products/warehouses/:id' => sub {
              [ 'Not found' ] ]
         unless defined $response;
 
-    my $triplet = [ HTTP_OK,
-                    [ 'Content-Type' => 'application/json; charset=UTF-8',
-                      'ETag' => qq|"$meta->{ETag}"| ],
-                    [ json()->encode( $response ) ] ];
-    my ($result, $errors, $warnings) =
-        $validator->validate_response(
-            method => 'PUT',
-            openapi_path => '/products/warehouses/{id}',
-            status => $triplet->[0],
-            parameters => {
-                header => { $triplet->[1]->@* },
-                path => $params,
-                query => $r->query_parameters->as_hashref_mixed,
-                body => [1, 'application/json', $response]
-            });
-    return error($r, HTTP_INTERNAL_SERVER_ERROR, [], @$errors)
-        if scalar(@$errors) > 0;
-
-    return $triplet;
+    return [ HTTP_OK,
+             [ 'Content-Type' => 'application/json; charset=UTF-8',
+               'ETag' => qq|"$meta->{ETag}"| ],
+             $response ];
 };
 
 patch '/products/warehouses/:id' => sub {
-    my ($env, $params) = @_;
+    my ($env, $body, $params) = @_;
     my $r = Plack::Request::WithEncoding->new($env);
     my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
     my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;

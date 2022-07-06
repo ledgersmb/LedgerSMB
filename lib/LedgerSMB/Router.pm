@@ -55,9 +55,15 @@ use parent 'Exporter';
 use Carp;
 use HTML::Escape qw( escape_html );
 use HTTP::Negotiate qw( choose );
-use HTTP::Status qw( HTTP_NOT_FOUND );
+use HTTP::Status qw( HTTP_BAD_REQUEST HTTP_NOT_FOUND HTTP_UNSUPPORTED_MEDIA_TYPE
+    HTTP_INTERNAL_SERVER_ERROR );
 use JSON::MaybeXS;
+use JSONSchema::Validator;
 use List::Util qw( reduce );
+use Plack::Request::WithEncoding;
+use Plack::Util;
+use Scalar::Util qw( reftype );
+use YAML::PP;
 
 use LedgerSMB::Locale;
 use LedgerSMB::Sysconfig;
@@ -77,6 +83,7 @@ my $router = {};
 
 our @EXPORT = ## no critic (ProhibitAutomaticExportation)
     qw(
+    api openapi_schema
     del get head patch post put
     error json locale set user
     );
@@ -364,6 +371,28 @@ the URL parameters and C<$wildcard_segments> is an arrayref with the
 URL segments matched by the terminating wildcard.
 
 
+=head2 api path => \&code
+
+Add web service API request/response validation wrapper around the code
+reference. Returns the path and a code reference which can be used as the
+argument list of the api entry point defining keywords:
+
+  post api 'our/path/' => sub {
+     my ($env, $body, $params, @rest) = @_;
+     ...;
+  };
+
+The wrapper wants the C<api_schema> setting to be assigned in order to
+be able to validate the validity of the request and the response.
+
+=head2 openapi_schema \*FH
+
+Parses an OpenAPI (currently 3.0) definition from the fileref passed as
+the argument. The return value can be used to set the schema of the current
+file:
+
+   set api_schema => openapi_schema( \*DATA );
+
 =head2 error $req, $status_code, $headers, @errors
 =head2 hook $name => \&hook
 =head2 json
@@ -382,6 +411,83 @@ sub post    { _add_mapping(['post'], @_); }
 sub put     { _add_mapping(['put'], @_); }
 
 
+sub api {
+    my ($path, $code) = @_;
+    my $schema = $router->{$appname}->setting('api_schema');
+
+    return (
+        $path => sub {
+            my @args = @_;
+            my $env = shift @args;
+            my $params = shift @args;
+            my $req = Plack::Request::WithEncoding->new($env);
+            my $has_body = $req->headers->content_length() > 0;
+            my $body = ($req->headers->content_type eq 'application/json') ?
+                json()->decode($req->content) : '';
+            # bug: multipart/form-data wants to be validated and
+            # so does application/x-www-form-urlencoded
+
+            my ($result, $errors, $warnings) =
+                $schema->validate_request(
+                    method => $env->{REQUEST_METHOD},
+                    openapi_path => $path,
+                    parameters => {
+                        path => $params,
+                        header => { $req->headers->psgi_flatten->@* },
+                        query => $req->query_parameters->as_hashref_mixed,
+                        body => [ $has_body, $req->headers->content_type, $body ]
+                    });
+            if (scalar(@$errors) > 0) {
+                my ($err) = @$errors;
+                if ($err->context and
+                    $err->context->[0]->message =~ m/content with content-type/) {
+                    return error($req, HTTP_UNSUPPORTED_MEDIA_TYPE, [], @$errors);
+                }
+
+                return error($req, HTTP_BAD_REQUEST, [], @$errors);
+            }
+
+            my $triplet = $code->($env, $body, $params, @args);
+            $has_body = reftype $triplet->[2] ne 'ARRAY'
+                or Plack::Util::content_length($triplet->[2]);
+            ($result, $errors, $warnings) =
+                $schema->validate_response(
+                    method => $env->{REQUEST_METHOD},
+                    openapi_path => $path,
+                    status => $triplet->[0],
+                    parameters => {
+                        header => { $triplet->[1]->@* },
+                        path => $params,
+                        query => $req->query_parameters->as_hashref_mixed,
+                        body => [
+                            $has_body,
+                            Plack::Util::header_get($triplet->[1], 'Content-Type'),
+                            $triplet->[2]
+                            ]
+                    });
+            return error($req, HTTP_INTERNAL_SERVER_ERROR, [], @$errors)
+                if scalar(@$errors) > 0;
+
+            $triplet->[2] = [ json()->encode($triplet->[2]) ]
+                if Plack::Util::header_get($triplet->[1], 'Content-Type') =~ m|^application/json|;
+            return $triplet;
+        })
+}
+
+sub openapi_schema {
+    my $fh = shift;
+
+    my $reader = YAML::PP->new(boolean => 'JSON::PP');
+    my $schema = $reader->load_string(
+        do {
+            # slurp __DATA__ section
+            local $/ = undef;
+            <$fh>;
+        });
+    return JSONSchema::Validator->new(
+        schema => $schema,
+        specification => 'OAS30');
+}
 
 my $variants = [
     ['json', 1.000, 'application/json' ],
