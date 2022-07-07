@@ -161,3 +161,4 @@ mc/delete-migration-validation-data.sql
 1.10/pricegroup-config.sql
 1.10/warehouse-config.sql
 1.10/language-config.sql
+1.10/sic-config.sql

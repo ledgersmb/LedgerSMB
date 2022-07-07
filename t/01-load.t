@@ -205,6 +205,7 @@ my @modules =
           'LedgerSMB::Report::co::Caja_Diaria',
           'LedgerSMB::Router',
           'LedgerSMB::Routes::ERP::API::Accounts',
+          'LedgerSMB::Routes::ERP::API::Contacts',
           'LedgerSMB::Routes::ERP::API::Goods',
           'LedgerSMB::Routes::ERP::API::Languages',
           'LedgerSMB::Routes::ERP::API::MenuNodes',

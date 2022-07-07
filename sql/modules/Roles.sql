@@ -1183,13 +1183,12 @@ SELECT lsmb__grant_role('business_type_all', 'business_type_edit');
 
 SELECT lsmb__create_role('sic_create');
 SELECT lsmb__grant_perms('sic_create', 'sic', 'INSERT');
-SELECT lsmb__grant_menu('sic_create', id, 'allow')
-  FROM unnest(array[154,248]) id;
+SELECT lsmb__grant_menu('sic_create', 153, 'allow');
 
 SELECT lsmb__create_role('sic_edit');
 SELECT lsmb__grant_perms('sic_edit', 'sic', ptype)
   FROM unnest(array['UPDATE'::text, 'DELETE']) ptype;
-SELECT lsmb__grant_menu('sic_edit', 155, 'allow');
+SELECT lsmb__grant_menu('sic_edit', 153, 'allow');
 
 SELECT lsmb__create_role('sic_all');
 SELECT lsmb__grant_role('sic_all', 'sic_create');
