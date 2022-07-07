@@ -8,6 +8,7 @@ export const usePricegroupsStore = defineStore("pricegroups", {
     state: () => {
         return {
             fields: ["id", "description"],
+            id: "id",
             items: [],
             url: "products/pricegroups/"
         };

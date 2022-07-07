@@ -17,6 +17,7 @@ const pricegroupsStore = usePricegroupsStore();
     <ConfigTable
         :columns="COLUMNS"
         :store="pricegroupsStore"
+        storeId="id"
         editRole="pricegroup_edit"
         createRole="pricegroup_create" />
 </template>

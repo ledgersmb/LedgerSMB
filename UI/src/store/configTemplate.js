@@ -50,7 +50,7 @@ export const configStoreTemplate = {
             });
 
             if (response.ok) {
-                let index = this.items.findIndex((w) => w.id === id);
+                let index = this.items.findIndex((w) => w[this.id] === id);
                 if (index !== -1) {
                     this.items.splice(index, 1);
                 }
@@ -59,7 +59,7 @@ export const configStoreTemplate = {
             }
         },
         async get(id) {
-            const index = this.items.findIndex((w) => w.id === id);
+            const index = this.items.findIndex((w) => w[this.id] === id);
             const warehouse = this.items[index];
             if (!warehouse._meta || warehouse._meta.invalidated) {
                 const response = await fetch(`./erp/api/v0/${this.url}${id}`, {
@@ -68,7 +68,7 @@ export const configStoreTemplate = {
 
                 if (response.ok) {
                     const newData = await response.json();
-                    newData.id = id;
+                    newData[this.id] = id;
                     newData._meta = {
                         ETag: response.headers.get("ETag")
                     };
@@ -82,8 +82,8 @@ export const configStoreTemplate = {
         },
         getById(id) {
             return id === ""
-                ? { id: undefined, description: undefined }
-                : this.items.find((w) => w.id === id);
+                ? { [this.id]: undefined, description: undefined }
+                : this.items.find((w) => w[this.id] === id);
         },
         async save(id, data) {
             const warehouse = this.getById(id);
@@ -98,8 +98,8 @@ export const configStoreTemplate = {
 
             if (response.ok) {
                 const newData = await response.json();
-                const index = this.items.findIndex((w) => w.id === id);
-                newData.id = id; // prevent overwriting 'id'
+                const index = this.items.findIndex((w) => w[this.id] === id);
+                newData[this.id] = id; // prevent overwriting 'id'
                 this.items[index] = newData;
             } else {
                 throw new Error(`HTTP Error: ${response.status}`);

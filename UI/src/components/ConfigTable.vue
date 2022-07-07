@@ -13,7 +13,8 @@ const props = defineProps([
     "store",
     "createRole",
     "editRole",
-    "deletable"
+    "deletable",
+    "storeId"
 ]);
 const user = useSessionUserStore();
 const hasRole = user.hasRole; // import the function from the store's getter
@@ -41,14 +42,14 @@ const hasCreate = computed(() => hasRole(props.createRole));
                 <tbody>
                     <ConfigTableRow
                         v-for="item in items"
-                        :key="item.id"
+                        :key="item[props.storeId]"
                         :columns="props.columns"
                         :deletable="props.deletable"
                         :editingId="editingId"
-                        :id="item.id"
+                        :id="item[props.storeId]"
                         :store="props.store"
                         :type="hasEdit ? 'existing' : 'uneditable'"
-                        @modifying="send({ type: 'modify', rowId: item.id })"
+                        @modifying="send({ type: 'modify', rowId: item[props.storeId] })"
                         @idle="send('complete')"
                     />
                 </tbody>

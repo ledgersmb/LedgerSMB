@@ -8,6 +8,7 @@ export const useWarehousesStore = defineStore("warehouses", {
     state: () => {
         return {
             fields: ["id", "description"],
+            id: "id",
             items: [],
             url: "products/warehouses/"
         };
