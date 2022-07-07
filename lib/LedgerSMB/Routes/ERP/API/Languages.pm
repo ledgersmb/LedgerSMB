@@ -23,7 +23,6 @@ use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_CONFLICT );
 
-use LedgerSMB::Company;
 use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.languages';
@@ -145,9 +144,8 @@ sub _update_language {
 
 
 get api '/languages/' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
 
-    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _get_languages( $c );
     return [ 200,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
@@ -155,9 +153,8 @@ get api '/languages/' => sub {
 };
 
 post api '/languages/' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
 
-    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($response, $meta) = _add_language( $c, $body );
     return [
         HTTP_CREATED,
@@ -168,9 +165,8 @@ post api '/languages/' => sub {
 };
 
 del api '/languages/:id' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
 
-    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _del_language( $c, $params->{id} );
 
     # return 'undef' if $response is undef, which it is when not found
@@ -178,9 +174,8 @@ del api '/languages/:id' => sub {
 };
 
 get api '/languages/:id' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
 
-    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($response, $meta) = _get_language( $c, $params->{id} );
 
     return [ HTTP_OK,
@@ -191,9 +186,8 @@ get api '/languages/:id' => sub {
 
 
 put api '/languages/:id' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
 
-    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
     my ($response, $meta) = _update_language(
         $c, {
@@ -214,7 +208,7 @@ put api '/languages/:id' => sub {
 };
 
 patch api '/languages/:id' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
     my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
     my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;
     my $description = ($r->parameters->{description} // '') =~ s/[*]//gr;

@@ -23,7 +23,6 @@ use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_CONFLICT );
 
-use LedgerSMB::Company;
 use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.products';
@@ -145,9 +144,8 @@ sub _update_pricegroup {
 
 
 get api '/products/pricegroups/' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
 
-    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _get_pricegroups( $c );
     return [ 200,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
@@ -155,9 +153,8 @@ get api '/products/pricegroups/' => sub {
 };
 
 post api '/products/pricegroups/' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
 
-    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($response, $meta) = _add_pricegroup( $c, $body );
     return [
         HTTP_CREATED,
@@ -168,9 +165,8 @@ post api '/products/pricegroups/' => sub {
 };
 
 del api '/products/pricegroups/:id' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
 
-    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _del_pricegroup( $c, $params->{id} );
 
     # return 'undef' if $response is undef, which it is when not found
@@ -178,9 +174,8 @@ del api '/products/pricegroups/:id' => sub {
 };
 
 get api '/products/pricegroups/:id' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
 
-    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($response, $meta) = _get_pricegroup( $c, $params->{id} );
 
     return [ HTTP_OK,
@@ -191,9 +186,8 @@ get api '/products/pricegroups/:id' => sub {
 
 
 put api '/products/pricegroups/:id' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
 
-    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
     my ($response, $meta) = _update_pricegroup(
         $c, {
@@ -214,7 +208,7 @@ put api '/products/pricegroups/:id' => sub {
 };
 
 patch api '/products/pricegroups/:id' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
     my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
     my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;
     my $description = ($r->parameters->{description} // '') =~ s/[*]//gr;
@@ -340,9 +334,8 @@ sub _update_warehouse {
 
 
 get api '/products/warehouses/' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
 
-    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _get_warehouses( $c );
     return [ 200,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
@@ -350,9 +343,8 @@ get api '/products/warehouses/' => sub {
 };
 
 post api '/products/warehouses/' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
 
-    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($response, $meta) = _add_warehouse( $c, $body );
     return [
         HTTP_CREATED,
@@ -363,9 +355,8 @@ post api '/products/warehouses/' => sub {
 };
 
 del api '/products/warehouses/:id' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
 
-    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _del_warehouse( $c, $params->{id} );
 
     # return 'undef' if $response is undef, which it is when not found
@@ -373,9 +364,8 @@ del api '/products/warehouses/:id' => sub {
 };
 
 get api '/products/warehouses/:id' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
 
-    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($response, $meta) = _get_warehouse( $c, $params->{id} );
 
     return [ HTTP_OK,
@@ -386,9 +376,8 @@ get api '/products/warehouses/:id' => sub {
 
 
 put api '/products/warehouses/:id' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
 
-    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
     my ($response, $meta) = _update_warehouse(
         $c, {
@@ -409,7 +398,7 @@ put api '/products/warehouses/:id' => sub {
 };
 
 patch api '/products/warehouses/:id' => sub {
-    my ($env, $r, $body, $params) = @_;
+    my ($env, $r, $c, $body, $params) = @_;
     my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
     my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;
     my $description = ($r->parameters->{description} // '') =~ s/[*]//gr;
