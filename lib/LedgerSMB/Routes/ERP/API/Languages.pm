@@ -22,7 +22,6 @@ use strict;
 use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_NOT_FOUND HTTP_CONFLICT );
-use Plack::Request::WithEncoding;
 
 use LedgerSMB::Company;
 use LedgerSMB::Router appname => 'erp/api';
@@ -146,8 +145,7 @@ sub _update_language {
 
 
 get api '/languages/' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _get_languages( $c );
@@ -157,8 +155,7 @@ get api '/languages/' => sub {
 };
 
 post api '/languages/' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($response, $meta) = _add_language( $c, $body );
@@ -171,8 +168,7 @@ post api '/languages/' => sub {
 };
 
 del api '/languages/:id' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _del_language( $c, $params->{id} );
@@ -185,8 +181,7 @@ del api '/languages/:id' => sub {
 };
 
 get api '/languages/:id' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($response, $meta) = _get_language( $c, $params->{id} );
@@ -203,8 +198,7 @@ get api '/languages/:id' => sub {
 
 
 put api '/languages/:id' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
@@ -231,8 +225,7 @@ put api '/languages/:id' => sub {
 };
 
 patch api '/languages/:id' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
     my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
     my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;
     my $description = ($r->parameters->{description} // '') =~ s/[*]//gr;

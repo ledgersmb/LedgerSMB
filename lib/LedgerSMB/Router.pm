@@ -378,7 +378,7 @@ reference. Returns the path and a code reference which can be used as the
 argument list of the api entry point defining keywords:
 
   post api 'our/path/' => sub {
-     my ($env, $body, $params, @rest) = @_;
+     my ($env, $req, $body, $params, @rest) = @_;
      ...;
   };
 
@@ -447,7 +447,7 @@ sub api {
                 return error($req, HTTP_BAD_REQUEST, [], @$errors);
             }
 
-            my $triplet = $code->($env, $body, $params, @args);
+            my $triplet = $code->($env, $req, $body, $params, @args);
             $has_body = reftype $triplet->[2] ne 'ARRAY'
                 or Plack::Util::content_length($triplet->[2]);
             ($result, $errors, $warnings) =

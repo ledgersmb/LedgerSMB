@@ -22,7 +22,6 @@ use strict;
 use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_NOT_FOUND HTTP_CONFLICT );
-use Plack::Request::WithEncoding;
 
 use LedgerSMB::Company;
 use LedgerSMB::Router appname => 'erp/api';
@@ -146,8 +145,7 @@ sub _update_pricegroup {
 
 
 get api '/products/pricegroups/' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _get_pricegroups( $c );
@@ -157,8 +155,7 @@ get api '/products/pricegroups/' => sub {
 };
 
 post api '/products/pricegroups/' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($response, $meta) = _add_pricegroup( $c, $body );
@@ -171,8 +168,7 @@ post api '/products/pricegroups/' => sub {
 };
 
 del api '/products/pricegroups/:id' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _del_pricegroup( $c, $params->{id} );
@@ -185,8 +181,7 @@ del api '/products/pricegroups/:id' => sub {
 };
 
 get api '/products/pricegroups/:id' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($response, $meta) = _get_pricegroup( $c, $params->{id} );
@@ -203,8 +198,7 @@ get api '/products/pricegroups/:id' => sub {
 
 
 put api '/products/pricegroups/:id' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
@@ -231,8 +225,7 @@ put api '/products/pricegroups/:id' => sub {
 };
 
 patch api '/products/pricegroups/:id' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
     my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
     my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;
     my $description = ($r->parameters->{description} // '') =~ s/[*]//gr;
@@ -358,8 +351,7 @@ sub _update_warehouse {
 
 
 get api '/products/warehouses/' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _get_warehouses( $c );
@@ -369,8 +361,7 @@ get api '/products/warehouses/' => sub {
 };
 
 post api '/products/warehouses/' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($response, $meta) = _add_warehouse( $c, $body );
@@ -383,8 +374,7 @@ post api '/products/warehouses/' => sub {
 };
 
 del api '/products/warehouses/:id' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _del_warehouse( $c, $params->{id} );
@@ -397,8 +387,7 @@ del api '/products/warehouses/:id' => sub {
 };
 
 get api '/products/warehouses/:id' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($response, $meta) = _get_warehouse( $c, $params->{id} );
@@ -415,8 +404,7 @@ get api '/products/warehouses/:id' => sub {
 
 
 put api '/products/warehouses/:id' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
@@ -443,8 +431,7 @@ put api '/products/warehouses/:id' => sub {
 };
 
 patch api '/products/warehouses/:id' => sub {
-    my ($env, $body, $params) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $body, $params) = @_;
     my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
     my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;
     my $description = ($r->parameters->{description} // '') =~ s/[*]//gr;
@@ -473,7 +460,7 @@ your software.
 __DATA__
 openapi: 3.0.0
 info:
-  title: Retrieval of warehouse configuration
+  title: Managing products and related configuration
   version: 0.0.1
 paths:
   /products/pricegroups/:
