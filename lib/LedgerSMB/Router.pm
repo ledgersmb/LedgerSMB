@@ -385,6 +385,9 @@ argument list of the api entry point defining keywords:
 The wrapper wants the C<api_schema> setting to be assigned in order to
 be able to validate the validity of the request and the response.
 
+In case third element of the PSGI triplet is undefined or the return value
+itself is undefined, a C<404 Not Found> response is generated.
+
 =head2 openapi_schema \*FH
 
 Parses an OpenAPI (currently 3.0) definition from the fileref passed as
@@ -448,6 +451,14 @@ sub api {
             }
 
             my $triplet = $code->($env, $req, $body, $params, @args);
+            if (not defined $triplet
+                or not defined $triplet->[2]) {
+                $triplet = [
+                    HTTP_NOT_FOUND,
+                    [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
+                    [ 'Not found' ] ];
+            }
+
             $has_body = reftype $triplet->[2] ne 'ARRAY'
                 or Plack::Util::content_length($triplet->[2]);
             ($result, $errors, $warnings) =

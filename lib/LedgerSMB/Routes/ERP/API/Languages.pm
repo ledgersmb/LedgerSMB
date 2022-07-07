@@ -21,7 +21,7 @@ This module doesn't export any methods.
 use strict;
 use warnings;
 
-use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_NOT_FOUND HTTP_CONFLICT );
+use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_CONFLICT );
 
 use LedgerSMB::Company;
 use LedgerSMB::Router appname => 'erp/api';
@@ -173,11 +173,8 @@ del api '/languages/:id' => sub {
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my $response = _del_language( $c, $params->{id} );
 
-    return [ HTTP_NOT_FOUND, [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
-             [ 'Not found' ] ]
-        unless defined $response;
-
-    return [ HTTP_OK, [ ], [ '' ] ];
+    # return 'undef' if $response is undef, which it is when not found
+    return $response && [ HTTP_OK, [ ], [ '' ] ];
 };
 
 get api '/languages/:id' => sub {
@@ -185,10 +182,6 @@ get api '/languages/:id' => sub {
 
     my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
     my ($response, $meta) = _get_language( $c, $params->{id} );
-
-    return [ HTTP_NOT_FOUND, [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
-             [ 'Not found' ] ]
-        unless defined $response;
 
     return [ HTTP_OK,
              [ 'Content-Type' => 'application/json; charset=UTF-8',
@@ -213,10 +206,6 @@ put api '/languages/:id' => sub {
 
     return [ HTTP_CONFLICT, [], [ '' ] ]
         if ($meta->{conflict});
-
-    return [ HTTP_NOT_FOUND, [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
-             [ 'Not found' ] ]
-        unless defined $response;
 
     return [ HTTP_OK,
              [ 'Content-Type' => 'application/json; charset=UTF-8',
