@@ -421,7 +421,7 @@ sub api {
             my $env = shift @args;
             my $params = shift @args;
             my $req = Plack::Request::WithEncoding->new($env);
-            my $has_body = $req->headers->content_length() > 0;
+            my $has_body = ($req->headers->content_length() // 0) > 0;
             my $body = ($req->headers->content_type eq 'application/json') ?
                 json()->decode($req->content) : '';
             # bug: multipart/form-data wants to be validated and

@@ -1229,11 +1229,11 @@ SELECT lsmb__grant_role('system_admin', rname)
 \echo MANUAL TRANSLATION
 SELECT lsmb__create_role('language_create');
 SELECT lsmb__grant_perms('language_create', 'language', 'INSERT');
-SELECT lsmb__grant_menu('language_create', 151, 'allow');
+SELECT lsmb__grant_menu('language_create', 150, 'allow');
 
 SELECT lsmb__create_role('language_edit');
 SELECT lsmb__grant_perms('language_edit', 'language', 'UPDATE');
-SELECT lsmb__grant_menu('language_edit', 152, 'allow');
+SELECT lsmb__grant_menu('language_edit', 150, 'allow');
 
 SELECT lsmb__create_role('translation_create');
 SELECT lsmb__grant_perms('translation_create', obj, 'ALL')

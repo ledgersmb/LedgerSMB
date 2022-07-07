@@ -15,11 +15,13 @@ import ImportCsvSic from "./components/ImportCSV-SIC";
 import ImportCsvTimecard from "./components/ImportCSV-Timecard";
 import Warehouses from "./components/Warehouses.vue";
 import Pricegroups from "./components/Pricegroups.vue";
+import Languages from "./components/Languages.vue";
 
 const routes = [
     { name: "home", path: "/", component: Home },
     { name: "warehouses", path: "/warehouses", component: Warehouses },
     { name: "pricegroups", path: "/pricegroups", component: Pricegroups },
+    { name: "languages", path: "/languages", component: Languages },
     {
         name: "importCSV-AR-Batch",
         path: "/import-csv/ar_multi",

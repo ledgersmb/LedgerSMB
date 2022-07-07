@@ -160,3 +160,4 @@ mc/delete-migration-validation-data.sql
 1.10/change-data-capture.sql
 1.10/pricegroup-config.sql
 1.10/warehouse-config.sql
+1.10/language-config.sql
