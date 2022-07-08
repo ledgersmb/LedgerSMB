@@ -10,7 +10,7 @@ const text = props.data.text;
 const duration = text ? 10 : 2;
 
 
-const { send } = createToastMachine(
+const { send, state } = createToastMachine(
     {
         item: props.data
     },
@@ -23,6 +23,9 @@ const { send } = createToastMachine(
 window.setTimeout(() => { send('dismiss') }, duration * 1000);
 if (props.data.dismissReceiver) {
     props.data.dismissReceiver( () => send('dismiss') );
+    window.setTimeout(() => { send('show') }, 250);
+} else {
+    send('show');
 }
 
 </script>
@@ -30,6 +33,7 @@ if (props.data.dismissReceiver) {
 <template>
     <div class="toast dijitContentPane dijitBorderContainer-child edgePanel"
          :class="type"
+         v-show="state !== 'pending'"
          @click="send('dismiss-immediate')"
          @mouseenter="send('hold')"
          @mouseleave="send('release')">
