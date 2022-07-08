@@ -39,10 +39,10 @@ find UI/ templates/ t/data/ \
 
 utils/devel/extract-sql < sql/Pg-database.sql >> locale/LedgerSMB.pot
 
+utils/devel/extract-vue-template-translations.sh >> locale/LedgerSMB.pot
+
 msguniq --sort-output --width=80 --output-file=locale/LedgerSMB.pot locale/LedgerSMB.pot \
   || exit 1
-
-utils/devel/extract-vue-template-translations.sh
 
 # Merge with .po files
 

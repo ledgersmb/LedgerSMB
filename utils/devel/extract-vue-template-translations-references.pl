@@ -30,11 +30,15 @@ sub print_reference {
 }
 
 # Set references to help translators
+my $skipping_header = 1;
+my $in_msgstr = 0;
 foreach my $line ( <STDIN> ) {
 
+    $in_msgstr &&= ($line =~ /^"/);
     if ( $line =~ /^msgid.+"(.+)"$/ ) {
-
         my $id = $1;
+
+        $skipping_header = '';
 
         # Use JSON key syntax instead of PO
         $id =~ s/##/./g
@@ -58,5 +62,11 @@ foreach my $line ( <STDIN> ) {
 
         print_reference(@matches);
     }
-    print $line
+    elsif ( $line =~ /^msgstr\b/
+            and not $skipping_header) {
+        #BUG: multiline msgstrs?
+        print qq|msgstr ""\n|;
+        $in_msgstr = 1;
+    }
+    print $line unless $skipping_header or $in_msgstr;
 }
