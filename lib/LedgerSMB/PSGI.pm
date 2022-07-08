@@ -31,6 +31,7 @@ use LedgerSMB::Router keywords => [ qw( router ) ];
 use LedgerSMB::Routes::ERP::API::Accounts;
 use LedgerSMB::Routes::ERP::API::Contacts;
 use LedgerSMB::Routes::ERP::API::Goods;
+use LedgerSMB::Routes::ERP::API::GeneralLedger;
 use LedgerSMB::Routes::ERP::API::MenuNodes;
 use LedgerSMB::Routes::ERP::API::Languages;
 use LedgerSMB::Routes::ERP::API::Products;

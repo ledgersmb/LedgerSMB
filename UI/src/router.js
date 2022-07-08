@@ -18,6 +18,7 @@ import Pricegroups from "./components/Pricegroups.vue";
 import Languages from "./components/Languages.vue";
 import SIC from "./components/SIC.vue";
 import BusinessTypes from "./components/BusinessTypes.vue";
+import GIFI from "./components/GIFI.vue";
 
 const routes = [
     { name: "home", path: "/", component: Home },
@@ -25,6 +26,7 @@ const routes = [
     { name: "pricegroups", path: "/pricegroups", component: Pricegroups },
     { name: "languages", path: "/languages", component: Languages },
     { name: "sics", path: "/sics", component: SIC },
+    { name: "gifis", path: "/gifis", component: GIFI },
     {
         name: "business-types",
         path: "/business-types",

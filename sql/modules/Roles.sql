@@ -1154,12 +1154,11 @@ SELECT lsmb__grant_perms('audit_trail_maintenance', 'audittrail', 'DELETE');
 
 SELECT lsmb__create_role('gifi_create');
 SELECT lsmb__grant_perms('gifi_create', 'gifi', 'INSERT');
-SELECT lsmb__grant_menu('gifi_create', id, 'allow')
-  FROM unnest(array[139,247]) id;
+SELECT lsmb__grant_menu('gifi_create', 136, 'allow');
 
 SELECT lsmb__create_role('gifi_edit');
 SELECT lsmb__grant_perms('gifi_edit', 'gifi', 'UPDATE');
-SELECT lsmb__grant_menu('gifi_edit', 140, 'allow');
+SELECT lsmb__grant_menu('gifi_edit', 136, 'allow');
 
 SELECT lsmb__create_role('account_all');
 SELECT lsmb__grant_role('account_all', rname)
