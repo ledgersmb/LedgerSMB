@@ -11,7 +11,7 @@ set -x
 cp UI/src/locales/en.json /tmp/en.json
 npx vue-i18n-extract-translations -v "./UI/src/**/*.?(js|vue)" -l "/tmp/" --def-locale "en" \
     --key "i18n" --keep-unused >> /dev/null
-i18next-conv --quiet --language "en" --source /tmp/en.json --target /tmp/en.po
+npx i18next-conv --quiet --language "en" --source /tmp/en.json --target /tmp/en.po
 ./utils/devel/extract-vue-template-translations-references.pl < /tmp/en.po > /tmp/_en.po
 msgfilter  --sort-output --width=80 \
     --input=/tmp/_en.po --output-file=/tmp/en.pot true
