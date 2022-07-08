@@ -1169,13 +1169,13 @@ SELECT lsmb__grant_role('account_all', rname)
 SELECT lsmb__create_role('business_type_create');
 SELECT lsmb__grant_perms('business_type_create', 'business', 'INSERT');
 SELECT lsmb__grant_perms('business_type_create', 'business_id_seq', 'ALL');
-SELECT lsmb__grant_menu('business_type_create', 148, 'allow');
+SELECT lsmb__grant_menu('business_type_create', 147, 'allow');
 
 SELECT lsmb__create_role('business_type_edit');
 SELECT lsmb__grant_perms('business_type_edit', 'business', ptype)
   FROM unnest(array['UPDATE'::text, 'DELETE'::text]) ptype;
 
-SELECT lsmb__grant_menu('business_type_edit', 149, 'allow');
+SELECT lsmb__grant_menu('business_type_edit', 147, 'allow');
 
 SELECT lsmb__create_role('business_type_all');
 SELECT lsmb__grant_role('business_type_all', 'business_type_create');

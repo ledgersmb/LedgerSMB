@@ -81,9 +81,14 @@ export const configStoreTemplate = {
             return this.items[index];
         },
         getById(id) {
-            return id === ""
-                ? { [this.id]: undefined, description: undefined }
-                : this.items.find((w) => w[this.id] === id);
+            if (id === "") {
+                const rv = {};
+                this.fields.forEach((f) => {
+                    rv[f] = undefined;
+                });
+                return rv;
+            }
+            return this.items.find((w) => w[this.id] === id);
         },
         async save(id, data) {
             const warehouse = this.getById(id);

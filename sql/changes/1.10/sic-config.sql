@@ -4,7 +4,7 @@ update menu_node
    set menu = null,
        url = 'sics',
        parent = 19,
-       position = 4
+       position = 5
  where id = 153; -- SIC
 
 update menu_acl

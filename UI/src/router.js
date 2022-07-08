@@ -17,6 +17,7 @@ import Warehouses from "./components/Warehouses.vue";
 import Pricegroups from "./components/Pricegroups.vue";
 import Languages from "./components/Languages.vue";
 import SIC from "./components/SIC.vue";
+import BusinessTypes from "./components/BusinessTypes.vue";
 
 const routes = [
     { name: "home", path: "/", component: Home },
@@ -24,6 +25,11 @@ const routes = [
     { name: "pricegroups", path: "/pricegroups", component: Pricegroups },
     { name: "languages", path: "/languages", component: Languages },
     { name: "sics", path: "/sics", component: SIC },
+    {
+        name: "business-types",
+        path: "/business-types",
+        component: BusinessTypes
+    },
     {
         name: "importCSV-AR-Batch",
         path: "/import-csv/ar_multi",
