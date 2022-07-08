@@ -62,6 +62,7 @@ while (<>) {
     my $line_no = 1;
     my $text;
 
+    print STDERR "Parsing $file\n";
     while ($source ne '') {
 
       PARSER: {

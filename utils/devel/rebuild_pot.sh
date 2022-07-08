@@ -29,7 +29,7 @@ EOF
 
 # EXTRACT STRINGS AND CREATE POT
 find . -name '*.pl' -o -name '*.pm' | \
-  grep -v '\(b\|xt/\)lib/\|UI/pod/' | grep -v LaTeX | sort | \
+  grep -v '\(b\|xt/\)lib/\|UI/pod/\|.local/\|devel/' | grep -v LaTeX | sort | \
   utils/devel/extract-perl >> locale/LedgerSMB.pot
 
 find UI/ templates/ t/data/ \
