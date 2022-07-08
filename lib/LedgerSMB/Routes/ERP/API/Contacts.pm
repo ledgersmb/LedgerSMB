@@ -1,16 +1,16 @@
-package LedgerSMB::Routes::ERP::API::Products;
+package LedgerSMB::Routes::ERP::API::Contacts;
 
 =head1 NAME
 
-LedgerSMB::Routes::ERP::API::Products - Webservice routes for goods & services
+LedgerSMB::Routes::ERP::API::Contacts - Webservice routes for contacts
 
 =head1 DESCRIPTION
 
-Webservice routes for goods & services
+Webservice routes for managing contacts and related configuration.
 
 =head1 SYNOPSIS
 
-  use LedgerSMB::Routes::ERP::API::Products;
+  use LedgerSMB::Routes::ERP::API::Contacts;
 
 =head1 METHODS
 
@@ -25,32 +25,33 @@ use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_CONFLICT );
 
 use LedgerSMB::Router appname => 'erp/api';
 
-set logger => 'erp.api.products';
+set logger => 'erp.api.contacts';
 set api_schema => openapi_schema(\*DATA);
 
 
 ##############################################################################
 #
 #
-#     PRICEGROUPS
+#     SIC
 #
 #
 #############################################################################
 
-sub _add_pricegroup {
+
+sub _add_sic {
     my ($c, $w) = @_;
     my $sth = $c->dbh->prepare(
-        q|INSERT INTO pricegroup (pricegroup) VALUES (?)
-          RETURNING id, pricegroup as description, md5(last_updated::text) as etag|
+        q|INSERT INTO sic (code, description) VALUES (?, ?)
+          RETURNING *, md5(last_updated::text) as etag|
         ) or die $c->dbh->errstr;
 
-    $sth->execute( $w->{description} ) or die $sth->errstr;
+    $sth->execute( $w->{code}, $w->{description} ) or die $sth->errstr;
     my $row = $sth->fetchrow_hashref('NAME_lc');
     die $sth->errstr if $sth->err;
 
     return (
         {
-            id => $row->{id},
+            code => $row->{code},
             description => $row->{description}
         },
         {
@@ -58,33 +59,32 @@ sub _add_pricegroup {
         });
 }
 
-sub _del_pricegroup {
-    my ($c, $id) = @_;
+sub _del_sic {
+    my ($c, $code) = @_;
     my $sth = $c->dbh->prepare(
-        q|DELETE FROM pricegroup WHERE id = ?|
+        q|DELETE FROM sic WHERE code = ?|
         ) or die $c->dbh->errstr;
 
-    $sth->execute( $id ) or die $sth->errstr;
+    $sth->execute( $code ) or die $sth->errstr;
     return undef unless $sth->rows > 0;
 
     return 1;
 }
 
-sub _get_pricegroup {
-    my ($c, $id) = @_;
+sub _get_sic {
+    my ($c, $code) = @_;
     my $sth = $c->dbh->prepare(
-        q|SELECT id, pricegroup as description,
-                 md5(last_updated::text) as etag FROM pricegroup WHERE id = ?|
+        q|SELECT *, md5(last_updated::text) as etag FROM sic WHERE code = ?|
         ) or die $c->dbh->errstr;
 
-    $sth->execute($id) or die $sth->errstr;
+    $sth->execute($code) or die $sth->errstr;
     my $row = $sth->fetchrow_hashref('NAME_lc');
     die $sth->errstr if $sth->err;
 
     return undef unless $row;
     return (
         {
-            id => $row->{id},
+            code => $row->{code},
             description => $row->{description},
         },
         {
@@ -92,17 +92,17 @@ sub _get_pricegroup {
         });
 }
 
-sub _get_pricegroups {
+sub _get_sics {
     my ($c) = @_;
     my $sth = $c->dbh->prepare(
-        q|SELECT id, pricegroup as description FROM pricegroup ORDER BY id|
+        q|SELECT * FROM sic ORDER BY code|
         ) or die $c->dbh->errstr;
 
     $sth->execute() or die $sth->errstr;
     my @results;
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
         push @results, {
-            id => $row->{id},
+            code => $row->{code},
             description => $row->{description},
         };
     }
@@ -111,17 +111,18 @@ sub _get_pricegroups {
     return \@results;
 }
 
-sub _update_pricegroup {
+sub _update_sic {
     my ($c, $w, $m) = @_;
     my $sth = $c->dbh->prepare(
-        q|UPDATE pricegroup SET pricegroup = ?
-           WHERE id = ? AND md5(last_updated::text) = ?
-          RETURNING id, pricegroup as description, md5(last_updated::text) as etag|
+        q|UPDATE sic SET description = ?
+           WHERE code = ? AND md5(last_updated::text) = ?
+          RETURNING *, md5(last_updated::text) as etag|
         ) or die $c->dbh->errstr;
 
-    $sth->execute( $w->{description}, $w->{id}, $m->{ETag} ) or die $sth->errstr;
+    $sth->execute( $w->{description}, $w->{code}, $m->{ETag} )
+        or die $sth->errstr;
     if ($sth->rows == 0) {
-        my ($response, $meta) = _get_warehouse($c, $w->{id});
+        my ($response, $meta) = _get_sic($c, $w->{code});
         return (undef, {}) unless $response;
 
         # Obviously, the hashes must have mismatched
@@ -133,7 +134,7 @@ sub _update_pricegroup {
 
     return (
         {
-            id => $row->{id},
+            code => $row->{code},
             description => $row->{description}
         },
         {
@@ -142,20 +143,19 @@ sub _update_pricegroup {
 }
 
 
-
-get api '/products/pricegroups/' => sub {
+get api '/contacts/sic/' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my $response = _get_pricegroups( $c );
+    my $response = _get_sics( $c );
     return [ 200,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              $response  ];
 };
 
-post api '/products/pricegroups/' => sub {
+post api '/contacts/sic/' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my ($response, $meta) = _add_pricegroup( $c, $body );
+    my ($response, $meta) = _add_sic( $c, $body );
     return [
         HTTP_CREATED,
         [ 'Content-Type' => 'application/json; charset=UTF-8',
@@ -164,19 +164,19 @@ post api '/products/pricegroups/' => sub {
         $response ];
 };
 
-del api '/products/pricegroups/:id' => sub {
+del api '/contacts/sic/:id' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my $response = _del_pricegroup( $c, $params->{id} );
+    my $response = _del_sic( $c, $params->{id} );
 
     # return 'undef' if $response is undef, which it is when not found
     return $response && [ HTTP_OK, [ ], [ '' ] ];
 };
 
-get api '/products/pricegroups/:id' => sub {
+get api '/contacts/sic/:id' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my ($response, $meta) = _get_pricegroup( $c, $params->{id} );
+    my ($response, $meta) = _get_sic( $c, $params->{id} );
 
     return [ HTTP_OK,
              [ 'Content-Type' => 'application/json; charset=UTF-8',
@@ -185,13 +185,13 @@ get api '/products/pricegroups/:id' => sub {
 };
 
 
-put api '/products/pricegroups/:id' => sub {
+put api '/contacts/sic/:id' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
-    my ($response, $meta) = _update_pricegroup(
+    my ($response, $meta) = _update_sic(
         $c, {
-            id => $params->{id},
+            code => $params->{id},
             description => $body->{description}
         },
         {
@@ -207,7 +207,7 @@ put api '/products/pricegroups/:id' => sub {
              $response ];
 };
 
-patch api '/products/pricegroups/:id' => sub {
+patch api '/contacts/sic/:id' => sub {
     my ($env, $r, $c, $body, $params) = @_;
     my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
     my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;
@@ -223,37 +223,38 @@ patch api '/products/pricegroups/:id' => sub {
 ##############################################################################
 #
 #
-#     WAREHOUSES
+#     BUSINESS TYPES
 #
 #
 #############################################################################
 
 
-sub _add_warehouse {
+sub _add_businesstype {
     my ($c, $w) = @_;
     my $sth = $c->dbh->prepare(
-        q|INSERT INTO warehouse (description) VALUES (?)
+        q|INSERT INTO business (description, discount) VALUES (?, ?)
           RETURNING *, md5(last_updated::text) as etag|
         ) or die $c->dbh->errstr;
 
-    $sth->execute( $w->{description} ) or die $sth->errstr;
+    $sth->execute( $w->{description}, $w->{discount} ) or die $sth->errstr;
     my $row = $sth->fetchrow_hashref('NAME_lc');
     die $sth->errstr if $sth->err;
 
     return (
         {
             id => $row->{id},
-            description => $row->{description}
+            description => $row->{description},
+            discount => $row->{discount},
         },
         {
             ETag => $row->{etag}
         });
 }
 
-sub _del_warehouse {
+sub _del_businesstype {
     my ($c, $id) = @_;
     my $sth = $c->dbh->prepare(
-        q|DELETE FROM warehouse WHERE id = ?|
+        q|DELETE FROM business WHERE id = ?|
         ) or die $c->dbh->errstr;
 
     $sth->execute( $id ) or die $sth->errstr;
@@ -262,10 +263,10 @@ sub _del_warehouse {
     return 1;
 }
 
-sub _get_warehouse {
+sub _get_businesstype {
     my ($c, $id) = @_;
     my $sth = $c->dbh->prepare(
-        q|SELECT *, md5(last_updated::text) as etag FROM warehouse WHERE id = ?|
+        q|SELECT *, md5(last_updated::text) as etag FROM business WHERE id = ?|
         ) or die $c->dbh->errstr;
 
     $sth->execute($id) or die $sth->errstr;
@@ -277,16 +278,17 @@ sub _get_warehouse {
         {
             id => $row->{id},
             description => $row->{description},
+            discount => $row->{discount},
         },
         {
             ETag => $row->{etag}
         });
 }
 
-sub _get_warehouses {
+sub _get_businesstypes {
     my ($c) = @_;
     my $sth = $c->dbh->prepare(
-        q|SELECT * FROM warehouse ORDER BY id|
+        q|SELECT * FROM business ORDER BY id|
         ) or die $c->dbh->errstr;
 
     $sth->execute() or die $sth->errstr;
@@ -295,6 +297,7 @@ sub _get_warehouses {
         push @results, {
             id => $row->{id},
             description => $row->{description},
+            discount => $row->{discount},
         };
     }
     die $sth->errstr if $sth->err;
@@ -302,17 +305,18 @@ sub _get_warehouses {
     return \@results;
 }
 
-sub _update_warehouse {
+sub _update_businesstype {
     my ($c, $w, $m) = @_;
     my $sth = $c->dbh->prepare(
-        q|UPDATE warehouse SET description = ?
+        q|UPDATE business SET description = ?, discount = ?
            WHERE id = ? AND md5(last_updated::text) = ?
           RETURNING *, md5(last_updated::text) as etag|
         ) or die $c->dbh->errstr;
 
-    $sth->execute( $w->{description}, $w->{id}, $m->{ETag} ) or die $sth->errstr;
+    $sth->execute( $w->{description}, $w->{discount}, $w->{id}, $m->{ETag} )
+        or die $sth->errstr;
     if ($sth->rows == 0) {
-        my ($response, $meta) = _get_warehouse($c, $w->{id});
+        my ($response, $meta) = _get_businesstype($c, $w->{id});
         return (undef, {}) unless $response;
 
         # Obviously, the hashes must have mismatched
@@ -325,7 +329,8 @@ sub _update_warehouse {
     return (
         {
             id => $row->{id},
-            description => $row->{description}
+            description => $row->{description},
+            discount => $row->{discount},
         },
         {
             ETag => $row->{etag}
@@ -333,19 +338,19 @@ sub _update_warehouse {
 }
 
 
-get api '/products/warehouses/' => sub {
+get api '/contacts/business-types/' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my $response = _get_warehouses( $c );
+    my $response = _get_businesstypes( $c );
     return [ 200,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              $response  ];
 };
 
-post api '/products/warehouses/' => sub {
+post api '/contacts/business-types/' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my ($response, $meta) = _add_warehouse( $c, $body );
+    my ($response, $meta) = _add_businesstype( $c, $body );
     return [
         HTTP_CREATED,
         [ 'Content-Type' => 'application/json; charset=UTF-8',
@@ -354,19 +359,19 @@ post api '/products/warehouses/' => sub {
         $response ];
 };
 
-del api '/products/warehouses/:id' => sub {
+del api '/contacts/business-types/:id' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my $response = _del_warehouse( $c, $params->{id} );
+    my $response = _del_businesstype( $c, $params->{id} );
 
     # return 'undef' if $response is undef, which it is when not found
     return $response && [ HTTP_OK, [ ], [ '' ] ];
 };
 
-get api '/products/warehouses/:id' => sub {
+get api '/contacts/business-types/:id' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my ($response, $meta) = _get_warehouse( $c, $params->{id} );
+    my ($response, $meta) = _get_businesstype( $c, $params->{id} );
 
     return [ HTTP_OK,
              [ 'Content-Type' => 'application/json; charset=UTF-8',
@@ -375,14 +380,15 @@ get api '/products/warehouses/:id' => sub {
 };
 
 
-put api '/products/warehouses/:id' => sub {
+put api '/contacts/business-types/:id' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
-    my ($response, $meta) = _update_warehouse(
+    my ($response, $meta) = _update_businesstype(
         $c, {
             id => $params->{id},
-            description => $body->{description}
+            description => $body->{description},
+            discount => $body->{discount},
         },
         {
             ETag => $ETag
@@ -397,7 +403,7 @@ put api '/products/warehouses/:id' => sub {
              $response ];
 };
 
-patch api '/products/warehouses/:id' => sub {
+patch api '/contacts/business-types/:id' => sub {
     my ($env, $r, $c, $body, $params) = @_;
     my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
     my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;
@@ -427,10 +433,10 @@ your software.
 __DATA__
 openapi: 3.0.0
 info:
-  title: Managing products and related configuration
+  title: Management of industry codes configuration
   version: 0.0.1
 paths:
-  /products/pricegroups/:
+  /contacts/sic/:
     get:
       responses:
         200:
@@ -440,13 +446,13 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Pricegroup'
+                  $ref: '#/components/schemas/SIC'
     post:
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewPricegroup'
+              $ref: '#/components/schemas/SIC'
       responses:
         201:
           description: ...
@@ -457,13 +463,13 @@ paths:
               schema:
                 type: string
                 format: uri-reference
-  /products/pricegroups/{id}:
+  /contacts/sic/{id}:
     parameters:
       - name: id
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/pricegroup-id'
+          $ref: '#/components/schemas/sic-code'
         style: simple
     get:
       responses:
@@ -475,7 +481,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/Pricegroup'
+                $ref: '#/components/schemas/SIC'
         304:
           description: ...
         400:
@@ -497,7 +503,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Pricegroup'
+              $ref: '#/components/schemas/SIC'
       responses:
         200:
           description: ...
@@ -505,9 +511,9 @@ paths:
             ETag:
               $ref: '#/components/headers/ETag'
           content:
-            'application/json':
+            application/json:
               schema:
-                $ref: '#/components/schemas/Pricegroup'
+                $ref: '#/components/schemas/SIC'
         304:
           description: ...
         400:
@@ -544,7 +550,7 @@ paths:
       responses:
         200:
           description: ...
-  /products/warehouses/:
+  /contacts/business-types/:
     get:
       responses:
         200:
@@ -554,13 +560,13 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Warehouse'
+                  $ref: '#/components/schemas/BusinessType'
     post:
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewWarehouse'
+              $ref: '#/components/schemas/BusinessType'
       responses:
         201:
           description: ...
@@ -571,13 +577,13 @@ paths:
               schema:
                 type: string
                 format: uri-reference
-  /products/warehouses/{id}:
+  /contacts/business-types/{id}:
     parameters:
       - name: id
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/warehouse-id'
+          $ref: '#/components/schemas/business-type-id'
         style: simple
     get:
       responses:
@@ -589,7 +595,7 @@ paths:
           content:
             'application/json':
               schema:
-                $ref: '#/components/schemas/Warehouse'
+                $ref: '#/components/schemas/BusinessType'
         304:
           description: ...
         400:
@@ -611,7 +617,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Warehouse'
+              $ref: '#/components/schemas/BusinessType'
       responses:
         200:
           description: ...
@@ -619,9 +625,9 @@ paths:
             ETag:
               $ref: '#/components/headers/ETag'
           content:
-            'application/json':
+            application/json:
               schema:
-                $ref: '#/components/schemas/Warehouse'
+                $ref: '#/components/schemas/BusinessType'
         304:
           description: ...
         400:
@@ -671,46 +677,35 @@ components:
       schema:
         type: string
   schemas:
-    common-id:
-      type: integer
+    sic-code:
+      type: string
+      minLength: 1
+    SIC:
+      type: object
+      required:
+        - code
+        - description
+      properties:
+        code:
+          $ref: '#/components/schemas/sic-code'
+        description:
+          type: string
+    business-type-id:
+      type: number
       format: int64
-      minimum: 1
-    pricegroup-id:
-      $ref: '#/components/schemas/common-id'
-    Pricegroup:
-      allOf:
-        - $ref: '#/components/schemas/NewPricegroup'
-        - type: object
-          required:
-            - id
-          properties:
-            id:
-              $ref: '#/components/schemas/pricegroup-id'
-    NewPricegroup:
+    BusinessType:
       type: object
       required:
+        - id
         - description
       properties:
+        id:
+          $ref: '#/components/schemas/business-type-id'
         description:
           type: string
-    warehouse-id:
-      $ref: '#/components/schemas/common-id'
-    Warehouse:
-      allOf:
-        - $ref: '#/components/schemas/NewWarehouse'
-        - type: object
-          required:
-            - id
-          properties:
-            id:
-              $ref: '#/components/schemas/warehouse-id'
-    NewWarehouse:
-      type: object
-      required:
-        - description
-      properties:
-        description:
-          type: string
+        discount:
+          type: number
+          format: float
   responses:
     400:
       description: Bad request

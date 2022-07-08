@@ -1,6 +1,6 @@
 <script setup>
 
-import { useWarehousesStore } from "@/store/warehouses";
+import { usePricegroupsStore } from "@/store/pricegroups";
 import { useI18n } from "vue-i18n";
 import ConfigTable from "./ConfigTable.vue";
 
@@ -9,15 +9,16 @@ const COLUMNS = [
     { key: "description", type: "text",     head: t("Description") },
 ];
 
-const warehousesStore = useWarehousesStore();
+const pricegroupsStore = usePricegroupsStore();
 
 </script>
 
 <template>
     <ConfigTable
         :columns="COLUMNS"
-        :store="warehousesStore"
+        :store="pricegroupsStore"
         storeId="id"
-        editRole="warehouse_edit"
-        createRole="warehouse_create" />
+        editRole="pricegroup_edit"
+        createRole="pricegroup_create" />
 </template>
+

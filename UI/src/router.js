@@ -14,10 +14,24 @@ import ImportCsvInventory from "./components/ImportCSV-Inventory";
 import ImportCsvSic from "./components/ImportCSV-SIC";
 import ImportCsvTimecard from "./components/ImportCSV-Timecard";
 import Warehouses from "./components/Warehouses.vue";
+import Pricegroups from "./components/Pricegroups.vue";
+import Languages from "./components/Languages.vue";
+import SIC from "./components/SIC.vue";
+import BusinessTypes from "./components/BusinessTypes.vue";
+import GIFI from "./components/GIFI.vue";
 
 const routes = [
     { name: "home", path: "/", component: Home },
     { name: "warehouses", path: "/warehouses", component: Warehouses },
+    { name: "pricegroups", path: "/pricegroups", component: Pricegroups },
+    { name: "languages", path: "/languages", component: Languages },
+    { name: "sics", path: "/sics", component: SIC },
+    { name: "gifis", path: "/gifis", component: GIFI },
+    {
+        name: "business-types",
+        path: "/business-types",
+        component: BusinessTypes
+    },
     {
         name: "importCSV-AR-Batch",
         path: "/import-csv/ar_multi",

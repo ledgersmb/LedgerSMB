@@ -65,6 +65,7 @@ use Plack::Util;
 use Scalar::Util qw( reftype );
 use YAML::PP;
 
+use LedgerSMB::Company;
 use LedgerSMB::Locale;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::User;
@@ -378,12 +379,46 @@ reference. Returns the path and a code reference which can be used as the
 argument list of the api entry point defining keywords:
 
   post api 'our/path/' => sub {
-     my ($env, $body, $params, @rest) = @_;
+     my ($env, $req, $company, $body, $params, @rest) = @_;
      ...;
   };
 
 The wrapper wants the C<api_schema> setting to be assigned in order to
 be able to validate the validity of the request and the response.
+
+In case third element of the PSGI triplet is undefined or the return value
+itself is undefined, a C<404 Not Found> response is generated.
+
+The parameters to the coderef are:
+
+=over
+
+=item $env
+
+The PSGI environment hash.
+
+=item $req
+
+The PSGI L<Plack::Request::WithEncoding> instance
+
+=item $company
+
+An authenticated L<LedgerSMB::Company> instance
+
+=item $body
+
+The request body in case the request has media type 'application/json',
+which is cached here to prevent parsing the JSON body more than once.
+
+=item $params
+
+A hash containing the parameters parsed from the request path.
+
+=item @rest
+
+Any other parameters passed to the route entry point are forwarded here.
+
+=back
 
 =head2 openapi_schema \*FH
 
@@ -421,7 +456,7 @@ sub api {
             my $env = shift @args;
             my $params = shift @args;
             my $req = Plack::Request::WithEncoding->new($env);
-            my $has_body = $req->headers->content_length() > 0;
+            my $has_body = ($req->headers->content_length() // 0) > 0;
             my $body = ($req->headers->content_type eq 'application/json') ?
                 json()->decode($req->content) : '';
             # bug: multipart/form-data wants to be validated and
@@ -447,7 +482,16 @@ sub api {
                 return error($req, HTTP_BAD_REQUEST, [], @$errors);
             }
 
-            my $triplet = $code->($env, $body, $params, @args);
+            my $company = LedgerSMB::Company->new(dbh => $env->{'lsmb.app'});
+            my $triplet = $code->($env, $req, $company, $body, $params, @args);
+            if (not defined $triplet
+                or not defined $triplet->[2]) {
+                $triplet = [
+                    HTTP_NOT_FOUND,
+                    [ 'Content-Type' => 'text/plain; charset=UTF-8' ],
+                    [ 'Not found' ] ];
+            }
+
             $has_body = reftype $triplet->[2] ne 'ARRAY'
                 or Plack::Util::content_length($triplet->[2]);
             ($result, $errors, $warnings) =

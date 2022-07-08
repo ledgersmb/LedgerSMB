@@ -3,14 +3,14 @@
 import { defineStore } from "pinia";
 import { configStoreTemplate } from "@/store/configTemplate";
 
-export const useWarehousesStore = defineStore("warehouses", {
+export const useGIFIsStore = defineStore("gifis", {
     ...configStoreTemplate,
     state: () => {
         return {
-            fields: ["id", "description"],
-            id: "id",
+            fields: ["accno", "description"],
+            id: "accno",
             items: [],
-            url: "products/warehouses/"
+            url: "gl/gifi/"
         };
     }
 });

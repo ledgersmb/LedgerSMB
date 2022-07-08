@@ -77,27 +77,6 @@ sub delete_partsgroup {
 
 }
 
-=item PE->delete_pricegroup($myconfig, $form);
-
-Deletes the pricegroup entry identified by $form->{id}.
-
-$myconfig is unused.
-
-=cut
-
-sub delete_pricegroup {
-    my ( $self, $myconfig, $form ) = @_;
-
-    my $dbh = $form->{dbh};
-
-    $query = qq|DELETE FROM pricegroup WHERE id = ?|;
-    $sth   = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-
-}
-
-
 =item PE->partsgroups($myconfig, $form);
 
 Populates the list referred to as $form->{item_list} with hashes containing
@@ -187,72 +166,6 @@ sub get_partsgroup {
 
     # check if it is orphaned
     $query = qq|SELECT count(*) FROM parts WHERE partsgroup_id = ?|;
-    $sth   = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    ( $form->{orphaned} ) = $sth->fetchrow_array;
-    $form->{orphaned} = !$form->{orphaned};
-
-    $sth->finish;
-
-}
-
-=item PE->save_pricegroup($myconfig, $form);
-
-Adds or updates a pricegroup.  If $form->{id} is set, update the pricegroup
-value using $form->{pricegroup}.  If $form->{id} is not set, adds a new
-pricegroup with a pricegroup value of $form->{pricegroup}.
-
-$myconfig is unused.
-
-=cut
-
-sub save_pricegroup {
-    my ( $self, $myconfig, $form ) = @_;
-
-    my $dbh = $form->{dbh};
-
-    if ( $form->{id} ) {
-        $query = qq|
-            UPDATE pricegroup SET
-                   pricegroup = ?
-             WHERE id = | . $dbh->quote( $form->{id} );
-    }
-    else {
-        $query = qq|
-            INSERT INTO pricegroup (pricegroup)
-            VALUES (?)|;
-    }
-    $sth = $dbh->prepare($query);
-    $sth->execute( $form->{pricegroup} ) || $form->dberror($query);
-
-}
-
-=item PE->get_pricegroup($myconfig, $form);
-
-Sets $form->{pricegroup} to the description of the pricegroup identified by
-$form->{id}.  If the pricegroup is not mentioned in partscustomer,
-$form->{orphaned} is set true, otherwise false.
-
-=cut
-
-sub get_pricegroup {
-    my ( $self, $myconfig, $form ) = @_;
-
-    my $dbh = $form->{dbh};
-
-    my $query = qq|SELECT * FROM pricegroup WHERE id = ?|;
-    my $sth   = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    my $ref = $sth->fetchrow_hashref(NAME_lc);
-
-    for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
-
-    $sth->finish;
-
-    # check if it is orphaned
-    $query = "SELECT count(*) FROM partscustomer WHERE pricegroup_id = ?";
     $sth   = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 

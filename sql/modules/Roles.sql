@@ -911,7 +911,7 @@ SELECT lsmb__grant_perms('pricegroup_create', 'entity_credit_account', 'UPDATE')
 
 SELECT lsmb__create_role('pricegroup_edit');
 SELECT lsmb__grant_role('pricegroup_edit', 'contact_read');
-SELECT lsmb__grant_menu('pricegroup_edit', 92, 'allow');
+SELECT lsmb__grant_menu('pricegroup_edit', 83, 'allow');
 SELECT lsmb__grant_perms('pricegroup_edit', 'pricegroup', 'UPDATE');
 SELECT lsmb__grant_perms('pricegroup_edit', 'entity_credit_account', 'UPDATE');
 
@@ -1154,12 +1154,11 @@ SELECT lsmb__grant_perms('audit_trail_maintenance', 'audittrail', 'DELETE');
 
 SELECT lsmb__create_role('gifi_create');
 SELECT lsmb__grant_perms('gifi_create', 'gifi', 'INSERT');
-SELECT lsmb__grant_menu('gifi_create', id, 'allow')
-  FROM unnest(array[139,247]) id;
+SELECT lsmb__grant_menu('gifi_create', 136, 'allow');
 
 SELECT lsmb__create_role('gifi_edit');
 SELECT lsmb__grant_perms('gifi_edit', 'gifi', 'UPDATE');
-SELECT lsmb__grant_menu('gifi_edit', 140, 'allow');
+SELECT lsmb__grant_menu('gifi_edit', 136, 'allow');
 
 SELECT lsmb__create_role('account_all');
 SELECT lsmb__grant_role('account_all', rname)
@@ -1169,13 +1168,13 @@ SELECT lsmb__grant_role('account_all', rname)
 SELECT lsmb__create_role('business_type_create');
 SELECT lsmb__grant_perms('business_type_create', 'business', 'INSERT');
 SELECT lsmb__grant_perms('business_type_create', 'business_id_seq', 'ALL');
-SELECT lsmb__grant_menu('business_type_create', 148, 'allow');
+SELECT lsmb__grant_menu('business_type_create', 147, 'allow');
 
 SELECT lsmb__create_role('business_type_edit');
 SELECT lsmb__grant_perms('business_type_edit', 'business', ptype)
   FROM unnest(array['UPDATE'::text, 'DELETE'::text]) ptype;
 
-SELECT lsmb__grant_menu('business_type_edit', 149, 'allow');
+SELECT lsmb__grant_menu('business_type_edit', 147, 'allow');
 
 SELECT lsmb__create_role('business_type_all');
 SELECT lsmb__grant_role('business_type_all', 'business_type_create');
@@ -1183,13 +1182,12 @@ SELECT lsmb__grant_role('business_type_all', 'business_type_edit');
 
 SELECT lsmb__create_role('sic_create');
 SELECT lsmb__grant_perms('sic_create', 'sic', 'INSERT');
-SELECT lsmb__grant_menu('sic_create', id, 'allow')
-  FROM unnest(array[154,248]) id;
+SELECT lsmb__grant_menu('sic_create', 153, 'allow');
 
 SELECT lsmb__create_role('sic_edit');
 SELECT lsmb__grant_perms('sic_edit', 'sic', ptype)
   FROM unnest(array['UPDATE'::text, 'DELETE']) ptype;
-SELECT lsmb__grant_menu('sic_edit', 155, 'allow');
+SELECT lsmb__grant_menu('sic_edit', 153, 'allow');
 
 SELECT lsmb__create_role('sic_all');
 SELECT lsmb__grant_role('sic_all', 'sic_create');
@@ -1229,11 +1227,11 @@ SELECT lsmb__grant_role('system_admin', rname)
 \echo MANUAL TRANSLATION
 SELECT lsmb__create_role('language_create');
 SELECT lsmb__grant_perms('language_create', 'language', 'INSERT');
-SELECT lsmb__grant_menu('language_create', 151, 'allow');
+SELECT lsmb__grant_menu('language_create', 150, 'allow');
 
 SELECT lsmb__create_role('language_edit');
 SELECT lsmb__grant_perms('language_edit', 'language', 'UPDATE');
-SELECT lsmb__grant_menu('language_edit', 152, 'allow');
+SELECT lsmb__grant_menu('language_edit', 150, 'allow');
 
 SELECT lsmb__create_role('translation_create');
 SELECT lsmb__grant_perms('translation_create', obj, 'ALL')

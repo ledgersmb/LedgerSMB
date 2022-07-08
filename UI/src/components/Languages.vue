@@ -1,23 +1,24 @@
 <script setup>
 
-import { useWarehousesStore } from "@/store/warehouses";
+import { useLanguagesStore } from "@/store/languages";
 import { useI18n } from "vue-i18n";
 import ConfigTable from "./ConfigTable.vue";
 
 const { t } = useI18n();
 const COLUMNS = [
+    { key: "code", type: "text",            head: t("Code") },
     { key: "description", type: "text",     head: t("Description") },
 ];
 
-const warehousesStore = useWarehousesStore();
+const store = useLanguagesStore();
 
 </script>
 
 <template>
     <ConfigTable
         :columns="COLUMNS"
-        :store="warehousesStore"
-        storeId="id"
-        editRole="warehouse_edit"
-        createRole="warehouse_create" />
+        :store="store"
+        storeId="code"
+        editRole="language_edit"
+        createRole="language_create" />
 </template>

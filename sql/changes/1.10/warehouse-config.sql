@@ -2,7 +2,9 @@
 
 update menu_node
    set menu = null,
-       url = 'warehouses'
+       url = 'warehouses',
+       parent = 77,
+       position = 9
  where id = 141; -- Warehouses
 
 update menu_acl

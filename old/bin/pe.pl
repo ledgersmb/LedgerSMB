@@ -48,11 +48,6 @@ sub prepare_partsgroup {
     PE->get_partsgroup(\%$form)
       if $form->{id};
 }
-sub prepare_pricegroup {
-    PE->get_pricegroup( \%myconfig, \%$form )
-      if $form->{id};
-}
-
 
 sub save {
 
@@ -68,11 +63,6 @@ sub save {
         $form->redirect( $locale->text('Group saved!') );
     }
 
-    elsif ( $form->{type} eq 'pricegroup' ) {
-        $form->isblank( "pricegroup", $locale->text('Pricegroup missing!') );
-        PE->save_pricegroup( \%myconfig, \%$form );
-        $form->redirect( $locale->text('Pricegroup saved!') );
-    }
 }
 
 sub delete {
@@ -87,10 +77,6 @@ sub delete {
         if ( $form->{type} eq 'partsgroup' ) {
             PE->delete_partsgroup( \%myconfig, \%$form );
             $form->redirect( $locale->text('Group deleted!') );
-        }
-        elsif ( $form->{type} eq 'pricegroup' ) {
-            PE->delete_pricegroup( \%myconfig, \%$form );
-            $form->redirect( $locale->text('Pricegroup deleted!') );
         }
     }
 
@@ -158,78 +144,6 @@ sub partsgroup_footer {
     $form->hide_form(qw(callback path login sessionid));
 
     if ( $myconfig{acs} !~ /Goods \& Services--Add Group/ ) {
-        print qq|
-<button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="action" value="save">|
-          . $locale->text('Save')
-          . qq|</button>
-|;
-
-        if ( $form->{id} && $form->{orphaned} ) {
-            print qq|
-<button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="action" value="delete">|
-              . $locale->text('Delete')
-              . qq|</button>|;
-        }
-    }
-
-    print qq|
-</form>
-
-</body>
-</html>
-|;
-
-}
-
-sub pricegroup_header {
-
-    $form->{action} =~ s/_.*//;
-    # $locale->text('Add Pricegroup')
-    # $locale->text('Edit Pricegroup')
-    $form->{title} = $locale->maketext(
-        ucfirst $form->{action} . " Pricegroup" );
-
-    $form->{pricegroup} = $form->quote( $form->{pricegroup} );
-
-    $form->header;
-
-    print qq|
-<body class="lsmb">
-
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
-
-<input type=hidden name=id value=$form->{id}>
-<input type=hidden name=type value=$form->{type}>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table width=100%>
-    <tr>
-      <th align=right>| . $locale->text('Pricegroup') . qq|</th>
-
-          <td><input data-dojo-type="dijit/form/TextBox" name=pricegroup size=30 value="$form->{pricegroup}"></td>
-    </tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td colspan=2><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
-
-}
-
-sub pricegroup_footer {
-
-    $form->hide_form(qw(callback path login sessionid));
-
-    if ( $myconfig{acs} !~ /Goods \& Services--Add Pricegroup/ ) {
         print qq|
 <button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="action" value="save">|
           . $locale->text('Save')
@@ -787,7 +701,6 @@ sub continue { &{ $form->{nextsub} } }
 sub add_group      { &add }
 sub add_project    { &add }
 sub add_job        { &add }
-sub add_pricegroup { &add }
 
 sub project_sales_order {
 
