@@ -43,6 +43,10 @@ const toasterMachine = createMachine(
 
 const toastMachine = createMachine(
     {
+        pending: state(
+            transition("dismiss", "removing"),
+            transition("show", "showing")
+        ),
         showing: state(
             transition("dismiss", "removing"),
             transition("dismiss-immediate", "removing"),
