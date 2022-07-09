@@ -34,7 +34,7 @@ find . -name '*.pl' -o -name '*.pm' | \
 
 find UI/ templates/ t/data/ \
      -name '*.html' -o -name '*.tex' -o -name '*.csv' | \
-   grep -v 'UI/\(js\|pod\)' | sort | \
+   grep -v 'UI/\(js\|pod\)/' | sort | \
    utils/devel/extract-template-translations >> locale/LedgerSMB.pot
 
 utils/devel/extract-sql < sql/Pg-database.sql >> locale/LedgerSMB.pot
