@@ -1,5 +1,6 @@
 /** @format */
 
+/* eslint-disable-next-line import/no-unresolved */
 import { createRouter, createWebHashHistory } from "vue-router";
 
 import Home from "./components/Home";
