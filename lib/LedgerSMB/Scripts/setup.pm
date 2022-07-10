@@ -454,10 +454,11 @@ sub run_backup {
     if ($request->{backup_type} eq 'email') {
 
         my $mail = LedgerSMB::Mailer->new(
-            from     => LedgerSMB::Sysconfig::backup_email_from(),
-            to       => $request->{email},
-            subject  => 'Email of Backup',
-            message  => 'The Backup is Attached',
+            transport => $request->{_wire}->get( 'mail' )->{transport},
+            from      => LedgerSMB::Sysconfig::backup_email_from(),
+            to        => $request->{email},
+            subject   => 'Email of Backup',
+            message   => 'The Backup is Attached',
         );
         $mail->attach(
             mimetype => $mimetype,

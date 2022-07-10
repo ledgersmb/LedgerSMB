@@ -47,12 +47,9 @@ use warnings;
 use strict;
 use Carp;
 
-use Authen::SASL;
 use Digest::MD5 qw(md5_hex);
 use Email::Sender::Simple;
 use Email::Stuffer;
-use LedgerSMB::Mailer::TransportSMTP;
-use LedgerSMB::Sysconfig;
 
 our $VERSION = '0.14';
 
@@ -68,7 +65,9 @@ sub new {
     my $self = {};
     bless $self, $type;
 
-    $self->prepare_message(@_) if @_;
+    my %args = @_;
+    $self->{_transport} = delete $args{transport};
+    $self->prepare_message(%args) if %args;
 
     return $self;
 }
@@ -197,57 +196,8 @@ sub send {
     $self->{_message}->header( 'X-Mailer' => "LedgerSMB::Mailer $VERSION" );
     local $@ = undef;
     eval {
-        my @transport;
-        if (LedgerSMB::Sysconfig::smtphost()) {
-            my @options;
-
-            push @options,
-                host => LedgerSMB::Sysconfig::smtphost();
-
-            if (LedgerSMB::Sysconfig::smtpport()) {
-                push @options,
-                    port => LedgerSMB::Sysconfig::smtpport();
-            }
-
-            if (LedgerSMB::Sysconfig::smtpuser()) {
-                my $auth = Authen::SASL->new(
-                    mechanism => LedgerSMB::Sysconfig::smtpauthmech(),
-                    callback => {
-                        user => LedgerSMB::Sysconfig::smtpuser(),
-                        pass => LedgerSMB::Sysconfig::smtppass(),
-                    });
-                push @options,
-                    # the SMTP transport checks that 'sasl_password' be
-                    # defined; however, its implementation (Net::SMTP) allows
-                    # the 'sasl_username' to be an Authen::SASL instance which
-                    # means the password is already embedded in sasl_username.
-                    sasl_username => $auth,
-                    sasl_password => '';
-            }
-
-            if (LedgerSMB::Sysconfig::smtptimeout()) {
-                push @options, timeout => LedgerSMB::Sysconfig::smtptimeout();
-            }
-
-            my $tls = LedgerSMB::Sysconfig::smtptls();
-            if ($tls and $tls ne 'no') {
-                if ($tls eq 'yes') {
-                    push @options, ssl => 'starttls';
-                }
-                elsif ($tls eq 'tls') {
-                    push @options, ssl => 'ssl';
-                }
-            }
-
-            if (LedgerSMB::Sysconfig::smtpsender_hostname()) {
-                push @options,
-                    helo => LedgerSMB::Sysconfig::smtpsender_hostname();
-            }
-
-            @transport = (
-                transport => LedgerSMB::Mailer::TransportSMTP->new(@options),
-            );
-        }
+        my @transport =
+            $self->{_transport} ? ( transport => $self->{_transport} ) : ();
 
         # On failure, send() throws an exception
         if ($self->{bcc}) {

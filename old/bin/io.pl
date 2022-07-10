@@ -1436,6 +1436,7 @@ sub print_form {
         my $body = $template->{output};
         utf8::encode($body) if utf8::is_utf8($body);  ## no critic
         my $email_data = {
+            _transport    => $form->{_wire}->get( 'mail' )->{transport},
             immediateSend => $form->{immediate},
             expansions    => \%expansions,
             body          => $form->{message},

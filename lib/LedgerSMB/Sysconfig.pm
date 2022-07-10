@@ -18,6 +18,7 @@ This module doesn't specify any methods.
 use strict;
 use warnings;
 
+use Authen::SASL;
 use Config;
 use Config::IniFiles;
 use English;
@@ -274,61 +275,6 @@ def 'proxy_ip',
 
 ### SECTION  ---   mail
 
-def 'sendmail',
-    section => 'mail',
-    default => '/usr/sbin/sendmail -t',
-    doc => q{The sendmail command used for sending e-mail. Applies only when smtphost is not defined.};
-
-def 'smtphost',
-    section => 'mail',
-    default => undef,
-    doc => 'Connect to this SMTP host to send e-mails. If defined, used instead of sendmail.';
-
-def 'smtpport',
-    section => 'mail',
-    default => 25,
-    doc => 'Connect to the smtp host using this port.';
-
-def 'smtpsender_hostname',
-    section => 'mail',
-    default => undef,
-    doc => 'Sets the host name used to identify the host when connecting to the mail server (smtphost).';
-
-def 'smtptimeout',
-    section => 'mail',
-    default => 60,
-    doc => 'Timeout in seconds for smtp connections.';
-
-def 'smtpuser',
-    section => 'mail',
-    default => undef,
-    doc => 'Optional username used when connecting to smtp server.';
-
-def 'smtppass',
-    section => 'mail',
-    default => undef,
-    doc => 'Optional password used when connecting to smtp server.';
-
-def 'smtpauthmech',
-    section => 'mail',
-    default => 'PLAIN',
-    doc => 'SASL mechanism to use for authentication
-
-Note that the default (PLAIN) sends unencrypted passwords. Instead, use
-of more secure mechanisms such as DIGEST-MD5, SRP or PASSDSS is highly
-    recommended if the server supports it.';
-
-def 'smtptls',
-    section => 'mail',
-    default => 'no',
-    doc => q{Whether or not to use TLS to encrypt the connection for mail
-submission; default (no) doesn't use TLS, 'yes' indicates STARTTLS, usually
-used with a regular (25) or submission (587) port. 'tls' indicates "raw"
-TLS, most often used with dedicated port 465.
-
-When using PLAIN or LOGIN authentication, be sure to change this setting to
-prevent publicly visible transmission of credentials.};
-
 def 'backup_email_from',
     section => 'mail',
     default => undef,
@@ -504,7 +450,7 @@ sub ini2wire {
         printers => $wire->create_service(
             printers => (
                 class => 'LedgerSMB::Printers',
-                args => {
+                args  => {
                     printers => {
                         map { $_ => $cfg->val( printers => $_ ) }
                         $cfg->Parameters( 'printers' )
@@ -513,6 +459,75 @@ sub ini2wire {
                 }
             ))
         );
+
+    my $value;
+    if (my $value = $cfg->val( 'mail', 'smtphost' )) {
+        my @options;
+
+        push @options, host => $value;
+
+        if ($value = $cfg->val( 'mail', 'smtpport' )) {
+            push @options, port => $value;
+        }
+
+        if ($value = $cfg->val( 'mail', 'smtpuser' )) {
+            my $auth = Authen::SASL->new(
+                mechanism => $cfg->val( 'mail', 'smtpauthmech' ),
+                callback => {
+                    user => $value,
+                    pass => $cfg->val( 'mail', 'smtppass' ),
+                });
+            push @options,
+                # the SMTP transport checks that 'sasl_password' be
+                # defined; however, its implementation (Net::SMTP) allows
+                # the 'sasl_username' to be an Authen::SASL instance which
+                # means the password is already embedded in sasl_username.
+                sasl_username => $auth,
+                sasl_password => '';
+        }
+
+        if ($value = $cfg->val( 'mail', 'smtptimeout')) {
+            push @options, timeout => $value;
+        }
+
+        my $tls = $cfg->val( 'mail', 'smtptls' );
+        if ($tls and $tls ne 'no') {
+            if ($tls eq 'yes') {
+                push @options, ssl => 'starttls';
+            }
+            elsif ($tls eq 'tls') {
+                push @options, ssl => 'ssl';
+            }
+        }
+
+        if ($value = $cfg->val( 'mail', 'smtpsender_hostname' )) {
+            push @options, helo => $value;
+        }
+        $wire->set(
+            'mail' => {
+                transport =>
+                    $wire->create_service(
+                        transport => (
+                            class => 'LedgerSMB::Mailer::TransportSMTP',
+                            args  => \@options,
+                        ))
+            });
+    }
+    else {
+        my @options;
+        if ($value = $cfg->val( 'mail', 'sendmail' )) {
+            @options = ( path => $value );
+        }
+        $wire->set(
+            'mail' => {
+                transport =>
+                    $wire->create_service(
+                        transport => (
+                            class => 'Email::Sender::Transport::Sendmail',
+                            args  => \@options,
+                        ))
+            });
+    }
 }
 
 =head1 LICENSE AND COPYRIGHT

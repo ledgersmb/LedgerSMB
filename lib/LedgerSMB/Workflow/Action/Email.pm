@@ -54,17 +54,12 @@ use strict;
 use warnings;
 use parent qw( LedgerSMB::Workflow::Action );
 
-use Authen::SASL;
-
 use Email::MessageID;
 use Email::Sender::Simple;
 use Email::Stuffer;
 
 use Log::Any qw($log);
 use Workflow::Factory qw(FACTORY);
-
-use LedgerSMB::Mailer::TransportSMTP;
-use LedgerSMB::Sysconfig;
 
 
 my @PROPS = qw( action );
@@ -183,7 +178,7 @@ from the database.
 
 This step requires valid content for at least C<from>, C<to>, C<subject>.
 
-Uses global e-mail transfer configuration from L<LedgerSMB::Sysconfig>.
+Uses e-mail transfer configuration from the context.
 
 =cut
 
@@ -230,13 +225,13 @@ sub send {
                 $mail->email,
                 {
                     to => [ keys %bcc ],
-                    _configure_smtp(),
+                    transport => $ctx->param( '_transport' ),
                 });
         }
         Email::Sender::Simple->send(
             $mail->email,
             {
-                _configure_smtp(),
+                transport => $ctx->param( '_transport' ),
             });
     };
     die "Could not send email: $@.  Please check your configuration." if $@;
@@ -259,54 +254,6 @@ sub save {
     # after each successful action; no additional code required
 }
 
-
-sub _configure_smtp {
-
-    return unless LedgerSMB::Sysconfig::smtphost();
-
-    my @options = (host => LedgerSMB::Sysconfig::smtphost() );
-
-    if (LedgerSMB::Sysconfig::smtpport()) {
-        push @options,
-            port => LedgerSMB::Sysconfig::smtpport();
-    }
-
-    if (LedgerSMB::Sysconfig::smtpuser()) {
-        push @options,
-            # the SMTP transport checks that 'sasl_password' be
-            # defined; however, its implementation (Net::SMTP) allows
-            # the 'sasl_username' to be an Authen::SASL instance which
-            # means the password is already embedded in sasl_username.
-            sasl_username => Authen::SASL->new(
-                mechanism => LedgerSMB::Sysconfig::smtpauthmech(),
-                callback => {
-                    user => LedgerSMB::Sysconfig::smtpuser(),
-                    pass => LedgerSMB::Sysconfig::smtppass(),
-                }),
-            sasl_password => '';
-    }
-
-    if (LedgerSMB::Sysconfig::smtptimeout()) {
-        push @options, timeout => LedgerSMB::Sysconfig::smtptimeout();
-    }
-
-    my $tls = LedgerSMB::Sysconfig::smtptls();
-    if ($tls and $tls ne 'no') {
-        if ($tls eq 'yes') {
-            push @options, ssl => 'starttls';
-        }
-        elsif ($tls eq 'tls') {
-            push @options, ssl => 'ssl';
-        }
-    }
-
-    if (LedgerSMB::Sysconfig::smtpsender_hostname()) {
-        push @options,
-            helo => LedgerSMB::Sysconfig::smtpsender_hostname();
-    }
-
-    return ( transport => LedgerSMB::Mailer::TransportSMTP->new(@options) );
-}
 
 1;
 

@@ -87,17 +87,6 @@ localepath = locale/po
 [programs]
 
 [mail]
-# The sendmail command is used to send mail unless smtphost is set.
-# sendmail   = /usr/bin/sendmail
-
-# If smtp host is defined, messages will be sent via this smtp server,
-# instead of the default sendmail method.
-# smtphost = localhost
-# smtpport = 25
-# smtpuser = username
-# smtppass = password
-# smtptimeout = 60
-
 # This must be set to enable e-mail delivery of backups
 # backup_email_from = backups@lsmb_hosting.com
 

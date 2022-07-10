@@ -45,6 +45,8 @@ sub render {
     my $wf = FACTORY()->fetch_workflow('Email', $request->{id});
 
     if ($request->{wf_action}) {
+        $wf->context->param(
+            _transport => $request->{_wire}->get( 'mail' )->{transport} );
         for my $field (qw( from to cc bcc subject body )) {
             if (defined $request->{$field}) {
                 $wf->context->param( $field => $request->{$field} );
