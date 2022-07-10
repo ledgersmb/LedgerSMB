@@ -86,6 +86,7 @@ Returns a 'PSGI app' which handles requests for the 'old-code' scripts in old/bi
 
 sub old_app {
     my $script = shift;
+    my $wire = shift;
 
     # marshall the psgi environment into the cgi environment
     # so we can re-use state from the various middlewares
@@ -108,7 +109,7 @@ sub old_app {
                             local ($!, $@) = (undef, undef);
                             # the lsmb_legacy package is created by the
                             # oldHandler use statement
-                            unless ( lsmb_legacy->handle($script, $env) ) { ## no critic (RequireExplicitInclusion)
+                            unless ( lsmb_legacy->handle($script, $env, $wire) ) { ## no critic (RequireExplicitInclusion)
                                 if ($! or $@) {
                                     print "Status: 500 Internal server error (PSGI.pm)\n\n";
                                     warn "Failed to execute old request ($!): $@\n";
@@ -145,50 +146,54 @@ in LedgerSMB::Scripts::*.
 
 
 sub psgi_app {
-    my $env = shift;
-    my $psgi_req = Plack::Request::WithEncoding->new($env);
-    my $request = LedgerSMB->new($psgi_req);
+    my $wire = shift;
 
-    $request->{action} = $env->{'lsmb.action_name'};
-    my $res;
-    try {
-        LedgerSMB::App_State::run_with_state sub {
+    return sub {
+        my $env = shift;
+        my $psgi_req = Plack::Request::WithEncoding->new($env);
+        my $request = LedgerSMB->new($psgi_req, $wire);
 
-            $request->initialize_with_db if $request->{dbh};
-            $res = $env->{'lsmb.action'}->($request);
-        }, DBH     => $env->{'lsmb.db'};
+        $request->{action} = $env->{'lsmb.action_name'};
+        my $res;
+        try {
+            LedgerSMB::App_State::run_with_state sub {
 
-        $request->{dbh}->commit if defined $request->{dbh};
-    }
-    catch ($error) {
-        # Explicitly roll back, because middleware may require the
-        # database connection to be in a working state (e.g. DisableBackbutton)
-        $request->{dbh}->rollback
-            if $request->{dbh};
-        if ($error !~ /^Died at/) {
-            $env->{'psgix.logger'}->({
-                level => 'error',
-                message => $error });
-            $res = LedgerSMB::PSGI::Util::internal_server_error(
-                $error,
-                'Error!',
-                $request->{company},
-                $request->{dbversion},
-            );
+                $request->initialize_with_db if $request->{dbh};
+                $res = $env->{'lsmb.action'}->($request);
+            }, DBH     => $env->{'lsmb.db'};
+
+            $request->{dbh}->commit if defined $request->{dbh};
         }
-        else {
-            $res = [ '500', [ 'Content-Type' => 'text/plain' ], [ $error ]];
+        catch ($error) {
+            # Explicitly roll back, because middleware may require the
+            # database connection to be in a working state (e.g. DisableBackbutton)
+            $request->{dbh}->rollback
+                if $request->{dbh};
+            if ($error !~ /^Died at/) {
+                $env->{'psgix.logger'}->({
+                    level => 'error',
+                    message => $error });
+                $res = LedgerSMB::PSGI::Util::internal_server_error(
+                    $error,
+                    'Error!',
+                    $request->{company},
+                    $request->{dbversion},
+                    );
+            }
+            else {
+                $res = [ '500', [ 'Content-Type' => 'text/plain' ], [ $error ]];
+            }
         }
-    }
 
-    return Plack::Util::response_cb(
-        $res,
-        sub {
-            my $res = shift;
-            Plack::Util::header_set($res->[1],
-                                    'Content-Security-Policy',
-                                    q{frame-ancestors 'self'});
-        });
+        return Plack::Util::response_cb(
+            $res,
+            sub {
+                my $res = shift;
+                Plack::Util::header_set($res->[1],
+                                        'Content-Security-Policy',
+                                        q{frame-ancestors 'self'});
+            });
+    };
 }
 
 =item setup_url_space(development => $boolean, coverage => $boolean)
@@ -217,9 +222,10 @@ sub _hook_psgi_logger {
 }
 
 sub setup_url_space {
-    my %args = @_;
+    my %args        = @_;
+    my $wire        = $args{wire};
+    my $psgi_app    = psgi_app($wire);
     my $development = $args{development};
-    my $psgi_app = \&psgi_app;
 
     return builder {
         if (LedgerSMB::Sysconfig::proxy_ip()) {
@@ -258,7 +264,7 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::MainAppConnect',
                 provide_connection => 'closed',
                 require_version    => $LedgerSMB::VERSION;
-            old_app($script)
+            old_app($script, $wire)
         }
         for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
 

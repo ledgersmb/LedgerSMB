@@ -74,7 +74,7 @@ sub handle {
     #
     # Note that this function can receive a PSGI environment, but
     # modifications aren't marshalled back to the fork()ing process!
-    my ($class, $script_module, $psgi_env) = @_;
+    my ($class, $script_module, $psgi_env, $wire) = @_;
     my $script = $script_module . '.pl';
 
 
@@ -93,6 +93,7 @@ sub handle {
     $form = Form->new($params);
     my $session = $psgi_env->{'lsmb.session'};
     $form->{_session} = $session;
+    $form->{_wire} = $wire;
     @{$form}{qw/ session_id company /} =
         @{$session}{qw/ session_id company /};
 

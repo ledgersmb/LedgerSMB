@@ -214,7 +214,7 @@ my $logger = Log::Any->get_logger(category => 'LedgerSMB');
 my $expiration_parser = DateTime::Format::Duration::ISO8601->new;
 
 sub new {
-    my ($class, $request) = @_;
+    my ($class, $request, $wire) = @_;
     my $self = {};
     bless $self, $class;
 
@@ -237,6 +237,7 @@ sub new {
     $self->{_logout} = $request->env->{'lsmb.invalidate_session_cb'};
     $self->{_setting} = $request->env->{'lsmb.setting'};
     $self->{_req} = $request;
+    $self->{_wire} = $wire;
 
     # Initialize ourselves from parameters in $self->{_req}
     $self->_process_args;
