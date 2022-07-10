@@ -340,8 +340,12 @@ sub generate_statement {
             );
     }
     else {
+        my $cmd = $request->{_wire}->get( 'printers' )->get( $request->{media} );
+        unless ($cmd) {
+            die "No printer configured for '$request->{media}'";
+        }
         $sink = LedgerSMB::Template::Sink::Printer->new(
-            printer => $request->{media},
+            command => $cmd,
             );
     }
 

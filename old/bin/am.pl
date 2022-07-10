@@ -518,14 +518,7 @@ sub process_transactions {
     my $pt = Form->new;
     for ( keys %$form ) { $pt->{$_} = $form->{$_} }
 
-    my $defaultprinter;
-    while ( my ( $key, $value ) = each LedgerSMB::Sysconfig::printer()->%* ) {
-        if ( $value =~ /lpr/ ) {
-            $defaultprinter = $key;
-            last;
-        }
-    }
-
+    my $defaultprinter = $form->{_wire}->get( 'printers' )->fallback;
     $myconfig{vclimit} = 0;
     %f = &formnames;
 
@@ -547,7 +540,7 @@ sub process_transactions {
             # forward to removing this code. --CT
             for ( keys %$form ) { delete $form->{$_}; }
             for (qw(header dbversion company dbh login path sessionid _auth
-                    stylesheet timeout id _locale)
+                    stylesheet timeout id _locale _wire)
             ) {
                 $form->{$_} = $pt->{$_};
             }
@@ -878,8 +871,7 @@ sub print_recurring {
         @f = split /:/, $pt->{recurringprint};
         for ( $j = 0 ; $j <= $#f ; $j += 3 ) {
             $media = $f[ $j + 2 ];
-            $media ||= $myconfig->{printer}
-              if ${LedgerSMB::Sysconfig::printer}{ $myconfig->{printer} };
+            $media ||= $myconfig->{printer};
             $media ||= $defaultprinter;
 
 

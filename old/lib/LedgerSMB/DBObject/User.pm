@@ -133,14 +133,6 @@ sub get_option_data {
     }
     closedir CSS;
 
-    $self->{printers} = [];
-
-    if ( LedgerSMB::Sysconfig::printer()->%*
-         && LedgerSMB::Sysconfig::latex() ) {
-        foreach my $item ( sort keys LedgerSMB::Sysconfig::printer()->%* ) {
-            push @{$self->{printers}}, {printer => $item};
-        }
-    }
     my ($pw_expiration) = $self->call_dbmethod(
             funcname => 'user__check_my_expiration');
     return $self->{password_expires} = $pw_expiration->{user__check_my_expiration};

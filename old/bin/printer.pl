@@ -1,4 +1,4 @@
-=head1 NAME 
+=head1 NAME
 
 printer.pl - centralized printing logic used for printing in legacy sl code
 
@@ -125,18 +125,13 @@ sub print_options {
         $options{media} = {
             name => 'media',
             default_values => $form->{media},
-            options => [{
-                text => $locale->text('Screen'),
-                value => 'screen'}
-                ]};
-
-        if (   LedgerSMB::Sysconfig::printer()->%*
-            && LedgerSMB::Sysconfig::latex() )
-        {
-            for ( sort keys LedgerSMB::Sysconfig::printer()->%* ) {
-                push @{$options{media}{options}}, {text => $_, value => $_};
-            }
-        }
+            options => [
+                {
+                    text => $locale->text('Screen'),
+                    value => 'screen'
+                },
+                $form->{_wire}->get( 'printers' )->as_options ]
+        };
     }
 
     $options{format} = {
@@ -162,12 +157,7 @@ sub print_options {
             };
     }
 
-    if (   LedgerSMB::Sysconfig::printer()->%*
-        && LedgerSMB::Sysconfig::latex()
-        && ($form->{media}//'') ne 'email' )
-    {
-        $options{copies} = 1;
-    }
+    $options{copies} = $form->{copies};
 
     # $locale->text('Printed')
     # $locale->text('E-mailed')

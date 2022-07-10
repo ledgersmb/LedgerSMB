@@ -686,10 +686,7 @@ sub form_header {
         );
 
         %a = ();
-        for ( "update", "ship_to", "save" ) { $a{$_} = 1 }
-        $a{'print_and_save'} =
-            LedgerSMB::Sysconfig::latex()
-            and LedgerSMB::Sysconfig::printer->%*;
+        for ( "update", "ship_to", "save", "print_and_save" ) { $a{$_} = 1 }
 
         if ( $form->{id} ) {
 
@@ -697,9 +694,7 @@ sub form_header {
             $a{'delete'}                = 1;
             $a{'print'}                 = 1;
             $a{'save_as_new'}           = 1;
-            $a{'print_and_save_as_new'} =
-                LedgerSMB::Sysconfig::latex()
-                and LedgerSMB::Sysconfig::printer->%*;
+            $a{'print_and_save_as_new'} = 1;
 
             if ( $form->{type} =~ /sales_/ ) {
                 if ( $myconfig{acs} !~ /AR--Sales Invoice/ ) {

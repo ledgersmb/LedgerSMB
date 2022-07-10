@@ -388,24 +388,6 @@ def 'zip',
     doc => '';
 
 
-
-# available printers
-my $printer;
-sub printer {
-    $printer = { @_ } if @_;
-    return $printer if $printer;
-
-    my %printer;
-    for ($cfg->Parameters('printers')){
-        $printer{$_} = $cfg->val('printers', $_);
-    }
-
-    $printer = \%printer;
-    return $printer;
-}
-
-
-
 # if you have latex installed set to 1
 my $latex = 0;
 sub latex {
@@ -506,6 +488,31 @@ sub initialize {
             FACTORY()->add_config_from_file(%wf_config);
         }
     }
+
+    return $cfg;
+}
+
+
+sub ini2wire {
+    my ($wire, $cfg) = @_;
+
+    my @printer_names = $cfg->Parameters( 'printers' );
+    my $fallback_printer =
+        $cfg->val( 'main', 'fallback_printer', $printer_names[0] );
+
+    $wire->set(
+        printers => $wire->create_service(
+            printers => (
+                class => 'LedgerSMB::Printers',
+                args => {
+                    printers => {
+                        map { $_ => $cfg->val( printers => $_ ) }
+                        $cfg->Parameters( 'printers' )
+                    },
+                    fallback => $fallback_printer
+                }
+            ))
+        );
 }
 
 =head1 LICENSE AND COPYRIGHT

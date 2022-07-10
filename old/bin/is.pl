@@ -643,26 +643,14 @@ sub form_header {
                delete $button{$_}
                  for qw(post_as_new post e_mail sales_order void print on_hold);
            }
-
-            unless (LedgerSMB::Sysconfig::latex()
-                    and LedgerSMB::Sysconfig::printer->%* ) {
-                for ( "print_and_post", "print_and_post_as_new" ) {
-                    delete $button{$_};
-                }
-            }
-
         }
         else {
             if ( ! $form->is_closed( $transdate ) ) {
                 # Added on_hold, by Aurynn.
-                for ( "update", "ship_to", "post", "schedule")
+                for ( "update", "ship_to", "post", "schedule", "print_and_post" )
                 {
                     $allowed{$_} = 1;
                 }
-                $a{'print_and_post'} =
-                    (LedgerSMB::Sysconfig::latex()
-                     and LedgerSMB::Sysconfig::printer->%*);
-
 
                 for ( keys %button ) { delete $button{$_} if !$allowed{$_} }
             }

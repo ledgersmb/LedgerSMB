@@ -5,7 +5,9 @@ use warnings;
 
 use Test2::V0;
 
+use Beam::Wire;
 use File::Temp;
+
 use LedgerSMB;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Locale;
@@ -311,8 +313,18 @@ SKIP: {
     eval {require Template::Latex} ||
         skip 'Template::Latex not installed', 2;
 
+    my $wire = Beam::Wire->new(
+        config => {
+            printers => {
+                class => 'LedgerSMB::Printers',
+                args => {
+                    printers => {
+                        test => "cat > $temp"
+                    }
+                },
+            }
+        } );
     my $temp = File::Temp->new();
-    LedgerSMB::Sysconfig::printer('test' => "cat > $temp");
     $template = LedgerSMB::Template->new(
         'format'   => 'PDF',
         'template' => '04-template',
@@ -322,7 +334,7 @@ SKIP: {
     $template->render({});
     LedgerSMB::Legacy_Util::output_template(
         $template,
-        {}, # $form
+        { _wire => $wire }, # $form
         method => 'test',
     );
 

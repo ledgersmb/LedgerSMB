@@ -446,13 +446,13 @@ sub schedule {
 
     }
 
-    if (   LedgerSMB::Sysconfig::printer()->%*
-        && LedgerSMB::Sysconfig::latex()
+    if ( $form->{_wire}->get( 'printers' )->names # any printers ?
         && %formname )
     {
-        $selectprinter = qq|<option>\n|;
-        for ( sort keys LedgerSMB::Sysconfig::printer()->%* ) {
-            $selectprinter .= qq|<option value="$_">$_\n|;
+        $selectprinter = qq|<option></option>\n|;
+        for ( sort $form->{_wire}->get( 'printers' )->names ) {
+            my $prn = $form->escape($_);
+            $selectprinter .= qq|<option value="$prn">$prn</option>\n|;
         }
 
         # formname:format:printer

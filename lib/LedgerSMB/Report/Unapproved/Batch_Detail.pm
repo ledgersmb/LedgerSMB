@@ -33,7 +33,6 @@ LedgerSMB::Report::Unapproved::Batch_Overview instead.
 
 use LedgerSMB::I18N;
 use LedgerSMB::Setting;
-use LedgerSMB::Sysconfig;
 
 use Moose;
 use namespace::autoclean;
@@ -237,22 +236,17 @@ Runs the report, and assigns rows to $self->rows.
 =cut
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self, $request) = @_;
     my @languages =
         LedgerSMB::I18N::get_language_list($self,$request->{_user}->{language});
-    my $printer = [ {text => 'Screen', value => 'screen'},
-                    map { {
-                        text  => $_,
-                        value => LedgerSMB::Sysconfig::printer()->{$_}
-                          } }
-                  keys LedgerSMB::Sysconfig::printer()->%*];
+
     $self->options([{
        name => 'language',
        options => \@languages,
        default_value => [$self->default_language],
     }, {
        name => 'media',
-       options => $printer,
+       options => scalar $request->{_wire}->get( 'printers' )->as_options,
     },
     ]);
 

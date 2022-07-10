@@ -28,7 +28,6 @@ use Log::Log4perl qw(:easy);
 use Log::Log4perl::Layout::PatternLayout;
 use LedgerSMB::Middleware::RequestID;
 
-LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
 my $wire;
 if (-f 'ledgersmb.yaml') {
     $wire = Beam::Wire->new( file => 'ledgersmb.yaml');
@@ -40,6 +39,10 @@ else {
         } );
 }
 
+my $cfg = LedgerSMB::Sysconfig->initialize(
+    $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf'
+    );
+LedgerSMB::Sysconfig::ini2wire( $wire, $cfg );
 LedgerSMB::Locale->initialize;
 
 require Plack::Middleware::Pod

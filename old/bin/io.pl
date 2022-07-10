@@ -45,7 +45,6 @@ use LedgerSMB::OE;
 use LedgerSMB::Tax;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::DBObject::Draft;
@@ -1380,13 +1379,13 @@ sub print_form {
 
     my %output_options;
     if ($form->{media} eq 'zip'){
-        $form->{OUT}       = $form->{zipdir};
+        $form->{OUT} = $form->{zipdir};
         $form->{printmode} = '>';
     } elsif ( $form->{media} !~ /(screen|zip|email)/ ) { # printing
-        $form->{OUT}       = LedgerSMB::Sysconfig::printer()->{ $form->{media} };
-        $form->{printmode} = '|-';
+        $form->{OUT} = $form->{_wire}->get( 'printers' )->get( $form->{media} );
         $form->{OUT} =~ s/<%(fax)%>/<%$form->{vc}$1%>/;
         $form->{OUT} =~ s/<%(.*?)%>/$form->{$1}/g;
+        $form->{printmode} = '|-';
 
         if ( $form->{printed} !~ /$form->{formname}/ ) {
 

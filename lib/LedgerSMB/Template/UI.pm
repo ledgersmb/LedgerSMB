@@ -151,8 +151,7 @@ sub render_string {
               $request->{_company_config}->{dojo_theme}
               || LedgerSMB::Sysconfig::dojo_theme()),
           PRINTERS => [
-              ( ( map { { text => $_, value => $_ } }
-                  keys LedgerSMB::Sysconfig::printer()->%* ),
+              ( $request->{_wire}->get( 'printers' )->as_options,
                 {
                     text  => $request->{_locale}->text('Screen'),
                     value => 'screen'

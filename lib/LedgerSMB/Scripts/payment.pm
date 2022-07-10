@@ -688,13 +688,10 @@ sub display_payments {
     }
     $payment->{grand_total} = $payment->{grand_total}->to_output(money  => 1);
     @{$payment->{media_options}} = (
-            {text  => $request->{_locale}->text('Screen'),
-             value => 'screen'});
-    for (keys LedgerSMB::Sysconfig::printer()->%* ){
-         push @{$payment->{media_options}},
-              {text  => $_,
-               value => $_};
-    }
+        { text  => $request->{_locale}->text('Screen'),
+          value => 'screen' },
+        $request->{_wire}->get( 'printers' )->as_options );
+
     if ( LedgerSMB::Sysconfig::latex() ){
         @{$payment->{format_options}} = (
               {text => 'PDF',        value => 'PDF'},
@@ -1149,14 +1146,10 @@ sub payment2 {
         }
     }
     # We need to set the available media and format from printing
-    my @media_options;
-    push  @media_options, {value => 1, text => 'Screen'};
-    if (LedgerSMB::Sysconfig::printer()->%*) {
-        for (keys LedgerSMB::Sysconfig::printer()->%*) {
-            push  @media_options, {value => 1, text => $_};
-        }
-    }
-    push  @media_options, {value => 1, text => 'e-mail'};
+    my @media_options =
+        ( {value => 1, text => 'Screen'},
+          $request->{_wire}->get( 'printers' )->as_options,
+          {value => 1, text => 'e-mail'});
 
     #$request->error("@media_options");
     my @format_options;

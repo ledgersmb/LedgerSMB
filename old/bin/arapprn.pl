@@ -228,10 +228,10 @@ sub print_transaction {
     }
 
     if ( lc($form->{media}) eq 'zip'){
-        $form->{OUT}       = $form->{zipdir};
+        $form->{OUT} = $form->{zipdir};
         $form->{printmode} = '>';
     } elsif ( $form->{media} !~ /(zip|screen)/ ) {
-        $form->{OUT}       = LedgerSMB::Sysconfig::printer()->{ $form->{media} };
+        $form->{OUT} = $form->{_wire}->get( 'printers' )->get( $form->{media} );
         $form->{printmode} = '|-';
 
         if ( $form->{printed} !~ /$form->{formname}/ ) {
