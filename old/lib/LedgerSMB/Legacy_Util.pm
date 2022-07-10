@@ -145,7 +145,7 @@ sub _output_template_http {
 }
 
 sub _output_template_lpr {
-    my ($template, $wire) = shift;
+    my ($wire, $template) = @_;
     my $args = $template->{output_options};
     if ($template->{format} ne 'LaTeX') {
         die 'Invalid Format';

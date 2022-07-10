@@ -313,6 +313,7 @@ SKIP: {
     eval {require Template::Latex} ||
         skip 'Template::Latex not installed', 2;
 
+    my $temp = File::Temp->new();
     my $wire = Beam::Wire->new(
         config => {
             printers => {
@@ -324,7 +325,6 @@ SKIP: {
                 },
             }
         } );
-    my $temp = File::Temp->new();
     $template = LedgerSMB::Template->new(
         'format'   => 'PDF',
         'template' => '04-template',

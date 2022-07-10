@@ -18,6 +18,14 @@ use Moo;
 
 our $VERSION = '0.0.1';
 
+=head1 ATTRIBUTES
+
+=head2 fallback
+
+=head2 printers
+
+=cut
+
 has fallback => (is => 'ro');
 
 has printers => (is => 'ro', default => sub { {} });
