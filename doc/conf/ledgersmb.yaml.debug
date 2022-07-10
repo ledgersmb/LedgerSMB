@@ -1,0 +1,49 @@
+
+extra_middleware:
+  - name: InteractiveDebugger
+    args: []
+  - name: Debug
+    args:
+      panels:
+        - Parameters
+        - Environment
+        - Response
+        - Session
+        - Timer
+        - Memory
+        - ModuleVersions
+        - PerlConfig
+        - LazyLoadModules
+        - Log4perl
+        - RefCounts
+  - name: Debug::W3CValidate
+    args:
+      validator_uri: https://validator.w3.org/check
+  - name: Debug::DBIProfile
+    args:
+      profile: 2
+  - name: Debug::DBITrace
+    args:
+      level: 1
+  - name: Debug::TraceENV
+    args:
+      method:
+        - "fetch"
+        - "store"
+        - "exists"
+        - "delete"
+        - "clear"
+        - "scalar"
+        - "firstkey"
+        - "nextkey"
+  - name: Debug::Profiler::NYTProf
+    args:
+      exclude:
+        - ".*\.css"
+        - ".*\.png"
+        - ".*\.ico"
+        - ".*\.js"
+        - ".*\.gif"
+        - ".*\.html"
+      minimal: yes
+      root: logs/NYTProf

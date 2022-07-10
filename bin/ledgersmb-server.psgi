@@ -20,12 +20,26 @@ use LedgerSMB::Locale;
 use LedgerSMB::PSGI;
 use LedgerSMB::PSGI::Preloads;
 use LedgerSMB::Sysconfig;
+
+use Beam::Wire;
+use Plack::Builder;
 use Log::Any::Adapter;
 use Log::Log4perl qw(:easy);
 use Log::Log4perl::Layout::PatternLayout;
 use LedgerSMB::Middleware::RequestID;
 
 LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
+my $wire;
+if (-f 'ledgersmb.yaml') {
+    $wire = Beam::Wire->new( file => 'ledgersmb.yaml');
+}
+else {
+    $wire = Beam::Wire->new(
+        config => {
+            extra_middleware => []
+        } );
+}
+
 LedgerSMB::Locale->initialize;
 
 require Plack::Middleware::Pod
@@ -72,9 +86,18 @@ Log::Any::Adapter->set('Log4perl');
 STDOUT->autoflush(1);
 STDERR->autoflush(1);
 
-LedgerSMB::PSGI::setup_url_space(
+
+my $builder = Plack::Builder->new();
+for my $mw ($wire->get( 'extra_middleware' )->@*) {
+    $builder->add_middleware( $mw->{name}, $mw->{args}->@* );
+}
+
+# THIS HAS TO BE THE LAST THING IN THE FILE, EXCEPT FOR COMMENTS!
+$builder->to_app(
+    LedgerSMB::PSGI::setup_url_space(
+        wire        => $wire,
         development => ($ENV{PLACK_ENV} eq 'development'),
-        );
+    ));
 
 
 # -*- perl-mode -*-

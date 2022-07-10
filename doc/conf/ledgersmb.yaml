@@ -1,0 +1,10 @@
+
+extra_middleware: []
+
+printers:
+  $class: LedgerSMB::Printers
+  printers:
+    Laser: lpr -Plaser
+    Epson: lpr -PEpson
+  fallback: Laser
+
