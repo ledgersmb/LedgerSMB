@@ -84,47 +84,44 @@ Returns a 'PSGI app' which handles requests for the 'old-code' scripts in old/bi
 
 =cut
 
-our $psgi_env;
-
 sub old_app {
     my $script = shift;
-    my $handler = CGI::Emulate::PSGI->handler(
-        sub {
-            local $ENV{CONTENT_LENGTH} = $ENV{CONTENT_LENGTH} // 0;
-
-            if (my $cpid = fork()){
-                waitpid $cpid, 0;
-            } else {
-                # make 100% sure any "die"-s don't bubble up higher than
-                # this point in the stack: we're a fork()ed process and
-                # should under no circumstance end up acting like another
-                # worker. When we are done, we need to exit() below.
-                try {
-                    local ($!, $@) = (undef, undef);
-                    # the lsmb_legacy package is created by the
-                    # oldHandler use statement
-                    unless ( lsmb_legacy->handle($script, $psgi_env) ) { ## no critic (RequireExplicitInclusion)
-                        if ($! or $@) {
-                            print "Status: 500 Internal server error (PSGI.pm)\n\n";
-                            warn "Failed to execute old request ($!): $@\n";
-                        }
-                    }
-                }
-                catch ($e) {
-                }
-                exit;
-            }
-            return;
-        });
 
     # marshall the psgi environment into the cgi environment
     # so we can re-use state from the various middlewares
     return sub {
         my $env = shift;
-        local $psgi_env = $env;
 
         return Plack::Util::response_cb(
-            $handler->($env),
+            CGI::Emulate::PSGI->handler(
+                sub {
+                    local $ENV{CONTENT_LENGTH} = $ENV{CONTENT_LENGTH} // 0;
+
+                    if (my $cpid = fork()){
+                        waitpid $cpid, 0;
+                    } else {
+                        # make 100% sure any "die"-s don't bubble up higher than
+                        # this point in the stack: we're a fork()ed process and
+                        # should under no circumstance end up acting like another
+                        # worker. When we are done, we need to exit() below.
+                        try {
+                            local ($!, $@) = (undef, undef);
+                            # the lsmb_legacy package is created by the
+                            # oldHandler use statement
+                            unless ( lsmb_legacy->handle($script, $env) ) { ## no critic (RequireExplicitInclusion)
+                                if ($! or $@) {
+                                    print "Status: 500 Internal server error (PSGI.pm)\n\n";
+                                    warn "Failed to execute old request ($!): $@\n";
+                                }
+                            }
+                        }
+                        catch ($e) {
+                        }
+                        exit;
+                    }
+                    return;
+                }
+            )->($env),
             sub {
                 Plack::Util::header_set($_[0]->[1],
                                         'Content-Security-Policy',
