@@ -436,8 +436,13 @@ info:
   title: Management of industry codes configuration
   version: 0.0.1
 paths:
-  /contacts/sic/:
+  /contacts/sic:
+    description: Management of Contacts
     get:
+      tags:
+        - Contacts
+      summary: Get a list of Contacts
+      operationId: getContacts
       responses:
         200:
           description: ...
@@ -447,7 +452,19 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/SIC'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
     post:
+      tags:
+        - Contacts
+      summary: Put a list of Contacts
+      operationId: putContacts
       requestBody:
         content:
           application/json:
@@ -463,6 +480,14 @@ paths:
               schema:
                 type: string
                 format: uri-reference
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
   /contacts/sic/{id}:
     parameters:
       - name: id
@@ -472,6 +497,10 @@ paths:
           $ref: '#/components/schemas/sic-code'
         style: simple
     get:
+      tags:
+        - Contacts
+      summary: Get a single Contact
+      operationId: getContactsById
       responses:
         200:
           description: ...
@@ -493,6 +522,10 @@ paths:
         404:
           $ref: '#/components/responses/404'
     put:
+      tags:
+        - Contacts
+      summary: Put a single Contact
+      operationId: putContactsById
       parameters:
         - name: If-Match
           in: header
@@ -531,6 +564,10 @@ paths:
         428:
           $ref: '#/components/responses/428'
     delete:
+      tags:
+        - Contacts
+      summary: Delete a single Contact
+      operationId: deleteContactsById
       parameters:
         - name: 'If-Match'
           in: header
@@ -540,7 +577,19 @@ paths:
       responses:
         204:
           description: ...
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
     patch:
+      tags:
+        - Contacts
+      summary: Update a single Contact
+      operationId: updateContactsById
       parameters:
         - name: 'If-Match'
           in: header
@@ -550,8 +599,21 @@ paths:
       responses:
         200:
           description: ...
-  /contacts/business-types/:
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
+  /contacts/business-types:
+    description: Manage business types
     get:
+      tags:
+        - Business types
+      summary: Get business types
+      operationId: getBusinessTypes
       responses:
         200:
           description: ...
@@ -561,7 +623,19 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/BusinessType'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
     post:
+      tags:
+        - Business types
+      summary: Put business types
+      operationId: putBusinessTypes
       requestBody:
         content:
           application/json:
@@ -577,7 +651,16 @@ paths:
               schema:
                 type: string
                 format: uri-reference
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
   /contacts/business-types/{id}:
+    description: Manage business type
     parameters:
       - name: id
         in: path
@@ -586,6 +669,10 @@ paths:
           $ref: '#/components/schemas/business-type-id'
         style: simple
     get:
+      tags:
+        - Business types
+      summary: Get a single business type
+      operationId: getBusinessTypesById
       responses:
         200:
           description: ...
@@ -607,6 +694,10 @@ paths:
         404:
           $ref: '#/components/responses/404'
     put:
+      tags:
+        - Business types
+      summary: Put a single business type
+      operationId: putBusinessTypesById
       parameters:
         - name: If-Match
           in: header
@@ -645,6 +736,10 @@ paths:
         428:
           $ref: '#/components/responses/428'
     delete:
+      tags:
+        - Business types
+      summary: Delete a single business type
+      operationId: deleteBusinessTypesById
       parameters:
         - name: 'If-Match'
           in: header
@@ -654,7 +749,19 @@ paths:
       responses:
         204:
           description: ...
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
     patch:
+      tags:
+        - Business types
+      summary: Update a single business type
+      operationId: updateBusinessTypesById
       parameters:
         - name: 'If-Match'
           in: header
@@ -664,6 +771,14 @@ paths:
       responses:
         200:
           description: ...
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
 components:
   headers:
     ETag:

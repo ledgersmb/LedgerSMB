@@ -1,0 +1,20 @@
+{
+  "inputs": [
+    {
+      "inputFile": "_LedgerSMB.yaml"
+    },
+    {
+      "inputFile": "Contacts.yaml"
+    },
+    {
+      "inputFile": "GeneralLedger.yaml"
+    },
+    {
+      "inputFile": "Languages.yaml"
+    },
+    {
+      "inputFile": "Products.yaml"
+    }
+  ], 
+  "output": "openapi.yaml"
+}
