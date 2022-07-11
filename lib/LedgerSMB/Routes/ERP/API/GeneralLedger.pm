@@ -273,7 +273,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/gifi-accno'
+          $ref: '#/components/schemas/accno-code'
         style: simple
     get:
       responses:
