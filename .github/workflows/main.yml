@@ -194,7 +194,7 @@ jobs:
         uses: actions/checkout@v3.0.2
 
       - name: Install GNU gettext
-        run: sudo apt install gettext
+        run: sudo apt -q -y install gettext
 
       - name: Create logging directories
         run: |
@@ -235,7 +235,7 @@ jobs:
       # This will start a hub and JOB_COUNT matrix.
       - name: Starting hub with ${{ matrix.BROWSER }}
         run: |
-          docker-compose \
+          docker-compose --log-level CRITICAL \
               --file=utils/selenium/docker-compose.yml \
               --file=utils/selenium/docker-compose-${{ matrix.BROWSER }}.yml \
               up \
