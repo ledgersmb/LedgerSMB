@@ -278,6 +278,7 @@ sub setup_url_space {
                 cookie   => LedgerSMB::Sysconfig::cookie_name,
                 duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
+                max_post_size => $wire->get( 'miscellaneous/max_upload_size' ),
                 script   => $script;
             enable '+LedgerSMB::Middleware::Log4perl',
                 script   => $script;
@@ -302,6 +303,7 @@ sub setup_url_space {
                 cookie   => LedgerSMB::Sysconfig::cookie_name,
                 duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
+                max_post_size => $wire->get( 'miscellaneous/max_upload_size' ),
                 script   => 'login.pl';
             enable '+LedgerSMB::Middleware::Log4perl',
                 script   => 'login.pl';
@@ -342,6 +344,7 @@ sub setup_url_space {
             enable 'AccessLog',
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
+                max_post_size => $wire->get( 'miscellaneous/max_upload_size' ),
                 script => 'setup.pl';
             enable '+LedgerSMB::Middleware::Log4perl',
                 script => 'setup.pl';

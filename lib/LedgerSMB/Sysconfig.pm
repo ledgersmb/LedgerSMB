@@ -134,11 +134,6 @@ def 'auth',
     default => 'DB',
     doc => q{};
 
-def 'max_post_size',
-    section => 'main',
-    default => 4194304, ## no critic ( ProhibitMagicNumbers)
-    doc => q{};
-
 def 'cookie_name',
     section => 'main',
     default => 'LedgerSMB-1.10',
@@ -471,6 +466,14 @@ sub ini2wire {
         $value = $cfg->val( 'main', 'log_level', 'ERROR' );
         $wire->set( 'logging', { level => $value } );
     }
+
+    $wire->set('miscellaneous', Beam::Wire->new );
+
+    $wire->set(
+        'miscellaneous/max_upload_size',
+        $wire->create_service(
+            'max_post_size',
+            value => $cfg->val( 'main', 'max_post_size', 4194304 ) ) );
 }
 
 =head1 LICENSE AND COPYRIGHT

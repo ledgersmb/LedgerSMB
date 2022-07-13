@@ -23,6 +23,10 @@ logging:
   level: ERROR
   # config: ledgersmb.log.conf
 
+miscellaneous:
+  value:
+    max_upload_size: 4194304
+
 output_plugins:
   $class: LedgerSMB::Template::Plugins
   plugins:

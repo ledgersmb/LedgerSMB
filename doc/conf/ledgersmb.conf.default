@@ -34,9 +34,6 @@ log_level = ERROR
 # Examples in doc/conf/ledgersmb.log.conf.*
 #log_config = ledgersmb.log.conf
 
-# Maximum POST size to prevent DoS (4MB default)
-max_post_size = 4194304
-
 # Spelling of cookie name for this instance of LedgerSMB.
 # Used to keep multiple instances and/or different versions
 # logged in at the same time

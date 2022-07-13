@@ -8,9 +8,6 @@ logging  = 0
 log_level = OFF
 # log_config =
 
-# Maximum POST size to prevent DoS (4MB default)
-max_post_size = 4194304
-
 # Spelling of cookie name for this instance of LedgerSMB.
 # Used to keep multiple instances and/or different versions
 # logged in at the same time
