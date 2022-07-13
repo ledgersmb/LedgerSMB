@@ -40,7 +40,6 @@ use LedgerSMB::GL;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::PGDate;
 use LedgerSMB::Template::UI;
-use LedgerSMB::Sysconfig;
 
 # end of main
 

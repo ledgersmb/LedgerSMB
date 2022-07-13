@@ -22,7 +22,7 @@ use Carp;
 
 use MIME::Base64;
 use Log::Any;
-use LedgerSMB::Sysconfig;
+
 use Moose;
 use namespace::autoclean;
 

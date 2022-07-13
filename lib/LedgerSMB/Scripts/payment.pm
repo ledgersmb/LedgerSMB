@@ -62,7 +62,6 @@ use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Invoices::Payments;
 use LedgerSMB::Request::Helper::ParameterMap;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 

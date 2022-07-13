@@ -20,14 +20,23 @@ use File::Find::Rule;
 use File::Spec;
 use Locale::CLDR;
 
-use LedgerSMB::Sysconfig;
-
 =head1 SYNOPSIS
 
 my $dbconfig = LedgerSMB::Database::Config->new;
 
+=head1 ATTRIBUTES
+
+=head2 language
+
 =cut
 
+has language => (is => 'ro', default => 'en');
+
+=head2 templates_dir
+
+=cut
+
+has templates_dir => (is => 'ro');
 
 ###############################
 #
@@ -63,7 +72,8 @@ set.
 =cut
 
 sub templates {
-    my $basedir = LedgerSMB::Sysconfig::templates();
+    my $self = shift;
+    my $basedir = $self->templates_dir;
     my $templates = _list_directory($basedir);
 
     return {
@@ -111,12 +121,12 @@ List of available files defining a Standard of Industry Codes
 =cut
 
 sub charts_of_accounts {
+    my $self = shift;
     ###TODO: Define a parameter to the SQL directory!!
     my $basedir = File::Spec->catfile('.', 'locale', 'coa');
     my $countries = _list_directory($basedir);
-    my %regions = %{Locale::CLDR
-                    ->new(LedgerSMB::Sysconfig::language() || 'en')
-                    ->all_regions};
+    my %regions = %{Locale::CLDR->new($self->language)
+                        ->all_regions};
 
     return {
         map {

@@ -60,7 +60,6 @@ Deprecated
 use strict;
 use warnings;
 
-use LedgerSMB::Sysconfig;
 use Log::Any;
 use Carp;
 

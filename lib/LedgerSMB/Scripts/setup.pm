@@ -537,7 +537,9 @@ sub template_screen {
     my ($request, $entrypoint) = @_;
     $request->{template_dirs} =
         [ map { +{ text => $_, value => $_ } }
-          sort keys %{ LedgerSMB::Database::Config->new->templates } ];
+          sort keys %{ LedgerSMB::Database::Config->new(
+                           templates_dir => LedgerSMB::Sysconfig::templates(),
+                           )->templates } ];
     return LedgerSMB::Template::UI->new_UI
         ->render($request, 'setup/template_info',
                  { %$request, templates_action => $entrypoint });
@@ -553,7 +555,9 @@ and not the user creation screen.
 
 sub _save_templates {
     my ($request, $entrypoint) = @_;
-    my $templates = LedgerSMB::Database::Config->new->templates;
+    my $templates = LedgerSMB::Database::Config->new(
+        templates_dir => LedgerSMB::Sysconfig::templates()
+        )->templates;
 
     return template_screen($request, $entrypoint)
         if not exists $templates->{$request->{template_dir}};
@@ -1027,7 +1031,9 @@ coa_lc not set:  Select the coa location code
 
 sub select_coa {
     my ($request) = @_;
-    my $coa_data = LedgerSMB::Database::Config->new->charts_of_accounts;
+    my $coa_data = LedgerSMB::Database::Config
+        ->new( language => LedgerSMB::Sysconfig::language() )
+        ->charts_of_accounts;
 
     if ($request->{coa_lc}) {
         my $coa_lc = $request->{coa_lc};

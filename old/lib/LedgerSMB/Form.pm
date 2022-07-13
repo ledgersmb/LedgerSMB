@@ -67,7 +67,6 @@ use LedgerSMB::App_State;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Magic qw( SCRIPT_OLDSCRIPTS );
 use LedgerSMB::PGNumber;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Setting;
 

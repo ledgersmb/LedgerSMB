@@ -43,7 +43,6 @@ package OE;
 use LedgerSMB::Magic qw(OEC_QUOTATION OEC_RFQ);
 use LedgerSMB::Num2text;
 use LedgerSMB::Setting;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Tax;
 
 use Log::Any;
