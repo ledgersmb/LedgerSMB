@@ -57,7 +57,7 @@ Log::Log4perl::Layout::PatternLayout::add_global_cspec(
     'Z',
     sub { return $LedgerSMB::Middleware::RequestID::request_id.''; });
 
-my $log_config = LedgerSMB::Sysconfig::log_config();
+my $log_config = $wire->get( 'logging' )->{config};
 if ($log_config) {
     Log::Log4perl->init($log_config);
 }
@@ -71,7 +71,7 @@ else {
         DEBUG => $DEBUG,
         TRACE => $TRACE,
         );
-    my $log_level = LedgerSMB::Sysconfig::log_level();
+    my $log_level = $wire->get( 'logging' )->{level};
     die "Invalid log level: $log_level" unless exists $log_levels{$log_level};
     Log::Log4perl->easy_init($log_levels{$log_level});
 }

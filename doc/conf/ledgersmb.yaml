@@ -1,6 +1,28 @@
 
 extra_middleware: []
 
+mail:
+  # transport:
+  #   $class: LedgerSMB::Mailer::TransportSMTP
+  #   host: example.com
+  #   port: 2525
+  #   sasl_username:
+  #     $class: Authen::SASL
+  #     mechanism: PLAIN
+  #     callback:
+  #       user: the-user
+  #       pass: SECURITY-FIRST
+  # when using the sendmail binary, use the following:
+  transport:
+    $class: Email::Sender::Transport::Sendmail
+    # optionally use a 'path' argument pointing to the directory
+    # with the 'sendmail' binary:
+    # path: /usr/bin/ssmtp
+
+logging:
+  level: ERROR
+  # config: ledgersmb.log.conf
+
 output_plugins:
   $class: LedgerSMB::Template::Plugins
   plugins:
@@ -24,20 +46,3 @@ printers:
     Epson: lpr -PEpson
   fallback: Laser
 
-mail:
-  # transport:
-  #   $class: LedgerSMB::Mailer::TransportSMTP
-  #   host: example.com
-  #   port: 2525
-  #   sasl_username:
-  #     $class: Authen::SASL
-  #     mechanism: PLAIN
-  #     callback:
-  #       user: the-user
-  #       pass: SECURITY-FIRST
-  # when using the sendmail binary, use the following:
-  transport:
-    $class: Email::Sender::Transport::Sendmail
-    # optionally use a 'path' argument pointing to the directory
-    # with the 'sendmail' binary:
-    # path: /usr/bin/ssmtp

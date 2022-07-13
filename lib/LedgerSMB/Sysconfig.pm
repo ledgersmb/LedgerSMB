@@ -180,16 +180,6 @@ admin application (setup.pl).
 Note that the browser locale (language) will be used when this value isn't set.
 The default is to use the iso date format (yyyy-mm-dd).};
 
-def 'log_level',
-    section => 'main',
-    default => 'ERROR',
-    doc => q{};
-
-def 'log_config',
-    section => 'main',
-    default => '',
-    doc     => q{};
-
 def 'cache_templates',
     section => 'main',
     default => 0,
@@ -493,6 +483,14 @@ sub ini2wire {
                             args  => \@options,
                         ))
             });
+    }
+
+    if ($value = $cfg->val( 'main', 'log_config' )) {
+        $wire->set( 'logging', { config => $value } );
+    }
+    else {
+        $value = $cfg->val( 'main', 'log_level', 'ERROR' );
+        $wire->set( 'logging', { level => $value } );
     }
 }
 
