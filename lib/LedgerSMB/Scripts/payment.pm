@@ -693,13 +693,11 @@ sub display_payments {
           value => 'screen' },
         $request->{_wire}->get( 'printers' )->as_options );
 
-    if ( LedgerSMB::Sysconfig::latex() ){
-        @{$payment->{format_options}} = (
-              {text => 'PDF',        value => 'PDF'},
-              {text => 'Postscript', value => 'Postscript'},
-        );
-        $payment->{can_print} = 1;
-    }
+    $payment->{format_options} = [
+        map { { text => $_, value => lc $_ } }
+        $request->{_wire}->get( 'output_plugins' )->get_formats
+        ];
+    $payment->{can_print} = scalar @{$payment->{format_options}};
 
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'payments/payments_detail',
@@ -1152,14 +1150,6 @@ sub payment2 {
           $request->{_wire}->get( 'printers' )->as_options,
           {value => 1, text => 'e-mail'});
 
-    #$request->error("@media_options");
-    my @format_options;
-    push @format_options, {value => 1, text => 'HTML'};
-    if ( LedgerSMB::Sysconfig::latex() ) {
-        push  @format_options,
-        {value => 2, text => 'PDF' },
-        {value => 3, text => 'POSTSCRIPT' };
-    }
     # LETS BUILD THE SELECTION FOR THE UI
     # Notice that the first data inside this selection is the firs_load, this
     # will help payment2.html to know wether it is being called for the first time
@@ -1211,9 +1201,6 @@ sub payment2 {
                 {text => $vc_options[0]->{country}},
                 ]
         },
-        format => {
-            name => 'FORMAT',
-            options => \@format_options },
         media => {
             name => 'MEDIA',
             options => \@media_options  },

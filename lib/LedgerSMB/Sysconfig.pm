@@ -312,12 +312,6 @@ def 'zip',
     doc => '';
 
 
-# if you have latex installed set to 1
-my $latex = 0;
-sub latex {
-    return $latex;
-}
-
 sub _workflow_factory_config {
     my ($wf_type) = @_;
     my %config;
