@@ -45,7 +45,11 @@ if (document.getElementById("main")) {
                     document.body.setAttribute("data-lsmb-done", "true");
                 });
             });
-            window.__lsmbLoadLink = (url) => this.$router.push(url);
+            window.__lsmbLoadLink = (url) =>
+                this.$router.push(
+                    // eslint-disable-next-line no-useless-escape
+                    url.replace(/^https?:\/\/(?:[^@\/]+)/, "")
+                );
         },
         beforeUpdate() {
             document.body.removeAttribute("data-lsmb-done");
