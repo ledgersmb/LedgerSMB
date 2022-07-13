@@ -53,13 +53,6 @@ my $version = $LedgerSMB::VERSION;
 die "Library verification failed (found $version from '$path', expected 1.10)"
     unless $version =~ /^1\.10\./;
 
-# Report to the console what type of dojo we are running
-if ( LedgerSMB::Sysconfig::dojo_built() ) {
-    print "Starting Worker on PID $$ Using Built Dojo\n";
-} else {
-    print "Starting Worker on PID $$ Using Dojo Source\n";
-}
-
 Log::Log4perl::Layout::PatternLayout::add_global_cspec(
     'Z',
     sub { return $LedgerSMB::Middleware::RequestID::request_id.''; });

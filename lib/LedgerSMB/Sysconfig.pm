@@ -126,16 +126,6 @@ sub def {
 
 
 
-### SECTION  ---   debug
-
-def 'dojo_built',
-    section => 'debug',
-    default => 1,
-    doc => q{};
-
-    # Debug Panels
-
-
 ### SECTION  ---   main
 
 
