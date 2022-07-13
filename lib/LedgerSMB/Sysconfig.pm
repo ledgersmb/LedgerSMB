@@ -134,11 +134,6 @@ def 'auth',
     default => 'DB',
     doc => q{};
 
-def 'dojo_theme',
-    section => 'main',
-    default => 'claro',
-    doc => q{};
-
 def 'force_username_case',
     section => 'main',
     default => undef,  # don't force case

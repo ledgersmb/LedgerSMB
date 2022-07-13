@@ -127,8 +127,8 @@ sub render_string {
                 sub { return escape_html($_[0]); }) },
           %{$self->{standard_vars}},
           dojo_theme => (
-              $request->{_company_config}->{dojo_theme}
-              || LedgerSMB::Sysconfig::dojo_theme()),
+              $request->{_company_config}->{dojo_theme} || 'claro'
+          ),
           LIST_FORMATS => sub {
               return $request->{_wire}->get( 'output_plugins' )->get_formats;
           },
