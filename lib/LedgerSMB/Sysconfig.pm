@@ -164,11 +164,6 @@ admin application (setup.pl).
 Note that the browser locale (language) will be used when this value isn't set.
 The default is to use the iso date format (yyyy-mm-dd).};
 
-def 'cache_templates',
-    section => 'main',
-    default => 0,
-    doc => q{};
-
 ### SECTION  ---   paths
 
 # Path to the translation files
