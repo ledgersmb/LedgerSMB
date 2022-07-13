@@ -45,24 +45,6 @@ our @pre_render_cbs = (
     );
 
 
-sub _available_formats {
-    my @retval = ('HTML', 'TXT');
-
-    if ( LedgerSMB::Sysconfig::template_latex() ) {
-        push @retval, 'PDF', 'PS';
-    }
-    if ( LedgerSMB::Sysconfig::template_xls() ) {
-        push @retval, 'XLS';
-    }
-    if ( LedgerSMB::Sysconfig::template_xlsx() ) {
-        push @retval, 'XLSX';
-    }
-    if ( LedgerSMB::Sysconfig::template_ods() ) {
-        push @retval, 'ODS';
-    }
-    return \@retval;
-}
-
 =head2 new_UI()
 
 Constructor. Returns (singleton) template UI renderer.
@@ -89,9 +71,6 @@ sub new_UI {
                    File::Spec->rel2abs( LedgerSMB::Sysconfig::templates_cache(),
                                         File::Spec->tmpdir ),
                 VARIABLES => {
-                    LIST_FORMATS => sub {
-                        return _available_formats();
-                    },
                     UNESCAPE => sub {
                         return decode_entities(shift @_);
                     },
@@ -150,6 +129,9 @@ sub render_string {
           dojo_theme => (
               $request->{_company_config}->{dojo_theme}
               || LedgerSMB::Sysconfig::dojo_theme()),
+          LIST_FORMATS => sub {
+              return $request->{_wire}->get( 'output_plugins' )->get_formats;
+          },
           PRINTERS => [
               ( $request->{_wire}->get( 'printers' )->as_options,
                 {

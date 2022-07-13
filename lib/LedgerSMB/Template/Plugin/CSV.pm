@@ -1,34 +1,48 @@
 
-package LedgerSMB::Template::CSV;
+package LedgerSMB::Template::Plugin::CSV;
 
 =head1 NAME
 
-LedgerSMB::Template::CSV - Template support module for LedgerSMB
+LedgerSMB::Template::Plugin::CSV - Template support module for LedgerSMB
 
 =head1 DESCRIPTION
 
 Implements C<LedgerSMB::Template>'s FORMATTER protocol for CSV output.
-
-=head1 METHODS
-
-=over
 
 =cut
 
 use warnings;
 use strict;
 
+use Moo;
+
 my $binmode = ':utf8';
 my $extension = 'csv';
 
-=item setup($parent, $vars, $output)
+=head1 ATTRIBUTES
+
+=head2 formats
+
+=cut
+
+has formats => (is => 'ro', default => sub { [ 'CSV' ] });
+
+=head2 format
+
+=cut
+
+has format => (is => 'ro', default => 'CSV');
+
+=head1 METHODS
+
+=head2 setup($parent, $vars, $output)
 
 Implements the template's initialization protocol.
 
 =cut
 
 sub setup {
-    my ($parent, $cleanvars, $output) = @_;
+    my ($self, $parent, $cleanvars, $output) = @_;
 
     return ($output, {
         input_extension => $extension,
@@ -36,33 +50,33 @@ sub setup {
     });
 }
 
-=item postprocess($parent, $output, $config)
+=head2 postprocess($parent, $output, $config)
 
 Implements the template's post-processing protocol.
 
 =cut
 
 sub postprocess {
-    my ($parent, $output, $config) = @_;
+    my ($self, $parent, $output, $config) = @_;
     return undef;
 }
 
-=item mimetype()
+=head2 mimetype()
 
 Returns the rendered template's mimetype.
 
 =cut
 
 sub mimetype {
+    my $self = shift;
     my $config = shift;
     return 'text/' . $extension;
 }
 
-=back
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2007-2018 The LedgerSMB Core Team
+Copyright (C) 2007-2022 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

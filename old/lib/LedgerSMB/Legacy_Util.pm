@@ -147,7 +147,8 @@ sub _output_template_http {
 sub _output_template_lpr {
     my ($wire, $template) = @_;
     my $args = $template->{output_options};
-    if ($template->{format} ne 'LaTeX') {
+    if ($template->{format_plugin}->format ne 'PDF'
+        and $template->{format_plugin}->format ne 'PS') {
         die 'Invalid Format';
     }
     my $lpr = $wire->get( 'printers' )->get( $args->{method} );

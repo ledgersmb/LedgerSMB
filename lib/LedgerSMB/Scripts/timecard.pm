@@ -205,7 +205,8 @@ sub print {
         dbh      => $request->{dbh},
         path     => 'DB',
         template => 'timecard',
-        format   => $request->{format} || 'HTML',
+        format_plugin   =>
+              $request->{_wire}->get( 'output_plugins' )->get( $request->{format} || 'HTML'),
     );
 
     if (lc($request->{media}) eq 'screen') {

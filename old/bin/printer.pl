@@ -137,19 +137,10 @@ sub print_options {
     $options{format} = {
         name => 'format',
         default_values => $form->{selectformat},
-        options => [{text => 'HTML', value => 'html'},
-                    {text => 'CSV', value => 'csv'} ],
-        };
-    if ( LedgerSMB::Sysconfig::latex() ) {
-        push @{$options{format}{options}}, {
-            text => $locale->text('Postscript'),
-            value => 'postscript',
-            };
-        push @{$options{format}{options}}, {
-            text => 'PDF',
-            value => 'pdf',
-            };
-    }
+        options => [
+            map { { text => $_, value => lc $_ } }
+            $form->{_wire}->get( 'output_plugins' )->get_formats ],
+    };
     if ($form->{type} && $form->{type} eq 'invoice'){
        push @{$options{format}{options}}, {
             text => '894.EDI',

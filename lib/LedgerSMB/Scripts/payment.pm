@@ -513,12 +513,13 @@ sub print {
         $template = LedgerSMB::Template->new( # printed document
             user => $payment->{_user},
             template => 'check_multiple',
-            format => uc $payment->{'format'},
             path => 'DB',
             dbh  => $request->{dbh},
             output_options => {
                filename => 'printed-checks',
             },
+            format_plugin   =>
+                 $request->{_wire}->get( 'output_plugins' )->get( uc $payment->{format} ),
             );
         $template->render(
             {
@@ -1480,7 +1481,9 @@ sub print_payment {
       locale   => $Payment->{_locale},
       path     => 'DB',
       template => 'printPayment',
-      format => 'HTML' );
+      format_plugin   =>
+         $request->{_wire}->get( 'output_plugins' )->get( 'HTML' ),
+    );
     $template->render(
         {
             DBNAME => $request->{company},

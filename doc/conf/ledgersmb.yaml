@@ -1,6 +1,22 @@
 
 extra_middleware: []
 
+output_plugins:
+  $class: LedgerSMB::Template::Plugins
+  plugins:
+    - $class: LedgerSMB::Template::Plugin::LaTeX
+      format: PDF
+    - $class: LedgerSMB::Template::Plugin::LaTeX
+      format: PS
+    - $class: LedgerSMB::Template::Plugin::XLSX
+      format: XLS
+    - $class: LedgerSMB::Template::Plugin::XLSX
+      format: XLSX
+    - $class: LedgerSMB::Template::Plugin::ODS
+    - $class: LedgerSMB::Template::Plugin::CSV
+    - $class: LedgerSMB::Template::Plugin::TXT
+    - $class: LedgerSMB::Template::Plugin::HTML
+
 printers:
   $class: LedgerSMB::Printers
   printers:

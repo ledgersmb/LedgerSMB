@@ -586,10 +586,11 @@ sub report_renderer_doc {
             user     => $request->{_user},
             path     => 'DB',
             dbh      => $request->{dbh},
-            format   => uc($request->{format} || 'HTML'),
             output_options => {
                 filename => $report->output_name($request),
             },
+            format_plugin   =>
+               $request->{_wire}->get( 'output_plugins' )->get( uc($request->{format} || 'HTML' ) ),
             );
 
         $template->render($vars, $cvars);

@@ -25,6 +25,7 @@ use English;
 use File::Find::Rule;
 use String::Random;
 use Symbol;
+use List::Util qw(pairmap);
 use Workflow::Factory qw(FACTORY);
 
 =head2 def $name, %args;
@@ -242,29 +243,6 @@ of the same type with e.g. additional states and actions.
 
 defaults to './custom_workflows'};
 
-### SECTION  ---   Template file formats
-
-def 'template_latex',
-    section => 'template_format',
-    default => 0,
-    doc => q{Set to 'disabled' to prevent LaTeX output formats (Postscript and PDF) being made available};
-
-def 'template_xls',
-    section => 'template_format',
-    default => 0,
-    doc => q{Set to 'disabled' to prevent XLS output formats being made available};
-
-def 'template_xlsx',
-    section => 'template_format',
-    default => 0,
-    doc => q{Set to 'disabled' to prevent XLSX output formats being made available};
-
-def 'template_ods',
-    section => 'template_format',
-    default => 0,
-    doc => q{Set to 'disabled' to prevent ODS output formats being made available};
-
-
 ### SECTION  ---   reverse proxy
 
 def 'proxy_ip',
@@ -340,35 +318,6 @@ sub latex {
     return $latex;
 }
 
-sub override_defaults {
-
-    local $@ = undef; # protect existing $@
-
-    # Check Latex
-    $latex = eval {require Template::Plugin::Latex; 1;};
-
-    # Check availability and loadability
-    LedgerSMB::Sysconfig::template_latex(
-        LedgerSMB::Sysconfig::template_latex() ne 'disabled' &&
-        eval {require LedgerSMB::Template::LaTeX}
-    );
-    LedgerSMB::Sysconfig::template_xls(
-        LedgerSMB::Sysconfig::template_xls() ne 'disabled' &&
-        eval {require LedgerSMB::Template::XLS}
-    );
-    LedgerSMB::Sysconfig::template_xlsx(
-        LedgerSMB::Sysconfig::template_xlsx() ne 'disabled' &&
-        eval {require LedgerSMB::Template::XLSX}
-    );
-    LedgerSMB::Sysconfig::template_ods(
-        LedgerSMB::Sysconfig::template_ods() ne 'disabled' &&
-        eval {require LedgerSMB::Template::ODS}
-    );
-
-    return;
-}
-
-
 sub _workflow_factory_config {
     my ($wf_type) = @_;
     my %config;
@@ -411,8 +360,6 @@ sub initialize {
             $Config{path_sep} .
             ( join $Config{path_sep}, $cfg->val('environment', $var, ''));
     }
-
-    override_defaults();
 
     FACTORY()->add_config_from_file(_workflow_factory_config('')->%*);
     if ($args{disable_workflow_preload}) {
@@ -459,6 +406,41 @@ sub ini2wire {
                 }
             ))
         );
+
+    my @formats = (
+        { class => 'LedgerSMB::Template::Plugin::CSV' },
+        { class => 'LedgerSMB::Template::Plugin::TXT' },
+        { class => 'LedgerSMB::Template::Plugin::HTML' },
+        );
+    my @optionals = (
+        template_latex => { class => 'LedgerSMB::Template::Plugin::LaTeX',
+                            args => { format => 'PDF' } },
+        template_latex => { class => 'LedgerSMB::Template::Plugin::LaTeX',
+                            args => { format => 'PS' } },
+        template_xlsx  => { class => 'LedgerSMB::Template::Plugin::XLSX',
+                            args => { format => 'XLSX' } },
+        template_xls   => { class => 'LedgerSMB::Template::Plugin::XLSX',
+                            args => { format => 'XLS' } },
+        template_ods   => { class => 'LedgerSMB::Template::Plugin::ODS' },
+        );
+    pairmap {
+        if ($cfg->val( 'template_format', $a, 'enabled' ) ne 'disabled') {
+            if (eval { "require $b->{class}; 1;" }) {
+                push @formats, $b;
+            }
+        }
+    } @optionals;
+    $wire->set(
+        'output_plugins' => $wire->create_service(
+            'output_plugins',
+            class => 'LedgerSMB::Template::Plugins',
+            args => {
+                plugins => [
+                    map { $wire->create_service( '', %$_ ) }
+                    @formats
+                ]
+            }
+        ));
 
     my $value;
     if (my $value = $cfg->val( 'mail', 'smtphost' )) {

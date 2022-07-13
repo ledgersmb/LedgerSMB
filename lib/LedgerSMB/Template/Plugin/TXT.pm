@@ -1,17 +1,13 @@
 
-package LedgerSMB::Template::TXT;
+package LedgerSMB::Template::Plugin::TXT;
 
 =head1 NAME
 
-LedgerSMB::Template::TXT - Template support module for LedgerSMB
+LedgerSMB::Template::Plugin::TXT - Template support module for LedgerSMB
 
 =head1 DESCRIPTION
 
 Implements C<LedgerSMB::Template>'s FORMATTER protocol for TXT output.
-
-=head1 METHODS
-
-=over
 
 =cut
 
@@ -19,6 +15,23 @@ use strict;
 use warnings;
 
 use DateTime;
+
+
+use Moo;
+
+=head1 ATTRIBUTES
+
+=head2 formats
+
+=cut
+
+has formats => (is => 'ro', default => sub { [ 'TXT' ] });
+
+=head2 format
+
+=cut
+
+has format => (is => 'ro', default => 'TXT');
 
 # The following are for EDI only
 my $dt = DateTime->now;
@@ -37,14 +50,16 @@ sub _get_extension {
     }
 }
 
-=item setup($parent, $cleanvars, $output)
+=head1 METHODS
+
+=head2 setup($parent, $cleanvars, $output)
 
 Implements the template's initialization protocol.
 
 =cut
 
 sub setup {
-    my ($parent, $cleanvars, $output) = @_;
+    my ($self, $parent, $cleanvars, $output) = @_;
 
     $cleanvars->{EDI_CURRENT_DATE} = $date;
     $cleanvars->{EDI_CURRENT_TIME} = $time;
@@ -55,33 +70,32 @@ sub setup {
     });
 }
 
-=item postprocess($parent, $output, $config)
+=head2 postprocess($parent, $output, $config)
 
 Implements the template's post-processing protocol.
 
 =cut
 
 sub postprocess {
-    my ($parent, $output, $config) = @_;
+    my ($self, $parent, $output, $config) = @_;
     return undef;
 }
 
-=item mimetype()
+=head2 mimetype()
 
 Returns the rendered template's mimetype.
 
 =cut
 
 sub mimetype {
+    my $self = shift;
     my $config = shift;
     return 'text/plain';
 }
 
-=back
-
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2007-2018 The LedgerSMB Core Team
+Copyright (C) 2007-2022 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

@@ -258,7 +258,9 @@ sub print_transaction {
         path => 'DB',
         locale => $locale,
         output_options => \%output_options,
-        format => uc $form->{format} );
+        format_plugin   =>
+           $form->{_wire}->get( 'output_plugins' )->get( uc($form->{format} || 'HTML') ),
+        );
     $template->render($form);
     LedgerSMB::Legacy_Util::output_template($template, $form);
 

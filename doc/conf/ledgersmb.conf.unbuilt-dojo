@@ -122,12 +122,3 @@ sslmode = prefer
 #
 dojo_built = 0
 
-[template_format]
-# These define the file format options allowed for report exports
-# Set to 'disabled' to prevent the option being made available
-# Otherwise options will be made available subject to a load-time
-# check against module availability.
-#template_latex = disabled
-#template_xls = disabled
-#template_xlsx = disabled
-#template_ods = disabled

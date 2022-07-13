@@ -357,8 +357,9 @@ sub generate_statement {
                      locale   => $request->{_locale},
                      template => $request->{print_template},
                      language => $statement->{language},
-                     format   => $format,
                      method   => $request->{media},
+                     format_plugin   =>
+                         $request->{_wire}->get( 'output_plugins' )->get( $request->{format}),
                 );
 
         $template->render(
