@@ -52,19 +52,6 @@ sub _build_credentials {
     my %rv;
     @rv{('login', 'password')} = split(/:/, $auth, 2);
 
-    my $username_case = LedgerSMB::Sysconfig::force_username_case;
-    if ($username_case) {
-        if (lc($username_case) eq 'lower') {
-            $rv{login} = lc($rv{login});
-        }
-        elsif (lc($username_case) eq 'upper') {
-            $rv{login} = uc($rv{login});
-        }
-        else {
-            die "Unknown username casing algorithm $username_case; expected 'lower' or 'upper'"
-        }
-    }
-
     return \%rv;
 }
 

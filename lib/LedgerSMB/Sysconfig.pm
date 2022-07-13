@@ -134,11 +134,6 @@ def 'auth',
     default => 'DB',
     doc => q{};
 
-def 'force_username_case',
-    section => 'main',
-    default => undef,  # don't force case
-    doc => q{};
-
 def 'max_post_size',
     section => 'main',
     default => 4194304, ## no critic ( ProhibitMagicNumbers)
