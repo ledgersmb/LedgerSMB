@@ -154,12 +154,6 @@ def 'cookie_secret',
     default => sub { return String::Random->new->randpattern('.' x 50); },
     doc => q{};
 
-# Maximum number of invoices that can be printed on a check
-def 'check_max_invoices',
-    section => 'main',
-    default => 5,
-    doc => q{};
-
 # set language for login and admin
 def 'language',
     section => 'main',
