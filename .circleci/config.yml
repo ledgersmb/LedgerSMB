@@ -28,7 +28,7 @@ commands:
           command: |
             if [ "x$COVERAGE" == "x1" ]
             then
-              echo "JOB_COUNT=2" >> $BASH_ENV
+              echo "JOB_COUNT=4" >> $BASH_ENV
               echo "STARMAN_DEVEL_COVER_OPTIONS='-MDevel::Cover=$DEVEL_COVER_OPTIONS'" >> $BASH_ENV
               echo "YATH_DEVEL_COVER_OPTIONS='--cover=$DEVEL_COVER_OPTIONS'" >> $BASH_ENV
             fi
@@ -252,7 +252,7 @@ executors:
       COVERAGE: << parameters.coverage >>
       DEVEL_COVER_OPTIONS: -silent,1,+ignore,(^x?t/|^utils/|\.lttc$|^/usr/|/home/circleci/perl5|starman$$)
       HARNESS_RULESFILE: t/testrules.yml
-      JOB_COUNT: 2
+      JOB_COUNT: 4
       LSMB_BASE_URL: http://127.0.0.1:5000
       LSMB_NEW_DB: lsmb_test
       LSMB_TEST_DB: 1
@@ -284,6 +284,11 @@ jobs:
       - start_starman
       - start_proxy
       - prove
+ 
+    # The resource_class feature allows configuring CPU and RAM resources for each job.
+    # Different resource classes are available for different executors.
+    # https://circleci.com/docs/2.0/configuration-reference/#resourceclass
+    resource_class: large
 
   test_webpack_firefox:
     <<: *defaults
