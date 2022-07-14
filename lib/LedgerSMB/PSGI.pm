@@ -225,7 +225,6 @@ sub setup_url_space {
     my %args        = @_;
     my $wire        = $args{wire};
     my $psgi_app    = psgi_app($wire);
-    my $development = $args{development};
 
     return builder {
         if (LedgerSMB::Sysconfig::proxy_ip()) {
@@ -235,12 +234,6 @@ sub setup_url_space {
         }
         enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
             'ConditionalGET';
-
-        enable 'Plack::Middleware::Pod',
-             path => qr{^/pod/},
-             root => './',
-             pod_view => 'Pod::POM::View::HTMl' # the default
-                 if $development;
 
         # not using LedgerSMB::Sysconfig::scripts():
         #   it has more than only entry-points
