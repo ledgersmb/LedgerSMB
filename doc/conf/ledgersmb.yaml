@@ -10,6 +10,10 @@ default_locale:
 
 extra_middleware: []
 
+logging:
+  level: ERROR
+  # config: ledgersmb.log.conf
+
 mail:
   # transport:
   #   $class: LedgerSMB::Mailer::TransportSMTP
@@ -28,12 +32,9 @@ mail:
     # with the 'sendmail' binary:
     # path: /usr/bin/ssmtp
 
-logging:
-  level: ERROR
-  # config: ledgersmb.log.conf
-
 miscellaneous:
   value:
+    backup_email_from:
     max_upload_size: 4194304
 
 output_plugins:

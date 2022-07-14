@@ -173,14 +173,6 @@ def 'proxy_ip',
     doc => 'The space separated list of IP addresses (or ranges, using CIDR notation) of acceptable reverse proxies';
 
 
-### SECTION  ---   mail
-
-def 'backup_email_from',
-    section => 'mail',
-    default => undef,
-    doc => 'The e-mail address from which backups are sent.';
-
-
 ### SECTION  ---   database
 
 def 'db_host',
@@ -442,6 +434,11 @@ sub ini2wire {
         $wire->create_service(
             'max_post_size',
             value => $cfg->val( 'main', 'max_post_size', 4194304 ) ) );
+    $wire->set(
+        'miscellaneous/backup_email_from',
+        $wire->create_service(
+            'backup_email_from',
+            value => $cfg->val( 'mail', 'backup_email_from', '' ) ) );
 
     $wire->set(
         'cookie',
