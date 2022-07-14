@@ -31,8 +31,9 @@ use Cookie::Baker;
 use Plack::Request;
 use Plack::Util;
 use Plack::Util::Accessor
-    qw( domain cookie cookie_path duration inner_serialize );
+    qw( cookie cookie_path domain duration inner_serialize secret );
 use Session::Storage::Secure;
+use String::Random;
 
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Sysconfig;
@@ -92,9 +93,11 @@ Check minimum Chrome version
 our $store;
 
 sub prepare_app {
-    # delay initializing $store to allow LedgerSMB::Sysconfig to be loaded
+    my $self = shift;
+    $self->secret( String::Random->new->randpattern('.' x 50) )
+        unless $self->secret;
     $store = Session::Storage::Secure->new(
-        secret_key => LedgerSMB::Sysconfig::cookie_secret,
+        secret_key => $self->secret,
         default_duration => 24*60*60*90, # 90 days
         );
 }

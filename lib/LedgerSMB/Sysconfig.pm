@@ -19,6 +19,7 @@ use strict;
 use warnings;
 
 use Authen::SASL;
+use Beam::Wire;
 use Config;
 use Config::IniFiles;
 use English;
@@ -132,16 +133,6 @@ sub def {
 def 'auth',
     section => 'main',
     default => 'DB',
-    doc => q{};
-
-def 'cookie_name',
-    section => 'main',
-    default => 'LedgerSMB-1.10',
-    doc => q{};
-
-def 'cookie_secret',
-    section => 'main',
-    default => sub { return String::Random->new->randpattern('.' x 50); },
     doc => q{};
 
 # set language for login and admin
@@ -474,6 +465,13 @@ sub ini2wire {
         $wire->create_service(
             'max_post_size',
             value => $cfg->val( 'main', 'max_post_size', 4194304 ) ) );
+
+    $wire->set(
+        'cookie',
+        {
+            name => $cfg->val( 'main', 'cookie_name' ),
+            secret => $cfg->val( 'main', 'cookie_secret' )
+        });
 }
 
 =head1 LICENSE AND COPYRIGHT

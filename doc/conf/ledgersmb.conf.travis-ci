@@ -8,11 +8,6 @@ logging  = 0
 log_level = OFF
 # log_config =
 
-# Spelling of cookie name for this instance of LedgerSMB.
-# Used to keep multiple instances and/or different versions
-# logged in at the same time
-cookie_name = LedgerSMB-1.10
-
 [environment]
 # If the server can't find applications, append to the path
 PATH=/bin:/usr/bin:/usr/local/bin:/usr/local/pgsql/bin

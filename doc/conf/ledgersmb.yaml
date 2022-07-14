@@ -1,4 +1,9 @@
 
+cookie:
+  name: LedgerSMB-1.10
+  # Leaving the secret empty causes a secret to be dynamically generated
+  # secret:
+
 extra_middleware: []
 
 mail:

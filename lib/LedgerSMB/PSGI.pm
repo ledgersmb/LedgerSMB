@@ -250,8 +250,9 @@ sub setup_url_space {
             enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::SessionStorage',
                 domain          => 'main',
-                cookie          => LedgerSMB::Sysconfig::cookie_name,
+                cookie          => $wire->get( 'cookie' )->{name},
                 duration        => 60*60*24*90,
+                secret          => $wire->get( 'cookie' )->{secret},
                 # can marshall state in, but not back out (due to forking)
                 # so have the inner scope handle serialization itself
                 inner_serialize => 1;
@@ -275,7 +276,8 @@ sub setup_url_space {
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::SessionStorage',
                 domain   => 'main',
-                cookie   => LedgerSMB::Sysconfig::cookie_name,
+                cookie   => $wire->get( 'cookie' )->{name},
+                secret   => $wire->get( 'cookie' )->{secret},
                 duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
                 max_post_size => $wire->get( 'miscellaneous/max_upload_size' ),
@@ -300,7 +302,8 @@ sub setup_url_space {
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::SessionStorage',
                 domain   => 'main',
-                cookie   => LedgerSMB::Sysconfig::cookie_name,
+                cookie   => $wire->get( 'cookie' )->{name},
+                secret   => $wire->get( 'cookie' )->{secret},
                 duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
                 max_post_size => $wire->get( 'miscellaneous/max_upload_size' ),
@@ -324,8 +327,9 @@ sub setup_url_space {
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::SessionStorage',
                 domain      => 'main',
-                cookie      => LedgerSMB::Sysconfig::cookie_name,
+                cookie      => $wire->get( 'cookie' )->{name},
                 cookie_path => '/',
+                secret      => $wire->get( 'cookie' )->{secret},
                 duration    => 60*60*24*90;
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'open',
