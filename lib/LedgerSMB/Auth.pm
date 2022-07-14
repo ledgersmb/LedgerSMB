@@ -53,7 +53,7 @@ use strict;
 use warnings;
 
 use LedgerSMB::Sysconfig;
-use Module::Runtime qw(use_module compose_module_name);
+use Module::Runtime qw(use_module);
 
 
 my $plugin = '';
@@ -62,8 +62,7 @@ sub factory {
     my ($psgi_env, $domain) = @_;
 
     unless ($plugin) {
-        $plugin =
-            compose_module_name('LedgerSMB::Auth', LedgerSMB::Sysconfig::auth);
+        $plugin = 'LedgerSMB::Auth::DB';
         use_module($plugin);
     }
 

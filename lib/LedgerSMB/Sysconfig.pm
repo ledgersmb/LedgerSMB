@@ -130,11 +130,6 @@ sub def {
 ### SECTION  ---   main
 
 
-def 'auth',
-    section => 'main',
-    default => 'DB',
-    doc => q{};
-
 # set language for login and admin
 def 'language',
     section => 'main',

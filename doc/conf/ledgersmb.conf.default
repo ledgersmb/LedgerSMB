@@ -8,11 +8,6 @@
 
 [main]
 
-# Designate the authentication module in the LedgerSMB::Auth:: namespace
-# to be loaded to handle authentication.  LedgerSMB comes with only the
-# DB authentication module included.
-auth = DB
-
 # Set language for login and admin pages
 language =
 
