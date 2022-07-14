@@ -109,7 +109,10 @@ sub handle {
     };
 
 
-    $locale = LedgerSMB::Locale->get_handle( LedgerSMB::Sysconfig::language() )
+    $locale = LedgerSMB::Locale
+        ->get_handle($wire->get( 'default_locale' )
+                     ->from_header( $ENV{HTTP_ACCEPT_LANGUAGE} )
+        )
         or $form->error( __FILE__ . ':' . __LINE__ .
                          ": Locale not loaded: $!\n" );
 

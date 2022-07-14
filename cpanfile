@@ -25,6 +25,7 @@ requires 'File::Find::Rule';
 requires 'Hash::Merge';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
+requires 'HTTP::AcceptLanguage';
 requires 'HTTP::Headers::Fast', '0.21'; # for content_is_text() method
 requires 'HTTP::Negotiate';
 requires 'HTTP::Status';

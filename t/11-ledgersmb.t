@@ -6,6 +6,8 @@ use warnings;
 use Test2::V0;
 
 use LedgerSMB;
+
+use Beam::Wire;
 use Plack::Request;
 
 use LedgerSMB::Sysconfig;
@@ -18,6 +20,15 @@ Log::Log4perl->easy_init($OFF);
 
 
 my $lsmb;
+my $wire = Beam::Wire->new(
+    config => {
+        default_locale => {
+            class => 'LedgerSMB::LanguageResolver',
+            args => {
+                directory => './locale/po/',
+            },
+        }
+    });
 my $request = Plack::Request->new({});
 
 
@@ -27,38 +38,38 @@ my $request = Plack::Request->new({});
 ##merge
 
 
-$lsmb = LedgerSMB->new($request);
+$lsmb = LedgerSMB->new($request, $wire);
 my $utfstr;
 
 ok(defined $lsmb);
 isa_ok($lsmb, ['LedgerSMB']);
 
 # $lsmb->escape checks
-$lsmb = LedgerSMB->new($request);
+$lsmb = LedgerSMB->new($request, $wire);
 $utfstr = "\xd8\xad";
 utf8::decode($utfstr);
 
 # $lsmb->new checks
-$lsmb = LedgerSMB->new($request);
+$lsmb = LedgerSMB->new($request, $wire);
 ok(defined $lsmb, 'new: blank, defined');
 isa_ok($lsmb, ['LedgerSMB'], 'new: blank, correct type');
 ok(defined $lsmb->{dbversion}, 'new: blank, dbversion defined');
 ok(defined $lsmb->{version}, 'new: blank, version defined');
 
 # $lsmb->merge checks
-$lsmb = LedgerSMB->new($request);
+$lsmb = LedgerSMB->new($request, $wire);
 $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3}, 'keys' => ['apple', 'pear']);
 ok(!defined $lsmb->{peach}, 'merge: Did not add unselected key');
 is($lsmb->{apple}, 1, 'merge: Added unselected key apple');
 is($lsmb->{pear}, 2, 'merge: Added unselected key pear');
 
-$lsmb = LedgerSMB->new($request);
+$lsmb = LedgerSMB->new($request, $wire);
 $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3});
 is($lsmb->{apple}, 1, 'merge: No key, added apple');
 is($lsmb->{pear}, 2, 'merge: No key, added pear');
 is($lsmb->{peach}, 3, 'merge: No key, added peach');
 
-$lsmb = LedgerSMB->new($request);
+$lsmb = LedgerSMB->new($request, $wire);
 $lsmb->merge({'apple' => 1, 'pear' => 2, 'peach' => 3}, 'index' => 1);
 is($lsmb->{apple_1}, 1, 'merge: Index 1, added apple as apple_1');
 is($lsmb->{pear_1}, 2, 'merge: Index 1, added pear as pear_1');

@@ -69,7 +69,11 @@ e.g. C<ledgersmb/1.2>.
 
 has type => (is => 'ro', required => 1);
 
+=head2 language (optional)
 
+=cut
+
+has language => (is => 'ro', default => 'en');
 
 
 
@@ -170,7 +174,7 @@ my %required_vars_values = (
     default_ar      => sub { _linked_accounts($_[1], 'AR') },
     default_ap      => sub { _linked_accounts($_[1], 'AP') },
     default_country => sub {
-        LedgerSMB::I18N::get_country_list(LedgerSMB::Sysconfig::language()) },
+        LedgerSMB::I18N::get_country_list($_[0]->language) },
     slschema        => sub { $migration_schema{$_[0]->type} },
     );
 

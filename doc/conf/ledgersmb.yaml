@@ -4,6 +4,10 @@ cookie:
   # Leaving the secret empty causes a secret to be dynamically generated
   # secret:
 
+default_locale:
+  $class: LedgerSMB::LanguageResolver
+  directory: ./locale/po/
+
 extra_middleware: []
 
 mail:

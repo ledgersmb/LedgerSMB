@@ -88,9 +88,7 @@ sub authenticate {
 
 
 sub __default {
-
     my ($request) = @_;
-    $request->{_user} //= { language => LedgerSMB::Sysconfig::language() };
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'setup/credentials', $request);
 }
@@ -669,9 +667,12 @@ sub _process_and_run_upgrade_script {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
+    my $hdr = $request->{_req}->header( 'Accept-Language' );
+    my $lang = $request->{_wire}->get( 'default_locale' )->from_header( $hdr );
     my $upgrade = LedgerSMB::Database::Upgrade->new(
         database => $database,
         type     => $type,
+        language => $lang
         );
     $upgrade->run_upgrade_script(
         {
@@ -792,9 +793,12 @@ sub upgrade {
 
     $request->{dbh}->{AutoCommit} = 0;
 
+    my $hdr = $request->{_req}->header( 'Accept-Language' );
+    my $lang = $request->{_wire}->get( 'default_locale' )->from_header( $hdr );
     my $upgrade = LedgerSMB::Database::Upgrade->new(
         database => $database,
-        type => $upgrade_type,
+        type     => $upgrade_type,
+        language => $lang
         );
 
     my $rv;
@@ -953,9 +957,12 @@ sub fix_tests {
     my $dbh = $request->{dbh};
     $dbh->{AutoCommit} = 0;
 
+    my $hdr = $request->{_req}->header( 'Accept-Language' );
+    my $lang = $request->{_wire}->get( 'default_locale' )->from_header( $hdr );
     my $upgrade = LedgerSMB::Database::Upgrade->new(
         database => $database,
-        type => '.../...',
+        type     => '.../...',
+        language => $lang
         );
 
     my $check = $upgrade->applicable_test_by_name($request->{check});
@@ -1031,8 +1038,10 @@ coa_lc not set:  Select the coa location code
 
 sub select_coa {
     my ($request) = @_;
+    my $hdr = $request->{_req}->header( 'Accept-Language' );
+    my $lang = $request->{_wire}->get( 'default_locale' )->from_header( $hdr );
     my $coa_data = LedgerSMB::Database::Config
-        ->new( language => LedgerSMB::Sysconfig::language() )
+        ->new( language =>  $lang )
         ->charts_of_accounts;
 
     if ($request->{coa_lc}) {
@@ -1406,9 +1415,12 @@ sub force {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
+    my $hdr = $request->{_req}->header( 'Accept-Language' );
+    my $lang = $request->{_wire}->get( 'default_locale' )->from_header( $hdr );
     my $upgrade = LedgerSMB::Database::Upgrade->new(
         database => $database,
         type => '.../...',
+        language => $lang
         );
 
     my $test = $upgrade->applicable_test_by_name($request->{check});

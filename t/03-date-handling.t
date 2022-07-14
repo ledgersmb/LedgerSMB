@@ -5,15 +5,18 @@
 
 use strict;
 use warnings;
+
 use Test2::V0;
+
+use Beam::Wire;
 use Math::BigFloat;
+use Plack::Request;
 
 use LedgerSMB::Sysconfig;
 use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::App_State;
-use Plack::Request;
 
 use Log::Log4perl qw( :easy );
 
@@ -26,14 +29,24 @@ $ENV{REQUEST_METHOD} = 'GET';
      # Suppress warnings from LedgerSMB::_process_cookies
 
 
+my $wire = Beam::Wire->new(
+    config => {
+        default_locale => {
+            class => 'LedgerSMB::LanguageResolver',
+            args => {
+                directory => './locale/po/',
+            },
+        }
+    });
 my $form = Form->new;
+$form->{_wire} = $wire;
 my $locale_en = LedgerSMB::Locale->get_handle('en_CA');
 my $locale_es = LedgerSMB::Locale->get_handle('es');
 my %myconfig;
 ok(defined $form);
 isa_ok($form, 'Form');
 my $request = Plack::Request->new({});
-my $lsmb = LedgerSMB->new($request);
+my $lsmb = LedgerSMB->new($request, $wire);
 ok(defined $lsmb);
 isa_ok($lsmb, 'LedgerSMB');
 

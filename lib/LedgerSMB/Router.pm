@@ -605,9 +605,7 @@ sub locale {
     my $env = shift;
 
     return $env->{'lsmb.locale'} //=
-        LedgerSMB::Locale->get_handle(
-            user($env)->{language} // LedgerSMB::Sysconfig::language()
-        );
+        LedgerSMB::Locale->get_handle( user($env)->{language} // 'en' );
 }
 
 sub set {

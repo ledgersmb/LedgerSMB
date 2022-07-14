@@ -127,24 +127,6 @@ sub def {
 
 
 
-### SECTION  ---   main
-
-
-# set language for login and admin
-def 'language',
-    section => 'main',
-    default => 'en',
-    doc => q{};
-
-def 'date_format',
-    section => 'main',
-    default => 'yyyy-mm-dd',
-    dock => q{Specifies the date format to be used for the database
-admin application (setup.pl).
-
-Note that the browser locale (language) will be used when this value isn't set.
-The default is to use the iso date format (yyyy-mm-dd).};
-
 ### SECTION  ---   paths
 
 # Path to the translation files
@@ -467,6 +449,16 @@ sub ini2wire {
             name => $cfg->val( 'main', 'cookie_name' ),
             secret => $cfg->val( 'main', 'cookie_secret' )
         });
+
+    $wire->set(
+        'default_locale',
+        $wire->create_service(
+            'default_locale' => (
+                class => 'LedgerSMB::LanguageResolver',
+                args => {
+                    directory => './locale/po/'
+                }
+            )));
 }
 
 =head1 LICENSE AND COPYRIGHT

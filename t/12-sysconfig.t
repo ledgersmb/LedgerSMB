@@ -12,8 +12,6 @@ use LedgerSMB::Magic qw( SCRIPT_NEWSCRIPTS SCRIPT_OLDSCRIPTS );
 
 LedgerSMB::Sysconfig->initialize( 't/data/ledgersmb.conf' );
 
-is LedgerSMB::Sysconfig::language(), 'en2', 'language set correctly';
-
 like $ENV{PATH}, qr/foo$/, 'appends config path correctly';
 
 for my $script (SCRIPT_OLDSCRIPTS->@*) {

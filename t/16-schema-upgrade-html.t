@@ -32,7 +32,13 @@ sub test_request {
             printers => {
                 class => 'LedgerSMB::Printers',
                 args => [],
-            }
+            },
+            default_locale => {
+                class => 'LedgerSMB::LanguageResolver',
+                args => {
+                    directory => './locale/po/',
+                }
+            },
         });
     my $req = LedgerSMB->new($plack_req, $wire);
 
