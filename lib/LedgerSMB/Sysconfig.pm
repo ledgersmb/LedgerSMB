@@ -165,14 +165,6 @@ of the same type with e.g. additional states and actions.
 
 defaults to './custom_workflows'};
 
-### SECTION  ---   reverse proxy
-
-def 'proxy_ip',
-    section => 'proxy',
-    default => '127.0.0.1/8 ::1/128 ::ffff:127.0.0.1/108',
-    doc => 'The space separated list of IP addresses (or ranges, using CIDR notation) of acceptable reverse proxies';
-
-
 ### SECTION  ---   database
 
 def 'db_host',
@@ -439,6 +431,15 @@ sub ini2wire {
         $wire->create_service(
             'backup_email_from',
             value => $cfg->val( 'mail', 'backup_email_from', '' ) ) );
+    $wire->set(
+        'miscellaneous/proxy_ip',
+        $wire->create_service(
+            'proxy_ip',
+            value => $cfg->val(
+                'proxy',
+                'proxy_ip',
+                '127.0.0.1/8 ::1/128 ::ffff:127.0.0.1/108'
+            ) ) );
 
     $wire->set(
         'cookie',
