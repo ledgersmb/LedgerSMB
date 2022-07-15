@@ -33,7 +33,8 @@ use LedgerSMB::Template::UI;
 
 use LedgerSMB::old_code qw(dispatch);
 
-use File::Temp;
+use Archive::Zip qw(:CONSTANTS :ERROR_CODES);
+use File::Temp qw/ :seekable /;
 use HTTP::Status qw( HTTP_OK);
 
 
@@ -524,7 +525,7 @@ sub print_batch {
 
     # Make sure we have a temporary directory which gets cleaned up
     # after exiting this routine
-    my $dir = File::Temp->newdir( CLEANUP => 1);
+    my $dir = File::Temp->newdir( CLEANUP => 1 );
     my $dirname = $dir->dirname;
 
     # zipdir gets consumed by io.pl and arapprn.pl
@@ -551,18 +552,18 @@ sub print_batch {
         @{$report->rows};
 
     if (@files) {
-        my $zipcmd = LedgerSMB::Sysconfig::zip();
-        $zipcmd =~ s/\%dir/$dirname/g;
-        `$zipcmd`;
-
-        my $file_path = "$dirname.zip";
+        my $zip = Archive::Zip->new;
+        unless ( $zip->addTree("$dirname/.", '') == AZ_OK ) {
+            die 'Unable to add vouchers from temporary directory to zip file';
+        };
+        my $fh = File::Temp->new( CLEANUP => 1 );
+        unless ( $zip->writeToFileHandle( $fh, 1 ) == AZ_OK ) {
+            die 'Unable to write voucher zip output to temporary file';
+        }
+        $fh->seek( 0, 0 );
 
         return sub {
             my $responder = shift;
-
-            open my $zip, '<:bytes', $file_path
-                or die "Failed to open temporary zip file $file_path : $!";
-
             $responder->(
                 [
                  HTTP_OK,
@@ -572,13 +573,8 @@ sub print_batch {
                       'attachment; filename="batch-'
                       . $request->{batch_id} . '.zip"',
                  ],
-                 $zip   # the file-handle
+                 $fh   # the file-handle
                 ]);
-
-            close $zip
-                or warn "Failed to close temporary zip file $file_path : $!";
-            unlink $file_path
-                or warn "Failed to unlink temporary zip file $file_path : $!";
         };
     }
     else {

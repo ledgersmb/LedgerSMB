@@ -147,14 +147,6 @@ of the same type with e.g. additional states and actions.
 
 defaults to './custom_workflows'};
 
-### SECTION  ---   programs
-
-def 'zip',
-    section => 'programs',
-    default => 'zip -r %dir %dir',
-    doc => '';
-
-
 sub _workflow_factory_config {
     my ($wf_type) = @_;
     my %config;
