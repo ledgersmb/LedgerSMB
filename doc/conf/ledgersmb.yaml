@@ -12,6 +12,13 @@ default_locale:
   directory:
     $ref: paths/locale
 
+environment_variables:
+  class: LedgerSMB::EnvVarSetter
+  lifecycle: eager
+  method: set
+  args:
+    PATH: /bin:/usr/bin:/usr/local/bin:/usr/local/pgsql/bin
+
 extra_middleware: []
 
 logging:

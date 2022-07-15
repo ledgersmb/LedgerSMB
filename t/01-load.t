@@ -86,6 +86,7 @@ my @modules =
      'LedgerSMB::LanguageResolver',
      'LedgerSMB::Mailer',
      'LedgerSMB::User', 'LedgerSMB::Entity',
+     'LedgerSMB::EnvVarSetter',
      'LedgerSMB::GL', 'LedgerSMB::Timecard',
      'LedgerSMB::PE', 'LedgerSMB::App_Module', 'LedgerSMB::Budget',
      'LedgerSMB::Business_Unit', 'LedgerSMB::Business_Unit_Class',
