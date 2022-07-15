@@ -177,6 +177,16 @@ commands:
             echo "export LSMB_BASE_URL=http://\$HOST_IP:5000" >> $BASH_ENV
             echo "export PSGI_BASE_URL=http://\$HOST_IP:5762" >> $BASH_ENV
 
+      - run:
+          name: Test MailHog
+          command: |
+            echo -e "To: you@lsmb\n" \
+                    "Subject: sendmail test\n" \
+                    "From: me@lsmb\n" "\n" \
+                    "And here goes the e-mail body, test test test..\n" | \
+              sendmail me@test
+            curl localhost:8025/api/v2/messages
+
   start_starman:
     description: "Start starman"
     steps:
@@ -230,7 +240,7 @@ executors:
         type: integer
         default: 0
     docker:
-      - image: ledgersmbdev/ledgersmb_circleci-perl:<< parameters.perl >>
+      - image: ledgersmb/ledgersmb_circleci-perl:<< parameters.perl >>
       - image: ledgersmbdev/ledgersmb_circleci-postgres:<< parameters.postgres >>
         environment:
           POSTGRES_PASSWORD: test
@@ -247,6 +257,8 @@ executors:
           HUB_PORT: 4444
           NODE_MAX_SESSION: 5
           NODE_MAX_INSTANCES: 5
+      - image: mailhog/mailhog:latest
+  
     environment:
       BROWSER: << parameters.browser >>
       COVERAGE: << parameters.coverage >>
