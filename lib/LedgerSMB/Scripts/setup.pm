@@ -113,14 +113,11 @@ sub _get_database {
         if ( $request->{database} && $request->{database} =~ /postgres|template0|template1/);
 
     return (undef,
-            LedgerSMB::Database->new(
-                connect_data => {
-                    user     => $creds->{login},
-                    password => $creds->{password},
-                    dbname   => $request->{database},
-                },
-                schema   => LedgerSMB::Sysconfig::db_namespace(),
-    ));
+            $request->{_wire}->get( 'db' )->instance(
+                user     => $creds->{login},
+                password => $creds->{password},
+                dbname   => $request->{database},
+            ));
 }
 
 

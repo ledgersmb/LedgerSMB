@@ -47,10 +47,9 @@ use HTTP::Status qw( is_server_error );
 use Plack::Request;
 use Plack::Util;
 use Plack::Util::Accessor
-    qw( provide_connection default_company schema );
+    qw( provide_connection default_company factory );
 use Scope::Guard qw( guard );
 
-use LedgerSMB::Database;
 use LedgerSMB::PSGI::Util;
 
 =head1 METHODS
@@ -95,13 +94,8 @@ sub _connect {
         return (undef, LedgerSMB::PSGI::Util::unauthorized());
     }
 
-    my $schema = $self->schema =~ s/'/''/gr;
     my $dbh = eval {
-        $env->{'lsmb.db'} =
-            LedgerSMB::Database->new(
-                schema => $schema,
-                connect_data => \%creds
-            )->connect;
+        $env->{'lsmb.db'} = $self->factory->instance( %creds )->connect;
     };
 
     if (not defined $dbh

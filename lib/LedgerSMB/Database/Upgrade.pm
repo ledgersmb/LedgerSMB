@@ -237,7 +237,7 @@ sub run_upgrade_script {
     my $dbh = $self->database->connect({ PrintError => 0, AutoCommit => 0 });
     my $temp = $self->database->loader_log_filename();
 
-    my $schema =  LedgerSMB::Sysconfig::db_namespace();
+    my $schema = $self->database->schema;
     my $guard = Scope::Guard->new(
         sub {
             $dbh->rollback;

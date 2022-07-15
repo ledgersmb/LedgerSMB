@@ -149,34 +149,9 @@ defaults to './custom_workflows'};
 
 ### SECTION  ---   database
 
-def 'db_host',
-    key => 'host',
-    section => 'database',
-    envvar => 'PGHOST',
-    default => 'localhost',
-    doc => '';
-
-def 'db_port',
-    key => 'port',
-    section => 'database',
-    envvar => 'PGPORT',
-    default => '5432',
-    doc => '';
-
 def 'default_db',
     section => 'database',
     default => undef,
-    doc => '';
-
-def 'db_namespace',
-    section => 'database',
-    default => 'public',
-    doc => '';
-
-def 'db_sslmode',
-    section => 'database',
-    default => 'prefer',
-    envvar => 'PGSSLMODE',
     doc => '';
 
 def 'auth_db',
@@ -455,6 +430,19 @@ sub ini2wire {
                        cache => $cfg->val( 'paths', 'templates_cache',
                                            'lsmb_templates/' )
                    }) );
+
+    $wire->set(
+        'db' => $wire->create_service(
+            'db',
+            class => 'LedgerSMB::Database::Factory',
+            args => {
+                connect_data => {
+                    host => $cfg->val( 'database', 'host', 'localhost'),
+                    port => $cfg->val( 'database', 'port', 5432),
+                    sslmode => $cfg->val( 'database', 'sslmode', 'prefer'),
+                },
+                schema => $cfg->val( 'database', 'db_namespace', 'public' )
+            }));
 }
 
 =head1 LICENSE AND COPYRIGHT

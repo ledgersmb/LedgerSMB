@@ -4,6 +4,9 @@ cookie:
   # Leaving the secret empty causes a secret to be dynamically generated
   # secret:
 
+db:
+  $class: LedgerSMB::Database::Factory
+
 default_locale:
   $class: LedgerSMB::LanguageResolver
   directory:

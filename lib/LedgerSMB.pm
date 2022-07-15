@@ -422,7 +422,7 @@ sub upload {
 sub call_procedure {
     my $self = shift;
     my %args = @_;
-    $args{funcschema} ||= LedgerSMB::Sysconfig::db_namespace();
+    $args{funcschema} ||= $self->{_wire}->get( 'db' )->schema;
     $args{funcname} ||= $args{procname};
     $args{dbh} = $self->{dbh};
     $args{args} ||= [];

@@ -252,7 +252,7 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'closed',
                 default_company    => LedgerSMB::Sysconfig::default_db(),
-                schema             => LedgerSMB::Sysconfig::db_namespace();
+                factory            => $wire->get( 'db' );
             enable '+LedgerSMB::Middleware::MainAppConnect',
                 provide_connection => 'closed',
                 require_version    => $LedgerSMB::VERSION;
@@ -278,7 +278,7 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'open',
                 default_company => LedgerSMB::Sysconfig::default_db(),
-                schema          => LedgerSMB::Sysconfig::db_namespace();
+                factory         => $wire->get( 'db' );
             enable '+LedgerSMB::Middleware::MainAppConnect',
                 provide_connection => 'open',
                 require_version => $LedgerSMB::VERSION;
@@ -304,7 +304,7 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'none',
                 default_company => LedgerSMB::Sysconfig::default_db(),
-                schema          => LedgerSMB::Sysconfig::db_namespace();
+                factory         => $wire->get( 'db' );
             enable '+LedgerSMB::Middleware::MainAppConnect',
                 provide_connection => 'none',
                 require_version => $LedgerSMB::VERSION;
@@ -325,7 +325,7 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'open',
                 default_company => LedgerSMB::Sysconfig::default_db(),
-                schema          => LedgerSMB::Sysconfig::db_namespace();
+                factory         => $wire->get( 'db' );
             enable '+LedgerSMB::Middleware::MainAppConnect',
                 provide_connection => 'open',
                 require_version => $LedgerSMB::VERSION;
