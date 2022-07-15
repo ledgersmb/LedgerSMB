@@ -129,11 +129,6 @@ sub def {
 
 ### SECTION  ---   paths
 
-def 'templates_cache',
-    section => 'paths',
-    default => 'lsmb_templates',
-    doc => q{this is a subdir of tempdir, unless it's an absolute path};
-
 def 'workflows',
     section => 'paths',
     default => 'workflows',
@@ -450,6 +445,16 @@ sub ini2wire {
                $cfg->val( 'paths', 'localepath', './locale/po/' ) );
     $wire->set('paths/templates',
                $cfg->val( 'paths', 'templates', './templates/' ) );
+    $wire->set('ui',
+               $wire->create_service(
+                   'ui',
+                   class => 'LedgerSMB::Template::UI',
+                   lifecycle => 'eager',
+                   method => 'new_UI',
+                   args => {
+                       cache => $cfg->val( 'paths', 'templates_cache',
+                                           'lsmb_templates/' )
+                   }) );
 }
 
 =head1 LICENSE AND COPYRIGHT

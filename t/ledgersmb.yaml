@@ -10,3 +10,10 @@ paths:
   config:
     locale: ./locale/po/
 
+ui:
+  class: LedgerSMB::Template::UI
+  method: new_UI
+  lifecycle: eager
+  args:
+    cache: lsmb_templates/
+    root: ./

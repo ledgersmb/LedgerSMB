@@ -67,3 +67,10 @@ printers:
     Epson: lpr -PEpson
   fallback: Laser
 
+ui:
+  class: LedgerSMB::Template::UI
+  method: new_UI
+  lifecycle: eager
+  args:
+    cache: lsmb_templates/
+    root: ./
