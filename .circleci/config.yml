@@ -239,7 +239,7 @@ executors:
         type: integer
         default: 0
     docker:
-      - image: ledgersmb/ledgersmb_circleci-perl:<< parameters.perl >>
+      - image: ledgersmbdev/ledgersmb_circleci-perl:<< parameters.perl >>
       - image: ledgersmbdev/ledgersmb_circleci-postgres:<< parameters.postgres >>
         environment:
           POSTGRES_PASSWORD: test
