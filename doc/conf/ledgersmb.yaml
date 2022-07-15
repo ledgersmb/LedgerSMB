@@ -18,6 +18,9 @@ logging:
   level: ERROR
   # config: ledgersmb.log.conf
 
+login_settings:
+  default_db: ledgersmb
+
 mail:
   # transport:
   #   $class: LedgerSMB::Mailer::TransportSMTP
@@ -71,6 +74,10 @@ printers:
     Laser: lpr -Plaser
     Epson: lpr -PEpson
   fallback: Laser
+
+setup_settings:
+  admin_db: template1
+  auth_db: postgres
 
 ui:
   class: LedgerSMB::Template::UI

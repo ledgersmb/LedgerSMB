@@ -147,26 +147,6 @@ of the same type with e.g. additional states and actions.
 
 defaults to './custom_workflows'};
 
-### SECTION  ---   database
-
-def 'default_db',
-    section => 'database',
-    default => undef,
-    doc => '';
-
-def 'auth_db',
-    section => 'database',
-    default => 'postgres',
-    doc => q{Database used to log into when collecting information
-    about the system, e.g. from the setup.pl status page.};
-
-def 'admin_db',
-    section => 'database',
-    default => 'template1',
-    doc => q{Database used to log into when authenticating setup.pl
-admin users and determining the list of database names available for
-administration};
-
 ### SECTION  ---   programs
 
 def 'zip',
@@ -443,11 +423,22 @@ sub ini2wire {
                 },
                 schema => $cfg->val( 'database', 'db_namespace', 'public' )
             }));
+
+    $wire->set(
+        'login_settings' => {
+            default_db => $cfg->val( 'database', 'default_db' )
+        });
+
+    $wire->set(
+        'setup_settings' => {
+            auth_db  => $cfg->val( 'database', 'admin_db', 'postgres' ),
+            admin_db => $cfg->val( 'database', 'admin_db', 'template1' ),
+        });
 }
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2006-2020 The LedgerSMB Core Team
+Copyright (C) 2006-2022 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

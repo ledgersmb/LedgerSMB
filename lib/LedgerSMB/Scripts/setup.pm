@@ -51,7 +51,6 @@ use LedgerSMB::PGDate;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setting;
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::UI;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Database::Upgrade;
@@ -255,8 +254,9 @@ sub login {
     return $reauth if $reauth;
 
     my $template = LedgerSMB::Template::UI->new_UI;
-    my $version_info =
-        $database->get_info(LedgerSMB::Sysconfig::auth_db());
+    my $settings = $request->{_wire}->get( 'setup_settings' );
+    my $auth_db = ($settings and $settings->{auth_db}) // 'postgres';
+    my $version_info = $database->get_info($auth_db);
 
     my $server_version     = version->parse(
         $version_info->{system_info}->{'PostgreSQL (server)'}
@@ -331,7 +331,9 @@ sub list_databases {
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
-    my @results = $database->list_dbs(LedgerSMB::Sysconfig::admin_db());
+    my @results = $database->list_dbs(
+        $request->{_wire}->get('setup_settings')->{admin_db}
+        );
     $request->{dbs} = [];
     # Ideally we would extend DBAdmin->list_dbs to accept an argument containing a list of databases to exclude using a method similar to that shown at https://git.framasoft.org/framasoft/OCB/commit/7a6e94edd83e9e73e56d2d148e3238618
     # also, we should add a new function DBAdmin->list_dbs_this_user which only returns db's the currently auth'd user has access to. Once again the framasoft.org link shows a method of doing this
@@ -789,7 +791,9 @@ sub upgrade {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
-    my $dbinfo = $database->get_info(LedgerSMB::Sysconfig::auth_db());
+    my $settings = $request->{_wire}->get( 'setup_settings' );
+    my $auth_db = ($settings and $settings->{auth_db}) // 'postgres';
+    my $dbinfo = $database->get_info($auth_db);
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
     my $locale = $request->{_locale};
 
@@ -955,7 +959,9 @@ sub fix_tests {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
-    my $dbinfo = $database->get_info(LedgerSMB::Sysconfig::auth_db());
+    my $settings = $request->{_wire}->get( 'setup_settings' );
+    my $auth_db = ($settings and $settings->{auth_db}) // 'postgres';
+    my $dbinfo = $database->get_info($auth_db);
     my $dbh = $request->{dbh};
     $dbh->{AutoCommit} = 0;
 
@@ -1006,8 +1012,9 @@ sub create_db {
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
-    my $version_info =
-        $database->get_info(LedgerSMB::Sysconfig::auth_db());
+    my $settings = $request->{_wire}->get( 'setup_settings' );
+    my $auth_db = ($settings and $settings->{auth_db}) // 'postgres';
+    my $version_info = $database->get_info($auth_db);
     $request->{login_name} = $version_info->{username};
     if ($version_info->{status} ne 'does not exist') {
         $request->{message} = $request->{_locale}->text(
@@ -1511,9 +1518,10 @@ sub system_info {
 
     # the intent here is to get a much more sophisticated system which
     # asks registered modules for their system and dependency info
+    my $settings = $request->{_wire}->get( 'setup_settings' );
+    my $auth_db = ($settings and $settings->{auth_db}) // 'postgres';
     my $info = {
-        db => $database->get_info(LedgerSMB::Sysconfig::auth_db())
-            ->{system_info},
+        db     => $database->get_info($auth_db)->{system_info},
         system => LedgerSMB::system_info()->{system},
         environment => \%ENV,
         modules => \%INC,
@@ -1528,7 +1536,7 @@ sub system_info {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2011-2018 The LedgerSMB Core Team
+Copyright (C) 2011-2022 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
