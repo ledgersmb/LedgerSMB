@@ -35,7 +35,7 @@ if (-f 'ledgersmb.yaml') {
 else {
     $wire = Beam::Wire->new(
         config => {
-            extra_middleware => []
+            extra_middleware => [],
         } );
 }
 
@@ -43,7 +43,7 @@ my $cfg = LedgerSMB::Sysconfig->initialize(
     $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf'
     );
 LedgerSMB::Sysconfig::ini2wire( $wire, $cfg );
-LedgerSMB::Locale->initialize;
+LedgerSMB::Locale->initialize($wire);
 
 require Plack::Middleware::Pod
     if ( $ENV{PLACK_ENV} && $ENV{PLACK_ENV} eq 'development' );

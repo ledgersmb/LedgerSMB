@@ -6,7 +6,8 @@ cookie:
 
 default_locale:
   $class: LedgerSMB::LanguageResolver
-  directory: ./locale/po/
+  directory:
+    $ref: paths/locale
 
 extra_middleware: []
 
@@ -53,6 +54,10 @@ output_plugins:
     - $class: LedgerSMB::Template::Plugin::CSV
     - $class: LedgerSMB::Template::Plugin::TXT
     - $class: LedgerSMB::Template::Plugin::HTML
+
+paths:
+  $class: Beam::Wire
+  locale: ./locale/po/
 
 printers:
   $class: LedgerSMB::Printers

@@ -105,9 +105,11 @@ use Locale::Maketext::Lexicon;
 use Encode;
 
 sub initialize {
+    my $class = shift;
+    my $wire = shift;
     Locale::Maketext::Lexicon->import(
         {
-            '*'     => [ Gettext => (LedgerSMB::Sysconfig::localepath() . '/*.po'), ],
+            '*'     => [ Gettext => ($wire->get( 'paths/locale' ) . '/*.po'), ],
                 _auto   => 1,
                 _decode => 1,
         }

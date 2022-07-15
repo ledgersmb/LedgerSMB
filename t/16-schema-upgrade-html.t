@@ -21,8 +21,9 @@ use LedgerSMB::Database::ChangeChecks qw( run_checks load_checks );
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
 use LedgerSMB::Sysconfig;
 
+my $wire = Beam::Wire->new(file => 't/ledgersmb.yaml');
 LedgerSMB::Sysconfig->initialize;
-LedgerSMB::Locale->initialize;
+LedgerSMB::Locale->initialize($wire);
 
 
 sub test_request {

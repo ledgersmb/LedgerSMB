@@ -1,0 +1,12 @@
+
+default_locale:
+  class: LedgerSMB::LanguageResolver
+  args:
+    directory:
+      $ref: paths/locale
+
+paths:
+  $class: Beam::Wire
+  config:
+    locale: ./locale/po/
+

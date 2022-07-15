@@ -129,13 +129,6 @@ sub def {
 
 ### SECTION  ---   paths
 
-# Path to the translation files
-def 'localepath',
-    section => 'paths',
-    default => 'locale/po',
-    doc => q{};
-
-
 # templates base directory
 def 'templates',
     section => 'paths',
@@ -457,6 +450,10 @@ sub ini2wire {
                     directory => './locale/po/'
                 }
             )));
+
+    $wire->set('paths', Beam::Wire->new );
+    $wire->set('paths/locale',
+               $cfg->val( 'paths', 'localepath', './locale/po/' ) );
 }
 
 =head1 LICENSE AND COPYRIGHT

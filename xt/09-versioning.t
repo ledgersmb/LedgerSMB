@@ -13,21 +13,12 @@ use Log::Log4perl qw(:easy);
 use Plack::Request;
 
 LedgerSMB::Sysconfig->initialize;
-LedgerSMB::Locale->initialize;
+my $wire = Beam::Wire->new(file => 't/ledgersmb.yaml');
+LedgerSMB::Locale->initialize($wire);
 Log::Log4perl->easy_init($OFF);
 
 $ENV{REQUEST_METHOD} = 'GET';
      # Suppress warnings from LedgerSMB::_process_cookies
-
-my $wire = Beam::Wire->new(
-    config => {
-        default_locale => {
-            class => 'LedgerSMB::LanguageResolver',
-            args => {
-                directory => './locale/po/',
-            },
-        }
-    });
 
 my $request = Plack::Request->new({});
 
