@@ -130,12 +130,6 @@ jobs:
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
-      mailhog:
-        image: mailhog/mailhog:latest
-        ports:
-          - 1025:1025
-          - 8025:8025
-
     env:
       BROWSER: ${{ matrix.BROWSER }}
       COA_TESTING: ${{ matrix.COA_TESTING }}
@@ -153,10 +147,6 @@ jobs:
       PSGI_BASE_URL: http://lsmb:5762
       RELEASE_TESTING: 1
       REMOTE_SERVER_ADDR: 127.0.0.1
-      SSMTP_FROMLINE_OVERRIDE: YES
-      SSMTP_HOSTNAME: lsmb
-      SSMTP_MAILHUB: lsmb:1025
-      MH_SENDMAIL_SMTP_ADDR: lsmb:1025
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -176,18 +166,6 @@ jobs:
       - name: Set host alias (why doesn't Github do it itself)
         run: |
           hostname -i | awk '{printf("%s lsmb\n",$1)}' | sudo tee -a /etc/hosts
-
-      - name: Sendmail
-        run: |
-          wget --quiet https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64
-          sudo chmod +x mhsendmail_linux_amd64
-          sudo mv mhsendmail_linux_amd64 /usr/local/bin/sendmail
-          echo -e "To: you@lsmb\n" \
-                  "Subject: sendmail test\n" \
-                  "From: me@lsmb\n" "\n" \
-                  "And here goes the e-mail body, test test test..\n" | \
-            sendmail me@test
-          curl lsmb:8025/api/v2/messages
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
