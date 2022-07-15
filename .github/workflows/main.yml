@@ -135,7 +135,6 @@ jobs:
         ports:
           - 1025:1025
           - 8025:8025
-
     env:
       BROWSER: ${{ matrix.BROWSER }}
       COA_TESTING: ${{ matrix.COA_TESTING }}
@@ -176,7 +175,6 @@ jobs:
       - name: Set host alias (why doesn't Github do it itself)
         run: |
           hostname -i | awk '{printf("%s lsmb\n",$1)}' | sudo tee -a /etc/hosts
-
       - name: Sendmail
         run: |
           wget --quiet https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64

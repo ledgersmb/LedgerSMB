@@ -186,7 +186,6 @@ commands:
                     "And here goes the e-mail body, test test test..\n" | \
               sendmail me@test
             curl localhost:8025/api/v2/messages
-
   start_starman:
     description: "Start starman"
     steps:
