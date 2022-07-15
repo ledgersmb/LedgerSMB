@@ -32,10 +32,6 @@ key which can be used to create a database connection.
 When C<none>, the database connection created to authenticate the user
 is closed. No additional action is taken.
 
-=head2 default_company
-
-The default company to use.
-
 =cut
 
 use strict;
@@ -47,7 +43,7 @@ use HTTP::Status qw( is_server_error );
 use Plack::Request;
 use Plack::Util;
 use Plack::Util::Accessor
-    qw( provide_connection default_company factory );
+    qw( provide_connection factory );
 use Scope::Guard qw( guard );
 
 use LedgerSMB::PSGI::Util;
@@ -70,8 +66,7 @@ added to authenticate and create a database connection on demand.
 =head2 lsmb.db_cb($env, [$login, $password, [$company]])
 
 Returns a database handle connected to C<$company> using the credentials
-C<$login> and C<$password>, if supplied. If C<$company> isn't provided,
-the value of the C<default_company> attribute is used.
+C<$login> and C<$password>, if supplied.
 
 When C<$login> isn't provided, credentials are taken from the session
 storage available through C<$env->{'lsmb.session'}>.

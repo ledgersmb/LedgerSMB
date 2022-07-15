@@ -38,7 +38,6 @@ use LedgerSMB::Routes::ERP::API::Products;
 use LedgerSMB::Routes::ERP::API::Session;
 use LedgerSMB::Routes::ERP::API::Templates;
 use LedgerSMB::Setting;
-use LedgerSMB::Sysconfig;
 
 use CGI::Emulate::PSGI;
 use HTTP::Status qw( HTTP_FOUND );
@@ -251,7 +250,6 @@ sub setup_url_space {
                 script          => $script;
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'closed',
-                default_company    => LedgerSMB::Sysconfig::default_db(),
                 factory            => $wire->get( 'db' );
             enable '+LedgerSMB::Middleware::MainAppConnect',
                 provide_connection => 'closed',
@@ -277,7 +275,6 @@ sub setup_url_space {
                 script   => $script;
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'open',
-                default_company => LedgerSMB::Sysconfig::default_db(),
                 factory         => $wire->get( 'db' );
             enable '+LedgerSMB::Middleware::MainAppConnect',
                 provide_connection => 'open',
@@ -303,7 +300,6 @@ sub setup_url_space {
                 script   => 'login.pl';
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'none',
-                default_company => LedgerSMB::Sysconfig::default_db(),
                 factory         => $wire->get( 'db' );
             enable '+LedgerSMB::Middleware::MainAppConnect',
                 provide_connection => 'none',
@@ -324,7 +320,6 @@ sub setup_url_space {
                 duration    => 60*60*24*90;
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'open',
-                default_company => LedgerSMB::Sysconfig::default_db(),
                 factory         => $wire->get( 'db' );
             enable '+LedgerSMB::Middleware::MainAppConnect',
                 provide_connection => 'open',
