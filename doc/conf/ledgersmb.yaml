@@ -58,6 +58,7 @@ output_plugins:
 paths:
   $class: Beam::Wire
   locale: ./locale/po/
+  templates: ./templates/
 
 printers:
   $class: LedgerSMB::Printers

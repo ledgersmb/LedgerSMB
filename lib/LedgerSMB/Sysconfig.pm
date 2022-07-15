@@ -129,12 +129,6 @@ sub def {
 
 ### SECTION  ---   paths
 
-# templates base directory
-def 'templates',
-    section => 'paths',
-    default => 'templates',
-    doc => q{};
-
 def 'templates_cache',
     section => 'paths',
     default => 'lsmb_templates',
@@ -454,6 +448,8 @@ sub ini2wire {
     $wire->set('paths', Beam::Wire->new );
     $wire->set('paths/locale',
                $cfg->val( 'paths', 'localepath', './locale/po/' ) );
+    $wire->set('paths/templates',
+               $cfg->val( 'paths', 'templates', './templates/' ) );
 }
 
 =head1 LICENSE AND COPYRIGHT

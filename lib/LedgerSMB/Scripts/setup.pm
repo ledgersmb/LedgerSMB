@@ -541,7 +541,7 @@ sub template_screen {
     $request->{template_dirs} =
         [ map { +{ text => $_, value => $_ } }
           sort keys %{ LedgerSMB::Database::Config->new(
-                           templates_dir => LedgerSMB::Sysconfig::templates(),
+                           templates_dir => $request->{_wire}->get( 'paths/templates' ),
                            )->templates } ];
     return LedgerSMB::Template::UI->new_UI
         ->render($request, 'setup/template_info',
@@ -559,7 +559,7 @@ and not the user creation screen.
 sub _save_templates {
     my ($request, $entrypoint) = @_;
     my $templates = LedgerSMB::Database::Config->new(
-        templates_dir => LedgerSMB::Sysconfig::templates()
+        templates_dir => $request->{_wire}->get( 'paths/templates' ),
         )->templates;
 
     return template_screen($request, $entrypoint)
