@@ -52,11 +52,7 @@
     "@babel/plugin-proposal-object-rest-spread": "7.18.6",
     "@babel/preset-env": "7.18.6",
     "@intlify/vue-i18n-loader": "4.2.0",
-    "@vue/cli": "5.0.8",
-    "@vue/cli-service": "5.0.8",
-    "@vue/compiler-sfc": "3.2.37",
     "@vue/test-utils": "2.0.2",
-    "autoprefixer": "10.4.7",
     "babel-loader": "8.2.5",
     "browserslist": "4.21.1",
     "buffer": "6.0.3",
@@ -103,7 +99,6 @@
     "stylelint": "14.9.1",
     "stylelint-config-standard": "26.0.0",
     "stylelint-declaration-block-no-ignored-properties": "2.5.0",
-    "stylelint-no-browser-hacks": "1.2.1",
     "stylelint-no-nested-media": "0.1.0",
     "stylelint-no-unsupported-browser-features": "5.0.3",
     "stylelint-order": "5.0.0",
@@ -286,7 +281,6 @@
     "extends": "stylelint-config-standard",
     "plugins": [
       "stylelint-declaration-block-no-ignored-properties",
-      "stylelint-no-browser-hacks/lib",
       "stylelint-no-nested-media",
       "stylelint-no-unsupported-browser-features",
       "stylelint-order"
@@ -313,12 +307,6 @@
       "plugin/no-unsupported-browser-features": [true, {
         "ignorePartialSupport": true
       }],
-      "plugin/no-browser-hacks": [true, {
-        "browsers": [
-            "last 2 versions",
-            "not ie",
-            "edge >= 18"
-      ]}],
       "plugin/declaration-block-no-ignored-properties": true,
       "pitcher/no-nested-media": true,
       "selector-class-pattern": null,
