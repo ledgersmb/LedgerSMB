@@ -10,10 +10,6 @@ no lib '.'; # can run from anywhere
 use Log::Log4perl qw(:easy);
 Log::Log4perl->easy_init($OFF);
 
-use LedgerSMB::Sysconfig;
-
-LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
-
 =head1 NAME
 
 makeblacklist.pl

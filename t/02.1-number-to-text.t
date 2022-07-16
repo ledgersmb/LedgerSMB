@@ -10,9 +10,6 @@ use LedgerSMB::PGNumber;
 use Log::Log4perl qw(:easy);
 Log::Log4perl->easy_init($OFF);
 
-use LedgerSMB::Sysconfig;
-LedgerSMB::Sysconfig->initialize;
-
 my $wire = Beam::Wire->new(file => 't/ledgersmb.yaml');
 LedgerSMB::Locale->initialize($wire);
 

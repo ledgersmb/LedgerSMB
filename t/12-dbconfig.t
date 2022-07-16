@@ -7,9 +7,6 @@ Log::Log4perl->easy_init($OFF);
 
 
 use LedgerSMB::Database::Config;
-use LedgerSMB::Sysconfig;
-
-LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
 
 my $coa = LedgerSMB::Database::Config
     ->new( templates_dir => './templates' )

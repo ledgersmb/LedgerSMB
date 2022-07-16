@@ -6,13 +6,11 @@ use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::App_State;
 use LedgerSMB::Locale;
-use LedgerSMB::Sysconfig;
 
 use Beam::Wire;
 use Log::Log4perl qw(:easy);
 use Plack::Request;
 
-LedgerSMB::Sysconfig->initialize;
 my $wire = Beam::Wire->new(file => 't/ledgersmb.yaml');
 LedgerSMB::Locale->initialize($wire);
 Log::Log4perl->easy_init($OFF);

@@ -13,12 +13,9 @@ use Log::Log4perl qw(:easy);
 Log::Log4perl->easy_init($OFF);
 
 use LedgerSMB::Database::Upgrade;
-use LedgerSMB::Sysconfig;
 
 use DBI;
 use DBD::Mock::Session;
-
-LedgerSMB::Sysconfig->initialize();
 
 package LedgerSMB::Test::Database {
     use Carp;
