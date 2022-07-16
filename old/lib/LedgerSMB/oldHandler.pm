@@ -55,8 +55,6 @@ use LedgerSMB::Middleware::RequestID;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Sysconfig;
 
-use Cookie::Baker;
-use Digest::MD5;
 use HTML::Escape;
 use Log::Any;
 use Feature::Compat::Try;

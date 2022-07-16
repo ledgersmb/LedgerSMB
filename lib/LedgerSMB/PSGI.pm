@@ -45,6 +45,7 @@ use List::Util qw{  none };
 use Log::Any;
 use Log::Log4perl;
 use Scalar::Util qw{ reftype };
+use String::Random;
 use Feature::Compat::Try;
 
 # To build the URL space
@@ -225,6 +226,10 @@ sub setup_url_space {
     my $wire        = $args{wire};
     my $psgi_app    = psgi_app($wire);
 
+    my $cookie      = $wire->get( 'cookie' )->{name} // 'LedgerSMB';
+    my $secret      = $wire->get( 'cookie' )->{secret} //
+        String::Random->new->randpattern('.' x 50);
+
     return builder {
         if (my $proxy_ip = eval { $wire->get( 'miscellaneous/proxy_ip' ); }) {
             enable match_if addr([ split / /, $proxy_ip ]), 'ReverseProxy';
@@ -240,9 +245,9 @@ sub setup_url_space {
             enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::SessionStorage',
                 domain          => 'main',
-                cookie          => $wire->get( 'cookie' )->{name},
+                cookie          => $cookie,
                 duration        => 60*60*24*90,
-                secret          => $wire->get( 'cookie' )->{secret},
+                secret          => $secret,
                 # can marshall state in, but not back out (due to forking)
                 # so have the inner scope handle serialization itself
                 inner_serialize => 1;
@@ -265,8 +270,8 @@ sub setup_url_space {
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::SessionStorage',
                 domain   => 'main',
-                cookie   => $wire->get( 'cookie' )->{name},
-                secret   => $wire->get( 'cookie' )->{secret},
+                cookie   => $cookie,
+                secret   => $secret,
                 duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
                 max_post_size => $wire->get( 'miscellaneous/max_upload_size' ),
@@ -290,8 +295,8 @@ sub setup_url_space {
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::SessionStorage',
                 domain   => 'main',
-                cookie   => $wire->get( 'cookie' )->{name},
-                secret   => $wire->get( 'cookie' )->{secret},
+                cookie   => $cookie,
+                secret   => $secret,
                 duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
                 max_post_size => $wire->get( 'miscellaneous/max_upload_size' ),
@@ -314,9 +319,9 @@ sub setup_url_space {
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::SessionStorage',
                 domain      => 'main',
-                cookie      => $wire->get( 'cookie' )->{name},
+                cookie      => $cookie,
                 cookie_path => '/',
-                secret      => $wire->get( 'cookie' )->{secret},
+                secret      => $secret,
                 duration    => 60*60*24*90;
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'open',
