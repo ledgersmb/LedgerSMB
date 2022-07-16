@@ -29,24 +29,33 @@ use Log::Log4perl::Layout::PatternLayout;
 use LedgerSMB::Middleware::RequestID;
 
 my $wire;
-if (-f 'ledgersmb.yaml') {
-    $wire = Beam::Wire->new( file => 'ledgersmb.yaml');
-}
-else {
-    $wire = Beam::Wire->new(
-        config => {
-            extra_middleware => [],
-        } );
-}
+do {
+    my $config_file;
+    if ($ENV{LSMB_CONFIG_FILE}
+        and -e $ENV{LSMB_CONFIG_FILE}) {
+        $config_file = $ENV{LSMB_CONFIG_FILE};
+    }
+    elsif (-f 'ledgersmb.yaml') {
+        $config_file = 'ledgersmb.yaml';
+    }
+    elsif (-f 'ledgersmb.yml') {
+        $config_file = 'ledgersmb.yml';
+    }
+    elsif (-f 'ledgersmb.conf') {
+        $config_file = 'ledgersmb.conf';
+    }
 
-my $cfg = LedgerSMB::Sysconfig->initialize(
-    $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf'
-    );
-LedgerSMB::Sysconfig::ini2wire( $wire, $cfg );
+    if ($config_file =~ /[.]ya?ml$/) {
+        $wire = Beam::Wire->new( file => $config_file);
+    }
+    else {
+        $wire = Beam::Wire->new( config => { extra_middleware => [] });
+        my $cfg = LedgerSMB::Sysconfig->initialize( $config_file );
+        LedgerSMB::Sysconfig::ini2wire( $wire, $cfg );
+    }
+};
+
 LedgerSMB::Locale->initialize($wire);
-
-require Plack::Middleware::Pod
-    if ( $ENV{PLACK_ENV} && $ENV{PLACK_ENV} eq 'development' );
 
 my $path = $INC{"LedgerSMB.pm"};
 my $version = $LedgerSMB::VERSION;
