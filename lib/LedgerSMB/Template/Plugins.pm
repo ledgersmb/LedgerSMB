@@ -6,7 +6,7 @@ LedgerSMB::Template::Plugins - Module to manage template output format plugins
 
 =head1 DESCRIPTION
 
-
+This module manages the collection available output formats.
 
 =head1 SYNOPSIS
 
@@ -14,7 +14,7 @@ LedgerSMB::Template::Plugins - Module to manage template output format plugins
     $class: LedgerSMB::Template::Plugins
     plugins:
       - $class: LedgerSMB::Template::Plugin::LaTeX
-        formats: [ "PDF" ]           # Supports PDF too, but suppress that
+        format: "PDF"           # Supports Postscript too, but suppress that
       - $class: LedgerSMB::Template::Plugin::CSV
       - $class: MyTemplate::Plugin::Format
 
@@ -24,7 +24,7 @@ use strict;
 use warnings;
 
 use Module::Runtime;
-use List::Util qw(any first);
+use List::Util qw(first);
 
 use Moo;
 
@@ -33,27 +33,31 @@ use Moo;
 
 =head2 plugins
 
+Contains an array of configured output formats.
+
 =cut
 
 has plugins => (is => 'ro', default => sub { [] });
 
-has _cache => (is => 'ro', default => sub { {} });
 
 =head1 METHODS
 
 =head2 get( $output_format )
 
+Retrieves the formatter C<$output_format> from the configured list.
+
 =cut
 
 sub get {
     my ($self, $fmt) = @_;
-    return $self->_cache->{$fmt} if exists $self->_cache->{$fmt};
 
-    return $self->_cache->{$fmt} =
-        first { $_->format eq $fmt } $self->plugins->@*;
+    return first { $_->format eq $fmt } $self->plugins->@*;
 }
 
 =head2 get_formats
+
+Retrieves the list of configured output formats. Returns a list in
+list context or an arrayref in scalar context.
 
 =cut
 

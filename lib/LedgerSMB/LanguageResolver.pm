@@ -25,9 +25,15 @@ our $VERSION = '0.0.1';
 
 =head2 directory
 
+The directory in which the C<.po> language files are located which are
+available for translation.
+
 =cut
 
 has directory => (is => 'ro');
+
+# The list of available language codes as extracted from the files in the
+# tranlation directory.
 
 has _languages => (is => 'rw', lazy => 1, builder => '_build_languages');
 
@@ -47,9 +53,11 @@ sub _build_languages {
 
 =head1 METHODS
 
-=head2 from_header
+=head2 from_header( $accept_language )
 
-
+Selects the most appropriate of available languages, based on the user's
+preference as given by the C<Accept-Language> header, of which the value
+is passed as the argument to this method.
 
 =cut
 

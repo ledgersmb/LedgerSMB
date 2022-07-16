@@ -25,11 +25,17 @@ my $extension = 'html';
 
 =head2 formats
 
+Holds an array of strings naming the formats supported by this plugin.
+
 =cut
 
 has formats => (is => 'ro', default => sub { [ 'HTML' ] });
 
 =head2 format
+
+Holds a string naming the actual format for which this plugin
+is configured. The plugin can be used multiple times with different
+formats, as long as they are in the list of formats.
 
 =cut
 

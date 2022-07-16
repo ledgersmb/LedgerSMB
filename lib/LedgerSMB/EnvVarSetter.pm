@@ -3,11 +3,21 @@ package LedgerSMB::EnvVarSetter;
 
 =head1 NAME
 
-LedgerSMB::EnvVarSetter -
+LedgerSMB::EnvVarSetter - Changing environment variables
 
 =head1 SYNOPSIS
 
+  environment:
+    $class: LedgerSMB::EnvVarSetter
+    $lifecycle: eager
+    $method: set
+    PATH: /usr/bin:/usr/local/bin
+
 =head1 DESCRIPTION
+
+Sets environment variables to specified values. This module can be used
+to declare environment variable values by means of dependency injection
+through L<Beam::Wire>. See SYNOPSIS for an example of how to do this.
 
 =cut
 
@@ -21,6 +31,10 @@ our $VERSION = '0.0.1';
 =head1 CLASS METHODS
 
 =head2 set( %envvars )
+
+Sets the environment variables in the hash's keys to the values specified
+in the hash's values. Note that the current value - if there is one - is
+plainly overwritten. There is no mechanism for appending the value specified.
 
 =cut
 
