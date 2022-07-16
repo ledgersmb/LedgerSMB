@@ -93,3 +93,12 @@ ui:
   args:
     cache: lsmb_templates/
     root: ./
+
+workflows:
+  class: LedgerSMB::Workflow::Loader
+  lifecycle: eager
+  method: load
+  args:
+    directories:
+      - workflows/
+      - custom_workflows/
