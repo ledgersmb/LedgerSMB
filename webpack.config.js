@@ -430,7 +430,7 @@ if (TARGET !== "readme") {
                 pinia$: "pinia/dist/pinia.esm-browser.js",
                 "@": path.join(__dirname, "UI/src/")
             },
-            extensions: [".js", ".vue", ".ts", ".jsx", ".tsx", ".mjs"],
+            extensions: [".js", ".vue", ".ts", ".mjs"],
             fallback: {
                 path: require.resolve("path-browserify")
             }
