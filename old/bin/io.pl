@@ -51,8 +51,6 @@ use LedgerSMB::DBObject::Draft;
 use LedgerSMB::File;
 use List::Util qw(max reduce);
 
-use Workflow::Factory qw(FACTORY);
-
 
 require "old/bin/printer.pl";
 # any custom scripts for this one
@@ -140,7 +138,8 @@ sub approve {
     my $draft = LedgerSMB::DBObject::Draft->new(%$form);
 
     $draft->approve();
-    my $wf = FACTORY->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    my $wf = $form->{_wire}->get('workflows')
+        ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
     $wf->execute_action( 'post' ) if $wf;
     edit();
 }
@@ -954,7 +953,7 @@ sub validate_items {
 
 sub purchase_order {
 
-    my $wf = FACTORY()->fetch_workflow(
+    my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
         ($form->{type} eq 'invoice') ? 'AR/AP' : 'Order/Quote',
         $form->{workflow_id}
         );
@@ -973,7 +972,7 @@ sub purchase_order {
 
 sub sales_order {
 
-    my $wf = FACTORY()->fetch_workflow(
+    my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
         ($form->{type} eq 'invoice') ? 'AR/AP' : 'Order/Quote',
         $form->{workflow_id}
         );
@@ -992,7 +991,7 @@ sub sales_order {
 
 sub rfq {
 
-    my $wf = FACTORY()->fetch_workflow(
+    my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
         ($form->{type} eq 'invoice') ? 'AR/AP' : 'Order/Quote',
         $form->{workflow_id}
         );
@@ -1011,7 +1010,7 @@ sub rfq {
 
 sub quotation {
 
-    my $wf = FACTORY()->fetch_workflow(
+    my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
         ($form->{type} eq 'invoice') ? 'AR/AP' : 'Order/Quote',
         $form->{workflow_id}
         );
@@ -1476,7 +1475,8 @@ sub print_form {
                     q{select workflow_id from oe where id = ?},
                     {}, $form->{id});
 
-            $trans_wf = FACTORY()->fetch_workflow( 'Order/Quote', $wf_id );
+            $trans_wf = $form->{_wire}->get('workflows')
+                ->fetch_workflow( 'Order/Quote', $wf_id );
         }
         else {
             ($wf_id) =
@@ -1484,7 +1484,8 @@ sub print_form {
                     q{select workflow_id from transactions where id = ?},
                     {}, $form->{id});
 
-            $trans_wf = FACTORY()->fetch_workflow( 'AR/AP', $wf_id );
+            $trans_wf = $form->{_wire}->get('workflows')
+                ->fetch_workflow( 'AR/AP', $wf_id );
             if (grep { $_ eq 'save' } $trans_wf->get_current_actions) {
                 $trans_wf->execute_action( 'save' );
             }

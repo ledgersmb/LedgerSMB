@@ -22,7 +22,6 @@ use warnings;
 use HTTP::Status qw(HTTP_SEE_OTHER);
 use Log::Any;
 use URI::Escape qw(uri_unescape);
-use Workflow::Factory qw(FACTORY);
 
 
 use LedgerSMB::Template::UI;
@@ -42,7 +41,8 @@ with through the C<file.pm> script module.
 sub render {
     my ($request) = @_;
 
-    my $wf = FACTORY()->fetch_workflow('Email', $request->{id});
+    my $wf = $request->{_wire}->get('workflows')
+        ->fetch_workflow('Email', $request->{id});
 
     if ($request->{wf_action}) {
         $wf->context->param(

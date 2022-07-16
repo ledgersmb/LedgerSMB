@@ -38,6 +38,7 @@ has host => (is => 'rw', default => $ENV{PGHOST} // 'localhost');
 has template_db_name => (is => 'rw', default => 'std-template');
 has admin_user_name => (is => 'rw', default => 'test-user-admin');
 has admin_user_password => (is => 'rw', default => 'password');
+has wire => (is => 'ro', default => sub { $wire });
 
 has db => (is => 'rw');
 has super_dbh => (is => 'rw',

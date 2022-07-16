@@ -51,7 +51,6 @@ use LedgerSMB::Tax;
 use LedgerSMB::Template::UI;
 use LedgerSMB::Legacy_Util;
 
-use Workflow::Factory qw(FACTORY);
 
 require "old/bin/arap.pl";
 require "old/bin/io.pl";
@@ -90,7 +89,8 @@ sub add {
 
 sub edit {
     if (not $form->{id} and $form->{workflow_id}) {
-        my $wf = FACTORY()->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+        my $wf = $form->{_wire}->get('workflows')
+            ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
         $form->{id} = $wf->context->param( '_extra' )->{id};
         delete $form->{workflow_id};
     }
@@ -850,7 +850,8 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
          <caption>History</caption>
 |;
     # insert history items
-    my $wf = FACTORY()->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    my $wf = $form->{_wire}->get('workflows')
+        ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
     if ($wf) {
         my @history = $wf->get_history;
         for my $h (sort { $a->id <=> $b->{id} } @history) {
@@ -1328,7 +1329,8 @@ sub _save {
        # the old workflow is being saved-as. the new workflow has its id
        # set in workflow_id, because the form was saved already...
        my $id  = $form->{old_workflow_id} // $form->{workflow_id};
-       my $wf  = FACTORY()->fetch_workflow( 'Order/Quote', $id );
+       my $wf  = $form->{_wire}->get('workflows')
+           ->fetch_workflow( 'Order/Quote', $id );
        my $ctx = $wf->context;
        $ctx->param( spawned_type => 'Order/Quote' );
        $ctx->param( spawned_id   => $form->{workflow_id} );
@@ -1349,7 +1351,8 @@ sub _save {
 
 sub print_and_save {
 
-    my $wf = FACTORY()->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    my $wf = $form->{_wire}->get('workflows')
+        ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
     $wf->execute_action( 'print_and_save' );
 
     &_print_and_save;
@@ -1367,7 +1370,8 @@ sub _print_and_save {
     $old_form->{rowcount}++;
 
     my $wf =
-        FACTORY()->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+        $form->{_wire}->get('workflows')
+        ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
     $wf->execute_action( 'print' );
     &print_form($old_form);
 
@@ -1375,7 +1379,8 @@ sub _print_and_save {
 
 sub delete {
 
-    my $wf = FACTORY()->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    my $wf = $form->{_wire}->get('workflows')
+        ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
     $wf->execute_action( 'delete' );
     $form->header;
 
@@ -1475,7 +1480,8 @@ sub invoice {
     $form->{closed} = 1;
 
     OE->save( \%myconfig, \%$form );
-    my $wf = FACTORY()->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    my $wf = $form->{_wire}->get('workflows')
+        ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
     my $action;
 
     $form->{transdate} = '';

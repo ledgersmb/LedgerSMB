@@ -128,7 +128,8 @@ sub add {
 sub edit {
     $form->{ARAP} = 'AP';
     if (not $form->{id} and $form->{workflow_id}) {
-        my $wf = FACTORY->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+        my $wf = $form->{_wire}->get('workflows')
+            ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
         $form->{id} = $wf->context->param( 'id' );
         delete $form->{workflow_id};
     }
@@ -831,7 +832,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
         $form->{dbh}->selectrow_array(
             q{select workflow_id from transactions where id = ?},
             {}, $form->{id});
-    my $wf      = FACTORY()->fetch_workflow( 'AR/AP', $wf_id );
+    my $wf      = $form->{_wire}->get('workflows')->fetch_workflow( 'AR/AP', $wf_id );
     if ($wf) {
         my @history = $wf->get_history;
         for my $h (sort { $a->id <=> $b->{id} } @history) {
@@ -1356,7 +1357,7 @@ sub post {
     IR->post_invoice( \%myconfig, \%$form );
 
     my $id = $form->{old_workflow_id} // $form->{workflow_id};
-    my $wf = FACTORY()->fetch_workflow( 'AR/AP', $id );
+    my $wf = $form->{_wire}->get('workflows')->fetch_workflow( 'AR/AP', $id );
 
     # m/save_as/ matches both print_and_save_as_new as well as save_as_new
     # note that "post" is modelled through the 'approve' entrypoint

@@ -29,7 +29,6 @@ use parent qw( LedgerSMB::Workflow::Action );
 
 use DateTime;
 use Log::Any qw($log);
-use Workflow::Factory qw(FACTORY);
 
 my @PROPS = qw( history_text );
 __PACKAGE__->mk_accessors(@PROPS);
