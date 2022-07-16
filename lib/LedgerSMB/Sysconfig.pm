@@ -55,7 +55,7 @@ sub ini2wire {
 
     my @printer_names = $cfg->Parameters( 'printers' );
     my $fallback_printer =
-        $cfg->val( 'main', 'fallback_printer', $printer_names[0] );
+        scalar $cfg->val( 'main', 'fallback_printer', $printer_names[0] );
 
     $wire->set(
         printers => $wire->create_service(
@@ -63,7 +63,7 @@ sub ini2wire {
                 class => 'LedgerSMB::Printers',
                 args  => {
                     printers => {
-                        map { $_ => $cfg->val( printers => $_ ) }
+                        map { $_ => scalar $cfg->val( printers => $_ ) }
                         $cfg->Parameters( 'printers' )
                     },
                     fallback => $fallback_printer
@@ -118,10 +118,10 @@ sub ini2wire {
 
         if ($value = $cfg->val( 'mail', 'smtpuser' )) {
             my $auth = Authen::SASL->new(
-                mechanism => $cfg->val( 'mail', 'smtpauthmech' ),
+                mechanism => scalar $cfg->val( 'mail', 'smtpauthmech' ),
                 callback => {
                     user => $value,
-                    pass => $cfg->val( 'mail', 'smtppass' ),
+                    pass => scalar $cfg->val( 'mail', 'smtppass' ),
                 });
             push @options,
                 # the SMTP transport checks that 'sasl_password' be
@@ -189,17 +189,17 @@ sub ini2wire {
         'miscellaneous/max_upload_size',
         $wire->create_service(
             'max_post_size',
-            value => $cfg->val( 'main', 'max_post_size', 4194304 ) ) );
+            value => scalar $cfg->val( 'main', 'max_post_size', 4194304 ) ) );
     $wire->set(
         'miscellaneous/backup_email_from',
         $wire->create_service(
             'backup_email_from',
-            value => $cfg->val( 'mail', 'backup_email_from', '' ) ) );
+            value => scalar $cfg->val( 'mail', 'backup_email_from', '' ) ) );
     $wire->set(
         'miscellaneous/proxy_ip',
         $wire->create_service(
             'proxy_ip',
-            value => $cfg->val(
+            value => scalar $cfg->val(
                 'proxy',
                 'proxy_ip',
                 '127.0.0.1/8 ::1/128 ::ffff:127.0.0.1/108'
@@ -208,8 +208,8 @@ sub ini2wire {
     $wire->set(
         'cookie',
         {
-            name => $cfg->val( 'main', 'cookie_name' ),
-            secret => $cfg->val( 'main', 'cookie_secret' )
+            name => scalar $cfg->val( 'main', 'cookie_name' ),
+            secret => scalar $cfg->val( 'main', 'cookie_secret' )
         });
 
     $wire->set(
@@ -224,9 +224,9 @@ sub ini2wire {
 
     $wire->set('paths', Beam::Wire->new );
     $wire->set('paths/locale',
-               $cfg->val( 'paths', 'localepath', './locale/po/' ) );
+               scalar $cfg->val( 'paths', 'localepath', './locale/po/' ) );
     $wire->set('paths/templates',
-               $cfg->val( 'paths', 'templates', './templates/' ) );
+               scalar $cfg->val( 'paths', 'templates', './templates/' ) );
     $wire->set('ui',
                $wire->create_service(
                    'ui',
@@ -234,8 +234,8 @@ sub ini2wire {
                    lifecycle => 'eager',
                    method => 'new_UI',
                    args => {
-                       cache => $cfg->val( 'paths', 'templates_cache',
-                                           'lsmb_templates/' )
+                       cache => scalar $cfg->val( 'paths', 'templates_cache',
+                                                  'lsmb_templates/' )
                    }) );
 
     $wire->set(
@@ -244,22 +244,22 @@ sub ini2wire {
             class => 'LedgerSMB::Database::Factory',
             args => {
                 connect_data => {
-                    host => $cfg->val( 'database', 'host', 'localhost'),
-                    port => $cfg->val( 'database', 'port', 5432),
-                    sslmode => $cfg->val( 'database', 'sslmode', 'prefer'),
+                    host => scalar $cfg->val( 'database', 'host', 'localhost'),
+                    port => scalar $cfg->val( 'database', 'port', 5432),
+                    sslmode => scalar $cfg->val( 'database', 'sslmode', 'prefer'),
                 },
-                schema => $cfg->val( 'database', 'db_namespace', 'public' )
+                schema => scalar $cfg->val( 'database', 'db_namespace', 'public' )
             }));
 
     $wire->set(
         'login_settings' => {
-            default_db => $cfg->val( 'database', 'default_db' )
+            default_db => scalar $cfg->val( 'database', 'default_db' )
         });
 
     $wire->set(
         'setup_settings' => {
-            auth_db  => $cfg->val( 'database', 'admin_db', 'postgres' ),
-            admin_db => $cfg->val( 'database', 'admin_db', 'template1' ),
+            auth_db  => scalar $cfg->val( 'database', 'auth_db', 'postgres' ),
+            admin_db => scalar $cfg->val( 'database', 'admin_db', 'template1' ),
         });
 
     $wire->set(
@@ -271,11 +271,11 @@ sub ini2wire {
                 args => {
                     lifecycle => 'eager',
                     directories => [
-                        $cfg->val( 'paths', 'workflows', 'workflows'),
-                        $cfg->val( 'paths', 'custom_workflows', 'custom_workflows'),
+                        scalar $cfg->val( 'paths', 'workflows', 'workflows'),
+                        scalar $cfg->val( 'paths', 'custom_workflows', 'custom_workflows'),
                         ],
                 },
-                )))
+            )));
 }
 
 =head1 LICENSE AND COPYRIGHT
