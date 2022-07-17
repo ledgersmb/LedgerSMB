@@ -49,9 +49,10 @@ my @modules =
     (
      'LedgerSMB::Sysconfig',
      'LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894',
-     'LedgerSMB::Template::XLSX',
-     'LedgerSMB::Template::ODS',
-     'LedgerSMB::Template::LaTeX',
+     'LedgerSMB::Template::Plugins',
+     'LedgerSMB::Template::Plugin::XLSX',
+     'LedgerSMB::Template::Plugin::ODS',
+     'LedgerSMB::Template::Plugin::LaTeX',
      'LedgerSMB::Template::Sink',
      'LedgerSMB::Template::Sink::Email',
      'LedgerSMB::Template::Sink::Printer',
@@ -80,20 +81,25 @@ my @modules =
      'LedgerSMB::Company::Configuration::SIC',
      'LedgerSMB::Company::Configuration::SICs',
      'LedgerSMB::App_State',
-          'LedgerSMB::I18N',
-          'LedgerSMB::Locale', 'LedgerSMB::Mailer',
-          'LedgerSMB::User', 'LedgerSMB::Entity',
-          'LedgerSMB::GL', 'LedgerSMB::Timecard',
-          'LedgerSMB::PE', 'LedgerSMB::App_Module', 'LedgerSMB::Budget',
-          'LedgerSMB::Business_Unit', 'LedgerSMB::Business_Unit_Class',
-          'LedgerSMB::MooseTypes', 'LedgerSMB::PriceMatrix',
+     'LedgerSMB::I18N',
+     'LedgerSMB::Locale',
+     'LedgerSMB::LanguageResolver',
+     'LedgerSMB::Mailer',
+     'LedgerSMB::User', 'LedgerSMB::Entity',
+     'LedgerSMB::EnvVarSetter',
+     'LedgerSMB::GL', 'LedgerSMB::Timecard',
+     'LedgerSMB::PE', 'LedgerSMB::App_Module', 'LedgerSMB::Budget',
+     'LedgerSMB::Business_Unit', 'LedgerSMB::Business_Unit_Class',
+     'LedgerSMB::MooseTypes', 'LedgerSMB::PriceMatrix',
+     'LedgerSMB::Printers',
           'LedgerSMB::File', 'LedgerSMB::Report',
           'LedgerSMB::Request::Helper::ParameterMap',
           'LedgerSMB::Template', 'LedgerSMB::Template::UI',
           'LedgerSMB::Legacy_Util',
           'LedgerSMB::Company_Config',
           'LedgerSMB::Currency', 'LedgerSMB::Database',
-          'LedgerSMB::Database::ChangeChecks', 'LedgerSMB::Database::Config',
+     'LedgerSMB::Database::ChangeChecks', 'LedgerSMB::Database::Config',
+     'LedgerSMB::Database::Factory',
           'LedgerSMB::Database::Upgrade',
           'LedgerSMB::Exchangerate', 'LedgerSMB::Exchangerate_Type',
           'LedgerSMB::PGObject', 'LedgerSMB::Auth',
@@ -239,8 +245,8 @@ my @modules =
           'LedgerSMB::Setup::SchemaChecks',
           'LedgerSMB::Taxes::Simple',
           'LedgerSMB::Template::DBProvider',
-          'LedgerSMB::Template::TXT',
-          'LedgerSMB::Template::HTML', 'LedgerSMB::Template::CSV',
+          'LedgerSMB::Template::Plugin::TXT',
+          'LedgerSMB::Template::Plugin::HTML', 'LedgerSMB::Template::Plugin::CSV',
           'LedgerSMB::Template::DB', 'LedgerSMB::Timecard::Type',
           'LedgerSMB::Database::Loadorder', 'LedgerSMB::Database::Change',
      'LedgerSMB::Magic',
@@ -250,6 +256,7 @@ my @modules =
      'LedgerSMB::Workflow::Action::RecordSpawnedWorkflow',
      'LedgerSMB::Workflow::Action::SpawnWorkflow',
      'LedgerSMB::Workflow::Email',
+     'LedgerSMB::Workflow::Loader',
      'LedgerSMB::Workflow::Persister',
      'LedgerSMB::Workflow::Persister::Email',
      'LedgerSMB::Workflow::Persister::ExtraData',
@@ -266,13 +273,16 @@ my @modules =
 use Test2::Require::Module 'LedgerSMB::Sysconfig';
 delete $on_disk{'LedgerSMB::Sysconfig'};
 
-module_loads 'LedgerSMB::Template::ODS' => qw( XML::Twig OpenOffice::OODoc );
+module_loads
+    'LedgerSMB::Template::Plugin::ODS' => qw( XML::Twig OpenOffice::OODoc );
 
 module_loads
-    'LedgerSMB::Template::LaTeX' => qw( Template::Plugin::Latex Template::Latex );
+    'LedgerSMB::Template::Plugin::LaTeX' =>
+    qw( Template::Plugin::Latex Template::Latex );
 
 module_loads
-    'LedgerSMB::Template::XLSX' => qw( Excel::Writer::XLSX Spreadsheet::WriteExcel );
+    'LedgerSMB::Template::Plugin::XLSX' =>
+    qw( Excel::Writer::XLSX Spreadsheet::WriteExcel );
 
 for ('LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894') {
     module_loads $_ => qw( X12::Parser );

@@ -188,7 +188,8 @@ sub print {
         locale   => $request->{_locale},
         path     => 'DB',
         template => $request->{taxform_name},
-        format   => $request->{format},
+        format_plugin   =>
+           $request->{_wire}->get( 'output_plugins' )->get( $request->{format}),
     );
     $template->render($request);
 

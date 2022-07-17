@@ -26,8 +26,6 @@ use warnings;
 use strict;
 use base qw( Workflow );
 
-use Workflow::Factory qw(FACTORY);
-
 =head2 attachment_content( $id, disable_cache => $boolean )
 
 Returns the content of an attachment to an e-mail, *if* the attachment
@@ -44,7 +42,7 @@ sub attachment_content {
 
     return $self->{_content}->{$id} if $self->{_content}->{$id};
 
-    my $persister = FACTORY()->get_persister( $self->type );
+    my $persister = $self->_factory->get_persister( $self->type );
     my $dbh       = $persister->handle;
     my $sth       = $dbh->prepare(
         q{select content from file_email where ref_key = ? and id = ?})

@@ -118,15 +118,13 @@
                                   value_attr = 'file'
                                 } %]</td>
                           </tr>
-          [% IF printers.defined %]
+          [% IF PRINTERS.defined %]
                           <tr>
                             <th align="right">[% text('Printer') %]</th>
                             <td>[% PROCESS select element_data={
                                 name = 'printer'
-                                options = user.printers
+                                options = PRINTERS
                                 default_values = [ user.prefs.printer]
-                                text_attr = 'printer'
-                                value_attr = 'printer'
                                 }%]</td>
                           </tr>
           [% END %]

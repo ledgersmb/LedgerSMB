@@ -22,7 +22,7 @@ use Carp;
 
 use MIME::Base64;
 use Log::Any;
-use LedgerSMB::Sysconfig;
+
 use Moose;
 use namespace::autoclean;
 
@@ -51,19 +51,6 @@ sub _build_credentials {
     $auth = MIME::Base64::decode($auth);
     my %rv;
     @rv{('login', 'password')} = split(/:/, $auth, 2);
-
-    my $username_case = LedgerSMB::Sysconfig::force_username_case;
-    if ($username_case) {
-        if (lc($username_case) eq 'lower') {
-            $rv{login} = lc($rv{login});
-        }
-        elsif (lc($username_case) eq 'upper') {
-            $rv{login} = uc($rv{login});
-        }
-        else {
-            die "Unknown username casing algorithm $username_case; expected 'lower' or 'upper'"
-        }
-    }
 
     return \%rv;
 }

@@ -214,7 +214,7 @@ my $logger = Log::Any->get_logger(category => 'LedgerSMB');
 my $expiration_parser = DateTime::Format::Duration::ISO8601->new;
 
 sub new {
-    my ($class, $request) = @_;
+    my ($class, $request, $wire) = @_;
     my $self = {};
     bless $self, $class;
 
@@ -237,6 +237,7 @@ sub new {
     $self->{_logout} = $request->env->{'lsmb.invalidate_session_cb'};
     $self->{_setting} = $request->env->{'lsmb.setting'};
     $self->{_req} = $request;
+    $self->{_wire} = $wire;
 
     # Initialize ourselves from parameters in $self->{_req}
     $self->_process_args;
@@ -308,7 +309,10 @@ sub get_user_info {
 sub _set_default_locale {
     my ($self) = @_;
 
-    my $lang = LedgerSMB::Sysconfig::language();
+    my $lang = $self->{_wire}->get( 'default_locale' )
+        ->from_header( $self->{_req}->header( 'Accept-Language' ) );
+
+    $self->{_user}->{language} = $lang;
     $self->{_locale}=LedgerSMB::Locale->get_handle($lang);
     $self->error( __FILE__ . ':' . __LINE__
                   . ": Locale ($lang) not loaded: $!\n" )
@@ -418,7 +422,7 @@ sub upload {
 sub call_procedure {
     my $self = shift;
     my %args = @_;
-    $args{funcschema} ||= LedgerSMB::Sysconfig::db_namespace();
+    $args{funcschema} ||= $self->{_wire}->get( 'db' )->schema;
     $args{funcname} ||= $args{procname};
     $args{dbh} = $self->{dbh};
     $args{args} ||= [];
@@ -585,10 +589,11 @@ sub report_renderer_doc {
             user     => $request->{_user},
             path     => 'DB',
             dbh      => $request->{dbh},
-            format   => uc($request->{format} || 'HTML'),
             output_options => {
                 filename => $report->output_name($request),
             },
+            format_plugin   =>
+               $request->{_wire}->get( 'output_plugins' )->get( uc($request->{format} || 'HTML' ) ),
             );
 
         $template->render($vars, $cvars);

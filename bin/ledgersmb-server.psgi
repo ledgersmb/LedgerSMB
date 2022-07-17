@@ -20,34 +20,53 @@ use LedgerSMB::Locale;
 use LedgerSMB::PSGI;
 use LedgerSMB::PSGI::Preloads;
 use LedgerSMB::Sysconfig;
+
+use Beam::Wire;
+use Plack::Builder;
 use Log::Any::Adapter;
 use Log::Log4perl qw(:easy);
 use Log::Log4perl::Layout::PatternLayout;
 use LedgerSMB::Middleware::RequestID;
 
-LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
-LedgerSMB::Locale->initialize;
+my $wire;
+do {
+    my $config_file;
+    if ($ENV{LSMB_CONFIG_FILE}
+        and -e $ENV{LSMB_CONFIG_FILE}) {
+        $config_file = $ENV{LSMB_CONFIG_FILE};
+    }
+    elsif (-f 'ledgersmb.yaml') {
+        $config_file = 'ledgersmb.yaml';
+    }
+    elsif (-f 'ledgersmb.yml') {
+        $config_file = 'ledgersmb.yml';
+    }
+    elsif (-f 'ledgersmb.conf') {
+        $config_file = 'ledgersmb.conf';
+    }
 
-require Plack::Middleware::Pod
-    if ( $ENV{PLACK_ENV} && $ENV{PLACK_ENV} eq 'development' );
+    if ($config_file =~ /[.]ya?ml$/) {
+        $wire = Beam::Wire->new( file => $config_file);
+    }
+    else {
+        $wire = Beam::Wire->new( config => { extra_middleware => [] });
+        my $cfg = LedgerSMB::Sysconfig->initialize( $config_file );
+        LedgerSMB::Sysconfig::ini2wire( $wire, $cfg );
+    }
+};
+
+LedgerSMB::Locale->initialize($wire);
 
 my $path = $INC{"LedgerSMB.pm"};
 my $version = $LedgerSMB::VERSION;
 die "Library verification failed (found $version from '$path', expected 1.10)"
     unless $version =~ /^1\.10\./;
 
-# Report to the console what type of dojo we are running
-if ( LedgerSMB::Sysconfig::dojo_built() ) {
-    print "Starting Worker on PID $$ Using Built Dojo\n";
-} else {
-    print "Starting Worker on PID $$ Using Dojo Source\n";
-}
-
 Log::Log4perl::Layout::PatternLayout::add_global_cspec(
     'Z',
     sub { return $LedgerSMB::Middleware::RequestID::request_id.''; });
 
-my $log_config = LedgerSMB::Sysconfig::log_config();
+my $log_config = $wire->get( 'logging' )->{config};
 if ($log_config) {
     Log::Log4perl->init($log_config);
 }
@@ -61,7 +80,7 @@ else {
         DEBUG => $DEBUG,
         TRACE => $TRACE,
         );
-    my $log_level = LedgerSMB::Sysconfig::log_level();
+    my $log_level = $wire->get( 'logging' )->{level};
     die "Invalid log level: $log_level" unless exists $log_levels{$log_level};
     Log::Log4perl->easy_init($log_levels{$log_level});
 }
@@ -72,9 +91,18 @@ Log::Any::Adapter->set('Log4perl');
 STDOUT->autoflush(1);
 STDERR->autoflush(1);
 
-LedgerSMB::PSGI::setup_url_space(
+
+my $builder = Plack::Builder->new();
+for my $mw ($wire->get( 'extra_middleware' )->@*) {
+    $builder->add_middleware( $mw->{name}, $mw->{args}->@* );
+}
+
+# THIS HAS TO BE THE LAST THING IN THE FILE, EXCEPT FOR COMMENTS!
+$builder->to_app(
+    LedgerSMB::PSGI::setup_url_space(
+        wire        => $wire,
         development => ($ENV{PLACK_ENV} eq 'development'),
-        );
+    ));
 
 
 # -*- perl-mode -*-

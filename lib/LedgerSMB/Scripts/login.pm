@@ -22,7 +22,6 @@ use HTTP::Status qw( HTTP_OK );
 use JSON::MaybeXS;
 
 use LedgerSMB::PSGI::Util;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::UI;
 
 our $VERSION = 1.0;
@@ -39,7 +38,6 @@ sub __default {
     $request->{_req}->env->{'lsmb.session.expire'} = 1;
     $request->{stylesheet} = 'ledgersmb.css';
     $request->{titlebar} = "LedgerSMB $request->{version}";
-    $request->{_user} //= { language => LedgerSMB::Sysconfig::language() };
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'login', $request);
 }
@@ -79,10 +77,13 @@ sub authenticate {
         || ! $r->{password}) {
         return LedgerSMB::PSGI::Util::unauthorized();
     }
-    $r->{company} ||= LedgerSMB::Sysconfig::default_db();
+
+    if (my $settings = $request->{_wire}->get( 'login_settings' )) {
+        $r->{company} ||= $settings->{default_db};
+    }
     if (my $r = $request->{_create_session}->($r->{login},
-                                      $r->{password},
-                                      $r->{company})) {
+                                              $r->{password},
+                                              $r->{company})) {
         return $r;
     }
 

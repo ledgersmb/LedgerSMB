@@ -67,7 +67,6 @@ use LedgerSMB::App_State;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Magic qw( SCRIPT_OLDSCRIPTS );
 use LedgerSMB::PGNumber;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Setting;
 
@@ -1168,14 +1167,13 @@ sub generate_selects {
      }
 
      # formats
-    $form->{selectformat} = qq|<option value="html">html<option value="csv">csv\n|;
-    if ( LedgerSMB::Sysconfig::latex() ) {
-        $form->{selectformat} .= qq|
-            <option value="postscript">|
-                . $form->{_locale}->text('Postscript')
-                . qq|<option value="pdf">|
-                . $form->{_locale}->text('PDF');
-    }
+    $form->{selectformat} =
+        join('',
+             map {
+                 my $val = lc $_;
+                 qq|<option value="$val">$_|
+             } $form->{_wire}->get( 'output_plugins' )->get_formats
+        );
 
     # warehouse
     if ( $form->{all_warehouse} &&  @{ $form->{all_warehouse} } ) {

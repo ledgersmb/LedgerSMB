@@ -47,7 +47,6 @@ use Log::Any;
 use LedgerSMB::Magic qw(BC_SALES_INVOICE);
 
 use Workflow::Context;
-use Workflow::Factory qw(FACTORY);
 
 my $logger = Log::Any->get_logger(category => 'LedgerSMB::IS');
 
@@ -811,7 +810,8 @@ sub post_invoice {
         ( $form->{id} ) = $sth->fetchrow_array;
         my $ctx = Workflow::Context->new;
         $ctx->param( trans_id => $form->{id} );
-        my $wf = FACTORY()->create_workflow( 'AR/AP', $ctx );
+        my $wf = $form->{_wire}->get('workflows')
+            ->create_workflow( 'AR/AP', $ctx );
         $form->{workflow_id} = $wf->id;
 
         $sth->finish;

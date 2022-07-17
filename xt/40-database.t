@@ -6,7 +6,6 @@ use DBI;
 
 use LedgerSMB::Database;
 use LedgerSMB;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Admin;
 
 use Log::Log4perl qw(:easy);
@@ -14,8 +13,6 @@ Log::Log4perl->easy_init($OFF);
 
 skip_all( 'LSMB_TEST_DB not set' )
     if not $ENV{LSMB_TEST_DB};
-
-LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
 
 my $db;
 my $admin_dbh = DBI->connect('dbi:Pg:dbname=postgres',

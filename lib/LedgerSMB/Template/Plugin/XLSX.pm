@@ -1,17 +1,13 @@
 
-package LedgerSMB::Template::XLSX;
+package LedgerSMB::Template::Plugin::XLSX;
 
 =head1 NAME
 
-LedgerSMB::Template::XLSX - Template support module for LedgerSMB
+LedgerSMB::Template::Plugin::XLSX - Template support module for LedgerSMB
 
 =head1 DESCRIPTION
 
 Implements C<LedgerSMB::Template>'s FORMATTER protocol for XLSX output.
-
-=head1 METHODS
-
-=over
 
 =cut
 
@@ -22,6 +18,29 @@ use IO::Scalar;
 use Excel::Writer::XLSX;
 use Spreadsheet::WriteExcel;
 use XML::Twig;
+
+
+use Moo;
+
+=head1 ATTRIBUTES
+
+=head2 formats
+
+Holds an array of strings naming the formats supported by this plugin.
+
+=cut
+
+has formats => (is => 'ro', default => sub { [ 'XLS', 'XLSX' ] });
+
+=head2 format
+
+Holds a string naming the actual format for which this plugin
+is configured. The plugin can be used multiple times with different
+formats, as long as they are in the list of formats.
+
+=cut
+
+has format => (is => 'ro', required => 1);
 
 my $binmode = undef;
 my $extension = 'xlsx';
@@ -147,14 +166,16 @@ sub _xlsx_process {
     return $workbook->close;
 }
 
-=item setup($parent, $cleanvars, $output)
+=head1 METHODS
+
+=head2 setup($parent, $cleanvars, $output)
 
 Implements the template's initialization protocol.
 
 =cut
 
 sub setup {
-    my ($parent, $cleanvars, $output) = @_;
+    my ($self, $parent, $cleanvars, $output) = @_;
 
     my $temp_output;
     return (\$temp_output, {
@@ -165,14 +186,14 @@ sub setup {
     });
 }
 
-=item postprocess($parent, $output, $config)
+=head2 postprocess($parent, $output, $config)
 
 Implements the template's post-processing protocol.
 
 =cut
 
 sub postprocess {
-    my ($parent, $temp_output, $config) = @_;
+    my ($self, $parent, $temp_output, $config) = @_;
 
     # Implement Template Toolkit's protocol: if the variable
     # '$output' contains a string, it's a filename. If it's a
@@ -183,7 +204,7 @@ sub postprocess {
     my $output = $config->{_output};
     $output = IO::Scalar->new($output) if ref $output;
 
-    if ($config->{_output_extension} eq 'xlsx') {
+    if (lc $self->format eq 'xlsx') {
         $workbook  = Excel::Writer::XLSX->new($output);
         $workbook->set_optimization(); # reduce memory consumption
     }
@@ -195,17 +216,18 @@ sub postprocess {
     return undef;
 }
 
-=item mimetype()
+=head2 mimetype()
 
 Returns the rendered template's mimetype.
 
 =cut
 
 sub mimetype {
+    my $self = shift;
     my $config = shift;
     my $mimetype;
 
-    if ($config->{_output_extension} eq 'xlsx') {
+    if (lc $self->format eq 'xlsx') {
         $mimetype = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
     }
     else {
@@ -214,8 +236,6 @@ sub mimetype {
 
     return $mimetype;
 }
-
-=back
 
 =head1 LICENSE AND COPYRIGHT
 

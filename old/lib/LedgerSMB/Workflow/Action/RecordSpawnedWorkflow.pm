@@ -49,7 +49,6 @@ use warnings;
 use parent qw( Workflow::Action );
 
 use Log::Any qw($log);
-use Workflow::Factory qw(FACTORY);
 
 my @PROPS = qw( description );
 __PACKAGE__->mk_accessors(@PROPS);

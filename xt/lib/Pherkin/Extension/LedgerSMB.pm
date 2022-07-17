@@ -19,16 +19,17 @@ use LedgerSMB::Database;
 use LedgerSMB::PGDate;
 use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::Entity::User;
-use LedgerSMB::Sysconfig;
 use Test::BDD::Cucumber::Extension;
 use List::Util qw(any);
 use Log::Log4perl qw(:easy);
 
+use LedgerSMB::Sysconfig;
+my $wire = Beam::Wire->new;
+LedgerSMB::Sysconfig::ini2wire( $wire, LedgerSMB::Sysconfig->initialize );
+
 use Moose;
 use namespace::autoclean;
 extends 'Test::BDD::Cucumber::Extension';
-
-LedgerSMB::Sysconfig->initialize;
 
 has db_name => (is => 'rw', default => $ENV{PGDATABASE});
 has username => (is => 'rw', default => $ENV{PGUSER});
@@ -37,6 +38,7 @@ has host => (is => 'rw', default => $ENV{PGHOST} // 'localhost');
 has template_db_name => (is => 'rw', default => 'std-template');
 has admin_user_name => (is => 'rw', default => 'test-user-admin');
 has admin_user_password => (is => 'rw', default => 'password');
+has wire => (is => 'ro', default => sub { $wire });
 
 has db => (is => 'rw');
 has super_dbh => (is => 'rw',

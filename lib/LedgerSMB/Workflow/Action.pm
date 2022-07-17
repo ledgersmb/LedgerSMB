@@ -53,7 +53,6 @@ use parent qw( Workflow::Action );
 
 use DateTime;
 use Log::Any qw($log);
-use Workflow::Factory qw(FACTORY);
 
 
 my @PROPS = qw( order short_help text );

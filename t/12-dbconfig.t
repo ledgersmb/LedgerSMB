@@ -7,11 +7,10 @@ Log::Log4perl->easy_init($OFF);
 
 
 use LedgerSMB::Database::Config;
-use LedgerSMB::Sysconfig;
 
-LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
-
-my $coa = LedgerSMB::Database::Config->new->charts_of_accounts;
+my $coa = LedgerSMB::Database::Config
+    ->new( templates_dir => './templates' )
+    ->charts_of_accounts;
 
 ok( m/^[[:alnum:]]{2,2}(_[[:alnum:]]{2,2})?$/,
     "Returned coa key '$_' follows the xx or xx_xx pattern" )
@@ -38,7 +37,9 @@ for my $type (qw( sic )) {
     }
 }
 
-my $templates = LedgerSMB::Database::Config->new->templates;
+my $templates = LedgerSMB::Database::Config
+    ->new( templates_dir => './templates' )
+    ->templates;
 
 is_deeply [ sort keys %$templates ], [ qw( demo xedemo ) ],
     'Returned template sets are the example templates';

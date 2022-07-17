@@ -62,7 +62,6 @@ use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Invoices::Payments;
 use LedgerSMB::Request::Helper::ParameterMap;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 
@@ -513,12 +512,13 @@ sub print {
         $template = LedgerSMB::Template->new( # printed document
             user => $payment->{_user},
             template => 'check_multiple',
-            format => uc $payment->{'format'},
             path => 'DB',
             dbh  => $request->{dbh},
             output_options => {
                filename => 'printed-checks',
             },
+            format_plugin   =>
+                 $request->{_wire}->get( 'output_plugins' )->get( uc $payment->{format} ),
             );
         $template->render(
             {
@@ -688,20 +688,15 @@ sub display_payments {
     }
     $payment->{grand_total} = $payment->{grand_total}->to_output(money  => 1);
     @{$payment->{media_options}} = (
-            {text  => $request->{_locale}->text('Screen'),
-             value => 'screen'});
-    for (keys LedgerSMB::Sysconfig::printer()->%* ){
-         push @{$payment->{media_options}},
-              {text  => $_,
-               value => $_};
-    }
-    if ( LedgerSMB::Sysconfig::latex() ){
-        @{$payment->{format_options}} = (
-              {text => 'PDF',        value => 'PDF'},
-              {text => 'Postscript', value => 'Postscript'},
-        );
-        $payment->{can_print} = 1;
-    }
+        { text  => $request->{_locale}->text('Screen'),
+          value => 'screen' },
+        $request->{_wire}->get( 'printers' )->as_options );
+
+    $payment->{format_options} = [
+        map { { text => $_, value => lc $_ } }
+        $request->{_wire}->get( 'output_plugins' )->get_formats
+        ];
+    $payment->{can_print} = scalar @{$payment->{format_options}};
 
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'payments/payments_detail',
@@ -1149,23 +1144,11 @@ sub payment2 {
         }
     }
     # We need to set the available media and format from printing
-    my @media_options;
-    push  @media_options, {value => 1, text => 'Screen'};
-    if (LedgerSMB::Sysconfig::printer()->%*) {
-        for (keys LedgerSMB::Sysconfig::printer()->%*) {
-            push  @media_options, {value => 1, text => $_};
-        }
-    }
-    push  @media_options, {value => 1, text => 'e-mail'};
+    my @media_options =
+        ( {value => 1, text => 'Screen'},
+          $request->{_wire}->get( 'printers' )->as_options,
+          {value => 1, text => 'e-mail'});
 
-    #$request->error("@media_options");
-    my @format_options;
-    push @format_options, {value => 1, text => 'HTML'};
-    if ( LedgerSMB::Sysconfig::latex() ) {
-        push  @format_options,
-        {value => 2, text => 'PDF' },
-        {value => 3, text => 'POSTSCRIPT' };
-    }
     # LETS BUILD THE SELECTION FOR THE UI
     # Notice that the first data inside this selection is the firs_load, this
     # will help payment2.html to know wether it is being called for the first time
@@ -1217,9 +1200,6 @@ sub payment2 {
                 {text => $vc_options[0]->{country}},
                 ]
         },
-        format => {
-            name => 'FORMAT',
-            options => \@format_options },
         media => {
             name => 'MEDIA',
             options => \@media_options  },
@@ -1487,7 +1467,9 @@ sub print_payment {
       locale   => $Payment->{_locale},
       path     => 'DB',
       template => 'printPayment',
-      format => 'HTML' );
+      format_plugin   =>
+         $request->{_wire}->get( 'output_plugins' )->get( 'HTML' ),
+    );
     $template->render(
         {
             DBNAME => $request->{company},

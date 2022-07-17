@@ -53,7 +53,6 @@ use LedgerSMB::Tax;
 use LedgerSMB::Setting;
 use LedgerSMB::DBObject::Draft;
 
-use Workflow::Factory qw(FACTORY);
 
 require "old/bin/arap.pl";
 require "old/bin/io.pl";
@@ -121,7 +120,8 @@ sub add {
 sub edit {
     $form->{ARAP} = 'AR';
     if (not $form->{id} and $form->{workflow_id}) {
-        my $wf = FACTORY->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+        my $wf = $form->{_wire}->get('workflows')
+            ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
         $form->{id} = $wf->context->param( 'id' );
         delete $form->{workflow_id};
     }
@@ -643,26 +643,14 @@ sub form_header {
                delete $button{$_}
                  for qw(post_as_new post e_mail sales_order void print on_hold);
            }
-
-            unless (LedgerSMB::Sysconfig::latex()
-                    and LedgerSMB::Sysconfig::printer->%* ) {
-                for ( "print_and_post", "print_and_post_as_new" ) {
-                    delete $button{$_};
-                }
-            }
-
         }
         else {
             if ( ! $form->is_closed( $transdate ) ) {
                 # Added on_hold, by Aurynn.
-                for ( "update", "ship_to", "post", "schedule")
+                for ( "update", "ship_to", "post", "schedule", "print_and_post" )
                 {
                     $allowed{$_} = 1;
                 }
-                $a{'print_and_post'} =
-                    (LedgerSMB::Sysconfig::latex()
-                     and LedgerSMB::Sysconfig::printer->%*);
-
 
                 for ( keys %button ) { delete $button{$_} if !$allowed{$_} }
             }
@@ -943,7 +931,8 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
         $form->{dbh}->selectrow_array(
             q{select workflow_id from transactions where id = ?},
             {}, $form->{id});
-    my $wf      = FACTORY()->fetch_workflow( 'AR/AP', $wf_id );
+    my $wf = $form->{_wire}->get('workflows')
+        ->fetch_workflow( 'AR/AP', $wf_id );
     if ($wf) {
         my @history = $wf->get_history;
         for my $h (sort { $a->id <=> $b->{id} } @history) {
@@ -1479,7 +1468,7 @@ sub post {
     IS->post_invoice( \%myconfig, \%$form );
 
     my $id = $form->{old_workflow_id} // $form->{workflow_id};
-    my $wf = FACTORY()->fetch_workflow( 'AR/AP', $id );
+    my $wf = $form->{_wire}->get('workflows')->fetch_workflow( 'AR/AP', $id );
 
     # m/save_as/ matches both print_and_save_as_new as well as save_as_new
     # note that "post" is modelled through the 'approve' entrypoint
@@ -1526,7 +1515,8 @@ sub print_and_post {
     $old_form->{rowcount}++;
 
     my $wf =
-        FACTORY()->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+        $form->{_wire}->get('workflows')
+        ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
     $wf->execute_action( 'print' );
     &print_form($old_form);
 

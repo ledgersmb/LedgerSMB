@@ -6,13 +6,13 @@ use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::App_State;
 use LedgerSMB::Locale;
-use LedgerSMB::Sysconfig;
 
+use Beam::Wire;
 use Log::Log4perl qw(:easy);
 use Plack::Request;
 
-LedgerSMB::Sysconfig->initialize;
-LedgerSMB::Locale->initialize;
+my $wire = Beam::Wire->new(file => 't/ledgersmb.yaml');
+LedgerSMB::Locale->initialize($wire);
 Log::Log4perl->easy_init($OFF);
 
 $ENV{REQUEST_METHOD} = 'GET';
@@ -20,7 +20,7 @@ $ENV{REQUEST_METHOD} = 'GET';
 
 my $request = Plack::Request->new({});
 
-my $lsmb = LedgerSMB->new($request);
+my $lsmb = LedgerSMB->new($request, $wire);
 ok(defined $lsmb, 'lsmb: defined');
 isa_ok($lsmb, ['LedgerSMB'], 'lsmb: correct type');
 ok(defined $lsmb->{version}, 'lsmb: version set');

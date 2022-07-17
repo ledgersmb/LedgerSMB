@@ -38,7 +38,6 @@ use LedgerSMB::Routes::ERP::API::Products;
 use LedgerSMB::Routes::ERP::API::Session;
 use LedgerSMB::Routes::ERP::API::Templates;
 use LedgerSMB::Setting;
-use LedgerSMB::Sysconfig;
 
 use CGI::Emulate::PSGI;
 use HTTP::Status qw( HTTP_FOUND );
@@ -46,6 +45,7 @@ use List::Util qw{  none };
 use Log::Any;
 use Log::Log4perl;
 use Scalar::Util qw{ reftype };
+use String::Random;
 use Feature::Compat::Try;
 
 # To build the URL space
@@ -84,47 +84,45 @@ Returns a 'PSGI app' which handles requests for the 'old-code' scripts in old/bi
 
 =cut
 
-our $psgi_env;
-
 sub old_app {
     my $script = shift;
-    my $handler = CGI::Emulate::PSGI->handler(
-        sub {
-            local $ENV{CONTENT_LENGTH} = $ENV{CONTENT_LENGTH} // 0;
-
-            if (my $cpid = fork()){
-                waitpid $cpid, 0;
-            } else {
-                # make 100% sure any "die"-s don't bubble up higher than
-                # this point in the stack: we're a fork()ed process and
-                # should under no circumstance end up acting like another
-                # worker. When we are done, we need to exit() below.
-                try {
-                    local ($!, $@) = (undef, undef);
-                    # the lsmb_legacy package is created by the
-                    # oldHandler use statement
-                    unless ( lsmb_legacy->handle($script, $psgi_env) ) { ## no critic (RequireExplicitInclusion)
-                        if ($! or $@) {
-                            print "Status: 500 Internal server error (PSGI.pm)\n\n";
-                            warn "Failed to execute old request ($!): $@\n";
-                        }
-                    }
-                }
-                catch ($e) {
-                }
-                exit;
-            }
-            return;
-        });
+    my $wire = shift;
 
     # marshall the psgi environment into the cgi environment
     # so we can re-use state from the various middlewares
     return sub {
         my $env = shift;
-        local $psgi_env = $env;
 
         return Plack::Util::response_cb(
-            $handler->($env),
+            CGI::Emulate::PSGI->handler(
+                sub {
+                    local $ENV{CONTENT_LENGTH} = $ENV{CONTENT_LENGTH} // 0;
+
+                    if (my $cpid = fork()){
+                        waitpid $cpid, 0;
+                    } else {
+                        # make 100% sure any "die"-s don't bubble up higher than
+                        # this point in the stack: we're a fork()ed process and
+                        # should under no circumstance end up acting like another
+                        # worker. When we are done, we need to exit() below.
+                        try {
+                            local ($!, $@) = (undef, undef);
+                            # the lsmb_legacy package is created by the
+                            # oldHandler use statement
+                            unless ( lsmb_legacy->handle($script, $env, $wire) ) { ## no critic (RequireExplicitInclusion)
+                                if ($! or $@) {
+                                    print "Status: 500 Internal server error (PSGI.pm)\n\n";
+                                    warn "Failed to execute old request ($!): $@\n";
+                                }
+                            }
+                        }
+                        catch ($e) {
+                        }
+                        exit;
+                    }
+                    return;
+                }
+            )->($env),
             sub {
                 Plack::Util::header_set($_[0]->[1],
                                         'Content-Security-Policy',
@@ -148,50 +146,54 @@ in LedgerSMB::Scripts::*.
 
 
 sub psgi_app {
-    my $env = shift;
-    my $psgi_req = Plack::Request::WithEncoding->new($env);
-    my $request = LedgerSMB->new($psgi_req);
+    my $wire = shift;
 
-    $request->{action} = $env->{'lsmb.action_name'};
-    my $res;
-    try {
-        LedgerSMB::App_State::run_with_state sub {
+    return sub {
+        my $env = shift;
+        my $psgi_req = Plack::Request::WithEncoding->new($env);
+        my $request = LedgerSMB->new($psgi_req, $wire);
 
-            $request->initialize_with_db if $request->{dbh};
-            $res = $env->{'lsmb.action'}->($request);
-        }, DBH     => $env->{'lsmb.db'};
+        $request->{action} = $env->{'lsmb.action_name'};
+        my $res;
+        try {
+            LedgerSMB::App_State::run_with_state sub {
 
-        $request->{dbh}->commit if defined $request->{dbh};
-    }
-    catch ($error) {
-        # Explicitly roll back, because middleware may require the
-        # database connection to be in a working state (e.g. DisableBackbutton)
-        $request->{dbh}->rollback
-            if $request->{dbh};
-        if ($error !~ /^Died at/) {
-            $env->{'psgix.logger'}->({
-                level => 'error',
-                message => $error });
-            $res = LedgerSMB::PSGI::Util::internal_server_error(
-                $error,
-                'Error!',
-                $request->{company},
-                $request->{dbversion},
-            );
+                $request->initialize_with_db if $request->{dbh};
+                $res = $env->{'lsmb.action'}->($request);
+            }, DBH     => $env->{'lsmb.db'};
+
+            $request->{dbh}->commit if defined $request->{dbh};
         }
-        else {
-            $res = [ '500', [ 'Content-Type' => 'text/plain' ], [ $error ]];
+        catch ($error) {
+            # Explicitly roll back, because middleware may require the
+            # database connection to be in a working state (e.g. DisableBackbutton)
+            $request->{dbh}->rollback
+                if $request->{dbh};
+            if ($error !~ /^Died at/) {
+                $env->{'psgix.logger'}->({
+                    level => 'error',
+                    message => $error });
+                $res = LedgerSMB::PSGI::Util::internal_server_error(
+                    $error,
+                    'Error!',
+                    $request->{company},
+                    $request->{dbversion},
+                    );
+            }
+            else {
+                $res = [ '500', [ 'Content-Type' => 'text/plain' ], [ $error ]];
+            }
         }
-    }
 
-    return Plack::Util::response_cb(
-        $res,
-        sub {
-            my $res = shift;
-            Plack::Util::header_set($res->[1],
-                                    'Content-Security-Policy',
-                                    q{frame-ancestors 'self'});
-        });
+        return Plack::Util::response_cb(
+            $res,
+            sub {
+                my $res = shift;
+                Plack::Util::header_set($res->[1],
+                                        'Content-Security-Policy',
+                                        q{frame-ancestors 'self'});
+            });
+    };
 }
 
 =item setup_url_space(development => $boolean, coverage => $boolean)
@@ -220,24 +222,20 @@ sub _hook_psgi_logger {
 }
 
 sub setup_url_space {
-    my %args = @_;
-    my $development = $args{development};
-    my $psgi_app = \&psgi_app;
+    my %args        = @_;
+    my $wire        = $args{wire};
+    my $psgi_app    = psgi_app($wire);
+
+    my $cookie      = $wire->get( 'cookie' )->{name} // 'LedgerSMB';
+    my $secret      = $wire->get( 'cookie' )->{secret} //
+        String::Random->new->randpattern('.' x 50);
 
     return builder {
-        if (LedgerSMB::Sysconfig::proxy_ip()) {
-            enable match_if addr([ split / /,
-                                   LedgerSMB::Sysconfig::proxy_ip() ]),
-                'ReverseProxy';
+        if (my $proxy_ip = eval { $wire->get( 'miscellaneous/proxy_ip' ); }) {
+            enable match_if addr([ split / /, $proxy_ip ]), 'ReverseProxy';
         }
         enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
             'ConditionalGET';
-
-        enable 'Plack::Middleware::Pod',
-             path => qr{^/pod/},
-             root => './',
-             pod_view => 'Pod::POM::View::HTMl' # the default
-                 if $development;
 
         # not using LedgerSMB::Sysconfig::scripts():
         #   it has more than only entry-points
@@ -247,8 +245,9 @@ sub setup_url_space {
             enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::SessionStorage',
                 domain          => 'main',
-                cookie          => LedgerSMB::Sysconfig::cookie_name,
+                cookie          => $cookie,
                 duration        => 60*60*24*90,
+                secret          => $secret,
                 # can marshall state in, but not back out (due to forking)
                 # so have the inner scope handle serialization itself
                 inner_serialize => 1;
@@ -256,12 +255,11 @@ sub setup_url_space {
                 script          => $script;
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'closed',
-                default_company    => LedgerSMB::Sysconfig::default_db(),
-                schema             => LedgerSMB::Sysconfig::db_namespace();
+                factory            => $wire->get( 'db' );
             enable '+LedgerSMB::Middleware::MainAppConnect',
                 provide_connection => 'closed',
                 require_version    => $LedgerSMB::VERSION;
-            old_app($script)
+            old_app($script, $wire)
         }
         for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
 
@@ -272,16 +270,17 @@ sub setup_url_space {
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::SessionStorage',
                 domain   => 'main',
-                cookie   => LedgerSMB::Sysconfig::cookie_name,
+                cookie   => $cookie,
+                secret   => $secret,
                 duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
+                max_post_size => $wire->get( 'miscellaneous/max_upload_size' ),
                 script   => $script;
             enable '+LedgerSMB::Middleware::Log4perl',
                 script   => $script;
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'open',
-                default_company => LedgerSMB::Sysconfig::default_db(),
-                schema          => LedgerSMB::Sysconfig::db_namespace();
+                factory         => $wire->get( 'db' );
             enable '+LedgerSMB::Middleware::MainAppConnect',
                 provide_connection => 'open',
                 require_version => $LedgerSMB::VERSION;
@@ -296,16 +295,17 @@ sub setup_url_space {
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::SessionStorage',
                 domain   => 'main',
-                cookie   => LedgerSMB::Sysconfig::cookie_name,
+                cookie   => $cookie,
+                secret   => $secret,
                 duration => 60*60*24*90;
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
+                max_post_size => $wire->get( 'miscellaneous/max_upload_size' ),
                 script   => 'login.pl';
             enable '+LedgerSMB::Middleware::Log4perl',
                 script   => 'login.pl';
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'none',
-                default_company => LedgerSMB::Sysconfig::default_db(),
-                schema          => LedgerSMB::Sysconfig::db_namespace();
+                factory         => $wire->get( 'db' );
             enable '+LedgerSMB::Middleware::MainAppConnect',
                 provide_connection => 'none',
                 require_version => $LedgerSMB::VERSION;
@@ -319,13 +319,13 @@ sub setup_url_space {
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::SessionStorage',
                 domain      => 'main',
-                cookie      => LedgerSMB::Sysconfig::cookie_name,
+                cookie      => $cookie,
                 cookie_path => '/',
+                secret      => $secret,
                 duration    => 60*60*24*90;
             enable '+LedgerSMB::Middleware::Authenticate::Company',
                 provide_connection => 'open',
-                default_company => LedgerSMB::Sysconfig::default_db(),
-                schema          => LedgerSMB::Sysconfig::db_namespace();
+                factory         => $wire->get( 'db' );
             enable '+LedgerSMB::Middleware::MainAppConnect',
                 provide_connection => 'open',
                 require_version => $LedgerSMB::VERSION;
@@ -339,6 +339,7 @@ sub setup_url_space {
             enable 'AccessLog',
                 format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
+                max_post_size => $wire->get( 'miscellaneous/max_upload_size' ),
                 script => 'setup.pl';
             enable '+LedgerSMB::Middleware::Log4perl',
                 script => 'setup.pl';
@@ -361,10 +362,6 @@ sub setup_url_space {
                 return $app->($env);
             }
         };
-
-        if (! LedgerSMB::Sysconfig::dojo_built() ) {
-            mount '/js/' => Plack::App::File->new(root => 'UI/js-src')->to_app
-        }
 
         mount '/' => Plack::App::File->new( root => 'UI' )->to_app;
     };

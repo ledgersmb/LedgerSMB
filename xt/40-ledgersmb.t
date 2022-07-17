@@ -6,20 +6,30 @@ use warnings;
 use Test2::V0;
 use Math::BigFloat;
 
-use LedgerSMB;
-use LedgerSMB::Locale;
-use LedgerSMB::Sysconfig;
+use Beam::Wire;
+use Log::Log4perl qw(:easy);
 use Plack::Request;
 
-use Log::Log4perl qw(:easy);
+use LedgerSMB;
+use LedgerSMB::Locale;
 
-LedgerSMB::Sysconfig->initialize;
-LedgerSMB::Locale->initialize;
+
+my $wire = Beam::Wire->new(file => 't/ledgersmb.yaml');
+LedgerSMB::Locale->initialize($wire);
 Log::Log4perl->easy_init($OFF);
 
+$wire = Beam::Wire->new(
+    config => {
+        default_locale => {
+            class => 'LedgerSMB::LanguageResolver',
+            args => {
+                directory => './locale/po/',
+            },
+        }
+    });
 my $request = Plack::Request->new({});
 
-my $lsmb = LedgerSMB->new($request);
+my $lsmb = LedgerSMB->new($request, $wire);
 my @r;
 
 ok(defined $lsmb);

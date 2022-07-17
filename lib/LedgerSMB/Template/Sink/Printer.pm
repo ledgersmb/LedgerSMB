@@ -36,22 +36,19 @@ use strict;
 
 use HTTP::Status qw(HTTP_OK);
 
-
-use LedgerSMB::Sysconfig;
-
 use Moose;
 use namespace::autoclean;
 
 
 =head1 ATTRIBUTES
 
-=head2 printer
+=head2 command
 
-Name of the printer to send the output to.
+Command to execute and send the output to.
 
 =cut
 
-has printer => (is => 'ro');
+has command => (is => 'ro');
 
 =head2 _results
 
@@ -73,7 +70,7 @@ Implements the super class's append
 sub append {
     my ($self, $template) = @_;
 
-    my $cmd = LedgerSMB::Sysconfig::printer()->{$self->printer};
+    my $cmd = $self->command;
     unless (defined $cmd) {
         push $self->_results->@*, {
             msg    => 'No printer configured for ' . $self->printer,

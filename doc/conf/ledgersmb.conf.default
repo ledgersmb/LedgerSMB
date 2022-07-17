@@ -8,15 +8,6 @@
 
 [main]
 
-# Designate the authentication module in the LedgerSMB::Auth:: namespace
-# to be loaded to handle authentication.  LedgerSMB comes with only the
-# DB authentication module included.
-auth = DB
-
-# If set to a true value this caches templates.  Typically it will be set to 0
-# to disable or 1 to enable.
-cache_templates = 0
-
 # Set language for login and admin pages
 language =
 
@@ -37,14 +28,6 @@ log_level = ERROR
 #
 # Examples in doc/conf/ledgersmb.log.conf.*
 #log_config = ledgersmb.log.conf
-
-# Maximum POST size to prevent DoS (4MB default)
-max_post_size = 4194304
-
-# Spelling of cookie name for this instance of LedgerSMB.
-# Used to keep multiple instances and/or different versions
-# logged in at the same time
-cookie_name = LedgerSMB-1.10
 
 # This is the Dojo theme to be used by default -- e.g. when no other theme
 # has been selected.
@@ -87,17 +70,6 @@ localepath = locale/po
 [programs]
 
 [mail]
-# The sendmail command is used to send mail unless smtphost is set.
-# sendmail   = /usr/bin/sendmail
-
-# If smtp host is defined, messages will be sent via this smtp server,
-# instead of the default sendmail method.
-# smtphost = localhost
-# smtpport = 25
-# smtpuser = username
-# smtppass = password
-# smtptimeout = 60
-
 # This must be set to enable e-mail delivery of backups
 # backup_email_from = backups@lsmb_hosting.com
 
@@ -120,25 +92,3 @@ host = localhost
 db_namespace = public
 # sslmode can be require, allow, prefer, or disable.  Defaults to prefer.
 sslmode = prefer
-
-[debug]
-
-# This is the boolean indicating if dojo's compacted output ("built output")
-# should be used or the development version [1 = 'true' ==> 'built version']
-#
-# this should be used in versions you download from packages, but should
-# NOT be used when running directly from version control software because
-# you cannot guarantee you are running the correct versions of dojo
-# widgets with your aplication in that case.
-#
-#dojo_built = 1
-
-[template_format]
-# These define the file format options allowed for report exports
-# Set to 'disabled' to prevent the option being made available
-# Otherwise options will be made available subject to a load-time
-# check against module availability.
-#template_latex = disabled
-#template_xls = disabled
-#template_xlsx = disabled
-#template_ods = disabled

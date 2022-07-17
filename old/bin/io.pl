@@ -45,14 +45,11 @@ use LedgerSMB::OE;
 use LedgerSMB::Tax;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::DBObject::Draft;
 use LedgerSMB::File;
 use List::Util qw(max reduce);
-
-use Workflow::Factory qw(FACTORY);
 
 
 require "old/bin/printer.pl";
@@ -141,7 +138,8 @@ sub approve {
     my $draft = LedgerSMB::DBObject::Draft->new(%$form);
 
     $draft->approve();
-    my $wf = FACTORY->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    my $wf = $form->{_wire}->get('workflows')
+        ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
     $wf->execute_action( 'post' ) if $wf;
     edit();
 }
@@ -955,7 +953,7 @@ sub validate_items {
 
 sub purchase_order {
 
-    my $wf = FACTORY()->fetch_workflow(
+    my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
         ($form->{type} eq 'invoice') ? 'AR/AP' : 'Order/Quote',
         $form->{workflow_id}
         );
@@ -974,7 +972,7 @@ sub purchase_order {
 
 sub sales_order {
 
-    my $wf = FACTORY()->fetch_workflow(
+    my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
         ($form->{type} eq 'invoice') ? 'AR/AP' : 'Order/Quote',
         $form->{workflow_id}
         );
@@ -993,7 +991,7 @@ sub sales_order {
 
 sub rfq {
 
-    my $wf = FACTORY()->fetch_workflow(
+    my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
         ($form->{type} eq 'invoice') ? 'AR/AP' : 'Order/Quote',
         $form->{workflow_id}
         );
@@ -1012,7 +1010,7 @@ sub rfq {
 
 sub quotation {
 
-    my $wf = FACTORY()->fetch_workflow(
+    my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
         ($form->{type} eq 'invoice') ? 'AR/AP' : 'Order/Quote',
         $form->{workflow_id}
         );
@@ -1380,13 +1378,13 @@ sub print_form {
 
     my %output_options;
     if ($form->{media} eq 'zip'){
-        $form->{OUT}       = $form->{zipdir};
+        $form->{OUT} = $form->{zipdir};
         $form->{printmode} = '>';
     } elsif ( $form->{media} !~ /(screen|zip|email)/ ) { # printing
-        $form->{OUT}       = LedgerSMB::Sysconfig::printer()->{ $form->{media} };
-        $form->{printmode} = '|-';
+        $form->{OUT} = $form->{_wire}->get( 'printers' )->get( $form->{media} );
         $form->{OUT} =~ s/<%(fax)%>/<%$form->{vc}$1%>/;
         $form->{OUT} =~ s/<%(.*?)%>/$form->{$1}/g;
+        $form->{printmode} = '|-';
 
         if ( $form->{printed} !~ /$form->{formname}/ ) {
 
@@ -1409,9 +1407,10 @@ sub print_form {
                 dbh => $form->{dbh},
                 path => 'DB',
                 language => $form->{language_code},
-                format => uc $form->{format},
                 output_options => \%output_options,
                 filename => $form->{formname} . "-" . $form->{"${inv}number"},
+                format_plugin   =>
+                   $form->{_wire}->get( 'output_plugins' )->get( uc($form->{format} ) ),
             );
         $template->render($form);
 
@@ -1437,6 +1436,7 @@ sub print_form {
         my $body = $template->{output};
         utf8::encode($body) if utf8::is_utf8($body);  ## no critic
         my $email_data = {
+            _transport    => $form->{_wire}->get( 'mail' )->{transport},
             immediateSend => $form->{immediate},
             expansions    => \%expansions,
             body          => $form->{message},
@@ -1475,7 +1475,8 @@ sub print_form {
                     q{select workflow_id from oe where id = ?},
                     {}, $form->{id});
 
-            $trans_wf = FACTORY()->fetch_workflow( 'Order/Quote', $wf_id );
+            $trans_wf = $form->{_wire}->get('workflows')
+                ->fetch_workflow( 'Order/Quote', $wf_id );
         }
         else {
             ($wf_id) =
@@ -1483,7 +1484,8 @@ sub print_form {
                     q{select workflow_id from transactions where id = ?},
                     {}, $form->{id});
 
-            $trans_wf = FACTORY()->fetch_workflow( 'AR/AP', $wf_id );
+            $trans_wf = $form->{_wire}->get('workflows')
+                ->fetch_workflow( 'AR/AP', $wf_id );
             if (grep { $_ eq 'save' } $trans_wf->get_current_actions) {
                 $trans_wf->execute_action( 'save' );
             }
@@ -1519,9 +1521,10 @@ sub print_form {
         dbh => $form->{dbh},
         path => 'DB',
         language => $form->{language_code},
-        format => uc $form->{format},
         output_options => \%output_options,
         filename => $form->{formname} . "-" . $form->{"${inv}number"},
+        format_plugin   =>
+            $form->{_wire}->get( 'output_plugins' )->get( uc($form->{format} ) ),
         );
     $template->render($form);
     LedgerSMB::Legacy_Util::output_template($template, $form,

@@ -9,8 +9,6 @@ use FindBin;
 use Log::Log4perl qw(:easy);
 Log::Log4perl->easy_init($OFF);
 
-LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
-
 my $sqldir = "$FindBin::Bin/../sql/modules";
 my $blacklist_file = "$sqldir/BLACKLIST";
 

@@ -5,27 +5,28 @@ use warnings;
 
 use Test2::V0;
 
+use Beam::Wire;
 use File::Temp;
+
 use LedgerSMB;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Locale;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::Template;
-use LedgerSMB::Template::HTML;
+use LedgerSMB::Template::Plugin::HTML;
 use Plack::Request;
 
 use Log::Log4perl qw(:easy);
 
-LedgerSMB::Sysconfig->initialize( $ENV{LSMB_CONFIG_FILE} // 'ledgersmb.conf' );
-LedgerSMB::Locale->initialize();
+my $wire = Beam::Wire->new(file => 't/ledgersmb.yaml');
+LedgerSMB::Locale->initialize($wire);
 Log::Log4perl->easy_init($OFF);
 
 
 my $template;
 my $locale;
+my $plugin = LedgerSMB::Template::Plugin::HTML->new;
 
 $locale = LedgerSMB::Locale->get_handle('fr');
-
 
 ###############################################
 ## LedgerSMB::Template::preprocess checks ##
@@ -42,7 +43,7 @@ for my $value ([], {}) {
 ## LedgerSMB::Template::HTML checks ##
 ######################################
 
-my $escape = LedgerSMB::Template::HTML->can('escape');
+my $escape = sub { $plugin->escape(@_) };
 is(LedgerSMB::Template::preprocess('04-template', $escape), '04-template',
         'HTML, preprocess: Returned simple string unchanged');
 is(LedgerSMB::Template::preprocess('14 > 12', $escape), '14 &gt; 12',
@@ -67,7 +68,7 @@ $template = undef;
 $template = LedgerSMB::Template->new(
     'language' => 'de',
     'path'     => 't/data',
-    'format'   => 'HTML'
+    'format_plugin' => $plugin
 );
 ok(defined $template,
         'Template, new: Object creation with valid language and path');
@@ -78,10 +79,10 @@ is($template->{include_path}, 't/data',
 
 $template = undef;
 $template = LedgerSMB::Template->new(
-    'format'   => 'HTML',
     'path'     => 't/data',
     'template' => '04-template',
-    'locale' => $locale
+    'locale' => $locale,
+    'format_plugin'   => $plugin
 );
 ok(defined $template,
         'Template, new: Object creation with locale');
@@ -90,9 +91,9 @@ isa_ok($template, ['LedgerSMB::Template'],
 
 $template = undef;
 $template = LedgerSMB::Template->new(
-    'format'   => 'HTML',
     'path'     => 't/data',
-    'template' => '04-template-2'
+    'template' => '04-template-2',
+    'format_plugin'   => $plugin
 );
 ok(defined $template,
         'Template, new: Object creation with non-existent template');
@@ -109,12 +110,15 @@ SKIP: {
         skip 'Template::Plugin::Latex not installed', 12;
     eval {require Template::Latex} ||
         skip 'Template::Latex not installed', 12;
+    eval { require LedgerSMB::Template::Plugin::LaTeX } or
+        skip q{Can't require LedgerSMB::Template::Plugin::LaTeX}, 12;
 
     $template = undef;
+    my $p = LedgerSMB::Template::Plugin::LaTeX->new( format => 'PDF' );
     $template = LedgerSMB::Template->new(
-        'format'   => 'PDF',
         'path'     => 't/data',
-        'template' => '04-template'
+        'template' => '04-template',
+        'format_plugin'   => $p
     );
     ok(defined $template,
         'Template, new (PDF): Object creation with format and template');
@@ -133,10 +137,11 @@ SKIP: {
     );
 
     $template = undef;
+    $p = LedgerSMB::Template::Plugin::LaTeX->new( format => 'PS' );
     $template = LedgerSMB::Template->new(
-        'format'   => 'postscript',
         'path'     => 't/data',
-        'template' => '04-template'
+        'template' => '04-template',
+        'format_plugin'   => $p
     );
     ok(defined $template,
         'Template, new (PS): Object creation with format and template');
@@ -157,12 +162,15 @@ SKIP: {
         skip 'Excel::Writer::XLSX not installed', 12;
     eval {require Spreadsheet::WriteExcel} ||
         skip 'Spreadsheet::WriteExcel not installed', 12;
+    eval { require LedgerSMB::Template::Plugin::XLSX } or
+        skip q{Can't require LedgerSMB::Template::Plugin::XLSX}, 12;
 
     $template = undef;
+    my $p = LedgerSMB::Template::Plugin::XLSX->new( format => 'XLS' );
     $template = LedgerSMB::Template->new(
-        'format'   => 'XLS',
         'path'     => 'templates/demo',
-        'template' => 'display_report'
+        'template' => 'display_report',
+        'format_plugin'   => $p
     );
     ok(defined $template,
         'Template, new (XLS): Object creation with format and template');
@@ -185,10 +193,11 @@ SKIP: {
     );
 
     $template = undef;
+    $p = LedgerSMB::Template::Plugin::XLSX->new( format => 'XLSX' );
     $template = LedgerSMB::Template->new(
-        'format'   => 'XLSX',
         'path'     => 'templates/demo',
-        'template' => 'display_report'
+        'template' => 'display_report',
+        'format_plugin'   => $p
     );
     ok(defined $template,
         'Template, new (XLSX): Object creation with format and template');
@@ -215,12 +224,15 @@ SKIP: {
         skip 'XML::Twig not installed', 5;
     eval {require OpenOffice::OODoc} ||
         skip 'OpenOffice::OODoc not installed', 5;
+    eval { require LedgerSMB::Template::Plugin::ODS } or
+        skip q{Can't require LedgerSMB::Template::Plugin::ODS}, 12;
 
     $template = undef;
+    my $p = LedgerSMB::Template::Plugin::ODS->new( format => 'ODS' );
     $template = LedgerSMB::Template->new(
-        'format'   => 'ODS',
         'path'     => 'templates/demo',
-        'template' => 'display_report'
+        'template' => 'display_report',
+        'format_plugin'   => $p
     );
     ok(defined $template,
         'Template, new (ODS): Object creation with format and template');
@@ -241,10 +253,12 @@ SKIP: {
 }
 
 $template = undef;
+ok(require LedgerSMB::Template::Plugin::TXT);
+$plugin = LedgerSMB::Template::Plugin::TXT->new;
 $template = LedgerSMB::Template->new(
-    'format'   => 'TXT',
     'path'     => 't/data',
-    'template' => '04-template'
+    'template' => '04-template',
+    'format_plugin'   => $plugin
 );
 ok(defined $template,
         'Template, new (TXT): Object creation with format and template');
@@ -256,10 +270,12 @@ is($template->{output}, "I am a template.\nLook at me foo&bar.",
 is($template->{mimetype}, 'text/plain', 'Template, new (HTML): correct mimetype');
 
 $template = undef;
+ok(require LedgerSMB::Template::Plugin::CSV);
+$plugin = LedgerSMB::Template::Plugin::CSV->new;
 $template = LedgerSMB::Template->new(
-    'format'   => 'CSV',
     'path'     => 't/data',
-    'template' => '04-template'
+    'template' => '04-template',
+    'format_plugin'   => $plugin
 );
 ok(defined $template,
         'Template, new (CSV): Object creation with format and template');
@@ -271,10 +287,11 @@ is($template->{output}, "account,amount,description,project",
 is($template->{mimetype}, 'text/csv', 'Template, new (CSV): correct mimetype');
 
 $template = undef;
+$plugin = LedgerSMB::Template::Plugin::HTML->new;
 $template = LedgerSMB::Template->new(
-    'format'   => 'HTML',
     'path'     => 't/data',
-    'template' => '04-template'
+    'template' => '04-template',
+    'format_plugin'   => $plugin
 );
 ok(defined $template,
         'Template, new (HTML): Object creation with format and template');
@@ -293,8 +310,8 @@ use Math::BigFloat;
 $template = undef;
 $template = LedgerSMB::Template->new(
     'user'     => {numberformat => '1.000,00'},
-    'format'   => 'HTML',
-    'template' => '04-template'
+    'template' => '04-template',
+    'format_plugin'   => $plugin # HTML
 );
 ok(defined $template,
         'Template, private (preprocess): Object creation with format and template');
@@ -310,19 +327,32 @@ SKIP: {
         skip 'Template::Plugin::Latex not installed', 2;
     eval {require Template::Latex} ||
         skip 'Template::Latex not installed', 2;
+    eval { require LedgerSMB::Template::Plugin::LaTeX } or
+        skip q{Can't require LedgerSMB::Template::Plugin::LaTeX}, 12;
 
     my $temp = File::Temp->new();
-    LedgerSMB::Sysconfig::printer('test' => "cat > $temp");
+    my $wire = Beam::Wire->new(
+        config => {
+            printers => {
+                class => 'LedgerSMB::Printers',
+                args => {
+                    printers => {
+                        test => "cat > $temp"
+                    }
+                },
+            }
+        } );
+    my $p = LedgerSMB::Template::Plugin::LaTeX->new( format => 'PDF' );
     $template = LedgerSMB::Template->new(
-        'format'   => 'PDF',
         'template' => '04-template',
         'locale'   => $locale,
         'path'     => 't/data',
+        'format_plugin'   => $p,
         );
     $template->render({});
     LedgerSMB::Legacy_Util::output_template(
         $template,
-        {}, # $form
+        { _wire => $wire }, # $form
         method => 'test',
     );
 

@@ -18,7 +18,6 @@ use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER );
 use Workflow::Context;
-use Workflow::Factory qw(FACTORY);
 
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Entity;
@@ -170,7 +169,8 @@ sub _render_statement_batch {
     my $rows = [ $results->@* ];
     for my $row ($rows->@*) {
         $row->{id_href_suffix} = $row->{id};
-        my $nested_wf = FACTORY()->fetch_workflow( 'Email' => $row->{id} );
+        my $nested_wf = $request->{_wire}->get('workflows')
+            ->fetch_workflow( 'Email' => $row->{id} );
         $row->{status} = $nested_wf->state;
     }
     return $template->render(
@@ -204,14 +204,13 @@ sub-workflows and renders an overview page.
 
 sub cancel {
     my ($request) = @_;
-    my $wf = FACTORY()->fetch_workflow(
+    my $wf = $request->{_wire}->get('workflows')->fetch_workflow(
         'Aging statement batch' => $request->{workflow_id}
         );
 
     for my $result ($wf->context->param( 'results' )->@*) {
-        my $nested_wf = FACTORY()->fetch_workflow(
-            'Email' => $result->{id}
-            );
+        my $nested_wf = $request->{_wire}->get('workflows')
+            ->fetch_workflow('Email' => $result->{id});
 
         if ($nested_wf and
             grep { $_ eq 'Cancel' } $nested_wf->get_current_actions
@@ -232,7 +231,7 @@ Marks the batch processing completed and renders an overview page.
 
 sub mark_complete {
     my ($request) = @_;
-    my $wf = FACTORY()->fetch_workflow(
+    my $wf = $request->{_wire}->get('workflows')->fetch_workflow(
         'Aging statement batch' => $request->{workflow_id}
         );
 
@@ -249,7 +248,7 @@ aging statements.
 
 sub render_statement_batch {
     my ($request) = @_;
-    my $wf = FACTORY()->fetch_workflow(
+    my $wf = $request->{_wire}->get('workflows')->fetch_workflow(
         'Aging statement batch' => $request->{workflow_id}
         );
 
@@ -340,8 +339,12 @@ sub generate_statement {
             );
     }
     else {
+        my $cmd = $request->{_wire}->get( 'printers' )->get( $request->{media} );
+        unless ($cmd) {
+            die "No printer configured for '$request->{media}'";
+        }
         $sink = LedgerSMB::Template::Sink::Printer->new(
-            printer => $request->{media},
+            command => $cmd,
             );
     }
 
@@ -353,8 +356,9 @@ sub generate_statement {
                      locale   => $request->{_locale},
                      template => $request->{print_template},
                      language => $statement->{language},
-                     format   => $format,
                      method   => $request->{media},
+                     format_plugin   =>
+                         $request->{_wire}->get( 'output_plugins' )->get( $request->{format}),
                 );
 
         $template->render(
@@ -387,7 +391,8 @@ sub generate_statement {
     my $context = Workflow::Context->new(
         results => \@results
         );
-    my $wf = FACTORY()->create_workflow( 'Aging statement batch', $context );
+    my $wf = $request->{_wire}->get('workflows')
+        ->create_workflow( 'Aging statement batch', $context );
     $request->{workflow_id} = $wf->id;
 
     return _render_statement_batch($request, $wf);

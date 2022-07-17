@@ -2,15 +2,16 @@
 
 use Test2::V0;
 
+use Beam::Wire;
+
 use LedgerSMB::Locale;
 use LedgerSMB::Num2text;
 use LedgerSMB::PGNumber;
 use Log::Log4perl qw(:easy);
 Log::Log4perl->easy_init($OFF);
 
-use LedgerSMB::Sysconfig;
-LedgerSMB::Sysconfig->initialize;
-LedgerSMB::Locale->initialize;
+my $wire = Beam::Wire->new(file => 't/ledgersmb.yaml');
+LedgerSMB::Locale->initialize($wire);
 
 my %english = (
     0 => 'Zero',

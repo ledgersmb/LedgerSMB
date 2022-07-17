@@ -45,25 +45,7 @@ our @pre_render_cbs = (
     );
 
 
-sub _available_formats {
-    my @retval = ('HTML', 'TXT');
-
-    if ( LedgerSMB::Sysconfig::template_latex() ) {
-        push @retval, 'PDF', 'PS';
-    }
-    if ( LedgerSMB::Sysconfig::template_xls() ) {
-        push @retval, 'XLS';
-    }
-    if ( LedgerSMB::Sysconfig::template_xlsx() ) {
-        push @retval, 'XLSX';
-    }
-    if ( LedgerSMB::Sysconfig::template_ods() ) {
-        push @retval, 'ODS';
-    }
-    return \@retval;
-}
-
-=head2 new_UI()
+=head2 new_UI( cache => $path, root => $path )
 
 Constructor. Returns (singleton) template UI renderer.
 
@@ -71,14 +53,15 @@ Constructor. Returns (singleton) template UI renderer.
 
 sub new_UI {
     my $class = shift;
-    croak 'called LedgerSMB::Template::UI::new_UI with args while it takes none'
-        if @_;
+    my %args = @_;
+    my $cache = $args{cache} // 'lsmb_templates/';
+    my $root = $args{root} // './';
 
     if (! defined $singleton) {
         if (!defined $engine) {
             $engine = Template->new(
-                ### TODO: These should be configurable absolute paths
-                INCLUDE_PATH => [ 'UI/js', 'UI/', 'UI/lib/' ],
+                INCLUDE_PATH => [
+                    map { $root . $_ } ('UI/js', 'UI/', 'UI/lib/') ],
                 ENCODING => 'utf8',
                 TRIM => 1,
                 START_TAG => quotemeta('[%'),
@@ -86,17 +69,12 @@ sub new_UI {
                 DELIMITER => ';',
                 COMPILE_EXT => '.lttc',
                 COMPILE_DIR =>
-                   File::Spec->rel2abs( LedgerSMB::Sysconfig::templates_cache(),
-                                        File::Spec->tmpdir ),
+                   File::Spec->rel2abs( $cache, File::Spec->tmpdir ),
                 VARIABLES => {
-                    LIST_FORMATS => sub {
-                        return _available_formats();
-                    },
                     UNESCAPE => sub {
                         return decode_entities(shift @_);
                     },
-                }
-                )
+                })
                 or die Template->error;
         }
 
@@ -148,11 +126,13 @@ sub render_string {
                 sub { return escape_html($_[0]); }) },
           %{$self->{standard_vars}},
           dojo_theme => (
-              $request->{_company_config}->{dojo_theme}
-              || LedgerSMB::Sysconfig::dojo_theme()),
+              $request->{_company_config}->{dojo_theme} || 'claro'
+          ),
+          LIST_FORMATS => sub {
+              return $request->{_wire}->get( 'output_plugins' )->get_formats;
+          },
           PRINTERS => [
-              ( ( map { { text => $_, value => $_ } }
-                  keys LedgerSMB::Sysconfig::printer()->%* ),
+              ( $request->{_wire}->get( 'printers' )->as_options,
                 {
                     text  => $request->{_locale}->text('Screen'),
                     value => 'screen'

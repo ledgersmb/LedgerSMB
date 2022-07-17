@@ -32,7 +32,6 @@ use LedgerSMB::Magic qw( MIN_PER_HOUR SEC_PER_HOUR SUNDAY SATURDAY );
 use LedgerSMB::PGDate;
 use LedgerSMB::PGTimestamp;
 use LedgerSMB::Report::Timecards;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 use LedgerSMB::Timecard;
@@ -149,7 +148,6 @@ sub save {
     $request->{id} = $timecard->id;
     $request->merge($timecard->get($request->{id}));
     $request->{templates} = ['timecard'];
-    @{$request->{printers}} = LedgerSMB::Sysconfig::printer()->%*; # List context
     return display($request, $request);
 }
 
@@ -207,7 +205,8 @@ sub print {
         dbh      => $request->{dbh},
         path     => 'DB',
         template => 'timecard',
-        format   => $request->{format} || 'HTML',
+        format_plugin   =>
+              $request->{_wire}->get( 'output_plugins' )->get( $request->{format} || 'HTML'),
     );
 
     if (lc($request->{media}) eq 'screen') {

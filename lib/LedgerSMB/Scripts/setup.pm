@@ -51,7 +51,6 @@ use LedgerSMB::PGDate;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setting;
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::UI;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Database::Upgrade;
@@ -88,9 +87,7 @@ sub authenticate {
 
 
 sub __default {
-
     my ($request) = @_;
-    $request->{_user} //= { language => LedgerSMB::Sysconfig::language() };
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'setup/credentials', $request);
 }
@@ -115,14 +112,11 @@ sub _get_database {
         if ( $request->{database} && $request->{database} =~ /postgres|template0|template1/);
 
     return (undef,
-            LedgerSMB::Database->new(
-                connect_data => {
-                    user     => $creds->{login},
-                    password => $creds->{password},
-                    dbname   => $request->{database},
-                },
-                schema   => LedgerSMB::Sysconfig::db_namespace(),
-    ));
+            $request->{_wire}->get( 'db' )->instance(
+                user     => $creds->{login},
+                password => $creds->{password},
+                dbname   => $request->{database},
+            ));
 }
 
 
@@ -260,8 +254,9 @@ sub login {
     return $reauth if $reauth;
 
     my $template = LedgerSMB::Template::UI->new_UI;
-    my $version_info =
-        $database->get_info(LedgerSMB::Sysconfig::auth_db());
+    my $settings = $request->{_wire}->get( 'setup_settings' );
+    my $auth_db = ($settings and $settings->{auth_db}) // 'postgres';
+    my $version_info = $database->get_info($auth_db);
 
     my $server_version     = version->parse(
         $version_info->{system_info}->{'PostgreSQL (server)'}
@@ -336,7 +331,9 @@ sub list_databases {
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
-    my @results = $database->list_dbs(LedgerSMB::Sysconfig::admin_db());
+    my @results = $database->list_dbs(
+        $request->{_wire}->get('setup_settings')->{admin_db}
+        );
     $request->{dbs} = [];
     # Ideally we would extend DBAdmin->list_dbs to accept an argument containing a list of databases to exclude using a method similar to that shown at https://git.framasoft.org/framasoft/OCB/commit/7a6e94edd83e9e73e56d2d148e3238618
     # also, we should add a new function DBAdmin->list_dbs_this_user which only returns db's the currently auth'd user has access to. Once again the framasoft.org link shows a method of doing this
@@ -413,7 +410,11 @@ sub backup_roles {
 # Private method, basically just passes the inputs on to the next screen.
 sub _begin_backup {
     my $request = shift @_;
-    $request->{can_email} = defined LedgerSMB::Sysconfig::backup_email_from();
+    $request->{can_email} = eval {
+        # when accessing an undefined service, an exception is thrown;
+        # suppress the exception: all we want to know is if there is a value
+        $request->{_wire}->get( 'miscellaneous/backup_email_from' );
+    };
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'setup/begin_backup', $request);
 };
@@ -454,10 +455,12 @@ sub run_backup {
     if ($request->{backup_type} eq 'email') {
 
         my $mail = LedgerSMB::Mailer->new(
-            from     => LedgerSMB::Sysconfig::backup_email_from(),
-            to       => $request->{email},
-            subject  => 'Email of Backup',
-            message  => 'The Backup is Attached',
+            transport => $request->{_wire}->get( 'mail' )->{transport},
+            from      => $request->{_wire}->get( 'miscellaneous/backup_email_from' ),
+
+            to        => $request->{email},
+            subject   => 'Email of Backup',
+            message   => 'The Backup is Attached',
         );
         $mail->attach(
             mimetype => $mimetype,
@@ -536,7 +539,9 @@ sub template_screen {
     my ($request, $entrypoint) = @_;
     $request->{template_dirs} =
         [ map { +{ text => $_, value => $_ } }
-          sort keys %{ LedgerSMB::Database::Config->new->templates } ];
+          sort keys %{ LedgerSMB::Database::Config->new(
+                           templates_dir => $request->{_wire}->get( 'paths/templates' ),
+                           )->templates } ];
     return LedgerSMB::Template::UI->new_UI
         ->render($request, 'setup/template_info',
                  { %$request, templates_action => $entrypoint });
@@ -552,7 +557,9 @@ and not the user creation screen.
 
 sub _save_templates {
     my ($request, $entrypoint) = @_;
-    my $templates = LedgerSMB::Database::Config->new->templates;
+    my $templates = LedgerSMB::Database::Config->new(
+        templates_dir => $request->{_wire}->get( 'paths/templates' ),
+        )->templates;
 
     return template_screen($request, $entrypoint)
         if not exists $templates->{$request->{template_dir}};
@@ -664,9 +671,12 @@ sub _process_and_run_upgrade_script {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
+    my $hdr = $request->{_req}->header( 'Accept-Language' );
+    my $lang = $request->{_wire}->get( 'default_locale' )->from_header( $hdr );
     my $upgrade = LedgerSMB::Database::Upgrade->new(
         database => $database,
         type     => $type,
+        language => $lang
         );
     $upgrade->run_upgrade_script(
         {
@@ -781,15 +791,20 @@ sub upgrade {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
-    my $dbinfo = $database->get_info(LedgerSMB::Sysconfig::auth_db());
+    my $settings = $request->{_wire}->get( 'setup_settings' );
+    my $auth_db = ($settings and $settings->{auth_db}) // 'postgres';
+    my $dbinfo = $database->get_info($auth_db);
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
     my $locale = $request->{_locale};
 
     $request->{dbh}->{AutoCommit} = 0;
 
+    my $hdr = $request->{_req}->header( 'Accept-Language' );
+    my $lang = $request->{_wire}->get( 'default_locale' )->from_header( $hdr );
     my $upgrade = LedgerSMB::Database::Upgrade->new(
         database => $database,
-        type => $upgrade_type,
+        type     => $upgrade_type,
+        language => $lang
         );
 
     my $rv;
@@ -944,13 +959,18 @@ sub fix_tests {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
-    my $dbinfo = $database->get_info(LedgerSMB::Sysconfig::auth_db());
+    my $settings = $request->{_wire}->get( 'setup_settings' );
+    my $auth_db = ($settings and $settings->{auth_db}) // 'postgres';
+    my $dbinfo = $database->get_info($auth_db);
     my $dbh = $request->{dbh};
     $dbh->{AutoCommit} = 0;
 
+    my $hdr = $request->{_req}->header( 'Accept-Language' );
+    my $lang = $request->{_wire}->get( 'default_locale' )->from_header( $hdr );
     my $upgrade = LedgerSMB::Database::Upgrade->new(
         database => $database,
-        type => '.../...',
+        type     => '.../...',
+        language => $lang
         );
 
     my $check = $upgrade->applicable_test_by_name($request->{check});
@@ -992,8 +1012,9 @@ sub create_db {
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
-    my $version_info =
-        $database->get_info(LedgerSMB::Sysconfig::auth_db());
+    my $settings = $request->{_wire}->get( 'setup_settings' );
+    my $auth_db = ($settings and $settings->{auth_db}) // 'postgres';
+    my $version_info = $database->get_info($auth_db);
     $request->{login_name} = $version_info->{username};
     if ($version_info->{status} ne 'does not exist') {
         $request->{message} = $request->{_locale}->text(
@@ -1026,7 +1047,11 @@ coa_lc not set:  Select the coa location code
 
 sub select_coa {
     my ($request) = @_;
-    my $coa_data = LedgerSMB::Database::Config->new->charts_of_accounts;
+    my $hdr = $request->{_req}->header( 'Accept-Language' );
+    my $lang = $request->{_wire}->get( 'default_locale' )->from_header( $hdr );
+    my $coa_data = LedgerSMB::Database::Config
+        ->new( language =>  $lang )
+        ->charts_of_accounts;
 
     if ($request->{coa_lc}) {
         my $coa_lc = $request->{coa_lc};
@@ -1399,9 +1424,12 @@ sub force {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
+    my $hdr = $request->{_req}->header( 'Accept-Language' );
+    my $lang = $request->{_wire}->get( 'default_locale' )->from_header( $hdr );
     my $upgrade = LedgerSMB::Database::Upgrade->new(
         database => $database,
         type => '.../...',
+        language => $lang
         );
 
     my $test = $upgrade->applicable_test_by_name($request->{check});
@@ -1490,9 +1518,10 @@ sub system_info {
 
     # the intent here is to get a much more sophisticated system which
     # asks registered modules for their system and dependency info
+    my $settings = $request->{_wire}->get( 'setup_settings' );
+    my $auth_db = ($settings and $settings->{auth_db}) // 'postgres';
     my $info = {
-        db => $database->get_info(LedgerSMB::Sysconfig::auth_db())
-            ->{system_info},
+        db     => $database->get_info($auth_db)->{system_info},
         system => LedgerSMB::system_info()->{system},
         environment => \%ENV,
         modules => \%INC,
@@ -1507,7 +1536,7 @@ sub system_info {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2011-2018 The LedgerSMB Core Team
+Copyright (C) 2011-2022 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

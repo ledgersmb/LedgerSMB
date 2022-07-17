@@ -47,7 +47,6 @@ use LedgerSMB::IIAA;
 use LedgerSMB::Magic qw(BC_VENDOR_INVOICE);
 
 use Workflow::Context;
-use Workflow::Factory qw(FACTORY);
 
 =over
 
@@ -159,7 +158,8 @@ sub post_invoice {
         ( $form->{id} ) = $sth->fetchrow_array;
         my $ctx = Workflow::Context->new;
         $ctx->param( trans_id => $form->{id} );
-        my $wf = FACTORY()->create_workflow( 'AR/AP', $ctx );
+        my $wf = $form->{_wire}->get('workflows')
+            ->create_workflow( 'AR/AP', $ctx );
         $form->{workflow_id} = $wf->id;
 
         $sth->finish;

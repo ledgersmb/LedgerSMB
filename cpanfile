@@ -5,6 +5,7 @@ requires 'perl', '5.32.0';
 
 requires 'Archive::Zip';
 requires 'Authen::SASL';
+requires 'Beam::Wire';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Parse::PSGI';
 requires 'Config::IniFiles';
@@ -24,6 +25,7 @@ requires 'File::Find::Rule';
 requires 'Hash::Merge';
 requires 'HTML::Entities';
 requires 'HTML::Escape';
+requires 'HTTP::AcceptLanguage';
 requires 'HTTP::Headers::Fast', '0.21'; # for content_is_text() method
 requires 'HTTP::Negotiate';
 requires 'HTTP::Status';
@@ -180,7 +182,6 @@ on 'develop' => sub {
     requires 'Perl::Critic::Moose';
     requires 'Perl::Critic::Policy::Modules::RequireExplicitInclusion';
     requires 'Pherkin::Extension::Weasel', '0.15';
-    requires 'Plack::Middleware::Pod'; # YLA - Generate browseable documentation
     requires 'Pod::ProjectDocs';
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP', '3.33';

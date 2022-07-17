@@ -3,6 +3,7 @@
 use Test2::V0;
 use Text::Diff;
 
+use Beam::Wire;
 use Data::Dumper;
 use DBI;
 use Digest::MD5 qw( md5_hex );
@@ -18,15 +19,27 @@ use LedgerSMB;
 use LedgerSMB::Locale;
 use LedgerSMB::Database::ChangeChecks qw( run_checks load_checks );
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
-use LedgerSMB::Sysconfig;
 
-LedgerSMB::Sysconfig->initialize;
-LedgerSMB::Locale->initialize;
+my $wire = Beam::Wire->new(file => 't/ledgersmb.yaml');
+LedgerSMB::Locale->initialize($wire);
 
 
 sub test_request {
     my $plack_req = Plack::Request->new({});
-    my $req = LedgerSMB->new($plack_req);
+    my $wire = Beam::Wire->new(
+        config => {
+            printers => {
+                class => 'LedgerSMB::Printers',
+                args => [],
+            },
+            default_locale => {
+                class => 'LedgerSMB::LanguageResolver',
+                args => {
+                    directory => './locale/po/',
+                }
+            },
+        });
+    my $req = LedgerSMB->new($plack_req, $wire);
 
     $req->{script}          = 'script.pl';
     $req->{query_string}    = 'action=rebuild';

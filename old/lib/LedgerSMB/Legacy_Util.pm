@@ -16,7 +16,6 @@ use strict;
 use warnings;
 
 use LedgerSMB::Setting;
-use LedgerSMB::Sysconfig;
 
 use Log::Any;
 
@@ -85,11 +84,11 @@ sub output_template {
         close $fh
             or warn "Can't close handle of $args{OUT}";
     } elsif ('print' eq lc $method) {
-        _output_template_lpr($template);
+        _output_template_lpr($form->{_wire}, $template);
     } elsif (lc $method eq 'screen') {
         _output_template_http($template);
     } elsif (defined $method and $method ne '' ) {
-        _output_template_lpr($template);
+        _output_template_lpr($form->{_wire}, $template);
     } else {
         _output_template_http($template, $form, %args);
     }
@@ -146,17 +145,18 @@ sub _output_template_http {
 }
 
 sub _output_template_lpr {
-    my ($self) = shift;
-    my $args = $self->{output_options};
-    if ($self->{format} ne 'LaTeX') {
+    my ($wire, $template) = @_;
+    my $args = $template->{output_options};
+    if ($template->{format_plugin}->format ne 'PDF'
+        and $template->{format_plugin}->format ne 'PS') {
         die 'Invalid Format';
     }
-    my $lpr = LedgerSMB::Sysconfig::printer()->{$args->{method}};
+    my $lpr = $wire->get( 'printers' )->get( $args->{method} );
 
     open my $pipe, '|-', $lpr
         or die "Failed to open lpr pipe $lpr : $!";
 
-   print $pipe $self->{output}
+   print $pipe $template->{output}
         or die "Cannot print to $lpr";
 
     close $pipe or die "Cannot close pipe to $lpr";

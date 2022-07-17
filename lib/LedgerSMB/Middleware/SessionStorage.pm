@@ -31,7 +31,7 @@ use Cookie::Baker;
 use Plack::Request;
 use Plack::Util;
 use Plack::Util::Accessor
-    qw( domain cookie cookie_path duration inner_serialize );
+    qw( cookie cookie_path domain duration inner_serialize secret store );
 use Session::Storage::Secure;
 
 use LedgerSMB::PSGI::Util;
@@ -88,15 +88,13 @@ Check minimum Chrome version
 
 =cut
 
-# this variable exists to deal with the code in old/
-our $store;
-
 sub prepare_app {
-    # delay initializing $store to allow LedgerSMB::Sysconfig to be loaded
-    $store = Session::Storage::Secure->new(
-        secret_key => LedgerSMB::Sysconfig::cookie_secret,
+    my $self = shift;
+    my $store = Session::Storage::Secure->new(
+        secret_key => $self->secret,
         default_duration => 24*60*60*90, # 90 days
         );
+    $self->store( $store );
 }
 
 sub call {
@@ -105,7 +103,7 @@ sub call {
     my $req = Plack::Request->new($env);
 
     my $cookie      = $req->cookies->{$self->cookie};
-    my $session     = $store->decode($cookie);
+    my $session     = $self->store->decode($cookie);
 
     my $secure = defined($env->{HTTPS}) && $env->{HTTPS} eq 'ON';
     my $path =
@@ -118,7 +116,7 @@ sub call {
 
             if (! $self->inner_serialize) {
                 my $_cookie_attributes = {
-                    value    => $store->encode(
+                    value    => $self->store->encode(
                         $env->{'lsmb.session'},
                         time + ($env->{'lsmb.session.duration'}
                                 // $self->duration)),

@@ -43,11 +43,9 @@ package OE;
 use LedgerSMB::Magic qw(OEC_QUOTATION OEC_RFQ);
 use LedgerSMB::Num2text;
 use LedgerSMB::Setting;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Tax;
 
 use Log::Any;
-use Workflow::Factory qw(FACTORY);
 
 my $logger = Log::Any->get_logger(category => 'OE');
 
@@ -195,7 +193,8 @@ sub save {
     my $did_insert = 0;
     if ( !$form->{id} ) {
         if (! $form->{workflow_id}) {
-            my $wf = FACTORY()->create_workflow( 'Order/Quote' );
+            my $wf = $form->{_wire}->get('workflows')
+                ->create_workflow( 'Order/Quote' );
             $form->{workflow_id} = $wf->id;
         }
         $query = qq|SELECT nextval('oe_id_seq')|;

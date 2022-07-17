@@ -26,9 +26,6 @@ if ($ENV{COVERAGE} && $ENV{CI}) {
 }
 
 
-use LedgerSMB::Sysconfig;
-LedgerSMB::Sysconfig->initialize;
-
 #### Test setup
 
 my @on_disk;
@@ -91,13 +88,16 @@ sub module_covered {
 ##### The actual tests
 
 
-module_covered 'LedgerSMB::Template::ODS' => qw( XML::Twig OpenOffice::OODoc );
+module_covered
+    'LedgerSMB::Template::Plugin::ODS' => qw( XML::Twig OpenOffice::OODoc );
 
 module_covered
-    'LedgerSMB::Template::LaTeX' => qw( Template::Plugin::Latex Template::Latex );
+    'LedgerSMB::Template::Plugin::LaTeX'
+    => qw( Template::Plugin::Latex Template::Latex );
 
 module_covered
-    'LedgerSMB::Template::XLSX' => qw( Excel::Writer::XLSX Spreadsheet::WriteExcel );
+    'LedgerSMB::Template::Plugin::XLSX'
+    => qw( Excel::Writer::XLSX Spreadsheet::WriteExcel );
 
 for ('LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894') {
     module_covered $_ => qw( X12::Parser );

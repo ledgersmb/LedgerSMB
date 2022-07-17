@@ -1,0 +1,107 @@
+
+cookie:
+  name: LedgerSMB-1.10
+  # Leaving the secret empty causes a secret to be dynamically generated
+  # secret:
+
+db:
+  $class: LedgerSMB::Database::Factory
+  connect_data:
+    sslmode: prefer
+
+default_locale:
+  $class: LedgerSMB::LanguageResolver
+  directory:
+    $ref: paths/locale
+
+environment_variables:
+  class: LedgerSMB::EnvVarSetter
+  lifecycle: eager
+  method: set
+  args:
+    PATH: /bin:/usr/bin:/usr/local/bin:/usr/local/pgsql/bin
+
+extra_middleware: []
+
+logging:
+  level: ERROR
+  # config: ledgersmb.log.conf
+
+login_settings:
+  default_db: ledgersmb
+
+mail:
+  # transport:
+  #   $class: LedgerSMB::Mailer::TransportSMTP
+  #   host: example.com
+  #   port: 2525
+  #   sasl_username:
+  #     $class: Authen::SASL
+  #     mechanism: PLAIN
+  #     callback:
+  #       user: the-user
+  #       pass: SECURITY-FIRST
+  # when using the sendmail binary, use the following:
+  transport:
+    $class: Email::Sender::Transport::Sendmail
+    # optionally use a 'path' argument pointing to the directory
+    # with the 'sendmail' binary:
+    # path: /usr/bin/ssmtp
+
+miscellaneous:
+  $class: Beam::Wire
+  config:
+    backup_email_from:
+    max_upload_size: 4194304
+    proxy_ip: 127.0.0.1/8 ::1/128 ::ffff:127.0.0.1/108
+
+output_plugins:
+  $class: LedgerSMB::Template::Plugins
+  plugins:
+    - $class: LedgerSMB::Template::Plugin::LaTeX
+      format: PDF
+    - $class: LedgerSMB::Template::Plugin::LaTeX
+      format: PS
+    - $class: LedgerSMB::Template::Plugin::XLSX
+      format: XLS
+    - $class: LedgerSMB::Template::Plugin::XLSX
+      format: XLSX
+    - $class: LedgerSMB::Template::Plugin::ODS
+    - $class: LedgerSMB::Template::Plugin::CSV
+    - $class: LedgerSMB::Template::Plugin::TXT
+    - $class: LedgerSMB::Template::Plugin::HTML
+
+paths:
+  $class: Beam::Wire
+  config:
+    locale: ./locale/po/
+    templates: ./templates/
+
+printers:
+  $class: LedgerSMB::Printers
+  printers:
+    Laser: lpr -Plaser
+    Epson: lpr -PEpson
+  fallback: Laser
+
+setup_settings:
+  admin_db: template1
+  auth_db: postgres
+
+ui:
+  class: LedgerSMB::Template::UI
+  method: new_UI
+  lifecycle: eager
+  args:
+    cache: lsmb_templates/
+    root: ./
+
+workflows:
+  class: LedgerSMB::Workflow::Loader
+  lifecycle: eager
+  method: load
+  args:
+    directories:
+      - workflows/
+      - custom_workflows/
+    lifecycle: eager

@@ -40,7 +40,6 @@ use LedgerSMB::GL;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::PGDate;
 use LedgerSMB::Template::UI;
-use LedgerSMB::Sysconfig;
 
 # end of main
 
@@ -502,12 +501,13 @@ sub edit_recurring {
         &{ $prepare{ $form->{module} } };
     }
 
-    $form->{selectformat} = qq|<option value="html">html\n|;
-    if ( LedgerSMB::Sysconfig::latex() ) {
-        $form->{selectformat} .= qq|
-            <option value="postscript">| . $locale->text('Postscript') . qq|
-        <option value="pdf">| . $locale->text('PDF');
-    }
+    $form->{selectformat} =
+        join('',
+             map {
+                 my $val = lc $_;
+                 qq|<option value="$val">$_|
+             } $form->{_wire}->get( 'output_plugins' )->get_formats
+        );
 
     &schedule;
 
@@ -518,14 +518,7 @@ sub process_transactions {
     my $pt = Form->new;
     for ( keys %$form ) { $pt->{$_} = $form->{$_} }
 
-    my $defaultprinter;
-    while ( my ( $key, $value ) = each LedgerSMB::Sysconfig::printer()->%* ) {
-        if ( $value =~ /lpr/ ) {
-            $defaultprinter = $key;
-            last;
-        }
-    }
-
+    my $defaultprinter = $form->{_wire}->get( 'printers' )->fallback;
     $myconfig{vclimit} = 0;
     %f = &formnames;
 
@@ -547,7 +540,7 @@ sub process_transactions {
             # forward to removing this code. --CT
             for ( keys %$form ) { delete $form->{$_}; }
             for (qw(header dbversion company dbh login path sessionid _auth
-                    stylesheet timeout id _locale)
+                    stylesheet timeout id _locale _wire)
             ) {
                 $form->{$_} = $pt->{$_};
             }
@@ -714,88 +707,93 @@ sub process_transactions {
                     $form->info( " ..... " . $locale->text('done') );
 
                     # print form
-                    if ( LedgerSMB::Sysconfig::latex() && $ok ) {
+                    if ( $ok ) {
+                        # this needs a PDF/Postscript output plugin
+                        # to be in place. If it's not, the print will fail,
+                        # which seems the appropriate way to inform the
+                        # user since they already configured the recurring
+                        # print...
                         $ok = &print_recurring( \%$pt, $defaultprinter );
                     }
 
                     &email_recurring( \%$pt ) if $ok;
 
                 }
-                else {
+                # Recurring orders are broken (see #5295)
+                # else {
 
-                    # order
-                    $form->{script} = "oe.pl";
-                    $form->{module} = "oe";
+                #     # order
+                #     $form->{script} = "oe.pl";
+                #     $form->{module} = "oe";
 
-                    $ordnumber = "ordnumber";
-                    if ( $pt->{customer_id} ) {
-                        $form->{vc}   = "customer";
-                        $form->{type} = "sales_order";
-                        $ordfld       = "sonumber";
-                        $flabel       = $locale->text('Sales Order');
-                    }
-                    else {
-                        $form->{vc}   = "vendor";
-                        $form->{type} = "purchase_order";
-                        $ordfld       = "ponumber";
-                        $flabel       = $locale->text('Purchase Order');
-                    }
-                    require "old/bin/$form->{script}";
+                #     $ordnumber = "ordnumber";
+                #     if ( $pt->{customer_id} ) {
+                #         $form->{vc}   = "customer";
+                #         $form->{type} = "sales_order";
+                #         $ordfld       = "sonumber";
+                #         $flabel       = $locale->text('Sales Order');
+                #     }
+                #     else {
+                #         $form->{vc}   = "vendor";
+                #         $form->{type} = "purchase_order";
+                #         $ordfld       = "ponumber";
+                #         $flabel       = $locale->text('Purchase Order');
+                #     }
+                #     require "old/bin/$form->{script}";
 
-                    &order_links;
-                    &prepare_order;
+                #     &order_links;
+                #     &prepare_order;
 
-                    for ( keys %$form ) {
-                        $form->{$_} = $form->unquote( $form->{$_} );
-                    }
+                #     for ( keys %$form ) {
+                #         $form->{$_} = $form->unquote( $form->{$_} );
+                #     }
 
-                    $form->{$ordnumber} = $pt->{reference};
-                    $form->{transdate} = $pt->{nextdate};
+                #     $form->{$ordnumber} = $pt->{reference};
+                #     $form->{transdate} = $pt->{nextdate};
 
-                    # calculate reqdate
-                    $form->{reqdate} =
-                      $form->add_date( \%myconfig, $form->{transdate},
-                        $pt->{req}, "days" )
-                      if $form->{reqdate};
+                #     # calculate reqdate
+                #     $form->{reqdate} =
+                #       $form->add_date( \%myconfig, $form->{transdate},
+                #         $pt->{req}, "days" )
+                #       if $form->{reqdate};
 
-                    for (qw(id recurring intnotes printed emailed)) {
-                        delete $form->{$_};
-                    }
-                    for ( 1 .. $form->{rowcount} ) {
-                        delete $form->{"orderitems_id_$_"};
-                    }
+                #     for (qw(id recurring intnotes printed emailed)) {
+                #         delete $form->{$_};
+                #     }
+                #     for ( 1 .. $form->{rowcount} ) {
+                #         delete $form->{"orderitems_id_$_"};
+                #     }
 
-                    $form->{$ordnumber} =
-                      $form->update_defaults( \%myconfig, "$ordfld" )
-                      unless $form->{$ordnumber};
-                    $form->{reference} = $form->{$ordnumber};
-                    for ( "$ordnumber", "reference" ) {
-                        $form->{$_} = $form->unquote( $form->{$_} );
-                    }
-                    $form->{closed} = 0;
+                #     $form->{$ordnumber} =
+                #       $form->update_defaults( \%myconfig, "$ordfld" )
+                #       unless $form->{$ordnumber};
+                #     $form->{reference} = $form->{$ordnumber};
+                #     for ( "$ordnumber", "reference" ) {
+                #         $form->{$_} = $form->unquote( $form->{$_} );
+                #     }
+                #     $form->{closed} = 0;
 
-                    $form->info(
-                        "\n"
-                          . $locale->text(
-                            'Saving [_1] [_2]',
-                            $flabel, $form->{$ordnumber}
-                          )
-                    );
-                    if ( $ok = OE->save( \%myconfig, \%$form ) ) {
-                        $form->info( " ..... " . $locale->text('done') );
-                    }
-                    else {
-                        $form->info( " ..... " . $locale->text('failed') );
-                    }
+                #     $form->info(
+                #         "\n"
+                #           . $locale->text( 'Saving [_1] [_2]',
+                #             $flabel, $form->{$ordnumber}
+                #           )
+                #     );
+                #     if ( $ok = OE->save( \%myconfig, \%$form ) ) {
+                #         $form->info( " ..... " . $locale->text('done') );
+                #     }
+                #     else {
+                #         $form->info( " ..... " . $locale->text('failed') );
+                #     }
 
-                    # print form
-                    if ( LedgerSMB::Sysconfig::latex() && $ok ) {
-                        &print_recurring( \%$pt, $defaultprinter );
-                    }
+                #     # print form
+                #     if ( LedgerSMB::Sysconfig::latex() && $ok ) {
+                #         &print_recurring( \%$pt, $defaultprinter );
+                #     }
 
-                    &email_recurring( \%$pt );
+                #     &email_recurring( \%$pt );
 
-                }
+                # }
 
             }
             else {
@@ -878,8 +876,7 @@ sub print_recurring {
         @f = split /:/, $pt->{recurringprint};
         for ( $j = 0 ; $j <= $#f ; $j += 3 ) {
             $media = $f[ $j + 2 ];
-            $media ||= $myconfig->{printer}
-              if ${LedgerSMB::Sysconfig::printer}{ $myconfig->{printer} };
+            $media ||= $myconfig->{printer};
             $media ||= $defaultprinter;
 
 

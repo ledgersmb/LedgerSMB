@@ -1,9 +1,9 @@
 
-package LedgerSMB::Template::LaTeX;
+package LedgerSMB::Template::Plugin::LaTeX;
 
 =head1 NAME
 
-LedgerSMB::Template::LaTeX - Template support module for LedgerSMB
+LedgerSMB::Template::Plugin::LaTeX - Template support module for LedgerSMB
 
 =head1 DESCRIPTION
 
@@ -13,10 +13,6 @@ LaTeX rendering support.  Handles PDF, Postscript, and DVI output.
 
 The final output format is determined by the format_option of filetype.  The
 valid filetype specifiers are 'pdf' and 'ps'.
-
-=head1 METHODS
-
-=over
 
 =cut
 
@@ -30,19 +26,45 @@ use Template::Plugin::Latex;
 use TeX::Encode::charmap;
 use TeX::Encode;
 
+use Moo;
+
 
 my $binmode = ':raw';
 my $extension = 'tex';
 
 my $logger = Log::Any->get_logger(category => 'LedgerSMB::Template::LaTeX');
 
-=item escape($string)
+
+=head1 ATTRIBUTES
+
+=head2 formats
+
+Holds an array of strings naming the formats supported by this plugin.
+
+=cut
+
+has formats => (is => 'ro', default => sub { [ 'PS', 'PDF' ] });
+
+=head2 format
+
+Holds a string naming the actual format for which this plugin
+is configured. The plugin can be used multiple times with different
+formats, as long as they are in the list of formats.
+
+=cut
+
+has format => (is => 'ro', required => 1);
+
+=head1 METHODS
+
+=head2 escape($string)
 
 Escapes a scalar string and returns the sanitized version.
 
 =cut
 
 sub escape {
+    my $self = shift;
     my ($vars) = shift @_;
     return '' unless defined $vars;
 
@@ -66,32 +88,28 @@ sub escape {
     return $vars;
 }
 
-=item setup($parent, $cleanvars, $output)
+=head2 setup($parent, $cleanvars, $output)
 
 Implements the template's initialization protocol.
 
 =cut
 
 sub setup {
-    my ($parent, $cleanvars, $output) = @_;
+    my ($self, $parent, $cleanvars, $output) = @_;
 
     $Template::Latex::DEBUG = 1 if $parent->{debug};
-    my $format = 'ps';
-    if ($parent->{format_options}{filetype} eq 'pdf') {
-        $format = 'pdf';
-    }
     # The templates use the FORMAT variable to indicate to the LaTeX
     # filter which output type is desired.
-    $cleanvars->{FORMAT} = $format;
+    $cleanvars->{FORMAT} = lc $self->format;
 
     return ($output, {
-        binmode => ':raw',
+        binmode         => ':raw',
         input_extension => $extension,
-        _format => $format,
+        _format         => lc $self->format,
     });
 }
 
-=item initialize_template($parent, $config, $template)
+=head2 initialize_template($parent, $config, $template)
 
 Implements the template's engine instance initialization protocol.
 
@@ -101,7 +119,7 @@ Latex plugin.
 =cut
 
 sub initialize_template {
-    my ($parent, $config, $template) = @_;
+    my ($self, $parent, $config, $template) = @_;
 
     my %options = ( format => $config->{_format} );
     Template::Plugin::Latex->new($template->context, \%options);
@@ -109,28 +127,29 @@ sub initialize_template {
     return undef;
 }
 
-=item postprocess($parent, $output, $config)
+=head2 postprocess($parent, $output, $config)
 
 Implements the template's post-processing protocol.
 
 =cut
 
 sub postprocess {
-    my ($parent, $output, $config) = @_;
+    my ($self, $parent, $output, $config) = @_;
     return undef;
 }
 
-=item mimetype()
+=head2 mimetype()
 
 Returns the rendered template's mimetype.
 
 =cut
 
 sub mimetype {
+    my $self = shift;
     my $config = shift;
     my $mimetype;
 
-    if (lc $config->{_format} eq 'pdf') {
+    if (lc $self->format eq 'pdf') {
         $mimetype = 'application/pdf';
     } else {
         $mimetype = 'application/postscript';
@@ -139,11 +158,9 @@ sub mimetype {
     return $mimetype;
 }
 
-=back
-
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2007-2018 The LedgerSMB Core Team
+Copyright (C) 2007-2022 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

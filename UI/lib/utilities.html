@@ -38,7 +38,7 @@ PROCESS select element_data = {
 };
 
 IF !printers.defined;
-   printers = [];
+   printers = PRINTERS;
 END;
 
 printers.push({ text = text('Screen'), value = 'screen' });

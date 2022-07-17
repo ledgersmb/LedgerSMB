@@ -8,8 +8,6 @@
 # Perl Module::Build, Module::Install, ExtUtils::MakeMaker
 META.yml
 #
-# LedgerSMB runtime files
-ledgersmb.conf
 
 # Transifex configuration:
 .transifexrc
@@ -17,6 +15,8 @@ ledgersmb.conf
 # /
 /META.yml
 /ledgersmb.conf
+/ledgersmb.logging
+/ledgersmb.yaml
 /ledgersmb-httpd.conf
 
 # /bin/custom/

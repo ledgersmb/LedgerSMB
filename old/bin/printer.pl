@@ -1,4 +1,4 @@
-=head1 NAME 
+=head1 NAME
 
 printer.pl - centralized printing logic used for printing in legacy sl code
 
@@ -6,7 +6,6 @@ printer.pl - centralized printing logic used for printing in legacy sl code
 
 
 package lsmb_legacy;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 
 sub print_options {
@@ -125,36 +124,22 @@ sub print_options {
         $options{media} = {
             name => 'media',
             default_values => $form->{media},
-            options => [{
-                text => $locale->text('Screen'),
-                value => 'screen'}
-                ]};
-
-        if (   LedgerSMB::Sysconfig::printer()->%*
-            && LedgerSMB::Sysconfig::latex() )
-        {
-            for ( sort keys LedgerSMB::Sysconfig::printer()->%* ) {
-                push @{$options{media}{options}}, {text => $_, value => $_};
-            }
-        }
+            options => [
+                {
+                    text => $locale->text('Screen'),
+                    value => 'screen'
+                },
+                $form->{_wire}->get( 'printers' )->as_options ]
+        };
     }
 
     $options{format} = {
         name => 'format',
         default_values => $form->{selectformat},
-        options => [{text => 'HTML', value => 'html'},
-                    {text => 'CSV', value => 'csv'} ],
-        };
-    if ( LedgerSMB::Sysconfig::latex() ) {
-        push @{$options{format}{options}}, {
-            text => $locale->text('Postscript'),
-            value => 'postscript',
-            };
-        push @{$options{format}{options}}, {
-            text => 'PDF',
-            value => 'pdf',
-            };
-    }
+        options => [
+            map { { text => $_, value => lc $_ } }
+            $form->{_wire}->get( 'output_plugins' )->get_formats ],
+    };
     if ($form->{type} && $form->{type} eq 'invoice'){
        push @{$options{format}{options}}, {
             text => '894.EDI',
@@ -162,12 +147,7 @@ sub print_options {
             };
     }
 
-    if (   LedgerSMB::Sysconfig::printer()->%*
-        && LedgerSMB::Sysconfig::latex()
-        && ($form->{media}//'') ne 'email' )
-    {
-        $options{copies} = 1;
-    }
+    $options{copies} = $form->{copies};
 
     # $locale->text('Printed')
     # $locale->text('E-mailed')

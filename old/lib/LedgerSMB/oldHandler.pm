@@ -55,8 +55,6 @@ use LedgerSMB::Middleware::RequestID;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Sysconfig;
 
-use Cookie::Baker;
-use Digest::MD5;
 use HTML::Escape;
 use Log::Any;
 use Feature::Compat::Try;
@@ -74,7 +72,7 @@ sub handle {
     #
     # Note that this function can receive a PSGI environment, but
     # modifications aren't marshalled back to the fork()ing process!
-    my ($class, $script_module, $psgi_env) = @_;
+    my ($class, $script_module, $psgi_env, $wire) = @_;
     my $script = $script_module . '.pl';
 
 
@@ -93,6 +91,7 @@ sub handle {
     $form = Form->new($params);
     my $session = $psgi_env->{'lsmb.session'};
     $form->{_session} = $session;
+    $form->{_wire} = $wire;
     @{$form}{qw/ session_id company /} =
         @{$session}{qw/ session_id company /};
 
@@ -108,7 +107,10 @@ sub handle {
     };
 
 
-    $locale = LedgerSMB::Locale->get_handle( LedgerSMB::Sysconfig::language() )
+    $locale = LedgerSMB::Locale
+        ->get_handle($wire->get( 'default_locale' )
+                     ->from_header( $ENV{HTTP_ACCEPT_LANGUAGE} )
+        )
         or $form->error( __FILE__ . ':' . __LINE__ .
                          ": Locale not loaded: $!\n" );
 

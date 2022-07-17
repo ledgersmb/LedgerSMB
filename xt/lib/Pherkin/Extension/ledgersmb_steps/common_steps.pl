@@ -314,6 +314,7 @@ Given qr/inventory has been built up for '(.*)' from these transactions:$/, sub 
 
         my $form = Form->new();
         $form->{dbh} = S->{ext_lsmb}->admin_dbh;
+        $form->{_wire} = S->{ext_lsmb}->wire;
         $form->{rowcount} = 2;
         $form->{transdate} = $trans->{transdate};
         $form->{qty_1} = $trans->{amount};

@@ -14,16 +14,21 @@ Added functionalities
 * Support for custom Tax modules adding a Source value on output lines
 * Possibility to add Vue component based pages
 * User-modified workflows through "custom_workflows" config path setting
+* Increased configurability by using dependency injection instead of configuration
+* Default printer selection supports 'Screen' as default output location
 
 Changed functionalities
 * Overpayment section in payment screen hidden on missing configuration (#2512)
 * Batch AR/AP upload changed to support foreign currency transactions
 * Line description on AR/AP transactions renamed to 'linedescription' (#6482)
 * Some existing pages (including login.pl) converted to Vue.js v3
+* INI-format configuration file replaced by YAML dependency injection file
+* Localization of setup.pl & login.pl based on browser preferences
 
 Removed functionalities
 * Removed 'accesskey' HTML attribute, based on WebAIM.org guidance
 * Removed DojoToolkit's TableContainerWidget converting its use to CSS3 Grid
+* Removed dependency on 'zip' program; replaced by dependency on Archive::Zip
 
 Bugs fixed
 * Better logging on authentication failure
@@ -34,6 +39,7 @@ Bugs fixed
 * B/S and PnL PDF templates cleaned up and alignment fixed
 * Aging statements language selector restored (#6353)
 * Multiple aging statements generation and e-mailing restored (#6353)
+* Default printer selection in user preferences restored
 
 Code cleanup
 * Fewer warnings from old code
@@ -59,6 +65,8 @@ Dependency updates
 * YAML::PP (new)
 * YAML (dropped)
 * JSONSchema::Validator (new)
+* HTTP::AcceptLanguage (new)
+* Beam::Wire (new)
 
 
 Changelog for 1.9 Series
