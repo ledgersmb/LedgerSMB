@@ -6,6 +6,8 @@ cookie:
 
 db:
   $class: LedgerSMB::Database::Factory
+  connect_data:
+    sslmode: prefer
 
 default_locale:
   $class: LedgerSMB::LanguageResolver
@@ -102,3 +104,4 @@ workflows:
     directories:
       - workflows/
       - custom_workflows/
+    lifecycle: eager
