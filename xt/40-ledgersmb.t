@@ -18,7 +18,7 @@ my $wire = Beam::Wire->new(file => 't/ledgersmb.yaml');
 LedgerSMB::Locale->initialize($wire);
 Log::Log4perl->easy_init($OFF);
 
-my $wire = Beam::Wire->new(
+$wire = Beam::Wire->new(
     config => {
         default_locale => {
             class => 'LedgerSMB::LanguageResolver',
