@@ -161,7 +161,7 @@ if (TARGET !== "readme") {
     /* PLUGINS */
 
     const CleanWebpackPluginOptions = {
-        dry: false,
+        dry: !prodMode,
         verbose: false
     }; // delete all files in the js directory without deleting this folder
 

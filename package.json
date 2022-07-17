@@ -52,15 +52,11 @@
     "@babel/plugin-proposal-object-rest-spread": "7.18.6",
     "@babel/preset-env": "7.18.6",
     "@intlify/vue-i18n-loader": "4.2.0",
-    "@vue/cli": "5.0.8",
-    "@vue/cli-service": "5.0.8",
-    "@vue/compiler-sfc": "3.2.37",
     "@vue/test-utils": "2.0.2",
-    "autoprefixer": "10.4.7",
     "babel-loader": "8.2.5",
-    "browserslist": "4.21.1",
+    "browserslist": "4.21.2",
     "buffer": "6.0.3",
-    "caniuse-lite": "1.0.30001365",
+    "caniuse-lite": "1.0.30001367",
     "clean-webpack-plugin": "4.0.0",
     "compression-webpack-plugin": "10.0.0",
     "copy-webpack-plugin": "11.0.0",
@@ -71,7 +67,7 @@
     "dojo-util": "1.17.2",
     "dojo-webpack-plugin": "3.0.4",
     "ejs-loader": "0.5.0",
-    "eslint": "8.19.0",
+    "eslint": "8.20.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-eslint": "7.0.0",
     "eslint-config-prettier": "8.5.0",
@@ -81,7 +77,7 @@
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jsdoc": "39.3.3",
     "eslint-plugin-json": "3.1.0",
-    "eslint-plugin-markdown": "2.2.1",
+    "eslint-plugin-markdown": "3.0.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-promise": "6.0.0",
@@ -94,7 +90,7 @@
     "inspectpack": "4.7.1",
     "markdown-include": "0.4.3",
     "markdownlint": "0.26.0",
-    "markdownlint-cli": "0.31.1",
+    "markdownlint-cli": "0.32.0",
     "mini-css-extract-plugin": "2.6.1",
     "npm-run-all": "4.1.5",
     "path-browserify": "1.0.1",
@@ -103,7 +99,6 @@
     "stylelint": "14.9.1",
     "stylelint-config-standard": "26.0.0",
     "stylelint-declaration-block-no-ignored-properties": "2.5.0",
-    "stylelint-no-browser-hacks": "1.2.1",
     "stylelint-no-nested-media": "0.1.0",
     "stylelint-no-unsupported-browser-features": "5.0.3",
     "stylelint-order": "5.0.0",
@@ -286,7 +281,6 @@
     "extends": "stylelint-config-standard",
     "plugins": [
       "stylelint-declaration-block-no-ignored-properties",
-      "stylelint-no-browser-hacks/lib",
       "stylelint-no-nested-media",
       "stylelint-no-unsupported-browser-features",
       "stylelint-order"
@@ -313,12 +307,6 @@
       "plugin/no-unsupported-browser-features": [true, {
         "ignorePartialSupport": true
       }],
-      "plugin/no-browser-hacks": [true, {
-        "browsers": [
-            "last 2 versions",
-            "not ie",
-            "edge >= 18"
-      ]}],
       "plugin/declaration-block-no-ignored-properties": true,
       "pitcher/no-nested-media": true,
       "selector-class-pattern": null,
