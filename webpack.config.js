@@ -166,6 +166,11 @@ if (TARGET !== "readme") {
 
     /* PLUGINS */
 
+    const CleanWebpackPluginOptions = {
+        dry: false,
+        verbose: false
+    }; // delete all files in the js directory without deleting this folder
+
     const ESLintPluginOptions = {
         files: "**/*.js",
         exclude: ["node_modules", "./bootstrap.js"],
@@ -260,7 +265,6 @@ if (TARGET !== "readme") {
     };
 
     var pluginsProd = [
-
         // Lint the sources
         new ESLintPlugin(ESLintPluginOptions),
         new StylelintPlugin(StylelintPluginOptions),
