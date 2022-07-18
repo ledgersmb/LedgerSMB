@@ -45,7 +45,7 @@ export function setI18nLanguage(locale) {
 }
 
 export async function loadLocaleMessages(locale) {
-    const _locale = _mapLocale(locale);
+    let _locale = _mapLocale(locale);
     if (SUPPORT_LOCALES.includes(_locale)) {
         // load locale messages
         if (!i18n.global.availableLocales.includes(_locale)) {
@@ -56,8 +56,10 @@ export async function loadLocaleMessages(locale) {
             // set locale and locale messages
             i18n.global.setLocaleMessage(_locale, messages);
         }
-        setI18nLanguage(_locale);
+    } else {
+        _locale = "en";
     }
+    setI18nLanguage(_locale);
     return nextTick();
 }
 
