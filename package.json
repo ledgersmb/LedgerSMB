@@ -41,8 +41,8 @@
     }
   ],
   "_browserslist-comment": [
-      "explicitly exclude Edge <= 18, because 'and supports input-event'",
-      "fails to exclude Edge 16-18"
+    "explicitly exclude Edge <= 18, because 'and supports input-event'",
+    "fails to exclude Edge 16-18"
   ],
   "browserslist": [
     "supports es6-module and supports async-functions and supports xhr2 and supports bloburls and supports css-variables and supports css3-boxsizing and supports border-radius and supports fetch and supports classlist and supports multicolumn and not edge <= 18"
@@ -96,6 +96,7 @@
     "path-browserify": "1.0.1",
     "pinia": "2.0.16",
     "prettier": "2.7.1",
+    "rtl-detect": "^1.0.4",
     "stylelint": "14.9.1",
     "stylelint-config-standard": "26.0.0",
     "stylelint-declaration-block-no-ignored-properties": "2.5.0",
@@ -304,9 +305,12 @@
         "declarations"
       ],
       "order/properties-alphabetical-order": true,
-      "plugin/no-unsupported-browser-features": [true, {
-        "ignorePartialSupport": true
-      }],
+      "plugin/no-unsupported-browser-features": [
+        true,
+        {
+          "ignorePartialSupport": true
+        }
+      ],
       "plugin/declaration-block-no-ignored-properties": true,
       "pitcher/no-nested-media": true,
       "selector-class-pattern": null,

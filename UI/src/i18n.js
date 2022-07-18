@@ -3,6 +3,7 @@
 /* eslint-disable global-require */
 
 export const SUPPORT_LOCALES = __SUPPORTED_LOCALES;
+const rtlDetect = require("rtl-detect");
 
 import { nextTick } from "vue";
 import { createI18n } from "vue-i18n";
@@ -38,6 +39,9 @@ export function setI18nLanguage(locale) {
         i18n.global.locale.value = locale;
     }
     document.querySelector("html").setAttribute("lang", locale);
+    if (rtlDetect.isRtlLang(locale)) {
+        document.querySelector("html").setAttribute("dir", "rtl");
+    }
 }
 
 export async function loadLocaleMessages(locale) {
