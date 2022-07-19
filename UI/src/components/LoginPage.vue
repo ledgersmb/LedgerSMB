@@ -47,7 +47,7 @@
 </template>
 
 <script>
-/* eslint-disable no-alert */
+/* eslint-disable */
 import { defineComponent } from "vue";
 import { useI18n } from "vue-i18n";
 

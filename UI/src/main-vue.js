@@ -3,7 +3,7 @@
 
 import { createApp } from "vue";
 import router from "./router";
-import i18n, { loadLocaleMessages } from "./i18n";
+import i18n from "./i18n";
 import { useI18n } from "vue-i18n";
 import LoginPage from "./components/LoginPage";
 import Toaster from "./components/Toaster";
@@ -33,10 +33,6 @@ if (document.getElementById("main")) {
         setup() {
             const { t } = useI18n();
             return { t };
-        },
-        beforeCreate() {
-            // Load the user desired language if not default
-            loadLocaleMessages(window.lsmbConfig.language);
         },
         mounted() {
             let m = document.getElementById("main");

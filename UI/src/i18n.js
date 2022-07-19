@@ -63,6 +63,6 @@ export async function loadLocaleMessages(locale) {
     return nextTick();
 }
 
-loadLocaleMessages(window.lsmbConfig.language);
+await loadLocaleMessages(window.lsmbConfig.language);
 
 export default i18n;
