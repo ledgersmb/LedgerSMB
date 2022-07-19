@@ -3,7 +3,8 @@
 
 import { createApp } from "vue";
 import router from "./router";
-import i18n, { loadLocaleMessages } from "./i18n";
+import i18n from "./i18n";
+import { useI18n } from "vue-i18n";
 import LoginPage from "./components/LoginPage";
 import Toaster from "./components/Toaster";
 import { createToasterMachine } from "./components/Toaster.machines";
@@ -15,6 +16,7 @@ const registry = require("dijit/registry");
 const dojoParser = require("dojo/parser");
 
 let app;
+let appName;
 let lsmbDirective = {
     beforeMount(el, binding /* , vnode */) {
         let handler = (event) => {
@@ -28,9 +30,9 @@ let lsmbDirective = {
 
 if (document.getElementById("main")) {
     app = createApp({
-        created() {
-            // Load the user desired language if not default
-            loadLocaleMessages(window.lsmbConfig.language);
+        setup() {
+            const { t } = useI18n();
+            return { t };
         },
         mounted() {
             let m = document.getElementById("main");
@@ -59,12 +61,7 @@ if (document.getElementById("main")) {
         }
     })
         .use(router)
-        .use(createPinia())
-        .use(i18n);
-
-    app.config.compilerOptions.isCustomElement = (tag) =>
-        tag.startsWith("lsmb-");
-    app.directive("update", lsmbDirective);
+        .use(createPinia());
 
     useSessionUserStore().initialize();
     app.component("Toaster", Toaster);
@@ -75,14 +72,10 @@ if (document.getElementById("main")) {
         send({ type: "add", item: notification });
     });
 
-    app.mount("#main");
+    appName = "#main";
 } else if (document.getElementById("login")) {
     app = createApp(LoginPage);
-    app.config.compilerOptions.isCustomElement = (tag) =>
-        tag.startsWith("lsmb-");
-    app.directive("update", lsmbDirective);
-
-    app.mount("#login");
+    appName = "#login";
 } else {
     /* In case we're running a "setup.pl" page */
     dojoParser.parse(document.body).then(() => {
@@ -92,4 +85,11 @@ if (document.getElementById("main")) {
         }
         document.body.setAttribute("data-lsmb-done", "true");
     });
+}
+if (app) {
+    app.config.compilerOptions.isCustomElement = (tag) =>
+        tag.startsWith("lsmb-");
+    app.directive("update", lsmbDirective);
+    app.use(i18n);
+    app.mount(appName);
 }

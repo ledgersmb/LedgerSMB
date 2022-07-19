@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.0-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-07-08 21:33+0000\n"
+"POT-Creation-Date: 2022-07-18 03:29+0000\n"
 "PO-Revision-Date: 2019-01-21 05:20+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/ledgersmb/ledgersmb/"
@@ -202,6 +202,8 @@ msgid "Access Denied"
 msgstr "Nektet Adgang"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:220
+msgid "Access denied: Bad username or password"
+msgstr ""
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:137
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:69
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:70
@@ -1709,6 +1711,8 @@ msgid "Company Sales Tax ID"
 msgstr "Firmaets MVA nummer"
 
 #: UI/Reports/filters/balance_sheet.html:138
+msgid "Company does not exist"
+msgstr ""
 msgid "Comparison Dates"
 msgstr "Sammenlign datoer"
 
@@ -1862,6 +1866,8 @@ msgid "Could Not Load Template from DB"
 msgstr "Kunne ikke laste Mal fra DB"
 
 #: old/bin/ir.pl:1297 old/bin/is.pl:1420 old/bin/oe.pl:1326
+msgid "Could not connect to server"
+msgstr ""
 msgid "Could not save the data.  Please try again"
 msgstr "Kunne ikke lagre data. Prøv igjen."
 
@@ -2178,6 +2184,8 @@ msgid "Database exists."
 msgstr "Databasen eksisterer."
 
 #: lib/LedgerSMB/Report/Aging.pm:128 lib/LedgerSMB/Report/GL.pm:92
+msgid "Database version mismatch"
+msgstr ""
 #: lib/LedgerSMB/Report/Inventory/History.pm:145
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:102
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:199
@@ -4106,6 +4114,8 @@ msgid "January"
 msgstr "januar"
 
 #: UI/Contact/divs/employee.html:65
+msgid "JavaScript error: "
+msgstr ""
 msgid "Job Title"
 msgstr "Jobb Tittel"
 
@@ -4403,6 +4413,8 @@ msgid "Load Templates"
 msgstr "Hente Maler"
 
 #: UI/src/components/ConfigTable.vue:71
+msgid "Loaded"
+msgstr ""
 msgid "Loading..."
 msgstr ""
 
@@ -4428,6 +4440,8 @@ msgid "Logged out due to inactivity"
 msgstr "Logget ut på grunn av ikke aktivitet"
 
 #: UI/setup/credentials.html:91
+msgid "Logging in... Please wait."
+msgstr ""
 msgid "Login"
 msgstr "Login"
 
@@ -5720,8 +5734,6 @@ msgid "Posting Vendor Invoice [_1]"
 msgstr "Bokført Inngående Faktura"
 
 #: old/bin/am.pl:508 old/bin/printer.pl:150 old/lib/LedgerSMB/Form.pm:1175
-msgid "Postscript"
-msgstr "Postscript"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1228
 #, fuzzy
@@ -6992,6 +7004,8 @@ msgid "Serialnumber"
 msgstr "Serienummer"
 
 #: old/bin/io.pl:627
+msgid "Server returned insecure response"
+msgstr ""
 msgid "Service"
 msgstr "Tjeneste"
 
@@ -8256,6 +8270,8 @@ msgid "Unknown "
 msgstr "Ukjent"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1137
+msgid "Unknown (JavaScript) error"
+msgstr ""
 msgid ""
 "Unknown account category (should be A(sset)/L(iability)/E(xpense)/I(ncome)/"
 "(e)Q(uity))"
@@ -8272,6 +8288,8 @@ msgid "Unknown database found."
 msgstr "Ukjent database funnet"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:252
+msgid "Unknown error preventing login"
+msgstr ""
 msgid "Unlock"
 msgstr "Låsopp"
 
@@ -8400,6 +8418,8 @@ msgid "User"
 msgstr "Bruker"
 
 #: lib/LedgerSMB/Scripts/setup.pm:1204
+msgid "User Name"
+msgstr "Bruker Navn"
 msgid "User already exists. Import?"
 msgstr "Bruker eksisterer allerede. Importer?"
 
@@ -9226,9 +9246,6 @@ msgstr "bruk en overbetaling"
 
 #~ msgid "To: [_1]"
 #~ msgstr "Til: [_1]"
-
-#~ msgid "User Name"
-#~ msgstr "Bruker Navn"
 
 #~ msgid "Username "
 #~ msgstr "Brukernavn"

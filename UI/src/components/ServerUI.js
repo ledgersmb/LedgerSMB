@@ -1,6 +1,7 @@
 /** @format */
 
 import { h, inject, ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 const registry = require("dijit/registry");
 const parser = require("dojo/parser");
@@ -17,10 +18,11 @@ function domReject(response) {
 
 export default {
     setup() {
+        const { t } = useI18n();
         const notify = inject("notify");
         return {
             notify,
-            content: ref("Loading...")
+            content: ref(t("Loading..."))
         };
     },
     props: ["uiURL"],
@@ -34,7 +36,7 @@ export default {
             try {
                 let dismiss;
                 this.notify({
-                    title: "Loading...",
+                    title: this.$t("Loading..."),
                     type: "info",
                     dismissReceiver: (cb) => {
                         dismiss = cb;
@@ -63,7 +65,7 @@ export default {
                 if (dismiss) {
                     dismiss();
                 }
-                this.notify({ title: "Loaded" });
+                this.notify({ title: this.$t("Loaded") });
             } catch (e) {
                 this._report_error(e);
             }
@@ -79,17 +81,17 @@ export default {
         _report_error(errOrReq) {
             let errstr;
             if (errOrReq instanceof Error) {
-                errstr = "JavaScript error: " + errOrReq.toString();
+                errstr = this.$t("JavaScript error: ") + errOrReq.toString();
             } else if (errOrReq instanceof Response) {
                 if (errOrReq.status === 0) {
-                    errstr = "Could not connect to server";
+                    errstr = this.$t("Could not connect to server");
                 } else if (domReject(errOrReq)) {
-                    errstr = "Server returned insecure response";
+                    errstr = this.$t("Server returned insecure response");
                 } else {
                     errstr = errOrReq.response;
                 }
             } else {
-                errstr = "Unknown (JavaScript) error";
+                errstr = this.$t("Unknown (JavaScript) error");
             }
 
             let d = registry.byId("errorDialog");

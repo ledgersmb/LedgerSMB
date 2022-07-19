@@ -393,6 +393,10 @@ if (TARGET !== "readme") {
     /* WEBPACK CONFIG */
 
     const webpackConfigs = {
+        experiments: {
+            topLevelAwait: true
+        },
+
         context: path.join(__dirname, "UI"),
 
         entry: {

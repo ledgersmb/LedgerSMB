@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.0-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-07-08 21:33+0000\n"
+"POT-Creation-Date: 2022-07-18 03:29+0000\n"
 "PO-Revision-Date: 2019-01-21 05:20+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: German (Switzerland) (http://www.transifex.com/ledgersmb/"
@@ -194,6 +194,8 @@ msgid "Access Denied"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:220
+msgid "Access denied: Bad username or password"
+msgstr ""
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:137
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:69
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:70
@@ -1700,6 +1702,8 @@ msgid "Company Sales Tax ID"
 msgstr ""
 
 #: UI/Reports/filters/balance_sheet.html:138
+msgid "Company does not exist"
+msgstr ""
 msgid "Comparison Dates"
 msgstr ""
 
@@ -1849,6 +1853,8 @@ msgid "Could Not Load Template from DB"
 msgstr ""
 
 #: old/bin/ir.pl:1297 old/bin/is.pl:1420 old/bin/oe.pl:1326
+msgid "Could not connect to server"
+msgstr ""
 msgid "Could not save the data.  Please try again"
 msgstr ""
 
@@ -2165,6 +2171,8 @@ msgid "Database exists."
 msgstr ""
 
 #: lib/LedgerSMB/Report/Aging.pm:128 lib/LedgerSMB/Report/GL.pm:92
+msgid "Database version mismatch"
+msgstr ""
 #: lib/LedgerSMB/Report/Inventory/History.pm:145
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:102
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:199
@@ -4084,6 +4092,8 @@ msgid "January"
 msgstr "Januar"
 
 #: UI/Contact/divs/employee.html:65
+msgid "JavaScript error: "
+msgstr ""
 msgid "Job Title"
 msgstr ""
 
@@ -4374,6 +4384,8 @@ msgid "Load Templates"
 msgstr ""
 
 #: UI/src/components/ConfigTable.vue:71
+msgid "Loaded"
+msgstr ""
 msgid "Loading..."
 msgstr ""
 
@@ -4399,6 +4411,8 @@ msgid "Logged out due to inactivity"
 msgstr ""
 
 #: UI/setup/credentials.html:91
+msgid "Logging in... Please wait."
+msgstr ""
 msgid "Login"
 msgstr "Benutzername"
 
@@ -5671,8 +5685,6 @@ msgid "Posting Vendor Invoice [_1]"
 msgstr ""
 
 #: old/bin/am.pl:508 old/bin/printer.pl:150 old/lib/LedgerSMB/Form.pm:1175
-msgid "Postscript"
-msgstr "Postscript"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1228
 msgid ""
@@ -6938,6 +6950,8 @@ msgid "Serialnumber"
 msgstr ""
 
 #: old/bin/io.pl:627
+msgid "Server returned insecure response"
+msgstr ""
 msgid "Service"
 msgstr "Dienstleistung"
 
@@ -8185,6 +8199,8 @@ msgid "Unknown "
 msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1137
+msgid "Unknown (JavaScript) error"
+msgstr ""
 msgid ""
 "Unknown account category (should be A(sset)/L(iability)/E(xpense)/I(ncome)/"
 "(e)Q(uity))"
@@ -8199,6 +8215,8 @@ msgid "Unknown database found."
 msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:252
+msgid "Unknown error preventing login"
+msgstr ""
 msgid "Unlock"
 msgstr ""
 
@@ -8327,6 +8345,8 @@ msgid "User"
 msgstr "Datenbankbenutzer"
 
 #: lib/LedgerSMB/Scripts/setup.pm:1204
+msgid "User Name"
+msgstr ""
 msgid "User already exists. Import?"
 msgstr ""
 

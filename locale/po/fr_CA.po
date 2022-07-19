@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-07-08 21:33+0000\n"
+"POT-Creation-Date: 2022-07-18 03:29+0000\n"
 "PO-Revision-Date: 2022-01-09T21:20:27.139Z\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/ledgersmb/ledgersmb/"
@@ -200,6 +200,8 @@ msgid "Access Denied"
 msgstr "Accès refusé"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:220
+msgid "Access denied: Bad username or password"
+msgstr "Accès refusé: nom d'utilisateur ou mot de passe invalide"
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:137
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:69
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:70
@@ -1702,6 +1704,8 @@ msgid "Company Sales Tax ID"
 msgstr ""
 
 #: UI/Reports/filters/balance_sheet.html:138
+msgid "Company does not exist"
+msgstr "La société n'existe pas"
 msgid "Comparison Dates"
 msgstr ""
 
@@ -1851,6 +1855,8 @@ msgid "Could Not Load Template from DB"
 msgstr ""
 
 #: old/bin/ir.pl:1297 old/bin/is.pl:1420 old/bin/oe.pl:1326
+msgid "Could not connect to server"
+msgstr "Connexion au serveur impossible"
 msgid "Could not save the data.  Please try again"
 msgstr ""
 
@@ -2167,6 +2173,8 @@ msgid "Database exists."
 msgstr ""
 
 #: lib/LedgerSMB/Report/Aging.pm:128 lib/LedgerSMB/Report/GL.pm:92
+msgid "Database version mismatch"
+msgstr "Version incorrecte de la banque de données"
 #: lib/LedgerSMB/Report/Inventory/History.pm:145
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:102
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:199
@@ -4086,6 +4094,8 @@ msgid "January"
 msgstr "Janvier"
 
 #: UI/Contact/divs/employee.html:65
+msgid "JavaScript error: "
+msgstr "Erreur de Javascript"
 msgid "Job Title"
 msgstr ""
 
@@ -4376,8 +4386,10 @@ msgid "Load Templates"
 msgstr ""
 
 #: UI/src/components/ConfigTable.vue:71
+msgid "Loaded"
+msgstr "Chargé"
 msgid "Loading..."
-msgstr ""
+msgstr "Chargement..."
 
 #: UI/asset/edit_asset.html:137 UI/asset/search_asset.html:124
 #: UI/payments/payment2.html:36 UI/payments/use_overpayment2.html:32
@@ -4401,8 +4413,10 @@ msgid "Logged out due to inactivity"
 msgstr ""
 
 #: UI/setup/credentials.html:91
+msgid "Logging in... Please wait."
+msgstr "Connexion... Veuillez patienter"
 msgid "Login"
-msgstr "Login"
+msgstr "Connexion"
 
 #: lib/LedgerSMB/Scripts/setup.pm:1002
 msgid "Login?"
@@ -5674,8 +5688,6 @@ msgid "Posting Vendor Invoice [_1]"
 msgstr ""
 
 #: old/bin/am.pl:508 old/bin/printer.pl:150 old/lib/LedgerSMB/Form.pm:1175
-msgid "Postscript"
-msgstr "Postcript"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1228
 msgid ""
@@ -6941,6 +6953,8 @@ msgid "Serialnumber"
 msgstr ""
 
 #: old/bin/io.pl:627
+msgid "Server returned insecure response"
+msgstr "Le serveur a retourné une réponse non-sécurisée"
 msgid "Service"
 msgstr "Prestation de service"
 
@@ -8188,6 +8202,8 @@ msgid "Unknown "
 msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1137
+msgid "Unknown (JavaScript) error"
+msgstr "Erreur inconnue (Javascript)"
 msgid ""
 "Unknown account category (should be A(sset)/L(iability)/E(xpense)/I(ncome)/"
 "(e)Q(uity))"
@@ -8202,6 +8218,8 @@ msgid "Unknown database found."
 msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:252
+msgid "Unknown error preventing login"
+msgstr "Erreur inconnue lors de la connexion"
 msgid "Unlock"
 msgstr ""
 
@@ -8330,6 +8348,8 @@ msgid "User"
 msgstr "Utilisateur"
 
 #: lib/LedgerSMB/Scripts/setup.pm:1204
+msgid "User Name"
+msgstr "Nom d'utilisateur"
 msgid "User already exists. Import?"
 msgstr ""
 

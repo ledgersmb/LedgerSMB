@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.0-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-07-08 21:33+0000\n"
+"POT-Creation-Date: 2022-07-18 03:29+0000\n"
 "PO-Revision-Date: 2019-01-21 05:20+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/ledgersmb/ledgersmb/language/"
@@ -201,6 +201,8 @@ msgid "Access Denied"
 msgstr "Toegang geweigerd"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:220
+msgid "Access denied: Bad username or password"
+msgstr ""
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:137
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:69
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:70
@@ -1704,6 +1706,8 @@ msgid "Company Sales Tax ID"
 msgstr "Firma BTW Nummer"
 
 #: UI/Reports/filters/balance_sheet.html:138
+msgid "Company does not exist"
+msgstr ""
 msgid "Comparison Dates"
 msgstr ""
 
@@ -1854,6 +1858,8 @@ msgid "Could Not Load Template from DB"
 msgstr "Kon sjabloon niet uit DB ophalen"
 
 #: old/bin/ir.pl:1297 old/bin/is.pl:1420 old/bin/oe.pl:1326
+msgid "Could not connect to server"
+msgstr ""
 msgid "Could not save the data.  Please try again"
 msgstr "Kan gegevens niet opslaan Probeer opnieuw"
 
@@ -2170,6 +2176,8 @@ msgid "Database exists."
 msgstr "Database bestaat al."
 
 #: lib/LedgerSMB/Report/Aging.pm:128 lib/LedgerSMB/Report/GL.pm:92
+msgid "Database version mismatch"
+msgstr ""
 #: lib/LedgerSMB/Report/Inventory/History.pm:145
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:102
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:199
@@ -4099,6 +4107,8 @@ msgid "January"
 msgstr "januari"
 
 #: UI/Contact/divs/employee.html:65
+msgid "JavaScript error: "
+msgstr ""
 msgid "Job Title"
 msgstr "Functietitel"
 
@@ -4392,6 +4402,8 @@ msgid "Load Templates"
 msgstr "Laad sjablonen"
 
 #: UI/src/components/ConfigTable.vue:71
+msgid "Loaded"
+msgstr ""
 msgid "Loading..."
 msgstr ""
 
@@ -4417,6 +4429,8 @@ msgid "Logged out due to inactivity"
 msgstr "Uitgelogd door inactiviteit"
 
 #: UI/setup/credentials.html:91
+msgid "Logging in... Please wait."
+msgstr ""
 msgid "Login"
 msgstr "Aanmelden"
 
@@ -5714,8 +5728,6 @@ msgid "Posting Vendor Invoice [_1]"
 msgstr "Boeken inkoopfactuur [_1]"
 
 #: old/bin/am.pl:508 old/bin/printer.pl:150 old/lib/LedgerSMB/Form.pm:1175
-msgid "Postscript"
-msgstr "Postscript"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1228
 msgid ""
@@ -6982,6 +6994,8 @@ msgid "Serialnumber"
 msgstr "Serienummer"
 
 #: old/bin/io.pl:627
+msgid "Server returned insecure response"
+msgstr ""
 msgid "Service"
 msgstr "Dienst"
 
@@ -8234,6 +8248,8 @@ msgid "Unknown "
 msgstr "Onbekend"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1137
+msgid "Unknown (JavaScript) error"
+msgstr ""
 msgid ""
 "Unknown account category (should be A(sset)/L(iability)/E(xpense)/I(ncome)/"
 "(e)Q(uity))"
@@ -8250,6 +8266,8 @@ msgid "Unknown database found."
 msgstr "Onbekende database aangetroffen"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:252
+msgid "Unknown error preventing login"
+msgstr ""
 msgid "Unlock"
 msgstr "Ontgrendel"
 
@@ -8378,6 +8396,8 @@ msgid "User"
 msgstr "Gebruiker"
 
 #: lib/LedgerSMB/Scripts/setup.pm:1204
+msgid "User Name"
+msgstr "Gebruikersnaam"
 msgid "User already exists. Import?"
 msgstr "Gebruiker bestaat al    Importeer?"
 
@@ -9179,9 +9199,6 @@ msgstr "Gebruik van een vooruitbetaling"
 
 #~ msgid "To: [_1]"
 #~ msgstr "Aan: [_1]"
-
-#~ msgid "User Name"
-#~ msgstr "Gebruikersnaam"
 
 #~ msgid "Username "
 #~ msgstr "Gebruikersnaam"
