@@ -2,7 +2,7 @@
 <!-- eslint-disable -->
 
 <template>
-    <form name="login">
+    <form name="login" style="max-width:fit-content">
       <div class="login" id="logindiv">
         <div class="login" align="center">
           <a href="http://www.ledgersmb.org/"
@@ -10,9 +10,12 @@
             <img src="images/ledgersmb.png"
                  class="logo"
                  alt="LedgerSMB Logo" /></a>
-          <div id="maindiv" style="position:relative; width:100%; height:15em;">
-
-            <div style="z-index:10; position:absolute; top:0; left:0; width:100%; height:100%;">
+          <div id="maindiv" style="position:relative; min-width:max-content; height:15em;">
+            <div style="z-index: 10; position: absolute;
+                     top: 50%; left: 50%;
+                     transform: translate(-50%, -50%);
+                     width: fit-content;
+                     height: 100%;">
               <h1 class="login" align="center">
                 LedgerSMB {{ version }}
               </h1>

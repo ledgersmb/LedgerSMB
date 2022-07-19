@@ -12,7 +12,7 @@ div.login div.login {
     border-style: solid;
     border-width: 1px;
     height: 23em;
-    min-width: 21em;
+    max-width: fit-content;
     padding-bottom: 2em;
 }
 
