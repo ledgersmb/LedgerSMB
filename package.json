@@ -279,11 +279,6 @@
       ]
     }
   },
-  "postcss": {
-    "plugins": [
-      "autoprefixer"
-    ]
-  },
   "stylelint": {
     "defaultSeverity": "warning",
     "extends": "stylelint-config-standard",
