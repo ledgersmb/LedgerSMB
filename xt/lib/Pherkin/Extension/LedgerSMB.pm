@@ -27,8 +27,7 @@ use Test::BDD::Cucumber::Extension;
 
 use LedgerSMB::Sysconfig;
 
-my $wire = Beam::Wire->new(
-    config => LedgerSMB::Sysconfig::ini2wire( LedgerSMB::Sysconfig->initialize ));
+my $wire = Beam::Wire->new( config => LedgerSMB::Sysconfig->ini2wire );
 
 use Moose;
 use namespace::autoclean;

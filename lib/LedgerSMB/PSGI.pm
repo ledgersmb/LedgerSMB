@@ -237,7 +237,7 @@ sub setup_url_space {
         enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
             'ConditionalGET';
 
-        # not using LedgerSMB::Sysconfig::scripts():
+        # not using LedgerSMB::Magic::SCRIPT_OLDSCRIPTS:
         #   it has more than only entry-points
         mount "/$_.pl" => builder {
             my $script = $_;

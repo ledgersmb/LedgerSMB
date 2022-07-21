@@ -49,8 +49,7 @@ do {
         $wire = Beam::Wire->new( file => $config_file);
     }
     else {
-        my $ini = LedgerSMB::Sysconfig->initialize( $config_file );
-        my $cfg = LedgerSMB::Sysconfig::ini2wire( $ini );
+        my $cfg = LedgerSMB::Sysconfig->ini2wire( $config_file );
         $wire = Beam::Wire->new( config => { extra_middleware => [], %$cfg });
     }
 };

@@ -10,10 +10,6 @@ Log::Log4perl->easy_init($OFF);
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Magic qw( SCRIPT_NEWSCRIPTS SCRIPT_OLDSCRIPTS );
 
-LedgerSMB::Sysconfig->initialize( 't/data/ledgersmb.conf' );
-
-like $ENV{PATH}, qr/foo$/, 'appends config path correctly';
-
 for my $script (SCRIPT_OLDSCRIPTS->@*) {
     ok(-f 'old/bin/' . $script, "Whitelisted oldcode script $script exists");
 }

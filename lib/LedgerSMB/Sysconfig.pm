@@ -23,8 +23,9 @@ use Config::IniFiles;
 use English;
 use List::Util qw(pairmap);
 
-sub initialize {
-    my ($module, $cfg_file, %args) = @_;
+
+sub ini2wire {
+    my ($module, $cfg_file) = @_;
 
     my $cfg;
     if ($cfg_file and -r $cfg_file) {
@@ -36,13 +37,6 @@ sub initialize {
             if $cfg_file;  # no name provided? no need to warn...
         $cfg = Config::IniFiles->new();
     }
-
-    return $cfg;
-}
-
-
-sub ini2wire {
-    my ($cfg) = @_;
 
     my %wire_config;
 
