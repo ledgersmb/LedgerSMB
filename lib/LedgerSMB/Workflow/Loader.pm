@@ -66,6 +66,13 @@ sub _fn {
     return $file;
 }
 
+sub _type_to_fn {
+    my ($type) = @_;
+
+    my $type_fn = ($type =~ tr|a-zA-Z /|a-za-z\-\-|dr);
+    return $type_fn;
+}
+
 sub load {
     my $class = shift;
     my %args = @_;
