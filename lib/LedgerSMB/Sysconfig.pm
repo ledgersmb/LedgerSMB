@@ -37,13 +37,6 @@ sub initialize {
         $cfg = Config::IniFiles->new();
     }
 
-    # ENV Paths
-    for my $var (qw(PATH PERL5LIB)) {
-        $ENV{$var} .=
-            $Config{path_sep} .
-            ( join $Config{path_sep}, $cfg->val('environment', $var, ''));
-    }
-
     return $cfg;
 }
 
@@ -245,6 +238,18 @@ sub ini2wire {
                 scalar $cfg->val( 'paths', 'custom_workflows', 'custom_workflows'),
                 ],
         },
+    };
+
+    $wire_config{environment_variables} = {
+        class => 'LedgerSMB::EnvVarSetter',
+        lifecycle => 'eager',
+        method => 'set',
+        args => {
+            map { $_ => join($Config{path_sep}, '+',
+                             $cfg->val('environment', $_, '')) }
+            grep { scalar $cfg->val('environment', $_, '') }
+            qw( PATH PERL5LIB )
+        }
     };
 
     return \%wire_config;
