@@ -258,7 +258,6 @@ if (TARGET !== "readme") {
             includedRequires.join('","') +
             `"], function(parser, ready) {\n` +
             `    ready(function() {\n` +
-            `        console.log('Bootstrapped');\n` +
             `    });\n` +
             `    return {};\n` +
             `});`
