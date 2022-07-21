@@ -19,13 +19,16 @@ use LedgerSMB::Database;
 use LedgerSMB::PGDate;
 use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::Entity::User;
-use Test::BDD::Cucumber::Extension;
+
+use Beam::Wire;
 use List::Util qw(any);
 use Log::Log4perl qw(:easy);
+use Test::BDD::Cucumber::Extension;
 
 use LedgerSMB::Sysconfig;
-my $wire = Beam::Wire->new;
-LedgerSMB::Sysconfig::ini2wire( $wire, LedgerSMB::Sysconfig->initialize );
+
+my $wire = Beam::Wire->new(
+    config => LedgerSMB::Sysconfig::ini2wire( LedgerSMB::Sysconfig->initialize ));
 
 use Moose;
 use namespace::autoclean;

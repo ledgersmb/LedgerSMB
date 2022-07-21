@@ -25,7 +25,7 @@ extra_middleware: []
 
 logging:
   level: ERROR
-  # config: ledgersmb.log.conf
+  # file: ledgersmb.log.conf
 
 login_settings:
   default_db: ledgersmb
@@ -51,7 +51,7 @@ mail:
 miscellaneous:
   $class: Beam::Wire
   config:
-    backup_email_from:
+    backup_email_from: ''
     max_upload_size: 4194304
     proxy_ip: 127.0.0.1/8 ::1/128 ::ffff:127.0.0.1/108
 

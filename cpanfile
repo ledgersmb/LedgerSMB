@@ -4,7 +4,7 @@
 requires 'perl', '5.32.0';
 
 requires 'Archive::Zip';
-requires 'Authen::SASL';
+recommends 'Authen::SASL';
 requires 'Beam::Wire';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Parse::PSGI';
