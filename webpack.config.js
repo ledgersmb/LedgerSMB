@@ -494,6 +494,7 @@ if (TARGET !== "readme") {
                 writeToDisk: true // Required for Perl TT
             },
             hot: true,
+            host: "0.0.0.0",
             port: 9000,
             proxy: {
                 "/*.pl": {
