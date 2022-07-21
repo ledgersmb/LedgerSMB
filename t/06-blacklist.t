@@ -1,7 +1,5 @@
 #!/usr/bin/perl
 
-use LedgerSMB::Sysconfig;
-
 use Test2::V0;
 use Test2::Plugin::BailOnFail;
 use Digest::SHA 'sha512_base64'; #already a dependency

@@ -35,7 +35,6 @@ use Plack::Util::Accessor
 use Session::Storage::Secure;
 
 use LedgerSMB::PSGI::Util;
-use LedgerSMB::Sysconfig;
 
 =head1 METHODS
 

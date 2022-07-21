@@ -18,7 +18,6 @@ use strict;
 use warnings;
 
 use LedgerSMB::Locale;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
 
 use Carp;
