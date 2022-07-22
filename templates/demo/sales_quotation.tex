@@ -1,16 +1,19 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.0
-   Date:     2021-01-04
+   Version:  1.1
+   Date:     2022-07-22
    File:     sales_quotation.tex
    Set:      demo
 
 Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
+Version   Changes
+1.1       Merged xelatex targetting templates with those targetting pdflatex
+
 -?>
-<?lsmb FILTER latex { format="$FORMAT(pdflatex)" };
-       INCLUDE "preamble-pdflatex.tex"; -?>
+<?lsmb FILTER latex { format="$FORMAT($PROCESSOR)" };
+       INCLUDE "preamble.tex"; -?>
 
 \setlength\LTleft{0pt}
 \setlength\LTright{0pt}
@@ -20,7 +23,10 @@ releases. No explicit versioning was applied before 2021-01-04.
 \pagestyle{myheadings}
 \thispagestyle{empty}
 
-\fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+\ifpdftex
+  %% (pdf)latex
+  \fontfamily{cmss}\fontsize{10pt}{12pt}\selectfont
+\fi
 
 \newsavebox{\ftr}
 \sbox{\ftr}{
@@ -108,7 +114,6 @@ releases. No explicit versioning was applied before 2021-01-04.
   <?lsmb sellprice.${lc} ?> &
   <?lsmb discountrate.${lc} ?> &
   <?lsmb linetotal.${lc} ?> \\
- & & & & & \\
 <?lsmb END ?>
 \hline \hline
 \multicolumn{6}{r}{<?lsmb text('Subtotal') ?>} & <?lsmb subtotal ?> \\*
