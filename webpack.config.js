@@ -4,48 +4,28 @@
 
 const TARGET = process.env.npm_lifecycle_event;
 
-const fs = require("fs");
-const glob = require("glob");
-const path = require("path");
-const webpack = require("webpack");
-
-function findDataDojoTypes(fileName) {
-    var content = "" + fs.readFileSync(fileName);
-    // Return unique data-dojo-type refereces
-    return (
-        content.match(/(?<=['"]?data-dojo-type['"]?\s*=\s*")([^"]+)(?=")/gi) ||
-        []
-    ).filter((x, i, a) => a.indexOf(x) === i);
-}
-
-function getPOFilenames(_path, extension) {
-    return fs
-        .readdirSync(_path)
-        .filter(
-            (item) =>
-                fs.statSync(path.join(_path, item)).isFile() &&
-                (extension === undefined || path.extname(item) === extension)
-        )
-        .map((item) => path.basename(item, extension))
-        .sort();
-}
-
 if (TARGET !== "readme") {
+    const fs = require("fs");
+    const glob = require("glob");
+    const path = require("path");
+    const webpack = require("webpack");
+
     const BundleAnalyzerPlugin =
         require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+    const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via npm
     const CompressionPlugin = require("compression-webpack-plugin");
     const CopyWebpackPlugin = require("copy-webpack-plugin");
     const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
     const DojoWebpackPlugin = require("dojo-webpack-plugin");
-    const { DuplicatesPlugin } = require("inspectpack/plugin");
     const ESLintPlugin = require("eslint-webpack-plugin");
     const HtmlWebpackPlugin = require("html-webpack-plugin");
     const MiniCssExtractPlugin = require("mini-css-extract-plugin");
     const StylelintPlugin = require("stylelint-webpack-plugin");
     const UnusedWebpackPlugin = require("unused-webpack-plugin");
+    const VirtualModulesPlugin = require("webpack-virtual-modules");
     const { VueLoaderPlugin } = require("vue-loader");
-
-    const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via npm
+    // eslint-disable-next-line
+    const { WebpackDeduplicationPlugin } = require("webpack-deduplication-plugin");
 
     const argv = require("yargs").argv;
     const prodMode =
@@ -57,7 +37,33 @@ if (TARGET !== "readme") {
     process.env.NODE_ENV = prodMode ? "production" : "development";
     const parallelJobs = process.env.CI ? 2 : true;
 
+    /* FUNCTIONS */
     var includedRequires = [];
+
+    /* eslint-disable-next-line no-inner-declarations */
+    function findDataDojoTypes(fileName) {
+        var content = "" + fs.readFileSync(fileName);
+        // Return unique data-dojo-type refereces
+        return (
+            content.match(
+                /(?<=['"]?data-dojo-type['"]?\s*=\s*")([^"]+)(?=")/gi
+            ) || []
+        ).filter((x, i, a) => a.indexOf(x) === i);
+    }
+
+    /* eslint-disable-next-line no-inner-declarations */
+    function getPOFilenames(_path, extension) {
+        return fs
+            .readdirSync(_path)
+            .filter(
+                (item) =>
+                    fs.statSync(path.join(_path, item)).isFile() &&
+                    (extension === undefined ||
+                        path.extname(item) === extension)
+            )
+            .map((item) => path.basename(item, extension))
+            .sort();
+    }
 
     // Compute used data-dojo-type
     glob.sync("**/*.html", {
@@ -161,12 +167,13 @@ if (TARGET !== "readme") {
     /* PLUGINS */
 
     const CleanWebpackPluginOptions = {
-        dry: !prodMode,
+        dry: false,
         verbose: false
     }; // delete all files in the js directory without deleting this folder
 
     const ESLintPluginOptions = {
         files: "**/*.js",
+        exclude: ["node_modules", "./bootstrap.js"],
         emitError: prodMode,
         emitWarning: !prodMode
     };
@@ -215,7 +222,7 @@ if (TARGET !== "readme") {
 
     const UnusedWebpackPluginOptions = {
         // Source directories
-        directories: ["js-src/lsmb"],
+        directories: ["js-src/lsmb", "src"],
         // Exclude patterns
         exclude: ["*.test.js"],
         // Root directory (optional)
@@ -243,10 +250,20 @@ if (TARGET !== "readme") {
         )
     };
 
-    var pluginsProd = [
-        // Clean UI/js before building (must be first)
-        new CleanWebpackPlugin(CleanWebpackPluginOptions),
+    // Compile bootstrap module as a virtual one
+    const VirtualModulesPluginOptions = {
+        "./bootstrap.js":
+            `/* eslint-disable */\n` +
+            `define(["dojo/parser","dojo/ready","` +
+            includedRequires.join('","') +
+            `"], function(parser, ready) {\n` +
+            `    ready(function() {\n` +
+            `    });\n` +
+            `    return {};\n` +
+            `});`
+    };
 
+    var pluginsProd = [
         // Lint the sources
         new ESLintPlugin(ESLintPluginOptions),
         new StylelintPlugin(StylelintPluginOptions),
@@ -272,6 +289,8 @@ if (TARGET !== "readme") {
                 "!!raw-loader!"
             );
         }),
+
+        new VirtualModulesPlugin(VirtualModulesPluginOptions),
 
         // Copy a few Dojo ressources
         new CopyWebpackPlugin(CopyWebpackPluginOptions),
@@ -308,13 +327,7 @@ if (TARGET !== "readme") {
             reportFilename: "../../logs/report.json"
         }),
 
-        // Warn on duplication of code
-        new DuplicatesPlugin({
-            // Emit compilation warning or error? (Default: `false`)
-            emitErrors: false,
-            // Display full duplicates information? (Default: `false`)
-            verbose: true
-        }),
+        new WebpackDeduplicationPlugin({}),
 
         // Generate GZ versions of compiled code to sppedup download
         new CompressionPlugin({
@@ -343,12 +356,21 @@ if (TARGET !== "readme") {
         new UnusedWebpackPlugin(UnusedWebpackPluginOptions),
 
         new webpack.DefinePlugin({
+            __VUE_I18N_FULL_INSTALL__: JSON.stringify(true),
+            __INTLIFY_PROD_DEVTOOLS__: JSON.stringify(false),
+            __VUE_I18N_LEGACY_API__: JSON.stringify(false),
             __VUE_OPTIONS_API__: true,
             __VUE_PROD_DEVTOOLS__: true
         })
     ];
 
-    var pluginsList = prodMode ? pluginsProd : pluginsDev;
+    var pluginsList = prodMode
+        ? [
+              // Clean UI/js before building (must be first)
+              new CleanWebpackPlugin(CleanWebpackPluginOptions),
+              ...pluginsProd
+          ]
+        : pluginsDev;
 
     /* OPTIMIZATIONS */
 
@@ -400,7 +422,7 @@ if (TARGET !== "readme") {
         context: path.join(__dirname, "UI"),
 
         entry: {
-            "dojo-shared": [...includedRequires],
+            bootstrap: "./bootstrap.js", // Virtual file
             ...lsmbCSS
         },
 
@@ -453,7 +475,47 @@ if (TARGET !== "readme") {
             maxEntrypointSize: prodMode ? 250000 /* the default */ : 10000000
         },
 
-        devtool: prodMode ? "hidden-source-map" : "source-map"
+        devtool: prodMode ? "hidden-source-map" : "source-map",
+
+        devServer: {
+            allowedHosts: "all", // Replace with docker parent and localhost
+            client: {
+                logging: "verbose",
+                overlay: {
+                    errors: true,
+                    warnings: false
+                },
+                progress: true
+            },
+            compress: true,
+            devMiddleware: {
+                index: false,
+                serverSideRender: true,
+                writeToDisk: true // Required for Perl TT
+            },
+            hot: true,
+            host: "0.0.0.0",
+            port: 9000,
+            proxy: {
+                "/*.pl": {
+                    target: "http://localhost:5762"
+                },
+                "/erp/api": {
+                    target: "http://localhost:5762"
+                }
+            },
+            static: {
+                directory: path.join(__dirname, "/UI")
+            },
+            watchFiles: [
+                "webpack.config.js",
+                "UI/**/*",
+                "!UI/js/*",
+                "node_modules/**/*"
+            ]
+        },
+
+        target: "web"
     };
 
     module.exports = webpackConfigs;
