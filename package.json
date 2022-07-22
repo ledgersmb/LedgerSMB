@@ -300,7 +300,8 @@
       "UI/**/dijit/**/*.css",
       "UI/**/util/**/*.css",
       "UI/js/**",
-      "UI/pod/**"
+      "UI/pod/**",
+      "UI/openapi/**"
     ],
     "rules": {
       "declaration-block-no-duplicate-custom-properties": null,
