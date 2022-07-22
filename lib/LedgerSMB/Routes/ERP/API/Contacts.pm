@@ -437,12 +437,12 @@ info:
   version: 0.0.1
 paths:
   /contacts/sic:
-    description: Management of Contacts
+    description: Management of Standard Industry Codes (SICs)
     get:
       tags:
-        - Contacts
-      summary: Get a list of Contacts
-      operationId: getContacts
+        - SICs
+      summary: Get a list of SICs
+      operationId: getSICs
       responses:
         200:
           description: ...
@@ -462,9 +462,9 @@ paths:
           $ref: '#/components/responses/404'
     post:
       tags:
-        - Contacts
-      summary: Put a list of Contacts
-      operationId: putContacts
+        - SICs
+      summary: Put a list of SICs
+      operationId: putSICs
       requestBody:
         content:
           application/json:
@@ -498,9 +498,9 @@ paths:
         style: simple
     get:
       tags:
-        - Contacts
+        - SICs
       summary: Get a single Contact
-      operationId: getContactsById
+      operationId: getSICsById
       responses:
         200:
           description: ...
@@ -523,9 +523,9 @@ paths:
           $ref: '#/components/responses/404'
     put:
       tags:
-        - Contacts
+        - SICs
       summary: Put a single Contact
-      operationId: putContactsById
+      operationId: putSICsById
       parameters:
         - name: If-Match
           in: header
@@ -565,9 +565,9 @@ paths:
           $ref: '#/components/responses/428'
     delete:
       tags:
-        - Contacts
+        - SICs
       summary: Delete a single Contact
-      operationId: deleteContactsById
+      operationId: deleteSICsById
       parameters:
         - name: 'If-Match'
           in: header
@@ -587,9 +587,9 @@ paths:
           $ref: '#/components/responses/404'
     patch:
       tags:
-        - Contacts
+        - SICs
       summary: Update a single Contact
-      operationId: updateContactsById
+      operationId: updateSICsById
       parameters:
         - name: 'If-Match'
           in: header
@@ -634,7 +634,7 @@ paths:
     post:
       tags:
         - Business types
-      summary: Put business types
+      summary: Create business types
       operationId: putBusinessTypes
       requestBody:
         content:
