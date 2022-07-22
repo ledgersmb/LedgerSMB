@@ -25,8 +25,6 @@ echo '],"output": "API.yaml"}'  >> openapi-merge.json
 openapi-merge-cli --config openapi-merge.json
 
 # Validate the resulting OpenAPI spec
-cp $gitDirName/openapi/openapitools.json .
-npx @openapitools/openapi-generator-cli validate --input-spec API.yaml || exit
 cp $gitDirName/openapi/.redocly.yaml .
 npx @redocly/cli lint API.yaml || exit
 
