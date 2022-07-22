@@ -95,7 +95,7 @@
     "path-browserify": "1.0.1",
     "pinia": "2.0.16",
     "prettier": "2.7.1",
-    "rtl-detect": "^1.0.4",
+    "rtl-detect": "1.0.4",
     "stylelint": "14.9.1",
     "stylelint-config-standard": "26.0.0",
     "stylelint-declaration-block-no-ignored-properties": "2.5.0",
