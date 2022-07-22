@@ -1,4 +1,5 @@
 #!/usr/bin/plackup
+#                                                      -*- mode: perl; -*-
 
 
 
@@ -20,13 +21,15 @@ use LedgerSMB::Locale;
 use LedgerSMB::PSGI;
 use LedgerSMB::PSGI::Preloads;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Middleware::RequestID;
 
 use Beam::Wire;
-use Plack::Builder;
+use Hash::Merge;
 use Log::Any::Adapter;
 use Log::Log4perl qw(:easy);
 use Log::Log4perl::Layout::PatternLayout;
-use LedgerSMB::Middleware::RequestID;
+use Plack::Builder;
+use YAML::PP;
 
 my $wire;
 do {
@@ -45,13 +48,27 @@ do {
         $config_file = 'ledgersmb.conf';
     }
 
-    if ($config_file =~ /[.]ya?ml$/) {
-        $wire = Beam::Wire->new( file => $config_file);
+    my $config;
+    if (not defined $config_file
+        or $config_file =~ /[.]ya?ml$/) {
+        my $yp = YAML::PP->new( header => 0 );
+        my $base_config = $yp->load_string( do { local $/ = undef; <DATA> } );
+
+        if (defined $config_file) {
+            my $merger = Hash::Merge->new( 'RIGHT_PRECEDENT' );
+            $config = $merger->merge(
+                $base_config,
+                $yp->load_file( $config_file ));
+        }
+        else {
+            $config = $base_config;
+        }
     }
     else {
-        my $cfg = LedgerSMB::Sysconfig->ini2wire( $config_file );
-        $wire = Beam::Wire->new( config => { extra_middleware => [], %$cfg });
+        $config = LedgerSMB::Sysconfig->ini2wire( $config_file );
+        $config->{extra_middleware} = [];
     }
+    $wire = Beam::Wire->new( config => $config );
 };
 
 LedgerSMB::Locale->initialize($wire);
@@ -103,5 +120,70 @@ $builder->to_app(
         development => ($ENV{PLACK_ENV} eq 'development'),
     ));
 
-
-# -*- perl-mode -*-
+__DATA__
+cookie:
+  name: LedgerSMB-1.10
+db:
+  $class: LedgerSMB::Database::Factory
+  connect_data:
+    sslmode: prefer
+default_locale:
+  $class: LedgerSMB::LanguageResolver
+  directory:
+    $ref: paths/locale
+extra_middleware: []
+logging:
+  level: ERROR
+login_settings: {}
+mail:
+  transport:
+    $class: Email::Sender::Transport::Sendmail
+miscellaneous:
+  $class: Beam::Wire
+  config:
+    backup_email_from: ''
+    max_upload_size: 4194304
+    proxy_ip: 127.0.0.1/8 ::1/128 ::ffff:127.0.0.1/108
+output_plugins:
+  $class: LedgerSMB::Template::Plugins
+  plugins:
+    - $class: LedgerSMB::Template::Plugin::LaTeX
+      format: PDF
+    - $class: LedgerSMB::Template::Plugin::LaTeX
+      format: PS
+    - $class: LedgerSMB::Template::Plugin::XLSX
+      format: XLS
+    - $class: LedgerSMB::Template::Plugin::XLSX
+      format: XLSX
+    - $class: LedgerSMB::Template::Plugin::ODS
+    - $class: LedgerSMB::Template::Plugin::CSV
+    - $class: LedgerSMB::Template::Plugin::TXT
+    - $class: LedgerSMB::Template::Plugin::HTML
+paths:
+  $class: Beam::Wire
+  config:
+    locale: ./locale/po/
+    templates: ./templates/
+printers:
+  $class: LedgerSMB::Printers
+  printers: []
+  fallback: null
+setup_settings:
+  admin_db: template1
+  auth_db: postgres
+ui:
+  class: LedgerSMB::Template::UI
+  method: new_UI
+  lifecycle: eager
+  args:
+    cache: lsmb_templates/
+    root: ./
+workflows:
+  class: LedgerSMB::Workflow::Loader
+  lifecycle: eager
+  method: load
+  args:
+    directories:
+      - workflows/
+      - custom_workflows/
+    lifecycle: eager
