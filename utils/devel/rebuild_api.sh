@@ -1,24 +1,41 @@
 #!/bin/bash
 
+# Find ledgerSMB root directory
+gitDirName=`git rev-parse --show-toplevel 2>/dev/null`
+
+# Allow finding openapi modules 
+PATH="$gitDirName/node_modules/.bin:$PATH"
+
+# Build in a temporary directory
+TMPDIR=$(mktemp -d)
+
 set -x
 
-PATH="/srv/ledgersmb/node_modules/.bin:${PATH}"
+pushd $TMPDIR
 
-pushd /srv/ledgersmb/openapi
-
-# Extract OpenAPI specs from the Perkl sources
-grep -il OpenAPI: ../lib/LedgerSMB/Routes/ERP/API/*.pm | xargs ./extract_data_section.pl
+# Extract OpenAPI specs from the Perl sources
+$gitDirName/openapi/extract_data_section.pl $gitDirName/lib/LedgerSMB/Routes/ERP/API.pm
+mv API.yml _LedgerSMB.yml
+echo '{"inputs": [{"inputFile": "_LedgerSMB.yml"}' > openapi-merge.json
+grep -il OpenAPI: $gitDirName/lib/LedgerSMB/Routes/ERP/API/*.pm | xargs $gitDirName/openapi/extract_data_section.pl
+find . -name '[A-Z]*.yml' -exec echo ",{""inputs"": [{""inputFile": "{}""}" >> openapi-merge.json
+echo '],"output": "API.yaml"}'  >> openapi-merge.json
 
 # Merge them into openapi.yaml 
-openapi-merge-cli
+openapi-merge-cli --config openapi-merge.json
 
 # Validate the resulting OpenAPI spec
-openapi-generator-cli validate --input-spec openapi.yaml || exit
-npx @redocly/cli lint openapi.yaml || exit
+cp $gitDirName/openapi/openapitools.json .
+npx @openapitools/openapi-generator-cli validate --input-spec API.yaml || exit
+cp $gitDirName/openapi/.redocly.yaml .
+npx @redocly/cli lint API.yaml || exit
 
 # Build the documentation
-snippet-enricher-cli --input=openapi.yaml > /tmp/openapi-with-examples.json
-redoc-cli build /tmp/openapi-with-examples.json -o ../UI/pod/LedgerSMB-api.html 
-rm /tmp/openapi-with-examples.json [A-Z]*.yaml
+snippet-enricher-cli --input=API.yaml > openapi-with-examples.json
+redoc-cli build openapi-with-examples.json -o $gitDirName/UI/pod/LedgerSMB-api.html 
+
+mv API.yaml $gitDirName/openapi/
 
 popd
+
+rm -r $TMPDIR

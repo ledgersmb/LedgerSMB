@@ -2,13 +2,14 @@
 use strict;
 use warnings;
 
+use File::Spec;
+
 while ( my $file=shift(@ARGV)) {
-    my $yaml=$file;
-    $yaml =~ s/.+\///;
-    $yaml =~ s/.pm/.yaml/;
+    my (undef,undef,$yml) = File::Spec->splitpath( $file );
+    $yml =~ s/.pm/.yml/;
 
     open(FILE,'<',$file) or die $!;
-    open(YAML,'>',$yaml) or die $!;
+    open(YML,'>',$yml) or die $!;
 
     my $keep=0;
     while(<FILE>)
@@ -18,8 +19,8 @@ while ( my $file=shift(@ARGV)) {
             $keep=1;
             next;
         }
-        print YAML $_ if $keep;
+        print YML $_ if $keep;
     }
     close FILE or die $!;
-    close YAML or dir $1;
+    close YML or dir $1;
 }
