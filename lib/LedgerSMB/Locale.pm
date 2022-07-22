@@ -100,7 +100,6 @@ use warnings;
 use base qw( Locale::Maketext Exporter );
 our @EXPORT_OK = qw(marktext);
 
-use LedgerSMB::Sysconfig;
 use Locale::Maketext::Lexicon;
 use Encode;
 

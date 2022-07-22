@@ -43,7 +43,7 @@ sub set {
     my %args = @_;
 
     for my $var (keys %args) {
-        $ENV{$var} = $args{$var}; ## no critic (RequireLocalizedPunctuationVars)
+        $ENV{$var} = ($args{$var} =~ s/^\+/$ENV{$var}/r); ## no critic (RequireLocalizedPunctuationVars)
     }
 }
 

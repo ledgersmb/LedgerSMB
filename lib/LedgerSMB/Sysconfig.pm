@@ -18,15 +18,14 @@ This module doesn't specify any methods.
 use strict;
 use warnings;
 
-use Authen::SASL;
-use Beam::Wire;
 use Config;
 use Config::IniFiles;
 use English;
 use List::Util qw(pairmap);
 
-sub initialize {
-    my ($module, $cfg_file, %args) = @_;
+
+sub ini2wire {
+    my ($module, $cfg_file) = @_;
 
     my $cfg;
     if ($cfg_file and -r $cfg_file) {
@@ -39,72 +38,51 @@ sub initialize {
         $cfg = Config::IniFiles->new();
     }
 
-    # ENV Paths
-    for my $var (qw(PATH PERL5LIB)) {
-        $ENV{$var} .=
-            $Config{path_sep} .
-            ( join $Config{path_sep}, $cfg->val('environment', $var, ''));
-    }
-
-    return $cfg;
-}
-
-
-sub ini2wire {
-    my ($wire, $cfg) = @_;
+    my %wire_config;
 
     my @printer_names = $cfg->Parameters( 'printers' );
     my $fallback_printer =
         scalar $cfg->val( 'main', 'fallback_printer', $printer_names[0] );
 
-    $wire->set(
-        printers => $wire->create_service(
-            printers => (
-                class => 'LedgerSMB::Printers',
-                args  => {
-                    printers => {
-                        map { $_ => scalar $cfg->val( printers => $_ ) }
-                        $cfg->Parameters( 'printers' )
-                    },
-                    fallback => $fallback_printer
-                }
-            ))
-        );
+    $wire_config{printers} = {
+        class => 'LedgerSMB::Printers',
+        args  => {
+            printers => {
+                map { $_ => scalar $cfg->val( printers => $_ ) }
+                $cfg->Parameters( 'printers' )
+            },
+            fallback => $fallback_printer
+        }
+    };
 
     my @formats = (
-        { class => 'LedgerSMB::Template::Plugin::CSV' },
-        { class => 'LedgerSMB::Template::Plugin::TXT' },
-        { class => 'LedgerSMB::Template::Plugin::HTML' },
+        { '$class' => 'LedgerSMB::Template::Plugin::CSV', args => [] },
+        { '$class' => 'LedgerSMB::Template::Plugin::TXT', args => [] },
+        { '$class' => 'LedgerSMB::Template::Plugin::HTML', args => [] },
         );
     my @optionals = (
-        template_latex => { class => 'LedgerSMB::Template::Plugin::LaTeX',
-                            args => { format => 'PDF' } },
-        template_latex => { class => 'LedgerSMB::Template::Plugin::LaTeX',
-                            args => { format => 'PS' } },
-        template_xlsx  => { class => 'LedgerSMB::Template::Plugin::XLSX',
-                            args => { format => 'XLSX' } },
-        template_xls   => { class => 'LedgerSMB::Template::Plugin::XLSX',
-                            args => { format => 'XLS' } },
-        template_ods   => { class => 'LedgerSMB::Template::Plugin::ODS' },
+        template_latex => { '$class' => 'LedgerSMB::Template::Plugin::LaTeX',
+                            format => 'PDF' },
+        template_latex => { '$class' => 'LedgerSMB::Template::Plugin::LaTeX',
+                            format => 'PS' },
+        template_xlsx  => { '$class' => 'LedgerSMB::Template::Plugin::XLSX',
+                            format => 'XLSX' },
+        template_xls   => { '$class' => 'LedgerSMB::Template::Plugin::XLSX',
+                            format => 'XLS' },
+        template_ods   => { '$class' => 'LedgerSMB::Template::Plugin::ODS' },
         );
     pairmap {
         if ($cfg->val( 'template_format', $a, 'enabled' ) ne 'disabled') {
-            if (eval { "require $b->{class}; 1;" }) {
+            if (eval { "require $b->{'$class'}; 1;" }) {
                 push @formats, $b;
             }
         }
     } @optionals;
-    $wire->set(
-        'output_plugins' => $wire->create_service(
-            'output_plugins',
-            class => 'LedgerSMB::Template::Plugins',
-            args => {
-                plugins => [
-                    map { $wire->create_service( '', %$_ ) }
-                    @formats
-                ]
-            }
-        ));
+
+    $wire_config{output_plugins} = {
+        class => 'LedgerSMB::Template::Plugins',
+        args => { plugins => \@formats }
+    };
 
     my $value;
     if (my $value = $cfg->val( 'mail', 'smtphost' )) {
@@ -117,18 +95,19 @@ sub ini2wire {
         }
 
         if ($value = $cfg->val( 'mail', 'smtpuser' )) {
-            my $auth = Authen::SASL->new(
-                mechanism => scalar $cfg->val( 'mail', 'smtpauthmech' ),
-                callback => {
-                    user => $value,
-                    pass => scalar $cfg->val( 'mail', 'smtppass' ),
-                });
             push @options,
                 # the SMTP transport checks that 'sasl_password' be
                 # defined; however, its implementation (Net::SMTP) allows
                 # the 'sasl_username' to be an Authen::SASL instance which
                 # means the password is already embedded in sasl_username.
-                sasl_username => $auth,
+                sasl_username => {
+                    '$class' => 'Authen::SASL',
+                    mechanism => scalar $cfg->val( 'mail', 'smtpauthmech' ),
+                    callback => {
+                        user => $value,
+                        pass => scalar $cfg->val( 'mail', 'smtppass' ),
+                    }
+                },
                 sasl_password => '';
         }
 
@@ -149,133 +128,125 @@ sub ini2wire {
         if ($value = $cfg->val( 'mail', 'smtpsender_hostname' )) {
             push @options, helo => $value;
         }
-        $wire->set(
-            'mail' => {
-                transport =>
-                    $wire->create_service(
-                        transport => (
-                            class => 'LedgerSMB::Mailer::TransportSMTP',
-                            args  => \@options,
-                        ))
-            });
+
+        $wire_config{mail} = {
+            transport => {
+                '$class' => 'LedgerSMB::Mailer::TransportSMTP',
+                @options,
+            }
+        };
     }
     else {
         my @options;
         if ($value = $cfg->val( 'mail', 'sendmail' )) {
             @options = ( path => $value );
         }
-        $wire->set(
-            'mail' => {
-                transport =>
-                    $wire->create_service(
-                        transport => (
-                            class => 'Email::Sender::Transport::Sendmail',
-                            args  => \@options,
-                        ))
-            });
+        $wire_config{mail} = {
+            transport => {
+                '$class' => 'Email::Sender::Transport::Sendmail',
+                @options,
+            }
+        };
     }
 
     if ($value = $cfg->val( 'main', 'log_config' )) {
-        $wire->set( 'logging', { config => $value } );
+        $wire_config{logging} = { file => $value };
     }
     else {
         $value = $cfg->val( 'main', 'log_level', 'ERROR' );
-        $wire->set( 'logging', { level => $value } );
+        $wire_config{logging} = { level => $value };
     }
 
-    $wire->set('miscellaneous', Beam::Wire->new );
-
-    $wire->set(
-        'miscellaneous/max_upload_size',
-        $wire->create_service(
-            'max_post_size',
-            value => scalar $cfg->val( 'main', 'max_post_size', 4194304 ) ) );
-    $wire->set(
-        'miscellaneous/backup_email_from',
-        $wire->create_service(
-            'backup_email_from',
-            value => scalar $cfg->val( 'mail', 'backup_email_from', '' ) ) );
-    $wire->set(
-        'miscellaneous/proxy_ip',
-        $wire->create_service(
-            'proxy_ip',
-            value => scalar $cfg->val(
+    $wire_config{miscellaneous} = {
+        '$class' => 'Beam::Wire',
+        config => {
+            max_upload_size => scalar $cfg->val(
+                'main', 'max_post_size', 4194304 ),
+            backup_email_from => scalar $cfg->val(
+                'mail', 'backup_email_from', '' ),
+            proxy_ip => scalar $cfg->val(
                 'proxy',
                 'proxy_ip',
                 '127.0.0.1/8 ::1/128 ::ffff:127.0.0.1/108'
-            ) ) );
+                ),
+        }
+    };
 
-    $wire->set(
-        'cookie',
-        {
-            name => scalar $cfg->val( 'main', 'cookie_name' ),
-            secret => scalar $cfg->val( 'main', 'cookie_secret' )
-        });
+    $wire_config{cookie} = {
+        name => scalar $cfg->val( 'main', 'cookie_name' ),
+        secret => scalar $cfg->val( 'main', 'cookie_secret' )
+    };
 
-    $wire->set(
-        'default_locale',
-        $wire->create_service(
-            'default_locale' => (
-                class => 'LedgerSMB::LanguageResolver',
-                args => {
-                    directory => './locale/po/'
-                }
-            )));
+    $wire_config{default_locale} = {
+        '$class' => 'LedgerSMB::LanguageResolver',
+        directory => './locale/po/'
+    };
 
-    $wire->set('paths', Beam::Wire->new );
-    $wire->set('paths/locale',
-               scalar $cfg->val( 'paths', 'localepath', './locale/po/' ) );
-    $wire->set('paths/templates',
-               scalar $cfg->val( 'paths', 'templates', './templates/' ) );
-    $wire->set('ui',
-               $wire->create_service(
-                   'ui',
-                   class => 'LedgerSMB::Template::UI',
-                   lifecycle => 'eager',
-                   method => 'new_UI',
-                   args => {
-                       cache => scalar $cfg->val( 'paths', 'templates_cache',
-                                                  'lsmb_templates/' )
-                   }) );
+    $wire_config{paths} = {
+        '$class' => 'Beam::Wire',
+        config => {
+            locale => scalar $cfg->val( 'paths', 'localepath', './locale/po/' ),
+            templates => scalar $cfg->val( 'paths', 'templates', './templates/' ),
+        }
+    };
 
-    $wire->set(
-        'db' => $wire->create_service(
-            'db',
-            class => 'LedgerSMB::Database::Factory',
-            args => {
-                connect_data => {
-                    host => scalar $cfg->val( 'database', 'host', 'localhost'),
-                    port => scalar $cfg->val( 'database', 'port', 5432),
-                    sslmode => scalar $cfg->val( 'database', 'sslmode', 'prefer'),
-                },
-                schema => scalar $cfg->val( 'database', 'db_namespace', 'public' )
-            }));
+    $wire_config{ui} = {
+        class => 'LedgerSMB::Template::UI',
+        lifecycle => 'eager',
+        method => 'new_UI',
+        args => {
+            cache => scalar $cfg->val(
+                'paths', 'templates_cache', 'lsmb_templates/' ),
+        }
+    };
 
-    $wire->set(
-        'login_settings' => {
-            default_db => scalar $cfg->val( 'database', 'default_db' )
-        });
+    $wire_config{db} = {
+        class => 'LedgerSMB::Database::Factory',
+        args => {
+            connect_data => {
+                host => scalar $cfg->val( 'database', 'host', 'localhost'),
+                port => scalar $cfg->val( 'database', 'port', 5432),
+                sslmode => scalar $cfg->val( 'database', 'sslmode', 'prefer'),
+            },
+            schema => scalar $cfg->val( 'database', 'db_namespace', 'public' )
+        }
+    };
 
-    $wire->set(
-        'setup_settings' => {
-            auth_db  => scalar $cfg->val( 'database', 'auth_db', 'postgres' ),
-            admin_db => scalar $cfg->val( 'database', 'admin_db', 'template1' ),
-        });
+    $wire_config{login_settings} = {
+        default_db => scalar $cfg->val( 'database', 'default_db' )
+    };
 
-    $wire->set(
-        'workflows' => $wire->create_service(
-            workflows => (
-                class => 'LedgerSMB::Workflow::Loader',
-                lifecycle => 'eager',
-                method => 'load',
-                args => {
-                    lifecycle => 'eager',
-                    directories => [
-                        scalar $cfg->val( 'paths', 'workflows', 'workflows'),
-                        scalar $cfg->val( 'paths', 'custom_workflows', 'custom_workflows'),
-                        ],
-                },
-            )));
+    $wire_config{setup_settings} = {
+        auth_db  => scalar $cfg->val( 'database', 'auth_db', 'postgres' ),
+        admin_db => scalar $cfg->val( 'database', 'admin_db', 'template1' ),
+    };
+
+    $wire_config{workflows} = {
+        class => 'LedgerSMB::Workflow::Loader',
+        lifecycle => 'eager',
+        method => 'load',
+        args => {
+            lifecycle => 'eager',
+            directories => [
+                scalar $cfg->val( 'paths', 'workflows', 'workflows'),
+                scalar $cfg->val( 'paths', 'custom_workflows', 'custom_workflows'),
+                ],
+        },
+    };
+
+    $wire_config{environment_variables} = {
+        class => 'LedgerSMB::EnvVarSetter',
+        lifecycle => 'eager',
+        method => 'set',
+        args => {
+            map { $_ => join($Config{path_sep}, '+',
+                             $cfg->val('environment', $_, '')) }
+            grep { scalar $cfg->val('environment', $_, '') }
+            qw( PATH PERL5LIB )
+        }
+    };
+
+    return \%wire_config;
 }
 
 =head1 LICENSE AND COPYRIGHT

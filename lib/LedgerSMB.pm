@@ -199,7 +199,6 @@ use PGObject;
 use Plack;
 use URI::Escape;
 
-use LedgerSMB::Sysconfig;
 use LedgerSMB::App_State;
 use LedgerSMB::Locale;
 use LedgerSMB::User;

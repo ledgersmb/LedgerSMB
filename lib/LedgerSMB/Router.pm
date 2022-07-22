@@ -67,7 +67,6 @@ use YAML::PP;
 
 use LedgerSMB::Company;
 use LedgerSMB::Locale;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::User;
 
 use constant {

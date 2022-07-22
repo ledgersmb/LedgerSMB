@@ -13,7 +13,6 @@ use strict;
 use warnings;
 
 use LedgerSMB::I18N;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Upgrade_Tests;
 
 use File::Temp;

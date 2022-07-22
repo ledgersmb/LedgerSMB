@@ -49,9 +49,8 @@ do {
         $wire = Beam::Wire->new( file => $config_file);
     }
     else {
-        $wire = Beam::Wire->new( config => { extra_middleware => [] });
-        my $cfg = LedgerSMB::Sysconfig->initialize( $config_file );
-        LedgerSMB::Sysconfig::ini2wire( $wire, $cfg );
+        my $cfg = LedgerSMB::Sysconfig->ini2wire( $config_file );
+        $wire = Beam::Wire->new( config => { extra_middleware => [], %$cfg });
     }
 };
 
@@ -66,7 +65,7 @@ Log::Log4perl::Layout::PatternLayout::add_global_cspec(
     'Z',
     sub { return $LedgerSMB::Middleware::RequestID::request_id.''; });
 
-my $log_config = $wire->get( 'logging' )->{config};
+my $log_config = $wire->get( 'logging' )->{file};
 if ($log_config) {
     Log::Log4perl->init($log_config);
 }

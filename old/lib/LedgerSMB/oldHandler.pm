@@ -53,7 +53,6 @@ use LedgerSMB::App_State;
 use LedgerSMB::Middleware::SessionStorage;
 use LedgerSMB::Middleware::RequestID;
 use LedgerSMB::PSGI::Util;
-use LedgerSMB::Sysconfig;
 
 use HTML::Escape;
 use Log::Any;

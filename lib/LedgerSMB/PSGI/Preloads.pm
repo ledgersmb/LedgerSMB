@@ -45,7 +45,6 @@ use LedgerSMB::PGObject;
 use LedgerSMB::Scripts::login;
 use LedgerSMB::Setting;
 use LedgerSMB::Setting::Sequence;
-use LedgerSMB::Sysconfig;
 use LedgerSMB::Tax;
 use LedgerSMB::Template::UI;
 
