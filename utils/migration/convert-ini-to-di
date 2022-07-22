@@ -1,0 +1,23 @@
+#!/usr/bin/perl
+
+use lib 'lib';
+use lib 'old/lib';
+
+use v5.14.0;
+
+use YAML::PP;
+
+use LedgerSMB::Sysconfig;
+
+my $file = pop @ARGV;
+if ($file) {
+    my $yaml_data = LedgerSMB::Sysconfig->ini2wire( $file );
+
+    my $yp = YAML::PP->new( header => 0 );
+    say $yp->dump_string( $yaml_data );
+}
+else {
+    say "Usage: $0 <config-file>"
+}
+
+exit 0;
