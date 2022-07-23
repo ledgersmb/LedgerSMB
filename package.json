@@ -98,7 +98,6 @@
     "prettier": "2.7.1",
     "redoc-cli": "0.13.16",
     "rtl-detect": "1.0.4",
-    "snippet-enricher-cli": "0.0.8",
     "stylelint": "14.9.1",
     "stylelint-config-standard": "26.0.0",
     "stylelint-declaration-block-no-ignored-properties": "2.5.0",

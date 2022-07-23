@@ -29,8 +29,7 @@ cp $gitDirName/openapi/.redocly.yaml .
 npx @redocly/cli lint API.yaml || exit
 
 # Build the documentation
-snippet-enricher-cli --input=API.yaml > openapi-with-examples.json
-redoc-cli build openapi-with-examples.json -o $gitDirName/UI/openapi/LedgerSMB-api.html 
+redoc-cli build API.yaml -o $gitDirName/UI/openapi/LedgerSMB-api.html 
 
 mv API.yaml $gitDirName/openapi/
 
