@@ -124,7 +124,7 @@ END; ?>
             END;
 
             NEXT IF TYPE == 'hidden';
-      <td class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>"[% ROWSPAN %]>
+      <td class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>"<?lsmb ROWSPAN ?>>
           <?lsmb- IF TYPE == 'boolean_checkmark' OR TYPE == 'checkbox' OR TYPE == 'radio';
                    IF ROW.${COL.col_id};
                        ?>✓<?lsmb
