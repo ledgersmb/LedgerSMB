@@ -36,7 +36,7 @@ export default {
             try {
                 let dismiss;
                 this.notify({
-                    title: this.$t("Loading..."),
+                    title: options.doing || this.$t("Loading..."),
                     type: "info",
                     dismissReceiver: (cb) => {
                         dismiss = cb;
@@ -65,7 +65,7 @@ export default {
                 if (dismiss) {
                     dismiss();
                 }
-                this.notify({ title: this.$t("Loaded") });
+                this.notify({ title: options.done || this.$t("Loaded") });
             } catch (e) {
                 this._report_error(e);
             }

@@ -7,8 +7,9 @@ define([
     "dojo/on",
     "dojo/dom-attr",
     "dojo/dom-form",
-    "dojo/query"
-], function (Form, declare, event, on, domattr, domform, query) {
+    "dojo/query",
+    "dijit/registry"
+], function (Form, declare, event, on, domattr, domform, query, registry) {
     var c = 0;
     return declare("lsmb/Form", [Form], {
         clickedAction: null,
@@ -36,6 +37,9 @@ define([
                 typeof this.method === "undefined" ? "GET" : this.method;
             var url = this.action;
             var options = { handleAs: "text" };
+            const widget = registry.getEnclosingWidget(this.clickedAction);
+            options.doing = widget["data-lsmb-doing"];
+            options.done = widget["data-lsmb-done"];
             if (method.toLowerCase() === "get") {
                 if (!url) {
                     /* eslint no-alert:0 */

@@ -966,23 +966,52 @@ sub form_footer {
 # REMARK: According to the check below, post_as_new and delete button never render
 # Why post_as_new and delete are exist?
         %button = (
-            'update' => { ndx => 1, key => 'U', value => $locale->text('Update') },
+            'update' => {
+                ndx => 1,
+                key => 'U',
+                value => $locale->text('Update'),
+                doing => $locale->text('Updating...'),
+                done => $locale->text('Updated')
+            },
             'copy_to_new' => { ndx => 2, key => 'C', value => $locale->text('Copy to New') },
             'print' =>
               { ndx => 3, key => 'P', value => $locale->text('Print'),
                 type => 'lsmb/PrintButton' },
-            'edit_and_save' => { ndx   => 4, key   => 'E', value => $locale->text('Save') },
-            'post' => { ndx => 5, key => 'O', value => $locale->text('Post') },
+            'edit_and_save' => {
+                ndx   => 4,
+                key   => 'E',
+                value => $locale->text('Save'),
+                doing => $locale->text('Saving...'),
+                done => $locale->text('Saved')
+            },
+            'post' => {
+                ndx => 5,
+                key => 'O',
+                value => $locale->text('Post'),
+                doing => $locale->text('Posting...'),
+                done => $locale->text('Posted')
+            },
             'post_as_new' => { ndx => 6, key => 'O', value => $locale->text('Post') },
-            'approve' => { ndx   => 7, key   => 'O', value => $locale->text('Post') },
+            'approve' => {
+                ndx   => 7,
+                key   => 'O',
+                value => $locale->text('Post'),
+                doing => $locale->text('Posting...'),
+                done => $locale->text('Posted')
+            },
             'schedule' =>
               { ndx => 8, key => 'H', value => $locale->text('Schedule') },
             'delete' =>
               { ndx => 9, key => 'D', value => $locale->text('Delete') },
             'on_hold' =>
               { ndx => 10, key => 'O', value => $hold_text },
-            'save_info' =>
-              { ndx => 11, key => 'I', value => $locale->text('Save Info') },
+            'save_info' => {
+                ndx => 11,
+                key => 'I',
+                value => $locale->text('Save Info'),
+                doing => $locale->text('Saving...'),
+                done => $locale->text('Saved')
+            },
             'save_temp' =>
               { ndx => 12, key => 'T', value => $locale->text('Save Template')},
             'new_screen' => # Create a blank ar/ap invoice.
@@ -1008,6 +1037,9 @@ sub form_footer {
 
         if ($form->{separate_duties} || $form->{batch_id}){
             $button{post}->{value} = $locale->text('Save');
+            $button{post}->{doing} = $locale->text('Saving...');
+            $button{post}->{done} = $locale->text('Saved');
+
             $button{post_as_new}->{value} = $locale->text('Save as New');
             $form->hide_form('separate_duties');
         }
