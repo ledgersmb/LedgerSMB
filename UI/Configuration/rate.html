@@ -83,6 +83,8 @@
 
       [% PROCESS button element_data={
              text = text('Upload'),
+             'data-lsmb-doing' = text('Uploading...')
+             'data-lsmb-done' = text('Uploaded')
              class="submit"
              type="submit"
              name="action"

@@ -29,6 +29,8 @@
 
     [% INCLUDE button element_data = {
            text = text("Delete")
+           'data-lsmb-doing' = text('Deleting...')
+           'data-lsmb-done' = text('Deleted')
            value = "delete_internal_files"
            name = "action"
            type = "submit"
@@ -72,6 +74,8 @@
       <div class="inputgroup">
         [% INCLUDE button element_data = {
                text = text('Upload')
+               'data-lsmb-doing' = text('Uploading...')
+               'data-lsmb-done' = text('Uploaded')
                value = "attach_file"
                name = "action"
                type = "submit"
