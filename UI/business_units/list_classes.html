@@ -82,6 +82,8 @@
    value = "save_class"
       id = "save_class_$id"
     text = (c.id) ? text('Save') : text('Add Class')
+    'data-lsmb-doing' = text('Saving...')
+    'data-lsmb-done' = text('Saved')
 };
 PROCESS button element_data = {
     type = "submit"
