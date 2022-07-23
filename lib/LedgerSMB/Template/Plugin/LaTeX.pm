@@ -55,6 +55,16 @@ formats, as long as they are in the list of formats.
 
 has format => (is => 'ro', required => 1);
 
+=head2 processor
+
+The value of this field is passed to the template in the PROCESSOR
+variable, which can be used to select between C<pdflatex> and
+C<xelatex> processing engines.
+
+=cut
+
+has processor => (is => 'ro', default => 'pdflatex');
+
 =head1 METHODS
 
 =head2 escape($string)
@@ -101,6 +111,7 @@ sub setup {
     # The templates use the FORMAT variable to indicate to the LaTeX
     # filter which output type is desired.
     $cleanvars->{FORMAT} = lc $self->format;
+    $cleanvars->{PROCESSOR} = lc $self->processor;
 
     return ($output, {
         binmode         => ':raw',

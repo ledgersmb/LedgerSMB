@@ -41,7 +41,7 @@ my $templates = LedgerSMB::Database::Config
     ->new( templates_dir => './templates' )
     ->templates;
 
-is_deeply [ sort keys %$templates ], [ qw( demo xedemo ) ],
+is_deeply [ sort keys %$templates ], [ qw( demo ) ],
     'Returned template sets are the example templates';
 for my $template (keys %$templates) {
     ok( -f $_, "Returned template item ($_) is a file" )

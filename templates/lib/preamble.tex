@@ -1,17 +1,28 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
    Version:  1.0
-   Date:     2021-01-04
-   File:     preamble-pdflatex.tex
+   Date:     2022-07-22
+   File:     preamble.tex
    Set:      none; shared
 
 Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
+Version     Change
+1.0         Generalized from 'preamble-{xe,pdf}latex.tex' using iftex
+
 -?>
+
 \documentclass{scrartcl}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
+\usepackage{iftex}
+\ifpdftex
+  %% latex or pdflatex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else
+  %% all others, including xe(la)tex
+  \usepackage{fontspec}
+\fi
 \usepackage{tabularx}
 \usepackage{longtable}
 \usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
