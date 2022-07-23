@@ -690,7 +690,7 @@ paths:
     put:
       tags:
         - Warehouses
-      summary: Put a single warehouse
+      summary: Update a single warehouse
       operationId: putWarehousesById
       parameters:
         - name: If-Match
