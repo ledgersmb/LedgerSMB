@@ -16,9 +16,9 @@ pushd $TMPDIR
 # Extract OpenAPI specs from the Perl sources
 $gitDirName/openapi/extract_data_section.pl $gitDirName/lib/LedgerSMB/Routes/ERP/API.pm
 mv API.yml _LedgerSMB.yml
-echo '{"inputs": [{"inputFile": "_LedgerSMB.yml"}' > openapi-merge.json
+echo -n '{"inputs": [{"inputFile": "_LedgerSMB.yml"}' > openapi-merge.json
 grep -il OpenAPI: $gitDirName/lib/LedgerSMB/Routes/ERP/API/*.pm | xargs $gitDirName/openapi/extract_data_section.pl
-find . -name '[A-Z]*.yml' -exec echo ",{""inputs"": [{""inputFile": "{}""}" >> openapi-merge.json
+find . -name '[A-Z]*.yml' -exec echo -n ",{\"inputFile\": \"{}\"}" \; >> openapi-merge.json
 echo '],"output": "API.yaml"}'  >> openapi-merge.json
 
 # Merge them into openapi.yaml 
