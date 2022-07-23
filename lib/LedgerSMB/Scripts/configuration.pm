@@ -66,6 +66,9 @@ sub _default_settings {
               { name => 'format',
                 type => 'SELECT_ONE',
                 label => $locale->text('Default Format'), },
+              { name => 'papersize',
+                type => 'SELECT_ONE',
+                label => $locale->text('Default Paper Size'), },
               ] },
         { title => $locale->text('Security Settings'),
           items => [
@@ -302,6 +305,16 @@ sub defaults_screen {
                 {text => 'HTML', value => 'html'},
                 {text => 'PDF', value => 'pdf'},
                 {text => 'Postscript', value => 'postscript'},
+            ]
+        },
+        'papersize' => {
+            name           => 'papersize',
+            text_attr      => 'text',
+            value_attr     => 'value',
+            default_values => [$request->{'format'}],
+            options        => [
+                {text => 'Letter', value => 'letter'},
+                {text => 'A4', value => 'a4'},
             ]
         },
     );

@@ -13,9 +13,6 @@ Version   Changes
 
 -?>
 <?lsmb- PROCESS 'dynatable.tex';
-IF !papersize;
-   papersize = 'a4paper';
-END;
 
 SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
 COLNUMBER = 0;
@@ -26,8 +23,9 @@ FOREACH COL IN columns;
     END;
 END;
 FILTER latex { format="$FORMAT($PROCESSOR)" };
+
 -?>
-\documentclass[<?lsmb papersize ?>]{article}
+\documentclass[<?lsmb SETTINGS.papersize ?>paper]{article}
 \usepackage{longtable}
 \usepackage[margin=1cm]{geometry}
 \begin{document}
