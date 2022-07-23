@@ -34,7 +34,7 @@
 
 <script setup>
 
-import { createRowMachine } from "./ConfigTable.machines.js";
+import { createRowMachine } from "@/components/ConfigTable.machines.js";
 import { computed, inject, watch } from "vue";
 import { contextRef } from "@/robot-vue";
 import { useI18n } from "vue-i18n";

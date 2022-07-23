@@ -6,8 +6,8 @@ import { storeToRefs } from "pinia";
 import { contextRef } from "@/robot-vue";
 import { useSessionUserStore } from "@/store/sessionUser";
 
-import { createTableMachine } from "./ConfigTable.machines.js";
-import ConfigTableRow from "./ConfigTableRow.vue";
+import { createTableMachine } from "@/components/ConfigTable.machines.js";
+import ConfigTableRow from "@/components/ConfigTableRow.vue";
 
 const props = defineProps([
     "columns",

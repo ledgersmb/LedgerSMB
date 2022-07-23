@@ -2,7 +2,7 @@
 
 import { usePricegroupsStore } from "@/store/pricegroups";
 import { useI18n } from "vue-i18n";
-import ConfigTable from "./ConfigTable.vue";
+import ConfigTable from "@/components/ConfigTable.vue";
 
 const { t } = useI18n();
 const COLUMNS = [

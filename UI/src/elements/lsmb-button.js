@@ -1,7 +1,7 @@
 /** @format */
 /* eslint-disable class-methods-use-this */
 
-import { LsmbDijit } from "./lsmb-dijit";
+import { LsmbDijit } from "@/elements/lsmb-dijit";
 
 const Button = require("dijit/form/Button");
 const registry = require("dijit/registry");

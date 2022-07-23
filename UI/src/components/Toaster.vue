@@ -4,8 +4,8 @@ import { computed, inject } from "vue";
 import { contextRef } from "@/robot-vue";
 import { useSessionUserStore } from "@/store/sessionUser";
 
-import { createToasterMachine } from "./Toaster.machines";
-import Toast from "./Toast.vue";
+import { createToasterMachine } from "@/components/Toaster.machines";
+import Toast from "@/components/Toast.vue";
 
 const user = useSessionUserStore();
 const wantToaster = computed(() => !user.preferences.__disableToaster);

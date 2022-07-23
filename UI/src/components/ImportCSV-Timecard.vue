@@ -52,7 +52,7 @@ dl > dd {
 
 <script>
 
-import ImportCSVBase from "./ImportCSV-Base";
+import ImportCSVBase from "@/components/ImportCSV-Base";
 
 
 export default {

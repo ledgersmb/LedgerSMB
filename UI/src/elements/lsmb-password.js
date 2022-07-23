@@ -1,7 +1,7 @@
 /** @format */
 /* eslint-disable class-methods-use-this */
 
-import { LsmbText } from "./lsmb-text";
+import { LsmbText } from "@/elements/lsmb-text";
 
 export class LsmbPassword extends LsmbText {
     _stdProps() {
