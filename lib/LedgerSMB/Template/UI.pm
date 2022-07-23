@@ -37,6 +37,7 @@ our @pre_render_cbs = (
         $cvars->{locale} = $cvars->{language} // $cvars->{locale};
         if ($request->{company} && $request->{_company_config}) {
             $vars->{SETTINGS} = {
+                papersize => 'letter', # default paper size when not configured
                 (%{$request->{_company_config}},)
             };
         }

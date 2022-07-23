@@ -14,6 +14,9 @@ Version   Changes
 
 -?>
 <?lsmb FILTER latex { format="$FORMAT($PROCESSOR)" };
+       # Uncomment the next line to overrule the value from System > Defaults;
+       # The value should be without the 'paper' suffix. E.g. "a4" for "a4paper"
+       # SETTINGS.papersize = "<your-format>";
        INCLUDE "preamble.tex"; -?>
 
 \begin{document}
