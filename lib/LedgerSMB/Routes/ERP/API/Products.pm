@@ -430,8 +430,13 @@ info:
   title: Managing products and related configuration
   version: 0.0.1
 paths:
-  /products/pricegroups/:
+  /products/pricegroups:
+    description: Managing products and related configuration
     get:
+      tags:
+        - Price groups
+      summary: Get products price groups
+      operationId: getProductsPricegroups
       responses:
         200:
           description: ...
@@ -441,7 +446,19 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Pricegroup'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
     post:
+      tags:
+        - Price groups
+      summary: Create products price group
+      operationId: postProductsPricegroup
       requestBody:
         content:
           application/json:
@@ -457,6 +474,14 @@ paths:
               schema:
                 type: string
                 format: uri-reference
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
   /products/pricegroups/{id}:
     parameters:
       - name: id
@@ -466,6 +491,10 @@ paths:
           $ref: '#/components/schemas/pricegroup-id'
         style: simple
     get:
+      tags:
+        - Price groups
+      summary: Get a single products price group
+      operationId: getProductsPricegroupById
       responses:
         200:
           description: ...
@@ -487,6 +516,10 @@ paths:
         404:
           $ref: '#/components/responses/404'
     put:
+      tags:
+        - Price groups
+      summary: Create single products price group
+      operationId: putProductsPricegroupById
       parameters:
         - name: If-Match
           in: header
@@ -525,6 +558,10 @@ paths:
         428:
           $ref: '#/components/responses/428'
     delete:
+      tags:
+        - Price groups
+      summary: Delete a single products price group
+      operationId: deleteProductsPricegroupById
       parameters:
         - name: 'If-Match'
           in: header
@@ -534,7 +571,19 @@ paths:
       responses:
         204:
           description: ...
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
     patch:
+      tags:
+        - Price groups
+      summary: Update a single products price group
+      operationId: updateProductsPricegroupById
       parameters:
         - name: 'If-Match'
           in: header
@@ -544,8 +593,21 @@ paths:
       responses:
         200:
           description: ...
-  /products/warehouses/:
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
+  /products/warehouses:
+    description: Manage warehouses
     get:
+      tags:
+        - Warehouses
+      summary: Get a list of warehouses
+      operationId: getWarehouses
       responses:
         200:
           description: ...
@@ -555,7 +617,19 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Warehouse'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
     post:
+      tags:
+        - Warehouses
+      summary: Create a warehouse
+      operationId: postWarehouse
       requestBody:
         content:
           application/json:
@@ -571,7 +645,16 @@ paths:
               schema:
                 type: string
                 format: uri-reference
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
   /products/warehouses/{id}:
+    description: Manage a warehouse
     parameters:
       - name: id
         in: path
@@ -580,6 +663,10 @@ paths:
           $ref: '#/components/schemas/warehouse-id'
         style: simple
     get:
+      tags:
+        - Warehouses
+      summary: Get a single warehouse
+      operationId: getWarehousesById
       responses:
         200:
           description: ...
@@ -601,6 +688,10 @@ paths:
         404:
           $ref: '#/components/responses/404'
     put:
+      tags:
+        - Warehouses
+      summary: Update a single warehouse
+      operationId: putWarehousesById
       parameters:
         - name: If-Match
           in: header
@@ -639,6 +730,10 @@ paths:
         428:
           $ref: '#/components/responses/428'
     delete:
+      tags:
+        - Warehouses
+      summary: Delete a single warehouse
+      operationId: deleteWarehousesById
       parameters:
         - name: 'If-Match'
           in: header
@@ -648,7 +743,19 @@ paths:
       responses:
         204:
           description: ...
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
     patch:
+      tags:
+        - Warehouses
+      summary: Update a single warehouse
+      operationId: updateWarehousesById
       parameters:
         - name: 'If-Match'
           in: header
@@ -658,6 +765,14 @@ paths:
       responses:
         200:
           description: ...
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
 components:
   headers:
     ETag:

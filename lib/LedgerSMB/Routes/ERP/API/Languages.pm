@@ -240,8 +240,13 @@ info:
   title: Management of language configuration
   version: 0.0.1
 paths:
-  /languages/:
+  /languages:
+    description: Management of language configuration
     get:
+      tags:
+        - Languages
+      summary: Get available languages
+      operationId: getLanguages
       responses:
         200:
           description: ...
@@ -251,7 +256,19 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Language'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
     post:
+      tags:
+        - Languages
+      summary: Create a language
+      operationId: postLanguage
       requestBody:
         content:
           application/json:
@@ -267,7 +284,16 @@ paths:
               schema:
                 type: string
                 format: uri-reference
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
   /languages/{id}:
+    description: Manage a single language
     parameters:
       - name: id
         in: path
@@ -276,6 +302,10 @@ paths:
           $ref: '#/components/schemas/language-code'
         style: simple
     get:
+      tags:
+        - Languages
+      summary: Get a single language
+      operationId: getLanguageById
       responses:
         200:
           description: ...
@@ -297,6 +327,10 @@ paths:
         404:
           $ref: '#/components/responses/404'
     put:
+      tags:
+        - Languages
+      summary: Update a single language
+      operationId: putLanguageById
       parameters:
         - name: If-Match
           in: header
@@ -335,6 +369,10 @@ paths:
         428:
           $ref: '#/components/responses/428'
     delete:
+      tags:
+        - Languages
+      summary: Delete a single language
+      operationId: deleteLanguageById
       parameters:
         - name: 'If-Match'
           in: header
@@ -344,7 +382,19 @@ paths:
       responses:
         204:
           description: ...
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
     patch:
+      tags:
+        - Languages
+      summary: Update a single language
+      operationId: updateLanguageById
       parameters:
         - name: 'If-Match'
           in: header
@@ -354,6 +404,14 @@ paths:
       responses:
         200:
           description: ...
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
 components:
   headers:
     ETag:

@@ -240,8 +240,13 @@ info:
   title: Management of GIFI (canadian accounting) codes configuration
   version: 0.0.1
 paths:
-  /gl/gifi/:
+  /gl/gifi:
+    description: A list of GIFI
     get:
+      tags:
+        - GIFI
+      summary: Get a list of GIFI
+      operationId: getWIFIs
       responses:
         200:
           description: ...
@@ -251,7 +256,19 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/GIFI'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
     post:
+      tags:
+        - GIFI
+      summary: Create a single GIFI
+      operationId: postWIFI
       requestBody:
         content:
           application/json:
@@ -267,15 +284,28 @@ paths:
               schema:
                 type: string
                 format: uri-reference
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
   /gl/gifi/{id}:
+    description: A single GIFI
     parameters:
       - name: id
         in: path
         required: true
         schema:
-          $ref: '#/components/schemas/gifi-accno'
+          $ref: '#/components/schemas/accno-code'
         style: simple
     get:
+      tags:
+        - GIFI
+      summary: Get a single GIFI
+      operationId: getWIFIById
       responses:
         200:
           description: ...
@@ -297,6 +327,10 @@ paths:
         404:
           $ref: '#/components/responses/404'
     put:
+      tags:
+        - GIFI
+      summary: Put a single GIFI
+      operationId: putWIFIById
       parameters:
         - name: If-Match
           in: header
@@ -335,6 +369,10 @@ paths:
         428:
           $ref: '#/components/responses/428'
     delete:
+      tags:
+        - GIFI
+      summary: Delete a single GIFI
+      operationId: deleteWIFIById
       parameters:
         - name: 'If-Match'
           in: header
@@ -344,7 +382,19 @@ paths:
       responses:
         204:
           description: ...
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
     patch:
+      tags:
+        - GIFI
+      summary: Update a single GIFI
+      operationId: updateWIFIById
       parameters:
         - name: 'If-Match'
           in: header
@@ -354,6 +404,14 @@ paths:
       responses:
         200:
           description: ...
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
 components:
   headers:
     ETag:

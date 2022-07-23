@@ -92,9 +92,11 @@
     "markdownlint-cli": "0.32.0",
     "mini-css-extract-plugin": "2.6.1",
     "npm-run-all": "4.1.5",
+    "openapi-merge-cli": "1.3.1",
     "path-browserify": "1.0.1",
     "pinia": "2.0.16",
     "prettier": "2.7.1",
+    "redoc-cli": "0.13.16",
     "rtl-detect": "1.0.4",
     "stylelint": "14.9.1",
     "stylelint-config-standard": "26.0.0",
@@ -297,7 +299,8 @@
       "UI/**/dijit/**/*.css",
       "UI/**/util/**/*.css",
       "UI/js/**",
-      "UI/pod/**"
+      "UI/pod/**",
+      "UI/openapi/**"
     ],
     "rules": {
       "declaration-block-no-duplicate-custom-properties": null,
