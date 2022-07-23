@@ -267,8 +267,8 @@ paths:
     post:
       tags:
         - Languages
-      summary: Put a list of languages
-      operationId: putLanguages
+      summary: Create a language
+      operationId: postLanguage
       requestBody:
         content:
           application/json:
@@ -329,7 +329,7 @@ paths:
     put:
       tags:
         - Languages
-      summary: Put a single language
+      summary: Update a single language
       operationId: putLanguageById
       parameters:
         - name: If-Match

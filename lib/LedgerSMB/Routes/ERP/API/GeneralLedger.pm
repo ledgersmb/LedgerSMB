@@ -267,8 +267,8 @@ paths:
     post:
       tags:
         - GIFI
-      summary: Put a list of GIFI
-      operationId: putWIFIs
+      summary: Create a single GIFI
+      operationId: postWIFI
       requestBody:
         content:
           application/json:

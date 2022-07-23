@@ -463,8 +463,8 @@ paths:
     post:
       tags:
         - SICs
-      summary: Put a list of SICs
-      operationId: putSICs
+      summary: Add SIC entry
+      operationId: postSIC
       requestBody:
         content:
           application/json:
@@ -499,8 +499,8 @@ paths:
     get:
       tags:
         - SICs
-      summary: Get a single Contact
-      operationId: getSICsById
+      summary: Get a single SIC
+      operationId: getSICById
       responses:
         200:
           description: ...
@@ -524,8 +524,8 @@ paths:
     put:
       tags:
         - SICs
-      summary: Put a single Contact
-      operationId: putSICsById
+      summary: Update a single SIC
+      operationId: putSICByCode
       parameters:
         - name: If-Match
           in: header
@@ -566,8 +566,8 @@ paths:
     delete:
       tags:
         - SICs
-      summary: Delete a single Contact
-      operationId: deleteSICsById
+      summary: Delete a single SIC
+      operationId: deleteSICByCode
       parameters:
         - name: 'If-Match'
           in: header
@@ -588,8 +588,8 @@ paths:
     patch:
       tags:
         - SICs
-      summary: Update a single Contact
-      operationId: updateSICsById
+      summary: Update a single SIC
+      operationId: updateSICByCode
       parameters:
         - name: 'If-Match'
           in: header
@@ -634,8 +634,8 @@ paths:
     post:
       tags:
         - Business types
-      summary: Create business types
-      operationId: putBusinessTypes
+      summary: Create a business type
+      operationId: postBusinessType
       requestBody:
         content:
           application/json:
@@ -696,7 +696,7 @@ paths:
     put:
       tags:
         - Business types
-      summary: Put a single business type
+      summary: Update a single business type
       operationId: putBusinessTypesById
       parameters:
         - name: If-Match

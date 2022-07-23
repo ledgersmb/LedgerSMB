@@ -457,8 +457,8 @@ paths:
     post:
       tags:
         - Price groups
-      summary: Put products price groups
-      operationId: putProductsPricegroups
+      summary: Create products price group
+      operationId: postProductsPricegroup
       requestBody:
         content:
           application/json:
@@ -518,7 +518,7 @@ paths:
     put:
       tags:
         - Price groups
-      summary: Put a single products price group
+      summary: Create single products price group
       operationId: putProductsPricegroupById
       parameters:
         - name: If-Match
@@ -628,8 +628,8 @@ paths:
     post:
       tags:
         - Warehouses
-      summary: Put a list of warehouses
-      operationId: putWarehouses
+      summary: Create a warehouse
+      operationId: postWarehouse
       requestBody:
         content:
           application/json:
