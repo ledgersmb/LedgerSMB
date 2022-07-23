@@ -22,7 +22,8 @@
                                                       'readonly', 'style', 'wrap' ])
   select_keys             = default_input_keys.merge(['multiple'])
   option_keys             = default_keys.merge(['tabindex', 'disabled', 'value', 'selected'])
-  button_keys             = default_input_keys
+  button_keys             = default_input_keys.merge(['data-lsmb-doing',
+                                                      'data-lsmb-done'])
   toggle_keys             = default_input_keys.merge(['showLabel', 'label'])
   for_keys                = default_keys.merge(['for'])
 

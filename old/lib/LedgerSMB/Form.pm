@@ -483,14 +483,8 @@ sub open_status_div {
         $class = "new";
     }
 
-    my $status = $self->{_locale}->text(
-        'Action: [_1], ID: [_2]',
-        $self->{action},
-        $self->{id}
-        );
     my $id = $div_id ? "id=\"$div_id\"" : '';
-    return "<div $id class=\"$class\">
-            <div id=\"history\">$status</div>";
+    return "<div $id class=\"$class\">";
 }
 
 =item $form->close_status_div
@@ -1005,8 +999,15 @@ sub print_button {
 
     my $type = $button->{$name}{type} // 'dijit/form/Button';
     $btn++;
+
+    my $doing_toast =
+        $button->{$name}{doing} ? qq|data-lsmb-doing="$button->{$name}{doing}"|
+        : '';
+    my $done_toast =
+        $button->{$name}{done} ? qq|data-lsmb-done="$button->{$name}{done}"|
+        : '';
     print
-qq|<button data-dojo-type="$type" class="submit" type="submit" name="action" value="$name" id="action-$name-$btn" title="$button->{$name}{value}">$button->{$name}{value}</button>\n|;
+qq|<button data-dojo-type="$type" class="submit" type="submit" name="action" value="$name" id="action-$name-$btn" title="$button->{$name}{value}" $doing_toast $done_toast>$button->{$name}{value}</button>\n|;
 }
 
 

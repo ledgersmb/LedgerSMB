@@ -43,6 +43,8 @@
     <div class="inputgroup">
     [% INCLUDE button element_data = {
            text = text('Upload')
+           'data-lsmb-doing' = text('Uploading...')
+           'data-lsmb-done' = text('Uploaded')
           value = "attach_file"
            name = "action"
            type = "submit"

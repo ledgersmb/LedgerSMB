@@ -85,6 +85,8 @@
        name = 'action',
        value = 'save'
        text = text('Save')
+       'data-lsmb-doing' = text('Saving...')
+       'data-lsmb-done' = text('Saved')
     };
 
     IF form.id;
@@ -100,6 +102,8 @@
            name = 'action',
            value = 'delete'
            text = text('Delete')
+           'data-lsmb-doing' = text('Deleting...')
+           'data-lsmb-done' = text('Deleted')
         };
     END;
 %]
@@ -545,6 +549,8 @@
        name = 'action',
        value = 'save'
        text = text('Save')
+       'data-lsmb-doing' = text('Saving...')
+       'data-lsmb-done' = text('Saved')
     };
 
     IF form.id;
@@ -560,6 +566,8 @@
            name = 'action',
            value = 'delete'
            text = text('Delete')
+           'data-lsmb-doing' = text('Deleting...')
+           'data-lsmb-done' = text('Deleted')
         };
     END;
 %]
@@ -624,6 +632,8 @@
     type = 'submit',
     class = 'submit',
     text = text('Save Translations'),
+    'data-lsmb-doing' = text('Saving Translations...')
+    'data-lsmb-done' = text('Saved Translations')
 } %]
 </form>
 </div>

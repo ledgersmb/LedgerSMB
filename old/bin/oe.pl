@@ -637,12 +637,23 @@ sub form_header {
     }
     if ( !$form->{readonly} ) {
         %button = (
-            'update' =>
-              { ndx => 1, key => 'U', value => $locale->text('Update') },
+            'update' => {
+                ndx => 1,
+                key => 'U',
+                value => $locale->text('Update'),
+                doing => $locale->text('Updating...'),
+                done => $locale->text('Updated')
+            },
             'print' =>
               { ndx => 2, key => 'P', value => $locale->text('Print'),
                 type => 'lsmb/PrintButton' },
-            'save' => { ndx => 3, key => 'S', value => $locale->text('Save') },
+            'save' => {
+                ndx => 3,
+                key => 'S',
+                value => $locale->text('Save'),
+                doing => $locale->text('Saving...'),
+                done => $locale->text('Saved')
+            },
             'ship_to' =>
               { ndx => 4, key => 'T', value => $locale->text('Ship to') },
             'e_mail' =>

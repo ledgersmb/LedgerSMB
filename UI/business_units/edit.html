@@ -95,6 +95,8 @@ default_blank = 1
         class = "submit"
         name = "action"
         value = "save"
+       'data-lsmb-doing' = text('Saving...')
+       'data-lsmb-done' = text('Saved')
 } %]
 </div>
 [% ELSE %]
@@ -105,6 +107,8 @@ default_blank = 1
         class = "submit"
         name = "action"
         value = "save_new"
+       'data-lsmb-doing' = text('Saving...')
+       'data-lsmb-done' = text('Saved')
 } %]
 </div>
 [% END %]

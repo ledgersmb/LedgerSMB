@@ -409,6 +409,8 @@ IF have_outstanding ;
     text = text('Save'),
     value = 'save_recon_set',
     class = "submit"
+'data-lsmb-doing' = text('Saving...')
+'data-lsmb-done' = text('Saved')
 } %]
 [% INCLUDE button element_data = {
     name = "action",
@@ -425,12 +427,16 @@ IF have_outstanding ;
     value = 'approve',
     disabled = submit_enabled ? 'false' : 'true',
     class = "submit"
+'data-lsmb-doing' = text('Approving...')
+'data-lsmb-done' = text('Approved')
 };
 INCLUDE button element_data = {
     name = "action",
     text = text('Reject'),
     value = 'reject',
     class = "submit"
+'data-lsmb-doing' = text('Rejecting...')
+'data-lsmb-done' = text('Rejected')
 } %]
 [% END %]
 [% IF NOT approved %]
@@ -440,6 +446,8 @@ INCLUDE button element_data = {
        value = 'delete_report'
         type = 'submit'
        class = 'submit'
+'data-lsmb-doing' = text('Deleting...')
+'data-lsmb-done' = text('Deleted')
 } %]
 [% END %]
 </form>

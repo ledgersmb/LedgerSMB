@@ -491,6 +491,8 @@ fld = "payment_" _ r.contact_id _ "_" _ i.id ;
                 value = 'pre_bulk_post_report'
                 class = "submit"
                 name  = 'action'
+                'data-lsmb-doing' = text('Saving...')
+                'data-lsmb-done'  = text('Saved')
         } %]
         [% IF payment.can_print %]
                 [% INCLUDE select element_data = {
