@@ -69,7 +69,7 @@ sub _fn {
 sub _type_to_fn {
     my ($type) = @_;
 
-    my $type_fn = ($type =~ tr|a-zA-Z /|a-za-z\-\-|dr);
+    my $type_fn = ($type =~ tr|a-zA-Z /|a-za-z\-\-|r);
     return $type_fn;
 }
 
