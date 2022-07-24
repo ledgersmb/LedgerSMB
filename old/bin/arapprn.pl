@@ -259,7 +259,7 @@ sub print_transaction {
         locale => $locale,
         output_options => \%output_options,
         format_plugin   =>
-           $form->{_wire}->get( 'output_plugins' )->get( uc($form->{format} || 'HTML') ),
+           $form->{_wire}->get( 'output_formatter' )->get( uc($form->{format} || 'HTML') ),
         );
     $template->render($form);
     LedgerSMB::Legacy_Util::output_template($template, $form);

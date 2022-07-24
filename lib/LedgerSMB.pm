@@ -592,7 +592,7 @@ sub report_renderer_doc {
                 filename => $report->output_name($request),
             },
             format_plugin   =>
-               $request->{_wire}->get( 'output_plugins' )->get( uc($request->{format} || 'HTML' ) ),
+               $request->{_wire}->get( 'output_formatter' )->get( uc($request->{format} || 'HTML' ) ),
             );
 
         $template->render($vars, $cvars);

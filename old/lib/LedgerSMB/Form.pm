@@ -1173,7 +1173,7 @@ sub generate_selects {
              map {
                  my $val = lc $_;
                  qq|<option value="$val">$_|
-             } $form->{_wire}->get( 'output_plugins' )->get_formats
+             } $form->{_wire}->get( 'output_formatter' )->get_formats
         );
 
     # warehouse

@@ -1410,7 +1410,7 @@ sub print_form {
                 output_options => \%output_options,
                 filename => $form->{formname} . "-" . $form->{"${inv}number"},
                 format_plugin   =>
-                   $form->{_wire}->get( 'output_plugins' )->get( uc($form->{format} ) ),
+                   $form->{_wire}->get( 'output_formatter' )->get( uc($form->{format} ) ),
             );
         $template->render($form);
 
@@ -1524,7 +1524,7 @@ sub print_form {
         output_options => \%output_options,
         filename => $form->{formname} . "-" . $form->{"${inv}number"},
         format_plugin   =>
-            $form->{_wire}->get( 'output_plugins' )->get( uc($form->{format} ) ),
+            $form->{_wire}->get( 'output_formatter' )->get( uc($form->{format} ) ),
         );
     $template->render($form);
     LedgerSMB::Legacy_Util::output_template($template, $form,

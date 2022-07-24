@@ -49,7 +49,7 @@ my @modules =
     (
      'LedgerSMB::Sysconfig',
      'LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894',
-     'LedgerSMB::Template::Plugins',
+     'LedgerSMB::Template::Formatter',
      'LedgerSMB::Template::Plugin::XLSX',
      'LedgerSMB::Template::Plugin::ODS',
      'LedgerSMB::Template::Plugin::LaTeX',

@@ -189,7 +189,7 @@ sub print {
         path     => 'DB',
         template => $request->{taxform_name},
         format_plugin   =>
-           $request->{_wire}->get( 'output_plugins' )->get( $request->{format}),
+           $request->{_wire}->get( 'output_formatter' )->get( $request->{format}),
     );
     $template->render($request);
 

@@ -518,7 +518,7 @@ sub print {
                filename => 'printed-checks',
             },
             format_plugin   =>
-                 $request->{_wire}->get( 'output_plugins' )->get( uc $payment->{format} ),
+                 $request->{_wire}->get( 'output_formatter' )->get( uc $payment->{format} ),
             );
         $template->render(
             {
@@ -694,7 +694,7 @@ sub display_payments {
 
     $payment->{format_options} = [
         map { { text => $_, value => lc $_ } }
-        $request->{_wire}->get( 'output_plugins' )->get_formats
+        $request->{_wire}->get( 'output_formatter' )->get_formats
         ];
     $payment->{can_print} = scalar @{$payment->{format_options}};
 
@@ -1468,7 +1468,7 @@ sub print_payment {
       path     => 'DB',
       template => 'printPayment',
       format_plugin   =>
-         $request->{_wire}->get( 'output_plugins' )->get( 'HTML' ),
+         $request->{_wire}->get( 'output_formatter' )->get( 'HTML' ),
     );
     $template->render(
         {

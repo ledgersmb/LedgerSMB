@@ -206,7 +206,7 @@ sub print {
         path     => 'DB',
         template => 'timecard',
         format_plugin   =>
-              $request->{_wire}->get( 'output_plugins' )->get( $request->{format} || 'HTML'),
+              $request->{_wire}->get( 'output_formatter' )->get( $request->{format} || 'HTML'),
     );
 
     if (lc($request->{media}) eq 'screen') {

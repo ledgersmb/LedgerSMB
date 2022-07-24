@@ -129,7 +129,7 @@ sub render_string {
               $request->{_company_config}->{dojo_theme} || 'claro'
           ),
           LIST_FORMATS => sub {
-              return $request->{_wire}->get( 'output_plugins' )->get_formats;
+              return $request->{_wire}->get( 'output_formatter' )->get_formats;
           },
           PRINTERS => [
               ( $request->{_wire}->get( 'printers' )->as_options,

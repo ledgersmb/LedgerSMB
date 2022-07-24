@@ -179,8 +179,8 @@ miscellaneous:
     backup_email_from: ''
     max_upload_size: 4194304
     proxy_ip: 127.0.0.1/8 ::1/128 ::ffff:127.0.0.1/108
-output_plugins:
-  $class: LedgerSMB::Template::Plugins
+output_formatter:
+  $class: LedgerSMB::Template::Formatter
   plugins:
   - $class: LedgerSMB::Template::Plugin::LaTeX
     format: PDF
