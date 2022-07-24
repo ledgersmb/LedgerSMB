@@ -358,7 +358,7 @@ sub generate_statement {
                      language => $statement->{language},
                      method   => $request->{media},
                      format_plugin   =>
-                         $request->{_wire}->get( 'output_plugins' )->get( $request->{format}),
+                         $request->{_wire}->get( 'output_formatter' )->get( $request->{format}),
                 );
 
         $template->render(

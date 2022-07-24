@@ -79,8 +79,8 @@ sub ini2wire {
         }
     } @optionals;
 
-    $wire_config{output_plugins} = {
-        class => 'LedgerSMB::Template::Plugins',
+    $wire_config{output_formatter} = {
+        class => 'LedgerSMB::Template::Formatter',
         args => { plugins => \@formats }
     };
 

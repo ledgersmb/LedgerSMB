@@ -1,8 +1,8 @@
-package LedgerSMB::Template::Plugins;
+package LedgerSMB::Template::Formatter;
 
 =head1 NAME
 
-LedgerSMB::Template::Plugins - Module to manage template output format plugins
+LedgerSMB::Template::Formatter - Module to manage template output format plugins
 
 =head1 DESCRIPTION
 
@@ -11,7 +11,7 @@ This module manages the collection available output formats.
 =head1 SYNOPSIS
 
   output_formats:
-    $class: LedgerSMB::Template::Plugins
+    $class: LedgerSMB::Template::Formatter
     plugins:
       - $class: LedgerSMB::Template::Plugin::LaTeX
         format: "PDF"           # Supports Postscript too, but suppress that

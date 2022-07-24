@@ -138,7 +138,7 @@ sub print_options {
         default_values => $form->{selectformat},
         options => [
             map { { text => $_, value => lc $_ } }
-            $form->{_wire}->get( 'output_plugins' )->get_formats ],
+            $form->{_wire}->get( 'output_formatter' )->get_formats ],
     };
     if ($form->{type} && $form->{type} eq 'invoice'){
        push @{$options{format}{options}}, {
