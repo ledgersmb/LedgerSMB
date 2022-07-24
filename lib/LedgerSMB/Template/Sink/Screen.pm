@@ -107,6 +107,8 @@ sub append {
     else {
         $self->template({ template => $template, filename => $args{filename} });
     }
+
+    return undef;
 }
 
 =head2 render()

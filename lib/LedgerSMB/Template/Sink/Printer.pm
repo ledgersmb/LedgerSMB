@@ -88,6 +88,8 @@ sub append {
         msg   => 'Successfully submitted',
         status => 'success'
     };
+
+    return undef;
 }
 
 =head2 render()
