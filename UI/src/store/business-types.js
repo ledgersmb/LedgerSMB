@@ -10,7 +10,7 @@ export const useBusinessTypesStore = defineStore("business-types", {
             fields: ["id", "description", "discount"],
             id: "id",
             items: [],
-            url: "contacts/business-types/"
+            url: "contacts/business-types"
         };
     }
 });

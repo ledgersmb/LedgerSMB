@@ -143,7 +143,7 @@ sub _update_pricegroup {
 
 
 
-get api '/products/pricegroups/' => sub {
+get api '/products/pricegroups' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my $response = _get_pricegroups( $c );
@@ -152,7 +152,7 @@ get api '/products/pricegroups/' => sub {
              $response  ];
 };
 
-post api '/products/pricegroups/' => sub {
+post api '/products/pricegroups' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($response, $meta) = _add_pricegroup( $c, $body );
@@ -333,7 +333,7 @@ sub _update_warehouse {
 }
 
 
-get api '/products/warehouses/' => sub {
+get api '/products/warehouses' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my $response = _get_warehouses( $c );
@@ -342,7 +342,7 @@ get api '/products/warehouses/' => sub {
              $response  ];
 };
 
-post api '/products/warehouses/' => sub {
+post api '/products/warehouses' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($response, $meta) = _add_warehouse( $c, $body );
