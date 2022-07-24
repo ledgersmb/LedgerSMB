@@ -350,15 +350,16 @@ sub generate_statement {
 
     my @results = ();
     for my $statement (@statements) {
-        my $template = LedgerSMB::Template->new( # printed document
-                     path     => 'DB',
-                     dbh      => $request->{dbh},
-                     locale   => $request->{_locale},
-                     template => $request->{print_template},
-                     language => $statement->{language},
-                     method   => $request->{media},
-                     format_plugin   =>
-                         $request->{_wire}->get( 'output_formatter' )->get( $request->{format}),
+        my $template =
+            LedgerSMB::Template->new(
+                path            => 'DB',
+                dbh             => $request->{dbh},
+                locale          => $request->{_locale},
+                template        => $request->{print_template},
+                language        => $statement->{language},
+                method          => $request->{media},
+                format_plugin   => ($request->{_wire}->get( 'output_formatter' )
+                                    ->get( $request->{print_format})),
                 );
 
         $template->render(
