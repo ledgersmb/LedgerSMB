@@ -157,6 +157,7 @@ jobs:
       SSMTP_HOSTNAME: lsmb
       SSMTP_MAILHUB: lsmb:1025
       MH_SENDMAIL_SMTP_ADDR: lsmb:1025
+      PERL5OPT: -MSyntax::Keyword::Try::Deparse
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
