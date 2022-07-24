@@ -108,7 +108,7 @@ sub _get_sics {
     }
     die $sth->errstr if $sth->err;
 
-    return \@results;
+    return { items => \@results, _links => [] };
 }
 
 sub _update_sic {
@@ -302,7 +302,7 @@ sub _get_businesstypes {
     }
     die $sth->errstr if $sth->err;
 
-    return \@results;
+    return { items => \@results, _links => [] };
 }
 
 sub _update_businesstype {
@@ -449,9 +449,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
+                type: object
+                required:
+                  - items
+                properties:
+                  _links:
+                    type: array
+                    items:
+                      type: object
                 items:
-                  $ref: '#/components/schemas/SIC'
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SIC'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -620,9 +629,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
+                type: object
+                required:
+                  - items
+                properties:
+                  _links:
+                    type: array
+                    items:
+                      type: object
                 items:
-                  $ref: '#/components/schemas/BusinessType'
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/BusinessType'
         400:
           $ref: '#/components/responses/400'
         401:

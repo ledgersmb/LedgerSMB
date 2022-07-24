@@ -108,7 +108,7 @@ sub _get_gifis {
     }
     die $sth->errstr if $sth->err;
 
-    return \@results;
+    return { items => \@results, _links => [] };
 }
 
 sub _update_gifi {
@@ -253,9 +253,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
+                type: object
+                required:
+                  - items
+                properties:
+                  _links:
+                    type: array
+                    items:
+                      type: object
                 items:
-                  $ref: '#/components/schemas/GIFI'
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/GIFI'
         400:
           $ref: '#/components/responses/400'
         401:

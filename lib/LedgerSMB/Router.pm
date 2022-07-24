@@ -90,7 +90,7 @@ our @EXPORT = ## no critic (ProhibitAutomaticExportation)
 our @EXPORT_OK = qw(router);
 our %EXPORT_TAGS = (
     all => [ qw( any del get head options patch post put
-             hook json locale set user )]
+             hook json locale set setting user )]
     );
 
 =head1 MODULE METHODS
@@ -493,6 +493,9 @@ sub api {
 
             $has_body = reftype $triplet->[2] ne 'ARRAY'
                 or Plack::Util::content_length($triplet->[2]);
+            my $content_type =
+                (Plack::Util::header_get($triplet->[1], 'Content-Type')
+                 =~ s/;(.*)$//r);
             ($result, $errors, $warnings) =
                 $schema->validate_response(
                     method => $env->{REQUEST_METHOD},
@@ -502,11 +505,7 @@ sub api {
                         header => { $triplet->[1]->@* },
                         path => $params,
                         query => $req->query_parameters->as_hashref_mixed,
-                        body => [
-                            $has_body,
-                            Plack::Util::header_get($triplet->[1], 'Content-Type'),
-                            $triplet->[2]
-                            ]
+                        body => [ $has_body, $content_type, $triplet->[2] ]
                     });
             return error($req, HTTP_INTERNAL_SERVER_ERROR, [], @$errors)
                 if scalar(@$errors) > 0;

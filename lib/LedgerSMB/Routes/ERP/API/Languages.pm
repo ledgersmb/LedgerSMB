@@ -93,7 +93,7 @@ sub _get_language {
 }
 
 sub _get_languages {
-    my ($c) = @_;
+    my ($c, $formats) = @_;
     my $sth = $c->dbh->prepare(
         q|SELECT * FROM language ORDER BY code|
         ) or die $c->dbh->errstr;
@@ -108,7 +108,18 @@ sub _get_languages {
     }
     die $sth->errstr if $sth->err;
 
-    return \@results;
+    my $fc = scalar $formats->get_formats->@*;
+    return {
+        items => \@results,
+        _links => [
+            map {
+                +{
+                    rel => 'download',
+                    href => "?format=$_",
+                    title => $_
+                }
+            } $formats->get_formats->@* ]
+    };
 }
 
 sub _update_language {
@@ -146,7 +157,7 @@ sub _update_language {
 get api '/languages' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my $response = _get_languages( $c );
+    my $response = _get_languages( $c, $env->{wire}->get( 'output_formatter' ) );
     return [ 200,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              $response  ];
@@ -253,9 +264,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
+                type: object
+                required:
+                  - items
+                properties:
+                  _links:
+                    type: array
+                    items:
+                      type: object
                 items:
-                  $ref: '#/components/schemas/Language'
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Language'
         400:
           $ref: '#/components/responses/400'
         401:

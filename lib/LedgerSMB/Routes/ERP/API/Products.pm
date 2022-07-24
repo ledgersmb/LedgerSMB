@@ -108,7 +108,7 @@ sub _get_pricegroups {
     }
     die $sth->errstr if $sth->err;
 
-    return \@results;
+    return { items => \@results, _links => [] };
 }
 
 sub _update_pricegroup {
@@ -299,7 +299,7 @@ sub _get_warehouses {
     }
     die $sth->errstr if $sth->err;
 
-    return \@results;
+    return { items => \@results, _links => [] };
 }
 
 sub _update_warehouse {
@@ -443,9 +443,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
+                type: object
+                required:
+                  - items
+                properties:
+                  _links:
+                    type: array
+                    items:
+                      type: object
                 items:
-                  $ref: '#/components/schemas/Pricegroup'
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Pricegroup'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -614,9 +623,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Warehouse'
+                type: object
+                required:
+                  - items
+                properties:
+                  _links:
+                    type: array
+                    items:
+                      type: object
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Warehouse'
         400:
           $ref: '#/components/responses/400'
         401:

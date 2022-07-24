@@ -4,11 +4,15 @@ export const configStoreTemplate = {
     // to be mixed in at the parent level:
     // state: () => {
     //    return {
-    //        fields: ["id", "description"],
-    //        items: [],
-    //        url: "products/warehouses/"
+    //        "fields": ["id", "description"],
+    //        "items": [],
+    //        "_links": [],
+    //        "url": "products/warehouses/"
     //    };
     // },
+    getters: {
+        apiURL: (state) => `./erp/api/v0/${state.url}`
+    },
     actions: {
         async initialize() {
             const response = await fetch(`./erp/api/v0/${this.url}`, {
@@ -16,7 +20,9 @@ export const configStoreTemplate = {
             });
 
             if (response.ok) {
-                this.items = await response.json();
+                const rv = await response.json();
+                this.items = rv.items;
+                this._links = rv._links;
             } else {
                 throw new Error(`HTTP Error: ${response.status}`);
             }

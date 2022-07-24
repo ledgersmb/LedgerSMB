@@ -10,6 +10,7 @@ export const usePricegroupsStore = defineStore("pricegroups", {
             fields: ["id", "description"],
             id: "id",
             items: [],
+            _links: [],
             url: "products/pricegroups"
         };
     }
