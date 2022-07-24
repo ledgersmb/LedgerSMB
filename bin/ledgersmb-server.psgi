@@ -12,6 +12,8 @@ BEGIN {
 
 package LedgerSMB::FCGI;
 
+use v5.14.0;
+
 no lib '.';
 
 use FindBin;
@@ -24,12 +26,47 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Middleware::RequestID;
 
 use Beam::Wire;
-use Hash::Merge;
 use Log::Any::Adapter;
 use Log::Log4perl qw(:easy);
 use Log::Log4perl::Layout::PatternLayout;
 use Plack::Builder;
+use Scalar::Util qw(reftype);
 use YAML::PP;
+
+sub merge_config_hashes {
+    my ($left, $right, $relative_entry, $path) = @_;
+    $path //= '';
+    my $ref_left = reftype $left;
+    my $ref_right = reftype $right;
+
+    if (not $ref_right or not $ref_left) {
+        return $right // $left;
+    }
+     elsif ($ref_right eq 'ARRAY' and $ref_left eq 'ARRAY') {
+        return $relative_entry ? [ $left->@*, $right->@* ] : [ $right->@* ];
+    }
+    elsif ($ref_right ne $ref_left) {
+        die "Unsupported merge combination at $path: $ref_left and $ref_right";
+    }
+
+    # 2 hashes remain; merging required...
+    my %key_rel = (
+        (map { $_ => 0 } keys $left->%*),
+        (map {
+            m/^([+])?([^+].*)$/; $2 => $1;
+         } keys $right->%*));
+
+    return {
+        map {
+            $_ => merge_config_hashes(
+                $left->{$_},
+                $key_rel{$_} ? $right->{"+$_"} : $right->{$_},
+                $key_rel{$_},
+                "$path/$_"
+                )
+        } keys %key_rel
+    };
+}
 
 my $wire;
 do {
@@ -55,10 +92,8 @@ do {
         my $base_config = $yp->load_string( do { local $/ = undef; <DATA> } );
 
         if (defined $config_file) {
-            my $merger = Hash::Merge->new( 'RIGHT_PRECEDENT' );
-            $config = $merger->merge(
-                $base_config,
-                $yp->load_file( $config_file ));
+            $config = merge_config_hashes( $base_config,
+                                           $yp->load_file( $config_file ) );
         }
         else {
             $config = $base_config;
@@ -147,18 +182,18 @@ miscellaneous:
 output_plugins:
   $class: LedgerSMB::Template::Plugins
   plugins:
-    - $class: LedgerSMB::Template::Plugin::LaTeX
-      format: PDF
-    - $class: LedgerSMB::Template::Plugin::LaTeX
-      format: PS
-    - $class: LedgerSMB::Template::Plugin::XLSX
-      format: XLS
-    - $class: LedgerSMB::Template::Plugin::XLSX
-      format: XLSX
-    - $class: LedgerSMB::Template::Plugin::ODS
-    - $class: LedgerSMB::Template::Plugin::CSV
-    - $class: LedgerSMB::Template::Plugin::TXT
-    - $class: LedgerSMB::Template::Plugin::HTML
+  - $class: LedgerSMB::Template::Plugin::LaTeX
+    format: PDF
+  - $class: LedgerSMB::Template::Plugin::LaTeX
+    format: PS
+  - $class: LedgerSMB::Template::Plugin::XLSX
+    format: XLS
+  - $class: LedgerSMB::Template::Plugin::XLSX
+    format: XLSX
+  - $class: LedgerSMB::Template::Plugin::ODS
+  - $class: LedgerSMB::Template::Plugin::CSV
+  - $class: LedgerSMB::Template::Plugin::TXT
+  - $class: LedgerSMB::Template::Plugin::HTML
 paths:
   $class: Beam::Wire
   config:
@@ -166,24 +201,22 @@ paths:
     templates: ./templates/
 printers:
   $class: LedgerSMB::Printers
-  printers: []
+  printers: {}
   fallback: null
 setup_settings:
   admin_db: template1
   auth_db: postgres
 ui:
-  class: LedgerSMB::Template::UI
-  method: new_UI
-  lifecycle: eager
-  args:
-    cache: lsmb_templates/
-    root: ./
+  $class: LedgerSMB::Template::UI
+  $method: new_UI
+  $lifecycle: eager
+  cache: lsmb_templates/
+  root: ./
 workflows:
-  class: LedgerSMB::Workflow::Loader
+  $class: LedgerSMB::Workflow::Loader
+  $lifecycle: eager
+  $method: load
+  directories:
+  - workflows/
+  - custom_workflows/
   lifecycle: eager
-  method: load
-  args:
-    directories:
-      - workflows/
-      - custom_workflows/
-    lifecycle: eager
