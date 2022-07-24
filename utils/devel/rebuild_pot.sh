@@ -57,6 +57,6 @@ done
 # Extract Vue strings which came back from Transifex
 for json in `find UI/src/locales/ -name "*.json" -exec basename {} .json \; | sort`; do
     # Convert updated locale/po/, keeping Vue added data and only non-empty strings
-    i18next-conv --quiet --skipUntranslated --language "$json" \
+    npx i18next-conv --quiet --skipUntranslated --language "$json" \
         --source locale/po/$json.po --target UI/src/locales/$json.json
 done
