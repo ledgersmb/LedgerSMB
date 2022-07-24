@@ -16,6 +16,8 @@ Added functionalities
 * User-modified workflows through "custom_workflows" config path setting
 * Increased configurability by using dependency injection instead of configuration
 * Default printer selection supports 'Screen' as default output location
+* Default page size for PDFs selectable through System > Defaults
+* Support for Right-to-Left (RTL) languages
 
 Changed functionalities
 * Overpayment section in payment screen hidden on missing configuration (#2512)
@@ -26,9 +28,16 @@ Changed functionalities
 * Localization of setup.pl & login.pl based on browser preferences
 
 Removed functionalities
-* Removed 'accesskey' HTML attribute, based on WebAIM.org guidance
-* Removed DojoToolkit's TableContainerWidget converting its use to CSS3 Grid
-* Removed dependency on 'zip' program; replaced by dependency on Archive::Zip
+* HTML 'accesskey' attribute, based on WebAIM.org guidance
+* DojoToolkit's TableContainerWidget converting its use to CSS3 Grid
+* Dependency on 'zip' program; replaced by dependency on Archive::Zip
+* Broken 'auth' config key for user authentication provider configuration
+* Unused config keys:
+  * force_username_case (section: main)
+  * check_max_invoices (section: main)
+  * dojo_theme (section: main)
+  * dojo_unbuilt (section: debug)
+* Template set 'xedemo'; functionality merged into 'demo' templates
 
 Bugs fixed
 * Better logging on authentication failure
