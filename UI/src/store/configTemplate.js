@@ -42,7 +42,7 @@ export const configStoreTemplate = {
         },
         async del(id) {
             const warehouse = this.getById(id);
-            const response = await fetch(`./erp/api/v0/${this.url}${id}`, {
+            const response = await fetch(`./erp/api/v0/${this.url}/${id}`, {
                 method: "DELETE",
                 headers: {
                     "If-Match": warehouse._meta.ETag
@@ -62,7 +62,7 @@ export const configStoreTemplate = {
             const index = this.items.findIndex((w) => w[this.id] === id);
             const warehouse = this.items[index];
             if (!warehouse._meta || warehouse._meta.invalidated) {
-                const response = await fetch(`./erp/api/v0/${this.url}${id}`, {
+                const response = await fetch(`./erp/api/v0/${this.url}/${id}`, {
                     method: "GET"
                 });
 
@@ -92,7 +92,7 @@ export const configStoreTemplate = {
         },
         async save(id, data) {
             const warehouse = this.getById(id);
-            const response = await fetch(`./erp/api/v0/${this.url}${id}`, {
+            const response = await fetch(`./erp/api/v0/${this.url}/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

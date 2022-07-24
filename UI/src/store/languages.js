@@ -10,7 +10,7 @@ export const useLanguagesStore = defineStore("languages", {
             fields: ["code", "description"],
             id: "code",
             items: [],
-            url: "languages/"
+            url: "languages"
         };
     }
 });

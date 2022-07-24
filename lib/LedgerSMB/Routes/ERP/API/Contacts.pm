@@ -143,7 +143,7 @@ sub _update_sic {
 }
 
 
-get api '/contacts/sic/' => sub {
+get api '/contacts/sic' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my $response = _get_sics( $c );
@@ -152,7 +152,7 @@ get api '/contacts/sic/' => sub {
              $response  ];
 };
 
-post api '/contacts/sic/' => sub {
+post api '/contacts/sic' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($response, $meta) = _add_sic( $c, $body );
@@ -338,7 +338,7 @@ sub _update_businesstype {
 }
 
 
-get api '/contacts/business-types/' => sub {
+get api '/contacts/business-types' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my $response = _get_businesstypes( $c );
@@ -347,7 +347,7 @@ get api '/contacts/business-types/' => sub {
              $response  ];
 };
 
-post api '/contacts/business-types/' => sub {
+post api '/contacts/business-types' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($response, $meta) = _add_businesstype( $c, $body );

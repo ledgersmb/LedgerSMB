@@ -143,7 +143,7 @@ sub _update_gifi {
 }
 
 
-get api '/gl/gifi/' => sub {
+get api '/gl/gifi' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my $response = _get_gifis( $c );
@@ -152,7 +152,7 @@ get api '/gl/gifi/' => sub {
              $response  ];
 };
 
-post api '/gl/gifi/' => sub {
+post api '/gl/gifi' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($response, $meta) = _add_gifi( $c, $body );

@@ -143,7 +143,7 @@ sub _update_language {
 }
 
 
-get api '/languages/' => sub {
+get api '/languages' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my $response = _get_languages( $c );
@@ -152,7 +152,7 @@ get api '/languages/' => sub {
              $response  ];
 };
 
-post api '/languages/' => sub {
+post api '/languages' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($response, $meta) = _add_language( $c, $body );

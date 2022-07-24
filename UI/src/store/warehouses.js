@@ -10,7 +10,7 @@ export const useWarehousesStore = defineStore("warehouses", {
             fields: ["id", "description"],
             id: "id",
             items: [],
-            url: "products/warehouses/"
+            url: "products/warehouses"
         };
     }
 });
