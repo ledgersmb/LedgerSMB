@@ -498,10 +498,10 @@ if (TARGET !== "readme") {
             port: 9000,
             proxy: {
                 "/*.pl": {
-                    target: "http://localhost:5762"
+                    target: "http://proxy"
                 },
                 "/erp/api": {
-                    target: "http://localhost:5762"
+                    target: "http://proxy"
                 }
             },
             static: {
