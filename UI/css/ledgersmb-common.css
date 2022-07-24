@@ -334,7 +334,6 @@ input {
     /*  font-family: var(--input-font-family); */
     border: var(--input-border);
     font-size: var(--input-font-size);
-    font-weight: bold;
 }
 
 select {
