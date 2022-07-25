@@ -187,9 +187,7 @@ sub defaults_screen {
         $request->{$skey} = $request->setting->get($skey);
     }
 
-    my @country_list =
-        LedgerSMB::I18N::location_list_country_localized($request,
-            $request->{_company_config}->{default_language});
+    my @country_list = $request->enabled_countries->@*;
     unshift @country_list, {}
         if ! defined $request->{default_country};
 

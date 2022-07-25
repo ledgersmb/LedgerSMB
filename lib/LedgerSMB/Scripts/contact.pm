@@ -307,7 +307,7 @@ sub _main_screen {
     my @plugins = grep { /^[^.]/ && -f "UI/Contact/plugins/$_" } readdir($dh2);
     closedir $dh2;
 
-    my @country_list = LedgerSMB::I18N::location_list_country_localized($request);
+    my @country_list = $request->enabled_countries->@*;
     my @entity_classes =
         map { $_->{class} = $locale->maketext($_->{class}) ; $_ }
         $request->call_procedure(

@@ -29,6 +29,7 @@ use LedgerSMB::Form;
 use LedgerSMB::Report::Taxform::Summary;
 use LedgerSMB::Report::Taxform::Details;
 use LedgerSMB::Report::Taxform::List;
+use LedgerSMB::Setting;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 
@@ -69,7 +70,9 @@ sub _taxform_screen
 {
     my ($request) = @_;
     my $taxform = LedgerSMB::DBObject::TaxForm->new(%$request);
-    $taxform->get_metadata();
+    $taxform->{countries} = $request->enabled_countries;
+    $taxform->{default_country} =
+        LedgerSMB::Setting->new(%$request)->get('default_country');
 
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'taxform/add_taxform', $taxform);
@@ -238,7 +241,7 @@ sub list_all {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2010-2018 The LedgerSMB Core Team
+Copyright (C) 2010-2022 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

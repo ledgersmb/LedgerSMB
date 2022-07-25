@@ -133,42 +133,12 @@ sub get_forms
     return @{$self->{forms}};
 }
 
-=item get_metadata
-
-Gets metadata for the screen.
-
-Sets the following hashref properties
-
-=over
-
-=item countries
-A list of all countries, for drop down box purposes.
-
-=item default_country
-The default country of the organization, to set the dropdown box.
-
-=back
-
-=cut
-
-sub get_metadata
-{
-    my ($self) = @_;
-
-    @{$self->{countries}} =
-        LedgerSMB::I18N::location_list_country_localized($self);
-
-    my ($ref) = $self->call_procedure(funcname => 'setting_get', args => ['default_country']);
-    return $self->{default_country} = $ref->{setting_get};
-}
-
-
 
 =back
 
 =head1 COPYRIGHT
 
-Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU
+Copyright (C) 2009-2022 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

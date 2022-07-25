@@ -150,6 +150,26 @@ The name of the language, translated into the user's selected language
 
 =back
 
+=item enabled_countries()
+
+Returns arrayref of hashes with the following keys:
+
+=over
+
+=item id
+
+The internal identifier for the country
+
+=item short_name
+
+The 2-leter iso code of the country
+
+=item name
+
+The country's full name translated into the user's selected language
+
+=back
+
 =item report_renderer_ui
 
 Returns a code reference to render a report on the UI - pass as the
@@ -209,6 +229,7 @@ use DateTime::Format::Duration::ISO8601;
 use Encode qw(perlio_ok);
 use HTTP::Headers::Fast;
 use HTTP::Status qw( HTTP_OK ) ;
+use Locale::CLDR;
 use Locales unicode => 1;
 use Log::Any;
 use PGObject;
@@ -594,6 +615,20 @@ sub enabled_languages {
                                 // $_->{description})
             }
         } $self->call_procedure(funcname => 'person__list_languages')
+        ];
+}
+
+sub enabled_countries {
+    my ($self) = @_;
+
+    my $regions = Locale::CLDR->new($self->{_user}->{language})->all_regions;
+    return [
+        map {
+            +{
+                $_->%*,
+                name => $regions->{$_->{short_name}} // $_->{name}
+            }
+        } $self->call_procedure(funcname => 'location_list_country')
         ];
 }
 

@@ -98,8 +98,7 @@ sub start_report {
     if (!$request->{report_name}){
         die $request->{_locale}->text('No report specified');
     }
-    @{$request->{country_list}} =
-        LedgerSMB::I18N::location_list_country_localized($request);
+    $request->{country_list} = $request->enabled_countries;
     @{$request->{employees}} =  $request->call_procedure(
         funcname => 'employee__all_salespeople'
     );

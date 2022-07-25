@@ -12,6 +12,7 @@ use Plack::Request;
 
 use LedgerSMB;
 use LedgerSMB::Locale;
+use LedgerSMB::PGNumber;
 
 
 my $wire = Beam::Wire->new(file => 't/ledgersmb.yaml');
