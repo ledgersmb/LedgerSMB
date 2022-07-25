@@ -38,6 +38,10 @@ use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
+
+has languages => (is => 'ro',
+                  required => 1);
+
 =head1 PROPERTIES
 
 =over
@@ -237,12 +241,10 @@ Runs the report, and assigns rows to $self->rows.
 
 sub run_report{
     my ($self, $request) = @_;
-    my @languages =
-        LedgerSMB::I18N::get_language_list($self,$request->{_user}->{language});
 
     $self->options([{
        name => 'language',
-       options => \@languages,
+       options => $self->languages,
        default_value => [$self->default_language],
     }, {
        name => 'media',

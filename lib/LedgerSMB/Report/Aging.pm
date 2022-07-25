@@ -31,6 +31,10 @@ use LedgerSMB::I18N;
 
 use List::Util qw(none);
 
+
+has 'languages' => (is => 'ro',
+                    required => 1);
+
 =head1 PROPERTIES
 
 =over
@@ -87,12 +91,6 @@ sub columns {
         $base_href = 'ar.pl?action=edit&id='; # for details
     }
 
-
-    ###BUG: This is bleeding abstractions like crazy: the Report class itself
-    # already *has* LedgerSMB::I18N mixed in (::I18N is a role!)
-    my @languages =
-        LedgerSMB::I18N::get_language_list($self,$request->{_user}->{language});
-
     push @COLUMNS,
       {col_id => 'select',
          type => 'checkbox',
@@ -108,7 +106,7 @@ sub columns {
       {col_id => 'language',
          name => $self->Text('Language'),
          type => 'select',
-      options => \@languages,
+      options => $self->languages,
        pwidth => '0', };
 
    if ($self->report_type eq 'detail'){
@@ -295,7 +293,7 @@ sub run_report{
     for my $row (@rows) {
         next if ($self->has_details_filter
                  and none { $_ == $row->{id} } $self->details_filter->@*);
-        $row->{language} //= $request->{_user}->{language};
+        $row->{language} //= $self->language;
         push @result, $row;
 
         if ($self->report_type eq 'detail') {

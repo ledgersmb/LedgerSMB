@@ -134,6 +134,21 @@ Month info in hashref format in 01 => January format
 
 =back
 
+=item enabled_languages()
+
+Returns arrayref of hashes with the following keys:
+
+=over
+
+=item value
+
+The code of the language as per the CLDR
+
+=item text
+
+The name of the language, translated into the user's selected language
+
+=back
 
 =item report_renderer_ui
 
@@ -194,6 +209,7 @@ use DateTime::Format::Duration::ISO8601;
 use Encode qw(perlio_ok);
 use HTTP::Headers::Fast;
 use HTTP::Status qw( HTTP_OK ) ;
+use Locales unicode => 1;
 use Log::Any;
 use PGObject;
 use Plack;
@@ -566,6 +582,20 @@ sub all_years {
                            } @years ] };
 }
 
+sub enabled_languages {
+    my ($self) = @_;
+
+    my $l = Locales->new( $self->{_user}->{language} );
+    return [
+        map {
+            +{
+                value => $_->{code},
+                text => ucfirst($l->get_language_from_code($_->{code})
+                                // $_->{description})
+            }
+        } $self->call_procedure(funcname => 'person__list_languages')
+        ];
+}
 
 sub report_renderer_ui {
   my ($request) = @_;

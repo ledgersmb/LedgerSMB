@@ -57,8 +57,11 @@ sub run_report{
                if $request->{"business_unit_$count"};
     }
     return $request->render_report(
-        LedgerSMB::Report::Aging->new(%$request)
-        );
+        LedgerSMB::Report::Aging->new(
+            %$request,
+            language => $request->{_user}->{language},
+            languages => $request->enabled_languages
+        ));
 }
 
 

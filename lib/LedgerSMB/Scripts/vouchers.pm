@@ -286,6 +286,8 @@ sub get_batch {
     return $request->render_report(
         LedgerSMB::Report::Unapproved::Batch_Detail->new(
             default_language => $setting->get('default_language'),
+            language         => $request->{_user}->{language},
+            languages        => $request->enabled_languages,
             %$request,
         ));
 }
@@ -518,7 +520,11 @@ and gl transactions are not printed.
 
 sub print_batch {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(%$request);
+    my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(
+        %$request,
+        language         => $request->{_user}->{language},
+        languages        => $request->enabled_languages,
+        );
     $request->{format} = 'pdf';
     $request->{media} = 'zip';
 
