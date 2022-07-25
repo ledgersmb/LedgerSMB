@@ -182,15 +182,6 @@ fields of the columns above.
 
 has 'rows' => (is => 'rw', isa => 'ArrayRef[HashRef[Any]]');
 
-=head2 format
-
-This is the format, and must be one used by LedgerSMB::Template. If
-undefined, defaults to 'html'.
-
-=cut
-
-has 'format' => (is => 'rw', isa => 'Maybe[Str]');
-
 =head2 order_by
 
 The column to order on.  Used in providing subtotals also.
@@ -359,12 +350,6 @@ sub output_name {
     my $self = shift;
     my $request = shift;
 
-    return undef
-        unless $request->{format};
-
-    $self->format('html')
-        unless defined $self->format;
-
     my $name = $self->name // '';
     $name =~ s/ /_/g;
 
@@ -485,7 +470,6 @@ sub _render {
     $self->rows(\@newrows);
     # Rendering
 
-    $self->format('html') unless defined $self->format;
     my $columns = $self->show_cols($request);
 
     for my $col (@$columns){
