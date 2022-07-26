@@ -214,7 +214,7 @@ Url for order redirection.  Internal only.
 
 has order_url  => (is => 'rw', isa => 'Maybe[Str]');
 
-=item relative_url
+=head2 relative_url
 
 L<URI> object initialized with the script name and query string.
 
@@ -223,8 +223,7 @@ L<URI> object initialized with the script name and query string.
 has relative_url => (
     is => 'ro',
     isa => 'URI',
-    required => 1,
-    # trick to get the value initialized from the $request object
+    # trick to get the value initialized from the $request object:
     init_arg => '_uri');
 
 =head2 show_subtotals
@@ -542,7 +541,7 @@ Returns a list of columns based on selected ones from the report
 sub show_cols {
     my ($self, $request) = @_;
     my @retval;
-    my @columns = @{$self->columns($request)};
+    my @columns = @{$self->columns};
     for my $ref (@columns){
         if ($request->{"col_$ref->{col_id}"}){
             push @retval, $ref;

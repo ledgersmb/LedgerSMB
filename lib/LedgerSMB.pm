@@ -276,8 +276,9 @@ sub new {
     $self->{_req} = $request;
     $self->{_wire} = $wire;
 
+    my $q = $self->{query_string} // '';
     $self->{_uri} = URI->new(
-        $request->env->{'lsmb.script'} . "?$self->{query_string}",
+        $request->env->{'lsmb.script'} . ($q ? "?$q" : ''),
         $request->request_uri
         );
 

@@ -172,7 +172,7 @@ has '+order_by' => (default => 'meta_number');
 =cut
 
 sub columns {
-    my ($self, $request) = @_;
+    my ($self) = @_;
     my ($inv_label, $inv_href_base);
     if ($self->is_detailed){
         $inv_label = $self->Text('Invoice');

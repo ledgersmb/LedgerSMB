@@ -33,8 +33,10 @@ sub chart_of_accounts {
     my ($request) = @_;
 
     return $request->render_report(
-        LedgerSMB::Report::COA->new(_locale => $request->{_locale},
-                                    dbh => $request->{dbh})
+        LedgerSMB::Report::COA->new(
+            _locale => $request->{_locale},
+            _uri => $request->{_uri},
+            dbh => $request->{dbh})
         );
 }
 

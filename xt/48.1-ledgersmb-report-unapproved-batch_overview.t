@@ -10,6 +10,8 @@ that exercise interaction with a test database.
 use Test2::V0;
 
 use DBI;
+use URI;
+
 use LedgerSMB::Batch;
 use LedgerSMB::Report::Unapproved::Batch_Overview
 
@@ -76,7 +78,9 @@ foreach my $batch_data(@test_batches) {
 
 
 # Initialise Object
-$report = LedgerSMB::Report::Unapproved::Batch_Overview->new();
+$report = LedgerSMB::Report::Unapproved::Batch_Overview->new(
+    _uri => URI->new,
+    );
 isa_ok($report, ['LedgerSMB::Report::Unapproved::Batch_Overview'], 'instantiated object');
 ok($report->set_dbh($dbh), 'set dbh');
 
