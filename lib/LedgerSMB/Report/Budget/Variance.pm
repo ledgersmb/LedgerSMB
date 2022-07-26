@@ -115,13 +115,13 @@ Returns the inputs to display on header.
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'reference',
+    return [{value => $self->reference,
              text => $self->Text('Budget Number')},
-            {name => 'description',
+            {value => $self->description,
              text => $self->Text('Description')},
-            {name => 'start_date',
+            {value => $self->start_date,
              text => $self->Text('Start Date')},
-            {name => 'end_date',
+            {value => $self->end_date,
              text => $self->Text('End Date')},];
 }
 

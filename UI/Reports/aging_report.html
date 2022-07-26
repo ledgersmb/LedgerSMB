@@ -4,8 +4,6 @@ PROCESS "elements.html";
 
 PROCESS "dynatable.html";
 
-LINK = request.script _ '?' _ request.query_string _ '&amp;company=' _ DBNAME;
-
 %]
 <body class="lsmb [% dojo_theme %]">
 <div class="report_header"><label>[% text('Report Name') %]:</label>
@@ -90,27 +88,27 @@ PROCESS button element_data = {
 };
  %]
 </form><br />
-<a href="[% LINK %]">[[% text('permalink') %]]</a>&nbsp;
+<a href="[% REPORT_LINK %]">[[% text('permalink') %]]</a>&nbsp;
 [% IF FORMATS.grep('PDF').size()
 %]
 <a target="_blank" rel="noopener noreferrer"
-   href="[% LINK _ '&amp;format=PDF' %]">[[% text('PDF') %]]</a>&nbsp;
+   href="[% REPORT_LINK _ '&amp;format=PDF' %]">[[% text('PDF') %]]</a>&nbsp;
 [% END;
 IF FORMATS.grep('TXT').size();
 %]
 <a target="_blank" rel="noopener noreferrer"
-   href="[% LINK _ '&amp;format=CSV' %]">[[% text('CSV') %]]</a>&nbsp;
+   href="[% REPORT_LINK _ '&amp;format=CSV' %]">[[% text('CSV') %]]</a>&nbsp;
 [% END;
 IF FORMATS.grep('XLS').size() %]
 <a target="_blank" rel="noopener noreferrer"
-   href="[% LINK _ '&amp;format=XLS' %]">[[% text('XLS') %]]</a>&nbsp;
+   href="[% REPORT_LINK _ '&amp;format=XLS' %]">[[% text('XLS') %]]</a>&nbsp;
 [% END;
 IF FORMATS.grep('XLSX').size() %]
 <a target="_blank" rel="noopener noreferrer"
-   href="[% LINK _ '&amp;format=XLSX' %]">[[% text('XLSX') %]]</a>&nbsp;
+   href="[% REPORT_LINK _ '&amp;format=XLSX' %]">[[% text('XLSX') %]]</a>&nbsp;
 [% END;
 IF FORMATS.grep('ODS').size() %]
 <a target="_blank" rel="noopener noreferrer"
-   href="[% LINK _ '&amp;format=ODS' %]">[[% text('ODS') %]]</a>&nbsp;
+   href="[% REPORT_LINK _ '&amp;format=ODS' %]">[[% text('ODS') %]]</a>&nbsp;
 [% END; %]
 </body>

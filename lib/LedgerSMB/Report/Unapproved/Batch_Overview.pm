@@ -186,14 +186,14 @@ Returns the inputs to display on header.
 sub header_lines {
     my ($self) = @_;
     return [
-            {name => 'class_name',
-             text => $self->_locale->text('Transaction Type')},
-            {name => 'description',
-             text => $self->_locale->text('Description')},
-            {name => 'amount_gt',
-             text => $self->_locale->text('Amount Greater Than')},
-            {name => 'amount_lt',
-             text => $self->_locale->text('Amount Less Than')},
+            {value => $self->class_name,
+             text  => $self->_locale->text('Transaction Type')},
+            {value => $self->description,
+             text  => $self->_locale->text('Description')},
+            {value => $self->amount_gt,
+             text  => $self->_locale->text('Amount Greater Than')},
+            {value => $self->amount_lt,
+             text  => $self->_locale->text('Amount Less Than')},
     ];
 }
 

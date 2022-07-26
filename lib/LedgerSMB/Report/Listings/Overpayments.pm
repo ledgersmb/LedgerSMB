@@ -102,11 +102,11 @@ sub name {
 sub header_lines {
     my ($self) = @_;
     return [
-      {name => 'meta_number', text => $self->Text('Counterparty Code')}.
-      {name => 'date_from',   text => $self->Text('Date From')},
-      {name => 'date_to',     text => $self->Text('Date To')},
-      {name => 'amount_from', text => $self->Text('Amount From')},
-      {name => 'amount_to',   text =>  $self->Text('Amount To')},
+      { value => $self->meta_number, text => $self->Text('Counterparty Code')}.
+      { value => $self->date_from,   text => $self->Text('Date From')},
+      { value => $self->date_to,     text => $self->Text('Date To')},
+      { value => $self->amount_from, text => $self->Text('Amount From')},
+      { value => $self->amount_to,   text => $self->Text('Amount To')},
     ];
 }
 

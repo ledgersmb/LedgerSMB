@@ -79,13 +79,13 @@ sub name {
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'from_date',
+    return [{value => $self->from_date,
              text => $self->Text('Start Date') },
-            {name => 'to_date',
+            {value => $self->to_date,
              text => $self->Text('End Date') },
-            {name => 'partnumber',
+            {value => $self->partnumber,
              text => $self->Text('Including partnumber') },
-            {name => 'source',
+            {value => $self->source,
              text => $self->Text('Source starting with') },
            ];
 }

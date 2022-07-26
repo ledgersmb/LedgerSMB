@@ -228,7 +228,8 @@ use Carp;
 use DateTime::Format::Duration::ISO8601;
 use Encode qw(perlio_ok);
 use HTTP::Headers::Fast;
-use HTTP::Status qw( HTTP_OK ) ;
+use HTTP::Status qw( HTTP_OK );
+use List::Util qw( pairgrep );
 use Locale::CLDR;
 use Locales unicode => 1;
 use Log::Any;
@@ -632,9 +633,17 @@ sub enabled_countries {
 sub report_renderer_ui {
   my ($request) = @_;
   my $ui = LedgerSMB::Template::UI->new_UI;
+  my $uri = $request->{_uri}->clone;
+  if (not pairgrep { $a eq 'company' } $uri->query_form) {
+      $uri->query_form(
+          $uri->query_form,
+          company => $request->{company},
+          );
+  }
 
   return sub {
       my ($template_name, $report, $vars, $cvars) = @_;
+      $vars->{REPORT_LINK} = $uri->as_string;
 
       return $ui->render($request, "Reports/$template_name", $vars, $cvars);
   };

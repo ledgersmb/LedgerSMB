@@ -157,7 +157,7 @@ Returns the inputs to display on header.
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'batch_id',
+    return [{value => $self->batch_id,
              text => $self->Text('Batch ID')}, ]
 }
 

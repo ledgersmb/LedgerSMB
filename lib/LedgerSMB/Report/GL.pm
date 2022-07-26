@@ -211,15 +211,15 @@ Returns the inputs to display on header.
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'from_date',
+    return [{value => $self->from_date,
              text => $self->Text('Start Date')},
-            {name => 'to_date',
+            {value => $self->to_date,
              text => $self->Text('End Date')},
-            {name => 'accno',
+            {value => $self->accno,
              text => $self->Text('Account Number')},
-            {name => 'reference',
+            {value => $self->reference,
              text => $self->Text('Reference')},
-            {name => 'source',
+            {value => $self->source,
              text => $self->Text('Source')}];
 }
 

@@ -162,10 +162,10 @@ sub columns {
 sub header_lines {
     my ($self) = @_;
     return [
-      { name => 'partnumber',  text => $self->Text('Partnumber') },
-      { name => 'description', text => $self->Text('Description') },
-      { name => 'date_from',   text => $self->Text('From Date') },
-      { name => 'date_to',     text => $self->Text('To Date') },
+      { value => $self->partnumber,  text => $self->Text('Partnumber') },
+      { value => $self->description, text => $self->Text('Description') },
+      { value => $self->date_from,   text => $self->Text('From Date') },
+      { value => $self->date_to,     text => $self->Text('To Date') },
     ];
 }
 

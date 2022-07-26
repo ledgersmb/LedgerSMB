@@ -154,14 +154,14 @@ sub columns {
 sub header_lines {
     my ($self) = @_;
     return [
-       { name => 'from_date',
-         text => $self->Text('Start Date'), },
-       { name => 'to_date',
-         text => $self->Text('End Date'), },
-       { name => 'partnumber',
-         text => $self->Text('Part Number'), },
-       { name => 'description',
-         text => $self->Text('Part Description'), },
+       { value => $self->from_date,
+         text  => $self->Text('Start Date'), },
+       { value => $self->to_date,
+         text  => $self->Text('End Date'), },
+       { value => $self->partnumber,
+         text  => $self->Text('Part Number'), },
+       { value => $self->description,
+         text  => $self->Text('Part Description'), },
     ];
 }
 

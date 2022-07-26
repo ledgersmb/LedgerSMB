@@ -144,16 +144,16 @@ sub name {
 sub header_lines {
     my ($self) = @_;
      return [
-            {name => 'name',
-             text => $self->Text('Name')},
+            {value => $self->name_part,
+             text  => $self->Text('Name')},
 
-            {name => 'meta_number',
-             text => $self->Text('Account Number')},
-            {name => 'from_date',
-             text => $self->Text('Start Date')},
+            {value => $self->meta_number,
+             text  => $self->Text('Account Number')},
+            {value => $self->from_date,
+             text  => $self->Text('Start Date')},
 
-            {name => 'to_date',
-             text => $self->Text('End Date')},
+            {value => $self->to_date,
+             text  => $self->Text('End Date')},
 
 
       ];

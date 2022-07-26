@@ -69,7 +69,7 @@ Just the language_code
 sub header_lines {
     my ($self) = @_;
     return [
-        { name => 'language_code', text => $self->Text('Language') },
+        { value => $self->language_code, text => $self->Text('Language') },
         ];
 };
 

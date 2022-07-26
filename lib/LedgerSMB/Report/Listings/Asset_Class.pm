@@ -95,10 +95,10 @@ Label and method
 sub header_lines {
     my ($self) = @_;
     return [
-       {name => 'label',
-        text => $self->Text('Label') },
-       {name => 'method',
-        text => $self->Text('Depreciation Method') },
+       {value => $self->label,
+        text  => $self->Text('Label') },
+       {value => $self->method,
+        text  => $self->Text('Depreciation Method') },
     ];
 }
 

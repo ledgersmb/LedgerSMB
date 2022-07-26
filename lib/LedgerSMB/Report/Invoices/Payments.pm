@@ -181,13 +181,13 @@ sub header_lines {
     } else {
         die 'Invalid entity class';
     }
-    return [{name => 'meta_number', text => $meta_number },
-            {name => 'cash_accno',
-             text => $self->Text('Account Number') },
-            {name => 'from_date',
-             text => $self->Text('From Date')},
-            {name => 'to_date',
-             text => $self->Text('To Date')}
+    return [{value => $self->meta_number, text => $meta_number },
+            {value => $self->cash_accno,
+             text  => $self->Text('Account Number') },
+            {value => $self->from_date,
+             text  => $self->Text('From Date')},
+            {value => $self->to_date,
+             text  => $self->Text('To Date')}
            ];
 }
 

@@ -77,11 +77,9 @@ sub name { my ($self) = @_; return $self->Text('Invoice Profit/Loss') }
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'name',
-            text => $self->Text('Name') },
-            {name => 'invnumber',
+    return [{value => $self->invnumber,
             text => $self->Text('Invoice Number') },
-            {name => 'transdate',
+            {value => $self->transdate,
             text => $self->Text('Transaction Date') },
     ];
 }

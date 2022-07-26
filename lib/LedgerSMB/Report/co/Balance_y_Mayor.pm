@@ -133,10 +133,10 @@ Returns the inputs to display on header.
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'date_from',
-             text => $self->Text('Start Date')},
-            {name => 'date_to',
-             text =>  $self->Text('End Date')},]
+    return [{value => $self->date_from,
+             text  => $self->Text('Start Date')},
+            {value => $self->date_to,
+             text  =>  $self->Text('End Date')},]
 }
 
 =back

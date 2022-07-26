@@ -73,9 +73,9 @@ sub name { my ($self) = @_;
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'partnumber',
+    return [{value => $self->partnumber,
             text => $self->Text('Part Number') },
-            {name => 'description',
+            {value => $self->description,
             text => $self->Text('Description') },
     ];
 }

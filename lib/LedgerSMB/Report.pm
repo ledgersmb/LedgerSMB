@@ -539,9 +539,9 @@ sub _render {
         $template, $self,
         {
             report          => $self,
-            company_name    => $setting->get('company_name'),
+            company_name    => ($setting->get('company_name')
+                                || $request->{company}),
             company_address => $setting->get('company_address'),
-            request         => $request,
             new_heads       => $replace_hnames,
             name            => $self->name,
             hlines          => $self->header_lines,
@@ -550,8 +550,6 @@ sub _render {
             buttons         => $self->buttons,
             options         => $self->options,
             rows            => $self->rows,
-
-            DBNAME          => $request->{company},
         });
 }
 

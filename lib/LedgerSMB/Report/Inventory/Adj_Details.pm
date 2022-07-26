@@ -78,7 +78,7 @@ sub name {
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'source', text => $self->Text('Source') }];
+    return [{value => $self->source, text => $self->Text('Source') }];
 }
 
 =item columns

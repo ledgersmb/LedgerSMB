@@ -26,21 +26,16 @@ PROCESS "dynatable.html";
 <body class="lsmb <?lsmb dojo_theme ?>">
   <div class="heading_section">
     <div class="report_header">
-      <label><?lsmb text('Report Name') ?>:</label> <span class=
-      "report_header"><?lsmb name ?></span>
+      <label><?lsmb text('Report Name') ?>:</label>
+      <span class="report_header"><?lsmb name ?></span>
     </div>
     <div class="report_header">
       <label><?lsmb text('Company') ?>:</label> <span class=
-      "report_header"><?lsmb request.company ?></span>
+      "report_header"><?lsmb company_name ?></span>
     </div><?lsmb FOREACH LINE IN hlines ?>
     <div class="report_header">
-      <label><?lsmb LINE.text ?>:</label> <span class="report_header"><?lsmb
-           IF request.${LINE.name};
-              request.${LINE.name};
-           ELSE;
-              report.${LINE.name};
-           END;
-           ?></span>
+      <label><?lsmb LINE.text ?>:</label>
+      <span class="report_header"><?lsmb LINE.value ?></span>
     </div><?lsmb END ?>
   </div><?lsmb PROCESS dynatable tbody = {rows = rows }
                  attributes = {class = 'report', order_url = order_url } ?>

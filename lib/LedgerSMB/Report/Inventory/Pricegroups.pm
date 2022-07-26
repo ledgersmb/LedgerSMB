@@ -67,8 +67,8 @@ sub columns {
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'partsgroup',
-             text => $self->Text('Price Group') }];
+    return [{value => $self->pricegroup,
+             text  => $self->Text('Price Group') }];
 }
 
 =head2 name

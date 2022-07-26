@@ -125,14 +125,14 @@ Returns the inputs to display on header.
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'date_from',
-             text => $self->Text('Start Date')},
-            {name => 'date_to',
-             text => $self->Text('End Date')},
-            {name => 'accno',
-             text => $self->Text('Account Number Start')},
-            {name => 'reference',
-             text => $self->Text('Account Number End')},]
+    return [{value => $self->date_from,
+             text  => $self->Text('Start Date')},
+            {value => $self->date_to,
+             text  => $self->Text('End Date')},
+            {value => $self->accno,
+             text  => $self->Text('Account Number Start')},
+            {value => $self->reference,
+             text  => $self->Text('Account Number End')},]
 }
 
 =back

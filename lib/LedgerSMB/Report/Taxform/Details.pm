@@ -113,10 +113,10 @@ sub columns {
 sub header_lines {
     my ($self) = @_;
     return [
-       { name => 'from_date', text => $self->Text('From Date') },
-       { name => 'to_date',   text => $self->Text('To Date') },
-       { name => 'taxform',   text => $self->Text('Tax Form') },
-       { name => 'meta_number',   text => $self->Text('Account Number') },
+        { value => $self->from_date,   text => $self->Text('From Date') },
+        { value => $self->to_date,     text => $self->Text('To Date') },
+        { value => $self->taxform,     text => $self->Text('Tax Form') },
+        { value => $self->meta_number, text => $self->Text('Account Number') },
     ];
 }
 

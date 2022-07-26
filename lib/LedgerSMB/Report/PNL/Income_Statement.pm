@@ -52,8 +52,8 @@ sub name { my ($self) = @_; return $self->Text('Income Statement') }
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'basis',
-            text => $self->Text('Reporting Basis') }];
+    return [{value => $self->basis,
+             text  => $self->Text('Reporting Basis') }];
 }
 
 =back
