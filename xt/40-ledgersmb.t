@@ -53,8 +53,8 @@ is($r[0]->{'character_length'}, 5,
 
 @r = $lsmb->call_procedure('procname' => 'trunc',
         'funcschema' => 'pg_catalog',
-        'args' => [57.1, 0]);
-is($r[0]->{'trunc'}, Math::BigFloat->new('57'),
+        'args' => ['57.12', 1]);
+is($r[0]->{'trunc'} , Math::BigFloat->new('57.1'),
         'call_procedure: two args, numeric return');
 
 @r = $lsmb->call_procedure('procname' => 'pi',
