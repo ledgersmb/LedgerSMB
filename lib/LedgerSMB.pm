@@ -644,6 +644,11 @@ sub report_renderer_ui {
   return sub {
       my ($template_name, $report, $vars, $cvars) = @_;
       $vars->{REPORT_LINK} = $uri->as_string;
+      $vars->{SETTINGS} = {
+          papersize    => 'letter', # default paper size when not configured
+          (%{$request->{_company_config} // {}},)
+      };
+      $vars->{SETTINGS}->{company_name} ||= $request->{company};
 
       return $ui->render($request, "Reports/$template_name", $vars, $cvars);
   };
@@ -666,6 +671,11 @@ sub report_renderer_doc {
                $request->{_wire}->get( 'output_formatter' )->get( uc($request->{format} || 'HTML' ) ),
             );
 
+        $vars->{SETTINGS} = {
+            papersize    => 'letter', # default paper size when not configured
+            (%{$request->{_company_config} // {}},)
+        };
+        $vars->{SETTINGS}->{company_name} ||= $request->{company};
         $template->render($vars, $cvars);
 
         my $charset = '';

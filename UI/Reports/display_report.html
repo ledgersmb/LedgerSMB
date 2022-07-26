@@ -17,7 +17,7 @@ FORMATS = LIST_FORMATS();
       <span class="report_header">[% name %]</span>
     </div>
     <div class="report_header"><label>[% text('Company') %]:</label>
-      <span class="report_header">[% company_name %]</span>
+      <span class="report_header">[% SETTINGS.company_name %]</span>
     </div>
     [% FOREACH LINE IN hlines %]
     <div class="report_header"><label>[% LINE.text %]:</label>

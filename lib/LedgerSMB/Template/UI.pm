@@ -32,15 +32,8 @@ our @pre_render_cbs = (
     sub {
         my ($request, $template, $vars, $cvars) = @_;
         $vars->{USER} = $request->{_user};
-        $vars->{DBNAME} = $request->{company};
         $vars->{locale} = $vars->{language} // $vars->{locale};
         $cvars->{locale} = $cvars->{language} // $cvars->{locale};
-        if ($request->{company} && $request->{_company_config}) {
-            $vars->{SETTINGS} = {
-                papersize => 'letter', # default paper size when not configured
-                (%{$request->{_company_config}},)
-            };
-        }
     },
     );
 

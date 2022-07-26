@@ -367,7 +367,7 @@ sub render {
     my $request = shift;
 
     $self->run_report($request) if not defined $self->rows;
-    return $self->_render($request, renderer => 'render', @_);
+    return $self->_render(renderer => 'render', @_);
 }
 
 
@@ -401,7 +401,7 @@ sub output_name {
 # Render the report.
 
 sub _render {
-    my ($self, $request) = @_;
+    my $self = shift;
     my $template;
     my %args = ( @_ );
 
@@ -534,14 +534,10 @@ sub _render {
         return [map { +{ %$_, %{shift @newlines} } } @$lines ];
     };
 
-    my $setting = LedgerSMB::Setting->new(%$request);
     return $args{renderer}->(
         $template, $self,
         {
             report          => $self,
-            company_name    => ($setting->get('company_name')
-                                || $request->{company}),
-            company_address => $setting->get('company_address'),
             new_heads       => $replace_hnames,
             name            => $self->name,
             hlines          => $self->header_lines,

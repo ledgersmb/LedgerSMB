@@ -27,7 +27,7 @@ END;
      <cell text="<?lsmb name | html ?>" />
 </row>
 <row><cell text="<?lsmb text('Company') | html ?>:" />
-     <cell text="<?lsmb company_name | html ?>" />
+     <cell text="<?lsmb SETTINGS.company_name | html ?>" />
 </row>
 <?lsmb FOREACH HLINE IN hlines -?>
 <row><cell text="<?lsmb HLINE.text | html ?>:" />

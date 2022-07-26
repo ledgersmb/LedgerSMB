@@ -31,7 +31,7 @@ PROCESS "dynatable.html";
     </div>
     <div class="report_header">
       <label><?lsmb text('Company') ?>:</label> <span class=
-      "report_header"><?lsmb company_name ?></span>
+      "report_header"><?lsmb SETTINGS.company_name ?></span>
     </div><?lsmb FOREACH LINE IN hlines ?>
     <div class="report_header">
       <label><?lsmb LINE.text ?>:</label>
