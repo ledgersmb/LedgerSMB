@@ -70,7 +70,44 @@ for the report).
 =item columns
 
 Must return an arrayref comprising hashes defining specifying each column
-of the report table.
+of the report table. Keys for each hash:
+
+=over
+
+=item col_id
+
+ID of column, alphanumeric, used in names of elements, classes, etc.  Required
+for smooth operation.
+
+Note: When the C<col_id> starts with C<bc_> and the column selection includes
+C<business_units>, the column will be included in the report.
+
+=item name
+
+Localized name of column for labelling purposes
+
+=item type
+
+Display type for column data.  May be one of:
+
+    * text
+    * input_text
+    * hidden
+    * href
+    * input_text
+    * radio
+    * checkbox
+    * boolean_checkmark
+
+=item href_base
+
+Base for href.  Only meaningful if type is href
+
+=item class
+
+CSS class (additional) for the column.
+
+=back
 
 =item run_report
 
@@ -128,50 +165,32 @@ use namespace::autoclean;
 with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';
 
 
+around BUILDARGS => sub {
+    my ( $orig, $class, %args ) = @_;
+
+    $args{selected_columns} = {
+        map { my $k = s/^col_//r; $args{$_} ? ($k => 1) : () }
+        grep { /^col_/}
+        keys %args
+    };
+    return $class->$orig(%args);
+};
 
 =head1 PROPERTIES
 
-=head2 cols
+=head2 selected_columns
 
-This is an array of hashrefs.  Properties for each hashref:
+Contains a hashref where the keys are the columns selected for inclusion
+in the report and the values are booleans, where only those columns with
+true valued values are to be included in the report.
 
-=over
-
-=item col_id
-
-ID of column, alphanumeric, used in names of elements, classes, etc.  Required
-for smooth operation.
-
-=item name
-
-Localized name of column for labelling purposes
-
-=item type
-
-Display type for column data.  May be one of:
-
-    * text
-    * input_text
-    * hidden
-    * href
-    * input_text
-    * radio
-    * checkbox
-    * boolean_checkmark
-
-=item href_base
-
-Base for href.  Only meaningful if type is href
-
-=item class
-
-CSS class (additional) for the column.
-
-=back
+Column selections are passed as regular named arguments to the constructor,
+where the column name prefixed with C<col_> is the name of the key in the
+constructor argument list.
 
 =cut
 
-has 'cols' => (is => 'rw', isa => 'ArrayRef[HashRef[Any]]');
+has 'selected_columns' => (is => 'ro', isa => 'HashRef[Bool]');
 
 =head2 rows
 
@@ -485,9 +504,15 @@ sub _render {
     $self->rows(\@newrows);
     # Rendering
 
-    my $columns = $self->show_cols($request);
+    my %want_col = $self->selected_columns->%*;
+    my @columns = (
+        grep {
+            not %want_col # use all columns when none selected specifically
+            or $want_col{$_->{col_id}}
+            or ($_->{col_id} =~ m/^bc_/ and $want_col{business_units})
+        } $self->columns->@*);
 
-    for my $col (@$columns){
+    for my $col (@columns){
         if ($col->{money}) {
             $col->{class} = 'money';
             for my $row(@{$self->rows}){
@@ -522,7 +547,7 @@ sub _render {
             new_heads       => $replace_hnames,
             name            => $self->name,
             hlines          => $self->header_lines,
-            columns         => $columns,
+            columns         => \@columns,
             order_url       => $self->order_url,
             buttons         => $self->buttons,
             options         => $self->options,
@@ -530,30 +555,6 @@ sub _render {
 
             DBNAME          => $request->{company},
         });
-}
-
-=head2 show_cols
-
-Returns a list of columns based on selected ones from the report
-
-=cut
-
-sub show_cols {
-    my ($self, $request) = @_;
-    my @retval;
-    my @columns = @{$self->columns};
-    for my $ref (@columns){
-        if ($request->{"col_$ref->{col_id}"}){
-            push @retval, $ref;
-        }
-        if ($ref->{col_id} =~ /bc_\d+/){
-            push @retval, $ref if $request->{'col_business_units'};
-        }
-    }
-    if (scalar @retval == 0){
-        @retval = @columns;
-    }
-    return \@retval;
 }
 
 =head2 header_lines
