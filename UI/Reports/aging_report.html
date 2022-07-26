@@ -5,33 +5,34 @@ PROCESS "elements.html";
 PROCESS "dynatable.html";
 
 %]
-<body class="lsmb [% dojo_theme %]">
+<body>
 <div class="report_header"><label>[% text('Report Name') %]:</label>
 <span class="report_header">[% name %]</span>
 </div>
 <div class="report_header"><label>[% text('Company') %]:</label>
-<span class="report_header">[% request.company %]</span>
+<span class="report_header">[% SETTINGS.company_name %]</span>
 </div>
 [% FOREACH LINE IN hlines %]
 <div class="report_header"><label>[% LINE.text %]:</label>
-<span class="report_header">[% request.${LINE.name} %]</span>
+<span class="report_header">[% LINE.value %]</span>
 </div>
 [% END %]
 
 <form data-dojo-type="lsmb/Form" method="get" action="report_aging.pl">
 [%
 
+PROCESS input element_data = {
+         name = 'form_id'
+         value = FORM_ID
+         type = 'hidden'
+};
 FOREACH KEY IN [ 'entity_class', 'to_date', 'report_type',
                  'overdue', 'c0', 'c30', 'c60', 'c90'];
-    IF KEY == 'rows';
-       NEXT;
-    ELSE;
-        PROCESS input element_data = {
-             name = KEY
-             type = 'hidden'
-            value = request.$KEY
-        };
-    END;
+    PROCESS input element_data = {
+          name = KEY
+          type = 'hidden'
+          value = report.$KEY
+    };
 END;
 
 PROCESS input element_data = {

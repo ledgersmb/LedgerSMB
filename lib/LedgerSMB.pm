@@ -644,11 +644,14 @@ sub report_renderer_ui {
   return sub {
       my ($template_name, $report, $vars, $cvars) = @_;
       $vars->{REPORT_LINK} = $uri->as_string;
+      $vars->{SCRIPT} = $request->{script};
       $vars->{SETTINGS} = {
           papersize    => 'letter', # default paper size when not configured
           (%{$request->{_company_config} // {}},)
       };
       $vars->{SETTINGS}->{company_name} ||= $request->{company};
+      $vars->{HIDDENS} = $request->{hiddens};
+      $vars->{FORM_ID} = $request->{form_id};
 
       return $ui->render($request, "Reports/$template_name", $vars, $cvars);
   };

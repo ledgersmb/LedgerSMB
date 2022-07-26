@@ -10,7 +10,7 @@ FORMATS = LIST_FORMATS();
 <body class="lsmb [% dojo_theme %]">
 <form data-dojo-type="lsmb/Form"
       method="post"
-      action="[% request.script %]"
+      action="[% SCRIPT %]"
       id="search-report-dynatable" >
   <div class="heading_section">
     <div class="report_header"><label>[% text('Report Name') %]:</label>
@@ -27,22 +27,14 @@ FORMATS = LIST_FORMATS();
   </div>
   [% PROCESS input element_data = {
          name = 'form_id'
-         value = request.form_id
+         value = FORM_ID
          type = 'hidden'
       } %]
-  [% # legacy... we want explicit 'hiddens'...
-     FOREACH K IN request.hiddens.keys;
+  [% FOREACH K IN HIDDENS.keys;
          PROCESS input element_data = {
          name = K
          type = 'hidden'
-         value = request.hiddens.$K
-         };
-         END; %]
-  [% FOREACH K IN hiddens.keys;
-         PROCESS input element_data = {
-         name = K
-         type = 'hidden'
-         value = hiddens.$K
+         value = HIDDENS.$K
          };
          END; %]
   [% PROCESS dynatable tbody = {rows = rows }

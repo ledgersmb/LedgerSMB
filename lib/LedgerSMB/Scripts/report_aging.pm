@@ -315,6 +315,7 @@ sub generate_statement {
         $request->{entity_id} = $entity_id;
         my $aging_report = LedgerSMB::Report::Aging->new(
             (ref $filters{$eca}) ? (details_filter => $filters{$eca}) : (),
+            languages => $request->enabled_languages,
             %$request);
         $aging_report->run_report($request);
         my $statement = {

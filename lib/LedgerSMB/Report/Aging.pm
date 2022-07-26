@@ -196,15 +196,7 @@ Returns the name of the template to use
 =cut
 
 sub template {
-    my ($self) = @_;
-    if (not $self->format or (uc($self->format) eq 'HTML')
-           or (uc($self->format) eq 'PDF'))
-    {
-           return 'aging_report';
-    }
-    else {
-       return undef;
-    }
+    return 'aging_report';
 }
 
 =back
