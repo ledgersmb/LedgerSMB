@@ -371,7 +371,7 @@ sub render {
 }
 
 
-=head2 output_name($request)
+=head2 output_name
 
 Returns the suggested file name to be used to store the report.
 
@@ -379,8 +379,6 @@ Returns the suggested file name to be used to store the report.
 
 sub output_name {
     my $self = shift;
-    my $request = shift;
-
     my $name = $self->name // '';
     $name =~ s/ /_/g;
 

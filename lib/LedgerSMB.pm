@@ -651,7 +651,7 @@ sub report_renderer_doc {
             path     => 'DB',
             dbh      => $request->{dbh},
             output_options => {
-                filename => $report->output_name($request),
+                filename => $report->output_name,
             },
             format_plugin   =>
                $request->{_wire}->get( 'output_formatter' )->get( uc($request->{format} || 'HTML' ) ),
