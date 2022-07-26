@@ -9,8 +9,7 @@ generate Reports
 =head1 SYNPOSIS
 
   my $report = LedgerSMB::Report::Contact::Purchase->new(%$request);
-  $report->run;
-  $report->render($request, $format);
+  $report->render();
 
 =head1 DESCRIPTION
 
@@ -275,7 +274,7 @@ Runs the report, populates rows.
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows;
     if ($self->summarize){
        @rows = $self->call_dbmethod(

@@ -8,8 +8,7 @@ LedgerSMB::Reports::Budget::Search - Search for Budgets
 =head1 SYNPOSIS
 
   my $report = LedgerSMB::Report::Budget::Search->new(%$request);
-  $report->run;
-  $report->render($request, $format);
+  $report->render();
 
 =head1 DESCRIPTION
 
@@ -208,7 +207,7 @@ Runs the report
 =cut
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'budget__search');
     for my $r(@rows){
         $r->{row_id} = $r->{id};

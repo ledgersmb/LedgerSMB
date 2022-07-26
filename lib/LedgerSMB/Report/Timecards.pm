@@ -8,7 +8,7 @@ LedgerSMB::Report::Timecards - Time and materials reports for LedgerSMB
 =head1 SYNOPSIS
 
  my $report = LedgerSMB::Report::Timecards->new(%$request);
- $report->render($request);
+ $report->render();
 
 =head1 DESCRIPTION
 
@@ -172,7 +172,7 @@ sub name {
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'timecard__report');
     for my $row (@rows){
         $row->{"day$row->{weekday}"} = $row->{qty};

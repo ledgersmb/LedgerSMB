@@ -24,7 +24,7 @@ Implements a listing of parts, reporting numbers in 4 categories of activity:
 =head1 SYNOPSIS
 
  my $report = LedgerSMB::Report::Inventory::Activity->new(%$request);
- $report->render($request);
+ $report->render();
 
 =cut
 
@@ -188,7 +188,7 @@ sub name {
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'inventory__activity');
     for my $r (@rows) {
        $r->{row_id} = $r->{partnumber};

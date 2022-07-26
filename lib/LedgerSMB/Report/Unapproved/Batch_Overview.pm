@@ -9,8 +9,7 @@ LedgerSMB
 =head1 SYNPOSIS
 
   my $report = LedgerSMB::Report::Unapproved::Batch_Overview->new(%$request);
-  $report->run;
-  $report->render($request, $format);
+  $report->render();
 
 =head1 DESCRIPTION
 
@@ -206,7 +205,7 @@ properties.
 =cut
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self) = @_;
     $self->get_rows();
     return;
 }

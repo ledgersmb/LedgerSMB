@@ -8,7 +8,7 @@ LedgerSMB::Report::PNL::Income_Statement - Basic Income Statement for LedgerSMB
 =head1 SYNPOSIS
 
  my $rpt = LedgerSMB::Report::PNL::Income_Statement->new(%$request);
- $rpt->render($request);
+ $report->render();
 
 =head1 DESCRIPTION
 

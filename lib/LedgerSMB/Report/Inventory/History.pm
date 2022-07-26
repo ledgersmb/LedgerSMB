@@ -187,7 +187,7 @@ sub name {
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'goods__history');
     return $self->rows(
         [  map { { (%$_, (row_id => $_->{id})) } } @rows ]

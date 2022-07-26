@@ -9,7 +9,7 @@ LedgerSMB::Report::co::Caja_Diaria - Caja Diaria Reports (Colombia)
 
   my $cdreport = LedgerSMB::Report::co::Caja_Diaria->new(%$request);
   $cdreport->run;
-  $cdreport->render($request, $format);
+  $cdreport->render();
 
 =head1 DESCRIPTION
 
@@ -186,7 +186,7 @@ Runs the report, and assigns rows to $self->rows.
 =cut
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'report__cash_summary');
     for my $ref(@rows){
         $ref->{document_type} = $doctypes->{$ref->{document_type}}

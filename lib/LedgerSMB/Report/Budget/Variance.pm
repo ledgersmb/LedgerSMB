@@ -8,8 +8,7 @@ LedgerSMB::Report::Budget::Variance - Variance Report per Budget
 =head1 SYNPOSIS
 
   my $report = LedgerSMB::Report::Budget::Variance->new(%$request);
-  $report->run;
-  $report->render($request, $format);
+  $report->render();
 
 =head1 DESCRIPTION
 
@@ -200,7 +199,7 @@ Runs the report, setting rows for rendering.
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'budget__variance_report');
     return $self->rows(\@rows);
 }

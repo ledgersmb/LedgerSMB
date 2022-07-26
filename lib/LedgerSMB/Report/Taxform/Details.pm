@@ -149,7 +149,7 @@ sub buttons {
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my $tf = LedgerSMB::DBObject::TaxForm
         ->new(dbh => $self->_dbh )
         ->get($self->tax_form_id);

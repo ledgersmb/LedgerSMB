@@ -8,8 +8,7 @@ LedgerSMB::Report::Aging - AR/AP Aging reports for LedgerSMB
 =head1 SYNPOSIS
 
   my $agereport = LedgerSMB::Report::Aging->new(%$request);
-  $agereport->run;
-  $agereport->render($request, $format);
+  $agereport->render();
 
 =head1 DESCRIPTION
 
@@ -277,7 +276,7 @@ Runs the report, and assigns rows to $self->rows.
 =cut
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'report__invoice_aging_' .
                                                 $self->report_type);
     my @result;

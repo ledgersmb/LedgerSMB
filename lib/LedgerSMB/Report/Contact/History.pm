@@ -9,8 +9,7 @@ and more.
 =head1 SYNPOSIS
 
   my $report = LedgerSMB::Report::Contact::History->new(%$request);
-  $report->run;
-  $report->render($request, $format);
+  $report->render();
 
 =head1 DESCRIPTION
 
@@ -331,7 +330,7 @@ Runs the report, populates rows.
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my $proc = 'eca__history';
     $proc .= '_summary' if $self->is_summary;
     my @rows = $self->call_dbmethod(funcname => $proc);

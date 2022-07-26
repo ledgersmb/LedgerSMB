@@ -8,8 +8,7 @@ LedgerSMB::Report::COA - Chart of Accounts List for LedgerSMB
 =head1 SYNPOSIS
 
   my $report = LedgerSMB::Report::COA->new(%$request);
-  $report->run;
-  $report->render($request, $format);
+  $report->render();
 
 =head1 DESCRIPTION
 
@@ -151,7 +150,7 @@ Runs the report, and assigns rows to $self->rows.
 =cut
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'report__coa');
     for my $r(@rows){
         my $ct;

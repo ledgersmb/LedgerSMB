@@ -176,7 +176,7 @@ Returns a code reference to render a report on the UI - pass as the
 named argument 'renderer' to the C<LedgerSMB::Report->render> method.
 
   my $report = LedgerSMB::Report
-  $report->render($request, renderer => $request->report_renderer_ui);
+  $report->render( renderer => $request->report_renderer_ui);
 
 
 =item report_renderer_doc
@@ -185,7 +185,7 @@ Returns a code reference to render a report as a document - pass as the
 named argument 'renderer' to the C<LedgerSMB::Report->render> method.
 
   my $report = LedgerSMB::Report
-  $report->render($request, renderer => $request->report_renderer_doc);
+  $report->render( renderer => $request->report_renderer_doc);
 
 
 =item render_report($report)
@@ -720,7 +720,7 @@ sub render_report {
         # render as UI element
         $renderer = $request->report_renderer_ui;
     }
-    return $report->render($request, renderer => $renderer);
+    return $report->render( renderer => $renderer);
 }
 
 =head1 LICENSE AND COPYRIGHT

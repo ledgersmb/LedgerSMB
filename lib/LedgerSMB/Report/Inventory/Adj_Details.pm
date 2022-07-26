@@ -10,7 +10,7 @@ Details report for LedgerSMB
 
  my $rpt = LedgerSMB::Report::Inventory::Adj_Details->new(%$request);
  $rpt->run_report($request);
- $rpt->render($request);
+ $report->render();
 
 =cut
 
@@ -140,7 +140,7 @@ sub set_buttons {
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my ($rpt) = $self->call_dbmethod(funcname => 'inventory_adjust__get');
     $self->_include_buttons(defined $rpt->{trans_id});
     $self->source($rpt->{source});

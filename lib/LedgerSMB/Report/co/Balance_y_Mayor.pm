@@ -8,8 +8,7 @@ LedgerSMB::Report::co::Balance_y_Mayor - Colombian Balance/Ledger Rpt
 =head1 SYNPOSIS
 
   my $bmreport = LedgerSMB::Report::co::Balance_y_Mayor->new(%$request);
-  $bmreport->run;
-  $bmreport->render($request, $format);
+  $bmreport->render();
 
 =head1 DESCRIPTION
 
@@ -176,7 +175,7 @@ Runs the report, and assigns rows to $self->rows.
 =cut
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'report__general_balance');
     return $self->rows(\@rows);
 }

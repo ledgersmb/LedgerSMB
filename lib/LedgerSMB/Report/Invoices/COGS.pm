@@ -185,7 +185,7 @@ Populates and returns $report->rows.
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'report__incoming_cogs_line');
     for my $row (@rows){
         $row->{partnumber_href_suffix} = $row->{parts_id};

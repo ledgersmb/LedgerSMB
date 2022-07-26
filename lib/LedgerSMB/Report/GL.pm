@@ -8,8 +8,7 @@ LedgerSMB::Report::GL - GL Reports for LedgerSMB
 =head1 SYNPOSIS
 
   my $glreport = LedgerSMB::Report::GL->new(%$request);
-  $glreport->run;
-  $glreport->render($request, $format);
+  $glreport->render();
 
 =head1 DESCRIPTION
 
@@ -323,7 +322,7 @@ sub _exclude_from_totals {
 }
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my $accno = $self->accno;
     $accno =~ s/--.*//;
     $self->accno($accno);

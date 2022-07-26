@@ -9,7 +9,7 @@ LedgerSMB
 =head1 SYNPOSIS
 
  my $report = LedgerSMB::Report::Reconciliation::Summary->new(%$request);
- $report->render($request);
+ $report->render();
 
 =cut
 
@@ -207,7 +207,7 @@ sub name {
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     $self->manual_totals(1);
     my @rows = $self->call_dbmethod(funcname => 'reconciliation__search');
     my @accounts = $self->call_dbmethod(

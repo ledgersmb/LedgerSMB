@@ -9,7 +9,7 @@ LedgerSMB
 =head1 SYNOPSIS
 
  my $report = LedgerSMB::Report::Invoices::Outstanding->new(%$request);
- $report->render($request);
+ $report->render();
 
 =cut
 
@@ -323,7 +323,7 @@ sub name {
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my $procname = 'report__aa_outstanding';
     if ($self->is_detailed){
        $procname .= '_details';

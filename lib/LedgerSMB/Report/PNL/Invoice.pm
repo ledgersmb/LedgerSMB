@@ -9,7 +9,7 @@ invoices
 =head1 SYNPOSIS
 
  my $rpt = LedgerSMB::Report::PNL::Invoice->new(%$request);
- $rpt->render($request);
+ $report->render();
 
 =head1 DESCRIPTION
 

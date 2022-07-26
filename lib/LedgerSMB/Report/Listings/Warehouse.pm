@@ -65,7 +65,7 @@ sub name {
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'warehouse__list');
     for my $row(@rows){
         $row->{row_id} = $row->{id};

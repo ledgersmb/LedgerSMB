@@ -9,7 +9,7 @@ LedgerSMB
 =head1 SYNPOPSIS
 
   my $report = LedgerSMB::Report::Listings::Business_Type->new(%$request);
-  $report->render($request);
+  $report->render();
 
 =head1 DESCRIPTION
 
@@ -78,7 +78,7 @@ Runs the report and returns the results for rendering.
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     $self->manual_totals(1); #don't display totals
     my @rows = $self->call_dbmethod(funcname => 'business_type__list');
     for my $ref(@rows){

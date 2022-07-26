@@ -11,8 +11,7 @@ in LedgerSMB
   my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(
       %$request
   );
-  $report->run;
-  $report->render($request, $format);
+  $report->render();
 
 =head1 DESCRIPTION
 

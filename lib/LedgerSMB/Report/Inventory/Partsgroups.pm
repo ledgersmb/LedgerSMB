@@ -12,7 +12,7 @@ Implements a listing of parts groups
 =head1 SYNOPSIS
 
  my $report = LedgerSMB::Report::Inventory::Partsgroups->new(%$request);
- $report->render($request);
+ $report->render();
 
 =cut
 
@@ -91,7 +91,7 @@ Populates rows
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'partsgroup__search');
     $_->{row_id} = $_->{id} for (@rows);
     return $self->rows(\@rows);

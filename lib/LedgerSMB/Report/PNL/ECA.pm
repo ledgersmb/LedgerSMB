@@ -8,7 +8,7 @@ LedgerSMB::Report::PNL::ECA - Income Statement-like Reports for Customers
 =head1 SYNPOSIS
 
  my $rpt = LedgerSMB::Report::PNL::ECA->new(%$request);
- $rpt->render($request);
+ $report->render();
 
 =head1 DESCRIPTION
 

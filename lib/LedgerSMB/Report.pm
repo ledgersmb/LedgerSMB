@@ -49,7 +49,7 @@ A report could then be generated with the following:
 
     use LedgerSMB::Report::MinimalReportExample;
     my $report = LedgerSMB::Report::MinimalReportExample->new();
-    $report->render($request);
+    $report->render();
 
 
 =head1 DESCRIPTION
@@ -364,10 +364,9 @@ the template).
 
 sub render {
     my $self = shift;
-    my $request = shift;
 
-    $self->run_report($request) if not defined $self->rows;
-    return $self->_render(renderer => 'render', @_);
+    $self->run_report() if not defined $self->rows;
+    return $self->_render(@_);
 }
 
 
@@ -403,7 +402,7 @@ sub output_name {
 sub _render {
     my $self = shift;
     my $template;
-    my %args = ( @_ );
+    my %args = @_;
 
     # This is a hook for other modules to use to override the default
     # template --CT
