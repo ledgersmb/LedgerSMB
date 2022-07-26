@@ -51,4 +51,5 @@ info:
   license:
     name: GPL-2.0-or-later
     url: https://spdx.org/licenses/GPL-2.0-or-later.html
-  
+servers: 
+  - url: 'http://lsmb/erp/api/v0'
