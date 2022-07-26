@@ -13,6 +13,8 @@ LedgerSMB
 
 =cut
 
+use List::Util qw(pairgrep);
+
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -171,16 +173,22 @@ has '+order_by' => (default => 'meta_number');
 
 sub columns {
     my ($self, $request) = @_;
-    my $inv_label = $self->Text('# Invoices');
-    my $details_url = $request->get_relative_url;
-    $details_url =~ s/is_detailed=0/is_detailed=1/;
-    $details_url =~ s/meta_number=[^&]*//;
-    my $inv_type = 'href';
-    my $inv_href_base = $details_url . '&meta_number=';
+    my ($inv_label, $inv_href_base);
     if ($self->is_detailed){
         $inv_label = $self->Text('Invoice');
-        $inv_type = 'href';
         $inv_href_base = '';
+    }
+    else {
+        $inv_label = $self->Text('# Invoices');
+        my $details_url = $self->relative_url;
+        $details_url->query_form(
+            (pairgrep {
+                $a ne 'meta_number' and $a ne 'is_detailed'
+             } $details_url->query_form),
+            is_detailed => 1,
+            meta_number => ''
+            );
+        $inv_href_base = $details_url->as_string;
     }
     my $entity_label;
     if ($self->entity_class == 1){
@@ -205,7 +213,7 @@ sub columns {
          pwidth => 2, },
         {col_id => 'invnumber',
            name => $inv_label,
-           type => $inv_type,
+           type => 'href',
       href_base => $inv_href_base,
          pwidth => 10, },
         {col_id => 'ordnumber',

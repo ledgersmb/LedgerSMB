@@ -118,7 +118,7 @@ C<UI/reports/display_report> template will be used.
 =cut
 
 
-use List::Util qw{ any };
+use List::Util qw{ any pairgrep };
 use LedgerSMB::PGNumber;
 use LedgerSMB::Setting;
 use Scalar::Util qw{ blessed };
@@ -213,6 +213,19 @@ Url for order redirection.  Internal only.
 =cut
 
 has order_url  => (is => 'rw', isa => 'Maybe[Str]');
+
+=item relative_url
+
+L<URI> object initialized with the script name and query string.
+
+=cut
+
+has relative_url => (
+    is => 'ro',
+    isa => 'URI',
+    required => 1,
+    # trick to get the value initialized from the $request object
+    init_arg => '_uri');
 
 =head2 show_subtotals
 
@@ -395,18 +408,21 @@ sub _render {
         $self->order_dir('asc');
     }
 
-    my $url = $request->get_relative_url();
+    my $url = $self->relative_url;
     if ($url) {
-        $url =~ s/(^|&)(old_)?order_by=[^&]*//g;
-        $url =~ s/(^|&)order_dir=[^&]*//g;
+        my @query_form = pairgrep {
+            $a ne 'old_order_by' and $a ne 'order_by' and $a ne 'order_dir'
+        } $url->query_form;
 
         if ($self->order_by) {
-            $self->order_url(
-                "$url&old_order_by=".$self->order_by.'&order_dir='.$self->order_dir
-                );
+            $url->query_form(@query_form,
+                             old_order_by => $self->order_by,
+                             order_dir    => $self->order_dir);
+            $self->order_url($url->as_string);
         }
         else {
-            $self->order_url($url);
+            $url->query_form( @query_form );
+            $self->order_url($url->as_string);
         }
     }
 

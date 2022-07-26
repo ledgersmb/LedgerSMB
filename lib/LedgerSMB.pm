@@ -234,6 +234,7 @@ use Locales unicode => 1;
 use Log::Any;
 use PGObject;
 use Plack;
+use URI;
 use URI::Escape;
 
 use LedgerSMB::App_State;
@@ -274,6 +275,11 @@ sub new {
     $self->{_setting} = $request->env->{'lsmb.setting'};
     $self->{_req} = $request;
     $self->{_wire} = $wire;
+
+    $self->{_uri} = URI->new(
+        $request->env->{'lsmb.script'} . "?$self->{query_string}",
+        $request->request_uri
+        );
 
     # Initialize ourselves from parameters in $self->{_req}
     $self->_process_args;
@@ -379,16 +385,6 @@ sub _process_args {
         }
     }
     return;
-}
-
-sub get_relative_url {
-    my ($self) = @_;
-
-    return Encode::decode(
-        'utf8',
-        uri_unescape(
-            $self->{script} .
-            ($self->{query_string} ? "?$self->{query_string}" : '')));
 }
 
 sub upload {
