@@ -391,15 +391,15 @@ sub display_report {
     {
         $hiddens->{$hide} = $request->{$hide};
     }
-    $request->{hiddens} = $hiddens;
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'Reports/display_report', {
-                        name => $title,
-                     request => $request,
-                     columns => $cols,
-                        rows => $rows,
-                     hiddens => $hiddens,
-                     buttons => $buttons,
+        FORM_ID => $request->{form_id},
+        HIDDENS => $hiddens,
+        SCRIPT  => $request->{script},
+        name    => $title,
+        columns => $cols,
+        rows    => $rows,
+        buttons => $buttons,
     });
 }
 
@@ -438,7 +438,6 @@ sub report_results {
     my $locale = $request->{_locale};
     my $ar = LedgerSMB::DBObject::Asset_Report->new(%$request);
     $ar->get_metadata;
-    my $title = $locale->text('Report Results');
     my @results = $ar->search;
     my $base_href = 'asset.pl?action=report_details&'.
                      "expense_acct=$ar->{expense_acct}";
@@ -536,11 +535,13 @@ sub report_results {
     $ar->{hiddens} = $hiddens;
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'Reports/display_report', {
-         request => $ar,
-            name => $title,
+         FORM_ID => $request->{form_id},
+         HIDDENS => $hiddens,
+         SCRIPT  => $request->{script},
+         name    => $locale->text('Report Results'),
          rows    => $rows,
          columns => $cols,
-        buttons  => $buttons,
+         buttons => $buttons,
    });
 }
 
@@ -647,14 +648,15 @@ sub report_details {
                    value => 'report_details_approve'
                    },
     ];
-    $report->{hiddens} = { id => $report->{id} };
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'Reports/display_report', {
-                    request => $report,
-                       name => $title,
-                    columns => $cols,
-                       rows => $rows,
-                    buttons => $buttons
+        FORM_ID => $request->{form_id},
+        HIDDENS => { id => $report->{id} },
+        SCRIPT  => $request->{script},
+        name    => $title,
+        columns => $cols,
+        rows    => $rows,
+        buttons => $buttons
     });
 }
 
@@ -748,19 +750,20 @@ sub partial_disposal_details {
                    value => 'disposal_details_approve'
                    },
         ];
-    $report->{hiddens} = {
-        id => $report->{id},
-        gain_acct => $report->{gain_acct},
-        loss_acct => $report->{loss_acct},
-    };
 
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'Reports/display_report', {
-                    request => $report,
-                       name => $title,
-                    columns => $cols,
-                       rows => $rows,
-                    buttons => $buttons
+        SCRIPT  => $request->{script},
+        HIDDENS => {
+            id        => $report->{id},
+            gain_acct => $report->{gain_acct},
+            loss_acct => $report->{loss_acct},
+        },
+        FORM_ID => $request->{form_id},
+        name    => $title,
+        columns => $cols,
+        rows    => $rows,
+        buttons => $buttons
     });
 }
 
@@ -853,20 +856,21 @@ sub disposal_details {
                    value => 'disposal_details_approve'
                    },
         ];
-    $report->{hiddens} = {
-        id        => $report->{id},
-        gain_acct => $report->{gain_acct},
-        loss_acct => $report->{loss_acct},
-    };
     my $title = $locale->text('Disposal Report [_1] on date [_2]',
                      $report->{id}, $report->{report_date});
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'Reports/display_report', {
-                       name => $title,
-                    request => $report,
-                    columns => $cols,
-                       rows => $rows,
-                    buttons => $buttons
+        SCRIPT  => $request->{script},
+        HIDDENS => {
+            id        => $report->{id},
+            gain_acct => $report->{gain_acct},
+            loss_acct => $report->{loss_acct},
+        },
+        FORM_ID => $request->{form_id},
+        name    => $title,
+        columns => $cols,
+        rows    => $rows,
+        buttons => $buttons
     });
 }
 

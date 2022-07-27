@@ -182,9 +182,11 @@ sub _render_statement_batch {
         {
             buttons => \@buttons,
             columns => \@columns,
-            hiddens => {
+            HIDDENS => {
                 workflow_id => $wf_id,
             },
+            SCRIPT  => $request->{script},
+            FORM_ID => $request->{form_id},
             hlines => [
                 {
                     text => $locale->text('Status'),
@@ -193,8 +195,6 @@ sub _render_statement_batch {
             ],
             rows    => $rows,
             name    => $locale->text('E-mail aging reminder status'),
-            request => $request,
-            DBNAME  => $request->{company},
         });
 }
 

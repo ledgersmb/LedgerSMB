@@ -131,6 +131,7 @@ sub render_string {
                     value => 'screen'
                 } )
           ],
+          SETTINGS => $request->{_company_settings},
           # translation of constant-string arguments
           text => sub {
               if ($locale) {
