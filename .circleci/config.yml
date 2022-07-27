@@ -36,6 +36,7 @@ commands:
       - run:
           command: |
             source $BASH_ENV
+            export PERL5OPT="$PERL5OPT -MSyntax::Keyword::Try::Deparse"
             if [ "x$COVERAGE" == "x1" ]
             then
               make devtest TESTS="--no-progress --job-count $JOB_COUNT \"--cover=$DEVEL_COVER_OPTIONS\" t/ xt/"
@@ -103,9 +104,9 @@ commands:
             - v1-npm-deps-
 
       - run:
-          name: Make Dojo
+          name: Make JS + README
           command: |
-            make dojo
+            make js
             make readme
 
       - save_cache:
