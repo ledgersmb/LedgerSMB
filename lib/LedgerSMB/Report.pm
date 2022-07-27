@@ -103,6 +103,19 @@ Display type for column data.  May be one of:
 
 Base for href.  Only meaningful if type is href
 
+=item money
+
+Boolean value indicating whether the column contains monetary values.
+
+=item pwidth
+
+Relative width of the column on the generated table.
+
+=item html_only
+
+Boolean value indicating whether the column should only be included in
+html reports.
+
 =item class
 
 CSS class (additional) for the column.
