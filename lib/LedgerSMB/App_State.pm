@@ -25,7 +25,7 @@ The following are objects that are expected to be stored in this namespace:
 
 =cut
 
-our $User;
+our $User = {};
 
 =item User
 

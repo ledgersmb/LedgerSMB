@@ -407,6 +407,7 @@ sub get_template_args {
                       format => $extension,
                       language_code => $self->{language},
                       PARSER => $parser,
+                      _dbh => $self->{dbh}
                   }),
               # We need this provider in order to allow the templates to
               # depend on 'dynatable.*'
