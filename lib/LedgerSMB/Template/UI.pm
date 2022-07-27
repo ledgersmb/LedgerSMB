@@ -115,27 +115,37 @@ sub render_string {
     }
     my $cleanvars = {
         ( %{LedgerSMB::Template::preprocess(
-                $vars,
-                sub { return escape_html($_[0]); }) },
-          %{$self->{standard_vars}},
-          dojo_theme => (
-              $request->{_company_config}->{dojo_theme} || 'claro'
-          ),
-          LIST_FORMATS => sub {
-              return $request->{_wire}->get( 'output_formatter' )->get_formats;
-          },
-          PRINTERS => [
-              ( $request->{_wire}->get( 'printers' )->as_options,
                 {
-                    text  => $request->{_locale}->text('Screen'),
-                    value => 'screen'
-                } )
-          ],
-          SETTINGS => $request->{_company_settings},
+                    $vars->%*,
+                    PRINTERS => [
+                        ( $request->{_wire}->get( 'printers' )->as_options,
+                          {
+                              text  => $request->{_locale}->text('Screen'),
+                              value => 'screen'
+                          } )
+                    ],
+                    SETTINGS => {
+                        ($request->{_company_config} // {})->%*,
+                        # Reports rendered as UI elements have SETTINGS in $vars
+                        ($vars->{SETTINGS} // {})->%*
+                    },
+                    dojo_theme => (
+                        $request->{_company_config}->{dojo_theme} || 'claro'
+                        )
+                },
+                sub { return escape_html($_[0]); },
+                )},
+          %{$self->{standard_vars}},
+          LIST_FORMATS => sub {
+              return [
+                  map { escape_html($_) }
+                  $request->{_wire}->get( 'output_formatter' )->get_formats->@*
+                  ];
+          },
           # translation of constant-string arguments
           text => sub {
               if ($locale) {
-                  return $locale->maketext(@_);
+                  return escape_html($locale->maketext(@_));
               }
               else {
                   return shift;
@@ -144,10 +154,10 @@ sub render_string {
           # translation of dynamic string content
           maketext => sub {
               if ($locale) {
-                  return $locale->maketext(@_);
+                  return escape_html($locale->maketext(@_));
               }
               else {
-                  return shift;
+                  return escape_html(shift);
               }
           },
           %{$cvars // {}}
