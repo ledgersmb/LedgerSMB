@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.1
-   Date:     2022-07-22
+   Version:  1.2
+   Date:     2022-07-27
    File:     display_report.tex
    Set:      demo
 
@@ -10,6 +10,7 @@ releases. No explicit versioning was applied before 2021-01-04.
 
 Version   Changes
 1.1       Merged xelatex targetting templates with those targetting pdflatex
+1.2       Simplified report header generation factored out of dynatable
 
 -?>
 <?lsmb- PROCESS 'dynatable.tex';
@@ -29,32 +30,20 @@ FILTER latex { format="$FORMAT($PROCESSOR)" };
 \usepackage{longtable}
 \usepackage[margin=1cm]{geometry}
 \begin{document}
-<?lsmb
 
-FIRSTHEAD = '\\multicolumn{2}{r}{' _ text('Report Name') _ ':} & ' _
-            '\\multicolumn{' _ (COLNUMBER - 2) _ '}{l}{ ' _ name _ '}\\\\
-             \\multicolumn{2}{r}{' _ text('Company') _ ':} & ' _
-            '\\multicolumn{' _ (COLNUMBER - 2) _ '}{l}{ ' _ request.company
-            _ '} \\\\
-            ';
+\begin{center}
+\begin{tabular}{rl}
+  \textbf{<?lsmb text('Report Name') ?>}: & <?lsmb name ?> \\
+  \textbf{<?lsmb text('Company') ?>}: & <?lsmb SETTINGS.company_name ?> \\
+  <?lsmb- newlines = new_heads(hlines);
+  FOREACH LINE IN newlines -?>
+  \textbf{<?lsmb LINE.text ?>}: & <?lsmb LINE.value ?> \\
+  <?lsmb- END -?>
+\end{tabular}
+\end{center}
 
-# use new_heads to get around variable name escaping
-newlines = new_heads(hlines);
-FOREACH LINE IN newlines;
-    IF request.${LINE.name}; #$
-        headval = request.${LINE.name}; #$
-    ELSE;
-         headval = report.${LINE.name};
-    END;
-    FIRSTHEAD = FIRSTHEAD _ '\\multicolumn{2}{r}{ ' _ LINE.text _ ':} & ';
-    FIRSTHEAD = FIRSTHEAD _ '\\multicolumn{' _ (COLNUMBER - 2) _ '}{l}{ ' _ headval;
-    FIRSTHEAD = FIRSTHEAD _ '}\\\\
-             ';
-END;
-
-PROCESS dynatable 
-      tbody = { rows = rows }
-      firsthead = FIRSTHEAD;
+<?lsmb PROCESS dynatable
+      tbody = { rows = rows };
 ?>
 \end{document}
 <?lsmb END -?>

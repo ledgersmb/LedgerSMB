@@ -1,12 +1,18 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.0
-   Date:     2021-01-04
+   Version:  1.1
+   Date:     2022-07-27
    File:     dynatable.tex
    Set:      none; shared
 
 Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
+
+Version   Changes
+1.1       Simplified version which also works without columns of pre-declared
+          width by using tabular environments to capture 'intentionally multi-
+          line output' into a single cell.
+
 
 -?>
 <?lsmb- BLOCK dynatable;
@@ -14,14 +20,14 @@ releases. No explicit versioning was applied before 2021-01-04.
 TOTAL_WIDTH=14; # cm. using A4 as a basis because it is slightly narrower than
                 # US Letter. This way the dynatable works for both paper sizes.
                 # This assumes a 1cm margin on either side. --CT
-DECLARED_WIDTH=0; 
+DECLARED_WIDTH=0;
 
 SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
 
 
 FOREACH COL IN columns;
     DECLARED_WIDTH = DECLARED_WIDTH + COL.pwidth; # pwidth is arbitrary scale
-END; 
+END;
 
 IF DECLARED_WIDTH > 0;
     WIDTH_PER_P = TOTAL_WIDTH / DECLARED_WIDTH;
@@ -47,12 +53,8 @@ FOREACH COL IN columns;
    IF COL.psep_after;
       '|';
    END;
-END; 
+END;
 -?>}
-<?lsmb IF firsthead; firsthead ?>\\
-<?lsmb- END ?>
-<?lsmb IF head; head ?>\\<?lsmb- END ?>
-<?lsmb- -?>
 <?lsmb
 FOREACH COL IN columns;
     IF 0 == SKIP_TYPES.grep(COL.type).size() AND ! COL.html_only;
@@ -82,14 +84,13 @@ END;
 
 FOREACH ROW IN tbody.rows;
     FOREACH COL IN columns;
-        COLID =  COL.col_id.replace('\\\\');
         IF 0 == SKIP_TYPES.grep(COL.type).size() AND ! COL.html_only;
             UNLESS loop.first();
                ' & ';
             END;
-            ?>\begin{minipage}{<?lsmb (COL.pwidth * WIDTH_PER_P) _ "cm"; ?>}<?lsmb
-                ROW.${COLID}; #$
-            ?>\end{minipage}<?lsmb
+            ?>\begin{tabular}[t]{@{}l@{}}<?lsmb
+                ROW.${COL.col_id};
+            ?>\end{tabular}<?lsmb
         END;
     END;
     ?>\tabularnewline
