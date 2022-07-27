@@ -102,6 +102,7 @@ sub render_string {
     my ($self, $request, $template, $vars, $cvars) = @_;
     my $locale;
     $vars //= {};
+    delete $vars->{HIDDENS}->{form_id} if $vars->{HIDDENS};
 
     for my $cb (@pre_render_cbs) {
         $cb->($request, $template, $vars, $cvars);
