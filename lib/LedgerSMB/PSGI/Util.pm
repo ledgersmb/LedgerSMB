@@ -28,6 +28,12 @@ use HTML::Escape;
 use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED HTTP_INTERNAL_SERVER_ERROR
     HTTP_SEE_OTHER HTTP_BAD_REQUEST );
 
+use parent 'Exporter';
+our @EXPORT_OK = qw(
+    internal_server_error unauthorized session_timed_out
+    incompatible_database cookie_path template_response
+    );
+
 =head1 METHODS
 
 This module declares no methods.
@@ -120,6 +126,50 @@ sub cookie_path {
     my $script = shift;
 
     return ($script =~ s|[^/]*$||r);
+}
+
+
+=head2 template_response( $template, %args )
+
+Transform a template into a PSGI response, taking additional args
+into account:
+
+=over
+
+=item disposition
+
+When set and equal to 'attach', generates a Content-Disposition header
+with the value 'attachment'.
+
+=item headers
+
+Additional headers to include in the response.
+
+=back
+
+=cut
+
+
+sub template_response {
+    my ($template, %args) = @_;
+    my $content_type = $template->{mimetype};
+    $content_type .= '; charset=UTF-8' if $content_type =~ m|^text/|;
+
+    my @headers = (
+        'Content-Type' => $content_type,
+        ($args{headers} // [])->@*
+        );
+
+    if ($args{disposition} and $args{disposition} eq 'attach') {
+        my $name = $template->{output_options}->{filename};
+        push @headers,
+            'Content-Disposition' => qq{attachment; filename="$name"};
+    }
+
+    my $body = $template->{output};
+    utf8::encode($body) if utf8::is_utf8($body); ## no critic
+
+    return [ HTTP_OK, \@headers, [ $body ] ];
 }
 
 

@@ -242,6 +242,7 @@ use LedgerSMB::App_State;
 use LedgerSMB::Locale;
 use LedgerSMB::User;
 use LedgerSMB::Company_Config;
+use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Setting;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
@@ -659,51 +660,24 @@ sub report_renderer_ui {
 
 sub report_renderer_doc {
     my ($request) = @_;
+    my $renderer =
+        $request->{_wire}->get( 'output_formatter' )->report_doc_renderer(
+            $request->{_dbh},
+            uc($request->{format}) || 'HTML',
+            {
+                SETTINGS => {
+                     # default paper size when not configured
+                    papersize    => 'letter',
+                    (%{$request->{_company_config} // {}},)
+                }
+            });
 
     return sub {
         my ($template_name, $report, $vars, $cvars) = @_;
-        my $template = LedgerSMB::Template->new( # printed document
-            template => $template_name,
-            user     => $request->{_user},
-            path     => 'DB',
-            dbh      => $request->{dbh},
-            output_options => {
-                filename => $report->output_name,
-            },
-            format_plugin   =>
-               $request->{_wire}->get( 'output_formatter' )->get( uc($request->{format} || 'HTML' ) ),
-            );
 
-        $vars->{SETTINGS} = {
-            papersize    => 'letter', # default paper size when not configured
-            (%{$request->{_company_config} // {}},)
-        };
-        $vars->{SETTINGS}->{company_name} ||= $request->{company};
-        $template->render($vars, $cvars);
-
-        my $charset = '';
-        $charset = '; charset=utf-8'
-                          if $template->{mimetype} =~ m!^text/!;
-
-        # $request->{mimetype} set by format
-        my $headers = [
-            'Content-Type' => "$template->{mimetype}$charset",
-            ];
-
-        # Use the same Content-Disposition criteria as _http_output()
-        my $name =
-            $template->{output_options}->{filename} . '.' . lc($request->{format});
-        if ($name) {
-            $name =~ s#^.*/##;
-            push @$headers,
-                ( 'Content-Disposition' =>
-                  qq{attachment; filename="$name"} );
-        }
-
-        my $body = $template->{output};
-        utf8::encode($body) if utf8::is_utf8($body); ## no critic
-
-        return [ HTTP_OK, $headers, [ $body ] ];
+        return template_response(
+            $renderer->( $template_name, $report, $vars, $cvars ),
+            disposition => 'attach' );
     };
 }
 
