@@ -51,12 +51,6 @@ is($#r, 0, 'call_procedure: correct return length (one row)');
 is($r[0]->{'character_length'}, 5,
         'call_procedure: single arg, non-numeric return');
 
-@r = $lsmb->call_procedure('procname' => 'trunc',
-        'funcschema' => 'pg_catalog',
-        'args' => ['57.12', 1]);
-is($r[0]->{'trunc'} , Math::BigFloat->new('57.1'),
-        'call_procedure: two args, numeric return');
-
 @r = $lsmb->call_procedure('procname' => 'pi',
         'funcschema' => 'pg_catalog',
         'args' => []);
