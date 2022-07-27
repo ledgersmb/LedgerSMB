@@ -23,6 +23,8 @@ use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_CONFLICT );
 
+use LedgerSMB::PSGI::Util qw( template_response );
+use LedgerSMB::Report::Listings::Language;
 use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.languages';
@@ -157,7 +159,20 @@ sub _update_language {
 get api '/languages' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my $response = _get_languages( $c, $env->{wire}->get( 'output_formatter' ) );
+    if (my $format = $r->query_parameters->get('format')) {
+        my $report = LedgerSMB::Report::Listings::Language->new(
+            _dbh => $c->dbh,
+            language => 'en',
+            );
+        my $formatter = $env->{wire}->get( 'output_formatter' );
+        my $renderer = $formatter->report_doc_renderer( $c->dbh, $format );
+
+        return template_response( $report->render( renderer => $renderer ),
+                                  disposition => 'attach');
+    }
+
+    my $response =
+        _get_languages( $c, $env->{wire}->get( 'output_formatter' ) );
     return [ 200,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              $response  ];
