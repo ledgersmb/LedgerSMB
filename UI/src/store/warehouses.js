@@ -11,7 +11,7 @@ export const useWarehousesStore = defineStore("warehouses", {
             id: "id",
             items: [],
             _links: [],
-            url: "products/warehouses/"
+            url: "products/warehouses"
         };
     }
 });
