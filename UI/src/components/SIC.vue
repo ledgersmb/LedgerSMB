@@ -15,6 +15,7 @@ const store = useSICsStore();
 </script>
 
 <template>
+    <h1 class="listtop">{{ t("Configure Standard Industry Codes (SIC)") }}</h1>
     <ConfigTable
         :columns="COLUMNS"
         :store="store"

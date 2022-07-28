@@ -15,6 +15,7 @@ const store = useBusinessTypesStore();
 </script>
 
 <template>
+    <h1 class="listtop">{{ t("Configure Type of Businesses") }}</h1>
     <ConfigTable
         :columns="COLUMNS"
         :store="store"

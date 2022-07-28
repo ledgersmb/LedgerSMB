@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.0-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-07-24 17:53+0000\n"
+"POT-Creation-Date: 2022-07-28 08:16+0000\n"
 "PO-Revision-Date: 2019-01-21 05:20+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: Estonian (http://www.transifex.com/ledgersmb/ledgersmb/"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:174
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:182
 msgid "# Invoices"
 msgstr "Arveid kokku"
 
@@ -99,7 +99,7 @@ msgstr "Ostuarve"
 msgid "AP Invoices"
 msgstr "Ostuarved"
 
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:301
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:309
 #: UI/Reports/filters/invoice_outstanding.html:4
 msgid "AP Outstanding"
 msgstr "OR Laekumata"
@@ -111,7 +111,7 @@ msgstr "OR Laekumata"
 msgid "AP Transaction"
 msgstr "OR Tehing"
 
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:131
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:130
 msgid "AP Transactions"
 msgstr "OR Tehingud"
 
@@ -146,7 +146,7 @@ msgstr "Müügiarve"
 msgid "AR Invoices"
 msgstr "Müügiarved"
 
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:303
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:311
 #: UI/Reports/filters/invoice_outstanding.html:8
 msgid "AR Outstanding"
 msgstr "MR Laekumata"
@@ -157,7 +157,7 @@ msgstr "MR Laekumata"
 msgid "AR Transaction"
 msgstr "MR Tehing"
 
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:133
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:132
 msgid "AR Transactions"
 msgstr "MR Tehingud"
 
@@ -174,8 +174,8 @@ msgstr ""
 msgid "AR transaction"
 msgstr "MR Tehing"
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:154
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:116
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:153
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:115
 msgid "AR/AP/GL Amount"
 msgstr "Müügi/ostu/pearaamatu summa"
 
@@ -183,8 +183,8 @@ msgstr "Müügi/ostu/pearaamatu summa"
 msgid "Abandonment"
 msgstr ""
 
-#: lib/LedgerSMB.pm:455 lib/LedgerSMB.pm:456
-#: lib/LedgerSMB/Scripts/configuration.pm:368
+#: lib/LedgerSMB.pm:491 lib/LedgerSMB.pm:492
+#: lib/LedgerSMB/Scripts/configuration.pm:366
 msgid "Access Denied"
 msgstr "Ligipääs keelatud"
 
@@ -192,11 +192,11 @@ msgstr "Ligipääs keelatud"
 msgid "Access denied: Bad username or password"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:220
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:228
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:137
-#: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:69
+#: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:68
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:70
-#: lib/LedgerSMB/Scripts/report_aging.pm:138 old/bin/aa.pl:603 old/bin/aa.pl:674
+#: lib/LedgerSMB/Scripts/report_aging.pm:141 old/bin/aa.pl:603 old/bin/aa.pl:674
 #: old/bin/aa.pl:842 old/bin/ic.pl:1109 old/bin/ir.pl:439 old/bin/ir.pl:912
 #: old/bin/is.pl:1012 old/bin/is.pl:472 old/bin/oe.pl:446
 #: UI/Contact/contact.html:15 UI/Contact/divs/credit.html:186
@@ -221,22 +221,22 @@ msgstr "Konto"
 msgid "Account Description"
 msgstr "Konto kirjeldus"
 
-#: lib/LedgerSMB/Report/Budget/Variance.pm:80
+#: lib/LedgerSMB/Report/Budget/Variance.pm:79
 msgid "Account Label"
 msgstr "Konto silt"
 
-#: lib/LedgerSMB/Report/GL.pm:160 UI/Reports/co/filter_bm.html:84
+#: lib/LedgerSMB/Report/GL.pm:159 UI/Reports/co/filter_bm.html:84
 #: UI/Reports/co/filter_cd.html:68 UI/Reports/filters/gl.html:286
 msgid "Account Name"
 msgstr "Konto nimi"
 
-#: lib/LedgerSMB/Report/Budget/Search.pm:129
-#: lib/LedgerSMB/Report/Budget/Variance.pm:76 lib/LedgerSMB/Report/COA.pm:88
-#: lib/LedgerSMB/Report/Contact/History.pm:151
-#: lib/LedgerSMB/Report/Contact/History.pm:62
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:147
-#: lib/LedgerSMB/Report/Contact/Search.pm:107 lib/LedgerSMB/Report/GL.pm:155
-#: lib/LedgerSMB/Report/GL.pm:219 lib/LedgerSMB/Report/Invoices/Payments.pm:186
+#: lib/LedgerSMB/Report/Budget/Search.pm:128
+#: lib/LedgerSMB/Report/Budget/Variance.pm:75 lib/LedgerSMB/Report/COA.pm:87
+#: lib/LedgerSMB/Report/Contact/History.pm:150
+#: lib/LedgerSMB/Report/Contact/History.pm:61
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:146
+#: lib/LedgerSMB/Report/Contact/Search.pm:106 lib/LedgerSMB/Report/GL.pm:154
+#: lib/LedgerSMB/Report/GL.pm:218 lib/LedgerSMB/Report/Invoices/Payments.pm:186
 #: lib/LedgerSMB/Report/PNL/ECA.pm:88
 #: lib/LedgerSMB/Report/Taxform/Details.pm:119
 #: lib/LedgerSMB/Report/Taxform/Details.pm:89
@@ -317,7 +317,7 @@ msgstr "Tekkepõhine"
 msgid "Accrual Basis:"
 msgstr "Tekkepõhine:"
 
-#: lib/LedgerSMB/Scripts/asset.pm:816
+#: lib/LedgerSMB/Scripts/asset.pm:819
 msgid "Accum. Depreciation"
 msgstr ""
 
@@ -614,7 +614,7 @@ msgstr ""
 msgid "Adjusted"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:822
+#: lib/LedgerSMB/Scripts/asset.pm:825
 msgid "Adjusted Basis"
 msgstr ""
 
@@ -634,7 +634,7 @@ msgstr "Korrigeerimise üksikasjad"
 msgid "Aged"
 msgstr "Aegunud"
 
-#: lib/LedgerSMB/Report/Aging.pm:191 UI/Reports/filters/aging.html:6
+#: lib/LedgerSMB/Report/Aging.pm:188 UI/Reports/filters/aging.html:6
 msgid "Aging Report"
 msgstr "Hilinenute aruanne"
 
@@ -688,11 +688,11 @@ msgstr "Reserveeritud"
 msgid "Allow Input"
 msgstr "Luba sisestus"
 
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:85
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:229
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:84
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:237
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:281
 #: lib/LedgerSMB/Report/Orders.pm:225
-#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:128 old/bin/aa.pl:672
+#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:131 old/bin/aa.pl:672
 #: old/bin/aa.pl:839 old/bin/am.pl:311 old/bin/ir.pl:690 old/bin/ir.pl:909
 #: old/bin/is.pl:1009 old/bin/is.pl:788 old/bin/pe.pl:952
 #: UI/Reports/filters/gl.html:100 UI/Reports/filters/gl.html:106
@@ -710,11 +710,11 @@ msgstr "Luba sisestus"
 msgid "Amount"
 msgstr "Summa"
 
-#: lib/LedgerSMB/Report/Budget/Variance.pm:85
+#: lib/LedgerSMB/Report/Budget/Variance.pm:84
 msgid "Amount Budgetted"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:249
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:257
 #: lib/LedgerSMB/Scripts/payment.pm:936 lib/LedgerSMB/Scripts/payment.pm:941
 #: UI/Reports/filters/invoice_outstanding.html:240
 #: UI/Reports/filters/invoice_search.html:363 templates/demo/check_base.tex:67
@@ -726,13 +726,13 @@ msgstr "Maksmisele kuuluv summa"
 msgid "Amount From"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:194
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:153
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:193
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:152
 msgid "Amount Greater Than"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:196
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:155
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:195
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:154
 msgid "Amount Less Than"
 msgstr ""
 
@@ -796,9 +796,9 @@ msgid "Approval Status"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:125
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:229
-#: lib/LedgerSMB/Scripts/asset.pm:529 lib/LedgerSMB/Scripts/asset.pm:643
-#: lib/LedgerSMB/Scripts/asset.pm:744 lib/LedgerSMB/Scripts/asset.pm:849
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:228
+#: lib/LedgerSMB/Scripts/asset.pm:528 lib/LedgerSMB/Scripts/asset.pm:644
+#: lib/LedgerSMB/Scripts/asset.pm:746 lib/LedgerSMB/Scripts/asset.pm:852
 #: lib/LedgerSMB/Scripts/budgets.pm:113 UI/reconciliation/report.html:426
 msgid "Approve"
 msgstr "Kiida heaks"
@@ -811,12 +811,12 @@ msgstr "Kiida heaks"
 msgid "Approved"
 msgstr "Heaks kiidetud"
 
-#: lib/LedgerSMB/Report/Budget/Search.pm:96
+#: lib/LedgerSMB/Report/Budget/Search.pm:95
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:160
 msgid "Approved By"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:487
+#: lib/LedgerSMB/Scripts/asset.pm:486
 msgid "Approved at"
 msgstr ""
 
@@ -832,16 +832,16 @@ msgstr ""
 msgid "Apr"
 msgstr "Apr"
 
-#: lib/LedgerSMB.pm:537 old/bin/aa.pl:70 old/bin/gl.pl:65 old/bin/io.pl:67
+#: lib/LedgerSMB.pm:573 old/bin/aa.pl:70 old/bin/gl.pl:65 old/bin/io.pl:67
 msgid "April"
 msgstr "Aprill"
 
-#: lib/LedgerSMB/Scripts/asset.pm:578 lib/LedgerSMB/Scripts/asset.pm:687
-#: lib/LedgerSMB/Scripts/asset.pm:810
+#: lib/LedgerSMB/Scripts/asset.pm:579 lib/LedgerSMB/Scripts/asset.pm:689
+#: lib/LedgerSMB/Scripts/asset.pm:813
 msgid "Aquired Value"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:716
+#: lib/LedgerSMB/Scripts/asset.pm:718
 msgid "Aquired Value Remaining"
 msgstr ""
 
@@ -881,7 +881,7 @@ msgstr "Vara"
 msgid "Asset Account"
 msgstr "Vara konto"
 
-#: lib/LedgerSMB/Scripts/asset.pm:476 UI/asset/begin_approval.html:14
+#: lib/LedgerSMB/Scripts/asset.pm:475 UI/asset/begin_approval.html:14
 #: UI/asset/begin_report.html:13
 msgid "Asset Class"
 msgstr "Varaklass"
@@ -906,7 +906,7 @@ msgstr "Vara amortisatsiooni aruanne"
 msgid "Asset Disposal Report"
 msgstr "Vara realiseerimise aruanne"
 
-#: lib/LedgerSMB/Report/Listings/Asset.pm:144
+#: lib/LedgerSMB/Report/Listings/Asset.pm:143
 msgid "Asset Listing"
 msgstr "Vara nimekiri"
 
@@ -1011,7 +1011,7 @@ msgstr ""
 msgid "Aug"
 msgstr "Aug"
 
-#: lib/LedgerSMB.pm:541 old/bin/aa.pl:74 old/bin/gl.pl:69 old/bin/io.pl:71
+#: lib/LedgerSMB.pm:577 old/bin/aa.pl:74 old/bin/gl.pl:69 old/bin/io.pl:71
 msgid "August"
 msgstr "August"
 
@@ -1081,13 +1081,13 @@ msgstr "Varunda andmebaas"
 msgid "Backup Roles"
 msgstr "Varundus rollid"
 
-#: lib/LedgerSMB/Report/GL.pm:170 lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:97
+#: lib/LedgerSMB/Report/GL.pm:169 lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:96
 #: UI/Reports/filters/gl.html:292 templates/demo/invoice.html:154
 #: templates/demo/invoice.tex:200
 msgid "Balance"
 msgstr "Bilanss"
 
-#: UI/Reports/balance_sheet.html:25 UI/Reports/filters/balance_sheet.html:7
+#: UI/Reports/balance_sheet.html:23 UI/Reports/filters/balance_sheet.html:7
 #: templates/demo/balance_sheet.html:255 templates/demo/balance_sheet.tex:43
 #: sql/Pg-database.sql:2597
 msgid "Balance Sheet"
@@ -1145,7 +1145,7 @@ msgstr ""
 msgid "Batch"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:107
+#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:110
 msgid "Batch Class"
 msgstr ""
 
@@ -1161,7 +1161,7 @@ msgstr ""
 msgid "Batch Description"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:157
+#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:160
 msgid "Batch ID"
 msgstr ""
 
@@ -1173,12 +1173,12 @@ msgstr ""
 msgid "Batch Name"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:143 UI/create_batch.html:10
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:142 UI/create_batch.html:10
 #: UI/create_batch.html:70
 msgid "Batch Number"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:177
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:176
 msgid "Batch Search"
 msgstr ""
 
@@ -1259,15 +1259,15 @@ msgstr ""
 msgid "Budget"
 msgstr "Eelarve"
 
-#: lib/LedgerSMB/Report/Budget/Variance.pm:119
+#: lib/LedgerSMB/Report/Budget/Variance.pm:118
 msgid "Budget Number"
 msgstr "Eelarve number"
 
-#: lib/LedgerSMB/Report/Budget/Search.pm:113
+#: lib/LedgerSMB/Report/Budget/Search.pm:112
 msgid "Budget Search Results"
 msgstr "Eelarve otsingu tulemused"
 
-#: lib/LedgerSMB/Report/Budget/Variance.pm:107
+#: lib/LedgerSMB/Report/Budget/Variance.pm:106
 msgid "Budget Variance Report"
 msgstr "Eelarve lahknevuse aruanne"
 
@@ -1283,7 +1283,7 @@ msgstr "Ettevõte"
 msgid "Business Number"
 msgstr "Ettevõtte Registrinumber"
 
-#: lib/LedgerSMB/Report/Contact/Search.pm:80 UI/Contact/divs/credit.html:234
+#: lib/LedgerSMB/Report/Contact/Search.pm:79 UI/Contact/divs/credit.html:234
 #: UI/Contact/divs/credit.html:235
 msgid "Business Type"
 msgstr "Ettevõtte tüüp"
@@ -1318,9 +1318,9 @@ msgstr "Müügikulud"
 msgid "COGS Lots Report"
 msgstr ""
 
-#: UI/Contact/pricelist.html:127 UI/Reports/PNL.html:119
-#: UI/Reports/aging_report.html:102 UI/Reports/balance_sheet.html:118
-#: UI/Reports/display_report.html:86
+#: UI/Contact/pricelist.html:127 UI/Reports/PNL.html:117
+#: UI/Reports/aging_report.html:101 UI/Reports/balance_sheet.html:116
+#: UI/Reports/display_report.html:59
 msgid "CSV"
 msgstr "CSV"
 
@@ -1336,7 +1336,7 @@ msgstr ""
 msgid "Can't void a voided invoice!"
 msgstr "Tühistatud arvet ei saa tühistada!"
 
-#: lib/LedgerSMB/Scripts/report_aging.pm:154 lib/LedgerSMB/Scripts/setup.pm:185
+#: lib/LedgerSMB/Scripts/report_aging.pm:157 lib/LedgerSMB/Scripts/setup.pm:185
 #: lib/LedgerSMB/Scripts/setup.pm:236 old/bin/io.pl:1824
 #: UI/templates/widget.html:146 UI/templates/widget.html:162
 #: UI/src/components/ConfigTableRow.vue:22
@@ -1468,11 +1468,11 @@ msgstr "Muuda salasõna"
 msgid "Chargeable"
 msgstr "Maksustatav"
 
-#: lib/LedgerSMB/Report/GL.pm:150
+#: lib/LedgerSMB/Report/GL.pm:149
 msgid "Chart ID"
 msgstr "Konto ID"
 
-#: lib/LedgerSMB/Report/COA.pm:139 sql/Pg-database.sql:2552
+#: lib/LedgerSMB/Report/COA.pm:138 sql/Pg-database.sql:2552
 msgid "Chart of Accounts"
 msgstr "Kontoplaan"
 
@@ -1532,7 +1532,7 @@ msgstr ""
 msgid "Clear date over [*,_1,day]"
 msgstr ""
 
-#: lib/LedgerSMB/Report/GL.pm:140 UI/Reports/filters/gl.html:259
+#: lib/LedgerSMB/Report/GL.pm:139 UI/Reports/filters/gl.html:259
 #: UI/reconciliation/report.html:118 UI/reconciliation/report.html:250
 #: UI/reconciliation/report.html:323
 msgid "Cleared"
@@ -1619,8 +1619,8 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/Details.pm:81
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:74
 #: lib/LedgerSMB/Scripts/contact.pm:186 UI/Contact/contact.html:12
-#: UI/Contact/divs/company.html:2 UI/Reports/aging_report.html:14
-#: UI/Reports/display_report.html:28 UI/main.html:32
+#: UI/Contact/divs/company.html:2 UI/Reports/aging_report.html:12
+#: UI/Reports/display_report.html:19 UI/main.html:32
 #: templates/demo/display_report.html:33 templates/demo/display_report.tex:36
 #: UI/src/components/LoginPage.vue:36
 msgid "Company"
@@ -1667,12 +1667,36 @@ msgstr ""
 msgid "Comparison Periods"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/report_aging.pm:163
+#: lib/LedgerSMB/Scripts/report_aging.pm:166
 msgid "Complete"
 msgstr ""
 
 #: UI/email.html:7
 msgid "Compose e-mail"
+msgstr ""
+
+#: UI/src/components/GIFI.vue:18
+msgid "Configure GIFI codes"
+msgstr ""
+
+#: UI/src/components/SIC.vue:18
+msgid "Configure Standard Industry Codes (SIC)"
+msgstr ""
+
+#: UI/src/components/BusinessTypes.vue:18
+msgid "Configure Type of Businesses"
+msgstr ""
+
+#: UI/src/components/Languages.vue:18
+msgid "Configure languages"
+msgstr ""
+
+#: UI/src/components/Pricegroups.vue:17
+msgid "Configure pricegroups"
+msgstr ""
+
+#: UI/src/components/Warehouses.vue:17
+msgid "Configure warehouses"
 msgstr ""
 
 #: UI/setup/confirm_operation.html:10
@@ -1683,7 +1707,7 @@ msgstr ""
 msgid "Confirm!"
 msgstr "Kinnita!"
 
-#: lib/LedgerSMB.pm:461
+#: lib/LedgerSMB.pm:497
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
 msgstr ""
 
@@ -1711,7 +1735,7 @@ msgstr "Kontakti info:"
 msgid "Contact Information"
 msgstr "Kontakti info"
 
-#: lib/LedgerSMB/Report/Contact/Search.pm:94
+#: lib/LedgerSMB/Report/Contact/Search.pm:93
 #: UI/Reports/filters/contact_search.html:7
 msgid "Contact Search"
 msgstr "Kontakti otsing"
@@ -1768,7 +1792,7 @@ msgstr ""
 msgid "Contributing"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Contact/Search.pm:67
+#: lib/LedgerSMB/Report/Contact/Search.pm:66
 #: lib/LedgerSMB/Report/Listings/Business_Unit.pm:59
 #: lib/LedgerSMB/Report/PNL/ECA.pm:90 lib/LedgerSMB/Report/Taxform/Summary.pm:86
 #: old/bin/arap.pl:165 UI/Contact/divs/company.html:51
@@ -1856,7 +1880,7 @@ msgstr "Riik:"
 msgid "Create"
 msgstr "Loo"
 
-#: lib/LedgerSMB/Report/COA.pm:196
+#: lib/LedgerSMB/Report/COA.pm:195
 msgid "Create Account"
 msgstr ""
 
@@ -1868,7 +1892,7 @@ msgstr ""
 msgid "Create Database?"
 msgstr "Lisame andmebaasi?"
 
-#: lib/LedgerSMB/Report/COA.pm:203
+#: lib/LedgerSMB/Report/COA.pm:202
 msgid "Create Heading"
 msgstr ""
 
@@ -1896,7 +1920,7 @@ msgstr ""
 msgid "Created On"
 msgstr ""
 
-#: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:92
+#: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:91
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:92 UI/Reports/co/filter_bm.html:105
 #: UI/Reports/filters/gl.html:240 UI/Reports/filters/trial_balance.html:5
 #: UI/budgetting/budget_entry.html:62 UI/journal/journal_entry.html:144
@@ -1907,7 +1931,7 @@ msgstr "Kreedit"
 msgid "Credit Account"
 msgstr "Kreeditkonto"
 
-#: lib/LedgerSMB/Report/Contact/Search.pm:72
+#: lib/LedgerSMB/Report/Contact/Search.pm:71
 msgid "Credit Account Number"
 msgstr "Kreeditkonto number"
 
@@ -1934,22 +1958,22 @@ msgstr "Krediidilimiit:"
 msgid "Credit Note"
 msgstr ""
 
-#: lib/LedgerSMB/Report/COA.pm:112 lib/LedgerSMB/Report/GL.pm:124
+#: lib/LedgerSMB/Report/COA.pm:111 lib/LedgerSMB/Report/GL.pm:123
 #: lib/LedgerSMB/Report/Trial_Balance.pm:176
 #: lib/LedgerSMB/Scripts/payment.pm:209 UI/Reports/co/filter_cd.html:90
 #: UI/reconciliation/report.html:159 UI/reconciliation/report.html:161
 msgid "Credits"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:254
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:262
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:278 old/bin/ic.pl:1006
 #: old/bin/ic.pl:1100 old/bin/oe.pl:2519
 msgid "Curr"
 msgstr "Val."
 
-#: lib/LedgerSMB/Report/Contact/History.pm:74
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:80
-#: lib/LedgerSMB/Report/Contact/Search.pm:84
+#: lib/LedgerSMB/Report/Contact/History.pm:73
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:79
+#: lib/LedgerSMB/Report/Contact/Search.pm:83
 #: lib/LedgerSMB/Report/Inventory/Search.pm:315
 #: lib/LedgerSMB/Report/Orders.pm:230 lib/LedgerSMB/Scripts/currency.pm:240
 #: old/bin/aa.pl:424 old/bin/ir.pl:325 old/bin/is.pl:323 old/bin/oe.pl:1629
@@ -1968,7 +1992,7 @@ msgstr "Val."
 msgid "Currency"
 msgstr "Valuuta"
 
-#: lib/LedgerSMB/Report/Aging.pm:140 old/bin/pe.pl:729
+#: lib/LedgerSMB/Report/Aging.pm:137 old/bin/pe.pl:729
 #: UI/Reports/co/filter_bm.html:52 UI/Reports/filters/aging.html:98
 #: UI/lib/report_base.html:159 UI/lib/report_base.html:252
 #: templates/demo/statement.html:62 templates/demo/statement.tex:54
@@ -1984,8 +2008,8 @@ msgstr "Käesoleva aasta kasum (kahjum)"
 msgid "Custom Flags"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Aging.pm:86
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:189
+#: lib/LedgerSMB/Report/Aging.pm:89
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:197
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:251
 #: lib/LedgerSMB/Report/Orders.pm:179 lib/LedgerSMB/Report/Orders.pm:185
 #: old/bin/aa.pl:516 old/bin/ic.pl:1108 old/bin/is.pl:439 old/bin/pe.pl:1074
@@ -2048,7 +2072,7 @@ msgstr "Klient puudub failis!"
 msgid "Customer/Vendor Accounts"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:805
+#: lib/LedgerSMB/Scripts/asset.pm:808
 msgid "D M"
 msgstr ""
 
@@ -2125,17 +2149,17 @@ msgstr "Andmebaas eksisteerib."
 msgid "Database version mismatch"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Aging.pm:128 lib/LedgerSMB/Report/GL.pm:92
+#: lib/LedgerSMB/Report/Aging.pm:125 lib/LedgerSMB/Report/GL.pm:91
 #: lib/LedgerSMB/Report/Inventory/History.pm:145
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:102
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:199
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:207
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:259
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:141
 #: lib/LedgerSMB/Report/Orders.pm:204
-#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:112
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:138
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:95
-#: lib/LedgerSMB/Scripts/asset.pm:465 lib/LedgerSMB/Scripts/payment.pm:192
+#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:115
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:137
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:94
+#: lib/LedgerSMB/Scripts/asset.pm:464 lib/LedgerSMB/Scripts/payment.pm:192
 #: lib/LedgerSMB/Scripts/payment.pm:930 old/bin/aa.pl:838 old/bin/ir.pl:908
 #: old/bin/is.pl:1008 old/bin/oe.pl:1633 old/bin/pe.pl:937
 #: UI/Reports/filters/gl.html:203 UI/Reports/filters/orders.html:134
@@ -2165,8 +2189,8 @@ msgstr "Kuupäeva formaat"
 msgid "Date From"
 msgstr "Kuupäev alates"
 
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:104
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:258
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:103
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:266
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:129
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:296
 #: UI/Reports/filters/invoice_outstanding.html:219
@@ -2245,7 +2269,7 @@ msgstr "Päev(a)"
 msgid "Days"
 msgstr "Päeva"
 
-#: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:86
+#: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:85
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:86 UI/Reports/filters/gl.html:233
 #: UI/Reports/filters/trial_balance.html:4 UI/budgetting/budget_entry.html:61
 #: UI/journal/journal_entry.html:143
@@ -2260,7 +2284,7 @@ msgstr "Deebitarve"
 msgid "Debit Note"
 msgstr ""
 
-#: lib/LedgerSMB/Report/COA.pm:105 lib/LedgerSMB/Report/GL.pm:118
+#: lib/LedgerSMB/Report/COA.pm:104 lib/LedgerSMB/Report/GL.pm:117
 #: lib/LedgerSMB/Report/Trial_Balance.pm:170
 #: lib/LedgerSMB/Scripts/payment.pm:203 UI/Reports/co/filter_cd.html:82
 #: UI/reconciliation/report.html:158 UI/reconciliation/report.html:160
@@ -2271,7 +2295,7 @@ msgstr ""
 msgid "Dec"
 msgstr "Dets"
 
-#: lib/LedgerSMB.pm:545 old/bin/aa.pl:78 old/bin/gl.pl:73 old/bin/io.pl:75
+#: lib/LedgerSMB.pm:581 old/bin/aa.pl:78 old/bin/gl.pl:73 old/bin/io.pl:75
 msgid "December"
 msgstr "Detsember"
 
@@ -2356,11 +2380,11 @@ msgstr ""
 msgid "Defined exchange rate types"
 msgstr ""
 
-#: lib/LedgerSMB/Report/COA.pm:124 lib/LedgerSMB/Report/COA.pm:163
+#: lib/LedgerSMB/Report/COA.pm:123 lib/LedgerSMB/Report/COA.pm:162
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:131
 #: lib/LedgerSMB/Report/Listings/TemplateTrans.pm:121
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:245
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:235 old/bin/aa.pl:1005
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:244
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:234 old/bin/aa.pl:1005
 #: old/bin/aa.pl:949 old/bin/am.pl:67 old/bin/am.pl:79 old/bin/ic.pl:828
 #: old/bin/ic.pl:850 old/bin/ir.pl:1027 old/bin/is.pl:1127 old/bin/oe.pl:696
 #: old/bin/oe.pl:924 old/bin/pe.pl:156 old/bin/pe.pl:518
@@ -2373,7 +2397,7 @@ msgstr ""
 msgid "Delete"
 msgstr "Kustuta"
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:200
+#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:203
 msgid "Delete Batch"
 msgstr ""
 
@@ -2386,7 +2410,7 @@ msgstr "Kustutata Ajakava"
 msgid "Delete User"
 msgstr "Lisa kasutaja"
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:207
+#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:210
 msgid "Delete Vouchers"
 msgstr ""
 
@@ -2409,21 +2433,21 @@ msgstr ""
 msgid "Delivery"
 msgstr "Üleandmine"
 
-#: lib/LedgerSMB/Report/Contact/History.pm:108 old/bin/io.pl:265
+#: lib/LedgerSMB/Report/Contact/History.pm:107 old/bin/io.pl:265
 #: UI/Reports/filters/purchase_history.html:314
 msgid "Delivery Date"
 msgstr "Tarnetähtaeg"
 
-#: lib/LedgerSMB/Scripts/asset.pm:595
+#: lib/LedgerSMB/Scripts/asset.pm:596
 msgid "Dep. Basis"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:584
+#: lib/LedgerSMB/Scripts/asset.pm:585
 msgid "Dep. Method"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:572 lib/LedgerSMB/Scripts/asset.pm:681
-#: lib/LedgerSMB/Scripts/asset.pm:793
+#: lib/LedgerSMB/Scripts/asset.pm:573 lib/LedgerSMB/Scripts/asset.pm:683
+#: lib/LedgerSMB/Scripts/asset.pm:796
 msgid "Dep. Starts"
 msgstr ""
 
@@ -2431,11 +2455,11 @@ msgstr ""
 msgid "Dep. Through"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:619
+#: lib/LedgerSMB/Scripts/asset.pm:620
 msgid "Dep. YTD"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:613
+#: lib/LedgerSMB/Scripts/asset.pm:614
 msgid "Dep. this run"
 msgstr ""
 
@@ -2457,7 +2481,7 @@ msgstr ""
 msgid "Depreciate Through"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:512 UI/accounts/edit.html:505
+#: lib/LedgerSMB/Scripts/asset.pm:511 UI/accounts/edit.html:505
 #: sql/Pg-database.sql:2657
 msgid "Depreciation"
 msgstr ""
@@ -2478,15 +2502,15 @@ msgstr ""
 msgid "Depreciation Starts"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Aging.pm:123
+#: lib/LedgerSMB/Report/Aging.pm:120
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:79
-#: lib/LedgerSMB/Report/Budget/Search.pm:88
-#: lib/LedgerSMB/Report/Budget/Variance.pm:121
-#: lib/LedgerSMB/Report/Budget/Variance.pm:72 lib/LedgerSMB/Report/COA.pm:94
-#: lib/LedgerSMB/Report/Contact/History.pm:85
-#: lib/LedgerSMB/Report/Contact/Search.pm:76
+#: lib/LedgerSMB/Report/Budget/Search.pm:87
+#: lib/LedgerSMB/Report/Budget/Variance.pm:120
+#: lib/LedgerSMB/Report/Budget/Variance.pm:71 lib/LedgerSMB/Report/COA.pm:93
+#: lib/LedgerSMB/Report/Contact/History.pm:84
+#: lib/LedgerSMB/Report/Contact/Search.pm:75
 #: lib/LedgerSMB/Report/File/Incoming.pm:53
-#: lib/LedgerSMB/Report/File/Internal.pm:51 lib/LedgerSMB/Report/GL.pm:108
+#: lib/LedgerSMB/Report/File/Internal.pm:51 lib/LedgerSMB/Report/GL.pm:107
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:166
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:97
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:98
@@ -2503,13 +2527,13 @@ msgstr ""
 #: lib/LedgerSMB/Report/Listings/Warehouse.pm:46
 #: lib/LedgerSMB/Report/PNL/Product.pm:79 lib/LedgerSMB/Report/Timecards.pm:106
 #: lib/LedgerSMB/Report/Timecards.pm:93
-#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:123
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:149
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:192
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:111
-#: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:75
+#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:126
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:148
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:191
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:110
+#: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:74
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:76 lib/LedgerSMB/Scripts/asset.pm:331
-#: lib/LedgerSMB/Scripts/asset.pm:693 lib/LedgerSMB/Scripts/asset.pm:788
+#: lib/LedgerSMB/Scripts/asset.pm:695 lib/LedgerSMB/Scripts/asset.pm:791
 #: lib/LedgerSMB/Scripts/currency.pm:138 lib/LedgerSMB/Scripts/currency.pm:53
 #: lib/LedgerSMB/Scripts/file.pm:138 old/bin/aa.pl:623 old/bin/aa.pl:675
 #: old/bin/am.pl:302 old/bin/ic.pl:1258 old/bin/ic.pl:2013 old/bin/ic.pl:2080
@@ -2577,7 +2601,7 @@ msgstr ""
 msgid "Disable Back Button"
 msgstr "Keela tagasi nupp"
 
-#: lib/LedgerSMB/Report/Contact/History.pm:104
+#: lib/LedgerSMB/Report/Contact/History.pm:103
 msgid "Disc"
 msgstr "Allahindlus"
 
@@ -2603,16 +2627,16 @@ msgstr "Allahindluse %"
 msgid "Discount:"
 msgstr "Allahindlus:"
 
-#: lib/LedgerSMB/Scripts/asset.pm:704
+#: lib/LedgerSMB/Scripts/asset.pm:706
 msgid "Disp. Aquired Value"
 msgstr "Näita soetusmaksumust"
 
-#: lib/LedgerSMB/Scripts/asset.pm:513 sql/Pg-database.sql:2655
+#: lib/LedgerSMB/Scripts/asset.pm:512 sql/Pg-database.sql:2655
 #: sql/Pg-database.sql:2658
 msgid "Disposal"
 msgstr "Realiseerimine"
 
-#: lib/LedgerSMB/Scripts/asset.pm:799
+#: lib/LedgerSMB/Scripts/asset.pm:802
 msgid "Disposal Date"
 msgstr "Realiseerimise kuupäev"
 
@@ -2620,11 +2644,11 @@ msgstr "Realiseerimise kuupäev"
 msgid "Disposal Method"
 msgstr "Realiseerimise meetod"
 
-#: lib/LedgerSMB/Scripts/asset.pm:861
+#: lib/LedgerSMB/Scripts/asset.pm:859
 msgid "Disposal Report [_1] on date [_2]"
 msgstr "Realiseerimise aruanne [_1] kuupäeval [_2]"
 
-#: lib/LedgerSMB.pm:458
+#: lib/LedgerSMB.pm:494
 msgid "Division by 0 error"
 msgstr "Viga nulliga jagamisel"
 
@@ -2656,6 +2680,10 @@ msgstr ""
 msgid "Double vendornumbers"
 msgstr ""
 
+#: UI/src/components/ConfigTable.vue:85
+msgid "Download: "
+msgstr ""
+
 #: sql/Pg-database.sql:705
 msgid "Dr."
 msgstr "Doktor"
@@ -2664,11 +2692,11 @@ msgstr "Doktor"
 msgid "Draft Posted"
 msgstr "Mustand salvestatud"
 
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:133
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:132
 msgid "Draft Search"
 msgstr "Mustandi otsing"
 
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:145
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:144
 msgid "Draft Type"
 msgstr "Mustandi tüüp"
 
@@ -2682,11 +2710,11 @@ msgstr "Mustandid"
 msgid "Drawing"
 msgstr "Joonis"
 
-#: lib/LedgerSMB/Report/COA.pm:119
+#: lib/LedgerSMB/Report/COA.pm:118
 msgid "Dropdowns"
 msgstr "Rippmenüüd"
 
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:100
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:99
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:293
 #: templates/demo/ap_transaction.html:64 templates/demo/ap_transaction.tex:77
 #: templates/demo/ar_transaction.html:62 templates/demo/ar_transaction.tex:94
@@ -2695,9 +2723,9 @@ msgstr "Rippmenüüd"
 msgid "Due"
 msgstr "Tähtaeg"
 
-#: lib/LedgerSMB/Report/Aging.pm:133
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:108
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:262
+#: lib/LedgerSMB/Report/Aging.pm:130
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:107
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:270
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:299 old/bin/aa.pl:651
 #: old/bin/ir.pl:493 old/bin/is.pl:545
 #: UI/Reports/filters/invoice_outstanding.html:234
@@ -2727,7 +2755,7 @@ msgstr "E-post"
 msgid "E-mail address missing!"
 msgstr "E-posti aadress puudub"
 
-#: lib/LedgerSMB/Scripts/report_aging.pm:192
+#: lib/LedgerSMB/Scripts/report_aging.pm:197
 msgid "E-mail aging reminder status"
 msgstr ""
 
@@ -2888,7 +2916,7 @@ msgstr "üksteist"
 msgid "Eleven-o"
 msgstr ""
 
-#: UI/Reports/aging_report.html:55 sql/Pg-database.sql:790
+#: UI/Reports/aging_report.html:54 sql/Pg-database.sql:790
 msgid "Email"
 msgstr "E-posti aadress"
 
@@ -2945,14 +2973,14 @@ msgstr ""
 msgid "Empty vendornumbers"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Budget/Search.pm:127
-#: lib/LedgerSMB/Report/Budget/Search.pm:78
-#: lib/LedgerSMB/Report/Budget/Variance.pm:125
-#: lib/LedgerSMB/Report/Contact/History.pm:156 lib/LedgerSMB/Report/GL.pm:217
+#: lib/LedgerSMB/Report/Budget/Search.pm:126
+#: lib/LedgerSMB/Report/Budget/Search.pm:77
+#: lib/LedgerSMB/Report/Budget/Variance.pm:124
+#: lib/LedgerSMB/Report/Contact/History.pm:155 lib/LedgerSMB/Report/GL.pm:216
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:85
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:160
 #: lib/LedgerSMB/Report/Listings/Business_Unit.pm:71
-#: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:139
+#: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:138
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:131 UI/Contact/divs/credit.html:31
 #: UI/Contact/divs/credit.html:121 UI/Contact/divs/credit.html:122
 #: UI/Contact/divs/employee.html:140 UI/Reports/filters/budget_search.html:51
@@ -2996,7 +3024,7 @@ msgstr "Sisesta kasutaja"
 msgid "Enter employee numbers where they are missing"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Budget/Search.pm:92
+#: lib/LedgerSMB/Report/Budget/Search.pm:91
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:157
 msgid "Entered By"
 msgstr ""
@@ -3005,7 +3033,7 @@ msgstr ""
 msgid "Entered For"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:481
+#: lib/LedgerSMB/Scripts/asset.pm:480
 msgid "Entered at"
 msgstr ""
 
@@ -3014,7 +3042,7 @@ msgid "Entered at: [_1]"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/contact.pm:296
-#: lib/LedgerSMB/Scripts/report_aging.pm:133 sql/Pg-database.sql:1036
+#: lib/LedgerSMB/Scripts/report_aging.pm:136 sql/Pg-database.sql:1036
 msgid "Entity"
 msgstr ""
 
@@ -3039,7 +3067,7 @@ msgstr ""
 msgid "Entity Name"
 msgstr "Riigi nimi"
 
-#: lib/LedgerSMB/Report/GL.pm:113
+#: lib/LedgerSMB/Report/GL.pm:112
 msgid "Entry ID"
 msgstr ""
 
@@ -3076,7 +3104,7 @@ msgstr ""
 msgid "Error creating batch.  Please try again."
 msgstr ""
 
-#: lib/LedgerSMB.pm:462
+#: lib/LedgerSMB.pm:498
 msgid "Error from Function:"
 msgstr ""
 
@@ -3084,7 +3112,7 @@ msgstr ""
 msgid "Error: Cannot include summary account in other dropdown menus"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:589
+#: lib/LedgerSMB/Scripts/asset.pm:590
 msgid "Est. Life"
 msgstr ""
 
@@ -3096,7 +3124,7 @@ msgstr "Iga"
 msgid "Exch"
 msgstr "Kurss"
 
-#: lib/LedgerSMB/Report/Contact/History.pm:118
+#: lib/LedgerSMB/Report/Contact/History.pm:117
 #: lib/LedgerSMB/Scripts/payment.pm:940 old/bin/aa.pl:431 old/bin/ir.pl:334
 #: old/bin/is.pl:332 old/bin/oe.pl:1637 old/bin/oe.pl:350 old/bin/oe.pl:358
 #: UI/Reports/filters/overpayments.html:50 UI/Reports/filters/payments.html:113
@@ -3205,7 +3233,7 @@ msgstr "Faks: [_1]"
 msgid "Feb"
 msgstr "Veebr"
 
-#: lib/LedgerSMB.pm:535 old/bin/aa.pl:68 old/bin/gl.pl:63 old/bin/io.pl:65
+#: lib/LedgerSMB.pm:571 old/bin/aa.pl:68 old/bin/gl.pl:63 old/bin/io.pl:65
 msgid "February"
 msgstr "Veebruar"
 
@@ -3221,7 +3249,7 @@ msgstr "viiskümmend"
 msgid "File"
 msgstr "Fail"
 
-#: lib/LedgerSMB/Scripts/asset.pm:1063
+#: lib/LedgerSMB/Scripts/asset.pm:1067
 msgid "File Imported"
 msgstr "Fail imporditud"
 
@@ -3365,7 +3393,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/Details.pm:116
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:110
 #: lib/LedgerSMB/Report/Timecards.pm:147
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:149
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:148
 #: UI/Reports/filters/unapproved.html:35
 msgid "From Date"
 msgstr "Alates"
@@ -3388,11 +3416,11 @@ msgstr "Alates"
 msgid "Full"
 msgstr "Kõik"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1151
+#: lib/LedgerSMB/Scripts/setup.pm:1150
 msgid "Full Permissions"
 msgstr "Kõik õigused"
 
-#: lib/LedgerSMB/Report/COA.pm:100 lib/LedgerSMB/Report/GL.pm:165
+#: lib/LedgerSMB/Report/COA.pm:99 lib/LedgerSMB/Report/GL.pm:164
 #: lib/LedgerSMB/Report/Listings/GIFI.pm:48
 #: lib/LedgerSMB/Report/Listings/GIFI.pm:65
 #: lib/LedgerSMB/Report/Trial_Balance.pm:158
@@ -3423,7 +3451,7 @@ msgstr "Pearaamatu Viitenumber"
 msgid "Gain"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:834
+#: lib/LedgerSMB/Scripts/asset.pm:837
 msgid "Gain (Loss)"
 msgstr ""
 
@@ -3431,7 +3459,7 @@ msgstr ""
 msgid "Gain Account"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:723
+#: lib/LedgerSMB/Scripts/asset.pm:725
 #, fuzzy
 msgid "Gain/Loss"
 msgstr "Kahjum"
@@ -3444,7 +3472,7 @@ msgstr ""
 msgid "General Journal"
 msgstr ""
 
-#: lib/LedgerSMB/Report/GL.pm:203
+#: lib/LedgerSMB/Report/GL.pm:202
 msgid "General Ledger Report"
 msgstr "Pearaamatu aruanne"
 
@@ -3452,7 +3480,7 @@ msgstr "Pearaamatu aruanne"
 msgid "General Ledger Reports"
 msgstr "Pearaamatu aruanded"
 
-#: lib/LedgerSMB/Scripts/order.pm:124 UI/Reports/aging_report.html:84
+#: lib/LedgerSMB/Scripts/order.pm:124 UI/Reports/aging_report.html:83
 #: sql/Pg-database.sql:2541 sql/Pg-database.sql:2579
 msgid "Generate"
 msgstr "Genereeri"
@@ -3539,7 +3567,7 @@ msgstr "Gtalk"
 msgid "HR"
 msgstr "Personal"
 
-#: UI/Reports/PNL.html:115 UI/Reports/balance_sheet.html:115
+#: UI/Reports/PNL.html:113 UI/Reports/balance_sheet.html:113
 msgid "HTML"
 msgstr ""
 
@@ -3581,18 +3609,18 @@ msgid "Hundred"
 msgstr "sada"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:70
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:60 lib/LedgerSMB/Report/GL.pm:87
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:59 lib/LedgerSMB/Report/GL.pm:86
 #: lib/LedgerSMB/Report/Inventory/History.pm:116
 #: lib/LedgerSMB/Report/Inventory/Search.pm:214
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:203
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:211
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:256
 #: lib/LedgerSMB/Report/Listings/Asset_Class.pm:71
 #: lib/LedgerSMB/Report/Listings/TemplateTrans.pm:88
 #: lib/LedgerSMB/Report/Orders.pm:200 lib/LedgerSMB/Report/Timecards.pm:97
-#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:102
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:133
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:90
-#: lib/LedgerSMB/Scripts/asset.pm:459 lib/LedgerSMB/Scripts/report_aging.pm:127
+#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:105
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:132
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:89
+#: lib/LedgerSMB/Scripts/asset.pm:458 lib/LedgerSMB/Scripts/report_aging.pm:130
 #: old/bin/am.pl:301 UI/Reports/filters/gl.html:196
 #: UI/Reports/filters/invoice_outstanding.html:131
 #: UI/Reports/filters/invoice_search.html:255 UI/Reports/filters/orders.html:121
@@ -3745,7 +3773,7 @@ msgid ""
 "charge."
 msgstr ""
 
-#: lib/LedgerSMB.pm:454
+#: lib/LedgerSMB.pm:490
 msgid "Internal Database Error"
 msgstr "Andmebaasi sisene viga"
 
@@ -3766,7 +3794,7 @@ msgstr ""
 msgid "Invalid backup request"
 msgstr ""
 
-#: lib/LedgerSMB.pm:457
+#: lib/LedgerSMB.pm:493
 msgid "Invalid date/time entered"
 msgstr ""
 
@@ -3820,9 +3848,9 @@ msgstr "Laoseis salvestatud!"
 msgid "Inventory transferred!"
 msgstr "Laoseis üle kantud!"
 
-#: lib/LedgerSMB/Report/Aging.pm:117
+#: lib/LedgerSMB/Report/Aging.pm:114
 #: lib/LedgerSMB/Report/Inventory/Search.pm:303
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:181
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:178
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:269
 #: lib/LedgerSMB/Scripts/payment.pm:929 old/bin/am.pl:958 old/bin/io.pl:1142
 #: old/bin/is.pl:1484 old/bin/is.pl:251 old/bin/printer.pl:48
@@ -3851,7 +3879,7 @@ msgstr "Arve loonud"
 msgid "Invoice Created Date missing!"
 msgstr "Arve koostamise kuupäev puudub!"
 
-#: lib/LedgerSMB/Report/Contact/History.pm:126
+#: lib/LedgerSMB/Report/Contact/History.pm:125
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:96 old/bin/aa.pl:647 old/bin/ir.pl:489
 #: old/bin/is.pl:541 UI/Reports/filters/invoice_outstanding.html:158
 #: UI/Reports/filters/invoice_search.html:283
@@ -3866,10 +3894,10 @@ msgstr "Kaubaarvel Kuupäev puudu!"
 msgid "Invoice No."
 msgstr "Arve nr"
 
-#: lib/LedgerSMB/Report/Contact/History.pm:70
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:68
+#: lib/LedgerSMB/Report/Contact/History.pm:69
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:67
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:90
-#: lib/LedgerSMB/Report/PNL/Invoice.pm:83
+#: lib/LedgerSMB/Report/PNL/Invoice.pm:81
 #: lib/LedgerSMB/Report/Taxform/Details.pm:93 old/bin/aa.pl:634
 #: old/bin/ir.pl:475 old/bin/is.pl:528
 #: UI/Reports/filters/invoice_outstanding.html:137
@@ -3962,7 +3990,7 @@ msgstr ""
 msgid "Jan"
 msgstr "Jaan"
 
-#: lib/LedgerSMB.pm:534 old/bin/aa.pl:67 old/bin/gl.pl:62 old/bin/io.pl:64
+#: lib/LedgerSMB.pm:570 old/bin/aa.pl:67 old/bin/gl.pl:62 old/bin/io.pl:64
 msgid "January"
 msgstr "Jaanuar"
 
@@ -3994,7 +4022,7 @@ msgstr ""
 msgid "Jul"
 msgstr "Juul"
 
-#: lib/LedgerSMB.pm:540 old/bin/aa.pl:73 old/bin/gl.pl:68 old/bin/io.pl:70
+#: lib/LedgerSMB.pm:576 old/bin/aa.pl:73 old/bin/gl.pl:68 old/bin/io.pl:70
 msgid "July"
 msgstr "Juuli"
 
@@ -4002,7 +4030,7 @@ msgstr "Juuli"
 msgid "Jun"
 msgstr "Juun"
 
-#: lib/LedgerSMB.pm:539 old/bin/aa.pl:72 old/bin/gl.pl:67 old/bin/io.pl:69
+#: lib/LedgerSMB.pm:575 old/bin/aa.pl:72 old/bin/gl.pl:67 old/bin/io.pl:69
 #: t/data/04-strings-for-translation.html:6
 msgid "June"
 msgstr "Juuni"
@@ -4035,7 +4063,7 @@ msgstr "Tööjõud/Kulud"
 msgid "Labor/Service Code"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Aging.pm:109
+#: lib/LedgerSMB/Report/Aging.pm:106
 #: lib/LedgerSMB/Report/Listings/Language.pm:65
 #: lib/LedgerSMB/Report/Listings/Templates.pm:72 old/bin/pe.pl:300
 #: old/bin/pe.pl:473 UI/Contact/divs/credit.html:275
@@ -4266,7 +4294,7 @@ msgid "Loaded"
 msgstr ""
 
 #: UI/src/components/ServerUI.js:25 UI/src/components/ServerUI.js:39
-#: UI/src/components/ConfigTable.vue:71
+#: UI/src/components/ConfigTable.vue:78
 msgid "Loading..."
 msgstr ""
 
@@ -4355,11 +4383,11 @@ msgid ""
 "only and is at least one character long"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1150
+#: lib/LedgerSMB/Scripts/setup.pm:1149
 msgid "Manage Users"
 msgstr "Kasutajate haldamine"
 
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:278
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:286
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:311
 #: lib/LedgerSMB/Report/Orders.pm:258 UI/Contact/divs/employee.html:83
 #: UI/Contact/divs/employee.html:107
@@ -4380,7 +4408,7 @@ msgstr "Manuaalne"
 msgid "Mar"
 msgstr "Mär"
 
-#: lib/LedgerSMB.pm:536 old/bin/aa.pl:69 old/bin/gl.pl:64 old/bin/io.pl:66
+#: lib/LedgerSMB.pm:572 old/bin/aa.pl:69 old/bin/gl.pl:64 old/bin/io.pl:66
 msgid "March"
 msgstr "Märts"
 
@@ -4397,12 +4425,12 @@ msgstr ""
 msgid "Max per dropdown"
 msgstr "Hüppikmenüü max valikute arv"
 
-#: lib/LedgerSMB.pm:538 old/bin/aa.pl:71 old/bin/aa.pl:85 old/bin/gl.pl:66
+#: lib/LedgerSMB.pm:574 old/bin/aa.pl:71 old/bin/aa.pl:85 old/bin/gl.pl:66
 #: old/bin/gl.pl:80 old/bin/io.pl:68 old/bin/io.pl:82
 msgid "May"
 msgstr "Mai"
 
-#: lib/LedgerSMB/Report/GL.pm:135 lib/LedgerSMB/Scripts/payment.pm:935
+#: lib/LedgerSMB/Report/GL.pm:134 lib/LedgerSMB/Scripts/payment.pm:935
 #: old/bin/aa.pl:844 old/bin/ir.pl:694 old/bin/ir.pl:914 old/bin/is.pl:1014
 #: old/bin/is.pl:792 UI/Reports/filters/gl.html:73
 #: UI/Reports/filters/gl.html:253 UI/journal/journal_entry.html:146
@@ -4497,7 +4525,7 @@ msgstr "Kuu(d)"
 msgid "Months"
 msgstr "kuud"
 
-#: lib/LedgerSMB.pm:470
+#: lib/LedgerSMB.pm:506
 msgid "More information has been reported in the error logs"
 msgstr ""
 
@@ -4532,15 +4560,14 @@ msgstr ""
 msgid "NONE"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Contact/History.pm:148
-#: lib/LedgerSMB/Report/Contact/History.pm:58
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:145
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:63
-#: lib/LedgerSMB/Report/Contact/Search.pm:105
-#: lib/LedgerSMB/Report/Contact/Search.pm:62 lib/LedgerSMB/Report/Orders.pm:221
-#: lib/LedgerSMB/Report/PNL/ECA.pm:86 lib/LedgerSMB/Report/PNL/Invoice.pm:81
-#: old/bin/arap.pl:163 UI/Contact/divs/company.html:75
-#: UI/Reports/filters/contact_search.html:33
+#: lib/LedgerSMB/Report/Contact/History.pm:147
+#: lib/LedgerSMB/Report/Contact/History.pm:57
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:144
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:62
+#: lib/LedgerSMB/Report/Contact/Search.pm:104
+#: lib/LedgerSMB/Report/Contact/Search.pm:61 lib/LedgerSMB/Report/Orders.pm:221
+#: lib/LedgerSMB/Report/PNL/ECA.pm:86 old/bin/arap.pl:163
+#: UI/Contact/divs/company.html:75 UI/Reports/filters/contact_search.html:33
 #: UI/Reports/filters/overpayments.html:31 UI/payments/payments_detail.html:225
 msgid "Name"
 msgstr "Nimi"
@@ -4600,7 +4627,7 @@ msgid "Next Number"
 msgstr "Järgmine Number"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:114
-#: lib/LedgerSMB/Scripts/configuration.pm:344
+#: lib/LedgerSMB/Scripts/configuration.pm:342
 msgid "Next in Sequence"
 msgstr "Järgmine järjekorras"
 
@@ -4652,7 +4679,7 @@ msgstr ""
 msgid "No Old Password"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1152
+#: lib/LedgerSMB/Scripts/setup.pm:1151
 msgid "No changes"
 msgstr ""
 
@@ -4684,7 +4711,7 @@ msgstr ""
 msgid "No report specified"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/taxform.pm:126
+#: lib/LedgerSMB/Scripts/taxform.pm:129
 msgid "No tax form selected"
 msgstr "Maksuvormi pole valitud"
 
@@ -4755,9 +4782,9 @@ msgstr ""
 msgid "Note that the process invoked by hitting the button below might "
 msgstr ""
 
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:112
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:111
 #: lib/LedgerSMB/Report/Inventory/Search.pm:295
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:266
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:274
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:302
 #: lib/LedgerSMB/Scripts/contact.pm:195 old/bin/aa.pl:809 old/bin/ic.pl:764
 #: old/bin/ir.pl:804 old/bin/is.pl:902 old/bin/oe.pl:832
@@ -4797,7 +4824,7 @@ msgstr "Pole midagi ümber paigutada!"
 msgid "Nov"
 msgstr "Nov"
 
-#: lib/LedgerSMB.pm:544 old/bin/aa.pl:77 old/bin/gl.pl:72 old/bin/io.pl:74
+#: lib/LedgerSMB.pm:580 old/bin/aa.pl:77 old/bin/gl.pl:72 old/bin/io.pl:74
 msgid "November"
 msgstr "November"
 
@@ -4842,8 +4869,8 @@ msgstr ""
 msgid "Number:"
 msgstr "Number"
 
-#: UI/Contact/pricelist.html:123 UI/Reports/aging_report.html:114
-#: UI/Reports/display_report.html:90
+#: UI/Contact/pricelist.html:123 UI/Reports/aging_report.html:113
+#: UI/Reports/display_report.html:63
 msgid "ODS"
 msgstr "ODS"
 
@@ -4860,7 +4887,7 @@ msgstr ""
 msgid "Obsolete"
 msgstr "Aegunud"
 
-#: lib/LedgerSMB/Report/Budget/Search.pm:100
+#: lib/LedgerSMB/Report/Budget/Search.pm:99
 msgid "Obsolete By"
 msgstr ""
 
@@ -4868,7 +4895,7 @@ msgstr ""
 msgid "Oct"
 msgstr "Okt"
 
-#: lib/LedgerSMB.pm:543 old/bin/aa.pl:76 old/bin/gl.pl:71 old/bin/io.pl:73
+#: lib/LedgerSMB.pm:579 old/bin/aa.pl:76 old/bin/gl.pl:71 old/bin/io.pl:73
 msgid "October"
 msgstr "Oktoober"
 
@@ -4943,7 +4970,7 @@ msgid "Or Add To Batch"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:307
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:212
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:220
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:272 old/bin/oe.pl:2510
 msgid "Order"
 msgstr "Tellimus"
@@ -4975,7 +5002,7 @@ msgstr "Tellimuse Kuupäev puudub!"
 msgid "Order Entry"
 msgstr "Tellimuse Sisestus"
 
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:72 old/bin/aa.pl:639
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:71 old/bin/aa.pl:639
 #: old/bin/ir.pl:480 old/bin/is.pl:532 old/bin/oe.pl:1903 old/bin/oe.pl:397
 #: UI/Reports/filters/invoice_outstanding.html:144
 #: UI/Reports/filters/invoice_search.html:99
@@ -5066,9 +5093,9 @@ msgstr ""
 msgid "Overpayments"
 msgstr ""
 
-#: UI/Contact/pricelist.html:105 UI/Reports/PNL.html:111
-#: UI/Reports/aging_report.html:97 UI/Reports/balance_sheet.html:112
-#: UI/Reports/display_report.html:82
+#: UI/Contact/pricelist.html:105 UI/Reports/PNL.html:109
+#: UI/Reports/aging_report.html:96 UI/Reports/balance_sheet.html:110
+#: UI/Reports/display_report.html:55
 msgid "PDF"
 msgstr "PDF"
 
@@ -5077,8 +5104,8 @@ msgstr "PDF"
 msgid "PO #"
 msgstr "Ostutellimus"
 
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:76
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:216
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:75
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:224
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:275
 #: lib/LedgerSMB/Report/Orders.pm:238 old/bin/aa.pl:655 old/bin/is.pl:549
 #: old/bin/oe.pl:1914 old/bin/oe.pl:412
@@ -5118,8 +5145,8 @@ msgstr "Saateelehe Number puudu!"
 msgid "Packing list"
 msgstr "Saateleht"
 
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:95
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:244
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:94
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:252
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:290
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:145
 #: lib/LedgerSMB/Scripts/payment.pm:932
@@ -5147,7 +5174,7 @@ msgstr ""
 msgid "Part Group"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Contact/History.pm:81
+#: lib/LedgerSMB/Report/Contact/History.pm:80
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:95
 #: lib/LedgerSMB/Report/Inventory/History.pm:121
 #: lib/LedgerSMB/Report/Inventory/Search.pm:219
@@ -5176,7 +5203,7 @@ msgstr ""
 msgid "Partial"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:728
+#: lib/LedgerSMB/Scripts/asset.pm:730
 msgid "Partial Disposal Report [_1] on date [_2]"
 msgstr ""
 
@@ -5244,7 +5271,7 @@ msgstr "Kreditoorne võlgnevus"
 msgid "Payment"
 msgstr "Makse"
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:160
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:159
 msgid "Payment Amount"
 msgstr ""
 
@@ -5306,11 +5333,11 @@ msgstr ""
 msgid "Percent"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:698
+#: lib/LedgerSMB/Scripts/asset.pm:700
 msgid "Percent Disposed"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:710
+#: lib/LedgerSMB/Scripts/asset.pm:712
 msgid "Percent Remaining"
 msgstr ""
 
@@ -5477,7 +5504,7 @@ msgstr ""
 msgid "Please use the 1.3 UI to add the GIFI accounts"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:238 old/bin/aa.pl:945
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:237 old/bin/aa.pl:945
 #: old/bin/aa.pl:990 old/bin/aa.pl:994 old/bin/aa.pl:998 old/bin/gl.pl:244
 #: old/bin/gl.pl:246 old/bin/ir.pl:1023 old/bin/ir.pl:539 old/bin/ir.pl:585
 #: old/bin/is.pl:1122 old/bin/is.pl:606 old/bin/is.pl:656
@@ -5485,7 +5512,7 @@ msgstr ""
 msgid "Post"
 msgstr "Postita"
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:193
+#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:196
 msgid "Post Batch"
 msgstr ""
 
@@ -5607,7 +5634,7 @@ msgstr "Peamine telefon"
 msgid "Print"
 msgstr "Trüki"
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:221
+#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:224
 msgid "Print Batch"
 msgstr ""
 
@@ -5667,15 +5694,15 @@ msgstr ""
 msgid "Printing Work Order [_1]"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:607
+#: lib/LedgerSMB/Scripts/asset.pm:608
 msgid "Prior Dep."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:601
+#: lib/LedgerSMB/Scripts/asset.pm:602
 msgid "Prior Through"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:374 lib/LedgerSMB/Scripts/asset.pm:828
+#: lib/LedgerSMB/Scripts/asset.pm:374 lib/LedgerSMB/Scripts/asset.pm:831
 msgid "Proceeds"
 msgstr ""
 
@@ -5735,7 +5762,7 @@ msgstr "Ostu kuupäev"
 msgid "Purchase Date:"
 msgstr "Ostu kuupäev:"
 
-#: lib/LedgerSMB/Report/Contact/History.pm:137
+#: lib/LedgerSMB/Report/Contact/History.pm:136
 #: UI/Reports/filters/purchase_history.html:9
 msgid "Purchase History"
 msgstr "Ostu ajalugu"
@@ -5761,7 +5788,7 @@ msgid "Purchase Orders"
 msgstr "Hanketellimused"
 
 #: lib/LedgerSMB/Report/Listings/Asset.pm:100
-#: lib/LedgerSMB/Report/Listings/Asset.pm:132 lib/LedgerSMB/Scripts/asset.pm:341
+#: lib/LedgerSMB/Report/Listings/Asset.pm:131 lib/LedgerSMB/Scripts/asset.pm:341
 msgid "Purchase Value"
 msgstr ""
 
@@ -5778,7 +5805,7 @@ msgstr "Hanketellimus"
 msgid "Purchased"
 msgstr "Ostetud"
 
-#: lib/LedgerSMB/Report/Contact/History.pm:89
+#: lib/LedgerSMB/Report/Contact/History.pm:88
 #: lib/LedgerSMB/Report/Inventory/History.pm:158
 #: lib/LedgerSMB/Report/Inventory/Search.pm:319 old/bin/ic.pl:1250
 #: old/bin/ic.pl:2087 old/bin/io.pl:237 old/bin/oe.pl:1959 old/bin/oe.pl:2241
@@ -5993,13 +6020,13 @@ msgstr ""
 msgid "Recurring Transactions"
 msgstr "Korduvad Tehingud"
 
-#: lib/LedgerSMB/Report/Budget/Search.pm:131
-#: lib/LedgerSMB/Report/Budget/Search.pm:83 lib/LedgerSMB/Report/GL.pm:221
-#: lib/LedgerSMB/Report/GL.pm:97
+#: lib/LedgerSMB/Report/Budget/Search.pm:130
+#: lib/LedgerSMB/Report/Budget/Search.pm:82 lib/LedgerSMB/Report/GL.pm:220
+#: lib/LedgerSMB/Report/GL.pm:96
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:106
-#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:117
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:100
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:147 old/bin/am.pl:297
+#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:120
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:146
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:99 old/bin/am.pl:297
 #: old/bin/arap.pl:572 UI/Reports/filters/budget_search.html:18
 #: UI/Reports/filters/gl.html:23 UI/Reports/filters/gl.html:210
 #: UI/Reports/filters/unapproved.html:29 UI/accounts/yearend.html:32
@@ -6069,12 +6096,12 @@ msgstr ""
 msgid "Report Generated By:"
 msgstr ""
 
-#: UI/Reports/aging_report.html:11 UI/Reports/display_report.html:25
+#: UI/Reports/aging_report.html:9 UI/Reports/display_report.html:16
 #: templates/demo/display_report.html:29 templates/demo/display_report.tex:34
 msgid "Report Name"
 msgstr "Aruande nimi"
 
-#: lib/LedgerSMB/Scripts/asset.pm:441
+#: lib/LedgerSMB/Scripts/asset.pm:541
 msgid "Report Results"
 msgstr ""
 
@@ -6086,7 +6113,7 @@ msgstr ""
 msgid "Report Type"
 msgstr "Aruande tüüp"
 
-#: lib/LedgerSMB/Scripts/asset.pm:632
+#: lib/LedgerSMB/Scripts/asset.pm:633
 msgid "Report [_1] on date [_2]"
 msgstr ""
 
@@ -6154,7 +6181,7 @@ msgstr ""
 msgid "Required by"
 msgstr "Tarnetähtaeg"
 
-#: lib/LedgerSMB.pm:459 lib/LedgerSMB.pm:460
+#: lib/LedgerSMB.pm:495 lib/LedgerSMB.pm:496
 msgid "Required input not provided"
 msgstr ""
 
@@ -6332,8 +6359,8 @@ msgstr "Tervitus"
 msgid "Sales:"
 msgstr "Müük:"
 
-#: lib/LedgerSMB/Report/Contact/History.pm:122
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:274
+#: lib/LedgerSMB/Report/Contact/History.pm:121
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:282
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:308 old/bin/aa.pl:480
 #: old/bin/is.pl:380 old/bin/oe.pl:539 UI/Reports/filters/contact_search.html:61
 #: UI/Reports/filters/invoice_outstanding.html:178
@@ -6511,7 +6538,7 @@ msgstr "Ajakava"
 msgid "Scheduled"
 msgstr "Planeeritud"
 
-#: lib/LedgerSMB/Scripts/payment.pm:691 lib/LedgerSMB/Template/UI.pm:137
+#: lib/LedgerSMB/Scripts/payment.pm:691 lib/LedgerSMB/Template/UI.pm:124
 #: old/bin/printer.pl:129 UI/lib/utilities.html:44
 msgid "Screen"
 msgstr "Ekraan"
@@ -6695,7 +6722,7 @@ msgstr ""
 msgid "Sell"
 msgstr "Müüma"
 
-#: lib/LedgerSMB/Report/Contact/History.pm:99
+#: lib/LedgerSMB/Report/Contact/History.pm:98
 #: lib/LedgerSMB/Report/Inventory/History.pm:154
 #: lib/LedgerSMB/Report/Inventory/Search.pm:253 old/bin/ic.pl:1112
 #: old/bin/ic.pl:431 UI/Contact/pricelist.csv:31 UI/Contact/pricelist.html:43
@@ -6752,7 +6779,7 @@ msgstr "Sept"
 msgid "Separate Duties"
 msgstr ""
 
-#: lib/LedgerSMB.pm:542 old/bin/aa.pl:75 old/bin/gl.pl:70 old/bin/io.pl:72
+#: lib/LedgerSMB.pm:578 old/bin/aa.pl:75 old/bin/gl.pl:70 old/bin/io.pl:72
 msgid "September"
 msgstr "September"
 
@@ -6772,7 +6799,7 @@ msgstr "Seeria #"
 msgid "Serial No."
 msgstr "Seerianr."
 
-#: lib/LedgerSMB/Report/Contact/History.pm:112
+#: lib/LedgerSMB/Report/Contact/History.pm:111
 #: lib/LedgerSMB/Report/Inventory/History.pm:167
 #: lib/LedgerSMB/Report/Inventory/Search.pm:328
 #: UI/Reports/filters/purchase_history.html:332
@@ -6858,8 +6885,8 @@ msgstr ""
 msgid "Ship To:"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:120
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:286
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:119
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:294
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:317
 #: lib/LedgerSMB/Report/Orders.pm:250
 #: UI/Reports/filters/invoice_outstanding.html:60
@@ -6906,8 +6933,8 @@ msgstr "Saatmise Kuupäev puudub"
 msgid "Shipping Label"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:116
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:282
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:115
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:290
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:314
 #: lib/LedgerSMB/Report/Orders.pm:246 old/bin/is.pl:513 old/bin/oe.pl:1887
 #: old/bin/oe.pl:602 UI/Reports/filters/invoice_outstanding.html:261
@@ -6978,8 +7005,8 @@ msgstr "Müüdud"
 msgid "Some"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Budget/Search.pm:133 lib/LedgerSMB/Report/GL.pm:130
-#: lib/LedgerSMB/Report/GL.pm:223
+#: lib/LedgerSMB/Report/Budget/Search.pm:132 lib/LedgerSMB/Report/GL.pm:129
+#: lib/LedgerSMB/Report/GL.pm:222
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:81
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:136
 #: lib/LedgerSMB/Scripts/payment.pm:198 lib/LedgerSMB/Scripts/recon.pm:489
@@ -7025,14 +7052,14 @@ msgstr "Standard"
 msgid "Standard Industrial Codes"
 msgstr "Standardiseeritud Tööstuskood"
 
-#: lib/LedgerSMB/Report/Budget/Search.pm:125
-#: lib/LedgerSMB/Report/Budget/Search.pm:73
-#: lib/LedgerSMB/Report/Budget/Variance.pm:123
-#: lib/LedgerSMB/Report/Contact/History.pm:153 lib/LedgerSMB/Report/GL.pm:215
+#: lib/LedgerSMB/Report/Budget/Search.pm:124
+#: lib/LedgerSMB/Report/Budget/Search.pm:72
+#: lib/LedgerSMB/Report/Budget/Variance.pm:122
+#: lib/LedgerSMB/Report/Contact/History.pm:152 lib/LedgerSMB/Report/GL.pm:214
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:83
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:158
 #: lib/LedgerSMB/Report/Listings/Business_Unit.pm:67
-#: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:137
+#: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:136
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:129 UI/Contact/divs/credit.html:30
 #: UI/Contact/divs/employee.html:132 UI/Reports/filters/budget_search.html:41
 #: UI/budgetting/budget_entry.html:38 UI/business_units/edit.html:55
@@ -7057,7 +7084,7 @@ msgid "Startdate"
 msgstr "Alguskuupäev"
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:164
-#: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:80 UI/Reports/co/filter_bm.html:91
+#: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:79 UI/Reports/co/filter_bm.html:91
 msgid "Starting Balance"
 msgstr ""
 
@@ -7109,8 +7136,8 @@ msgstr ""
 msgid "Statement Date To"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/report_aging.pm:143
-#: lib/LedgerSMB/Scripts/report_aging.pm:187
+#: lib/LedgerSMB/Scripts/report_aging.pm:146
+#: lib/LedgerSMB/Scripts/report_aging.pm:192
 #: UI/Reports/filters/search_goods.html:25
 #, fuzzy
 msgid "Status"
@@ -7222,8 +7249,8 @@ msgstr "KOKKU"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:75
 #: lib/LedgerSMB/Report/Listings/Asset.pm:128
-#: lib/LedgerSMB/Report/Listings/Asset.pm:90 lib/LedgerSMB/Scripts/asset.pm:567
-#: lib/LedgerSMB/Scripts/asset.pm:676 lib/LedgerSMB/Scripts/asset.pm:783
+#: lib/LedgerSMB/Report/Listings/Asset.pm:90 lib/LedgerSMB/Scripts/asset.pm:568
+#: lib/LedgerSMB/Scripts/asset.pm:678 lib/LedgerSMB/Scripts/asset.pm:786
 msgid "Tag"
 msgstr ""
 
@@ -7231,8 +7258,8 @@ msgstr ""
 msgid "Tag:"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:90
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:234
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:89
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:242
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:284 old/bin/ic.pl:535
 #: old/bin/ic.pl:664 UI/Reports/filters/invoice_outstanding.html:199
 #: UI/Reports/filters/invoice_search.html:323 UI/Reports/filters/orders.html:185
@@ -7555,8 +7582,8 @@ msgstr ""
 msgid "Thu"
 msgstr "Neljapäev"
 
-#: lib/LedgerSMB/Report/GL.pm:145
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:270
+#: lib/LedgerSMB/Report/GL.pm:144
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:278
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:305
 #: UI/Reports/filters/gl.html:267
 #: UI/Reports/filters/invoice_outstanding.html:253
@@ -7635,7 +7662,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:111
 #: lib/LedgerSMB/Report/Timecards.pm:149
 #: lib/LedgerSMB/Report/Trial_Balance.pm:198
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:151
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:150
 #: UI/Reports/filters/unapproved.html:43
 msgid "To Date"
 msgstr ""
@@ -7681,14 +7708,14 @@ msgstr ""
 msgid "Top-level"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Aging.pm:164
+#: lib/LedgerSMB/Report/Aging.pm:161
 #: lib/LedgerSMB/Report/Inventory/History.pm:163
 #: lib/LedgerSMB/Report/Inventory/Search.pm:324
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:122
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:239
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:247
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:287
 #: lib/LedgerSMB/Report/Taxform/Details.pm:105
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:99 lib/LedgerSMB/Scripts/asset.pm:493
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:99 lib/LedgerSMB/Scripts/asset.pm:492
 #: lib/LedgerSMB/Scripts/payment.pm:931 old/bin/ir.pl:840 old/bin/is.pl:940
 #: old/bin/oe.pl:846 UI/Reports/filters/invoice_outstanding.html:206
 #: UI/Reports/filters/invoice_search.html:329 UI/payments/payment1.html:99
@@ -7710,7 +7737,7 @@ msgstr ""
 msgid "Total"
 msgstr "Kokku"
 
-#: lib/LedgerSMB/Scripts/asset.pm:625
+#: lib/LedgerSMB/Scripts/asset.pm:626
 msgid "Total Accum. Dep."
 msgstr ""
 
@@ -7738,7 +7765,7 @@ msgstr "Tehing"
 msgid "Transaction Approval"
 msgstr "Tehingu kinnitamine"
 
-#: lib/LedgerSMB/Report/PNL/Invoice.pm:85
+#: lib/LedgerSMB/Report/PNL/Invoice.pm:83
 #: UI/Reports/filters/purchase_history.html:129
 #: UI/Reports/filters/purchase_history.html:342
 msgid "Transaction Date"
@@ -7752,7 +7779,7 @@ msgstr "Tehingu Kuupäev puudu!"
 msgid "Transaction Dates"
 msgstr "Tehingte Kuupäevad"
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:190
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:189
 #: UI/Reports/filters/batches.html:12 UI/Reports/filters/unapproved.html:20
 #: UI/reconciliation/report.html:114 UI/reconciliation/report.html:249
 msgid "Transaction Type"
@@ -7861,9 +7888,9 @@ msgid "Two"
 msgstr "kaks"
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:149
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:129
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:86
-#: lib/LedgerSMB/Scripts/asset.pm:471 old/bin/io.pl:1707
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:128
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:85
+#: lib/LedgerSMB/Scripts/asset.pm:470 old/bin/io.pl:1707
 #: UI/Contact/divs/address.html:79 UI/Contact/divs/address.html:118
 #: UI/Contact/divs/contact_info.html:29 UI/Contact/divs/credit.html:25
 #: UI/Contact/divs/wage.html:7 UI/Reports/filters/search_goods.html:13
@@ -7921,7 +7948,7 @@ msgstr ""
 msgid "Unique nonobsolete partnumbers"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Contact/History.pm:93
+#: lib/LedgerSMB/Report/Contact/History.pm:92
 #: lib/LedgerSMB/Report/Inventory/History.pm:133
 #: lib/LedgerSMB/Report/Inventory/Search.pm:231 old/bin/ic.pl:1252
 #: old/bin/ic.pl:783 old/bin/io.pl:239 old/bin/oe.pl:1961
@@ -7962,11 +7989,11 @@ msgstr ""
 msgid "Unknown error preventing login"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:252
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:251
 msgid "Unlock"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:214
+#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:217
 msgid "Unlock Batch"
 msgstr ""
 
@@ -8095,7 +8122,7 @@ msgstr ""
 msgid "Use web service for current exchange rates"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Budget/Variance.pm:90
+#: lib/LedgerSMB/Report/Budget/Variance.pm:89
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:132
 msgid "Used"
 msgstr "Kasutatud"
@@ -8109,7 +8136,7 @@ msgstr "Kasutaja"
 msgid "User Name"
 msgstr "Kasutajanimi"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1229
+#: lib/LedgerSMB/Scripts/setup.pm:1228
 msgid "User already exists. Import?"
 msgstr ""
 
@@ -8157,7 +8184,7 @@ msgstr ""
 msgid "Variable"
 msgstr "Kasutatav"
 
-#: lib/LedgerSMB/Report/Budget/Variance.pm:95
+#: lib/LedgerSMB/Report/Budget/Variance.pm:94
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:107
 msgid "Variance"
 msgstr ""
@@ -8166,8 +8193,8 @@ msgstr ""
 msgid "Variance:"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Aging.pm:83
-#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:187
+#: lib/LedgerSMB/Report/Aging.pm:86
+#: lib/LedgerSMB/Report/Invoices/Outstanding.pm:195
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:248
 #: lib/LedgerSMB/Report/Orders.pm:182 lib/LedgerSMB/Report/Orders.pm:188
 #: old/bin/aa.pl:519 old/bin/ic.pl:1014 old/bin/ir.pl:404 old/bin/oe.pl:2508
@@ -8241,7 +8268,7 @@ msgstr ""
 msgid "Vendor not on file!"
 msgstr "Tarnija pole failis!"
 
-#: lib/LedgerSMB/Report/GL.pm:103 lib/LedgerSMB/Report/Unapproved/Drafts.pm:106
+#: lib/LedgerSMB/Report/GL.pm:102 lib/LedgerSMB/Report/Unapproved/Drafts.pm:105
 #: UI/Reports/filters/gl.html:217
 #, fuzzy
 msgid "Vendor/Customer"
@@ -8255,7 +8282,7 @@ msgstr ""
 msgid "Void"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:145
+#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:148
 msgid "Voucher List"
 msgstr "Vautšerite nimekiri"
 
@@ -8389,13 +8416,13 @@ msgstr "Kas soovite migreerida andmebaasi?"
 msgid "Would you like to upgrade the database?"
 msgstr ""
 
-#: UI/Contact/pricelist.html:111 UI/Reports/aging_report.html:106
-#: UI/Reports/display_report.html:94
+#: UI/Contact/pricelist.html:111 UI/Reports/aging_report.html:105
+#: UI/Reports/display_report.html:67
 msgid "XLS"
 msgstr "XLS"
 
-#: UI/Contact/pricelist.html:117 UI/Reports/aging_report.html:110
-#: UI/Reports/display_report.html:98
+#: UI/Contact/pricelist.html:117 UI/Reports/aging_report.html:109
+#: UI/Reports/display_report.html:71
 msgid "XLSX"
 msgstr ""
 
@@ -8636,7 +8663,7 @@ msgstr ""
 msgid "partial disposal"
 msgstr ""
 
-#: UI/Reports/aging_report.html:93 UI/Reports/display_report.html:79
+#: UI/Reports/aging_report.html:92 UI/Reports/display_report.html:52
 msgid "permalink"
 msgstr "püsiviide"
 

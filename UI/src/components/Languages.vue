@@ -15,6 +15,7 @@ const store = useLanguagesStore();
 </script>
 
 <template>
+    <h1 class="listtop">{{ t("Configure languages") }}</h1>
     <ConfigTable
         :columns="COLUMNS"
         :store="store"

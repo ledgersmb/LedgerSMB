@@ -14,6 +14,7 @@ const warehousesStore = useWarehousesStore();
 </script>
 
 <template>
+    <h1 class="listtop">{{ t("Configure warehouses") }}</h1>
     <ConfigTable
         :columns="COLUMNS"
         :store="warehousesStore"

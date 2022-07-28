@@ -15,6 +15,7 @@ const store = useGIFIsStore();
 </script>
 
 <template>
+    <h1 class="listtop">{{ t("Configure GIFI codes") }}</h1>
     <ConfigTable
         :columns="COLUMNS"
         :store="store"
