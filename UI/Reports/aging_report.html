@@ -4,36 +4,35 @@ PROCESS "elements.html";
 
 PROCESS "dynatable.html";
 
-LINK = request.script _ '?' _ request.query_string _ '&amp;company=' _ DBNAME;
-
 %]
-<body class="lsmb [% dojo_theme %]">
+<body>
 <div class="report_header"><label>[% text('Report Name') %]:</label>
 <span class="report_header">[% name %]</span>
 </div>
 <div class="report_header"><label>[% text('Company') %]:</label>
-<span class="report_header">[% request.company %]</span>
+<span class="report_header">[% SETTINGS.company_name %]</span>
 </div>
 [% FOREACH LINE IN hlines %]
 <div class="report_header"><label>[% LINE.text %]:</label>
-<span class="report_header">[% request.${LINE.name} %]</span>
+<span class="report_header">[% LINE.value %]</span>
 </div>
 [% END %]
 
 <form data-dojo-type="lsmb/Form" method="get" action="report_aging.pl">
 [%
 
+PROCESS input element_data = {
+         name = 'form_id'
+         value = FORM_ID
+         type = 'hidden'
+};
 FOREACH KEY IN [ 'entity_class', 'to_date', 'report_type',
                  'overdue', 'c0', 'c30', 'c60', 'c90'];
-    IF KEY == 'rows';
-       NEXT;
-    ELSE;
-        PROCESS input element_data = {
-             name = KEY
-             type = 'hidden'
-            value = request.$KEY
-        };
-    END;
+    PROCESS input element_data = {
+          name = KEY
+          type = 'hidden'
+          value = report.$KEY
+    };
 END;
 
 PROCESS input element_data = {
@@ -90,27 +89,27 @@ PROCESS button element_data = {
 };
  %]
 </form><br />
-<a href="[% LINK %]">[[% text('permalink') %]]</a>&nbsp;
+<a href="[% REPORT_LINK %]">[[% text('permalink') %]]</a>&nbsp;
 [% IF FORMATS.grep('PDF').size()
 %]
 <a target="_blank" rel="noopener noreferrer"
-   href="[% LINK _ '&amp;format=PDF' %]">[[% text('PDF') %]]</a>&nbsp;
+   href="[% REPORT_LINK _ '&amp;format=PDF' %]">[[% text('PDF') %]]</a>&nbsp;
 [% END;
 IF FORMATS.grep('TXT').size();
 %]
 <a target="_blank" rel="noopener noreferrer"
-   href="[% LINK _ '&amp;format=CSV' %]">[[% text('CSV') %]]</a>&nbsp;
+   href="[% REPORT_LINK _ '&amp;format=CSV' %]">[[% text('CSV') %]]</a>&nbsp;
 [% END;
 IF FORMATS.grep('XLS').size() %]
 <a target="_blank" rel="noopener noreferrer"
-   href="[% LINK _ '&amp;format=XLS' %]">[[% text('XLS') %]]</a>&nbsp;
+   href="[% REPORT_LINK _ '&amp;format=XLS' %]">[[% text('XLS') %]]</a>&nbsp;
 [% END;
 IF FORMATS.grep('XLSX').size() %]
 <a target="_blank" rel="noopener noreferrer"
-   href="[% LINK _ '&amp;format=XLSX' %]">[[% text('XLSX') %]]</a>&nbsp;
+   href="[% REPORT_LINK _ '&amp;format=XLSX' %]">[[% text('XLSX') %]]</a>&nbsp;
 [% END;
 IF FORMATS.grep('ODS').size() %]
 <a target="_blank" rel="noopener noreferrer"
-   href="[% LINK _ '&amp;format=ODS' %]">[[% text('ODS') %]]</a>&nbsp;
+   href="[% REPORT_LINK _ '&amp;format=ODS' %]">[[% text('ODS') %]]</a>&nbsp;
 [% END; %]
 </body>

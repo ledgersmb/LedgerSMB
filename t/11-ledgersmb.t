@@ -19,7 +19,7 @@ Log::Log4perl->easy_init($OFF);
 
 
 my $lsmb;
-my $request = Plack::Request->new({});
+my $request = Plack::Request->new({ 'lsmb.script' => 'test.pl' });
 
 
 ##table of subroutine tests

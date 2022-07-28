@@ -23,6 +23,9 @@ use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_CONFLICT );
 
+use LedgerSMB::PSGI::Util qw( template_response );
+use LedgerSMB::Report::Listings::Business_Type;
+use LedgerSMB::Report::Listings::SIC;
 use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.contacts';
@@ -93,7 +96,7 @@ sub _get_sic {
 }
 
 sub _get_sics {
-    my ($c) = @_;
+    my ($c, $formatter) = @_;
     my $sth = $c->dbh->prepare(
         q|SELECT * FROM sic ORDER BY code|
         ) or die $c->dbh->errstr;
@@ -108,7 +111,17 @@ sub _get_sics {
     }
     die $sth->errstr if $sth->err;
 
-    return \@results;
+    return {
+        items => \@results,
+        _links => [
+            map {
+                +{
+                    rel => 'download',
+                    href => "?format=$_",
+                    title => $_
+                }
+            } $formatter->get_formats->@* ]
+    };
 }
 
 sub _update_sic {
@@ -145,8 +158,20 @@ sub _update_sic {
 
 get api '/contacts/sic' => sub {
     my ($env, $r, $c, $body, $params) = @_;
+    my $formatter = $env->{wire}->get( 'output_formatter' );
 
-    my $response = _get_sics( $c );
+    if (my $format = $r->query_parameters->get('format')) {
+        my $report = LedgerSMB::Report::Listings::SIC->new(
+            _dbh => $c->dbh,
+            language => 'en',
+            );
+        my $renderer = $formatter->report_doc_renderer( $c->dbh, $format );
+
+        return template_response( $report->render( renderer => $renderer ),
+                                  disposition => 'attach');
+    }
+
+    my $response = _get_sics( $c, $formatter );
     return [ 200,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              $response  ];
@@ -286,7 +311,7 @@ sub _get_businesstype {
 }
 
 sub _get_businesstypes {
-    my ($c) = @_;
+    my ($c, $formatter) = @_;
     my $sth = $c->dbh->prepare(
         q|SELECT * FROM business ORDER BY id|
         ) or die $c->dbh->errstr;
@@ -302,7 +327,17 @@ sub _get_businesstypes {
     }
     die $sth->errstr if $sth->err;
 
-    return \@results;
+    return {
+        items => \@results,
+        _links => [
+            map {
+                +{
+                    rel => 'download',
+                    href => "?format=$_",
+                    title => $_
+                }
+            } $formatter->get_formats->@* ]
+    };
 }
 
 sub _update_businesstype {
@@ -340,8 +375,20 @@ sub _update_businesstype {
 
 get api '/contacts/business-types' => sub {
     my ($env, $r, $c, $body, $params) = @_;
+    my $formatter = $env->{wire}->get( 'output_formatter' );
 
-    my $response = _get_businesstypes( $c );
+    if (my $format = $r->query_parameters->get('format')) {
+        my $report = LedgerSMB::Report::Listings::Business_Type->new(
+            _dbh => $c->dbh,
+            language => 'en',
+            );
+        my $renderer = $formatter->report_doc_renderer( $c->dbh, $format );
+
+        return template_response( $report->render( renderer => $renderer ),
+                                  disposition => 'attach');
+    }
+
+    my $response = _get_businesstypes( $c, $formatter );
     return [ 200,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              $response  ];
@@ -449,9 +496,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
+                type: object
+                required:
+                  - items
+                properties:
+                  _links:
+                    type: array
+                    items:
+                      type: object
                 items:
-                  $ref: '#/components/schemas/SIC'
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SIC'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -620,9 +676,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
+                type: object
+                required:
+                  - items
+                properties:
+                  _links:
+                    type: array
+                    items:
+                      type: object
                 items:
-                  $ref: '#/components/schemas/BusinessType'
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/BusinessType'
         400:
           $ref: '#/components/responses/400'
         401:

@@ -10,6 +10,7 @@ export const useGIFIsStore = defineStore("gifis", {
             fields: ["accno", "description"],
             id: "accno",
             items: [],
+            _links: [],
             url: "gl/gifi"
         };
     }

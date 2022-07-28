@@ -8,8 +8,7 @@ LedgerSMB::Report::Aging - AR/AP Aging reports for LedgerSMB
 =head1 SYNPOSIS
 
   my $agereport = LedgerSMB::Report::Aging->new(%$request);
-  $agereport->run;
-  $agereport->render($request, $format);
+  $agereport->render();
 
 =head1 DESCRIPTION
 
@@ -30,6 +29,10 @@ use LedgerSMB::Business_Unit;
 use LedgerSMB::I18N;
 
 use List::Util qw(none);
+
+
+has 'languages' => (is => 'ro',
+                    required => 1);
 
 =head1 PROPERTIES
 
@@ -87,12 +90,6 @@ sub columns {
         $base_href = 'ar.pl?action=edit&id='; # for details
     }
 
-
-    ###BUG: This is bleeding abstractions like crazy: the Report class itself
-    # already *has* LedgerSMB::I18N mixed in (::I18N is a role!)
-    my @languages =
-        LedgerSMB::I18N::get_language_list($self,$request->{_user}->{language});
-
     push @COLUMNS,
       {col_id => 'select',
          type => 'checkbox',
@@ -108,7 +105,7 @@ sub columns {
       {col_id => 'language',
          name => $self->Text('Language'),
          type => 'select',
-      options => \@languages,
+      options => $self->languages,
        pwidth => '0', };
 
    if ($self->report_type eq 'detail'){
@@ -198,15 +195,7 @@ Returns the name of the template to use
 =cut
 
 sub template {
-    my ($self) = @_;
-    if (not $self->format or (uc($self->format) eq 'HTML')
-           or (uc($self->format) eq 'PDF'))
-    {
-           return 'aging_report';
-    }
-    else {
-       return undef;
-    }
+    return 'aging_report';
 }
 
 =back
@@ -287,7 +276,7 @@ Runs the report, and assigns rows to $self->rows.
 =cut
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'report__invoice_aging_' .
                                                 $self->report_type);
     my @result;
@@ -295,7 +284,7 @@ sub run_report{
     for my $row (@rows) {
         next if ($self->has_details_filter
                  and none { $_ == $row->{id} } $self->details_filter->@*);
-        $row->{language} //= $request->{_user}->{language};
+        $row->{language} //= $self->language;
         push @result, $row;
 
         if ($self->report_type eq 'detail') {

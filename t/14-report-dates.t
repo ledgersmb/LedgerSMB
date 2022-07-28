@@ -3,6 +3,7 @@
 use Test2::V0;
 
 use Data::Dumper;
+use URI;
 
 use LedgerSMB::App_State;
 use LedgerSMB::Report::PNL::Income_Statement;
@@ -25,6 +26,7 @@ LedgerSMB::App_State::set_User({});
 
 {  # Scenario 1: PNL, from & to dates, no comparison periods
     my $rpt = LedgerSMB::Report::PNL::Income_Statement->new(
+        _uri => URI->new,
         basis => 'accrual',
         ignore_yearend => 'all',
         from_date => '2016-01-01',
@@ -40,6 +42,7 @@ LedgerSMB::App_State::set_User({});
 
 {  # Scenario 2: PNL, from & to dates, 1 comparison period (by dates)
     my $rpt = LedgerSMB::Report::PNL::Income_Statement->new(
+        _uri => URI->new,
         basis => 'accrual',
         ignore_yearend => 'all',
         from_date => '2016-01-01',
@@ -62,6 +65,7 @@ LedgerSMB::App_State::set_User({});
 
 {  # Scenario 3: PNL, from date, 1 comparison period (by periods/year/date)
     my $rpt = LedgerSMB::Report::PNL::Income_Statement->new(
+        _uri => URI->new,
         basis => 'accrual',
         ignore_yearend => 'all',
         from_date => '2016-01-05',
@@ -83,6 +87,7 @@ LedgerSMB::App_State::set_User({});
 
 {  # Scenario 4: PNL, from month & year, 1 comparison period (by periods/year)
     my $rpt = LedgerSMB::Report::PNL::Income_Statement->new(
+        _uri => URI->new,
         basis => 'accrual',
         ignore_yearend => 'all',
         from_date => '2016-01-01',
@@ -106,6 +111,7 @@ LedgerSMB::App_State::set_User({});
 
 {  # Scenario 5: PNL, from month & year, 1 comparison period (by periods/quarter)
     my $rpt = LedgerSMB::Report::PNL::Income_Statement->new(
+        _uri => URI->new,
         basis => 'accrual',
         ignore_yearend => 'all',
         from_month => '01',
@@ -128,6 +134,7 @@ LedgerSMB::App_State::set_User({});
 
 {  # Scenario 6: PNL, from date, 1 comparison period (by periods/month)
     my $rpt = LedgerSMB::Report::PNL::Income_Statement->new(
+        _uri => URI->new,
         basis => 'accrual',
         ignore_yearend => 'all',
         from_month => '01',
@@ -150,6 +157,7 @@ LedgerSMB::App_State::set_User({});
 
 {  # Scenario 7: PNL, from date, 9 comparisons period (by periods/month)
     my $rpt = LedgerSMB::Report::PNL::Income_Statement->new(
+        _uri => URI->new,
         basis => 'accrual',
         ignore_yearend => 'all',
         from_month => '01',
@@ -208,6 +216,7 @@ LedgerSMB::App_State::set_User({});
 
 {  # Scenario 1: B/S, from & to dates, no comparison periods
     my $rpt = LedgerSMB::Report::Balance_Sheet->new(
+        _uri => URI->new,
         basis => 'accrual',
         ignore_yearend => 'all',
         from_date => '2016-01-01',
@@ -223,6 +232,7 @@ LedgerSMB::App_State::set_User({});
 
 {  # Scenario 2: B/S, from & to dates, 1 comparison period (by dates)
     my $rpt = LedgerSMB::Report::Balance_Sheet->new(
+        _uri => URI->new,
         ignore_yearend => 'all',
         from_date => '2016-01-01',
         to_date => '2016-12-31',
@@ -246,6 +256,7 @@ LedgerSMB::App_State::set_User({});
 
 {  # Scenario 3: B/S, from & to dates, 1 comparison period (by periods)
     my $rpt = LedgerSMB::Report::Balance_Sheet->new(
+        _uri => URI->new,
         ignore_yearend => 'all',
         from_date => '2016-01-01',
         to_date => '2016-12-31',
@@ -267,6 +278,7 @@ LedgerSMB::App_State::set_User({});
 
 {  # Scenario 4: B/S, from month & year, 1 comparison period (by periods)
     my $rpt = LedgerSMB::Report::Balance_Sheet->new(
+        _uri => URI->new,
         basis => 'accrual',
         ignore_yearend => 'all',
         from_month => '01',

@@ -3,10 +3,11 @@
 use Test2::V0;
 
 use Data::Dumper;
+use URI;
 
 use LedgerSMB::Report::Hierarchical;
 
-my $report = LedgerSMB::Report::Hierarchical->new;
+my $report = LedgerSMB::Report::Hierarchical->new(_uri => URI->new);
 
 # all we need to test now is the addition of comparisons, the rest
 # requires a database connection
@@ -29,7 +30,7 @@ is($report->cells, {'1' => { '1' => 15 },
                            '3' => { '1' => 3 },
           }, 'report accumulates cell value');
 
-my $compared = LedgerSMB::Report::Hierarchical->new;
+my $compared = LedgerSMB::Report::Hierarchical->new(_uri => URI->new);
 
 # all we need to test now is the addition of comparisons, the rest
 # requires a database connection

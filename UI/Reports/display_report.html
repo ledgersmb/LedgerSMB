@@ -5,63 +5,36 @@ PROCESS "elements.html";
 PROCESS "dynatable.html";
 
 FORMATS = LIST_FORMATS();
-QSTRING = request.query_string;
-
-IF NOT QSTRING.match('company=');
-   ESCAPED_COMPANY = request.company FILTER uri;
-   QSTRING = QSTRING _ '&amp;company=' _ ESCAPED_COMPANY;
-END;
-
-LINK = request.script _ '?' _ QSTRING;
-
 
 %]
 <body class="lsmb [% dojo_theme %]">
 <form data-dojo-type="lsmb/Form"
       method="post"
-      action="[% request.script %]"
+      action="[% SCRIPT %]"
       id="search-report-dynatable" >
   <div class="heading_section">
     <div class="report_header"><label>[% text('Report Name') %]:</label>
       <span class="report_header">[% name %]</span>
     </div>
     <div class="report_header"><label>[% text('Company') %]:</label>
-      <span class="report_header">[% request.company %]</span>
+      <span class="report_header">[% SETTINGS.company_name %]</span>
     </div>
     [% FOREACH LINE IN hlines %]
     <div class="report_header"><label>[% LINE.text %]:</label>
-      <span class="report_header">
-        [%
-           IF LINE.value;
-              LINE.value;
-           ELSIF request.${LINE.name};
-              request.${LINE.name};
-           ELSE;
-              report.${LINE.name};
-           END;
-           %]
-      </span>
+      <span class="report_header"> [% LINE.value %] </span>
     </div>
     [% END %]
   </div>
   [% PROCESS input element_data = {
          name = 'form_id'
-         value = request.form_id
+         value = FORM_ID
          type = 'hidden'
       } %]
-  [% # legacy... we want explicit 'hiddens'...
-     FOREACH K IN request.hiddens.keys;
+  [% FOREACH K IN HIDDENS.keys;
          PROCESS input element_data = {
          name = K
          type = 'hidden'
-         value = request.hiddens.$K
-         };
-         END; %]
-  [% FOREACH K IN hiddens.keys;
-         PROCESS input element_data = {
-         name = K
-         type = 'hidden'
-         value = hiddens.$K
+         value = HIDDENS.$K
          };
          END; %]
   [% PROCESS dynatable tbody = {rows = rows }
@@ -76,26 +49,26 @@ END; %]
 FOREACH BUTTON IN buttons;
   PROCESS button element_data = BUTTON;
 END; %]<br />
-<a href="[% LINK %]">[[% text('permalink') %]]</a>&nbsp;
+<a href="[% REPORT_LINK %]">[[% text('permalink') %]]</a>&nbsp;
 [% IF FORMATS.grep('PDF').size() %]
 <a target="_blank" rel="noopener noreferrer"
-   href="[% LINK _ '&amp;format=PDF' %]">[[% text('PDF') %]]</a>&nbsp;
+   href="[% REPORT_LINK _ '&amp;format=PDF' %]">[[% text('PDF') %]]</a>&nbsp;
 [% END;
 IF FORMATS.grep('TXT').size(); %]
 <a target="_blank" rel="noopener noreferrer"
-   href="[% LINK _ '&amp;format=CSV' %]">[[% text('CSV') %]]</a>&nbsp;
+   href="[% REPORT_LINK _ '&amp;format=CSV' %]">[[% text('CSV') %]]</a>&nbsp;
 [% END;
 IF FORMATS.grep('ODS').size() %]
 <a target="_blank" rel="noopener noreferrer"
-   href="[% LINK _ '&amp;format=ODS' %]">[[% text('ODS') %]]</a>&nbsp;
+   href="[% REPORT_LINK _ '&amp;format=ODS' %]">[[% text('ODS') %]]</a>&nbsp;
 [% END;
 IF FORMATS.grep('XLS').size(); %]
 <a target="_blank" rel="noopener noreferrer"
-   href="[% LINK _ '&amp;format=XLS' %]">[[% text('XLS') %]]</a>&nbsp;
+   href="[% REPORT_LINK _ '&amp;format=XLS' %]">[[% text('XLS') %]]</a>&nbsp;
 [% END;
 IF FORMATS.grep('XLSX').size(); %]
 <a target="_blank" rel="noopener noreferrer"
-   href="[% LINK _ '&amp;format=XLSX' %]">[[% text('XLSX') %]]</a>&nbsp;
+   href="[% REPORT_LINK _ '&amp;format=XLSX' %]">[[% text('XLSX') %]]</a>&nbsp;
 [% END; %]
 </form>
 </body>

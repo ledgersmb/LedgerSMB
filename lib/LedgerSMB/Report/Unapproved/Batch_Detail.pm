@@ -11,8 +11,7 @@ in LedgerSMB
   my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(
       %$request
   );
-  $report->run;
-  $report->render($request, $format);
+  $report->render();
 
 =head1 DESCRIPTION
 
@@ -37,6 +36,10 @@ use LedgerSMB::Setting;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
+
+
+has languages => (is => 'ro',
+                  required => 1);
 
 =head1 PROPERTIES
 
@@ -153,7 +156,7 @@ Returns the inputs to display on header.
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'batch_id',
+    return [{value => $self->batch_id,
              text => $self->Text('Batch ID')}, ]
 }
 
@@ -237,12 +240,10 @@ Runs the report, and assigns rows to $self->rows.
 
 sub run_report{
     my ($self, $request) = @_;
-    my @languages =
-        LedgerSMB::I18N::get_language_list($self,$request->{_user}->{language});
 
     $self->options([{
        name => 'language',
-       options => \@languages,
+       options => $self->languages,
        default_value => [$self->default_language],
     }, {
        name => 'media',

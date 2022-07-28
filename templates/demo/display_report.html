@@ -11,36 +11,47 @@ releases. No explicit versioning was applied before 2021-01-04.
 -?>
 <?lsmb
 
-PROCESS "ui-header.html"
-   stylesheet = USER.stylesheet;
-
 PROCESS "dynatable.html";
 
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.6.0">
   <title></title>
+  <style>
+    table tbody tr:nth-child(2n) {
+        background-color: #e6e6fa;
+    }
+    table tbody tr:nth-child(2n+1) {
+        background-color: #ffeeec;
+    }
+    table td, table th {
+        padding: 0.2em 1ex;
+    }
+    table thead {
+        background-color: #bcd8f4;
+    }
+    label {
+        font-weight: bold;
+    }
+    div.heading-section {
+        margin-bottom: 2em;
+    }
+  </style>
 </head>
-<body class="lsmb <?lsmb dojo_theme ?>">
-  <div class="heading_section">
-    <div class="report_header">
-      <label><?lsmb text('Report Name') ?>:</label> <span class=
-      "report_header"><?lsmb name ?></span>
+<body>
+  <div class="heading-section">
+    <div class="report-header">
+      <label><?lsmb text('Report Name') ?>:</label>
+      <span class="report-header"><?lsmb name ?></span>
     </div>
-    <div class="report_header">
-      <label><?lsmb text('Company') ?>:</label> <span class=
-      "report_header"><?lsmb request.company ?></span>
+    <div class="report-header">
+      <label><?lsmb text('Company') ?>:</label>
+      <span class="report-header"><?lsmb SETTINGS.company_name ?></span>
     </div><?lsmb FOREACH LINE IN hlines ?>
-    <div class="report_header">
-      <label><?lsmb LINE.text ?>:</label> <span class="report_header"><?lsmb
-           IF request.${LINE.name};
-              request.${LINE.name};
-           ELSE;
-              report.${LINE.name};
-           END;
-           ?></span>
+    <div class="report-header">
+      <label><?lsmb LINE.text ?>:</label>
+      <span class="report-header"><?lsmb LINE.value ?></span>
     </div><?lsmb END ?>
   </div><?lsmb PROCESS dynatable tbody = {rows = rows }
                  attributes = {class = 'report', order_url = order_url } ?>

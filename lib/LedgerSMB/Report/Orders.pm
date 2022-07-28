@@ -8,7 +8,7 @@ LedgerSMB::Report::Orders - Search for Orders and Quotations in LedgerSMB
 =head1 SYNPOSIS
 
  my $report = LedgerSMB::Report::Orders->new(%$request);
- $report->render($request);
+ $report->render();
 
 =cut
 
@@ -290,7 +290,7 @@ script should do that separately.
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'order__search');
     for my $r(@rows){
        $r->{row_id} = $r->{id};

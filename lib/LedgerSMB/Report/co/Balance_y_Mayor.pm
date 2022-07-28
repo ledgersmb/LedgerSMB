@@ -8,8 +8,7 @@ LedgerSMB::Report::co::Balance_y_Mayor - Colombian Balance/Ledger Rpt
 =head1 SYNPOSIS
 
   my $bmreport = LedgerSMB::Report::co::Balance_y_Mayor->new(%$request);
-  $bmreport->run;
-  $bmreport->render($request, $format);
+  $bmreport->render();
 
 =head1 DESCRIPTION
 
@@ -133,10 +132,10 @@ Returns the inputs to display on header.
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'date_from',
-             text => $self->Text('Start Date')},
-            {name => 'date_to',
-             text =>  $self->Text('End Date')},]
+    return [{value => $self->date_from,
+             text  => $self->Text('Start Date')},
+            {value => $self->date_to,
+             text  =>  $self->Text('End Date')},]
 }
 
 =back
@@ -176,7 +175,7 @@ Runs the report, and assigns rows to $self->rows.
 =cut
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'report__general_balance');
     return $self->rows(\@rows);
 }

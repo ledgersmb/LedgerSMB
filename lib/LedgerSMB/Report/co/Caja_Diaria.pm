@@ -9,7 +9,7 @@ LedgerSMB::Report::co::Caja_Diaria - Caja Diaria Reports (Colombia)
 
   my $cdreport = LedgerSMB::Report::co::Caja_Diaria->new(%$request);
   $cdreport->run;
-  $cdreport->render($request, $format);
+  $cdreport->render();
 
 =head1 DESCRIPTION
 
@@ -125,14 +125,14 @@ Returns the inputs to display on header.
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'date_from',
-             text => $self->Text('Start Date')},
-            {name => 'date_to',
-             text => $self->Text('End Date')},
-            {name => 'accno',
-             text => $self->Text('Account Number Start')},
-            {name => 'reference',
-             text => $self->Text('Account Number End')},]
+    return [{value => $self->date_from,
+             text  => $self->Text('Start Date')},
+            {value => $self->date_to,
+             text  => $self->Text('End Date')},
+            {value => $self->accno,
+             text  => $self->Text('Account Number Start')},
+            {value => $self->reference,
+             text  => $self->Text('Account Number End')},]
 }
 
 =back
@@ -186,7 +186,7 @@ Runs the report, and assigns rows to $self->rows.
 =cut
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'report__cash_summary');
     for my $ref(@rows){
         $ref->{document_type} = $doctypes->{$ref->{document_type}}

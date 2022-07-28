@@ -8,7 +8,7 @@ LedgerSMB::Report::PNL::ECA - Income Statement-like Reports for Customers
 =head1 SYNPOSIS
 
  my $rpt = LedgerSMB::Report::PNL::ECA->new(%$request);
- $rpt->render($request);
+ $report->render();
 
 =head1 DESCRIPTION
 
@@ -82,11 +82,11 @@ sub name { my ($self) = @_; return $self->Text('ECA Income Statement') }
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'name',
+    return [{value => $self->legal_name,
             text => $self->Text('Name') },
-            {name => 'meta_number',
+            {value => $self->meta_number,
             text => $self->Text('Account Number')},
-            {name => 'control_code',
+            {value => $self->control_code,
             text => $self->Text('Control Code')}
           ];
 }

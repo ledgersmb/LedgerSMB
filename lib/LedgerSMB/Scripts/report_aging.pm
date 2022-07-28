@@ -57,8 +57,11 @@ sub run_report{
                if $request->{"business_unit_$count"};
     }
     return $request->render_report(
-        LedgerSMB::Report::Aging->new(%$request)
-        );
+        LedgerSMB::Report::Aging->new(
+            %$request,
+            language => $request->{_user}->{language},
+            languages => $request->enabled_languages
+        ));
 }
 
 
@@ -179,9 +182,11 @@ sub _render_statement_batch {
         {
             buttons => \@buttons,
             columns => \@columns,
-            hiddens => {
+            HIDDENS => {
                 workflow_id => $wf_id,
             },
+            SCRIPT  => $request->{script},
+            FORM_ID => $request->{form_id},
             hlines => [
                 {
                     text => $locale->text('Status'),
@@ -190,8 +195,6 @@ sub _render_statement_batch {
             ],
             rows    => $rows,
             name    => $locale->text('E-mail aging reminder status'),
-            request => $request,
-            DBNAME  => $request->{company},
         });
 }
 
@@ -312,6 +315,7 @@ sub generate_statement {
         $request->{entity_id} = $entity_id;
         my $aging_report = LedgerSMB::Report::Aging->new(
             (ref $filters{$eca}) ? (details_filter => $filters{$eca}) : (),
+            languages => $request->enabled_languages,
             %$request);
         $aging_report->run_report($request);
         my $statement = {

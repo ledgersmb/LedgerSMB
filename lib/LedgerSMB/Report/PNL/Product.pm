@@ -8,7 +8,7 @@ LedgerSMB::Report::PNL::Product - Profit/Loss reports on Products
 =head1 SYNPOSIS
 
  my $rpt = LedgerSMB::Report::PNL::Product->new(%$request);
- $rpt->render($request);
+ $report->render();
 
 =head1 DESCRIPTION
 
@@ -73,9 +73,9 @@ sub name { my ($self) = @_;
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'partnumber',
+    return [{value => $self->partnumber,
             text => $self->Text('Part Number') },
-            {name => 'description',
+            {value => $self->description,
             text => $self->Text('Description') },
     ];
 }

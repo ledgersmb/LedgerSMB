@@ -9,7 +9,7 @@ Report
 =head1 SYNPOSIS
 
  my $report = LedgerSMB::Report::Assets::Net_Book_Value->new(%$request);
- $report->render($request);
+ $report->render();
 
 =head1 DESCRIPTION
 
@@ -134,7 +134,7 @@ sub name {
 =cut
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'asset_nbv_report');
     for my $row(@rows){
         $row->{row_id} = $row->{id};

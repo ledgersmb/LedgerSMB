@@ -9,7 +9,7 @@ LedgerSMB
 =head1 SYNPOSIS
 
  my $report = LedgerSMB::Report::Inventory::Search->new(%$request);
- $report->render($request);
+ $report->render();
 
 =cut
 
@@ -348,7 +348,7 @@ sub name {
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'goods__search');
     for my $r (@rows){
         $r->{row_id} = $r->{id};

@@ -134,6 +134,41 @@ Month info in hashref format in 01 => January format
 
 =back
 
+=item enabled_languages()
+
+Returns arrayref of hashes with the following keys:
+
+=over
+
+=item value
+
+The code of the language as per the CLDR
+
+=item text
+
+The name of the language, translated into the user's selected language
+
+=back
+
+=item enabled_countries()
+
+Returns arrayref of hashes with the following keys:
+
+=over
+
+=item id
+
+The internal identifier for the country
+
+=item short_name
+
+The 2-leter iso code of the country
+
+=item name
+
+The country's full name translated into the user's selected language
+
+=back
 
 =item report_renderer_ui
 
@@ -141,7 +176,7 @@ Returns a code reference to render a report on the UI - pass as the
 named argument 'renderer' to the C<LedgerSMB::Report->render> method.
 
   my $report = LedgerSMB::Report
-  $report->render($request, renderer => $request->report_renderer_ui);
+  $report->render( renderer => $request->report_renderer_ui);
 
 
 =item report_renderer_doc
@@ -150,7 +185,7 @@ Returns a code reference to render a report as a document - pass as the
 named argument 'renderer' to the C<LedgerSMB::Report->render> method.
 
   my $report = LedgerSMB::Report
-  $report->render($request, renderer => $request->report_renderer_doc);
+  $report->render( renderer => $request->report_renderer_doc);
 
 
 =item render_report($report)
@@ -193,16 +228,21 @@ use Carp;
 use DateTime::Format::Duration::ISO8601;
 use Encode qw(perlio_ok);
 use HTTP::Headers::Fast;
-use HTTP::Status qw( HTTP_OK ) ;
+use HTTP::Status qw( HTTP_OK );
+use List::Util qw( pairgrep );
+use Locale::CLDR;
+use Locales unicode => 1;
 use Log::Any;
 use PGObject;
 use Plack;
+use URI;
 use URI::Escape;
 
 use LedgerSMB::App_State;
 use LedgerSMB::Locale;
 use LedgerSMB::User;
 use LedgerSMB::Company_Config;
+use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Setting;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
@@ -237,6 +277,12 @@ sub new {
     $self->{_setting} = $request->env->{'lsmb.setting'};
     $self->{_req} = $request;
     $self->{_wire} = $wire;
+
+    my $q = $self->{query_string} // '';
+    $self->{_uri} = URI->new(
+        $request->env->{'lsmb.script'} . ($q ? "?$q" : ''),
+        $request->request_uri
+        );
 
     # Initialize ourselves from parameters in $self->{_req}
     $self->_process_args;
@@ -342,16 +388,6 @@ sub _process_args {
         }
     }
     return;
-}
-
-sub get_relative_url {
-    my ($self) = @_;
-
-    return Encode::decode(
-        'utf8',
-        uri_unescape(
-            $self->{script} .
-            ($self->{query_string} ? "?$self->{query_string}" : '')));
 }
 
 sub upload {
@@ -566,13 +602,57 @@ sub all_years {
                            } @years ] };
 }
 
+sub enabled_languages {
+    my ($self) = @_;
+
+    my $l = Locales->new( $self->{_user}->{language} );
+    return [
+        map {
+            +{
+                value => $_->{code},
+                text => ucfirst($l->get_language_from_code($_->{code})
+                                // $_->{description})
+            }
+        } $self->call_procedure(funcname => 'person__list_languages')
+        ];
+}
+
+sub enabled_countries {
+    my ($self) = @_;
+
+    my $regions = Locale::CLDR->new($self->{_user}->{language})->all_regions;
+    return [
+        map {
+            +{
+                $_->%*,
+                name => $regions->{$_->{short_name}} // $_->{name}
+            }
+        } $self->call_procedure(funcname => 'location_list_country')
+        ];
+}
 
 sub report_renderer_ui {
   my ($request) = @_;
   my $ui = LedgerSMB::Template::UI->new_UI;
+  my $uri = $request->{_uri}->clone;
+  if (not pairgrep { $a eq 'company' } $uri->query_form) {
+      $uri->query_form(
+          $uri->query_form,
+          company => $request->{company},
+          );
+  }
 
   return sub {
       my ($template_name, $report, $vars, $cvars) = @_;
+      $vars->{REPORT_LINK} = $uri->as_string;
+      $vars->{SCRIPT} = $request->{script};
+      $vars->{SETTINGS} = {
+          papersize    => 'letter', # default paper size when not configured
+          (%{$request->{_company_config} // {}},)
+      };
+      $vars->{SETTINGS}->{company_name} ||= $request->{company};
+      $vars->{HIDDENS} = $request->{hiddens};
+      $vars->{FORM_ID} = $request->{form_id};
 
       return $ui->render($request, "Reports/$template_name", $vars, $cvars);
   };
@@ -580,46 +660,24 @@ sub report_renderer_ui {
 
 sub report_renderer_doc {
     my ($request) = @_;
+    my $renderer =
+        $request->{_wire}->get( 'output_formatter' )->report_doc_renderer(
+            $request->{_dbh},
+            uc($request->{format}) || 'HTML',
+            {
+                SETTINGS => {
+                     # default paper size when not configured
+                    papersize    => 'letter',
+                    (%{$request->{_company_config} // {}},)
+                }
+            });
 
     return sub {
         my ($template_name, $report, $vars, $cvars) = @_;
-        my $template = LedgerSMB::Template->new( # printed document
-            template => $template_name,
-            user     => $request->{_user},
-            path     => 'DB',
-            dbh      => $request->{dbh},
-            output_options => {
-                filename => $report->output_name($request),
-            },
-            format_plugin   =>
-               $request->{_wire}->get( 'output_formatter' )->get( uc($request->{format} || 'HTML' ) ),
-            );
 
-        $template->render($vars, $cvars);
-
-        my $charset = '';
-        $charset = '; charset=utf-8'
-                          if $template->{mimetype} =~ m!^text/!;
-
-        # $request->{mimetype} set by format
-        my $headers = [
-            'Content-Type' => "$template->{mimetype}$charset",
-            ];
-
-        # Use the same Content-Disposition criteria as _http_output()
-        my $name =
-            $template->{output_options}->{filename} . '.' . lc($request->{format});
-        if ($name) {
-            $name =~ s#^.*/##;
-            push @$headers,
-                ( 'Content-Disposition' =>
-                  qq{attachment; filename="$name"} );
-        }
-
-        my $body = $template->{output};
-        utf8::encode($body) if utf8::is_utf8($body); ## no critic
-
-        return [ HTTP_OK, $headers, [ $body ] ];
+        return template_response(
+            $renderer->( $template_name, $report, $vars, $cvars ),
+            disposition => 'attach' );
     };
 }
 
@@ -636,7 +694,7 @@ sub render_report {
         # render as UI element
         $renderer = $request->report_renderer_ui;
     }
-    return $report->render($request, renderer => $renderer);
+    return $report->render( renderer => $renderer);
 }
 
 =head1 LICENSE AND COPYRIGHT

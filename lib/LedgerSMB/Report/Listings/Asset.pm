@@ -125,11 +125,10 @@ sub columns {
 sub header_lines {
     my ($self) = @_;
     return  [
-     { name => 'tag',         text => $self->Text('Tag') },
-     { name => 'description', text => $self->Text('Description') },
-     {name => 'purchase_date',text => $self->Text('Purchase Date')},
-     {name => 'purchase_value',
-        text => $self->Text('Purchase Value') },
+     { value => $self->tag,            text => $self->Text('Tag') },
+     { value => $self->description,    text => $self->Text('Description') },
+     { value => $self->purchase_date,  text => $self->Text('Purchase Date')},
+     { value => $self->purchase_value, text => $self->Text('Purchase Value') },
    ];
 }
 
@@ -151,7 +150,7 @@ sub name {
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'asset__search');
     for my $r(@rows){
        $r->{row_id} = $r->{id};

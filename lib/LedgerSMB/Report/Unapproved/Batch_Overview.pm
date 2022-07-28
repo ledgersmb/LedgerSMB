@@ -9,8 +9,7 @@ LedgerSMB
 =head1 SYNPOSIS
 
   my $report = LedgerSMB::Report::Unapproved::Batch_Overview->new(%$request);
-  $report->run;
-  $report->render($request, $format);
+  $report->render();
 
 =head1 DESCRIPTION
 
@@ -186,14 +185,14 @@ Returns the inputs to display on header.
 sub header_lines {
     my ($self) = @_;
     return [
-            {name => 'class_name',
-             text => $self->_locale->text('Transaction Type')},
-            {name => 'description',
-             text => $self->_locale->text('Description')},
-            {name => 'amount_gt',
-             text => $self->_locale->text('Amount Greater Than')},
-            {name => 'amount_lt',
-             text => $self->_locale->text('Amount Less Than')},
+            {value => $self->class_name,
+             text  => $self->_locale->text('Transaction Type')},
+            {value => $self->description,
+             text  => $self->_locale->text('Description')},
+            {value => $self->amount_gt,
+             text  => $self->_locale->text('Amount Greater Than')},
+            {value => $self->amount_lt,
+             text  => $self->_locale->text('Amount Less Than')},
     ];
 }
 
@@ -206,7 +205,7 @@ properties.
 =cut
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self) = @_;
     $self->get_rows();
     return;
 }

@@ -49,7 +49,7 @@ A report could then be generated with the following:
 
     use LedgerSMB::Report::MinimalReportExample;
     my $report = LedgerSMB::Report::MinimalReportExample->new();
-    $report->render($request);
+    $report->render();
 
 
 =head1 DESCRIPTION
@@ -70,7 +70,57 @@ for the report).
 =item columns
 
 Must return an arrayref comprising hashes defining specifying each column
-of the report table.
+of the report table. Keys for each hash:
+
+=over
+
+=item col_id
+
+ID of column, alphanumeric, used in names of elements, classes, etc.  Required
+for smooth operation.
+
+Note: When the C<col_id> starts with C<bc_> and the column selection includes
+C<business_units>, the column will be included in the report.
+
+=item name
+
+Localized name of column for labelling purposes
+
+=item type
+
+Display type for column data.  May be one of:
+
+    * text
+    * input_text
+    * hidden
+    * href
+    * input_text
+    * radio
+    * checkbox
+    * boolean_checkmark
+
+=item href_base
+
+Base for href.  Only meaningful if type is href
+
+=item money
+
+Boolean value indicating whether the column contains monetary values.
+
+=item pwidth
+
+Relative width of the column on the generated table.
+
+=item html_only
+
+Boolean value indicating whether the column should only be included in
+html reports.
+
+=item class
+
+CSS class (additional) for the column.
+
+=back
 
 =item run_report
 
@@ -118,7 +168,7 @@ C<UI/reports/display_report> template will be used.
 =cut
 
 
-use List::Util qw{ any };
+use List::Util qw{ any pairgrep };
 use LedgerSMB::PGNumber;
 use LedgerSMB::Setting;
 use Scalar::Util qw{ blessed };
@@ -128,50 +178,32 @@ use namespace::autoclean;
 with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';
 
 
+around BUILDARGS => sub {
+    my ( $orig, $class, %args ) = @_;
+
+    $args{selected_columns} = {
+        map { my $k = s/^col_//r; $args{$_} ? ($k => 1) : () }
+        grep { /^col_/}
+        keys %args
+    };
+    return $class->$orig(%args);
+};
 
 =head1 PROPERTIES
 
-=head2 cols
+=head2 selected_columns
 
-This is an array of hashrefs.  Properties for each hashref:
+Contains a hashref where the keys are the columns selected for inclusion
+in the report and the values are booleans, where only those columns with
+true valued values are to be included in the report.
 
-=over
-
-=item col_id
-
-ID of column, alphanumeric, used in names of elements, classes, etc.  Required
-for smooth operation.
-
-=item name
-
-Localized name of column for labelling purposes
-
-=item type
-
-Display type for column data.  May be one of:
-
-    * text
-    * input_text
-    * hidden
-    * href
-    * input_text
-    * radio
-    * checkbox
-    * boolean_checkmark
-
-=item href_base
-
-Base for href.  Only meaningful if type is href
-
-=item class
-
-CSS class (additional) for the column.
-
-=back
+Column selections are passed as regular named arguments to the constructor,
+where the column name prefixed with C<col_> is the name of the key in the
+constructor argument list.
 
 =cut
 
-has 'cols' => (is => 'rw', isa => 'ArrayRef[HashRef[Any]]');
+has 'selected_columns' => (is => 'ro', isa => 'HashRef[Bool]');
 
 =head2 rows
 
@@ -213,6 +245,18 @@ Url for order redirection.  Internal only.
 =cut
 
 has order_url  => (is => 'rw', isa => 'Maybe[Str]');
+
+=head2 relative_url
+
+L<URI> object initialized with the script name and query string.
+
+=cut
+
+has relative_url => (
+    is => 'ro',
+    isa => 'URI',
+    # trick to get the value initialized from the $request object:
+    init_arg => '_uri');
 
 =head2 show_subtotals
 
@@ -333,14 +377,13 @@ the template).
 
 sub render {
     my $self = shift;
-    my $request = shift;
 
-    $self->run_report($request) if not defined $self->rows;
-    return $self->_render($request, renderer => 'render', @_);
+    $self->run_report() if not defined $self->rows;
+    return $self->_render(@_);
 }
 
 
-=head2 output_name($request)
+=head2 output_name
 
 Returns the suggested file name to be used to store the report.
 
@@ -348,8 +391,6 @@ Returns the suggested file name to be used to store the report.
 
 sub output_name {
     my $self = shift;
-    my $request = shift;
-
     my $name = $self->name // '';
     $name =~ s/ /_/g;
 
@@ -372,9 +413,9 @@ sub output_name {
 # Render the report.
 
 sub _render {
-    my ($self, $request) = @_;
+    my $self = shift;
     my $template;
-    my %args = ( @_ );
+    my %args = @_;
 
     # This is a hook for other modules to use to override the default
     # template --CT
@@ -395,18 +436,21 @@ sub _render {
         $self->order_dir('asc');
     }
 
-    my $url = $request->get_relative_url();
+    my $url = $self->relative_url;
     if ($url) {
-        $url =~ s/(^|&)(old_)?order_by=[^&]*//g;
-        $url =~ s/(^|&)order_dir=[^&]*//g;
+        my @query_form = pairgrep {
+            $a ne 'old_order_by' and $a ne 'order_by' and $a ne 'order_dir'
+        } $url->query_form;
 
         if ($self->order_by) {
-            $self->order_url(
-                "$url&old_order_by=".$self->order_by.'&order_dir='.$self->order_dir
-                );
+            $url->query_form(@query_form,
+                             old_order_by => $self->order_by,
+                             order_dir    => $self->order_dir);
+            $self->order_url($url->as_string);
         }
         else {
-            $self->order_url($url);
+            $url->query_form( @query_form );
+            $self->order_url($url->as_string);
         }
     }
 
@@ -470,9 +514,15 @@ sub _render {
     $self->rows(\@newrows);
     # Rendering
 
-    my $columns = $self->show_cols($request);
+    my %want_col = $self->selected_columns->%*;
+    my @columns = (
+        grep {
+            not %want_col # use all columns when none selected specifically
+            or $want_col{$_->{col_id}}
+            or ($_->{col_id} =~ m/^bc_/ and $want_col{business_units})
+        } $self->columns->@*);
 
-    for my $col (@$columns){
+    for my $col (@columns){
         if ($col->{money}) {
             $col->{class} = 'money';
             for my $row(@{$self->rows}){
@@ -496,49 +546,19 @@ sub _render {
         return [map { +{ %$_, %{shift @newlines} } } @$lines ];
     };
 
-    my $setting = LedgerSMB::Setting->new(%$request);
     return $args{renderer}->(
         $template, $self,
         {
             report          => $self,
-            company_name    => $setting->get('company_name'),
-            company_address => $setting->get('company_address'),
-            request         => $request,
             new_heads       => $replace_hnames,
             name            => $self->name,
             hlines          => $self->header_lines,
-            columns         => $columns,
+            columns         => \@columns,
             order_url       => $self->order_url,
             buttons         => $self->buttons,
             options         => $self->options,
             rows            => $self->rows,
-
-            DBNAME          => $request->{company},
         });
-}
-
-=head2 show_cols
-
-Returns a list of columns based on selected ones from the report
-
-=cut
-
-sub show_cols {
-    my ($self, $request) = @_;
-    my @retval;
-    my @columns = @{$self->columns($request)};
-    for my $ref (@columns){
-        if ($request->{"col_$ref->{col_id}"}){
-            push @retval, $ref;
-        }
-        if ($ref->{col_id} =~ /bc_\d+/){
-            push @retval, $ref if $request->{'col_business_units'};
-        }
-    }
-    if (scalar @retval == 0){
-        @retval = @columns;
-    }
-    return \@retval;
 }
 
 =head2 header_lines

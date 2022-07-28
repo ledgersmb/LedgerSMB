@@ -9,8 +9,6 @@ import { useSessionUserStore } from "@/store/sessionUser";
 import { createTableMachine } from "./ConfigTable.machines.js";
 import ConfigTableRow from "./ConfigTableRow.vue";
 
-const { t } = useI18n();
-
 const props = defineProps([
     "columns",
     "store",
@@ -21,10 +19,11 @@ const props = defineProps([
 ]);
 const notify = inject("notify");
 
+const { t } = useI18n();
 const user = useSessionUserStore();
 const hasRole = user.hasRole; // import the function from the store's getter
 
-const { items } = storeToRefs(props.store);
+const { items, _links, apiURL } = storeToRefs(props.store);
 
 const { service, send, state } = createTableMachine(props.store, {
     cb: {
@@ -36,6 +35,11 @@ const { service, send, state } = createTableMachine(props.store, {
 const editingId = contextRef(service, "editingId");
 const hasEdit = computed(() => hasRole(props.editRole));
 const hasCreate = computed(() => hasRole(props.createRole));
+
+const absURL = new URL(apiURL.value, window.location);
+function u(relURL) {
+    return new URL(relURL, absURL);
+}
 
 </script>
 
@@ -91,6 +95,12 @@ const hasCreate = computed(() => hasRole(props.createRole));
                 </tfoot>
             </template>
         </table>
+    </div>
+    <div v-if="_links.length > 0">
+        <span>{{ t("Download: ") }}</span>
+        <span v-for="link in _links" :key="link.href">
+            <a :href="u(link.href)" target="_blank">[ {{ link.title }} ]</a>
+        </span>
     </div>
 </template>
 

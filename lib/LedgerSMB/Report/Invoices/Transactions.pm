@@ -9,7 +9,7 @@ LedgerSMB
 =head1 SYNOPSIS
 
   my $report = LedgerSMB::Report::Invoices::Transactions(%$request);
-  $report->render($request);
+  $report->render();
 
 =cut
 
@@ -342,7 +342,7 @@ This runs the report and sets the $report->rows.
 
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     $self->approved;
     my @rows = $self->call_dbmethod(funcname => 'report__aa_transactions');
     for my $r(@rows){

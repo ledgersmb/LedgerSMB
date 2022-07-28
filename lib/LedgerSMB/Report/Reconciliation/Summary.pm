@@ -9,7 +9,7 @@ LedgerSMB
 =head1 SYNPOSIS
 
  my $report = LedgerSMB::Report::Reconciliation::Summary->new(%$request);
- $report->render($request);
+ $report->render();
 
 =cut
 
@@ -178,14 +178,14 @@ sub columns {
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'date_from',
-             text => $self->Text('From Date')},
-            {name => 'date_to',
-             text => $self->Text('To Date') },
-            {name => 'balance_from',
-             text => $self->Text('From Amount')},
-            {name => 'balance_to',
-             text => $self->Text('To Amount')}
+    return [{value => $self->date_from,
+             text  => $self->Text('From Date')},
+            {value => $self->date_to,
+             text  => $self->Text('To Date') },
+            {value => $self->balance_from,
+             text  => $self->Text('From Amount')},
+            {value => $self->balance_to,
+             text  => $self->Text('To Amount')}
      ];
 }
 
@@ -207,7 +207,7 @@ sub name {
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     $self->manual_totals(1);
     my @rows = $self->call_dbmethod(funcname => 'reconciliation__search');
     my @accounts = $self->call_dbmethod(

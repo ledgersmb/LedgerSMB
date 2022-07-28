@@ -136,49 +136,6 @@ sub get_country_list {
     ];
 }
 
-=item get_language_list($request, $language)
-
-Get a language localized list to allow user selection
-
-=cut
-
-sub get_language_list {
-    my ($request, $language) = @_;
-    my $locale = Locales->new($language);
-    my @rows = $request->call_dbmethod(funcname => 'person__list_languages');
-    my @languages;
-    for (@rows) {
-        my $text = $locale->get_language_from_code(lc($_->{code}));
-        push @languages, {
-            value => $_->{code},
-            text => ucfirst($text // $_->{description})
-        }
-    }
-    @languages = sort { $a->{text} cmp $b->{text} } @languages;
-    return @languages;
-}
-
-=item location_list_country_localized($request, $language)
-
-Get the country list, localized according to the desired language
-
-Use the provided language of default to user
-
-=cut
-
-sub location_list_country_localized {
-    my $request = shift;
-    my $language = shift // $request->{_user}->{language};
-    my @country_list = $request->call_procedure(
-                     funcname => 'location_list_country'
-    );
-    my %regions = %{Locale::CLDR->new($language)->all_regions};
-    foreach (@country_list) {
-      $_->{name} = $regions{$_->{short_name}}
-        if defined $regions{$_->{short_name}};
-    }
-    return @country_list;
-}
 =back
 
 =head1 LICENSE AND COPYRIGHT

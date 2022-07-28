@@ -10,6 +10,7 @@ export const useSICsStore = defineStore("sics", {
             fields: ["code", "description"],
             id: "code",
             items: [],
+            _links: [],
             url: "contacts/sic"
         };
     }

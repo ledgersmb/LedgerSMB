@@ -12,6 +12,7 @@ use Plack::Request;
 
 use LedgerSMB;
 use LedgerSMB::Locale;
+use LedgerSMB::PGNumber;
 
 
 my $wire = Beam::Wire->new(file => 't/ledgersmb.yaml');
@@ -27,7 +28,7 @@ $wire = Beam::Wire->new(
             },
         }
     });
-my $request = Plack::Request->new({});
+my $request = Plack::Request->new({ 'lsmb.script' => 'test.pl' });
 
 my $lsmb = LedgerSMB->new($request, $wire);
 my @r;
@@ -49,12 +50,6 @@ LedgerSMB::App_State::set_DBH($lsmb->{dbh});
 is($#r, 0, 'call_procedure: correct return length (one row)');
 is($r[0]->{'character_length'}, 5,
         'call_procedure: single arg, non-numeric return');
-
-@r = $lsmb->call_procedure('procname' => 'trunc',
-        'funcschema' => 'pg_catalog',
-        'args' => [57.1, 0]);
-is($r[0]->{'trunc'}, Math::BigFloat->new('57'),
-        'call_procedure: two args, numeric return');
 
 @r = $lsmb->call_procedure('procname' => 'pi',
         'funcschema' => 'pg_catalog',

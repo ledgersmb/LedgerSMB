@@ -69,7 +69,7 @@ Just the language_code
 sub header_lines {
     my ($self) = @_;
     return [
-        { name => 'language_code', text => $self->Text('Language') },
+        { value => $self->language_code, text => $self->Text('Language') },
         ];
 };
 
@@ -91,7 +91,7 @@ Populates the $report->rows.
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'templates__list');
     for my $ref(@rows){
         $ref->{row_id} =

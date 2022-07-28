@@ -10,6 +10,7 @@ export const useBusinessTypesStore = defineStore("business-types", {
             fields: ["id", "description", "discount"],
             id: "id",
             items: [],
+            _links: [],
             url: "contacts/business-types"
         };
     }

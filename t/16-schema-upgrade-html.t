@@ -1,4 +1,4 @@
-# Database schema upgrade pre-checks
+# Database schema upgrade pre-checks                         -*- mode: perl; -*-
 
 use Test2::V0;
 use Text::Diff;
@@ -39,6 +39,7 @@ sub test_request {
                 }
             },
         });
+    $plack_req->env->{'lsmb.script'}   = 'script.pl';
     my $req = LedgerSMB->new($plack_req, $wire);
 
     $req->{script}          = 'script.pl';

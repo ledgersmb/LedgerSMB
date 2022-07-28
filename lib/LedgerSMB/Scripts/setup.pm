@@ -1142,8 +1142,7 @@ sub _render_user {
         funcname => 'person__list_salutations'
     );
 
-    @{$request->{countries}} =
-        LedgerSMB::I18N::location_list_country_localized($request);
+    $request->{countries} = $request->enabled_countries;
     my $locale = $request->{_locale};
 
     @{$request->{perm_sets}} = (

@@ -154,14 +154,14 @@ sub columns {
 sub header_lines {
     my ($self) = @_;
     return [
-       { name => 'from_date',
-         text => $self->Text('Start Date'), },
-       { name => 'to_date',
-         text => $self->Text('End Date'), },
-       { name => 'partnumber',
-         text => $self->Text('Part Number'), },
-       { name => 'description',
-         text => $self->Text('Part Description'), },
+       { value => $self->from_date,
+         text  => $self->Text('Start Date'), },
+       { value => $self->to_date,
+         text  => $self->Text('End Date'), },
+       { value => $self->partnumber,
+         text  => $self->Text('Part Number'), },
+       { value => $self->description,
+         text  => $self->Text('Part Description'), },
     ];
 }
 
@@ -185,7 +185,7 @@ Populates and returns $report->rows.
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'report__incoming_cogs_line');
     for my $row (@rows){
         $row->{partnumber_href_suffix} = $row->{parts_id};

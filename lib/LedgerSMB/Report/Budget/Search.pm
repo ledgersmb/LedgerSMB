@@ -8,8 +8,7 @@ LedgerSMB::Reports::Budget::Search - Search for Budgets
 =head1 SYNPOSIS
 
   my $report = LedgerSMB::Report::Budget::Search->new(%$request);
-  $report->run;
-  $report->render($request, $format);
+  $report->render();
 
 =head1 DESCRIPTION
 
@@ -121,16 +120,16 @@ Returns the inputs to display on header.
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'date_from',
-             text => $self->Text('Start Date')},
-            {name => 'date_to',
-             text => $self->Text('End Date')},
-            {name => 'accno',
-             text => $self->Text('Account Number')},
-            {name => 'reference',
-             text => $self->Text('Reference')},
-            {name => 'source',
-             text => $self->Text('Source')}];
+    return [{value => $self->date_from,
+             text  => $self->Text('Start Date')},
+            {value => $self->date_to,
+             text  => $self->Text('End Date')},
+            {value => $self->accno,
+             text  => $self->Text('Account Number')},
+            {value => $self->reference,
+             text  => $self->Text('Reference')},
+            {value => $self->source,
+             text  => $self->Text('Source')}];
 }
 
 =back
@@ -208,7 +207,7 @@ Runs the report
 =cut
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'budget__search');
     for my $r(@rows){
         $r->{row_id} = $r->{id};

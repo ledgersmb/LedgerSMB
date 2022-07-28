@@ -9,7 +9,7 @@ forms for LedgerSMB
 =head1 SYNPOSIS
 
  $report = LedgerSMB::Report::Taxform::Summary->new(%$request);
- $report->render($request);
+ $report->render();
 
 =cut
 
@@ -107,9 +107,9 @@ sub columns {
 sub header_lines {
     my ($self) = @_;
     return [
-       { name => 'from_date', text => $self->Text('From Date') },
-       { name => 'to_date',   text => $self->Text('To Date') },
-       { name => 'taxform',   text => $self->Text('Tax Form') },
+       { value => $self->from_date, text => $self->Text('From Date') },
+       { value => $self->to_date,   text => $self->Text('To Date') },
+       { value => $self->taxform,   text => $self->Text('Tax Form') },
     ];
 }
 
@@ -141,7 +141,7 @@ sub buttons {
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my $tf = LedgerSMB::DBObject::TaxForm
         ->new(dbh => $self->_dbh )
         ->get($self->tax_form_id);

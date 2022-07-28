@@ -8,7 +8,7 @@ LedgerSMB::Report::PNL::Income_Statement - Basic Income Statement for LedgerSMB
 =head1 SYNPOSIS
 
  my $rpt = LedgerSMB::Report::PNL::Income_Statement->new(%$request);
- $rpt->render($request);
+ $report->render();
 
 =head1 DESCRIPTION
 
@@ -52,8 +52,8 @@ sub name { my ($self) = @_; return $self->Text('Income Statement') }
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'basis',
-            text => $self->Text('Reporting Basis') }];
+    return [{value => $self->basis,
+             text  => $self->Text('Reporting Basis') }];
 }
 
 =back

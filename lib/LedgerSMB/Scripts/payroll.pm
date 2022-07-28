@@ -44,7 +44,7 @@ with different inputs.
 
 sub show_income_type {
     my ($request) = @_;
-    my @country_list = LedgerSMB::I18N::location_list_country_localized($request);
+    my @country_list = $request->enabled_countries->@*;
     @{$request->{pics}} = $request->call_procedure(
        funcname => 'payroll_pic__list', args => [$request->{country_id}]
     ) if $request->{country_id};
@@ -87,7 +87,7 @@ Displays the income type search screen
 
 sub search_income_type {
     my ($request) = @_;
-    my @country_list = LedgerSMB::I18N::location_list_country_localized($request);
+    my @country_list = $request->enabled_countries->@*;
 
     return LedgerSMB::Template::UI->new_UI
         ->render($request, 'payroll/income_search', $request);

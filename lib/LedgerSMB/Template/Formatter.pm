@@ -26,6 +26,8 @@ use warnings;
 use Module::Runtime;
 use List::Util qw(first);
 
+use LedgerSMB::Template;
+
 use Moo;
 
 
@@ -68,6 +70,38 @@ sub get_formats {
     return wantarray ? @f : \@f;
 }
 
+=head2 report_doc_renderer( $dbh, $format, $extra_vars )
+
+Returns a renderer function to be passed to the C<render> function of
+C<LedgerSMB::Report>. This renderer causes the report C<render> function
+to return an evaluated C<LedgerSMB::Template>.
+
+=cut
+
+sub report_doc_renderer {
+    my ($self, $dbh, $format, $extra_vars) = @_;
+    $extra_vars //= {};
+
+    return sub {
+        my ($template_name, $report, $vars, $cvars) = @_;
+        my $template = LedgerSMB::Template->new( # printed document
+            template => $template_name,
+            path     => 'DB',
+            dbh      => $dbh,
+            output_options => {
+                filename => $report->output_name . '.' . lc($format),
+            },
+            format_plugin   =>
+               $self->get( uc($format) ),
+            );
+
+        my %combined_vars = ( %$extra_vars, %$vars );
+        $combined_vars{SETTINGS}->{papersize} //= 'letter';
+        $template->render( \%combined_vars, $cvars);
+
+        return $template;
+    };
+}
 
 =head1 LICENSE AND COPYRIGHT
 

@@ -8,8 +8,7 @@ LedgerSMB::Report::GL - GL Reports for LedgerSMB
 =head1 SYNPOSIS
 
   my $glreport = LedgerSMB::Report::GL->new(%$request);
-  $glreport->run;
-  $glreport->render($request, $format);
+  $glreport->render();
 
 =head1 DESCRIPTION
 
@@ -211,15 +210,15 @@ Returns the inputs to display on header.
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'from_date',
+    return [{value => $self->from_date,
              text => $self->Text('Start Date')},
-            {name => 'to_date',
+            {value => $self->to_date,
              text => $self->Text('End Date')},
-            {name => 'accno',
+            {value => $self->accno,
              text => $self->Text('Account Number')},
-            {name => 'reference',
+            {value => $self->reference,
              text => $self->Text('Reference')},
-            {name => 'source',
+            {value => $self->source,
              text => $self->Text('Source')}];
 }
 
@@ -323,7 +322,7 @@ sub _exclude_from_totals {
 }
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my $accno = $self->accno;
     $accno =~ s/--.*//;
     $self->accno($accno);

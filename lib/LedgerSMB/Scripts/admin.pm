@@ -70,12 +70,8 @@ sub list_sessions {
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'Reports/display_report', {
         name    => $request->{_locale}->text('Active Sessions'),
-        script  => 'admin.pl',
-        form    => $admin,
         columns => $columns,
         rows    => \@sessions,
-        buttons => [],
-        hiddens => [],
     });
 }
 

@@ -8,7 +8,7 @@ LedgerSMB::Report::Invoices::Payments - Payment Search Report for LedgerSMB
 =head1 SYNPOSIS
 
  my $report = LedgerSMB::Report::Invoices::Payments->new(%$request);
- $report->render($request);
+ $report->render();
 
 =cut
 
@@ -181,13 +181,13 @@ sub header_lines {
     } else {
         die 'Invalid entity class';
     }
-    return [{name => 'meta_number', text => $meta_number },
-            {name => 'cash_accno',
-             text => $self->Text('Account Number') },
-            {name => 'from_date',
-             text => $self->Text('From Date')},
-            {name => 'to_date',
-             text => $self->Text('To Date')}
+    return [{value => $self->meta_number, text => $meta_number },
+            {value => $self->cash_accno,
+             text  => $self->Text('Account Number') },
+            {value => $self->from_date,
+             text  => $self->Text('From Date')},
+            {value => $self->to_date,
+             text  => $self->Text('To Date')}
            ];
 }
 
@@ -215,7 +215,7 @@ Runs the report and sets $self->rows
 =cut
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self) = @_;
     die $self->Text('Must have cash account in batch')
         if $self->batch_id and not defined $self->cash_accno;
     my @rows = $self->call_dbmethod(funcname => 'payment__search');

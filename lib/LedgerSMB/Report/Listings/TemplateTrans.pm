@@ -150,7 +150,7 @@ my %jtype = (
     );
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     $self->manual_totals(1); #don't display totals
     my @rows = $self->call_dbmethod(funcname => 'journal__search');
     for my $ref(@rows){

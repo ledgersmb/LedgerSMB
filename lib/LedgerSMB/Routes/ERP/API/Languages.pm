@@ -23,6 +23,8 @@ use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_CONFLICT );
 
+use LedgerSMB::PSGI::Util qw( template_response );
+use LedgerSMB::Report::Listings::Language;
 use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.languages';
@@ -93,7 +95,7 @@ sub _get_language {
 }
 
 sub _get_languages {
-    my ($c) = @_;
+    my ($c, $formatter) = @_;
     my $sth = $c->dbh->prepare(
         q|SELECT * FROM language ORDER BY code|
         ) or die $c->dbh->errstr;
@@ -108,7 +110,18 @@ sub _get_languages {
     }
     die $sth->errstr if $sth->err;
 
-    return \@results;
+    my $fc = scalar $formatter->get_formats->@*;
+    return {
+        items => \@results,
+        _links => [
+            map {
+                +{
+                    rel => 'download',
+                    href => "?format=$_",
+                    title => $_
+                }
+            } $formatter->get_formats->@* ]
+    };
 }
 
 sub _update_language {
@@ -145,8 +158,20 @@ sub _update_language {
 
 get api '/languages' => sub {
     my ($env, $r, $c, $body, $params) = @_;
+    my $formatter = $env->{wire}->get( 'output_formatter' );
 
-    my $response = _get_languages( $c );
+    if (my $format = $r->query_parameters->get('format')) {
+        my $report = LedgerSMB::Report::Listings::Language->new(
+            _dbh => $c->dbh,
+            language => 'en',
+            );
+        my $renderer = $formatter->report_doc_renderer( $c->dbh, $format );
+
+        return template_response( $report->render( renderer => $renderer ),
+                                  disposition => 'attach');
+    }
+
+    my $response = _get_languages( $c, $formatter );
     return [ 200,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              $response  ];
@@ -253,9 +278,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
+                type: object
+                required:
+                  - items
+                properties:
+                  _links:
+                    type: array
+                    items:
+                      type: object
                 items:
-                  $ref: '#/components/schemas/Language'
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Language'
         400:
           $ref: '#/components/responses/400'
         401:

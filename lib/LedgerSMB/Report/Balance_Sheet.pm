@@ -8,7 +8,7 @@ LedgerSMB::Report::Balance_Sheet - The LedgerSMB Balance Sheet Report
 =head1 SYNOPSIS
 
  my $report = LedgerSMB::Report::Balance_Sheet->new(%$request);
- $report->render($request);
+ $report->render();
 
 =head1 DESCRIPTION
 
@@ -82,7 +82,7 @@ the balance sheet.
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
 
     die $self->Text('Required period type')
            if $self->comparison_periods and $self->interval eq 'none';

@@ -280,14 +280,14 @@ sub pre_bulk_post_report {
     }];
     delete $request->{$_}
        for qw(action dbh);
-    $request->{hiddens} = { %$request }; # prevent circular reference
-    delete $request->{form_id};
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render(
         $request,
         'Reports/display_report',
         {
-            request => $request,
+            SCRIPT  => $request->{script},
+            HIDDENS => { %$request },
+            FORM_ID => $request->{form_id},
             name    => $request->{_locale}->text('Payment batch'),
             columns => $cols,
             rows    => $rows,

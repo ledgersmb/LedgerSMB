@@ -331,6 +331,11 @@ sub setup_url_space {
                 require_version => $LedgerSMB::VERSION;
             my $router = router 'erp/api';
             $router->hooks('before' => \&_hook_psgi_logger);
+            $router->hooks(
+                'before' => sub {
+                    my ($env, $settings) = @_;
+                    $env->{wire} = $wire;
+                });
             sub { return $router->dispatch(@_); };
         };
 

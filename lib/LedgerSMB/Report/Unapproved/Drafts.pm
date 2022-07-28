@@ -9,8 +9,7 @@ transactions) in LedgerSMB
 =head1 SYNPOSIS
 
   my $report = LedgerSMB::Report::Unapproved::Drafts->new(%$request);
-  $report->run;
-  $report->render($request, $format);
+  $report->render();
 
 =head1 DESCRIPTION
 
@@ -141,18 +140,18 @@ Returns the inputs to display on header.
 
 sub header_lines {
     my ($self) = @_;
-    return [{name => 'type',
-             text => $self->Text('Draft Type')},
-            {name => 'reference',
-             text => $self->Text('Reference')},
-            {name => 'from_date',
-             text => $self->Text('From Date')},
-            {name => 'to_date',
-             text => $self->Text('To Date')},
-            {name => 'amount_gt',
-             text => $self->Text('Amount Greater Than')},
-            {name => 'amount_lt',
-             text => $self->Text('Amount Less Than')}, ]
+    return [{value => $self->type,
+             text  => $self->Text('Draft Type')},
+            {value => $self->reference,
+             text  => $self->Text('Reference')},
+            {value => $self->from_date,
+             text  => $self->Text('From Date')},
+            {value => $self->to_date,
+             text  => $self->Text('To Date')},
+            {value => $self->amount_gt,
+             text  => $self->Text('Amount Greater Than')},
+            {value => $self->amount_lt,
+             text  => $self->Text('Amount Less Than')}, ]
 }
 
 =back
@@ -245,7 +244,7 @@ Runs the report, and assigns rows to $self->rows.
 =cut
 
 sub run_report{
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'draft__search');
     for my $ref (@rows){
         my $script = $ref->{type};

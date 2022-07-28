@@ -23,6 +23,9 @@ use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_CONFLICT );
 
+use LedgerSMB::PSGI::Util qw( template_response );
+use LedgerSMB::Report::Inventory::Pricegroups;
+use LedgerSMB::Report::Listings::Warehouse;
 use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.products';
@@ -93,7 +96,7 @@ sub _get_pricegroup {
 }
 
 sub _get_pricegroups {
-    my ($c) = @_;
+    my ($c, $formatter) = @_;
     my $sth = $c->dbh->prepare(
         q|SELECT id, pricegroup as description FROM pricegroup ORDER BY id|
         ) or die $c->dbh->errstr;
@@ -108,7 +111,17 @@ sub _get_pricegroups {
     }
     die $sth->errstr if $sth->err;
 
-    return \@results;
+    return {
+        items => \@results,
+        _links => [
+            map {
+                +{
+                    rel => 'download',
+                    href => "?format=$_",
+                    title => $_
+                }
+            } $formatter->get_formats->@* ]
+    };
 }
 
 sub _update_pricegroup {
@@ -145,8 +158,20 @@ sub _update_pricegroup {
 
 get api '/products/pricegroups' => sub {
     my ($env, $r, $c, $body, $params) = @_;
+    my $formatter = $env->{wire}->get( 'output_formatter' );
 
-    my $response = _get_pricegroups( $c );
+    if (my $format = $r->query_parameters->get('format')) {
+        my $report = LedgerSMB::Report::Inventory::Pricegroups->new(
+            _dbh => $c->dbh,
+            language => 'en',
+            );
+        my $renderer = $formatter->report_doc_renderer( $c->dbh, $format );
+
+        return template_response( $report->render( renderer => $renderer ),
+                                  disposition => 'attach');
+    }
+
+    my $response = _get_pricegroups( $c, $formatter );
     return [ 200,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              $response  ];
@@ -284,7 +309,7 @@ sub _get_warehouse {
 }
 
 sub _get_warehouses {
-    my ($c) = @_;
+    my ($c, $formatter) = @_;
     my $sth = $c->dbh->prepare(
         q|SELECT * FROM warehouse ORDER BY id|
         ) or die $c->dbh->errstr;
@@ -299,7 +324,17 @@ sub _get_warehouses {
     }
     die $sth->errstr if $sth->err;
 
-    return \@results;
+    return {
+        items => \@results,
+        _links => [
+            map {
+                +{
+                    rel => 'download',
+                    href => "?format=$_",
+                    title => $_
+                }
+            } $formatter->get_formats->@* ]
+    };
 }
 
 sub _update_warehouse {
@@ -335,8 +370,20 @@ sub _update_warehouse {
 
 get api '/products/warehouses' => sub {
     my ($env, $r, $c, $body, $params) = @_;
+    my $formatter = $env->{wire}->get( 'output_formatter' );
 
-    my $response = _get_warehouses( $c );
+    if (my $format = $r->query_parameters->get('format')) {
+        my $report = LedgerSMB::Report::Listings::Warehouse->new(
+            _dbh => $c->dbh,
+            language => 'en',
+            );
+        my $renderer = $formatter->report_doc_renderer( $c->dbh, $format );
+
+        return template_response( $report->render( renderer => $renderer ),
+                                  disposition => 'attach');
+    }
+
+    my $response = _get_warehouses( $c, $formatter );
     return [ 200,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              $response  ];
@@ -443,9 +490,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
+                type: object
+                required:
+                  - items
+                properties:
+                  _links:
+                    type: array
+                    items:
+                      type: object
                 items:
-                  $ref: '#/components/schemas/Pricegroup'
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Pricegroup'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -614,9 +670,18 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Warehouse'
+                type: object
+                required:
+                  - items
+                properties:
+                  _links:
+                    type: array
+                    items:
+                      type: object
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Warehouse'
         400:
           $ref: '#/components/responses/400'
         401:

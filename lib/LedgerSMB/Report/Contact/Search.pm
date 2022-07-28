@@ -9,8 +9,7 @@ and more.
 =head1 SYNPOSIS
 
   my $report = LedgerSMB::Report::GL->new(%$request);
-  $report->run;
-  $report->render($request, $format);
+  $report->render();
 
 =head1 DESCRIPTION
 
@@ -101,10 +100,10 @@ sub name {
 sub header_lines {
     my ($self) = @_;
      return [
-            {name => 'name_part',
-             text => $self->Text('Name')},
-            {name => 'meta_number',
-             text => $self->Text('Account Number')}
+            {value => $self->name_part,
+             text  => $self->Text('Name')},
+            {value => $self->meta_number,
+             text  => $self->Text('Account Number')}
        ];
 }
 
@@ -269,7 +268,7 @@ Runs the report, populates rows.
 =cut
 
 sub run_report {
-    my ($self,$request) = @_;
+    my ($self) = @_;
     my @contact_info;
     push @contact_info, $self->phone if $self->phone;
     push @contact_info, $self->email if $self->email;
