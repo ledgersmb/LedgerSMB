@@ -22,5 +22,5 @@ const store = useGIFIsStore();
         storeId="accno"
         editRole="gifi_edit"
         createRole="gifi_create" />
-    <lsmb-button disabled="disabled">Import</lsmb-button>
+    <lsmb-button disabled="disabled">{{ t("Import") }}</lsmb-button>
 </template>

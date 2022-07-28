@@ -22,5 +22,5 @@ const store = useSICsStore();
         storeId="code"
         editRole="sic_edit"
         createRole="sic_create" />
-    <lsmb-button disabled="disabled">Import</lsmb-button>
+    <lsmb-button disabled="disabled">{{ t("Import") }}</lsmb-button>
 </template>
