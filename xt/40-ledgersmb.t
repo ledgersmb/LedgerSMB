@@ -28,7 +28,7 @@ $wire = Beam::Wire->new(
             },
         }
     });
-my $request = Plack::Request->new({});
+my $request = Plack::Request->new({ 'lsmb.script' => 'test.pl' });
 
 my $lsmb = LedgerSMB->new($request, $wire);
 my @r;

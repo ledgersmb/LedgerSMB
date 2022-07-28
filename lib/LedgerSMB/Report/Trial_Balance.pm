@@ -196,8 +196,6 @@ sub header_lines {
              text => $self->Text('From date') },
             {value => $self->to_date,
              text => $self->Text('To Date') },
-            {value => $self->ignore_yearend,
-             text => $self->Text('Ignore Year-ends') },
             ];
 }
 

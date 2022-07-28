@@ -34,7 +34,7 @@ my $locale_es = LedgerSMB::Locale->get_handle('es');
 my %myconfig;
 ok(defined $form);
 isa_ok($form, 'Form');
-my $request = Plack::Request->new({});
+my $request = Plack::Request->new({ 'lsmb.script' => 'test.pl' });
 my $lsmb = LedgerSMB->new($request, $wire);
 ok(defined $lsmb);
 isa_ok($lsmb, 'LedgerSMB');
