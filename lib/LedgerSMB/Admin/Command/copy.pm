@@ -22,7 +22,7 @@ use Feature::Compat::Try;
 sub run {
     my ($self, $dbname, $newname) = @_;
 
-    return $self->help("copy")
+    return $self->help('copy')
         if !$dbname || $dbname eq 'help';
 
     my $logger = $self->logger;

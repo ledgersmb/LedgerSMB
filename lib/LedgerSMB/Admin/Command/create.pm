@@ -22,7 +22,7 @@ use Feature::Compat::Try;
 sub run {
     my ($self, $dbname) = @_;
 
-    return $self->help("create")
+    return $self->help('create')
         if !$dbname || $dbname eq 'help';
 
     my $logger = $self->logger;

@@ -24,7 +24,7 @@ my $logger;
 sub run {
     my ($self, $dbname) = @_;
 
-    return $self->help("destroy")
+    return $self->help('destroy')
         if !$dbname || $dbname eq 'help';
 
     $logger = $self->logger;

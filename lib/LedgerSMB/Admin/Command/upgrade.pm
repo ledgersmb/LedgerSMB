@@ -34,7 +34,7 @@ sub run {
     GetOptionsFromArray(\@args, $options, 'modules-only');
     my $dbname = shift @args;
 
-    return $self->help("upgrade")
+    return $self->help('upgrade')
         if !$dbname || $dbname eq 'help';
 
     if (!$modules_only) {

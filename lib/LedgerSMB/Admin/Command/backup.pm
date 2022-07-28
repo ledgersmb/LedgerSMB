@@ -23,7 +23,7 @@ use Feature::Compat::Try;
 sub run {
     my ($self, $dbname, $filename) = @_;
 
-    return $self->help("backup")
+    return $self->help('backup')
         if !$dbname || $dbname eq 'help';
 
     my $logger = $self->logger;

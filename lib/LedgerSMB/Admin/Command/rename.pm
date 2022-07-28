@@ -20,7 +20,7 @@ use namespace::autoclean;
 sub run {
     my ($self, $dbname, $newname) = @_;
 
-    return $self->help("rename")
+    return $self->help('rename')
         if !$dbname || $dbname eq 'help';
 
     my $existing_db = $self->connect_data_from_arg($dbname);
