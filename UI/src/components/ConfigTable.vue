@@ -3,14 +3,11 @@
 import { computed, inject } from "vue";
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
-import { useI18n } from "vue-i18n";
 import { contextRef } from "@/robot-vue";
 import { useSessionUserStore } from "@/store/sessionUser";
 
 import { createTableMachine } from "./ConfigTable.machines.js";
 import ConfigTableRow from "./ConfigTableRow.vue";
-
-const { t } = useI18n();
 
 const props = defineProps([
     "columns",
