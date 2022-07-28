@@ -6,6 +6,7 @@ import { useI18n } from "vue-i18n";
 const registry = require("dijit/registry");
 const parser = require("dojo/parser");
 const query = require("dojo/query");
+const topic = require("dojo/topic");
 
 function domReject(response) {
     return (
@@ -65,7 +66,6 @@ export default {
                             registry.findWidgets(maindiv).forEach((child) => {
                                 this._recursively_resize(child);
                             });
-                            maindiv.setAttribute("data-lsmb-done", "true");
                             maindiv
                                 .querySelectorAll("a")
                                 .forEach((node) => this._interceptClick(node));
@@ -73,6 +73,7 @@ export default {
                                 dismiss();
                             }
                             this.notify({ title: options.done || this.$t("Loaded") });
+                            topic.publish("lsmb/page-fresh-content");
                             maindiv.setAttribute("data-lsmb-done", "true");
                         });
                     });
