@@ -25,9 +25,6 @@ has modules_only => (is => 'ro');
 sub run {
     my ($self, @args) = @_;
 
-    return $self->help("upgrade")
-        if !$dbname || $dbname eq 'help';
-
     my $logger = $self->logger;
 
     my $modules_only = 0;
@@ -36,6 +33,9 @@ sub run {
     };
     GetOptionsFromArray(\@args, $options, 'modules-only');
     my $dbname = shift @args;
+
+    return $self->help("upgrade")
+        if !$dbname || $dbname eq 'help';
 
     if (!$modules_only) {
         die 'Non-modules-only modes not implemented yet!';
