@@ -55,10 +55,13 @@ export class LsmbFile extends HTMLElement {
         }
 
         if (name === "disabled" || name === "required") {
-            if (newValue === null) {
-                document.getElementById(this.elmId).removeAttribute(name);
-            } else {
-                document.getElementById(this.elmId).setAttribute(name, "");
+            let elm = document.getElementById(this.elmId);
+            if (elm) {
+                if (newValue === null) {
+                    document.getElementById(this.elmId).removeAttribute(name);
+                } else {
+                    document.getElementById(this.elmId).setAttribute(name, "");
+                }
             }
         }
     }
@@ -68,6 +71,12 @@ export class LsmbFile extends HTMLElement {
         let label = "";
         if (this.hasAttribute("name")) {
             options += ` name="${escHTML(this.getAttribute("name"))}"`;
+        }
+        if (this.required) {
+            options += " required";
+        }
+        if (this.disabled) {
+            options += " disabled";
         }
         if (this.hasAttribute("accept")) {
             options += ` accept="${escHTML(this.getAttribute("accept"))}"`;
