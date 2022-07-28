@@ -59,13 +59,26 @@ export default {
                 let b = await r.text();
                 if (r.ok && !domReject(r)) {
                     this.content = b;
+                    this.$nextTick(() => {
+                        let maindiv = document.getElementById("maindiv");
+                        parser.parse(maindiv).then(() => {
+                            registry.findWidgets(maindiv).forEach((child) => {
+                                this._recursively_resize(child);
+                            });
+                            maindiv.setAttribute("data-lsmb-done", "true");
+                            maindiv
+                                .querySelectorAll("a")
+                                .forEach((node) => this._interceptClick(node));
+                            if (dismiss) {
+                                dismiss();
+                            }
+                            this.notify({ title: options.done || this.$t("Loaded") });
+                            maindiv.setAttribute("data-lsmb-done", "true");
+                        });
+                    });
                 } else {
                     this._report_error(r);
                 }
-                if (dismiss) {
-                    dismiss();
-                }
-                this.notify({ title: options.done || this.$t("Loaded") });
             } catch (e) {
                 this._report_error(e);
             }
@@ -133,8 +146,6 @@ export default {
             }
         }
     },
-    beforeRouteEnter() {},
-    beforeRouteUpdate() {},
     beforeRouteLeave() {
         this._cleanWidgets();
     },
@@ -148,23 +159,6 @@ export default {
     },
     beforeUpdate() {
         this._cleanWidgets();
-    },
-    updated() {
-        if (!document.getElementById("maindiv")) {
-            return;
-        }
-        this.$nextTick(() => {
-            let maindiv = document.getElementById("maindiv");
-            parser.parse(maindiv).then(() => {
-                registry.findWidgets(maindiv).forEach((child) => {
-                    this._recursively_resize(child);
-                });
-                maindiv.setAttribute("data-lsmb-done", "true");
-            });
-            maindiv
-                .querySelectorAll("a")
-                .forEach((node) => this._interceptClick(node));
-        });
     },
     render() {
         let body = this.content.match(/<body[^>]*>([\s\S]*)(<\/body>)?/i);
