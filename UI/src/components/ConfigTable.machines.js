@@ -148,10 +148,8 @@ const warehouseMachine = createMachine(
     (ctx) => ({ ...ctx })
 );
 
-function cbStateEntry() {}
-
-function createTableMachine(store) {
-    return interpret(warehousesMachine, cbStateEntry, {
+function createTableMachine(store, { cb = {} }) {
+    return interpret(warehousesMachine, cb, {
         store,
         editingId: ""
     });
