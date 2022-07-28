@@ -72,7 +72,9 @@ export default {
                             if (dismiss) {
                                 dismiss();
                             }
-                            this.notify({ title: options.done || this.$t("Loaded") });
+                            this.notify({
+                                title: options.done || this.$t("Loaded")
+                            });
                             topic.publish("lsmb/page-fresh-content");
                             maindiv.setAttribute("data-lsmb-done", "true");
                         });
