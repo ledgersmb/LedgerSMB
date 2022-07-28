@@ -95,7 +95,7 @@ sub _get_language {
 }
 
 sub _get_languages {
-    my ($c, $formats) = @_;
+    my ($c, $formatter) = @_;
     my $sth = $c->dbh->prepare(
         q|SELECT * FROM language ORDER BY code|
         ) or die $c->dbh->errstr;
@@ -110,7 +110,7 @@ sub _get_languages {
     }
     die $sth->errstr if $sth->err;
 
-    my $fc = scalar $formats->get_formats->@*;
+    my $fc = scalar $formatter->get_formats->@*;
     return {
         items => \@results,
         _links => [
@@ -120,7 +120,7 @@ sub _get_languages {
                     href => "?format=$_",
                     title => $_
                 }
-            } $formats->get_formats->@* ]
+            } $formatter->get_formats->@* ]
     };
 }
 
@@ -158,21 +158,20 @@ sub _update_language {
 
 get api '/languages' => sub {
     my ($env, $r, $c, $body, $params) = @_;
+    my $formatter = $env->{wire}->get( 'output_formatter' );
 
     if (my $format = $r->query_parameters->get('format')) {
         my $report = LedgerSMB::Report::Listings::Language->new(
             _dbh => $c->dbh,
             language => 'en',
             );
-        my $formatter = $env->{wire}->get( 'output_formatter' );
         my $renderer = $formatter->report_doc_renderer( $c->dbh, $format );
 
         return template_response( $report->render( renderer => $renderer ),
                                   disposition => 'attach');
     }
 
-    my $response =
-        _get_languages( $c, $env->{wire}->get( 'output_formatter' ) );
+    my $response = _get_languages( $c, $formatter );
     return [ 200,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              $response  ];

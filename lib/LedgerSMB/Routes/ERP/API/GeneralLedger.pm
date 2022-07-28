@@ -23,6 +23,8 @@ use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_CONFLICT );
 
+use LedgerSMB::PSGI::Util qw( template_response );
+use LedgerSMB::Report::Listings::GIFI;
 use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.gl';
@@ -93,7 +95,7 @@ sub _get_gifi {
 }
 
 sub _get_gifis {
-    my ($c) = @_;
+    my ($c, $formatter) = @_;
     my $sth = $c->dbh->prepare(
         q|SELECT * FROM gifi ORDER BY accno|
         ) or die $c->dbh->errstr;
@@ -108,7 +110,17 @@ sub _get_gifis {
     }
     die $sth->errstr if $sth->err;
 
-    return { items => \@results, _links => [] };
+    return {
+        items => \@results,
+        _links => [
+            map {
+                +{
+                    rel => 'download',
+                    href => "?format=$_",
+                    title => $_
+                }
+            } $formatter->get_formats->@* ]
+    };
 }
 
 sub _update_gifi {
@@ -145,8 +157,20 @@ sub _update_gifi {
 
 get api '/gl/gifi' => sub {
     my ($env, $r, $c, $body, $params) = @_;
+    my $formatter = $env->{wire}->get( 'output_formatter' );
 
-    my $response = _get_gifis( $c );
+    if (my $format = $r->query_parameters->get('format')) {
+        my $report = LedgerSMB::Report::Listings::GIFI->new(
+            _dbh => $c->dbh,
+            language => 'en',
+            );
+        my $renderer = $formatter->report_doc_renderer( $c->dbh, $format );
+
+        return template_response( $report->render( renderer => $renderer ),
+                                  disposition => 'attach');
+    }
+
+    my $response = _get_gifis( $c, $formatter );
     return [ 200,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              $response  ];
