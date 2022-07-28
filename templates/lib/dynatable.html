@@ -85,15 +85,7 @@ releases. No explicit versioning was applied before 2021-01-04.
    <tr>
    <?lsmb- FOREACH COL IN columns;
    IF COL.type != 'hidden'; -?>
-   <th class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>"><?lsmb
-
-IF attributes.order_url
-?> <a href="<?lsmb order_url | url ?>&amp;order_by=<?lsmb COL.col_id ?>"><?lsmb
-END;
-COL.name;
-IF attributes.order_url
-?></a><?lsmb
-END; ?>
+   <th class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>"><?lsmb COL.name ?>
    </th>
    <?lsmb- END; END; -?>
    </tr>
@@ -123,41 +115,27 @@ END; ?>
               TYPE = 'text';
             END;
 
-            NEXT IF TYPE == 'hidden';
+            NEXT IF TYPE == 'hidden'; -?>
       <td class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>"<?lsmb ROWSPAN ?>>
           <?lsmb- IF TYPE == 'boolean_checkmark' OR TYPE == 'checkbox' OR TYPE == 'radio';
                    IF ROW.${COL.col_id};
-                       ?>✓<?lsmb
+                      '✓';
                    END;
 
-         <?lsmb- ELSIF TYPE == 'select';
-                 # ROW is passed as an argument if COL.options is a callback
-                 # function, which allows dropdown options to be dynamically
-                 # customised to each row. The ROW argument is harmlessly
-                 # ignored by Template Toolkit if COL.options is a static
-                 # arrayref common to every row.
-                 OPTION_LIST = COL.options(ROW);
+                  ELSIF TYPE == 'select';
+                  # ROW is passed as an argument if COL.options is a callback
+                  # function, which allows dropdown options to be dynamically
+                  # customised to each row. The ROW argument is harmlessly
+                  # ignored by Template Toolkit if COL.options is a static
+                  # arrayref common to every row.
+                  OPTION_LIST = COL.options(ROW);
 
-                 FOREACH option IN OPTION_LIST
-                    IF option.value == ROW.${COL.col_id}
-                       option.text
-                    END
-                 END
-                 ?>
-         <?lsmb- ELSIF TYPE == 'href';
-                   HREF_SFX = COL.col_id _ "_href_suffix";
-                   IF ROW.$HREF_SFX;
-                      ESCAPED_HREF = COL.href_base _ ROW.$HREF_SFX | url;
-                   ELSE;
-                      ESCAPED_BASE = COL.href_base | url;
-                      ESCAPED_PARAM = UNESCAPE(ROW.row_id) | uri;
-                      ESCAPED_HREF = ESCAPED_BASE _ ESCAPED_PARAM;
-                   END;
-                   IF COL.href_target;
-                      HREF_TGT = ' target="' _ COL.href_target _ '"';
-                   END;
-          ?><a href="<?lsmb ESCAPED_HREF ?>"<?lsmb HREF_TGT ?>><?lsmb ROW.${COL.col_id} ?></a>
-         <?lsmb- ELSE -?>
+                  FOREACH option IN OPTION_LIST;
+                    IF option.value == ROW.${COL.col_id};
+                       option.text;
+                    END;
+                  END;
+                 ELSE -?>
             <?lsmb ROW.${COL.col_id} ?>
          <?lsmb- END -?>
       </td>
@@ -187,21 +165,13 @@ END; ?>
                 <td colspan="<?lsmb SPACECOUNT ?>">&nbsp;</td>
              <?lsmb END;
        NEXT IF TYPE == 'hidden';
-
+       -?>
        <td class="<?lsmb COL.col_id ?>">
           <?lsmb- IF TYPE == 'boolean_checkmark' OR TYPE == 'checkbox' OR TYPE == 'radio';
                    IF ROW.${COL.col_id};
-                       ?>✓<?lsmb
+                       '✓';
                    END;
-         <?lsmb- ELSIF TYPE == 'href';
-                   HREF_SFX = COL.col_id _ "_href_suffix";
-                   IF row.$HREF_SFX;
-                      HREF = COL.href_base _ ROW.$HREF_SFX;
-                   ELSE;
-                      HREF = COL.href_base _ ROW.row_id;
-                   END
-          ?><a href="<?lsmb HREF ?>"><?lsmb ROW.${COL.col_id} ?></a>
-         <?lsmb- ELSE -?>
+                 ELSE -?>
             <?lsmb ROW.${COL.col_id} ?>
          <?lsmb- END -?>
      </td>
