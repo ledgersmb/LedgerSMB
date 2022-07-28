@@ -23,6 +23,10 @@ my $logger;
 
 sub run {
     my ($self, $dbname) = @_;
+
+    return $self->help("destroy")
+        if !$dbname || $dbname eq 'help';
+
     $logger = $self->logger;
     my $existing_db = $self->connect_data_from_arg($dbname);
     my $connect_data = {

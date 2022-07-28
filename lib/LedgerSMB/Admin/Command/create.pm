@@ -19,9 +19,12 @@ use namespace::autoclean;
 
 use Feature::Compat::Try;
 
-
 sub run {
     my ($self, $dbname) = @_;
+
+    return $self->help("create")
+        if !$dbname || $dbname eq 'help';
+
     my $logger = $self->logger;
     my $connect_data = {
         $self->config->get('connect_data')->%*,
