@@ -22,6 +22,10 @@ use Feature::Compat::Try;
 
 sub run {
     my ($self, $dbname, $filename) = @_;
+
+    return $self->help('backup')
+        if !$dbname || $dbname eq 'help';
+
     my $logger = $self->logger;
     my $connect_data = {
         $self->config->get('connect_data')->%*,
