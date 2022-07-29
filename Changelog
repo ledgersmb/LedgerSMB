@@ -26,6 +26,8 @@ Changed functionalities
 * Some existing pages (including login.pl) converted to Vue.js v3
 * INI-format configuration file replaced by YAML dependency injection file
 * Localization of setup.pl & login.pl based on browser preferences
+* Some variables in document templates (e.g. 'company_name') renamed (#6672)
+* Simplified and fixed 'display_report.tex' and 'dynatable.tex' templates (#6676)
 
 Removed functionalities
 * HTML 'accesskey' attribute, based on WebAIM.org guidance
@@ -49,6 +51,7 @@ Bugs fixed
 * Aging statements language selector restored (#6353)
 * Multiple aging statements generation and e-mailing restored (#6353)
 * Default printer selection in user preferences restored
+* Template 'display_report.html' doesn't depend on 'ui-header' anymore (#6672)
 
 Code cleanup
 * Fewer warnings from old code
