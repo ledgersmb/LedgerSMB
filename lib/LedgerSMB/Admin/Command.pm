@@ -59,6 +59,10 @@ sub _decode {
 
 sub connect_data_from_arg {
     my ($self, $arg) = @_;
+    if (!$arg) {
+        $self->logger->error('Missing database');
+        exit(1);
+    }
     # patterns to process:
     #  dbname[?connection_parameters]
     #  [user@]host[:port]/dbname (host can be 'ipv6': "[::]")
