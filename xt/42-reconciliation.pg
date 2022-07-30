@@ -66,7 +66,7 @@ BEGIN;
 
     PREPARE test AS SELECT COUNT(*)::INT FROM acc_trans
                     WHERE cleared
-                    AND entry_id NOT IN (SELECT ledger_id FROM cr_report_line);
+                    AND entry_id NOT IN (SELECT entry_id FROM cr_report_line_links);
     SELECT results_eq('test', Array[4], 'Transactions that should be in cr_report');
     DEALLOCATE test;
 

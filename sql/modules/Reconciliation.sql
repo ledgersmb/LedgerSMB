@@ -728,7 +728,9 @@ this is the credit balance.$$;
 
 CREATE OR REPLACE VIEW recon_payee AS
  SELECT DISTINCT ON (rr.id)
-   n.name AS payee, rr.id, rr.report_id, rr.scn, rr.their_balance, rr.our_balance, rr.errorcode, rr."user", rr.clear_time, rr.insert_time, rr.trans_type, rr.post_date, rr.ledger_id, ac.voucher_id, rr.overlook, rr.cleared
+   n.name AS payee, rr.id, rr.report_id, rr.scn, rr.their_balance,
+   rr.our_balance, rr."user", rr.clear_time, rr.insert_time, rr.trans_type,
+   rr.post_date, rr.cleared
    FROM cr_report_line rr
    LEFT JOIN cr_report_line_links rll ON rr.id = rll.report_line_id
    LEFT JOIN acc_trans ac ON rll.entry_id = ac.entry_id
