@@ -140,12 +140,18 @@ to reject approval.$$;
 CREATE OR REPLACE FUNCTION reconciliation__save_set(
         in_report_id int, in_line_ids int[]) RETURNS bool AS
 $$
-        UPDATE cr_report_line SET cleared = false
-        WHERE report_id = in_report_id;
+        UPDATE cr_report_line SET cleared = (id = ANY(in_line_ids))
+         WHERE report_id = in_report_id;
 
-        UPDATE cr_report_line SET cleared = true
-        WHERE report_id = in_report_id AND id = ANY(in_line_ids)
-        RETURNING TRUE;
+        UPDATE cr_report_line_links rll
+           SET cleared = (select submitted from cr_report
+                           where id = in_report_id)
+                         AND report_line_id = ANY(in_line_ids)
+         WHERE EXISTS (select 1 from cr_report_line rl
+                        where rl.report_id = in_report_id
+                              and rl.id = rll.report_line_id);
+
+        SELECT TRUE;
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION reconciliation__save_set(
