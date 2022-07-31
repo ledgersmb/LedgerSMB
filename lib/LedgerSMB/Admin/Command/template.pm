@@ -117,7 +117,6 @@ sub archive {
     unless ( $zip->writeToFileNamed($archive) == AZ_OK ) {
         die 'write error';
     }
-
     $dbh->disconnect;
     return 0;
 }
@@ -198,7 +197,6 @@ Dumps the content of a specific template to STDOUT. The values
 of the arguments must be equal to in the output of the 'list'
 command. When not specified, <language> is assumed to be equal
 to 'all'.
-
 =head2 archive <db-uri> [<archive>] [<name>] [<format>] [<language>]
 
 Archive the templates in file <archive>, defaulting to templates.zip

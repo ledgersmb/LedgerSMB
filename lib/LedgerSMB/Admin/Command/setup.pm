@@ -55,6 +55,7 @@ sub _before_dispatch {
                 $self->config->get('connect_data')->%*,
                 $self->connect_data_from_arg($db_uri)->%*,
             },
+            schema => $self->config->get('schema'),
         ));
 
     return (LedgerSMB::Company->new(dbh => $self->db->connect),
