@@ -18,12 +18,20 @@ cleared. This prevents the line from being included in other reconciliations
 which are either submitted or approved.
 $$;
 
+/*
+  Note that the query below sets *every* entry_id with 'unique_exempt'='f'
+  exactly once. For those which have multiple occurrances, it sets the second
+  and later occurrances to 't'.
+
+  That way, the same entry_id can't be added again using the regular procedure.
+*/
 update cr_report_line_links a
-   set unique_exempt = true
- where exists (select 1 from cr_report_line_links i
-                where a.entry_id = i.entry_id
-                group by i.entry_id
-                having count(*) > 1);
+   set unique_exempt = (b.rn<>1)
+from (select report_line_id, entry_id,
+             row_number() over( partition by entry_id order by report_line_id ) as rn
+        from cr_report_line_links) b
+where a.entry_id = b.entry_id
+      and a.report_line_id = b.report_line_id;
 
 update cr_report_line_links rll
   set cleared = (select r.approved and rl.cleared
