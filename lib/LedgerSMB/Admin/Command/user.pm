@@ -27,13 +27,6 @@ use Feature::Compat::Try;
 
 # LedgerSMB database interface
 has db => (is => 'rw');
-has super_dbh => (is => 'rw',
-                  predicate => '_has_super_dbh');
-has admin_dbh => (is => 'rw', lazy => 1,
-                  builder => '_build_admin_dbh',
-                  clearer => '_clear_admin_dbh',
-                  predicate => '_has_admin_dbh',
-    );
 
 # users
 my $username;
@@ -86,8 +79,8 @@ sub _get_user {
     #my ($user) = grep { $_username eq $_->{username} } @users;
 
     #This ugly hack does
-    my $sth = $dbh->prepare("SELECT id, entity_id FROM users WHERE username='$username'");
-    $sth->execute
+    my $sth = $dbh->prepare(q(SELECT id, entity_id FROM users WHERE username=?));
+    $sth->execute($username)
         or die $dbh->errstr;
     my ($user) = $sth->fetchrow_hashref;
     return $user;
@@ -351,7 +344,7 @@ sub _create_employee {
 sub _create_user {
     my ($self, %args) = @_;
 
-    my $dbh = $args{dbh} // $self->admin_dbh;
+    my $dbh = $args{dbh};
     my $_username = $args{username};
 
     $dbh->do(qq(DROP ROLE IF EXISTS "$_username"));
@@ -376,7 +369,7 @@ sub delete {
     GetOptionsFromArray(\@args, \%options, $self->_option_spec('delete'));
     return 1 if !$username;
 
-    my $user = _get_user($dbh);
+    my $user = $self->_get_user($dbh);
     if (!$user) {
         $self->logger->error("User '$username' does not exists");
         $dbh->rollback;
