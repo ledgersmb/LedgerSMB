@@ -25,9 +25,6 @@ use namespace::autoclean;
 
 use Feature::Compat::Try;
 
-# LedgerSMB database interface
-has db => (is => 'rw');
-
 # users
 my $username;
 my $password;
