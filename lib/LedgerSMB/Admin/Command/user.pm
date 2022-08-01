@@ -279,7 +279,8 @@ sub create {
         return 1;
     }
     #TODO: Fix validity
-    $dbh->do(qq(ALTER USER "$username" VALID UNTIL 'infinity'));
+    my $ident_username=$dbh->quote_identifier($username);
+    $dbh->do(qq(ALTER USER $ident_username VALID UNTIL 'infinity'));
 
     # Add permissions
     return 1 if $permission && !$self->_add_permissions($dbh, $user);
@@ -351,7 +352,8 @@ sub _create_user {
         _dbh => $dbh,
         );
     $user->create($args{password});
-    $dbh->do(qq(ALTER USER "$_username" VALID UNTIL 'infinity'));
+    my $ident_username=$dbh->quote_identifier($username);
+    $dbh->do(qq(ALTER USER $ident_username VALID UNTIL 'infinity'));
 
     return $user;
 }
