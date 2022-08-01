@@ -1307,12 +1307,12 @@ BEGIN
   -- the payment_links table without further temporary tables
   WITH new_entries AS (
     INSERT INTO acc_trans (trans_id, chart_id, transdate, source,
-                           cleared, memo, invoice_id, approved, cleared_on,
-                           reconciled_on, amount_bc, amount_tc, curr,
+                           cleared, memo, invoice_id, approved,
+                           amount_bc, amount_tc, curr,
                            voucher_id)
      SELECT trans_id, chart_id, in_payment_date, source,
-            false, memo, null, coalesce(in_approved, true), null,
-            null, -1 * amount_bc, -1 * amount_tc, curr,
+            false, memo, null, coalesce(in_approved, true),
+            -1 * amount_bc, -1 * amount_tc, curr,
             (select id from voucher v
               where a.trans_id = v.trans_id
                     and v.batch_id = in_batch_id) as voucher_id
@@ -1398,9 +1398,7 @@ CREATE TYPE payment_line_item AS (
   cleared bool,
   memo text,
   invoice_id int,
-  approved bool,
-  cleared_on date,
-  reconciled_on date
+  approved bool
 );
 
 CREATE OR REPLACE FUNCTION payment_gather_line_info(in_account_class int, in_payment_id int)
@@ -1409,7 +1407,7 @@ CREATE OR REPLACE FUNCTION payment_gather_line_info(in_account_class int, in_pay
      SELECT pl.payment_id, ac.entry_id, pl.type as link_type, ac.trans_id, a.invnumber as invoice_number,
      ac.chart_id, ch.accno as chart_accno, ch.description as chart_description,
      ac.amount_bc, ac.transdate as trans_date, ac.source, ac.cleared,
-     ac.memo, ac.invoice_id, ac.approved, ac.cleared_on, ac.reconciled_on
+     ac.memo, ac.invoice_id, ac.approved
      FROM acc_trans ac
      JOIN payment_links pl ON (pl.entry_id = ac.entry_id )
      JOIN account ch ON (ch.id = ac.chart_id)

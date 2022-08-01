@@ -50,6 +50,9 @@ has admin_dbh => (is => 'rw', lazy => 1,
                   clearer => '_clear_admin_dbh',
                   predicate => '_has_admin_dbh',
     );
+has admin_conn => (is => 'rw', lazy => 1,
+                   builder => '_build_admin_conn');
+
 has template_created => (is => 'rw', default => 0);
 has last_scenario_stash => (is => 'rw');
 has last_feature_stash => (is => 'rw');
@@ -76,6 +79,13 @@ sub _build_admin_dbh {
 
     return $dbh;
 }
+
+sub _build_admin_conn {
+    my $self = shift;
+
+    return LedgerSMB::Company->new( dbh => $self->admin_dbh );
+}
+
 
 sub step_directories {
     return [ 'ledgersmb_steps/' ];

@@ -1,29 +1,73 @@
 
 set client_min_messages = 'warning';
 
-
--- The reconciliation reports have the following state transition diagram:
-
-
--- +----------+    +--------+    +------------+    +------------+
--- | Initial  +--->+ Saved  +--->+ Submitted  +-+->+ Accepted   |
--- +----------+    +-+------+    +------+-----+ |  +------------+
---                   | ^                |       |
---                   | \---Rejecting----/       |  +------------+
---                   \--------------------------+->+ Deleted    |
---                                                 -------------+
-
--- lines from acc_trans are referenced in the report lines. The cr_report_lines
--- are marked 'cleared' as soon as they are marked reconciled (and saved) in
--- the reconciliation screen.
-
--- When a report is Rejected, it's returned to the saved state for correction.
-
--- Upon *approval*, the 'cleared' status is written to the 'acc_trans' table,
--- which means that rejected or deleted reports don't have any impact on
--- the reconciliation state of the actual transactions.
+/*
+The reconciliation reports have the following state transition diagram:
 
 
++----------+    +--------+    +------------+     +------------+
+| Initial  +--->+ Saved  +--->+ Submitted  +-+-->+ Approved   |
++----------+    +-+------+    +------+-----+ |   +------------+
+                  | ^                |       |
+                  | \---Rejecting----/       |   +------------+
+                  \-------------------------/ \->+ Deleted    |
+                                                 +------------+
+
+The state diagram is reflected in the various table columns as follows
+(excluding the 'deleted' state, which has no rows in the database):
+
+|------------------------------+---------+-------+-----------+----------|
+| table column                 | initial | saved | submitted | approved |
+|------------------------------+---------+-------+-----------+----------|
+| cr_report.submitted          | false   | false | true      | true     |
+| cr_report.approved           | false   | false | false     | true     |
+| cr_report_line.cleared       | false   | t/f   | t/f       | t/f      |
+| cr_report_line_links.cleared | false   | false | true (2)  | true (2) |
+| acc_trans.cleared            | false   | false | false     | true (1) |
+|------------------------------+---------+-------+-----------+----------|
+
+(1): Only for those lines which have a corresponding cr_report_line_link
+record which is also marked "cleared". Note that a reconciliation report
+can have both cleared and uncleared lines in all states.
+
+(2): For all rows where the cr_report_line.cleared column is marked "cleared".
+
+
+The reasoning behind the difference in definition of the "cleared" column
+between the cr_report_line, cr_report_line_link and acc_trans tables is as
+follows:
+
+ * cr_report_line.cleared indicates if the line on the report is considered
+   to have cleared
+ * cr_report_line_link.cleared indicates (the intention to mark) an acc_trans
+   line as being cleared; the 'submitted' state comes with this intention
+ * acc_trans.cleared indicates that the line actually has been cleared
+
+
+|------------+-----------+--------------------------------------|
+| From state | To state  | Function name                        |
+|------------+-----------+--------------------------------------|
+| <start>    | Initial   | reconciliation__new_repord_id        |
+| Initial    | Saved     | reconciliation__save_set             |
+| Saved      | Submitted | reconciliation__submit_set           |
+| Submitted  | Approved  | reconciliation__report_approve       |
+| Submitted  | Saved     | reconciliation__reject_set           |
+| Iniitial   | Deleted   | reconciliation__delete_unapproved    |
+| Saved      | Deleted   | reconciliation__delete_unapproved    |
+| Submitted  | Deleted   | reconciliation__delete_unapproved    |
+| Initial    | Deleted   | reconciliation__delete_my_report     |
+| Saved      | Deleted   | reconciliation__delete_my_report     |
+| Initial    | Initial   | recenciliation__pending_transactions |
+| Saved      | Saved     | recenciliation__pending_transactions |
+| Initial    | Initial   | reconciliation__add_entry            |
+| Saved      | Saved     | reconciliation__add_entry            |
+|------------+-----------+--------------------------------------|
+
+
+
+
+
+*/
 
 BEGIN;
 
@@ -96,12 +140,18 @@ to reject approval.$$;
 CREATE OR REPLACE FUNCTION reconciliation__save_set(
         in_report_id int, in_line_ids int[]) RETURNS bool AS
 $$
-        UPDATE cr_report_line SET cleared = false
-        WHERE report_id = in_report_id;
+        UPDATE cr_report_line SET cleared = (id = ANY(in_line_ids))
+         WHERE report_id = in_report_id;
 
-        UPDATE cr_report_line SET cleared = true
-        WHERE report_id = in_report_id AND id = ANY(in_line_ids)
-        RETURNING TRUE;
+        UPDATE cr_report_line_links rll
+           SET cleared = (select submitted from cr_report
+                           where id = in_report_id)
+                         AND report_line_id = ANY(in_line_ids)
+         WHERE EXISTS (select 1 from cr_report_line rl
+                        where rl.report_id = in_report_id
+                              and rl.id = rll.report_line_id);
+
+        SELECT TRUE;
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION reconciliation__save_set(
@@ -728,7 +778,9 @@ this is the credit balance.$$;
 
 CREATE OR REPLACE VIEW recon_payee AS
  SELECT DISTINCT ON (rr.id)
-   n.name AS payee, rr.id, rr.report_id, rr.scn, rr.their_balance, rr.our_balance, rr.errorcode, rr."user", rr.clear_time, rr.insert_time, rr.trans_type, rr.post_date, rr.ledger_id, ac.voucher_id, rr.overlook, rr.cleared
+   n.name AS payee, rr.id, rr.report_id, rr.scn, rr.their_balance,
+   rr.our_balance, rr."user", rr.clear_time, rr.insert_time, rr.trans_type,
+   rr.post_date, rr.cleared
    FROM cr_report_line rr
    LEFT JOIN cr_report_line_links rll ON rr.id = rll.report_line_id
    LEFT JOIN acc_trans ac ON rll.entry_id = ac.entry_id
