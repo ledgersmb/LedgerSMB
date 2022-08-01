@@ -18,6 +18,7 @@ Added functionalities
 * Default printer selection supports 'Screen' as default output location
 * Default page size for PDFs selectable through System > Defaults
 * Support for Right-to-Left (RTL) languages
+* Ability to archive templates (#1931)
 
 Changed functionalities
 * Overpayment section in payment screen hidden on missing configuration (#2512)
