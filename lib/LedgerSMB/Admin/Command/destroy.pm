@@ -35,6 +35,8 @@ sub run {
     };
     my $db = LedgerSMB::Database->new(
         connect_data => $connect_data,
+        source_dir   => $self->config->sql_directory,
+        schema       => $self->config->get('schema'),
         );
     my $role_prefix = _get_role_prefix($db);
 
@@ -68,6 +70,8 @@ sub run {
             };
             my $db = LedgerSMB::Database->new(
                     connect_data => $connect_database,
+                    source_dir   => $self->config->sql_directory,
+                    schema       => $self->config->get('schema'),
                 );
             my $database_role_prefix = _get_role_prefix($db);
             if ( defined $database_role_prefix && $role_prefix eq $database_role_prefix ) {

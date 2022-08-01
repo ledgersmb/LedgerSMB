@@ -47,6 +47,7 @@ sub _before_dispatch {
     my ($self) = shift;
     $self->db(LedgerSMB::Database->new(
                   connect_data => $self->config->get('connect_data'),
+                        schema => $self->config->get('schema'),
               ));
     return @_;
 }
@@ -59,6 +60,10 @@ sub _decode {
 
 sub connect_data_from_arg {
     my ($self, $arg) = @_;
+    if (!$arg) {
+        $self->logger->error('Missing database');
+        exit(1);
+    }
     # patterns to process:
     #  dbname[?connection_parameters]
     #  [user@]host[:port]/dbname (host can be 'ipv6': "[::]")

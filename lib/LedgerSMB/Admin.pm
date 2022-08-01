@@ -115,9 +115,12 @@ sub run_command {
     my %options = ();
 
     Getopt::Long::Configure(qw(bundling require_order));
-    GetOptionsFromArray(\@args, \%options, 'help', 'version', 'debug');
+    GetOptionsFromArray(\@args, \%options, 'help', 'version', 'debug', 'info');
 
-    Log::Log4perl->easy_init($options{debug} ? $DEBUG : $INFO);
+    Log::Log4perl->easy_init(
+        $options{debug} ? $DEBUG :
+        $options{info}  ? $INFO :
+                          $WARN);
     Log::Any::Adapter->set('Log4perl');
     my ($cmd, @cmd_args) = @args;
     return help() if $options{help};
