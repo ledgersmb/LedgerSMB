@@ -164,7 +164,7 @@ When qr/I create (a|one|two) reconciliations? ending on (\d{4}-\d\d-\d\d)/ => su
     S->{'the second reconciliation'} = _create_recon($end_date)
 };
 
-When qr/(the (first |second )?reconciliation) is submitted/ => sub {
+When qr/(the (?:first |second )?reconciliation) is submitted/ => sub {
     my $recon_name = $1;
     my $recon_id   = S->{$recon_name};
     my $dbh        = S->{ext_lsmb}->admin_dbh;
@@ -189,8 +189,8 @@ When qr/(the (first |second )?reconciliation) is submitted/ => sub {
     ok(1);
 };
 
-Then qr/(the (first |second )?reconciliation) can( also| not|'t)? be submitted/ => sub {
-    my $negate     = $2 and ($2 eq ' not' or $2 eq q{'t});
+Then qr/(the (?:first |second )?reconciliation) can( also| not|'t)? be submitted/ => sub {
+    my $negate     = ($2 and ($2 eq ' not' or $2 eq q{'t}));
     my $recon_name = $1;
     my $recon_id   = S->{$recon_name};
     my $dbh        = S->{ext_lsmb}->admin_dbh;
@@ -224,8 +224,8 @@ Then qr/(the (first |second )?reconciliation) can( also| not|'t)? be submitted/ 
     }
 };
 
-When qr/the journal line is cleared in (the (first |second )?reconciliation)/ => sub {
-    my $recon_name = $2;
+When qr/the journal line is cleared in (the (?:first |second )?reconciliation)/ => sub {
+    my $recon_name = $1;
     my $recon_id   = S->{$recon_name};
     my $dbh        = S->{ext_lsmb}->admin_dbh;
 
@@ -249,7 +249,7 @@ When qr/the journal line is cleared in (the (first |second )?reconciliation)/ =>
     ok(1);
 };
 
-Then qr/the journal line is (not )?in (the (first |second )?reconciliation)/ => sub {
+Then qr/the journal line is (not )?in (the (?:first |second )?reconciliation)/ => sub {
     my $negate     = $1;
     my $recon_name = $2;
     my $recon_id   = S->{$recon_name};
