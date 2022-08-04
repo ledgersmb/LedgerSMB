@@ -1,4 +1,18 @@
 
+-- make sure data is compliant with the table constraint we're
+-- about tot introduce
+update cr_report set submitted = true
+ where approved and not submitted;
+
+alter table cr_report
+  add constraint cr_report_approved_submitted_check
+  CHECK ( submitted or not approved );
+
+comment on constraint cr_report_approved_submitted_check on cr_report is
+$$Make sure approved reports are also submitted in order to make sure that
+the triggers attached to the 'submitted' column have run.
+$$;
+
 alter table cr_report_line_links
   add column unique_exempt boolean not null default false,
   add column cleared boolean not null default false;
@@ -16,6 +30,11 @@ comment on column cr_report_line_links.cleared is
 $$Indicates that the associated acc_trans line is (going to be) marked as
 cleared. This prevents the line from being included in other reconciliations
 which are either submitted or approved.
+
+The value is maintained by triggers on the 'cr_report' and 'cr_report_line'
+tables. It is defined as 'cr_report.submitted and cr_report_line.cleared'. An
+INSERT trigger on the 'cr_report_line_links' table ensures the value to be
+correct when creating new records.
 $$;
 
 /*
