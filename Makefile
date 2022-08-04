@@ -171,6 +171,26 @@ else
             $(TESTS)
 endif
 
+jstest:
+ifneq ($(origin DOCKER_CMD),undefined)
+#       if there's a docker container, jump into it and run from there
+	$(DOCKER_CMD) make jstest
+else
+#        the 'dropdb' command may fail, hence the prefix minus-sign
+	-dropdb lsmb_test
+	perl -Ilib bin/ledgersmb-admin create \
+            $${PGUSER:-postgres}@$${PGHOST:-localhost}/$${PGDATABASE:-lsmb_test}#xyz
+	perl -Ilib bin/ledgersmb-admin user create \
+            $${PGUSER:-postgres}@$${PGHOST:-localhost}/$${PGDATABASE:-lsmb_test}#xyz \
+				--username="$${UIUSER:-Jest}" \
+				--password="$${UIPASSWORD:-Tester}" \
+				--employeenumber=1 \
+				--country='Canada' \
+				--first_name="$${UIUSER:-Jest}" \
+				--last_name="$${UIPASSWORD:-Tester}" \
+				--permission='Full Permissions'
+	jest
+endif
 
 serve:
 ifneq ($(origin DOCKER_CMD),undefined)
