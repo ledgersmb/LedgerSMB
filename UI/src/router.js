@@ -7,12 +7,10 @@ import Home from "./components/Home";
 import ServerUI from "./components/ServerUI";
 import ImportCsvAaBatch from "./components/ImportCSV-AA-Batch";
 import ImportCsvCoA from "./components/ImportCSV-CoA";
-import ImportCsvGifi from "./components/ImportCSV-GIFI";
 import ImportCsvGl from "./components/ImportCSV-GL";
 import ImportCsvGlBatch from "./components/ImportCSV-GL-Batch";
 import ImportCsvGSO from "./components/ImportCSV-GSO";
 import ImportCsvInventory from "./components/ImportCSV-Inventory";
-import ImportCsvSic from "./components/ImportCSV-SIC";
 import ImportCsvTimecard from "./components/ImportCSV-Timecard";
 import Warehouses from "./components/Warehouses.vue";
 import Pricegroups from "./components/Pricegroups.vue";
@@ -49,11 +47,6 @@ const routes = [
         name: "importCSV-CoA",
         path: "/import-csv/chart",
         component: ImportCsvCoA
-    },
-    {
-        name: "importCSV-GIFI",
-        path: "/import-csv/gifi",
-        component: ImportCsvGifi
     },
     {
         name: "importCSV-GL",
@@ -93,11 +86,6 @@ const routes = [
         path: "/import-csv/services",
         component: ImportCsvGSO,
         props: { type: "services" }
-    },
-    {
-        name: "importCSV-SIC",
-        path: "/import-csv/sic",
-        component: ImportCsvSic
     },
     {
         name: "importCSV-Timecard",
