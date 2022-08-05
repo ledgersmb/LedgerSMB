@@ -150,6 +150,9 @@ contact__search
 contact_class__list
 cr_coa_to_account_save
 cr_report_block_changing_approved
+cr_report_line_cleared_update
+cr_report_line_link_insert
+cr_report_submitted_update
 credit_limit__used
 currency__delete
 currency__get

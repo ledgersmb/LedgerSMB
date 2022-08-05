@@ -113,10 +113,14 @@ Given qr/a cleared journal line on (\d{4}-\d\d-\d\d)/, sub {
         {},
         $recon_line->{id},
         S->{journal_line}->{entry_id}) or die $dbh->errstr;
-    $dbh->do('select reconciliation__submit_set(?, ?)',
+    $dbh->do('select reconciliation__save_set(?, ?)',
              {},
              $recon->{id},
              [ $recon_line->{id} ]
+        ) or die $dbh->errstr;
+    $dbh->do('select reconciliation__submit_set(?)',
+             {},
+             $recon->{id}
         ) or die $dbh->errstr;
     $dbh->do('select reconciliation__report_approve(?)',
              {}, $recon->{id}) or die $dbh->errstr;
@@ -164,53 +168,36 @@ When qr/I create (a|one|two) reconciliations? ending on (\d{4}-\d\d-\d\d)/ => su
     S->{'the second reconciliation'} = _create_recon($end_date)
 };
 
-When qr/(the (first |second )?reconciliation) is submitted/ => sub {
+When qr/(the (?:first |second )?reconciliation) is submitted/ => sub {
     my $recon_name = $1;
     my $recon_id   = S->{$recon_name};
     my $dbh        = S->{ext_lsmb}->admin_dbh;
 
     $dbh->do(
         <<~'STMT',
-        select reconciliation__submit_set(
-                   ?,
-                   ARRAY[(select report_line_id
-                           from cr_report_line_links rll
-                            join cr_report_line rl on rll.report_line_id = rl.id
-                            join cr_report r on rl.report_id = r.id
-                           where entry_id = ? and r.id = ?)]::int[]
-        )
+        select reconciliation__submit_set(?)
         STMT
         {},
         $recon_id,
-        S->{journal_line}->{entry_id},
-        $recon_id
         ) or die $dbh->errstr;
 
     ok(1);
 };
 
-Then qr/(the (first |second )?reconciliation) can( also| not|'t)? be submitted/ => sub {
-    my $negate     = $2 and ($2 eq ' not' or $2 eq q{'t});
+Then qr/(the (?:first |second )?reconciliation) can( also| not|\'t)? be submitted/ => sub {
+    my $a = $2;
+    my $negate     = (not $2 or ($2 eq ' not' or $2 eq q{'t}));
     my $recon_name = $1;
     my $recon_id   = S->{$recon_name};
     my $dbh        = S->{ext_lsmb}->admin_dbh;
 
     local $dbh->{RaiseError} = 0;
-    my $succeed = $dbh->do(
+    my $succeed = defined $dbh->do(
         <<~'STMT',
-        select reconciliation__submit_set(
-                   ?,
-                   ARRAY[(select report_line_id
-                           from cr_report_line_links rll
-                            join cr_report_line rl on rll.report_line_id = rl.id
-                            join cr_report r on rl.report_id = r.id
-                           where entry_id = ? and r.id = ?)]::int[]
-        )
+        select reconciliation__submit_set(?)
         STMT
         {},
         $recon_id,
-        S->{journal_line}->{entry_id},
-        $recon_id
         );
 
     ### NOTE!! This leaves the current transaction cancelled!
@@ -224,8 +211,8 @@ Then qr/(the (first |second )?reconciliation) can( also| not|'t)? be submitted/ 
     }
 };
 
-When qr/the journal line is cleared in (the (first |second )?reconciliation)/ => sub {
-    my $recon_name = $2;
+When qr/the journal line is cleared in (the (?:first |second )?reconciliation)/ => sub {
+    my $recon_name = $1;
     my $recon_id   = S->{$recon_name};
     my $dbh        = S->{ext_lsmb}->admin_dbh;
 
@@ -249,7 +236,7 @@ When qr/the journal line is cleared in (the (first |second )?reconciliation)/ =>
     ok(1);
 };
 
-Then qr/the journal line is (not )?in (the (first |second )?reconciliation)/ => sub {
+Then qr/the journal line is (not )?in (the (?:first |second )?reconciliation)/ => sub {
     my $negate     = $1;
     my $recon_name = $2;
     my $recon_id   = S->{$recon_name};

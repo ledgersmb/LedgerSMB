@@ -71,19 +71,83 @@ follows:
 
 BEGIN;
 
-CREATE OR REPLACE FUNCTION reconciliation__submit_set(
-        in_report_id int, in_line_ids int[]) RETURNS bool AS
+CREATE OR REPLACE FUNCTION cr_report_submitted_update()
+RETURNS trigger
+AS
+$$
+BEGIN
+  UPDATE cr_report_line_links rll
+     SET cleared = rl.cleared and NEW.submitted
+    FROM cr_report_line rl
+   WHERE rll.report_line_id = rl.id
+         AND rl.report_id = NEW.id;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION cr_report_line_cleared_update()
+RETURNS trigger
+AS
+$$
+BEGIN
+  UPDATE cr_report_line_links rll
+     SET cleared = NEW.cleared and r.submitted
+    FROM cr_report r
+   WHERE rll.report_line_id = NEW.id
+         AND r.id = NEW.report_id;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION cr_report_line_link_insert()
+RETURNS trigger
+AS
+$$
+BEGIN
+  NEW.cleared = (select r.submitted and rl.cleared
+                   from cr_report_line rl
+                   join cr_report r on rl.report_id = r.id
+                  where rl.id = NEW.report_line_id);
+
+  RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+-- drop and create, because only Pg14+ support CREATE OR REPLACE
+DROP TRIGGER IF EXISTS cr_report_links_update ON cr_report;
+CREATE TRIGGER cr_report_links_update AFTER UPDATE OF submitted
+    ON cr_report
+    FOR EACH ROW
+    EXECUTE PROCEDURE cr_report_submitted_update();
+
+-- drop and create, because only Pg14+ support CREATE OR REPLACE
+DROP TRIGGER IF EXISTS cr_report_line_links_update ON cr_report_line;
+CREATE TRIGGER cr_report_line_links_update AFTER UPDATE OF cleared
+    ON cr_report_line
+    FOR EACH ROW
+    EXECUTE PROCEDURE cr_report_line_cleared_update();
+
+-- drop and create, because only Pg14+ support CREATE OR REPLACE
+DROP TRIGGER IF EXISTS cr_report_line_link_insert ON cr_report_line_links;
+CREATE TRIGGER cr_report_line_link_insert BEFORE INSERT
+    ON cr_report_line_links
+    FOR EACH ROW
+    EXECUTE PROCEDURE cr_report_line_link_insert();
+
+
+CREATE OR REPLACE FUNCTION reconciliation__submit_set(in_report_id int)
+RETURNS bool AS
 $$
 BEGIN
         UPDATE cr_report set submitted = true where id = in_report_id;
-        PERFORM reconciliation__save_set(in_report_id, in_line_ids);
 
         RETURN FOUND;
 END;
 $$ LANGUAGE PLPGSQL;
 
-COMMENT ON FUNCTION reconciliation__submit_set(
-        in_report_id int, in_line_ids int[]) IS
+COMMENT ON FUNCTION reconciliation__submit_set(in_report_id int) IS
 $$Submits a reconciliation report for approval.
 in_line_ids is used to specify which report lines are cleared, finalizing the
 report.$$;
@@ -142,14 +206,6 @@ CREATE OR REPLACE FUNCTION reconciliation__save_set(
 $$
         UPDATE cr_report_line SET cleared = (id = ANY(in_line_ids))
          WHERE report_id = in_report_id;
-
-        UPDATE cr_report_line_links rll
-           SET cleared = (select submitted from cr_report
-                           where id = in_report_id)
-                         AND report_line_id = ANY(in_line_ids)
-         WHERE EXISTS (select 1 from cr_report_line rl
-                        where rl.report_id = in_report_id
-                              and rl.id = rll.report_line_id);
 
         SELECT TRUE;
 $$ LANGUAGE SQL;

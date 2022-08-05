@@ -93,7 +93,7 @@ Submits the reconciliation set for approval.
 
 sub submit {
     my $self = shift @_;
-    $self->_pre_save;
+    $self->save;
     return $self->call_dbmethod(funcname=>'reconciliation__submit_set');
 }
 
