@@ -277,6 +277,8 @@ executors:
       RELEASE_TESTING: 1
       REMOTE_SERVER_ADDR: selenium-hub
       STARMAN_DEVEL_COVER_OPTIONS: ''
+      UIUSER: Jest
+      UIPASSWORD: Tester
       YATH_DEVEL_COVER_OPTIONS: ''
 
 # Define jobs
