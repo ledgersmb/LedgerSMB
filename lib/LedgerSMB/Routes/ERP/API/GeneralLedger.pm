@@ -21,7 +21,7 @@ This module doesn't export any methods.
 use strict;
 use warnings;
 
-use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_CONFLICT );
+use HTTP::Status qw( HTTP_OK HTTP_NO_CONTENT HTTP_CREATED HTTP_CONFLICT );
 
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Report::Listings::GIFI;
@@ -171,7 +171,7 @@ get api '/gl/gifi' => sub {
     }
 
     my $response = _get_gifis( $c, $formatter );
-    return [ 200,
+    return $response && [ HTTP_OK,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              $response  ];
 };
@@ -194,7 +194,7 @@ del api '/gl/gifi/{id}' => sub {
     my $response = _del_sic( $c, $params->{id} );
 
     # return 'undef' if $response is undef, which it is when not found
-    return $response && [ HTTP_OK, [ ], [ '' ] ];
+    return $response && [ HTTP_NO_CONTENT, [ ], [ '' ] ];
 };
 
 get api '/gl/gifi/{id}' => sub {
@@ -202,7 +202,7 @@ get api '/gl/gifi/{id}' => sub {
 
     my ($response, $meta) = _get_gifi( $c, $params->{id} );
 
-    return [ HTTP_OK,
+    return $response && [ HTTP_OK,
              [ 'Content-Type' => 'application/json; charset=UTF-8',
                'ETag' => qq|"$meta->{ETag}"| ],
              $response ];

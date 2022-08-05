@@ -21,7 +21,7 @@ This module doesn't export any methods.
 use strict;
 use warnings;
 
-use HTTP::Status qw( HTTP_OK HTTP_NO_CONTENT HTTP_CREATED HTTP_CONFLICT HTTP_FORBIDDEN );
+use HTTP::Status qw( HTTP_OK HTTP_NO_CONTENT HTTP_CREATED HTTP_CONFLICT HTTP_FORBIDDEN);
 
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Report::Listings::Business_Type;
@@ -399,6 +399,7 @@ post api '/contacts/business-types' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($response, $meta) = _add_businesstype( $c, $body );
+
     return $response && [
         HTTP_CREATED,
         [ 'Content-Type' => 'application/json; charset=UTF-8',
@@ -410,10 +411,10 @@ post api '/contacts/business-types' => sub {
 del api '/contacts/business-types/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my $response = _del_businesstype( $c, $params->{id} );
+    # my $response = _del_businesstype( $c, $params->{id} );
 
     # return 'undef' if $response is undef, which it is when not found
-    return $response && [ HTTP_NO_CONTENT, [ ], [ '' ] ];
+    return [ HTTP_FORBIDDEN, [ ], [ '' ] ];
 };
 
 get api '/contacts/business-types/{id}' => sub {
@@ -707,7 +708,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BusinessType'
+              $ref: '#/components/schemas/NewBusinessType'
       responses:
         201:
           description: ...
@@ -888,6 +889,13 @@ components:
         discount:
           type: number
           format: float
+    NewBusinessType:
+            type: object
+            required:
+              - description
+            properties:
+              description:
+                type: string
   responses:
     400:
       description: Bad request
