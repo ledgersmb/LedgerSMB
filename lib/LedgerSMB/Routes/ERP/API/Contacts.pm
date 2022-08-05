@@ -21,7 +21,7 @@ This module doesn't export any methods.
 use strict;
 use warnings;
 
-use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_CONFLICT );
+use HTTP::Status qw( HTTP_OK HTTP_NO_CONTENT HTTP_CREATED HTTP_CONFLICT HTTP_FORBIDDEN );
 
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Report::Listings::Business_Type;
@@ -192,18 +192,19 @@ post api '/contacts/sic' => sub {
 del api '/contacts/sic/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my $response = _del_sic( $c, $params->{id} );
+    # my $response = _del_sic( $c, $params->{id} );
 
     # return 'undef' if $response is undef, which it is when not found
-    return $response && [ HTTP_OK, [ ], [ '' ] ];
+    return [ HTTP_FORBIDDEN, [ ], [ '' ] ];
 };
 
 get api '/contacts/sic/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
+    return undef if !$params->{id};
     my ($response, $meta) = _get_sic( $c, $params->{id} );
 
-    return [ HTTP_OK,
+    return $response && [ HTTP_OK,
              [ 'Content-Type' => 'application/json; charset=UTF-8',
                'ETag' => qq|"$meta->{ETag}"| ],
              $response ];
@@ -389,7 +390,7 @@ get api '/contacts/business-types' => sub {
     }
 
     my $response = _get_businesstypes( $c, $formatter );
-    return [ 200,
+    return $response && [ HTTP_OK,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              $response  ];
 };
@@ -398,7 +399,7 @@ post api '/contacts/business-types' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($response, $meta) = _add_businesstype( $c, $body );
-    return [
+    return $response && [
         HTTP_CREATED,
         [ 'Content-Type' => 'application/json; charset=UTF-8',
           'ETag' => qq|"$meta->{ETag}"|
@@ -412,15 +413,16 @@ del api '/contacts/business-types/{id}' => sub {
     my $response = _del_businesstype( $c, $params->{id} );
 
     # return 'undef' if $response is undef, which it is when not found
-    return $response && [ HTTP_OK, [ ], [ '' ] ];
+    return $response && [ HTTP_NO_CONTENT, [ ], [ '' ] ];
 };
 
 get api '/contacts/business-types/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
+    return undef if !$params->{id};
     my ($response, $meta) = _get_businesstype( $c, $params->{id} );
 
-    return [ HTTP_OK,
+    return $response && [ HTTP_OK,
              [ 'Content-Type' => 'application/json; charset=UTF-8',
                'ETag' => qq|"$meta->{ETag}"| ],
              $response ];
