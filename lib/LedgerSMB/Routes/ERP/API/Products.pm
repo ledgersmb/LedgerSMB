@@ -21,7 +21,7 @@ This module doesn't export any methods.
 use strict;
 use warnings;
 
-use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_CONFLICT );
+use HTTP::Status qw( HTTP_OK HTTP_NO_CONTENT HTTP_CREATED HTTP_CONFLICT HTTP_FORBIDDEN );
 
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Report::Inventory::Pricegroups;
@@ -154,8 +154,6 @@ sub _update_pricegroup {
         });
 }
 
-
-
 get api '/products/pricegroups' => sub {
     my ($env, $r, $c, $body, $params) = @_;
     my $formatter = $env->{wire}->get( 'output_formatter' );
@@ -172,7 +170,7 @@ get api '/products/pricegroups' => sub {
     }
 
     my $response = _get_pricegroups( $c, $formatter );
-    return [ 200,
+    return [ HTTP_OK,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              $response  ];
 };
@@ -192,18 +190,19 @@ post api '/products/pricegroups' => sub {
 del api '/products/pricegroups/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my $response = _del_pricegroup( $c, $params->{id} );
+    #my $response = _del_pricegroup( $c, $params->{id} );
 
     # return 'undef' if $response is undef, which it is when not found
-    return $response && [ HTTP_OK, [ ], [ '' ] ];
+    return [ HTTP_FORBIDDEN, [ ], [ '' ] ];
 };
 
 get api '/products/pricegroups/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
+    return undef if !$params->{id};
     my ($response, $meta) = _get_pricegroup( $c, $params->{id} );
 
-    return [ HTTP_OK,
+    return $response && [ HTTP_OK,
              [ 'Content-Type' => 'application/json; charset=UTF-8',
                'ETag' => qq|"$meta->{ETag}"| ],
              $response ];
