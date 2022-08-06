@@ -679,6 +679,7 @@ h2 {
 
 #logindiv #company_div label {
     text-align: left;
+    white-space: nowrap;
 }
 
 .two-column-grid {
