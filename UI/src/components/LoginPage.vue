@@ -15,7 +15,7 @@
                      top: 50%; left: 50%;
                      transform: translate(-50%, -50%);
                      width: fit-content;
-                     height: 100%;">
+                     height: fit-content;">
               <h1 class="login" align="center">
                 LedgerSMB {{ version }}
               </h1>
