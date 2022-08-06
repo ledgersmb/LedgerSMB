@@ -403,18 +403,19 @@ post api '/products/warehouses' => sub {
 del api '/products/warehouses/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my $response = _del_warehouse( $c, $params->{id} );
+    # my $response = _del_warehouse( $c, $params->{id} );
 
     # return 'undef' if $response is undef, which it is when not found
-    return $response && [ HTTP_OK, [ ], [ '' ] ];
+    return [ HTTP_FORBIDDEN, [ ], [ '' ] ];
 };
 
 get api '/products/warehouses/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
+    return undef if !$params->{id};
     my ($response, $meta) = _get_warehouse( $c, $params->{id} );
 
-    return [ HTTP_OK,
+    return $response && [ HTTP_OK,
              [ 'Content-Type' => 'application/json; charset=UTF-8',
                'ETag' => qq|"$meta->{ETag}"| ],
              $response ];
