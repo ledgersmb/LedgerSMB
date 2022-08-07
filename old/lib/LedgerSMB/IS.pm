@@ -1324,7 +1324,7 @@ sub retrieve_invoice {
                  FROM invoice i
                      JOIN parts p ON (i.parts_id = p.id)
             LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
-            LEFT JOIN translation t
+            LEFT JOIN partsgroup_translation t
                       ON (t.trans_id = p.partsgroup_id
                       AND t.language_code
                       = ?)
@@ -1448,9 +1448,9 @@ sub retrieve_item {
                 LEFT JOIN makemodel mm ON (mm.parts_id = p.id AND mm.barcode = |
                              . $dbh->quote($form->{"partnumber_$i"}) . qq|)
         LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
-        LEFT JOIN translation t1
+        LEFT JOIN parts_translation t1
                   ON (t1.trans_id = p.id AND t1.language_code = ?)
-        LEFT JOIN translation t2
+        LEFT JOIN partsgroup_translation t2
                   ON (t2.trans_id = p.partsgroup_id
                   AND t2.language_code = ?)
              $where

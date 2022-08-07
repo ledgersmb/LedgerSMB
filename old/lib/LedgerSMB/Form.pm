@@ -2469,7 +2469,7 @@ sub get_partsgroup {
                 t.description AS translation
             FROM partsgroup pg
             JOIN parts p ON (p.partsgroup_id = pg.id)
-            LEFT JOIN translation t ON (t.trans_id = pg.id
+            LEFT JOIN partsgroup_translation t ON (t.trans_id = pg.id
                 AND t.language_code = ?)|;
         @queryargs = (
             $p->{language_code}

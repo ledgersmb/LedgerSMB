@@ -420,7 +420,6 @@ sub save {
 
     my $partsgroup_id;
     ( $null, $partsgroup_id ) = split /--/, $form->{partsgroup};
-    $partsgroup_id *= 1;
 
 
     if ( !$form->{priceupdate} ) {

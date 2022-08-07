@@ -645,7 +645,7 @@ sub retrieve {
             LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
             LEFT JOIN partsvendor pv ON (pv.parts_id = p.id
                                            AND pv.credit_id = ?)
-            LEFT JOIN translation t
+            LEFT JOIN partsgroup_translation t
                 ON (t.trans_id = p.partsgroup_id
                     AND t.language_code = ?)
             WHERE o.trans_id = ?

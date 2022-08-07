@@ -697,7 +697,7 @@ sub retrieve_invoice {
                  FROM invoice i
                  JOIN parts p ON (i.parts_id = p.id)
             LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
-            LEFT JOIN translation t
+            LEFT JOIN partsgroup_translation t
                       ON (t.trans_id = p.partsgroup_id
                       AND t.language_code = ?)
                 WHERE i.trans_id = ?
@@ -813,9 +813,9 @@ sub retrieve_item {
         LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
                 LEFT JOIN partsvendor pv ON (pv.parts_id = p.id
                                            AND pv.credit_id = ?)
-        LEFT JOIN translation t1
+        LEFT JOIN parts_translation t1
                   ON (t1.trans_id = p.id AND t1.language_code = ?)
-        LEFT JOIN translation t2
+        LEFT JOIN partsgroup_translation t2
                   ON (t2.trans_id = p.partsgroup_id
                   AND t2.language_code = ?)
              $where
