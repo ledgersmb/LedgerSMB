@@ -370,22 +370,6 @@ input[type="checkbox"].remove:checked::before {
     background: red;
 }
 
-/* Theming controls based on transaction status */
-
-/* disabled for now to speed release
-#statusdiv.new input {
-}
-
-#statusdiv.posted input {
-       background-color: white;
-}
-
-#statusdiv.saved input {
-       background-color: #ccccff;
-}
-
-*/
-
 /* media stuff */
 
 @media screen {

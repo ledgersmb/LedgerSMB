@@ -449,20 +449,6 @@ input[type="checkbox"].remove:checked::before {
     background: var(--input-remove-checked-before-bg);
 }
 
-/* Theming controls based on transaction status */
-
-/* disabled for now to speed release
-#statusdiv.new input {
-}
-
-#statusdiv.posted input { background-color: var(--statusdiv-posted-input-bg-clr);
-}
-
-#statusdiv.saved input { background-color: var(--statusdiv-saved-input-bg-clr);
-}
-
-*/
-
 /* media stuff */
 
 @media screen {
