@@ -97,7 +97,7 @@ define([
                 this.domNode,
                 "keydown",
                 lang.hitch(this, function (e) {
-                    this.oldValue = domAttr.get(e.target, "value");
+                    this._oldValue = domAttr.get(e.target, "value");
                 })
             );
             on(
@@ -106,7 +106,7 @@ define([
                 lang.hitch(this, function (e) {
                     let value = domAttr.get(e.target, "value");
 
-                    if (this.oldValue.length > value.length) {
+                    if (this._oldValue.length > value.length) {
                         // allow removing characters; separators and others alike
                         return;
                     }
