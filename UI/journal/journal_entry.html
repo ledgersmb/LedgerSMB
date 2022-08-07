@@ -146,7 +146,7 @@
           <th class="listheading">[% text('Memo') %]</th>
           [% FOREACH cls IN form.bu_class %]
               [% IF form.b_units.${cls.id} %]
-          <th>[% maketext(cls.label)
+          <th class="listheading">[% maketext(cls.label)
             %]</th>
                [% END %]
           [% END %]
