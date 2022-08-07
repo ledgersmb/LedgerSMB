@@ -1053,28 +1053,6 @@ sub generate_selects {
         }
     }
 
-     # projects
-    if ( $form->{all_project} && @{ $form->{all_project} } ) {
-        $form->{selectprojectnumber} = "<option></option>\n";
-          $form->{selectprojectnumber} = "";
-
-        for ( @{ $form->{all_project} } ) {
-            my $value = "$_->{projectnumber}--$_->{id}";
-            $form->{selectprojectnumber} .=
-                     # change the format here, then change it below!
-                     qq|<option value="$value">$_->{projectnumber}</option>\n|;
-        }
-
-          if ($form->{rowcount}) {
-                for my $i ( 1 .. $form->{rowcount} ) {
-                     $form->{"selectprojectnumber_$i"} =
-                          $form->{"selectprojectnumber"};
-                     $form->{"selectprojectnumber_$i"} =~
-                          s/(value="\Q$form->{"projectnumber_$i"}\E")/$1 selected="selected"/;
-                }
-          }
-    }
-
     # departments
     if ( $form->{all_department} && @{ $form->{all_department} } ) {
         $form->{selectdepartment} = "<option></option>\n";
