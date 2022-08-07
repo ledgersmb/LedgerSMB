@@ -103,7 +103,6 @@ sub post_invoice {
     my $sth;
     my $ref;
     my $null;
-    my $project_id;
     my $exchangerate = 0;
     my $taxrate;
     my $diff = 0;
@@ -203,11 +202,6 @@ sub post_invoice {
                 $form->{"${_}_$i"} = $ref->{$_};
             }
             $pth->finish;
-
-            if ( ($form->{"projectnumber_$i"} // "") ne "" ) {
-                ( $null, $project_id ) =
-                  split /--/, $form->{"projectnumber_$i"};
-            }
 
             # undo discount formatting
             $form->{"discount_$i"} =
@@ -364,7 +358,6 @@ sub post_invoice {
                     fxgrossamount => $fxlinetotal +
                       $form->round_amount( $fxtax, 2 ),
                     grossamount => $grossamount,
-                    project_id  => $project_id,
                     invoice_id  => $invoice_id
                   };
 
@@ -389,7 +382,6 @@ sub post_invoice {
                     fxgrossamount => $fxlinetotal +
                       $form->round_amount( $fxtax, 2 ),
                     grossamount => $grossamount,
-                    project_id  => $project_id,
                     invoice_id  => $invoice_id
                   };
 

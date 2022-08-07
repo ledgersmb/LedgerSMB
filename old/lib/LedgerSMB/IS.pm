@@ -108,10 +108,6 @@ sub invoice_details {
     my $item;
     my $i;
     my @sortlist = ();
-    my $projectnumber;
-    my $projectdescription;
-    my $projectnumber_id;
-    my $translation;
     my @taxaccounts;
     my %taxaccounts;
     my $taxrate;
@@ -144,55 +140,17 @@ sub invoice_details {
         for ( keys %$ref ) { $form->{"${_}_$i"} = $ref->{$_} }
         $pth->finish;
 
-        $projectnumber_id      = 0;
-        $projectnumber         = "";
         $form->{partsgroup}    = "";
         $form->{projectnumber} = "";
 
-        if ( $form->{groupprojectnumber} || $form->{grouppartsgroup} ) {
+        if ( $form->{grouppartsgroup} ) {
 
             $inventory_accno_id =
               ( $form->{"inventory_accno_id_$i"} || $form->{"assembly_$i"} )
               ? "1"
               : "";
 
-            if ( $form->{groupprojectnumber} ) {
-                ( $projectnumber, $projectnumber_id ) =
-                  split /--/, $form->{"projectnumber_$i"};
-            }
-            if ( $form->{grouppartsgroup} ) {
-                ( $form->{partsgroup} ) =
-                  split /--/, $form->{"partsgroup_$i"};
-            }
-
-            if ( $projectnumber_id && $form->{groupprojectnumber} ) {
-                if ( $translation{$projectnumber_id} ) {
-                    $form->{projectnumber} = $translation{$projectnumber_id};
-                }
-                else {
-
-                    # get project description
-                    $prh->execute( $projectnumber_id, $form->{language_code} );
-
-                    ( $projectdescription, $translation ) =
-                      $prh->fetchrow_array;
-
-                    $prh->finish;
-
-                    $form->{projectnumber} =
-                      ($translation)
-                      ? "$projectnumber, $translation"
-                      : "$projectnumber, " . "$projectdescription";
-
-                    $translation{$projectnumber_id} = $form->{projectnumber};
-                }
-            }
-
-            if ( $form->{grouppartsgroup} && $form->{partsgroup} ) {
-                $form->{projectnumber} .= " / "
-                  if $projectnumber_id;
-                $form->{projectnumber} .= $form->{partsgroup};
-            }
+            ( $form->{partsgroup} ) = split /--/, $form->{"partsgroup_$i"};
         }
 
         $sortby = qq|$projectnumber$form->{partsgroup}|;
