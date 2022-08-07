@@ -665,12 +665,12 @@ h2 {
 }
 
 #logindiv #company_div {
+    column-gap: 1ex;
     display: grid;
-    grid-column-gap: 1ex;
-    grid-row-gap: 4px;
     grid-template: none / auto auto;
     margin-bottom: 1em;
     margin-top: 2em;
+    row-gap: 4px;
 }
 
 #logindiv #company_div lsmb-text,
