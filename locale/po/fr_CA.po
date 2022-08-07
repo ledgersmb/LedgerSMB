@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-07-28 08:16+0000\n"
+"POT-Creation-Date: 2022-08-07 21:44+0000\n"
 "PO-Revision-Date: 2022-01-09T21:20:27.139Z\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/ledgersmb/ledgersmb/"
@@ -211,7 +211,7 @@ msgstr "Accès refusé: nom d'utilisateur ou mot de passe invalide"
 #: UI/Reports/filters/invoice_search.html:29 UI/Reports/filters/orders.html:29
 #: UI/Reports/filters/orders.html:164
 #: UI/Reports/filters/reconciliation_search.html:42 UI/accounts/edit.html:119
-#: UI/budgetting/budget_entry.html:57 UI/journal/journal_entry.html:141
+#: UI/budgetting/budget_entry.html:57 UI/journal/journal_entry.html:146
 #: UI/payments/payment2.html:86 UI/payments/payment2.html:268
 #: UI/payments/payment2.html:345 UI/payments/payments_detail.html:135
 #: UI/payments/payments_detail.html:223 UI/payments/payments_filter.html:62
@@ -272,7 +272,7 @@ msgstr ""
 msgid "Account Type"
 msgstr "Type de compte"
 
-#: old/bin/gl.pl:574 old/lib/LedgerSMB/GL.pm:226
+#: old/bin/gl.pl:676 old/lib/LedgerSMB/GL.pm:226
 msgid "Account [_1] not found"
 msgstr ""
 
@@ -324,10 +324,6 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:819
 msgid "Accum. Depreciation"
-msgstr ""
-
-#: UI/journal/journal_entry.html:15
-msgid "Action: [_1], ID: [_2]"
 msgstr ""
 
 #: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
@@ -1356,7 +1352,7 @@ msgstr ""
 msgid "Cancel?"
 msgstr ""
 
-#: old/bin/gl.pl:611
+#: old/bin/gl.pl:713
 msgid "Cannot Repost Transaction"
 msgstr ""
 
@@ -1396,7 +1392,7 @@ msgstr "Impossible de supprimer l'objet!"
 msgid "Cannot delete order!"
 msgstr "Impossible de supprimer la commande!"
 
-#: old/bin/gl.pl:639
+#: old/bin/gl.pl:741
 msgid "Cannot delete posted transaction"
 msgstr ""
 
@@ -1412,11 +1408,11 @@ msgstr "Impossible d'enregistrer la facture sur un exercice clos!"
 msgid "Cannot post payment for a closed period!"
 msgstr "Impossible d'enregistrer le paiement sur un exercice clos!"
 
-#: old/bin/aa.pl:1368 old/bin/gl.pl:622
+#: old/bin/aa.pl:1368 old/bin/gl.pl:183 old/bin/gl.pl:724
 msgid "Cannot post transaction for a closed period!"
 msgstr "Impossible d'enregistrer l'écriture sur un exercice clos!"
 
-#: old/bin/gl.pl:661
+#: old/bin/gl.pl:763
 msgid ""
 "Cannot post transaction with a debit and credit entry for the same account!"
 msgstr ""
@@ -1590,8 +1586,8 @@ msgid "Closing data"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Language.pm:49
-#: lib/LedgerSMB/Report/Listings/SIC.pm:47 UI/src/components/GIFI.vue:9
-#: UI/src/components/SIC.vue:9 UI/src/components/Languages.vue:9
+#: lib/LedgerSMB/Report/Listings/SIC.pm:47 UI/src/components/GIFI.vue:11
+#: UI/src/components/SIC.vue:11 UI/src/components/Languages.vue:9
 msgid "Code"
 msgstr "Code"
 
@@ -1627,7 +1623,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/contact.pm:186 UI/Contact/contact.html:12
 #: UI/Contact/divs/company.html:2 UI/Reports/aging_report.html:12
 #: UI/Reports/display_report.html:19 UI/main.html:32
-#: templates/demo/display_report.html:33 templates/demo/display_report.tex:36
+#: templates/demo/display_report.html:49 templates/demo/display_report.tex:37
 #: UI/src/components/LoginPage.vue:36
 msgid "Company"
 msgstr "Société"
@@ -1681,11 +1677,11 @@ msgstr ""
 msgid "Compose e-mail"
 msgstr ""
 
-#: UI/src/components/GIFI.vue:18
+#: UI/src/components/GIFI.vue:32
 msgid "Configure GIFI codes"
 msgstr ""
 
-#: UI/src/components/SIC.vue:18
+#: UI/src/components/SIC.vue:32
 msgid "Configure Standard Industry Codes (SIC)"
 msgstr ""
 
@@ -1812,7 +1808,7 @@ msgstr ""
 msgid "Copy"
 msgstr "Copier"
 
-#: old/bin/aa.pl:976 old/bin/gl.pl:259 old/bin/ir.pl:531 old/bin/is.pl:598
+#: old/bin/aa.pl:976 old/bin/gl.pl:343 old/bin/ir.pl:531 old/bin/is.pl:598
 msgid "Copy to New"
 msgstr ""
 
@@ -1833,7 +1829,7 @@ msgstr "Coût des produits vendus"
 msgid "Could Not Load Template from DB"
 msgstr ""
 
-#: UI/src/components/ServerUI.js:87
+#: UI/src/components/ServerUI.js:103
 msgid "Could not connect to server"
 msgstr "Connexion au serveur impossible"
 
@@ -1929,7 +1925,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:91
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:92 UI/Reports/co/filter_bm.html:105
 #: UI/Reports/filters/gl.html:240 UI/Reports/filters/trial_balance.html:5
-#: UI/budgetting/budget_entry.html:62 UI/journal/journal_entry.html:144
+#: UI/budgetting/budget_entry.html:62 UI/journal/journal_entry.html:149
 msgid "Credit"
 msgstr "Crédit"
 
@@ -2170,7 +2166,7 @@ msgstr "Version incorrecte de la banque de données"
 #: old/bin/is.pl:1008 old/bin/oe.pl:1633 old/bin/pe.pl:937
 #: UI/Reports/filters/gl.html:203 UI/Reports/filters/orders.html:134
 #: UI/asset/begin_report.html:21 UI/inventory/adjustment_setup.html:16
-#: UI/journal/journal_entry.html:50 UI/payments/payment2.html:100
+#: UI/journal/journal_entry.html:40 UI/payments/payment2.html:100
 #: UI/payments/payments_detail.html:333 UI/payments/use_overpayment2.html:85
 #: templates/demo/ap_transaction.html:60 templates/demo/ap_transaction.html:151
 #: templates/demo/ap_transaction.tex:76 templates/demo/ap_transaction.tex:127
@@ -2278,7 +2274,7 @@ msgstr "Jours"
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:85
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:86 UI/Reports/filters/gl.html:233
 #: UI/Reports/filters/trial_balance.html:4 UI/budgetting/budget_entry.html:61
-#: UI/journal/journal_entry.html:143
+#: UI/journal/journal_entry.html:148
 msgid "Debit"
 msgstr "Débit"
 
@@ -2562,7 +2558,7 @@ msgstr ""
 #: UI/budgetting/budget_entry.html:26 UI/budgetting/budget_entry.html:63
 #: UI/create_batch.html:19 UI/create_batch.html:73
 #: UI/file/internal-file-list.html:43 UI/inventory/adjustment_entry.html:25
-#: UI/journal/journal_entry.html:63 UI/payments/payment2.html:188
+#: UI/journal/journal_entry.html:53 UI/payments/payment2.html:188
 #: UI/reconciliation/report.html:138 UI/reconciliation/report.html:253
 #: UI/reconciliation/report.html:326 UI/timecards/timecard-week.html:111
 #: UI/timecards/timecard.html:45 templates/demo/bin_list.html:100
@@ -2577,7 +2573,7 @@ msgstr ""
 #: templates/demo/timecard.tex:54 templates/demo/timecard.tex:56
 #: templates/demo/work_order.html:100 templates/demo/work_order.tex:140
 #: sql/Pg-database.sql:2591 sql/Pg-database.sql:2596
-#: UI/src/components/GIFI.vue:10 UI/src/components/SIC.vue:10
+#: UI/src/components/GIFI.vue:12 UI/src/components/SIC.vue:12
 #: UI/src/components/Languages.vue:10 UI/src/components/Pricegroups.vue:9
 #: UI/src/components/Warehouses.vue:9 UI/src/components/BusinessTypes.vue:9
 msgid "Description"
@@ -2686,7 +2682,7 @@ msgstr ""
 msgid "Double vendornumbers"
 msgstr ""
 
-#: UI/src/components/ConfigTable.vue:85
+#: UI/src/components/ConfigTable.vue:100
 msgid "Download: "
 msgstr ""
 
@@ -3114,6 +3110,10 @@ msgstr ""
 msgid "Error from Function:"
 msgstr ""
 
+#: UI/src/components/ConfigTable.vue:66
+msgid "Error loading data..."
+msgstr ""
+
 #: old/lib/LedgerSMB/DBObject/Account.pm:144
 msgid "Error: Cannot include summary account in other dropdown menus"
 msgstr ""
@@ -3192,12 +3192,12 @@ msgstr ""
 msgid "FAQ"
 msgstr ""
 
-#: UI/budgetting/budget_entry.html:59 UI/journal/journal_entry.html:116
-#: UI/journal/journal_entry.html:142
+#: UI/budgetting/budget_entry.html:59 UI/journal/journal_entry.html:106
+#: UI/journal/journal_entry.html:147
 msgid "FX"
 msgstr "Devises"
 
-#: UI/src/components/ConfigTableRow.vue:91
+#: UI/src/components/ConfigTableRow.vue:91 UI/src/components/ConfigTable.vue:31
 msgid "Failed"
 msgstr ""
 
@@ -3642,7 +3642,7 @@ msgstr ""
 msgid "Identification"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Trial_Balance.pm:200 UI/lib/report_base.html:86
+#: UI/lib/report_base.html:86
 msgid "Ignore Year-ends"
 msgstr ""
 
@@ -3657,6 +3657,7 @@ msgstr ""
 
 #: UI/setup/edit_user.html:63 sql/Pg-database.sql:2542 sql/Pg-database.sql:2652
 #: sql/Pg-database.sql:2667 sql/Pg-database.sql:2672
+#: UI/src/components/GIFI.vue:40 UI/src/components/SIC.vue:40
 msgid "Import"
 msgstr ""
 
@@ -4001,7 +4002,7 @@ msgstr "Jan."
 msgid "January"
 msgstr "Janvier"
 
-#: UI/src/components/ServerUI.js:84
+#: UI/src/components/ServerUI.js:100
 msgid "JavaScript error: "
 msgstr "Erreur de Javascript"
 
@@ -4293,12 +4294,12 @@ msgstr ""
 msgid "Load Templates"
 msgstr ""
 
-#: UI/src/components/ServerUI.js:68
+#: UI/src/components/ServerUI.js:76
 msgid "Loaded"
 msgstr "Chargé"
 
-#: UI/src/components/ServerUI.js:25 UI/src/components/ServerUI.js:39
-#: UI/src/components/ConfigTable.vue:78
+#: UI/src/components/ServerUI.js:26 UI/src/components/ServerUI.js:40
+#: UI/src/components/ConfigTable.vue:59
 msgid "Loading..."
 msgstr "Chargement..."
 
@@ -4437,7 +4438,7 @@ msgstr "Mai"
 #: lib/LedgerSMB/Report/GL.pm:134 lib/LedgerSMB/Scripts/payment.pm:935
 #: old/bin/aa.pl:844 old/bin/ir.pl:694 old/bin/ir.pl:914 old/bin/is.pl:1014
 #: old/bin/is.pl:792 UI/Reports/filters/gl.html:73
-#: UI/Reports/filters/gl.html:253 UI/journal/journal_entry.html:146
+#: UI/Reports/filters/gl.html:253 UI/journal/journal_entry.html:151
 #: UI/payments/payment2.html:348 templates/demo/ap_transaction.html:154
 msgid "Memo"
 msgstr "Mémo"
@@ -4587,7 +4588,7 @@ msgstr ""
 msgid "Net Due"
 msgstr ""
 
-#: old/bin/aa.pl:1018 old/bin/aa.pl:471 old/bin/gl.pl:257 old/bin/ir.pl:351
+#: old/bin/aa.pl:1018 old/bin/aa.pl:471 old/bin/gl.pl:341 old/bin/ir.pl:351
 #: old/bin/ir.pl:562 old/bin/is.pl:347 old/bin/is.pl:630 old/bin/oe.pl:520
 msgid "New"
 msgstr "Nouveau"
@@ -4797,7 +4798,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:247
 #: UI/Reports/filters/invoice_search.html:150
 #: UI/Reports/filters/invoice_search.html:370
-#: UI/Reports/filters/search_goods.html:373 UI/journal/journal_entry.html:89
+#: UI/Reports/filters/search_goods.html:373 UI/journal/journal_entry.html:79
 #: UI/payments/payment2.html:50 UI/payments/use_overpayment2.html:70
 #: UI/timecards/timecard.html:134 t/data/04-complex_template.html:33
 #: t/data/04-complex_template.html:626 templates/demo/printPayment.html:99
@@ -5063,7 +5064,7 @@ msgstr ""
 msgid "Out"
 msgstr ""
 
-#: old/bin/gl.pl:670
+#: old/bin/gl.pl:772
 msgid "Out of balance transaction!"
 msgstr "Écriture non-soldée!"
 
@@ -5509,9 +5510,9 @@ msgid "Please use the 1.3 UI to add the GIFI accounts"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:237 old/bin/aa.pl:945
-#: old/bin/aa.pl:990 old/bin/aa.pl:994 old/bin/aa.pl:998 old/bin/gl.pl:244
-#: old/bin/gl.pl:246 old/bin/ir.pl:1023 old/bin/ir.pl:539 old/bin/ir.pl:585
-#: old/bin/is.pl:1122 old/bin/is.pl:606 old/bin/is.pl:656
+#: old/bin/aa.pl:990 old/bin/aa.pl:994 old/bin/aa.pl:998 old/bin/gl.pl:325
+#: old/bin/gl.pl:327 old/bin/gl.pl:333 old/bin/ir.pl:1023 old/bin/ir.pl:539
+#: old/bin/ir.pl:585 old/bin/is.pl:1122 old/bin/is.pl:606 old/bin/is.pl:656
 #: UI/payments/payment2.html:508
 msgid "Post"
 msgstr "Enregistrer"
@@ -5736,7 +5737,7 @@ msgstr ""
 msgid "Proft/Loss on Inventory Sales"
 msgstr ""
 
-#: old/bin/io.pl:267 old/bin/pe.pl:800 UI/journal/journal_entry.html:148
+#: old/bin/io.pl:267 old/bin/pe.pl:800
 msgid "Project"
 msgstr "Projet"
 
@@ -6034,7 +6035,7 @@ msgstr "Transactions périodiques"
 #: old/bin/arap.pl:572 UI/Reports/filters/budget_search.html:18
 #: UI/Reports/filters/gl.html:23 UI/Reports/filters/gl.html:210
 #: UI/Reports/filters/unapproved.html:29 UI/accounts/yearend.html:32
-#: UI/budgetting/budget_entry.html:16 UI/journal/journal_entry.html:29
+#: UI/budgetting/budget_entry.html:16 UI/journal/journal_entry.html:19
 msgid "Reference"
 msgstr "Référence"
 
@@ -6101,7 +6102,7 @@ msgid "Report Generated By:"
 msgstr ""
 
 #: UI/Reports/aging_report.html:9 UI/Reports/display_report.html:16
-#: templates/demo/display_report.html:29 templates/demo/display_report.tex:34
+#: templates/demo/display_report.html:45 templates/demo/display_report.tex:36
 msgid "Report Name"
 msgstr ""
 
@@ -6230,7 +6231,7 @@ msgstr ""
 msgid "Reversal Information"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Listings/Overpayments.pm:164
+#: lib/LedgerSMB/Report/Listings/Overpayments.pm:164 old/bin/gl.pl:396
 msgid "Reverse"
 msgstr ""
 
@@ -6427,7 +6428,7 @@ msgstr ""
 msgid "Save Contact"
 msgstr ""
 
-#: old/bin/gl.pl:249
+#: old/bin/gl.pl:330
 msgid "Save Draft"
 msgstr ""
 
@@ -6455,7 +6456,7 @@ msgstr ""
 msgid "Save Schedule"
 msgstr "Enregistrer transaction planifiée"
 
-#: old/bin/aa.pl:1016 old/bin/gl.pl:251
+#: old/bin/aa.pl:1016 old/bin/gl.pl:335
 msgid "Save Template"
 msgstr ""
 
@@ -6467,7 +6468,7 @@ msgstr ""
 msgid "Save as New"
 msgstr ""
 
-#: old/bin/am.pl:66 old/bin/am.pl:75 old/bin/gl.pl:253 old/bin/ic.pl:827
+#: old/bin/am.pl:66 old/bin/am.pl:75 old/bin/gl.pl:337 old/bin/ic.pl:827
 #: old/bin/ic.pl:844 old/bin/oe.pl:668 old/bin/oe.pl:921
 #: UI/accounts/edit.html:96 UI/accounts/edit.html:560
 msgid "Save as new"
@@ -6532,13 +6533,13 @@ msgstr ""
 msgid "Saving..."
 msgstr ""
 
-#: old/bin/aa.pl:1003 old/bin/aa.pl:946 old/bin/gl.pl:255 old/bin/ir.pl:1025
+#: old/bin/aa.pl:1003 old/bin/aa.pl:946 old/bin/gl.pl:339 old/bin/ir.pl:1025
 #: old/bin/ir.pl:551 old/bin/is.pl:1123 old/bin/is.pl:617 old/bin/oe.pl:694
 #: old/bin/oe.pl:917
 msgid "Schedule"
 msgstr "Planification"
 
-#: old/bin/printer.pl:154 UI/journal/journal_entry.html:354
+#: old/bin/printer.pl:154 UI/journal/journal_entry.html:337
 msgid "Scheduled"
 msgstr "Planifié"
 
@@ -6817,7 +6818,7 @@ msgstr "Numéro de série"
 msgid "Serialnumber"
 msgstr ""
 
-#: UI/src/components/ServerUI.js:89
+#: UI/src/components/ServerUI.js:105
 msgid "Server returned insecure response"
 msgstr "Le serveur a retourné une réponse non-sécurisée"
 
@@ -7019,7 +7020,7 @@ msgstr ""
 #: UI/Reports/filters/inventory_adj.html:13
 #: UI/Reports/filters/invoice_search.html:130
 #: UI/Reports/filters/payments.html:64 UI/inventory/adjustment_setup.html:26
-#: UI/journal/journal_entry.html:145 UI/payments/payment2.html:113
+#: UI/journal/journal_entry.html:150 UI/payments/payment2.html:113
 #: UI/payments/payment2.html:281 UI/payments/payment2.html:347
 #: UI/payments/payments_detail.html:315 UI/reconciliation/report.html:126
 #: UI/reconciliation/report.html:251 UI/reconciliation/report.html:324
@@ -7417,7 +7418,7 @@ msgstr "Squelettes"
 msgid "Template Listing"
 msgstr ""
 
-#: old/bin/aa.pl:1195 old/bin/gl.pl:355
+#: old/bin/aa.pl:1195 old/bin/gl.pl:458
 msgid "Template Saved!"
 msgstr "Squelette enregistré!"
 
@@ -7548,6 +7549,18 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1990
 msgid "This gl movement, is the result of a overpayment transaction"
+msgstr ""
+
+#: UI/journal/journal_entry.html:121
+msgid "This transaction has been reversed by transaction [_1]"
+msgstr ""
+
+#: UI/journal/journal_entry.html:127
+msgid "This transaction reverses transaction [_1]"
+msgstr ""
+
+#: UI/journal/journal_entry.html:129
+msgid "This transaction will reverse transaction [_1]"
 msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1232
@@ -7772,7 +7785,7 @@ msgstr ""
 msgid "Transaction Date"
 msgstr ""
 
-#: old/bin/gl.pl:617
+#: old/bin/gl.pl:719
 msgid "Transaction Date missing!"
 msgstr "Date d'écriture manquante!"
 
@@ -7968,7 +7981,7 @@ msgstr "Prix unitaire"
 msgid "Unknown "
 msgstr ""
 
-#: UI/src/components/ServerUI.js:94
+#: UI/src/components/ServerUI.js:110
 msgid "Unknown (JavaScript) error"
 msgstr "Erreur inconnue (Javascript)"
 
@@ -8039,7 +8052,7 @@ msgid "Up"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/budgets.pm:98 old/bin/aa.pl:943 old/bin/aa.pl:972
-#: old/bin/gl.pl:240 old/bin/ic.pl:825 old/bin/ic.pl:834 old/bin/ir.pl:1022
+#: old/bin/gl.pl:321 old/bin/ic.pl:825 old/bin/ic.pl:834 old/bin/ir.pl:1022
 #: old/bin/ir.pl:521 old/bin/is.pl:1120 old/bin/is.pl:588 old/bin/oe.pl:2056
 #: old/bin/oe.pl:643 old/bin/oe.pl:915 old/bin/pe.pl:516 UI/am-taxes.html:71
 #: UI/payments/payment2.html:502 UI/payments/payments_detail.html:483
@@ -8498,7 +8511,7 @@ msgid ""
 "[_2]"
 msgstr ""
 
-#: old/bin/gl.pl:177
+#: old/bin/gl.pl:257
 msgid "[_1] Cash Transfer Transaction"
 msgstr ""
 
@@ -8510,7 +8523,7 @@ msgstr "Note de crédit"
 msgid "[_1] Debit Note"
 msgstr "Note de débit"
 
-#: old/bin/gl.pl:180
+#: old/bin/gl.pl:260
 msgid "[_1] General Ledger Transaction"
 msgstr ""
 
