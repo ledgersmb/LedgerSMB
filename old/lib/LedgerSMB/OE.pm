@@ -645,7 +645,7 @@ sub retrieve {
             LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
             LEFT JOIN partsvendor pv ON (pv.parts_id = p.id
                                            AND pv.credit_id = ?)
-            LEFT JOIN translation t
+            LEFT JOIN partsgroup_translation t
                 ON (t.trans_id = p.partsgroup_id
                     AND t.language_code = ?)
             WHERE o.trans_id = ?
@@ -754,10 +754,6 @@ sub order_details {
     my $item;
     my $i;
     my @sortlist = ();
-    my $projectnumber;
-    my $projectdescription;
-    my $projectnumber_id;
-    my $translation;
     my @queryargs;
 
     my @taxaccounts;
@@ -765,15 +761,6 @@ sub order_details {
     my $tax;
     my $taxrate;
     my $taxamount;
-
-    my $language_code = $form->{dbh}->quote( $form->{language_code} );
-    $query = qq|
-        SELECT p.description, t.description
-        FROM project p
-        LEFT JOIN translation t ON (t.trans_id = p.id AND
-            t.language_code = $language_code)
-           WHERE id = ?|;
-    my $prh = $dbh->prepare($query) || $form->dberror($query);
 
     $query = qq|
         SELECT inventory_accno_id, income_accno_id,
@@ -794,13 +781,10 @@ sub order_details {
             for ( keys %$ref ) { $form->{"${_}_$i"} = $ref->{$_} }
             $pth->finish;
 
-            $projectnumber_id      = 0;
-            $projectnumber         = "";
             $form->{partsgroup}    = "";
             $form->{projectnumber} = "";
 
-            if (   $form->{groupprojectnumber}
-                || $form->{grouppartsgroup} )
+            if ( $form->{grouppartsgroup} )
             {
 
                 $inventory_accno_id =
@@ -808,50 +792,7 @@ sub order_details {
                   ? "1"
                   : "";
 
-                if ( $form->{groupprojectnumber} ) {
-                    ( $projectnumber, $projectnumber_id ) =
-                      split /--/, $form->{"projectnumber_$i"};
-                }
-                if ( $form->{grouppartsgroup} ) {
-                    ( $form->{partsgroup} ) = split /--/,
-                      $form->{"partsgroup_$i"};
-                }
-
-                if (   $projectnumber_id
-                    && $form->{groupprojectnumber} )
-                {
-                    if ( $translation{$projectnumber_id} ) {
-                        $form->{projectnumber} =
-                          $translation{$projectnumber_id};
-                    }
-                    else {
-
-                        # get project description
-                        $prh->execute($projectnumber_id);
-                        ( $projectdescription, $translation ) =
-                          $prh->fetchrow_array;
-                        $prh->finish;
-
-                        $form->{projectnumber} =
-                          ($translation)
-                          ? "$projectnumber, \n" . "$translation"
-                          : "$projectnumber, \n" . "$projectdescription";
-
-                        $translation{$projectnumber_id} =
-                          $form->{projectnumber};
-                    }
-                }
-
-                if (   $form->{grouppartsgroup}
-                    && $form->{partsgroup} )
-                {
-                    $form->{projectnumber} .= " / "
-                      if $projectnumber_id;
-                    $form->{projectnumber} .= $form->{partsgroup};
-                }
-
-                $form->format_string($form->{projectnumber});
-
+                ( $form->{partsgroup} ) = split /--/, $form->{"partsgroup_$i"};
             }
 
             $sortby = qq|$projectnumber$form->{partsgroup}|;
