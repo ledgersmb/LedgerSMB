@@ -52,7 +52,7 @@ use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::Num2text;
 
-require "old/bin/arap.pl";
+require "old/bin/arap.pl"; # for: Schedule action
 
 # end of main
 
@@ -107,7 +107,6 @@ sub approve {
     }
 }
 
-
 sub new {
      for my $row (0 .. $form->{rowcount}){
          for my $fld(qw(accno projectnumber acc debit credit source memo)){
@@ -147,6 +146,90 @@ sub add {
 
 }
 
+
+sub _reverse_amounts {
+    # swap debits and credits
+    for my $rownum (0 .. $form->{rowcount}) {
+        my $credit = $form->{"credit_$rownum"};
+        my $credit_fx = $form->{"credit_fx_$rownum"};
+        $form->{"credit_$rownum"} = $form->{"debit_$rownum"};
+        $form->{"credit_fx_$rownum"} = $form->{"debit_fx_$rownum"};
+        $form->{"debit_$rownum"} = $credit;
+        $form->{"debit_fx_$rownum"} = $credit_fx;
+    }
+}
+
+sub reverse {
+    $form->{title}     = "Reverse";
+
+    &create_links; # runs GL->transaction()
+    _reverse_amounts();
+
+    $form->{reversing} = delete $form->{id};
+    delete $form->{approved};
+
+    display_form();
+}
+
+
+sub post_reversing {
+    # we should save only the reference, sequence, transdate, description and notes.
+
+    $form->error(
+        $locale->text('Cannot post transaction for a closed period!') )
+        if ( $transdate and $form->is_closed( $transdate ) );
+    if (not $form->{id}) {
+        do {
+            local $form->{id} = $form->{reversing};
+
+            # save data we want to use from the posted form,
+            # not from the reversed transaction.
+            local $form->{reversing};
+            local $form->{notes};
+            local $form->{description};
+            local $form->{transdate};
+            local $form->{reference};
+            local $form->{approved};
+
+            &create_links; # create_links overwrites 'reversing'
+        };
+
+        # Why do I not need _reverse_amounts here???
+        # _reverse_amounts();
+        GL->post_transaction( \%myconfig, \%$form, $locale);
+
+        my $query = q{UPDATE transactions SET reversing = ? WHERE id = ?};
+        $form->{dbh}->do(
+            $query,
+            {},
+            $form->{reversing},
+            $form->{id})
+            or $form->dberror($query);
+    }
+    else {
+        my $query = <<~'QUERY';
+        UPDATE gl
+           SET reference = ?,
+               description = ?,
+               transdate = ?,
+               notes = ?
+         WHERE id = ?
+        QUERY
+
+        $form->{dbh}->do(
+            $query,
+            {},
+            $form->{reference},
+            $form->{description},
+            $form->{transdate},
+            $form->{notes},
+
+            $form->{id})
+            or $form->dberror($query);
+    }
+
+    display_form();
+}
 
 sub display_form
 {
@@ -203,6 +286,7 @@ sub display_form
         'callback' => $form->{callback},
         'form_id' => $form->{form_id},
         'separate_duties' => $form->{separate_duties},
+        'reversing' => $form->{reversing}
     );
 
 
@@ -237,6 +321,9 @@ sub display_form
             class => 'post' },
           { action => 'edit_and_save',
             value => $locale->text('Save Draft') },
+          { action => 'post_reversing',
+            value => ($form->{separate_duties}
+                      ? $locale->text('Save') : $locale->text('Post')), },
           { action => 'save_temp',
             value => $locale->text('Save Template') },
           { action => 'save_as_new',
@@ -250,11 +337,14 @@ sub display_form
           );
 
       %a = ();
-      $a{'save_temp'} = 1;
+      $a{'save_temp'} = not $form->{reversing};
 
       if ( $form->{id}) {
-          for ( 'new', 'save_as_new', 'schedule', 'copy_to_new' ) {
+          for ( 'new', 'save_as_new', 'copy_to_new' ) {
               $a{$_} = 1;
+          }
+          for ( 'schedule' ) {
+              $a{$_} = not $form->{reversing};
           }
           if (!$form->{approved} && !$form->{batch_id}) {
             #   Need to check for draft_modify and draft_post
@@ -262,14 +352,18 @@ sub display_form
                 $a{approve} = 1;
             }
             if ($form->is_allowed_role(['draft_modify'])) {
-                $a{edit_and_save} = 1;
+                $a{edit_and_save} = not $form->{reversing};
+                $a{post_reversing} = $form->{reversing};
             }
-              $a{update} = 1;
+            $a{update} = not $form->{reversing};
           }
       } else {
-          $a{'update'} = 1;
           if ( not $form->is_closed( $transdate ) ) {
-              for ( 'post', 'schedule' ) { $a{$_} = 1 }
+              for ( 'post' ) { $a{$_} = not $form->{reversing} }
+              for ( 'post_reversing' ) { $a{$_} = $form->{reversing} }
+          }
+          for ( 'update', 'schedule' ) {
+              $a{$_} = not $form->{reversing};
           }
       }
 
@@ -286,6 +380,18 @@ sub display_form
       }
       grep { $a{$_->{action}} } @buttons;
   }
+
+    unless ($form->{reversed_by}) {
+        if ($form->{approved}) {
+            push @buttons, {
+                name  => 'action',
+                value => 'reverse',
+                text  => $locale->text('Reverse'),
+                type  => 'submit',
+                class => 'submit',
+            };
+        }
+    }
 
   $form->{recurringset}=0;
   if ( $form->{recurring} ) {

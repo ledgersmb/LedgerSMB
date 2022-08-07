@@ -175,3 +175,4 @@ mc/delete-migration-validation-data.sql
 1.11/country-config.sql
 1.11/workflow-user.sql
 1.11/enable-barcode-on-invoices.sql
+1.10/reversed-transactions.sql
