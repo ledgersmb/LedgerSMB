@@ -144,9 +144,6 @@
           <th class="listheading">[% text('Credit') %]</th>
           <th class="listheading">[% text('Source') %]</th>
           <th class="listheading">[% text('Memo') %]</th>
-          [% IF form.projectset == 1 %]
-          <th class="listheading">[% text('Project') %]</th>
-          [% END %]
           [% FOREACH cls IN form.bu_class %]
               [% IF form.b_units.${cls.id} %]
           <th>[% maketext(cls.label)
@@ -237,31 +234,6 @@
                                      }  %]
 
                    </td>
-                  [% IF form.projectset == 1 %]
-                   <td>
-
-                        [% IF displayrow.projectset == 1 %]
-                                        [% PROCESS label element_data = {
-                                              text = displayrow.projectnumber
-                                              align = 'right'
-                                              id = "pro_$INDEX"
-                                     } %]
-
-
-                        [% ELSE %]
-                                [% INCLUDE select element_data = {
-                                        text_attr = "projectnumber"
-                                        value_attr = "projectstyle"
-                                        default_values = []
-                                        options = form.all_project
-                                        name = "projectnumber_$INDEX"
-                                        id = "pro_$INDEX"
-                                     } %]
-
-                        [% END %]
-
-                   </td>
-                       [% END %]
                    [% FOREACH cls IN form.bu_class %]
                       [% IF form.b_units.${cls.id} %]
                    <td>
@@ -324,9 +296,6 @@
           </th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
-          [% IF form.projectset == 1 %]
-          <th class="listheading">&nbsp;</th>
-          [% END %]
           [% FOREACH cls IN form.bu_class %]
               [% IF form.b_units.${cls.id} %]
           <th>&nbsp;</th>

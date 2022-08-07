@@ -169,9 +169,6 @@ sub display_form
     if ($form->{all_department}){
         unshift @{ $form->{all_department} }, {};
     }
-    if ($form->{all_project}){
-       unshift @{ $form->{all_project} }, {};
-    }
     $title = $locale->maketext($form->{title});
     if ( $form->{transfer} ) {
         $form->{title} = $locale->text("[_1] Cash Transfer Transaction", $title);
@@ -373,7 +370,6 @@ sub display_row {
         $temphash1->{fx_transactionset} = 1;
         if (!defined $form->{"accno_$i"} || ! $form->{"accno_$i"}) {
                   $temphash1->{accnoset}=0;   #use  @{ $form->{all_accno} }
-                  $temphash1->{projectset}=0; #use  @{ $form->{all_project} }
                   $temphash1->{fx_transactionset}=0;    #use checkbox and value=1 if transfer=1
 
         }
