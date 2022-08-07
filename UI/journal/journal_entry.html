@@ -5,16 +5,6 @@
 
 <body class="lsmb [% dojo_theme %]">
 <div id="journal-entry">
-[% CLASS = 'new';
-   IF form.id and form.approved;
-       CLASS = 'posted';
-   ELSIF id;
-       CLASS = 'saved';
-   END;
-%]<div id="statusdiv" class="[% CLASS %]">
-    <div id="history">[% text('Action: [_1], ID: [_2]', form.action, form.id);
-      %]</div>
-
 
 <form data-dojo-type="lsmb/Form" method="post" action="[% form.script %]">
 <table width="100%">
@@ -338,6 +328,5 @@
 END # IF
 %]
 </form>
-</div>
 </div>
 </body>

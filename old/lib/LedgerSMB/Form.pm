@@ -460,31 +460,17 @@ sub header {
     $self->{header} = 1;
 }
 
-=item $form->open_status_div
+=item $form->open_status_div( $div_id )
 
-Returns a div tag with an id of statusdiv.
-
-If $form->{id} is set and $form->{approved} the class is set to "posted" and if
-id is set but not approved, this is set to "saved."  If neither applies, we set
-to "new."
+Returns a div tag with an id of C<$div_id>.
 
 =cut
 
 sub open_status_div {
     my ($self, $div_id) = @_;
-    my $class;
-    if ($self->{approved} and $self->{id}){
-        $class = "posted";
-    }
-    elsif ($self->{id}){
-        $class = "saved";
-    }
-    else {
-        $class = "new";
-    }
 
     my $id = $div_id ? "id=\"$div_id\"" : '';
-    return "<div $id class=\"$class\">";
+    return "<div $id>";
 }
 
 =item $form->close_status_div
