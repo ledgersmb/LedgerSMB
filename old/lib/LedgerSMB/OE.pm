@@ -679,7 +679,7 @@ sub retrieve {
 
             $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
-            $bu_sth->execute($ref->{invoice_id});
+            $bu_sth->execute($ref->{orderitems_id});
             while ( $buref = $bu_sth->fetchrow_hashref(NAME_lc) ) {
                 $ref->{"b_unit_$buref->{class_id}"} = $buref->{bu_id};
             }
