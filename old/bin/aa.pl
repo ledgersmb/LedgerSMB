@@ -502,9 +502,6 @@ $form->open_status_div($status_div_id) . qq|
 <input type=hidden name=title value="$title">
 
 |;
-    if (!defined $form->{approved}){
-        $form->{approved} = 1;
-    }
     $form->hide_form(
         qw(batch_id approved id printed emailed sort
            oldtransdate audittrail recurring checktax reverse subtype
@@ -1018,21 +1015,22 @@ sub form_footer {
              { ndx => 13, key=> 'N', value => $locale->text('New') }
         );
         my $is_draft = 0;
+        my %b = map { $_ => 1} keys %button; # buttons to actually show
         if (!$form->{approved} && !$form->{batch_id}){
            $is_draft = 1;
-           if (!$form->is_allowed_role(['draft_modify'])){
-               delete $button{edit_and_save};
+           if (!$form->{id} || !$form->is_allowed_role(['draft_modify'])){
+               $b{edit_and_save} = 0;
            }
 # Approve button should not render if user don't have permission
-           if (!$form->is_allowed_role(['draft_post'])) {
-             delete $button{approve};
+           if (!$form->{id} || !$form->is_allowed_role(['draft_post'])) {
+             $b{approve} = 0;
            }
-           delete $button{post_as_new};
-           delete $button{post};
+           $b{post_as_new} = 0;
+           #$b{post} = 0;
         }
         else {
-            delete $button{approve};
-            delete $button{edit_and_save};
+            $b{approve} = 0;
+            $b{edit_and_save} = 0;
         }
 
         if ($form->{separate_duties} || $form->{batch_id}){
@@ -1045,13 +1043,13 @@ sub form_footer {
         }
         if ( $form->{id}) {
             for ( "post", "delete", "post_as_new" ) {
-                delete $button{$_};
+                $b{$_} = 0;
             }
-            delete $button{'update'} unless $is_draft;
+            $b{'update'} = $is_draft;
         }
         elsif (!$form->{id}) {
 
-            for ( "post_as_new","delete","save_info",
+            for ( "post_as_new","delete","save_info", "schedule",
                   "print", 'copy_to_new', 'new_screen', 'on_hold') {
                 delete $button{$_};
             }
@@ -1072,7 +1070,8 @@ sub form_footer {
         }
         print "<br>";
 
-        for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
+        for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
+              grep { $b{$_} } keys %button )
         {
             $form->print_button( \%button, $_ );
         }
