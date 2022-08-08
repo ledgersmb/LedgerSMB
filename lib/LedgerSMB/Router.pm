@@ -498,7 +498,7 @@ sub api {
             $has_body = reftype $triplet->[2] ne 'ARRAY'
                 or Plack::Util::content_length($triplet->[2]);
             my $content_type =
-                (Plack::Util::header_get($triplet->[1], 'Content-Type')
+                ((Plack::Util::header_get($triplet->[1], 'Content-Type') // '')
                  =~ s/;(.*)$//r);
             ($result, $errors, $warnings) =
                 $schema->validate_response(
@@ -515,7 +515,8 @@ sub api {
                 if scalar(@$errors) > 0;
 
             $triplet->[2] = [ json()->encode($triplet->[2]) ]
-                if Plack::Util::header_get($triplet->[1], 'Content-Type') =~ m|^application/json|;
+                if (Plack::Util::header_get($triplet->[1], 'Content-Type') // '') =~ m|^application/json|;
+
             return $triplet;
         })
 }
