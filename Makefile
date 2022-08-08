@@ -49,10 +49,11 @@ Help on using this Makefile
     - dbdocs       : Builds the PDF, SVG and PNG schema documentation
                      (without rebuilding the inputs)
     - pod          : Builds POD documentation
-	- api		   : Builds API documentation
+    - api          : Builds API documentation
     - pot          : Builds LedgerSMB.pot translation lexicon
     - readme       : Builds the README.md
     - test         : Runs tests (TESTS='t/')
+    - serve        : Runs the 'webpack serve' command
     - devtest      : Runs all tests including development tests (TESTS='t/ xt/')
     - pherkin      : Runs all BDD tests with 'pherkin' (instead of 'prove')
 
@@ -166,6 +167,15 @@ else
             --Feature-tags=~@wip \
             --Feature-tags=~@extended \
             $(TESTS)
+endif
+
+
+serve:
+ifneq ($(origin DOCKER_CMD),undefined)
+#       if there's a docker container, jump into it and run from there
+	$(DOCKER_CMD) make serve
+else
+	npx webpack serve
 endif
 
 pherkin: TESTS ?= xt/
