@@ -43,6 +43,7 @@ Removed functionalities
 * Template set 'xedemo'; functionality merged into 'demo' templates
 
 Bugs fixed
+* Tax incorrect on existing invoice after customer tax status change (#2322)
 * Better logging on authentication failure
 * Full support for running from a schema other than 'public'
 * Printing checks fails to include invoices on the check's voucher (#6253)
