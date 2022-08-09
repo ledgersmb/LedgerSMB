@@ -1954,7 +1954,6 @@ sub create_links {
             }
         }
     }
-
     $sth->finish;
 
     my $arap = ( $vc eq 'customer' ) ? 'ar' : 'ap';
@@ -1970,17 +1969,17 @@ sub create_links {
                 a.duedate, a.ordnumber,
                 a.taxincluded, a.curr AS currency, a.notes,
                 a.intnotes, ce.name AS $vc,
-            a.amount_tc AS oldinvtotal,
-            case when a.amount_tc = 0 then 0
-            else a.amount_bc / a.amount_tc end as exchangerate,
+                a.amount_tc AS oldinvtotal,
+                case when a.amount_tc = 0 then 0
+                else a.amount_bc / a.amount_tc end as exchangerate,
                 a.person_id as employee_id, e.name AS employee,
                 c.language_code, a.ponumber, a.reverse,
-                                a.approved, ctf.default_reportable,
-                                a.description, a.on_hold, a.crdate,
-                                ns.location_id as locationid, a.is_return, $seq,
-                                t.workflow_id
+                a.approved, ctf.default_reportable,
+                a.description, a.on_hold, a.crdate,
+                ns.location_id as locationid, a.is_return, $seq,
+                t.workflow_id, t.reversing, t.reversed_by
             FROM $arap a
-            JOIN transactions t ON t.id = a.id
+            JOIN transactions_reversal t ON t.id = a.id
             JOIN entity_credit_account c
                 ON (a.entity_credit_account = c.id)
             JOIN entity ce ON (ce.id = c.entity_id)
