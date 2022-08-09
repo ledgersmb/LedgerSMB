@@ -7,7 +7,7 @@ import jestOpenAPI from "jest-openapi";
 import { StatusCodes } from "http-status-codes";
 
 // Load an OpenAPI file (YAML or JSON) into this plugin
-jestOpenAPI("/srv/ledgersmb/openapi/API.yaml");
+jestOpenAPI(process.env.PWD + "/openapi/API.yaml");
 
 // Set API version to use
 const api = "erp/api/v0";

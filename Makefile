@@ -55,12 +55,13 @@ Help on using this Makefile
     - test         : Runs tests (TESTS='t/')
     - serve        : Runs the 'webpack serve' command
     - devtest      : Runs all tests including development tests (TESTS='t/ xt/')
+	- jstest	   : Runs all UI tests (TESTS='UI/tests')
     - pherkin      : Runs all BDD tests with 'pherkin' (instead of 'prove')
 
     - blacklist    : Builds sql blacklist (required after adding functions)
 
-The targets 'test', 'devtest' and 'pherkin' take a TESTS parameter which
-can be used to specify a subset of tests to be run.
+The targets 'test', 'devtest', 'jstest' and 'pherkin' take a TESTS parameter
+which can be used to specify a subset of tests to be run.
 
 endef
 export HELP
@@ -171,6 +172,7 @@ else
             $(TESTS)
 endif
 
+jstest: TESTS ?= UI/tests
 jstest:
 ifneq ($(origin DOCKER_CMD),undefined)
 #       if there's a docker container, jump into it and run from there
@@ -180,7 +182,7 @@ else
 	-dropdb lsmb_test
 	perl -Ilib bin/ledgersmb-admin create \
             $${PGUSER:-postgres}@$${PGHOST:-localhost}/$${PGDATABASE:-lsmb_test}#xyz
-	perl -Ilib bin/ledgersmb-admin user create \
+	perl -Ilib -Iold/lib bin/ledgersmb-admin user create \
             $${PGUSER:-postgres}@$${PGHOST:-localhost}/$${PGDATABASE:-lsmb_test}#xyz \
 				--username="$${UIUSER:-Jest}" \
 				--password="$${UIPASSWORD:-Tester}" \
@@ -189,7 +191,10 @@ else
 				--first_name="$${UIUSER:-Jest}" \
 				--last_name="$${UIPASSWORD:-Tester}" \
 				--permission='Full Permissions'
-	jest
+	# Make sure API definition is current
+	./utils/devel/rebuild_api.sh
+	# Test API answer
+	./node_modules/.bin/jest $(TESTS)
 endif
 
 serve:
