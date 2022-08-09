@@ -304,7 +304,7 @@ sub _get_businesstype {
         {
             id => $row->{id},
             description => $row->{description},
-            discount => $row->{discount},
+            discount => $row->{discount} + 0 # Force string to float
         },
         {
             ETag => $row->{etag}
@@ -323,7 +323,7 @@ sub _get_businesstypes {
         push @results, {
             id => $row->{id},
             description => $row->{description},
-            discount => $row->{discount},
+            discount => $row->{discount} + 0 # Force string to float
         };
     }
     die $sth->errstr if $sth->err;
@@ -366,7 +366,7 @@ sub _update_businesstype {
         {
             id => $row->{id},
             description => $row->{description},
-            discount => $row->{discount},
+            discount => $row->{discount} + 0 # Force string to float
         },
         {
             ETag => $row->{etag}
@@ -438,7 +438,7 @@ put api '/contacts/business-types/{id}' => sub {
         $c, {
             id => $params->{id},
             description => $body->{description},
-            discount => $body->{discount},
+            discount => $body->{discount} + 0 # Force string to float
         },
         {
             ETag => $ETag
