@@ -345,6 +345,8 @@ sub post_transaction {
     $form->{invnumber} = undef if $form->{invnumber} eq '';
     $form->{datepaid} = $form->{transdate} unless $form->{datepaid};
     my $datepaid = ($paid) ? qq|'$form->{datepaid}'| : undef;
+    my $approved = 1;
+    $approved = 0 if $form->{separate_duties};
 
     my @queryargs = (
         $form->{invnumber},        $form->{description},
@@ -357,7 +359,8 @@ sub post_transaction {
         $form->{notes},            $form->{intnotes},
         $form->{ponumber},         $form->{crdate},
         $form->{reverse},          $form->{employee_id},
-        $form->{"$form->{vc}_id"}, $form->{approved}
+        $form->{"$form->{vc}_id"},
+        $approved
         );
    if ($table eq 'ar') {
        push @queryargs, $form->{setting_sequence}
@@ -416,7 +419,8 @@ sub post_transaction {
                 $form->{id},            $ref->{accno},
                 $ref->{amount_bc} * $ml, $ref->{curr},
                 $ref->{amount_tc} * $ml,
-                $form->{transdate}, $form->{approved},
+                $form->{transdate},
+                $approved,
                 $ref->{description},
                 $ref->{cleared}
             );
@@ -461,7 +465,9 @@ sub post_transaction {
             @queryargs = (
                 $form->{id}, $ref->{accno}, $ref->{amount_bc} * $ml,
                 $form->{currency}, $ref->{amount_tc} * $ml,
-                $form->{transdate}, $form->{approved}, $ref->{source}
+                $form->{transdate},
+                $approved,
+                $ref->{source}
             );
             $dbh->prepare($query)->execute(@queryargs)
               || $form->dberror($query);
@@ -484,7 +490,9 @@ sub post_transaction {
             ( $form->{id}, $accno,
               $invamount * -1 * $ml, $form->{currency},
               $invamount * -1 * $ml / $form->{exchangerate},
-            $form->{transdate}, $form->{approved} );
+              $form->{transdate},
+              $approved,
+            );
 
         $dbh->prepare($query)->execute(@queryargs)
           || $form->dberror($query);
