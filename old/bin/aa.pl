@@ -167,10 +167,79 @@ sub edit {
         } else {
             $form->error("Unknown AR/AP selection value: $form->{ARAP}");
         }
-
     }
 
     &display_form;
+}
+
+sub reverse {
+    $form->{title}     = $locale->text('Add');
+    $form->{invnumber} .= '-VOID';
+
+    &create_links;
+
+    $form->{reversing} = delete $form->{id};
+    delete $form->{approved};
+    $form->{reverse} = $form->{reverse} ? 0 : 1;
+    $form->{paidaccounts} = 0;
+    if ($form->{reverse}){
+        if ($form->{ARAP} eq 'AR'){
+            $form->{subtype} = 'credit_note';
+            $form->{type} = 'transaction';
+        } elsif ($form->{ARAP} eq 'AP'){
+            $form->{subtype} = 'debit_note';
+            $form->{type} = 'transaction';
+        } else {
+            $form->error("Unknown AR/AP selection value: $form->{ARAP}");
+        }
+    }
+
+    &display_form;
+}
+
+sub post_reversing {
+    # we should save only the reference, sequence, transdate, description and notes;
+    # get the rest from the transaction being reversed.
+
+    $form->error(
+        $locale->text('Cannot post transaction for a closed period!') )
+        if ( $transdate and $form->is_closed( $transdate ) );
+    if (not $form->{id}) {
+        do {
+            local $form->{id} = $form->{reversing};
+
+            # save data we want to use from the posted form,
+            # not from the reversed transaction.
+            local $form->{reversing};
+            local $form->{reverse};
+            local $form->{notes};
+            local $form->{description};
+            local $form->{transdate};
+            local $form->{reference};
+            local $form->{approved};
+
+            &create_links; # create_links overwrites 'reversing'
+        };
+
+        AA->post_transaction( \%myconfig, \%$form );
+        my $query = q{UPDATE transactions SET reversing = ? WHERE id = ?};
+        $form->{dbh}->do(
+            $query,
+            {},
+            $form->{reversing},
+            $form->{id})
+            or $form->dberror($query);
+    }
+    else {
+        my $query = <<~'QUERY';
+        UPDATE gl
+           SET reference = ?,
+               description = ?,
+               transdate = ?,
+               notes = ?
+         WHERE id = ?
+        QUERY
+    }
 }
 
 sub display_form {
@@ -546,7 +615,7 @@ $form->open_status_div($status_div_id) . qq|
         qw(batch_id approved id printed emailed sort
            oldtransdate audittrail recurring checktax reverse subtype
            entity_control_code tax_id meta_number default_reportable
-           address city zipcode state country workflow_id)
+           address city zipcode state country workflow_id reversing)
     );
 
     if ( $form->{vc} eq 'customer' ) {
@@ -664,6 +733,10 @@ $form->open_status_div($status_div_id) . qq|
             </tr>
         </table>
       </td>
+      <td style="vertical-align:middle">| .
+         ($form->{reversing} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversing}">| . ($form->{approved} ? $locale->text('This transaction reverses transaction [_1]', $form->{reversing}) : $locale->text('This transaction will reverse transaction [_1]', $form->{reversing})) .q|</a><br />| : '') .
+         ($form->{reversed_by} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversed_by}"> | . $locale->text('This transaction is reversed by transaction [_1]', $form->{reversed_by}) . q|</a>| : '') .
+    qq|</td>
       <td align=right>
         <table>
           $employee
@@ -799,7 +872,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 
     }
      my $tax_base = $form->{invtotal};
-    foreach my $item ( split / /, $form->{taxaccounts} ) {
+     foreach my $item ( split / /, $form->{taxaccounts} ) {
         $form->{"calctax_$item"} =
           ( $form->{"calctax_$item"} ) ? "checked" : "";
         $form->{"tax_$item"} =
@@ -1023,6 +1096,13 @@ sub form_footer {
                 type  => $button_types{$action->ui},
                 tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
             };
+        }
+        ###TODO: Move "reversing" state to the workflow!
+        if ($form->{reversing}) {
+            delete $button{$_} for (qw(schedule update save_temp edit_and_save));
+        }
+        if (not $form->{approved}) {
+            delete $button{reverse};
         }
 
 
