@@ -542,7 +542,7 @@ sub invoice_details {
             );
 
             push( @{ $form->{taxdescription} },
-                $form->{"${item}_description"} );
+                $form->{_accno_descriptions}->{$item} );
 
             $form->{"${item}_taxrate"} =
               $form->format_amount( $myconfig, $form->{"${item}_rate"} * 100 );

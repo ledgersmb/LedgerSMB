@@ -45,7 +45,7 @@
 
 package lsmb_legacy;
 
-use List::Util qw(max min);
+use List::Util qw(max min uniq);
 use LedgerSMB::Form;
 use LedgerSMB::IS;
 use LedgerSMB::PE;
@@ -173,9 +173,15 @@ sub invoice_links {
     }
     ###TODO 20151108; end of merge region
 
-    AA->get_name( \%myconfig, \%$form );
     delete $form->{notes};
     IS->retrieve_invoice( \%myconfig, \%$form );
+    AA->get_name( \%myconfig, \%$form );
+    $form->{taxaccounts} =
+        join(' ',
+             uniq((split / /, $form->{taxaccounts}),
+                  # add transaction tax accounts, which may no longer be applicable to
+                  # the customer, but still are for the transaction
+                  (map { $_->{accno} } @{$form->{"$form->{ARAP}_links"}{"$form->{ARAP}_tax"}})));
 
     $form->{oldlanguage_code} = $form->{language_code};
 
@@ -566,8 +572,7 @@ sub form_header {
     );
 
     foreach my $item ( split / /, $form->{taxaccounts} ) {
-        $form->hide_form( "${item}_rate", "${item}_description",
-            "${item}_taxnumber" );
+        $form->hide_form( "${item}_rate", "${item}_taxnumber" );
     }
     if ( !$form->{readonly} ) {
         print "<tr><td>";
@@ -818,7 +823,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
                # this in the normal way so we have to change the layout of the
                # notes fields. --CT
                $tax .= qq|<tr class="invoice-manual-tax">
-                <th align=right>$form->{"${taccno}_description"}</th>
+                <th align=right>$form->{_accno_descriptions}->{$taccno}</th>
                 <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_amount_$item"
                         id="mt-amount-$item" value="|
                         .$form->format_amount(\%myconfig, $form->{"mt_amount_$item"}, LedgerSMB::Setting->new(%$form)->get('decimal_places'))
@@ -846,7 +851,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
                 next if !$form->{"${taccno}_total"};
                 $tax .= qq|
                 <tr class="invoice-auto-tax" title="Source: $form->{acc_trans}{ $form->{id} }{ $taccno }{source}">
-                  <th align=right>$form->{"${taccno}_description"}</th>
+                  <th align=right>$form->{_accno_descriptions}->{$taccno}</th>
                   <td align=right>$form->{"${taccno}_total"}</td>
                   <td>$form->{currency}</td>
                 </tr>|;

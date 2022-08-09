@@ -39,7 +39,7 @@
 #======================================================================
 
 package lsmb_legacy;
-use List::Util qw(min max);
+use List::Util qw(min max uniq);
 use LedgerSMB::Form;
 use LedgerSMB::IR;
 use LedgerSMB::IS;
@@ -178,9 +178,15 @@ sub invoice_links {
         }
     }
 
-    AA->get_name( \%myconfig, \%$form );
     delete $form->{notes};
     IR->retrieve_invoice( \%myconfig, \%$form );
+    AA->get_name( \%myconfig, \%$form );
+    $form->{taxaccounts} =
+        join(' ',
+             uniq((split / /, $form->{taxaccounts}),
+                  # add transaction tax accounts, which may no longer be applicable to
+                  # the vendor, but still are for the transaction
+                  (map { $_->{accno} } @{$form->{"$form->{ARAP}_links"}{"$form->{ARAP}_tax"}})));
 
     $form->{oldlanguage_code} = $form->{language_code};
 
@@ -626,9 +632,8 @@ sub form_header {
     $form->hide_form(qw(defaultcurrency taxaccounts workflow_id));
 
     for ( split / /, $form->{taxaccounts} ) {
-        $form->hide_form( "${_}_rate", "${_}_description" );
+        $form->hide_form( "${_}_rate" );
     }
-
 }
 
 sub form_footer {
@@ -732,7 +737,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
                # this in the normal way so we have to change the layout of the
                # notes fields. --CT
                $tax .= qq|<tr>
-                <th align=right>$form->{"${taccno}_description"}</th>
+                <th align=right>$form->{_accno_descriptions}->{$taccno}"}</th>
                 <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_amount_$item"
                         id="mt-amount-$item" value="|
                         .$form->format_amount(\%myconfig,$form->{"mt_amount_$item"}).qq|" size="10"/></td>
@@ -756,7 +761,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
                 my $item_total_formatted=$form->format_amount(\%myconfig,$form->{"${item}_total"},LedgerSMB::Setting->new(%$form)->get('decimal_places'),0);
                 $tax .= qq|
                 <tr class="invoice-auto-tax">
-                  <th align=right>$form->{"${item}_description"}</th>
+                  <th align=right>$form->{_accno_descriptions}->{$item}</th>
                   <td align=right>$item_total_formatted</td>
                   <td>$form->{currency}</td>
                 </tr>

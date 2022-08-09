@@ -1913,14 +1913,14 @@ sub create_links {
     $self->{accounts} = "";
 
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+        $self->{_accno_descriptions}->{$ref->{accno}} = $ref->{description};
         my $link = $ref->{link};
 
-        push(@$link,"${module}_tax") if $tax_accounts{$ref->{accno}};
+        push(@$link,"${module}_tax") # there's no "${module}_tax" link; only a tax boolean
+            if $tax_accounts{$ref->{accno}};
 
         foreach my $key ( @$link ) {
-
-            if ( $key =~ /$module/ ) {
-
+            if ( $key =~ /$module/ ) { # *all* tax accounts selected in query above
                 # cross reference for keys
                 $xkeyref{ $ref->{accno} } = $key;
 

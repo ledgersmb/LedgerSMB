@@ -53,6 +53,8 @@ use LedgerSMB::Tax;
 use LedgerSMB::DBObject::Draft;
 use LedgerSMB::DBObject::TransTemplate;
 
+use List::Util qw(uniq);
+
 # any custom scripts for this one
 if ( -f "old/bin/custom/aa.pl" ) {
     eval { require "old/bin/custom/aa.pl"; };
@@ -218,6 +220,13 @@ sub create_links {
     AA->get_name( \%myconfig, \%$form )
             unless ($form->{"old$vc"} and $form->{$vc} and $form->{"old$vc"} eq $form->{$vc})
                     or ($form->{"old$vc"} and $form->{"old$vc"} =~ /^\Q$form->{$vc}\E--/);
+
+    $form->{taxaccounts} =
+        join(' ',
+             uniq((split / /, $form->{taxaccounts}),
+                  # add transaction tax accounts, which may no longer be applicable to
+                  # the customer, but still are for the transaction
+                  (map { $_->{accno} } @{$form->{"$form->{ARAP}_links"}{"$form->{ARAP}_tax"}})));
 
     $form->{currency} =~ s/ //g if $form->{currency};
     $form->{duedate}     = $duedate     if $duedate;
@@ -768,12 +777,12 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
                             title="Calculate automatically"></td>
           <td><input type="hidden" name="$form->{ARAP}_tax_$item"
                 id="$form->{ARAP}_tax_$item"
-                value="$item" />$item--$form->{"${item}_description"}</td>
+                value="$item" />$item--$form->{_accno_descriptions}->{$item}</td>
     </tr>
 |;
 
         $form->hide_form(
-            "${item}_rate",      "${item}_description",
+            "${item}_rate",
             "${item}_taxnumber", "select$form->{ARAP}_tax_$item",
             "taxsource_$item"
             );
