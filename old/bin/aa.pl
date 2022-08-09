@@ -194,7 +194,7 @@ sub reverse {
         }
     }
 
-    &display_form;
+    &display_form( readonly => 1 );
 }
 
 sub post_reversing {
@@ -243,6 +243,7 @@ sub post_reversing {
 }
 
 sub display_form {
+    my %args = @_;
     my $invnumber = "sinumber";
     if ( $form->{vc} eq 'vendor' ) {
         $invnumber = "vinumber";
@@ -254,8 +255,8 @@ sub display_form {
     $form->generate_selects(\%myconfig);
     $form->open_form;
     AA->get_files($form, $locale);
-    &form_header;
-    &form_footer;
+    &form_header( readonly => $args{readonly} );
+    &form_footer( readonly => $args{readonly} );
 
 }
 
@@ -445,8 +446,9 @@ sub create_links {
 }
 
 sub form_header {
+    my %args = @_;
     my $min_lines = $form->get_setting('min_empty') // 0;
-    my $readonly = $form->{approved} ? 'readonly="readonly"' : '';
+    my $readonly = ($args{readonly} or $form->{approved}) ? 'readonly="readonly"' : '';
 
     $form->generate_selects(\%myconfig) unless $form->{"select$form->{ARAP}"};
 
@@ -589,7 +591,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
         $employee = qq|
           <tr>
         <th align=right nowrap><label for="employee">$label</label></th>
-        <td><select data-dojo-type="dijit/form/Select" id=employee name=employee>$form->{selectemployee}</select></td>
+        <td><select data-dojo-type="dijit/form/Select" id=employee name=employee $readonly>$form->{selectemployee}</select></td>
         <input type=hidden name=selectemployee value="|
           . $form->escape( $form->{selectemployee}, 1 ) . qq|">
           </tr>
@@ -830,7 +832,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     if($form->{"taxformcheck_$i"} or ($form->{default_reportable} and ($i == $form->{rowcount})))
     {
         $taxchecked=qq|CHECKED="CHECKED"|;
-
+        $taxchecked.=q| disabled="disabled"| if $readonly;
     }
 
     $taxformcheck=qq|<td><input type="checkbox" data-dojo-type="dijit/form/CheckBox" name="taxformcheck_$i" value="1" $taxchecked $readonly></td>|;
