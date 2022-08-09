@@ -1913,6 +1913,7 @@ sub create_links {
     $self->{accounts} = "";
 
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+        $self->{_accno_descriptions}->{$ref->{accno}} = $ref->{description};
         my $link = $ref->{link};
 
         push(@$link,"${module}_tax") if $tax_accounts{$ref->{accno}};
