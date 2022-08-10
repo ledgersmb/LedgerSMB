@@ -692,9 +692,6 @@ sub void {
            "Can't void a voided invoice!"
        ));
     }
-    for my $i (1 .. $form->{rowcount}){
-        $form->{"qty_$_"} *= -1;
-    }
     $form->{invnumber} .= '-VOID';
     $form->{reverse} = 1;
     $form->{paidaccounts} = 1;
