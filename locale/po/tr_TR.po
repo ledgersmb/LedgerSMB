@@ -1,20 +1,16 @@
 #
-# Translators:
-# Haval Abdulkarim <haval.abdulkarim@gmail.com>, 2020
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.8.30-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
 "POT-Creation-Date: 2022-08-10 20:12+0000\n"
-"Last-Translator: Haval Abdulkarim <haval.abdulkarim@gmail.com>, 2020\n"
-"Language-Team: Central Kurdish (https://www.transifex.com/ledgersmb/"
-"teams/58325/ckb/)\n"
-"Language: ckb\n"
+"Language-Team: Turkish (Turkey) (https://www.transifex.com/ledgersmb/"
+"teams/58325/tr_TR/)\n"
+"Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:174
 msgid "# Invoices"
@@ -60,17 +56,17 @@ msgstr ""
 #: templates/demo/statement.html:61 templates/demo_with_images/statement.html:61
 #: templates/xedemo/statement.html:61
 msgid "30"
-msgstr "30"
+msgstr ""
 
 #: templates/demo/statement.html:62 templates/demo_with_images/statement.html:62
 #: templates/xedemo/statement.html:62
 msgid "60"
-msgstr "60"
+msgstr ""
 
 #: templates/demo/statement.html:63 templates/demo_with_images/statement.html:63
 #: templates/xedemo/statement.html:63
 msgid "90"
-msgstr "90"
+msgstr ""
 
 #: templates/demo/invoice.tex:32 templates/demo/packing_list.tex:22
 #: templates/demo_with_images/invoice.tex:32
@@ -9416,7 +9412,7 @@ msgstr ""
 
 #: UI/Configuration/sequence.html:9
 msgid "label"
-msgstr "ناونیشان"
+msgstr ""
 
 #: sql/Pg-database.sql:3712
 msgid "partial disposal"
@@ -9432,7 +9428,7 @@ msgstr ""
 
 #: old/bin/arap.pl:792 old/bin/io.pl:1458
 msgid "sent"
-msgstr "نێردرا"
+msgstr ""
 
 #: UI/Reports/filters/search_goods.html:418
 msgid "subtotal"
@@ -9448,11 +9444,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:3596
 msgid "time"
-msgstr "کات"
+msgstr ""
 
 #: old/bin/arap.pl:544
 msgid "time(s)"
-msgstr "کات(ەکان)"
+msgstr ""
 
 #: UI/lib/report_base.html:220
 msgid "to_date"
