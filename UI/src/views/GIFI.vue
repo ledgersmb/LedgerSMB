@@ -4,7 +4,7 @@ import { useGIFIsStore } from "@/store/gifis";
 import { useI18n } from "vue-i18n";
 import ConfigTable from "@/components/ConfigTable.vue";
 
-import ImportCsvGifi from "@/components/ImportCSV-GIFI";
+import ImportCsvGifi from "@/views/ImportCSV-GIFI";
 
 const { t } = useI18n();
 const COLUMNS = [

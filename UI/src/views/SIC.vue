@@ -4,7 +4,7 @@ import { useSICsStore } from "@/store/sics";
 import { useI18n } from "vue-i18n";
 import ConfigTable from "@/components/ConfigTable.vue";
 
-import ImportCsvSic from "@/components/ImportCSV-SIC";
+import ImportCsvSic from "@/views/ImportCSV-SIC";
 
 const { t } = useI18n();
 const COLUMNS = [
