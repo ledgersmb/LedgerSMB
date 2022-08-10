@@ -118,8 +118,8 @@ sub new {
         $self->{nextsub} //= '';
         $self->{action} //= $self->{nextsub};
     }
-    $self->{version}   = '1.8.30';
-    $self->{dbversion} = '1.8.30';
+    $self->{version}   = '1.8.31-dev';
+    $self->{dbversion} = '1.8.31-dev';
 
 
     $self;
