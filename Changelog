@@ -537,6 +537,11 @@ Dependency updates
 Changelog for 1.7 Series
 Released 2019-10-04
 
+Changelog for 1.7.40
+* Fix invoices randomly being incorrectly voided (#2321)
+* Reduce memory consumption rendering XLSX output (#6483)
+
+
 Changelog for 1.7.39
 * Fix tax form details reports throwing an error (#6458)
 * Support PostgreSQL 14 (#6500)
