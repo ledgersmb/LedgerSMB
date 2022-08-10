@@ -293,6 +293,10 @@ Dependency updates (Perl)
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.30
+* Fix invoices randomly being incorrectly voided (#2321)
+* Fix response status code checks to correctly roll back on error (#6586)
+
 Changelog for 1.8.29
 * Fix the 1.8 Changelog which had been replaced with the 1.9 Changelog
 
