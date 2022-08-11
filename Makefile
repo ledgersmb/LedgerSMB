@@ -172,7 +172,7 @@ else
             $(TESTS)
 endif
 
-jstest: TESTS ?= UI/tests
+jstest: TESTS ?= tests
 jstest:
 ifneq ($(origin DOCKER_CMD),undefined)
 #       if there's a docker container, jump into it and run from there
