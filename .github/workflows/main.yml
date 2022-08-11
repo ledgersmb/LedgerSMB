@@ -159,6 +159,7 @@ jobs:
       JOB_COUNT: 5
       LSMB_BASE_URL: http://lsmb:5000
       LSMB_NEW_DB: lsmb_test
+      LSMB_NEW_DB_API: lsmb_test_api
       MONITOR_FILE: cpu-memory-usage
       PGDB: lsmb_test
       PGHOST: localhost

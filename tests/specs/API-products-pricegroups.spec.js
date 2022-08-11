@@ -16,7 +16,7 @@ const api = "erp/api/v0";
 const server = process.env.LSMB_BASE_URL;
 const username = process.env.UIUSER;
 const password = process.env.UIPASSWORD;
-const company = process.env.LSMB_NEW_DB;
+const company = process.env.LSMB_NEW_DB_API;
 
 let headers = {};
 

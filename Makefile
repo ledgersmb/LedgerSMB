@@ -179,11 +179,11 @@ ifneq ($(origin DOCKER_CMD),undefined)
 	$(DOCKER_CMD) make jstest
 else
 #        the 'dropdb' command may fail, hence the prefix minus-sign
-	-dropdb lsmb_test
+	-dropdb lsmb_test_api
 	perl -Ilib bin/ledgersmb-admin create \
-            $${PGUSER:-postgres}@$${PGHOST:-localhost}/$${PGDATABASE:-lsmb_test}#xyz
+            $${PGUSER:-postgres}@$${PGHOST:-localhost}/$${PGDATABASE:-lsmb_test_api}#xyz
 	perl -Ilib -Iold/lib bin/ledgersmb-admin user create \
-            $${PGUSER:-postgres}@$${PGHOST:-localhost}/$${PGDATABASE:-lsmb_test}#xyz \
+            $${PGUSER:-postgres}@$${PGHOST:-localhost}/$${PGDATABASE:-lsmb_test_api}#xyz \
 				--username="$${UIUSER:-Jest}" \
 				--password="$${UIPASSWORD:-Tester}" \
 				--employeenumber=1 \
@@ -194,7 +194,8 @@ else
 	# Make sure API definition is current
 	./utils/devel/rebuild_api.sh
 	# Test API answer
-	./node_modules/.bin/jest $(TESTS)
+	LSMB_NEW_DB_API=lsmb_test_api ./node_modules/.bin/jest $(TESTS)
+	-dropdb lsmb_test_api
 endif
 
 serve:
