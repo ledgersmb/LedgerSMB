@@ -3,7 +3,7 @@
 
 import { createApp } from "vue";
 import router from "./router";
-import i18n from "./i18n";
+import i18n, { setI18nLanguage } from "@/i18n";
 import { useI18n } from "vue-i18n";
 import LoginPage from "./components/LoginPage";
 import Toaster from "./components/Toaster";
@@ -31,7 +31,8 @@ let lsmbDirective = {
 if (document.getElementById("main")) {
     app = createApp({
         setup() {
-            const { t } = useI18n();
+            const { t, locale } = useI18n({ useScope: "global" });
+            setI18nLanguage(locale);
             return { t };
         },
         mounted() {
