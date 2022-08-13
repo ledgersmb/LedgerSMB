@@ -99,7 +99,7 @@
     "redoc-cli": "0.13.18",
     "rtl-detect": "1.0.4",
     "stylelint": "14.10.0",
-    "stylelint-config-standard": "26.0.0",
+    "stylelint-config-standard": "27.0.0",
     "stylelint-declaration-block-no-ignored-properties": "2.5.0",
     "stylelint-no-nested-media": "0.1.0",
     "stylelint-no-unsupported-browser-features": "5.0.3",
