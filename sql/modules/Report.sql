@@ -209,6 +209,8 @@ CREATE TYPE gl_report_item AS (
     transdate date,
     source text,
     amount numeric,
+    curr text,
+    amount_tc numeric,
     accno text,
     gifi_accno text,
     till text,
@@ -257,7 +259,7 @@ FOR retval IN
               JOIN bu_tree ON bu_tree.id = bu.parent_id
             )
        SELECT g.id, g.type, g.invoice, g.reference, g.eca_name, g.description, ac.transdate,
-              ac.source, ac.amount_bc, c.accno, c.gifi_accno,
+              ac.source, ac.amount_bc, ac.curr, ac.amount_tc, c.accno, c.gifi_accno,
               g.till, ac.cleared, ac.memo, c.description AS accname,
               ac.chart_id, ac.entry_id,
               sum(ac.amount_bc) over (order by ac.transdate, ac.trans_id,
