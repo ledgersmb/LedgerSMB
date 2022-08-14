@@ -61,6 +61,12 @@ Read-only accessor, returns a list of columns.
 
 =item credits
 
+=item curr
+
+=item fx_debits
+
+=item fx_credits
+
 =item entry_id
 
 =item cleared
@@ -68,6 +74,8 @@ Read-only accessor, returns a list of columns.
 =item chart_id
 
 =item accno
+
+=item accname
 
 =item gifi_accno
 
@@ -121,6 +129,22 @@ sub columns {
 
     {col_id => 'credits',
        name => $self->Text('Credits'),
+       type => 'text',
+      money => 1,
+     pwidth => '2', },
+
+    {col_id => 'curr',
+       name => $self->Text('Curr'),
+       type => 'text' },
+
+    {col_id => 'fx_debits',
+       name => $self->Text('FX Debits'),
+       type => 'text',
+      money => 1,
+     pwidth => '2', },
+
+    {col_id => 'fx_credits',
+       name => $self->Text('FX Credits'),
        type => 'text',
       money => 1,
      pwidth => '2', },
@@ -335,6 +359,13 @@ sub run_report{
         } else {
             $ref->{credits} = $ref->{amount};
             $ref->{debits} = 0;
+        }
+        if ($ref->{amount_tc} < 0){
+            $ref->{fx_debits} = $ref->{amount_tc} * -1;
+            $ref->{fx_credits} = 0;
+        } else {
+            $ref->{fx_credits} = $ref->{amount_tc};
+            $ref->{fx_debits} = 0;
         }
         if ($ref->{type} eq 'gl'){
            $ref->{reference_href_suffix} = "gl.pl?action=edit&id=$ref->{id}";

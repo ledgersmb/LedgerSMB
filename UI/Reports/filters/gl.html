@@ -239,6 +239,26 @@
                                           checked="checked"
                                           } %] [% text('Credit') %]</td>
                         <td nowrap>[% PROCESS input element_data = {
+                                          name="col_curr"
+                                          class="checkbox"
+                                          type="checkbox"
+                                          value="1"
+                                          } %] [% text('Currency') %]</td>
+                        <td nowrap>[% PROCESS input element_data = {
+                                          name="col_fx_debits"
+                                          class="checkbox"
+                                          type="checkbox"
+                                          value="1"
+                                          } %] [% text('FX Debit') %]</td>
+                        <td nowrap>[% PROCESS input element_data = {
+                                          name="col_fx_credits"
+                                          class="checkbox"
+                                          type="checkbox"
+                                          value="1"
+                                          } %] [% text('FX Credit') %]</td>
+                      </tr>
+                      <tr>
+                        <td nowrap>[% PROCESS input element_data = {
                                           name="col_source"
                                           class="checkbox"
                                           type="checkbox"
@@ -257,14 +277,14 @@
                                           type="checkbox"
                                           value="1"
                                           } %] [% text('Cleared') %]</td>
-                      </tr>
-                      <tr>
                         <td nowrap>[% PROCESS input element_data = {
                                           name="col_till"
                                           class="checkbox"
                                           type="checkbox"
                                           value="1"
                                           } %] [% text('Till') %]</td>
+                      </tr>
+                      <tr>
                         <td nowrap>[% PROCESS input element_data = {
                                           name="col_accno"
                                           class="checkbox"
@@ -273,25 +293,23 @@
                                           checked="checked"
                                           } %] [% text('Account') %]</td>
                         <td nowrap>[% PROCESS input element_data = {
-                                          name="col_gifi_accno"
-                                          class="checkbox"
-                                          type="checkbox"
-                                          value="1"
-                                          } %] [% text('GIFI') %]</td>
-                        <td nowrap>[% PROCESS input element_data = {
                                           name="col_accname"
                                           class="checkbox"
                                           type="checkbox"
                                           value="1"
                                           } %] [% text('Account Name') %]</td>
                         <td nowrap>[% PROCESS input element_data = {
+                                          name="col_gifi_accno"
+                                          class="checkbox"
+                                          type="checkbox"
+                                          value="1"
+                                          } %] [% text('GIFI') %]</td>
+                        <td nowrap>[% PROCESS input element_data = {
                                           name="col_running_balance"
                                           class="checkbox"
                                           type="checkbox"
                                           value="1"
                                           } %] [% text('Balance') %]</td>
-                      </tr>
-                      <tr>
                         <td nowrap>[% PROCESS input element_data = {
                                           name="subtotal"
                                           class="checkbox"

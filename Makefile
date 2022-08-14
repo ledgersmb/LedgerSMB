@@ -159,6 +159,7 @@ ifneq ($(origin DOCKER_CMD),undefined)
 else
 #        the 'dropdb' command may fail, hence the prefix minus-sign
 	-dropdb lsmb_test
+	-dropdb lsmb_test_db_coa
 	-mkdir -p logs/screens
 	perl -Ilib bin/ledgersmb-admin create \
             $${PGUSER:-postgres}@$${PGHOST:-localhost}/$${PGDATABASE:-lsmb_test}#xyz
