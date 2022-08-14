@@ -115,6 +115,7 @@ commands:
       - run:
           name: Set up dirs and files
           command: |
+            mkdir -p logs/screens
             # these commands are in start.sh of the Perl container too:
             cp doc/conf/ledgersmb.conf.default ledgersmb.conf
             sed -i \
