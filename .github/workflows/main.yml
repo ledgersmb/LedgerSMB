@@ -198,7 +198,7 @@ jobs:
 
       - name: Create logging directories
         run: |
-          mkdir screens logs
+          mkdir -p logs/screens
           cp doc/conf/ledgersmb.conf.default ledgersmb.conf
           sed -i -e 's/db_namespace = public/db_namespace = xyz/' ledgersmb.conf
 
@@ -303,7 +303,6 @@ jobs:
           name: logs-and-screens ${{ matrix.perl }} ${{ matrix.BROWSER }}
           path: |
             logs/**
-            screens/**
             /tmp/nginx*.log
         if: always()
 

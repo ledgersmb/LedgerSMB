@@ -158,8 +158,9 @@ ifneq ($(origin DOCKER_CMD),undefined)
 	$(DOCKER_CMD) make devtest TESTS="$(TESTS)"
 else
 #        the 'dropdb' command may fail, hence the prefix minus-sign
-	-dropdb lsmb_test
-	-dropdb lsmb_test_db_coa
+	-dropdb --if-exists lsmb_test
+	-dropdb --if-exists lsmb_test_db_coa
+	-mkdir -p logs/screens
 	perl -Ilib bin/ledgersmb-admin create \
             $${PGUSER:-postgres}@$${PGHOST:-localhost}/$${PGDATABASE:-lsmb_test}#xyz
 	PGOPTIONS="-c search_path=xyz" yath test --no-color --retry=2 \

@@ -58,10 +58,8 @@ commands:
           command: |
             gnuplot -e "filename='logs/${MONITOR_FILE}.txt';outputfile='screens/${MONITOR_FILE}.png'" \
                     utils/test/monitor.gnuplot || true
-            mkdir -p /tmp/artifact/logs;
-            mkdir -p /tmp/artifact/screens;
+            mkdir -p /tmp/artifact/logs/screens;
             cp -r logs/* /tmp/artifact/logs || true;
-            cp screens/* /tmp/artifact/screens || true;
           when: always
 
       - run:
@@ -90,7 +88,7 @@ commands:
       - run:
           name: "Monitor CPU & MEMORY"
           command: |
-            mkdir -p logs screens
+            mkdir -p logs/screens
             ./utils/test/monitor_rss.sh logs/${MONITOR_FILE}.txt
           background: true
 
@@ -117,7 +115,7 @@ commands:
       - run:
           name: Set up dirs and files
           command: |
-            mkdir -p logs screens
+            mkdir -p logs/screens
             # these commands are in start.sh of the Perl container too:
             cp doc/conf/ledgersmb.conf.default ledgersmb.conf
             sed -i \
