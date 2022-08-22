@@ -18,6 +18,7 @@ BEGIN
         WHERE pg_catalog.pg_function_is_visible(p.oid)
               AND n.nspname <> 'pg_catalog'
               AND n.nspname <> 'information_schema'
+              AND p.prokind NOT IN ('a', 'w') -- not aggregates or window funcs
               AND p.proname IN (
                   SELECT funcname from blacklisted_funcs
               )

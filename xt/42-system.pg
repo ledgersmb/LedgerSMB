@@ -18,8 +18,9 @@ BEGIN;
                     FROM (select proname FROM pg_proc
                             WHERE pronamespace =
                                     (select oid from pg_namespace
-                                    where nspname = current_schema())
-                                    AND proname IN (select funcname FROM blacklisted_funcs)
+                                      where nspname = current_schema())
+                                            AND prokind NOT IN ('a', 'w')
+                                            AND proname IN (select funcname FROM blacklisted_funcs)
                             group by proname
                             having count(*) > 1
                     ) t;

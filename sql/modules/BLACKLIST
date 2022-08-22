@@ -140,6 +140,7 @@ company__get_by_cc
 company__next_id
 company__save
 company_get_billing_info
+compound_array
 config_currency__delete
 config_currency__save
 config_gifi__delete
