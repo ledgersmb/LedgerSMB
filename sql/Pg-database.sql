@@ -3389,29 +3389,6 @@ CREATE INDEX menu_acl_node_id_idx ON menu_acl (node_id);
 -- PostgreSQL database dump complete
 --
 
-CREATE OR REPLACE FUNCTION compound_array(ary anyarray, elm anyarray)
-RETURNS anyarray
-AS $$
-   SELECT array_cat(ary, elm);
-$$ LANGUAGE sql;
-
-COMMENT ON FUNCTION compound_array(anyarray, anyarray)
-IS $$PostgreSQL 14 vs pre-14 compatibility measure.$$;
-
-
-CREATE AGGREGATE compound_array (
-        BASETYPE = ANYARRAY,
-        STYPE = ANYARRAY,
-        SFUNC = COMPOUND_ARRAY,
-        INITCOND = '{}'
-);
-
-COMMENT ON AGGREGATE compound_array(ANYARRAY) is
-$$ Returns an n dimensional array.
-
-Example: SELECT as_array(ARRAY[id::text, class]) from contact_class
-$$;
-
 CREATE TABLE new_shipto (
         id serial primary key,
         trans_id int references transactions(id),
