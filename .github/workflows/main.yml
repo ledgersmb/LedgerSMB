@@ -99,6 +99,7 @@ jobs:
       - name: install with cpm
         run: |
           cpanm --notest App::cpm
+          cpm install -g -v Locale::Codes Locale::Country Locale::Language
           cpm install -g -v --resolver=metacpan --notest --with-develop --feature=starman --feature=latex-pdf-ps --feature=openoffice --feature=xls --feature=edi
 
       - name: Build JS
