@@ -23,6 +23,7 @@ if (TARGET !== "readme") {
     const StylelintPlugin = require("stylelint-webpack-plugin");
     const UnusedWebpackPlugin = require("unused-webpack-plugin");
     const VirtualModulesPlugin = require("webpack-virtual-modules");
+    const VueI18nPlugin = require("@intlify/unplugin-vue-i18n/webpack");
     const { VueLoaderPlugin } = require("vue-loader");
     // eslint-disable-next-line
     const { WebpackDeduplicationPlugin } = require("webpack-deduplication-plugin");
@@ -123,19 +124,6 @@ if (TARGET !== "readme") {
         }
     };
 
-    const vueTranslations = {
-        test: /\.(json5?|ya?ml)$/, // target json, json5, yaml and yml files
-        type: "javascript/auto",
-        // Use `Rule.include` to specify the files of locale messages to be pre-compiled
-        include: [path.resolve(__dirname, "./src/locales")],
-        loader: "@intlify/vue-i18n-loader"
-    };
-
-    const vuei18n = {
-        resourceQuery: /blockType=i18n/,
-        type: "javascript/auto",
-        loader: "@intlify/vue-i18n-loader"
-    };
 
     const css = {
         test: /\.css$/i,
@@ -270,6 +258,11 @@ if (TARGET !== "readme") {
 
         // Add Vue
         new VueLoaderPlugin(),
+
+        VueI18nPlugin({
+            // locale messages resources pre-compile option
+            include: [path.resolve(__dirname, "./UI/src/locales/**")]
+        }),
 
         // Add Dojo
         new DojoWebpackPlugin(DojoWebpackPluginOptions),
@@ -435,16 +428,7 @@ if (TARGET !== "readme") {
         },
 
         module: {
-            rules: [
-                vue,
-                vueTranslations,
-                vuei18n,
-                javascript,
-                css,
-                images,
-                svg,
-                html
-            ]
+            rules: [vue, javascript, css, images, svg, html]
         },
 
         plugins: pluginsList,

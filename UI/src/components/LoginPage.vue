@@ -53,11 +53,13 @@
 /* eslint-disable */
 import { defineComponent } from "vue";
 import { useI18n } from "vue-i18n";
+import { setI18nLanguage } from "@/i18n";
 
 export default defineComponent({
    name: "LoginPage",
    setup() {
-      const { t } = useI18n();
+      const { t, locale } = useI18n({ useScope: "global" });
+      setI18nLanguage(locale);
       return { t };
    },
    data() {
