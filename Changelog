@@ -3,6 +3,10 @@
 Changelog for 1.8 Series
 Released 2020-09-04
 
+Changelog for 1.8.31
+* Support for PostgreSQL 14 for databases upgraded from pre-1.9.15
+
+
 Changelog for 1.8.30
 * Fix invoices randomly being incorrectly voided (#2321)
 * Fix response status code checks to correctly roll back on error (#6586)
