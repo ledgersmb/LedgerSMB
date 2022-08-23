@@ -636,6 +636,10 @@ Dependency updates
 Changelog for 1.7 Series
 Released 2019-10-04
 
+Changelog for 1.7.41
+* Support for PostgreSQL 14 for databases upgraded from pre-1.9.15
+
+
 Changelog for 1.7.40
 * Fix invoices randomly being incorrectly voided (#2321)
 * Reduce memory consumption rendering XLSX output (#6483)
