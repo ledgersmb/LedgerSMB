@@ -51,7 +51,7 @@
     "@babel/eslint-parser": "7.18.9",
     "@babel/plugin-proposal-object-rest-spread": "7.18.9",
     "@babel/preset-env": "7.18.10",
-    "@intlify/unplugin-vue-i18n": "^0.5.0",
+    "@intlify/unplugin-vue-i18n": "0.5.0",
     "@vue/test-utils": "2.0.2",
     "babel-loader": "8.2.5",
     "browserslist": "4.21.3",
