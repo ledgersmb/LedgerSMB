@@ -136,7 +136,8 @@ CREATE TRIGGER cr_report_line_link_insert BEFORE INSERT
     FOR EACH ROW
     EXECUTE PROCEDURE cr_report_line_link_insert();
 
-
+-- drop and recreate because of the signature change.
+DROP FUNCTION IF exists reconciliation__submit_set(in_report_id integer, in_line_ids integer[]);
 CREATE OR REPLACE FUNCTION reconciliation__submit_set(in_report_id int)
 RETURNS bool AS
 $$

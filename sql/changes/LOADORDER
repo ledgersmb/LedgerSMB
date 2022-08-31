@@ -166,5 +166,4 @@ mc/delete-migration-validation-data.sql
 1.10/gifi-config.sql
 1.10/reconciliation-columns-cleanup.sql
 1.10/unique-transaction-reconciliation.sql
-1.10/reconciliation-submit.sql
 1.10/missing-fkeys.sql
