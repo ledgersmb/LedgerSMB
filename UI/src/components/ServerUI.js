@@ -57,9 +57,8 @@ export default {
                     // mode(cors?), credentials, referrerPolicy?
                 });
 
-                let b = await r.text();
                 if (r.ok && !domReject(r)) {
-                    this.content = b;
+                    this.content = await r.text();
                     this.$nextTick(() => {
                         let maindiv = document.getElementById("maindiv");
                         parser.parse(maindiv).then(() => {
@@ -94,7 +93,7 @@ export default {
                 widget.resize();
             }
         },
-        _report_error(errOrReq) {
+        async _report_error(errOrReq) {
             let errstr;
             if (errOrReq instanceof Error) {
                 errstr = this.$t("JavaScript error: ") + errOrReq.toString();
@@ -104,7 +103,7 @@ export default {
                 } else if (domReject(errOrReq)) {
                     errstr = this.$t("Server returned insecure response");
                 } else {
-                    errstr = errOrReq.response;
+                    errstr = await errOrReq.text();
                 }
             } else {
                 errstr = this.$t("Unknown (JavaScript) error");
