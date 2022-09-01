@@ -80,7 +80,7 @@ describe("Retrieving all products/pricegroups with old syntax should fail", () =
             axios.get(server + "/" + api + "/products/pricegroups/", {
                 headers: headers
             })
-        ).rejects.toThrow("Request failed with status code " + StatusCodes.NOT_FOUND);
+        ).rejects.toThrow("Request failed with status code " + StatusCodes.BAD_REQUEST);
     });
 });
 

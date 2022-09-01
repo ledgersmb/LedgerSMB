@@ -78,7 +78,7 @@ describe("Retrieving all languages with old syntax should fail", () => {
                 headers: headers
             })
         ).rejects.toThrow(
-            "Request failed with status code " + StatusCodes.NOT_FOUND
+            "Request failed with status code " + StatusCodes.BAD_REQUEST
         );
     });
 });
