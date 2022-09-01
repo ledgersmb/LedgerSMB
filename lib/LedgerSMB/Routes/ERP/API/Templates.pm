@@ -82,7 +82,7 @@ sub _query_template {
 }
 
 
-get '/templates/:id/content' => sub {
+get '/templates/{id}/content' => sub {
     my ($env, $match) = @_;
     return [ HTTP_NOT_FOUND, [], [] ]
         unless $match->{id} =~ m/^\d+$/;
@@ -90,7 +90,7 @@ get '/templates/:id/content' => sub {
     return _query_template($env, id => $match->{id});
 };
 
-get '/templates/:name/:format/:language' => sub {
+get '/templates/{name}/{format}/{language}' => sub {
     my ($env, $match) = @_;
     delete $match->{language} if $match->{language} eq '__all__';
 
@@ -100,7 +100,7 @@ get '/templates/:name/:format/:language' => sub {
                            language      => $match->{language});
 };
 
-put '/templates/:id/content' => sub {
+put '/templates/{id}/content' => sub {
     my ($env, $match) = @_;
     return [ HTTP_NOT_FOUND, [], [] ]
         unless $match->{id} =~ m/^\d+$/;
@@ -124,7 +124,7 @@ put '/templates/:id/content' => sub {
         [ ], [ ] ];
 };
 
-put '/templates/:name/:format/:language' => sub {
+put '/templates/{name}/{format}/{language}' => sub {
     my ($env, $match) = @_;
     delete $match->{language} if $match->{language} eq '__all__';
 

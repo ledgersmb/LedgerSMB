@@ -189,7 +189,7 @@ post api '/products/pricegroups' => sub {
         $response ];
 };
 
-del api '/products/pricegroups/:id' => sub {
+del api '/products/pricegroups/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my $response = _del_pricegroup( $c, $params->{id} );
@@ -198,7 +198,7 @@ del api '/products/pricegroups/:id' => sub {
     return $response && [ HTTP_OK, [ ], [ '' ] ];
 };
 
-get api '/products/pricegroups/:id' => sub {
+get api '/products/pricegroups/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($response, $meta) = _get_pricegroup( $c, $params->{id} );
@@ -210,7 +210,7 @@ get api '/products/pricegroups/:id' => sub {
 };
 
 
-put api '/products/pricegroups/:id' => sub {
+put api '/products/pricegroups/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
@@ -232,7 +232,7 @@ put api '/products/pricegroups/:id' => sub {
              $response ];
 };
 
-patch api '/products/pricegroups/:id' => sub {
+patch api '/products/pricegroups/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
     my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
     my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;
@@ -401,7 +401,7 @@ post api '/products/warehouses' => sub {
         $response ];
 };
 
-del api '/products/warehouses/:id' => sub {
+del api '/products/warehouses/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my $response = _del_warehouse( $c, $params->{id} );
@@ -410,7 +410,7 @@ del api '/products/warehouses/:id' => sub {
     return $response && [ HTTP_OK, [ ], [ '' ] ];
 };
 
-get api '/products/warehouses/:id' => sub {
+get api '/products/warehouses/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($response, $meta) = _get_warehouse( $c, $params->{id} );
@@ -422,7 +422,7 @@ get api '/products/warehouses/:id' => sub {
 };
 
 
-put api '/products/warehouses/:id' => sub {
+put api '/products/warehouses/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
@@ -444,7 +444,7 @@ put api '/products/warehouses/:id' => sub {
              $response ];
 };
 
-patch api '/products/warehouses/:id' => sub {
+patch api '/products/warehouses/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
     my $type = ($r->parameters->{type} // '') =~ s/[*]//gr;
     my $partnumber = ($r->parameters->{partnumber} // '') =~ s/[*]//gr;

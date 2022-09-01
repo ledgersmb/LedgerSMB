@@ -39,7 +39,7 @@ keywords to help define
      return [ 200, [], [ 'body']];
    };
 
-   post '/route/to/:parameterized/:endpoint' => sub {
+   post '/route/to/{parameterized}/{endpoint}' => sub {
      my ($env, %params) = @_;
 
      # return a PSGI tripple
@@ -75,6 +75,7 @@ use constant {
     MAP_NAMED   => 2,
     MAP_WILD    => 3,
     MAP_NAMES   => 4,
+    MAP_PATHDEF => 5,
 };
 
 my $appname;
@@ -113,7 +114,7 @@ sub import {
 
 
 sub _alloc_entry {
-    return [ {}, undef, undef, undef, undef ];
+    return [ {}, undef, undef, undef, undef, undef ];
 }
 
 =head2 new (constructor)
@@ -144,7 +145,7 @@ routes consist of path segments which can be fixed, parameterized or - in
 case of the last segment - be the catch-all pseudo-segment; e.g.:
 
   /fixed/path/segments
-  /parameterized/:path/segments
+  /parameterized/{path}/segments
   /route/to/catch/*
 
 The above examples list, from top to bottom, a route with fixed segments,
@@ -172,7 +173,7 @@ sub add_mapping {
         my ($m, $s) = ($a, $b);
         $segments = $segments ? "$segments/$s" : $s;
         croak "Wildcard before end of path in $path" if $wild;
-        if ($s =~ m/^:(.+)$/) {
+        if ($s =~ m/^{(.+)}$/) {
             $names{$1} = $segment;
             $m->[MAP_NAMED] = 1;
             $s = '/';
@@ -190,6 +191,7 @@ sub add_mapping {
     croak "handler already defined at $path" if $map->[MAP_HANDLER];
     $map->[MAP_HANDLER] = $handler;
     $map->[MAP_NAMES] = \%names;
+    $map->[MAP_PATHDEF] = $path;
 
     return;
 }
@@ -200,14 +202,14 @@ Matches C<$path> against the registered routes, finding the most specific
 matching route. E.g. when matching C</menu-nodes/new>, both routes below match:
 
    /menu-nodes/new
-   /menu-nodes/:id
+   /menu-nodes/{id}
 
 The first entry is the most specific one as C<:id> is a generic match whereas
 C<new> is a specific match.
 
-In a list context, this function returns C<($handler, \%values, \@wild)>; in
-a scalar context, it returns a hash C<{ handler => $handler, values =>
-\%values, wild => \@wild }>.
+In a list context, this function returns C<($handler, \%values, \@wild,
+$route_path)>; in a scalar context, it returns a hash C<{ handler => $handler,
+values => \%values, wild => \@wild, pathdef => $route_path }>.
 
 =cut
 
@@ -236,13 +238,14 @@ sub lookup {
         @segments[values %{$m->[MAP_NAMES]}] if $m->[MAP_NAMES];
 
     if (wantarray) {
-        return ($m->[MAP_HANDLER], \%values, \@wild);
+        return ($m->[MAP_HANDLER], \%values, \@wild, $m->[MAP_PATHDEF]);
     }
     else {
         return {
             handler => $m->[MAP_HANDLER],
             wild    => \@wild,
             values  => \%values,
+            pathdef => $m->[MAP_PATHDEF],
         }
     }
 }
@@ -263,14 +266,15 @@ sub dispatch {
     my $url = $env->{PATH_INFO};
 
     my $method = $env->{REQUEST_METHOD};
-    my ($h, $vals, $wild) = $self->lookup($url);
+    my ($h, $vals, $wild, $pathdef) = $self->lookup($url);
     my $route = $h->{$method} if $h;
 
     return [ HTTP_NOT_FOUND, [], [] ] unless $route;
 
     for my $hook ($self->hooks('before')) {
-        $hook->($env, $route->{settings}, $self);
+        $hook->($env, $route->{settings}, $self, $pathdef);
     }
+
     return $route->{handler}->($env, $vals, $wild);
 }
 
