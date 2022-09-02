@@ -438,7 +438,7 @@ put api '/contacts/business-types/{id}' => sub {
         $c, {
             id => $params->{id},
             description => $body->{description},
-            discount => $body->{discount} + 0 # Force string to float
+            discount => $body->{discount}
         },
         {
             ETag => $ETag

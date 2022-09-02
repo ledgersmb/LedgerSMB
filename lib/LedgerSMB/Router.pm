@@ -598,7 +598,7 @@ my $json = JSON::MaybeXS->new( pretty => 1,
                                utf8 => 1,
                                indent => 1,
                                convert_blessed => 1,
-                               allow_bignum => 1);
+                               allow_bignum => 0);
 
 sub json {
     return $json;
