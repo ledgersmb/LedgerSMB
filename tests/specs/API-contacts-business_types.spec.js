@@ -130,14 +130,18 @@ describe("Modifying the new Business Type", () => {
         res = await axios.put(
             server + "/" + api + "/contacts/business-types/1",
             {
+                id: 1,
                 description: "Bigger customer",
-                discount: 0.1
+                discount: "0.1"
             },
             {
                 headers: { ...headers, "If-Match": res.headers.etag }
             }
         );
         expect(res.status).toEqual(StatusCodes.OK);
+
+        // Assert that the HTTP response satisfies the OpenAPI spec
+        expect(res).toSatisfyApiSpec();
 
         // Assert that the HTTP response satisfies the OpenAPI spec
         expect(res.data).toSatisfySchemaInApiSpec("BusinessType");
