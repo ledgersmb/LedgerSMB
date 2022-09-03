@@ -10,6 +10,7 @@
     "Dijit",
     "lsmb"
   ],
+  "license": "GPL-2.0-or-later",
   "maintainers": [
     {
       "name": "Erik Huelsmann"
@@ -29,12 +30,6 @@
       "name": "Yves Lavoie"
     }
   ],
-  "license": "GPL-2.0-or-later",
-  "bugs": "https://github.com/ledgersmb/LedgerSMB/issues",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ledgersmb/LedgerSMB.git"
-  },
   "bundlesize": [
     {
       "path": "./UI/js/*"
@@ -47,6 +42,18 @@
   "browserslist": [
     "supports es6-module and supports async-functions and supports xhr2 and supports bloburls and supports css-variables and supports css3-boxsizing and supports border-radius and supports fetch and supports classlist and supports multicolumn and not edge <= 18"
   ],
+  "bugs": "https://github.com/ledgersmb/LedgerSMB/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ledgersmb/LedgerSMB.git"
+  },
+  "dependencies": {
+    "content-disposition": "0.5.4",
+    "dijit": "1.17.3",
+    "dojo": "1.17.3",
+    "robot3": "0.3.1",
+    "vue-i18n": "9.2.2"
+  },
   "devDependencies": {
     "@babel/core": "7.19.0",
     "@babel/eslint-parser": "7.18.9",
@@ -67,7 +74,6 @@
     "css-loader": "6.7.1",
     "css-minimizer-webpack-plugin": "4.0.0",
     "cssnano": "5.1.13",
-    "depcheck": "1.4.3",
     "dojo-util": "1.17.3",
     "dojo-webpack-plugin": "3.0.4",
     "ejs-loader": "0.5.0",
@@ -84,6 +90,7 @@
     "eslint-plugin-json": "3.1.0",
     "eslint-plugin-markdown": "3.0.0",
     "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-package-json": "0.1.4",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-promise": "6.0.1",
     "eslint-plugin-snakecasejs": "2.2.0",
@@ -133,17 +140,9 @@
     "webpack-virtual-modules": "0.4.4",
     "yargs": "17.5.1"
   },
-  "dependencies": {
-    "content-disposition": "0.5.4",
-    "dijit": "1.17.3",
-    "dojo": "1.17.3",
-    "robot3": "0.3.1",
-    "vue-i18n": "9.2.2"
-  },
   "homepage": "http://ledgersmb.org/",
   "scripts": {
     "analyzer": "webpack-bundle-analyzer logs/stats.json UI/js -h 0.0.0.0",
-    "build //": "See https://corgibytes.com/blog/2017/04/18/npm-tips/",
     "build": "webpack --mode=production --stats errors-warnings",
     "build:dev": "webpack --progress --mode=development --stats errors-warnings",
     "lint": "npm run lint:css;npm run lint:js;npm run lint:markdown",
@@ -171,6 +170,18 @@
     "overrides": [
       {
         "files": [
+          "package.json"
+        ],
+        "rules": {
+          "package-json/sort-collections": "error",
+          "indent": [
+            "error",
+            2
+          ]
+        }
+      },
+      {
+        "files": [
           "**/__tests__/**/*.[jt]s?(x)",
           "**/?(*.)+(spec|test).[tj]s?(x)"
         ],
@@ -191,6 +202,7 @@
       "import",
       "jest",
       "markdown",
+      "package-json",
       "sort-dojo-dependency",
       "vue",
       "prettier"
@@ -236,8 +248,7 @@
       "node_modules/",
       "js/",
       "**/*.po*",
-      "pod/**",
-      "tests/**"
+      "pod/**"
     ],
     "rules": {
       "camelcase": "error",
@@ -294,24 +305,59 @@
       "jest/no-identical-title": "error",
       "jest/prefer-to-have-length": "warn",
       "jest/valid-expect": "error",
-      "prettier/prettier": [
+      "package-json/order-properties": [
         "error",
-        {
-          "bracketSpacing": true,
-          "printWidth": 80,
-          "quote-props": [
-            "error",
-            "consistent"
-          ],
-          "semi": true,
-          "singleQuote": false,
-          "tabWidth": 4,
-          "trailingComma": "none",
-          "useTabs": false,
-          "insertPragma": true,
-          "proseWrap": "preserve"
-        }
+        [
+          "name",
+          "version",
+          "lockfileVersion",
+          "private",
+          "publishConfig",
+          "description",
+          "keywords",
+          "author",
+          "license",
+          "maintainers",
+          "contributors",
+          "bundlesize",
+          "main",
+          "browser",
+          "_browserslist-comment",
+          "browserslist",
+          "bugs",
+          "repository",
+          "files",
+          "bin",
+          "directories",
+          "man",
+          "config",
+          "dependencies",
+          "devDependencies",
+          "peerDependencies",
+          "optionalDependencies",
+          "bundledDependencies",
+          "homepage",
+          "scripts",
+          "engines",
+          "os",
+          "cpu",
+          "babel",
+          "eslintConfig",
+          "prettier",
+          "stylelint",
+          "lint-staged"
+        ]
       ],
+      "package-json/sort-collections": [
+        "error",
+        [
+          "scripts",
+          "devDependencies",
+          "dependencies",
+          "config"
+        ]
+      ],
+      "package-json/valid-package-def": "error",
       "no-restricted-syntax": [
         "error",
         "SequenceExpression"
@@ -337,8 +383,7 @@
       "UI/**/util/**/*.css",
       "UI/js/**",
       "UI/pod/**",
-      "UI/openapi/**",
-      "UI/tests/**"
+      "UI/openapi/**"
     ],
     "rules": {
       "declaration-block-no-duplicate-custom-properties": null,
