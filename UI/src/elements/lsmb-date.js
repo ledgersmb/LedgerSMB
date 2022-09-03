@@ -1,7 +1,7 @@
 /** @format */
 /* eslint-disable class-methods-use-this, max-classes-per-file */
 
-import { LsmbBaseInput } from "./lsmb-base-input";
+import { LsmbBaseInput } from "@/elements/lsmb-base-input";
 
 const dojoDateBox = require("lsmb/DateTextBox");
 

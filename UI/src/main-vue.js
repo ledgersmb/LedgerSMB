@@ -2,13 +2,13 @@
 /* eslint-disable no-console, import/no-unresolved, vue/multi-word-component-names */
 
 import { createApp } from "vue";
-import router from "./router";
+import router from "@/router";
 import i18n, { setI18nLanguage } from "@/i18n";
 import { useI18n } from "vue-i18n";
-import LoginPage from "./components/LoginPage";
-import Toaster from "./components/Toaster";
-import { createToasterMachine } from "./components/Toaster.machines";
-import { useSessionUserStore } from "./store/sessionUser";
+import LoginPage from "@/views/LoginPage";
+import Toaster from "@/components/Toaster";
+import { createToasterMachine } from "@/components/Toaster.machines";
+import { useSessionUserStore } from "@/store/sessionUser";
 
 import { createPinia } from "pinia";
 

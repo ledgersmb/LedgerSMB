@@ -3,21 +3,21 @@
 /* eslint-disable-next-line import/no-unresolved */
 import { createRouter, createWebHashHistory } from "vue-router";
 
-import Home from "./components/Home";
-import ServerUI from "./components/ServerUI";
-import ImportCsvAaBatch from "./components/ImportCSV-AA-Batch";
-import ImportCsvCoA from "./components/ImportCSV-CoA";
-import ImportCsvGl from "./components/ImportCSV-GL";
-import ImportCsvGlBatch from "./components/ImportCSV-GL-Batch";
-import ImportCsvGSO from "./components/ImportCSV-GSO";
-import ImportCsvInventory from "./components/ImportCSV-Inventory";
-import ImportCsvTimecard from "./components/ImportCSV-Timecard";
-import Warehouses from "./components/Warehouses.vue";
-import Pricegroups from "./components/Pricegroups.vue";
-import Languages from "./components/Languages.vue";
-import SIC from "./components/SIC.vue";
-import BusinessTypes from "./components/BusinessTypes.vue";
-import GIFI from "./components/GIFI.vue";
+import Home from "@/views/Home";
+import ServerUI from "@/components/ServerUI";
+import ImportCsvAaBatch from "@/views/ImportCSV-AA-Batch";
+import ImportCsvCoA from "@/views/ImportCSV-CoA";
+import ImportCsvGl from "@/views/ImportCSV-GL";
+import ImportCsvGlBatch from "@/views/ImportCSV-GL-Batch";
+import ImportCsvGSO from "@/views/ImportCSV-GSO";
+import ImportCsvInventory from "@/views/ImportCSV-Inventory";
+import ImportCsvTimecard from "@/views/ImportCSV-Timecard";
+import Warehouses from "@/views/Warehouses.vue";
+import Pricegroups from "@/views/Pricegroups.vue";
+import Languages from "@/views/Languages.vue";
+import SIC from "@/views/SIC.vue";
+import BusinessTypes from "@/views/BusinessTypes.vue";
+import GIFI from "@/views/GIFI.vue";
 
 const routes = [
     { name: "home", path: "/", component: Home },

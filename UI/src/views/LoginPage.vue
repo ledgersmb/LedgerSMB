@@ -37,13 +37,13 @@
                              :value="company"
                              v-update:company="" />
                 </div>
-                <lsmb-button tabindex="4" id="login" @click="login">{{ $t('Login') }}</lsmb-button>
+                <lsmb-button tabindex="4" id="login" @click="login" :disabled="loginDisabled">{{ $t('Login') }}</lsmb-button>
               </div>
             </div>
           </div>
-          <div v-show="inProgress">
-             {{ $t("Logging in... Please wait.") }}
-          </div>
+          <transition>
+             <div v-if="inProgress">{{ $t("Logging in... Please wait.") }}</div>
+          </transition>
         </div>
       </div>
     </form>
@@ -70,6 +70,11 @@ export default defineComponent({
          company: "",
          inProgress: false
       };
+   },
+   computed: {
+      loginDisabled() {
+         return !this.username || !this.password || !this.company
+      }
    },
    methods: {
       async login() {

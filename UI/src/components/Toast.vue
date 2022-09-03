@@ -1,6 +1,6 @@
 <script setup>
 
-import { createToastMachine } from "./Toaster.machines";
+import { createToastMachine } from "@/components/Toaster.machines";
 
 const props = defineProps({"data": { }, "type": { default: "success" }});
 const emit = defineEmits(["remove"]);
