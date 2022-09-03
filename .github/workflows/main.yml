@@ -33,7 +33,6 @@ jobs:
     steps:
       # Dump environment variables & event
       - uses: hmarr/debug-action@v2
-
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.10.0
         with:
@@ -49,6 +48,18 @@ jobs:
           # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
           node-version: '16'
 
+      - name: Cache npm files
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: |
+            modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-npm != 'true'
+        run: npm ci --ignore-scripts
+
       - name: Cache node modules
         id: cache-node_modules
         uses: actions/cache@v3
@@ -57,9 +68,13 @@ jobs:
           key: |
             modules-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-node_modules != 'true'
-        run: npm ci --ignore-scripts
+      - name: 'Tar node_modules files'
+        run: tar -cf ~/node_modules.tar node_modules
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: node_modules
+          path: ~/node_modules.tar
 
       - name: Cache Dojo
         id: cache-dojo
@@ -75,7 +90,7 @@ jobs:
         if: steps.cache-dojo.outputs.cache-hit != 'true' ||
             steps.cache-node_modules.outputs.cache-hit != 'true'
 
-      - name: 'Tar files'
+      - name: 'Tar Webpacked files'
         run: tar -cf ~/webpacked_js.tar UI/js
 
       - uses: actions/upload-artifact@v3
@@ -144,6 +159,7 @@ jobs:
       JOB_COUNT: 5
       LSMB_BASE_URL: http://lsmb:5000
       LSMB_NEW_DB: lsmb_test
+      LSMB_NEW_DB_API: lsmb_test_api
       MONITOR_FILE: cpu-memory-usage
       PGDB: lsmb_test
       PGHOST: localhost
@@ -157,6 +173,8 @@ jobs:
       SSMTP_HOSTNAME: lsmb
       SSMTP_MAILHUB: lsmb:1025
       MH_SENDMAIL_SMTP_ADDR: lsmb:1025
+      UIUSER: Jest
+      UIPASSWORD: Tester
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -258,7 +276,7 @@ jobs:
 
       # Fix the condition to debug
       - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
+        uses: mxschmitt/action-tmate@v3
         if: ${{ matrix.BROWSER == 'chrome' && 0 }}
 
       - name: Run Perl tests
@@ -270,6 +288,18 @@ jobs:
           COVERAGE: ${{ matrix.COVERAGE }}
           DB_TESTING: ${{ matrix.DB_TESTING }}
         if: ${{ !matrix.COVERAGE }}
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: node_modules
+
+      - name: 'Untar node modules'
+        run: tar -xf node_modules.tar
+
+      - name: Run API tests
+        run: |
+          PWD=$HOME
+          make jstest
 
       - name: Run Coverage Perl tests
         run: |

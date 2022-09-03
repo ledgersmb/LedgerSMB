@@ -34,6 +34,12 @@ commands:
             fi
 
       - run:
+          name: Run API tests
+          command: |
+            echo "PWD=${CIRCLE_WORKING_DIRECTORY/#\~/$HOME}" >> $BASH_ENV
+            make jstest
+    
+      - run:
           command: |
             source $BASH_ENV
             export PERL5OPT="$PERL5OPT -MSyntax::Keyword::Try::Deparse"
@@ -43,6 +49,7 @@ commands:
             else
                make devtest TESTS='--no-progress --job-count 2 t/ xt/'
             fi
+
       - run:
           command: |
             while [ $(pidof starman) ];
@@ -266,6 +273,7 @@ executors:
       JOB_COUNT: 4
       LSMB_BASE_URL: http://127.0.0.1:5000
       LSMB_NEW_DB: lsmb_test
+      LSMB_NEW_DB_API: lsmb_test_api
       LSMB_TEST_DB: 1
       MONITOR_FILE: cpu-memory-usage
       PGDB: lsmb_test
@@ -274,9 +282,12 @@ executors:
       PGPASSWORD: test
       PGUSER: postgres
       PSGI_BASE_URL: http://127.0.0.1:5762
+      PWD: $CIRCLE_WORKING_DIRECTORY
       RELEASE_TESTING: 1
       REMOTE_SERVER_ADDR: selenium-hub
       STARMAN_DEVEL_COVER_OPTIONS: ''
+      UIUSER: Jest
+      UIPASSWORD: Tester
       YATH_DEVEL_COVER_OPTIONS: ''
 
 # Define jobs

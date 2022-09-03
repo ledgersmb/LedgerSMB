@@ -55,12 +55,13 @@ Help on using this Makefile
     - test         : Runs tests (TESTS='t/')
     - serve        : Runs the 'webpack serve' command
     - devtest      : Runs all tests including development tests (TESTS='t/ xt/')
+	- jstest	   : Runs all UI tests (TESTS='UI/tests')
     - pherkin      : Runs all BDD tests with 'pherkin' (instead of 'prove')
 
     - blacklist    : Builds sql blacklist (required after adding functions)
 
-The targets 'test', 'devtest' and 'pherkin' take a TESTS parameter which
-can be used to specify a subset of tests to be run.
+The targets 'test', 'devtest', 'jstest' and 'pherkin' take a TESTS parameter
+which can be used to specify a subset of tests to be run.
 
 endef
 export HELP
@@ -171,6 +172,31 @@ else
             $(TESTS)
 endif
 
+jstest: TESTS ?= tests
+jstest:
+ifneq ($(origin DOCKER_CMD),undefined)
+#       if there's a docker container, jump into it and run from there
+	$(DOCKER_CMD) make jstest
+else
+#        the 'dropdb' command may fail, hence the prefix minus-sign
+	-dropdb lsmb_test_api
+	perl -Ilib bin/ledgersmb-admin create \
+            $${PGUSER:-postgres}@$${PGHOST:-localhost}/$${PGDATABASE:-lsmb_test_api}#xyz
+	perl -Ilib -Iold/lib bin/ledgersmb-admin user create \
+            $${PGUSER:-postgres}@$${PGHOST:-localhost}/$${PGDATABASE:-lsmb_test_api}#xyz \
+				--username="$${UIUSER:-Jest}" \
+				--password="$${UIPASSWORD:-Tester}" \
+				--employeenumber=1 \
+				--country='Canada' \
+				--first_name="$${UIUSER:-Jest}" \
+				--last_name="$${UIPASSWORD:-Tester}" \
+				--permission='Full Permissions'
+	# Make sure API definition is current
+	./utils/devel/rebuild_api.sh
+	# Test API answer
+	LSMB_NEW_DB_API=lsmb_test_api ./node_modules/.bin/jest $(TESTS)
+	-dropdb lsmb_test_api
+endif
 
 serve:
 ifneq ($(origin DOCKER_CMD),undefined)
