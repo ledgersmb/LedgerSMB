@@ -34,13 +34,11 @@ module.exports = {
     // The directory where Jest should output its coverage files
     coverageDirectory: "coverage",
 
-    coveragePathIgnorePatterns: ["/node_modules/"],
-
     // An array of regexp pattern strings used to skip coverage collection
-    // coveragePathIgnorePatterns: ["node_modules", "<rootDir>/test/*.*"],
+    coveragePathIgnorePatterns: ["node_modules", "<rootDir>/UI/tests/*.*"],
 
     // Indicates which provider should be used to instrument code for coverage
-    coverageProvider: "babel",
+    coverageProvider: "v8",
 
     // A list of reporter names that Jest uses when writing coverage reports
     coverageReporters: ["text", "lcov"],
@@ -116,13 +114,7 @@ module.exports = {
     // An array of file extensions your modules use
     moduleFileExtensions: [
         "js",
-        "mjs",
-        "cjs",
-        "jsx",
-        "ts",
-        "tsx",
         "json",
-        "node",
         "vue"
     ],
 
@@ -152,7 +144,6 @@ module.exports = {
     passWithNoTests: false,
 
     prettierPath: "prettier",
-
 
     // A preset that is used as a base for Jest's configuration
     // preset: 'ts-jest',
@@ -219,7 +210,7 @@ module.exports = {
     snapshotSerializers: [],
 
     // The test environment that will be used for testing
-    testEnvironment: "node",
+    testEnvironment: "jsdom",
 
     // Options that will be passed to the testEnvironment
     testEnvironmentOptions: {
@@ -249,9 +240,8 @@ module.exports = {
 
     // A map from regular expressions to paths to transformers
     transform: {
-        // "\\.tsx?$": "ts-jest",
-        ".*\\.(js)$": "babel-jest",
-        ".+\\.(vue)$": "@vue/vue3-jest"
+        "^.+\\.js$": "babel-jest",
+        "^.+\\.vue$": "@vue/vue3-jest"
     },
 
     // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
