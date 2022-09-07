@@ -33,7 +33,7 @@ beforeAll(() => {
     axios.defaults.adapter = http;
     create_database(username, password, company);
     load_coa(username, password, company, "locale/coa/us/General.xml");
-    initialize(company,"tests/specs/data/Invoices.sql");
+    initialize(company,"UI/tests/specs/data/Invoices.sql");
 });
 
 afterAll(() => {
