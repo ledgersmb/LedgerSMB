@@ -40,8 +40,7 @@ insert into gifi ( accno, description )
 select distinct gifi_accno, gifi_accno
   from account a
  where not exists (select 1 from gifi g
-                    where g.accno = a.gifi_accno)
-       and gifi_accno is not null;
+                    where g.accno = a.gifi_accno and a.gifi_accno is not null);
 
 alter table account
   add constraint account_gifi_accno_fkey
