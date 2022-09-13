@@ -710,6 +710,7 @@ sub post_invoice {
     my $project_id;
     my $exchangerate = 0;
     my $keepcleared  = 0;
+    my $transdate = $form->{transdate} || 'today';
 
     $form->{acc_trans} = ();
 
@@ -1084,7 +1085,7 @@ sub post_invoice {
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id}, $ref->{chart_id}, $amount,
                        $form->{currency}, $amount - $ref->{fxdiff},
-                       $form->{transdate}, $approved, $ref->{invoice_id})
+                       $transdate, $approved, $ref->{invoice_id})
           || $form->dberror($query);
         $diff   = 0;
         $fxdiff = 0;
@@ -1122,7 +1123,7 @@ sub post_invoice {
         $sth->execute( $form->{id}, $accno,
                        $form->{receivables}, $form->{currency},
                $form->{receivables} / $form->{exchangerate},
-                       $form->{transdate}, $approved)
+                       $transdate, $approved)
             || $form->dberror($query);
     }
 
@@ -1146,7 +1147,7 @@ sub post_invoice {
                     || $form->dberror($dbh->errstr);
                 $sth->execute( $trans_id, $accno,
                                $amount, $form->{defaultcurrency}, $amount,
-                               $form->{transdate}, $approved,
+                               $transdate, $approved,
                                $form->{acc_trans}{$trans_id}{$accno}{source} )
                   || $form->dberror($query);
             }
@@ -1204,7 +1205,7 @@ sub post_invoice {
     $sth->execute(
         $form->{invnumber},     $form->{ordnumber},
         $form->{quonumber},     $form->{description},
-        $form->{transdate} || 'now',
+        $transdate,
         $form->{customer_id},   $invamount,
         $invamount/$form->{exchangerate},
         $invnetamount,          $invnetamount/$form->{exchangerate},
