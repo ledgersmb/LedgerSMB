@@ -110,8 +110,8 @@ LedgerSMB::Locale->initialize($wire);
 
 my $path = $INC{"LedgerSMB.pm"};
 my $version = $LedgerSMB::VERSION;
-die "Library verification failed (found $version from '$path', expected 1.10)"
-    unless $version =~ /^1\.10\./;
+die "Library verification failed (found $version from '$path', expected 1.11)"
+    unless $version =~ /^1\.11\./;
 
 Log::Log4perl::Layout::PatternLayout::add_global_cspec(
     'Z',
@@ -157,7 +157,7 @@ $builder->to_app(
 
 __DATA__
 cookie:
-  name: LedgerSMB-1.10
+  name: LedgerSMB-1.11
 db:
   $class: LedgerSMB::Database::Factory
   connect_data:

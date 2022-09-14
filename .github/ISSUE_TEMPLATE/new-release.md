@@ -10,7 +10,7 @@ about: Tracking the progress on preparing a new release branch
 When working toward a non-patch release, it's practical to use an issue to track the progress of the release. Copying the following check list as an initial proposal helps structure the process. A good time to start with this check list is after branching the stable branch off of `master` as that marks the last phase of stabilization.
 
 
-# Post-Beta
+# At branch time (pre-beta)
 
 * [ ] Create stabilization branch
 * [ ] Create a new transifex resource for branch translation
@@ -22,15 +22,13 @@ When working toward a non-patch release, it's practical to use an issue to track
   * [ ] package.json
   * [ ] In setup.pm, add support to create databases of the version that 'master' becomes
   * [ ] In LedgerSMB.pm, increase the $VERSION variable
-  * [ ] In bin/ledgersmb-server.psgi and utils/devel/ledgersmb-server-development.psgi, adjust the version-check regex
+  * [ ] In bin/ledgersmb-server.psgi adjust the version-check regex and the cookie name in the `__DATA__` section
   * [ ] In locale/LedgerSMB.pot, adjust the Project-Id
   * [ ] In t/data/Is_LSMB_running.html, increase the version text
   * [ ] Update the supported items page: https://ledgersmb.org/faq/which-versions-do-you-support
   * [ ] Update README.md reference to `docker-compose` file (both on the branch and on master)
   * [ ] Create a new docker-compose branch
-  * [ ] Update ledgersmb.conf example files in doc/conf/ with new version in cookie name
-  * [ ] Update the cookie's version number in Sysconfig.pm
-  * [ ] Update the cookie's version number in the default config files `doc/conf/ledgersmb.conf.*`
+  * [ ] Update the cookie's version number in the default config files `doc/conf/ledgersmb.yaml.*`
   * [ ] Add the new version to renovate.json baseBranches
 
 # General preparation
