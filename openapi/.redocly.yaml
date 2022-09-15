@@ -10,7 +10,5 @@ lint:
   extends:
     - recommended
   rules:
-    no-empty-servers:
-      severity: off
     security-defined:
       severity: warn
