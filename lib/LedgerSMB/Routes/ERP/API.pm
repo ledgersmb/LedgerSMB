@@ -53,3 +53,11 @@ info:
     url: https://spdx.org/licenses/GPL-2.0-or-later.html
 servers: 
   - url: 'http://lsmb/erp/api/v0'
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: LedgerSMB-1.10
+security:
+  - cookieAuth: []
