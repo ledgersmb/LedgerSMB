@@ -30,11 +30,6 @@
       "name": "Yves Lavoie"
     }
   ],
-  "bundlesize": [
-    {
-      "path": "./UI/js/*"
-    }
-  ],
   "_browserslist-comment": [
     "explicitly exclude Edge <= 18, because 'and supports input-event'",
     "fails to exclude Edge 16-18"
@@ -319,7 +314,6 @@
           "license",
           "maintainers",
           "contributors",
-          "bundlesize",
           "main",
           "browser",
           "_browserslist-comment",
