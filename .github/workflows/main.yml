@@ -298,8 +298,8 @@ jobs:
 
       - name: Run API tests
         run: |
-          PWD=$HOME
-          make jstest
+          pwd
+          PERL5LIB="lib:old/lib:$PERL5LIB" make jstest
 
       - name: Run Coverage Perl tests
         run: |

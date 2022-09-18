@@ -23,12 +23,16 @@ module.exports = {
     collectCoverage: false,
 
     // An array of glob patterns indicating a set of files for which coverage information should be collected
-    collectCoverageFrom: [],
+    collectCoverageFrom: [
+        "UI/**/*.{js,jsx,vue}",
+        "!UI/js/**/*",
+        "!**/*.spec.js"
+    ],
 
     // The directory where Jest should output its coverage files
     coverageDirectory: "coverage",
 
-    coveragePathIgnorePatterns: ["/node_modules/"],
+    coveragePathIgnorePatterns: ["/node_modules/", "/tests/", "/.local/"],
 
     // An array of regexp pattern strings used to skip coverage collection
     // coveragePathIgnorePatterns: ["node_modules", "<rootDir>/test/*.*"],
@@ -37,7 +41,7 @@ module.exports = {
     coverageProvider: "babel",
 
     // A list of reporter names that Jest uses when writing coverage reports
-    coverageReporters: ["json", "text", "lcov", "clover"],
+    coverageReporters: ["text", "lcov"],
 
     // An object that configures minimum threshold enforcement for coverage results
     // coverageThreshold: undefined,
@@ -45,13 +49,13 @@ module.exports = {
     // A path to a custom dependency extractor
     // dependencyExtractor: undefined,
 
-    detectLeaks: false,
-    detectOpenHandles: false,
+    detectLeaks: true,
+    detectOpenHandles: true,
 
     // Make calling deprecated APIs throw helpful error messages
-    errorOnDeprecated: false,
+    errorOnDeprecated: true,
 
-    expand: false,
+    expand: true,
     extensionsToTreatAsEsm: [],
 
     // The default configuration for fake timers
@@ -59,6 +63,8 @@ module.exports = {
         enableGlobally: false
     },
 
+    // Force Jest to exit after all tests have completed running.
+    // This is useful when resources set up by test code cannot be adequately cleaned up.
     forceExit: false,
 
     // Force coverage collection from ignored files using an array of glob patterns
@@ -80,11 +86,23 @@ module.exports = {
         throwOnModuleCollision: false
     },
 
+    // Insert Jest's globals (expect, test, describe, beforeEach etc.) into the global environment.
+    // If you set this to false, you should import from @jest/globals
     injectGlobals: true,
+
+    // Prints the test results in JSON. This mode will send all other test output and user messages to stderr.
     json: false,
+
+    // Run all tests affected by file changes in the last commit made
     lastCommit: false,
+
+    // Lists all test files that Jest will run given the arguments, and exits.
     listTests: false,
+
+    // Logs the heap usage after every test. Useful to debug memory leaks.
     logHeapUsage: false,
+
+    // Prevents Jest from executing more than the specified amount of tests at the same time. Only affects tests that use test.concurrent
     maxConcurrency: 5,
 
     // The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
@@ -107,11 +125,14 @@ module.exports = {
     ],
 
     // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-    // moduleNameMapper: {},
+    moduleNameMapper: {
+        "^@/(.*)$": "<rootDir>/UI/src/$1"
+    },
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
     modulePathIgnorePatterns: [],
 
+    // Disables stack trace in test results output.
     noStackTrace: false,
 
     // Activates notifications for test results
@@ -120,17 +141,24 @@ module.exports = {
     // An enum that specifies notification mode. Requires { notify: true }
     notifyMode: "failure-change",
 
+    // Attempts to identify which tests to run based on which files have changed in the current repository.
+    // Only works if you're running tests in a git/hg repository at the moment and requires a static dependency graph
     onlyChanged: false,
     onlyFailures: false,
+
+    // Allows the test suite to pass when no files are found
     passWithNoTests: false,
+
     prettierPath: "prettier",
-    projects: [],
+
 
     // A preset that is used as a base for Jest's configuration
     // preset: 'ts-jest',
 
-    // Run tests from one or more projects
-    // projects: undefined,
+    // Run tests from one or more projects, found in the specified paths; also takes path globs.
+    // This option is the CLI equivalent of the projects configuration option.
+    // Note that if configuration files are found in the specified paths, all projects specified within those configuration files will be run.
+    projects: [],
 
     // Use this configuration option to add custom reporters to Jest
     reporters: [
@@ -164,8 +192,12 @@ module.exports = {
     // ],
 
     // Allows you to use a custom runner instead of Jest's default test runner
-    runner: "jest-runner",
+    runner: "groups",
 
+    // Run all tests serially in the current process, rather than creating a worker pool of child processes that run tests. This can be useful for debugging.
+    // runInBand: false,
+
+    // Run only the tests that were specified with their exact paths.
     runTestsByPath: false,
 
     sandboxInjectedGlobals: [],
@@ -226,12 +258,18 @@ module.exports = {
     // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
     // unmockedModulePathPatterns: undefined,
 
+    // Use this flag to re-record every snapshot that fails during this test run.
+    // Can be used together with a test suite pattern or with --testNamePattern to re-record snapshots.
     updateSnapshot: true,
+
+    // Divert all output to stderr.
     useStderr: false,
 
     // Indicates whether each individual test should be reported during the run
     verbose: true,
 
+    // Watch files for changes and rerun tests related to changed files.
+    // If you want to re-run all tests when a file has changed, use the --watchAll option instead.
     watch: false,
 
     // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
