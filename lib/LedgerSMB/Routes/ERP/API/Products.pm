@@ -577,11 +577,7 @@ paths:
       summary: Create single products price group
       operationId: putProductsPricegroupById
       parameters:
-        - name: If-Match
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/if-match'
       requestBody:
         content:
           application/json:
@@ -619,11 +615,7 @@ paths:
       summary: Delete a single products price group
       operationId: deleteProductsPricegroupById
       parameters:
-        - name: 'If-Match'
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/if-match'
       responses:
         204:
           description: ...
@@ -641,11 +633,7 @@ paths:
       summary: Update a single products price group
       operationId: updateProductsPricegroupById
       parameters:
-        - name: 'If-Match'
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/if-match'
       responses:
         200:
           description: ...
@@ -758,11 +746,7 @@ paths:
       summary: Update a single warehouse
       operationId: putWarehousesById
       parameters:
-        - name: If-Match
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/if-match'
       requestBody:
         content:
           application/json:
@@ -800,11 +784,7 @@ paths:
       summary: Delete a single warehouse
       operationId: deleteWarehousesById
       parameters:
-        - name: 'If-Match'
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/if-match'
       responses:
         204:
           description: ...
@@ -822,11 +802,7 @@ paths:
       summary: Update a single warehouse
       operationId: updateWarehousesById
       parameters:
-        - name: 'If-Match'
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/if-match'
       responses:
         200:
           description: ...
@@ -845,7 +821,10 @@ components:
       required: true
       schema:
         type: string
-    If-Match:
+  parameters:
+    if-match:
+      name: If-Match
+      in: header
       description: ...
       required: true
       schema:

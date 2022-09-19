@@ -586,11 +586,7 @@ paths:
       summary: Update a single SIC
       operationId: putSICByCode
       parameters:
-        - name: If-Match
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/if-match'
       requestBody:
         content:
           application/json:
@@ -628,11 +624,7 @@ paths:
       summary: Delete a single SIC
       operationId: deleteSICByCode
       parameters:
-        - name: 'If-Match'
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/if-match'
       responses:
         204:
           description: ...
@@ -650,11 +642,7 @@ paths:
       summary: Update a single SIC
       operationId: updateSICByCode
       parameters:
-        - name: 'If-Match'
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/if-match'
       responses:
         200:
           description: ...
@@ -767,11 +755,7 @@ paths:
       summary: Update a single business type
       operationId: putBusinessTypesById
       parameters:
-        - name: If-Match
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/if-match'
       requestBody:
         content:
           application/json:
@@ -809,11 +793,7 @@ paths:
       summary: Delete a single business type
       operationId: deleteBusinessTypesById
       parameters:
-        - name: 'If-Match'
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/if-match'
       responses:
         204:
           description: ...
@@ -831,11 +811,7 @@ paths:
       summary: Update a single business type
       operationId: updateBusinessTypesById
       parameters:
-        - name: 'If-Match'
-          in: header
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/if-match'
       responses:
         200:
           description: ...
@@ -854,7 +830,10 @@ components:
       required: true
       schema:
         type: string
-    If-Match:
+  parameters:
+    if-match:
+      name: If-Match
+      in: header
       description: ...
       required: true
       schema:
