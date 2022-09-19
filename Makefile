@@ -173,13 +173,11 @@ else
 endif
 
 jstest: TESTS ?= tests
-jstest:
+jstest: api
 ifneq ($(origin DOCKER_CMD),undefined)
 #       if there's a docker container, jump into it and run from there
 	$(DOCKER_CMD) make jstest
 else
-	# Make sure API definition is current
-	./utils/devel/rebuild_api.sh
 	# Test API answer
 	./node_modules/.bin/jest $(TESTS)
 endif
