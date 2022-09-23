@@ -1,5 +1,6 @@
 /** @format */
 
+
 import { h, inject, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -49,7 +50,10 @@ export default {
                 document
                     .getElementById("maindiv")
                     .removeAttribute("data-lsmb-done");
-                let r = await fetch(tgt, {
+                // chop off the leading '/' to use relative paths
+                let base = window.location.pathname.replace(/[^/]*$/, "");
+                let relTgt = (tgt.substring(0, 1) === '/') ? tgt.substring(1) : tgt;
+                let r = await fetch(base + relTgt, {
                     method: options.method,
                     body: options.data,
                     headers: headers
