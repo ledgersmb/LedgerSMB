@@ -11,6 +11,7 @@ import axios from "axios";
 import jestOpenAPI from "jest-openapi";
 import { StatusCodes } from "http-status-codes";
 import { create_database, drop_database } from "./database";
+import { server } from '../../common/mocks/server.js'
 
 // Load an OpenAPI file (YAML or JSON) into this plugin
 jestOpenAPI(process.env.PWD + "/openapi/API.yaml");
@@ -26,7 +27,7 @@ const username = `Jest${id}`;
 const password = "Tester";
 const company = `lsmb_test_api_${id}`;
 
-const server = process.env.LSMB_BASE_URL;
+const serverUrl = process.env.LSMB_BASE_URL;
 
 let headers = {};
 
@@ -34,6 +35,11 @@ let headers = {};
 beforeAll(() => {
     axios.defaults.adapter = 'http';
     create_database(username, password, company);
+
+    // Establish API mocking before all tests.
+    server.listen({
+        onUnhandledRequest: 'bypass'
+    });
 });
 
 afterAll(() => {
@@ -43,7 +49,7 @@ afterAll(() => {
 // Log in before each test
 beforeEach(async () => {
     let r = await axios.post(
-        server + "/login.pl?action=authenticate&company=" + encodeURI(company),
+        serverUrl + "/login.pl?action=authenticate&company=" + encodeURI(company),
         {
             company: company,
             password: password,
@@ -59,14 +65,14 @@ beforeEach(async () => {
     if (r.status === StatusCodes.OK) {
         headers = {
             cookie: r.headers["set-cookie"],
-            referer: server + "/" + r.data.target,
+            referer: serverUrl + "/" + r.data.target,
             authorization: "Basic " + btoa(username + ":" + password)
         };
     }
 });
 // Log out after each test
 afterEach(async () => {
-    let r = await axios.get(server + "/login.pl?action=logout&target=_top");
+    let r = await axios.get(serverUrl + "/login.pl?action=logout&target=_top");
     if (r.status === StatusCodes.OK) {
         headers = {};
     }
@@ -75,8 +81,8 @@ afterEach(async () => {
 // COUNTRY tests
 describe("Retrieving all countries", () => {
     it("GET /countries should satisfy OpenAPI spec", async () => {
-        // Get an HTTP response from your server
-        let res = await axios.get(server + "/" + api + "/countries", {
+        // Get an HTTP response from your serverUrl
+        let res = await axios.get(serverUrl + "/" + api + "/countries", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
@@ -89,7 +95,7 @@ describe("Retrieving all countries", () => {
 describe("Retrieving all countries with old syntax should fail", () => {
     it("GET /countries/ should fail", async () => {
         await expect(
-            axios.get(server + "/" + api + "/countries/", {
+            axios.get(serverUrl + "/" + api + "/countries/", {
                 headers: headers
             })
         ).rejects.toThrow(
@@ -101,7 +107,7 @@ describe("Retrieving all countries with old syntax should fail", () => {
 describe("Retrieve non-existant COUNTRY ZZ should fail", () => {
     it("GET /countries/ZZ should not retrieve invalid COUNTRY", async () => {
         await expect(
-            axios.get(server + "/" + api + "/countries/ZZ", {
+            axios.get(serverUrl + "/" + api + "/countries/ZZ", {
                 headers: headers
             })
         ).rejects.toThrow(
@@ -113,7 +119,7 @@ describe("Retrieve non-existant COUNTRY ZZ should fail", () => {
 describe("Adding the new Test COUNTRY ZZ", () => {
     it("POST /countries/ZZ should allow adding a new COUNTRY", async () => {
         let res = await axios.post(
-            server + "/" + api + "/countries",
+            serverUrl + "/" + api + "/countries",
             {
                 code: "ZZ",
                 name: "Atlantika"
@@ -131,13 +137,13 @@ describe("Adding the new Test COUNTRY ZZ", () => {
 
 describe("Modifying the new COUNTRY ZZ", () => {
     it("PUT /countries/ZZ should allow modifying Atlantica", async () => {
-        let res = await axios.get(server + "/" + api + "/countries/ZZ", {
+        let res = await axios.get(serverUrl + "/" + api + "/countries/ZZ", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
         expect(res.headers.etag).toBeDefined();
         res = await axios.put(
-            server + "/" + api + "/countries/ZZ",
+            serverUrl + "/" + api + "/countries/ZZ",
             {
                 code: "ZZ",
                 name: "Atlantica"
@@ -160,13 +166,13 @@ describe("Modifying the new COUNTRY ZZ", () => {
 Not implemented yet
 describe("Updating the new COUNTRY ZZ", () => {
     it("PATCH /countries/ZZ should allow updating Atlantica", async () => {
-        let res = await axios.get(server + "/" + api + "/countries/ZZ", {
+        let res = await axios.get(serverUrl + "/" + api + "/countries/ZZ", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
         expect(res.headers.etag).toBeDefined();
         res = await axios.patch(
-            server + "/" + api + "/countries/ZZ",
+            serverUrl + "/" + api + "/countries/ZZ",
             {
                 code: "ZZ",
                 name: "Atlantika"
@@ -188,14 +194,14 @@ describe("Updating the new COUNTRY ZZ", () => {
 
 describe("Not Removing COUNTRY ZZ", () => {
     it("DELETE /countries/ZZ should not allow deleting Test COUNTRY", async () => {
-        let res = await axios.get(server + "/" + api + "/countries/ZZ", {
+        let res = await axios.get(serverUrl + "/" + api + "/countries/ZZ", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
         expect(res.headers.etag).toBeDefined();
 
         await expect(
-            axios.delete(server + "/" + api + "/countries/ZZ", {
+            axios.delete(serverUrl + "/" + api + "/countries/ZZ", {
                 headers: { ...headers, "If-Match": res.headers.etag }
             })
         ).rejects.toThrow(

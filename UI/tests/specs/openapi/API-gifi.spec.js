@@ -11,6 +11,7 @@ import axios from "axios";
 import jestOpenAPI from "jest-openapi";
 import { StatusCodes } from "http-status-codes";
 import { create_database, drop_database } from "./database";
+import { server } from '../../common/mocks/server.js'
 
 // Load an OpenAPI file (YAML or JSON) into this plugin
 jestOpenAPI(process.env.PWD + "/openapi/API.yaml");
@@ -26,7 +27,7 @@ const username = `Jest${id}`;
 const password = "Tester";
 const company = `lsmb_test_api_${id}`;
 
-const server = process.env.LSMB_BASE_URL;
+const serverUrl = process.env.LSMB_BASE_URL;
 
 let headers = {};
 
@@ -34,7 +35,13 @@ let headers = {};
 beforeAll(() => {
     axios.defaults.adapter = 'http';
     create_database(username, password, company);
-});
+
+    // Establish API mocking before all tests.
+    server.listen({
+        onUnhandledRequest: 'bypass'
+    });
+})
+
 
 afterAll(() => {
     drop_database(company);
@@ -43,7 +50,7 @@ afterAll(() => {
 // Log in before each test
 beforeEach(async () => {
     let r = await axios.post(
-        server + "/login.pl?action=authenticate&company=" + encodeURI(company),
+        serverUrl + "/login.pl?action=authenticate&company=" + encodeURI(company),
         {
             company: company,
             password: password,
@@ -59,14 +66,14 @@ beforeEach(async () => {
     if (r.status === StatusCodes.OK) {
         headers = {
             cookie: r.headers["set-cookie"],
-            referer: server + "/" + r.data.target,
+            referer: serverUrl + "/" + r.data.target,
             authorization: "Basic " + btoa(username + ":" + password)
         };
     }
 });
 // Log out after each test
 afterEach(async () => {
-    let r = await axios.get(server + "/login.pl?action=logout&target=_top");
+    let r = await axios.get(serverUrl + "/login.pl?action=logout&target=_top");
     if (r.status === StatusCodes.OK) {
         headers = {};
     }
@@ -75,8 +82,8 @@ afterEach(async () => {
 // GIFI tests
 describe("Retrieving all gifis", () => {
     it("GET /gifi should satisfy OpenAPI spec", async () => {
-        // Get an HTTP response from your server
-        let res = await axios.get(server + "/" + api + "/gl/gifi", {
+        // Get an HTTP response from your serverUrl
+        let res = await axios.get(serverUrl + "/" + api + "/gl/gifi", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
@@ -89,7 +96,7 @@ describe("Retrieving all gifis", () => {
 describe("Retrieving all gifis with old syntax should fail", () => {
     it("GET /gifi/ should fail", async () => {
         await expect(
-            axios.get(server + "/" + api + "/gl/gifi/", {
+            axios.get(serverUrl + "/" + api + "/gl/gifi/", {
                 headers: headers
             })
         ).rejects.toThrow(
@@ -101,7 +108,7 @@ describe("Retrieving all gifis with old syntax should fail", () => {
 describe("Retrieve non-existant GIFI 99999", () => {
     it("GET /gifi/99999 should not retrieve invalid GIFI", async () => {
         await expect(
-            axios.get(server + "/" + api + "/gl/gifi/99999", {
+            axios.get(serverUrl + "/" + api + "/gl/gifi/99999", {
                 headers: headers
             })
         ).rejects.toThrow(
@@ -113,7 +120,7 @@ describe("Retrieve non-existant GIFI 99999", () => {
 describe("Adding the new Test GIFI", () => {
     it("POST /gifi/99999 should allow adding a new GIFI", async () => {
         let res = await axios.post(
-            server + "/" + api + "/gl/gifi",
+            serverUrl + "/" + api + "/gl/gifi",
             {
                 accno: "99999",
                 description: "Test GIFI"
@@ -131,13 +138,13 @@ describe("Adding the new Test GIFI", () => {
 
 describe("Modifying the new GIFI 99999", () => {
     it("PUT /gifi/99999 should allow updating Test GIFI", async () => {
-        let res = await axios.get(server + "/" + api + "/gl/gifi/99999", {
+        let res = await axios.get(serverUrl + "/" + api + "/gl/gifi/99999", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
         expect(res.headers.etag).toBeDefined();
         res = await axios.put(
-            server + "/" + api + "/gl/gifi/99999",
+            serverUrl + "/" + api + "/gl/gifi/99999",
             {
                 accno: "99999",
                 description: "Test GIFI"
@@ -160,13 +167,13 @@ describe("Modifying the new GIFI 99999", () => {
  * Not implemented yet
 describe("Updating the new GIFI 99999", () => {
     it("PATCH /gifi/99999 should allow updating Test GIFI", async () => {
-        let res = await axios.get(server + "/" + api + "/gl/gifi/99999", {
+        let res = await axios.get(serverUrl + "/" + api + "/gl/gifi/99999", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
         expect(res.headers.etag).toBeDefined();
         res = await axios.patch(
-            server + "/" + api + "/gl/gifi/99999",
+            serverUrl + "/" + api + "/gl/gifi/99999",
             {
                 accno: "99999",
                 description: "Test GIFI"
@@ -188,14 +195,14 @@ describe("Updating the new GIFI 99999", () => {
 
 describe("Not Removing the new GIFI 99999", () => {
     it("DELETE /gifi/99999 should allow deleting Test GIFI", async () => {
-        let res = await axios.get(server + "/" + api + "/gl/gifi/99999", {
+        let res = await axios.get(serverUrl + "/" + api + "/gl/gifi/99999", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
         expect(res.headers.etag).toBeDefined();
 
         await expect(
-            axios.delete(server + "/" + api + "/gl/gifi/99999", {
+            axios.delete(serverUrl + "/" + api + "/gl/gifi/99999", {
                 headers: { ...headers, "If-Match": res.headers.etag }
             })
         ).rejects.toThrow(
