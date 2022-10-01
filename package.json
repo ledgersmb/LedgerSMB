@@ -136,7 +136,7 @@
     "webpack-sources": "3.2.3",
     "webpack-virtual-modules": "0.4.5",
     "whatwg-fetch": "3.6.2",
-    "yargs": "17.5.1"
+    "yargs": "17.6.0"
   },
   "homepage": "http://ledgersmb.org/",
   "scripts": {
