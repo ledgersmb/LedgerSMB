@@ -46,17 +46,17 @@
   "devDependencies": {
     "@babel/eslint-parser": "7.19.1",
     "@babel/plugin-proposal-object-rest-spread": "7.18.9",
-    "@babel/preset-env": "7.19.1",
+    "@babel/preset-env": "7.19.3",
     "autoprefixer": "10.4.12",
     "babel-loader": "8.2.5",
     "browserslist": "4.21.4",
     "buffer": "6.0.3",
-    "caniuse-lite": "1.0.30001410",
+    "caniuse-lite": "1.0.30001414",
     "clean-webpack-plugin": "4.0.0",
     "compression-webpack-plugin": "10.0.0",
     "copy-webpack-plugin": "11.0.0",
     "css-loader": "6.7.1",
-    "css-minimizer-webpack-plugin": "4.1.0",
+    "css-minimizer-webpack-plugin": "4.2.0",
     "cssnano": "5.1.13",
     "depcheck": "1.4.3",
     "dojo-util": "1.17.3",
@@ -88,7 +88,7 @@
     "npm-run-all": "4.1.5",
     "path-browserify": "1.0.1",
     "prettier": "2.7.1",
-    "stylelint": "14.12.1",
+    "stylelint": "14.13.0",
     "stylelint-bare-webpack-plugin": "2.1.0",
     "stylelint-config-standard": "28.0.0",
     "stylelint-no-unsupported-browser-features": "5.0.4",
@@ -100,7 +100,7 @@
     "webpack-cli": "4.10.0",
     "webpack-merge": "5.8.0",
     "webpack-sources": "3.2.3",
-    "yargs": "17.5.1"
+    "yargs": "17.6.0"
   },
   "dependencies": {
     "content-disposition": "0.5.4",
