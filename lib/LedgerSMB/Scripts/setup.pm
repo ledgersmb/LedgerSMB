@@ -259,6 +259,8 @@ sub login {
     my $template = $request->{_wire}->get('ui');
     my $settings = $request->{_wire}->get( 'setup_settings' );
     my $auth_db = ($settings and $settings->{auth_db}) // 'postgres';
+    $database->{connect_data}->{options} = "-c search_path=$database->{schema},public";
+
     my $version_info = $database->get_info($auth_db);
 
     my $server_version     = version->parse(
