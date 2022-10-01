@@ -120,7 +120,7 @@
     "stylelint-config-standard": "28.0.0",
     "stylelint-declaration-block-no-ignored-properties": "2.5.0",
     "stylelint-no-nested-media": "0.1.0",
-    "stylelint-no-unsupported-browser-features": "5.0.4",
+    "stylelint-no-unsupported-browser-features": "6.0.0",
     "stylelint-order": "5.0.0",
     "stylelint-webpack-plugin": "3.3.0",
     "stylelint-z-index-value-constraint": "1.2.0",
