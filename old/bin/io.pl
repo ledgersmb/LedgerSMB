@@ -1075,8 +1075,10 @@ sub create_form {
 sub e_mail {
     my $old_form = $form;
     $form = Form->new;
-    $form->{$_} = $old_form->{$_} for (qw/ action type formname script
-                                       format language_code vc dbh id /);
+    $form->{$_} = $old_form->{$_} for (
+        qw/ action type formname script format language_code vc dbh id /,
+        grep { /^_/ } keys %$old_form
+        );
 
     if ($form->{type} eq 'invoice') {
         &invoice_links;
@@ -1087,8 +1089,10 @@ sub e_mail {
         &prepare_order;
     }
 
-    $form->{$_} = $old_form->{$_} for (qw/ action type formname script
-                                       format language_code vc dbh id /);
+    $form->{$_} = $old_form->{$_} for (
+        qw/ action type formname script format language_code vc dbh id /,
+        grep { /^_/ } keys %$old_form
+        );
     $form->{media} = 'email';
     $form->{rowcount}++;
     &print_form;
