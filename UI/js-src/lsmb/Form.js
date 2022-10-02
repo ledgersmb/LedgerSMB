@@ -40,7 +40,8 @@ define([
             this.submit();
         },
         submit: function () {
-            if (!this.validate()) {
+            const widget = registry.getEnclosingWidget(this.clickedAction);
+            if (!this.validate() || widget === null) {
                 return;
             }
 
