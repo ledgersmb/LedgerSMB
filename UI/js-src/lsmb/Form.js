@@ -29,7 +29,8 @@ define([
             this.submit();
         },
         submit: function () {
-            if (!this.validate()) {
+            const widget = registry.getEnclosingWidget(this.clickedAction);
+            if (!this.validate() || widget === null) {
                 return;
             }
 
@@ -37,7 +38,6 @@ define([
                 typeof this.method === "undefined" ? "GET" : this.method;
             var url = this.action;
             var options = { handleAs: "text" };
-            const widget = registry.getEnclosingWidget(this.clickedAction);
             options.doing = widget["data-lsmb-doing"];
             options.done = widget["data-lsmb-done"];
             if (method.toLowerCase() === "get") {
