@@ -122,13 +122,17 @@ export default {
                 return;
             }
 
-            var href = dnode.href;
+            let href = dnode.href;
             dnode.addEventListener("click", function (e) {
                 if (!e.ctrlKey && !e.shiftKey && e.button === 0) {
                     e.preventDefault();
                     window.__lsmbLoadLink(href);
                 }
             });
+
+            let url = new URL(href);
+            let anode = dnode;
+            anode.href = '#' + url.pathname + url.search;
         },
         _cleanWidgets() {
             try {
