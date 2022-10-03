@@ -19,37 +19,44 @@ use LedgerSMB::Entity::User;
 use LedgerSMB::PGDate;
 use LedgerSMB::User;
 
+use Array::PrintCols;
+
 use Moose;
 extends 'LedgerSMB::Admin::Command';
 use namespace::autoclean;
 
 use Feature::Compat::Try;
 
-
 has options => (is => 'ro', default => sub { {} });
 
 sub _get_valid_salutation {
     my ($self, $dbh) = @_;
-    my $sth = $dbh->prepare('SELECT * FROM salutation');
-    $sth->execute
+    my $sth = $dbh->prepare('SELECT id FROM salutation WHERE salutation ilike ?');
+    $sth->execute($self->options->{salutation})
         or die $dbh->errstr;
-    my ($values) = $sth->fetchall_arrayref({});
-    foreach (@$values) {
-        return $_->{id}
-            if ( $_->{salutation} eq $self->options->{salutation})
-    }
-    $self->logger->error('Invalid salutation');
-    return 0;
+    my $value = $sth->fetchrow_hashref;
+    $self->logger->error('Invalid salutation')
+        if !$value;
+    return $value->{id};
+}
+
+sub _get_salutation_by_id {
+    my ($self, $dbh, $id) = @_;
+    my $sth = $dbh->prepare('SELECT salutation FROM salutation WHERE id=?');
+    $sth->execute($id)
+        or die $dbh->errstr;
+    my $values = $sth->fetchrow_hashref;
+    return $values->{salutation};
 }
 
 sub _get_user {
-    my ($self, $dbh) = @_;
-    my $_username = shift // $self->options->{username};
+    my ($self, $dbh, $_username) = @_;
+    $_username //= $self->options->{username};
 
-    #This ugly hack does
+    # Get user by username
     my $sth =
         $dbh->prepare(q(SELECT id, entity_id FROM users WHERE username=?));
-    $sth->execute($self->options->{username})
+    $sth->execute($_username)
         or die $dbh->errstr;
     my ($user) = $sth->fetchrow_hashref;
     return $user;
@@ -57,17 +64,26 @@ sub _get_user {
 
 sub _get_valid_country {
     my ($self, $dbh) = @_;
-    return 0 if !$self->options->{country};
-    my $sth = $dbh->prepare('SELECT * FROM country');
-    $sth->execute
+    return if !$self->options->{country};
+    my $sth = $dbh->prepare('SELECT * FROM country WHERE name ilike ? OR short_name=?');
+    $sth->execute($self->options->{country},uc $self->options->{country})
         or die $dbh->errstr;
-    my ($values) = $sth->fetchall_arrayref({});
-    foreach (@$values) {
-        return $_->{id}
-            if ( $_->{name} eq $self->options->{country})
+    my $values = $sth->fetchrow_hashref;
+    if ($values) {
+        $self->options->{country} = $values->{name};
+        return $values;
     }
     $self->logger->error('Invalid country');
-    return 0;
+    return;
+}
+
+sub _get_country_by_id {
+    my ($self, $dbh, $id) = @_;
+    my $sth = $dbh->prepare('SELECT * FROM country WHERE id=?');
+    $sth->execute($id)
+        or die $dbh->errstr;
+    my $values = $sth->fetchrow_hashref;
+    return $values->{name};
 }
 
 sub _option_spec {
@@ -84,20 +100,20 @@ sub _option_spec {
             # employee
             'dob=s' => \$self->options->{dob},
             'employeenumber=s' => \$self->options->{employeenumber},
-            'end_date=s' => \$self->options->{end_date},
-            'is_manager!' => \$self->options->{is_manager},
+            'end-date=s' => \$self->options->{end_date},
+            'is-manager!' => \$self->options->{is_manager},
             'manager=s' => \$self->options->{manager},
-            'role=s' => \$self->options->{role},
-            'sales!' => \$self->options->{is_sales},
+            'job-title=s' => \$self->options->{role},
+            'is-sales!' => \$self->options->{is_sales},
             'ssn=s' => \$self->options->{ssn},
-            'start_date=s' => \$self->options->{start_date},
+            'start-date=s' => \$self->options->{start_date},
             # person
             #'birthdate=s' => \$birthdate, # Not used?
             'country=s' => \$self->options->{country},
-            'first_name=s' => \$self->options->{first_name},
-            'last_name=s' => \$self->options->{last_name},
-            'middle_name=s' => \$self->options->{middle_name},
-            #'personal_id=s' => \$personal_id,
+            'first-name=s' => \$self->options->{first_name},
+            'last-name=s' => \$self->options->{last_name},
+            'middle-name=s' => \$self->options->{middle_name},
+            #'personal-id=s' => \$personal_id,
             'salutation=s' => \$self->options->{salutation}
         );
         $option_spec{'no-permission=s@'} = \$self->options->{no_permission}
@@ -128,7 +144,7 @@ sub _add_permissions{
         foreach my $p ($self->options->{permission}->@*) {
             my ($h) = grep { lc($p) eq $_->{description} } @{$user->list_roles};
             if (!$h ) {
-                $self->logger->error("Invalid role '$p'");
+                $self->logger->error("Invalid permission '$p'");
                 $dbh->rollback;
                 return 0;
             }
@@ -150,12 +166,11 @@ sub _remove_permissions{
             foreach my $p ($self->options->{no_permission}) {
                 my ($h) = grep { lc($p) eq $_->{description} } @{$user->list_roles};
                 if (!$h ) {
-                    $self->logger->error("Invalid role '$p'");
+                    $self->logger->error("Invalid permission '$p'");
                     $dbh->rollback;
                     return 0;
                 }
                 @$roles = grep { $h->{rolname} ne $_ } @$roles;
-                warn np $roles;
             }
         }
         $user->save_roles($roles);
@@ -182,12 +197,13 @@ sub change {
     local $LedgerSMB::App_State::DBH = $dbh;
     my $user = LedgerSMB::Entity::User->get($_user->{entity_id});
     my $emp = LedgerSMB::Entity::Person::Employee->get($_user->{entity_id});
+    my $_country = $self->_get_valid_country($dbh);
 
     if ( $self->options->{password} ) {
         $user->reset_password($self->options->{password});
     }
     my $needs_save = 0;
-    for my $setting (qw(country dob employeenumber end_date first_name
+    for my $setting (qw(dob employeenumber end_date first_name
                         is_manager last_name manager middle_name role sales
                         salutation ssn start_date)) {
         if ($self->options->{$setting}) {
@@ -195,11 +211,18 @@ sub change {
             $needs_save = 1;
         }
     }
+    if ($self->options->{country}) {
+        $emp->{country} = $_country->{name};
+        $emp->{country_id} = $_country->{id};
+        $needs_save = 1;
+    }
 
     $emp->save if $needs_save;
+
     # Add permissions
     return 1 if ($self->options->{permission}
                  and not $self->_add_permissions($dbh, $user));
+
     # Remove permissions
     return 1 if ($self->options->{no_permission}
                  and not $self->_remove_permissions($dbh, $user));
@@ -253,6 +276,7 @@ sub create {
     return 1
         if ($self->options->{permission}
             and not $self->_add_permissions($dbh, $user));
+
     # Remove permissions
     return 1
         if ($self->options->{no_permission}
@@ -276,8 +300,8 @@ sub _create_employee {
 
     $self->logger->error('Missing country')
         if !$self->options->{country};
-    my $country_id = $self->_get_valid_country($dbh);
-    return undef if !$country_id;
+    my $_country = $self->_get_valid_country($dbh);
+    return undef if !$_country;
 
     if (not $self->options->{first_name}
         or not $self->options->{last_name}){
@@ -291,7 +315,7 @@ sub _create_employee {
         _dbh => $dbh,
         $self->options->%*,
 
-        country_id => $country_id,
+        country_id => $_country->{id},
         salutation_id => $salutation_id,
         control_code => $self->options->{employeenumber},
         manager_id => $_manager->{entity_id},
@@ -362,29 +386,57 @@ sub delete {
 }
 
 sub list {
-    my ($self, $dbh, $options, @args) = @_;
-    my $user;
+    my ($self, $dbh, $options, $db_uri, $user) = @_;
 
-    ## no critic (ProhibitFormats)
-format LANG =
+    if (!defined $user) {
+        my @users = LedgerSMB::User->get_all_users( { dbh => $dbh } );
+
+        ## no critic (ProhibitFormats)
+    format LANG =
 @<<<<<<@<<<<<<<<<<<<<<<@<<<<<<<<<<<<<<<<<<
 $user->{id},$user->{username},$user->{created}
 .
-format LANG_TOP =
+    format LANG_TOP =
 ------------------------------------------
 Id     Username        Created
 ------------------------------------------
 .
-
-    local $^ = 'LANG_TOP';
-    local $~ = 'LANG';
-    for $user (
-        sort { $a->{username} cmp $b->{username} }
-        LedgerSMB::User->get_all_users( { dbh => $dbh } )
-        ) {
-        write;
+        local $^ = 'LANG_TOP';
+        local $~ = 'LANG';
+        for $user (sort
+                    {
+                        $a->{username} cmp $b->{username}
+                    } @users) {
+            write;
+        }
     }
+    else {
+        my $_user = $self->_get_user($dbh,$user);
+        if (!$_user) {
+            $self->logger->error("User '$user' does not exists");
+            $dbh->rollback;
+            return 1;
+        }
 
+        local $LedgerSMB::App_State::User = {};
+        local $LedgerSMB::App_State::DBH = $dbh;
+        $user = LedgerSMB::Entity::User->get($_user->{entity_id});
+        my $emp = LedgerSMB::Entity::Person::Employee->get($_user->{entity_id});
+        
+        print STDOUT 'Username: ',$user->{username},
+            ', Name: "',$self->_get_salutation_by_id($dbh,$emp->{salutation_id}), ' ',
+            $emp->{first_name}, ' ',
+            $emp->{middle_name} ? $emp->{middle_name} . ' ' : '',
+            $emp->{last_name}, '"',
+            ', Job Title: "', $emp->{role}, '", Number: ', $emp->{employeenumber},"\n",
+            'BirthDate: "', $emp->{dob}, '", Started: "', $emp->{start_date}, '", Ended: "', $emp->{end_date}, "\"\n",
+            'Manager: ', $emp->{is_manager} ? 'YES' : 'NO', ', Sales: ', $emp->{is_sales} ? 'YES' : 'NO',
+            ', Manager user: ', $emp->{manager} // 'undef',"\n",
+            'Country: ', $self->_get_country_by_id($dbh, $emp->{country_id}), ', SSN: ', $emp->{ssn} // 'undef',"\n",
+            "Permissions:\n";
+        $Array::PrintCols::PreSorted = 0;
+        print_cols \$user->{role_list}->@*, -5, 0, 1;
+    }
     $dbh->disconnect;
     return 0;
 }
@@ -414,10 +466,10 @@ __END__
 
 =head1 SYNOPSIS
 
-   ledgersmb-admin user list <db-uri>
-   ledgersmb-admin user create <db-uri> [options]
+   ledgersmb-admin user list <db-uri> <user>
+   ledgersmb-admin user create <db-uri> [options] 
    ledgersmb-admin user delete <db-uri>
-   ledgersmb-admin user change <db-uri>
+   ledgersmb-admin user change <db-uri> [options]
 
 =head1 DESCRIPTION
 
@@ -425,85 +477,119 @@ This command manages users in the database identified by C<db-uri>.
 
 =head1 SUBCOMMANDS
 
-=head2 list <db-uri>
+=head2 list <db-uri> <user>
 
-Lists users in the database identified by C<db-uri>.
+Lists all users in the database identified by C<db-uri> if <user> is not specified,
+otherwise list the user specified.
 
 =head2 create <db-uri>
 
-Creates user C<user> in the database identified by C<db-uri>.
+Creates a user in the database identified by C<db-uri>.
 
 =head3 OPTIONS
 
 =over
 
-=item username
+=item username C<string>
 
-User name of the created or changed user
+User name of the created, deleted or changed user
 
-=item password
+=item password C<string>
 
 Password
 
-=item start_date
+=item start-date C<YYYY-MM-DD>
 
-Start date of the employee
+Start date of the employee as C<YYYY-MM-DD>
 
-=item end_date
+=item end-date C<YYYY-MM-DD>
 
 Ending date of the employee
 
-=item dob
+=item dob C<YYYY-MM-DD>
 
 Date of birth
 
-=item role
+=item permission <list>
 
-Role(s) to affect to the user.
+Permission(s) to affect to the user.
 
-=item ssn
+Permission can be C<Full Permissions> or a comma separated list of the following roles:
+
+C<account_all> C<account_create> C<account_delete> C<account_edit> C<account_link_description_create>
+C<ap_all> C<ap_all_transactions> C<ap_all_vouchers> C<ap_invoice_create> C<ap_invoice_create_voucher>
+C<ap_transaction_all> C<ap_transaction_create> C<ap_transaction_create_voucher> C<ap_transaction_list>
+C<ar_all> C<ar_invoice_create> C<ar_invoice_create_voucher> C<ar_transaction_all> C<ar_transaction_create>
+C<ar_transaction_create_voucher> C<ar_transaction_list> C<ar_voucher_all> C<assembly_stock>
+C<assets_administer> C<assets_approve> C<assets_depreciate> C<assets_enter> C<audit_trail_maintenance>
+C<auditor> C<base_user> C<batch_create> C<batch_list> C<batch_post> C<budget_approve> C<budget_enter>
+C<budget_obsolete> C<budget_view> C<business_type_all> C<business_type_create> C<business_type_edit>
+C<business_units_manage> C<cash_all> C<contact_all_rights> C<contact_class_cold_lead> C<contact_class_contact>
+C<contact_class_customer> C<contact_class_employee> C<contact_class_hot_lead> C<contact_class_lead>
+C<contact_class_referral> C<contact_class_robot> C<contact_class_sub_contractor> C<contact_class_vendor>
+C<contact_create> C<contact_delete> C<contact_edit> C<contact_read> C<draft_modify> C<draft_post>
+C<employees_manage> C<exchangerate_edit> C<file_attach_eca> C<file_attach_entity> C<file_attach_order>
+C<file_attach_part> C<file_attach_tx> C<file_read> C<file_upload> C<financial_reports> C<gifi_create>
+C<gifi_edit> C<gl_all> C<gl_reports> C<gl_transaction_create> C<gl_voucher_create> C<inventory_adjust>
+C<inventory_all> C<inventory_approve> C<inventory_receive> C<inventory_reports> C<inventory_ship>
+C<inventory_transfer> C<language_create> C<language_edit> C<orders_generate> C<orders_manage>
+C<orders_purchase_consolidate> C<orders_sales_consolidate> C<orders_sales_to_purchase>
+C<part_create> C<part_delete> C<part_edit> C<payment_process> C<pricegroup_create> C<pricegroup_edit>
+C<purchase_order_create> C<purchase_order_edit> C<purchase_order_list> C<receipt_process> C<reconciliation_all>
+C<reconciliation_approve> C<reconciliation_enter> C<recurring> C<rfq_create> C<rfq_list> C<sales_order_create>
+C<sales_order_edit> C<sales_order_list> C<sales_quotation_create> C<sales_quotation_list> C<sic_all>
+C<sic_create> C<sic_edit> C<system_admin> C<system_settings_change> C<system_settings_list>
+C<tax_form_save> C<taxes_set> C<template_edit> C<timecard_add> C<timecard_list> C<timecard_order_generate>
+C<transaction_template_delete> C<translation_create> C<users_manage> C<voucher_delete> C<warehouse_create>
+C<warehouse_edit> C<yearend_reopen> C<yearend_run> C<yearend_run> 
+
+=item ssn C<string>
 
 Social security number
 
-=item sales
+=item is-sales
 
-Employee is in sales
+Employee is in sales. Negatable
 
-=item manager
+=item manager C<string>
 
-Employee manager
+Employee manager name
 
-=item employeenumber
+=item employeenumber C<string>
 
 Employee number
 
-=item is_manager
+=item is-manager
 
-Employee is a manager
+Employee is a manager. Negatable
 
-=item salutation
+=item job-title C<string>
+
+Employee job title
+
+=item salutation C<string>
 
 Salutation
 
-=item first_name
+=item first-name C<string>
 
 First name of the employee
 
-=item middle_name
+=item middle-name C<string>
 
 Middle name of the employee
 
-=item last_name
+=item last-name C<string>
 
 Last name of the employee
 
-=item country
+=item country C<string>
 
-Country name
+Country name or 2 letter country abbreviation
 
 =back
 
-=head2 delete <db-uri>
+=head2 delete <db-uri> C<user>
 
 Deletes user C<user> in the database identified by C<db-uri>.
 
@@ -511,13 +597,13 @@ Deletes user C<user> in the database identified by C<db-uri>.
 
 =over
 
-=item username
+=item username C<string>
 
 User name of the created or changed user
 
 =back
 
-=head2 change <db-uri>
+=head2 change <db-uri> C<user>
 
 Changes user C<user> in the database identified by C<db-uri>.
 
@@ -527,11 +613,11 @@ Changes user C<user> in the database identified by C<db-uri>.
 
 =item All create items
 
-=item no-role
+=item no-permission <list>
 
 =back
 
-Remove a role for the user
+Remove a permission for the user
 
 =head1 LICENSE AND COPYRIGHT
 
