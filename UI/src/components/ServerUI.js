@@ -35,8 +35,8 @@ export default {
     },
     methods: {
         async updateContent(tgt, options = {}) {
+            let dismiss;
             try {
-                let dismiss;
                 this.notify({
                     title: options.doing || this.$t("Loading..."),
                     type: "info",
@@ -83,9 +83,15 @@ export default {
                         });
                     });
                 } else {
+                    if (dismiss) {
+                        dismiss();
+                    }
                     this._report_error(r);
                 }
             } catch (e) {
+                if (dismiss) {
+                    dismiss();
+                }
                 this._report_error(e);
             }
         },
