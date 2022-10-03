@@ -18,14 +18,14 @@ const { send, state } = createToastMachine(
         cb: {
             removed: () => { emit("remove", { item: props.data }) }
         }
-    });
+});
 
-window.setTimeout(() => { send('dismiss') }, duration * 1000);
 if (props.data.dismissReceiver) {
     props.data.dismissReceiver( () => send('dismiss') );
     window.setTimeout(() => { send('show') }, 250);
 } else {
     send('show');
+    window.setTimeout(() => { send('dismiss') }, duration * 1000);
 }
 
 </script>
