@@ -1,5 +1,8 @@
 <actions type="Email">
   <description>Actions for Email workflow</description>
+  <action name="initial-save"
+          class="LedgerSMB::Workflow::Action::Email"
+          action="initial-save" />
   <action name="update"
           text="Update"
           class="LedgerSMB::Workflow::Action::Email"

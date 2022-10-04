@@ -31,7 +31,7 @@ TODO! Check workflow when 'separate duties' is false!
           text="E-mail"
           class="LedgerSMB::Workflow::Action::SpawnWorkflow"
           spawn_type="Email"
-          context_param="email-data" />
+          context_param="_email_data" />
   <action name="print_and_save"
           text="Print and Save"
           description="Printed and saved"
