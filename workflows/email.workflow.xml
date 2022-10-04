@@ -4,6 +4,9 @@
   <persister>Email</persister>
  <description>Handles lifecycle of e-mail</description>
  <state name="INITIAL" autorun="yes">
+   <action name="initial-save" resulting_state="INITIALIZED" />
+ </state>
+ <state name="INITIALIZED" autorun="yes">
    <action name="send"    resulting_state="EXPANDED">
      <condition name="sendImmediately" />
    </action>
