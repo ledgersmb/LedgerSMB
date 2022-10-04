@@ -94,9 +94,9 @@ sub render {
     return $template->render($request, 'email', {
         callback    => uri_unescape($request->{callback}),
         id          => $wf->id,
-        ( map { $_ => scalar $wf->context->param($_) }
+        ( map { (s/^_//r) => scalar $wf->context->param($_) }
           qw( from to cc bcc notify subject body sent_date
-              attachments expansions ) ),
+              _attachments expansions ) ),
         actions     => [ map { { text  => $_->text,
                                  value => $_->name } }
                          sort { $a->{order} <=> $b->{order} }

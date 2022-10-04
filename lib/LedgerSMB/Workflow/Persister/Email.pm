@@ -83,7 +83,7 @@ sub _fetch_attachments {
     my $rows = $sth->fetchall_arrayref( {} );
     $sth->finish;
 
-    $wf->context->param( 'attachments' => $rows);
+    $wf->context->param( '_attachments' => $rows);
 }
 
 
