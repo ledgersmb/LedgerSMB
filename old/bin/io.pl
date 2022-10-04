@@ -1447,7 +1447,7 @@ sub print_form {
             from          => $form->get_setting( 'default_email_from' ),
             subject       => ($form->{subject}
                               // qq|$form->{label} $form->{"${inv}number"}|),
-            attachments   => [
+            _attachments   => [
                 { content => $body,
                   mime_type => $template->{mimetype},
                   file_name => ($form->{formname} . '-'
@@ -1498,7 +1498,7 @@ sub print_form {
             }
         }
 
-        $trans_wf->context->param( 'email-data' => $email_data );
+        $trans_wf->context->param( '_email_data' => $email_data );
         $trans_wf->execute_action( 'e_mail' );
         my $id = $trans_wf->context->param( 'spawned_workflow' );
         if (not $form->{header}) {

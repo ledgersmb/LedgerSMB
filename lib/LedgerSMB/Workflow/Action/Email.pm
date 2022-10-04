@@ -108,6 +108,9 @@ sub execute {
            or $self->action eq 'queue') {
         $self->save($wf);
     }
+    elsif ($self->action eq 'initial-save') {
+        $self->initial_save($wf);
+    }
     elsif ($self->action eq 'expand') {
         $self->expand($wf);
     }
@@ -208,7 +211,7 @@ sub send {
         $mail->header( 'Disposition-Notification-To' => $ctx->param( 'from' ) );
     }
 
-    for my $att ( ($ctx->param( 'attachments' ) // [])->@* ) {
+    for my $att ( ($ctx->param( '_attachments' ) // [])->@* ) {
         $mail->attach($wf->attachment_content($att->{id}, disable_cache => 1),
                       content_type => $att->{mime_type},
                       disposition  => 'attachment',
@@ -250,6 +253,31 @@ All fields in the e-mail are optional for this step.
 
 sub save {
     my ($self, $wf) = @_;
+    # Saving is built into the persister and happens automatically
+    # after each successful action; no additional code required
+}
+
+
+=head2 initial_save($wf)
+
+Stores the e-mail data from the workflow context, including C<attachments>.
+
+This step should be used to store e-mail data passed into the workflow on
+workflow creation.
+
+=cut
+
+sub initial_save {
+    my ($self, $wf) = @_;
+
+    my $persister   = FACTORY()->get_persister( $wf->type );
+    my $atts        = $wf->context->delete_param( '_attachments' );
+
+    for my $att ( $atts->@* ) {
+        $persister->attach( $wf, $att );
+    }
+    $persister->fetch_extra_workflow_data( $wf );
+
     # Saving is built into the persister and happens automatically
     # after each successful action; no additional code required
 }
