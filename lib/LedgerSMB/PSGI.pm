@@ -24,6 +24,7 @@ use warnings;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
+use LedgerSMB::Company_Config;
 use LedgerSMB::oldHandler;
 use LedgerSMB::Magic qw( SCRIPT_NEWSCRIPTS );
 use LedgerSMB::PSGI::Util;
@@ -32,6 +33,7 @@ use LedgerSMB::Routes::ERP::API::Accounts;
 use LedgerSMB::Routes::ERP::API::Contacts;
 use LedgerSMB::Routes::ERP::API::Goods;
 use LedgerSMB::Routes::ERP::API::GeneralLedger;
+use LedgerSMB::Routes::ERP::API::Invoices;
 use LedgerSMB::Routes::ERP::API::MenuNodes;
 use LedgerSMB::Routes::ERP::API::Languages;
 use LedgerSMB::Routes::ERP::API::Products;
@@ -329,12 +331,16 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::MainAppConnect',
                 provide_connection => 'open',
                 require_version => $LedgerSMB::VERSION;
+
             my $router = router 'erp/api';
             $router->hooks('before' => \&_hook_psgi_logger);
             $router->hooks(
                 'before' => sub {
-                    my ($env, $settings) = @_;
+                    my ($env) = @_;
+                    $env->{'lsmb.settings'} =
+                        LedgerSMB::Company_Config::initialize($env->{'lsmb.db'});
                     $env->{wire} = $wire;
+                    return;
                 });
             sub { return $router->dispatch(@_); };
         };

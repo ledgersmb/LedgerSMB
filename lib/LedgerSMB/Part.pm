@@ -59,6 +59,25 @@ sub get_by_partnumber {
         )[0];
 }
 
+=head2 get_by_id
+
+TODO:  Move to blessed moose object
+
+currently returns a hashref from parts table where the partnumber is an exact
+match and the part is not obsolete.
+
+=cut
+
+sub get_by_id {
+    my ($self, $id) = @_;
+    return (
+        $self->call_dbmethod(
+            funcname => 'parts__get_by_id',
+            args     => { id => $id }
+        )
+        )[0];
+}
+
 =head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2015 The LedgerSMB Core Team

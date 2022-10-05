@@ -71,11 +71,11 @@ Code cleanup
 Dependency updates
 * Perl 5.32 (updated from 5.24)
 * Dojo and Dijit 1.17.2 (from 1.16)
+* PostgreSQL 13 (updated from 10)
 * PGObject 2.3.2 (updated from 2.2.0)
 * PGObject::Simple 3.1.0 (updated from 3.0.2)
 * PGObject::Simple::Role 2.1.1 (updated from 2.0.2)
 * PGObject::Util::DBAdmin 1.6.1 (updated from 1.4.0)
-* PostgreSQL 13 (updated from 10)
 * Workflow 1.59 (upadted from 1.56)
 * YAML::PP (new)
 * YAML (dropped)

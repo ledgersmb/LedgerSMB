@@ -1184,7 +1184,7 @@ sub db_init {
     $self->{dbh} = $dbh;
     _set_datestyle($dbh);
 
-    LedgerSMB::Company_Config::initialize($self);
+    LedgerSMB::Company_Config::initialize($self->{dbh});
 }
 
 sub _set_datestyle {
