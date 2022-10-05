@@ -1018,6 +1018,7 @@ paths:
     get:
       tags:
         - Invoices
+        - Experimental
       summary: Lists invoices
       operationId: getInvoices
       responses:
@@ -1046,6 +1047,7 @@ paths:
     post:
       tags:
         - Invoices
+        - Experimental
       summary: Add an invoice
       operationId: postInvoices
       requestBody:
@@ -1087,6 +1089,7 @@ paths:
     get:
       tags:
         - Invoices
+        - Experimental
       summary: Get a single invoice
       operationId: getInvoicesById
       responses:
@@ -1110,6 +1113,7 @@ paths:
     put:
       tags:
         - Invoices
+        - Experimental
       summary: Update a single invoice
       operationId: putInvoiceById
       parameters:
