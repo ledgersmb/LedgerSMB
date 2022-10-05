@@ -597,6 +597,8 @@ sub hook {
 my $json = JSON::MaybeXS->new( pretty => 1,
                                utf8 => 1,
                                indent => 1,
+                               space_before => 0,
+                               space_after => 1,
                                convert_blessed => 1,
                                allow_bignum => 0);
 

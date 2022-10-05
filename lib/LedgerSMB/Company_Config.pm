@@ -14,7 +14,7 @@ LedgerSMB
 
 =over
 
-=item initialize()
+=item initialize($dbh)
 
 Initializes the $settings hashref.
 
@@ -48,12 +48,12 @@ our $VERSION = 1.0;
 our $settings = {};
 
 sub initialize{
-    my ($request) = @_;
+    my ($dbh) = @_;
 
-    my $sth = $request->{dbh}->prepare(
+    my $sth = $dbh->prepare(
         q{SELECT n.setting_key, s.value
         FROM unnest(?::text[]) n(setting_key), setting_get(setting_key) s})
-        or die $request->{dbh}->errstr;
+        or die $dbh->errstr;
     $sth->execute(\@company_settings)
         or die $sth->errstr;
 
