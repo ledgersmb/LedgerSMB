@@ -741,7 +741,6 @@ sub _post_invoices {
         die $sth->errstr
             if $sth->err;
         if (keys $inv->{taxes}->%* and keys %part_qty) {
-            my %part_tax;
             $sth = $env->{'lsmb.db'}->prepare(
                 q|
             SELECT *
