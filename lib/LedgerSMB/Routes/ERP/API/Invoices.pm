@@ -349,7 +349,7 @@ sub _post_invoices {
     my ($result, $errors, $warnings) =
         $validator->validate_request(
             method => 'POST',
-            openapi_path => '/erp/api/invoices',
+            openapi_path => '/invoices',
             parameters => {
                 body => [1, 'application/json', $body]
             });
