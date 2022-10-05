@@ -1014,7 +1014,7 @@ info:
   title: ...
   version: 0.0.1
 paths:
-  /erp/api/invoices:
+  /invoices:
     get:
       tags:
         - Invoices
@@ -1079,7 +1079,7 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  /erp/api/invoices/{id}:
+  /invoices/{id}:
     parameters:
       - name: id
         in: path
