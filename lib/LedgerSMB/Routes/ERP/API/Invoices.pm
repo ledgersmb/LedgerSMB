@@ -1016,6 +1016,10 @@ info:
 paths:
   /erp/api/invoices:
     get:
+      tags:
+        - Invoices
+      summary: Lists invoices
+      operationId: getInvoices
       responses:
         200:
           description: ...
@@ -1025,6 +1029,14 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Invoice'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
         default:
           description: ...
           content:
@@ -1032,6 +1044,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/error'
     post:
+      tags:
+        - Invoices
+      summary: Add an invoice
+      operationId: postInvoices
       requestBody:
         description: ...
         required: true
@@ -1040,18 +1056,27 @@ paths:
             schema:
               $ref: '#/components/schemas/newInvoice'
       responses:
-        201:
+        '201':
           description: Created
           headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
             Location:
-              description: ...
-              required: true
               schema:
                 type: string
+                format: uri-reference
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Invoice'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
   /erp/api/invoices/{id}:
     parameters:
       - name: id
@@ -1060,14 +1085,35 @@ paths:
         schema:
           type: string
     get:
+      tags:
+        - Invoices
+      summary: Get a single invoice
+      operationId: getInvoicesById
       responses:
         200:
           description: ...
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Invoice'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
     put:
+      tags:
+        - Invoices
+      summary: Update a single invoice
+      operationId: putInvoiceById
+      parameters:
+        - $ref: '#/components/parameters/if-match'
       requestBody:
         content:
           application/json:
@@ -1076,11 +1122,44 @@ paths:
       responses:
         200:
           description: ...
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Invoice'
+        '304':
+          description: ...
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '412':
+          $ref: '#/components/responses/412'
+        '413':
+          $ref: '#/components/responses/413'
+        '428':
+          $ref: '#/components/responses/428'
 components:
+  headers:
+    ETag:
+      description: ...
+      required: true
+      schema:
+        type: string
+  parameters:
+    if-match:
+      name: If-Match
+      in: header
+      description: ...
+      required: true
+      schema:
+        type: string
   schemas:
     error:
       type: object
@@ -1311,3 +1390,18 @@ components:
                     properties:
                       description:
                         type: string
+  responses:
+    400:
+      description: Bad request
+    401:
+      description: Unauthorized
+    403:
+      description: Forbidden
+    404:
+      description: Not Found
+    412:
+      description: Precondition failed (If-Match header)
+    413:
+      description: Payload too large
+    428:
+      description: Precondition required
