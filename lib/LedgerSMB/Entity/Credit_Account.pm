@@ -13,9 +13,9 @@ To get by ID:
 
 To get by customer/vendor number:
 
- my $eca = LedgerSMB::Entity::Credit_Account->get_by_meta_number(
-          $customernumber, $entity_class
- );
+ my $eca = LedgerSMB::Entity::Credit_Account
+     ->new(dbh => $dbh, entity_class => $entity_class)
+     ->get_by_meta_number($customernumber);
 
 To save
 
@@ -295,7 +295,7 @@ sub get_by_id {
     return __PACKAGE__->new(%$ref);
 }
 
-=item get_by_meta_number($meta_number string, $entity_class int)
+=item get_by_meta_number($meta_number string)
 
 Retrieves and returns the entity credit account, of entity class $entity_class,
 identified by $meta_number
@@ -303,12 +303,15 @@ identified by $meta_number
 =cut
 
 sub get_by_meta_number {
-    my ($self, $meta_number, $entity_class) = @_;
-    my ($ref) = __PACKAGE__->call_procedure(funcname => 'eca__get_by_meta_number',
+    my ($self, $meta_number) = @_;
+    my $entity_class = $self->entity_class;
+    my ($ref) = $self->call_procedure(funcname => 'eca__get_by_meta_number',
                                           args => [$meta_number,
                                                    $entity_class]);
-    $ref->{tax_ids} = __PACKAGE__->_get_tax_ids($ref->{id});
-    return __PACKAGE__->new(%$ref, entity_class => $entity_class);
+    $ref->{tax_ids} = $self->_get_tax_ids($ref->{id});
+    return __PACKAGE__->new(dbh => $self->{_dbh},
+                            entity_class => $entity_class,
+                            %$ref);
 }
 
 # Private methid _get_tax_ids
@@ -317,7 +320,7 @@ sub get_by_meta_number {
 sub _get_tax_ids {
     my ($self, $id) = @_;
     my @tax_ids;
-    my @results = __PACKAGE__->call_procedure(funcname => 'eca__get_taxes',
+    my @results = $self->call_procedure(funcname => 'eca__get_taxes',
                                             args => [$id]);
     for my $ref (@results){
         push @tax_ids, $ref->{chart_id};

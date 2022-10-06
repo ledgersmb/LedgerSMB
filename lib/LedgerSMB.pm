@@ -328,7 +328,7 @@ sub initialize_with_db {
     }
 
     $self->{_company_config} =
-        LedgerSMB::Company_Config::initialize($self);
+        LedgerSMB::Company_Config::initialize($self->{dbh});
 
     $self->get_user_info;
 
