@@ -4331,7 +4331,7 @@ CREATE TABLE file_transaction (
        check (file_class = 1),
        unique(id),
        primary key (ref_key, file_name, file_class),
-       foreign key (ref_key) REFERENCES transactions(id)
+       foreign key (ref_key) REFERENCES transactions(id) on delete cascade
 ) inherits (file_base);
 
 COMMENT ON TABLE file_transaction IS
