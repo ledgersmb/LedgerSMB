@@ -86,31 +86,6 @@ describe("Retrieving all invoices on an empty database", () => {
     });
 });
 
-/*
-      context: [
-        {
-          message: 'type mismatch',
-          instance_path: '/taxes/memo',
-          schema_path: '/properties/taxes/additionalProperties/type'
-        },
-        {
-          message: 'type mismatch',
-          instance_path: '/taxes/amount',
-          schema_path: '/properties/taxes/additionalProperties/type'
-        },
-        {
-          schema_path: '/properties/taxes/additionalProperties/type',
-          instance_path: '/taxes/base-amount',
-          message: 'type mismatch'
-        },
-        {
-          instance_path: '/taxes/source',
-          schema_path: '/properties/taxes/additionalProperties/type',
-          message: 'type mismatch'
-        },
-      ],
-      message: 'request body error'
-*/
 describe("Adding the new Invoice", () => {
     it("POST /invoices should allow adding a new invoice", async () => {
         let res;
@@ -185,10 +160,8 @@ describe("Adding the new Invoice", () => {
             console.log(e.response.data);
             console.dir(e.response.data.errors,{ depth: null });
         }
-        expect(res.status).toEqual(StatusCodes.CREATED);
-
-        // Assert that the HTTP response satisfies the OpenAPI spec
-        expect(res.data).toSatisfySchemaInApiSpec("Invoice");
+        expect(await res.status).toEqual(StatusCodes.CREATED);
+        expect(res.headers.location).toMatch('./1');
     });
 });
 
@@ -218,7 +191,7 @@ describe("Retrieving all invoices", () => {
 });
 
 describe("Retrieve first invoice", () => {
-    it("GET /invoice/en should work and satisfy the OpenAPI spec", async () => {
+    it("GET /invoices/1 should work and satisfy the OpenAPI spec", async () => {
         let res = await axios.get(server + "/" + api + "/invoices/1", {
             headers: headers
         });
