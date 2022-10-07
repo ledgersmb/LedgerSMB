@@ -74,8 +74,8 @@ afterEach(async () => {
 });
 
 // Invoice tests
-describe("Retrieving all invoices on an empty database", () => {
-    it("GET /invoices fail on an empty database", async () => {
+describe("Retrieving all invoices", () => {
+    it("GET /invoices fail", async () => {
         await expect(
             axios.get(server + "/" + api + "/invoices", {
                 headers: headers
@@ -174,19 +174,6 @@ describe("Retrieving all invoices with old syntax should fail", () => {
         ).rejects.toThrow(
             "Request failed with status code " + StatusCodes.BAD_REQUEST
         );
-    });
-});
-
-describe("Retrieving all invoices", () => {
-    it("GET /invoices should satisfy OpenAPI spec", async () => {
-        // Get an HTTP response from your server
-        let res = await axios.get(server + "/" + api + "/invoices", {
-            headers: headers
-        });
-        expect(res.status).toEqual(StatusCodes.OK);
-
-        // Assert that the HTTP response satisfies the OpenAPI spec
-        expect(res).toSatisfyApiSpec();
     });
 });
 
