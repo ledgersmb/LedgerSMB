@@ -133,7 +133,7 @@ sub _get_invoices_by_id {
        po  po-
         );
     for my $key (keys %map) {
-        $inv{$map{$key}.'number'} = $ref->{$key.'number'};
+        $inv{$map{$key}.'number'} = $ref->{$key.'number'} // '';
     }
     %map = qw(
         type          type
@@ -160,13 +160,35 @@ sub _get_invoices_by_id {
 
     $inv{lines} = [];
     my $item = 1;
+    # received did not satisfy it because:
+    # lines/0/price must be number,
+    # lines/0/price_fixated must be boolean,
+    # lines/0/qty must be number,
+    # lines/0/delivery_date must be string
+=x
+{
+    amount_bc      -624.58,
+    amount_tc      -624.58,
+    deliverydate   undef,
+    discount       0.12,
+    entry_id       2,
+    memo           undef,
+    notes          undef,
+    qty            1,
+    sellprice      56.78,
+    source         undef,
+} at /srv/ledgersmb/lib/LedgerSMB/Routes/ERP/API/Invoices.pm line 177, <$io> line 1.
+=cut
+    use DDP;
+    warn np $ref;
     while (my $line = $sth->fetchrow_hashref( 'NAME_lc' )) {
+      warn np $line;
         $line->{item} = $item;
         delete $line->@{qw(allocated assemblyitem trans_id)};
         $line->{price}         = delete $line->{sellprice};
-        $line->{delivery_date} = delete $line->{deliverydate};
+        $line->{delivery_date} = (delete $line->{deliverydate}) // '';
         $line->{total} = $line->{amount_tc};
-        $line->{discount_type} = '%' if defined $line->{discount};
+        $line->{discount_type} = defined $line->{discount} ? '%' : '';
         $line->{discount} *= 100 if defined $line->{discount};
 
         my $part = LedgerSMB::Part->new(
@@ -1028,7 +1050,7 @@ paths:
       summary: Lists invoices
       operationId: getInvoices
       responses:
-        '200':
+        200:
           description: ...
           content:
             application/json:
@@ -1036,13 +1058,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Invoice'
-        '400':
+        400:
           $ref: '#/components/responses/400'
-        '401':
+        401:
           $ref: '#/components/responses/401'
-        '403':
+        403:
           $ref: '#/components/responses/403'
-        '404':
+        404:
           $ref: '#/components/responses/404'
         default:
           description: ...
@@ -1064,7 +1086,7 @@ paths:
             schema:
               $ref: '#/components/schemas/newInvoice'
       responses:
-        '201':
+        201:
           description: Created
           headers:
             ETag:
@@ -1077,13 +1099,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Invoice'
-        '400':
+        400:
           $ref: '#/components/responses/400'
-        '401':
+        401:
           $ref: '#/components/responses/401'
-        '403':
+        403:
           $ref: '#/components/responses/403'
-        '404':
+        404:
           $ref: '#/components/responses/404'
   /invoices/{id}:
     parameters:
@@ -1100,7 +1122,7 @@ paths:
       summary: Get a single invoice
       operationId: getInvoicesById
       responses:
-        '200':
+        200:
           description: ...
           headers:
             ETag:
@@ -1109,13 +1131,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Invoice'
-        '400':
+        400:
           $ref: '#/components/responses/400'
-        '401':
+        401:
           $ref: '#/components/responses/401'
-        '403':
+        403:
           $ref: '#/components/responses/403'
-        '404':
+        404:
           $ref: '#/components/responses/404'
     put:
       tags:
@@ -1131,7 +1153,7 @@ paths:
             schema:
               $ref: '#/components/schemas/newInvoice'
       responses:
-        '200':
+        200:
           description: ...
           headers:
             ETag:
@@ -1140,21 +1162,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Invoice'
-        '304':
+        304:
           description: ...
-        '400':
+        400:
           $ref: '#/components/responses/400'
-        '401':
+        401:
           $ref: '#/components/responses/401'
-        '403':
+        403:
           $ref: '#/components/responses/403'
-        '404':
+        404:
           $ref: '#/components/responses/404'
-        '412':
+        412:
           $ref: '#/components/responses/412'
-        '413':
+        413:
           $ref: '#/components/responses/413'
-        '428':
+        428:
           $ref: '#/components/responses/428'
 components:
   headers:
@@ -1402,17 +1424,17 @@ components:
                       description:
                         type: string
   responses:
-    '400':
+    400:
       description: Bad request
-    '401':
+    401:
       description: Unauthorized
-    '403':
+    403:
       description: Forbidden
-    '404':
+    404:
       description: Not Found
-    '412':
+    412:
       description: Precondition failed (If-Match header)
-    '413':
+    413:
       description: Payload too large
-    '428':
+    428:
       description: Precondition required
