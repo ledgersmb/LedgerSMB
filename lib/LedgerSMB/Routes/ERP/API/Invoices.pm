@@ -995,6 +995,7 @@ get '/invoices' => \&_not_implemented;
 post '/invoices' => \&_post_invoices;
 
 get '/invoices/{id}' => \&_get_invoices_by_id;
+del '/invoices/{id}' => \&_not_implemented;
 patch '/invoices/{id}' => \&_not_implemented;
 
 
