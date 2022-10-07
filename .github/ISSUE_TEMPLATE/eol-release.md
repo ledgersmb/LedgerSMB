@@ -12,4 +12,4 @@ about: Tracking of steps to execute when marking a release branch End-of-Life
 * [ ] Update [list of supported PostgreSQL versions](https://ledgersmb.org/faq/installation/what-versions-postgresql-does-ledgersmb-support)
 * [ ] Mark ledgersmb.org items linked to the specific version number as obsolete  
       unless they're relevant for more recent versions too
-* [ ] Update the release on the ledgersmb.org front page
+* [ ] Update the "Current Versions" section on the ledgersmb.org front page
