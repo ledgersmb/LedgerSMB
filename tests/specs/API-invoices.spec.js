@@ -37,7 +37,6 @@ beforeAll(() => {
 });
 
 afterAll(() => {
-    console.log(company);
     drop_database(company);
 });
 
@@ -195,7 +194,7 @@ describe("Retrieve first invoice", () => {
 describe("Retrieve non-existant Invoice", () => {
     it("GET /invoices/2 should not retrieve Invoice 2", async () => {
         await expect(
-            axios.get(server + "/" + api + "/invoices/n2", {
+            axios.get(server + "/" + api + "/invoices/2", {
                 headers: headers
             })
         ).rejects.toThrow(
@@ -204,8 +203,9 @@ describe("Retrieve non-existant Invoice", () => {
     });
 });
 
+/*
 describe("Modifying the Invoice 1", () => {
-    it("PUT /invoices/nv should allow updating Invoice 1", async () => {
+    it("PUT /invoices/1 should allow updating Invoice 1", async () => {
         let res = await axios.get(server + "/" + api + "/invoices/1", {
             headers: headers
         });
@@ -283,11 +283,11 @@ describe("Modifying the Invoice 1", () => {
         expect(res).toSatisfyApiSpec();
 
         // Assert that the HTTP response satisfies the OpenAPI spec
-        expect(res.data).toSatisfySchemaInApiSpec("Language");
+        expect(res.data).toSatisfySchemaInApiSpec("Invoice");
     });
 });
 
-/*
+
  * Not implemented yet
 describe("Updating the Invoice 1", () => {
     it("PATCH /invoices/1 should allow updating Invoice 1", async () => {
@@ -314,10 +314,9 @@ describe("Updating the Invoice 1", () => {
         expect(res.data).toSatisfySchemaInApiSpec("Language");
     });
 });
-*/
 
 describe("Not removing Invoice 1", () => {
-    it("DELETE /invoices/1 should allow deleting Navajo language", async () => {
+    it("DELETE /invoices/1 should allow deleting Invoice 1", async () => {
         let res = await axios.get(server + "/" + api + "/invoices/1", {
             headers: headers
         });
@@ -333,3 +332,4 @@ describe("Not removing Invoice 1", () => {
         );
     });
 });
+*/
