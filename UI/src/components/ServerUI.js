@@ -124,11 +124,11 @@ export default {
             d.show();
         },
         _interceptClick(dnode) {
-            if (dnode.target || !dnode.href) {
+            let href = dnode.getAttribute('href');
+            if (dnode.target || !href) {
                 return;
             }
 
-            let href = dnode.href;
             dnode.addEventListener("click", function (e) {
                 if (!e.ctrlKey && !e.shiftKey && e.button === 0) {
                     e.preventDefault();
@@ -136,9 +136,8 @@ export default {
                 }
             });
 
-            let url = new URL(href);
             let anode = dnode;
-            anode.href = '#' + url.pathname + url.search;
+            anode.href = '#' + href;
         },
         _cleanWidgets() {
             try {
