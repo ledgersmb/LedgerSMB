@@ -76,29 +76,35 @@ sub _not_implemented {
 
 sub _get_invoices_by_id {
     my ($env, $params) = @_;
+
+    return [ HTTP_BAD_REQUEST,
+          [ ],
+          [ ] ]
+      if !$params->{id};
+
     my $r = Plack::Request::WithEncoding->new($env);
     my %inv = ( id => $params->{id} );
 
 
     my $query = q|
-SELECT 'customer' as type,
-       invnumber, ordnumber, quonumber, ponumber, transdate, duedate, crdate,
-       approved, on_hold, reverse, is_return, force_closed,
-       entity_credit_account, person_id,
-       language_code, description, notes, intnotes, shippingpoint, shipvia,
-       amount_bc, netamount_bc, curr, amount_tc, netamount_tc
-  FROM ar
- WHERE invoice AND id = ?
+        SELECT 'customer' as type,
+              invnumber, ordnumber, quonumber, ponumber, transdate, duedate, crdate,
+              approved, on_hold, reverse, is_return, force_closed,
+              entity_credit_account, person_id,
+              language_code, description, notes, intnotes, shippingpoint, shipvia,
+              amount_bc, netamount_bc, curr, amount_tc, netamount_tc
+          FROM ar
+        WHERE invoice AND id = ?
 
-UNION ALL
-SELECT 'vendor' as type,
-       invnumber, ordnumber, quonumber, ponumber, transdate, duedate, crdate,
-       approved, on_hold, reverse, is_return, force_closed,
-       entity_credit_account, person_id,
-       language_code, description, notes, intnotes, shippingpoint, shipvia,
-       amount_bc, netamount_bc, curr, amount_tc, netamount_tc
-  FROM ap
- WHERE invoice and id = ?
+        UNION ALL
+        SELECT 'vendor' as type,
+              invnumber, ordnumber, quonumber, ponumber, transdate, duedate, crdate,
+              approved, on_hold, reverse, is_return, force_closed,
+              entity_credit_account, person_id,
+              language_code, description, notes, intnotes, shippingpoint, shipvia,
+              amount_bc, netamount_bc, curr, amount_tc, netamount_tc
+          FROM ap
+        WHERE invoice and id = ?
         |;
     my $sth = $env->{'lsmb.db'}->prepare($query)
         or die $env->{'lsmb.db'}->errstr;
@@ -127,7 +133,7 @@ SELECT 'vendor' as type,
        po  po-
         );
     for my $key (keys %map) {
-        $inv{$map{$key}.'number'} = $ref->{$key.'number'};
+        $inv{$map{$key}.'number'} = $ref->{$key.'number'} // '';
     }
     %map = qw(
         type          type
@@ -159,9 +165,14 @@ SELECT 'vendor' as type,
         delete $line->@{qw(allocated assemblyitem trans_id)};
         $line->{price}         = delete $line->{sellprice};
         $line->{delivery_date} = delete $line->{deliverydate};
+        $line->{price_fixated} = (delete $line->{priceFixated}) ? \1 : \0;
         $line->{total} = $line->{amount_tc};
-        $line->{discount_type} = '%' if defined $line->{discount};
+        $line->{discount_type} = defined $line->{discount} ? '%' : '';
         $line->{discount} *= 100 if defined $line->{discount};
+
+        # Why?
+        $line->{qty} += 0; # Force string to number conversion
+        $line->{price} += 0; # Force string to number conversion
 
         my $part = LedgerSMB::Part->new(
             _dbh => $env->{'lsmb.db'}
@@ -173,8 +184,6 @@ SELECT 'vendor' as type,
         };
         delete $line->{parts_id};
 
-        $line->@{qw/price_fixated delivery_date discount_type/} =
-            $line->@{qw/priceFixated deliverydate discountType/};
         push $inv{lines}->@*, {
             $line->%{qw/id item price delivery_date total discount_type
                          part description unit price_fixated qty discount
@@ -284,9 +293,9 @@ SELECT 'vendor' as type,
         description => $eca->{description},
         pay_to_name => $eca->{pay_to_name},
         credit_limit => {
-            used => $credit_limit_used->[0],
-            maximum => $eca->{creditlimit},
-            remaining => ($eca->{creditlimit} - $credit_limit_used->[0]),
+            used => $credit_limit_used->[0] // 0,
+            maximum => $eca->{creditlimit} // 0,
+            remaining => (($eca->{creditlimit} // 0) - ($credit_limit_used->[0] // 0)),
         },
         entity => {
             $entity->%{qw/name control_code/}
@@ -523,7 +532,6 @@ sub _post_invoices {
 
             if ($payment->{account}->{accno} ne '') {
                 ###TODO: Payment account lookup
-                ...;
                 my $account = $c->configuration->coa_nodes
                     ->get(by => (accno => $payment->{account}->{accno}));
                 $inv_payment->{account} = $account;
@@ -564,17 +572,17 @@ sub _post_invoices {
             #
             my $sth = $env->{'lsmb.db'}->prepare(
                 q|
-   SELECT a.accno as category, a.description, t.rate, a.id
-     FROM account a JOIN tax t ON t.chart_id = a.id
-    WHERE a.accno = ?
-     AND coalesce(validto::timestamp, 'infinity')
-             >= coalesce(?::timestamp, now())
-   ORDER BY validto ASC
-   LIMIT 1
+                    SELECT a.accno as category, a.description, t.rate, a.id
+                      FROM account a JOIN tax t ON t.chart_id = a.id
+                      WHERE a.accno = ?
+                      AND coalesce(validto::timestamp, 'infinity')
+                              >= coalesce(?::timestamp, now())
+                    ORDER BY validto ASC
+                    LIMIT 1
                 |
                 )
                 or die $env->{'lsmb.db'}->errstr;
-            $sth->execute($tax->{tax}->{category}, $inv->{transdate})
+            $sth->execute($tax->{category}, $inv->{transdate})
                 or die $sth->errstr;
             $inv_tax->{tax} = $sth->fetchrow_hashref;
             die $sth->errstr
@@ -593,14 +601,14 @@ sub _post_invoices {
 
             $sth = $env->{'lsmb.db'}->prepare(
                 q|
-   SELECT 1 FROM eca_tax et
-            JOIN entity_credit_account eca ON et.eca_id = eca.id
-            JOIN account a ON a.id = et.chart_id
-            WHERE accno = ?
+                    SELECT 1 FROM eca_tax et
+                    JOIN entity_credit_account eca ON et.eca_id = eca.id
+                    JOIN account a ON a.id = et.chart_id
+                    WHERE accno = ?
                 |
-                    )
+                )
                 or die $env->{'lsmb.db'}->errstr;
-            $sth->execute($tax->{tax}->{category})
+            $sth->execute($tax->{category})
                 or die $sth->errstr;
 
             unless ($sth->rows) {
@@ -718,23 +726,23 @@ sub _post_invoices {
 
     if (not exists $inv->{taxes}) {
         my $sth = $env->{'lsmb.db'}->prepare(
-            q|
-        WITH taxes AS (
-          SELECT *,
-                 LAG(validto) OVER (PARTITION BY tax.chart_id
-                                    ORDER BY validto ASC NULLS LAST) as validfrom
-            FROM tax
-        )
-        SELECT *
-          FROM taxes
-          JOIN account ON account.id = taxes.chart_id
-          JOIN eca_tax et ON et.chart_id = account.id
-          JOIN taxmodule tm ON taxes.taxmodule_id = tm.taxmodule_id
-         WHERE et.eca_id = $1
-               AND (validfrom IS NULL OR $2 > validfrom)
-               AND (validto IS NULL OR $2 <= validto)
+          q|
+            WITH taxes AS (
+              SELECT *,
+                    LAG(validto) OVER (PARTITION BY tax.chart_id
+                                        ORDER BY validto ASC NULLS LAST) as validfrom
+                FROM tax
+            )
+            SELECT *
+              FROM taxes
+              JOIN account ON account.id = taxes.chart_id
+              JOIN eca_tax et ON et.chart_id = account.id
+              JOIN taxmodule tm ON taxes.taxmodule_id = tm.taxmodule_id
+            WHERE et.eca_id = $1
+                  AND (validfrom IS NULL OR $2 > validfrom)
+                  AND (validto IS NULL OR $2 <= validto)
             |)
-            or die $env->{'lsmb.db'}->errstr;
+          or die $env->{'lsmb.db'}->errstr;
         $sth->execute($inv->{eca}->{id}, $inv->{transdate})
             or die $sth->errstr;
         $inv->{taxes} = $sth->fetchall_hashref('accno');
@@ -743,10 +751,10 @@ sub _post_invoices {
         if (keys $inv->{taxes}->%* and keys %part_qty) {
             $sth = $env->{'lsmb.db'}->prepare(
                 q|
-            SELECT *
-              FROM partstax pt
-              JOIN account a ON pt.chart_id = a.id
-             WHERE pt.parts_id = ?
+                  SELECT *
+                    FROM partstax pt
+                    JOIN account a ON pt.chart_id = a.id
+                  WHERE pt.parts_id = ?
                 |)
                 or die $env->{'lsmb.db'}->errstr;
 
@@ -981,15 +989,16 @@ sub _post_invoices {
 
     return [
         HTTP_CREATED,
-        [ 'Location' => "./$inv_id" ],
+        [ 'Location' => "./$inv_id" ],  # We return this in a header?
         [  ] ];
 }
 
 
-get '/invoices/' => \&_not_implemented;
-post '/invoices/' => \&_post_invoices;
+get '/invoices' => \&_not_implemented;
+post '/invoices' => \&_post_invoices;
 
 get '/invoices/{id}' => \&_get_invoices_by_id;
+del '/invoices/{id}' => \&_not_implemented;
 patch '/invoices/{id}' => \&_not_implemented;
 
 
@@ -1010,10 +1019,11 @@ your software.
 __DATA__
 openapi: 3.0.0
 info:
-  title: ...
+  title: Management of Invoices
   version: 0.0.1
 paths:
   /invoices:
+    description: Management of Invoices
     get:
       tags:
         - Invoices
@@ -1029,13 +1039,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Invoice'
-        '400':
+        400:
           $ref: '#/components/responses/400'
-        '401':
+        401:
           $ref: '#/components/responses/401'
-        '403':
+        403:
           $ref: '#/components/responses/403'
-        '404':
+        404:
           $ref: '#/components/responses/404'
         default:
           description: ...
@@ -1057,7 +1067,7 @@ paths:
             schema:
               $ref: '#/components/schemas/newInvoice'
       responses:
-        '201':
+        201:
           description: Created
           headers:
             ETag:
@@ -1070,13 +1080,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Invoice'
-        '400':
+        400:
           $ref: '#/components/responses/400'
-        '401':
+        401:
           $ref: '#/components/responses/401'
-        '403':
+        403:
           $ref: '#/components/responses/403'
-        '404':
+        404:
           $ref: '#/components/responses/404'
   /invoices/{id}:
     parameters:
@@ -1085,6 +1095,7 @@ paths:
         required: true
         schema:
           type: string
+          minLength: 1
     get:
       tags:
         - Invoices
@@ -1101,13 +1112,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Invoice'
-        '400':
+        400:
           $ref: '#/components/responses/400'
-        '401':
+        401:
           $ref: '#/components/responses/401'
-        '403':
+        403:
           $ref: '#/components/responses/403'
-        '404':
+        404:
           $ref: '#/components/responses/404'
     put:
       tags:
@@ -1132,21 +1143,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Invoice'
-        '304':
+        304:
           description: ...
-        '400':
+        400:
           $ref: '#/components/responses/400'
-        '401':
+        401:
           $ref: '#/components/responses/401'
-        '403':
+        403:
           $ref: '#/components/responses/403'
-        '404':
+        404:
           $ref: '#/components/responses/404'
-        '412':
+        412:
           $ref: '#/components/responses/412'
-        '413':
+        413:
           $ref: '#/components/responses/413'
-        '428':
+        428:
           $ref: '#/components/responses/428'
 components:
   headers:
@@ -1210,10 +1221,13 @@ components:
           maxLength: 3
         description:
           type: string
+          nullable: true
         notes:
           type: string
+          nullable: true
         internal-notes:
           type: string
+          nullable: true
         invoice-number:
           type: string
         order-number:
@@ -1222,8 +1236,10 @@ components:
           type: string
         ship-via:
           type: string
+          nullable: true
         shipping-point:
           type: string
+          nullable: true
         ship-to:
           type: object
         dates:
@@ -1264,6 +1280,7 @@ components:
                 default: false
               serialnumber:
                 type: string
+                nullable: true
               discount:
                 description: |
                   A value of 10 means the customer gets a 10% discount,
@@ -1278,6 +1295,7 @@ components:
               delivery_date:
                 type: string
                 format: date
+                nullable: true
               part:
                 type: object
                 required:
