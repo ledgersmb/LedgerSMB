@@ -574,7 +574,7 @@ sub _post_invoices {
                 |
                 )
                 or die $env->{'lsmb.db'}->errstr;
-            $sth->execute($tax->{tax}->{category}, $inv->{transdate})
+            $sth->execute($tax->{category}, $inv->{transdate})
                 or die $sth->errstr;
             $inv_tax->{tax} = $sth->fetchrow_hashref;
             die $sth->errstr
@@ -600,7 +600,7 @@ sub _post_invoices {
                 |
                     )
                 or die $env->{'lsmb.db'}->errstr;
-            $sth->execute($tax->{tax}->{category})
+            $sth->execute($tax->{category})
                 or die $sth->errstr;
 
             unless ($sth->rows) {
@@ -1010,10 +1010,11 @@ your software.
 __DATA__
 openapi: 3.0.0
 info:
-  title: ...
+  title: Management of Invoices
   version: 0.0.1
 paths:
   /invoices:
+    description: Management of Invoices
     get:
       tags:
         - Invoices
@@ -1021,7 +1022,7 @@ paths:
       summary: Lists invoices
       operationId: getInvoices
       responses:
-        200:
+        '200':
           description: ...
           content:
             application/json:
@@ -1085,6 +1086,7 @@ paths:
         required: true
         schema:
           type: string
+          minLength: 1
     get:
       tags:
         - Invoices
@@ -1092,7 +1094,7 @@ paths:
       summary: Get a single invoice
       operationId: getInvoicesById
       responses:
-        200:
+        '200':
           description: ...
           headers:
             ETag:
@@ -1123,7 +1125,7 @@ paths:
             schema:
               $ref: '#/components/schemas/newInvoice'
       responses:
-        200:
+        '200':
           description: ...
           headers:
             ETag:
@@ -1394,17 +1396,17 @@ components:
                       description:
                         type: string
   responses:
-    400:
+    '400':
       description: Bad request
-    401:
+    '401':
       description: Unauthorized
-    403:
+    '403':
       description: Forbidden
-    404:
+    '404':
       description: Not Found
-    412:
+    '412':
       description: Precondition failed (If-Match header)
-    413:
+    '413':
       description: Payload too large
-    428:
+    '428':
       description: Precondition required
