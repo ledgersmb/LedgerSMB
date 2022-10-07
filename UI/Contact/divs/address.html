@@ -120,6 +120,7 @@
   } %]
   <label style="grid-row: span 3">[% text('Address') %]</label>
                 [% INCLUDE input element_data = {
+                        name = "line_one"
                         title = text('Address'),
                         value = DISPLAY.line_one,
                         type = "text",
@@ -142,6 +143,7 @@
                 } %]
                 [% PROCESS input element_data = {
                         label = text('City'),
+                        name = "city",
                         value = DISPLAY.city,
                         type = "text",
                         required = 'true',
