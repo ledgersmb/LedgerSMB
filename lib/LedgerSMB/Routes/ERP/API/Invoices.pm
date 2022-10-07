@@ -529,7 +529,6 @@ sub _post_invoices {
 
             if ($payment->{account}->{accno} ne '') {
                 ###TODO: Payment account lookup
-                ...;
                 my $account = $c->configuration->coa_nodes
                     ->get(by => (accno => $payment->{account}->{accno}));
                 $inv_payment->{account} = $account;
