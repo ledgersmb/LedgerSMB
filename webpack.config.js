@@ -487,11 +487,26 @@ if (TARGET !== "readme") {
                 },
                 "/erp/api": {
                     target: "http://proxy"
+                },
+                "/app/*.pl": {
+                    target: "http://proxy",
+                    pathRewrite: { "^/app": "" }
+                },
+                "/app/erp/api": {
+                    target: "http://proxy",
+                    pathRewrite: { "^/app": "" }
                 }
             },
-            static: {
-                directory: path.join(__dirname, "/UI")
-            },
+            static: [
+                {
+                    directory: path.join(__dirname, "/UI"),
+                    publicPath: '/'
+                },
+                {
+                    directory: path.join(__dirname, "/UI"),
+                    publicPath: '/app'
+                }
+            ],
             watchFiles: [
                 "webpack.config.js",
                 "UI/**/*",
