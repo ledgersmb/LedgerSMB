@@ -87,24 +87,24 @@ sub _get_invoices_by_id {
 
 
     my $query = q|
-SELECT 'customer' as type,
-       invnumber, ordnumber, quonumber, ponumber, transdate, duedate, crdate,
-       approved, on_hold, reverse, is_return, force_closed,
-       entity_credit_account, person_id,
-       language_code, description, notes, intnotes, shippingpoint, shipvia,
-       amount_bc, netamount_bc, curr, amount_tc, netamount_tc
-  FROM ar
- WHERE invoice AND id = ?
+        SELECT 'customer' as type,
+              invnumber, ordnumber, quonumber, ponumber, transdate, duedate, crdate,
+              approved, on_hold, reverse, is_return, force_closed,
+              entity_credit_account, person_id,
+              language_code, description, notes, intnotes, shippingpoint, shipvia,
+              amount_bc, netamount_bc, curr, amount_tc, netamount_tc
+          FROM ar
+        WHERE invoice AND id = ?
 
-UNION ALL
-SELECT 'vendor' as type,
-       invnumber, ordnumber, quonumber, ponumber, transdate, duedate, crdate,
-       approved, on_hold, reverse, is_return, force_closed,
-       entity_credit_account, person_id,
-       language_code, description, notes, intnotes, shippingpoint, shipvia,
-       amount_bc, netamount_bc, curr, amount_tc, netamount_tc
-  FROM ap
- WHERE invoice and id = ?
+        UNION ALL
+        SELECT 'vendor' as type,
+              invnumber, ordnumber, quonumber, ponumber, transdate, duedate, crdate,
+              approved, on_hold, reverse, is_return, force_closed,
+              entity_credit_account, person_id,
+              language_code, description, notes, intnotes, shippingpoint, shipvia,
+              amount_bc, netamount_bc, curr, amount_tc, netamount_tc
+          FROM ap
+        WHERE invoice and id = ?
         |;
     my $sth = $env->{'lsmb.db'}->prepare($query)
         or die $env->{'lsmb.db'}->errstr;
@@ -569,13 +569,13 @@ sub _post_invoices {
             #
             my $sth = $env->{'lsmb.db'}->prepare(
                 q|
-   SELECT a.accno as category, a.description, t.rate, a.id
-     FROM account a JOIN tax t ON t.chart_id = a.id
-    WHERE a.accno = ?
-     AND coalesce(validto::timestamp, 'infinity')
-             >= coalesce(?::timestamp, now())
-   ORDER BY validto ASC
-   LIMIT 1
+                    SELECT a.accno as category, a.description, t.rate, a.id
+                      FROM account a JOIN tax t ON t.chart_id = a.id
+                      WHERE a.accno = ?
+                      AND coalesce(validto::timestamp, 'infinity')
+                              >= coalesce(?::timestamp, now())
+                    ORDER BY validto ASC
+                    LIMIT 1
                 |
                 )
                 or die $env->{'lsmb.db'}->errstr;
@@ -598,12 +598,12 @@ sub _post_invoices {
 
             $sth = $env->{'lsmb.db'}->prepare(
                 q|
-   SELECT 1 FROM eca_tax et
-            JOIN entity_credit_account eca ON et.eca_id = eca.id
-            JOIN account a ON a.id = et.chart_id
-            WHERE accno = ?
+                    SELECT 1 FROM eca_tax et
+                    JOIN entity_credit_account eca ON et.eca_id = eca.id
+                    JOIN account a ON a.id = et.chart_id
+                    WHERE accno = ?
                 |
-                    )
+                )
                 or die $env->{'lsmb.db'}->errstr;
             $sth->execute($tax->{category})
                 or die $sth->errstr;
@@ -723,23 +723,23 @@ sub _post_invoices {
 
     if (not exists $inv->{taxes}) {
         my $sth = $env->{'lsmb.db'}->prepare(
-            q|
-        WITH taxes AS (
-          SELECT *,
-                 LAG(validto) OVER (PARTITION BY tax.chart_id
-                                    ORDER BY validto ASC NULLS LAST) as validfrom
-            FROM tax
-        )
-        SELECT *
-          FROM taxes
-          JOIN account ON account.id = taxes.chart_id
-          JOIN eca_tax et ON et.chart_id = account.id
-          JOIN taxmodule tm ON taxes.taxmodule_id = tm.taxmodule_id
-         WHERE et.eca_id = $1
-               AND (validfrom IS NULL OR $2 > validfrom)
-               AND (validto IS NULL OR $2 <= validto)
+          q|
+            WITH taxes AS (
+              SELECT *,
+                    LAG(validto) OVER (PARTITION BY tax.chart_id
+                                        ORDER BY validto ASC NULLS LAST) as validfrom
+                FROM tax
+            )
+            SELECT *
+              FROM taxes
+              JOIN account ON account.id = taxes.chart_id
+              JOIN eca_tax et ON et.chart_id = account.id
+              JOIN taxmodule tm ON taxes.taxmodule_id = tm.taxmodule_id
+            WHERE et.eca_id = $1
+                  AND (validfrom IS NULL OR $2 > validfrom)
+                  AND (validto IS NULL OR $2 <= validto)
             |)
-            or die $env->{'lsmb.db'}->errstr;
+          or die $env->{'lsmb.db'}->errstr;
         $sth->execute($inv->{eca}->{id}, $inv->{transdate})
             or die $sth->errstr;
         $inv->{taxes} = $sth->fetchall_hashref('accno');
@@ -748,10 +748,10 @@ sub _post_invoices {
         if (keys $inv->{taxes}->%* and keys %part_qty) {
             $sth = $env->{'lsmb.db'}->prepare(
                 q|
-            SELECT *
-              FROM partstax pt
-              JOIN account a ON pt.chart_id = a.id
-             WHERE pt.parts_id = ?
+                  SELECT *
+                    FROM partstax pt
+                    JOIN account a ON pt.chart_id = a.id
+                  WHERE pt.parts_id = ?
                 |)
                 or die $env->{'lsmb.db'}->errstr;
 
@@ -986,7 +986,7 @@ sub _post_invoices {
 
     return [
         HTTP_CREATED,
-        [ 'Location' => "./$inv_id" ],
+        [ 'Location' => "./$inv_id" ],  # We return this in a header?
         [  ] ];
 }
 
