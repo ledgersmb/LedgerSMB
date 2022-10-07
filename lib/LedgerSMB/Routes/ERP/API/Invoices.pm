@@ -160,36 +160,19 @@ sub _get_invoices_by_id {
 
     $inv{lines} = [];
     my $item = 1;
-    # received did not satisfy it because:
-    # lines/0/price must be number,
-    # lines/0/price_fixated must be boolean,
-    # lines/0/qty must be number,
-    # lines/0/delivery_date must be string
-=x
-{
-    amount_bc      -624.58,
-    amount_tc      -624.58,
-    deliverydate   undef,
-    discount       0.12,
-    entry_id       2,
-    memo           undef,
-    notes          undef,
-    qty            1,
-    sellprice      56.78,
-    source         undef,
-} at /srv/ledgersmb/lib/LedgerSMB/Routes/ERP/API/Invoices.pm line 177, <$io> line 1.
-=cut
-    use DDP;
-    warn np $ref;
     while (my $line = $sth->fetchrow_hashref( 'NAME_lc' )) {
-      warn np $line;
         $line->{item} = $item;
         delete $line->@{qw(allocated assemblyitem trans_id)};
         $line->{price}         = delete $line->{sellprice};
-        $line->{delivery_date} = (delete $line->{deliverydate}) // '';
+        $line->{delivery_date} = delete $line->{deliverydate};
+        $line->{price_fixated} = (delete $line->{priceFixated}) ? \1 : \0;
         $line->{total} = $line->{amount_tc};
         $line->{discount_type} = defined $line->{discount} ? '%' : '';
         $line->{discount} *= 100 if defined $line->{discount};
+
+        # Why?
+        $line->{qty} += 0; # Force string to number conversion
+        $line->{price} += 0; # Force string to number conversion
 
         my $part = LedgerSMB::Part->new(
             _dbh => $env->{'lsmb.db'}
@@ -201,8 +184,6 @@ sub _get_invoices_by_id {
         };
         delete $line->{parts_id};
 
-        $line->@{qw/price_fixated delivery_date discount_type/} =
-            $line->@{qw/priceFixated deliverydate discountType/};
         push $inv{lines}->@*, {
             $line->%{qw/id item price delivery_date total discount_type
                          part description unit price_fixated qty discount
@@ -312,9 +293,9 @@ sub _get_invoices_by_id {
         description => $eca->{description},
         pay_to_name => $eca->{pay_to_name},
         credit_limit => {
-            used => $credit_limit_used->[0],
-            maximum => $eca->{creditlimit},
-            remaining => ($eca->{creditlimit} - $credit_limit_used->[0]),
+            used => $credit_limit_used->[0] // 0,
+            maximum => $eca->{creditlimit} // 0,
+            remaining => (($eca->{creditlimit} // 0) - ($credit_limit_used->[0] // 0)),
         },
         entity => {
             $entity->%{qw/name control_code/}
@@ -1240,10 +1221,13 @@ components:
           maxLength: 3
         description:
           type: string
+          nullable: true
         notes:
           type: string
+          nullable: true
         internal-notes:
           type: string
+          nullable: true
         invoice-number:
           type: string
         order-number:
@@ -1252,8 +1236,10 @@ components:
           type: string
         ship-via:
           type: string
+          nullable: true
         shipping-point:
           type: string
+          nullable: true
         ship-to:
           type: object
         dates:
@@ -1294,6 +1280,7 @@ components:
                 default: false
               serialnumber:
                 type: string
+                nullable: true
               discount:
                 description: |
                   A value of 10 means the customer gets a 10% discount,
@@ -1308,6 +1295,7 @@ components:
               delivery_date:
                 type: string
                 format: date
+                nullable: true
               part:
                 type: object
                 required:
