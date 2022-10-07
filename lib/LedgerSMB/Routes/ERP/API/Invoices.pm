@@ -76,6 +76,12 @@ sub _not_implemented {
 
 sub _get_invoices_by_id {
     my ($env, $params) = @_;
+
+    return [ HTTP_BAD_REQUEST,
+          [ ],
+          [ ] ]
+      if !$params->{id};
+
     my $r = Plack::Request::WithEncoding->new($env);
     my %inv = ( id => $params->{id} );
 
@@ -986,8 +992,8 @@ sub _post_invoices {
 }
 
 
-get '/invoices/' => \&_not_implemented;
-post '/invoices/' => \&_post_invoices;
+get '/invoices' => \&_not_implemented;
+post '/invoices' => \&_post_invoices;
 
 get '/invoices/{id}' => \&_get_invoices_by_id;
 patch '/invoices/{id}' => \&_not_implemented;
