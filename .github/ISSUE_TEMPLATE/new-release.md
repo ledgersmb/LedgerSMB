@@ -81,7 +81,7 @@ When working toward a non-patch release, it's practical to use an issue to track
 
 # Last step:
 
-* Update listing of available tags on Docker Hub (edit the image description directly on the docker hub repository page)
+* [ ] Update listing of available tags on Docker Hub (edit the image description directly on the docker hub repository page)
 * [ ] Execute the final release procedure as with a regular (patch) release (but use a different release announcement text)
 * [ ] Update https://ledgersmb.org/content/download to include the new release (and remove the old!)
       Update: "current stable release line is X.X."  Update download, install, update url, "Docker Images" and 
