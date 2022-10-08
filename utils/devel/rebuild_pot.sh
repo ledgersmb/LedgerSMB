@@ -29,12 +29,12 @@ EOF
 
 # EXTRACT STRINGS AND CREATE POT
 find . -name '*.pl' -o -name '*.pm' | \
-  grep -v '\(b\|xt/\)lib/\|UI/pod\|UI/openapi/\|\./\.[a-z]*\+' | grep -v LaTeX | sort | \
+  grep -v '\(b\|xt/\)lib/\|UI/pod/\|\./\.[a-z]*\+' | grep -v LaTeX | sort | \
   utils/devel/extract-perl >> locale/LedgerSMB.pot
 
 find UI/ templates/ t/data/ \
      -name '*.html' -o -name '*.tex' -o -name '*.csv' | \
-   grep -v 'UI/\(js\|pod\|UI/openapi\)/' | sort | \
+   grep -v 'UI/\(js\|pod\)/' | sort | \
    utils/devel/extract-template-translations >> locale/LedgerSMB.pot
 
 utils/devel/extract-sql < sql/Pg-database.sql >> locale/LedgerSMB.pot
