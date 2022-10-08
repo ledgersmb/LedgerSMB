@@ -138,9 +138,9 @@ pod:
 	$(DOCKER_CMD) utils/devel/pod2projdocs.pl 2>&1 pod2projdocs.log
 
 api:
-	rm -rf UI/openapi
-	mkdir UI/openapi
-	chmod 777 UI/openapi
+	rm -rf doc/openapi
+	mkdir doc/openapi
+	chmod 777 doc/openapi
 	$(DOCKER_CMD) utils/devel/rebuild_api.sh 2>&1 rebuild_api.log
 
 pot:
