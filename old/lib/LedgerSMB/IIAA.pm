@@ -210,5 +210,33 @@ sub createcontact
 }
 
 
+sub trans_taxaccounts {
+    my ($self, $form) = @_;
+    if (not $form->{id}) {
+        return ();
+    }
+
+    my $dbh   = $form->{dbh};
+    my $query = q|
+       select distinct accno
+         from account
+         join acc_trans on account.id = acc_trans.chart_id
+        where account.tax
+               and acc_trans.trans_id = ?|;
+    my $sth   = $dbh->prepare($query)
+        or die $form->dberror($query);
+
+    $sth->execute( $form->{id} )
+        or die $form->dberror($query);
+
+    my @accounts;
+    while (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
+        push @accounts, $ref->{accno};
+    }
+
+    return @accounts;
+}
+
+
 
 1;
