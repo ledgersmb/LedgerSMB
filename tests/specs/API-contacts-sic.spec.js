@@ -1,10 +1,17 @@
 /** @format */
 
+/**
+ * OpenAPI tests
+ *
+ * @group openapi
+ */
+
 // Import test packages
 import axios from "axios";
 import http from "axios/lib/adapters/http";
 import jestOpenAPI from "jest-openapi";
 import { StatusCodes } from "http-status-codes";
+import { create_database, drop_database } from "./database";
 
 // Load an OpenAPI file (YAML or JSON) into this plugin
 jestOpenAPI(process.env.PWD + "/openapi/API.yaml");
@@ -13,16 +20,22 @@ jestOpenAPI(process.env.PWD + "/openapi/API.yaml");
 const api = "erp/api/v0";
 
 // Access to the database test user
+const id = [...Array(6)].map(() => Math.random().toString(12)[2]).join("");
+const username = `Jest${id}`;
+const password = "Tester";
+const company = `lsmb_test_api_${id}`;
 const server = process.env.LSMB_BASE_URL;
-const username = process.env.UIUSER;
-const password = process.env.UIPASSWORD;
-const company = process.env.LSMB_NEW_DB_API;
 
 let headers = {};
 
 // For all tests
-beforeAll(async () => {
+beforeAll(() => {
     axios.defaults.adapter = http;
+    create_database(username, password, company);
+});
+
+afterAll(() => {
+    drop_database(company);
 });
 
 // Log in before each test
@@ -57,7 +70,7 @@ afterEach(async () => {
     }
 });
 
-// Language tests
+// Contact SIC tests
 describe("Retrieving all SIC", () => {
     it("GET /contacts/sic should satisfy OpenAPI spec", async () => {
         // Get an HTTP response from your server
