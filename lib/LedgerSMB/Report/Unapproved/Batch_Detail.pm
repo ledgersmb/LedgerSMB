@@ -247,7 +247,7 @@ sub run_report{
        default_value => [$self->default_language],
     }, {
        name => 'media',
-       options => scalar $request->{_wire}->get( 'printers' )->as_options,
+       options => scalar $self->_wire->get( 'printers' )->as_options,
     },
     ]);
 
