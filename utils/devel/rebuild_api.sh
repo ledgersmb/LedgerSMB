@@ -29,7 +29,7 @@ cp $gitDirName/openapi/.redocly.yaml .
 npx @redocly/cli lint API.yaml || exit
 
 # Build the documentation
-redoc-cli build API.yaml -o $gitDirName/UI/openapi/LedgerSMB-api.html 
+redoc-cli build API.yaml -o $gitDirName/doc/openapi/LedgerSMB-api.html 
 
 mv API.yaml $gitDirName/openapi/
 
