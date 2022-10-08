@@ -41,6 +41,7 @@
 package lsmb_legacy;
 use List::Util qw(min max uniq);
 use LedgerSMB::Form;
+use LedgerSMB::IIAA;
 use LedgerSMB::IR;
 use LedgerSMB::IS;
 use LedgerSMB::PE;
@@ -186,7 +187,7 @@ sub invoice_links {
              uniq((split / /, $form->{taxaccounts}),
                   # add transaction tax accounts, which may no longer be applicable to
                   # the vendor, but still are for the transaction
-                  (map { $_->{accno} } @{$form->{"$form->{ARAP}_links"}{"$form->{ARAP}_tax"}})));
+                  IIAA->trans_taxaccounts($form) ));
 
     $form->{oldlanguage_code} = $form->{language_code};
 

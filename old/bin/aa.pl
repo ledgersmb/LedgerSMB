@@ -46,6 +46,7 @@
 
 package lsmb_legacy;
 use LedgerSMB::Form;
+use LedgerSMB::IIAA;
 use LedgerSMB::IR;
 use LedgerSMB::IS;
 use LedgerSMB::Setting;
@@ -226,7 +227,7 @@ sub create_links {
              uniq((split / /, $form->{taxaccounts}),
                   # add transaction tax accounts, which may no longer be applicable to
                   # the customer, but still are for the transaction
-                  (map { $_->{accno} } @{$form->{"$form->{ARAP}_links"}{"$form->{ARAP}_tax"}})));
+                  IIAA->trans_taxaccounts($form) ));
 
     $form->{currency} =~ s/ //g if $form->{currency};
     $form->{duedate}     = $duedate     if $duedate;
