@@ -334,6 +334,14 @@ Locale to be used for the translation/localization of the report.
 
 has _locale => (is => 'ro');
 
+=head2 _wire
+
+Dependency injection container holding global configuration.
+
+=cut
+
+has _wire => (is => 'ro');
+
 
 =head1 METHODS
 
