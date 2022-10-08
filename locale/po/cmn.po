@@ -1,5 +1,6 @@
 #
 # Translators:
+# asoo lin <asoolin1021@gmail.com>, 2022
 # Erik Huelsmann <ehuels@gmail.com>, 2022
 #
 msgid ""
@@ -8,9 +9,9 @@ msgstr ""
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
 "POT-Creation-Date: 2022-10-08 18:50+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
-"Language-Team: Malay (Malaysia) (https://www.transifex.com/ledgersmb/"
-"teams/58325/ms_MY/)\n"
-"Language: ms_MY\n"
+"Language-Team: Chinese (Mandarin) (https://www.transifex.com/ledgersmb/"
+"teams/58325/cmn/)\n"
+"Language: cmn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -18,7 +19,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:182
 msgid "# Invoices"
-msgstr "Invois"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:115
 msgid "% Dep."
@@ -59,15 +60,15 @@ msgstr ""
 
 #: templates/demo/statement.html:63
 msgid "30"
-msgstr "30"
+msgstr ""
 
 #: templates/demo/statement.html:64
 msgid "60"
-msgstr "60"
+msgstr ""
 
 #: templates/demo/statement.html:65
 msgid "90"
-msgstr "90"
+msgstr ""
 
 #: templates/demo/invoice.tex:54 templates/demo/packing_list.tex:37
 msgid ""
@@ -85,15 +86,15 @@ msgstr ""
 #: UI/setup/complete.html:21 UI/setup/confirm_operation.html:119
 #: sql/Pg-database.sql:2611
 msgid "AP"
-msgstr "AP"
+msgstr "应付帐款"
 
 #: sql/Pg-database.sql:2560
 msgid "AP Aging"
-msgstr "Penuaan AP"
+msgstr "应付帐龄分析"
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:113
 msgid "AP Invoice"
-msgstr "Invois AP"
+msgstr ""
 
 #: UI/Reports/filters/search_goods.html:156
 msgid "AP Invoices"
@@ -102,22 +103,22 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:309
 #: UI/Reports/filters/invoice_outstanding.html:4
 msgid "AP Outstanding"
-msgstr "AP Memberangsangkan"
+msgstr "應付未付"
 
 #: t/data/04-complex_template.html:325 templates/demo/ap_transaction.html:16
 #: templates/demo/ap_transaction.html:31 templates/demo/ap_transaction.tex:34
 #: UI/Contact/divs/credit.html:346 sql/Pg-database.sql:2709
 #: sql/Pg-database.sql:2722
 msgid "AP Transaction"
-msgstr "Transakai AP"
+msgstr "应付交易"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:130
 msgid "AP Transactions"
-msgstr "Transaksi Ap"
+msgstr "应付交易"
 
 #: sql/Pg-database.sql:2674
 msgid "AP Voucher"
-msgstr "Baucer AP"
+msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:392 lib/LedgerSMB/Upgrade_Tests.pm:614
 msgid "AP account available when vendors defined"
@@ -131,15 +132,15 @@ msgstr ""
 #: UI/setup/complete.html:22 UI/setup/confirm_operation.html:120
 #: sql/Pg-database.sql:2610
 msgid "AR"
-msgstr "AR"
+msgstr "应收帐款"
 
 #: sql/Pg-database.sql:2557
 msgid "AR Aging"
-msgstr "penuaan AR"
+msgstr "应收帐龄分析"
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:109
 msgid "AR Invoice"
-msgstr "Invois AR"
+msgstr ""
 
 #: UI/Reports/filters/search_goods.html:135
 msgid "AR Invoices"
@@ -148,21 +149,21 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:311
 #: UI/Reports/filters/invoice_outstanding.html:8
 msgid "AR Outstanding"
-msgstr "AR Memberangsangkan"
+msgstr "应收未收"
 
 #: templates/demo/ar_transaction.html:16 templates/demo/ar_transaction.html:31
 #: templates/demo/ar_transaction.tex:49 UI/Contact/divs/credit.html:359
 #: sql/Pg-database.sql:2708 sql/Pg-database.sql:2721
 msgid "AR Transaction"
-msgstr "Transaksi AR"
+msgstr "應收交易"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:132
 msgid "AR Transactions"
-msgstr "Transaksi AR"
+msgstr "應收交易"
 
 #: sql/Pg-database.sql:2673
 msgid "AR Voucher"
-msgstr "Baucer AR"
+msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:371 lib/LedgerSMB/Upgrade_Tests.pm:593
 msgid "AR account available when customers defined"
@@ -175,7 +176,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:153
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:115
 msgid "AR/AP/GL Amount"
-msgstr "Amaun AR/AP/GL"
+msgstr ""
 
 #: sql/Pg-database.sql:3491
 msgid "Abandonment"
@@ -184,7 +185,7 @@ msgstr ""
 #: lib/LedgerSMB.pm:491 lib/LedgerSMB.pm:492
 #: lib/LedgerSMB/Scripts/configuration.pm:366
 msgid "Access Denied"
-msgstr "Akses Dinafikan"
+msgstr ""
 
 #: UI/src/views/LoginPage.vue:102
 msgid "Access denied: Bad username or password"
@@ -212,21 +213,21 @@ msgstr ""
 #: UI/Reports/filters/orders.html:164
 #: UI/Reports/filters/reconciliation_search.html:42
 msgid "Account"
-msgstr "Akaun"
+msgstr "帐户"
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:152
 #: UI/payments/use_overpayment2.html:122
 msgid "Account Description"
-msgstr "Deskripsi Akaun"
+msgstr "帳戶描述"
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:79
 msgid "Account Label"
-msgstr "Label Akaun"
+msgstr "帳戶標籤"
 
 #: lib/LedgerSMB/Report/GL.pm:183 UI/Reports/co/filter_bm.html:84
 #: UI/Reports/co/filter_cd.html:68 UI/Reports/filters/gl.html:300
 msgid "Account Name"
-msgstr "Nama Akaun"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:128
 #: lib/LedgerSMB/Report/Budget/Variance.pm:75 lib/LedgerSMB/Report/COA.pm:87
@@ -246,24 +247,24 @@ msgstr "Nama Akaun"
 #: UI/payments/use_overpayment2.html:121 UI/Reports/co/filter_bm.html:77
 #: UI/Reports/co/filter_cd.html:61 UI/Reports/filters/contact_search.html:84
 msgid "Account Number"
-msgstr "Nombor Akaun"
+msgstr "帳戶編號"
 
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:135
 msgid "Account Number End"
-msgstr "Pengakhiran Akaun Nombor"
+msgstr ""
 
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:133
 msgid "Account Number Start"
-msgstr "Permulaan Akaun Nombor"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:187
 msgid "Account Title"
-msgstr "Nama Akaun"
+msgstr "帳戶名稱"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:85
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:78 UI/accounts/edit.html:210
 msgid "Account Type"
-msgstr ""
+msgstr "帳戶類型"
 
 #: old/bin/gl.pl:570 old/lib/LedgerSMB/GL.pm:226
 msgid "Account [_1] not found"
@@ -272,20 +273,20 @@ msgstr ""
 #: UI/Contact/divs/credit.html:511 UI/Reports/filters/balance_sheet.html:222
 #: UI/Reports/filters/income_statement.html:244
 msgid "Account category"
-msgstr ""
+msgstr "帳戶類型"
 
 #: UI/Contact/divs/credit.html:462 UI/Reports/filters/balance_sheet.html:173
 #: UI/Reports/filters/income_statement.html:195
 msgid "Account numbers"
-msgstr ""
+msgstr "帳戶號碼"
 
 #: UI/reconciliation/report.html:34
 msgid "Account:"
-msgstr ""
+msgstr "帳戶："
 
 #: UI/lib/report_base.html:63
 msgid "Accounts"
-msgstr ""
+msgstr "帐户"
 
 #: UI/Reports/co/filter_cd.html:23
 msgid "Accounts From"
@@ -321,11 +322,11 @@ msgstr ""
 
 #: t/data/04-complex_template.html:390 t/data/04-complex_template.html:560
 msgid "Actions"
-msgstr "Tindakan"
+msgstr "動作"
 
 #: t/data/04-complex_template.html:496
 msgid "Actions:"
-msgstr ""
+msgstr "動作："
 
 #: UI/business_units/list_classes.html:10
 #: UI/Reports/filters/contact_search.html:114
@@ -333,70 +334,70 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:181
 #: UI/Reports/filters/search_goods.html:29
 msgid "Active"
-msgstr "Aktif"
+msgstr "生效的"
 
 #: UI/business_units/filter.html:31
 msgid "Active On"
-msgstr "Aktif pada"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/admin.pm:72
 msgid "Active Sessions"
-msgstr "Sesi Aktif"
+msgstr ""
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:96
 #: lib/LedgerSMB/Report/File/Internal.pm:84 old/bin/ic.pl:2091
 #: UI/Configuration/currency.html:35 UI/Configuration/ratetype.html:28
 #: UI/src/components/ConfigTableRow.vue:30
 msgid "Add"
-msgstr "Tambah"
+msgstr "新增"
 
 #: old/bin/aa.pl:383 old/bin/aa.pl:422
 msgid "Add AP Transaction"
-msgstr ""
+msgstr "新增应付记录"
 
 #: old/bin/aa.pl:382
 msgid "Add AR Transaction"
-msgstr ""
+msgstr "新增应收记录"
 
 #: sql/Pg-database.sql:2553
 msgid "Add Accounts"
-msgstr "Tambah Akaun"
+msgstr "新增帳戶"
 
 #: old/bin/ic.pl:62 sql/Pg-database.sql:2628
 msgid "Add Assembly"
-msgstr "Tambah Pemasangan "
+msgstr "新增商品"
 
 #: lib/LedgerSMB/Scripts/asset.pm:156
 msgid "Add Asset"
-msgstr "Tambah Aset"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:55
 msgid "Add Asset Class"
-msgstr "Tambah Kelas Aset"
+msgstr ""
 
 #: sql/Pg-database.sql:2650
 msgid "Add Assets"
-msgstr "Tambah aset"
+msgstr ""
 
 #: sql/Pg-database.sql:2675
 msgid "Add Budget"
-msgstr "Tambah bajet"
+msgstr "新增預算"
 
 #: sql/Pg-database.sql:2602
 msgid "Add Business"
-msgstr "Tambah Bisnes"
+msgstr "新增业务"
 
 #: sql/Pg-database.sql:2648
 msgid "Add Class"
-msgstr "Tambah kelas"
+msgstr ""
 
 #: sql/Pg-database.sql:2549
 msgid "Add Contact"
-msgstr "Tambah Kenalan"
+msgstr "新增聯絡人"
 
 #: old/bin/is.pl:100
 msgid "Add Credit Invoice"
-msgstr "Tambah Kredit Invois"
+msgstr ""
 
 #: old/bin/aa.pl:420
 msgid "Add Credit Note"
@@ -405,7 +406,7 @@ msgstr ""
 #: t/data/04-complex_template.html:16 UI/Contact/contact.html:26
 #: UI/Contact/divs/company.html:15 UI/Contact/divs/person.html:14
 msgid "Add Customer"
-msgstr "Tambah Pelanggan"
+msgstr "新增客戶"
 
 #: old/bin/is.pl:104
 msgid "Add Customer Return"
@@ -413,7 +414,7 @@ msgstr ""
 
 #: old/bin/ir.pl:108 old/bin/ir.pl:145
 msgid "Add Debit Invoice"
-msgstr "Penambahan Invois debit"
+msgstr ""
 
 #: old/bin/aa.pl:418
 msgid "Add Debit Note"
@@ -422,19 +423,19 @@ msgstr ""
 #: t/data/04-complex_template.html:20 UI/Contact/contact.html:30
 #: UI/Contact/divs/employee.html:10 sql/Pg-database.sql:2570
 msgid "Add Employee"
-msgstr "Tambah Pekerja"
+msgstr "新增職員"
 
 #: old/bin/oe.pl:1615
 msgid "Add Exchange Rate"
-msgstr "Tambah kadar pertukaran"
+msgstr "新增外汇率"
 
 #: sql/Pg-database.sql:2669
 msgid "Add GIFI"
-msgstr "Tambah GIFI"
+msgstr "新增 GIFI"
 
 #: old/bin/pe.pl:88 sql/Pg-database.sql:2695
 msgid "Add Group"
-msgstr "Tambah Kumpulan"
+msgstr "新增组"
 
 #: old/bin/ic.pl:63
 msgid "Add Labor/Overhead"
@@ -442,11 +443,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:2604
 msgid "Add Language"
-msgstr "Tambah Bahasa"
+msgstr "新增語言"
 
 #: UI/budgetting/budget_entry.html:168
 msgid "Add Note"
-msgstr ""
+msgstr "新增註解"
 
 #: sql/Pg-database.sql:2694
 msgid "Add Overhead"
@@ -454,19 +455,19 @@ msgstr ""
 
 #: old/bin/ic.pl:60 sql/Pg-database.sql:2626
 msgid "Add Part"
-msgstr "Tambah Bahagian"
+msgstr "新增原料"
 
 #: sql/Pg-database.sql:2696
 msgid "Add Pricegroup"
-msgstr "Tambah Kumpulan Harga"
+msgstr "新增价格组"
 
 #: old/bin/io.pl:961 old/bin/oe.pl:63
 msgid "Add Purchase Order"
-msgstr "Tambah Pesanan Belian"
+msgstr "新增采购单"
 
 #: old/bin/io.pl:1018 old/bin/oe.pl:75
 msgid "Add Quotation"
-msgstr "Tambah Sebut Harga"
+msgstr "新增报价单"
 
 #: UI/business_units/edit.html:12
 msgid "Add Reporting Unit"
@@ -474,7 +475,7 @@ msgstr ""
 
 #: old/bin/io.pl:999 old/bin/oe.pl:71
 msgid "Add Request for Quotation"
-msgstr "Tambah Permintaan untuk Sebut Harga"
+msgstr "新增報價單要求"
 
 #: sql/Pg-database.sql:2738
 msgid "Add Return"
@@ -482,73 +483,73 @@ msgstr ""
 
 #: sql/Pg-database.sql:2606
 msgid "Add SIC"
-msgstr "Tambah SIC"
+msgstr "新增標準工業分類代碼"
 
 #: old/bin/is.pl:109 old/bin/oe.pl:1526
 msgid "Add Sales Invoice"
-msgstr "Tambah Jualan Invois"
+msgstr "新增销售发票"
 
 #: old/bin/io.pl:980 old/bin/oe.pl:67
 msgid "Add Sales Order"
-msgstr "Tambah Pesanan Jualan"
+msgstr "新增销货单"
 
 #: old/bin/ic.pl:61 sql/Pg-database.sql:2627
 msgid "Add Service"
-msgstr "Tambah Perkhidmatan"
+msgstr "新增服務"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:80 sql/Pg-database.sql:2634
 msgid "Add Tax Form"
-msgstr "Tambah Borang Cukai"
+msgstr "新增報稅單"
 
 #: sql/Pg-database.sql:2593
 msgid "Add Timecard"
-msgstr "Tambah Kad Masa "
+msgstr "新增工時卡"
 
 #: old/bin/io.pl:1824
 msgid "Add To List"
-msgstr ""
+msgstr "新增到清單"
 
 #: sql/Pg-database.sql:2556 sql/Pg-database.sql:2559
 msgid "Add Transaction"
-msgstr "Tambah Transaksi"
+msgstr "新增交易"
 
 #: UI/business_units/list_classes.html:105
 msgid "Add Unit"
-msgstr ""
+msgstr "新增單位"
 
 #: UI/Contact/divs/employee.html:167 UI/Contact/divs/user.html:135
 #: UI/setup/confirm_operation.html:56 UI/setup/edit_user.html:101
 msgid "Add User"
-msgstr "Tambah pengguna"
+msgstr "新增使用者"
 
 #: t/data/04-complex_template.html:18 UI/Contact/contact.html:28
 #: UI/Contact/divs/company.html:11 UI/Contact/divs/person.html:10
 msgid "Add Vendor"
-msgstr "Tambah Pembekal"
+msgstr "新增供應商"
 
 #: old/bin/ir.pl:117 old/bin/oe.pl:1517
 msgid "Add Vendor Invoice"
-msgstr "Penambahan Invois Pembekal"
+msgstr "新增供應商發票"
 
 #: old/bin/ir.pl:112
 msgid "Add Vendor Return"
-msgstr ""
+msgstr "新增供應商歸還"
 
 #: sql/Pg-database.sql:2600
 msgid "Add Warehouse"
-msgstr "Tambah Gudang"
+msgstr "新增仓库"
 
 #: old/bin/io.pl:1637
 msgid "Add line1"
-msgstr "Tambah barisan1"
+msgstr ""
 
 #: old/bin/io.pl:1640
 msgid "Add line2"
-msgstr "Tambah barisan2"
+msgstr ""
 
 #: old/bin/io.pl:1644
 msgid "Add line3 "
-msgstr "Tambah barisan3"
+msgstr ""
 
 #: UI/Contact/divs/wage.html:72
 msgid "Add/Change Deductions"
@@ -556,7 +557,7 @@ msgstr ""
 
 #: UI/Contact/divs/wage.html:43
 msgid "Add/Change Wage"
-msgstr ""
+msgstr "新增/更改工資"
 
 #: UI/Configuration/rate.html:58
 msgid "Add/Update"
@@ -580,15 +581,15 @@ msgstr ""
 #: UI/Contact/divs/address.html:124 UI/Reports/filters/contact_search.html:89
 #: UI/Reports/filters/purchase_history.html:67
 msgid "Address"
-msgstr "Alamat"
+msgstr "地址"
 
 #: t/data/04-complex_template.html:385
 msgid "Address1"
-msgstr ""
+msgstr "地址1:"
 
 #: t/data/04-complex_template.html:420
 msgid "Address:"
-msgstr ""
+msgstr "地址2:"
 
 #: templates/demo/printPayment.html:33
 msgid "Address: [_1]"
@@ -597,7 +598,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/contact.pm:192 t/data/04-complex_template.html:30
 #: UI/Contact/divs/address.html:2
 msgid "Addresses"
-msgstr "Alamat"
+msgstr "地址"
 
 #: old/bin/ic.pl:1266
 msgid "Adj"
@@ -605,11 +606,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:142
 msgid "Adjusted"
-msgstr ""
+msgstr "以調整"
 
 #: lib/LedgerSMB/Scripts/asset.pm:825
 msgid "Adjusted Basis"
-msgstr "Basis Yang Diubah"
+msgstr ""
 
 #: UI/inventory/adjustment_entry.html:28
 msgid "Adjustment"
@@ -629,7 +630,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Aging.pm:188 UI/Reports/filters/aging.html:6
 msgid "Aging Report"
-msgstr "Laporan Berumur"
+msgstr ""
 
 #: UI/templates/widget.html:71
 msgid "Aging statement"
@@ -643,7 +644,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:17 UI/Reports/filters/timecards.html:42
 #: UI/Reports/filters/trial_balance.html:61
 msgid "All"
-msgstr "Semua"
+msgstr "全部"
 
 #: UI/Reports/filters/trial_balance.html:36
 msgid "All accounts"
@@ -699,11 +700,11 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:192
 #: UI/Reports/filters/invoice_search.html:317 UI/Reports/filters/orders.html:177
 msgid "Amount"
-msgstr "Jumlah"
+msgstr "总计"
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:84
 msgid "Amount Budgetted"
-msgstr "Jumlah yang Dibajetkan"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:257
 #: lib/LedgerSMB/Scripts/payment.pm:936 lib/LedgerSMB/Scripts/payment.pm:941
@@ -711,7 +712,7 @@ msgstr "Jumlah yang Dibajetkan"
 #: UI/Reports/filters/invoice_outstanding.html:240
 #: UI/Reports/filters/invoice_search.html:363
 msgid "Amount Due"
-msgstr "Jumlah terhutang"
+msgstr "应得的总计"
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:108
 #: UI/Reports/filters/reconciliation_search.html:26
@@ -721,12 +722,12 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:193
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:152
 msgid "Amount Greater Than"
-msgstr "Jumlah Melebihi"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:195
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:154
 msgid "Amount Less Than"
-msgstr "Jumlah Kurang Daripada"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:109
 #: UI/Reports/filters/reconciliation_search.html:34
@@ -769,19 +770,19 @@ msgstr ""
 
 #: old/lib/LedgerSMB/Batch.pm:142
 msgid "Any"
-msgstr "Selain"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1343
 msgid "Applied discount"
-msgstr "Diskaun dipohon"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:2003
 msgid "Applied discount by an overpayment"
-msgstr "Dikaun dipohon daripada lebihan bayaran"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:934
 msgid "Apply Disc"
-msgstr "Permohonan cakera"
+msgstr ""
 
 #: UI/Reports/filters/reconciliation_search.html:56
 msgid "Approval Status"
@@ -793,7 +794,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/asset.pm:746 lib/LedgerSMB/Scripts/asset.pm:852
 #: lib/LedgerSMB/Scripts/budgets.pm:113 UI/reconciliation/report.html:426
 msgid "Approve"
-msgstr "Diluluskan"
+msgstr "核准"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:148
 #: UI/reconciliation/report.html:431 UI/Reports/filters/batches.html:23
@@ -801,16 +802,16 @@ msgstr "Diluluskan"
 #: UI/Reports/filters/reconciliation_search.html:51
 #: UI/Reports/filters/trial_balance.html:48
 msgid "Approved"
-msgstr "Diluluskan"
+msgstr "已核准"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:95
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:160
 msgid "Approved By"
-msgstr "Diluluskan Oleh"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:486
 msgid "Approved at"
-msgstr "Disahkan Di"
+msgstr ""
 
 #: templates/demo/printPayment.html:95
 msgid "Approved signature"
@@ -822,28 +823,28 @@ msgstr ""
 
 #: old/bin/aa.pl:87 old/bin/gl.pl:79 old/bin/io.pl:81
 msgid "Apr"
-msgstr "Apr"
+msgstr "四月"
 
 #: lib/LedgerSMB.pm:573 old/bin/aa.pl:73 old/bin/gl.pl:65 old/bin/io.pl:67
 msgid "April"
-msgstr "April"
+msgstr "四月"
 
 #: lib/LedgerSMB/Scripts/asset.pm:579 lib/LedgerSMB/Scripts/asset.pm:689
 #: lib/LedgerSMB/Scripts/asset.pm:813
 msgid "Aquired Value"
-msgstr "Nilai Diperlukan"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:718
 msgid "Aquired Value Remaining"
-msgstr "Dapatan Nilai Yang Tinggal"
+msgstr ""
 
 #: old/bin/oe.pl:1399
 msgid "Are you sure you want to delete Order Number"
-msgstr "Adakah anda pasti mahu memadam nombor pesanan"
+msgstr "您是否确定要删除订单编号"
 
 #: old/bin/oe.pl:1404
 msgid "Are you sure you want to delete Quotation Number"
-msgstr "Adakah anda pasti ingin memadam Nombor Sebut Harga"
+msgstr "您是否确定要删除报价单编号"
 
 #: UI/Reports/filters/balance_sheet.html:93
 msgid "As per"
@@ -859,23 +860,23 @@ msgstr ""
 
 #: old/bin/ic.pl:2211
 msgid "Assemblies restocked!"
-msgstr "Pemasangan diisi semula"
+msgstr "巳重新进货的商品"
 
 #: UI/accounts/edit.html:214 UI/Reports/filters/gl.html:135
 #: sql/Pg-database.sql:3529
 msgid "Asset"
-msgstr "Aset"
+msgstr "资产"
 
 #: lib/LedgerSMB/Report/Listings/Asset_Class.pm:81 UI/asset/edit_asset.html:154
 #: UI/asset/edit_class.html:37 UI/asset/search_asset.html:143
 #: UI/asset/search_class.html:44
 msgid "Asset Account"
-msgstr "Akaun Aset"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:475 UI/asset/begin_approval.html:14
 #: UI/asset/begin_report.html:13
 msgid "Asset Class"
-msgstr "Kelas Aset"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Asset_Class.pm:114
 msgid "Asset Class List"
@@ -883,19 +884,19 @@ msgstr ""
 
 #: UI/asset/edit_asset.html:49 UI/asset/search_asset.html:48
 msgid "Asset Class:"
-msgstr "Mengelasan Aset"
+msgstr ""
 
 #: sql/Pg-database.sql:2646
 msgid "Asset Classes"
-msgstr "Kelas aset"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:362
 msgid "Asset Depreciation Report"
-msgstr "Laporan Aset Susut Nilai"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:364
 msgid "Asset Disposal Report"
-msgstr "Laporan Aset Pembuangan"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Asset.pm:143
 msgid "Asset Listing"
@@ -903,16 +904,16 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:381
 msgid "Asset Partial Disposal Report"
-msgstr "Laporan Aset "
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:326
 msgid "Asset Tag"
-msgstr "Tanda Aset"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:207 lib/LedgerSMB/Report/PNL.pm:199
 #: sql/Pg-database.sql:2647
 msgid "Assets"
-msgstr "Aset"
+msgstr ""
 
 #: templates/demo/balance_sheet.html:332
 msgid "Assets to Equity"
@@ -926,7 +927,7 @@ msgstr ""
 #: old/bin/ic.pl:922 old/bin/ir.pl:1098 old/bin/is.pl:1196 old/bin/oe.pl:990
 #: UI/lib/attachments.html:56
 msgid "Attach"
-msgstr "Lampiran"
+msgstr ""
 
 #: UI/file/attachment_screen.html:19
 msgid "Attach File"
@@ -956,35 +957,35 @@ msgstr ""
 #: old/bin/aa.pl:1119 old/bin/ic.pl:894 old/bin/ir.pl:1072 old/bin/is.pl:1170
 #: old/bin/oe.pl:964 UI/lib/attachments.html:32
 msgid "Attached To"
-msgstr "Dilampirkan Kepada"
+msgstr ""
 
 #: old/bin/aa.pl:1118 old/bin/ic.pl:893 old/bin/ir.pl:1071 old/bin/is.pl:1169
 #: old/bin/oe.pl:963 UI/lib/attachments.html:31
 msgid "Attached To Type"
-msgstr "Dilampirkan Untuk Menaip"
+msgstr ""
 
 #: old/bin/aa.pl:1095 old/bin/ic.pl:870 old/bin/ir.pl:1048 old/bin/is.pl:1146
 #: old/bin/oe.pl:940 UI/lib/attachments.html:4
 msgid "Attached and Linked Files"
-msgstr "Dilampirkan dan Fail Berkaitan"
+msgstr ""
 
 #: old/bin/aa.pl:1099 old/bin/aa.pl:1120 old/bin/ic.pl:874 old/bin/ic.pl:895
 #: old/bin/ir.pl:1052 old/bin/ir.pl:1073 old/bin/is.pl:1150 old/bin/is.pl:1171
 #: old/bin/oe.pl:944 old/bin/oe.pl:965 UI/lib/attachments.html:10
 #: UI/lib/attachments.html:33
 msgid "Attached at"
-msgstr "Dilampirkan pada"
+msgstr ""
 
 #: old/bin/aa.pl:1100 old/bin/aa.pl:1121 old/bin/ic.pl:875 old/bin/ic.pl:896
 #: old/bin/ir.pl:1053 old/bin/ir.pl:1074 old/bin/is.pl:1151 old/bin/is.pl:1172
 #: old/bin/oe.pl:945 old/bin/oe.pl:966 UI/lib/attachments.html:11
 #: UI/lib/attachments.html:34
 msgid "Attached by"
-msgstr "Dilampirkan oleh"
+msgstr ""
 
 #: old/bin/printer.pl:116
 msgid "Attachment"
-msgstr "Lampiran"
+msgstr "附档"
 
 #: templates/demo/bin_list.html:50 templates/demo/bin_list.html:61
 #: templates/demo/packing_list.html:51 templates/demo/pick_list.html:51
@@ -1000,11 +1001,11 @@ msgstr ""
 
 #: old/bin/aa.pl:91 old/bin/gl.pl:83 old/bin/io.pl:85
 msgid "Aug"
-msgstr "Ogos"
+msgstr "八月"
 
 #: lib/LedgerSMB.pm:577 old/bin/aa.pl:77 old/bin/gl.pl:69 old/bin/io.pl:71
 msgid "August"
-msgstr "Ogos"
+msgstr "八月"
 
 #: UI/Contact/divs/notes.html:64
 msgid "Author: [_1]"
@@ -1012,7 +1013,7 @@ msgstr ""
 
 #: old/bin/ir.pl:658 old/bin/is.pl:425 old/bin/is.pl:747
 msgid "Automatic"
-msgstr "Automatik"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:149
 #: UI/payments/use_overpayment2.html:123
@@ -1037,11 +1038,11 @@ msgstr ""
 
 #: old/bin/ic.pl:443 UI/Reports/filters/search_goods.html:331
 msgid "Average Cost"
-msgstr "Kos Purata"
+msgstr "平均成本"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:263
 msgid "Avg. Cost"
-msgstr "Kos Purata"
+msgstr ""
 
 #: sql/Pg-database.sql:792
 msgid "BCC"
@@ -1058,11 +1059,11 @@ msgstr ""
 
 #: old/bin/ic.pl:1265
 msgid "BOM"
-msgstr "Bil Bahan"
+msgstr "材料清單"
 
 #: UI/setup/confirm_operation.html:83
 msgid "Backup"
-msgstr ""
+msgstr "備份"
 
 #: UI/setup/confirm_operation.html:90
 msgid "Backup DB"
@@ -1076,13 +1077,13 @@ msgstr ""
 #: templates/demo/invoice.html:154 templates/demo/invoice.tex:200
 #: UI/Reports/filters/gl.html:312
 msgid "Balance"
-msgstr "Baki"
+msgstr "餘額"
 
 #: templates/demo/balance_sheet.html:255 templates/demo/balance_sheet.tex:43
 #: UI/Reports/balance_sheet.html:23 UI/Reports/filters/balance_sheet.html:7
 #: sql/Pg-database.sql:2597
 msgid "Balance Sheet"
-msgstr "Helaian Kira-kira"
+msgstr "资产负债表"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:299 UI/templates/widget.html:33
 msgid "Balance sheet"
@@ -1112,11 +1113,11 @@ msgstr ""
 #: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:2
 #: UI/Contact/divs/bank_act.html:6
 msgid "Bank Accounts"
-msgstr "Akaun Bank"
+msgstr ""
 
 #: old/bin/ic.pl:976
 msgid "Bar Code"
-msgstr "Kod Bar"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:57
 msgid "Base Currency"
@@ -1129,56 +1130,56 @@ msgstr ""
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:95 old/bin/ir.pl:698
 #: old/bin/is.pl:793
 msgid "Basis"
-msgstr "Asas"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:148
 msgid "Batch"
-msgstr "Kumpulan"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:110
 msgid "Batch Class"
-msgstr "Kelas Kumpulan"
+msgstr ""
 
 #: old/bin/aa.pl:579
 msgid "Batch Control Code"
-msgstr "Kod kawalan batch"
+msgstr ""
 
 #: UI/create_batch.html:28
 msgid "Batch Date"
-msgstr "Tarikh Kumpulan"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:145
 msgid "Batch Description"
-msgstr "Deskripsi Kumpulan"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:160
 msgid "Batch ID"
-msgstr "ID Kumpulan"
+msgstr ""
 
 #: old/lib/LedgerSMB/GL.pm:142
 msgid "Batch ID Missing"
-msgstr "Kumpulan ID hilang"
+msgstr ""
 
 #: old/bin/aa.pl:584
 msgid "Batch Name"
-msgstr "Nama Batch"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:142 UI/create_batch.html:10
 #: UI/create_batch.html:70
 msgid "Batch Number"
-msgstr "Nombor Kumpulan"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:176
 msgid "Batch Search"
-msgstr "Carian Kumpulan"
+msgstr ""
 
 #: sql/Pg-database.sql:2547
 msgid "Batches"
-msgstr "Kelompok"
+msgstr ""
 
 #: UI/email.html:45
 msgid "Bcc"
-msgstr ""
+msgstr "不显示抄送"
 
 #: UI/reconciliation/report.html:41
 msgid "Beginning Statement Balance:"
@@ -1186,7 +1187,7 @@ msgstr ""
 
 #: UI/Contact/divs/address.html:40 sql/Pg-database.sql:641
 msgid "Billing"
-msgstr "Bill"
+msgstr ""
 
 #: sql/Pg-database.sql:795
 msgid "Billing BCC"
@@ -1211,14 +1212,14 @@ msgstr ""
 #: templates/demo/pick_list.html:96 templates/demo/pick_list.tex:117
 #: templates/demo/work_order.html:103 UI/Reports/filters/search_goods.html:352
 msgid "Bin"
-msgstr "Tong"
+msgstr "箱"
 
 #: old/bin/am.pl:966 old/bin/io.pl:1206 old/bin/oe.pl:274 old/bin/oe.pl:286
 #: old/bin/printer.pl:85 old/bin/printer.pl:99 templates/demo/bin_list.html:16
 #: templates/demo/bin_list.html:32 templates/demo/bin_list.tex:89
 #: sql/Pg-database.sql:2715 sql/Pg-database.sql:2728
 msgid "Bin List"
-msgstr "Senarai Bin"
+msgstr "箱的明細表"
 
 #: UI/templates/widget.html:37
 msgid "Bin list"
@@ -1250,32 +1251,32 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:118
 msgid "Budget Number"
-msgstr "Nombor Bajet"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:112
 msgid "Budget Search Results"
-msgstr "Keputusan Carian Bajet"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Budget/Variance.pm:106
 msgid "Budget Variance Report"
-msgstr "Laporan Bajet Varian"
+msgstr ""
 
 #: sql/Pg-database.sql:2677
 msgid "Budgets"
-msgstr "Bajet"
+msgstr ""
 
 #: old/bin/is.pl:370 old/bin/oe.pl:382 UI/payments/payments_detail.html:171
 msgid "Business"
-msgstr "Perniagaan"
+msgstr "业务"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:43
 msgid "Business Number"
-msgstr "Nombor Bisnes"
+msgstr "业务编号"
 
 #: lib/LedgerSMB/Report/Contact/Search.pm:79 UI/Contact/divs/credit.html:234
 #: UI/Contact/divs/credit.html:235
 msgid "Business Type"
-msgstr "Jenis Perniagaan"
+msgstr ""
 
 #: t/data/04-complex_template.html:294
 msgid "Business Type:"
@@ -1301,7 +1302,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:132 old/bin/ic.pl:523 old/bin/ic.pl:692
 #: UI/accounts/edit.html:436
 msgid "COGS"
-msgstr "COGS"
+msgstr "货销成本"
 
 #: UI/Reports/filters/cogs_lines.html:4
 msgid "COGS Lots Report"
@@ -1315,7 +1316,7 @@ msgstr ""
 
 #: old/bin/ir.pl:839 old/bin/is.pl:423 old/bin/is.pl:935
 msgid "Calculate Taxes"
-msgstr "Kira Cukai"
+msgstr ""
 
 #: old/lib/LedgerSMB/GL.pm:199
 msgid "Can't post credits and debits on one line."
@@ -1323,7 +1324,7 @@ msgstr ""
 
 #: old/bin/is.pl:713
 msgid "Can't void a voided invoice!"
-msgstr "Tidak boleh membatalkan invois yang telah dibatalkan"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/report_aging.pm:157 lib/LedgerSMB/Scripts/setup.pm:185
 #: lib/LedgerSMB/Scripts/setup.pm:236 old/bin/io.pl:1828
@@ -1338,47 +1339,47 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:301
 msgid "Cancel?"
-msgstr "Batal ?"
+msgstr ""
 
 #: old/bin/gl.pl:607
 msgid "Cannot Repost Transaction"
-msgstr "Transaksi Tidak Boleh Dihantar Kembali "
+msgstr ""
 
 #: old/bin/ic.pl:154
 msgid "Cannot create Labor; COGS account does not exist!"
-msgstr "Tenaga kerja tidak boleh dihasilkan; Akaun COGS tidak wujud!"
+msgstr ""
 
 #: old/bin/ic.pl:151
 msgid "Cannot create Labor; Inventory account does not exist!"
-msgstr "Tenaga kerja tidak boleh dihasilkan; Akaun inventori tidak wujud!"
+msgstr ""
 
 #: old/bin/ic.pl:129
 msgid "Cannot create Part; COGS account does not exist!"
-msgstr "Bahagian tidak boleh dihasilkan; Akaun COGS tidak wujud!"
+msgstr ""
 
 #: old/bin/ic.pl:126
 msgid "Cannot create Part; Income account does not exist!"
-msgstr "Bahagian tidak boleh dihasilkan; Akaun pendapatan tidak wujud!"
+msgstr ""
 
 #: old/bin/ic.pl:123
 msgid "Cannot create Part; Inventory account does not exist!"
-msgstr "Bahagian tidak boleh dihasilkan; Akaun inventori tidak wujud!"
+msgstr ""
 
 #: old/bin/ic.pl:142
 msgid "Cannot create Service; Expense account does not exist!"
-msgstr "Perkhidmatan tidak boleh dihasilkan; Akaun perbelanjaan tidak wujud!"
+msgstr ""
 
 #: old/bin/ic.pl:138
 msgid "Cannot create Service; Income account does not exist!"
-msgstr "Perkhidmatan tidak boleh dihasilkan; Akaun pendapatan tidak wujud!"
+msgstr ""
 
 #: old/bin/ic.pl:1982
 msgid "Cannot delete item!"
-msgstr "Barang tidak boleh dipadam"
+msgstr "不能刪除項目！"
 
 #: old/bin/oe.pl:1437
 msgid "Cannot delete order!"
-msgstr "Tidak boleh memadam pesanan"
+msgstr "不能删除定单"
 
 #: old/bin/gl.pl:635
 msgid "Cannot delete posted transaction"
@@ -1386,46 +1387,44 @@ msgstr ""
 
 #: old/bin/oe.pl:1441
 msgid "Cannot delete quotation!"
-msgstr "Tidak boleh memadam sebut harga!"
+msgstr "不能删除报价单"
 
 #: old/bin/ir.pl:1353 old/bin/is.pl:1460
 msgid "Cannot post invoice for a closed period!"
-msgstr "Tidak boleh simpan invois untuk jangka masa yang terdekat!"
+msgstr "不能在已關閉的時段內加入發票！"
 
 #: old/bin/aa.pl:1391 old/bin/ir.pl:1368 old/bin/is.pl:1475
 msgid "Cannot post payment for a closed period!"
-msgstr "Tidak boleh simpan bayaran untuk jangka masa yang terdekat!"
+msgstr "不能在已关闭的时段内加入款项"
 
 #: old/bin/aa.pl:1377 old/bin/gl.pl:618
 msgid "Cannot post transaction for a closed period!"
-msgstr "Tidak boleh menyimpan transaksi untuk tempoh tertutup"
+msgstr "不能在已關閉的時段內加入交易！"
 
 #: old/bin/gl.pl:657
 msgid ""
 "Cannot post transaction with a debit and credit entry for the same account!"
-msgstr ""
-"Tidak boleh menyimpan transaksi dengan kemasukan debit dan kredit untuk akaun "
-"yang sama"
+msgstr "在交易同一帳戶不能又出現在借方又出現在貸方！"
 
 #: old/bin/aa.pl:1437
 msgid "Cannot post transaction!"
-msgstr "Transaksi gagal dihantar!"
+msgstr "不能加入交易！"
 
 #: old/bin/oe.pl:1300
 msgid "Cannot save order!"
-msgstr "Tidak Boleh Menyimpan Pesanan"
+msgstr "不能储存定单"
 
 #: old/bin/oe.pl:1317
 msgid "Cannot save quotation!"
-msgstr "Tidah Boleh Menyimpan Sebut Harga!"
+msgstr "不能儲存報價單！"
 
 #: old/bin/am.pl:260
 msgid "Cannot save taxes!"
-msgstr "Cukai tidak disimpan!"
+msgstr ""
 
 #: old/bin/ic.pl:2214
 msgid "Cannot stock assemblies!"
-msgstr "Pemasangan tidak boleh diisi semula"
+msgstr "不能常备的商品"
 
 #: templates/demo/timecard.html:52 templates/demo/timecard.tex:43
 msgid "Card ID"
@@ -1433,7 +1432,7 @@ msgstr ""
 
 #: UI/Reports/filters/income_statement.html:40 sql/Pg-database.sql:2612
 msgid "Cash"
-msgstr "Tunai"
+msgstr "現金"
 
 #: UI/payments/payment2.html:346 UI/Reports/filters/payments.html:50
 msgid "Cash Account"
@@ -1445,7 +1444,7 @@ msgstr ""
 
 #: UI/email.html:36
 msgid "Cc"
-msgstr ""
+msgstr "抄送"
 
 #: sql/Pg-database.sql:779
 msgid "Cell Phone"
@@ -1461,11 +1460,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/GL.pm:173
 msgid "Chart ID"
-msgstr "Carta ID"
+msgstr ""
 
 #: lib/LedgerSMB/Report/COA.pm:138 sql/Pg-database.sql:2552
 msgid "Chart of Accounts"
-msgstr "Carta Akaun"
+msgstr "会计科目表"
 
 #: UI/setup/select_coa.html:41
 msgid "Chart of accounts"
@@ -1473,7 +1472,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2730
 msgid "Check"
-msgstr "Semak"
+msgstr "检查"
 
 #: UI/templates/widget.html:41
 msgid "Check (base)"
@@ -1481,11 +1480,11 @@ msgstr ""
 
 #: old/bin/ic.pl:2020
 msgid "Check Inventory"
-msgstr "Periksa Senarai Barang"
+msgstr "檢查存貨清單"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:138
 msgid "Check Prefix"
-msgstr "Semak Imbuhan"
+msgstr ""
 
 #: UI/payments/payment1_5.html:22
 msgid "Choose a company"
@@ -1500,7 +1499,7 @@ msgstr ""
 #: UI/Reports/filters/contact_search.html:94
 #: UI/Reports/filters/purchase_history.html:75
 msgid "City"
-msgstr "Bandar"
+msgstr "城市"
 
 #: t/data/04-complex_template.html:445
 msgid "City:"
@@ -1509,11 +1508,11 @@ msgstr ""
 #: UI/Contact/divs/company.html:72 UI/Contact/divs/credit.html:71
 #: UI/Contact/divs/person.html:68
 msgid "Class"
-msgstr "Kelas"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/recon.pm:485
 msgid "Clear date"
-msgstr "Tarikh dipadam"
+msgstr ""
 
 #: UI/reconciliation/report.html:192
 msgid "Clear date is [*,_1,day] in the future of after posting"
@@ -1527,7 +1526,7 @@ msgstr ""
 #: UI/reconciliation/report.html:250 UI/reconciliation/report.html:323
 #: UI/Reports/filters/gl.html:279
 msgid "Cleared"
-msgstr "Padamkan"
+msgstr "已清除"
 
 #: UI/reconciliation/report.html:104
 msgid "Cleared Transactions"
@@ -1535,7 +1534,7 @@ msgstr ""
 
 #: UI/timecards/timecard.html:100
 msgid "Clocked"
-msgstr ""
+msgstr "計算出的時間"
 
 #: UI/accounts/yearend.html:96
 msgid "Close As-Of"
@@ -1558,7 +1557,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:209
 #: UI/Reports/filters/timecards.html:35
 msgid "Closed"
-msgstr "Tutup"
+msgstr "已關閉"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:276
 msgid "Closing Balance"
@@ -1576,7 +1575,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Listings/SIC.pm:47 UI/src/views/SIC.vue:11
 #: UI/src/views/Languages.vue:9 UI/src/views/GIFI.vue:11
 msgid "Code"
-msgstr "kod"
+msgstr "编码"
 
 #: sql/Pg-database.sql:519
 msgid "Cold Lead"
@@ -1584,15 +1583,15 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/order.pm:116 sql/Pg-database.sql:2625
 msgid "Combine"
-msgstr "Gabung"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/order.pm:76
 msgid "Combine Purchase Orders"
-msgstr "Mengabung pesanan jualan"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/order.pm:68
 msgid "Combine Sales Orders"
-msgstr "Mengabung pesanan jualan"
+msgstr ""
 
 #: UI/src/views/Home.vue:20
 msgid "Community resources"
@@ -1613,36 +1612,36 @@ msgstr ""
 #: UI/Reports/aging_report.html:12 UI/Reports/display_report.html:19
 #: UI/src/views/LoginPage.vue:36
 msgid "Company"
-msgstr "Syarikat"
+msgstr "公司"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:40
 msgid "Company Address"
-msgstr "Alamat Syarikat"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:42
 msgid "Company Fax"
-msgstr "Faks Syarikat"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:35
 msgid "Company Information"
-msgstr "Maklumat syarikat"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:55
 msgid "Company License Number"
-msgstr "Nombor Lesen Syarikat"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:142
 #: lib/LedgerSMB/Scripts/configuration.pm:37
 msgid "Company Name"
-msgstr "Nama Syarikat"
+msgstr "公司名稱"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:41
 msgid "Company Phone"
-msgstr "Nombor Telefon Syarikat"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:53
 msgid "Company Sales Tax ID"
-msgstr "ID Cukai Jualan Syarikat"
+msgstr ""
 
 #: UI/src/views/LoginPage.vue:100
 msgid "Company does not exist"
@@ -1694,7 +1693,7 @@ msgstr ""
 
 #: old/bin/oe.pl:1418
 msgid "Confirm!"
-msgstr "Sah!"
+msgstr "入帳成功！"
 
 #: lib/LedgerSMB.pm:497
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
@@ -1707,14 +1706,14 @@ msgstr ""
 #: templates/demo/sales_quotation.html:62
 #: UI/Reports/filters/contact_search.html:56 sql/Pg-database.sql:515
 msgid "Contact"
-msgstr "Hubungan"
+msgstr "連絡人"
 
 #: lib/LedgerSMB/Scripts/contact.pm:193 t/data/04-complex_template.html:31
 #: UI/Contact/divs/contact_info.html:2 UI/Contact/divs/contact_info.html:31
 #: UI/Contact/divs/contact_info.html:108
 #: UI/Reports/filters/purchase_history.html:28
 msgid "Contact Info"
-msgstr "Maklumat Hubungi"
+msgstr ""
 
 #: t/data/04-complex_template.html:495 t/data/04-complex_template.html:536
 msgid "Contact Info:"
@@ -1727,7 +1726,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Contact/Search.pm:93
 #: UI/Reports/filters/contact_search.html:7
 msgid "Contact Search"
-msgstr "Carian Hubungan"
+msgstr ""
 
 #: UI/payments/payments_detail.html:435
 msgid "Contact Total (if paying \"some\")"
@@ -1735,7 +1734,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2613
 msgid "Contacts"
-msgstr "Kenalan"
+msgstr ""
 
 #: UI/budgetting/budget_entry.html:158 UI/budgetting/budget_entry.html:181
 msgid "Content"
@@ -1760,7 +1759,7 @@ msgstr ""
 #: UI/Reports/filters/taxforms.html:57 UI/Reports/filters/trial_balance.html:127
 #: UI/timecards/entry_filter.html:41
 msgid "Continue"
-msgstr "Sambung"
+msgstr "继续"
 
 #: old/bin/ic.pl:863
 msgid "Continue Previous Workflow"
@@ -1768,7 +1767,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:239
 msgid "Contra"
-msgstr ""
+msgstr "相反"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1035
 msgid ""
@@ -1790,7 +1789,7 @@ msgstr ""
 #: UI/Reports/filters/contact_search.html:39
 #: UI/Reports/filters/overpayments.html:9
 msgid "Control Code"
-msgstr "Kod kawalan"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:46
 msgid "Copy"
@@ -1798,7 +1797,7 @@ msgstr ""
 
 #: old/bin/aa.pl:983 old/bin/gl.pl:256 old/bin/ir.pl:538 old/bin/is.pl:604
 msgid "Copy to New"
-msgstr "Salin Ke Baru"
+msgstr ""
 
 #: UI/setup/confirm_operation.html:39
 msgid "Copy to New Name"
@@ -1807,11 +1806,11 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:127 old/bin/ic.pl:1017
 #: old/bin/ic.pl:1264 old/bin/oe.pl:2514
 msgid "Cost"
-msgstr "kos"
+msgstr "成本"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:106
 msgid "Cost of Goods Sold"
-msgstr "Kos Barangan Yang Dijual"
+msgstr ""
 
 #: lib/LedgerSMB/Template/DB.pm:128 lib/LedgerSMB/Template/DB.pm:77
 msgid "Could Not Load Template from DB"
@@ -1823,20 +1822,20 @@ msgstr ""
 
 #: old/bin/ir.pl:1332 old/bin/is.pl:1440 old/bin/oe.pl:1333
 msgid "Could not save the data.  Please try again"
-msgstr "Data tidak boleh disimpan. Sila cuba lagi"
+msgstr ""
 
 #: old/bin/oe.pl:2107
 msgid "Could not save!"
-msgstr "Tidak boleh disimpan"
+msgstr "不能儲存！"
 
 #: old/bin/oe.pl:2377
 msgid "Could not transfer Inventory!"
-msgstr "Tidak dapat memindahkan Inventori!"
+msgstr "存貨清單不能轉移！"
 
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:101
 #: UI/inventory/adjustment_entry.html:26
 msgid "Counted"
-msgstr "Dikira"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:137
 #: lib/LedgerSMB/Report/Listings/TemplateTrans.pm:102
@@ -1856,7 +1855,7 @@ msgstr ""
 #: UI/Reports/filters/contact_search.html:109
 #: UI/Reports/filters/purchase_history.html:99 UI/setup/select_coa.html:75
 msgid "Country"
-msgstr "Negara"
+msgstr "國家"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:55
 msgid "Country Name"
@@ -1880,7 +1879,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:282
 msgid "Create Database?"
-msgstr "Bina pankalan data?"
+msgstr ""
 
 #: lib/LedgerSMB/Report/COA.pm:202
 msgid "Create Heading"
@@ -1915,30 +1914,30 @@ msgstr ""
 #: UI/journal/journal_entry.html:134 UI/Reports/co/filter_bm.html:105
 #: UI/Reports/filters/gl.html:240 UI/Reports/filters/trial_balance.html:5
 msgid "Credit"
-msgstr "Kredit"
+msgstr "貸方"
 
 #: lib/LedgerSMB/Scripts/contact.pm:298
 msgid "Credit Account"
-msgstr "Akaun Kredit"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/Search.pm:71
 msgid "Credit Account Number"
-msgstr "No Akaun Kredit"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/contact.pm:191 UI/Contact/divs/credit.html:2
 msgid "Credit Accounts"
-msgstr "Akaun Kredit"
+msgstr ""
 
 #: old/bin/am.pl:959 templates/demo/invoice.html:32
 #: templates/demo/invoice.tex:136 sql/Pg-database.sql:2666
 msgid "Credit Invoice"
-msgstr "Invois kredit"
+msgstr ""
 
 #: old/bin/aa.pl:560 old/bin/ir.pl:425 old/bin/is.pl:458 old/bin/oe.pl:426
 #: UI/Contact/divs/credit.html:29 UI/Contact/divs/credit.html:144
 #: UI/Contact/divs/credit.html:145
 msgid "Credit Limit"
-msgstr "Had Kredit"
+msgstr "信用額度"
 
 #: t/data/04-complex_template.html:201
 msgid "Credit Limit:"
@@ -1946,21 +1945,21 @@ msgstr ""
 
 #: sql/Pg-database.sql:2665
 msgid "Credit Note"
-msgstr "Nota kredit"
+msgstr ""
 
 #: lib/LedgerSMB/Report/COA.pm:111 lib/LedgerSMB/Report/GL.pm:131
 #: lib/LedgerSMB/Report/Trial_Balance.pm:176
 #: lib/LedgerSMB/Scripts/payment.pm:209 UI/reconciliation/report.html:159
 #: UI/reconciliation/report.html:161 UI/Reports/co/filter_cd.html:90
 msgid "Credits"
-msgstr "Kredit"
+msgstr ""
 
 #: lib/LedgerSMB/Report/GL.pm:137
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:262
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:278 old/bin/ic.pl:1006
 #: old/bin/ic.pl:1100 old/bin/oe.pl:2519
 msgid "Curr"
-msgstr ""
+msgstr "目前"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:73
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:79
@@ -1982,14 +1981,14 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:422 UI/timecards/timecard.html:120
 #: UI/timecards/timecard-week.html:76
 msgid "Currency"
-msgstr "Mata Wang"
+msgstr "幣別"
 
 #: lib/LedgerSMB/Report/Aging.pm:137 old/bin/pe.pl:729
 #: templates/demo/statement.html:62 templates/demo/statement.tex:54
 #: UI/lib/report_base.html:159 UI/lib/report_base.html:252
 #: UI/Reports/co/filter_bm.html:52 UI/Reports/filters/aging.html:98
 msgid "Current"
-msgstr "Semasa"
+msgstr "现有"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:234 lib/LedgerSMB/Report/PNL.pm:215
 #: lib/LedgerSMB/Scripts/configuration.pm:97
@@ -2013,15 +2012,15 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:10 UI/Reports/filters/orders.html:7
 #: sql/Pg-database.sql:513
 msgid "Customer"
-msgstr "Pelanggan"
+msgstr "客戶"
 
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:250
 msgid "Customer Account"
-msgstr "Akaun Pelanggan"
+msgstr ""
 
 #: sql/Pg-database.sql:2550
 msgid "Customer History"
-msgstr "Rekod Pelanggan"
+msgstr "客户历史"
 
 #: UI/Contact/divs/credit.html:362
 msgid "Customer Invoice"
@@ -2041,7 +2040,7 @@ msgstr ""
 #: UI/Reports/filters/overpayments.html:20 UI/Reports/filters/payments.html:14
 #: UI/Reports/filters/purchase_history.html:56
 msgid "Customer Number"
-msgstr "Nombor Pelanggan"
+msgstr "客戶編號"
 
 #: UI/Reports/filters/contact_search.html:11
 msgid "Customer Search"
@@ -2049,7 +2048,7 @@ msgstr ""
 
 #: old/bin/aa.pl:1360 old/bin/is.pl:1449 old/bin/oe.pl:1268 old/bin/pe.pl:1153
 msgid "Customer missing!"
-msgstr "Pelanggan hilang"
+msgstr "未指明客户"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:872
 msgid "Customer not in a business"
@@ -2057,7 +2056,7 @@ msgstr ""
 
 #: old/bin/arap.pl:142 old/bin/pe.pl:1128
 msgid "Customer not on file!"
-msgstr "Pelangan tiada dalam fail!"
+msgstr "沒有此客戶的記錄！"
 
 #: UI/setup/complete.html:26 UI/setup/confirm_operation.html:124
 msgid "Customer/Vendor Accounts"
@@ -2073,7 +2072,7 @@ msgstr ""
 
 #: UI/Contact/divs/employee.html:124
 msgid "DOB"
-msgstr ""
+msgstr "生日"
 
 #: t/data/04-complex_template.html:106
 msgid "DOB:"
@@ -2089,16 +2088,16 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:415 old/bin/aa.pl:1350
 msgid "Data not saved.  Please try again."
-msgstr "Data gagal disimpan. Sila cuba lagi"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/recon.pm:152
 msgid "Data not saved.  Please update again."
-msgstr "Data tidak disimpan. Tolong update semula."
+msgstr ""
 
 #: UI/setup/credentials.html:81 UI/setup/list_databases.html:13
 #: UI/setup/ui-db-credentials.html:6
 msgid "Database"
-msgstr ""
+msgstr "资料库"
 
 #: UI/setup/ui-db-credentials.html:1
 msgid "Database Credentials"
@@ -2130,7 +2129,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:281
 msgid "Database does not exist."
-msgstr "Pengkalan data tidak wujud"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:1021
 msgid "Database exists."
@@ -2170,7 +2169,7 @@ msgstr ""
 #: UI/payments/use_overpayment2.html:85 UI/Reports/filters/gl.html:203
 #: UI/Reports/filters/orders.html:134
 msgid "Date"
-msgstr "Tarikh"
+msgstr "日期"
 
 #: UI/users/preferences.html:80
 msgid "Date Format"
@@ -2178,7 +2177,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:106 old/bin/ic.pl:941
 msgid "Date From"
-msgstr "Dari Tarikh"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:103
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:266
@@ -2187,7 +2186,7 @@ msgstr "Dari Tarikh"
 #: UI/Reports/filters/invoice_outstanding.html:219
 #: UI/Reports/filters/invoice_search.html:342
 msgid "Date Paid"
-msgstr "Tarikh Dibayar"
+msgstr "付款日期"
 
 #: UI/lib/report_base.html:196
 msgid "Date Range"
@@ -2195,7 +2194,7 @@ msgstr ""
 
 #: old/bin/oe.pl:1838
 msgid "Date Received"
-msgstr "Tarikh diterima"
+msgstr "收款日期"
 
 #: UI/Reports/filters/payments.html:90
 msgid "Date Reversed"
@@ -2203,7 +2202,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:107 old/bin/ic.pl:944
 msgid "Date To"
-msgstr "Kepada Tarikh"
+msgstr ""
 
 #: UI/timecards/timecard.html:55
 msgid "Date Worked"
@@ -2219,7 +2218,7 @@ msgstr ""
 
 #: old/bin/oe.pl:2092
 msgid "Date received missing!"
-msgstr "Tarikh diterima hilang"
+msgstr "未指明收款日期"
 
 #: UI/Reports/filters/balance_sheet.html:45
 msgid "Date selection"
@@ -2227,7 +2226,7 @@ msgstr ""
 
 #: UI/payments/payment1.html:85 UI/Reports/filters/contact_search.html:122
 msgid "Date to"
-msgstr "Tarikh kepada"
+msgstr ""
 
 #: UI/payments/payment2.html:107
 msgid "Date to register payment"
@@ -2250,54 +2249,54 @@ msgstr ""
 #: old/bin/am.pl:267 UI/lib/report_base.html:165
 #: UI/timecards/entry_filter.html:22
 msgid "Day"
-msgstr ""
+msgstr "日"
 
 #: old/bin/arap.pl:516
 msgid "Day(s)"
-msgstr "Hari"
+msgstr "日"
 
 #: old/bin/am.pl:268
 msgid "Days"
-msgstr ""
+msgstr "日"
 
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:85
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:86 UI/budgetting/budget_entry.html:61
 #: UI/journal/journal_entry.html:133 UI/Reports/filters/gl.html:233
 #: UI/Reports/filters/trial_balance.html:4
 msgid "Debit"
-msgstr "Debit"
+msgstr "借方"
 
 #: old/bin/am.pl:960 sql/Pg-database.sql:2662
 msgid "Debit Invoice"
-msgstr "Invois debit"
+msgstr ""
 
 #: sql/Pg-database.sql:2661
 msgid "Debit Note"
-msgstr "Nota debit"
+msgstr ""
 
 #: lib/LedgerSMB/Report/COA.pm:104 lib/LedgerSMB/Report/GL.pm:125
 #: lib/LedgerSMB/Report/Trial_Balance.pm:170
 #: lib/LedgerSMB/Scripts/payment.pm:203 UI/reconciliation/report.html:158
 #: UI/reconciliation/report.html:160 UI/Reports/co/filter_cd.html:82
 msgid "Debits"
-msgstr "Debit"
+msgstr ""
 
 #: old/bin/aa.pl:95 old/bin/gl.pl:87 old/bin/io.pl:89
 msgid "Dec"
-msgstr "Dis"
+msgstr "十二月"
 
 #: lib/LedgerSMB.pm:581 old/bin/aa.pl:81 old/bin/gl.pl:73 old/bin/io.pl:75
 msgid "December"
-msgstr "Disember"
+msgstr "十二月"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:143
 msgid "Decimal Places for Money"
-msgstr "Angka perpuluhan untuk mata wang"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Payroll/Deduction_Types.pm:38
 #: UI/payroll/deduction.html:28
 msgid "Deduction Class"
-msgstr "Kelas Pemotongan"
+msgstr ""
 
 #: UI/payroll/deduction.html:3
 msgid "Deduction Type"
@@ -2305,7 +2304,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Payroll/Deduction_Types.pm:53
 msgid "Deduction Types"
-msgstr "Jenis Pemotongan"
+msgstr ""
 
 #: UI/setup/upgrade_info.html:79
 msgid "Default AP"
@@ -2317,27 +2316,27 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:93
 msgid "Default Accounts"
-msgstr "Akaun Tetapan Utama"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:61 UI/setup/upgrade_info.html:43
 msgid "Default Country"
-msgstr "Negara"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:49
 msgid "Default Email BCC"
-msgstr "Tetapan utama Email BCC"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:47
 msgid "Default Email CC"
-msgstr "Tetapan utama Email CC"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:51
 msgid "Default Email From"
-msgstr "Tetapan utama Email daripada"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:45
 msgid "Default Email To"
-msgstr "Tetapan utama Email kepada"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:68
 msgid "Default Format"
@@ -2345,7 +2344,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:64
 msgid "Default Language"
-msgstr "Bahasa"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:71
 msgid "Default Paper Size"
@@ -2353,7 +2352,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:59
 msgid "Default Reportable"
-msgstr "Tetapan Utama yang dilaporkan"
+msgstr ""
 
 #: UI/payroll/income.html:79
 msgid "Default amount"
@@ -2361,7 +2360,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2599
 msgid "Defaults"
-msgstr "Asal"
+msgstr "預設"
 
 #: lib/LedgerSMB/Scripts/currency.pm:79
 msgid "Defined currencies"
@@ -2386,15 +2385,15 @@ msgstr ""
 #: UI/file/internal-file-list.html:31 UI/reconciliation/report.html:445
 #: UI/src/components/ConfigTableRow.vue:26
 msgid "Delete"
-msgstr "Padam"
+msgstr "刪除"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:203
 msgid "Delete Batch"
-msgstr "Padam Kumpulan"
+msgstr ""
 
 #: old/bin/arap.pl:618 old/bin/arap.pl:624
 msgid "Delete Schedule"
-msgstr "Padam Jadual"
+msgstr "删除预定"
 
 #: UI/Contact/divs/user.html:37
 msgid "Delete User"
@@ -2402,7 +2401,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:210
 msgid "Delete Vouchers"
-msgstr "Padam Baucer"
+msgstr ""
 
 #: UI/accounts/edit.html:106 UI/accounts/edit.html:570
 #: UI/file/internal-file-list.html:33 UI/reconciliation/report.html:450
@@ -2426,7 +2425,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Contact/History.pm:107 old/bin/io.pl:265
 #: UI/Reports/filters/purchase_history.html:314
 msgid "Delivery Date"
-msgstr "Tarikh Penghantaran"
+msgstr "到期日"
 
 #: lib/LedgerSMB/Scripts/asset.pm:596
 msgid "Dep. Basis"
@@ -2457,7 +2456,7 @@ msgstr ""
 #: UI/asset/edit_asset.html:147 UI/asset/search_asset.html:135
 #: UI/payments/payment2.html:76 UI/payments/payments_detail.html:129
 msgid "Department"
-msgstr "Jabatan"
+msgstr "部门"
 
 #: UI/payments/payment1.html:30
 msgid "Departments"
@@ -2465,32 +2464,32 @@ msgstr ""
 
 #: sql/Pg-database.sql:2653
 msgid "Depreciate"
-msgstr "Penyusutan"
+msgstr ""
 
 #: UI/asset/import_asset.html:11
 msgid "Depreciate Through"
-msgstr "Melalui Penyusutan"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:511 UI/accounts/edit.html:505
 #: sql/Pg-database.sql:2657
 msgid "Depreciation"
-msgstr "Susut Nilai"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Asset_Class.pm:84 UI/asset/edit_asset.html:167
 #: UI/asset/edit_class.html:48 UI/asset/search_asset.html:154
 #: UI/asset/search_class.html:55
 msgid "Depreciation Account"
-msgstr "Akaun Susut Nilai"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Asset_Class.pm:101
 #: lib/LedgerSMB/Report/Listings/Asset_Class.pm:78 UI/asset/edit_class.html:24
 #: UI/asset/search_class.html:20
 msgid "Depreciation Method"
-msgstr "Kaedah Susut Nilai"
+msgstr ""
 
 #: UI/asset/edit_asset.html:119 UI/asset/search_asset.html:107
 msgid "Depreciation Starts"
-msgstr "Permulaan Susut Nilai"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Aging.pm:120
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:79
@@ -2565,22 +2564,22 @@ msgstr "Permulaan Susut Nilai"
 #: UI/src/views/Pricegroups.vue:9 UI/src/views/GIFI.vue:12
 #: UI/src/views/BusinessTypes.vue:9
 msgid "Description"
-msgstr "Penerangan"
+msgstr "說明"
 
 #: old/bin/pe.pl:173
 msgid "Description Translations"
-msgstr "Huraian terjemahan"
+msgstr "翻译描述"
 
 #: UI/asset/edit_asset.html:57 UI/asset/search_asset.html:54
 #: UI/business_units/edit.html:71 UI/business_units/filter.html:22
 #: UI/taxform/add_taxform.html:43
 msgid "Description:"
-msgstr "Huraian"
+msgstr ""
 
 #: old/bin/pe.pl:810 UI/Reports/filters/aging.html:63
 #: UI/Reports/filters/purchase_history.html:228
 msgid "Detail"
-msgstr "Butiran"
+msgstr "詳情"
 
 #: UI/payments/payments_detail.html:228
 #: UI/Reports/filters/invoice_outstanding.html:117
@@ -2593,7 +2592,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/History.pm:103
 msgid "Disc"
-msgstr "Disk"
+msgstr ""
 
 #: templates/demo/invoice.html:109 templates/demo/invoice.tex:167
 #: templates/demo/sales_order.html:105 templates/demo/sales_order.tex:137
@@ -2607,7 +2606,7 @@ msgstr ""
 #: UI/payments/payments_detail.html:340
 #: UI/Reports/filters/purchase_history.html:303
 msgid "Discount"
-msgstr "Diskaun"
+msgstr "折扣"
 
 #: lib/LedgerSMB/Report/Listings/Business_Type.pm:57
 #: UI/src/views/BusinessTypes.vue:10
@@ -2625,15 +2624,15 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/asset.pm:512 sql/Pg-database.sql:2655
 #: sql/Pg-database.sql:2658
 msgid "Disposal"
-msgstr "Pembuangan"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:802
 msgid "Disposal Date"
-msgstr "Tarikh Pembuangan"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:368
 msgid "Disposal Method"
-msgstr "Cara Pembuangan"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:859
 msgid "Disposal Report [_1] on date [_2]"
@@ -2641,7 +2640,7 @@ msgstr ""
 
 #: lib/LedgerSMB.pm:494
 msgid "Division by 0 error"
-msgstr "Kesalahan bahagian 0"
+msgstr ""
 
 #: old/bin/io.pl:1942
 msgid "Do not keep field empty [_1]"
@@ -2649,7 +2648,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:81
 msgid "Document"
-msgstr "Dokumen"
+msgstr ""
 
 #: UI/Reports/co/filter_cd.html:75
 msgid "Document Type"
@@ -2657,11 +2656,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:499
 msgid "Don't know what to do with backup"
-msgstr "Tidak mengetahui apa yang perlu dibuat dengan backup "
+msgstr ""
 
 #: old/bin/oe.pl:2053 old/bin/oe.pl:2061
 msgid "Done"
-msgstr "Selesai"
+msgstr "巳完成"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:915
 msgid "Double customernumbers"
@@ -2677,33 +2676,33 @@ msgstr ""
 
 #: sql/Pg-database.sql:705
 msgid "Dr."
-msgstr "Dr."
+msgstr ""
 
 #: old/bin/aa.pl:1233 old/bin/aa.pl:1482 old/bin/gl.pl:110 old/bin/ir.pl:89
 msgid "Draft Posted"
-msgstr "Draf yang tercatat"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:132
 msgid "Draft Search"
-msgstr "Carian Draf"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:144
 msgid "Draft Type"
-msgstr "Jenis Draf"
+msgstr ""
 
 #: sql/Pg-database.sql:2632
 msgid "Drafts"
-msgstr "Draf"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:287 old/bin/ic.pl:502
 #: UI/Reports/filters/search_goods.html:106
 #: UI/Reports/filters/search_goods.html:387
 msgid "Drawing"
-msgstr "Lukisan"
+msgstr "图画"
 
 #: lib/LedgerSMB/Report/COA.pm:118
 msgid "Dropdowns"
-msgstr "Gugurkan"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:99
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:293
@@ -2712,7 +2711,7 @@ msgstr "Gugurkan"
 #: templates/demo/invoice.html:80 templates/demo/invoice.tex:146
 #: templates/demo/receipt.tex:80 templates/demo/statement.html:61
 msgid "Due"
-msgstr "Tarikh Akhir"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Aging.pm:130
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:107
@@ -2722,11 +2721,11 @@ msgstr "Tarikh Akhir"
 #: UI/Reports/filters/invoice_outstanding.html:234
 #: UI/Reports/filters/invoice_search.html:357
 msgid "Due Date"
-msgstr "Tarikh Akhir"
+msgstr "到期日"
 
 #: old/bin/aa.pl:1365
 msgid "Due Date missing!"
-msgstr "Tarikh akhir hilang!"
+msgstr "未指明到期日！"
 
 #: UI/Contact/divs/user.html:10 UI/setup/edit_user.html:11
 msgid "Duplicate User Found: Importing User"
@@ -2734,17 +2733,17 @@ msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:480
 msgid "Duplicate employee numbers"
-msgstr "Salinan nombor pekerja"
+msgstr ""
 
 #: old/bin/am.pl:315 old/bin/arap.pl:396 old/bin/is.pl:1129 old/bin/is.pl:619
 #: old/bin/oe.pl:2060 old/bin/oe.pl:660 old/bin/oe.pl:923
 #: UI/Reports/filters/contact_search.html:48
 msgid "E-mail"
-msgstr "E-mail"
+msgstr "電子郵件"
 
 #: old/bin/am.pl:931
 msgid "E-mail address missing!"
-msgstr "alamat emel hilang"
+msgstr "未指明电子邮件位址!"
 
 #: lib/LedgerSMB/Scripts/report_aging.pm:197
 msgid "E-mail aging reminder status"
@@ -2752,15 +2751,15 @@ msgstr ""
 
 #: old/bin/arap.pl:438
 msgid "E-mail message"
-msgstr "Pesanan e-mail"
+msgstr "发送电邮"
 
 #: old/bin/printer.pl:153
 msgid "E-mailed"
-msgstr ""
+msgstr "已電郵"
 
 #: lib/LedgerSMB/Report/PNL/ECA.pm:77
 msgid "ECA Income Statement"
-msgstr "Penyata Gaji ECA"
+msgstr ""
 
 #: sql/Pg-database.sql:797
 msgid "EDI ID"
@@ -2774,15 +2773,15 @@ msgstr ""
 #: UI/Contact/divs/address.html:51 UI/Contact/divs/contact_info.html:10
 #: UI/templates/widget.html:125
 msgid "Edit"
-msgstr "Ubahsuai"
+msgstr "编辑"
 
 #: old/bin/aa.pl:385 old/bin/aa.pl:423
 msgid "Edit AP Transaction"
-msgstr ""
+msgstr "編輯應付交易"
 
 #: old/bin/aa.pl:384
 msgid "Edit AR Transaction"
-msgstr ""
+msgstr "編輯應收交易"
 
 #: old/bin/ic.pl:713 old/bin/ic.pl:96
 msgid "Edit Assembly"
@@ -2790,7 +2789,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:53
 msgid "Edit Asset Class"
-msgstr "Mengedit Kelas Aset"
+msgstr ""
 
 #: old/bin/is.pl:137
 msgid "Edit Credit Invoice"
@@ -2803,7 +2802,7 @@ msgstr ""
 #: t/data/04-complex_template.html:17 UI/Contact/contact.html:27
 #: UI/Contact/divs/company.html:13 UI/Contact/divs/person.html:12
 msgid "Edit Customer"
-msgstr "Ubahsuai Pelanggan"
+msgstr "编辑客户"
 
 #: old/bin/is.pl:134
 msgid "Edit Customer Return"
@@ -2815,32 +2814,32 @@ msgstr ""
 
 #: old/bin/pe.pl:420
 msgid "Edit Description Translations"
-msgstr "Edit Penerangan Penterjemahan"
+msgstr "編輯翻譯描述"
 
 #: t/data/04-complex_template.html:21 UI/Contact/contact.html:31
 #: UI/Contact/divs/employee.html:8
 msgid "Edit Employee"
-msgstr "Ubahsuai Pekerja"
+msgstr "编辑职员"
 
 #: old/bin/pe.pl:89
 msgid "Edit Group"
-msgstr ""
+msgstr "编辑组"
 
 #: old/bin/ic.pl:97
 msgid "Edit Labor/Overhead"
-msgstr ""
+msgstr "編輯直接人工/經常費用"
 
 #: old/bin/ic.pl:711 old/bin/ic.pl:94
 msgid "Edit Part"
-msgstr ""
+msgstr "编辑原料"
 
 #: old/bin/oe.pl:100
 msgid "Edit Purchase Order"
-msgstr "Ubah Pesanan Pembelian"
+msgstr "編輯採購單"
 
 #: old/bin/oe.pl:114
 msgid "Edit Quotation"
-msgstr "Ubah Sebut Harga"
+msgstr "編輯報價單"
 
 #: UI/business_units/edit.html:10
 msgid "Edit Reporting Unit"
@@ -2848,19 +2847,19 @@ msgstr ""
 
 #: old/bin/oe.pl:110
 msgid "Edit Request for Quotation"
-msgstr "Ubah Permintaan Untuk Sebut Harga"
+msgstr "编辑报价单要求"
 
 #: old/bin/is.pl:140
 msgid "Edit Sales Invoice"
-msgstr ""
+msgstr "編輯銷售發票"
 
 #: old/bin/oe.pl:105
 msgid "Edit Sales Order"
-msgstr "Ubah Pesanan Jualan"
+msgstr "编辑销货单"
 
 #: old/bin/ic.pl:712 old/bin/ic.pl:95
 msgid "Edit Service"
-msgstr ""
+msgstr "編輯服務"
 
 #: UI/taxform/add_taxform.html:4
 msgid "Edit Tax Form"
@@ -2868,16 +2867,16 @@ msgstr ""
 
 #: UI/Contact/divs/employee.html:160
 msgid "Edit User"
-msgstr ""
+msgstr "編輯使用者"
 
 #: t/data/04-complex_template.html:19 UI/Contact/contact.html:29
 #: UI/Contact/divs/company.html:9 UI/Contact/divs/person.html:8
 msgid "Edit Vendor"
-msgstr "Ubahsuai Pembekal"
+msgstr "编辑供应商"
 
 #: old/bin/ir.pl:148
 msgid "Edit Vendor Invoice"
-msgstr "Penyuntingan Invois Pembekal"
+msgstr "編輯供應商發票"
 
 #: old/bin/ir.pl:142
 msgid "Edit Vendor Return"
@@ -2919,12 +2918,12 @@ msgstr ""
 #: UI/Contact/divs/employee.html:2 UI/Reports/filters/contact_search.html:64
 #: UI/timecards/entry_filter.html:12 sql/Pg-database.sql:514
 msgid "Employee"
-msgstr "Pekerja"
+msgstr "职员"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:127 t/data/04-complex_template.html:92
 #: UI/Contact/divs/employee.html:100 UI/setup/new_user.html:134
 msgid "Employee Number"
-msgstr "Nombor Pekerja"
+msgstr "工号"
 
 #: UI/Reports/filters/contact_search.html:13
 msgid "Employee Search"
@@ -2941,7 +2940,7 @@ msgstr ""
 
 #: UI/lib/report_base.html:301 sql/Pg-database.sql:2569
 msgid "Employees"
-msgstr "Pekerjaan"
+msgstr "职员"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:716
 msgid "Empty AP account"
@@ -2976,7 +2975,7 @@ msgstr ""
 #: UI/Contact/divs/credit.html:121 UI/Contact/divs/credit.html:122
 #: UI/Contact/divs/employee.html:140 UI/Reports/filters/budget_search.html:51
 msgid "End Date"
-msgstr "Tarikh Akhir"
+msgstr ""
 
 #: t/data/04-complex_template.html:122 t/data/04-complex_template.html:188
 msgid "End Date:"
@@ -2988,7 +2987,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:182
 msgid "Ending Balance"
-msgstr "Baki Pengakhiran"
+msgstr ""
 
 #: UI/reconciliation/report.html:71
 msgid "Ending GL Balance:"
@@ -3000,11 +2999,11 @@ msgstr ""
 
 #: old/bin/am.pl:308
 msgid "Ends"
-msgstr "Tamat"
+msgstr "完結"
 
 #: UI/inventory/adjustment_entry.html:7 sql/Pg-database.sql:2546
 msgid "Enter Inventory"
-msgstr "Masukan inventori"
+msgstr ""
 
 #: UI/setup/new_user.html:8
 msgid "Enter User"
@@ -3017,7 +3016,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Budget/Search.pm:91
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:157
 msgid "Entered By"
-msgstr "Dimasukkan Oleh"
+msgstr ""
 
 #: UI/timecards/timecard.html:20
 msgid "Entered For"
@@ -3025,7 +3024,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:480
 msgid "Entered at"
-msgstr "Di Masukkan Di"
+msgstr ""
 
 #: t/data/04-complex_template.html:629 UI/Contact/divs/notes.html:63
 msgid "Entered at: [_1]"
@@ -3034,7 +3033,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/contact.pm:296
 #: lib/LedgerSMB/Scripts/report_aging.pm:136 sql/Pg-database.sql:1036
 msgid "Entity"
-msgstr "Entiti"
+msgstr ""
 
 #: UI/lib/report_base.html:47
 msgid "Entity Class"
@@ -3042,11 +3041,11 @@ msgstr ""
 
 #: old/bin/ir.pl:443 old/bin/is.pl:476 old/bin/oe.pl:443
 msgid "Entity Code"
-msgstr "Kod Entiti"
+msgstr ""
 
 #: old/bin/aa.pl:600
 msgid "Entity Control Code"
-msgstr "Kod Kawalan entiti"
+msgstr ""
 
 #: sql/Pg-database.sql:1038
 msgid "Entity Credit Account"
@@ -3058,7 +3057,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/GL.pm:120
 msgid "Entry ID"
-msgstr "Masukkan ID"
+msgstr ""
 
 #: old/bin/is.pl:1104 old/bin/printer.pl:104 UI/templates/widget.html:45
 msgid "Envelope"
@@ -3071,7 +3070,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:227 lib/LedgerSMB/Report/PNL.pm:209
 #: UI/accounts/edit.html:216 UI/Reports/filters/gl.html:151
 msgid "Equity"
-msgstr ""
+msgstr "股權"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:213
 msgid "Equity & Liabilities"
@@ -3087,15 +3086,15 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:453
 msgid "Error creating backup file"
-msgstr "Kesalahan membina backup data"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/vouchers.pm:128
 msgid "Error creating batch.  Please try again."
-msgstr "Kesalahan mencipta kumpulan. sila cuba lagi. "
+msgstr ""
 
 #: lib/LedgerSMB.pm:498
 msgid "Error from Function:"
-msgstr "Kesalahan daripada fungsi"
+msgstr ""
 
 #: UI/src/components/ConfigTable.vue:66
 msgid "Error loading data..."
@@ -3103,7 +3102,7 @@ msgstr ""
 
 #: old/lib/LedgerSMB/DBObject/Account.pm:144
 msgid "Error: Cannot include summary account in other dropdown menus"
-msgstr "Ralat: Tidak boleh termasuk ringkasan akaun selain menu dropdown"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:590
 msgid "Est. Life"
@@ -3111,11 +3110,11 @@ msgstr ""
 
 #: old/bin/am.pl:313 old/bin/arap.pl:539
 msgid "Every"
-msgstr "Setiap"
+msgstr "每"
 
 #: old/bin/aa.pl:847 old/bin/ir.pl:916 old/bin/is.pl:1013
 msgid "Exch"
-msgstr "Tukar"
+msgstr "汇率"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:117
 #: lib/LedgerSMB/Scripts/payment.pm:940 old/bin/aa.pl:441 old/bin/ir.pl:341
@@ -3124,11 +3123,11 @@ msgstr "Tukar"
 #: UI/payments/payments_detail.html:157 UI/payments/use_overpayment2.html:98
 #: UI/Reports/filters/overpayments.html:50 UI/Reports/filters/payments.html:113
 msgid "Exchange Rate"
-msgstr "Kadar Pertukaran"
+msgstr "汇率"
 
 #: old/bin/aa.pl:1398 old/bin/ir.pl:1376 old/bin/is.pl:1483
 msgid "Exchange rate for payment missing!"
-msgstr "Kadar pertukaran pembayaran hilang!"
+msgstr "未指明付款的汇率"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1240
 msgid "Exchange rate hasn't been defined!"
@@ -3136,7 +3135,7 @@ msgstr ""
 
 #: old/bin/aa.pl:1380 old/bin/ir.pl:1356 old/bin/is.pl:1463 old/bin/oe.pl:1272
 msgid "Exchange rate missing!"
-msgstr "Kadar pertukaran hilang!"
+msgstr "未指明匯率！"
 
 #: UI/email.html:130
 msgid "Expansion"
@@ -3144,12 +3143,12 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:104
 msgid "Expected"
-msgstr "Telah dijangka"
+msgstr ""
 
 #: old/bin/ic.pl:656 UI/accounts/edit.html:219 UI/accounts/edit.html:475
 #: UI/accounts/edit.html:514 UI/Reports/filters/gl.html:167
 msgid "Expense"
-msgstr "perbelanjaan"
+msgstr "費用"
 
 #: UI/asset/edit_asset.html:189
 msgid "Expense Account"
@@ -3157,7 +3156,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:378
 msgid "Expense/Asset"
-msgstr ""
+msgstr "費用/資產"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:196 lib/LedgerSMB/Report/PNL.pm:188
 msgid "Expenses"
@@ -3169,7 +3168,7 @@ msgstr ""
 
 #: old/bin/io.pl:244 templates/demo/invoice.html:110
 msgid "Extended"
-msgstr "Dilanjutkan"
+msgstr "巳扩大"
 
 #: UI/timecards/timecard-week.html:105
 msgid "Extra Used"
@@ -3182,7 +3181,7 @@ msgstr ""
 #: UI/budgetting/budget_entry.html:59 UI/journal/journal_entry.html:106
 #: UI/journal/journal_entry.html:132
 msgid "FX"
-msgstr ""
+msgstr "外幣兌換"
 
 #: UI/Reports/filters/gl.html:258
 msgid "FX Credit"
@@ -3206,11 +3205,11 @@ msgstr ""
 
 #: old/bin/pe.pl:1220
 msgid "Failed to save order!"
-msgstr "Gagal menyimpan Pesanan!"
+msgstr "儲存訂單時出錯！"
 
 #: sql/Pg-database.sql:785
 msgid "Fax"
-msgstr ""
+msgstr "傳真"
 
 #: templates/demo/ar_transaction.html:48 templates/demo/ar_transaction.tex:43
 #: templates/demo/letterhead.tex:49
@@ -3240,11 +3239,11 @@ msgstr ""
 
 #: old/bin/aa.pl:85 old/bin/gl.pl:77 old/bin/io.pl:79
 msgid "Feb"
-msgstr "Feb"
+msgstr "二月"
 
 #: lib/LedgerSMB.pm:571 old/bin/aa.pl:71 old/bin/gl.pl:63 old/bin/io.pl:65
 msgid "February"
-msgstr "Februari"
+msgstr "二月"
 
 #: old/lib/LedgerSMB/Num2text.pm:84
 msgid "Fifteen"
@@ -3256,11 +3255,11 @@ msgstr ""
 
 #: UI/file/attachment_screen.html:36 UI/file/internal-file-list.html:67
 msgid "File"
-msgstr "Fail"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:1067
 msgid "File Imported"
-msgstr "Fail Masukkan"
+msgstr ""
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:50
 #: lib/LedgerSMB/Report/File/Internal.pm:48
@@ -3278,18 +3277,18 @@ msgstr ""
 #: UI/Contact/divs/files.html:9 UI/lib/attachments.html:8
 #: UI/lib/attachments.html:29
 msgid "File name"
-msgstr "Nama Fail"
+msgstr ""
 
 #: old/bin/aa.pl:1098 old/bin/aa.pl:1117 old/bin/ic.pl:873 old/bin/ic.pl:892
 #: old/bin/ir.pl:1051 old/bin/ir.pl:1070 old/bin/is.pl:1149 old/bin/is.pl:1168
 #: old/bin/oe.pl:943 old/bin/oe.pl:962 UI/lib/attachments.html:9
 #: UI/lib/attachments.html:30
 msgid "File type"
-msgstr "Jenis Fail"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/contact.pm:196 UI/Contact/divs/files.html:2
 msgid "Files"
-msgstr "Fail"
+msgstr ""
 
 #: UI/Contact/divs/files.html:35
 msgid "Files attached to Credit Account"
@@ -3337,19 +3336,19 @@ msgstr ""
 
 #: UI/accounts/edit.html:490 sql/Pg-database.sql:2687
 msgid "Fixed Assets"
-msgstr "Aset tetap"
+msgstr ""
 
 #: old/bin/arap.pl:544
 msgid "For"
-msgstr "Untuk"
+msgstr "重覆"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:109
 msgid "Foreign Exchange Gain"
-msgstr "Keuntungan Pertukaran Asing"
+msgstr "外匯收益"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:112
 msgid "Foreign Exchange Loss"
-msgstr "Kerugian Pertukaran Asing"
+msgstr "外汇损失"
 
 #: UI/Reports/filters/taxforms.html:22
 msgid "Form"
@@ -3377,7 +3376,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:130
 msgid "Fri"
-msgstr "Jumaat"
+msgstr ""
 
 #: old/bin/ic.pl:1114 old/bin/oe.pl:2236 old/bin/pe.pl:745
 #: templates/demo/bin_list.html:40 templates/demo/bin_list.tex:50
@@ -3391,11 +3390,11 @@ msgstr "Jumaat"
 #: UI/Reports/filters/purchase_history.html:137
 #: UI/Reports/filters/search_goods.html:222
 msgid "From"
-msgstr "Dari"
+msgstr "从"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:186
 msgid "From Amount"
-msgstr "Daripada Jumlah"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:167
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:188
@@ -3406,7 +3405,7 @@ msgstr "Daripada Jumlah"
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:148
 #: UI/Reports/filters/unapproved.html:35
 msgid "From Date"
-msgstr "Tarikh Mula"
+msgstr ""
 
 #: UI/asset/import_asset.html:20 UI/Configuration/rate.html:80
 msgid "From File"
@@ -3414,11 +3413,11 @@ msgstr ""
 
 #: old/bin/oe.pl:2249
 msgid "From Warehouse"
-msgstr "Daripada gudang"
+msgstr "從貨倉"
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:196
 msgid "From date"
-msgstr "Dari tarikh"
+msgstr ""
 
 #: UI/asset/begin_report.html:31 UI/Contact/divs/credit.html:490
 #: UI/Reports/filters/balance_sheet.html:201
@@ -3429,7 +3428,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:1150
 msgid "Full Permissions"
-msgstr "Permintaan penuh"
+msgstr ""
 
 #: lib/LedgerSMB/Report/COA.pm:99 lib/LedgerSMB/Report/GL.pm:188
 #: lib/LedgerSMB/Report/Listings/GIFI.pm:48
@@ -3441,7 +3440,7 @@ msgstr "Permintaan penuh"
 #: UI/Reports/filters/income_statement.html:66 UI/setup/select_coa.html:53
 #: sql/Pg-database.sql:2615
 msgid "GIFI"
-msgstr "GIFI"
+msgstr "財務訊息通用索引(GIFI)"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:575 lib/LedgerSMB/Upgrade_Tests.pm:637
 #: lib/LedgerSMB/Upgrade_Tests.pm:656
@@ -3451,11 +3450,11 @@ msgstr ""
 #: old/bin/am.pl:322 UI/Reports/filters/unapproved.html:7
 #: UI/setup/complete.html:23 UI/setup/confirm_operation.html:121
 msgid "GL"
-msgstr "GL"
+msgstr "總帳"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:116
 msgid "GL Reference Number"
-msgstr "Nombor rujukan GL"
+msgstr "總帳索引編號"
 
 #: UI/accounts/edit.html:523
 msgid "Gain"
@@ -3463,7 +3462,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:837
 msgid "Gain (Loss)"
-msgstr "Dapat (Kerugian)"
+msgstr ""
 
 #: UI/asset/begin_approval.html:45
 msgid "Gain Account"
@@ -3479,11 +3478,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:2682
 msgid "General Journal"
-msgstr "Jurnal umum"
+msgstr ""
 
 #: lib/LedgerSMB/Report/GL.pm:226
 msgid "General Ledger Report"
-msgstr "Laporan Lajuran Umum"
+msgstr ""
 
 #: UI/Reports/filters/gl.html:15
 msgid "General Ledger Reports"
@@ -3492,7 +3491,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/order.pm:124 UI/Reports/aging_report.html:83
 #: sql/Pg-database.sql:2541 sql/Pg-database.sql:2579
 msgid "Generate"
-msgstr "Hasilkan"
+msgstr "生成"
 
 #: UI/Contact/divs/company.html:135 UI/Contact/divs/person.html:142
 msgid "Generate Control Code"
@@ -3500,23 +3499,23 @@ msgstr ""
 
 #: old/bin/oe.pl:2616
 msgid "Generate Orders"
-msgstr "Menjana pesanan"
+msgstr "产生订单"
 
 #: old/bin/oe.pl:2521
 msgid "Generate Purchase Orders"
-msgstr "Menjana Pesanan Pembelian"
+msgstr "生成採購單"
 
 #: lib/LedgerSMB/Scripts/order.pm:66
 msgid "Generate Purchase Orders from Sales Orders"
-msgstr "Menjana Pesanan Pembelian dari Jualan Pesanan"
+msgstr ""
 
 #: old/bin/pe.pl:1045 old/bin/pe.pl:780 old/bin/pe.pl:955
 msgid "Generate Sales Orders"
-msgstr "Menjana Pesanan Jualan"
+msgstr "生成銷貨單"
 
 #: lib/LedgerSMB/Scripts/order.pm:79
 msgid "Generate Sales Orders from Purchase Orders"
-msgstr "Menjana Pesanan Pembelian dari Jualan Pesanan"
+msgstr ""
 
 #: sql/Pg-database.sql:786
 msgid "Generic Jabber"
@@ -3536,7 +3535,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:341 sql/Pg-database.sql:2683
 msgid "Goods and Services"
-msgstr "Barangan dan Servis"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:180
 msgid "Goods and Services History"
@@ -3550,23 +3549,23 @@ msgstr ""
 #: old/bin/ic.pl:418 old/bin/io.pl:268 old/bin/oe.pl:2159 old/bin/oe.pl:2232
 #: old/bin/oe.pl:2267 old/bin/pe.pl:127
 msgid "Group"
-msgstr "Kumpulan"
+msgstr "组"
 
 #: old/bin/pe.pl:185
 msgid "Group Translations"
-msgstr "Kumpulan Terjemahan"
+msgstr "组的翻译"
 
 #: old/bin/pe.pl:79
 msgid "Group deleted!"
-msgstr "Kumpulan dipadam"
+msgstr "組別已被刪除！"
 
 #: old/bin/pe.pl:61
 msgid "Group missing!"
-msgstr "Kumpulan hilang"
+msgstr "未指明的组"
 
 #: old/bin/pe.pl:63
 msgid "Group saved!"
-msgstr "Kumpulan disimpan"
+msgstr "巳储存的组"
 
 #: sql/Pg-database.sql:782
 msgid "Gtalk"
@@ -3574,7 +3573,7 @@ msgstr ""
 
 #: t/data/04-complex_template.html:25 sql/Pg-database.sql:2678
 msgid "HR"
-msgstr "HR"
+msgstr "人事管理"
 
 #: UI/Reports/balance_sheet.html:113 UI/Reports/PNL.html:113
 msgid "HTML"
@@ -3582,11 +3581,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:2636
 msgid "HTML Templates"
-msgstr "Template HTML"
+msgstr "HTML 模版"
 
 #: UI/accounts/edit.html:21 UI/accounts/edit.html:67 UI/accounts/edit.html:172
 msgid "Heading"
-msgstr ""
+msgstr "標題"
 
 #: UI/Contact/divs/credit.html:472 UI/Reports/filters/balance_sheet.html:183
 #: UI/Reports/filters/income_statement.html:205
@@ -3599,7 +3598,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:787
 msgid "Home Phone"
-msgstr ""
+msgstr "住宅電話"
 
 #: sql/Pg-database.sql:518
 msgid "Hot Lead"
@@ -3636,7 +3635,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:131
 #: UI/Reports/filters/invoice_search.html:255 UI/Reports/filters/orders.html:121
 msgid "ID"
-msgstr "ID"
+msgstr "識別編號"
 
 #: sql/Pg-database.sql:784
 msgid "IRC"
@@ -3653,37 +3652,37 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Search.pm:283 old/bin/ic.pl:496
 #: UI/Reports/filters/search_goods.html:380
 msgid "Image"
-msgstr "Gambar"
+msgstr "影像"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:145
 msgid "Images in Templates"
-msgstr "Imej untuk templat"
+msgstr ""
 
 #: UI/setup/edit_user.html:63 sql/Pg-database.sql:2542 sql/Pg-database.sql:2652
 #: sql/Pg-database.sql:2667 sql/Pg-database.sql:2672 UI/src/views/SIC.vue:40
 #: UI/src/views/GIFI.vue:40
 msgid "Import"
-msgstr "Import"
+msgstr ""
 
 #: sql/Pg-database.sql:2545
 msgid "Import AP Batch"
-msgstr "Import kumpulan AP"
+msgstr ""
 
 #: sql/Pg-database.sql:2544
 msgid "Import AR Batch"
-msgstr "Import kumpulan AR"
+msgstr ""
 
 #: sql/Pg-database.sql:2659 sql/Pg-database.sql:2663
 msgid "Import Batch"
-msgstr "Import kumpulan"
+msgstr ""
 
 #: sql/Pg-database.sql:2614
 msgid "Import Chart"
-msgstr "Carta Kemasukan"
+msgstr ""
 
 #: sql/Pg-database.sql:2671
 msgid "Import GIFI"
-msgstr "Import GIFI"
+msgstr ""
 
 #: sql/Pg-database.sql:2539
 msgid "Import Inventory"
@@ -3707,11 +3706,11 @@ msgstr ""
 
 #: old/bin/printer.pl:118
 msgid "In-line"
-msgstr "Selaras"
+msgstr "行内"
 
 #: old/bin/arap.pl:366
 msgid "Include Payment"
-msgstr "Termasuk pembayaran"
+msgstr "包括付款"
 
 #: UI/Reports/co/filter_bm.html:67 UI/Reports/co/filter_cd.html:53
 #: UI/Reports/filters/aging.html:70 UI/Reports/filters/gl.html:114
@@ -3720,11 +3719,11 @@ msgstr "Termasuk pembayaran"
 #: UI/Reports/filters/purchase_history.html:160
 #: UI/Reports/filters/search_goods.html:249
 msgid "Include in Report"
-msgstr "Masukkan didalam laporan"
+msgstr "一併顯示"
 
 #: UI/accounts/edit.html:316
 msgid "Include in drop-down menus"
-msgstr ""
+msgstr "包含在下拉式選單中"
 
 #: UI/Reports/filters/inventory_adj.html:23
 msgid "Includes Part"
@@ -3732,7 +3731,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:87
 msgid "Including partnumber"
-msgstr "Termasuk Nombor Bahagian"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:201 lib/LedgerSMB/Report/PNL.pm:194
 #: lib/LedgerSMB/Scripts/configuration.pm:103 old/bin/ic.pl:519
@@ -3740,16 +3739,16 @@ msgstr "Termasuk Nombor Bahagian"
 #: UI/accounts/edit.html:427 UI/accounts/edit.html:466
 #: UI/Reports/filters/gl.html:159
 msgid "Income"
-msgstr "Pendapatan"
+msgstr "收入"
 
 #: lib/LedgerSMB/Report/Payroll/Income_Types.pm:38 UI/payroll/income.html:29
 msgid "Income Class"
-msgstr "Kelas Pendapatan"
+msgstr ""
 
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:47 templates/demo/PNL.tex:43
 #: UI/Reports/filters/income_statement.html:15 sql/Pg-database.sql:2624
 msgid "Income Statement"
-msgstr "Penyata Pendapatan"
+msgstr "損益表"
 
 #: UI/payroll/income.html:3
 msgid "Income Type"
@@ -3757,7 +3756,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Payroll/Income_Types.pm:53
 msgid "Income Types"
-msgstr "Jenis Pendapatan"
+msgstr ""
 
 #: UI/templates/widget.html:35
 msgid "Income statement"
@@ -3769,11 +3768,11 @@ msgstr ""
 
 #: old/lib/LedgerSMB/DBObject/User.pm:71
 msgid "Incorrect Password"
-msgstr "Kata Laluan Tidak Tepat"
+msgstr ""
 
 #: old/bin/ic.pl:1274
 msgid "Individual Items"
-msgstr "Barang Individu"
+msgstr "個別的項目"
 
 #: templates/demo/invoice.tex:53
 msgid ""
@@ -3784,7 +3783,7 @@ msgstr ""
 
 #: lib/LedgerSMB.pm:490
 msgid "Internal Database Error"
-msgstr "Kesalahan Dalaman Pangkalan Data"
+msgstr ""
 
 #: lib/LedgerSMB/Report/File/Internal.pm:70
 msgid "Internal Files"
@@ -3793,19 +3792,19 @@ msgstr ""
 #: old/bin/aa.pl:817 old/bin/ir.pl:813 old/bin/ir.pl:821 old/bin/is.pl:910
 #: old/bin/is.pl:918 old/bin/oe.pl:833
 msgid "Internal Notes"
-msgstr "Nota Dalaman"
+msgstr "內部備忘錄"
 
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:75
 msgid "Invalid Reporting Basis"
-msgstr "Laporan Asas Tidak Sah"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:449
 msgid "Invalid backup request"
-msgstr "Permintaan backup tidak sah"
+msgstr ""
 
 #: lib/LedgerSMB.pm:493
 msgid "Invalid date/time entered"
-msgstr "Tarikh/Masa tidak sah dimasukkan"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:1059 lib/LedgerSMB/Scripts/setup.pm:1066
 msgid "Invalid request"
@@ -3813,12 +3812,12 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/recon.pm:340
 msgid "Invalid statement balance.  Hint: Try entering a number"
-msgstr "Baki kenyataan tidak sah. Petunjuk: Sila masukkan nombor"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:100 old/bin/ic.pl:515
 #: UI/accounts/edit.html:291 sql/Pg-database.sql:2705
 msgid "Inventory"
-msgstr "inventori"
+msgstr "库存"
 
 #: UI/Reports/filters/inventory_activity.html:5 sql/Pg-database.sql:2543
 msgid "Inventory Activity"
@@ -3830,11 +3829,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:72
 msgid "Inventory Adjustment Details"
-msgstr "Detail Inventori Pelarasan"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:73
 msgid "Inventory Adjustments"
-msgstr "Inventori Pelarasan"
+msgstr ""
 
 #: sql/Pg-database.sql:2706
 msgid "Inventory and COGS"
@@ -3843,7 +3842,7 @@ msgstr ""
 #: old/bin/ic.pl:1800
 msgid ""
 "Inventory quantity must be zero before you can set this assembly obsolete!"
-msgstr ""
+msgstr "在停用此项组合品之前, 存货数量必需为零!"
 
 #: old/bin/ic.pl:1799
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
@@ -3851,11 +3850,11 @@ msgstr ""
 
 #: old/bin/oe.pl:2104
 msgid "Inventory saved!"
-msgstr "Inventori disimpan"
+msgstr "已儲存存貨！"
 
 #: old/bin/oe.pl:2374
 msgid "Inventory transferred!"
-msgstr "Inventori di hantar"
+msgstr "轉移的存貨！"
 
 #: lib/LedgerSMB/Report/Aging.pm:114
 #: lib/LedgerSMB/Report/Inventory/Search.pm:303
@@ -3867,7 +3866,7 @@ msgstr "Inventori di hantar"
 #: templates/demo/printPayment.html:44 UI/templates/widget.html:47
 #: sql/Pg-database.sql:1037 sql/Pg-database.sql:2608 sql/Pg-database.sql:2707
 msgid "Invoice"
-msgstr "Invois"
+msgstr "发票"
 
 #: templates/demo/ap_transaction.html:56 templates/demo/ap_transaction.tex:75
 #: templates/demo/ar_transaction.html:54 templates/demo/ar_transaction.tex:92
@@ -3893,11 +3892,11 @@ msgstr ""
 #: old/bin/is.pl:548 UI/Reports/filters/invoice_outstanding.html:158
 #: UI/Reports/filters/invoice_search.html:283
 msgid "Invoice Date"
-msgstr "Tarikh Invois"
+msgstr "发票日期"
 
 #: old/bin/aa.pl:1364 old/bin/io.pl:1259 old/bin/ir.pl:1341 old/bin/is.pl:1448
 msgid "Invoice Date missing!"
-msgstr "Tarikh Invois hilang!"
+msgstr "未指明发票日期!"
 
 #: templates/demo/receipt.tex:79
 msgid "Invoice No."
@@ -3915,15 +3914,15 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:89
 #: UI/Reports/filters/invoice_search.html:262
 msgid "Invoice Number"
-msgstr "Nombor Invois"
+msgstr "发票编号"
 
 #: old/bin/io.pl:1269
 msgid "Invoice Number missing!"
-msgstr ""
+msgstr "未指明發票編號！"
 
 #: lib/LedgerSMB/Report/PNL/Invoice.pm:72
 msgid "Invoice Profit/Loss"
-msgstr "Invois Keuntungan/Kerugian"
+msgstr ""
 
 #: UI/Reports/filters/invoice_outstanding.html:71
 #: UI/Reports/filters/invoice_search.html:171
@@ -3936,7 +3935,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2555 sql/Pg-database.sql:2558
 msgid "Invoice Vouchers"
-msgstr "invois Baucer"
+msgstr ""
 
 #: UI/payments/use_overpayment2.html:150
 msgid "Invoice date"
@@ -3948,7 +3947,7 @@ msgstr ""
 
 #: old/lib/LedgerSMB/DBObject/Asset.pm:255
 msgid "Invoice not found"
-msgstr "Invois tidak dijumpai"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:101
 msgid "Invoice sum"
@@ -3970,15 +3969,15 @@ msgstr ""
 #: templates/demo/work_order.html:98 templates/demo/work_order.tex:139
 #: UI/payments/payment2.html:344
 msgid "Item"
-msgstr "Barang"
+msgstr ""
 
 #: old/bin/ic.pl:1979
 msgid "Item deleted!"
-msgstr "Barang dipadam"
+msgstr "已刪除項目！"
 
 #: old/bin/io.pl:609
 msgid "Item not on file!"
-msgstr "Item tiada di dalam fail!"
+msgstr "查无此项目"
 
 #: UI/Reports/filters/search_goods.html:128
 msgid "Items Found In"
@@ -3998,11 +3997,11 @@ msgstr ""
 
 #: old/bin/aa.pl:84 old/bin/gl.pl:76 old/bin/io.pl:78
 msgid "Jan"
-msgstr "Jan"
+msgstr "一月"
 
 #: lib/LedgerSMB.pm:570 old/bin/aa.pl:70 old/bin/gl.pl:62 old/bin/io.pl:64
 msgid "January"
-msgstr "Januari"
+msgstr "一月"
 
 #: UI/src/components/ServerUI.js:109
 msgid "JavaScript error: "
@@ -4022,7 +4021,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:1039 sql/Pg-database.sql:2590
 msgid "Journal Entry"
-msgstr "jurnal kedatangan"
+msgstr ""
 
 #: UI/setup/complete.html:24 UI/setup/confirm_operation.html:122
 msgid "Journal Lines"
@@ -4030,20 +4029,20 @@ msgstr ""
 
 #: old/bin/aa.pl:90 old/bin/gl.pl:82 old/bin/io.pl:84
 msgid "Jul"
-msgstr "Jul"
+msgstr "七月"
 
 #: lib/LedgerSMB.pm:576 old/bin/aa.pl:76 old/bin/gl.pl:68 old/bin/io.pl:70
 msgid "July"
-msgstr "Julai"
+msgstr "七月"
 
 #: old/bin/aa.pl:89 old/bin/gl.pl:81 old/bin/io.pl:83
 msgid "Jun"
-msgstr "Jun"
+msgstr "六月"
 
 #: lib/LedgerSMB.pm:575 old/bin/aa.pl:75 old/bin/gl.pl:67 old/bin/io.pl:69
 #: t/data/04-strings-for-translation.html:6
 msgid "June"
-msgstr "Jun"
+msgstr "六月"
 
 #: templates/demo/balance_sheet.html:326
 msgid "Key Ratios"
@@ -4051,7 +4050,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2635
 msgid "LaTeX Templates"
-msgstr "Template LaTeX"
+msgstr "LaTex 模版"
 
 #: lib/LedgerSMB/Report/Listings/Asset_Class.pm:74
 #: lib/LedgerSMB/Report/Listings/Asset_Class.pm:99
@@ -4059,7 +4058,7 @@ msgstr "Template LaTeX"
 #: lib/LedgerSMB/Report/Payroll/Income_Types.pm:41
 #: UI/business_units/list_classes.html:9
 msgid "Label"
-msgstr "Label"
+msgstr ""
 
 #: UI/asset/edit_class.html:18 UI/asset/search_class.html:13
 msgid "Label:"
@@ -4067,7 +4066,7 @@ msgstr ""
 
 #: old/bin/ic.pl:687
 msgid "Labor/Overhead"
-msgstr "Tenaga Kerja/Overhead"
+msgstr "劳工/经常费用"
 
 #: templates/demo/timecard.html:95 templates/demo/timecard.tex:55
 msgid "Labor/Service Code"
@@ -4081,11 +4080,11 @@ msgstr ""
 #: UI/Reports/filters/income_statement.html:259 UI/users/preferences.html:100
 #: sql/Pg-database.sql:2638
 msgid "Language"
-msgstr "Bahasa"
+msgstr "語言"
 
 #: old/bin/pe.pl:396
 msgid "Languages not defined!"
-msgstr "Bahasa tidak ditakrifkan"
+msgstr "不能辨認語言！"
 
 #: t/data/04-complex_template.html:67
 msgid "Last"
@@ -4095,7 +4094,7 @@ msgstr ""
 #: old/bin/ic.pl:631 UI/Contact/pricelist.csv:17 UI/Contact/pricelist.html:31
 #: UI/Contact/pricelist.tex:25 UI/Reports/filters/search_goods.html:324
 msgid "Last Cost"
-msgstr "Kos Lepas"
+msgstr "最后成本"
 
 #: UI/Contact/divs/employee.html:57
 msgid "Last Name"
@@ -4103,7 +4102,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:154
 msgid "Last Updated"
-msgstr "Kemaskini Terakhir"
+msgstr ""
 
 #: UI/setup/new_user.html:124
 msgid "Last name"
@@ -4111,7 +4110,7 @@ msgstr ""
 
 #: old/bin/oe.pl:2517 sql/Pg-database.sql:516
 msgid "Lead"
-msgstr "Utama"
+msgstr "交付時間"
 
 #: UI/Contact/pricelist.csv:23 UI/Contact/pricelist.html:37
 #: UI/Contact/pricelist.tex:33
@@ -4120,7 +4119,7 @@ msgstr ""
 
 #: old/bin/ic.pl:1019
 msgid "Leadtime"
-msgstr "Tempoh Proses"
+msgstr "總需時"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:97
 msgid "Ledger sum"
@@ -4209,7 +4208,7 @@ msgstr ""
 
 #: UI/templates/widget.html:49 sql/Pg-database.sql:2720 sql/Pg-database.sql:2735
 msgid "Letterhead"
-msgstr "Tajuk Surat"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:220 lib/LedgerSMB/Report/PNL.pm:204
 msgid "Liabilities"
@@ -4217,7 +4216,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:215 UI/Reports/filters/gl.html:143
 msgid "Liability"
-msgstr ""
+msgstr "負債"
 
 #: UI/Contact/divs/company.html:124
 msgid "License Number"
@@ -4233,31 +4232,31 @@ msgstr ""
 
 #: UI/Reports/filters/search_goods.html:338
 msgid "Line Total"
-msgstr ""
+msgstr "总列数"
 
 #: old/bin/ic.pl:759
 msgid "Link Accounts"
-msgstr "Akaun Pautan"
+msgstr "連結帳戶"
 
 #: old/bin/ic.pl:1262
 msgid "List"
-msgstr "Senarai"
+msgstr "牌价"
 
 #: sql/Pg-database.sql:2603
 msgid "List Businesses"
-msgstr "Senarai Perniagaan"
+msgstr "列出業務"
 
 #: sql/Pg-database.sql:2649
 msgid "List Classes"
-msgstr "Senarai kelas"
+msgstr ""
 
 #: sql/Pg-database.sql:2670
 msgid "List GIFI"
-msgstr "Senarai GIFI"
+msgstr "列出 GIFI"
 
 #: sql/Pg-database.sql:2605
 msgid "List Languages"
-msgstr "senarai Bahasa"
+msgstr "列出語言"
 
 #: UI/Reports/filters/overpayments.html:4
 msgid "List Overpayments"
@@ -4266,15 +4265,15 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Search.pm:248 old/bin/ic.pl:435
 #: UI/Reports/filters/search_goods.html:308
 msgid "List Price"
-msgstr "Senarai harga"
+msgstr "列出价"
 
 #: sql/Pg-database.sql:2607
 msgid "List SIC"
-msgstr "Senarai SIC"
+msgstr "列出SIC"
 
 #: sql/Pg-database.sql:2643
 msgid "List Tax Forms"
-msgstr "Senarai borang cukai"
+msgstr ""
 
 #: UI/business_units/list_classes.html:113
 msgid "List Units"
@@ -4286,7 +4285,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2601
 msgid "List Warehouse"
-msgstr "Senarai Gudang"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Business_Type.pm:67
 msgid "List of Business Types"
@@ -4308,7 +4307,7 @@ msgstr ""
 #: UI/asset/edit_asset.html:137 UI/asset/search_asset.html:124
 #: UI/payments/payment2.html:36 UI/payments/use_overpayment2.html:32
 msgid "Location"
-msgstr "Lokasi"
+msgstr ""
 
 #: t/data/04-complex_template.html:368 UI/Contact/divs/address.html:6
 msgid "Locations"
@@ -4332,7 +4331,7 @@ msgstr ""
 
 #: UI/setup/credentials.html:91 UI/src/views/LoginPage.vue:40
 msgid "Login"
-msgstr "Daftar masuk"
+msgstr "登入"
 
 #: lib/LedgerSMB/Scripts/setup.pm:1023
 msgid "Login?"
@@ -4340,7 +4339,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2688
 msgid "Logout"
-msgstr "Log keluar"
+msgstr "登出"
 
 #: UI/logout.html:8
 msgid "Logout Successful"
@@ -4360,13 +4359,13 @@ msgstr ""
 
 #: sql/Pg-database.sql:645
 msgid "Mailing"
-msgstr "Surat-menyurat"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:275 old/bin/ic.pl:974
 #: UI/Reports/filters/search_goods.html:86
 #: UI/Reports/filters/search_goods.html:401
 msgid "Make"
-msgstr "Buat"
+msgstr "制造"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:482
 msgid "Make employee numbers unique"
@@ -4392,7 +4391,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:1149
 msgid "Manage Users"
-msgstr "Pengguna diurus"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:286
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:311
@@ -4401,7 +4400,7 @@ msgstr "Pengguna diurus"
 #: UI/Reports/filters/invoice_outstanding.html:184
 #: UI/Reports/filters/invoice_search.html:309
 msgid "Manager"
-msgstr "Pengurus"
+msgstr "經理"
 
 #: t/data/04-complex_template.html:98
 msgid "Manager:"
@@ -4409,33 +4408,33 @@ msgstr ""
 
 #: old/bin/ir.pl:662 old/bin/is.pl:429 old/bin/is.pl:751
 msgid "Manual"
-msgstr "Manual"
+msgstr ""
 
 #: old/bin/aa.pl:86 old/bin/gl.pl:78 old/bin/io.pl:80
 msgid "Mar"
-msgstr "Mac"
+msgstr "三月"
 
 #: lib/LedgerSMB.pm:572 old/bin/aa.pl:72 old/bin/gl.pl:64 old/bin/io.pl:66
 msgid "March"
-msgstr "Mac"
+msgstr "三月"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:267 old/bin/ic.pl:458
 #: old/bin/ic.pl:637 UI/Reports/filters/search_goods.html:345
 msgid "Markup"
-msgstr "Tanda"
+msgstr "漲價"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:141
 msgid "Max Invoices per Check Stub"
-msgstr "Max Invois Setiap Cek Resit "
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:139
 msgid "Max per dropdown"
-msgstr "Maksima setiap penurunan"
+msgstr ""
 
 #: lib/LedgerSMB.pm:574 old/bin/aa.pl:74 old/bin/aa.pl:88 old/bin/gl.pl:66
 #: old/bin/gl.pl:80 old/bin/io.pl:68 old/bin/io.pl:82
 msgid "May"
-msgstr "Mei"
+msgstr "五月"
 
 #: lib/LedgerSMB/Report/GL.pm:158 lib/LedgerSMB/Scripts/payment.pm:935
 #: old/bin/aa.pl:851 old/bin/ir.pl:700 old/bin/ir.pl:920 old/bin/is.pl:1017
@@ -4443,7 +4442,7 @@ msgstr "Mei"
 #: UI/journal/journal_entry.html:136 UI/payments/payment2.html:348
 #: UI/Reports/filters/gl.html:73 UI/Reports/filters/gl.html:273
 msgid "Memo"
-msgstr "Memo"
+msgstr "備忘錄"
 
 #: UI/payments/payment2.html:230
 msgid "Memo to help retrieval"
@@ -4451,7 +4450,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:87
 msgid "Method"
-msgstr "Cara"
+msgstr "方法"
 
 #: UI/asset/edit_asset.html:101
 msgid "Method Default"
@@ -4461,7 +4460,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:116
 #: UI/Reports/filters/search_goods.html:394
 msgid "Microfiche"
-msgstr "Mikrofis"
+msgstr "單片縮影膠片"
 
 #: t/data/04-complex_template.html:60
 msgid "Middle"
@@ -4495,7 +4494,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:131
 msgid "Misc Settings"
-msgstr "Tetapan Misc"
+msgstr ""
 
 #: UI/reconciliation/report.html:240
 msgid "Mismatched Transactions (from upload)"
@@ -4503,13 +4502,13 @@ msgstr ""
 
 #: sql/Pg-database.sql:706
 msgid "Miss."
-msgstr "Cik"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:279 old/bin/ic.pl:975
 #: UI/Reports/filters/search_goods.html:96
 #: UI/Reports/filters/search_goods.html:408
 msgid "Model"
-msgstr "Model"
+msgstr "型号"
 
 #: UI/src/components/ConfigTableRow.vue:18
 msgid "Modify"
@@ -4517,16 +4516,16 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:114
 msgid "Mon"
-msgstr "Isnin"
+msgstr ""
 
 #: old/bin/am.pl:269 old/bin/pe.pl:731 UI/lib/report_base.html:177
 #: UI/lib/report_base.html:259 UI/Reports/co/filter_bm.html:57
 msgid "Month"
-msgstr "Bulan"
+msgstr "月份"
 
 #: old/bin/arap.pl:518
 msgid "Month(s)"
-msgstr "Bulan"
+msgstr "月"
 
 #: old/bin/am.pl:270
 msgid "Months"
@@ -4538,15 +4537,15 @@ msgstr ""
 
 #: sql/Pg-database.sql:707
 msgid "Mr."
-msgstr "Encik"
+msgstr ""
 
 #: sql/Pg-database.sql:708
 msgid "Mrs."
-msgstr "Puan"
+msgstr ""
 
 #: sql/Pg-database.sql:709
 msgid "Ms."
-msgstr "Cik"
+msgstr ""
 
 #: UI/templates/widget.html:43
 msgid "Multiple checks"
@@ -4577,7 +4576,7 @@ msgstr ""
 #: UI/Reports/filters/contact_search.html:33
 #: UI/Reports/filters/overpayments.html:31
 msgid "Name"
-msgstr "Nama"
+msgstr "名稱"
 
 #: t/data/04-complex_template.html:50 t/data/04-complex_template.html:160
 msgid "Name:"
@@ -4585,7 +4584,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:127 sql/Pg-database.sql:2654
 msgid "Net Book Value"
-msgstr "Nilai buku bersih"
+msgstr ""
 
 #: UI/payments/payments_detail.html:341
 msgid "Net Due"
@@ -4594,7 +4593,7 @@ msgstr ""
 #: old/bin/aa.pl:1025 old/bin/aa.pl:481 old/bin/gl.pl:254 old/bin/ir.pl:358
 #: old/bin/ir.pl:569 old/bin/is.pl:354 old/bin/is.pl:636 old/bin/oe.pl:520
 msgid "New"
-msgstr "Baru"
+msgstr ""
 
 #: UI/asset/begin_report.html:5
 msgid "New Asset Report"
@@ -4614,7 +4613,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2689
 msgid "New Window"
-msgstr "Tetingkap baru"
+msgstr "新視窗"
 
 #: UI/users/preferences.html:17
 msgid "New password"
@@ -4623,20 +4622,20 @@ msgstr ""
 #: old/bin/am.pl:304 UI/inventory/adjustment_entry.html:82
 #: UI/setup/select_coa.html:92
 msgid "Next"
-msgstr "Seterusnya"
+msgstr "下一個"
 
 #: old/bin/arap.pl:375
 msgid "Next Date"
-msgstr "Tarikh seterusnya"
+msgstr "下一日"
 
 #: old/bin/am.pl:375
 msgid "Next Number"
-msgstr "Nombor Seterusnya"
+msgstr "下一個號碼"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:114
 #: lib/LedgerSMB/Scripts/configuration.pm:342
 msgid "Next in Sequence"
-msgstr "Seterusnya Dalam Urutan"
+msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:77
 msgid "Nine"
@@ -4656,11 +4655,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:101 UI/Configuration/settings.html:45
 msgid "No"
-msgstr "Tidak"
+msgstr "否"
 
 #: lib/LedgerSMB/Scripts/contact.pm:604
 msgid "No AR or AP Account Selected"
-msgstr "Tiada Akaun AR atau AP Terpilih"
+msgstr ""
 
 #: old/lib/LedgerSMB/DBObject/TransTemplate.pm:67
 msgid "No Account id for [_1]"
@@ -4672,15 +4671,15 @@ msgstr ""
 
 #: old/lib/LedgerSMB/DBObject/Draft.pm:59 old/lib/LedgerSMB/DBObject/Draft.pm:77
 msgid "No ID Set"
-msgstr "Tiada Set ID"
+msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:533
 msgid "No NULL Amounts"
-msgstr "Tiada Amaun"
+msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:446
 msgid "No Null employeenumber"
-msgstr "Tiada Nombor Pekerja"
+msgstr ""
 
 #: UI/users/preferences.html:20
 msgid "No Old Password"
@@ -4692,7 +4691,7 @@ msgstr ""
 
 #: old/bin/aa.pl:211 old/bin/ir.pl:168 old/bin/is.pl:161
 msgid "No currencies defined.  Please set these up under System/Defaults."
-msgstr "Tiada mata wang ditakrifkan. Sila tetapkan mengikut sistem"
+msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:557
 msgid "No duplicate meta_numbers"
@@ -4700,17 +4699,15 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/file.pm:191
 msgid "No file uploaded"
-msgstr "Tiada data dimuat naik"
+msgstr ""
 
 #: old/bin/pe.pl:762
 msgid "No open Projects!"
-msgstr "Tiada projek yang terbuka"
+msgstr "沒有已開啟的項目"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1398
 msgid "No overpayment account selected.  Was one set up?"
 msgstr ""
-"Tiada akaun lebihan pembayaran dipilih. Adakah anda telah membuka akaun "
-"tersebut?"
 
 #: lib/LedgerSMB/Report/File.pm:38
 msgid "No ref key set and no override provided"
@@ -4718,7 +4715,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/reports.pm:99
 msgid "No report specified"
-msgstr "Tiada laporan dinyatakan"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/taxform.pm:129
 msgid "No tax form selected"
@@ -4728,7 +4725,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:249 UI/Reports/filters/orders.html:115
 #: UI/Reports/filters/search_goods.html:255
 msgid "No."
-msgstr "Tidak."
+msgstr "編號"
 
 #: UI/timecards/timecard.html:112
 msgid "Non-Chargeable"
@@ -4748,7 +4745,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:460
 msgid "Non-tracking Items"
-msgstr ""
+msgstr "不用追蹤的項目"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1006
 msgid "Non-unique invoice numbers"
@@ -4785,7 +4782,7 @@ msgstr ""
 
 #: UI/Contact/divs/notes.html:35 UI/Contact/divs/notes.html:39
 msgid "Note Class"
-msgstr "Kelas Nota"
+msgstr ""
 
 #: UI/setup/upgrade_info.html:93
 msgid "Note that the process invoked by hitting the button below might "
@@ -4810,7 +4807,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:370
 #: UI/Reports/filters/search_goods.html:373 UI/timecards/timecard.html:134
 msgid "Notes"
-msgstr "Nota"
+msgstr "備註"
 
 #: t/data/04-complex_template.html:639
 msgid "Notes:<br />"
@@ -4818,23 +4815,23 @@ msgstr ""
 
 #: old/bin/oe.pl:2101
 msgid "Nothing entered!"
-msgstr "Tiada apa-apa yang dimasukan"
+msgstr "没有巳输入"
 
 #: old/bin/oe.pl:2392 old/bin/oe.pl:2650 old/bin/pe.pl:1070
 msgid "Nothing selected!"
-msgstr "Anda tidak memilih apa-apa!"
+msgstr "没有巳选择"
 
 #: old/bin/oe.pl:2118
 msgid "Nothing to transfer!"
-msgstr "TIada apa-apa untuk dihantar"
+msgstr "沒有可轉移的項目！"
 
 #: old/bin/aa.pl:94 old/bin/gl.pl:86 old/bin/io.pl:88
 msgid "Nov"
-msgstr "Nov"
+msgstr "十一月"
 
 #: lib/LedgerSMB.pm:580 old/bin/aa.pl:80 old/bin/gl.pl:72 old/bin/io.pl:74
 msgid "November"
-msgstr "November"
+msgstr "十一月"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:966 lib/LedgerSMB/Upgrade_Tests.pm:985
 msgid "Null employee numbers"
@@ -4862,11 +4859,11 @@ msgstr ""
 #: UI/am-taxes.html:16 UI/Contact/divs/credit.html:26
 #: UI/Contact/divs/credit.html:77 UI/Contact/divs/credit.html:78
 msgid "Number"
-msgstr "Nombor"
+msgstr "編號"
 
 #: UI/users/preferences.html:90
 msgid "Number Format"
-msgstr ""
+msgstr "數字格式"
 
 #: old/bin/io.pl:949
 msgid "Number missing in Row [_1]"
@@ -4883,7 +4880,7 @@ msgstr ""
 
 #: old/bin/io.pl:248
 msgid "OH"
-msgstr "OH"
+msgstr "已有存量"
 
 #: UI/payments/payment2.html:341
 msgid "OVERPAYMENT / ADVANCE PAYMENT / PREPAYMENT"
@@ -4892,23 +4889,23 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/budgets.pm:128 old/bin/ic.pl:703
 #: UI/accounts/edit.html:143 UI/Reports/filters/search_goods.html:32
 msgid "Obsolete"
-msgstr "Lama"
+msgstr "停用"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:99
 msgid "Obsolete By"
-msgstr "Dilupuskan Oleh"
+msgstr ""
 
 #: old/bin/aa.pl:93 old/bin/gl.pl:85 old/bin/io.pl:87
 msgid "Oct"
-msgstr "Okt"
+msgstr "十月"
 
 #: lib/LedgerSMB.pm:579 old/bin/aa.pl:79 old/bin/gl.pl:71 old/bin/io.pl:73
 msgid "October"
-msgstr "Oktober"
+msgstr "十月"
 
 #: old/bin/aa.pl:968 old/bin/ir.pl:518 old/bin/is.pl:584 old/bin/is.pl:891
 msgid "Off Hold"
-msgstr "Teruskan"
+msgstr ""
 
 #: UI/users/preferences.html:16
 msgid "Old Password"
@@ -4919,13 +4916,13 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:112 old/bin/ic.pl:469 old/bin/ic.pl:678
 #: UI/inventory/adjustment_entry.html:27
 msgid "On Hand"
-msgstr "Dalam Tangan"
+msgstr "已有存量"
 
 #: old/bin/aa.pl:970 old/bin/ir.pl:520 old/bin/is.pl:586 old/bin/is.pl:893
 #: UI/Reports/filters/invoice_outstanding.html:89
 #: UI/Reports/filters/invoice_search.html:188
 msgid "On Hold"
-msgstr "Ditahan"
+msgstr ""
 
 #: UI/Reports/filters/search_goods.html:30
 #: UI/Reports/filters/search_goods.html:279
@@ -4953,7 +4950,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:200
 #: UI/Reports/filters/timecards.html:28
 msgid "Open"
-msgstr "Buka"
+msgstr "開啟"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:277
 msgid "Opening Balance"
@@ -4979,7 +4976,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:220
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:272 old/bin/oe.pl:2510
 msgid "Order"
-msgstr "Pesanan"
+msgstr "订单"
 
 #: templates/demo/ap_transaction.html:72 templates/demo/ap_transaction.tex:82
 #: templates/demo/ar_transaction.html:70 templates/demo/ar_transaction.tex:99
@@ -4998,15 +4995,15 @@ msgstr ""
 #: old/bin/oe.pl:1908 old/bin/oe.pl:403 templates/demo/purchase_order.html:75
 #: templates/demo/sales_order.html:78 templates/demo/work_order.html:77
 msgid "Order Date"
-msgstr "Tarikh Pesanan"
+msgstr "下單日期"
 
 #: old/bin/io.pl:1261 old/bin/oe.pl:1258 old/bin/oe.pl:1459
 msgid "Order Date missing!"
-msgstr "Tarikh Pesanan Hilang!"
+msgstr "未指明下單日期！"
 
 #: sql/Pg-database.sql:2679
 msgid "Order Entry"
-msgstr "Entri pesanan"
+msgstr "下单项目"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:71 old/bin/aa.pl:646
 #: old/bin/ir.pl:487 old/bin/is.pl:539 old/bin/oe.pl:1903 old/bin/oe.pl:397
@@ -5015,19 +5012,19 @@ msgstr "Entri pesanan"
 #: UI/Reports/filters/invoice_search.html:269 UI/Reports/filters/orders.html:39
 #: UI/Reports/filters/orders.html:128
 msgid "Order Number"
-msgstr "Nombor Pesanan"
+msgstr "订单编号"
 
 #: old/bin/io.pl:1271 old/bin/oe.pl:1458
 msgid "Order Number missing!"
-msgstr "Nombor Pesanan Hilang!"
+msgstr "未指明訂單編號！"
 
 #: old/bin/oe.pl:1436
 msgid "Order deleted!"
-msgstr "Pesanan dipadam"
+msgstr "已刪除訂單！"
 
 #: old/bin/oe.pl:2639
 msgid "Order generation failed!"
-msgstr "Penjanaan Pesanan gagal!"
+msgstr "生成訂單失敗！"
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:141
 msgid "Order/Invoice"
@@ -5044,7 +5041,7 @@ msgstr ""
 
 #: old/bin/pe.pl:1227
 msgid "Orders generated!"
-msgstr "Pesanan dihasilkan!"
+msgstr "已生成訂單！"
 
 #: UI/setup/confirm_operation.html:32
 msgid "Other Actions"
@@ -5052,7 +5049,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/recon.pm:497
 msgid "Our Balance"
-msgstr "Baki kita"
+msgstr ""
 
 #: UI/reconciliation/report.html:255 UI/reconciliation/report.html:328
 msgid "Our Credits"
@@ -5068,11 +5065,11 @@ msgstr ""
 
 #: old/bin/gl.pl:666
 msgid "Out of balance transaction!"
-msgstr "Kehabisan Baki Transaksi"
+msgstr "不协调交易"
 
 #: sql/Pg-database.sql:2692 sql/Pg-database.sql:2693
 msgid "Outstanding"
-msgstr ""
+msgstr "未收款交易"
 
 #: UI/reconciliation/report.html:315
 msgid "Outstanding Transactions"
@@ -5119,15 +5116,15 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:275 UI/Reports/filters/orders.html:49
 #: UI/Reports/filters/orders.html:141
 msgid "PO Number"
-msgstr "Jumlah PO"
+msgstr "采购单编号"
 
 #: UI/payments/use_overpayment2.html:352
 msgid "POST"
-msgstr "SIMPAN"
+msgstr ""
 
 #: UI/payments/payment2.html:514 UI/payments/use_overpayment2.html:358
 msgid "POST AND PRINT"
-msgstr "SIMPAN dan Cetak"
+msgstr ""
 
 #: old/bin/am.pl:961 old/bin/io.pl:1165 old/bin/is.pl:1103 old/bin/is.pl:260
 #: old/bin/oe.pl:262 old/bin/oe.pl:281 old/bin/printer.pl:76
@@ -5135,15 +5132,15 @@ msgstr "SIMPAN dan Cetak"
 #: templates/demo/packing_list.html:33 templates/demo/packing_list.tex:96
 #: sql/Pg-database.sql:2710 sql/Pg-database.sql:2723
 msgid "Packing List"
-msgstr "Senarai Bungkusan"
+msgstr "出货单"
 
 #: old/bin/io.pl:1260
 msgid "Packing List Date missing!"
-msgstr ""
+msgstr "未指明出貨單日期！"
 
 #: old/bin/io.pl:1270
 msgid "Packing List Number missing!"
-msgstr ""
+msgstr "未指明包装清单编号!"
 
 #: UI/templates/widget.html:51
 msgid "Packing list"
@@ -5158,15 +5155,15 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:227
 #: UI/Reports/filters/invoice_search.html:350
 msgid "Paid"
-msgstr "Dibaya"
+msgstr "已付"
 
 #: old/bin/pe.pl:115 UI/business_units/edit.html:41
 msgid "Parent"
-msgstr "Waris"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:107 old/bin/io.pl:623
 msgid "Part"
-msgstr "Bahagian"
+msgstr "零件"
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:164
 msgid "Part Description"
@@ -5192,7 +5189,7 @@ msgstr ""
 #: UI/Reports/filters/search_goods.html:53
 #: UI/Reports/filters/search_goods.html:263
 msgid "Part Number"
-msgstr "Bahagian nombor"
+msgstr "零件編號"
 
 #: UI/Reports/filters/search_goods.html:11
 msgid "Part criteria"
@@ -5219,7 +5216,7 @@ msgstr ""
 #: UI/Reports/filters/timecards.html:9 UI/timecards/timecard.html:33
 #: UI/timecards/timecard-week.html:88
 msgid "Partnumber"
-msgstr "Nombor Bahagian"
+msgstr "料号"
 
 #: UI/Reports/filters/search_goods.html:18
 msgid "Parts"
@@ -5239,7 +5236,7 @@ msgstr ""
 #: UI/setup/edit_user.html:49 UI/setup/new_user.html:29
 #: UI/src/views/LoginPage.vue:32
 msgid "Password"
-msgstr ""
+msgstr "密碼"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:79
 msgid "Password Duration (days)"
@@ -5247,7 +5244,7 @@ msgstr ""
 
 #: old/lib/LedgerSMB/DBObject/User.pm:59
 msgid "Passwords must match."
-msgstr "Kata laluan mestilah sempadan"
+msgstr ""
 
 #: UI/payments/payments_detail.html:195 UI/payments/payments_filter.html:90
 msgid "Pay From"
@@ -5256,7 +5253,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/payment.pm:177 UI/Contact/divs/credit.html:96
 #: UI/Contact/divs/credit.html:97 UI/payments/payments_filter.html:91
 msgid "Pay To"
-msgstr "Bayar Kepada"
+msgstr ""
 
 #: templates/demo/printPayment.html:83
 msgid "Pay in behalf of"
@@ -5264,7 +5261,7 @@ msgstr ""
 
 #: UI/accounts/edit.html:372
 msgid "Payables"
-msgstr ""
+msgstr "应付科目"
 
 #: lib/LedgerSMB/Scripts/payment.pm:1159 t/data/04-complex_template.html:282
 #: UI/accounts/edit.html:335 UI/accounts/edit.html:387
@@ -5272,11 +5269,11 @@ msgstr ""
 #: UI/payments/payments_detail.html:227 UI/templates/widget.html:55
 #: sql/Pg-database.sql:2563
 msgid "Payment"
-msgstr "Pembayaran"
+msgstr "付款"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:159
 msgid "Payment Amount"
-msgstr "Jumlah Pembayaran"
+msgstr ""
 
 #: templates/demo/printPayment.html:37
 msgid "Payment Order Number [_1]"
@@ -5288,7 +5285,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:202
 msgid "Payment Results"
-msgstr "Hasil Pembayaran"
+msgstr ""
 
 #: UI/Reports/filters/payments.html:79
 msgid "Payment Reversal Information"
@@ -5308,7 +5305,7 @@ msgstr ""
 
 #: old/bin/aa.pl:1388 old/bin/ir.pl:1365 old/bin/is.pl:1472
 msgid "Payment date missing!"
-msgstr "Tarikh pembayaran hilang!"
+msgstr "未指明付款日期!"
 
 #: templates/demo/invoice.tex:52
 msgid "Payment due NET [_1] Days from date of Invoice."
@@ -5325,28 +5322,27 @@ msgstr ""
 #: UI/payments/payment1.html:22 UI/payments/payments_detail.html:6
 #: sql/Pg-database.sql:2567 sql/Pg-database.sql:2630
 msgid "Payments"
-msgstr "Bayaran"
+msgstr "付款"
 
 #: old/bin/is.pl:721
 msgid "Payments associated with voided invoice may need to be reversed."
 msgstr ""
-"Bayaran berkaitan dengan invois yang dibatalkan mungkin perlu diterbalikkan"
 
 #: lib/LedgerSMB/Scripts/asset.pm:384
 msgid "Percent"
-msgstr "Peratus"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:700
 msgid "Percent Disposed"
-msgstr "Peratusan Pembuangan"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:712
 msgid "Percent Remaining"
-msgstr "Peratusan Yang Tinggal"
+msgstr ""
 
 #: old/bin/pe.pl:724 UI/lib/report_base.html:134 UI/lib/report_base.html:230
 msgid "Period"
-msgstr "Tempoh"
+msgstr "期間"
 
 #: UI/Contact/divs/credit.html:388 UI/Reports/filters/income_statement.html:81
 #: UI/Reports/filters/search_goods.html:178
@@ -5361,7 +5357,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/contact.pm:187 UI/Contact/divs/person.html:2
 msgid "Person"
-msgstr "Orang"
+msgstr ""
 
 #: UI/Contact/divs/person.html:126
 msgid "Personal ID"
@@ -5369,11 +5365,11 @@ msgstr ""
 
 #: UI/Reports/filters/contact_search.html:52
 msgid "Phone"
-msgstr ""
+msgstr "电话号码"
 
 #: sql/Pg-database.sql:644
 msgid "Physical"
-msgstr "Fizikal"
+msgstr ""
 
 #: old/bin/am.pl:962 old/bin/io.pl:1188 old/bin/is.pl:259 old/bin/oe.pl:261
 #: old/bin/oe.pl:280 old/bin/printer.pl:72 old/bin/printer.pl:90
@@ -5381,7 +5377,7 @@ msgstr "Fizikal"
 #: templates/demo/pick_list.tex:89 sql/Pg-database.sql:2711
 #: sql/Pg-database.sql:2724
 msgid "Pick List"
-msgstr "Senarai Pilihan"
+msgstr "选择单"
 
 #: UI/templates/widget.html:53
 msgid "Pick list"
@@ -5512,15 +5508,15 @@ msgstr ""
 #: old/bin/is.pl:1125 old/bin/is.pl:612 old/bin/is.pl:662
 #: UI/payments/payment2.html:508
 msgid "Post"
-msgstr "Simpan"
+msgstr "加入"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:196
 msgid "Post Batch"
-msgstr "Simpan Kumpulan"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/recon.pm:493 UI/create_batch.html:76
 msgid "Post Date"
-msgstr "Tarikh disimpan"
+msgstr ""
 
 #: UI/accounts/yearend.html:75
 msgid "Post Yearend"
@@ -5528,7 +5524,7 @@ msgstr ""
 
 #: old/bin/aa.pl:955 old/bin/ir.pl:1030 old/bin/ir.pl:551 old/bin/is.pl:1128
 msgid "Post as new"
-msgstr "Simpan Sebagai Baru"
+msgstr "當新的加入"
 
 #: old/bin/aa.pl:1007 old/bin/aa.pl:999 old/bin/ir.pl:548 old/bin/ir.pl:594
 #: old/bin/is.pl:614 old/bin/is.pl:664 UI/reconciliation/report.html:130
@@ -5572,7 +5568,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2690
 msgid "Preferences"
-msgstr "Keutamaan"
+msgstr "個人設定"
 
 #: UI/users/preferences.html:46
 msgid "Preferences Saved"
@@ -5591,7 +5587,7 @@ msgstr ""
 #: templates/demo/sales_order.html:104 templates/demo/sales_quotation.html:86
 #: templates/demo/sales_quotation.tex:105
 msgid "Price"
-msgstr "Harga"
+msgstr "价格"
 
 #: lib/LedgerSMB/Report/Inventory/Pricegroups.pm:55
 #: lib/LedgerSMB/Report/Inventory/Pricegroups.pm:71
@@ -5606,17 +5602,17 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Search.pm:271
 #: UI/Reports/filters/search_goods.html:294
 msgid "Price Updated"
-msgstr "Harga Dikemaskini"
+msgstr ""
 
 #: old/bin/ic.pl:1095 UI/Contact/divs/credit.html:246
 #: UI/Contact/divs/credit.html:247
 msgid "Pricegroup"
-msgstr "Harga Kumpulan"
+msgstr "价格组"
 
 #: t/data/04-complex_template.html:361 UI/Contact/divs/credit.html:372
 #: UI/Contact/pricelist.html:15
 msgid "Pricelist"
-msgstr ""
+msgstr "價格清單"
 
 #: UI/Contact/pricelist.tex:69
 msgid "Pricelist for [_1]"
@@ -5633,7 +5629,7 @@ msgstr ""
 #: old/bin/oe.pl:916 UI/payments/payments_detail.html:511
 #: UI/timecards/timecard.html:159
 msgid "Print"
-msgstr "Cetak"
+msgstr "列印"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:224
 msgid "Print Batch"
@@ -5641,19 +5637,19 @@ msgstr ""
 
 #: old/bin/oe.pl:664 old/bin/oe.pl:919
 msgid "Print and Save"
-msgstr "Cetak dan Simpan"
+msgstr "列印並儲存"
 
 #: old/bin/oe.pl:672 old/bin/oe.pl:922
 msgid "Print and Save as new"
-msgstr "Cetak dan Simpan sebagai yang baru"
+msgstr "列印並儲存作為新的"
 
 #: old/bin/printer.pl:152
 msgid "Printed"
-msgstr "Sudah Dicetak"
+msgstr "巳列印"
 
 #: UI/users/preferences.html:123
 msgid "Printer"
-msgstr ""
+msgstr "印表機"
 
 #: old/bin/am.pl:870
 msgid "Printing Bin List [_1]"
@@ -5705,17 +5701,17 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:374 lib/LedgerSMB/Scripts/asset.pm:831
 msgid "Proceeds"
-msgstr "Teruskan"
+msgstr ""
 
 #: old/bin/am.pl:435 UI/am-list-recurring.html:64
 msgid "Process Transactions"
-msgstr "Proses Transaksi"
+msgstr "處理所有交易"
 
 #: old/bin/ir.pl:1008 templates/demo/product_receipt.html:16
 #: templates/demo/product_receipt.html:32 templates/demo/product_receipt.tex:116
 #: sql/Pg-database.sql:2736 sql/Pg-database.sql:2737
 msgid "Product Receipt"
-msgstr "Resit produk"
+msgstr ""
 
 #: UI/templates/widget.html:57
 msgid "Product receipt"
@@ -5727,46 +5723,46 @@ msgstr ""
 
 #: old/bin/aa.pl:1092 old/bin/ic.pl:938 old/bin/ir.pl:1045 old/bin/is.pl:1143
 msgid "Profit/Loss"
-msgstr "Keuntungan/Kerugian"
+msgstr ""
 
 #: lib/LedgerSMB/Report/PNL/Product.pm:67
 msgid "Proft/Loss on Inventory Sales"
-msgstr "Keuntungan/Kerugian Stok Jualan"
+msgstr ""
 
 #: old/bin/io.pl:267 old/bin/pe.pl:800
 msgid "Project"
-msgstr "Projek"
+msgstr "方案"
 
 #: old/bin/pe.pl:190
 msgid "Project Description Translations"
-msgstr "Huraian Projek Penterjemahan"
+msgstr "項目描述的翻譯"
 
 #: old/bin/pe.pl:195 old/bin/pe.pl:945
 #: UI/Reports/filters/purchase_history.html:323
 msgid "Project Number"
-msgstr "Nombor Projek"
+msgstr "方案号码"
 
 #: lib/LedgerSMB/Report/Timecards.pm:89
 msgid "Project/Department Number"
-msgstr "Nombor Projek/Jabatan"
+msgstr ""
 
 #: UI/payments/payment2.html:66
 msgid "Projects"
-msgstr "Projek"
+msgstr "方案"
 
 #: lib/LedgerSMB/Report/Listings/Asset.pm:130
 #: lib/LedgerSMB/Report/Listings/Asset.pm:97 lib/LedgerSMB/Scripts/asset.pm:336
 msgid "Purchase Date"
-msgstr "Tarikh Pembelian"
+msgstr ""
 
 #: UI/asset/edit_asset.html:67 UI/asset/search_asset.html:64
 msgid "Purchase Date:"
-msgstr "Tarikh Pembelian"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/History.pm:136
 #: UI/Reports/filters/purchase_history.html:9
 msgid "Purchase History"
-msgstr "Rekod Pembelian"
+msgstr ""
 
 #: old/bin/am.pl:740 old/bin/am.pl:965 old/bin/io.pl:1199 old/bin/ir.pl:1032
 #: old/bin/ir.pl:555 old/bin/oe.pl:1294 old/bin/oe.pl:273 old/bin/oe.pl:689
@@ -5776,26 +5772,26 @@ msgstr "Rekod Pembelian"
 #: sql/Pg-database.sql:1883 sql/Pg-database.sql:2573 sql/Pg-database.sql:2714
 #: sql/Pg-database.sql:2727
 msgid "Purchase Order"
-msgstr "Beli Pesanan"
+msgstr "採購單"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:123
 msgid "Purchase Order Number"
-msgstr ""
+msgstr "采购单编号"
 
 #: lib/LedgerSMB/Report/Orders.pm:181 lib/LedgerSMB/Report/Orders.pm:273
 #: old/bin/am.pl:324 UI/Reports/filters/search_goods.html:163
 #: sql/Pg-database.sql:2576 sql/Pg-database.sql:2578 sql/Pg-database.sql:2581
 msgid "Purchase Orders"
-msgstr "Beli Pesanan"
+msgstr "採購單"
 
 #: lib/LedgerSMB/Report/Listings/Asset.pm:100
 #: lib/LedgerSMB/Report/Listings/Asset.pm:131 lib/LedgerSMB/Scripts/asset.pm:341
 msgid "Purchase Value"
-msgstr "Nilai Pembtanelian"
+msgstr ""
 
 #: UI/asset/edit_asset.html:78 UI/asset/search_asset.html:74
 msgid "Purchase Value:"
-msgstr "Nilai Pembelian"
+msgstr ""
 
 #: UI/templates/widget.html:59
 msgid "Purchase order"
@@ -5823,7 +5819,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:283
 #: UI/timecards/timecard-week.html:99
 msgid "Qty"
-msgstr "Kuantiti"
+msgstr "数量"
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:117
 msgid "Quantity"
@@ -5831,12 +5827,12 @@ msgstr ""
 
 #: old/bin/ic.pl:2204
 msgid "Quantity exceeds available units to stock!"
-msgstr "Kuantiti melebihi unit yang ada kepada stok!"
+msgstr "數量超過可庫存的數量！"
 
 #: old/bin/pe.pl:733 UI/lib/report_base.html:183 UI/lib/report_base.html:266
 #: UI/Reports/co/filter_bm.html:62
 msgid "Quarter"
-msgstr "Suku"
+msgstr "季度"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:311
 #: lib/LedgerSMB/Report/Orders.pm:242 old/bin/io.pl:1213 old/bin/io.pl:1220
@@ -5846,7 +5842,7 @@ msgstr "Suku"
 #: UI/Contact/divs/credit.html:368 sql/Pg-database.sql:1884
 #: sql/Pg-database.sql:2585 sql/Pg-database.sql:2717 sql/Pg-database.sql:2732
 msgid "Quotation"
-msgstr "Sebut Harga"
+msgstr "報價單"
 
 #: templates/demo/sales_quotation.tex:91
 msgid "Quotation #"
@@ -5854,37 +5850,37 @@ msgstr ""
 
 #: old/bin/oe.pl:494
 msgid "Quotation Date"
-msgstr "Tarikh Sebut Harga"
+msgstr "報價單日期"
 
 #: old/bin/io.pl:1262 old/bin/oe.pl:1261 old/bin/oe.pl:1465
 msgid "Quotation Date missing!"
-msgstr "Tarikh Sebut Harga Hilang!"
+msgstr "未指明報價單日期！"
 
 #: old/bin/oe.pl:471
 msgid "Quotation Number"
-msgstr "Bilangan Sebut Harga"
+msgstr "报价单号码"
 
 #: old/bin/io.pl:1272 old/bin/oe.pl:1464
 msgid "Quotation Number missing!"
-msgstr "Nombor sebut harga hilang!"
+msgstr "未指明报价单号码"
 
 #: old/bin/oe.pl:1440
 msgid "Quotation deleted!"
-msgstr "Sebut Harga dipadam!"
+msgstr "巳删除报价单"
 
 #: lib/LedgerSMB/Report/Orders.pm:184 lib/LedgerSMB/Report/Orders.pm:275
 #: UI/Reports/filters/purchase_history.html:189
 #: UI/Reports/filters/search_goods.html:149 sql/Pg-database.sql:2588
 #: sql/Pg-database.sql:2681
 msgid "Quotations"
-msgstr "Sebutan Harga"
+msgstr "報價單"
 
 #: old/bin/oe.pl:248 old/bin/oe.pl:691 old/bin/oe.pl:928 old/bin/printer.pl:59
 #: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:355
 #: sql/Pg-database.sql:1885 sql/Pg-database.sql:2586 sql/Pg-database.sql:2718
 #: sql/Pg-database.sql:2733
 msgid "RFQ"
-msgstr "RFQ"
+msgstr "報價請求(RFQ) "
 
 #: templates/demo/request_quotation.html:74
 #: templates/demo/request_quotation.tex:122
@@ -5893,23 +5889,23 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:124 old/bin/oe.pl:482
 msgid "RFQ Number"
-msgstr "Nombor RFQ"
+msgstr "報價請求號碼"
 
 #: lib/LedgerSMB/Report/Orders.pm:187 lib/LedgerSMB/Report/Orders.pm:277
 #: UI/Reports/filters/search_goods.html:170 sql/Pg-database.sql:2589
 msgid "RFQs"
-msgstr "RFQs"
+msgstr "报价请求"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:235 old/bin/ic.pl:2089
 #: old/bin/ic.pl:478 UI/Reports/filters/search_goods.html:359
 msgid "ROP"
-msgstr ""
+msgstr "再订点"
 
 #: lib/LedgerSMB/Scripts/currency.pm:256 old/bin/ir.pl:697 old/bin/is.pl:792
 #: templates/demo/timecard.html:107 templates/demo/timecard.tex:60
 #: UI/Configuration/rate.html:49
 msgid "Rate"
-msgstr "Kadar"
+msgstr "税率"
 
 #: UI/am-taxes.html:14
 msgid "Rate (%)"
@@ -5943,15 +5939,15 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/setup.pm:216 lib/LedgerSMB/Scripts/setup.pm:221
 #: lib/LedgerSMB/Scripts/setup.pm:226 lib/LedgerSMB/Scripts/setup.pm:231
 msgid "Rebuild/Upgrade?"
-msgstr "Menbina semula/menaik taraf"
+msgstr ""
 
 #: old/bin/io.pl:178 old/bin/oe.pl:1943 templates/demo/bin_list.html:104
 msgid "Recd"
-msgstr "Terima"
+msgstr "已收到"
 
 #: UI/templates/widget.html:61 sql/Pg-database.sql:2562 sql/Pg-database.sql:2731
 msgid "Receipt"
-msgstr "Resit"
+msgstr "收據"
 
 #: templates/demo/product_receipt.html:75
 msgid "Receipt Date"
@@ -5959,24 +5955,24 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:203
 msgid "Receipt Results"
-msgstr "Hasil Resit"
+msgstr ""
 
 #: UI/payments/payment1.html:21 sql/Pg-database.sql:2566
 #: sql/Pg-database.sql:2644
 msgid "Receipts"
-msgstr "Resit"
+msgstr "收據"
 
 #: UI/accounts/edit.html:319
 msgid "Receivables"
-msgstr ""
+msgstr "应收帐户"
 
 #: lib/LedgerSMB/Scripts/order.pm:81 sql/Pg-database.sql:2583
 msgid "Receive"
-msgstr "Diterima"
+msgstr "收到"
 
 #: old/bin/oe.pl:1836
 msgid "Receive Merchandise"
-msgstr "Penerimaan barang dagangan"
+msgstr "收到貨物"
 
 #: lib/LedgerSMB/Scripts/payment.pm:997
 msgid "Received"
@@ -5992,7 +5988,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2568 sql/Pg-database.sql:2621 sql/Pg-database.sql:2633
 msgid "Reconciliation"
-msgstr ""
+msgstr "调和"
 
 #: UI/reconciliation/report.html:31
 msgid "Reconciliation Report"
@@ -6000,11 +5996,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:200
 msgid "Reconciliation Reports"
-msgstr "Laporan Pendamaian"
+msgstr ""
 
 #: old/bin/ir.pl:467 old/bin/is.pl:508
 msgid "Record in"
-msgstr "Rekod Kemasukan"
+msgstr "記錄於"
 
 #: UI/timecards/entry_filter.html:16
 msgid "Recording time for"
@@ -6016,7 +6012,7 @@ msgstr ""
 
 #: old/bin/am.pl:280 UI/am-list-recurring.html:11 sql/Pg-database.sql:2685
 msgid "Recurring Transactions"
-msgstr "Perulangan Input Transaksi"
+msgstr "多次记录"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:130
 #: lib/LedgerSMB/Report/Budget/Search.pm:82 lib/LedgerSMB/Report/GL.pm:104
@@ -6030,7 +6026,7 @@ msgstr "Perulangan Input Transaksi"
 #: UI/Reports/filters/budget_search.html:18 UI/Reports/filters/gl.html:23
 #: UI/Reports/filters/gl.html:210 UI/Reports/filters/unapproved.html:29
 msgid "Reference"
-msgstr "Rujukan"
+msgstr "参考资料"
 
 #: old/bin/io.pl:1273
 msgid "Reference Number Missing"
@@ -6055,7 +6051,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/budgets.pm:119 UI/reconciliation/report.html:435
 msgid "Reject"
-msgstr "Ditolak"
+msgstr ""
 
 #: UI/reconciliation/report.html:439
 msgid "Rejected"
@@ -6071,7 +6067,7 @@ msgstr ""
 
 #: old/bin/aa.pl:562 old/bin/ir.pl:430 old/bin/is.pl:463 old/bin/oe.pl:431
 msgid "Remaining"
-msgstr "Baki"
+msgstr "尚【◎Fix:◎余;◎馀】"
 
 #: t/data/04-complex_template.html:559 UI/Contact/divs/bank_act.html:24
 #: UI/Contact/divs/bank_act.html:64
@@ -6084,7 +6080,7 @@ msgstr ""
 
 #: old/bin/arap.pl:535
 msgid "Repeat"
-msgstr "Pengulangan"
+msgstr "重覆"
 
 #: UI/reconciliation/approved.html:3
 msgid "Report Approved"
@@ -6101,7 +6097,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:541
 msgid "Report Results"
-msgstr "Hasil Laporan"
+msgstr ""
 
 #: UI/reconciliation/submitted.html:3
 msgid "Report Submitted"
@@ -6126,11 +6122,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:56
 msgid "Reporting Basis"
-msgstr "Laporan Asas"
+msgstr ""
 
 #: sql/Pg-database.sql:2640
 msgid "Reporting Units"
-msgstr "Unit yang dilaporkan"
+msgstr ""
 
 #: UI/Reports/filters/income_statement.html:271
 msgid "Reporting unit filters"
@@ -6141,21 +6137,21 @@ msgstr ""
 #: sql/Pg-database.sql:2656 sql/Pg-database.sql:2684 sql/Pg-database.sql:2699
 #: sql/Pg-database.sql:2740
 msgid "Reports"
-msgstr "Laporan"
+msgstr "報表"
 
 #: old/bin/arap.pl:338
 msgid "Reposting Not Allowed"
-msgstr "Ulangan pesanan tidak dibenarkan"
+msgstr ""
 
 #: old/bin/oe.pl:2512
 msgid "Req"
-msgstr ""
+msgstr "需要"
 
 #: old/bin/oe.pl:1311 templates/demo/request_quotation.html:16
 #: templates/demo/request_quotation.html:32
 #: templates/demo/request_quotation.tex:116
 msgid "Request for Quotation"
-msgstr "Pemintaan Bagi Sebut Harga"
+msgstr "要求报价单"
 
 #: UI/templates/widget.html:63
 msgid "Request for quotation"
@@ -6167,7 +6163,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Orders.pm:213
 msgid "Required Date"
-msgstr "Tarikh yang Diperlukan"
+msgstr ""
 
 #: old/bin/io.pl:274 old/bin/oe.pl:407 old/bin/oe.pl:466
 #: templates/demo/product_receipt.tex:122 templates/demo/purchase_order.html:76
@@ -6176,7 +6172,7 @@ msgstr "Tarikh yang Diperlukan"
 #: templates/demo/request_quotation.tex:123 templates/demo/sales_order.html:79
 #: templates/demo/sales_order.tex:122 templates/demo/work_order.html:78
 msgid "Required by"
-msgstr "Diperlukan oleh"
+msgstr "需要者"
 
 #: lib/LedgerSMB.pm:495 lib/LedgerSMB.pm:496
 msgid "Required input not provided"
@@ -6193,7 +6189,7 @@ msgstr ""
 
 #: UI/accounts/yearend.html:49
 msgid "Retained Earnings"
-msgstr ""
+msgstr "保留盈餘"
 
 #: UI/Contact/divs/company.html:144 UI/Contact/divs/person.html:150
 msgid "Retrieve"
@@ -6229,23 +6225,23 @@ msgstr ""
 
 #: sql/Pg-database.sql:2704
 msgid "Reverse AR Overpay"
-msgstr "Lebihan pembayaran AR"
+msgstr ""
 
 #: sql/Pg-database.sql:2703
 msgid "Reverse Overpay"
-msgstr "Lebihan pembayaran semula"
+msgstr ""
 
 #: sql/Pg-database.sql:2631
 msgid "Reverse Payment"
-msgstr "Pembayaran Balik"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:230
 msgid "Reverse Payments"
-msgstr "Pembayaran Balik"
+msgstr ""
 
 #: sql/Pg-database.sql:2702
 msgid "Reverse Receipts"
-msgstr "Pembatalan Resit"
+msgstr ""
 
 #: sql/Pg-database.sql:2396
 msgid "Rounded"
@@ -6266,7 +6262,7 @@ msgstr ""
 #: UI/Contact/divs/company.html:107 UI/setup/select_coa.html:66
 #: sql/Pg-database.sql:2637
 msgid "SIC"
-msgstr "SIC"
+msgstr "標準工業分類代碼"
 
 #: t/data/04-complex_template.html:259
 msgid "SIC:"
@@ -6274,7 +6270,7 @@ msgstr ""
 
 #: old/bin/io.pl:269 old/bin/oe.pl:1945 old/bin/oe.pl:2502
 msgid "SKU"
-msgstr "SKU"
+msgstr "被指定的数量"
 
 #: old/bin/ir.pl:504
 msgid "SO Number"
@@ -6286,7 +6282,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:152
 msgid "SQL-Ledger database detected."
-msgstr "Pangkalan data Lejar dikesan"
+msgstr ""
 
 #: UI/payments/payment1.html:55
 msgid "SSN"
@@ -6298,21 +6294,21 @@ msgstr ""
 
 #: sql/Pg-database.sql:3493
 msgid "Sale"
-msgstr ""
+msgstr "销售"
 
 #: UI/Contact/divs/address.html:42 UI/Contact/divs/employee.html:74
 #: sql/Pg-database.sql:642
 msgid "Sales"
-msgstr "Jualan"
+msgstr "销售"
 
 #: old/bin/is.pl:1102 old/bin/oe.pl:676 old/bin/oe.pl:925
 #: sql/Pg-database.sql:2664
 msgid "Sales Invoice"
-msgstr "Jualan Invois"
+msgstr "銷售發票"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:118
 msgid "Sales Invoice/AR Transaction Number"
-msgstr "jualan invois/nombor urus niaga AR"
+msgstr "銷售發票/應收帳交易編號"
 
 #: old/bin/am.pl:734 old/bin/am.pl:963 old/bin/io.pl:1151 old/bin/is.pl:1131
 #: old/bin/is.pl:621 old/bin/oe.pl:1288 old/bin/oe.pl:259 old/bin/oe.pl:678
@@ -6321,22 +6317,22 @@ msgstr "jualan invois/nombor urus niaga AR"
 #: UI/Contact/divs/credit.html:365 sql/Pg-database.sql:1882
 #: sql/Pg-database.sql:2572 sql/Pg-database.sql:2712 sql/Pg-database.sql:2725
 msgid "Sales Order"
-msgstr "Pesanan Jualan"
+msgstr "銷貨單"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:119
 msgid "Sales Order Number"
-msgstr "Nombor pesanan jualan"
+msgstr "銷貨單編號"
 
 #: lib/LedgerSMB/Report/Orders.pm:178 lib/LedgerSMB/Report/Orders.pm:271
 #: old/bin/am.pl:323 UI/Reports/filters/search_goods.html:142
 #: sql/Pg-database.sql:2575 sql/Pg-database.sql:2577 sql/Pg-database.sql:2580
 #: sql/Pg-database.sql:2594
 msgid "Sales Orders"
-msgstr "Pesanan Jualan"
+msgstr "銷貨單"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:120
 msgid "Sales Quotation Number"
-msgstr "Nombor Sebut Harga Jualan"
+msgstr "銷售報價單編號"
 
 #: UI/Contact/divs/company.html:116
 msgid "Sales Tax ID"
@@ -6364,7 +6360,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:178
 #: UI/Reports/filters/invoice_search.html:303
 msgid "Salesperson"
-msgstr "Penjual"
+msgstr "销售人员"
 
 #: UI/Contact/divs/employee.html:32 UI/Contact/divs/person.html:73
 msgid "Salutation"
@@ -6372,11 +6368,11 @@ msgstr ""
 
 #: UI/asset/edit_asset.html:106 UI/asset/search_asset.html:95
 msgid "Salvage Value:"
-msgstr "Nilai Penyelamat"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:134
 msgid "Sat"
-msgstr "Sabtu"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:354 lib/LedgerSMB/Scripts/budgets.pm:104
 #: old/bin/aa.pl:1047 old/bin/aa.pl:990 old/bin/am.pl:65 old/bin/am.pl:73
@@ -6400,7 +6396,7 @@ msgstr "Sabtu"
 #: UI/timecards/timecard.html:168 UI/timecards/timecard-week.html:125
 #: UI/users/preferences.html:151 UI/src/components/ConfigTableRow.vue:20
 msgid "Save"
-msgstr "Simpan"
+msgstr "储存"
 
 #: UI/Contact/divs/contact_info.html:126
 msgid "Save As New"
@@ -6408,7 +6404,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:276
 msgid "Save Batch"
-msgstr "Simpan sejumlah"
+msgstr ""
 
 #: UI/Contact/divs/credit.html:327
 msgid "Save Changes"
@@ -6428,7 +6424,7 @@ msgstr ""
 
 #: old/bin/aa.pl:1018 old/bin/ir.pl:564 old/bin/is.pl:631
 msgid "Save Info"
-msgstr "Simpan Maklumat"
+msgstr ""
 
 #: t/data/04-complex_template.html:485 UI/Contact/divs/address.html:186
 msgid "Save Location"
@@ -6444,11 +6440,11 @@ msgstr ""
 
 #: old/bin/arap.pl:617 old/bin/arap.pl:622
 msgid "Save Schedule"
-msgstr "Simpan Jadual"
+msgstr "儲存時間表"
 
 #: old/bin/aa.pl:1023 old/bin/gl.pl:248
 msgid "Save Template"
-msgstr "Simpan Templat"
+msgstr ""
 
 #: UI/accounts/edit.html:634
 msgid "Save Translations"
@@ -6456,13 +6452,13 @@ msgstr ""
 
 #: old/bin/aa.pl:1051
 msgid "Save as New"
-msgstr "Simpan sebagai baru"
+msgstr ""
 
 #: old/bin/am.pl:66 old/bin/am.pl:75 old/bin/gl.pl:250 old/bin/ic.pl:827
 #: old/bin/ic.pl:844 old/bin/oe.pl:668 old/bin/oe.pl:921
 #: UI/accounts/edit.html:96 UI/accounts/edit.html:560
 msgid "Save as new"
-msgstr "Simpan sebagai baru"
+msgstr "當新的儲存"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:217
 msgid "Save the fixes provided and attempt to continue migration"
@@ -6527,16 +6523,16 @@ msgstr ""
 #: old/bin/ir.pl:558 old/bin/is.pl:1126 old/bin/is.pl:623 old/bin/oe.pl:694
 #: old/bin/oe.pl:917
 msgid "Schedule"
-msgstr "Jadual"
+msgstr "時間表"
 
 #: old/bin/printer.pl:154 UI/journal/journal_entry.html:313
 msgid "Scheduled"
-msgstr "Sudah Dijadualkan"
+msgstr "編排了時間"
 
 #: lib/LedgerSMB/Scripts/payment.pm:691 lib/LedgerSMB/Template/UI.pm:124
 #: old/bin/printer.pl:129 UI/lib/utilities.html:44
 msgid "Screen"
-msgstr "Skrin"
+msgstr "螢幕"
 
 #: UI/asset/search_asset.html:188 UI/asset/search_class.html:66
 #: UI/business_units/filter.html:41 UI/Reports/filters/batches.html:58
@@ -6553,11 +6549,11 @@ msgstr "Skrin"
 #: sql/Pg-database.sql:2571 sql/Pg-database.sql:2629 sql/Pg-database.sql:2676
 #: sql/Pg-database.sql:2739
 msgid "Search"
-msgstr "Cari"
+msgstr "搜寻"
 
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:330
 msgid "Search AP"
-msgstr "Mencari AP"
+msgstr ""
 
 #: UI/Reports/filters/invoice_search.html:4
 msgid "Search AP Invoices"
@@ -6565,7 +6561,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:331
 msgid "Search AR"
-msgstr "Mencari AR"
+msgstr ""
 
 #: UI/Reports/filters/invoice_search.html:9
 msgid "Search AR Invoices"
@@ -6577,7 +6573,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2651
 msgid "Search Assets"
-msgstr "Carian aset"
+msgstr ""
 
 #: UI/Reports/filters/batches.html:9
 msgid "Search Batches"
@@ -6593,7 +6589,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2537
 msgid "Search Groups"
-msgstr "Carian kumpulan"
+msgstr ""
 
 #: UI/Reports/filters/inventory_adj.html:9
 msgid "Search Inventory Entry"
@@ -6613,15 +6609,15 @@ msgstr ""
 
 #: sql/Pg-database.sql:2538
 msgid "Search Pricegroups"
-msgstr "Carian kumpulan harga"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/order.pm:74
 msgid "Search Purchase Orders"
-msgstr "Mencari pesanan pembelian"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/order.pm:85
 msgid "Search Quotations"
-msgstr "Cari Sebut harga"
+msgstr ""
 
 #: UI/Reports/filters/payments.html:7
 msgid "Search Receipts"
@@ -6633,11 +6629,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/order.pm:89
 msgid "Search Requests for Quotation"
-msgstr "Mencari sebut harga yg diminta"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/order.pm:63
 msgid "Search Sales Orders"
-msgstr "Mencari pesanan jualan"
+msgstr ""
 
 #: UI/Reports/filters/unapproved.html:17
 msgid "Search Unapproved Transactions"
@@ -6645,11 +6641,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:2668
 msgid "Search and GL"
-msgstr "Carian dan GL"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/asset.pm:419
 msgid "Search reports"
-msgstr "Pemeriksaan Laporan"
+msgstr ""
 
 #: sql/Pg-database.sql:778
 msgid "Secondary Phone"
@@ -6657,7 +6653,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:73
 msgid "Security Settings"
-msgstr "Tetapan Keselamatan"
+msgstr ""
 
 #: UI/reconciliation/report.html:403
 msgid "Select All"
@@ -6665,7 +6661,7 @@ msgstr ""
 
 #: old/bin/pe.pl:1050
 msgid "Select Customer"
-msgstr "Pilih Pelanggan"
+msgstr "選擇客戶"
 
 #: UI/setup/template_info.html:9
 msgid "Select Templates to Load"
@@ -6673,19 +6669,19 @@ msgstr ""
 
 #: old/bin/oe.pl:2621
 msgid "Select Vendor"
-msgstr "Pilih Pembekal"
+msgstr "选厂商"
 
 #: old/bin/arapprn.pl:310 old/bin/is.pl:1532 old/bin/oe.pl:1375
 msgid "Select a Printer!"
-msgstr "Pilih Mesin Pencetak!"
+msgstr "選擇印表機！"
 
 #: UI/taxform/add_taxform.html:58
 msgid "Select by Default:"
-msgstr "Pilih Tetapan utama"
+msgstr ""
 
 #: old/bin/arap.pl:178 old/bin/ic.pl:1675 old/bin/pe.pl:582
 msgid "Select from one of the names below"
-msgstr "Pilih salah satu nama dibawah"
+msgstr "于下列姓名中选择一个"
 
 #: UI/payments/use_overpayment2.html:146
 msgid "Select invoices"
@@ -6698,11 +6694,11 @@ msgstr ""
 #: old/bin/arapprn.pl:308 old/bin/arapprn.pl:86 old/bin/is.pl:1530
 #: old/bin/oe.pl:1373
 msgid "Select postscript or PDF!"
-msgstr "Pilih postscript atau PDF!"
+msgstr "選擇postscript或PDF！"
 
 #: old/bin/io.pl:1118
 msgid "Select txt, postscript or PDF!"
-msgstr "Pilih txt, postscript atau PDF!"
+msgstr "選擇文字、postscript或PDF！"
 
 #: UI/Contact/divs/credit.html:391 UI/Reports/filters/balance_sheet.html:48
 #: UI/Reports/filters/income_statement.html:84
@@ -6712,11 +6708,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:123
 msgid "Selected"
-msgstr "Terpilih"
+msgstr ""
 
 #: old/bin/ic.pl:1260
 msgid "Sell"
-msgstr "Jual"
+msgstr "售賣"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:98
 #: lib/LedgerSMB/Report/Inventory/History.pm:154
@@ -6725,7 +6721,7 @@ msgstr "Jual"
 #: UI/Contact/pricelist.tex:42 UI/Reports/filters/purchase_history.html:263
 #: UI/Reports/filters/search_goods.html:316
 msgid "Sell Price"
-msgstr "Harga Jualan"
+msgstr "售价"
 
 #: old/bin/am.pl:918
 msgid "Sending Bin List [_1]"
@@ -6769,15 +6765,15 @@ msgstr ""
 
 #: old/bin/aa.pl:92 old/bin/gl.pl:84 old/bin/io.pl:86
 msgid "Sep"
-msgstr "Sep"
+msgstr "九月"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:84
 msgid "Separate Duties"
-msgstr "Tugas Berasingan"
+msgstr ""
 
 #: lib/LedgerSMB.pm:578 old/bin/aa.pl:78 old/bin/gl.pl:70 old/bin/io.pl:72
 msgid "September"
-msgstr "September"
+msgstr "九月"
 
 #: UI/Configuration/sequence.html:12
 msgid "Sequence"
@@ -6785,7 +6781,7 @@ msgstr ""
 
 #: UI/Configuration/sequence.html:3 sql/Pg-database.sql:2701
 msgid "Sequences"
-msgstr "Turutan"
+msgstr ""
 
 #: templates/demo/packing_list.html:93 templates/demo/work_order.html:104
 msgid "Serial #"
@@ -6793,7 +6789,7 @@ msgstr ""
 
 #: old/bin/io.pl:266 old/bin/oe.pl:1966
 msgid "Serial No."
-msgstr "No. Siri"
+msgstr "序號"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:111
 #: lib/LedgerSMB/Report/Inventory/History.pm:167
@@ -6803,7 +6799,7 @@ msgstr "No. Siri"
 #: UI/Reports/filters/search_goods.html:73
 #: UI/Reports/filters/search_goods.html:429
 msgid "Serial Number"
-msgstr "Nombor Siri"
+msgstr "序號"
 
 #: templates/demo/bin_list.html:101
 msgid "Serialnumber"
@@ -6815,11 +6811,11 @@ msgstr ""
 
 #: old/bin/io.pl:625
 msgid "Service"
-msgstr "Servis"
+msgstr "服務"
 
 #: old/bin/pe.pl:940
 msgid "Service Code"
-msgstr "kod servis"
+msgstr "服務編號"
 
 #: UI/Reports/filters/search_goods.html:19
 msgid "Services"
@@ -6831,7 +6827,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2642
 msgid "Sessions"
-msgstr "Sesi"
+msgstr ""
 
 #: UI/Configuration/sequence.html:10
 msgid "Setting"
@@ -6861,11 +6857,11 @@ msgstr ""
 #: templates/demo/packing_list.html:96 templates/demo/pick_list.html:94
 #: sql/Pg-database.sql:2582
 msgid "Ship"
-msgstr "Hantar"
+msgstr "付運"
 
 #: old/bin/oe.pl:1831
 msgid "Ship Merchandise"
-msgstr "Barang dagangan kapal"
+msgstr "海运货物"
 
 #: templates/demo/bin_list.html:41 templates/demo/bin_list.tex:68
 #: templates/demo/invoice.html:40 templates/demo/invoice.tex:98
@@ -6891,12 +6887,12 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:390 UI/Reports/filters/orders.html:59
 #: UI/Reports/filters/orders.html:170
 msgid "Ship Via"
-msgstr "Hantar Melalui"
+msgstr ""
 
 #: old/bin/aa.pl:954 old/bin/io.pl:1580 old/bin/is.pl:1127 old/bin/is.pl:617
 #: old/bin/oe.pl:2059 old/bin/oe.pl:658 old/bin/oe.pl:920
 msgid "Ship to"
-msgstr "Hantar kepada"
+msgstr "海运至"
 
 #: old/bin/is.pl:524 old/bin/oe.pl:1892 old/bin/oe.pl:606
 #: templates/demo/bin_list.html:80 templates/demo/invoice.html:84
@@ -6908,20 +6904,20 @@ msgstr "Hantar kepada"
 #: templates/demo/request_quotation.tex:125
 #: templates/demo/sales_quotation.html:64 templates/demo/sales_quotation.tex:94
 msgid "Ship via"
-msgstr "Penghantaran melalui"
+msgstr "由海运"
 
 #: UI/Contact/divs/address.html:44 sql/Pg-database.sql:643
 #: sql/Pg-database.sql:2680
 msgid "Shipping"
-msgstr "Penghantaran"
+msgstr "付運"
 
 #: old/bin/oe.pl:1833
 msgid "Shipping Date"
-msgstr "Tarikh penghantaran"
+msgstr "付運日期"
 
 #: old/bin/oe.pl:2088
 msgid "Shipping Date missing!"
-msgstr "Tarikh penghantaran hilang!"
+msgstr "未指明海运日期"
 
 #: old/bin/is.pl:1105 old/bin/printer.pl:108
 msgid "Shipping Label"
@@ -6945,7 +6941,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:261
 #: UI/Reports/filters/invoice_search.html:384
 msgid "Shipping Point"
-msgstr "Lokasi Penghantaran"
+msgstr "海运地点"
 
 #: UI/templates/widget.html:69
 msgid "Shipping label"
@@ -6953,7 +6949,7 @@ msgstr ""
 
 #: UI/Reports/filters/search_goods.html:31
 msgid "Short"
-msgstr ""
+msgstr "短"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:134
 msgid "Show Credit Limit"
@@ -6961,7 +6957,7 @@ msgstr ""
 
 #: templates/demo/printPayment.html:72
 msgid "Signature"
-msgstr ""
+msgstr "签名"
 
 #: sql/Pg-database.sql:2395
 msgid "Simple"
@@ -6973,7 +6969,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:710
 msgid "Sir."
-msgstr "Tuan"
+msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:74
 msgid "Six"
@@ -7016,7 +7012,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:130
 #: UI/Reports/filters/payments.html:64
 msgid "Source"
-msgstr "Sumber"
+msgstr "來源"
 
 #: UI/payments/payment2.html:122
 msgid "Source documentation"
@@ -7024,7 +7020,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:89
 msgid "Source starting with"
-msgstr "Sumber bermula dengan"
+msgstr ""
 
 #: templates/demo/sales_quotation.html:156
 msgid "Special order items are subject to a 10% cancellation fee."
@@ -7040,11 +7036,11 @@ msgstr ""
 
 #: UI/lib/report_base.html:70
 msgid "Standard"
-msgstr ""
+msgstr "标准"
 
 #: lib/LedgerSMB/Report/Listings/SIC.pm:63
 msgid "Standard Industrial Codes"
-msgstr "Standart kod industri"
+msgstr "標準工業編碼"
 
 #: lib/LedgerSMB/Report/Budget/Search.pm:124
 #: lib/LedgerSMB/Report/Budget/Search.pm:72
@@ -7058,7 +7054,7 @@ msgstr "Standart kod industri"
 #: UI/business_units/edit.html:55 UI/Contact/divs/credit.html:30
 #: UI/Contact/divs/employee.html:132 UI/Reports/filters/budget_search.html:41
 msgid "Start Date"
-msgstr "Tarikh Permulaan"
+msgstr ""
 
 #: t/data/04-complex_template.html:114
 msgid "Start Date:"
@@ -7074,12 +7070,12 @@ msgstr ""
 
 #: old/bin/arap.pl:576 UI/Reports/filters/purchase_history.html:110
 msgid "Startdate"
-msgstr "Tarikh mula"
+msgstr "開始日期"
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:164
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:79 UI/Reports/co/filter_bm.html:91
 msgid "Starting Balance"
-msgstr "Baki Permulaan"
+msgstr ""
 
 #: UI/Contact/divs/credit.html:109 UI/Contact/divs/credit.html:110
 #: UI/timecards/entry_filter.html:32
@@ -7092,13 +7088,13 @@ msgstr ""
 
 #: old/bin/io.pl:1650
 msgid "State"
-msgstr "Negeri"
+msgstr "州"
 
 #: t/data/04-complex_template.html:387 UI/Contact/divs/address.html:82
 #: UI/Contact/divs/address.html:153 UI/Reports/filters/contact_search.html:99
 #: UI/Reports/filters/purchase_history.html:83
 msgid "State/Province"
-msgstr ""
+msgstr "省"
 
 #: t/data/04-complex_template.html:454
 msgid "State/Province:"
@@ -7108,17 +7104,17 @@ msgstr ""
 #: templates/demo/statement.tex:45 sql/Pg-database.sql:2716
 #: sql/Pg-database.sql:2729
 msgid "Statement"
-msgstr "Kenyataan"
+msgstr "會計帳"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:144
 #: UI/reconciliation/new_report.html:24
 msgid "Statement Balance"
-msgstr "Baki Penyata"
+msgstr "会计帐余额"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:140
 #: UI/reconciliation/new_report.html:32 UI/reconciliation/report.html:38
 msgid "Statement Date"
-msgstr "Tarikh Penyata"
+msgstr ""
 
 #: UI/Reports/filters/reconciliation_search.html:9
 msgid "Statement Date From"
@@ -7136,11 +7132,11 @@ msgstr ""
 
 #: old/bin/ic.pl:623
 msgid "Stock"
-msgstr "Stok"
+msgstr "库存"
 
 #: old/bin/ic.pl:1989 old/bin/ic.pl:2096 sql/Pg-database.sql:2697
 msgid "Stock Assembly"
-msgstr "Himpunan Stok "
+msgstr "把製成品入貨"
 
 #: UI/users/preferences.html:21
 msgid "Strength"
@@ -7148,7 +7144,7 @@ msgstr ""
 
 #: UI/users/preferences.html:112
 msgid "Stylesheet"
-msgstr ""
+msgstr "樣式表"
 
 #: t/data/04-complex_template.html:231
 msgid "Subcontract GIFI:"
@@ -7174,7 +7170,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:151
 #: UI/Reports/filters/reconciliation_search.html:64
 msgid "Submitted"
-msgstr "Dihantar"
+msgstr ""
 
 #: old/bin/io.pl:1299 old/bin/ir.pl:782 old/bin/is.pl:864 old/bin/oe.pl:814
 #: templates/demo/ap_transaction.html:107 templates/demo/ar_transaction.html:105
@@ -7189,7 +7185,7 @@ msgstr "Dihantar"
 #: UI/Reports/filters/invoice_search.html:398 UI/Reports/filters/orders.html:200
 #: UI/Reports/filters/search_goods.html:436
 msgid "Subtotal"
-msgstr "Jumlah Kecil"
+msgstr "小計"
 
 #: UI/Configuration/sequence.html:13
 msgid "Suffix"
@@ -7199,7 +7195,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:110
 #: UI/Reports/filters/purchase_history.html:218
 msgid "Summary"
-msgstr "Ringkasan"
+msgstr "摘要"
 
 #: UI/accounts/edit.html:282
 msgid "Summary account for"
@@ -7207,7 +7203,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:110
 msgid "Sun"
-msgstr "Ahad"
+msgstr ""
 
 #: UI/Contact/divs/person.html:99
 msgid "Surname"
@@ -7215,11 +7211,11 @@ msgstr ""
 
 #: sql/Pg-database.sql:2691
 msgid "System"
-msgstr "Sistem"
+msgstr "系统"
 
 #: UI/Configuration/settings.html:8
 msgid "System Defaults"
-msgstr ""
+msgstr "系統預設值"
 
 #: UI/setup/confirm_operation.html:107
 msgid "System Info"
@@ -7242,7 +7238,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Listings/Asset.pm:90 lib/LedgerSMB/Scripts/asset.pm:568
 #: lib/LedgerSMB/Scripts/asset.pm:678 lib/LedgerSMB/Scripts/asset.pm:786
 msgid "Tag"
-msgstr "Tanda"
+msgstr ""
 
 #: UI/asset/edit_asset.html:36 UI/asset/search_asset.html:36
 msgid "Tag:"
@@ -7256,7 +7252,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:199
 #: UI/Reports/filters/invoice_search.html:323 UI/Reports/filters/orders.html:185
 msgid "Tax"
-msgstr "Cukai"
+msgstr "税金"
 
 #: UI/Reports/filters/invoice_search.html:73
 msgid "Tax Account"
@@ -7264,7 +7260,7 @@ msgstr ""
 
 #: old/bin/ir.pl:699 old/bin/is.pl:794
 msgid "Tax Code"
-msgstr "Kod Cukai"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:118
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:112 UI/Contact/divs/credit.html:264
@@ -7274,7 +7270,7 @@ msgstr ""
 
 #: old/bin/aa.pl:683
 msgid "Tax Form Applied"
-msgstr "Bentuk cukai digunakan"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:129
 msgid "Tax Form Details Report"
@@ -7282,7 +7278,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:71
 msgid "Tax Form List"
-msgstr "Cukai dalam bentuk senarai"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:122
 msgid "Tax Form Report"
@@ -7294,7 +7290,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2686
 msgid "Tax Forms"
-msgstr "Borang cukai"
+msgstr ""
 
 #: old/bin/aa.pl:605 old/bin/ir.pl:451 old/bin/is.pl:484
 msgid "Tax ID"
@@ -7307,7 +7303,7 @@ msgstr ""
 #: old/bin/ir.pl:687 old/bin/is.pl:781 old/bin/oe.pl:787
 #: UI/Contact/divs/credit.html:316 UI/Contact/divs/credit.html:317
 msgid "Tax Included"
-msgstr "Disertakan dengan Cukai"
+msgstr "巳含税金"
 
 #: UI/Contact/divs/company.html:99
 msgid "Tax Number/SSN"
@@ -7342,19 +7338,19 @@ msgstr ""
 
 #: old/bin/io.pl:250
 msgid "TaxForm"
-msgstr "BorangCukai"
+msgstr ""
 
 #: UI/Reports/filters/invoice_search.html:66
 msgid "Taxable"
-msgstr ""
+msgstr "应税"
 
 #: old/bin/am.pl:127 UI/Contact/divs/credit.html:289 sql/Pg-database.sql:2598
 msgid "Taxes"
-msgstr "Cukai"
+msgstr ""
 
 #: old/bin/am.pl:257
 msgid "Taxes saved!"
-msgstr "Cukai disimpan!"
+msgstr ""
 
 #: templates/demo/ap_transaction.html:178 templates/demo/ar_transaction.html:178
 #: templates/demo/invoice.html:231
@@ -7405,7 +7401,7 @@ msgstr ""
 
 #: old/bin/aa.pl:1204 old/bin/gl.pl:352
 msgid "Template Saved!"
-msgstr "templat Disimppan!"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/TemplateTrans.pm:139
 msgid "Template Transactions"
@@ -7421,7 +7417,7 @@ msgstr ""
 
 #: old/bin/oe.pl:372
 msgid "Terms"
-msgstr "Terma"
+msgstr "票期淨計"
 
 #: templates/demo/product_receipt.html:142
 #: templates/demo/purchase_order.html:144 templates/demo/sales_order.html:144
@@ -7467,7 +7463,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/recon.pm:501
 msgid "Their Balance"
-msgstr "Baki mereka"
+msgstr ""
 
 #: UI/reconciliation/report.html:257
 msgid "Their Credits"
@@ -7530,11 +7526,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1258
 msgid "This gl movement, is a consecuence of a payment transaction"
-msgstr "Pertukaran gl ini ialah disebabkan oleh pembayaran transit"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1990
 msgid "This gl movement, is the result of a overpayment transaction"
-msgstr "Pergerakan gl ialah hasil daripada transit lebihan bayaran"
+msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1232
 msgid ""
@@ -7567,7 +7563,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:126
 msgid "Thu"
-msgstr "Khamis"
+msgstr ""
 
 #: lib/LedgerSMB/Report/GL.pm:168
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:278
@@ -7576,7 +7572,7 @@ msgstr "Khamis"
 #: UI/Reports/filters/invoice_outstanding.html:253
 #: UI/Reports/filters/invoice_search.html:376
 msgid "Till"
-msgstr "Till"
+msgstr "直到"
 
 #: templates/demo/timecard.html:16 templates/demo/timecard.html:30
 #: templates/demo/timecard.tex:33
@@ -7589,11 +7585,11 @@ msgstr ""
 
 #: UI/timecards/timecard.html:67
 msgid "Time In"
-msgstr ""
+msgstr "上班時間"
 
 #: UI/timecards/timecard.html:83
 msgid "Time Out"
-msgstr ""
+msgstr "下班時間"
 
 #: UI/Reports/filters/timecards.html:5
 msgid "Time and Material Cards"
@@ -7605,7 +7601,7 @@ msgstr ""
 
 #: UI/templates/widget.html:73 sql/Pg-database.sql:2719 sql/Pg-database.sql:2734
 msgid "Timecard"
-msgstr ""
+msgstr "工時卡"
 
 #: UI/timecards/entry_filter.html:5 UI/timecards/entry_filter.html:6
 msgid "Timecard Criteria"
@@ -7613,11 +7609,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:161 sql/Pg-database.sql:2700
 msgid "Timecards"
-msgstr ""
+msgstr "工時卡"
 
 #: old/bin/am.pl:314
 msgid "Times"
-msgstr "Masa"
+msgstr "次"
 
 #: UI/Reports/filters/balance_sheet.html:107
 msgid "Timing"
@@ -7636,11 +7632,11 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:145
 #: UI/Reports/filters/search_goods.html:234
 msgid "To"
-msgstr "Kepada"
+msgstr "至"
 
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:188
 msgid "To Amount"
-msgstr "Kepada Jumlah"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:168
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:190
@@ -7652,7 +7648,7 @@ msgstr "Kepada Jumlah"
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:150
 #: UI/Reports/filters/unapproved.html:43
 msgid "To Date"
-msgstr "Kepada tarikh"
+msgstr ""
 
 #: UI/payments/payments_detail.html:342
 msgid "To Pay"
@@ -7660,7 +7656,7 @@ msgstr ""
 
 #: old/bin/oe.pl:2254
 msgid "To Warehouse"
-msgstr "Ke gudang"
+msgstr "到倉庫"
 
 #: t/data/04-strings-for-translation.html:7
 msgid "To [_1]"
@@ -7680,7 +7676,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:989
 msgid "To pay"
-msgstr "Untuk bayar"
+msgstr ""
 
 #: templates/demo/product_receipt.html:39 templates/demo/purchase_order.html:39
 #: templates/demo/request_quotation.html:39
@@ -7693,7 +7689,7 @@ msgstr ""
 
 #: sql/Pg-database.sql:2554
 msgid "Top-level"
-msgstr "Tahap Tertinggi"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Aging.pm:161
 #: lib/LedgerSMB/Report/Inventory/History.pm:163
@@ -7723,7 +7719,7 @@ msgstr "Tahap Tertinggi"
 #: UI/Reports/filters/invoice_outstanding.html:206
 #: UI/Reports/filters/invoice_search.html:329
 msgid "Total"
-msgstr "Jumlah"
+msgstr "总计"
 
 #: lib/LedgerSMB/Scripts/asset.pm:626
 msgid "Total Accum. Dep."
@@ -7735,37 +7731,37 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:133
 msgid "Total Paid"
-msgstr "Jumlah Dibayar"
+msgstr ""
 
 #: UI/accounts/edit.html:421
 msgid "Tracking Items"
-msgstr ""
+msgstr "需要追蹤的項目"
 
 #: old/bin/is.pl:373 old/bin/oe.pl:386
 msgid "Trade Discount"
-msgstr "Diskaun Perniagaan "
+msgstr "贸易折扣"
 
 #: old/bin/aa.pl:962 old/bin/am.pl:957
 msgid "Transaction"
-msgstr "Transaksi"
+msgstr "交易"
 
 #: sql/Pg-database.sql:2609
 msgid "Transaction Approval"
-msgstr "Transaksi Diterima"
+msgstr ""
 
 #: lib/LedgerSMB/Report/PNL/Invoice.pm:83
 #: UI/Reports/filters/purchase_history.html:129
 #: UI/Reports/filters/purchase_history.html:342
 msgid "Transaction Date"
-msgstr "Tarikh Transaksi"
+msgstr ""
 
 #: old/bin/gl.pl:613
 msgid "Transaction Date missing!"
-msgstr "Tarikh Transaksi Hilang!"
+msgstr "未指明交易日期!"
 
 #: old/bin/pe.pl:743
 msgid "Transaction Dates"
-msgstr "Tarikh Penterjemahan"
+msgstr "交易日期"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:189
 #: UI/reconciliation/report.html:114 UI/reconciliation/report.html:249
@@ -7776,44 +7772,44 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:90
 #: UI/setup/confirm_operation.html:125
 msgid "Transactions"
-msgstr ""
+msgstr "交易"
 
 #: old/bin/oe.pl:2243 old/bin/oe.pl:2359 sql/Pg-database.sql:2584
 #: sql/Pg-database.sql:2619
 msgid "Transfer"
-msgstr "Hantar"
+msgstr "转移"
 
 #: old/bin/oe.pl:2125 old/bin/oe.pl:2270
 msgid "Transfer Inventory"
-msgstr "Hantar Inventori"
+msgstr "转移存货"
 
 #: old/bin/oe.pl:2143
 msgid "Transfer from"
-msgstr "Hantar daripada"
+msgstr "由這裡取貨"
 
 #: old/bin/oe.pl:2147
 msgid "Transfer to"
-msgstr "Hantar ke"
+msgstr "存貨至"
 
 #: old/bin/pe.pl:304 old/bin/pe.pl:474
 msgid "Translation"
-msgstr "Penterjmahan"
+msgstr "翻譯"
 
 #: old/bin/pe.pl:72
 msgid "Translation deleted!"
-msgstr "Terjemahan dipadam"
+msgstr "巳删除翻译"
 
 #: UI/accounts/edit.html:582 sql/Pg-database.sql:2595 sql/Pg-database.sql:2698
 msgid "Translations"
-msgstr "Terjemahan"
+msgstr "翻譯"
 
 #: old/bin/pe.pl:56
 msgid "Translations saved!"
-msgstr "Terjemahan disimpan"
+msgstr "巳储存翻译"
 
 #: lib/LedgerSMB/Report/Trial_Balance.pm:133 sql/Pg-database.sql:2623
 msgid "Trial Balance"
-msgstr "Baki Percubaan"
+msgstr "试算表"
 
 #: old/lib/LedgerSMB/Num2text.pm:114
 msgid "Trillion"
@@ -7821,7 +7817,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:118
 msgid "Tue"
-msgstr "Selasa"
+msgstr ""
 
 #: old/lib/LedgerSMB/Num2text.pm:81
 msgid "Twelve"
@@ -7884,11 +7880,11 @@ msgstr ""
 #: UI/Contact/divs/credit.html:25 UI/Contact/divs/wage.html:7
 #: UI/Reports/filters/search_goods.html:13
 msgid "Type"
-msgstr "Jenis"
+msgstr ""
 
 #: sql/Pg-database.sql:2639
 msgid "Type of Business"
-msgstr "Jenis Bisnes"
+msgstr "业务种类"
 
 #: t/data/04-complex_template.html:411 t/data/04-complex_template.html:494
 #: t/data/04-complex_template.html:526
@@ -7897,7 +7893,7 @@ msgstr ""
 
 #: UI/payments/use_overpayment2.html:346
 msgid "UPDATE"
-msgstr "KEMASKINI"
+msgstr ""
 
 #: UI/Reports/filters/batches.html:30 UI/Reports/filters/gl.html:181
 #: UI/Reports/filters/invoice_search.html:235
@@ -7922,15 +7918,15 @@ msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:516
 msgid "Unique AR Invoice numbers"
-msgstr "Nombor Unik AR Invois"
+msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:413
 msgid "Unique Customernumber"
-msgstr "Nombor pelanggan unik"
+msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:432
 msgid "Unique Vendornumber"
-msgstr "Nombor Unik Pembekal"
+msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1051 lib/LedgerSMB/Upgrade_Tests.pm:500
 msgid "Unique nonobsolete partnumbers"
@@ -7945,7 +7941,7 @@ msgstr ""
 #: UI/payroll/income.html:68 UI/Reports/filters/purchase_history.html:293
 #: UI/Reports/filters/search_goods.html:287
 msgid "Unit"
-msgstr "Unit"
+msgstr "單位"
 
 #: templates/demo/invoice.html:108 templates/demo/request_quotation.tex:140
 msgid "Unit Price"
@@ -7971,7 +7967,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:299
 msgid "Unknown database found."
-msgstr "Pangkalan data tidak dikenali dijumpai"
+msgstr ""
 
 #: UI/src/views/LoginPage.vue:106
 msgid "Unknown error preventing login"
@@ -8011,7 +8007,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/contact.pm:450
 msgid "Unsupported account type"
-msgstr "Jenis akaun yang tidak disokong"
+msgstr ""
 
 #: UI/Reports/filters/contact_search.html:15
 msgid "Unsupported.  Expect errors"
@@ -8033,12 +8029,12 @@ msgstr ""
 #: UI/payroll/deduction.html:85 UI/payroll/income.html:90
 #: UI/reconciliation/report.html:397
 msgid "Update"
-msgstr "Terbaru"
+msgstr "更新"
 
 #: old/bin/aa.pl:981 old/bin/ic.pl:776 old/bin/ir.pl:530 old/bin/is.pl:596
 #: old/bin/oe.pl:645
 msgid "Updated"
-msgstr "Dikemaskini"
+msgstr "巳更新"
 
 #: old/bin/aa.pl:980 old/bin/ir.pl:529 old/bin/is.pl:595 old/bin/oe.pl:644
 msgid "Updating..."
@@ -8088,15 +8084,15 @@ msgstr ""
 #: lib/LedgerSMB/Report/Listings/Asset.pm:103 UI/asset/edit_asset.html:91
 #: UI/asset/search_asset.html:86
 msgid "Usable Life"
-msgstr "Kehidupan yang Boleh Digunakan"
+msgstr ""
 
 #: sql/Pg-database.sql:2565
 msgid "Use AR Overpayment"
-msgstr "Menggunakan Bayaran Lebih AR"
+msgstr ""
 
 #: UI/payments/use_overpayment1.html:8 sql/Pg-database.sql:2564
 msgid "Use Overpayment"
-msgstr "Menggunakan Bayaran Lebih"
+msgstr ""
 
 #: old/bin/io.pl:1820
 msgid "Use Shipto"
@@ -8104,7 +8100,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1868
 msgid "Use overpayment/prepayment"
-msgstr "Guna lebihan pembayaran/prabayaran"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:150
 msgid "Use web service for current exchange rates"
@@ -8113,12 +8109,12 @@ msgstr ""
 #: lib/LedgerSMB/Report/Budget/Variance.pm:89
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:132
 msgid "Used"
-msgstr "Digunakan"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/contact.pm:189 t/data/04-complex_template.html:36
 #: UI/Contact/divs/user.html:3 UI/main.html:28
 msgid "User"
-msgstr "Pengguna"
+msgstr "使用者"
 
 #: UI/src/views/LoginPage.vue:25
 msgid "User Name"
@@ -8126,7 +8122,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:1228
 msgid "User already exists. Import?"
-msgstr "Pengguna telah wujud. impot?"
+msgstr ""
 
 #: UI/Contact/divs/user.html:68 UI/setup/new_user.html:39
 msgid "User creation"
@@ -8161,7 +8157,7 @@ msgstr ""
 #: old/bin/oe.pl:465 templates/demo/sales_quotation.html:61
 #: templates/demo/sales_quotation.tex:92
 msgid "Valid until"
-msgstr "Sah Sehingga"
+msgstr "有效至"
 
 #: UI/Reports/filters/income_statement.html:20
 msgid "Valuation"
@@ -8174,7 +8170,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Budget/Variance.pm:94
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:107
 msgid "Variance"
-msgstr "Varian"
+msgstr ""
 
 #: UI/reconciliation/report.html:61
 msgid "Variance:"
@@ -8194,24 +8190,24 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:5 UI/Reports/filters/orders.html:4
 #: sql/Pg-database.sql:512
 msgid "Vendor"
-msgstr "Pembekal"
+msgstr "供應商"
 
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:247
 msgid "Vendor Account"
-msgstr "Akaun Pembekal"
+msgstr ""
 
 #: sql/Pg-database.sql:2551
 msgid "Vendor History"
-msgstr "Rekod Pembekal"
+msgstr "供应商历史"
 
 #: old/bin/oe.pl:684 old/bin/oe.pl:926 t/data/04-complex_template.html:334
 #: UI/Contact/divs/credit.html:349 sql/Pg-database.sql:2660
 msgid "Vendor Invoice"
-msgstr "Pembekal Senarai Bekalan"
+msgstr "供应商发票"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:122
 msgid "Vendor Invoice/AP Transaction Number"
-msgstr "invois pembekal/nombor urus niaga AP"
+msgstr "供應商發票/應付帳交易編號"
 
 #: UI/payments/payment1.html:45 UI/payments/payment2.html:29
 #: UI/Reports/filters/orders.html:5
@@ -8229,7 +8225,7 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:54
 #: UI/Reports/filters/taxforms.html:34
 msgid "Vendor Number"
-msgstr "Nombor Pembekal"
+msgstr "供应商号码"
 
 #: UI/Contact/pricelist.csv:20 UI/Contact/pricelist.html:34
 #: UI/Contact/pricelist.tex:29
@@ -8238,7 +8234,7 @@ msgstr ""
 
 #: old/bin/ic.pl:1016
 msgid "Vendor Reference Number"
-msgstr "Nombor Rujukan Pembekal"
+msgstr ""
 
 #: UI/Reports/filters/contact_search.html:9
 msgid "Vendor Search"
@@ -8246,7 +8242,7 @@ msgstr ""
 
 #: old/bin/aa.pl:1361 old/bin/ir.pl:1342 old/bin/oe.pl:1269
 msgid "Vendor missing!"
-msgstr "Pembekal hilang!"
+msgstr "未指明供应商"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:849
 msgid "Vendor not in a business"
@@ -8254,7 +8250,7 @@ msgstr ""
 
 #: old/bin/arap.pl:143 old/bin/pe.pl:1129
 msgid "Vendor not on file!"
-msgstr "Pembekal tiada dalam fail!"
+msgstr "沒有此供應商的記錄！"
 
 #: lib/LedgerSMB/Report/GL.pm:110 lib/LedgerSMB/Report/Unapproved/Drafts.pm:105
 #: UI/Reports/filters/gl.html:217
@@ -8267,15 +8263,15 @@ msgstr ""
 
 #: old/bin/is.pl:627
 msgid "Void"
-msgstr "Batal"
+msgstr ""
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:148
 msgid "Voucher List"
-msgstr "Senarai Baucer"
+msgstr ""
 
 #: sql/Pg-database.sql:2617 sql/Pg-database.sql:2618 sql/Pg-database.sql:2741
 msgid "Vouchers"
-msgstr "Baucer"
+msgstr ""
 
 #: UI/Contact/divs/wage.html:2
 msgid "Wages and Deductions"
@@ -8283,22 +8279,22 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/contact.pm:190
 msgid "Wages/Deductions"
-msgstr "Gaji/Potongan"
+msgstr ""
 
 #: old/bin/oe.pl:1843 templates/demo/bin_list.html:78
 #: templates/demo/bin_list.tex:97 templates/demo/packing_list.html:69
 #: templates/demo/packing_list.tex:105 templates/demo/pick_list.html:69
 #: templates/demo/pick_list.tex:97 UI/Reports/filters/search_goods.html:415
 msgid "Warehouse"
-msgstr "Gudang"
+msgstr "倉庫"
 
 #: lib/LedgerSMB/Report/Listings/Warehouse.pm:58 sql/Pg-database.sql:2641
 msgid "Warehouses"
-msgstr "Gudang-gudang"
+msgstr "倉庫"
 
 #: UI/oe-save-warn.html:4
 msgid "Warning!"
-msgstr ""
+msgstr "警告！"
 
 #: UI/lib/ui-header.html:45 UI/users/preferences.html:58
 msgid "Warning: Your password will expire in [_1] days"
@@ -8322,12 +8318,12 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Timecards.pm:122
 msgid "Wed"
-msgstr "Rabu"
+msgstr ""
 
 #: old/bin/am.pl:271 UI/lib/report_base.html:171
 #: UI/timecards/entry_filter.html:23
 msgid "Week"
-msgstr ""
+msgstr "星期"
 
 #: lib/LedgerSMB/Report/Timecards.pm:85
 msgid "Week Starting"
@@ -8335,7 +8331,7 @@ msgstr ""
 
 #: old/bin/arap.pl:517
 msgid "Week(s)"
-msgstr "Minggu"
+msgstr "星期"
 
 #: UI/timecards/timecard-week.html:49
 msgid "Weekly Time and Materials Entry"
@@ -8343,16 +8339,16 @@ msgstr ""
 
 #: old/bin/am.pl:272
 msgid "Weeks"
-msgstr ""
+msgstr "星期"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:243 old/bin/ic.pl:543
 #: old/bin/ic.pl:570 old/bin/ic.pl:592 UI/Reports/filters/search_goods.html:366
 msgid "Weight"
-msgstr "Berat"
+msgstr "重量"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:59
 msgid "Weight Unit"
-msgstr "Berat Unit"
+msgstr "重量單位"
 
 #: UI/src/views/Home.vue:4
 msgid "Welcome to LedgerSMB"
@@ -8364,7 +8360,7 @@ msgstr ""
 
 #: old/bin/io.pl:616
 msgid "What type of item is this?"
-msgstr "Apakah jenis item ini?"
+msgstr "此项目的型态?"
 
 #: UI/setup/begin_backup.html:8
 msgid "Where shall we send the backup?"
@@ -8383,7 +8379,7 @@ msgstr ""
 #: templates/demo/work_order.tex:124 sql/Pg-database.sql:2713
 #: sql/Pg-database.sql:2726
 msgid "Work Order"
-msgstr "Pesanan Kerja"
+msgstr "工作單"
 
 #: UI/templates/widget.html:75
 msgid "Work order"
@@ -8391,11 +8387,11 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:154
 msgid "Would you like to migrate the database?"
-msgstr "Adakah anda ingin memindah pangkalan data"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/setup.pm:157
 msgid "Would you like to upgrade the database?"
-msgstr "Adakah anda ingin menaik taraf pangkalan data?"
+msgstr ""
 
 #: UI/Contact/pricelist.html:111 UI/Reports/aging_report.html:105
 #: UI/Reports/display_report.html:67
@@ -8414,15 +8410,15 @@ msgstr ""
 #: old/bin/am.pl:273 old/bin/pe.pl:735 UI/lib/report_base.html:189
 #: UI/lib/report_base.html:274
 msgid "Year"
-msgstr "Tahun"
+msgstr "年"
 
 #: sql/Pg-database.sql:2622
 msgid "Year End"
-msgstr "Akhir Tahun"
+msgstr ""
 
 #: old/bin/arap.pl:519
 msgid "Year(s)"
-msgstr "Tahun"
+msgstr "年"
 
 #: UI/accounts/yearend.html:21 UI/accounts/yearend.html:37
 msgid "Yearend"
@@ -8439,7 +8435,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Taxform/List.pm:100 old/bin/oe.pl:1423
 #: UI/Configuration/settings.html:37 UI/setup/confirm_operation.html:29
 msgid "Yes"
-msgstr "Ya"
+msgstr "是"
 
 #: UI/setup/mismatch.html:11
 msgid ""
@@ -8457,7 +8453,7 @@ msgstr ""
 
 #: old/bin/io.pl:1653
 msgid "Zip Code"
-msgstr "Kod Pos"
+msgstr ""
 
 #: UI/Contact/divs/address.html:83 UI/Contact/divs/address.html:160
 msgid "Zip/Post Code"
@@ -8528,7 +8524,7 @@ msgstr ""
 
 #: old/bin/io.pl:1647
 msgid "city"
-msgstr "Bandar"
+msgstr ""
 
 #: UI/templates/widget.html:94
 msgid "csv"
@@ -8538,7 +8534,7 @@ msgstr ""
 #: t/data/04-complex_template.html:255 UI/Contact/divs/credit.html:162
 #: UI/Contact/divs/credit.html:180
 msgid "days"
-msgstr "Hari"
+msgstr "日"
 
 #: UI/Reports/co/filter_bm.html:98
 msgid "debits"
@@ -8551,7 +8547,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/admin.pm:67 lib/LedgerSMB/Scripts/currency.pm:160
 #: lib/LedgerSMB/Scripts/currency.pm:270 lib/LedgerSMB/Scripts/currency.pm:75
 msgid "delete"
-msgstr "padam"
+msgstr ""
 
 #: sql/Pg-database.sql:3538
 msgid "depreciation"
@@ -8564,7 +8560,7 @@ msgstr ""
 #: old/bin/am.pl:707 old/bin/am.pl:783 old/bin/am.pl:840 old/bin/am.pl:889
 #: old/bin/am.pl:941
 msgid "done"
-msgstr "selesai"
+msgstr "完成"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:694
 msgid "e"
@@ -8572,11 +8568,11 @@ msgstr ""
 
 #: old/bin/ir.pl:1303 old/bin/is.pl:1415 old/bin/oe.pl:1235
 msgid "ea"
-msgstr ""
+msgstr "個"
 
 #: old/bin/am.pl:786 old/bin/am.pl:892 old/bin/am.pl:944
 msgid "failed"
-msgstr "gagal"
+msgstr "失败"
 
 #: UI/lib/report_base.html:208
 msgid "from_date"
@@ -8608,19 +8604,19 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:2018
 msgid "is bigger than the amount available"
-msgstr "lebih besar daripada jumlah yang tersedia"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1719
 msgid "is lesser than 0"
-msgstr "kurang daripada 0"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1713
 msgid "is lesser than the amount to be paid"
-msgstr "kurang daripada jumlah perlu dibayar"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/payment.pm:1975
 msgid "is null"
-msgstr "kosong"
+msgstr ""
 
 #: UI/src/views/Home.vue:13
 msgid "keeping stock"
@@ -8668,7 +8664,7 @@ msgstr ""
 
 #: old/bin/arap.pl:546
 msgid "time(s)"
-msgstr "masa(s)"
+msgstr "次"
 
 #: UI/lib/report_base.html:219
 msgid "to_date"
@@ -8684,8 +8680,8 @@ msgstr ""
 
 #: old/bin/ic.pl:1426
 msgid "unexpected error!"
-msgstr "Kesilapan yang tidak dijangka"
+msgstr "沒有預期的錯誤！"
 
 #: lib/LedgerSMB/Scripts/payment.pm:2027 lib/LedgerSMB/Scripts/payment.pm:2046
 msgid "use of an overpayment"
-msgstr "guna lebihan bayaran"
+msgstr ""
