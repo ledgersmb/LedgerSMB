@@ -10162,6 +10162,13 @@ sales or purchases, such as IRS 1099 forms and international equivalents.
           <title>Constraints on cr_report</title>
 
           <varlistentry>
+            <term>cr_report_approved_submitted_check</term>
+            <listitem><para>CHECK ((submitted OR (NOT approved)))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
             <term>cr_report_check</term>
             <listitem><para>CHECK (((deleted IS NOT TRUE) OR (approved IS NOT TRUE)))</para></listitem>
           </varlistentry>
@@ -10611,6 +10618,11 @@ migration.
               <para>Indicates that the associated acc_trans line is (going to be) marked as
 cleared. This prevents the line from being included in other reconciliations
 which are either submitted or approved.
+
+The value is maintained by triggers on the &apos;cr_report&apos; and &apos;cr_report_line&apos;
+tables. It is defined as &apos;cr_report.submitted and cr_report_line.cleared&apos;. An
+INSERT trigger on the &apos;cr_report_line_links&apos; table ensures the value to be
+correct when creating new records.
 </para>
 
             </listitem>
@@ -10800,222 +10812,6 @@ it mostly serves as the canonical definition of currency codes.
           </listitem>
 
         </itemizedlist>
-
-
-
-
-
-
-      </para>
-    </section>
-
-      <section id="public.table.db-patch-log"
-               xreflabel="public.db_patch_log">
-        <title id="public.table.db-patch-log-title">
-         Table:
-         <database class="view">db_patch_log</database>
-         
-        </title>
- 
-
-
-        <para>
-          <variablelist>
-            <title>
-              Structure of <database class="table">db_patch_log</database>
-            </title>
-
-
-            <varlistentry>
-              <term><database class="field">when_applied</database></term>
-              <listitem><para>
-                <database class="datatype">timestamp without time zone</database>
-
-
-                <database class="constraint">PRIMARY KEY</database>
-
-
-
-
-
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><database class="field">path</database></term>
-              <listitem><para>
-                <database class="datatype">text</database>
-
-
-
-                <database class="constraint">NOT NULL</database>
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><database class="field">sha</database></term>
-              <listitem><para>
-                <database class="datatype">text</database>
-
-
-
-                <database class="constraint">NOT NULL</database>
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><database class="field">sqlstate</database></term>
-              <listitem><para>
-                <database class="datatype">text</database>
-
-
-
-                <database class="constraint">NOT NULL</database>
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><database class="field">error</database></term>
-              <listitem><para>
-                <database class="datatype">text</database>
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-        </variablelist>
-
-
-
-
-
-
-
-
-
-
-      </para>
-    </section>
-
-      <section id="public.table.db-patches"
-               xreflabel="public.db_patches">
-        <title id="public.table.db-patches-title">
-         Table:
-         <database class="view">db_patches</database>
-         
-        </title>
- 
-
-
-        <para>
-          <variablelist>
-            <title>
-              Structure of <database class="table">db_patches</database>
-            </title>
-
-
-            <varlistentry>
-              <term><database class="field">sha</database></term>
-              <listitem><para>
-                <database class="datatype">text</database>
-
-
-                <database class="constraint">PRIMARY KEY</database>
-
-
-
-
-
-
-
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><database class="field">path</database></term>
-              <listitem><para>
-                <database class="datatype">text</database>
-
-
-
-                <database class="constraint">NOT NULL</database>
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-            <varlistentry>
-              <term><database class="field">last_updated</database></term>
-              <listitem><para>
-                <database class="datatype">timestamp without time zone</database>
-
-
-
-                <database class="constraint">NOT NULL</database>
-
-
-
-
-
-              </para>
-
-            </listitem>
-          </varlistentry>
-
-        </variablelist>
-
-
-
-
 
 
 
@@ -29682,21 +29478,6 @@ a type &apos;0&apos; should be used.
 
 
 
-        <itemizedlist>
-          <title>
-            Tables referencing payroll_income_type via Foreign Key Constraints
-          </title>
-
-          <listitem>
-            <para>
-              <xref linkend="public.table.payroll-income-type"/>
-            </para>
-          </listitem>
-
-        </itemizedlist>
-
-
-
 
 
 
@@ -29919,10 +29700,6 @@ a type &apos;0&apos; should be used.
 
 
 
-
-
-
-
                 <database class="constraint">NOT NULL</database>
 
 
@@ -29931,10 +29708,6 @@ a type &apos;0&apos; should be used.
 
 
                 <database class="constraint">REFERENCES <xref linkend="public.table.payroll-income-class"/></database>
-
-
-
-                <database class="constraint">REFERENCES <xref linkend="public.table.payroll-income-category"/></database>
 
 
               </para>
@@ -30907,9 +30680,9 @@ SELECT&apos;ytd&apos;::text AS id
     
 (
      (
-           (EXTRACT
-                 (year 
-                    FROM now
+           (date_part
+                 (&apos;year&apos;::text
+                       , now
                        ()
                  )
            )::text || &apos;-01-01&apos;::text
@@ -30926,12 +30699,12 @@ SELECT&apos;last_year&apos;::text AS id
 (
      (
            (
-                 (EXTRACT
-                       (YEAR 
-                          FROM now
+                 (date_part
+                       (&apos;YEAR&apos;::text
+                             , now
                              ()
                        ) - 
-                       (1)::numeric
+                       (1)::double precision
                  )
            )::text || &apos;-12-31&apos;::text
      )
@@ -30941,12 +30714,12 @@ SELECT&apos;last_year&apos;::text AS id
 (
      (
            (
-                 (EXTRACT
-                       (YEAR 
-                          FROM now
+                 (date_part
+                       (&apos;YEAR&apos;::text
+                             , now
                              ()
                        ) - 
-                       (1)::numeric
+                       (1)::double precision
                  )
            )::text || &apos;-01-01&apos;::text
      )
@@ -42317,8 +42090,6 @@ account.
  
         Returns an n dimensional array.
 
-Example: SELECT as_array(ARRAY[id::text, class]) from contact_class
-
         <programlisting>aggregate_dummy</programlisting>
       </para>
     </section>
@@ -42777,6 +42548,116 @@ BEGIN
    ELSE
       RETURN NEW;
    END IF;
+END;
+</programlisting>
+      </para>
+    </section>
+
+<!-- Function cr_report_line_cleared_update() -->
+    <section id="public.function.cr-report-line-cleared-update"
+             xreflabel="()">
+      <title id="public.function.cr-report-line-cleared-update-title">
+       cr_report_line_cleared_update()
+      </title>
+      <titleabbrev id="public.function.cr-report-line-cleared-update-titleabbrev">
+       cr_report_line_cleared_update()
+      </titleabbrev>
+
+      <para>
+       <segmentedlist>
+        <title>Function Properties</title>
+        <?dbhtml list-presentation="list"?>
+        <segtitle>Language</segtitle>
+        <segtitle>Return Type</segtitle>
+        <seglistitem>
+         <seg>PLPGSQL</seg>
+         <seg>trigger</seg>
+        </seglistitem>
+       </segmentedlist>
+ 
+       
+        <programlisting>
+BEGIN
+  UPDATE cr_report_line_links rll
+     SET cleared = NEW.cleared and r.submitted
+    FROM cr_report r
+   WHERE rll.report_line_id = NEW.id
+         AND r.id = NEW.report_id;
+
+  RETURN NEW;
+END;
+</programlisting>
+      </para>
+    </section>
+
+<!-- Function cr_report_line_link_insert() -->
+    <section id="public.function.cr-report-line-link-insert"
+             xreflabel="()">
+      <title id="public.function.cr-report-line-link-insert-title">
+       cr_report_line_link_insert()
+      </title>
+      <titleabbrev id="public.function.cr-report-line-link-insert-titleabbrev">
+       cr_report_line_link_insert()
+      </titleabbrev>
+
+      <para>
+       <segmentedlist>
+        <title>Function Properties</title>
+        <?dbhtml list-presentation="list"?>
+        <segtitle>Language</segtitle>
+        <segtitle>Return Type</segtitle>
+        <seglistitem>
+         <seg>PLPGSQL</seg>
+         <seg>trigger</seg>
+        </seglistitem>
+       </segmentedlist>
+ 
+       
+        <programlisting>
+BEGIN
+  NEW.cleared = (select r.submitted and rl.cleared
+                   from cr_report_line rl
+                   join cr_report r on rl.report_id = r.id
+                  where rl.id = NEW.report_line_id);
+
+  RETURN NEW;
+END;
+</programlisting>
+      </para>
+    </section>
+
+<!-- Function cr_report_submitted_update() -->
+    <section id="public.function.cr-report-submitted-update"
+             xreflabel="()">
+      <title id="public.function.cr-report-submitted-update-title">
+       cr_report_submitted_update()
+      </title>
+      <titleabbrev id="public.function.cr-report-submitted-update-titleabbrev">
+       cr_report_submitted_update()
+      </titleabbrev>
+
+      <para>
+       <segmentedlist>
+        <title>Function Properties</title>
+        <?dbhtml list-presentation="list"?>
+        <segtitle>Language</segtitle>
+        <segtitle>Return Type</segtitle>
+        <seglistitem>
+         <seg>PLPGSQL</seg>
+         <seg>trigger</seg>
+        </seglistitem>
+       </segmentedlist>
+ 
+       
+        <programlisting>
+BEGIN
+  UPDATE cr_report_line_links rll
+     SET cleared = rl.cleared and NEW.submitted
+    FROM cr_report_line rl
+   WHERE rll.report_line_id = rl.id
+         AND rl.report_id = NEW.id;
+
+  RETURN NEW;
 END;
 </programlisting>
       </para>
@@ -49229,56 +49110,6 @@ END;
       </para>
     </section>
 
-<!-- Function lsmb__create_role(in_role text) -->
-    <section id="public.function.lsmb-create-role-in-role-text"
-             xreflabel="()">
-      <title id="public.function.lsmb-create-role-in-role-text-title">
-       lsmb__create_role(in_role text)
-      </title>
-      <titleabbrev id="public.function.lsmb-create-role-in-role-text-titleabbrev">
-       lsmb__create_role(in_role text)
-      </titleabbrev>
-
-      <para>
-       <segmentedlist>
-        <title>Function Properties</title>
-        <?dbhtml list-presentation="list"?>
-        <segtitle>Language</segtitle>
-        <segtitle>Return Type</segtitle>
-        <seglistitem>
-         <seg>PLPGSQL</seg>
-         <seg>boolean</seg>
-        </seglistitem>
-       </segmentedlist>
- 
-       
-        <programlisting>
-DECLARE
-  t_in_role text;
-BEGIN
-  -- Make sure to evaluate the role once because the optimizer
-  -- uses it as a filter on every row otherwise
-  SELECT lsmb__role(in_role) INTO t_in_role;
-  IF LENGTH(t_in_role) &gt; 63 THEN
-    RAISE EXCEPTION
-      &#39;Role % has more than 63 bytes. Truncation of % bytes will happen&#39;,
-      t_in_role,LENGTH(t_in_role)-63
-      USING ERRCODE = &#39;name_too_long&#39;;
-  END IF;
-  PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
-  IF FOUND THEN
-     RETURN TRUE;
-  END IF;
-
-  EXECUTE &#39;CREATE ROLE &#39; || quote_ident(t_in_role)
-  || &#39; WITH INHERIT NOLOGIN&#39;;
-
-  RETURN TRUE;
-END;
-</programlisting>
-      </para>
-    </section>
-
 <!-- Function lsmb__decompose_timestamp(in_timestamp timestamp with time zone) -->
     <section id="public.function.lsmb-decompose-timestamp-in-timestamp-timestamp-with-time-zone"
              xreflabel="()">
@@ -49353,307 +49184,6 @@ select case when position(lsmb__role_prefix() in role) = 1
               then substring(role from length(lsmb__role_prefix())+1)
        else null
        end;
-</programlisting>
-      </para>
-    </section>
-
-<!-- Function lsmb__grant_exec(in_role text, in_func text) -->
-    <section id="public.function.lsmb-grant-exec-in-role-text-in-func-text"
-             xreflabel="()">
-      <title id="public.function.lsmb-grant-exec-in-role-text-in-func-text-title">
-       lsmb__grant_exec(in_role text, in_func text)
-      </title>
-      <titleabbrev id="public.function.lsmb-grant-exec-in-role-text-in-func-text-titleabbrev">
-       lsmb__grant_exec(in_role text, in_func text)
-      </titleabbrev>
-
-      <para>
-       <segmentedlist>
-        <title>Function Properties</title>
-        <?dbhtml list-presentation="list"?>
-        <segtitle>Language</segtitle>
-        <segtitle>Return Type</segtitle>
-        <seglistitem>
-         <seg>PLPGSQL</seg>
-         <seg>boolean</seg>
-        </seglistitem>
-       </segmentedlist>
- 
-       
-        <programlisting>
-DECLARE
-  t_in_role text;
-BEGIN
-   SELECT lsmb__role(in_role) INTO t_in_role;
-   PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
-   IF NOT FOUND THEN
-      RAISE EXCEPTION &#39;Role % not found&#39;, t_in_role
-      USING ERRCODE = &#39;invalid_role_specification&#39;;
-   END IF;
-   EXECUTE &#39;GRANT EXECUTE ON FUNCTION &#39; || in_func || &#39; TO &#39;
-   || quote_ident(lsmb__role(in_role));
-   RETURN TRUE;
-END;
-</programlisting>
-      </para>
-    </section>
-
-<!-- Function lsmb__grant_menu(in_role text, in_node_id integer, in_perm_type text) -->
-    <section id="public.function.lsmb-grant-menu-in-role-text-in-node-id-integer-in-perm-type-text"
-             xreflabel="()">
-      <title id="public.function.lsmb-grant-menu-in-role-text-in-node-id-integer-in-perm-type-text-title">
-       lsmb__grant_menu(in_role text, in_node_id integer, in_perm_type text)
-      </title>
-      <titleabbrev id="public.function.lsmb-grant-menu-in-role-text-in-node-id-integer-in-perm-type-text-titleabbrev">
-       lsmb__grant_menu(in_role text, in_node_id integer, in_perm_type text)
-      </titleabbrev>
-
-      <para>
-       <segmentedlist>
-        <title>Function Properties</title>
-        <?dbhtml list-presentation="list"?>
-        <segtitle>Language</segtitle>
-        <segtitle>Return Type</segtitle>
-        <seglistitem>
-         <seg>PLPGSQL</seg>
-         <seg>boolean</seg>
-        </seglistitem>
-       </segmentedlist>
- 
-       
-        <programlisting>
-DECLARE
-  t_in_role text;
-BEGIN
-  -- Make sure to evaluate the role once because the optimizer
-  -- uses it as a filter on every row otherwise
-   SELECT lsmb__role(in_role) INTO t_in_role;
-   PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
-   IF NOT FOUND THEN
-      RAISE EXCEPTION &#39;Role % not found&#39;, t_in_role
-      USING ERRCODE = &#39;invalid_role_specification&#39;;
-   END IF;
-   PERFORM * FROM menu_node
-     WHERE menu AND id = in_node_id;
-   IF FOUND THEN
-      RAISE EXCEPTION &#39;Cannot grant to submenu&#39;;
-   END IF;
-   IF in_perm_type NOT IN (&#39;allow&#39;, &#39;deny&#39;) THEN
-      RAISE EXCEPTION &#39;Invalid perm type&#39;
-      USING ERRCODE = &#39;invalid_grantor&#39;;
-   END IF;
-   PERFORM * FROM menu_acl
-     WHERE node_id = in_node_id
-       AND role_name = t_in_role
-       AND acl_type = in_perm_type;
-   IF FOUND THEN RETURN TRUE;
-   END IF;
-   INSERT INTO menu_acl (node_id, role_name, acl_type)
-   VALUES (in_node_id, t_in_role, in_perm_type);
-   RETURN TRUE;
-END;
-</programlisting>
-      </para>
-    </section>
-
-<!-- Function lsmb__grant_perms(in_role text, in_table text, in_perms text) -->
-    <section id="public.function.lsmb-grant-perms-in-role-text-in-table-text-in-perms-text"
-             xreflabel="()">
-      <title id="public.function.lsmb-grant-perms-in-role-text-in-table-text-in-perms-text-title">
-       lsmb__grant_perms(in_role text, in_table text, in_perms text)
-      </title>
-      <titleabbrev id="public.function.lsmb-grant-perms-in-role-text-in-table-text-in-perms-text-titleabbrev">
-       lsmb__grant_perms(in_role text, in_table text, in_perms text)
-      </titleabbrev>
-
-      <para>
-       <segmentedlist>
-        <title>Function Properties</title>
-        <?dbhtml list-presentation="list"?>
-        <segtitle>Language</segtitle>
-        <segtitle>Return Type</segtitle>
-        <seglistitem>
-         <seg>PLPGSQL</seg>
-         <seg>boolean</seg>
-        </seglistitem>
-       </segmentedlist>
- 
-       
-        <programlisting>
-DECLARE
-  t_in_role text;
-BEGIN
-   SELECT lsmb__role(in_role) INTO t_in_role;
-   PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
-   IF NOT FOUND THEN
-      RAISE EXCEPTION &#39;Role % not found&#39;, t_in_role
-      USING ERRCODE = &#39;invalid_role_specification&#39;;
-   END IF;
-   IF upper(in_perms) NOT IN (&#39;ALL&#39;, &#39;INSERT&#39;, &#39;UPDATE&#39;, &#39;SELECT&#39;, &#39;DELETE&#39;) THEN
-      RAISE EXCEPTION &#39;Invalid permission&#39;
-      USING ERRCODE = &#39;invalid_grantor&#39;;
-   END IF;
-   EXECUTE &#39;GRANT &#39; || in_perms || &#39; ON &#39; || quote_ident(in_table)
-   || &#39; TO &#39; ||  quote_ident(lsmb__role(in_role));
-
-   RETURN TRUE;
-END;
-</programlisting>
-      </para>
-    </section>
-
-<!-- Function lsmb__grant_perms(in_role text, in_table text, in_perms text, in_cols text[]) -->
-    <section id="public.function.lsmb-grant-perms-in-role-text-in-table-text-in-perms-text-in-cols-textARRAY"
-             xreflabel="()">
-      <title id="public.function.lsmb-grant-perms-in-role-text-in-table-text-in-perms-text-in-cols-textARRAY-title">
-       lsmb__grant_perms(in_role text, in_table text, in_perms text, in_cols text[])
-      </title>
-      <titleabbrev id="public.function.lsmb-grant-perms-in-role-text-in-table-text-in-perms-text-in-cols-textARRAY-titleabbrev">
-       lsmb__grant_perms(in_role text, in_table text, in_perms text, in_cols text[])
-      </titleabbrev>
-
-      <para>
-       <segmentedlist>
-        <title>Function Properties</title>
-        <?dbhtml list-presentation="list"?>
-        <segtitle>Language</segtitle>
-        <segtitle>Return Type</segtitle>
-        <seglistitem>
-         <seg>PLPGSQL</seg>
-         <seg>boolean</seg>
-        </seglistitem>
-       </segmentedlist>
- 
-       
-        <programlisting>
-DECLARE
-  t_in_role text;
-BEGIN
-   SELECT lsmb__role(in_role) INTO t_in_role;
-   PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
-   IF NOT FOUND THEN
-      RAISE EXCEPTION &#39;Role % not found&#39;, t_in_role
-      USING ERRCODE = &#39;invalid_role_specification&#39;;
-   END IF;
-   IF upper(in_perms) NOT IN (&#39;ALL&#39;, &#39;INSERT&#39;, &#39;UPDATE&#39;, &#39;SELECT&#39;, &#39;DELETE&#39;) THEN
-      RAISE EXCEPTION &#39;Invalid permission&#39;
-      USING ERRCODE = &#39;invalid_grantor&#39;;
-   END IF;
-   EXECUTE &#39;GRANT &#39; || in_perms
-   || &#39;(&#39; || array_to_string(quote_ident_array(in_cols), &#39;, &#39;)
-   || &#39;) ON &#39; || quote_ident(in_table)|| &#39; TO &#39;
-   ||  quote_ident(lsmb__role(in_role));
-   RETURN TRUE;
-END;
-</programlisting>
-      </para>
-    </section>
-
-<!-- Function lsmb__grant_role(in_child text, in_parent text) -->
-    <section id="public.function.lsmb-grant-role-in-child-text-in-parent-text"
-             xreflabel="()">
-      <title id="public.function.lsmb-grant-role-in-child-text-in-parent-text-title">
-       lsmb__grant_role(in_child text, in_parent text)
-      </title>
-      <titleabbrev id="public.function.lsmb-grant-role-in-child-text-in-parent-text-titleabbrev">
-       lsmb__grant_role(in_child text, in_parent text)
-      </titleabbrev>
-
-      <para>
-       <segmentedlist>
-        <title>Function Properties</title>
-        <?dbhtml list-presentation="list"?>
-        <segtitle>Language</segtitle>
-        <segtitle>Return Type</segtitle>
-        <seglistitem>
-         <seg>PLPGSQL</seg>
-         <seg>boolean</seg>
-        </seglistitem>
-       </segmentedlist>
- 
-       
-        <programlisting>
-DECLARE
-  t_in_role text;
-BEGIN
-   SELECT lsmb__role(in_parent) INTO t_in_role;
-   PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
-   IF NOT FOUND THEN
-      RAISE EXCEPTION &#39;Role % not found&#39;, t_in_role
-      USING ERRCODE = &#39;invalid_role_specification&#39;;
-   END IF;
-   SELECT lsmb__role(in_child) INTO t_in_role;
-   PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
-   IF NOT FOUND THEN
-      RAISE EXCEPTION &#39;Role % not found&#39;, t_in_role
-      USING ERRCODE = &#39;invalid_role_specification&#39;;
-   END IF;
-   EXECUTE &#39;GRANT &#39; || quote_ident(lsmb__role(in_parent)) || &#39; TO &#39;
-   || quote_ident(lsmb__role(in_child));
-   RETURN TRUE;
-END;
-</programlisting>
-      </para>
-    </section>
-
-<!-- Function lsmb__grant_schema(in_role text, in_schema text) -->
-    <section id="public.function.lsmb-grant-schema-in-role-text-in-schema-text"
-             xreflabel="()">
-      <title id="public.function.lsmb-grant-schema-in-role-text-in-schema-text-title">
-       lsmb__grant_schema(in_role text, in_schema text)
-      </title>
-      <titleabbrev id="public.function.lsmb-grant-schema-in-role-text-in-schema-text-titleabbrev">
-       lsmb__grant_schema(in_role text, in_schema text)
-      </titleabbrev>
-
-      <para>
-       <segmentedlist>
-        <title>Function Properties</title>
-        <?dbhtml list-presentation="list"?>
-        <segtitle>Language</segtitle>
-        <segtitle>Return Type</segtitle>
-        <seglistitem>
-         <seg>PLPGSQL</seg>
-         <seg>boolean</seg>
-        </seglistitem>
-       </segmentedlist>
- 
-       
-        <programlisting>
-BEGIN
-  EXECUTE &#39;GRANT USAGE ON SCHEMA &#39; || quote_ident(in_schema) || &#39; TO &#39; || quote_ident(lsmb__role(&#39;base_user&#39;));
-  RETURN true;
-END;
-</programlisting>
-      </para>
-    </section>
-
-<!-- Function lsmb__is_allowed_role(in_rolelist text[]) -->
-    <section id="public.function.lsmb-is-allowed-role-in-rolelist-textARRAY"
-             xreflabel="()">
-      <title id="public.function.lsmb-is-allowed-role-in-rolelist-textARRAY-title">
-       lsmb__is_allowed_role(in_rolelist text[])
-      </title>
-      <titleabbrev id="public.function.lsmb-is-allowed-role-in-rolelist-textARRAY-titleabbrev">
-       lsmb__is_allowed_role(in_rolelist text[])
-      </titleabbrev>
-
-      <para>
-       <segmentedlist>
-        <title>Function Properties</title>
-        <?dbhtml list-presentation="list"?>
-        <segtitle>Language</segtitle>
-        <segtitle>Return Type</segtitle>
-        <seglistitem>
-         <seg>SQL</seg>
-         <seg>boolean</seg>
-        </seglistitem>
-       </segmentedlist>
- 
-       
-        <programlisting>
-select bool_and(pg_has_role(lsmb__role(r), &#39;USAGE&#39;))
-  from unnest(in_rolelist) r;
 </programlisting>
       </para>
     </section>
@@ -54192,36 +53722,6 @@ SELECT *
       </para>
     </section>
 
-<!-- Function quote_ident_array(text[]) -->
-    <section id="public.function.quote-ident-array-textARRAY"
-             xreflabel="()">
-      <title id="public.function.quote-ident-array-textARRAY-title">
-       quote_ident_array(text[])
-      </title>
-      <titleabbrev id="public.function.quote-ident-array-textARRAY-titleabbrev">
-       quote_ident_array(text[])
-      </titleabbrev>
-
-      <para>
-       <segmentedlist>
-        <title>Function Properties</title>
-        <?dbhtml list-presentation="list"?>
-        <segtitle>Language</segtitle>
-        <segtitle>Return Type</segtitle>
-        <seglistitem>
-         <seg>SQL</seg>
-         <seg>text[]</seg>
-        </seglistitem>
-       </segmentedlist>
- 
-       
-        <programlisting>
-   SELECT array_agg(quote_ident(e))
-     FROM unnest($1) e;
-</programlisting>
-      </para>
-    </section>
-
 <!-- Function reconciliation__account_list() -->
     <section id="public.function.reconciliation-account-list"
              xreflabel="()">
@@ -55169,14 +54669,6 @@ END;</programlisting>
         UPDATE cr_report_line SET cleared = (id = ANY(in_line_ids))
          WHERE report_id = in_report_id;
 
-        UPDATE cr_report_line_links rll
-           SET cleared = (select submitted from cr_report
-                           where id = in_report_id)
-                         AND report_line_id = ANY(in_line_ids)
-         WHERE EXISTS (select 1 from cr_report_line rl
-                        where rl.report_id = in_report_id
-                              and rl.id = rll.report_line_id);
-
         SELECT TRUE;
 </programlisting>
       </para>
@@ -55228,14 +54720,14 @@ exact matches.
       </para>
     </section>
 
-<!-- Function reconciliation__submit_set(in_report_id integer, in_line_ids integer[]) -->
-    <section id="public.function.reconciliation-submit-set-in-report-id-integer-in-line-ids-integerARRAY"
+<!-- Function reconciliation__submit_set(in_report_id integer) -->
+    <section id="public.function.reconciliation-submit-set-in-report-id-integer"
              xreflabel="()">
-      <title id="public.function.reconciliation-submit-set-in-report-id-integer-in-line-ids-integerARRAY-title">
-       reconciliation__submit_set(in_report_id integer, in_line_ids integer[])
+      <title id="public.function.reconciliation-submit-set-in-report-id-integer-title">
+       reconciliation__submit_set(in_report_id integer)
       </title>
-      <titleabbrev id="public.function.reconciliation-submit-set-in-report-id-integer-in-line-ids-integerARRAY-titleabbrev">
-       reconciliation__submit_set(in_report_id integer, in_line_ids integer[])
+      <titleabbrev id="public.function.reconciliation-submit-set-in-report-id-integer-titleabbrev">
+       reconciliation__submit_set(in_report_id integer)
       </titleabbrev>
 
       <para>
@@ -55256,7 +54748,6 @@ report.
         <programlisting>
 BEGIN
         UPDATE cr_report set submitted = true where id = in_report_id;
-        PERFORM reconciliation__save_set(in_report_id, in_line_ids);
 
         RETURN FOUND;
 END;
@@ -55874,7 +55365,7 @@ FOR retval IN
               JOIN bu_tree ON bu_tree.id = bu.parent_id
             )
        SELECT g.id, g.type, g.invoice, g.reference, g.eca_name, g.description, ac.transdate,
-              ac.source, ac.amount_bc, c.accno, c.gifi_accno,
+              ac.source, ac.amount_bc, ac.curr, ac.amount_tc, c.accno, c.gifi_accno,
               g.till, ac.cleared, ac.memo, c.description AS accname,
               ac.chart_id, ac.entry_id,
               sum(ac.amount_bc) over (order by ac.transdate, ac.trans_id,
@@ -57659,64 +57150,6 @@ BEGIN
 
    retval := template__get(in_template_name, in_language_code, in_format);
    RETURN retval;
-END;
-</programlisting>
-      </para>
-    </section>
-
-<!-- Function tg_enforce_perms_eclass() -->
-    <section id="public.function.tg-enforce-perms-eclass"
-             xreflabel="()">
-      <title id="public.function.tg-enforce-perms-eclass-title">
-       tg_enforce_perms_eclass()
-      </title>
-      <titleabbrev id="public.function.tg-enforce-perms-eclass-titleabbrev">
-       tg_enforce_perms_eclass()
-      </titleabbrev>
-
-      <para>
-       <segmentedlist>
-        <title>Function Properties</title>
-        <?dbhtml list-presentation="list"?>
-        <segtitle>Language</segtitle>
-        <segtitle>Return Type</segtitle>
-        <seglistitem>
-         <seg>PLPGSQL</seg>
-         <seg>trigger</seg>
-        </seglistitem>
-       </segmentedlist>
- 
-       
-        <programlisting>
-DECLARE
-   r_eclass entity_class;
-BEGIN
-IF TG_OP = &#39;DELETE&#39; THEN
-   RETURN OLD;
-ELSE
-   -- super user and database owner (group members)
-   -- don&#39;t need access enforcement
-   IF pg_has_role((SELECT rolname
-                     FROM pg_database db
-               INNER JOIN pg_roles rol
-                       ON db.datdba = rol.oid
-                    WHERE db.datname = current_database()),
-                  &#39;USAGE&#39;) IS TRUE THEN
-      RETURN NEW;
-   END IF;
-
-   SELECT * INTO r_eclass from entity_class WHERE id = NEW.entity_class;
-   IF pg_has_role(SESSION_USER,
-                  lsmb__role(&#39;contact_class_&#39;
-                             || lower(regexp_replace(r_eclass.class,
-                                                     &#39; &#39;, &#39;_&#39;))),
-                  &#39;USAGE&#39;)
-   THEN
-      RETURN NEW;
-   ELSE
-      RAISE EXCEPTION &#39;Access Denied for class&#39;;
-   END IF;
-END IF;
 END;
 </programlisting>
       </para>

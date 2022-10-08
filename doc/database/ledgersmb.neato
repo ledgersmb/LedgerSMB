@@ -96,10 +96,6 @@ edge [];
 
 "currency" [shape = record, label = "{<col0> \N| curr:  character(3)\ldescription:  text\l}" ];
 
-"db_patch_log" [shape = record, label = "{<col0> \N| when_applied:  timestamp without time zone\lpath:  text\lsha:  text\lsqlstate:  text\lerror:  text\l}" ];
-
-"db_patches" [shape = record, label = "{<col0> \N| sha:  text\lpath:  text\llast_updated:  timestamp without time zone\l}" ];
-
 "defaults" [shape = record, label = "{<col0> \N| setting_key:  text\lvalue:  text\l}" ];
 
 "eca_invoice" [shape = record, label = "{<col0> \N| order_id:  integer\ljournal_id:  integer\lon_hold:  boolean\lreverse:  boolean\lcredit_id:  integer\ldue:  date\llanguage_code:  character(6)\lforce_closed:  boolean\lorder_number:  text\l}" ];
@@ -583,7 +579,6 @@ edge [];
 "payroll_income_class" -> "country" [label="payroll_income_class_country_id_fkey"];
 "payroll_income_type" -> "account" [label="payroll_income_type_account_id_fkey"];
 "payroll_income_type" -> "payroll_income_class" [label="payroll_income_type_pic_id_country_id_fkey"];
-"payroll_income_type" -> "payroll_income_category" [label="payroll_income_type_pic_id_fkey"];
 "payroll_paid_timeoff" -> "entity" [label="payroll_paid_timeoff_employee_id_fkey"];
 "payroll_paid_timeoff" -> "payroll_pto_class" [label="payroll_paid_timeoff_pto_class_id_fkey"];
 "payroll_paid_timeoff" -> "payroll_report" [label="payroll_paid_timeoff_report_id_fkey"];
