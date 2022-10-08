@@ -239,7 +239,7 @@ Runs the report, and assigns rows to $self->rows.
 =cut
 
 sub run_report{
-    my ($self, $request) = @_;
+    my ($self) = @_;
 
     $self->options([{
        name => 'language',
