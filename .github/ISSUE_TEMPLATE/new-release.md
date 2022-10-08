@@ -71,6 +71,13 @@ When working toward a non-patch release, it's practical to use an issue to track
 * [ ] Add/update the release date
   * [ ] Update the release date of the minor series in Changelog
   * [ ] On the supported items page: https://ledgersmb.org/faq/which-versions-do-you-support
+* [ ] Remove the 'draft' topic from:
+  * [ ] [Preparing LedgerSMB XXX for first use](https://ledgersmb.org/content/preparing-ledgersmb-17-first-use)
+  * [ ] Create [installation documentation](https://ledgersmb.org/content/installing-ledgersmb-17) on ledgersmb.org
+  * [ ] Create [upgrade documentation](https://ledgersmb.org/content/upgrade-ledgersmb-17-16-or-15) on ledgersmb.org
+  * [ ] https://ledgersmb.org/content/documentation
+  * [ ] https://ledgersmb.org/content/using-docker-develop-ledgersmb
+  * [ ] the release notes
 
 # Last step:
 
