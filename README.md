@@ -61,25 +61,28 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome              | 2017-09  | 61-81, 83-103                               |
-| Edge                | 2020-01  | 79-81, 83-103                               |
-| Firefox             | 2018-05  | 60-102                                      |
-| Opera               | 2017-09  | 48-58, 60, 62-86                            |
+| Chrome              | 2017-09  | 61-81, 83-106                               |
+| Edge                | 2020-01  | 79-81, 83-106                               |
+| Firefox             | 2018-05  | 60-105                                      |
+| Opera               | 2017-09  | 48-58, 60, 62-91                            |
 | Safari              | 2017-09  | 11, 11.1, 12, 12.1, 13, 13.1, 14, 14.1,     |
-|                     |          | 15, 15.1, 15.2-15.5                         |
+|                     |          | 15, 15.1, 15.2-15.6, 16.0                   |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome for Android  | 2022-06  | 103                                         |
-| Firefox for Android | 2022-05  | 101                                         |
-| Android Browser     | 2022-06  | 103                                         |
+| Chrome for Android  | 2022-09  | 106                                         |
+| Firefox for Android | 2022-09  | 105                                         |
+| QQ Browser          | 2022-09  | 13.1                                        |
+| UC Browser for Android | 2021-10  | 13.4                                        |
+| Android Browser     | 2022-09  | 106                                         |
+| Baidu Browser       | 2022-09  | 13.18                                       |
 | Safari on iOS       | 2017-09  | 11.0-11.4, 12.0-12.5, 13.0-13.7,            |
-|                     |          | 14.0-14.8, 15.0-15.5                        |
+|                     |          | 14.0-14.8, 15.0-15.6, 16.0                  |
 | Opera Mobile        | 2021-02  | 64                                          |
 | Samsung Internet    | 2018-12  | 8.2, 9.2, 10.1, 11.1-11.2, 12.0, 13.0,      |
-|                     |          | 14.0, 15.0, 16.0, 17.0                      |
+|                     |          | 14.0, 15.0, 16.0, 17.0, 18.0                |
 
 
 **Note**: Earliest dates and versions come from http://caniuse.com. Only the most
@@ -89,7 +92,7 @@ devices running old browsers is negligible.
 
 # Quick start
 
-For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-19
+For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-110
 
 ## Installation
 
@@ -97,7 +100,7 @@ This instruction assumes you have [Docker](https://docs.docker.com/get-docker/)
 installed as well as [docker-compose](https://github.com/docker/compose#where-to-get-docker-compose).
 
 ```bash
- $ wget https://raw.githubusercontent.com/ledgersmb/ledgersmb-docker/1.9/docker-compose.yml
+ $ wget https://raw.githubusercontent.com/ledgersmb/ledgersmb-docker/1.10/docker-compose.yml
  $ docker-compose up -d
 ```
 
@@ -115,7 +118,7 @@ The system is installed and should be available for evaluation through
   Normal login for the application
 
 The system is ready for [preparation for first
-use](https://ledgersmb.org/content/preparing-ledgersmb-19-first-use).
+use](https://ledgersmb.org/content/preparing-ledgersmb-110-first-use).
 
 
 **NOTE:** This setup does not use a webserver like nginx or Apache. Setups which
