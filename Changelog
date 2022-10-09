@@ -79,9 +79,13 @@ Dependency updates
 * Workflow 1.59 (upadted from 1.56)
 * YAML::PP (new)
 * YAML (dropped)
+* Version::Compare (dropped)
 * JSONSchema::Validator (new)
+* Locales (new)
 * HTTP::AcceptLanguage (new)
+* HTTP::Negotiate (new)
 * Beam::Wire (new)
+* Archive::Zip (new)
 
 
 Changelog for 1.9 Series
