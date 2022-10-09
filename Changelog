@@ -42,8 +42,9 @@ Added functionalities
 * Default printer selection supports 'Screen' as default output location
 * Default page size for PDFs selectable through System > Defaults
 * Support for Right-to-Left (RTL) languages
-* Ability to archive templates (#1931)
+* Ability to download all document templates as a zip file (#1931)
 * Added 'Currency', 'FX Debits' and 'FX Credits' columns to GL report (#3999)
+* Attachments to reconciliations, e.g. bankstatement PDFs
 
 Changed functionalities
 * Overpayment section in payment screen hidden on missing configuration (#2512)
