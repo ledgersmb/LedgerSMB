@@ -1,0 +1,9 @@
+# Startup configuration for LedgerSMB on Starman
+
+host=localhost
+port=5762
+# If you want to specify workers you could do so here, like
+# starman_args="--workers 32 --preload_app"
+# but note --reload_app if used must be at the end
+starman_args=--preload_app
+working_dir=/usr/local/share/ledgersmb

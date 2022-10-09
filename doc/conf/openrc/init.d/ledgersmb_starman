@@ -1,0 +1,19 @@
+#!/sbin/openrc-run
+# Copyright 2022 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+name="ledgersmb daemon, running via starman"
+description=""
+command=/usr/bin/starman
+command_background="yes"
+ssd=/sbin/start-stop-daemon
+pidfile=/var/run/ledgersmb
+output_log="/var/log/ledgersmb/starman.log"
+error_log="/var/log/ledgersmb/starman.err"
+start_stop_daemon_args="-d $working_dir -u ledgersmb -g ledgersmb -b\
+    -p ${pidfile} -S -x $command"
+command_args="-Ilib -Iold/lib --listen ${host}:${port} ${ledgersmb_args} \
+    bin/ledgersmb-server.psgi"
+
+
+
