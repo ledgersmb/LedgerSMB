@@ -582,7 +582,7 @@ sub _post_invoices {
                 |
                 )
                 or die $env->{'lsmb.db'}->errstr;
-            $sth->execute($tax->{category}, $inv->{transdate})
+            $sth->execute($tax->{tax}->{category}, $inv->{transdate})
                 or die $sth->errstr;
             $inv_tax->{tax} = $sth->fetchrow_hashref;
             die $sth->errstr
@@ -608,7 +608,7 @@ sub _post_invoices {
                 |
                 )
                 or die $env->{'lsmb.db'}->errstr;
-            $sth->execute($tax->{category})
+            $sth->execute($tax->{tax}->{category})
                 or die $sth->errstr;
 
             unless ($sth->rows) {
