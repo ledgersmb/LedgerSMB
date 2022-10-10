@@ -131,8 +131,10 @@ describe("Adding the new Invoice", () => {
                         }
                     ],
                     taxes: {
-                        tax: {
-                            category: "2150",
+                        "2150": {
+                            tax: {
+                                category: "2150"
+                            },
                             "base-amount": 50,
                             amount: 6.78,
                             source: "Part 1",
@@ -253,8 +255,10 @@ describe("Modifying the Invoice 1", () => {
                         }
                     ],
                     taxes: {
-                        tax: {
-                            category: "2150",
+                        "2150": {
+                            tax: {
+                                category: "2150"
+                            },
                             "base-amount": 50,
                             amount: 6.78,
                             source: "Part 1",
