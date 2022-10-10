@@ -12,7 +12,7 @@ output_log="/var/log/ledgersmb/starman.log"
 error_log="/var/log/ledgersmb/starman.err"
 start_stop_daemon_args="-d $working_dir -u ledgersmb -g ledgersmb -b\
     -p ${pidfile} -S -x $command"
-command_args="-Ilib -Iold/lib --listen ${host}:${port} ${ledgersmb_args} \
+command_args="-Ilib -Iold/lib --listen ${host}:${port} ${starman_args} \
     bin/ledgersmb-server.psgi"
 
 

@@ -3,7 +3,10 @@
 host=localhost
 port=5762
 # If you want to specify workers you could do so here, like
-# starman_args="--workers 32 --preload_app"
+# starman_args="--workers 32 --preload-app"
 # but note --reload_app if used must be at the end
-starman_args=--preload_app
+#
+# Note further if you are *not* using --preload-app that you need to set
+# a shared secret in the ledgersmb.conf
+starman_args=--preload-app
 working_dir=/usr/local/share/ledgersmb
