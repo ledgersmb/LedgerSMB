@@ -1104,11 +1104,11 @@ sub print {
 
     if ($form->{type} eq 'invoice') {
         &invoice_links;
-        &prepare_invoice;
+        &prepare_invoice( unquoted => 1 );
     }
     else {
         &order_links;
-        &prepare_order;
+        &prepare_order( unquoted => 1 );
     }
     $form->{$_} = $saved_form->{$_} for (qw(language_code media formname));
 
