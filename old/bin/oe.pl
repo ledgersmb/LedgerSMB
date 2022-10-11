@@ -166,7 +166,7 @@ sub order_links {
 }
 
 sub prepare_order {
-
+    my %args          = @_;
     $form->{format}   = "postscript" if $myconfig{printer};
     $form->{media}    = $myconfig{printer};
     $form->{formname} = $form->{type};
@@ -176,11 +176,12 @@ sub prepare_order {
 
     if ( $form->{id} ) {
 
-        for(
-          qw(ordnumber quonumber shippingpoint shipvia notes intnotes shiptoname shiptoaddress1 shiptoaddress2 shiptocity shiptostate shiptozipcode shiptocountry shiptocontact)
-          )
-        {
-            $form->{$_} = $form->quote( $form->{$_} );
+        unless ($args{unquoted}) {
+            for(qw(ordnumber quonumber shippingpoint shipvia notes intnotes
+                   shiptoname shiptoaddress1 shiptoaddress2 shiptocity
+                   shiptostate shiptozipcode shiptocountry shiptocontact)) {
+                $form->{$_} = $form->quote( $form->{$_} );
+            }
         }
 
         my $i;
@@ -221,8 +222,10 @@ sub prepare_order {
               $form->format_amount( \%myconfig, $form->{"qty_$i"} );
             $form->{"oldqty_$i"} = $form->{"qty_$i"};
 
-            for (qw(partnumber sku description unit)) {
-                $form->{"${_}_$i"} = $form->quote( $form->{"${_}_$i"} );
+            unless ($args{unquoted}) {
+                for (qw(partnumber sku description unit)) {
+                    $form->{"${_}_$i"} = $form->quote( $form->{"${_}_$i"} );
+                }
             }
             $form->{rowcount} = $i;
         }

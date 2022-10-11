@@ -210,5 +210,61 @@ sub createcontact
 }
 
 
+sub prepare_invoice {
+    my ($self, $form, $myconfig, %args)            = @_;
+    $form->{type}       = "invoice";
+
+    my $i = 0;
+    $form->{currency} =~ s/ //g;
+    $form->{oldcurrency} = $form->{currency};
+
+    if ( $form->{id} ) {
+        unless ($args{unquoted}) {
+            for (qw(invnumber ordnumber ponumber quonumber shippingpoint
+                    shipvia notes intnotes)) {
+                $form->{$_} = $form->quote( $form->{$_} );
+            }
+        }
+
+        foreach my $ref ( @{ $form->{invoice_details} } ) {
+            $i++;
+            for ( keys %$ref ) { $form->{"${_}_$i"} = $ref->{$_} }
+
+            $form->{"projectnumber_$i"} =
+              qq|$ref->{projectnumber}--$ref->{project_id}|
+              if $ref->{project_id};
+            $form->{"partsgroup_$i"} =
+              qq|$ref->{partsgroup}--$ref->{partsgroup_id}|
+              if $ref->{partsgroup_id};
+
+            $form->{"discount_$i"} =
+              $form->format_amount( $myconfig, $form->{"discount_$i"} * 100 );
+
+            my $moneyplaces = LedgerSMB::Setting->new(%$form)->get('decimal_places');
+            my ($dec) = ($form->{"sellprice_$i"} =~/\.(\d*)/);
+            $dec = length $dec;
+            my $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
+            $form->{"precision_$i"} = $decimalplaces;
+
+            $form->{"sellprice_$i"} =
+              $form->format_amount( $myconfig, $form->{"sellprice_$i"},
+                $decimalplaces );
+            $form->{"qty_$i"} =
+              $form->format_amount( $myconfig, $form->{"qty_$i"} );
+            $form->{"oldqty_$i"} = $form->{"qty_$i"};
+
+        $form->{"taxformcheck_$i"}=1 if($args{module}->get_taxcheck($form,$form->{"invoice_id_$i"},$form->{dbh}));
+
+
+            unless ($args{unquoted}) {
+                for (qw(partnumber sku description unit)) {
+                    $form->{"${_}_$i"} = $form->quote( $form->{"${_}_$i"} );
+                }
+            }
+            $form->{rowcount} = $i;
+        }
+    }
+}
+
 
 1;
