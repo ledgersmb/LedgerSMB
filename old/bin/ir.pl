@@ -263,55 +263,9 @@ sub invoice_links {
 }
 
 sub prepare_invoice {
+    my %args = @_;
 
-    $form->{type} = "invoice";
-    $form->{currency} =~ s/ //g;
-    $form->{oldcurrency} = $form->{currency};
-
-    if ( $form->{id} ) {
-
-        for (qw(invnumber ordnumber ponumber quonumber)) {
-            $form->{$_} = $form->quote( $form->{$_} );
-        }
-
-        foreach my $ref ( @{ $form->{invoice_details} } ) {
-            $i++;
-            for ( keys %$ref ) { $form->{"${_}_$i"} = $ref->{$_} }
-
-            $form->{"projectnumber_$i"} =
-              qq|$ref->{projectnumber}--$ref->{project_id}|
-              if $ref->{project_id};
-            $form->{"partsgroup_$i"} =
-              qq|$ref->{partsgroup}--$ref->{partsgroup_id}|
-              if $ref->{partsgroup_id};
-
-            $form->{"discount_$i"} =
-              $form->format_amount( \%myconfig, $form->{"discount_$i"} * 100 );
-
-            my $moneyplaces = LedgerSMB::Setting->new(%$form)->get('decimal_places');
-            my ($dec) = ($form->{"sellprice_$i"} =~/\.(\d*)/);
-            $dec = length $dec;
-            $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
-            $form->{"precision_$i"} = $decimalplaces;
-
-            $form->{"sellprice_$i"} =
-              $form->format_amount( \%myconfig, $form->{"sellprice_$i"},
-                $decimalplaces );
-            $form->{"qty_$i"} =
-              $form->format_amount( \%myconfig, $form->{"qty_$i"} );
-            $form->{"oldqty_$i"} = $form->{"qty_$i"};
-
-        $form->{"taxformcheck_$i"}=1 if(IR->get_taxcheck($form,$form->{"invoice_id_$i"},$form->{dbh}));
-
-
-            for (qw(partnumber sku description unit)) {
-                $form->{"${_}_$i"} = $form->quote( $form->{"${_}_$i"} );
-            }
-
-            $form->{rowcount} = $i;
-        }
-    }
-
+    IIAA->prepare_invoice( $form, \%myconfig, module => 'IR', %args );
 }
 
 sub form_header {
