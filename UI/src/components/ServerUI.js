@@ -129,10 +129,11 @@ export default {
                 return;
             }
 
+            let i = 0;
             dnode.addEventListener("click", function (e) {
                 if (!e.ctrlKey && !e.shiftKey && e.button === 0) {
                     e.preventDefault();
-                    window.__lsmbLoadLink(href);
+                    window.__lsmbLoadLink(href + `#${i++}`);
                 }
             });
 
