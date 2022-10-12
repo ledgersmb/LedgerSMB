@@ -27,6 +27,13 @@ Dependency updates
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.1
+* Fix batch details screen failing to load (#6850)
+* Update 1.10.0 Perl dependency changes in Changelog
+* Fix taxes wrong taxes being applied to invoices (#6857)
+* Fix HTML-encoding values on (PDF) printed documents (#6861)
+
+
 Changelog for 1.10.0
 
 Added functionalities
