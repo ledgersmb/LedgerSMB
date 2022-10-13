@@ -214,7 +214,6 @@ sub post_reversing {
             local $form->{reverse};
             local $form->{notes};
             local $form->{description};
-            local $form->{transdate};
             local $form->{reference};
             local $form->{approved};
 
