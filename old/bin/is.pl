@@ -935,6 +935,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
                 my ($id, $workflow) = split(/,/, $items{spawned_workflow}, 2);
                 $link = ($links{$workflow}
                          // $links{"$workflow|$form->{vc}"}) . $id;
+                $link .= "&amp;callback=$form->{script}%3Faction%3D$form->{action}%26id%3D$form->{id}";
             }
             if ($link) {
                 print qq|<tr><td><a href="$link">$desc</a></td></tr>|;
