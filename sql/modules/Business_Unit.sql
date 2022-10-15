@@ -5,7 +5,7 @@ set client_min_messages = 'warning';
 BEGIN;
 
 CREATE OR REPLACE FUNCTION business_unit__list_classes(in_active bool, in_module text)
-RETURNS SETOF business_unit_class AS
+RETURNS SETOF business_unit_class STABLE AS
 $$
 
 SELECT bc.*
@@ -32,7 +32,7 @@ $$ SELECT * FROM business_unit WHERE id = $1; $$ LANGUAGE SQL;
 CREATE OR REPLACE FUNCTION business_unit__list_by_class
 (in_business_unit_class_id int, in_active_on date, in_credit_id int,
 in_strict_credit bool)
-RETURNS SETOF business_unit AS
+RETURNS SETOF business_unit STABLE AS
 $$
 SELECT * FROM business_unit
               WHERE (in_active_on BETWEEN coalesce(start_date, in_active_on)
@@ -70,7 +70,7 @@ level int
 );
 
 CREATE OR REPLACE FUNCTION business_unit__get_tree_for(in_id int)
-RETURNS SETOF business_unit_short AS
+RETURNS SETOF business_unit_short STABLE AS
 $$
 WITH RECURSIVE tree  (id, control_code, description,  start_date, end_date,
                       parent_id, path, level)
@@ -105,7 +105,7 @@ SELECT true;
 $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION business_unit_class__get_modules(in_id int)
-RETURNS SETOF lsmb_module AS
+RETURNS SETOF lsmb_module STABLE AS
 $$ SELECT * FROM lsmb_module
     WHERE id IN (select module_id from bu_class_to_module where bu_class_id = $1)
  ORDER BY id;
