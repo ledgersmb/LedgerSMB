@@ -28,6 +28,7 @@ CREATE OR REPLACE FUNCTION report__incoming_cogs_line
 (in_date_from date, in_date_to date, in_partnumber text,
 in_parts_description text)
 RETURNS SETOF incoming_lot_cogs_line
+STABLE
 LANGUAGE SQL AS
 $$
 SELECT i.id, a.id, a.invnumber, a.transdate, i.parts_id, p.partnumber,
@@ -79,7 +80,7 @@ CREATE OR REPLACE FUNCTION report__invoice_aging_detail
 (in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
  in_business_units int[], in_use_duedate bool, in_name_part text)
 RETURNS SETOF report_aging_item
-AS
+STABLE AS
 $$
      WITH RECURSIVE bu_tree (id, path) AS (
                 SELECT id, id::text AS path
@@ -185,7 +186,7 @@ CREATE OR REPLACE FUNCTION report__invoice_aging_summary
 (in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
  in_business_units int[], in_use_duedate bool, in_name_part text)
 RETURNS SETOF report_aging_item
-AS $$
+STABLE AS $$
 SELECT entity_id, account_number, name, contact_name, null::text, null::date,
        null::text, null::text, null::text, null::text,
        sum(c0), sum(c30), sum(c60), sum(c90), null::date, null::int, curr,
@@ -225,7 +226,7 @@ CREATE OR REPLACE FUNCTION report__gl
 in_source text, in_memo text,  in_description text, in_from_date date,
 in_to_date date, in_approved bool, in_from_amount numeric, in_to_amount numeric,
 in_business_units int[])
-RETURNS SETOF gl_report_item AS
+RETURNS SETOF gl_report_item STABLE AS
 $$
 DECLARE
          retval gl_report_item;
@@ -338,7 +339,7 @@ CREATE TYPE cash_summary_item AS (
 
 CREATE OR REPLACE FUNCTION report__cash_summary
 (in_from_date date, in_to_date date, in_from_accno text, in_to_accno text)
-RETURNS SETOF cash_summary_item AS
+RETURNS SETOF cash_summary_item STABLE AS
 $$
 SELECT a.id, a.accno, a.is_heading, a.description, t.label,
        sum(CASE WHEN ac.amount_bc < 0 THEN ac.amount_bc * -1 ELSE NULL END),
@@ -375,7 +376,7 @@ CREATE TYPE general_balance_line AS (
 
 CREATE OR REPLACE FUNCTION report__general_balance
 (in_from_date date, in_to_date date)
-RETURNS SETOF general_balance_line AS
+RETURNS SETOF general_balance_line STABLE AS
 $$
 
 SELECT a.id, a.accno, a.description,
@@ -432,7 +433,7 @@ CREATE OR REPLACE FUNCTION report__aa_outstanding_details
  in_meta_number text,
  in_employee_id int, in_business_units int[], in_ship_via text, in_on_hold bool,
  in_from_date date, in_to_date date, in_partnumber text, in_parts_id int)
-RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
+RETURNS SETOF aa_transactions_line LANGUAGE SQL STABLE AS $$
 
 SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
        a.invnumber, a.ordnumber, a.ponumber, a.curr, a.amount_bc, a.netamount_bc,
@@ -501,7 +502,7 @@ CREATE OR REPLACE FUNCTION report__aa_outstanding
  in_meta_number text,
  in_employee_id int, in_business_units int[], in_ship_via text, in_on_hold bool,
  in_from_date date, in_to_date date, in_partnumber text, in_parts_id int)
-RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
+RETURNS SETOF aa_transactions_line LANGUAGE SQL STABLE AS $$
 
 SELECT null::int as id, null::bool as invoice, entity_id, meta_number,
        entity_name, null::date as transdate, count(*)::text as invnumber,
@@ -541,7 +542,7 @@ CREATE OR REPLACE FUNCTION report__aa_transactions
  in_shipvia text, in_from_date date, in_to_date date, in_on_hold bool,
  in_taxable bool, in_tax_account_id int, in_open bool, in_closed bool,
  in_approved bool, in_partnumber text)
-RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
+RETURNS SETOF aa_transactions_line LANGUAGE SQL STABLE AS $$
 
 SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
        a.transdate, a.invnumber, a.ordnumber, a.ponumber, a.curr,

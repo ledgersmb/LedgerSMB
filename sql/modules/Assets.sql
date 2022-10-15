@@ -262,7 +262,7 @@ CREATE TYPE asset_class_result AS (
 CREATE OR REPLACE FUNCTION asset_class__search
 (in_asset_account_id int, in_dep_account_id int,
 in_method int, in_label text)
-RETURNS SETOF asset_class_result AS
+RETURNS SETOF asset_class_result STABLE AS
 $$
                 SELECT ac.id, ac.asset_account_id, aa.accno, aa.description,
                         ac.dep_account_id, ad.accno, ad.description,
@@ -351,7 +351,7 @@ CREATE OR REPLACE FUNCTION asset__search
 (in_asset_class int, in_description text, in_tag text,
 in_purchase_date date, in_purchase_value numeric,
 in_usable_life numeric, in_salvage_value numeric)
-RETURNS SETOF asset_item AS $$
+RETURNS SETOF asset_item STABLE AS $$
                 SELECT * FROM asset_item
                 WHERE (in_asset_class is null
                         or asset_class_id = in_asset_class)
@@ -480,7 +480,7 @@ in_usable_life numeric, in_salvage_value numeric,
 in_start_depreciation date, in_warehouse_id int,
 in_department_id int, in_invoice_id int,
 in_asset_account_id int, in_dep_account_id int)
-returns setof asset_item as
+returns setof asset_item STABLE as
 $$
          SELECT * FROM asset_item
           WHERE (id = in_id or in_id is null)
@@ -657,7 +657,7 @@ CREATE TYPE asset_nbv_line AS (
 
 
 CREATE OR REPLACE FUNCTION asset_nbv_report ()
-returns setof asset_nbv_line AS
+returns setof asset_nbv_line STABLE AS
 $$
    SELECT ai.id, ai.tag, ai.description, ai.start_depreciation,
           adm.short_name, ai.usable_life

@@ -38,7 +38,7 @@ CREATE OR REPLACE FUNCTION payment_get_entity_accounts
  in_vc_idn  text,
  in_datefrom date,
  in_dateto date)
- returns SETOF payment_vc_info AS
+ returns SETOF payment_vc_info STABLE AS
  $$
               SELECT ec.id, coalesce(ec.pay_to_name, e.name ||
                      coalesce(':' || ec.description,'')) as name,
@@ -67,7 +67,7 @@ as needed for discount calculations and the like.$$;
 CREATE OR REPLACE FUNCTION payment_get_entity_account_payment_info
 (in_entity_credit_id int)
 RETURNS payment_vc_info
-AS $$
+STABLE AS $$
  SELECT ec.id, coalesce(ec.pay_to_name, cp.name  || coalesce(':' || ec.description, ''), '') as name,
         e.entity_class, ec.discount_account_id, ec.meta_number
  FROM entity_credit_account ec
@@ -101,7 +101,7 @@ DROP FUNCTION IF EXISTS payment_get_open_accounts(int, date, date);
 -- refactored and redesigned.  -- CT
 CREATE OR REPLACE FUNCTION payment_get_open_accounts
 (in_account_class int, in_datefrom date, in_dateto date)
-returns SETOF payment_open_account AS
+returns SETOF payment_open_account STABLE AS
 $$
                 SELECT ec.id, e.name, ec.entity_class
                 FROM entity e
@@ -140,7 +140,7 @@ always) and returns all entities with open accounts of the appropriate type. $$;
 DROP FUNCTION if exists payment_get_all_accounts(int);
 
 CREATE OR REPLACE FUNCTION payment_get_all_accounts(in_account_class int)
-RETURNS SETOF payment_open_account AS
+RETURNS SETOF payment_open_account STABLE AS
 $$
                 SELECT  ec.id,
                         e.name, ec.entity_class
@@ -193,7 +193,7 @@ CREATE OR REPLACE FUNCTION payment_get_open_invoices
  in_amountfrom numeric,
  in_amountto   numeric,
  in_datepaid   date)
-RETURNS SETOF payment_invoice AS
+RETURNS SETOF payment_invoice STABLE AS
 $$
                 SELECT a.id AS invoice_id, a.invnumber AS invnumber,a.invoice AS invoice,
                        a.transdate AS invoice_date, a.amount_bc AS amount,
@@ -290,7 +290,7 @@ CREATE OR REPLACE FUNCTION payment_get_open_invoice
  in_amountto   numeric,
  in_invnumber text,
  in_datepaid  date)
-RETURNS SETOF payment_invoice AS
+RETURNS SETOF payment_invoice STABLE AS
 $$
                 SELECT * from payment_get_open_invoices(in_account_class, in_entity_credit_id, in_curr, in_datefrom, in_dateto, in_amountfrom,
                 in_amountto, in_datepaid)
@@ -327,7 +327,7 @@ CREATE OR REPLACE FUNCTION payment_get_all_contact_invoices
         in_date_from date, in_date_to date, in_batch_id int,
         in_ar_ap_accno text, in_meta_number text, in_contact_name text,
         in_payment_date date)
-RETURNS SETOF payment_contact_invoice AS
+RETURNS SETOF payment_contact_invoice STABLE AS
 $$
                   SELECT c.id AS contact_id, e.control_code as econtrol_code,
                         c.description as eca_description,
@@ -1162,7 +1162,7 @@ CREATE TYPE payment_location_result AS (
 --  This should be unified on the API when we get things working - David Mora
 --
 CREATE OR REPLACE FUNCTION payment_get_vc_info(in_entity_credit_id int, in_location_class_id int)
-RETURNS SETOF payment_location_result AS
+RETURNS SETOF payment_location_result STABLE AS
 $$
                 SELECT l.id, l.line_one, l.line_two, l.line_three, l.city,
                        l.state, l.mail_code, c.name, lc.class
@@ -1202,7 +1202,7 @@ CREATE OR REPLACE FUNCTION payment__search
 (in_source text, in_from_date date, in_to_date date, in_credit_id int,
         in_cash_accno text, in_entity_class int, in_currency char(3),
         in_meta_number text)
-RETURNS SETOF payment_record AS
+RETURNS SETOF payment_record STABLE AS
 $$
    select p.id, sum(case when c.entity_class = 1 then a.amount_bc
                     else -1*a.amount_bc end),
@@ -1354,7 +1354,7 @@ notes text
 );
 -- I NEED TO PLACE THE COMPANY TELEPHONE AND ALL THAT STUFF
 CREATE OR REPLACE FUNCTION payment_gather_header_info(in_account_class int, in_payment_id int)
- RETURNS SETOF payment_header_item AS
+ RETURNS SETOF payment_header_item STABLE AS
  $$
    SELECT p.id as payment_id, p.reference as payment_reference, p.payment_date,
           c.legal_name as legal_name, am.amount_bc as amount, em.first_name, em.last_name, p.currency, p.notes
@@ -1404,7 +1404,7 @@ CREATE TYPE payment_line_item AS (
 );
 
 CREATE OR REPLACE FUNCTION payment_gather_line_info(in_account_class int, in_payment_id int)
- RETURNS SETOF payment_line_item AS
+ RETURNS SETOF payment_line_item STABLE AS
  $$
      SELECT pl.payment_id, ac.entry_id, pl.type as link_type, ac.trans_id, a.invnumber as invoice_number,
      ac.chart_id, ch.accno as chart_accno, ch.description as chart_description,
@@ -1450,7 +1450,7 @@ GROUP BY p.id, c.accno, p.reference, p.payment_class, p.closed, p.payment_date,
       eca.entity_id, eca.discount, eca.meta_number, eca.entity_class;
 
 CREATE OR REPLACE FUNCTION payment_get_open_overpayment_entities(in_account_class int)
- returns SETOF payment_vc_info AS
+ returns SETOF payment_vc_info STABLE AS
  $$
                 SELECT DISTINCT entity_credit_id, legal_name, e.entity_class, null::int, o.meta_number
                 FROM overpayments o
@@ -1473,7 +1473,7 @@ $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION payment_get_unused_overpayment(
 in_account_class int, in_entity_credit_id int, in_chart_id int)
-returns SETOF overpayments AS
+returns SETOF overpayments STABLE AS
 $$
               SELECT DISTINCT *
               FROM overpayments
@@ -1498,7 +1498,7 @@ CREATE TYPE payment_overpayments_available_amount AS (
 
 CREATE OR REPLACE FUNCTION payment_get_available_overpayment_amount(
 in_account_class int, in_entity_credit_id int)
-returns SETOF payment_overpayments_available_amount AS
+returns SETOF payment_overpayments_available_amount STABLE AS
 $$
               SELECT chart_id, accno,   chart_description, available
               FROM overpayments

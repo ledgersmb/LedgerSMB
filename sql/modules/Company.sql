@@ -85,7 +85,7 @@ create type eca_history_result as (
 
 CREATE OR REPLACE FUNCTION eca__get_by_meta_number
 (in_meta_number text, in_entity_class int)
-RETURNS entity_credit_account AS
+RETURNS entity_credit_account STABLE AS
 $$
 SELECT * FROM entity_credit_account
  WHERE entity_class = $2 AND meta_number = $1;
