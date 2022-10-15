@@ -22,7 +22,7 @@ in_from_date date, in_to_date date, in_amount_lt numeric, in_amount_gt numeric);
 
 CREATE OR REPLACE FUNCTION draft__search(in_type text, in_reference text,
 in_from_date date, in_to_date date, in_amount_lt numeric, in_amount_gt numeric)
-returns setof draft_search_result AS
+returns setof draft_search_result STABLE AS
 $$
         SELECT id, transdate, invoice, reference, eca_name, description,
                type, amount FROM (
