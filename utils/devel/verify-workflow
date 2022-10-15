@@ -1,0 +1,159 @@
+#!/usr/bin/env perl
+
+use v5.28.0;
+use feature 'signatures';
+
+use List::Util qw( first );
+use Workflow::Config;
+
+my $wf_name = $ARGV[0];
+my @workflows = Workflow::Config->parse_all_files(
+    'workflow', $wf_name . '.workflow.xml'
+    );
+my @actions = Workflow::Config->parse_all_files(
+    'action', $wf_name . '.actions.xml'
+    );
+my @conditions = Workflow::Config->parse_all_files(
+    'condition', $wf_name . '.conditions.xml'
+    );
+
+sub lookup_actions_by_name {
+    my ($wf_type, $action_name) = @_;
+    my @rv;
+
+    for my $actions_group (@actions) {
+        my $actions_type = $actions_group->{type} // 'default';
+        next if ($actions_type ne 'default'
+                 and $actions_type ne $wf_type);
+
+        push @rv,
+            map { $_->{__wf_type} = $actions_type; $_ }
+            grep { $_->{name} eq $action_name } $actions_group->{action}->@*;
+    }
+
+    return @rv;
+}
+
+sub lookup_conditions_by_name {
+    my ($wf_type, $condition_name) = @_;
+    my @rv;
+
+    for my $conditions_group (@conditions) {
+        my $conditions_type = $conditions_group->{type} // 'default';
+        next if ($conditions_type ne 'default'
+                 and $conditions_type ne $wf_type);
+
+        push @rv,
+            map { $_->{__wf_type} = $conditions_type; $_ }
+            grep { $_->{name} eq $condition_name } $conditions_group->{condition}->@*;
+    }
+
+    return @rv;
+}
+
+sub verify_workflow_action {
+    my ($wf_type, $state_name, $action) = @_;
+    my @candidates = lookup_actions_by_name( $wf_type, $action->{name} );
+
+    print "Verifying action $state_name/$action->{name}...";
+    if (not @candidates) {
+        say " fail";
+        say "  No action configuration found for action $state_name/$action->{name}";
+        return;
+    }
+    elsif (scalar(grep { $_->{__wf_type} eq $wf_type } @candidates) > 1) {
+        say " fail";
+        say "  More than one configuration found for action $action->{name} of workflow type $wf_type";
+        return;
+    }
+    elsif (scalar(grep { $_->{__wf_type} eq $wf_type } @candidates) == 0
+           and scalar(grep { $_->{__wf_type} eq 'default' } @candidates) > 1) {
+        say " fail";
+        say "  More than one default configuration found for action $action->{name}, used for workflow type $wf_type";
+        return;
+    }
+
+    my $action_config =
+        (first { $_->{name} eq $action->{name} }
+         grep { $_->{__wf_type} eq $wf_type } @candidates)
+        // (first { $_->{name} eq $action->{name} }
+            grep { $_->{__wf_type} eq 'default' } @candidates);
+
+    if (not exists $action_config->{class}
+        and not exists $action->{class}) {
+        say " fail";
+        say "  Missing 'class' attribute for action $state_name/$action->{name}";
+        return;
+    }
+    for my $condition ($action->{condition}->@*) {
+        next if not $condition->{name};
+
+        my $condition_name = ($condition->{name} =~ s/^!//r);
+        @candidates = lookup_conditions_by_name( $wf_type, $condition_name );
+        if (not @candidates) {
+            say " fail";
+            say "  Missing condition $condition_name in action $state_name/$action->{name}";
+            return;
+        }
+        elsif (scalar(grep { $_{__wf_type} eq $wf_type } @candidates) > 1) {
+            say " fail";
+            say "  More than one configuration found for condition $condition_name of workflow type $wf_type";
+            return;
+        }
+        elsif (scalar(grep { $_{__wf_type} eq $wf_type } @candidates) == 0
+               and scalar(grep { $_->{__wf_type} eq 'default' } @candidates) > 1) {
+            say " fail";
+            say "  More than one default configuration found for condition $condition_name of workflow type $wf_type";
+            return;
+        }
+    }
+
+    say " ok";
+}
+
+
+sub verify_workflow_state {
+    my ($wf_type, $state) = @_;
+
+    say "Verifying state $state->{name}";
+    for my $action ($state->{action}->@*) {
+        verify_workflow_action( $wf_type, $state->{name}, $action );
+    }
+}
+
+sub collect_resulting_states {
+    my ($state) = @_;
+    my @rv;
+
+    for my $action ($state->{action}->@*) {
+        if (ref $action->{resulting_state}) {
+            push @rv,
+                map { $_->{state} } $action->{resulting_state}->@*;
+        }
+        else {
+            push @rv, $action->{resulting_state};
+        }
+    }
+
+    return @rv;
+}
+
+for my $workflow (@workflows) {
+    my $type = $workflow->{type} // 'default';
+
+    say "Verifying workflow $type";
+    my %wf_statenames =
+        map { $_->{name} => 1 } $workflow->{state}->@*;
+    for my $state ($workflow->{state}->@*) {
+        verify_workflow_state( $type, $state );
+
+        my $targets_fail;
+        for my $target (collect_resulting_states( $state )) {
+            next if $target eq 'NOCHANGE';
+            if (not exists $wf_statenames{$target}) {
+                $targets_fail = 1;
+                say "  State $state->{name} targets non-existing state $target";
+            }
+        }
+    }
+}

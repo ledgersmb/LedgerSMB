@@ -1,0 +1,28 @@
+#!/usr/bin/env perl
+
+use v5.22.0;
+use Workflow::Config;
+
+
+my @config = Workflow::Config->parse_all_files(
+    'workflow', $ARGV[0]
+    );
+
+my $workflow = shift @config;
+
+say "stateDiagram";
+say "  direction LR";
+say "  [*] --> INITIAL";
+
+for my $state ($workflow->{state}->@*) {
+    my $name = $state->{name};
+
+    for my $action ($state->{action}->@*) {
+        my $end = $action->{resulting_state};($state) {
+        if ($end eq 'NOCHANGE') {
+            $end = $name;
+        }
+        say "  $name --> $end: $action->{name}";
+    }
+}
+
