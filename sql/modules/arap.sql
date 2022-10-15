@@ -40,7 +40,7 @@ CREATE OR REPLACE FUNCTION ar_ap__transaction_search
  in_notes text, in_shipvia text, in_from_date date, in_to_date date,
  in_on_hold bool, in_inc_open bool, in_inc_closed bool, in_as_of date,
  in_entity_class int, in_approved bool)
-RETURNS SETOF purchase_info AS
+RETURNS SETOF purchase_info STABLE AS
 $$
    SELECT gl.id, gl.invoice,
           gl.invnumber, gl.ordnumber, gl.ponumber, gl.transdate,
@@ -123,7 +123,7 @@ CREATE OR REPLACE FUNCTION ar_ap__transaction_search_summary
  in_notes text, in_shipvia text, in_from_date date, in_to_date date,
  in_on_hold bool, in_inc_open bool, in_inc_closed bool, in_as_of date,
  in_entity_class int, in_approved bool)
-RETURNS SETOF purchase_info AS
+RETURNS SETOF purchase_info STABLE AS
 $$
        SELECT null::int, null::bool, null::text, null::text, null::text,
               null::date, entity_name, meta_number, entity_id, sum(amount_bc),
@@ -141,7 +141,7 @@ $$ language sql;
 
 
 CREATE OR REPLACE FUNCTION credit_limit__used(in_eca int)
-RETURNS numeric AS
+RETURNS numeric STABLE AS
 $$
 
   SELECT sum(total.used)     /
