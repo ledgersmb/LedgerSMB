@@ -20,10 +20,9 @@ jestOpenAPI(process.env.PWD + "/openapi/API.yaml");
 const api = "erp/api/v0";
 
 // Access to the database test user
-const id = [...Array(6)].map(() => Math.random().toString(12)[2]).join("");
-const username = `Jest${id}`;
+const username = `Jest`;
 const password = "Tester";
-const company = `lsmb_test_api_${id}`;
+const company = "lsmb_test_api";
 const server = process.env.LSMB_BASE_URL;
 
 let headers = {};
@@ -32,7 +31,7 @@ let headers = {};
 beforeAll(() => {
     axios.defaults.adapter = http;
     create_database(username, password, company);
-    load_coa(username, password, company, "locale/coa/us/General.xml")
+    load_coa(username, password, company, "locale/coa/us/General.xml");
     initialize(company,"tests/specs/data/Invoices.sql");
 });
 
