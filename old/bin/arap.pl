@@ -317,21 +317,29 @@ sub add_transaction {
 
 }
 
-
 sub post_as_new {
 
     $form->{old_workflow_id} = $form->{workflow_id};
-    for (qw(id printed emailed workflow_id)) { delete $form->{$_} }
-    &post;
+    for (qw(id printed emailed workflow_id invnumber)) { delete $form->{$_} }
 
+    my $wf = $form->{_wire}->get('workflows')
+        ->create_workflow( 'AR/AP' );
+    $form->{workflow_id} = $wf->id;
+    $form->{action} = 'post';
+
+    &post;
 }
 
 sub print_and_post_as_new {
 
     $form->{old_workflow_id} = $form->{workflow_id};
     for (qw(id printed emailed workflow_id)) { delete $form->{$_} }
-    &print_and_post;
 
+    my $wf = $form->{_wire}->get('workflows')
+        ->create_workflow( 'AR/AP' );
+    $form->{workflow_id} = $wf->id;
+
+    &print_and_post;
 }
 
 sub repost {

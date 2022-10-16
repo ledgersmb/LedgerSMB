@@ -906,6 +906,9 @@ sub _post_invoices {
     $ctx->param( trans_id => $inv_id );
     local $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
     my $wf  = FACTORY()->create_workflow( 'AR/AP', $ctx );
+    $env->{'lsmb.db'}->do(q{UPDATE transactions SET workflow_id = ? where id = ?},
+             {}, $wf->id, $inv_id)
+        or die $env->{'lsmb.db'}->errstr;
 
 
     $sth = $env->{'lsmb.db'}->prepare(

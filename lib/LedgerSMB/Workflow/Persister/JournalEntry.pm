@@ -35,20 +35,8 @@ associated.
 sub create_workflow {
     my ($self, $wf) = @_;
 
-    croak 'Need "trans_id" context key for JournalEntry workflow creation'
-        unless defined $wf->context->param( 'trans_id' );
+    return $self->SUPER::create_workflow( $wf );
 
-    my $wf_id = $self->SUPER::create_workflow( $wf );
-    my $dbh = $self->handle;
-    my $trans_id = $wf->context->param( 'trans_id' );
-    my $rows = $dbh->do(
-        q{UPDATE transactions SET workflow_id = ? WHERE workflow_id IS NULL AND id = ?},
-        {}, $wf_id, $trans_id );
-    if ($rows < 1) {
-        die "Transaction $trans_id already has an associated workflow";
-    }
-
-    return $wf_id;
 }
 
 

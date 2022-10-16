@@ -140,7 +140,7 @@ sub approve {
     $draft->approve();
     my $wf = $form->{_wire}->get('workflows')
         ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
-    $wf->execute_action( 'post' ) if $wf;
+    $wf->execute_action( 'approve' ) if $wf;
     edit();
 }
 

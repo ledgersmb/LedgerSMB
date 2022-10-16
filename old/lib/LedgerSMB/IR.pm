@@ -155,13 +155,10 @@ sub post_invoice {
         $sth->execute || $form->dberror($query);
 
         ( $form->{id} ) = $sth->fetchrow_array;
-        my $ctx = Workflow::Context->new;
-        $ctx->param( trans_id => $form->{id} );
-        my $wf = $form->{_wire}->get('workflows')
-            ->create_workflow( 'AR/AP', $ctx );
-        $form->{workflow_id} = $wf->id;
-
-        $sth->finish;
+        $query = q|UPDATE transactions SET workflow_id = ? WHERE id = ? AND workflow_id IS NULL|;
+        $sth   = $dbh->prepare($query);
+        $sth->execute( $form->{workflow_id}, $form->{id} )
+            || $form->dberror($query);
     }
 
     my $amount;
