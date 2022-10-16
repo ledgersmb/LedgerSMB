@@ -1488,6 +1488,11 @@ sub save_info {
 
         }
 
+        if ($form->{workflow_id}) {
+            my $wf = $form->{_wire}->get('workflows')
+                ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+            $wf->execute_action( $form->{action} );
+        }
         if ($form->{callback}){
         print "Location: $form->{callback}\n";
         print "Status: 302 Found\n\n";
@@ -1497,11 +1502,6 @@ sub save_info {
             . qq|here</a>.</body></html>|;
 
         } else {
-            if ($form->{workflow_id}) {
-                my $wf = $form->{_wire}->get('workflows')
-                    ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
-                $wf->execute_action( $form->{action} );
-            }
             edit();
         }
 

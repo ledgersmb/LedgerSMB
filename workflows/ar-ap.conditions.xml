@@ -6,4 +6,7 @@
   <condition name="complete"
              test="$context->{transdate}"
              class="Workflow::Condition::Evaluate"/>
+  <condition name="is_invoice"
+             test="not $context->{is_transaction}"
+             class="Workflow::Condition::Evaluate" />
 </conditions>

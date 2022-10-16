@@ -21,7 +21,9 @@
     <action name="copy_to_new" resulting_state="NOCHANGE" />
     <action name="new_screen" resulting_state="NOCHANGE" />
     <action name="update" resulting_state="NOCHANGE" />
-    <action name="ship_to" resulting_state="NOCHANGE" />
+    <action name="ship_to" resulting_state="NOCHANGE">
+      <condition name="is_invoice" />
+    </action>
     <action name="schedule" resulting_state="NOCHANGE" />
     <action name="approve" resulting_state="POSTED">
       <condition name="complete" />
@@ -31,9 +33,11 @@
     <action name="delete" resulting_state="DELETED" />
     <action name="sales_order" resulting_state="NOCHANGE">
       <condition name="is_sales" />
+      <condition name="is_invoice" />
     </action>
     <action name="purchase_order" resulting_state="NOCHANGE">
       <condition name="!is_sales" />
+      <condition name="is_invoice" />
     </action>
   </state>
   <state name="POSTED">
@@ -41,18 +45,22 @@
     <action name="copy_to_new" resulting_state="NOCHANGE" />
     <action name="void" resulting_state="VOIDED">
       <condition name="!is_sales" />
+      <condition name="is_invoice" />
     </action>
     <action name="hold" resulting_state="ONHOLD" />
     <action name="schedule" resulting_state="NOCHANGE" />
     <action name="print" resulting_state="NOCHANGE" />
     <action name="e_mail" resulting_state="NOCHANGE">
       <!-- condition name="configuredEmailFrom" / -->
+      <condition name="is_invoice" />
     </action>
     <action name="sales_order" resulting_state="NOCHANGE">
       <condition name="is_sales" />
+      <condition name="is_invoice" />
     </action>
     <action name="purchase_order" resulting_state="NOCHANGE">
       <condition name="!is_sales" />
+      <condition name="is_invoice" />
     </action>
   </state>
   <state name="ONHOLD">

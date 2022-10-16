@@ -362,13 +362,17 @@ sub post_transaction {
         $form->{"$form->{vc}_id"},
         $approved
         );
-   if ($table eq 'ar') {
-       push @queryargs, $form->{setting_sequence}
-   }
+    if ($table eq 'ar') {
+        push @queryargs, $form->{setting_sequence}
+    }
 
-   $sth = $dbh->prepare($query) or $form->dberror($query);
-   $sth->execute(@queryargs) or $form->dberror($query);
-   ($form->{id}) = $sth->fetchrow_array() or $form->dberror($query);
+    $sth = $dbh->prepare($query) or $form->dberror($query);
+    $sth->execute(@queryargs) or $form->dberror($query);
+    ($form->{id}) = $sth->fetchrow_array() or $form->dberror($query);
+    $query = q|UPDATE transactions SET workflow_id = ? WHERE id = ? AND workflow_id IS NULL|;
+    $sth   = $dbh->prepare($query);
+    $sth->execute( $form->{workflow_id}, $form->{id} )
+        || $form->dberror($query);
 
     if (defined $form->{approved}) {
         if (!$form->{approved} && $form->{batch_id}){
