@@ -1,0 +1,67 @@
+package LedgerSMB::Workflow::Condition::SeparateDuties;
+
+=head1 NAME
+
+LedgerSMB::Workflow::SeparatingDuties - Workflow condition indicating if separation of duties is activated
+
+=head1 SYNOPSIS
+
+  # condition configuration
+  <conditions>
+    <condition name="separate-duties"
+               class="LedgerSMB::Workflow::Condition::SeparateDuties" />
+  </conditions>
+
+
+=head1 DESCRIPTION
+
+This module implements the condition to check for company configuration of
+separation of duties.
+
+=head1 METHODS
+
+=cut
+
+
+use strict;
+use warnings;
+use parent qw( Workflow::Condition );
+
+use LedgerSMB::Setting;
+
+use Log::Any qw($log);
+use Workflow::Exception qw( condition_error );
+
+
+=head2 evaluate( $wf )
+
+Implements the C<Workflow::Condition> protocol, throwing a condition
+error in case separation of duties is I<not> enabled.
+
+=cut
+
+sub evaluate {
+    my ($self, $wf) = @_;
+    my $dbh = $wf->_factory->
+        get_persister_for_workflow_type( $wf->type )->handle;
+
+    my $separate_duties = LedgerSMB::Setting->new(dbh => $dbh)->get('separate_duties');
+    $log->info("separate duties: $separate_duties");
+    condition_error 'Separation of Duties disabled'
+        if not $separate_duties;
+
+    return 1;
+}
+
+
+
+1;
+
+=head1 LICENSE AND COPYRIGHT
+
+Copyright (C) 2022 The LedgerSMB Core Team
+
+This file is licensed under the GNU General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
