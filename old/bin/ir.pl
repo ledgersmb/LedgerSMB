@@ -499,9 +499,9 @@ sub form_header {
             my $action = $wf->get_action( $action_name );
             $button{$action_name} = {
                 ndx   => $action->order,
-                value => $action->text,
-                doing => $action->doing,
-                done  => $action->done,
+                value => $locale->maketext($action->text),
+                doing => ($action->doing ? $locale->maketext($action->doing) : ''),
+                done  => ($action->done ? $locale->maketext($action->done) : ''),
                 type  => $button_types{$action->ui}
             };
         }
