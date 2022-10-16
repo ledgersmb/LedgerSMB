@@ -20,9 +20,10 @@ jestOpenAPI(process.env.PWD + "/openapi/API.yaml");
 const api = "erp/api/v0";
 
 // Access to the database test user
-const username = `Jest`;
+const id = Math.random().toString(36).substr(2, 6);
+const username = `Jest${id}`;
 const password = "Tester";
-const company = "lsmb_test_api";
+const company = `lsmb_test_api_${id}`;
 const server = process.env.LSMB_BASE_URL;
 
 let headers = {};
