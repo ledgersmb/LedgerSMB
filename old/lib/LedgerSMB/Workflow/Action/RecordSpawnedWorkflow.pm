@@ -46,7 +46,7 @@ This action uses the following key from the workflow context:
 
 use strict;
 use warnings;
-use parent qw( Workflow::Action );
+use parent qw( LedgerSMB::Workflow::Action );
 
 use Log::Any qw($log);
 

@@ -55,7 +55,7 @@ use DateTime;
 use Log::Any qw($log);
 
 
-my @PROPS = qw( order short_help text );
+my @PROPS = qw( order short_help text doing done ui );
 __PACKAGE__->mk_accessors(@PROPS);
 
 =head1 METHODS
@@ -76,6 +76,11 @@ sub init {
         if exists $params->{order};
     $self->short_help( $params->{'short-help'} )
         if exists $params->{'short-help'};
+    $self->doing( $params->{doing} )
+        if exists $params->{doing};
+    $self->done( $params->{done} )
+        if exists $params->{done};
+    $self->ui( $params->{ui} // 'regular' );
 
     ### This is a workaround for the fact that 'text' calls are
     # reserved by our maketext translation extractor
