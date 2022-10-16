@@ -1587,6 +1587,11 @@ sub invoice {
         local $form->{separate_duties} = 1;
         local $form->{approved} = undef;
 
+        my $wf = $form->{_wire}->get('workflows')
+            ->create_workflow( 'AR/AP' );
+        $form->{workflow_id} = $wf->id;
+
+        $wf->execute_action( 'post' );
         # $lib contains either 'IS' or 'IR': the sales and purchase invoice libs
         $lib->post_invoice(\%myconfig, $form);
         $lib->retrieve_invoice(\%myconfig, $form);
@@ -1597,7 +1602,6 @@ sub invoice {
     $wf->execute_action( $action );
 
     &display_form;
-
 }
 
 sub backorder_exchangerate {

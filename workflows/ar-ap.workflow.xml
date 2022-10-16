@@ -4,9 +4,7 @@
   <description>Manage the life cycle of an AR/AP document</description>
   <state name="INITIAL">
     <action name="update" resulting_state="NOCHANGE" />
-    <action name="post" resulting_state="SAVED">
-      <condition name="separate-duties" />
-    </action>
+    <action name="post" resulting_state="SAVED" />
     <action name="post_and_approve" resulting_state="POSTED">
       <condition name="!separate-duties" />
       <condition name="!period-closed" />
