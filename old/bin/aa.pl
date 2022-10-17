@@ -996,7 +996,8 @@ sub form_footer {
                 value => $locale->maketext($action->text),
                 doing => ($action->doing ? $locale->maketext($action->doing) : ''),
                 done  => ($action->done ? $locale->maketext($action->done) : ''),
-                type  => $button_types{$action->ui}
+                type  => $button_types{$action->ui},
+                tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
             };
         }
 

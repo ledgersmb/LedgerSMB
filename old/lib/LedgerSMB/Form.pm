@@ -993,8 +993,10 @@ sub print_button {
     my $done_toast =
         $button->{$name}{done} ? qq|data-lsmb-done="$button->{$name}{done}"|
         : '';
+
+    my $title = $button->{$name}{tooltip} || $button->{$name}{value};
     print
-qq|<button data-dojo-type="$type" class="submit" type="submit" name="action" value="$name" id="action-$name-$btn" title="$button->{$name}{value}" $doing_toast $done_toast>$button->{$name}{value}</button>\n|;
+qq|<button data-dojo-type="$type" class="submit" type="submit" name="action" value="$name" id="action-$name-$btn" title="$title" $doing_toast $done_toast>$button->{$name}{value}</button>\n|;
 }
 
 

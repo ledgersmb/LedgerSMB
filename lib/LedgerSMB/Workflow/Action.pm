@@ -44,6 +44,16 @@ specification.
 This is the text that a UI element (e.g. a button) should present
 on an element that triggers this action in the workflow.
 
+=head2 doing
+
+Notification to be shown in the UI while the action is being performed
+in the backend.
+
+=head2 done
+
+Notification to be shown in the UI after the action successfully completes
+in the backend.
+
 =cut
 
 
