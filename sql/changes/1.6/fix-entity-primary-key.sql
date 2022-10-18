@@ -13,6 +13,7 @@ ALTER TABLE ap DROP CONSTRAINT ap_entity_id_fkey;
 ALTER TABLE ar DROP CONSTRAINT ar_entity_id_fkey;
 ALTER TABLE asset_report DROP CONSTRAINT asset_report_approved_by_fkey;
 ALTER TABLE asset_report DROP CONSTRAINT asset_report_entered_by_fkey;
+ALTER TABLE audittrail DROP CONSTRAINT audittrail_person_id_fkey;
 ALTER TABLE budget_info DROP CONSTRAINT budget_info_approved_by_fkey;
 ALTER TABLE budget_info DROP CONSTRAINT budget_info_entered_by_fkey;
 ALTER TABLE budget_info DROP CONSTRAINT budget_info_obsolete_by_fkey;
@@ -33,6 +34,7 @@ ALTER TABLE entity_to_location DROP CONSTRAINT entity_to_location_entity_id_fkey
 ALTER TABLE file_base DROP CONSTRAINT file_base_uploaded_by_fkey;
 ALTER TABLE file_entity DROP CONSTRAINT file_entity_ref_key_fkey;
 ALTER TABLE file_secondary_attachment DROP CONSTRAINT file_secondary_attachment_attached_by_fkey;
+ALTER TABLE jcitems DROP CONSTRAINT jcitems_person_id_fkey;
 ALTER TABLE journal_entry DROP CONSTRAINT journal_entry_approved_by_fkey;
 ALTER TABLE journal_entry DROP CONSTRAINT journal_entry_entered_by_fkey;
 ALTER TABLE oe DROP CONSTRAINT oe_entity_id_fkey;
@@ -57,6 +59,7 @@ ALTER TABLE ap ADD CONSTRAINT ap_entity_id_fkey FOREIGN KEY (entity_id) REFERENC
 ALTER TABLE ar ADD CONSTRAINT ar_entity_id_fkey FOREIGN KEY (entity_id) REFERENCES entity(id);
 ALTER TABLE asset_report ADD CONSTRAINT asset_report_approved_by_fkey FOREIGN KEY (approved_by) REFERENCES entity(id);
 ALTER TABLE asset_report ADD CONSTRAINT asset_report_entered_by_fkey FOREIGN KEY (entered_by) REFERENCES entity(id);
+ALTER TABLE audittrail ADD CONSTRAINT audittrail_person_id_fkey FOREIGN KEY (person_id) REFERENCES entity(id);
 ALTER TABLE budget_info ADD CONSTRAINT budget_info_approved_by_fkey FOREIGN KEY (approved_by) REFERENCES entity(id);
 ALTER TABLE budget_info ADD CONSTRAINT budget_info_entered_by_fkey FOREIGN KEY (entered_by) REFERENCES entity(id);
 ALTER TABLE budget_info ADD CONSTRAINT budget_info_obsolete_by_fkey FOREIGN KEY (obsolete_by) REFERENCES entity(id);
@@ -77,6 +80,7 @@ ALTER TABLE entity_to_location ADD CONSTRAINT entity_to_location_entity_id_fkey 
 ALTER TABLE file_base ADD CONSTRAINT file_base_uploaded_by_fkey FOREIGN KEY (uploaded_by) REFERENCES entity(id);
 ALTER TABLE file_entity ADD CONSTRAINT file_entity_ref_key_fkey FOREIGN KEY (ref_key) REFERENCES entity(id);
 ALTER TABLE file_secondary_attachment ADD CONSTRAINT file_secondary_attachment_attached_by_fkey FOREIGN KEY (attached_by) REFERENCES entity(id);
+ALTER TABLE jcitems ADD CONSTRAINT jcitems_person_id_fkey FOREIGN KEY (person_id) REFERENCES entity(id);
 ALTER TABLE journal_entry ADD CONSTRAINT journal_entry_approved_by_fkey FOREIGN KEY (approved_by) REFERENCES entity(id);
 ALTER TABLE journal_entry ADD CONSTRAINT journal_entry_entered_by_fkey FOREIGN KEY (entered_by) REFERENCES entity(id);
 ALTER TABLE oe ADD CONSTRAINT oe_entity_id_fkey FOREIGN KEY (entity_id) REFERENCES entity(id);
