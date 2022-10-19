@@ -991,6 +991,8 @@ sub form_footer {
             );
         for my $action_name ( $wf->get_current_actions ) {
             my $action = $wf->get_action( $action_name );
+
+            next if ($action->ui // '') eq 'none';
             $button{$action_name} = {
                 ndx   => $action->order,
                 value => $locale->maketext($action->text),
