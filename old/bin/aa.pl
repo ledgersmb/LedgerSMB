@@ -145,6 +145,17 @@ sub add {
     return 1;
 }
 
+sub del {
+    my $wf = $form->{_wire}->get('workflows')
+        ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    $wf->execute_action( 'delete' );
+
+    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
+    $draft->delete();
+
+    $form->info($locale->text('Draft deleted'));
+}
+
 sub edit {
 
     &create_links;

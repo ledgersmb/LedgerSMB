@@ -130,7 +130,8 @@ TODO! Check workflow when 'separate duties' is false!
           text="Save as New"
           history-text="Created new"
           class="LedgerSMB::Workflow::Action::RecordSpawnedWorkflow" />
-  <action name="delete"
+  <!-- 'delete' is a reserved keyword; we better not use it: it'll need to be the name of a sub -->
+  <action name="del"
           text="Delete"
           short-help="Remove draft transaction"
           class="LedgerSMB::Workflow::Action::Null" />

@@ -40,7 +40,7 @@
       <condition name="!period-closed" />
       <condition name="complete" />
     </action>
-    <action name="delete" resulting_state="DELETED">
+    <action name="del" resulting_state="DELETED">
       <condition name="!is-batch-member" />
     </action>
     <action name="batch-delete" resulting_state="DELETED">
