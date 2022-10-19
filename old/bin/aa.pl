@@ -381,7 +381,10 @@ sub form_header {
     else {
         $wf = $form->{_wire}->get('workflows')
             ->create_workflow( 'AR/AP',
-                               Workflow::Context->new( is_transaction => 1 ) );
+                               Workflow::Context->new(
+                                   'batch-id' => $form->{batch_id},
+                                   is_transaction => 1
+                               ) );
         $form->{workflow_id} = $wf->id;
     }
     $title = $form->{title};

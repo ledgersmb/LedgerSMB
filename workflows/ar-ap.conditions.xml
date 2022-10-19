@@ -9,4 +9,7 @@
   <condition name="is_invoice"
              test="not $context->{is_transaction}"
              class="Workflow::Condition::Evaluate" />
+  <condition name="is-batch-member"
+             test="$context->{'batch-id'}"
+             class="Workflow::Condition::Evaluate" />
 </conditions>

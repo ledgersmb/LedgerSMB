@@ -46,6 +46,8 @@
 package lsmb_legacy;
 
 use List::Util qw(max min uniq);
+use Workflow::Context;
+
 use LedgerSMB::Form;
 use LedgerSMB::IIAA;
 use LedgerSMB::IS;
@@ -284,7 +286,10 @@ sub form_header {
     }
     else {
         $wf = $form->{_wire}->get('workflows')
-            ->create_workflow( 'AR/AP' );
+            ->create_workflow( 'AR/AP',
+                               Workflow::Context->new(
+                                   'batch-id' => $form->{batch_id}
+                               ) );
         $form->{workflow_id} = $wf->id;
     }
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );

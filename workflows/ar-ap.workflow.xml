@@ -6,7 +6,13 @@
     <action name="update" resulting_state="NOCHANGE" />
     <action name="post" resulting_state="SAVED" />
     <action name="post_and_approve" resulting_state="POSTED">
+      <condition name="!is-batch-member" />
       <condition name="!separate-duties" />
+      <condition name="!period-closed" />
+      <condition name="complete" />
+    </action>
+    <action name="batch-approve" resulting_state="POSTED">
+      <condition name="is-batch-member" />
       <condition name="!period-closed" />
       <condition name="complete" />
     </action>
@@ -24,11 +30,22 @@
     </action>
     <action name="schedule" resulting_state="NOCHANGE" />
     <action name="approve" resulting_state="POSTED">
+      <condition name="!is-batch-member" />
       <condition name="complete" />
       <condition name="!period-closed" />
       <condition name="acl-draft-post" />
     </action>
-    <action name="delete" resulting_state="DELETED" />
+    <action name="batch-approve" resulting_state="POSTED">
+      <condition name="is-batch-member" />
+      <condition name="!period-closed" />
+      <condition name="complete" />
+    </action>
+    <action name="delete" resulting_state="DELETED">
+      <condition name="!is-batch-member" />
+    </action>
+    <action name="batch-delete" resulting_state="DELETED">
+      <condition name="is-batch-member" />
+    </action>
     <action name="sales_order" resulting_state="NOCHANGE">
       <condition name="is_sales" />
       <condition name="is_invoice" />
