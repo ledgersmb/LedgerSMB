@@ -2,7 +2,7 @@ package LedgerSMB::Workflow::Condition::ACL;
 
 =head1 NAME
 
-LedgerSMB::Workflow::ACL - Workflow condition testing for allowed role
+LedgerSMB::Workflow::ACL - Workflow condition testing for allowed rights
 
 =head1 SYNOPSIS
 
@@ -16,9 +16,9 @@ LedgerSMB::Workflow::ACL - Workflow condition testing for allowed role
 
 =head1 DESCRIPTION
 
-This module implements the condition to check for closed accounting periods. Note that
-to check for open accounting periods, simply check for the negated value of this condition
-by prefixing it with an exclamation mark (C<!period-closed>).
+This module implements the condition to check for the user having
+access rights as per the C<role> attribute, that being assigned the
+named role.
 
 =head1 METHODS
 

@@ -2,23 +2,23 @@ package LedgerSMB::Workflow::Condition::PeriodClosed;
 
 =head1 NAME
 
-LedgerSMB::Workflow::ACL - Workflow condition testing for allowed role
+LedgerSMB::Workflow::PeriodClosed - Workflow condition testing closed periods
 
 =head1 SYNOPSIS
 
   # condition configuration
   <conditions>
-    <condition name="acl-draft-modify"
-               class="LedgerSMB::Workflow::Condition::ACL"
-               role="draft-modify" />
+    <condition name="is-period-closed"
+               class="LedgerSMB::Workflow::Condition::PeriodClosed" />
   </conditions>
 
 
 =head1 DESCRIPTION
 
-This module implements the condition to check for closed accounting periods. Note that
-to check for open accounting periods, simply check for the negated value of this condition
-by prefixing it with an exclamation mark (C<!period-closed>).
+This module implements the condition to check for closed accounting periods.
+Note that to check for open accounting periods, simply check for the negated
+value of this condition by prefixing it with an exclamation
+mark (C<!period-closed>).
 
 =head1 METHODS
 
@@ -46,6 +46,12 @@ sub evaluate {
     my ($self, $wf) = @_;
     my $dbh = $wf->_factory->
         get_persister_for_workflow_type( $wf->type )->handle;
+
+    # The plan was to query the database for the period being open or
+    # closed, based on the transaction date in the database.
+
+    # However, at the time, it's simpler to get the indicator from the
+    # workflow instead.
 
     return $wf->context->param( '_is_closed' );
 }
