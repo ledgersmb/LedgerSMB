@@ -28,7 +28,9 @@
     <action name="ship_to" resulting_state="NOCHANGE">
       <condition name="is_invoice" />
     </action>
-    <action name="schedule" resulting_state="NOCHANGE" />
+    <action name="schedule" resulting_state="NOCHANGE">
+      <condition name="!is-batch-member" />
+    </action>
     <action name="approve" resulting_state="POSTED">
       <condition name="!is-batch-member" />
       <condition name="complete" />
