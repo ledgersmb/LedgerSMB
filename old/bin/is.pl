@@ -370,7 +370,7 @@ sub form_header {
          print qq|<th>$form->{notice}</th>|;
     }
     my $manual_tax;
-    if ($form->{id}){
+    if ($form->{approved}){
         $manual_tax =
             qq|<input type="hidden" name="manual_tax" value="|
                . $form->{manual_tax} . qq|" />|;
@@ -683,7 +683,7 @@ sub void {
 
 sub form_footer {
     my $manual_tax;
-    if ($form->{id}){
+    if ($form->{approved}){
         $manual_tax =
             qq|<input type="hidden" name="manual_tax" value="|
                . $form->{manual_tax} . qq|" />|;
