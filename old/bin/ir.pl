@@ -1148,9 +1148,9 @@ sub update {
               if $form->{"select$_"};
         }
 
-        if (   ( ($form->{"partnumber_$i"}//'') eq "" )
-            && ( ($form->{"description_$i"}//'') eq "" )
-            && ( ($form->{"partsgroup_$i"}//0)  eq "" ) )
+        if (   ( $form->{"partnumber_$i"} eq "" )
+            && ( $form->{"description_$i"} eq "" )
+            && ( $form->{"partsgroup_$i"}  eq "" ) )
         {
 
             $form->{creditremaining} +=
@@ -1250,7 +1250,9 @@ sub update {
                     && ( $form->{"partsnumber_$i"} eq "" )
                     && ( $form->{"description_$i"} eq "" ) )
                 {
-                    $form->{"discount_$i"} = "";
+                    $form->{rowcount}--;
+                    $form->{id} = $form_id;
+                    &display_form;
                 }
                 else {
 
@@ -1264,12 +1266,12 @@ sub update {
             }
         }
     }
-    $form->create_links( module => "AP",
-             myconfig => \%myconfig,
-             vc => "vendor",
-             billing => 1,
-             job => 1 );
-     $form->generate_selects();
+    # $form->create_links( module => "AP",
+    #          myconfig => \%myconfig,
+    #          vc => "vendor",
+    #          billing => 1,
+    #          job => 1 );
+    #  $form->generate_selects();
 
     # wow... check_form() in io.pl also *displays* the form!!
     # at least... in some cases
