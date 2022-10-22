@@ -7,7 +7,7 @@
                  ],
               response => { confirm => 'delete' },
               submit_session => [
-                   { statement => q|UPDATE company SET sic_code = NULL where sic_code = ? AND sic_code !~ '^\d{2,6}$';|,
+                   { statement => q|UPDATE company SET sic_code = NULL WHERE sic_code = ? AND sic_code !~ '^\d{2,6}$';|,
                      bound_params => [ 'A' ],
                      results => [] }
                     ]
