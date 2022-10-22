@@ -71,6 +71,11 @@ sub dispatch {
         return parse_cgi_output($stdout);
     }
     else {
+        # Do not close the database handle at the end:
+        #   the caller process may still need it.
+        $form_args->{dbh}->{InactiveDestroy} = 1
+            if $form_args->{dbh};
+
         # make 100% sure any "die"-s don't bubble up higher than this point in
         # the stack: we're a fork()ed process and should under no circumstance
         # end up acting like another worker. When we are done, we need to
@@ -115,8 +120,10 @@ sub dispatch {
                 my $ref = qualify_to_ref $entrypoint, 'lsmb_legacy';
                 &{*{$ref}}($lsmb_legacy::form, $lsmb_legacy::locale);
             }
+            $form_args->{dbh}->commit if $form_args->{dbh};
         }
         catch ($e) {
+            $form_args->{dbh}->rollback if $form_args->{dbh};
             warn "Error dispatching call to old code: $_\n";
         };
         exit;
