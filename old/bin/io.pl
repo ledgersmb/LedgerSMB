@@ -849,7 +849,7 @@ sub check_form {
         $count = 0;
         @a     = ();
         if ( $form->{rowcount} ) {
-            foreach my $i ( 1 .. $form->{rowcount} - 1 ) {
+            foreach my $i ( 1 .. $form->{rowcount} ) {
                 if ( $form->{"partnumber_$i"} ) {
                     push @a, {};
                     my $j = $#a;
