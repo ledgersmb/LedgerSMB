@@ -3,6 +3,12 @@
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.18
+* Fix '<< Return' link on the e-mail screen being broken in some cases (#6858)
+* Improve query performance by declaring stored functions STABLE (#6872)
+* Fix added line being dropped from invoice while deleting another (#6788)
+
+
 Changelog for 1.9.17
 * Fix HTML-encoding values on (PDF) printed documents (#6861)
 * Fix removal of invoice line breaking entire UI interaction (#6807)
