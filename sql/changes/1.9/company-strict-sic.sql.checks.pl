@@ -45,9 +45,7 @@ the 'Delete invalid SIC codes' button.
 
         if ($confirm eq 'delete') {
             my $delete = $dbh->prepare(
-                'UPDATE company '.
-                'SET   sic_code = NULL '.
-                'WHERE sic_code = ? '
+                q|UPDATE company SET sic_code = NULL WHERE sic_code = ? AND sic_code !~ '^\d{2,6}$';|
             ) or die 'ERROR preparing sql to NULL invalid SIC codes in company table: ' . $dbh->errstr;
 
             foreach my $row(@$rows) {
