@@ -27,6 +27,14 @@ Dependency updates
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.2
+* Fix multiple uploads through the [Attach] link failing (#6855)
+* Fix '<< Return' link on the e-mail screen being broken in some cases (#6858)
+* Improve query performance by declaring stored functions STABLE (#6872)
+* Fix manual tax entry unavailable on saved invoices (#6791)
+* Fix added line being dropped from invoice while deleting another (#6788)
+
+
 Changelog for 1.10.1
 * Fix batch details screen failing to load (#6850)
 * Update 1.10.0 Perl dependency changes in Changelog
