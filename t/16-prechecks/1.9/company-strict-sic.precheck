@@ -1,0 +1,15 @@
+{
+     q|Ensure that the company table doesn't contain invalid SIC codes.| => [
+         {
+              failure_data => [
+                     [ 'sic_code' ], # column names line
+                     [ 'A' ]
+                 ],
+              response => { confirm => 'delete' },
+              submit_session => [
+                   { statement => q|UPDATE company SET sic_code = NULL WHERE sic_code = ? AND sic_code !~ '^\d{2,6}$';|,
+                     bound_params => [ 'A' ],
+                     results => [] }
+                    ]
+         }]
+}
