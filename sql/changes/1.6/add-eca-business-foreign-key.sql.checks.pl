@@ -16,7 +16,7 @@ check q|Assert foreign key from entity_credit_account to business can be added|,
                          WHERE eca.business_id = b.id)|,
     description => q|
 Rows in your "entity_credit_account" table, which stores customer and vendor
-details, refer to non-existent business types.
+details, refer to non-existent types of buisiness.
 
 These are classifications which do not exist in the "business" table and
 therefore cannot be used or displayed.
