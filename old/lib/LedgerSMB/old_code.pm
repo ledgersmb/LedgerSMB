@@ -63,6 +63,7 @@ sub dispatch {
     my @entrypoint_args = @_;
 
     my $stdout = IO::File->new_tmpfile;
+    binmode $stdout, ':utf8';
     if (my $cpid = fork()) {
         waitpid $cpid, 0;
         seek($stdout, 0, SEEK_SET)
