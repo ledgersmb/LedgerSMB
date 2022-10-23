@@ -44,6 +44,16 @@ specification.
 This is the text that a UI element (e.g. a button) should present
 on an element that triggers this action in the workflow.
 
+=head2 doing
+
+Notification to be shown in the UI while the action is being performed
+in the backend.
+
+=head2 done
+
+Notification to be shown in the UI after the action successfully completes
+in the backend.
+
 =cut
 
 
@@ -55,7 +65,7 @@ use DateTime;
 use Log::Any qw($log);
 
 
-my @PROPS = qw( order short_help text );
+my @PROPS = qw( order short_help text doing done ui );
 __PACKAGE__->mk_accessors(@PROPS);
 
 =head1 METHODS
@@ -76,6 +86,11 @@ sub init {
         if exists $params->{order};
     $self->short_help( $params->{'short-help'} )
         if exists $params->{'short-help'};
+    $self->doing( $params->{doing} )
+        if exists $params->{doing};
+    $self->done( $params->{done} )
+        if exists $params->{done};
+    $self->ui( $params->{ui} // 'regular' );
 
     ### This is a workaround for the fact that 'text' calls are
     # reserved by our maketext translation extractor

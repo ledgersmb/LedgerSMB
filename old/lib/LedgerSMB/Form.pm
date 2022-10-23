@@ -993,8 +993,10 @@ sub print_button {
     my $done_toast =
         $button->{$name}{done} ? qq|data-lsmb-done="$button->{$name}{done}"|
         : '';
+
+    my $title = $button->{$name}{tooltip} || $button->{$name}{value};
     print
-qq|<button data-dojo-type="$type" class="submit" type="submit" name="action" value="$name" id="action-$name-$btn" title="$button->{$name}{value}" $doing_toast $done_toast>$button->{$name}{value}</button>\n|;
+qq|<button data-dojo-type="$type" class="submit" type="submit" name="action" value="$name" id="action-$name-$btn" title="$title" $doing_toast $done_toast>$button->{$name}{value}</button>\n|;
 }
 
 
@@ -1959,8 +1961,10 @@ sub create_links {
                 c.language_code, a.ponumber, a.reverse,
                                 a.approved, ctf.default_reportable,
                                 a.description, a.on_hold, a.crdate,
-                                ns.location_id as locationid, a.is_return, $seq
+                                ns.location_id as locationid, a.is_return, $seq,
+                                t.workflow_id
             FROM $arap a
+            JOIN transactions t ON t.id = a.id
             JOIN entity_credit_account c
                 ON (a.entity_credit_account = c.id)
             JOIN entity ce ON (ce.id = c.entity_id)

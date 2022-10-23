@@ -1,0 +1,10 @@
+<conditions>
+  <condition name="separate-duties"
+             class="LedgerSMB::Workflow::Condition::SeparateDuties" />
+  <condition name="period-closed"
+             class="LedgerSMB::Workflow::Condition::PeriodClosed" />
+  <condition name="acl-draft-modify"
+             class="LedgerSMB::Workflow::Condition::ACL" role="draft_modify" />
+  <condition name="acl-draft-post"
+             class="LedgerSMB::Workflow::Condition::ACL" role="draft_post" />
+</conditions>

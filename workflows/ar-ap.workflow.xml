@@ -1,41 +1,92 @@
 <workflow>
   <type>AR/AP</type>
-<!--
-
-TODO! Check workflow when 'separate duties' is false!
-(Do we get the correct state transitions?)
-
--->
   <persister>JournalEntry</persister>
-  <initial_state>SAVED</initial_state>
   <description>Manage the life cycle of an AR/AP document</description>
-  <state name="SAVED">
-    <action name="save" resulting_state="NOCHANGE" />
-    <action name="save_as_new" resulting_state="NOCHANGE" />
-    <action name="post" resulting_state="POSTED">
+  <state name="INITIAL">
+    <action name="update" resulting_state="NOCHANGE" />
+    <action name="post" resulting_state="SAVED" />
+    <action name="post_and_approve" resulting_state="POSTED">
+      <condition name="!is-batch-member" />
+      <condition name="!separate-duties" />
+      <condition name="!period-closed" />
       <condition name="complete" />
+    </action>
+    <action name="batch-approve" resulting_state="POSTED">
+      <condition name="is-batch-member" />
+      <condition name="!period-closed" />
+      <condition name="complete" />
+    </action>
+  </state>
+  <state name="SAVED">
+    <action name="save_info" resulting_state="NOCHANGE" />
+    <action name="edit_and_save" resulting_state="NOCHANGE">
+      <condition name="acl-draft-modify" />
+    </action>
+    <action name="copy_to_new" resulting_state="NOCHANGE" />
+    <action name="new_screen" resulting_state="NOCHANGE" />
+    <action name="update" resulting_state="NOCHANGE" />
+    <action name="ship_to" resulting_state="NOCHANGE">
+      <condition name="is_invoice" />
+    </action>
+    <action name="schedule" resulting_state="NOCHANGE">
+      <condition name="!is-batch-member" />
+    </action>
+    <action name="approve" resulting_state="POSTED">
+      <condition name="!is-batch-member" />
+      <condition name="complete" />
+      <condition name="!period-closed" />
+      <condition name="acl-draft-post" />
+    </action>
+    <action name="batch-approve" resulting_state="POSTED">
+      <condition name="is-batch-member" />
+      <condition name="!period-closed" />
+      <condition name="complete" />
+    </action>
+    <action name="del" resulting_state="DELETED">
+      <condition name="!is-batch-member" />
+    </action>
+    <action name="batch-delete" resulting_state="DELETED">
+      <condition name="is-batch-member" />
     </action>
     <action name="sales_order" resulting_state="NOCHANGE">
       <condition name="is_sales" />
+      <condition name="is_invoice" />
     </action>
     <action name="purchase_order" resulting_state="NOCHANGE">
       <condition name="!is_sales" />
+      <condition name="is_invoice" />
     </action>
   </state>
   <state name="POSTED">
-    <action name="save_as_new" resulting_state="NOCHANGE" />
-    <action name="void" resulting_state="VOIDED" />
+    <action name="save_info" resulting_state="NOCHANGE" />
+    <action name="copy_to_new" resulting_state="NOCHANGE" />
+    <action name="void" resulting_state="VOIDED">
+      <condition name="is_sales" />
+      <condition name="is_invoice" />
+    </action>
+    <action name="hold" resulting_state="ONHOLD" />
+    <action name="schedule" resulting_state="NOCHANGE" />
+    <action name="print" resulting_state="NOCHANGE" />
     <action name="e_mail" resulting_state="NOCHANGE">
       <!-- condition name="configuredEmailFrom" / -->
+      <condition name="is_invoice" />
     </action>
     <action name="sales_order" resulting_state="NOCHANGE">
       <condition name="is_sales" />
+      <condition name="is_invoice" />
     </action>
     <action name="purchase_order" resulting_state="NOCHANGE">
       <condition name="!is_sales" />
+      <condition name="is_invoice" />
     </action>
   </state>
-  <state name="VOIDED">
-    <action name="save_as_new" resulting_state="NOCHANGE" />
+  <state name="ONHOLD">
+    <action name="save_info" resulting_state="NOCHANGE" />
+    <action name="release" resulting_state="POSTED" />
   </state>
+  <state name="VOIDED">
+    <action name="save_info" resulting_state="NOCHANGE" />
+    <action name="copy_to_new" resulting_state="NOCHANGE" />
+  </state>
+  <state name="DELETED" />
 </workflow>

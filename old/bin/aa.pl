@@ -55,6 +55,7 @@ use LedgerSMB::DBObject::Draft;
 use LedgerSMB::DBObject::TransTemplate;
 
 use List::Util qw(uniq);
+use Workflow::Context;
 
 # any custom scripts for this one
 if ( -f "old/bin/custom/aa.pl" ) {
@@ -98,6 +99,7 @@ sub copy_to_new{
     delete $form->{id};
     delete $form->{invnumber};
     delete $form->{approved};
+    delete $form->{workflow_id};
     $form->{paidaccounts} = 1;
     if ($form->{paid_1}){
         delete $form->{paid_1};
@@ -141,6 +143,17 @@ sub add {
     $form->{focus} = "amount_1";
     &display_form;
     return 1;
+}
+
+sub del {
+    my $wf = $form->{_wire}->get('workflows')
+        ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    $wf->execute_action( 'delete' );
+
+    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
+    $draft->delete();
+
+    $form->info($locale->text('Draft deleted'));
 }
 
 sub edit {
@@ -366,9 +379,25 @@ sub create_links {
 }
 
 sub form_header {
-     my $min_lines = $form->get_setting('min_empty') // 0;
+    my $min_lines = $form->get_setting('min_empty') // 0;
 
-     $form->generate_selects(\%myconfig) unless $form->{"select$form->{ARAP}"};
+    $form->generate_selects(\%myconfig) unless $form->{"select$form->{ARAP}"};
+
+
+    my $wf;
+    if($form->{workflow_id}) {
+        $wf = $form->{_wire}->get('workflows')
+            ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    }
+    else {
+        $wf = $form->{_wire}->get('workflows')
+            ->create_workflow( 'AR/AP',
+                               Workflow::Context->new(
+                                   'batch-id' => $form->{batch_id},
+                                   is_transaction => 1
+                               ) );
+        $form->{workflow_id} = $wf->id;
+    }
     $title = $form->{title};
     $form->all_business_units($form->{transdate},
                               $form->{"$form->{vc}_id"},
@@ -516,7 +545,7 @@ $form->open_status_div($status_div_id) . qq|
         qw(batch_id approved id printed emailed sort
            oldtransdate audittrail recurring checktax reverse subtype
            entity_control_code tax_id meta_number default_reportable
-           address city zipcode state country)
+           address city zipcode state country workflow_id)
     );
 
     if ( $form->{vc} eq 'customer' ) {
@@ -661,6 +690,10 @@ $form->open_status_div($status_div_id) . qq|
           <tr>
         <th align=right nowrap><label for="ponum">| . $locale->text('PO Number') . qq|</label></th>
         <td><input data-dojo-type="dijit/form/TextBox" name=ponumber id=ponum size=20 value="$form->{ponumber}"></td>
+          </tr>
+          <tr>
+          <th align=right nowrap>| . $locale->text('State') . qq|</th>
+          <td>| . ( $wf ? $locale->maketext($wf->state) : '' ) . qq|</td>
           </tr>
         </table>
       </td>
@@ -945,6 +978,8 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
 sub form_footer {
     $form->hide_form(qw(callback path login sessionid form_id));
 
+    my $wf = $form->{_wire}->get('workflows')
+        ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
 
     # type=submit $locale->text('Update')
@@ -962,113 +997,24 @@ sub form_footer {
                                   {text=> $locale->text('Transaction'), value => 'transaction'},
                                 ]
                    };
-        my $hold_text;
+        %button;
 
-        if ($form->{on_hold}) {
-            $hold_text = $locale->text('Off Hold');
-        } else {
-            $hold_text = $locale->text('On Hold');
-        }
+        $wf->context->param( _is_closed => $form->is_closed( $transdate ) );
+        %button_types = (
+            print => 'lsmb/PrintButton'
+            );
+        for my $action_name ( $wf->get_current_actions ) {
+            my $action = $wf->get_action( $action_name );
 
-# REMARK: According to the check below, post_as_new and delete button never render
-# Why post_as_new and delete are exist?
-        %button = (
-            'update' => {
-                ndx => 1,
-                key => 'U',
-                value => $locale->text('Update'),
-                doing => $locale->text('Updating...'),
-                done => $locale->text('Updated')
-            },
-            'copy_to_new' => { ndx => 2, key => 'C', value => $locale->text('Copy to New') },
-            'print' =>
-              { ndx => 3, key => 'P', value => $locale->text('Print'),
-                type => 'lsmb/PrintButton' },
-            'edit_and_save' => {
-                ndx   => 4,
-                key   => 'E',
-                value => $locale->text('Save'),
-                doing => $locale->text('Saving...'),
-                done => $locale->text('Saved')
-            },
-            'post' => {
-                ndx => 5,
-                key => 'O',
-                value => $locale->text('Post'),
-                doing => $locale->text('Posting...'),
-                done => $locale->text('Posted')
-            },
-            'post_as_new' => { ndx => 6, key => 'O', value => $locale->text('Post') },
-            'approve' => {
-                ndx   => 7,
-                key   => 'O',
-                value => $locale->text('Post'),
-                doing => $locale->text('Posting...'),
-                done => $locale->text('Posted')
-            },
-            'schedule' =>
-              { ndx => 8, key => 'H', value => $locale->text('Schedule') },
-            'delete' =>
-              { ndx => 9, key => 'D', value => $locale->text('Delete') },
-            'on_hold' =>
-              { ndx => 10, key => 'O', value => $hold_text },
-            'save_info' => {
-                ndx => 11,
-                key => 'I',
-                value => $locale->text('Save Info'),
-                doing => $locale->text('Saving...'),
-                done => $locale->text('Saved')
-            },
-            'save_temp' =>
-              { ndx => 12, key => 'T', value => $locale->text('Save Template')},
-            'new_screen' => # Create a blank ar/ap invoice.
-             { ndx => 13, key=> 'N', value => $locale->text('New') }
-        );
-        my $is_draft = 0;
-        my %b = map { $_ => 1} keys %button; # buttons to actually show
-        if (!$form->{approved} && !$form->{batch_id}){
-           $is_draft = 1;
-           if (!$form->{id} || !$form->is_allowed_role(['draft_modify'])){
-               $b{edit_and_save} = 0;
-           }
-# Approve button should not render if user don't have permission
-           if (!$form->{id} || !$form->is_allowed_role(['draft_post'])) {
-             $b{approve} = 0;
-           }
-           $b{post_as_new} = 0;
-           #$b{post} = 0;
-        }
-        else {
-            $b{approve} = 0;
-            $b{edit_and_save} = 0;
-        }
-
-        if ($form->{separate_duties} || $form->{batch_id}){
-            $button{post}->{value} = $locale->text('Save');
-            $button{post}->{doing} = $locale->text('Saving...');
-            $button{post}->{done} = $locale->text('Saved');
-
-            $button{post_as_new}->{value} = $locale->text('Save as New');
-            $form->hide_form('separate_duties');
-        }
-        if ( $form->{id}) {
-            for ( "post", "delete", "post_as_new" ) {
-                $b{$_} = 0;
-            }
-            $b{'update'} = $is_draft;
-        }
-        elsif (!$form->{id}) {
-
-            for ( "post_as_new","delete","save_info", "schedule",
-                  "print", 'copy_to_new', 'new_screen', 'on_hold') {
-                delete $button{$_};
-            }
-
-            if ( $transdate && $form->is_closed( $transdate ) ) {
-                for ( "post","save_info") {
-                    delete $button{$_};
-                }
-            }
+            next if ($action->ui // '') eq 'none';
+            $button{$action_name} = {
+                ndx   => $action->order,
+                value => $locale->maketext($action->text),
+                doing => ($action->doing ? $locale->maketext($action->doing) : ''),
+                done  => ($action->done ? $locale->maketext($action->done) : ''),
+                type  => $button_types{$action->ui},
+                tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
+            };
         }
 
         if (defined $button{'print'}) {
@@ -1081,11 +1027,9 @@ sub form_footer {
         print "<br>";
 
         for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
-              grep { $b{$_} } keys %button )
-        {
+              keys %button ) {
             $form->print_button( \%button, $_ );
         }
-
     }
     if ($form->{id}){
         print qq|
@@ -1155,6 +1099,15 @@ sub form_footer {
 |;
 }
 
+
+sub hold {
+    on_hold();
+}
+
+sub release {
+    on_hold();
+}
+
 sub on_hold {
     use LedgerSMB::IS;
     use LedgerSMB::IR; # TODO: refactor this over time
@@ -1164,6 +1117,11 @@ sub on_hold {
             my $toggled = IS->toggle_on_hold($form);
         } else {
             my $toggled = IR->toggle_on_hold($form);
+        }
+        if ($form->{workflow_id}) {
+            my $wf = $form->{_wire}->get('workflows')
+                ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+            $wf->execute_action( $form->{action} );
         }
         &edit();
     }
@@ -1209,6 +1167,12 @@ sub edit_and_save {
     $draft->delete();
     delete $form->{id};
     AA->post_transaction( \%myconfig, \%$form );
+
+    if ($form->{workflow_id}) {
+        my $wf = $form->{_wire}->get('workflows')
+            ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+        $wf->execute_action( $form->{action} );
+    }
     $form->{rowcount} = 0;
     $form->{paidaccounts} = 0;
     edit();
@@ -1220,6 +1184,10 @@ sub approve {
     my $draft = LedgerSMB::DBObject::Draft->new(%$form);
 
     $draft->approve();
+
+    my $wf = $form->{_wire}->get('workflows')
+        ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    $wf->execute_action( $form->{action} );
 
     if ($form->{callback}){
         print "Location: $form->{callback}\n";
@@ -1344,6 +1312,10 @@ sub update {
 
 }
 
+sub post_and_approve {
+    post();
+}
+
 sub post {
     if (!$form->close_form){
        $form->info(
@@ -1411,6 +1383,10 @@ sub post {
 
     if ( !$form->{repost} ) {
         if ( $form->{id} ) {
+            my $id = $form->{old_workflow_id} // $form->{workflow_id};
+            my $wf = $form->{_wire}->get('workflows')->fetch_workflow( 'AR/AP', $id );
+            $wf->execute_action( $form->{action} );
+
             &repost;
             $form->finalize_request();
         }
@@ -1419,6 +1395,10 @@ sub post {
 
 
     if ( AA->post_transaction( \%myconfig, \%$form ) ) {
+
+        my $id = $form->{old_workflow_id} // $form->{workflow_id};
+        my $wf = $form->{_wire}->get('workflows')->fetch_workflow( 'AR/AP', $id );
+        $wf->execute_action( $form->{action} );
 
         $form->update_status;
        if ( $form->{printandpost} ) {
@@ -1470,6 +1450,11 @@ sub save_info {
 
         }
 
+        if ($form->{workflow_id}) {
+            my $wf = $form->{_wire}->get('workflows')
+                ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+            $wf->execute_action( $form->{action} );
+        }
         if ($form->{callback}){
         print "Location: $form->{callback}\n";
         print "Status: 302 Found\n\n";

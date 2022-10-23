@@ -48,6 +48,29 @@ use warnings;
 use LedgerSMB::Setting;
 use base qw(LedgerSMB::PGOld);
 
+use Log::Any qw($log);
+
+
+sub _iterate_batch_items {
+    my ($self, $cb) = @_;
+    my $dbh = $self->dbh;
+    my $sth = $dbh->prepare(<<~'QUERY'
+        SELECT v.trans_id, w.workflow_id, w.type
+          from transactions t
+          join voucher v on t.id = v.trans_id
+          join workflow w using (workflow_id)
+         WHERE v.batch_id = ?
+        QUERY
+      )
+        or die $dbh->errstr();
+    $sth->execute( $self->{batch_id} )
+        or die $sth->errstr;
+
+    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+        $cb->( %$row );
+    }
+}
+
 =item get_new_info
 
 This gets the information required for the new batch screen.  Currently this
@@ -231,6 +254,17 @@ Returns the batch C<approved_on> date (being the current database date).
 
 sub post {
     my ($self) = @_;
+
+    $self->_iterate_batch_items(
+        sub {
+            my %args = @_;
+            my $wf = $self->{_wire}->get('workflows')->fetch_workflow(
+                $args{type}, $args{workflow_id}
+                );
+            $wf->execute_action( 'batch-approve' );
+            $log->info("Updated workflow $args{workflow_id}, batch-approve");
+        });
+
     ($self->{post_return_ref}) = $self->call_dbmethod(funcname => 'batch_post');
     return $self->{post_return_ref}->{batch_post};
 }
@@ -247,6 +281,17 @@ Returns true on success.
 
 sub delete {
     my ($self) = @_;
+
+    $self->_iterate_batch_items(
+        sub {
+            my %args = @_;
+            my $wf = $self->{_wire}->get('workflows')->fetch_workflow(
+                $args{type}, $args{workflow_id}
+                );
+            $wf->execute_action( 'batch-delete' );
+            $log->info("Updated workflow $args{workflow_id}, batch-delete");
+        });
+
     my ($ref) = $self->call_dbmethod(funcname => 'batch_delete');
     return $ref->{batch_delete};
 }
