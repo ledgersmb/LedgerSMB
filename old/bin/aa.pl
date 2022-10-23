@@ -693,7 +693,7 @@ $form->open_status_div($status_div_id) . qq|
           </tr>
           <tr>
           <th align=right nowrap>| . $locale->text('State') . qq|</th>
-          <td>| . ( $wf ? $wf->state : '' ) . qq|</td>
+          <td>| . ( $wf ? $locale->maketext($wf->state) : '' ) . qq|</td>
           </tr>
         </table>
       </td>
