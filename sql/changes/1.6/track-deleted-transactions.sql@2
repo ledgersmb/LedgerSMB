@@ -9,7 +9,6 @@ delete from voucher v
 delete from transactions t
  where not exists (select 1 from ap where t.id = ap.id)
        and not exists (select 1 from ar where t.id = ar.id)
-       and not exists (select 1 from invoice where t.id = invoice.trans_id)
        and not exists (select 1 from gl where t.id = gl.id);
 
 
