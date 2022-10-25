@@ -43,6 +43,10 @@ META.yml
 /logs/*
 /screens/*
 
+# Coverage
+/cover_db/*
+/coverage/*
+
 # Webpack
 /node_modules/
 
