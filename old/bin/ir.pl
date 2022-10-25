@@ -641,7 +641,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
                # this in the normal way so we have to change the layout of the
                # notes fields. --CT
                $tax .= qq|<tr>
-                <th align=right>$form->{_accno_descriptions}->{$taccno}"}</th>
+                <th align=right>$form->{_accno_descriptions}->{$taccno}</th>
                 <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_amount_$item"
                         id="mt-amount-$item" value="|
                         .$form->format_amount(\%myconfig,$form->{"mt_amount_$item"}).qq|" size="10"/></td>
