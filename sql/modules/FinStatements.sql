@@ -227,16 +227,22 @@ acc_balance AS (
                  GROUP BY buac.entry_id) bu
           ON (ac.entry_id = bu.entry_id)
     WHERE ac.approved
-          AND (in_from_date IS NULL OR ac.transdate >= in_from_date)
-          AND (in_to_date IS NULL OR ac.transdate <= in_to_date)
-          AND (in_business_units IS NULL OR in_business_units = '{}'
-               OR in_tree(in_business_units, bu_ids))
-          AND (in_to_date is null
-               OR (ac.transdate <= in_to_date
-                   AND ac.trans_id IS DISTINCT FROM (SELECT trans_id
-                                                       FROM yearend
-                                                      WHERE transdate = in_to_date
-                                                        AND NOT reversed)))
+      AND (in_from_date IS NULL OR ac.transdate >= in_from_date)
+      AND (in_from_date IS NULL OR in_to_date IS NULL
+           OR NOT EXISTS (select 1 from yearend ye
+                           where in_from_date < ye.transdate
+                             and ye.transdate < in_to_date
+                             and not ye.reversed
+                             and ac.trans_id = ye.trans_id))
+      AND (in_to_date IS NULL OR ac.transdate <= in_to_date)
+      AND (in_business_units IS NULL OR in_business_units = '{}'
+           OR in_tree(in_business_units, bu_ids))
+      AND (in_to_date is null
+           OR (ac.transdate <= in_to_date
+               AND ac.trans_id IS DISTINCT FROM (SELECT trans_id
+                                                   FROM yearend
+                                                  WHERE transdate = in_to_date
+                                                    AND NOT reversed)))
    GROUP BY ac.chart_id
      HAVING sum(ac.amount_bc) <> 0.00
  ),
@@ -345,14 +351,20 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
          GROUP BY entry_id) bu
           ON (ac.entry_id = bu.entry_id)
     WHERE ac.approved
-          AND (in_business_units = '{}'
-              OR in_business_units is null or in_tree(in_business_units, bu_ids))
-          AND (in_to_date is null
-               OR (ac.transdate <= in_to_date
-                   AND ac.trans_id IS DISTINCT FROM (SELECT trans_id
-                                                       FROM yearend
-                                                      WHERE transdate = in_to_date
-                                                        AND NOT reversed)))
+      AND (in_business_units = '{}'
+           OR in_business_units is null or in_tree(in_business_units, bu_ids))
+      AND (in_from_date IS NULL OR in_to_date IS NULL
+           OR NOT EXISTS (select 1 from yearend ye
+                           where in_from_date < ye.transdate
+                             and ye.transdate < in_to_date
+                             and not ye.reversed
+                             and ac.trans_id = ye.trans_id))
+      AND (in_to_date is null
+           OR (ac.transdate <= in_to_date
+               AND ac.trans_id IS DISTINCT FROM (SELECT trans_id
+                                                   FROM yearend
+                                                  WHERE transdate = in_to_date
+                                                    AND NOT reversed)))
  GROUP BY ac.chart_id
    HAVING sum(ac.amount_bc * ca.portion) <> 0.00
  ),
