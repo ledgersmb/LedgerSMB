@@ -116,6 +116,12 @@ TODO! Check workflow when 'separate duties' is false!
           text="New"
           short-help="Create a new (empty) transaction"
           class="LedgerSMB::Workflow::Action::Null" />
+  <!-- 'delete' is a reserved keyword; we better not use it: it'll need to be the name of a sub -->
+  <action name="del"
+          order="19"
+          text="Delete"
+          short-help="Remove draft transaction"
+          class="LedgerSMB::Workflow::Action::Null" />
 
   <!-- these actions do not have a matching button in is.pl or ir.pl or aa.pl -->
   <action name="print_and_save"
@@ -130,11 +136,8 @@ TODO! Check workflow when 'separate duties' is false!
           text="Save as New"
           history-text="Created new"
           class="LedgerSMB::Workflow::Action::RecordSpawnedWorkflow" />
-  <!-- 'delete' is a reserved keyword; we better not use it: it'll need to be the name of a sub -->
-  <action name="del"
-          text="Delete"
-          short-help="Remove draft transaction"
-          class="LedgerSMB::Workflow::Action::Null" />
+
+  <!-- these do not have a button in the UI at all -->
   <action name="batch-delete"
           ui="none"
           class="LedgerSMB::Workflow::Action::Null" />
