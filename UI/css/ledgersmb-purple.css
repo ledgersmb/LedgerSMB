@@ -1,6 +1,6 @@
 /* stylesheet for ledger-smb, purple theme */
 
-@import "ledgersmb-common.css";
+@import url("ledgersmb-common.css");
 
 /* CSS3 Variables */
 

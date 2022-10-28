@@ -7,7 +7,7 @@
 
 /* stylelint-disable no-descending-specificity */
 
-@import "system/global.css";
+@import url("system/global.css");
 
 td.money {
     text-align: right;

@@ -8,7 +8,7 @@ Copyright: Ulisse Perusin <uli.peru@gmail.com>; Riccardo Buzzotta <raozuzu@yahoo
 This package is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; version 2 dated June, 1991.
 */
 
-@import "system/global.css";
+@import url("system/global.css");
 
 /* general stuff */
 
