@@ -1003,7 +1003,7 @@ sub form_footer {
         %button_types = (
             print => 'lsmb/PrintButton'
             );
-        for my $action_name ( $wf->get_current_actions ) {
+        for my $action_name ( $wf->get_current_actions( 'main') ) {
             my $action = $wf->get_action( $action_name );
 
             next if ($action->ui // '') eq 'none';
@@ -1017,18 +1017,39 @@ sub form_footer {
             };
         }
 
-        if (defined $button{'print'}) {
-            # Don't show the print selectors, if there's no "Print" button
-            print_select($form, $formname);
-            print_select($form, $printops->{lang});
-            print_select($form, $printops->{format});
-            print_select($form, $printops->{media});
-        }
-        print "<br>";
 
         for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
               keys %button ) {
             $form->print_button( \%button, $_ );
+        }
+
+        if ($wf and grep { $_ eq 'print' } $wf->get_current_actions( 'output' ) ) {
+            %button = ();
+            for my $action_name ( $wf->get_current_actions( 'output') ) {
+                my $action = $wf->get_action( $action_name );
+
+                next if ($action->ui // '') eq 'none';
+                $button{$action_name} = {
+                    ndx   => $action->order,
+                    value => $locale->maketext($action->text),
+                    doing => ($action->doing ? $locale->maketext($action->doing) : ''),
+                    done  => ($action->done ? $locale->maketext($action->done) : ''),
+                    type  => $button_types{$action->ui},
+                    tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
+                };
+            }
+
+            # Don't show the print selectors, if there's no "Print" button
+            print "<br><br>";
+            print_select($form, $formname);
+            print_select($form, $printops->{lang});
+            print_select($form, $printops->{format});
+            print_select($form, $printops->{media});
+
+            for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
+                  keys %button ) {
+                $form->print_button( \%button, $_ );
+            }
         }
     }
     if ($form->{id}){
