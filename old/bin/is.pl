@@ -575,7 +575,7 @@ sub form_header {
         %button_types = (
             print => 'lsmb/PrintButton'
             );
-        for my $action_name ( $wf->get_current_actions ) {
+        for my $action_name ( $wf->get_current_actions( 'main') ) {
             my $action = $wf->get_action( $action_name );
 
             next if ($action->ui // '') eq 'none';
@@ -992,28 +992,6 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
   <tr>
     <td><hr size=3 noshade></td>
   </tr>
-  <tr>
-    <td>
-|;
-
-    my $printops = &print_options;
-    my $formname = { name => 'formname',
-                     options => [
-                                  {text=> $locale->text('Sales Invoice'), value => 'invoice'},
-                                  {text=> $locale->text('Packing List'),  value => 'packing_list'},
-                                  {text=> $locale->text('Envelope'),      value => 'envelope'},
-                                  {text=> $locale->text('Shipping Label'), value=> 'shipping_label'},
-                                ]
-    };
-    if ($button{print}) {
-        print_select($form, $formname);
-        print_select($form, $printops->{lang});
-        print_select($form, $printops->{format});
-        print_select($form, $printops->{media});
-    }
-    print qq|
-    </td>
-  </tr>
 </table>
 <br>
 |;
@@ -1036,6 +1014,50 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
             $form->print_button( \%button, $_ );
         }
     }
+
+    if ( $wf and grep { $_ eq 'print' } $wf->get_current_actions ) {
+        my $printops = &print_options;
+        my $formname = { name => 'formname',
+                         options => [
+                             {text=> $locale->text('Sales Invoice'), value => 'invoice'},
+                             {text=> $locale->text('Packing List'),  value => 'packing_list'},
+                             {text=> $locale->text('Envelope'),      value => 'envelope'},
+                             {text=> $locale->text('Shipping Label'), value=> 'shipping_label'},
+                             ]
+        };
+
+        print "<br /><br />";
+        print_select($form, $formname);
+        print_select($form, $printops->{lang});
+        print_select($form, $printops->{format});
+        print_select($form, $printops->{media});
+
+
+        $wf->context->param( _is_closed => $form->is_closed( $transdate ) );
+        %button_types = (
+            print => 'lsmb/PrintButton'
+            );
+        %button = ();
+        for my $action_name ( $wf->get_current_actions( 'output') ) {
+            my $action = $wf->get_action( $action_name );
+
+            next if ($action->ui // '') eq 'none';
+            $button{$action_name} = {
+                ndx   => $action->order,
+                value => $locale->maketext($action->text),
+                doing => ($action->doing ? $locale->maketext($action->doing) : ''),
+                done  => ($action->done ? $locale->maketext($action->done) : ''),
+                type  => $button_types{$action->ui},
+                tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
+            };
+        }
+
+        for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
+              keys %button ) {
+            $form->print_button( \%button, $_ );
+        }
+    }
+
 
     if ($form->{id}){
         IS->get_files($form, $locale);
