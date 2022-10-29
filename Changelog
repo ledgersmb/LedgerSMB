@@ -131,6 +131,12 @@ Dependency updates
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.19
+* Fix UTF-8 character handling calling into old code (#6998)
+* Fix regression preventing cross-yearen PNL reporting (#6386)
+* Fix invoice and order screens breaking on 'min empty lines' > 1 (#6926)
+
+
 Changelog for 1.9.18
 * Fix '<< Return' link on the e-mail screen being broken in some cases (#6858)
 * Improve query performance by declaring stored functions STABLE (#6872)
