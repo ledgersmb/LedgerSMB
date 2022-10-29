@@ -511,7 +511,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" id="notes_$i" name="notes_$i" 
                 <td colspan=6 nowrap><b>$serialnumber</b> <input data-dojo-type="dijit/form/TextBox" id="serialnumber_$i" name="serialnumber_$i" value="$form->{"serialnumber_$i"}"></td>|
           if $form->{type} !~ /_quotation/;
 
-        if ( $i == $numrows ) {
+        if ( $i >= $numrows ) {
             $partsgroup = "";
             if ( $form->{selectpartsgroup} ) {
                 $partsgroup = qq|
