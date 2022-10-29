@@ -27,6 +27,16 @@ Dependency updates
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.3
+* Fix 'New' button on invoice and transaction screens (#6893)
+* Fix UTF-8 character handling calling into old code (#6897)
+* Fix database upgrades based on demo dataset (#6879)
+* Remove stray double quote and curly character in purchase invoice (#6905)
+* Fix regression preventing cross-yearend pnl reporting (#6386)
+* Catch and report errors from updating pages (#6906)
+* Fix invoice and order screens breaking on 'min empty lines' > 1 (#6911)
+
+
 Changelog for 1.10.2
 * Fix multiple uploads through the [Attach] link failing (#6855)
 * Fix '<< Return' link on the e-mail screen being broken in some cases (#6858)
