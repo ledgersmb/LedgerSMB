@@ -65,22 +65,29 @@ export default {
                     this.content = await r.text();
                     this.$nextTick(() => {
                         let maindiv = document.getElementById("maindiv");
-                        parser.parse(maindiv).then(() => {
-                            registry.findWidgets(maindiv).forEach((child) => {
-                                this._recursively_resize(child);
+                        parser.parse(maindiv).then(
+                            () => {
+                                registry.findWidgets(maindiv).forEach((child) => {
+                                    this._recursively_resize(child);
+                                });
+                                maindiv
+                                    .querySelectorAll("a")
+                                    .forEach((node) => this._interceptClick(node));
+                                if (dismiss) {
+                                    dismiss();
+                                }
+                                this.notify({
+                                    title: options.done || this.$t("Loaded")
+                                });
+                                topic.publish("lsmb/page-fresh-content");
+                                maindiv.setAttribute("data-lsmb-done", "true");
+                            },
+                            (e) => {
+                                if (dismiss) {
+                                    dismiss();
+                                }
+                                this._report_error(e);
                             });
-                            maindiv
-                                .querySelectorAll("a")
-                                .forEach((node) => this._interceptClick(node));
-                            if (dismiss) {
-                                dismiss();
-                            }
-                            this.notify({
-                                title: options.done || this.$t("Loaded")
-                            });
-                            topic.publish("lsmb/page-fresh-content");
-                            maindiv.setAttribute("data-lsmb-done", "true");
-                        });
                     });
                 } else {
                     if (dismiss) {
