@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.3-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-10-22 18:55+0000\n"
+"POT-Creation-Date: 2022-10-29 17:01+0000\n"
 "Last-Translator: Stig Berg <stig@tmb.no>, 2022\n"
 "Language-Team: Norwegian Bokmål (https://www.transifex.com/ledgersmb/"
 "teams/58325/nb/)\n"
@@ -1830,7 +1830,7 @@ msgstr "Kostnader for solgte varer"
 msgid "Could Not Load Template from DB"
 msgstr "Kunne ikke laste Mal fra DB"
 
-#: UI/src/components/ServerUI.js:112
+#: UI/src/components/ServerUI.js:119
 msgid "Could not connect to server"
 msgstr ""
 
@@ -4027,7 +4027,7 @@ msgstr "jan"
 msgid "January"
 msgstr "januar"
 
-#: UI/src/components/ServerUI.js:109
+#: UI/src/components/ServerUI.js:116
 msgid "JavaScript error: "
 msgstr ""
 
@@ -4323,7 +4323,7 @@ msgstr "Vis Firma Typer"
 msgid "Load Templates"
 msgstr "Hente Maler"
 
-#: UI/src/components/ServerUI.js:79
+#: UI/src/components/ServerUI.js:80
 msgid "Loaded"
 msgstr ""
 
@@ -6858,7 +6858,7 @@ msgstr "Serienummer"
 msgid "Serialnumber"
 msgstr "Serienummer"
 
-#: UI/src/components/ServerUI.js:114
+#: UI/src/components/ServerUI.js:121
 msgid "Server returned insecure response"
 msgstr ""
 
@@ -8021,7 +8021,7 @@ msgstr "Enhets Pris"
 msgid "Unknown "
 msgstr "Ukjent"
 
-#: UI/src/components/ServerUI.js:119
+#: UI/src/components/ServerUI.js:126
 msgid "Unknown (JavaScript) error"
 msgstr ""
 
@@ -8700,7 +8700,7 @@ msgstr ""
 msgid "label"
 msgstr "Etikett"
 
-#: UI/src/views/Home.vue:36 UI/src/views/Home.vue:51
+#: UI/src/views/Home.vue:51 UI/src/views/Home.vue:36
 msgid "mailing lists"
 msgstr ""
 

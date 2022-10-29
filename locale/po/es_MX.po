@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.3-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-10-22 18:55+0000\n"
+"POT-Creation-Date: 2022-10-29 17:01+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: Spanish (Mexico) (https://www.transifex.com/ledgersmb/"
 "teams/58325/es_MX/)\n"
@@ -1821,7 +1821,7 @@ msgstr ""
 msgid "Could Not Load Template from DB"
 msgstr ""
 
-#: UI/src/components/ServerUI.js:112
+#: UI/src/components/ServerUI.js:119
 msgid "Could not connect to server"
 msgstr ""
 
@@ -4010,7 +4010,7 @@ msgstr "Ene"
 msgid "January"
 msgstr "Enero"
 
-#: UI/src/components/ServerUI.js:109
+#: UI/src/components/ServerUI.js:116
 msgid "JavaScript error: "
 msgstr ""
 
@@ -4302,7 +4302,7 @@ msgstr ""
 msgid "Load Templates"
 msgstr ""
 
-#: UI/src/components/ServerUI.js:79
+#: UI/src/components/ServerUI.js:80
 msgid "Loaded"
 msgstr ""
 
@@ -6812,7 +6812,7 @@ msgstr "Número de serie"
 msgid "Serialnumber"
 msgstr ""
 
-#: UI/src/components/ServerUI.js:114
+#: UI/src/components/ServerUI.js:121
 msgid "Server returned insecure response"
 msgstr ""
 
@@ -7961,7 +7961,7 @@ msgstr ""
 msgid "Unknown "
 msgstr ""
 
-#: UI/src/components/ServerUI.js:119
+#: UI/src/components/ServerUI.js:126
 msgid "Unknown (JavaScript) error"
 msgstr ""
 
@@ -8636,7 +8636,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/views/Home.vue:36 UI/src/views/Home.vue:51
+#: UI/src/views/Home.vue:51 UI/src/views/Home.vue:36
 msgid "mailing lists"
 msgstr ""
 
