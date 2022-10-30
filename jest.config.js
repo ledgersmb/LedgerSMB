@@ -49,7 +49,7 @@ module.exports = {
     // A path to a custom dependency extractor
     // dependencyExtractor: undefined,
 
-    detectLeaks: true,
+    detectLeaks: false,
     detectOpenHandles: true,
 
     // Make calling deprecated APIs throw helpful error messages
