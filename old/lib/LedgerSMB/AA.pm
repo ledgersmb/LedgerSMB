@@ -346,7 +346,7 @@ sub post_transaction {
     $form->{datepaid} = $form->{transdate} unless $form->{datepaid};
     my $datepaid = ($paid) ? qq|'$form->{datepaid}'| : undef;
     my $approved = 1;
-    $approved = 0 if $form->{separate_duties};
+    $approved = 0 if $form->get_setting('separate_duties');
 
     my @queryargs = (
         $form->{invnumber},        $form->{description},
