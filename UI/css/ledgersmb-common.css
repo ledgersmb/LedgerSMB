@@ -636,3 +636,11 @@ td.data-entry .editing {
 .dijitTextBoxReadOnly {
     color: var(--textBox-ReadOnly-color) !important;
 }
+
+.dijitDisabled,
+.dijitDisabled *,
+.dijitReadOnly,
+.dijitReadOnly * {
+    color: var(--textBox-ReadOnly-color) !important;
+    cursor: default;
+}
