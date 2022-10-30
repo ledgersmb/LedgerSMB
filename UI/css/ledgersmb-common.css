@@ -631,3 +631,8 @@ td.data-entry .editing {
     background-color: white;
     border-color: black;
 }
+
+.dijitTextBoxDisabled,
+.dijitTextBoxReadOnly {
+    color: var(--textBox-ReadOnly-color) !important;
+}

@@ -102,6 +102,7 @@
     --submit-clr: #000080;
     --td-cleared-future-clr: red;
     --td-cleared-past-clr: black;
+    --textBox-ReadOnly-color: gray;
     --thead-a-link-clr: black;
     --tr-suspect-clr: white;
     --tr-warning-clr: black;
