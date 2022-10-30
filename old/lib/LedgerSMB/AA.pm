@@ -65,9 +65,6 @@ sub post_transaction {
     my $batch_class;
     my %paid;
     my $paidamount;
-    if ($form->{separate_duties}){
-        $form->{approved} = '0';
-    }
     for (1 .. $form->{rowcount}){
         $form->{"amount_$_"} = $form->parse_amount(
                $myconfig, $form->{"amount_$_"}
@@ -346,7 +343,7 @@ sub post_transaction {
     $form->{datepaid} = $form->{transdate} unless $form->{datepaid};
     my $datepaid = ($paid) ? qq|'$form->{datepaid}'| : undef;
     my $approved = 1;
-    $approved = 0 if $form->{separate_duties};
+    $approved = 0 if $form->get_setting('separate_duties');
 
     my @queryargs = (
         $form->{invnumber},        $form->{description},

@@ -1064,7 +1064,7 @@ sub post_invoice {
     );
 
     my $approved = 1;
-    $approved = 0 if $form->{separate_duties};
+    $approved = 0 if $form->get_setting('separate_duties');
 
 
     foreach my $ref ( sort { $b->{amount} <=> $a->{amount} }
@@ -1227,7 +1227,7 @@ sub post_invoice {
     # save printed, emailed
     $form->save_status($dbh);
 
-    if (!$form->{separate_duties}){
+    if ($form->get_setting('separate_duties')){
         $self->add_cogs($form);
     }
 
