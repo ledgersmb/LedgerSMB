@@ -8,6 +8,7 @@ package LedgerSMB::DBObject::User;
 
 use strict;
 use warnings;
+use feature 'fc';
 
 use base qw(LedgerSMB::PGOld);
 
@@ -128,7 +129,7 @@ sub get_option_data {
 
     $self->{cssfiles} = [];
     opendir CSS, "UI/css/.";
-    for my $opt (grep /.*\.css$/, readdir CSS){
+    for my $opt (grep /.*\.css$/, sort { fc($a) cmp fc($b) } readdir CSS){
          push @{$self->{cssfiles}}, {file => $opt};
     }
     closedir CSS;
