@@ -27,6 +27,10 @@ Dependency updates
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.4
+* Fix AR/AP transactions posted, not saved, with separation of duties (#6932)
+
+
 Changelog for 1.10.3
 * Fix 'New' button on invoice and transaction screens (#6893)
 * Fix UTF-8 character handling calling into old code (#6897)
