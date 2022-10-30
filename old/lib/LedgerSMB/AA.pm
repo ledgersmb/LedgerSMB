@@ -65,9 +65,6 @@ sub post_transaction {
     my $batch_class;
     my %paid;
     my $paidamount;
-    if ($form->{separate_duties}){
-        $form->{approved} = '0';
-    }
     for (1 .. $form->{rowcount}){
         $form->{"amount_$_"} = $form->parse_amount(
                $myconfig, $form->{"amount_$_"}
