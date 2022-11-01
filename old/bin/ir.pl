@@ -289,7 +289,7 @@ sub prepare_invoice {
 }
 
 sub form_header {
-
+    my $readonly = $form->{approved} ? 'readonly="readonly"' : '';
     $form->{nextsub} = 'update';
 
     $status_div_id = 'AP-invoice';
@@ -313,11 +313,11 @@ sub form_header {
     $form->{exchangerate} =
       $form->format_amount( \%myconfig, $form->{exchangerate} );
 
-    $form->{selectAP} =~ s/(\Qoption value="$form->{AP}"\E)/$1 selected="selected"/;
+    $form->{selectAP} =~ s/(\Qoption value="$form->{AP}"\E)/$1 $readonly selected="selected"/;
     $exchangerate = qq|<tr>|;
     $exchangerate .= qq|
                 <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" id=currency name=currency>$form->{selectcurrency}</select></td> |
+        <td><select data-dojo-type="dijit/form/Select" id=currency name=currency $readonly>$form->{selectcurrency}</select></td> |
       if $form->{defaultcurrency};
 
     if (   $form->{defaultcurrency}
@@ -327,7 +327,7 @@ sub form_header {
                 <th align=right nowrap>|
               . $locale->text('Exchange Rate')
               . qq|</th>
-                <td><input data-dojo-type="dijit/form/TextBox" name=exchangerate size=10 value=$form->{exchangerate}></td>
+                <td><input data-dojo-type="dijit/form/TextBox" name=exchangerate size=10 value=$form->{exchangerate} $readonly></td>
 |;
     }
     $exchangerate .= qq|
@@ -336,10 +336,10 @@ sub form_header {
 |;
 
     if ( $form->{selectvendor} ) {
-        $vendor = qq|<select data-dojo-type="lsmb/FilteringSelect" id=vendor name=vendor><option></option>$form->{selectvendor}</select>|;
+        $vendor = qq|<select data-dojo-type="lsmb/FilteringSelect" id=vendor name=vendor $readonly><option></option>$form->{selectvendor}</select>|;
     }
     else {
-        $vendor = qq|<input data-dojo-type="dijit/form/TextBox" name=vendor id=vendor value="$form->{vendor}" size=35>
+        $vendor = qq|<input data-dojo-type="dijit/form/TextBox" name=vendor id=vendor value="$form->{vendor}" size=35 $roadonly>
                  <a href="erp.pl?action=root#contact.pl?action=add&entity_class=1"
                   id="new-contact" target="_blank">[|
                  .  $locale->text('New') . qq|]</a>|;
@@ -348,7 +348,7 @@ sub form_header {
     $department = qq|
               <tr>
           <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
-          <td colspan=3><select data-dojo-type="dijit/form/Select" id=department name=department>$form->{selectdepartment}</select>
+          <td colspan=3><select data-dojo-type="dijit/form/Select" id=department name=department $readonly>$form->{selectdepartment}</select>
           <input type=hidden name=selectdepartment value="|
       . $form->escape( $form->{selectdepartment}, 1 ) . qq|">
           </td>
@@ -452,14 +452,14 @@ sub form_header {
         </td>
           <tr>
         <th align=right><label for="AP">| . $locale->text('Record in') . qq|</label></th>
-        <td colspan=3><select data-dojo-type="dijit/form/Select" id=AP name=AP>$form->{selectAP}</select></td>
+        <td colspan=3><select data-dojo-type="dijit/form/Select" id=AP name=AP $readonly>$form->{selectAP}</select></td>
           </tr>
               $department
           $exchangerate
             <tr>
                <th align="right" nowrap><label for="description">| . $locale->text('Description') . qq|</label></th>
                <td><input data-dojo-type="dijit/form/TextBox" type="text" id="description" name="description" size="40"
-                   value="| . $form->{description} . qq|" /></td>
+                   value="| . $form->{description} . qq|" $readonly /></td>
             </tr>
         </table>
       </td>
@@ -467,29 +467,29 @@ sub form_header {
         <table>
           <tr>
         <th align=right nowrap><label for="invnumber">| . $locale->text('Invoice Number') . qq|</label></th>
-        <td><input data-dojo-type="dijit/form/TextBox" id=invnumber name=invnumber size=20 value="$form->{invnumber}">
+        <td><input data-dojo-type="dijit/form/TextBox" id=invnumber name=invnumber size=20 value="$form->{invnumber}" $readonly>
                    | .  $form->sequence_dropdown('vinumber') . qq|</td>
           </tr>
           <tr>
         <th align=right nowrap><label for="ordnumber">| . $locale->text('Order Number') . qq|</label></th>
-        <td><input data-dojo-type="dijit/form/TextBox" id=ordnumber name=ordnumber size=20 value="$form->{ordnumber}"></td>
+        <td><input data-dojo-type="dijit/form/TextBox" id=ordnumber name=ordnumber size=20 value="$form->{ordnumber}" $readonly></td>
 <input type=hidden name=quonumber value="$form->{quonumber}">
           </tr>
               <tr>
                 <th align=right nowrap><label for="crdate">| . $locale->text('Invoice Created') . qq|</label></th>
-                <td><input class="date" data-dojo-type="lsmb/DateTextBox" id=crdate name=crdate size=11 title="$myconfig{dateformat}" value=$form->{crdate} data-dojo-props="defaultIsToday:true"></td>
+                <td><input class="date" data-dojo-type="lsmb/DateTextBox" id=crdate name=crdate size=11 title="$myconfig{dateformat}" value=$form->{crdate} data-dojo-props="defaultIsToday:true" $readonly></td>
               </tr>
           <tr>
         <th align=right nowrap><label for="transdate">| . $locale->text('Invoice Date') . qq|</label></th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate" data-dojo-props="defaultIsToday:true"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate" data-dojo-props="defaultIsToday:true" $readonly></td>
           </tr>
           <tr>
         <th align=right nowrap><label for="duedate">| . $locale->text('Due Date') . qq|</label></th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=duedate size=11 title="$myconfig{dateformat}" value="$form->{duedate}" id="duedate"></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=duedate size=11 title="$myconfig{dateformat}" value="$form->{duedate}" id="duedate" $readonly></td>
           </tr>
           <tr>
         <th align=right nowrap><label for="ponumber">| . $locale->text('SO Number') . qq|</label></th>
-        <td><input data-dojo-type="dijit/form/TextBox" id=ponumber name=ponumber size=20 value="$form->{ponumber}"></td>
+        <td><input data-dojo-type="dijit/form/TextBox" id=ponumber name=ponumber size=20 value="$form->{ponumber}" $readonly></td>
           </tr>
           <tr>
           <th align=right nowrap>| . $locale->text('State') . qq|</th>
@@ -541,6 +541,7 @@ sub form_header {
 }
 
 sub form_footer {
+    my $readonly = $form->{approved} ? 'readonly="readonly"' : '';
     my $manual_tax;
     if ($form->{approved}){
         $manual_tax =
@@ -560,11 +561,11 @@ sub form_footer {
                     qq|<label for="manual-tax-0">|.
                        $locale->text("Automatic"). qq|</label>
                        <input type="radio" data-dojo-type="dijit/form/RadioButton" name="manual_tax" value="0"
-                              id="manual-tax-0" $checked0 />
+                              id="manual-tax-0" $checked0 $readonly />
                         <label for="manual-tax-1">|.
                         $locale->text("Manual"). qq|</label>
                       <input type="radio" data-dojo-type="dijit/form/RadioButton" name="manual_tax" value="1"
-                              id="manual-tax-1" $checked1 />|;
+                              id="manual-tax-1" $checked1 $readonly />|;
     }
     _calc_taxes();
     $form->{invtotal} = $form->{invsubtotal};
@@ -577,7 +578,7 @@ sub form_footer {
     }
     $rows = ( $rows > $introws ) ? $rows : $introws;
     $notes =
-qq|<textarea data-dojo-type="dijit/form/Textarea" id=notes name=notes rows=$rows cols=35 wrap=soft>$form->{notes}</textarea>|;
+qq|<textarea data-dojo-type="dijit/form/Textarea" id=notes name=notes rows=$rows cols=35 wrap=soft $readonly>$form->{notes}</textarea>|;
     $intnotes =
 qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</textarea>|;
     $tax = "";
@@ -586,7 +587,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
     $taxincluded = "";
     if ($form->{taxaccounts} ) {
         $taxincluded = qq|
-        <input id=taxincluded name=taxincluded class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=1 $form->{taxincluded}> <b>|
+        <input id=taxincluded name=taxincluded class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=1 $form->{taxincluded} $readonly> <b>|
           . $locale->text('Tax Included') . qq|</b>
 |;
     }
@@ -644,19 +645,19 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
                 <th align=right>$form->{_accno_descriptions}->{$taccno}</th>
                 <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_amount_$item"
                         id="mt-amount-$item" value="|
-                        .$form->format_amount(\%myconfig,$form->{"mt_amount_$item"}).qq|" size="10"/></td>
+                        .$form->format_amount(\%myconfig,$form->{"mt_amount_$item"}).qq|" size="10" $readonly /></td>
                 <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_rate_$item"
                          id="mt-rate-$item" value="|
-                        .$form->format_amount(\%myconfig,$form->{"mt_rate_$item"}).qq|" size="6"/></td>
+                        .$form->format_amount(\%myconfig,$form->{"mt_rate_$item"}).qq|" size="6" $readonly /></td>
                 <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_basis_$item"
                          id="mt-basis-$item" value="|
-                        .$form->format_amount(\%myconfig,$form->{"mt_basis_$item"}).qq|" size="10" /></td>
+                        .$form->format_amount(\%myconfig,$form->{"mt_basis_$item"}).qq|" size="10" $readonly /></td>
                 <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_ref_$item"
                          id="mt-ref-$item" value="|
-                        .$form->{"mt_ref_$item"} .qq|" size="10"/></td>
+                        .$form->{"mt_ref_$item"} .qq|" size="10" $readonly /></td>
                 <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_memo_$item"
                          id="mt-memo-$item" value="|
-                        .$form->{"mt_memo_$item"} .qq|" size="10"/></td>
+                        .$form->{"mt_memo_$item"} .qq|" size="10" $readonly /></td>
                </tr>|;
             }  else {
                 $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);
@@ -837,6 +838,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
         $form->{"AP_paid_$form->{paidaccounts}"} = $1;
     }
     foreach my $i ( 1 .. $form->{paidaccounts} ) {
+        next if $readonly and not $form->{"datepaid_$i"};
 
         $form->hide_form("cleared_$i");
 
@@ -869,7 +871,7 @@ qq|<input type=hidden name="exchangerate_$i" value=$form->{"exchangerate_$i"}>$f
             }
             else {
                 $exchangerate =
-qq|<input data-dojo-type="dijit/form/TextBox" name="exchangerate_$i" id="exchangerate_$i" size=10 value=$form->{"exchangerate_$i"}>|;
+qq|<input data-dojo-type="dijit/form/TextBox" name="exchangerate_$i" id="exchangerate_$i" size=10 value=$form->{"exchangerate_$i"} $readonly>|;
             }
         }
         $exchangerate .= qq|
@@ -878,18 +880,18 @@ qq|<input data-dojo-type="dijit/form/TextBox" name="exchangerate_$i" id="exchang
 
         $form->{"${_}_$i"} //= '' for (qw(memo source datepaid));
         $column_data{"paid_$i"} =
-qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id="paid_$i" size=11 value=$form->{"paid_$i"}></td>|;
+qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id="paid_$i" size=11 value=$form->{"paid_$i"} $readonly></td>|;
         $column_data{"exchangerate_$i"} =
           qq|<td align=center>$exchangerate</td>|;
         $column_data{"paidfx_$i"} = qq|<td align="center">$form->{"paidfx_$i"}</td>|;
         $column_data{"AP_paid_$i"} =
-            qq|<td align=center><select data-dojo-type="dijit/form/Select" id="AP-paid-$i" name="AP_paid_$i" id="AP_paid_$i">$form->{"selectAP_paid_$i"}</select></td>|;
+            qq|<td align=center><select data-dojo-type="dijit/form/Select" id="AP-paid-$i" name="AP_paid_$i" id="AP_paid_$i" $readonly>$form->{"selectAP_paid_$i"}</select></td>|;
         $column_data{"datepaid_$i"} =
-qq|<td align=center><input class="date" data-dojo-type="lsmb/DateTextBox" name="datepaid_$i" id="datepaid_$i" size=11 title="$myconfig{dateformat}" value=$form->{"datepaid_$i"}></td>|;
+qq|<td align=center><input class="date" data-dojo-type="lsmb/DateTextBox" name="datepaid_$i" id="datepaid_$i" size=11 title="$myconfig{dateformat}" value=$form->{"datepaid_$i"} $readonly></td>|;
         $column_data{"source_$i"} =
-qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="source_$i" id="source_$i" size=11 value="$form->{"source_$i"}"></td>|;
+qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="source_$i" id="source_$i" size=11 value="$form->{"source_$i"}" $readonly></td>|;
         $column_data{"memo_$i"} =
-qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id="memo_$i" size=11 value="$form->{"memo_$i"}"></td>|;
+qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id="memo_$i" size=11 value="$form->{"memo_$i"}" $readonly></td>|;
 
         for (@column_index) { print qq|$column_data{"${_}_$i"}\n| }
 
