@@ -282,7 +282,8 @@ sub prepare_invoice {
 }
 
 sub form_header {
-    my $readonly = $form->{approved} ? 'readonly="readonly"' : '';
+    my $readonly =
+        ($form->{reversing} or $form->{approved}) ? 'readonly="readonly"' : '';
     $form->{nextsub} = 'update';
     $form->{ARAP} = 'AR';
     $form->generate_selects(\%myconfig) unless $form->{selectAR};
@@ -631,7 +632,8 @@ sub void {
 }
 
 sub form_footer {
-    my $readonly = $form->{approved} ? 'readonly="readonly"' : '';
+    my $readonly =
+        ($form->{reversing} or $form->{approved}) ? 'readonly="readonly"' : '';
     my $manual_tax;
     if ($form->{approved}){
         $manual_tax =

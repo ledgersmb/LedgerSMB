@@ -283,7 +283,8 @@ sub prepare_invoice {
 }
 
 sub form_header {
-    my $readonly = $form->{approved} ? 'readonly="readonly"' : '';
+    my $readonly =
+        ($form->{reversing} or $form->{approved}) ? 'readonly="readonly"' : '';
     $form->{nextsub} = 'update';
 
     $status_div_id = 'AP-invoice';
@@ -536,7 +537,8 @@ sub form_header {
 }
 
 sub form_footer {
-    my $readonly = $form->{approved} ? 'readonly="readonly"' : '';
+    my $readonly =
+        ($form->{reversing} or $form->{approved}) ? 'readonly="readonly"' : '';
     my $manual_tax;
     if ($form->{approved}){
         $manual_tax =
