@@ -160,7 +160,7 @@ jobs:
       BROWSER: ${{ matrix.BROWSER }}
       COA_TESTING: ${{ matrix.COA_TESTING }}
       DB_TESTING: ${{ matrix.DB_TESTING }}
-      DEVEL_COVER_OPTIONS: -silent,1,+ignore,(^x?t/|^local/|^utils/|\.lttc$|^/usr/|^/opt/|starman\$\$),-summary,1
+      DEVEL_COVER_OPTIONS: -silent,1,+ignore,'((^x?t|^utils)/|^\.local/|\.lttc\$\$|^/(usr|opt)/|starman\$\$)',-summary,1
       JOB_COUNT: 5
       LSMB_BASE_URL: http://lsmb:5000
       LSMB_NEW_DB: lsmb_test
@@ -265,11 +265,13 @@ jobs:
           echo "STARMAN_DEVEL_COVER_OPTIONS=-MDevel::Cover=${{ env.DEVEL_COVER_OPTIONS }}" >> $GITHUB_ENV
           echo "YATH_DEVEL_COVER_OPTIONS=--cover=${{ env.DEVEL_COVER_OPTIONS }}" >> $GITHUB_ENV
           echo "JOB_COUNT=2" >> $GITHUB_ENV
+          echo "UITESTS=--coverage" >> $GITHUB_ENV
+          echo "PERL5OPT=-MSyntax::Keyword::Try::Deparse" >> $GITHUB_ENV
         if: ${{ matrix.COVERAGE }}
 
       - name: Starting 'starman'
         run: |
-          PERL5OPT="$PERL5OPT -MSyntax::Keyword::Try::Deparse $STARMAN_DEVEL_COVER_OPTIONS" \
+          PERL5OPT="$PERL5OPT $STARMAN_DEVEL_COVER_OPTIONS" \
           starman --preload-app --pid starman.pid --workers $JOB_COUNT \
                   --max-requests 5000 --error-log logs/starman-error.log \
                   -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
@@ -279,16 +281,7 @@ jobs:
         uses: mxschmitt/action-tmate@v3
         if: ${{ matrix.BROWSER == 'chrome' && 0 }}
 
-      - name: Run Perl tests
-        run: |
-          make devtest TESTS='--no-progress --job-count 2 t xt'
-        env:
-          LSMB_TEST_DB: 1
-          COA_TESTING: ${{ matrix.COA_TESTING }}
-          COVERAGE: ${{ matrix.COVERAGE }}
-          DB_TESTING: ${{ matrix.DB_TESTING }}
-        if: ${{ !matrix.COVERAGE }}
-
+      # Do API Tests
       - uses: actions/download-artifact@v3
         with:
           name: node_modules
@@ -298,20 +291,29 @@ jobs:
 
       - name: Run API tests
         run: |
-          pwd
-          PERL5LIB="lib:old/lib:$PERL5LIB" make jstest
+          PERL5LIB="lib:old/lib:$PERL5LIB" make jstest TESTS="$UITESTS"
 
-      - name: Run Coverage Perl tests
+      # Do perl tests
+      - name: Run Perl tests
         run: |
-          make devtest TESTS="--no-progress --job-count $JOB_COUNT \"--cover=${{ env.DEVEL_COVER_OPTIONS }}\" t xt"
+          make devtest TESTS="$TESTS --no-progress --job-count $JOB_COUNT $YATH_DEVEL_COVER_OPTIONS t xt"
         env:
           LSMB_TEST_DB: 1
           COA_TESTING: ${{ matrix.COA_TESTING }}
           COVERAGE: ${{ matrix.COVERAGE }}
           DB_TESTING: ${{ matrix.DB_TESTING }}
-          PERL5OPT: -MSyntax::Keyword::Try::Deparse
+
+      # Send UI coverage before Perl
+      - name: Upload UI coverage data
+        uses: coverallsapp/github-action@1.1.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          flag-name: ui
+          parallel: true
+          path-to-lcov: ${{ github.workspace }}/coverage/lcov.info
         if: ${{ matrix.COVERAGE }}
 
+        # Upload coverage data if needed
       - name: Upload coverage data
         run: |
           unset PERL5OPT
@@ -319,8 +321,25 @@ jobs:
           cover -report text > logs/coverage.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COVERALLS_FLAG_NAME: perl
+          COVERALLS_PARALLEL: true
         if: ${{ matrix.COVERAGE }}
 
+      - name: Close parallel UI coverage data
+        uses: coverallsapp/github-action@1.1.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
+          path-to-lcov: ${{ github.workspace }}/coverage/lcov.info
+        if: ${{ matrix.COVERAGE }}
+
+      # Run the build hook again (Coveralls suggested patch)
+      - name: Rerun Build Webhook
+        run: |
+          curl --location --request GET "https://coveralls.io/rerun_build?repo_token=${{ secrets.GITHUB_TOKEN }}&build_num=${GITHUB_RUN_ID}"
+        if: ${{ matrix.COVERAGE }}
+
+      # Send logs & artifacts
       - name: Collect docker logs
         uses: jwalton/gh-docker-logs@v2
         with:
