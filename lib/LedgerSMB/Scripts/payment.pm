@@ -1359,8 +1359,8 @@ sub post_payment {
             if ($temporary_discount != 0) {
                 push @amount, $temporary_discount;
                 push @cash_account_id, $discount_account_id;
-                push @source, $locale->text('Applied discount');
-                push @memo, undef;
+                push @source, undef;
+                push @memo, $locale->text('Applied discount');
                 push @transaction_id, $array_options[$ref]->{invoice_id};
             }
 
@@ -2017,9 +2017,9 @@ sub post_overpayment {
         if ($list_key->{"optional_discount_$count"} && $list_key->{"amount_$count"} == $list_key->{"due_$count"}) {
             push @{$list_key->{array_amount}}, $list_key->{"discount_$count"};
             push @{$list_key->{array_cash_account_id}}, $list_key->{"vc_discount_accno_$count"};
-            push @{$list_key->{array_source}}, $locale->text('Applied discount by an overpayment');
+            push @{$list_key->{array_source}}, undef;
             push @{$list_key->{array_transaction_id}}, $list_key->{"invoice_id_$count"};
-            push @{$list_key->{array_memo}}, undef;
+            push @{$list_key->{array_memo}}, $locale->text('Applied discount by an overpayment');
             push @{$list_key->{ovp_payment_id}}, undef;
         }
 
