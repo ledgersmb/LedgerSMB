@@ -1,2 +1,7 @@
+# exclude non-test paths on a case-by-case basis
+# to prevent excluding too many (err on the safe
+# side)
 paths-ignore:
   - tests
+  - UI/lib/ui-header.html
+
