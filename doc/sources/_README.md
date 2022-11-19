@@ -5,12 +5,11 @@ Small and Medium business accounting and ERP
 
 
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/795/badge)](https://bestpractices.coreinfrastructure.org/projects/795)
-[![LedgerSMB](https://circleci.com/gh/ledgersmb/LedgerSMB/tree/master.svg?style=svg)](https://circleci.com/gh/ledgersmb/LedgerSMB/tree/master)
-[![Lgtm total alerts](https://img.shields.io/lgtm/alerts/g/ledgersmb/LedgerSMB.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ledgersmb/LedgerSMB/alerts/)
+[![LedgerSMB](https://circleci.com/gh/ledgersmb/LedgerSMB/tree/1.9.svg?style=svg)](https://circleci.com/gh/ledgersmb/LedgerSMB/tree/1.9)
+[![CodeQL](https://github.com/ledgersmb/LedgerSMB/actions/workflows/codeql.yml/badge.svg?branch=1.9)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/codeql.yml)
 [![GPLv2 Licence](https://badges.frapsoft.com/os/gpl/gpl.png?v=103)](https://opensource.org/licenses/GPL-2.0/)
-[![Coverage Status](https://coveralls.io/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=master)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=1.9)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=1.9)
 [![Docker](https://img.shields.io/docker/pulls/ledgersmb/ledgersmb.svg)](https://hub.docker.com/r/ledgersmb/ledgersmb/)
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/ledgersmb/LedgerSMB.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ledgersmb/LedgerSMB/context:javascript)
 [![Mentioned in Awesome <awesome-selfhosted>](https://awesome.re/mentioned-badge.svg)](https://github.com/Kickball/awesome-selfhosted#enterprise-resource-planning)
 
 
@@ -41,7 +40,7 @@ and [the 1.8 version](https://github.com/ledgersmb/LedgerSMB/tree/1.8#system-req
 ## Server
 
 * `Perl 5.24+`
-* `PostgreSQL 9.6+`
+* `PostgreSQL 10+`
 * Web server (e.g. `nginx`, `Apache`, `lighttpd`, `Varnish`)
 
 The web external server is only required for production installs;
@@ -69,7 +68,7 @@ old browsers is negligible. **
 The quickest way to get the `Docker` image up and running is by using the
 docker-compose file available through the `GitHub` repository at:
 
-https://github.com/ledgersmb/ledgersmb-docker/blob/1.8/docker-compose.yml
+https://github.com/ledgersmb/ledgersmb-docker/blob/1.9/docker-compose.yml
 
 which sets up both the LedgerSMB image and a supporting database image for
 production purposes (i.e. with persistent (database) data, with the
@@ -83,7 +82,7 @@ See the [documentation on Docker Hub](https://hub.docker.com/r/ledgersmb/ledgers
 
 The instructions below are for getting started quickly; the [project's site](https://ledgersmb.org)
 provides [in-depth installation
-instructions](https://ledgersmb.org/content/installing-ledgersmb-18)
+instructions](https://ledgersmb.org/content/installing-ledgersmb-19)
 for **production** installs.
 
 ## System (library) dependencies
@@ -230,7 +229,7 @@ The system is installed and should be available for evaluation through
 * `http://localhost:5762/login.pl`    # Normal login for the application
 
 The system is ready for [preparation for first
-use](https://ledgersmb.org/topic/preparing/preparing-ledgersmb-18-first-use).
+use](https://ledgersmb.org/content/preparing-ledgersmb-19-first-use).
 
 # Project information
 
@@ -263,7 +262,7 @@ as well as in the `Transifex` project Timeline.
 # Copyright
 
 ```plain
-Copyright (c) 2006 - 2020 The LedgerSMB Project contributors
+Copyright (c) 2006 - 2021 The LedgerSMB Project contributors
 Copyright (c) 1999 - 2006 DWS Systems Inc (under the name SQL Ledger)
 ```
 
