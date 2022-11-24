@@ -3,6 +3,11 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.5
+* Fix populating e-mail screen when mailing orders (#6956)
+* Populate 'memo' instead of 'source' when applying payment discount (#6943)
+
+
 Changelog for 1.10.4
 * Fix AR/AP transactions posted, not saved, with separation of duties (#6932)
 
