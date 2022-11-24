@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.5-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-10-30 13:04+0000\n"
+"POT-Creation-Date: 2022-11-24 20:10+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: Russian (https://www.transifex.com/ledgersmb/teams/58325/ru/)\n"
 "Language: ru\n"
@@ -779,11 +779,11 @@ msgstr "Годовая прямолинейная амортизация еже�
 msgid "Any"
 msgstr "Любой"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1343
+#: lib/LedgerSMB/Scripts/payment.pm:1344
 msgid "Applied discount"
 msgstr "Примененная скидка"
 
-#: lib/LedgerSMB/Scripts/payment.pm:2003
+#: lib/LedgerSMB/Scripts/payment.pm:2005
 msgid "Applied discount by an overpayment"
 msgstr "Примененная скидка при переплате"
 
