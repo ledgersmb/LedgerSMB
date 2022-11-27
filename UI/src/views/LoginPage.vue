@@ -21,18 +21,19 @@
               </h1>
               <div>
                 <div id="company_div">
-                  <lsmb-text type="text" name="login" size="20"
+                  <lsmb-text name="login" size="20"
                              id="username" :title="$t('User Name')"
                              tabindex="1"
                              :value="username"
                              v-update:username=""
                              autocomplete="off" />
-                  <lsmb-password type="password" name="password"
+                  <lsmb-password name="password"
                                  id="password" size="20"
                                  :title="$t('Password')"
                                  :value="password" v-update:password=""
                                  tabindex="2" autocomplete="off" />
-                  <lsmb-text type="text" name="company" size="20"
+                  <lsmb-text name="company"
+                             id="company" size="20"
                              :title="$t('Company')" tabindex="3"
                              :value="company"
                              v-update:company="" />
