@@ -2,6 +2,8 @@ package LedgerSMB::DBObject::TransTemplate;
 use base qw(LedgerSMB::PGOld);
 use strict;
 use warnings;
+
+use Carp;
 use Log::Any;
 
 use LedgerSMB::Magic qw(JRNL_GJ JRNL_AR JRNL_AP EC_CUSTOMER EC_VENDOR);
@@ -64,7 +66,7 @@ sub save {
        $l->{account_id} = $ref->{id};
        $logger->debug( "$l->{accno}\n" );
        if (!$ref->{id}){
-           $self->error($self->{_locale}->text('No Account id for [_1]', $l->{accno}));
+           Carp::croak $self->{_locale}->text('No Account id for [_1]', $l->{accno});
        }
        $l->call_dbmethod(funcname=> 'journal__add_line');
    }
