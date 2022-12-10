@@ -53,18 +53,11 @@ define([
                 document.getElementById("pwtitle").innerHTML =
                     this.lstrings.title;
                 var I = this;
-                on(this.oldpw, "keypress", function () {
-                    I.setFeedback(0, "");
-                });
                 on(this.newpw, "change", function () {
                     I.setStrengthClass();
                 });
-                on(this.newpw, "keypress", function () {
+                on(this.newpw, "keyup", function () {
                     I.setStrengthClass();
-                    I.setFeedback(0, "");
-                });
-                on(this.verified, "keypress", function () {
-                    I.setFeedback(0, "");
                 });
 
                 domAttr.set(
@@ -141,11 +134,11 @@ define([
                 var newPassword = I.newpw.get("value");
                 var confirmedPassword = I.verified.get("value");
                 if (oldPassword === "" || newPassword === "") {
-                    I.setFeedback(0, I.text("Password Required"));
+                    I.setFeedback(false, I.text("Password Required"));
                     return;
                 }
                 if (newPassword !== confirmedPassword) {
-                    I.setFeedback(0, I.text("Confirmation did not match"));
+                    I.setFeedback(false, I.text("Confirmation did not match"));
                     return;
                 }
                 r("user.pl", {
@@ -159,18 +152,18 @@ define([
                 })
                     // eslint-disable-next-line no-unused-vars
                     .then(function (response) {
-                        I.setFeedback(1, I.text("Password Changed"));
+                        I.setFeedback(true, I.text("Password Changed"));
                     })
                     .otherwise(function (err) {
                         if (err.response.status !== 200) {
                             if (err.response.status !== 500) {
                                 I.setFeedback(
-                                    0,
+                                    false,
                                     I.text("Bad username/Password")
                                 );
                             } else {
                                 I.setFeedback(
-                                    0,
+                                    false,
                                     I.text("Error changing password.")
                                 );
                             }
