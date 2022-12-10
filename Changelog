@@ -27,6 +27,14 @@ Dependency updates
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.6
+* Fix serial numbers from orders being on wrong invoice line (#6979)
+* Fix searching on quotation numbers in quote searching (#6988)
+* Remove negative feedback in password change while typing passwords (#6991)
+* Fix failing password resets resulting in a technical error (#6995)
+* Fix changing passwords from user preferences page (#6978)
+
+
 Changelog for 1.10.5
 * Fix populating e-mail screen when mailing orders (#6956)
 * Populate 'memo' instead of 'source' when applying payment discount (#6943)
