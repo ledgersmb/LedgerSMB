@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.9.20-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-10-29 16:47+0000\n"
+"POT-Creation-Date: 2022-12-10 21:53+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2021\n"
 "Language-Team: Latvian (https://www.transifex.com/ledgersmb/teams/58325/lv/)\n"
 "Language: lv\n"
@@ -219,7 +219,7 @@ msgstr ""
 #: UI/Reports/filters/gl.html:31 UI/Reports/filters/gl.html:274
 #: UI/Reports/filters/invoice_outstanding.html:26
 #: UI/Reports/filters/invoice_search.html:29 UI/Reports/filters/orders.html:29
-#: UI/Reports/filters/orders.html:164
+#: UI/Reports/filters/orders.html:177
 #: UI/Reports/filters/reconciliation_search.html:50
 msgid "Account"
 msgstr "Konts"
@@ -648,7 +648,7 @@ msgstr ""
 #: UI/Reports/filters/gl.html:186 UI/Reports/filters/invoice_outstanding.html:73
 #: UI/Reports/filters/invoice_search.html:173
 #: UI/Reports/filters/invoice_search.html:220
-#: UI/Reports/filters/invoice_search.html:241 UI/Reports/filters/orders.html:106
+#: UI/Reports/filters/invoice_search.html:241 UI/Reports/filters/orders.html:119
 #: UI/Reports/filters/search_goods.html:17 UI/Reports/filters/timecards.html:42
 #: UI/Reports/filters/trial_balance.html:61
 msgid "All"
@@ -725,7 +725,7 @@ msgstr ""
 #: UI/payments/payment2.html:347 UI/Reports/filters/gl.html:100
 #: UI/Reports/filters/gl.html:106
 #: UI/Reports/filters/invoice_outstanding.html:192
-#: UI/Reports/filters/invoice_search.html:317 UI/Reports/filters/orders.html:177
+#: UI/Reports/filters/invoice_search.html:317 UI/Reports/filters/orders.html:190
 msgid "Amount"
 msgstr "Summa"
 
@@ -799,11 +799,11 @@ msgstr ""
 msgid "Any"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1362
+#: lib/LedgerSMB/Scripts/payment.pm:1363
 msgid "Applied discount"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:2020
+#: lib/LedgerSMB/Scripts/payment.pm:2022
 msgid "Applied discount by an overpayment"
 msgstr ""
 
@@ -1609,7 +1609,7 @@ msgid "Close books"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Orders.pm:234 old/bin/oe.pl:332
-#: UI/Reports/filters/invoice_search.html:214 UI/Reports/filters/orders.html:100
+#: UI/Reports/filters/invoice_search.html:214 UI/Reports/filters/orders.html:113
 #: UI/Reports/filters/purchase_history.html:209
 #: UI/Reports/filters/timecards.html:35
 msgid "Closed"
@@ -1776,7 +1776,7 @@ msgstr ""
 #: UI/Reports/filters/income_statement.html:278
 #: UI/Reports/filters/inventory_activity.html:30
 #: UI/Reports/filters/invoice_outstanding.html:289
-#: UI/Reports/filters/invoice_search.html:412 UI/Reports/filters/orders.html:209
+#: UI/Reports/filters/invoice_search.html:412 UI/Reports/filters/orders.html:222
 #: UI/Reports/filters/purchase_history.html:360
 #: UI/Reports/filters/taxforms.html:57 UI/Reports/filters/trial_balance.html:127
 #: UI/timecards/entry_filter.html:41
@@ -1994,7 +1994,7 @@ msgstr "Val."
 #: UI/payments/payments_filter.html:72 UI/payments/use_overpayment1.html:42
 #: UI/payments/use_overpayment2.html:90
 #: UI/Reports/filters/invoice_outstanding.html:213
-#: UI/Reports/filters/invoice_search.html:336 UI/Reports/filters/orders.html:192
+#: UI/Reports/filters/invoice_search.html:336 UI/Reports/filters/orders.html:205
 #: UI/Reports/filters/overpayments.html:43 UI/Reports/filters/payments.html:108
 #: UI/Reports/filters/purchase_history.html:272
 #: UI/Reports/filters/search_goods.html:422 UI/timecards/timecard.html:121
@@ -2199,7 +2199,7 @@ msgstr ""
 #: UI/inventory/adjustment_setup.html:16 UI/journal/journal_entry.html:50
 #: UI/orders/order.html:245 UI/payments/payment2.html:100
 #: UI/payments/payments_detail.html:333 UI/payments/use_overpayment2.html:85
-#: UI/Reports/filters/gl.html:203 UI/Reports/filters/orders.html:134
+#: UI/Reports/filters/gl.html:203 UI/Reports/filters/orders.html:147
 msgid "Date"
 msgstr "Datums"
 
@@ -2586,7 +2586,7 @@ msgstr ""
 #: UI/Reports/filters/batches.html:43 UI/Reports/filters/budget_search.html:28
 #: UI/Reports/filters/cogs_lines.html:18 UI/Reports/filters/gl.html:82
 #: UI/Reports/filters/gl.html:224 UI/Reports/filters/inventory_activity.html:18
-#: UI/Reports/filters/invoice_search.html:140 UI/Reports/filters/orders.html:69
+#: UI/Reports/filters/invoice_search.html:140 UI/Reports/filters/orders.html:82
 #: UI/Reports/filters/purchase_history.html:253
 #: UI/Reports/filters/search_goods.html:63
 #: UI/Reports/filters/search_goods.html:271 UI/timecards/timecard.html:46
@@ -3706,7 +3706,7 @@ msgstr ""
 #: templates/xedemo/timecard.html:44 templates/xedemo/timecard.tex:28
 #: UI/business_units/list_classes.html:8 UI/Reports/filters/gl.html:196
 #: UI/Reports/filters/invoice_outstanding.html:131
-#: UI/Reports/filters/invoice_search.html:255 UI/Reports/filters/orders.html:121
+#: UI/Reports/filters/invoice_search.html:255 UI/Reports/filters/orders.html:134
 msgid "ID"
 msgstr "ID"
 
@@ -3788,7 +3788,7 @@ msgstr ""
 #: UI/Reports/co/filter_bm.html:67 UI/Reports/co/filter_cd.html:53
 #: UI/Reports/filters/aging.html:70 UI/Reports/filters/gl.html:114
 #: UI/Reports/filters/invoice_outstanding.html:97
-#: UI/Reports/filters/invoice_search.html:196 UI/Reports/filters/orders.html:81
+#: UI/Reports/filters/invoice_search.html:196 UI/Reports/filters/orders.html:94
 #: UI/Reports/filters/purchase_history.html:160
 #: UI/Reports/filters/search_goods.html:249
 msgid "Include in Report"
@@ -4810,7 +4810,7 @@ msgid "No tax form selected"
 msgstr ""
 
 #: UI/Reports/filters/invoice_outstanding.html:125
-#: UI/Reports/filters/invoice_search.html:249 UI/Reports/filters/orders.html:115
+#: UI/Reports/filters/invoice_search.html:249 UI/Reports/filters/orders.html:128
 #: UI/Reports/filters/search_goods.html:255
 msgid "No."
 msgstr "Nr."
@@ -5058,7 +5058,7 @@ msgid "Only for Employees"
 msgstr ""
 
 #: old/bin/oe.pl:329 UI/Reports/filters/invoice_search.html:208
-#: UI/Reports/filters/orders.html:94
+#: UI/Reports/filters/orders.html:107
 #: UI/Reports/filters/purchase_history.html:200
 #: UI/Reports/filters/timecards.html:28
 msgid "Open"
@@ -5132,8 +5132,8 @@ msgstr "Ordera ieraksts"
 #: old/bin/ir.pl:437 old/bin/is.pl:488 old/bin/oe.pl:1895 old/bin/oe.pl:400
 #: UI/orders/order.html:83 UI/Reports/filters/invoice_outstanding.html:144
 #: UI/Reports/filters/invoice_search.html:99
-#: UI/Reports/filters/invoice_search.html:269 UI/Reports/filters/orders.html:39
-#: UI/Reports/filters/orders.html:128
+#: UI/Reports/filters/invoice_search.html:269 UI/Reports/filters/orders.html:40
+#: UI/Reports/filters/orders.html:141
 msgid "Order Number"
 msgstr "Ordera Nr."
 
@@ -5240,8 +5240,8 @@ msgstr ""
 #: old/bin/oe.pl:1906 old/bin/oe.pl:415 UI/orders/order.html:101
 #: UI/Reports/filters/invoice_outstanding.html:150
 #: UI/Reports/filters/invoice_search.html:109
-#: UI/Reports/filters/invoice_search.html:275 UI/Reports/filters/orders.html:49
-#: UI/Reports/filters/orders.html:141
+#: UI/Reports/filters/invoice_search.html:275 UI/Reports/filters/orders.html:62
+#: UI/Reports/filters/orders.html:154
 msgid "PO Number"
 msgstr ""
 
@@ -6047,6 +6047,11 @@ msgstr "Tāme izdzēsta"
 msgid "Quotations"
 msgstr "Tāmes"
 
+#: UI/Reports/filters/orders.html:51
+#, fuzzy
+msgid "Quote Number"
+msgstr "Tāmes numurs"
+
 #: old/bin/oe.pl:251 old/bin/oe.pl:683 old/bin/oe.pl:925 old/bin/printer.pl:60
 #: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:361
 #: sql/Pg-database.sql:1908 sql/Pg-database.sql:2609 sql/Pg-database.sql:2741
@@ -6335,7 +6340,7 @@ msgstr "Tāmes pieprasījums"
 msgid "Request for quotation"
 msgstr ""
 
-#: UI/Reports/filters/orders.html:150
+#: UI/Reports/filters/orders.html:163
 msgid "Required By"
 msgstr ""
 
@@ -7046,8 +7051,8 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:60
 #: UI/Reports/filters/invoice_outstanding.html:267
 #: UI/Reports/filters/invoice_search.html:160
-#: UI/Reports/filters/invoice_search.html:390 UI/Reports/filters/orders.html:59
-#: UI/Reports/filters/orders.html:170
+#: UI/Reports/filters/invoice_search.html:390 UI/Reports/filters/orders.html:72
+#: UI/Reports/filters/orders.html:183
 msgid "Ship Via"
 msgstr ""
 
@@ -7385,7 +7390,7 @@ msgstr ""
 #: UI/payments/use_overpayment2.html:138 UI/payments/use_overpayment2.html:326
 #: UI/Reports/filters/gl.html:300
 #: UI/Reports/filters/invoice_outstanding.html:275
-#: UI/Reports/filters/invoice_search.html:398 UI/Reports/filters/orders.html:200
+#: UI/Reports/filters/invoice_search.html:398 UI/Reports/filters/orders.html:213
 #: UI/Reports/filters/search_goods.html:436
 msgid "Subtotal"
 msgstr "Kopā"
@@ -7453,7 +7458,7 @@ msgstr ""
 #: old/bin/ic.pl:663 UI/accounts/edit.html:259 UI/accounts/edit.html:344
 #: UI/accounts/edit.html:395 UI/accounts/edit.html:444 UI/accounts/edit.html:483
 #: UI/Reports/filters/invoice_outstanding.html:199
-#: UI/Reports/filters/invoice_search.html:323 UI/Reports/filters/orders.html:185
+#: UI/Reports/filters/invoice_search.html:323 UI/Reports/filters/orders.html:198
 msgid "Tax"
 msgstr "Nodokļi"
 
