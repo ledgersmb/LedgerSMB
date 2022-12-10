@@ -65,9 +65,11 @@ sub change_my_password {
 
     my $dbname = $self->{company};
 
-    my $verify = DBI->connect(
-        qq|dbi:Pg:dbname="$dbname"|, $self->{login}, $self->{old_password}
-    );
+    my $verify = $self->{_wire}->get('db')->instance(
+        dbname   => $self->{company},
+        user     => $self->{login},
+        password => $self->{old_password}
+        )->connect();
     if (!$verify){
         Carp::croak $self->{_locale}->text('Incorrect Password');
     }
