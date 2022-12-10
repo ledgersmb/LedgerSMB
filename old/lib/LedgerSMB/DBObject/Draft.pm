@@ -23,6 +23,8 @@ use warnings;
 
 use base qw/LedgerSMB::PGOld/;
 
+use Carp;
+
 =item search()
 
 returns a list of results for the search criteria.  This list is also stored
@@ -56,7 +58,7 @@ approved, the draft shows up in financial reports.
 sub approve {
    my ($self) = @_;
    if (!$self->{id}){
-       $self->error($self->{_locale}->text('No ID Set'));
+       Carp::croak $self->{_locale}->text('No ID Set');
    }
    ($self->{approved}) = $self->call_dbmethod(funcname => 'draft_approve');
    return $self->{approved};
@@ -74,7 +76,7 @@ books, a draft may not be deleted.
 sub delete {
    my ($self) = @_;
    if (!$self->{id}){
-       $self->error($self->{_locale}->text('No ID Set'));
+       Carp::croak $self->{_locale}->text('No ID Set');
    }
    ($self->{deleted}) = $self->call_dbmethod(funcname => 'draft_delete');
    return $self->{deleted};
