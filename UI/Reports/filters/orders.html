@@ -35,6 +35,7 @@
                     value = meta_number
                     } %]</td>
       </tr>
+[% IF oe_class_id == 1 OR oe_class_id == 2 %]
       <tr>
         <th>[% text('Order Number') %]</th>
         <td>[%  PROCESS input element_data = {
@@ -45,6 +46,18 @@
                     value = ordnumber
                     } %]</td>
       </tr>
+[% ELSE %]
+      <tr>
+        <th>[% text('Quote Number') %]</th>
+        <td>[%  PROCESS input element_data = {
+                    name = 'ordnumber'
+                    size = 16
+                    class = 'control-code'
+                    type = 'text'
+                    value = ordnumber
+                    } %]</td>
+      </tr>
+[% END %]
       <tr>
         <th>[% text('PO Number') %]</th>
         <td>[%  PROCESS input element_data = {
