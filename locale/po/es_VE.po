@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.6-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-11-24 20:10+0000\n"
+"POT-Creation-Date: 2022-12-10 22:07+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: Spanish (Venezuela) (https://www.transifex.com/ledgersmb/"
 "teams/58325/es_VE/)\n"
@@ -211,7 +211,7 @@ msgstr ""
 #: UI/Reports/filters/aging.html:24 UI/Reports/filters/gl.html:31
 #: UI/Reports/filters/gl.html:294 UI/Reports/filters/invoice_outstanding.html:26
 #: UI/Reports/filters/invoice_search.html:29 UI/Reports/filters/orders.html:29
-#: UI/Reports/filters/orders.html:164
+#: UI/Reports/filters/orders.html:177
 #: UI/Reports/filters/reconciliation_search.html:42
 msgid "Account"
 msgstr "Cuenta"
@@ -641,7 +641,7 @@ msgstr ""
 #: UI/Reports/filters/gl.html:186 UI/Reports/filters/invoice_outstanding.html:73
 #: UI/Reports/filters/invoice_search.html:173
 #: UI/Reports/filters/invoice_search.html:220
-#: UI/Reports/filters/invoice_search.html:241 UI/Reports/filters/orders.html:106
+#: UI/Reports/filters/invoice_search.html:241 UI/Reports/filters/orders.html:119
 #: UI/Reports/filters/search_goods.html:17 UI/Reports/filters/timecards.html:42
 #: UI/Reports/filters/trial_balance.html:61
 msgid "All"
@@ -699,7 +699,7 @@ msgstr ""
 #: templates/demo/sales_quotation.tex:106 UI/payments/payment2.html:349
 #: UI/Reports/filters/gl.html:100 UI/Reports/filters/gl.html:106
 #: UI/Reports/filters/invoice_outstanding.html:192
-#: UI/Reports/filters/invoice_search.html:317 UI/Reports/filters/orders.html:177
+#: UI/Reports/filters/invoice_search.html:317 UI/Reports/filters/orders.html:190
 msgid "Amount"
 msgstr "Monto"
 
@@ -1558,7 +1558,7 @@ msgid "Close books"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Orders.pm:234 old/bin/oe.pl:332
-#: UI/Reports/filters/invoice_search.html:214 UI/Reports/filters/orders.html:100
+#: UI/Reports/filters/invoice_search.html:214 UI/Reports/filters/orders.html:113
 #: UI/Reports/filters/purchase_history.html:209
 #: UI/Reports/filters/timecards.html:35
 msgid "Closed"
@@ -1759,7 +1759,7 @@ msgstr ""
 #: UI/Reports/filters/income_statement.html:278
 #: UI/Reports/filters/inventory_activity.html:30
 #: UI/Reports/filters/invoice_outstanding.html:289
-#: UI/Reports/filters/invoice_search.html:412 UI/Reports/filters/orders.html:209
+#: UI/Reports/filters/invoice_search.html:412 UI/Reports/filters/orders.html:222
 #: UI/Reports/filters/purchase_history.html:360
 #: UI/Reports/filters/taxforms.html:57 UI/Reports/filters/trial_balance.html:127
 #: UI/timecards/entry_filter.html:41
@@ -1980,7 +1980,7 @@ msgstr "Mon."
 #: UI/payments/payments_filter.html:72 UI/payments/use_overpayment1.html:42
 #: UI/payments/use_overpayment2.html:90 UI/Reports/filters/gl.html:246
 #: UI/Reports/filters/invoice_outstanding.html:213
-#: UI/Reports/filters/invoice_search.html:336 UI/Reports/filters/orders.html:192
+#: UI/Reports/filters/invoice_search.html:336 UI/Reports/filters/orders.html:205
 #: UI/Reports/filters/overpayments.html:43 UI/Reports/filters/payments.html:108
 #: UI/Reports/filters/purchase_history.html:272
 #: UI/Reports/filters/search_goods.html:422 UI/timecards/timecard.html:120
@@ -2172,7 +2172,7 @@ msgstr ""
 #: UI/inventory/adjustment_setup.html:16 UI/journal/journal_entry.html:40
 #: UI/payments/payment2.html:100 UI/payments/payments_detail.html:333
 #: UI/payments/use_overpayment2.html:85 UI/Reports/filters/gl.html:203
-#: UI/Reports/filters/orders.html:134
+#: UI/Reports/filters/orders.html:147
 msgid "Date"
 msgstr "Fecha"
 
@@ -2559,7 +2559,7 @@ msgstr ""
 #: UI/Reports/filters/budget_search.html:28
 #: UI/Reports/filters/cogs_lines.html:18 UI/Reports/filters/gl.html:82
 #: UI/Reports/filters/gl.html:224 UI/Reports/filters/inventory_activity.html:18
-#: UI/Reports/filters/invoice_search.html:140 UI/Reports/filters/orders.html:69
+#: UI/Reports/filters/invoice_search.html:140 UI/Reports/filters/orders.html:82
 #: UI/Reports/filters/purchase_history.html:253
 #: UI/Reports/filters/search_goods.html:63
 #: UI/Reports/filters/search_goods.html:271 UI/timecards/timecard.html:45
@@ -3638,7 +3638,7 @@ msgstr "ciento"
 #: templates/demo/timecard.tex:39 UI/business_units/list_classes.html:8
 #: UI/Reports/filters/gl.html:196
 #: UI/Reports/filters/invoice_outstanding.html:131
-#: UI/Reports/filters/invoice_search.html:255 UI/Reports/filters/orders.html:121
+#: UI/Reports/filters/invoice_search.html:255 UI/Reports/filters/orders.html:134
 msgid "ID"
 msgstr "N° de identidad"
 
@@ -3720,7 +3720,7 @@ msgstr "Inclir Pago"
 #: UI/Reports/co/filter_bm.html:67 UI/Reports/co/filter_cd.html:53
 #: UI/Reports/filters/aging.html:70 UI/Reports/filters/gl.html:114
 #: UI/Reports/filters/invoice_outstanding.html:97
-#: UI/Reports/filters/invoice_search.html:196 UI/Reports/filters/orders.html:81
+#: UI/Reports/filters/invoice_search.html:196 UI/Reports/filters/orders.html:94
 #: UI/Reports/filters/purchase_history.html:160
 #: UI/Reports/filters/search_goods.html:249
 msgid "Include in Report"
@@ -3771,7 +3771,7 @@ msgstr ""
 msgid "Incoming Files"
 msgstr ""
 
-#: old/lib/LedgerSMB/DBObject/User.pm:71
+#: old/lib/LedgerSMB/DBObject/User.pm:74
 msgid "Incorrect Password"
 msgstr ""
 
@@ -3952,7 +3952,7 @@ msgstr ""
 msgid "Invoice due"
 msgstr ""
 
-#: old/lib/LedgerSMB/DBObject/Asset.pm:255
+#: old/lib/LedgerSMB/DBObject/Asset.pm:257
 msgid "Invoice not found"
 msgstr ""
 
@@ -4306,7 +4306,7 @@ msgstr ""
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ServerUI.js:41 UI/src/components/ServerUI.js:27
+#: UI/src/components/ServerUI.js:27 UI/src/components/ServerUI.js:41
 #: UI/src/components/ConfigTable.vue:59
 msgid "Loading..."
 msgstr ""
@@ -4668,7 +4668,7 @@ msgstr "No"
 msgid "No AR or AP Account Selected"
 msgstr ""
 
-#: old/lib/LedgerSMB/DBObject/TransTemplate.pm:67
+#: old/lib/LedgerSMB/DBObject/TransTemplate.pm:69
 msgid "No Account id for [_1]"
 msgstr ""
 
@@ -4676,7 +4676,7 @@ msgstr ""
 msgid "No File Class Specified"
 msgstr ""
 
-#: old/lib/LedgerSMB/DBObject/Draft.pm:59 old/lib/LedgerSMB/DBObject/Draft.pm:77
+#: old/lib/LedgerSMB/DBObject/Draft.pm:61 old/lib/LedgerSMB/DBObject/Draft.pm:79
 msgid "No ID Set"
 msgstr ""
 
@@ -4729,7 +4729,7 @@ msgid "No tax form selected"
 msgstr ""
 
 #: UI/Reports/filters/invoice_outstanding.html:125
-#: UI/Reports/filters/invoice_search.html:249 UI/Reports/filters/orders.html:115
+#: UI/Reports/filters/invoice_search.html:249 UI/Reports/filters/orders.html:128
 #: UI/Reports/filters/search_goods.html:255
 msgid "No."
 msgstr "N°"
@@ -4953,7 +4953,7 @@ msgid "Only for Employees"
 msgstr ""
 
 #: old/bin/oe.pl:329 UI/Reports/filters/invoice_search.html:208
-#: UI/Reports/filters/orders.html:94
+#: UI/Reports/filters/orders.html:107
 #: UI/Reports/filters/purchase_history.html:200
 #: UI/Reports/filters/timecards.html:28
 msgid "Open"
@@ -5016,8 +5016,8 @@ msgstr "Órdenes"
 #: old/bin/ir.pl:441 old/bin/is.pl:494 old/bin/oe.pl:1907 old/bin/oe.pl:400
 #: UI/Reports/filters/invoice_outstanding.html:144
 #: UI/Reports/filters/invoice_search.html:99
-#: UI/Reports/filters/invoice_search.html:269 UI/Reports/filters/orders.html:39
-#: UI/Reports/filters/orders.html:128
+#: UI/Reports/filters/invoice_search.html:269 UI/Reports/filters/orders.html:40
+#: UI/Reports/filters/orders.html:141
 msgid "Order Number"
 msgstr "Orden N°"
 
@@ -5120,8 +5120,8 @@ msgstr ""
 #: old/bin/oe.pl:1918 old/bin/oe.pl:415
 #: UI/Reports/filters/invoice_outstanding.html:150
 #: UI/Reports/filters/invoice_search.html:109
-#: UI/Reports/filters/invoice_search.html:275 UI/Reports/filters/orders.html:49
-#: UI/Reports/filters/orders.html:141
+#: UI/Reports/filters/invoice_search.html:275 UI/Reports/filters/orders.html:62
+#: UI/Reports/filters/orders.html:154
 msgid "PO Number"
 msgstr "N° Control"
 
@@ -5249,7 +5249,7 @@ msgstr "Contraseña"
 msgid "Password Duration (days)"
 msgstr ""
 
-#: old/lib/LedgerSMB/DBObject/User.pm:59
+#: old/lib/LedgerSMB/DBObject/User.pm:60
 msgid "Passwords must match."
 msgstr ""
 
@@ -5882,6 +5882,10 @@ msgstr "¡Cotización borrada!"
 msgid "Quotations"
 msgstr "Cotizaciones"
 
+#: UI/Reports/filters/orders.html:51
+msgid "Quote Number"
+msgstr ""
+
 #: old/bin/oe.pl:251 old/bin/oe.pl:694 old/bin/oe.pl:932 old/bin/printer.pl:59
 #: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:355
 #: sql/Pg-database.sql:1885 sql/Pg-database.sql:2586 sql/Pg-database.sql:2718
@@ -6164,7 +6168,7 @@ msgstr "Solicitud de Cotización"
 msgid "Request for quotation"
 msgstr ""
 
-#: UI/Reports/filters/orders.html:150
+#: UI/Reports/filters/orders.html:163
 msgid "Required By"
 msgstr ""
 
@@ -6891,8 +6895,8 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:60
 #: UI/Reports/filters/invoice_outstanding.html:267
 #: UI/Reports/filters/invoice_search.html:160
-#: UI/Reports/filters/invoice_search.html:390 UI/Reports/filters/orders.html:59
-#: UI/Reports/filters/orders.html:170
+#: UI/Reports/filters/invoice_search.html:390 UI/Reports/filters/orders.html:72
+#: UI/Reports/filters/orders.html:183
 msgid "Ship Via"
 msgstr ""
 
@@ -7189,7 +7193,7 @@ msgstr ""
 #: UI/payments/payment2.html:477 UI/payments/use_overpayment2.html:138
 #: UI/payments/use_overpayment2.html:326 UI/Reports/filters/gl.html:318
 #: UI/Reports/filters/invoice_outstanding.html:275
-#: UI/Reports/filters/invoice_search.html:398 UI/Reports/filters/orders.html:200
+#: UI/Reports/filters/invoice_search.html:398 UI/Reports/filters/orders.html:213
 #: UI/Reports/filters/search_goods.html:436
 msgid "Subtotal"
 msgstr "Subtotal"
@@ -7257,7 +7261,7 @@ msgstr ""
 #: old/bin/ic.pl:664 UI/accounts/edit.html:260 UI/accounts/edit.html:345
 #: UI/accounts/edit.html:396 UI/accounts/edit.html:445 UI/accounts/edit.html:484
 #: UI/Reports/filters/invoice_outstanding.html:199
-#: UI/Reports/filters/invoice_search.html:323 UI/Reports/filters/orders.html:185
+#: UI/Reports/filters/invoice_search.html:323 UI/Reports/filters/orders.html:198
 msgid "Tax"
 msgstr "Impuesto"
 
@@ -8636,7 +8640,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/views/Home.vue:51 UI/src/views/Home.vue:36
+#: UI/src/views/Home.vue:36 UI/src/views/Home.vue:51
 msgid "mailing lists"
 msgstr ""
 
