@@ -63,8 +63,9 @@ LANGUAGE SQL AS $$
              AND (in_legal_name IS NULL OR
                      c.name @@ plainto_tsquery(in_legal_name))
              AND (in_ponumber IS NULL OR o.ponumber ILIKE in_ponumber || '%')
-            AND (in_ordnumber IS NULL
-                     OR o.ordnumber ILIKE in_ordnumber || '%')
+             AND (in_ordnumber IS NULL
+                  OR (oe_class_id IN (1, 2) AND o.ordnumber ILIKE in_ordnumber || '%')
+                  OR oe_class_id IN (3, 4) AND o.quonumber ILIKE in_ordnumber || '%')
              AND ((in_open is true and o.closed is false)
                  OR (in_closed is true and o.closed is true))
              AND (in_shipvia IS NULL
