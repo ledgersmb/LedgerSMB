@@ -91,6 +91,8 @@ use base qw(LedgerSMB::PGOld);
 use strict;
 use warnings;
 
+use Carp;
+
 =item save
 
 Uses standard properties
@@ -252,7 +254,7 @@ sub get_invoice_id {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'get_vendor_invoice_id');
     if (!$ref) {
-        return $self->error($self->{_locale}->text('Invoice not found'));
+        Carp::croak $self->{_locale}->text('Invoice not found');
     } else {
         return $self->{invoice_id} = $ref->{get_vendor_invoice_id};
     }
