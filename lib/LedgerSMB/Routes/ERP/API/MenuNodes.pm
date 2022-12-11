@@ -97,6 +97,8 @@ paths:
                    properties:
                      id:
                        type: number
+                     url:
+                       type: string
                      parent:
                        type: number
                      label:
