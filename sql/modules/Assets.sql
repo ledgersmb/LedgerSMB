@@ -663,7 +663,7 @@ $$
           adm.short_name, ai.usable_life
            - months_passed(ai.start_depreciation,
                                   coalesce(max(r.report_date),
-                                    ai.start_depreciation))/ 12,
+                                    ai.start_depreciation))/(case when adm.unit_label='in years' then 12 else 1 end),
           ai.purchase_value - ai.salvage_value, ai.salvage_value, max(r.report_date),
           sum(rl.amount), ai.purchase_value - coalesce(sum(rl.amount), 0)
      FROM asset_item ai
@@ -676,7 +676,7 @@ LEFT JOIN (select arl.*
 LEFT JOIN asset_report r on (rl.report_id = r.id)
     WHERE r.id IS NULL OR r.approved_at IS NOT NULL
  GROUP BY ai.id, ai.tag, ai.description, ai.start_depreciation, ai.purchase_date,
-          adm.short_name, ai.usable_life, ai.purchase_value, salvage_value
+          adm.short_name, adm.unit_label, ai.usable_life, ai.purchase_value, salvage_value
    HAVING (NOT 2 = ANY(as_array(r.report_class)))
           AND (NOT 4 = ANY(as_array(r.report_class)))
           OR max(r.report_class) IS NULL
