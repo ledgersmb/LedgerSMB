@@ -14,10 +14,10 @@ use LedgerSMB::Admin::Command;
 use LedgerSMB::App_State;
 use LedgerSMB::Company;
 use LedgerSMB::Database;
-use LedgerSMB::DBObject::User;
 use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::Entity::User;
 use LedgerSMB::PGDate;
+use LedgerSMB::User;
 
 use Moose;
 extends 'LedgerSMB::Admin::Command';
@@ -45,12 +45,6 @@ sub _get_valid_salutation {
 sub _get_user {
     my ($self, $dbh) = @_;
     my $_username = shift // $self->options->{username};
-
-    # The code below doesn't provide the entity_id
-    #my $user_obj = LedgerSMB::DBObject::User->new();
-    #$user_obj->set_dbh($dbh);
-    #my @users = @{$user_obj->get_all_users};
-    #my ($user) = grep { $_username eq $_->{username} } @users;
 
     #This ugly hack does
     my $sth =
@@ -369,9 +363,6 @@ sub delete {
 
 sub list {
     my ($self, $dbh, $options, @args) = @_;
-
-    my $user_obj = LedgerSMB::DBObject::User->new();
-    $user_obj->set_dbh($dbh);
     my $user;
 
     ## no critic (ProhibitFormats)
@@ -387,10 +378,10 @@ Id     Username        Created
 
     local $^ = 'LANG_TOP';
     local $~ = 'LANG';
-    for $user (sort
-                   {
-                       $a->{username} cmp $b->{username}
-                   } @{$user_obj->get_all_users}) {
+    for $user (
+        sort { $a->{username} cmp $b->{username} }
+        LedgerSMB::User->get_all_users( { dbh => $dbh } )
+        ) {
         write;
     }
 

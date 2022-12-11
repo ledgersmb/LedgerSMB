@@ -25,29 +25,6 @@ use base qw/LedgerSMB::PGOld/;
 
 use Carp;
 
-=item search()
-
-returns a list of results for the search criteria.  This list is also stored
-in $draft->{search_resuts}
-
-Requres $self->{type} to be one of 'ar', 'ap', or 'gl'
-
-Optional hash entries for search criteria are:
-
-with_accno: Draft transaction against a specific account.
-from_date:  Earliest date for match
-to_date: Latest date for match
-amount_le: total less than or equal to
-amount_ge: total greater than or equal to
-
-=cut
-
-sub search {
-    my ($self) = @_;
-    @{$self->{draft_results}} = $self->call_dbmethod(funcname => 'draft__search');
-    return @{$self->{draft_results}};
-}
-
 =item approve()
 
 Approves the draft identified by the transaction id in $draft->{id}.  Once

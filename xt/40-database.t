@@ -6,7 +6,6 @@ use DBI;
 
 use LedgerSMB::Database;
 use LedgerSMB;
-use LedgerSMB::DBObject::Admin;
 
 use Log::Log4perl qw(:easy);
 Log::Log4perl->easy_init($OFF);

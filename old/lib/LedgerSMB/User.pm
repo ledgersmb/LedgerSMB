@@ -106,6 +106,82 @@ sub fetch_config {
     return $myconfig;
 }
 
+
+=item get_all_users()
+
+Retrieves a list of users for the company (database).
+Sets $self->{users} and returns an arrayref.
+
+=cut
+
+sub get_all_users {
+    my ($self, $lsmb) = @_;
+
+    return $lsmb->{dbh}->selectall_array('select * from user__get_all_users()',
+                                         { Slice => {} });
+}
+
+=item change_my_password($request)
+
+Uses the request keys:
+
+ * login
+ * old_password
+ * new_password
+ * company
+ * _locale
+ * _wire
+
+to establish a database connection and change the user's password.
+
+=cut
+
+sub change_my_password {
+    my ($pkg, $request) = @_;
+
+    # Before doing any work at all, reject the request when the passwords
+    # don't match...
+    if ($request->{new_password} ne $request->{confirm_password}){
+        Carp::croak $request->{_locale}->text('Passwords must match.');
+        die;
+    }
+
+    my $verify = $request->{_wire}->get('db')->instance(
+        dbname   => $request->{company},
+        user     => $request->{login},
+        password => $request->{old_password}
+        )->connect();
+    if (!$verify){
+        Carp::croak $request->{_locale}->text('Incorrect Password');
+    }
+    $verify->disconnect;
+
+    return $request->call_procedure(
+        funcname => 'user__change_password',
+        args     => [ $request->{new_password} ]);
+}
+
+=item save_preferences($request)
+
+Saves preferences to the database and reloads the values in the object
+from the db for consistency.
+
+=cut
+
+sub save_preferences {
+    my ($pkg, $request) = @_;
+    my $dbh = $request->{dbh};
+    my $sth = $dbh->prepare('select * from preference__set(?, ?)')
+        or die $dbh->errstr;
+
+    for my $setting (
+        qw( dateformat numberformat language stylesheet printer )) {
+        $sth->execute( $setting, $request->{$setting} )
+            or die $sth->errstr;
+    }
+}
+
+
 1;
 
 =back
