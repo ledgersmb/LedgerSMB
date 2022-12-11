@@ -23,7 +23,6 @@ use warnings;
 
 use HTTP::Status qw( HTTP_OK );
 
-use LedgerSMB::DBObject::Menu;
 use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.session';

@@ -23,23 +23,32 @@ use warnings;
 
 use HTTP::Status qw( HTTP_OK );
 
-use LedgerSMB::DBObject::Menu;
 use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.menu-nodes';
+set api_schema => openapi_schema(\*DATA);
 
-
-get '/menu-nodes/' => sub {
-    my ($env) = @_;
+get api '/menu-nodes' => sub {
+    my ($env, undef, $c) = @_;
     my $locale = locale($env);
 
-    my $menu = LedgerSMB::DBObject::Menu->new(dbh => $env->{'lsmb.app'});
-    $menu->generate;
-    $_->{label} = $locale->maketext($_->{label})
-        for (@{$menu->{menu_items}});
+    my $sth = $c->dbh->prepare('select * from menu_generate()');
+    $sth->execute or die $sth->errstr;
+
+    my @menu;
+    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+        push @menu, {
+            id     => $row->{id},
+            url    => $row->{url},
+            menu   => $row->{menu} ? \1 : \0,
+            label  => $locale->maketext($row->{label}),
+            parent => $row->{parent}
+        };
+    }
+    die $sth->errstr if $sth->err;
 
     return [ 200, [ 'Content-Type' => 'application/json; charset=UTF-8' ],
-             [ json()->encode( $menu->{menu_items} ) ] ];
+             \@menu ];
 };
 
 
@@ -55,3 +64,60 @@ your software.
 
 
 1;
+
+
+__DATA__
+openapi: 3.0.0
+info:
+  title: Menu items for the active user
+  version: 0.0.1
+paths:
+  /menu-nodes:
+    description: Menu items for the active user
+    get:
+      tags:
+        - UserMenu
+      summary: Get the user's menu items
+      operationId: getUserMenuNodes
+      responses:
+        200:
+          description: ...
+          content:
+             application/json:
+               schema:
+                 type: array
+                 items:
+                   type: object
+                   required:
+                     - id
+                     - url
+                     - parent
+                     - label
+                     - menu
+                   properties:
+                     id:
+                       type: number
+                     parent:
+                       type: number
+                     label:
+                       type: string
+                     menu:
+                       type: boolean
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        404:
+          $ref: '#/components/responses/404'
+components:
+  responses:
+    400:
+      description: Bad request
+    401:
+      description: Unauthorized
+    403:
+      description: Forbidden
+    404:
+      description: Not Found

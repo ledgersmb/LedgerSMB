@@ -116,7 +116,7 @@ my @modules =
           'LedgerSMB::DBObject::Asset_Class', 'LedgerSMB::DBObject::Draft',
           'LedgerSMB::DBObject::EOY',
           'LedgerSMB::DBObject::Pricelist', 'LedgerSMB::DBObject::TaxForm',
-          'LedgerSMB::DBObject::TransTemplate', 'LedgerSMB::DBObject::Menu',
+          'LedgerSMB::DBObject::TransTemplate',
           'LedgerSMB::DBObject::User', 'LedgerSMB::DBObject::Account',
           'LedgerSMB::DBObject::Admin', 'LedgerSMB::DBObject::Asset',
           'LedgerSMB::DBObject::Asset_Report',
