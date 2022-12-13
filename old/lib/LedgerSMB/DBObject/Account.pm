@@ -185,6 +185,20 @@ sub save_translations {
     return;
 }
 
+=item init()
+
+This method retrieves the values required for the account selectors.
+
+=cut
+
+sub init {
+    my ($self) = @_;
+    $self->_get_custom_account_links;
+    $self->_get_summary_account_links;
+
+    return $self;
+}
+
 =item get()
 
 This method gets a chart of accounts entry corresponding with the object's
