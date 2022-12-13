@@ -35,14 +35,12 @@ define([
                         // revoking the ObjectURL
                         window.URL.revokeObjectURL(_data);
                     }, 100);
-                    registry
-                        .byId("maindiv")
-                        .load_link(
-                            "payment.pl?action=payment&account_class=" +
-                                _data.account_class +
-                                "&type=" +
-                                _data.type
-                        );
+                    window.__lsmbLoadLink(
+                        "payment.pl?action=payment&account_class=" +
+                            _data.account_class +
+                            "&type=" +
+                            _data.type
+                    );
                 },
                 function (err) {
                     registry.byId("maindiv").report_request_error(err);
