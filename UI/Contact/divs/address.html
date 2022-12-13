@@ -103,8 +103,7 @@
                           id              = 'attach_address_to'
                           default_values  = [attach_to]
                           options         = attach_level_options
-                          title = text('Attach To') #'
-                          label = "_none_"
+                          label = text('Attach To') #'
                        };
                      ELSE %]
   <label>[% text('Attach to Entity'); %]</label>
@@ -115,8 +114,7 @@
                        options        = location_class_list
                        text_attr      = "class"
                        value_attr     = "id"
-                       title = text('Type')
-                       label = "_none_"
+                       label = text('Type')
   } %]
   <label style="grid-row: span 3">[% text('Address') %]</label>
                 [% INCLUDE input element_data = {

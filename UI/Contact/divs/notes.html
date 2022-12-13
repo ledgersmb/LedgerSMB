@@ -25,14 +25,14 @@
                 name="credit_id"
                 value=credit_act.id
         } %]
-<div class="two-column-grid">
+<div class="two-column-grid" style="width: fit-content">
 [%
 IF credit_act.id;
     PROCESS select element_data = {
                         name = "note_class"
                         default_values = [note_class]
                         options = attach_level_options
-                        title = text("Note Class")
+                        label = text("Attach To")
                         value_attr = "value"
         };
 ELSE; %]
