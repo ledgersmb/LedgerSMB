@@ -42,7 +42,8 @@ sub new_account {
     my $account = LedgerSMB::DBObject::Account->new(
         dbh => $request->{dbh},
         charttype => 'A',
-    );
+        );
+    $account->init();
 
     return _display_account_screen($request, $account);
 }
