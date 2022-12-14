@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.9.21-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-12-10 21:53+0000\n"
+"POT-Creation-Date: 2022-12-14 20:02+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: Spanish (Ecuador) (https://www.transifex.com/ledgersmb/"
 "teams/58325/es_EC/)\n"
@@ -5623,7 +5623,7 @@ msgstr ""
 msgid "Please select a customer with unused overpayments"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/account.pm:111
+#: lib/LedgerSMB/Scripts/account.pm:112
 msgid "Please select a valid heading"
 msgstr ""
 
@@ -6056,9 +6056,8 @@ msgid "Quotations"
 msgstr "Cotizaciones"
 
 #: UI/Reports/filters/orders.html:51
-#, fuzzy
 msgid "Quote Number"
-msgstr "Número de Cotización"
+msgstr ""
 
 #: old/bin/oe.pl:251 old/bin/oe.pl:683 old/bin/oe.pl:925 old/bin/printer.pl:60
 #: t/data/04-complex_template.html:352 UI/Contact/divs/credit.html:361
