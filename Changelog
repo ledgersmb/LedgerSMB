@@ -27,6 +27,13 @@ Dependency updates
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.7
+* Fix 'remaining life' for monthly depreciation in fixed assets (#6563)
+* Fix new account configuration missing drop-down values and checkmarks (#7007)
+* Fix various buttons in payment and customer screens (#7010)
+* Fix alignment on Contact screen address, contact info and notes tabs (#7012)
+
+
 Changelog for 1.10.6
 * Fix serial numbers from orders being on wrong invoice line (#6979)
 * Fix searching on quotation numbers in quote searching (#6988)
