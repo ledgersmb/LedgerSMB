@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.7-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-12-10 22:07+0000\n"
+"POT-Creation-Date: 2022-12-14 20:26+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: Portuguese (https://www.transifex.com/ledgersmb/teams/58325/"
 "pt/)\n"
@@ -581,8 +581,8 @@ msgstr ""
 
 #: old/bin/aa.pl:615 old/bin/arap.pl:169 old/bin/ic.pl:1669 old/bin/ir.pl:410
 #: old/bin/is.pl:444 old/bin/oe.pl:454 old/bin/pe.pl:578
-#: UI/Contact/divs/address.html:80 UI/Contact/divs/address.html:121
-#: UI/Contact/divs/address.html:124 UI/Reports/filters/contact_search.html:89
+#: UI/Contact/divs/address.html:80 UI/Contact/divs/address.html:119
+#: UI/Contact/divs/address.html:122 UI/Reports/filters/contact_search.html:89
 #: UI/Reports/filters/purchase_history.html:67
 msgid "Address"
 msgstr "Endereço"
@@ -938,6 +938,7 @@ msgid "Attach File"
 msgstr ""
 
 #: UI/Contact/divs/address.html:106 UI/Contact/divs/contact_info.html:85
+#: UI/Contact/divs/notes.html:35
 msgid "Attach To"
 msgstr ""
 
@@ -945,7 +946,7 @@ msgstr ""
 msgid "Attach to Credit Account"
 msgstr ""
 
-#: UI/Contact/divs/address.html:110 UI/Contact/divs/contact_info.html:89
+#: UI/Contact/divs/address.html:109 UI/Contact/divs/contact_info.html:88
 #: UI/Contact/divs/files.html:54
 msgid "Attach to Entity"
 msgstr ""
@@ -1501,7 +1502,7 @@ msgid "Chord"
 msgstr ""
 
 #: old/bin/arap.pl:171 t/data/04-complex_template.html:386
-#: UI/Contact/divs/address.html:81 UI/Contact/divs/address.html:145
+#: UI/Contact/divs/address.html:81 UI/Contact/divs/address.html:143
 #: UI/Reports/filters/contact_search.html:94
 #: UI/Reports/filters/purchase_history.html:75
 msgid "City"
@@ -1716,7 +1717,7 @@ msgstr "Contacto"
 
 #: lib/LedgerSMB/Scripts/contact.pm:193 t/data/04-complex_template.html:31
 #: UI/Contact/divs/contact_info.html:2 UI/Contact/divs/contact_info.html:31
-#: UI/Contact/divs/contact_info.html:108
+#: UI/Contact/divs/contact_info.html:107
 #: UI/Reports/filters/purchase_history.html:28
 msgid "Contact Info"
 msgstr ""
@@ -1855,7 +1856,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Payroll/Deduction_Types.pm:34
 #: lib/LedgerSMB/Report/Payroll/Income_Types.pm:34 old/bin/io.pl:1656
 #: t/data/04-complex_template.html:389 UI/Contact/divs/address.html:84
-#: UI/Contact/divs/address.html:174 UI/Contact/divs/company.html:94
+#: UI/Contact/divs/address.html:172 UI/Contact/divs/company.html:94
 #: UI/Contact/divs/employee.html:96 UI/Contact/divs/person.html:118
 #: UI/payroll/deduction.html:15 UI/payroll/income.html:16
 #: UI/Reports/filters/contact_search.html:109
@@ -2549,7 +2550,7 @@ msgstr ""
 #: UI/accounts/edit.html:53 UI/accounts/edit.html:158
 #: UI/accounts/yearend.html:41 UI/budgetting/budget_entry.html:26
 #: UI/budgetting/budget_entry.html:63 UI/Contact/divs/contact_info.html:30
-#: UI/Contact/divs/contact_info.html:100 UI/Contact/divs/credit.html:28
+#: UI/Contact/divs/contact_info.html:99 UI/Contact/divs/credit.html:28
 #: UI/Contact/divs/credit.html:85 UI/Contact/divs/credit.html:86
 #: UI/Contact/pricelist.csv:11 UI/Contact/pricelist.html:25
 #: UI/Contact/pricelist.tex:17 UI/create_batch.html:19 UI/create_batch.html:73
@@ -4788,7 +4789,7 @@ msgstr ""
 msgid "Not set up for hierarchy reporting, please see linked instructions"
 msgstr ""
 
-#: UI/Contact/divs/notes.html:35 UI/Contact/divs/notes.html:39
+#: UI/Contact/divs/notes.html:39
 msgid "Note Class"
 msgstr ""
 
@@ -5486,7 +5487,7 @@ msgstr ""
 msgid "Please select a customer with unused overpayments"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/account.pm:111
+#: lib/LedgerSMB/Scripts/account.pm:112
 msgid "Please select a valid heading"
 msgstr ""
 
@@ -6410,7 +6411,7 @@ msgstr ""
 msgid "Save"
 msgstr "Guardar"
 
-#: UI/Contact/divs/contact_info.html:126
+#: UI/Contact/divs/contact_info.html:125
 msgid "Save As New"
 msgstr ""
 
@@ -6422,7 +6423,7 @@ msgstr ""
 msgid "Save Changes"
 msgstr ""
 
-#: t/data/04-complex_template.html:546 UI/Contact/divs/contact_info.html:119
+#: t/data/04-complex_template.html:546 UI/Contact/divs/contact_info.html:118
 msgid "Save Contact"
 msgstr ""
 
@@ -6438,7 +6439,7 @@ msgstr ""
 msgid "Save Info"
 msgstr ""
 
-#: t/data/04-complex_template.html:485 UI/Contact/divs/address.html:186
+#: t/data/04-complex_template.html:485 UI/Contact/divs/address.html:184
 msgid "Save Location"
 msgstr ""
 
@@ -6446,7 +6447,7 @@ msgstr ""
 msgid "Save New"
 msgstr ""
 
-#: UI/Contact/divs/address.html:194
+#: UI/Contact/divs/address.html:192
 msgid "Save New Location"
 msgstr ""
 
@@ -7103,7 +7104,7 @@ msgid "State"
 msgstr "Estado"
 
 #: t/data/04-complex_template.html:387 UI/Contact/divs/address.html:82
-#: UI/Contact/divs/address.html:153 UI/Reports/filters/contact_search.html:99
+#: UI/Contact/divs/address.html:151 UI/Reports/filters/contact_search.html:99
 #: UI/Reports/filters/purchase_history.html:83
 msgid "State/Province"
 msgstr "Estado / Província"
@@ -7888,7 +7889,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:85
 #: lib/LedgerSMB/Scripts/asset.pm:470 old/bin/io.pl:1711
 #: t/data/04-complex_template.html:384 UI/Contact/divs/address.html:79
-#: UI/Contact/divs/address.html:118 UI/Contact/divs/contact_info.html:29
+#: UI/Contact/divs/address.html:117 UI/Contact/divs/contact_info.html:29
 #: UI/Contact/divs/credit.html:25 UI/Contact/divs/wage.html:7
 #: UI/Reports/filters/search_goods.html:13
 msgid "Type"
@@ -8467,7 +8468,7 @@ msgstr ""
 msgid "Zip Code"
 msgstr ""
 
-#: UI/Contact/divs/address.html:83 UI/Contact/divs/address.html:160
+#: UI/Contact/divs/address.html:83 UI/Contact/divs/address.html:158
 msgid "Zip/Post Code"
 msgstr ""
 
@@ -8638,7 +8639,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/views/Home.vue:36 UI/src/views/Home.vue:51
+#: UI/src/views/Home.vue:51 UI/src/views/Home.vue:36
 msgid "mailing lists"
 msgstr ""
 
