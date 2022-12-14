@@ -3,6 +3,11 @@
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.21
+* Fix 'remaining life' for monthly depreciation in fixed assets (#6563)
+* Fix new account configuration missing drop-down values and checkmarks (#7007)
+
+
 Changelog for 1.9.20
 * Fix serial numbers from orders being on wrong invoice line (#6979)
 * Fix searching on quotation numbers in quote searching (#6988)
