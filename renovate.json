@@ -21,6 +21,10 @@
             "allowedVersions": "<4"
         },
         {
+            "packagePatterns": ["^@intlify/unplugin-vue-i18n"],
+            "allowedVersions": "<0.8"
+        },
+        {
             "matchPackagePatterns": [
                 "*"
             ],
