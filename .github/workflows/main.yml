@@ -40,7 +40,7 @@ jobs:
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v3.2.0
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
@@ -209,7 +209,7 @@ jobs:
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v3.2.0
 
       - name: Install GNU gettext
         run: sudo apt -q -y install gettext
@@ -345,7 +345,7 @@ jobs:
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v3.2.0
 
       - name: Check if merge must trigger
         id: pr_trigger
