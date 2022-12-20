@@ -717,7 +717,7 @@ Returns a hashref of table names to rows.  The following tables are counted:
 
 =cut
 
-my @tables = qw(ar ap gl users entity_credit_account entity acc_trans oe);
+my @tables = qw(ar ap gl users entity_credit_account entity acc_trans oe parts orderitems invoice);
 
 sub stats {
     my ($self) = @_;
