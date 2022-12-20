@@ -6,11 +6,10 @@ Small and Medium business accounting and ERP
 
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/795/badge)](https://bestpractices.coreinfrastructure.org/projects/795)
 [![CI](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml/badge.svg)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml)
-[![Lgtm total alerts](https://img.shields.io/lgtm/alerts/g/ledgersmb/LedgerSMB.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ledgersmb/LedgerSMB/alerts/)
+[![CodeQL](https://github.com/ledgersmb/LedgerSMB/actions/workflows/codeql.yml/badge.svg?branch=master)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/codeql.yml)
 [![GPLv2 Licence](https://badges.frapsoft.com/os/gpl/gpl.png?v=103)](https://opensource.org/licenses/GPL-2.0/)
 [![Coverage Status](https://coveralls.io/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=master)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=master)
 [![Docker](https://img.shields.io/docker/pulls/ledgersmb/ledgersmb.svg)](https://hub.docker.com/r/ledgersmb/ledgersmb/)
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/ledgersmb/LedgerSMB.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/ledgersmb/LedgerSMB/context:javascript)
 [![Mentioned in Awesome <awesome-selfhosted>](https://awesome.re/mentioned-badge.svg)](https://github.com/Kickball/awesome-selfhosted#enterprise-resource-planning)
 [![pull requests](https://www.oselvar.com/api/badge?label=pull+requests&csvUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fledgersmb%2Fledgersmb-oselvar%2Fmain%2Fdata%2Fledgersmb%2FLedgerSMB%2FpullRequests.csv)](https://www.oselvar.com/github/ledgersmb/ledgersmb-oselvar/main/ledgersmb/LedgerSMB "3rd quartile cycle time")
 [![issues](https://www.oselvar.com/api/badge?label=issues&csvUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fledgersmb%2Fledgersmb-oselvar%2Fmain%2Fdata%2Fledgersmb%2FLedgerSMB%2Fissues.csv)](https://www.oselvar.com/github/ledgersmb/ledgersmb-oselvar/main/ledgersmb/LedgerSMB "3rd quartile cycle time")
@@ -62,22 +61,25 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome              | 2017-09  | 61-81, 83-105                               |
-| Edge                | 2020-01  | 79-81, 83-105                               |
-| Firefox             | 2018-05  | 60-104                                      |
-| Opera               | 2017-09  | 48-58, 60, 62-90                            |
+| Chrome              | 2017-09  | 61-81, 83-107                               |
+| Edge                | 2020-01  | 79-81, 83-107                               |
+| Firefox             | 2018-05  | 60-106                                      |
+| Opera               | 2017-09  | 48-58, 60, 62-91                            |
 | Safari              | 2017-09  | 11, 11.1, 12, 12.1, 13, 13.1, 14, 14.1,     |
-|                     |          | 15, 15.1, 15.2-15.6                         |
+|                     |          | 15, 15.1, 15.2-15.6, 16.0-16.1              |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome for Android  | 2022-09  | 105                                         |
-| Firefox for Android | 2022-08  | 104                                         |
-| Android Browser     | 2022-09  | 105                                         |
+| Chrome for Android  | 2022-10  | 107                                         |
+| Firefox for Android | 2022-10  | 106                                         |
+| QQ Browser          | 2022-09  | 13.1                                        |
+| UC Browser for Android | 2021-10  | 13.4                                        |
+| Android Browser     | 2022-10  | 107                                         |
+| Baidu Browser       | 2022-09  | 13.18                                       |
 | Safari on iOS       | 2017-09  | 11.0-11.4, 12.0-12.5, 13.0-13.7,            |
-|                     |          | 14.0-14.8, 15.0-15.6                        |
+|                     |          | 14.0-14.8, 15.0-15.6, 16.0-16.1             |
 | Opera Mobile        | 2021-02  | 64                                          |
 | Samsung Internet    | 2018-12  | 8.2, 9.2, 10.1, 11.1-11.2, 12.0, 13.0,      |
 |                     |          | 14.0, 15.0, 16.0, 17.0, 18.0                |

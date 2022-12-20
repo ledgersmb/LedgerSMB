@@ -14,6 +14,7 @@ use base qw(LedgerSMB::PGOld);
 
 use Locale::CLDR;
 
+use Carp;
 use Log::Any;
 
 =head2 NOTES
@@ -57,7 +58,7 @@ sub change_my_password {
     # Before doing any work at all, reject the request when the passwords
     # don't match...
     if ($self->{new_password} ne $self->{confirm_password}){
-        $self->error($self->{_locale}->text('Passwords must match.'));
+        Carp::croak $self->{_locale}->text('Passwords must match.');
         die;
     }
 
@@ -65,11 +66,13 @@ sub change_my_password {
 
     my $dbname = $self->{company};
 
-    my $verify = DBI->connect(
-        qq|dbi:Pg:dbname="$dbname"|, $self->{login}, $self->{old_password}
-    );
+    my $verify = $self->{_wire}->get('db')->instance(
+        dbname   => $self->{company},
+        user     => $self->{login},
+        password => $self->{old_password}
+        )->connect();
     if (!$verify){
-        $self->error($self->{_locale}->text('Incorrect Password'));
+        Carp::croak $self->{_locale}->text('Incorrect Password');
     }
     $verify->disconnect;
     $self->{password} = $self->{new_password};

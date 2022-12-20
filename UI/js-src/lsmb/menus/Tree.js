@@ -30,7 +30,7 @@ define([
     // to query the children of a node
     var restStore = new Observable(
         new JsonRest({
-            target: "erp/api/v0/menu-nodes/",
+            target: "erp/api/v0/menu-nodes",
             idProperty: "id"
         })
     );

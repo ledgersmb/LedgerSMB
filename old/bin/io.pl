@@ -145,6 +145,7 @@ sub approve {
 }
 
 sub display_row {
+    my $readonly = $form->{approved} ? 'readonly="readonly"' : '';
     my $numrows = shift;
     my $min_lines = $form->get_setting('min_empty') // 0;
     my $lsmb_module;
@@ -280,6 +281,8 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
 
     $spc = substr( $myconfig{numberformat}, -3, 1 );
     foreach my $i ( 1 .. max($numrows, $min_lines)) {
+        next if $readonly and not $form->{"partnumber_$i"};
+
         $desc_disabled = '' if $i == $numrows;
         $dec = '';
         if ($form->{"sellprice_$i"}) {
@@ -343,7 +346,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                 qq|<td class="description"><div data-dojo-type="dijit/form/Textarea"
                             id="description_$i" name="description_$i"
                             size=48 style="width: 100%;font:inherit !important"
-                            >$form->{"description_$i"}</div></td>|;
+                            $readonly >$form->{"description_$i"}</div></td>|;
         } else {
             $form->{"description_$i"} //= '';
             $column_data{description} =
@@ -352,7 +355,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                             $desc_disabled size=48
                             data-dojo-props="channel:'/invoice/part-select/$i',fetchProperties:{type:'$parts_list'}"
                             style="width: 100%"
-                            >$form->{"description_$i"}</div></td>|;
+                            $readonly >$form->{"description_$i"}</div></td>|;
         }
 
         for (qw(partnumber sku unit)) {
@@ -379,7 +382,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
         $delivery = qq|
           <td colspan=2 nowrap>
              <b><label for="deliverydate_$i">${$delvar}</label></b>
-             <input class="date" data-dojo-type="lsmb/DateTextBox" id="deliverydate_$i" name="deliverydate_$i" size=11 title="$myconfig{dateformat}" value="$form->{"${delvar}_$i"}">
+             <input class="date" data-dojo-type="lsmb/DateTextBox" id="deliverydate_$i" name="deliverydate_$i" size=11 title="$myconfig{dateformat}" value="$form->{"${delvar}_$i"}" $readonly >
           </td>
 |;
 
@@ -393,7 +396,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
         for my $cls(@{$form->{bu_class}}){
             if (scalar @{$form->{b_units}->{"$cls->{id}"}}){
                 $column_data{"b_unit_$cls->{id}"} =
-                   qq|<td><select data-dojo-type="dijit/form/Select" id="b_unit_$cls->{id}_$i" name="b_unit_$cls->{id}_$i">
+                   qq|<td><select data-dojo-type="dijit/form/Select" id="b_unit_$cls->{id}_$i" name="b_unit_$cls->{id}_$i" $readonly >
                            <option>&nbsp;</option>|;
                 for my $bu (@{$form->{b_units}->{"$cls->{id}"}}){
                    my $selected = "";
@@ -412,17 +415,20 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
         }
 
         $column_data{runningnumber} =
-          qq|<td class="runningnumber"><input data-dojo-attach-point="runningnumber" data-dojo-type="dijit/form/TextBox" id="runningnumber_$i" name="runningnumber_$i" size="3" value="$i"></td>|;
+          qq|<td class="runningnumber"><input data-dojo-attach-point="runningnumber" data-dojo-type="dijit/form/TextBox" id="runningnumber_$i" name="runningnumber_$i" size="3" value="$i" $readonly ></td>|;
         if ($form->{"partnumber_$i"}){
             $column_data{deleteline} = qq|
-<td rowspan="2" valign="middle">
+<td rowspan="2" valign="middle">|;
+            if (not $form->{approved}) {
+                $column_data{deleteline} .= qq|
 <button data-dojo-type="dijit/form/Button"><span>X</span>
 <script type="dojo/on" data-dojo-event="click">
 require('dijit/registry').byId('invoice-lines').removeLine('line-$i');
 </script>
-</button>
-</td>|;
-           $column_data{partnumber} =
+</button>|;
+            }
+            $column_data{deleteline} .= q|</td>|;
+            $column_data{partnumber} =
            qq|<td> $form->{"partnumber_$i"}
                  <input type="hidden" id="partnumber_$i" name="partnumber_$i"
                        value="$form->{"partnumber_$i"}" /></td>|;
@@ -431,29 +437,29 @@ require('dijit/registry').byId('invoice-lines').removeLine('line-$i');
             $form->{"partnumber_$i"} //= '';
             $column_data{deleteline} = '<td rowspan="2"></td>';
             $column_data{partnumber} =
-qq|<td class="partnumber"><input data-dojo-type="lsmb/parts/PartSelector" data-dojo-props="required:false,channel: '/invoice/part-select/$i',fetchProperties:{type:'$parts_list'}" name="partnumber_$i" id="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" style="width:100%">$skunumber</td>|;
+qq|<td class="partnumber"><input data-dojo-type="lsmb/parts/PartSelector" data-dojo-props="required:false,channel: '/invoice/part-select/$i',fetchProperties:{type:'$parts_list'}" name="partnumber_$i" id="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" style="width:100%"  $readonly>$skunumber</td>|;
         }
         $form->{"onhand_$i"} //= '';
         $column_data{qty} =
 qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" id="qty_$i" name="qty_$i" title="$form->{"onhand_$i"}" size="5" value="|
           . $form->format_amount( \%myconfig, $form->{"qty_$i"} )
-          . qq|"></td>|;
+          . qq|" $readonly ></td>|;
         $column_data{ship} =
             qq|<td align=right class="ship"><input data-dojo-type="dijit/form/TextBox" id="ship_$i" name="ship_$i" size="5" value="|
           . $form->format_amount( \%myconfig, $form->{"ship_$i"} )
-          . qq|"></td>|;
+          . qq|" $readonly ></td>|;
         $form->{"unit_$i"} //= '';
         $column_data{unit} =
-          qq|<td class="unit"><input data-dojo-type="dijit/form/TextBox" id="unit_$i" name="unit_$i" size=5 value="$form->{"unit_$i"}"></td>|;
+          qq|<td class="unit"><input data-dojo-type="dijit/form/TextBox" id="unit_$i" name="unit_$i" size=5 value="$form->{"unit_$i"}" $readonly ></td>|;
         $column_data{sellprice} =
           qq|<td align=right class="sellprice"><input data-dojo-type="dijit/form/TextBox" id="sellprice_$i" name="sellprice_$i" size="9" value="|
           . $form->format_amount( \%myconfig, $form->{"sellprice_$i"},
             $form->{"precision_$i"} )
-          . qq|"></td>|;
+          . qq|" $readonly ></td>|;
         $column_data{discount} =
             qq|<td align=right class="discount"><input data-dojo-type="dijit/form/TextBox" id="discount_$i" name="discount_$i" size="3" value="|
           . $form->format_amount( \%myconfig, $form->{"discount_$i"} )
-          . qq|"></td>|;
+          . qq|" $readonly ></td>|;
         $column_data{linetotal} =
             qq|<td align=right class="linetotal">|
           . $form->format_amount( \%myconfig, $linetotal, LedgerSMB::Setting->new(%$form)->get('decimal_places') )
@@ -461,7 +467,7 @@ qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" id="qt
         $form->{"bin_$i"} //= '';
         $column_data{bin}    = qq|<td class="bin">$form->{"bin_$i"}</td>|;
         $column_data{onhand} = qq|<td class="onhand">|. $form->format_amount( \%myconfig, $form->{"onhand_$i"}) . qq|</td>|;
-        $column_data{taxformcheck} = qq|<td class="taxform"><input type="checkbox" data-dojo-type="dijit/form/CheckBox" id="taxformcheck_$i" name="taxformcheck_$i" value="1" $taxchecked></td>|;
+        $column_data{taxformcheck} = qq|<td class="taxform"><input type="checkbox" data-dojo-type="dijit/form/CheckBox" id="taxformcheck_$i" name="taxformcheck_$i" value="1" $taxchecked $readonly></td>|;
         print qq|
 <tbody data-dojo-type="lsmb/InvoiceLine"
  id="line-$i">
@@ -492,24 +498,24 @@ qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" id="qt
         $project = '';
         $project = qq|
                 <b>$projectnumber</b>
-        <select data-dojo-type="dijit/form/Select" id="projectnumber-$i" name="projectnumber_$i">$form->{selectprojectnumber}</select>
+        <select data-dojo-type="dijit/form/Select" id="projectnumber-$i" name="projectnumber_$i" $readonly>$form->{selectprojectnumber}</select>
 | if $form->{selectprojectnumber};
 
         if ( ( $rows = $form->numtextrows( $form->{"notes_$i"}, 36, 6 ) ) > 1 )
         {
             $form->{"notes_$i"} = $form->quote( $form->{"notes_$i"} ) // '';
             $notes =
-qq|<td><textarea data-dojo-type="dijit/form/Textarea" id="notes_$i" name="notes_$i" rows=$rows cols=36 wrap=soft>$form->{"notes_$i"}</textarea></td>|;
+qq|<td><textarea data-dojo-type="dijit/form/Textarea" id="notes_$i" name="notes_$i" rows=$rows cols=36 wrap=soft $readonly>$form->{"notes_$i"}</textarea></td>|;
         }
         else {
             $form->{"notes_$i"} = $form->quote( $form->{"notes_$i"} ) // '';
             $notes =
-qq|<td><input data-dojo-type="dijit/form/TextBox" id="notes_$i" name="notes_$i" size=38 value="$form->{"notes_$i"}"></td>|;
+qq|<td><input data-dojo-type="dijit/form/TextBox" id="notes_$i" name="notes_$i" size=38 value="$form->{"notes_$i"}" $readonly></td>|;
         }
 
         $form->{"serialnumber_$i"} //= '';
         $serial = qq|
-                <td colspan=6 nowrap><b>$serialnumber</b> <input data-dojo-type="dijit/form/TextBox" id="serialnumber_$i" name="serialnumber_$i" value="$form->{"serialnumber_$i"}"></td>|
+                <td colspan=6 nowrap><b>$serialnumber</b> <input data-dojo-type="dijit/form/TextBox" id="serialnumber_$i" name="serialnumber_$i" value="$form->{"serialnumber_$i"}" $readonly></td>|
           if $form->{type} !~ /_quotation/;
 
         if ( $i >= $numrows ) {
@@ -517,7 +523,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" id="notes_$i" name="notes_$i" 
             if ( $form->{selectpartsgroup} ) {
                 $partsgroup = qq|
             <b>$group</b>
-        <select data-dojo-type="dijit/form/Select" id="partsgroup-$i" name="partsgroup_$i">$form->{selectpartsgroup}</select>
+        <select data-dojo-type="dijit/form/Select" id="partsgroup-$i" name="partsgroup_$i" $readonly>$form->{selectpartsgroup}</select>
 |;
             }
 

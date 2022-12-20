@@ -1,0 +1,25 @@
+name: No Response
+
+# Both `issue_comment` and `scheduled` event types are required for this Action
+# to work properly.
+on:
+  issue_comment:
+    types: [created]
+  schedule:
+    # Schedule for five minutes after the hour, every hour
+    - cron: '5 3 * * *'
+
+jobs:
+  noResponse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lee-dohm/no-response@v0.5.0
+        with:
+          token: ${{ github.token }}
+          # Number of days of inactivity before an Issue is closed for lack of response
+          daysUntilClose: 90
+          # Label requiring a response
+          responseRequiredLabel: waiting-for-user
+          # Comment to post when closing an Issue for lack of response. Set to `false` to disable
+          closeComment: >
+            Closing: more than 90 days without user response. Feel free to reopen with your comments.
