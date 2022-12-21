@@ -408,7 +408,8 @@ $check = qq{<table id="grid"
         class="dynatable "
         width="">
   <thead>
-   <tr>
+   <tr><th style="display:none"></th>
+   <th style="display:none"></th>
     <th class="a  text">a</th>
     <th class="b  text">b</th>
     <th class="c  input_text">c</th>
@@ -416,15 +417,17 @@ $check = qq{<table id="grid"
   </thead>
   <tbody>
    <tr class=" 0">
-      <span><input id="grid-row-1" type="hidden" name="grid_row_1" value="0" /></span>
-      <span><input id="grid---pk-0" type="hidden" name="grid_--pk_0" value="Y29sMQ== Y29sMg==" /></span>
+      <td style="display:none">
+        <span><input id="grid-row-1" type="hidden" name="grid_row_1" value="0" /></span></td>
+      <td style="display:none"><span><input id="grid---pk-0" type="hidden" name="grid_--pk_0" value="Y29sMQ== Y29sMg==" /></span></td>
       <td class="a  text">col1</td>
       <td class="b  text">col2</td>
       <td class="c  input_text"><span><input id="grid_c-1" type="text" name="grid_c_0" size="60" value="col3" data-dojo-type="dijit/form/ValidationTextBox" maxlength="255" /></span></td>
    </tr>
   </tbody>
-  <span><input id="rowcount-grid" type="hidden" name="rowcount_grid" value="1" /></span>
- </table>};
+ </table>
+<span><input id="rowcount-grid" type="hidden" name="rowcount_grid" value="1" /></span>
+};
 
 $check =~ s|\n+\s*|\n|g;
 
