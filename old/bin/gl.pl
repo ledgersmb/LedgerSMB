@@ -221,10 +221,11 @@ sub display_form
 
     #Form footer  Begins------------------------------------------
 
-  for (qw(totaldebit totalcredit)) {
-      $form->{$_} =
-    $form->format_amount( \%myconfig, $form->{$_}, LedgerSMB::Setting->new(%$form)->get('decimal_places'), "0" );
-  }
+    $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
+    for (qw(totaldebit totalcredit)) {
+        $form->{$_} =
+            $form->format_amount( \%myconfig, $form->{$_}, $form->{_setting_decimal_places}, "0" );
+    }
 
   $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
   my @buttons;
@@ -358,6 +359,7 @@ sub display_row {
   $form->{totaldebit}  = 0;
   $form->{totalcredit} = 0;
 
+    $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
     for my $i ( 0 .. $form->{rowcount} ) {
 
         my $temphash1;
@@ -383,7 +385,7 @@ sub display_row {
 
             for (qw(debit debit_fx credit credit_fx)) {
                 $form->{"${_}_$i"} = ($form->{"${_}_$i"})
-                    ? $form->format_amount( \%myconfig, $form->{"${_}_$i"}, LedgerSMB::Setting->new(%$form)->get('decimal_places') )
+                    ? $form->format_amount( \%myconfig, $form->{"${_}_$i"}, $form->{_setting_decimal_places} )
                     : "";
                 $temphash1->{$_} = $form->{"${_}_$i"};
             }
@@ -474,53 +476,6 @@ sub create_links {
     GL->transaction( \%myconfig, \%$form );
 
 }
-
-sub gl_subtotal_tt {
-
-    my %column_data;
-    $subtotaldebit =
-      $form->format_amount( \%myconfig, $subtotaldebit, LedgerSMB::Setting->new(%$form)->get('decimal_places'), " " );
-    $subtotalcredit =
-      $form->format_amount( \%myconfig, $subtotalcredit, LedgerSMB::Setting->new(%$form)->get('decimal_places'), " " );
-
-    for (@column_index) { $column_data{$_} = " " }
-    $column_data{class} = 'subtotal';
-
-    $column_data{debit} = $subtotaldebit;
-    $column_data{credit} = $subtotalcredit;
-
-    $subtotaldebit  = 0;
-    $subtotalcredit = 0;
-
-    $sameitem = $ref->{ $form->{sort} };
-
-    return \%column_data;
-}
-
-sub gl_subtotal {
-    $subtotaldebit =
-      $form->format_amount( \%myconfig, $subtotaldebit, LedgerSMB::Setting->new(%$form)->get('decimal_places'), "&nbsp;" );
-    $subtotalcredit =
-      $form->format_amount( \%myconfig, $subtotalcredit, LedgerSMB::Setting->new(%$form)->get('decimal_places'), "&nbsp;" );
-
-    for (@column_index) { $column_data{$_} = "<td>&nbsp;</td>" }
-
-    $column_data{debit} =
-      "<th align=right class=listsubtotal>$subtotaldebit</td>";
-    $column_data{credit} =
-      "<th align=right class=listsubtotal>$subtotalcredit</td>";
-
-    print "<tr class=listsubtotal>";
-    for (@column_index) { print "$column_data{$_}\n" }
-    print "</tr>";
-
-    $subtotaldebit  = 0;
-    $subtotalcredit = 0;
-
-    $sameitem = $ref->{ $form->{sort} };
-
-}
-
 
 sub update {
     &create_links;
