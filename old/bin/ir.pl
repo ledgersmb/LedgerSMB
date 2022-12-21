@@ -611,6 +611,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
 |;
     }
 
+    $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
     if ( !$form->{taxincluded} ) {
         if ($form->{manual_tax}){
              $tax .= qq|
@@ -682,7 +683,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
                 $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);
                 $form->{"${taccno}_total"} =
                     $form->round_amount($form->{taxes}{$item}, 2);
-                my $item_total_formatted=$form->format_amount(\%myconfig,$form->{"${item}_total"},LedgerSMB::Setting->new(%$form)->get('decimal_places'),0);
+                my $item_total_formatted=$form->format_amount(\%myconfig,$form->{"${item}_total"}, $form->{_setting_decimal_places}, 0);
                 $tax .= qq|
                 <tr class="invoice-auto-tax">
                   <th align=right>$form->{"${item}_description"}</th>
@@ -694,11 +695,11 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
         }
 
         $form->{invsubtotal} =
-          $form->format_amount( \%myconfig, $form->{invsubtotal}, LedgerSMB::Setting->new(%$form)->get('decimal_places'), 0 );
+          $form->format_amount( \%myconfig, $form->{invsubtotal}, $form->{_setting_decimal_places}, 0 );
         my $invsubtotal_bc =
             $form->format_amount( \%myconfig,
                                   $form->{invsubtotal} * $form->{exchangerate},
-                                  LedgerSMB::Setting->new(%$form)->get('decimal_places'));
+                                  $form->{_setting_decimal_places});
 
         $subtotal = qq|
           <tr class="invoice-subtotal">
@@ -711,7 +712,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
 
     $form->{oldinvtotal} = $form->{invtotal};
     $form->{invtotal} =
-    $form->format_amount( \%myconfig, $form->{invtotal}, LedgerSMB::Setting->new(%$form)->get('decimal_places'), 0 );
+    $form->format_amount( \%myconfig, $form->{invtotal}, $form->{_setting_decimal_places}, 0 );
 
     my $hold;
 
@@ -771,7 +772,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
       (($form->{currency} ne $form->{defaultcurrency})
        ? ("<tr><td><!-- total --></td><td align=right>" . $form->format_amount( \%myconfig,
                                                      $form->{invtotal}
-                                                     * $form->{exchangerate}, LedgerSMB::Setting->new(%$form)->get('decimal_places'))
+                                                     * $form->{exchangerate}, $form->{_setting_decimal_places})
           . "</td><td>$form->{defaultcurrency}</td></tr>") : '') . qq|
         </table>
       </td>
@@ -871,9 +872,9 @@ s/option value="\Q$form->{"AP_paid_$i"}\E"/option value="$form->{"AP_paid_$i"}" 
         $form->{"paidfx_$i"} =
             $form->format_amount(
                 \%myconfig,
-                $form->{"paid_$i"} * ($form->{"exchangerate_$i"} // 1), LedgerSMB::Setting->new(%$form)->get('decimal_places') );
+                $form->{"paid_$i"} * ($form->{"exchangerate_$i"} // 1), $form->{_setting_decimal_places} );
         $form->{"paid_$i"} =
-          $form->format_amount( \%myconfig, $form->{"paid_$i"}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
+          $form->format_amount( \%myconfig, $form->{"paid_$i"}, $form->{_setting_decimal_places} );
         $form->{"exchangerate_$i"} =
           $form->format_amount( \%myconfig, $form->{"exchangerate_$i"} );
 

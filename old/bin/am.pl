@@ -523,12 +523,13 @@ sub display_taxes {
 
     my @rows;
     my $sametax = '';
+    $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
     for ( split( / /, $form->{taxaccounts} ) ) {
 
         ( $null, $i ) = split /_/, $_;
 
         $form->{"taxrate_$i"} =
-          $form->format_amount( \%myconfig, $form->{"taxrate_$i"}, LedgerSMB::Setting->new(%$form)->get('decimal_places'),'0');
+          $form->format_amount( \%myconfig, $form->{"taxrate_$i"}, $form->{_setting_decimal_places}, '0');
 
         $hiddens{"taxdescription_$i"} = $form->{"taxdescription_$i"};
         $hiddens{"old_validto_$i"} = $form->{"old_validto_$i"};
@@ -800,6 +801,7 @@ sub recurring_transactions {
     my @transactions;
     my $j;
     my $k;
+    $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
     foreach my $transaction ( sort keys %{ $form->{transactions} } ) {
         my $transaction_count = scalar( @{ $form->{transactions}{$transaction} } );
         push @transactions, {type => $transaction,
@@ -867,7 +869,7 @@ sub recurring_transactions {
             $column_data{howmany} =
                 $form->format_amount( \%myconfig, $ref->{howmany} );
             $column_data{amount} =
-                $form->format_amount( \%myconfig, $ref->{amount}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
+                $form->format_amount( \%myconfig, $ref->{amount}, $form->{_setting_decimal_places} );
 
             my @temp_split;
             my @f = split /:/, $ref->{recurringemail};
@@ -999,6 +1001,7 @@ sub process_transactions {
     $myconfig{vclimit} = 0;
     %f = &formnames;
 
+    $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
     for ( my $i = 1 ; $i <= $pt->{lastndx} ; $i++ ) {
         if ( $pt->{"ndx_$i"} ) {
             $id = $pt->{"ndx_$i"};
@@ -1065,12 +1068,12 @@ sub process_transactions {
                         for ( 1 .. $form->{rowcount} - 1 ) {
                             $form->{"amount_$_"} =
                               $form->format_amount( \%myconfig,
-                                $form->{"amount_$_"}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
+                                $form->{"amount_$_"}, $form->{_setting_decimal_places} );
                         }
                         for ( 1 .. $form->{paidaccounts} ) {
                             $form->{"paid_$_"} =
                               $form->format_amount( \%myconfig,
-                                $form->{"paid_$_"}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
+                                $form->{"paid_$_"}, $form->{_setting_decimal_places} );
                         }
 
                     }

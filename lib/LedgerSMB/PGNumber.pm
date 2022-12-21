@@ -149,6 +149,16 @@ Constructor to prevent BigFloat downgrades to BigInt
 
 =cut
 
+sub _formatter {
+    return Number::Format->new(@_);
+}
+
+# Together with the memoization in PGNumber,
+# this workaround shaved off 25% rendering time off a 10k acc_trans
+# table (being GL>Search-ed without restrictions)
+memoize('_formatter');
+
+
 sub new {
     my $class = shift;
     local $Math::BigFloat::downgrade = undef;
@@ -190,7 +200,7 @@ sub from_input {
         $pgnum = $string;
     }
     else {
-        my $formatter = Number::Format->new(
+        my $formatter = _formatter(
             -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
             -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
         );
@@ -232,15 +242,6 @@ Specifies the negative format
 =back
 
 =cut
-
-sub _formatter {
-    return Number::Format->new(@_);
-}
-
-# Together with the memoization in PGNumber,
-# this workaround shaved off 25% rendering time off a 10k acc_trans
-# table (being GL>Search-ed without restrictions)
-memoize('_formatter');
 
 
 sub to_output {
