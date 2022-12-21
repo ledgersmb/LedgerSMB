@@ -71,9 +71,11 @@
         width="[% attributes.width %]">
 [%- IF !hide_header %]
   <thead>
-   <tr>[%
+   <tr><th style="display:none"></th>[%
       FOREACH COL IN columns;
-        IF COL.type != 'hidden'; %]
+        IF COL.type == 'hidden'; %]
+     <th style="display:none"></th>
+     [% ELSE %]
     <th class="[% COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type %]">[%
 
 IF attributes.order_url and not COL.toggle
@@ -94,12 +96,14 @@ END; %]</th>
    PFX = attributes.input_prefix;
    FOREACH ROW IN tbody.rows;
       ROWCOUNT = ROWCOUNT + 1 -%]
-   <tr class="[% ROW.html_class _ ' ' _ ROW.row_id %]">
+<tr class="[% ROW.html_class _ ' ' _ ROW.row_id %]">
+  <td style="display:none">
       [% PROCESS input element_data = {
                                  type="hidden"
                                  name=PFX _ "row_" _ ROWCOUNT
                     value=ROW.row_id };
-         "\n";
+      %]</td>
+[%
          FOREACH COL IN columns;
             TYPE = COL.type;
             NOHREF = COL.col_id _ "_NOHREF";
@@ -109,14 +113,13 @@ END; %]</th>
             END;
             IF TYPE == 'hidden';
                NAME = PFX _ COL.col_id _ '_' _ ROW.row_id;
-
+%]<td style="display:none">[%
                PROCESS input element_data = {
                            type  = "hidden"
                            name  = NAME
                            value = ROW.${COL.col_id}
-               };
-               "\n";
-            ELSE; -%]
+    }; %]</td>
+[% ELSE; -%]
       <td class="[% COL.col_id %] [% COL.class %] [% COL.type %]">[%
                IF TYPE == 'text';
                  ROW.${COL.col_id};
@@ -229,11 +232,11 @@ END; %]</th>
           <td colspan="[% SPACECOUNT %]">&nbsp;</td>
        [% END;
        IF TYPE == 'hidden';
-       NAME = PFX _ COL.col_id _ '_' _ '_tfoot_' _ ROWCOUNT; -%]
-       [% PROCESS input element_data = {
+          NAME = PFX _ COL.col_id _ '_' _ '_tfoot_' _ ROWCOUNT; -%]<td style="display:none">[%
+              PROCESS input element_data = {
                                   type="hidden"
               name=NAME
-              value=ROW.${COL.col_id} } %]
+              value=ROW.${COL.col_id} } %]</td>
      [%- ELSE %]
      <td class="[% COL.col_id %]">
        [%
@@ -281,9 +284,9 @@ END; %]</th>
    [%- END -%]
   </tfoot>
 [% END; -%]
+ </table>
   [% PROCESS input element_data = {
        type="hidden"
        name="rowcount_" _ attributes.id
        value=ROWCOUNT } %]
- </table>
 [% END #block %]
