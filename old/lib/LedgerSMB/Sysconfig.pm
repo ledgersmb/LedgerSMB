@@ -81,6 +81,7 @@ sub ini2wire {
 
     $wire_config{output_formatter} = {
         class => 'LedgerSMB::Template::Formatter',
+        lifecycle => 'eager',
         args => { plugins => \@formats }
     };
 
