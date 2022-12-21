@@ -91,7 +91,7 @@ if ( -f "old/bin/custom/io.pl" ) {
 
 sub _calc_taxes {
     $form->{subtotal} = $form->{invsubtotal};
-    my $moneyplaces = $form->get_setting('decimal_places');
+    my $moneyplaces = $form->{_setting_decimal_places} //= $form->get_setting('decimal_places');
     foreach my $i (1 .. $form->{rowcount}){
         local $decimalplaces = $form->{"precision_$i"};
 
@@ -279,6 +279,8 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
     $exchangerate = ($exchangerate) ? $exchangerate : 1;
 
     $spc = substr( $myconfig{numberformat}, -3, 1 );
+    my $moneyplaces =
+        $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
     foreach my $i ( 1 .. max($numrows, $min_lines)) {
         $desc_disabled = '' if $i == $numrows;
         $dec = '';
@@ -290,7 +292,6 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                 ( $null, $dec ) = split /,/, $form->{"sellprice_$i"};
             }
         }
-        my $moneyplaces = LedgerSMB::Setting->new(%$form)->get('decimal_places');
         $dec = length $dec;
         $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
         $form->{"precision_$i"} = $decimalplaces;
@@ -456,7 +457,7 @@ qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" id="qt
           . qq|"></td>|;
         $column_data{linetotal} =
             qq|<td align=right class="linetotal">|
-          . $form->format_amount( \%myconfig, $linetotal, LedgerSMB::Setting->new(%$form)->get('decimal_places') )
+          . $form->format_amount( \%myconfig, $linetotal, $form->{_setting_decimal_places} )
           . qq|</td>|;
         $form->{"bin_$i"} //= '';
         $column_data{bin}    = qq|<td class="bin">$form->{"bin_$i"}</td>|;
