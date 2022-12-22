@@ -3,6 +3,13 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.8
+* Fix rendering performance of search results on Chrome-based browsers (#7018)
+* Improve request performance by loading document formatters on server startup
+* Improve invoice/order/quote performance by caching output formats
+* Reduce the number of database queries retrieving 'decimal_places'
+
+
 Changelog for 1.10.7
 * Fix 'remaining life' for monthly depreciation in fixed assets (#6563)
 * Fix new account configuration missing drop-down values and checkmarks (#7007)
