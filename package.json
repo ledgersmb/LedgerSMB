@@ -50,9 +50,9 @@
     "vue-i18n": "9.2.2"
   },
   "devDependencies": {
-    "@babel/core": "7.20.5",
+    "@babel/core": "7.20.7",
     "@babel/eslint-parser": "7.19.1",
-    "@babel/plugin-proposal-object-rest-spread": "7.20.2",
+    "@babel/plugin-proposal-object-rest-spread": "7.20.7",
     "@babel/preset-env": "7.20.2",
     "@intlify/unplugin-vue-i18n": "~0.7.3",
     "@vue/test-utils": "2.2.6",
@@ -62,7 +62,7 @@
     "babel-loader": "9.1.0",
     "browserslist": "4.21.4",
     "buffer": "6.0.3",
-    "caniuse-lite": "1.0.30001439",
+    "caniuse-lite": "1.0.30001441",
     "clean-webpack-plugin": "4.0.0",
     "compression-webpack-plugin": "10.0.0",
     "copy-webpack-plugin": "11.0.0",
