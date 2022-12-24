@@ -158,8 +158,10 @@ sub check_form {
     my ($self) = @_;
 
     return 0 unless $self->{form_id};
-    my $sth = $self->{dbh}->prepare('select form_check(?, ?)');
-    $sth->execute($self->{session_id}, $self->{form_id});
+    my $sth = $self->{dbh}->prepare('select form_check(?, ?)')
+        or die $self->{dbh}->errstr;
+    $sth->execute($self->{session_id}, $self->{form_id})
+        or die $self->{dbh}->errstr;
     my @results = $sth->fetchrow_array();
     return $results[0];
 }
@@ -170,8 +172,10 @@ sub close_form {
         delete $self->{form_id};
     }
 
-    my $sth = $self->{dbh}->prepare('select form_close(?, ?)');
-    $sth->execute($self->{session_id}, $self->{form_id});
+    my $sth = $self->{dbh}->prepare('select form_close(?, ?)')
+        or die $self->{dbh}->errstr;
+    $sth->execute($self->{session_id}, $self->{form_id})
+        or die $self->{dbh}->errstr;
     my @results = $sth->fetchrow_array();
     delete $self->{close_form};
     return $results[0];

@@ -89,6 +89,7 @@ sub post_transaction {
 
         $query = qq|SELECT id FROM gl WHERE id = $id|;
         ( $form->{id} ) = $dbh->selectrow_array($query);
+        die $dbh->errstr if $dbh->err;
 
         if ( $form->{id} ) {
 
@@ -112,7 +113,7 @@ sub post_transaction {
            VALUES (?, ?, ?, ?)
       RETURNING id|;
 
-        $sth = $dbh->prepare($query);
+        $sth = $dbh->prepare($query) || $form->dberror($query);
         $sth->execute($form->{reference}, $form->{description},
                       $form->{notes}, $form->{transdate})
             || $form->dberror($query);
@@ -141,8 +142,11 @@ UPDATE gl
            if (not defined $form->{batch_id}){
                $form->error($locale->text('Batch ID Missing'));
            }
-           my $vqh = $dbh->prepare('SELECT * FROM batch__lock_for_update(?)');
-           $vqh->execute($form->{batch_id});
+           my $vqh =
+               $dbh->prepare('SELECT * FROM batch__lock_for_update(?)')
+               or die $dbh->errstr;
+           $vqh->execute($form->{batch_id})
+               or die $vqh->errstr;
            my $bref = $vqh->fetchrow_hashref('NAME_lc');
            # Change the below to die with localization in 1.4
            $form->error('Approved Batch') if $bref->{approved_by};
@@ -151,7 +155,8 @@ UPDATE gl
          INSERT INTO voucher (batch_id, trans_id, batch_class)
          VALUES (?, ?, (select id FROM batch_class
                                  WHERE class = ?))|;
-           my $sth2 = $dbh->prepare($query);
+           my $sth2 = $dbh->prepare($query)
+               or $form->dberror($query);
            $sth2->execute($form->{batch_id}, $form->{id}, 'gl') ||
                 $form->dberror($query);
        }
@@ -282,16 +287,17 @@ sub transaction {
                      WHERE ac.trans_id = ?
                   ORDER BY ac.entry_id|;
 
-        $sth = $dbh->prepare($query);
+        $sth = $dbh->prepare($query) || $form->dberror($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
         my $bu_sth = $dbh->prepare(
             qq|SELECT * FROM business_unit_ac
                 WHERE entry_id = ?  |
-        );
+        ) || die $dbh->errstr;
 
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-            $bu_sth->execute($ref->{entry_id});
+            $bu_sth->execute($ref->{entry_id})
+                or die $bu_sth->errstr;
             while ($buref = $bu_sth->fetchrow_hashref(NAME_lc) ) {
                  $ref->{"b_unit_$buref->{class_id}"} = $buref->{bu_id};
             }
@@ -313,7 +319,7 @@ sub transaction {
               FROM account
            ORDER BY accno|;
 
-    $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query) || $form->dberror($query);
     $sth->execute || $form->dberror($query);
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
@@ -342,7 +348,7 @@ sub get_all_acc_dep_pro
               FROM account
            ORDER BY accno|;
 
-    $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query) || $form->dberror($query);
     $sth->execute || $form->dberror($query);
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
