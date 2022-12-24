@@ -127,6 +127,7 @@
                     'class="no-fx-transaction"' ;
                     END -%]
              >
+        <thead>
           <tr class="listheading">
           <th class="listheading">[% text('Account') %]</th>
           <th class="listheading">[% text('FX') %]</th>
@@ -140,14 +141,16 @@
             %]</th>
                [% END %]
           [% END %]
-        </tr>
+          </tr>
+        </thead>
           [%
         curr = [];
         FOREACH c IN form.currencies;
            curr.push({ text = c, value = c });
         END;
         FOREACH displayrow IN displayrows %]
-        <tr>
+        <tbody>
+          <tr>
                 [% INDEX=displayrow.index %]
                   <td>
                         [% IF displayrow.accnoset == 0 %]
@@ -282,6 +285,7 @@
                                       }  %]
        </td>
      </tr>
+     </tbody>
      [% END %]
         <tr class="listtotal">
           <th>&nbsp;</th>
