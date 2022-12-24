@@ -105,15 +105,24 @@ sub convert_to_form{
         }
     } else { #ar or ap
         my $meta_number = $trans->{credit_data}->{meta_number};
+        my $ARAP;
+
         $form->{reverse} = 0;
+        $form->{currency} = $trans->{currency};
         if ($type == 2){
             $form->{customer} = $meta_number;
+            $ARAP = 'AR';
         } else {
             $form->{vendor} = $meta_number;
+            $ARAP = 'AP';
         }
+
         $form->{rowcount} = 1;
         for my $row (@{$trans->{line_items}}){
-            $form->{"amount_$form->{rowcount}"} = $row->{amount};
+            $form->{"amount_$form->{rowcount}"} = $row->{amount_tc};
+            my $account = $trans->get_account_info($row->{account_id});
+            $form->{"${ARAP}_amount_1"} = "$account->{accno}--$account->{description}";
+            $form->{rowcount}++;
         }
     }
     return delete $form->{id};
