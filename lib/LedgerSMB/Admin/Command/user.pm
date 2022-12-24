@@ -25,31 +25,8 @@ use namespace::autoclean;
 
 use Feature::Compat::Try;
 
-# users
-my $username;
-my $password;
 
-# employee
-my $start_date; # date
-my $end_date; # date
-my $dob; # date
-my $role; # text
-my $ssn; # text 
-my $is_sales; # bool 
-my $manager; # text
-my $employeenumber; # text
-my $is_manager; # bool
-# RETURNS id integer AS $$
-
-# person
-my $salutation = ''; # Default to none
-my $first_name; # text 
-my $middle_name; # text 
-my $last_name; # text
-my $country; # text
-#my $personal_id; # text
-my $permission; # Text
-my $no_permission; # Text
+has options => (is => 'ro', default => sub { {} });
 
 sub _get_valid_salutation {
     my ($self, $dbh) = @_;
@@ -59,7 +36,7 @@ sub _get_valid_salutation {
     my ($values) = $sth->fetchall_arrayref({});
     foreach (@$values) {
         return $_->{id}
-            if ( $_->{salutation} eq $salutation)
+            if ( $_->{salutation} eq $self->options->{salutation})
     }
     $self->logger->error('Invalid salutation');
     return 0;
@@ -67,7 +44,7 @@ sub _get_valid_salutation {
 
 sub _get_user {
     my ($self, $dbh) = @_;
-    my $_username = shift // $username;
+    my $_username = shift // $self->options->{username};
 
     # The code below doesn't provide the entity_id
     #my $user_obj = LedgerSMB::DBObject::User->new();
@@ -76,8 +53,9 @@ sub _get_user {
     #my ($user) = grep { $_username eq $_->{username} } @users;
 
     #This ugly hack does
-    my $sth = $dbh->prepare(q(SELECT id, entity_id FROM users WHERE username=?));
-    $sth->execute($username)
+    my $sth =
+        $dbh->prepare(q(SELECT id, entity_id FROM users WHERE username=?));
+    $sth->execute($self->options->{username})
         or die $dbh->errstr;
     my ($user) = $sth->fetchrow_hashref;
     return $user;
@@ -85,14 +63,14 @@ sub _get_user {
 
 sub _get_valid_country {
     my ($self, $dbh) = @_;
-    return 0 if !$country;
+    return 0 if !$self->options->{country};
     my $sth = $dbh->prepare('SELECT * FROM country');
     $sth->execute
         or die $dbh->errstr;
     my ($values) = $sth->fetchall_arrayref({});
     foreach (@$values) {
         return $_->{id}
-            if ( $_->{name} eq $country)
+            if ( $_->{name} eq $self->options->{country})
     }
     $self->logger->error('Invalid country');
     return 0;
@@ -106,40 +84,40 @@ sub _option_spec {
       || $command eq 'create' ) {
         %option_spec = (
             # user
-            'username=s' => \$username,
-            'password=s' => \$password,
-            'permission=s@' => \$permission,
+            'username=s' => \$self->options->{username},
+            'password=s' => \$self->options->{password},
+            'permission=s@' => \$self->options->{permission},
             # employee
-            'dob=s' => \$dob,
-            'employeenumber=s' => \$employeenumber,
-            'end_date=s' => \$end_date,
-            'is_manager!' => \$is_manager,
-            'manager=s' => \$manager,
-            'role=s' => \$role,
-            'sales!' => \$is_sales,
-            'ssn=s' => \$ssn,
-            'start_date=s' => \$start_date,
+            'dob=s' => \$self->options->{dob},
+            'employeenumber=s' => \$self->options->{employeenumber},
+            'end_date=s' => \$self->options->{end_date},
+            'is_manager!' => \$self->options->{is_manager},
+            'manager=s' => \$self->options->{manager},
+            'role=s' => \$self->options->{role},
+            'sales!' => \$self->options->{is_sales},
+            'ssn=s' => \$self->options->{ssn},
+            'start_date=s' => \$self->options->{start_date},
             # person
             #'birthdate=s' => \$birthdate, # Not used?
-            'country=s' => \$country,
-            'first_name=s' => \$first_name,
-            'last_name=s' => \$last_name,
-            'middle_name=s' => \$middle_name,
+            'country=s' => \$self->options->{country},
+            'first_name=s' => \$self->options->{first_name},
+            'last_name=s' => \$self->options->{last_name},
+            'middle_name=s' => \$self->options->{middle_name},
             #'personal_id=s' => \$personal_id,
-            'salutation=s' => \$salutation
+            'salutation=s' => \$self->options->{salutation}
         );
-        $option_spec{'no-permission=s@'} = \$no_permission
+        $option_spec{'no-permission=s@'} = \$self->options->{no_permission}
             if $command eq 'change';
 
     }
     elsif ( $command eq 'delete' ) {
         %option_spec = (
-            'username=s' => \$username
+            'username=s' => \$self->options->{username}
         );
     }
     elsif ( $command eq 'list' ) {
         %option_spec = (
-            'username:s' => \$username
+            'username:s' => \$self->options->{username}
         );
     }
     return %option_spec;
@@ -150,10 +128,10 @@ sub _add_permissions{
 
     my $roles;
     @$roles = @{$user->{role_list}};
-    if (@$permission[0] =~ /Full Permissions/i) {
+    if ($self->options->{permission}->[0] =~ /Full Permissions/i) {
         @$roles = map { $_->{rolname} } @{$user->list_roles};
     } else {
-        foreach my $p (@$permission) {
+        foreach my $p ($self->options->{permission}->@*) {
             my ($h) = grep { lc($p) eq $_->{description} } @{$user->list_roles};
             if (!$h ) {
                 $self->logger->error("Invalid role '$p'");
@@ -172,10 +150,10 @@ sub _remove_permissions{
 
         my $roles;
         @$roles = @{$user->{role_list}};
-        if (@$no_permission[0] =~ /Full Permissions/i) {
+        if ($self->options->{no_permission}->[0] =~ /Full Permissions/i) {
             $roles = [];
         } else {
-            foreach my $p (@$no_permission) {
+            foreach my $p ($self->options->{no_permission}) {
                 my ($h) = grep { lc($p) eq $_->{description} } @{$user->list_roles};
                 if (!$h ) {
                     $self->logger->error("Invalid role '$p'");
@@ -196,10 +174,11 @@ sub change {
     my %options = ();
     Getopt::Long::Configure(qw(bundling require_order));
     GetOptionsFromArray(\@args, \%options, $self->_option_spec('change'));
-    return 1 if !$username;
+    return 1 if !$self->options->{username};
 
     my $_user = $self->_get_user($dbh);
     if (!$_user) {
+        my $username = $self->options->{username};
         $self->logger->error("User '$username' does not exists");
         $dbh->rollback;
         return 1;
@@ -210,35 +189,28 @@ sub change {
     my $user = LedgerSMB::Entity::User->get($_user->{entity_id});
     my $emp = LedgerSMB::Entity::Person::Employee->get($_user->{entity_id});
 
-    if ( $password ) {
-        $user->reset_password($password);
+    if ( $self->options->{password} ) {
+        $user->reset_password($self->options->{password});
     }
-    $emp->{country} = $country if $country;
-    $emp->{dob} = $dob if $dob;
-    $emp->{employeenumber} = $employeenumber if $employeenumber;
-    $emp->{end_date} = $end_date if $end_date;
-    $emp->{first_name} = $first_name if $first_name;
-    $emp->{is_manager} = $is_manager if $is_manager;
-    $emp->{last_name} = $last_name if $last_name;
-    $emp->{manager} = $manager if $manager;
-    $emp->{middle_name} = $middle_name if $middle_name;
-    $emp->{role} = $role if $role;
-    $emp->{sales} = $is_sales if $is_sales;
-    $emp->{salutation} = $salutation if $salutation;
-    $emp->{ssn} = $ssn if $ssn;
-    $emp->{start_date} = $start_date if $start_date;
+    my $needs_save = 0;
+    for my $setting (qw(country dob employeenumber end_date first_name
+                        is_manager last_name manager middle_name role sales
+                        salutation ssn start_date)) {
+        if ($self->options->{$setting}) {
+            $emp->{$setting} = $self->options->{$setting};
+            $needs_save = 1;
+        }
+    }
 
-    $emp->save
-        if $country || $dob || $employeenumber || $end_date || $first_name
-        || $is_manager || $last_name || $manager || $middle_name || $role
-        || $is_sales || $salutation || $ssn || $start_date;
-
+    $emp->save if $needs_save;
     # Add permissions
-    return 1 if $permission && !$self->_add_permissions($dbh, $user);
+    return 1 if ($self->options->{permission}
+                 and not $self->_add_permissions($dbh, $user));
     # Remove permissions
-    return 1 if $no_permission && !$self->_remove_permissions($dbh, $user);
+    return 1 if ($self->options->{no_permission}
+                 and not $self->_remove_permissions($dbh, $user));
 
-    $dbh->commit if ! $dbh->{AutoCommit};
+    $dbh->commit if not $dbh->{AutoCommit};
     $dbh->disconnect;
     $self->logger->warn('User successfully changed');
 
@@ -251,12 +223,13 @@ sub create {
     my %options = ();
     Getopt::Long::Configure(qw(bundling require_order));
     GetOptionsFromArray(\@args, \%options, $self->_option_spec('create'));
-    if (!$username || !$password){
+    if (!$self->options->{username} || !$self->options->{password}){
         $self->logger->error('Missing username or password');
         return 1;
     }
 
     if ($self->_get_user($dbh)) {
+        my $username = $self->options->{username};
         $self->logger->error("User '$username' already exists");
         $dbh->rollback;
         return 1;
@@ -270,8 +243,8 @@ sub create {
     my $user = $self->_create_user(
         dbh => $dbh,
         entity_id => $emp->entity_id,
-        username => $username,
-        password => $password
+        username => $self->options->{username},
+        password => $self->options->{password}
     );
     if (!$user) {
         $self->logger->error('Invalid user');
@@ -279,13 +252,17 @@ sub create {
         return 1;
     }
     #TODO: Fix validity
-    my $ident_username=$dbh->quote_identifier($username);
+    my $ident_username=$dbh->quote_identifier($self->options->{username});
     $dbh->do(qq(ALTER USER $ident_username VALID UNTIL 'infinity'));
 
     # Add permissions
-    return 1 if $permission && !$self->_add_permissions($dbh, $user);
+    return 1
+        if ($self->options->{permission}
+            and not $self->_add_permissions($dbh, $user));
     # Remove permissions
-    return 1 if $no_permission && !$self->_remove_permissions($dbh, $user);
+    return 1
+        if ($self->options->{no_permission}
+            and not $self->_remove_permissions($dbh, $user));
 
     $dbh->commit if ! $dbh->{AutoCommit};
     $dbh->disconnect;
@@ -304,35 +281,31 @@ sub _create_employee {
     return undef if !$salutation_id;
 
     $self->logger->error('Missing country')
-        if !$country;
+        if !$self->options->{country};
     my $country_id = $self->_get_valid_country($dbh);
     return undef if !$country_id;
 
-    if (!$first_name || !$last_name){
+    if (not $self->options->{first_name}
+        or not $self->options->{last_name}){
         $self->logger->error('Missing first or last name');
         return undef;
     }
-    my $_manager = $self->_get_user($dbh,$manager);
+    my $_manager = $self->_get_user($dbh, $self->options->{manager});
 
     local $LedgerSMB::App_State::User = {};
     my $emp = LedgerSMB::Entity::Person::Employee->new(
         _dbh => $dbh,
-        control_code => $employeenumber,
+        $self->options->%*,
+
         country_id => $country_id,
-        dob => LedgerSMB::PGDate->from_input($dob),
-        employeenumber => $employeenumber,
-        first_name => $first_name,
-        is_manager => $is_manager,
-        last_name => $last_name,
-        manager_id => $_manager->{entity_id},
-        middle_name => $middle_name,
-        name => $first_name . ' ' .
-                ($middle_name ? $middle_name . ' ' : '') .
-                $last_name,
-        role => $role,
-        sales => $is_sales,
         salutation_id => $salutation_id,
-        ssn => $ssn,
+        control_code => $self->options->{employeenumber},
+        manager_id => $_manager->{entity_id},
+        dob => LedgerSMB::PGDate->from_input($self->options->{dob}),
+        name => ($self->options->{first_name} . ' ' .
+                 ($self->options->{middle_name} ?
+                  $self->options->{middle_name} . ' ' : '') .
+                 $self->options->{last_name}),
     );
     $emp->save;
 
@@ -366,20 +339,21 @@ sub delete {
     my %options = ();
     Getopt::Long::Configure(qw(bundling require_order));
     GetOptionsFromArray(\@args, \%options, $self->_option_spec('delete'));
-    return 1 if !$username;
+    return 1 if !$self->options->{username};
 
     my $user = $self->_get_user($dbh);
     if (!$user) {
+        my $username = $self->options->{username};
         $self->logger->error("User '$username' does not exists");
         $dbh->rollback;
         return 1;
     }
     my $d =
-        $dbh->do("DELETE FROM person WHERE entity_id = ?",
+        $dbh->do('DELETE FROM person WHERE entity_id = ?',
                  {}, $user->{entity_id})
-        && $dbh->do("DELETE FROM employees WHERE entity_id= ?",
+        && $dbh->do('DELETE FROM employees WHERE entity_id= ?',
                     {}, $user->{entity_id})
-        && $dbh->do("DELETE FROM users WHERE id = ?", {}, $user->{id});
+        && $dbh->do('DELETE FROM users WHERE id = ?', {}, $user->{id});
 
     if ($d) {
         $dbh->commit if ! $dbh->{AutoCommit};
