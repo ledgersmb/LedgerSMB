@@ -344,15 +344,15 @@ sub _create_user {
 
     my $dbh = $args{dbh};
     my $_username = $args{username};
+    my $ident_username=$dbh->quote_identifier($_username);
 
-    $dbh->do(qq(DROP ROLE IF EXISTS "$_username"));
+    $dbh->do(qq(DROP ROLE IF EXISTS $ident_username));
     my $user = LedgerSMB::Entity::User->new(
         entity_id => $args{entity_id},
         username => $_username,
         _dbh => $dbh,
         );
     $user->create($args{password});
-    my $ident_username=$dbh->quote_identifier($username);
     $dbh->do(qq(ALTER USER $ident_username VALID UNTIL 'infinity'));
 
     return $user;
@@ -374,9 +374,12 @@ sub delete {
         $dbh->rollback;
         return 1;
     }
-    my $d = $dbh->do("DELETE FROM person WHERE entity_id=$user->{entity_id}")
-         && $dbh->do("DELETE FROM employees WHERE entity_id=$user->{entity_id}")
-         && $dbh->do("DELETE FROM users WHERE id=$user->{id}");
+    my $d =
+        $dbh->do("DELETE FROM person WHERE entity_id = ?",
+                 {}, $user->{entity_id})
+        && $dbh->do("DELETE FROM employees WHERE entity_id= ?",
+                    {}, $user->{entity_id})
+        && $dbh->do("DELETE FROM users WHERE id = ?", {}, $user->{id});
 
     if ($d) {
         $dbh->commit if ! $dbh->{AutoCommit};
@@ -445,7 +448,7 @@ __END__
 =head1 SYNOPSIS
 
    ledgersmb-admin user list <db-uri>
-   ledgersmb-admin user create <db-uri> [options] 
+   ledgersmb-admin user create <db-uri> [options]
    ledgersmb-admin user delete <db-uri>
    ledgersmb-admin user change <db-uri>
 
