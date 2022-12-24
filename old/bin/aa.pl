@@ -1158,6 +1158,7 @@ sub save_temp {
     $lsmb->{is_invoice} = 1;
     $lsmb->{due} = $form->{invtotal};
     $lsmb->{credit_id} = $form->{customer_id} // $form->{vendor_id};
+    $lsmb->{curr} = $form->{currency};
     my ($department_name, $department_id) = split/--/, $form->{department};
      if (!$lsmb->{language_code}){
         delete $lsmb->{language_code};
@@ -1171,13 +1172,15 @@ sub save_temp {
     }
     $lsmb->{post_date} = $form->{transdate};
     for my $iter (0 .. $form->{rowcount}){
-        if ($form->{"AP_amount_$iter"} and
+        if ($form->{"$form->{ARAP}_amount_$iter"} and
                   ($form->{"amount_$iter"} != 0)){
-             my ($acc_id, $acc_name) = split /--/, $form->{"AP_amount_$iter"};
+             my ($acc_id, $acc_name) = split /--/, $form->{"$form->{ARAP}_amount_$iter"};
              my $amount = $form->{"amount_$iter"};
              push @{$lsmb->{journal_lines}},
                   {accno => $acc_id,
-                   amount => $amount,
+                   amount_fx => $amount,
+                   amount => $amount*$form->{exchangerate},
+                   curr => $form->{currency},
                    cleared => 'false',
                   };
         }
