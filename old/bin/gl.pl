@@ -193,10 +193,6 @@ sub display_form
                $form->{colrownotes}=0;
     }
 
-    if (!defined $form->{approved}){
-        $form->{approved} = '1';
-    }
-
     $focus = ( $form->{focus} ) ? $form->{focus} : "debit_$form->{rowcount}";
     our %hiddens = (
         'direction' => $form->{direction},
