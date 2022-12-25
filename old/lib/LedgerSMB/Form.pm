@@ -1725,26 +1725,22 @@ units assigned to other customers.
 =cut
 
 sub all_business_units {
-
     my ( $self, $transdate, $credit_id, $module_name) = @_;
     $self->{bu_class} = [];
     $self->{b_units} = {};
 
     my $dbh       = $self->{dbh};
-    my $class_sth = $dbh->prepare(
-                q|SELECT * FROM business_unit__list_classes('1', ?)|
-    );
-    $class_sth->execute($module_name)
-        || $self->dberror(q|SELECT * FROM business_unit__list_classes('1', ?)|);
+    my $query     = q|SELECT * FROM business_unit__list_classes('1', ?)|;
+    my $class_sth = $dbh->prepare($query) || $self->dberror($query);
+    $class_sth->execute($module_name) || $self->dberror($query);
 
-    my $bu_sth    = $dbh->prepare(
-                q|SELECT * FROM business_unit__list_by_class(?, ?, ?, 'false')|
-    );
+    $query        = q|SELECT * FROM business_unit__list_by_class(?, ?, ?, 'false')|;
+    my $bu_sth    = $dbh->prepare($query) || $self->dberror($query);
 
+    $transdate  ||= undef; # set '' to undef
     while (my $classref = $class_sth->fetchrow_hashref('NAME_lc')){
         push @{$self->{bu_class}}, $classref;
-        $bu_sth->execute($classref->{id}, $transdate, $credit_id)
-            || $self->dberror(q|SELECT * FROM business_unit__list_by_class(?, ?, ?, 'false')|);
+        $bu_sth->execute($classref->{id}, $transdate, $credit_id) || $self->dberror($query);
         $self->{b_units}->{$classref->{id}} = [];
         while (my $buref = $bu_sth->fetchrow_hashref('NAME_lc')){
            push @{$self->{b_units}->{$classref->{id}}}, $buref;
