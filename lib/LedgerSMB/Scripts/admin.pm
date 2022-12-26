@@ -19,6 +19,8 @@ This module provides the workflow scripts for managing users and permissions.
 
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
+use LedgerSMB::Entity::User;
+use LedgerSMB::Report::Listings::User;
 use LedgerSMB::Template::UI;
 
 
@@ -31,6 +33,57 @@ use Log::Any;
 # and rewritten.  It makes the module too closely tied to the HTML.  --CT
 
 my $logger = Log::Any->get_logger(category => 'LedgerSMB::Scripts::admin');
+
+
+=item list_users
+
+=cut
+
+sub list_users {
+    my ($request) = @_;
+    my $report = LedgerSMB::Report::Listings::User->new(%$request);
+    return $request->render_report($report);
+}
+
+
+=item delete_user
+
+=cut
+
+sub delete_user {
+    my ($request) = @_;
+    my ($user) = $request->call_procedure(
+        funcname => 'admin__get_user',
+        args => [ $request->{id} ]
+        );
+    $request->call_procedure(
+        funcname => 'admin__delete_user',
+        args => [ $user->{username}, 1 ] # delete the role too
+        );
+
+    return list_users($request);
+}
+
+
+=item edit_user
+
+=cut
+
+sub edit_user {
+    my ($request) = @_;
+    my ($user) = $request->call_procedure(
+        funcname => 'admin__get_user',
+        args => [ $request->{id} ]
+        );
+    my $user_data = LedgerSMB::Entity::User->get($user->{entity_id});
+    my $template = LedgerSMB::Template::UI->new_UI;
+    return $template->render($request, 'Contact/divs/user', {
+        stand_alone => 1,
+        user        => $user_data,
+        request     => $request,
+        roles       => $user_data->list_roles,
+    });
+}
 
 
 =item list_sessions

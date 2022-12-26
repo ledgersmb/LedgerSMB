@@ -196,6 +196,7 @@ my @modules =
           'LedgerSMB::Report::Listings::Warehouse',
           'LedgerSMB::Report::Listings::Business_Unit',
           'LedgerSMB::Report::Listings::Business_Type',
+          'LedgerSMB::Report::Listings::User',
           'LedgerSMB::Report::PNL::ECA',
           'LedgerSMB::Report::PNL::Income_Statement',
           'LedgerSMB::Report::PNL::Invoice', 'LedgerSMB::Report::PNL::Product',

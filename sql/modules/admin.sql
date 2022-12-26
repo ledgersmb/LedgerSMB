@@ -462,7 +462,9 @@ create or replace view user_listable as
     select
         u.id,
         u.username,
-        e.created
+        e.created,
+        e.name,
+        e.control_code
     from entity e
     join users u on u.entity_id = e.id;
 

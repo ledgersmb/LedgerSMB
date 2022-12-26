@@ -1,4 +1,8 @@
-[% IF employee.first_name %]
+[%
+IF stand_alone ;
+PROCESS 'elements.html' ;
+END;
+IF employee.first_name or stand_alone %]
 <div id="user_div"
      title="[% text('User') %]"
      data-dojo-type="dijit/layout/ContentPane"
