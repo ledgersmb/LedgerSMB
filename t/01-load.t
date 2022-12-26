@@ -114,7 +114,6 @@ my @modules =
           'LedgerSMB::Form', 'LedgerSMB::IS',
           'LedgerSMB::Num2text', 'LedgerSMB::OE', 'LedgerSMB::Auth::DB',
           'LedgerSMB::DBObject::Asset_Class',
-          'LedgerSMB::DBObject::EOY',
           'LedgerSMB::DBObject::TaxForm',
           'LedgerSMB::DBObject::Account',
           'LedgerSMB::DBObject::Asset',
