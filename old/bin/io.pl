@@ -47,7 +47,6 @@ use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 use LedgerSMB::Setting;
 use LedgerSMB::Legacy_Util;
-use LedgerSMB::DBObject::Draft;
 use LedgerSMB::File;
 use List::Util qw(max reduce);
 
@@ -135,9 +134,8 @@ sub _calc_taxes {
 
 sub approve {
     $form->update_invnumber;
-    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
+    $form->call_procedure(funcname=>'draft_approve', args => [ $form->{id} ]);
 
-    $draft->approve();
     my $wf = $form->{_wire}->get('workflows')
         ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
     $wf->execute_action( 'approve' ) if $wf;

@@ -113,7 +113,7 @@ my @modules =
           'LedgerSMB::Database::SchemaChecks::JSON',
           'LedgerSMB::Form', 'LedgerSMB::IS',
           'LedgerSMB::Num2text', 'LedgerSMB::OE', 'LedgerSMB::Auth::DB',
-          'LedgerSMB::DBObject::Asset_Class', 'LedgerSMB::DBObject::Draft',
+          'LedgerSMB::DBObject::Asset_Class',
           'LedgerSMB::DBObject::EOY',
           'LedgerSMB::DBObject::Pricelist', 'LedgerSMB::DBObject::TaxForm',
           'LedgerSMB::DBObject::TransTemplate',

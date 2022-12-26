@@ -75,6 +75,7 @@ use Carp;
 use List::Util qw(first);
 use Log::Any;
 use LWP::Simple;
+use PGObject;
 use Symbol;
 use Time::Local;
 
@@ -343,6 +344,20 @@ appropriate path.
 sub error {
     my ( $self, $msg ) = @_;
     Carp::croak $msg;
+}
+
+=item $form->call_procedure()
+
+=cut
+
+sub call_procedure {
+    my $self = shift;
+    my %args = @_;
+    $args{funcschema} ||= $self->{_wire}->get( 'db' )->schema;
+    $args{funcname} ||= $args{procname};
+    $args{dbh} = $self->{dbh};
+    $args{args} ||= [];
+    return PGObject->call_procedure(%args);
 }
 
 =item $form->finalize_request();

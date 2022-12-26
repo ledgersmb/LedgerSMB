@@ -21,7 +21,6 @@ which have not been approved yet.
 use strict;
 use warnings;
 
-use LedgerSMB::DBObject::Draft;
 use LedgerSMB::Report::Unapproved::Drafts;
 
 our $VERSION = '0.1';
@@ -73,11 +72,11 @@ sub approve {
         list_drafts($request);
         return;
     }
-    my $draft= LedgerSMB::DBObject::Draft->new(%$request);
     for my $row (1 .. $request->{rowcount_}){
-        if ($draft->{"select_$row"}){
-             $draft->{id} = $draft->{"select_$row"};
-             $draft->approve;
+        if ($request->{"select_$row"}){
+            $request->call_procedure(
+                funcname => 'draft_approve',
+                args     => [ $request->{"select_$row"} ]);
         }
     }
     return search($request);
@@ -106,11 +105,11 @@ sub delete {
         list_drafts($request);
         return;
     }
-    my $draft= LedgerSMB::DBObject::Draft->new(%$request);
-    for my $row (1 .. $draft->{rowcount_}){
-        if ($draft->{"select_$row"}){
-             $draft->{id} = $draft->{"select_$row"};
-             $draft->delete;
+    for my $row (1 .. $request->{rowcount_}){
+        if ($request->{"select_$row"}){
+            $request->call_procedure(
+                funcname => 'draft_delete',
+                args     => [ $request->{"select_$row"} ]);
         }
     }
     return search($request);

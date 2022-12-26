@@ -51,7 +51,6 @@ use LedgerSMB::IR;
 use LedgerSMB::IS;
 use LedgerSMB::Setting;
 use LedgerSMB::Tax;
-use LedgerSMB::DBObject::Draft;
 use LedgerSMB::DBObject::TransTemplate;
 
 use List::Util qw(uniq);
@@ -150,9 +149,7 @@ sub del {
         ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
     $wf->execute_action( 'del' );
 
-    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
-    $draft->delete();
-
+    $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
     $form->info($locale->text('Draft deleted'));
 }
 
@@ -1191,8 +1188,7 @@ sub save_temp {
 }
 
 sub edit_and_save {
-    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
-    $draft->delete();
+    $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
     delete $form->{id};
     AA->post_transaction( \%myconfig, \%$form );
 
@@ -1208,10 +1204,7 @@ sub edit_and_save {
 
 sub approve {
     $form->update_invnumber;
-
-    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
-
-    $draft->approve();
+    $form->call_procedure(funcname=>'draft_approve', args => [ $form->{id} ]);
 
     my $wf = $form->{_wire}->get('workflows')
         ->fetch_workflow( 'AR/AP', $form->{workflow_id} );

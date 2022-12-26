@@ -51,7 +51,6 @@ use LedgerSMB::PE;
 use LedgerSMB::Template::UI;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Legacy_Util;
-use LedgerSMB::DBObject::Draft;
 use LedgerSMB::DBObject::TransTemplate;
 
 require "old/bin/arap.pl";
@@ -89,15 +88,13 @@ require "old/bin/arap.pl";
 
 sub edit_and_save {
     check_balanced($form);
-    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
-    $draft->delete();
+    $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
     GL->post_transaction( \%myconfig, \%$form, $locale);
     edit();
 }
 
 sub approve {
-    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
-    $draft->approve();
+    $form->call_procedure(funcname=>'draft_approve', args => [ $form->{id} ]);
     if ($form->{callback}){
         print "Location: $form->{callback}\n";
         print "Status: 302 Found\n\n";
@@ -585,8 +582,7 @@ sub post {
 sub delete {
     $form->error($locale->text('Cannot delete posted transaction'))
        if ($form->{approved});
-    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
-    $draft->delete();
+    $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
     delete $form->{id};
     delete $form->{reference};
     add();
