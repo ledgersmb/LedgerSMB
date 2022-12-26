@@ -51,7 +51,7 @@ use LedgerSMB::IR;
 use LedgerSMB::IS;
 use LedgerSMB::Setting;
 use LedgerSMB::Tax;
-use LedgerSMB::DBObject::TransTemplate;
+# use LedgerSMB::DBObject::TransTemplate;
 
 use List::Util qw(uniq);
 use Workflow::Context;
@@ -1150,42 +1150,42 @@ sub on_hold {
 }
 
 
-sub save_temp {
-    my $lsmb = { %$form };
-    $lsmb->{is_invoice} = 1;
-    $lsmb->{due} = $form->{invtotal};
-    $lsmb->{credit_id} = $form->{customer_id} // $form->{vendor_id};
-    $lsmb->{curr} = $form->{currency};
-    my ($department_name, $department_id) = split/--/, $form->{department};
-     if (!$lsmb->{language_code}){
-        delete $lsmb->{language_code};
-    }
-    $lsmb->{credit_id} = $form->{"$form->{vc}_id"};
-    $lsmb->{department_id} = $department_id;
-    if ($form->{ARAP} eq 'AR'){
-        $lsmb->{entity_class} = 2;
-    } else {
-        $lsmb->{entity_class} = 1;
-    }
-    $lsmb->{post_date} = $form->{transdate};
-    for my $iter (0 .. $form->{rowcount}){
-        if ($form->{"$form->{ARAP}_amount_$iter"} and
-                  ($form->{"amount_$iter"} != 0)){
-             my ($acc_id, $acc_name) = split /--/, $form->{"$form->{ARAP}_amount_$iter"};
-             my $amount = $form->{"amount_$iter"};
-             push @{$lsmb->{journal_lines}},
-                  {accno => $acc_id,
-                   amount_fx => $amount,
-                   amount => $amount*$form->{exchangerate},
-                   curr => $form->{currency},
-                   cleared => 'false',
-                  };
-        }
-    }
-    $template = LedgerSMB::DBObject::TransTemplate->new(%$lsmb);
-    $template->save;
-    $form->redirect( $locale->text('Template Saved!') );
-}
+# sub save_temp {
+#     my $lsmb = { %$form };
+#     $lsmb->{is_invoice} = 1;
+#     $lsmb->{due} = $form->{invtotal};
+#     $lsmb->{credit_id} = $form->{customer_id} // $form->{vendor_id};
+#     $lsmb->{curr} = $form->{currency};
+#     my ($department_name, $department_id) = split/--/, $form->{department};
+#      if (!$lsmb->{language_code}){
+#         delete $lsmb->{language_code};
+#     }
+#     $lsmb->{credit_id} = $form->{"$form->{vc}_id"};
+#     $lsmb->{department_id} = $department_id;
+#     if ($form->{ARAP} eq 'AR'){
+#         $lsmb->{entity_class} = 2;
+#     } else {
+#         $lsmb->{entity_class} = 1;
+#     }
+#     $lsmb->{post_date} = $form->{transdate};
+#     for my $iter (0 .. $form->{rowcount}){
+#         if ($form->{"$form->{ARAP}_amount_$iter"} and
+#                   ($form->{"amount_$iter"} != 0)){
+#              my ($acc_id, $acc_name) = split /--/, $form->{"$form->{ARAP}_amount_$iter"};
+#              my $amount = $form->{"amount_$iter"};
+#              push @{$lsmb->{journal_lines}},
+#                   {accno => $acc_id,
+#                    amount_fx => $amount,
+#                    amount => $amount*$form->{exchangerate},
+#                    curr => $form->{currency},
+#                    cleared => 'false',
+#                   };
+#         }
+#     }
+#     $template = LedgerSMB::DBObject::TransTemplate->new(%$lsmb);
+#     $template->save;
+#     $form->redirect( $locale->text('Template Saved!') );
+# }
 
 sub edit_and_save {
     $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
