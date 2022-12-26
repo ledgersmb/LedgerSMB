@@ -21,7 +21,6 @@ use warnings;
 use Feature::Compat::Try;
 
 use LedgerSMB;
-use LedgerSMB::DBObject::Pricelist;
 use LedgerSMB::Entity::Company;
 use LedgerSMB::Entity::Person;
 use LedgerSMB::Entity::Credit_Account;
@@ -831,42 +830,53 @@ and the description is a full text search.
 sub save_pricelist {
     my ($request) = @_;
     my $count = $request->{rowcount_pricematrix};
-    my $pricelist = LedgerSMB::DBObject::Pricelist->new(%$request);
     my @lines;
 
     # Search and populate
     if (defined $request->{"int_partnumber_tfoot_$count"}
-         or defined $request->{"description_tfoot_$count"})
-    {
-        my ($partnumber) = split(/--/, $request->{"int_partnumber_tfoot_$count"});
+         or defined $request->{"description_tfoot_$count"}) {
+        my ($partnumber) =
+            split(/--/, $request->{"int_partnumber_tfoot_$count"});
         my $part = LedgerSMB::Part->get_by_partnumber($partnumber);
-        push @lines, {
-                   parts_id => $part->{id},
-                  validfrom => $request->{"validfrom_tfoot_$count"},
-                    validto => $request->{"validto_tfoot_$count"},
-                      price => $request->{"lastcost_tfoot_$count"} ||
-                               $request->{"sellprice_tfoot_$count"},
-                   leadtime => $request->{"leadtime_tfoot_$count"},
-                        qty => $request->{"qty_tfoot_$count"},
-         } if defined $part->{id};
+        if (defined $part->{id}) {
+            push @lines, {
+                parts_id  => $part->{id},
+                validfrom => $request->{"validfrom_tfoot_$count"},
+                validto   => $request->{"validto_tfoot_$count"},
+                price     => ($request->{"lastcost_tfoot_$count"} ||
+                              $request->{"sellprice_tfoot_$count"}),
+                leadtime  => $request->{"leadtime_tfoot_$count"},
+                qty       => $request->{"qty_tfoot_$count"},
+                curr      => $request->{curr},
+            };
+        }
     }
 
     # Save rows
     for (1 .. ($count - 1)){
         my $id = $request->{"row_$_"};
         push @lines, {
-                entry_id => $id,
-                parts_id => $request->{"parts_id_$id"},
-               validfrom => $request->{"validfrom_$id"},
-                 validto => $request->{"validto_$id"},
-                   price => $request->{"lastcost_$id"} ||
-                            $request->{"sellprice_$id"},
-                leadtime => $request->{"leadtime_$id"},
-                     qty => $request->{"qty_$id"},
+            parts_id  => $request->{"parts_$id"},
+            validfrom => $request->{"validfrom_$id"},
+            validto   => $request->{"validto_$id"},
+            price     => ($request->{"lastcost_$id"} ||
+                          $request->{"sellprice_$id"}),
+            leadtime  => $request->{"leadtime_$id"},
+            qty       => $request->{"qty_$id"},
+            curr      => $request->{curr},
         };
     }
 
-    $pricelist->save(\@lines);
+    for my $line (@lines) {
+        $request->call_procedure(
+            funcname => 'pricelist__save',
+            args     => [
+                $line->{parts_id},
+                $request->{credit_id},
+                $line->@{qw(pricebreak price lead_time partnumber validfrom
+                            validto curr entry_id qty)}
+            ]);
+    }
 
     return get_pricelist($request);
 }
@@ -878,9 +888,9 @@ sub save_pricelist {
 
 sub delete_pricelist {
     my ($request) = @_;
-    my $pricelist = LedgerSMB::DBObject::Pricelist->new(%$request);
-
-    $pricelist->delete;
+    $request->call_procedure(
+        funcname => 'pricelist__delete',
+        args     => [ $request->{entry_id}, $request->{credit_id} ]);
 
     # Return to UI
     return get_pricelist($request);
