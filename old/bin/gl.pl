@@ -51,8 +51,6 @@ use LedgerSMB::PE;
 use LedgerSMB::Template::UI;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Legacy_Util;
-use LedgerSMB::DBObject::Draft;
-use LedgerSMB::DBObject::TransTemplate;
 
 require "old/bin/arap.pl";
 
@@ -89,15 +87,13 @@ require "old/bin/arap.pl";
 
 sub edit_and_save {
     check_balanced($form);
-    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
-    $draft->delete();
+    $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
     GL->post_transaction( \%myconfig, \%$form, $locale);
     edit();
 }
 
 sub approve {
-    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
-    $draft->approve();
+    $form->call_procedure(funcname=>'draft_approve', args => [ $form->{id} ]);
     if ($form->{callback}){
         print "Location: $form->{callback}\n";
         print "Status: 302 Found\n\n";
@@ -312,17 +308,7 @@ sub display_form
 sub save_temp {
     my ($department_name, $department_id) = split/--/, $form->{department};
 
-    my $data = {
-        dbh => $form->{dbh},
-        department_id => $department_id,
-        reference => $form->{reference},
-        description => $form->{description},
-        department_id => $department_id,
-        post_date => $form->{transdate},
-        type => 'gl',
-        journal_lines => [],
-    };
-
+    my @lines;
     for my $iter (0 .. $form->{rowcount}){
         if ($form->{"accno_$iter"} and
             (($form->{"credit_$iter"} != 0) or
@@ -334,18 +320,43 @@ sub save_temp {
                  ( $form->{"debit_$iter"} * -1 );
              my $amount_fx = $form->{"credit_fx_$iter"} ||
                  ( $form->{"debit_fx_$iter"} * -1 );
-             push @{$data->{journal_lines}},
-                  {accno => $acc_id,
-                   amount => $amount,
-                   amount_fx => $amount_fx,
-                   curr => $form->{"curr_$iter"},
-                   cleared => 'false',
-                  };
+             push @lines, {
+                 accno => $acc_id,
+                 amount => $amount,
+                 amount_fx => $amount_fx,
+                 curr => $form->{"curr_$iter"},
+             };
         }
     }
 
-    $template = LedgerSMB::DBObject::TransTemplate->new(%$data);
-    $template->save;
+    my ($journal) = $form->call_procedure(
+        funcname => 'journal__add',
+        args     => [
+            $form->{reference},
+            $form->{description},
+            1, # GJ journal
+            $form->{transdate},
+            0,
+            1,
+            $form->{curr_0} ###BUG: Sets a currency that doesn't exist on the GL screen!
+        ]);
+    for my $line (@lines) {
+        my ($acc) = $form->call_procedure(
+            funcname => 'account__get_from_accno',
+            args     => [ $line->{accno} ]);
+        $form->call_procedure(
+            funcname => 'journal__add_line',
+            args     => [
+                $acc->{id},
+                $journal->{id},
+                $line->{amount},
+                $line->{amount_fx},
+                $line->{curr},
+                'false',
+                undef, ###BUG: discards the 'memo' text!
+                undef ###BUG: discards selected reporting units!
+            ]);
+    }
     $form->redirect( $locale->text('Template Saved!') );
 }
 
@@ -475,13 +486,13 @@ sub create_links {
 
 sub update {
     &create_links;
-     my $min_lines = $form->get_setting('min_empty');
-     $form->open_form unless $form->check_form;
+    my $min_lines = $form->get_setting('min_empty');
+    $form->open_form unless $form->check_form;
 
-     $form->{transdate} = LedgerSMB::PGDate->from_input($form->{transdate})->to_output();
-     if ( $form->{transdate} ne $form->{oldtransdate} ) {
-         $form->{oldtransdate} = $form->{transdate};
-     }
+    $form->{transdate} = LedgerSMB::PGDate->from_input($form->{transdate})->to_output();
+    if ( $form->{transdate} ne $form->{oldtransdate} ) {
+        $form->{oldtransdate} = $form->{transdate};
+    }
 
     $form->all_business_units($form->{transdate}, undef, 'GL');
     GL->get_all_acc_dep_pro( \%myconfig, \%$form );
@@ -585,8 +596,7 @@ sub post {
 sub delete {
     $form->error($locale->text('Cannot delete posted transaction'))
        if ($form->{approved});
-    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
-    $draft->delete();
+    $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
     delete $form->{id};
     delete $form->{reference};
     add();

@@ -40,8 +40,6 @@ use LedgerSMB::App_State;
 use LedgerSMB::Company;
 use LedgerSMB::Database;
 use LedgerSMB::Database::Config;
-use LedgerSMB::DBObject::Admin;
-use LedgerSMB::DBObject::User;
 use LedgerSMB::Entity::User;
 use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::I18N;
@@ -54,6 +52,7 @@ use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
 use LedgerSMB::Template::UI;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Database::Upgrade;
+use LedgerSMB::User;
 
 
 
@@ -359,12 +358,10 @@ sub list_users {
     my ($reauth) = _init_db($request);
     return $reauth if $reauth;
 
-    my $user = LedgerSMB::DBObject::User->new();
-    $user->set_dbh($request->{dbh});
-    my $users = $user->get_all_users;
+    my @users = LedgerSMB::User->get_all_users($request);
     $request->{users} = [];
-    for my $u (@$users) {
-        push @{$request->{users}}, {row_id => $u->{id}, name => $u->{username} };
+    for my $user (@users) {
+        push @{$request->{users}}, {row_id => $user->{id}, name => $user->{username} };
     }
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'setup/list_users', $request);
@@ -1338,32 +1335,35 @@ sub edit_user_roles {
     return $reauth if $reauth;
 
     local $LedgerSMB::App_State::User = {};
-    my $admin = LedgerSMB::DBObject::Admin->new();
-    $admin->set_dbh($request->{dbh});
-    my $all_roles = $admin->get_roles($request->{database});
-
-    my $user_obj = LedgerSMB::DBObject::User->new();
-    $user_obj->set_dbh($request->{dbh});
-    $user_obj->get($request->{id});
-
-    # LedgerSMB::DBObject::User doesn't retrieve the username
-    # field from the users table (nor any of the other values from it,
-    # really) and there's no stored procedure to do so.
-    # The name 'admin__get_user' is already taken, but takes the entity_id
-    # as its argument... So, we're going brute force here, for 1.4
-    my @user_rec = grep { $_->{id} == $request->{id} }
-          @{$user_obj->get_all_users};
-
-    $user_obj->{username} = $user_rec[0]->{username};
-
     my $template = LedgerSMB::Template::UI->new_UI;
-    my $template_data = {
-                        request => $request,
-                           user => $user_obj,
-                          roles => $all_roles,
-            };
-
-    return $template->render($request, 'setup/edit_user', $template_data);
+    my ($user) = $request->call_procedure(
+        funcname => 'admin__get_user',
+        args     => [ $request->{id} ]);
+    return $template->render(
+        $request,
+        'setup/edit_user',
+        {
+            request => $request,
+            roles   => [
+                map {
+                    +{
+                        name => $_->{rolname},
+                        description => ($_->{rolname} =~ s/_/ /gr),
+                    }
+                }
+                $request->call_procedure(funcname => 'admin__get_roles')
+                ],
+            user    => {
+                roles    => [
+                    map { $_->{admin__get_roles_for_user} }
+                    $request->call_procedure(
+                        funcname => 'admin__get_roles_for_user',
+                        args     => [ $request->{id} ])
+                    ],
+                user_id  => $request->{id},
+                username => $user->{username},
+            }
+        });
 }
 
 =item save_user_roles
@@ -1376,13 +1376,31 @@ sub save_user_roles {
     my ($reauth) = _init_db($request);
     return $reauth if $reauth;
 
-    $request->{user_id} = $request->{id};
-    my $admin = LedgerSMB::DBObject::Admin->new(%$request);
-    my $roles = [];
-    for my $r (grep { $_ =~ m/lsmb_(.+)__/ } keys %$request) {
-        push @$roles, $r;
+    my ($user) = $request->call_procedure(
+        funcname => 'admin__get_user',
+        args => [ $request->{id} ] );
+    my %active_roles = map {
+        $_->{admin__get_roles_for_user} => 1
+    } $request->call_procedure(
+        funcname => 'admin__get_roles_for_user',
+        args     => [ $request->{id} ]);
+
+    for my $role (
+        map { $_->{rolname} }
+        $request->call_procedure( funcname => 'admin__get_roles' ) ) {
+        if ($active_roles{$role} and not $request->{$role}) {
+            # remove
+            $request->call_procedure(
+                funcname => 'admin__remove_user_from_role',
+                args     => [ $user->{username}, $role ] );
+        }
+        elsif ($request->{$role} and not $active_roles{$role}) {
+            # add
+            $request->call_procedure(
+                funcname => 'admin__add_user_to_role',
+                args     => [ $user->{username}, $role ] );
+        }
     }
-    $admin->save_roles($roles);
 
     return edit_user_roles($request);
 }

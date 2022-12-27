@@ -22,7 +22,6 @@ This module doesn't specify any methods.
 use strict;
 use warnings;
 
-use LedgerSMB::DBObject::TransTemplate;
 use LedgerSMB::Report::Listings::TemplateTrans;
 
 use LedgerSMB::old_code qw(dispatch);
@@ -54,13 +53,20 @@ sub view {
     our $template_dispatch =
     {
         '1' => {script => 'gl.pl', function => \&_run_update },
-        '2' => {script => 'ar.pl', function => \&_run_update },
-        '3' => {script => 'ap.pl', function => \&_run_update },
+#        '2' => {script => 'ar.pl', function => \&_run_update },
+#        '3' => {script => 'ap.pl', function => \&_run_update },
     };
 
-    my $transtemplate =
-        LedgerSMB::DBObject::TransTemplate->new(%$request);
-    $transtemplate->get;
+    my ($transtemplate) =
+        $request->call_procedure(
+            funcname => 'journal__get_entry',
+            args     => [ $request->{id} ]);
+    $transtemplate->{line_items} = [
+        $request->call_procedure(
+            funcname => 'journal__lines',
+            args     => [ $request->{id} ])
+        ];
+
     my $journal_type = $transtemplate->{journal};
     my $entry = $template_dispatch->{$journal_type};
     my $script = $entry->{script};
@@ -98,7 +104,8 @@ sub convert_to_form{
             } else {
                 $form->{"credit_$form->{rowcount}"} = $row->{amount};
             }
-            my $act = $trans->get_account_info($row->{account_id});
+            my ($act) = $form->call_procedure(
+                funcname => 'account_get', args => [ $row->{account_id} ]);
             $form->{"accno_$form->{rowcount}"} =
                        "$act->{accno}--$act->{description}";
             ++$form->{rowcount};
@@ -149,12 +156,13 @@ Delete transaction templates
 
 sub delete {
     my ($request) = @_;
-    my $templates =
-        LedgerSMB::DBObject::TransTemplate->new(dbh => $request->{dbh});
 
     for my $row ( 1 .. $request->{rowcount_} ) {
-        $templates->delete($request->{"row_select_$row"})
-            if $request->{"row_select_$row"};
+        next unless $request->{"row_select_$row"};
+
+        $request->call_procedure(
+            funcname => 'journal__delete',
+            args     => [ $request->{"row_select_$row"} ]);
         delete $request->{"row_select_$row"};
     }
     return $request->render_report(

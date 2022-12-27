@@ -17,8 +17,6 @@ This module provides the workflow scripts for managing users and permissions.
 
 =cut
 
-use LedgerSMB::DBObject::Admin;
-use LedgerSMB::DBObject::User;
 use LedgerSMB::Entity::User;
 use LedgerSMB::Report::Listings::User;
 use LedgerSMB::Template::UI;
@@ -94,8 +92,7 @@ Displays a list of open sessions.  No inputs required or used.
 
 sub list_sessions {
     my ($request) = @_;
-    my $admin = LedgerSMB::DBObject::Admin->new(%$request);
-    my @sessions = $admin->list_sessions();
+    my @sessions = $request->call_procedure(funcname => 'admin__list_sessions');
     my $column_names = {
         id => 'ID',
         username => 'Username',
@@ -136,8 +133,9 @@ Deletes the session specified by $request->{session_id}
 
 sub delete_session {
     my ($request) = @_;
-    my $admin = LedgerSMB::DBObject::Admin->new(%$request);
-    $admin->delete_session();
+    $request->call_procedure(
+        funcname => 'admin__drop_session',
+        args     => [ $request->{session_id} ]);
     return list_sessions($request);
 }
 

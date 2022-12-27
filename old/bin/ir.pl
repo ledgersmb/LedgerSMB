@@ -50,7 +50,6 @@ use LedgerSMB::IS;
 use LedgerSMB::PE;
 use LedgerSMB::Tax;
 use LedgerSMB::Setting;
-use LedgerSMB::DBObject::Draft;
 
 require "old/bin/io.pl";
 require "old/bin/arap.pl";
@@ -69,8 +68,7 @@ sub copy_to_new{
 
 sub edit_and_save {
     $form->{ARAP} = 'AP';
-    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
-    $draft->delete();
+    $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
     delete $form->{id};
     IR->post_invoice( \%myconfig, \%$form );
 
@@ -83,9 +81,7 @@ sub edit_and_save {
 }
 
 sub approve {
-    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
-
-    $draft->approve();
+    $form->call_procedure(funcname=>'draft_approve', args => [ $form->{id} ]);
 
     if ($form->{callback}){
         print "Location: $form->{callback}\n";
@@ -141,9 +137,7 @@ sub del {
         ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
     $wf->execute_action( 'del' );
 
-    my $draft = LedgerSMB::DBObject::Draft->new(%$form);
-    $draft->delete();
-
+    $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
     $form->info($locale->text('Draft deleted'));
 }
 
