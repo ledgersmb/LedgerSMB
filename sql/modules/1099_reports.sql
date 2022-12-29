@@ -41,7 +41,8 @@ CREATE TYPE tax_form_report_detail_item AS (
     duedate text,
     invoice_id int);
 
-CREATE OR REPLACE FUNCTION tax_form_summary_report(in_tax_form_id int, in_begin date, in_end date)
+drop function if exists tax_form_summary_report(int,date,date);
+CREATE OR REPLACE FUNCTION tax_form_summary_report(in_tax_form_id int, in_from_date date, in_to_date date)
 RETURNS SETOF tax_form_report_item AS $BODY$
               SELECT entity_credit_account.id,
                      company.legal_name, company.entity_id,
@@ -102,7 +103,7 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                        where chart_id in (select account_id
                                             from account_link
                                            where description like '%paid')
-                          AND transdate BETWEEN in_begin AND in_end
+                          AND transdate BETWEEN in_from_date AND in_to_date
                      group by ac.trans_id
                      ) pmt ON  (pmt.trans_id = gl.id)
                 JOIN entity_credit_account
@@ -115,11 +116,12 @@ RETURNS SETOF tax_form_report_item AS $BODY$
 $BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_summary_report
-(in_tax_form_id int, in_begin date, in_end date) IS
+(in_tax_form_id int, in_from_date date, in_to_date date) IS
 $$This provides the total reportable value per vendor.  As per 1099 forms, these
 are cash-basis documents and show amounts paid.$$;
 
-CREATE OR REPLACE FUNCTION tax_form_details_report(in_tax_form_id int, in_begin date, in_end date, in_meta_number text)
+drop function if exists tax_form_details_report(int, date, date, text);
+CREATE OR REPLACE FUNCTION tax_form_details_report(in_tax_form_id int, in_from_date date, in_to_date date, in_meta_number text)
 RETURNS SETOF tax_form_report_detail_item AS $BODY$
               SELECT entity_credit_account.id,
                      company.legal_name, company.entity_id,
@@ -184,7 +186,7 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                        where chart_id in (select account_id
                                             from account_link
                                            where description like '%paid')
-                          AND transdate BETWEEN in_begin AND in_end
+                          AND transdate BETWEEN in_from_date AND in_to_date
                      group by ac.trans_id
                      ) pmt ON  (pmt.trans_id = gl.id)
                 WHERE country_tax_form.id = in_tax_form_id AND meta_number = in_meta_number
@@ -192,13 +194,14 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
 $BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_details_report
-(in_tax_form_id int, in_begin date, in_end date, in_meta_number text) IS
+(in_tax_form_id int, in_from_date date, in_to_date date, in_meta_number text) IS
 $$ This provides a list of invoices and transactions that a report hits.  This
 is intended to allow an organization to adjust what is reported on the 1099
 before printing them.$$;
 
+drop function if exists tax_form_summary_report_accrual(int, date, date);
 CREATE OR REPLACE FUNCTION tax_form_summary_report_accrual
-(in_tax_form_id int, in_begin date, in_end date)
+(in_tax_form_id int, in_from_date date, in_to_date date)
 RETURNS SETOF tax_form_report_item AS $BODY$
               SELECT entity_credit_account.id,
                      company.legal_name, company.entity_id,
@@ -221,11 +224,11 @@ RETURNS SETOF tax_form_report_item AS $BODY$
 
                 FROM (select id, transdate, entity_credit_account, invoice,
                              amount_bc, 'ar' as class FROM ar
-                       WHERE transdate BETWEEN in_begin AND in_end
+                       WHERE transdate BETWEEN in_from_date AND in_to_date
                        UNION
                       select id, transdate, entity_credit_account, invoice,
                               amount_bc, 'ap' as class from ap
-                       WHERE transdate BETWEEN in_begin AND in_end
+                       WHERE transdate BETWEEN in_from_date AND in_to_date
                      ) gl
                JOIN (select trans_id, 'acc_trans' as relation,
                              sum(amount_bc) as amount_bc,
@@ -260,12 +263,13 @@ RETURNS SETOF tax_form_report_item AS $BODY$
 $BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_summary_report_accrual
-(in_tax_form_id int, in_begin date, in_end date) IS
+(in_tax_form_id int, in_from_date date, in_to_date date) IS
 $$This provides the total reportable value per vendor.  As per 1099 forms, these
 are cash-basis documents and show amounts paid.$$;
 
+drop function if exists tax_form_details_report_accrual(int, date, date, text);
 CREATE OR REPLACE FUNCTION tax_form_details_report_accrual
-(in_tax_form_id int, in_begin date, in_end date, in_meta_number text)
+(in_tax_form_id int, in_from_date date, in_to_date date, in_meta_number text)
 RETURNS SETOF tax_form_report_detail_item AS $BODY$
               SELECT entity_credit_account.id,
                      company.legal_name, company.entity_id,
@@ -291,12 +295,12 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                 FROM (select id, entity_credit_account, invnumber, duedate,
                              amount_bc, transdate, 'ar' as class
                         FROM ar
-                       WHERE transdate BETWEEN in_begin AND in_end
+                       WHERE transdate BETWEEN in_from_date AND in_to_date
                        UNION
                       select id, entity_credit_account, invnumber, duedate,
                              amount_bc, transdate, 'ap' as class
                         FROM ap
-                       WHERE transdate BETWEEN in_begin AND in_end
+                       WHERE transdate BETWEEN in_from_date AND in_to_date
                      ) gl
                 JOIN (select trans_id, 'acc_trans' as relation,
                              sum(amount_bc) as amount_bc,
@@ -327,7 +331,7 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
 $BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_details_report_accrual
-(in_tax_form_id int, in_begin date, in_end date, in_meta_number text) IS
+(in_tax_form_id int, in_from_date date, in_to_date date, in_meta_number text) IS
 $$ This provides a list of invoices and transactions that a report hits.  This
 is intended to allow an organization to adjust what is reported on the 1099
 before printing them.$$;
