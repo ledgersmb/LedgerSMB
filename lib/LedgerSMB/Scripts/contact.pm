@@ -21,7 +21,6 @@ use warnings;
 use Feature::Compat::Try;
 
 use LedgerSMB;
-use LedgerSMB::DBObject::TaxForm;
 use LedgerSMB::Entity::Company;
 use LedgerSMB::Entity::Person;
 use LedgerSMB::Entity::Credit_Account;
@@ -277,7 +276,7 @@ sub _main_screen {
     }
 
     my @taxform_list =
-        LedgerSMB::DBObject::TaxForm->new(%$request)->get_forms();
+        $request->call_procedure(funcname => 'tax_form__list_all');
 
     my @location_class_list =
        grep { $_->{class} =~ m/^(?:Billing|Sales|Shipping)$/ }
