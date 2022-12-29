@@ -129,11 +129,22 @@ sub generate_report {
     die $request->{_locale}->text('No tax form selected')
         unless $request->{tax_form_id};
 
+    my $tf = LedgerSMB::DBObject::TaxForm
+        ->new(dbh => $request->_dbh )
+        ->get($request->{tax_form_id});
+
     my $report;
     if ($request->{meta_number}){
-        $report = LedgerSMB::Report::Taxform::Details->new(%$request);
+        $report = LedgerSMB::Report::Taxform::Details->new(
+            %$request,
+            taxform    => $tf->{form_name},
+            is_accrual => $tf->{is_accrual});
     } else {
-        $report = LedgerSMB::Report::Taxform::Summary->new(%$request);
+        $report = LedgerSMB::Report::Taxform::Summary->new(
+            %$request,
+            taxform    => $tf->{form_name},
+            is_accrual => $tf->{is_accrual});
+            );
     }
     return $request->render_report($report);
 }

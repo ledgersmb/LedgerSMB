@@ -13,7 +13,6 @@ forms for LedgerSMB
 
 =cut
 
-use LedgerSMB::DBObject::TaxForm;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
@@ -43,6 +42,8 @@ This is the id of the taxform.
 has tax_form_id => (is => 'ro', isa => 'Int', required => '1');
 
 has taxform => (is => 'rw', isa => 'Str', required => 0);
+
+has is_accrual => (is => 'rw', isa => 'Bool', required => 0, default => 0);
 
 =head1 REPORT CONSTANTS
 
@@ -142,12 +143,8 @@ sub buttons {
 
 sub run_report {
     my ($self) = @_;
-    my $tf = LedgerSMB::DBObject::TaxForm
-        ->new(dbh => $self->_dbh )
-        ->get($self->tax_form_id);
-    $self->taxform($tf->{form_name});
     my $fname = 'tax_form_summary_report';
-    $fname .= '_accrual' if $tf->{is_accrual};
+    $fname .= '_accrual' if $self->is_accrual;
     my @rows = $self->call_dbmethod(funcname => $fname);
 
     my $href_suffix_base = 'from_date=' . $self->from_date
