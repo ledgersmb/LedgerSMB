@@ -138,22 +138,6 @@
     } %]
   </div>
 </div>
-[% IF form.id %]
-<div  class="inputline" id="obsolete-line">
-<label class="line" for='obsolete'>[% text('Obsolete') %]</label>
-[%
-        IF form.obsolete;
-           obsolete = 'CHECKED';
-        END;
-        INCLUDE input element_data={
-               name = 'obsolete'
-               type = 'checkbox',
-            checked = obsolete
-              value = '1'
-        } %]
-
-</div>
-[% END #  IF ID %]
 <div class="inputline" id="desc-line2">
    <label class="line" for="desc-a">[% text('Description') %]</label>
    <div class="inputgroup">
@@ -167,6 +151,26 @@
         id = 'desc-a'
     } %]
    </div>
+</div>
+<div class="inputline" id="acctype-line">
+   <label class="line" for="category-a">[% text('Account Type') %]</label>
+   <div class="inputgroup">
+      [%
+        a_types = [
+              { value = 'A', text = text('Asset') }
+              { value = 'L', text = text('Liability') }
+              { value = 'Q', text = text('Equity') }
+              { value = 'Qt', text = text('Equity (Temporary)') } #'
+              { value = 'I', text = text('Income') }
+              { value = 'E', text = text('Expense') }
+        ];
+    INCLUDE select element_data = {
+                  name = 'category'
+               options = a_types
+        default_values = [form.category]
+                    id = 'category-a'
+    }; %]
+  </div>
 </div>
 <div class="inputline" id="heading-line2">
    <label class="line" for="heading-a">[% text('Heading') %]</label>
@@ -183,7 +187,40 @@
     }; %]
    </div>
 </div>
-<div id="accdetails">
+<fieldset id="accdetails" style="border:1px solid lightgrey;border-radius:4px;margin-top:2em;padding:1em;width:max-content">
+  <legend style="padding-left:1em;padding-right:1em;font-size:120%;font-weight:bold">Configuration</legend>
+<div class="inputline" id="summary-line">
+    <label class="line" for="summary-a">[% text('Summary account for') %]</label>
+    <div class="inputgroup">
+    [%
+        summary = [];
+
+        # Localize summary account_link descriptions
+        FOREACH account_link IN form.summary_link_descriptions;
+            IF account_link.description == 'IC';
+                # Retain historic override for Inventory
+                account_link.text = text('Inventory');
+            ELSE;
+                account_link.text = maketext(account_link.description);
+            END;
+
+            IF form.${account_link.description};
+                summary = account_link.description;
+            END;
+        END;
+
+        INCLUDE select element_data = {
+                   name = "summary"
+                options = form.summary_link_descriptions
+         default_values = summary
+          default_blank = 'true'
+              text_attr = 'text',
+             value_attr = 'description'
+                     id = 'summary-a'
+        };
+    %]
+    </div>
+</div>
 [% IF form.gifi_list.size > 0 -%]
 <div class="inputline" id="gifi-line">
    <label class="line" for="gifi-a">[% text('GIFI') %]</label>
@@ -206,26 +243,6 @@
    </div>
 </div>
 [% END -%]
-<div class="inputline" id="acctype-line">
-   <label class="line" for="category-a">[% text('Account Type') %]</label>
-   <div class="inputgroup">
-      [%
-        a_types = [
-              { value = 'A', text = text('Asset') }
-              { value = 'L', text = text('Liability') }
-              { value = 'Q', text = text('Equity') }
-              { value = 'Qt', text = text('Equity (Temporary)') } #'
-              { value = 'I', text = text('Income') }
-              { value = 'E', text = text('Expense') }
-        ];
-    INCLUDE select element_data = {
-                  name = 'category'
-               options = a_types
-        default_values = [form.category]
-                    id = 'category-a'
-    }; %]
-  </div>
-</div>
 <div class="inputline" id="acc-options-line">
    <label class="line">[% text('Options') %]</label>
    <div class="inputgroup">
@@ -261,6 +278,18 @@
             checked = tax,
               value = '1'} %]
    </div>
+[% IF form.id %]
+   <div  class="inputgroup">
+     [%
+        INCLUDE input element_data={
+               name = 'obsolete'
+               type = 'checkbox'
+              label = text('Obsolete')
+            checked = form.obsolete ? 'checked' : ''
+              value = '1'
+        } %]
+   </div>
+[% END #  IF ID %]
 </div>
 [% IF form.custom_link_descriptions.size %]
 <div class="inputline" id="acc-custom-flags-line">
@@ -278,43 +307,11 @@
     [% END %]
 </div>
 [% END %]
-<div class="inputline" id="summary-line">
-    <label class="line" for="summary-a">[% text('Summary account for') %]</label>
-    <div class="inputgroup">
-    [%
-        summary = [];
-
-        # Localize summary account_link descriptions
-        FOREACH account_link IN form.summary_link_descriptions;
-            IF account_link.description == 'IC';
-                # Retain historic override for Inventory
-                account_link.text = text('Inventory');
-            ELSE;
-                account_link.text = maketext(account_link.description);
-            END;
-
-            IF form.${account_link.description};
-                summary = account_link.description;
-            END;
-        END;
-
-        INCLUDE select element_data = {
-                   name = "summary"
-                options = form.summary_link_descriptions
-         default_values = summary
-          default_blank = 'true'
-              text_attr = 'text',
-             value_attr = 'description'
-                     id = 'summary-a'
-        };
-    %]
-    </div>
-</div>
-</div> <!-- account details div -->
-<div id="dropdowns">
-<div class="subsectionhead">
+</fieldset> <!-- account details div -->
+<fieldset id="dropdowns" style="border:1px solid lightgrey;border-radius:4px;margin-top:2em;padding:1em;width:max-content">
+<legend class="subsectionhead" style="padding-left:1em;padding-right:1em;font-size:120%;font-weight:bold">
    [% text('Include in drop-down menus') %]
-</div>
+</legend>
 <div class="inputline" id="ar-line">
    <label class="line">[% text('Receivables') %]</label>
    <div class="inputgroup">
@@ -534,7 +531,7 @@
              value = 'asset_loss'} %]
    </div>
 </div>
-</div> <!-- dropdown div -->
+</fieldset> <!-- dropdown div -->
 
 <hr size="3" noshade="noshade" />
 
