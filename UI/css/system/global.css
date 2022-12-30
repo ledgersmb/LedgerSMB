@@ -742,3 +742,7 @@ h2 {
 .toaster.hidden {
     display: none;
 }
+
+.inputline {
+    margin: 1px 0;
+}

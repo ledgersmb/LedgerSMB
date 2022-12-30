@@ -34,7 +34,7 @@ When qr/^I (select|deselect) every checkbox in "(.*)"$/, sub {
     );
 
     my @checkboxes = $page->find_all(
-        qq{.//div[\@id="$section_ids{$section}"]//input[\@type="checkbox"]}
+        qq{.//*[\@id="$section_ids{$section}"]//input[\@type="checkbox"]}
     ) or die "failed to find checkboxes";
 
     foreach my $checkbox (@checkboxes) {
@@ -58,7 +58,7 @@ Then qr/^I expect to see (\d+) selected checkboxes in "(.*)"$/, sub {
 
     my $page = S->{ext_wsl}->page->body->maindiv->content;
     my @checkboxes = $page->find_all(
-        qq{.//div[\@id="$section_ids{$section}"]//input[\@type="checkbox" and \@checked="checked"]}
+        qq{.//*[\@id="$section_ids{$section}"]//input[\@type="checkbox" and \@checked="checked"]}
     );
 
     is(scalar @checkboxes, $wanted_count, "found $wanted_count selected checkboxes");
