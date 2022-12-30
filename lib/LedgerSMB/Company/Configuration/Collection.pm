@@ -122,6 +122,7 @@ sub get {
     my $offset = 0;
     my $limit = undef;
     my $where = 'true';
+    my $order = '';
     my @qargs = ();
     while (@args) {
         my $key = shift @args;
@@ -145,17 +146,22 @@ sub get {
             $offset = pop @args;
         }
         elsif ($key eq 'filter') {
-            my $filter = pop @args;
-            $where .= ' AND (' . (shift @$filter) . ')';
-            push @qargs, @$filter;
+            my $filter = $val;
+            my $criterion = ref $filter ? (shift @$filter) : $filter;
+            $where .= ' AND (' . $criterion . ')';
+            push @qargs, @$filter if ref $filter;
         }
         elsif ($key eq 'order') {
-            ##TODO
+            my $sort = $val;
+            my $clause = ref $sort ? (shift @$sort) : $sort;
+            $order .= $clause;
+            push @qargs, @$sort if ref $sort;
         }
     }
+    $order = 'ORDER BY ' . $order if $order;
     my $inner_query = $self->_resultset;
     my $sth = $self->dbh->prepare(
-        qq{SELECT * FROM ($inner_query) x WHERE $where LIMIT ? OFFSET ?})
+        qq{SELECT * FROM ($inner_query) x WHERE $where $order LIMIT ? OFFSET ?})
         or die $self->dbh->errstr;
 
     $sth->execute(@qargs, $limit, $offset)
