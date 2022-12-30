@@ -588,7 +588,6 @@ sub get_report_summary {
     @{$self}{keys %$r} = values %$r;
 
     # Add summary details of the account we're reconciling
-    # We should perhaps be instantiating a LedgerSMB::DBObject::Account object
     $self->{account_info} = $self->call_dbmethod(
         funcname=>'account_get',
         args => { id => $self->{chart_id} }

@@ -54,7 +54,6 @@ use List::Util qw/any sum/;
 
 use LedgerSMB::Batch;
 use LedgerSMB::Business_Unit;
-use LedgerSMB::DBObject::Account;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::Magic qw( MAX_DAYS_IN_MONTH  BRU_DEPARTMENT  EC_VENDOR );
 use LedgerSMB::Num2text;
@@ -222,10 +221,9 @@ sub pre_bulk_post_report {
     # The user interface sets the 'id' field true-ish when the customer
     # is selected for inclusion in the bulk payment
     @{$data->{contacts}} = grep { $_->{id} } @{$data->{contacts}};
-    my %accounts =
-        map { $_->{accno} => $_ } LedgerSMB::DBObject::Account->new(
-            dbh => $request->{dbh}
-        )->list;
+    my %accounts = map {
+        $_->{accno} => $_
+    } $request->call_procedure(funcname => 'chart_list_all');
 
     for my $crow (@{$data->{contacts}}) {
         $crow->{accno} = $data->{ar_ap_accno};

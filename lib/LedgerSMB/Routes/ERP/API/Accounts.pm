@@ -21,7 +21,7 @@ This module doesn't export any methods.
 use strict;
 use warnings;
 
-use LedgerSMB::DBObject::Account;
+use LedgerSMB::Company::Configuration;
 use LedgerSMB::Router appname => 'erp/api';
 
 use HTTP::Status qw( HTTP_OK );
@@ -36,7 +36,9 @@ get '/accounts/', sub {
     my $label = $req->parameters->{label} // '';
     $label =~ s/\*//g;
 
-    my $account = LedgerSMB::DBObject::Account->new(dbh => $env->{'lsmb.app'});
+    my @accounts = LedgerSMB::Company::Configuration->new(
+        dbh => $env->{'lsmb.app'}
+        )->coa_nodes->get(filter => q{not is_heading});
     return [ HTTP_OK,
              [ 'Content-Type' => '' ],
              [ json()->encode(
@@ -50,9 +52,10 @@ get '/accounts/', sub {
                             || ($a->{label} cmp $b->{label})
                     }
                     grep { (! $label) || $_->{label} =~ m/\Q$label\E/i }
-                    map { $_->{label} = $_->{accno} . '--' . $_->{description};
-                          $_ }
-                    $account->list()
+                    map {
+                        $_->{label} = $_->{accno} . '--' . $_->{description};
+                        +{ %$_ }
+                    } @accounts
                    ])
              ]
         ];

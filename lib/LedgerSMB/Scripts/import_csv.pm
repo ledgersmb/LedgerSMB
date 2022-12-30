@@ -22,7 +22,7 @@ use warnings;
 
 use LedgerSMB::AA;
 use LedgerSMB::Batch;
-use LedgerSMB::DBObject::Account;
+use LedgerSMB::Company::Configuration;
 use LedgerSMB::Form;
 use LedgerSMB::GL;
 use LedgerSMB::Inventory::Adjust;
@@ -357,23 +357,28 @@ sub _process_chart {
     my ($request, $entries) = @_;
 
     my %imported;
+    my $cfg = LedgerSMB::Company::Configuration->new(dbh => $request->{dbh});
     foreach my $entry (@$entries){
         my %settings;
 
+        ###BUG missing import settings: 'recon' and "is_temp"
         @settings{qw( accno description charttype
                       category contra tax link heading gifi_accno )} = @$entry;
-
-        my @link = split /:/, $settings{link};
-        @settings{ @link } = ( (1) x @link);
+        if ($settings{charttype} eq 'A') {
+            $settings{type} = 'account';
+        }
+        elsif ($settings{charttype} eq 'H') {
+            $settings{type} = 'heading';
+        }
+        $settings{link} = split /:/, $settings{link};
 
         die "Unable to resolve heading $settings{heading} to its id; available: " . join(' ', sort keys %imported)
             if ($settings{heading}
                 and not exists $imported{$settings{heading}});
-        $settings{heading} = $imported{$settings{heading}}->{id};
+        $settings{heading_id} = $imported{$settings{heading}}->{id};
 
-        my $account =
-            LedgerSMB::DBObject::Account->new(%settings,
-                                              dbh => $request->{dbh});
+        $settings{gifi_id} = $settings{gifi_accno};
+        my $account = $cfg->coa_nodes->create(%settings);
         $account->save();
         $imported{$settings{accno}} = $account;
     }

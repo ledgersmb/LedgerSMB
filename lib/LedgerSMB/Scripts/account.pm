@@ -23,9 +23,9 @@ use strict;
 use warnings;
 
 use Log::Any;
+use Feature::Compat::Try;
 
 use LedgerSMB;
-use LedgerSMB::DBObject::Account;
 use LedgerSMB::Template::UI;
 
 
@@ -37,14 +37,7 @@ Displays a screen to create a new account.
 
 sub new_account {
     my ($request) = @_;
-
-    my $account = LedgerSMB::DBObject::Account->new(
-        dbh => $request->{dbh},
-        charttype => 'A',
-        );
-    $account->init();
-
-    return _display_account_screen($request, $account);
+    return _display_account_screen($request, { charttype => 'A' });
 }
 
 =item new_heading
@@ -55,13 +48,7 @@ Displays a screen to create a new Chart of Accounts heading.
 
 sub new_heading {
     my ($request) = @_;
-
-    my $account = LedgerSMB::DBObject::Account->new(
-        dbh => $request->{dbh},
-        charttype => 'H',
-    );
-
-    return _display_account_screen($request, $account);
+    return _display_account_screen($request, { charttype => 'H' });
 }
 
 =item edit
@@ -74,14 +61,33 @@ Requires the id and charttype variables in the request to be set.
 
 sub edit {
     my ($request) = @_;
+    my $func = 'account_get';
+    my $trans_func = 'account__list_translations';
 
-    my $account = LedgerSMB::DBObject::Account->new(
-        dbh => $request->{dbh},
-        id => $request->{id},
-        charttype => $request->{charttype},
+    if ($request->{charttype} and $request->{charttype} eq 'H'){
+      $func = 'account_heading_get';
+      $trans_func = 'account_heading__list_translations';
+    }
+
+    my ($account) = $request->call_procedure(
+        funcname => $func,
+        args => [$request->{id}],
     );
+    if ($account->{is_temp} && $account->{category} eq 'Q') {
+        $account->{category} = 'Qt';
+    }
+    $account->{translations} = {
+        map { $_->{language_code} => $_ }
+        $request->call_procedure(
+            funcname => $trans_func,
+            args => [ $request->{id} ])
+    };
+    $account->{charttype} = $request->{charttype};
+    my ($ref) = $request->call_procedure(
+        funcname => 'account__is_recon',
+        args     => [ $account->{accno} ]);
+    $account->{account__is_recon} = $ref->{'account__is_recon'};
 
-    $account = $account->get;
     return _display_account_screen($request, $account);
 }
 
@@ -102,6 +108,27 @@ link:  a list of strings representing text box identifier.
 
 =cut
 
+sub _generate_links {
+    my $request = shift;
+    my @links;
+    my @descriptions = $request->call_procedure(
+        funcname => 'get_link_descriptions',
+        args => [
+            undef, #summary
+            undef, #custom
+        ],
+    );
+
+    foreach my $d (@descriptions) {
+       my $l = $d->{description};
+       if ($request->{$l}) {
+           push (@links, $l);
+        }
+     }
+
+     return \@links;
+}
+
 sub save {
     my ($request) = @_;
 
@@ -111,10 +138,54 @@ sub save {
     die $request->{_locale}->text('Please select a valid heading')
        if (defined $request->{heading}
            and $request->{heading} =~ /\D/);
-    my $account = LedgerSMB::DBObject::Account->new(%$request);
-    $account->{$account->{summary}}=$account->{summary};
-    $account->save;
-    return edit($account);
+
+    if ($request->{charttype} and $request->{charttype} eq 'A') {
+        if ($request->{category} eq 'Qt') {
+            $request->@{'is_temp', 'category'} = ('1', 'Q');
+        }
+        try {
+            $request->{$request->{summary}} = $request->{summary};
+            my ($ref) = $request->call_procedure(
+                funcname => 'account__save',
+                args     => [
+                    $request->@{qw(id accno description category
+                                   gifi_accno heading)},
+                    $request->{contra} // '0',
+                    $request->{tax} // '0',
+                    _generate_links($request),
+                    $request->@{qw(obsolete is_temp)}
+                ]);
+            $request->{id} = $ref->{account__save};
+        }
+        catch ($var) {
+            if ($var =~ m/Invalid link settings:\s*Summary/) {
+                die $request->{_locale}->text(
+                    'Error: Cannot include summary account in other dropdown menus'
+                    );
+            }
+            else {
+                die $var;
+            }
+        }
+
+        if (defined $request->{recon}){
+            $request->call_procedure(
+                funcname => 'cr_coa_to_account_save',
+                args     =>[
+                    $request->{accno},
+                    $request->{description}
+                ]);
+        }
+    }
+    else {
+        my ($ref) = $request->call_procedure(
+            funcname => 'account_heading_save',
+            args     => [
+                $request->@{qw(id accno description heading)}
+            ]);
+        $request->{id} = $ref->{account_heading_save};
+    }
+    return edit($request);
 }
 
 =item update_translations
@@ -125,17 +196,36 @@ Saves selected translations
 
 sub update_translations {
     my ($request) = @_;
-    my $account = LedgerSMB::DBObject::Account->new(%$request);
+    my $trans_save_func = 'account__save_translation';
+    my $trans_del_func = 'account__delete_translation';
+    if ($request->{charttype} and $request->{charttype} eq 'H') {
+        $trans_save_func = 'account_heading__save_translation';
+        $trans_del_func = 'account_heading__delete_translation';
+    }
+
     if ($request->{languagecount} > 0) {
-        $account->{translations} = {};
         for my $index (1..$request->{languagecount}) {
-            $account->{translations}->{$request->{"languagecode_$index"}}
-            = $request->{"languagetranslation_$index"};
+            if (($request->{"languagecode_$index"} // '') eq '') {
+                $request->call_procedure(
+                    funcname => $trans_del_func,
+                    args     => [
+                        $request->{id},
+                        $request->{"languagecode_$index"}
+                    ]);
+            }
+            else {
+                $request->call_procedure(
+                    funcname => $trans_save_func,
+                    args     => [
+                        $request->{id},
+                        $request->{"languagecode_$index"},
+                        $request->{"languagetranslation_$index"}
+                    ]);
+            }
         }
     }
 
-    $account->save_translations;
-    return edit($account);
+    return edit($request);
 }
 
 =item save_as_new
@@ -152,23 +242,31 @@ sub save_as_new {
 
 
 sub _display_account_screen {
-    my ($form, $account) = @_;
-
-    @{$account->{all_headings}} = $account->list_headings();
-    $account->is_recon;
-    $account->gifi_list;
-
+    my ($request, $account) = @_;
+    @{$account->{all_headings}} =
+        $request->call_procedure(funcname => 'account_heading__list');
+    $account->{custom_link_descriptions} = [
+        $request->call_procedure(
+            funcname => 'get_link_descriptions',
+            args => [ 0, 1 ] # summary = 0, custom = 1
+        )];
+    $account->{summary_link_descriptions} = [
+        $request->call_procedure(
+            funcname => 'get_link_descriptions',
+            args => [ 1, undef ] # summary = 1, custom = 0
+        )];
     foreach my $item ( split( /:/, $account->{link} ) ) {
         $account->{$item} = 1;
     }
 
-    my @languages = $form->call_procedure(
+    my @languages = $request->call_procedure(
         funcname => 'person__list_languages'
     );
 
     my $template = LedgerSMB::Template::UI->new_UI;
-    return $template->render($form, 'accounts/edit', {
+    return $template->render($request, 'accounts/edit', {
         form => $account,
+        gifis => [ $request->call_procedure(funcname => 'gifi__list') ],
         languages => \@languages,
     });
 }

@@ -7,7 +7,6 @@ use warnings;
 use LedgerSMB::Batch;
 use LedgerSMB::IR;
 use LedgerSMB::Form;
-use LedgerSMB::DBObject::Account;
 use LedgerSMB::DBObject::Reconciliation;
 use LedgerSMB::Entity::Company;
 use LedgerSMB::Entity::Credit_Account;
