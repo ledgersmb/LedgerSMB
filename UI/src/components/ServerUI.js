@@ -62,7 +62,16 @@ export default {
                 });
 
                 if (r.ok && !domReject(r)) {
-                    this.content = await r.text();
+                    let newContent = await r.text();
+                    this.notify({
+                        title: options.done || this.$t("Loaded")
+                    });
+                    if (newContent === this.content) {
+                        // when there is no difference in returned content,
+                        // Vue won't re-render... so don't rerun the parser!
+                        return;
+                    }
+                    this.content = newContent;
                     this.$nextTick(() => {
                         let maindiv = document.getElementById("maindiv");
                         parser.parse(maindiv).then(
@@ -76,30 +85,22 @@ export default {
                                 if (dismiss) {
                                     dismiss();
                                 }
-                                this.notify({
-                                    title: options.done || this.$t("Loaded")
-                                });
                                 topic.publish("lsmb/page-fresh-content");
                                 maindiv.setAttribute("data-lsmb-done", "true");
                             },
                             (e) => {
-                                if (dismiss) {
-                                    dismiss();
-                                }
                                 this._report_error(e);
                             });
                     });
                 } else {
-                    if (dismiss) {
-                        dismiss();
-                    }
                     this._report_error(r);
                 }
             } catch (e) {
+                this._report_error(e);
+            } finally {
                 if (dismiss) {
                     dismiss();
                 }
-                this._report_error(e);
             }
         },
         _recursively_resize(widget) {
