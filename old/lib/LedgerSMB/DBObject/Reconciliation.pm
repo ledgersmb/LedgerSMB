@@ -51,7 +51,6 @@ use warnings;
 
 use base qw(LedgerSMB::PGOld);
 use List::Util qw(sum);
-use LedgerSMB::Reconciliation::CSV;
 use LedgerSMB::PGNumber;
 
 
@@ -109,24 +108,6 @@ sub save {
     my $self = shift @_;
     $self->_pre_save;
     return $self->call_dbmethod(funcname=>'reconciliation__save_set');
-}
-
-=item import_file
-
-Calls the file import function.  This is generally assumed to be a csv file
-although the plugin is very modular and plugins could be written for other
-formats.  The format structure is per account id.
-
-=cut
-
-sub import_file {
-    my $self = shift @_;
-    my $contents = shift @_;
-
-    my $csv = LedgerSMB::Reconciliation::CSV->new(%$self);
-    $self->{import_entries} = $csv->process($self, $contents);
-
-    return $self->{import_entries};
 }
 
 =item unapproved_checks
@@ -248,18 +229,18 @@ sub reject {
     return $self->call_dbmethod(funcname => 'reconciliation__reject_set');
 }
 
-=item add_entries
+=item add_entries(\@entries)
 
 Adds entries from the import file routine.
 
 This function is extremely order dependent.  Meaningful scn's must be submitted
-first it is also recommended that amounts be ordered where scn's are not found.
+first; it is also recommended that amounts be ordered where scn's are not found.
 
 =cut
 
 sub add_entries {
     my $self = shift;
-    my $entries = $self->{import_entries};
+    my $entries = shift;
     for my $entry ( @{$entries} ) {
 
         # Codes:
@@ -282,7 +263,7 @@ sub add_entries {
                 $self->{report_id},
                 $entry->{scn},
                 $entry->{type},
-                $entry->{cleared_date},
+                $entry->{date},
                 $entry->{amount}, # needs leading 0's trimmed.
             ]
         );

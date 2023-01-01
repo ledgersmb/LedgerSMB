@@ -76,6 +76,7 @@ requires 'LWP::Simple';
 requires 'MIME::Types';
 requires 'Module::Runtime';
 requires 'Moo';                           # for Email::Sender::Transport::SMTP workaround
+requires 'Moo::Role';
 requires 'MooX::Types::MooseLike::Base';  # for Email::Sender::Transport::SMTP workaround
 requires 'Moose';
 requires 'Moose::Role';

@@ -79,14 +79,26 @@ END %]
 </table>
 
 [% IF ! approved and !submitted%]
-    <div id="csv-file">
-        <label for="file_upload">[% text('Bank (CSV/OFX/CAMT.053) transaction file:') %]</label>
-        [% PROCESS input element_data = {
-                    type="file"
-                    name="csv_file"
-                    id="file_upload"
-        } %]
-    </div>
+<fieldset id="csv-file">
+  <div>
+    <label for="file_upload">[% text('Bank transactions upload:') %]</label>
+    [% PROCESS input element_data = {
+    type="file"
+    name="csv_file"
+    id="file_upload"
+    } %]
+  </div>
+  <div>
+    <label for="trx_format">[% text('Upload file format') %]</label>
+        [% PROCESS select element_data = {
+                    name="trx_format"
+                    options=upload_formats
+                    text_attr="name"
+                    value_attr="name"
+                    default_blank=1
+    } %]
+  </div>
+</fieldset>
 [% END %]
 
 

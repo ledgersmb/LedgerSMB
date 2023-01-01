@@ -4,18 +4,11 @@ use strict;
 
 use LedgerSMB::FileFormats::OFX::BankStatement;
 
-my $file_content;
-{
-    local $/ = undef;
-    my $filename = 't/data/inout_tests/ofx_bank_statement.xml';
-    open my $fh, '<', $filename
-        or die "failed to open $filename for reading";
-    $file_content = <$fh>;
-}
+my $filename = 't/data/inout_tests/ofx_bank_statement.xml';
+open my $fh, '<', $filename
+    or die "failed to open $filename for reading";
+my $ofx = LedgerSMB::FileFormats::OFX::BankStatement->new($fh);
 
-my $ofx = LedgerSMB::FileFormats::OFX::BankStatement->new(
-    $file_content
-);
 ok($ofx, 'Parse of OFX bank statement file returned true');
 is(scalar @{$ofx->transactions}, 3, 'correct number of transaction items');
 is(
@@ -43,8 +36,10 @@ is(
     'Yielded expected transactions'
 );
 
+open $fh, '<', \'<?xml>'
+     or die 'Failed to open string for reading';
 ok(
-    !LedgerSMB::FileFormats::OFX::BankStatement->new('<?xml>'),
+    !LedgerSMB::FileFormats::OFX::BankStatement->new($fh),
     'Detected wrong data format'
 );
 

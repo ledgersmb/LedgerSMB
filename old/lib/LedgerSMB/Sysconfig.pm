@@ -217,6 +217,10 @@ sub ini2wire {
         default_db => scalar $cfg->val( 'database', 'default_db' )
     };
 
+    $wire_config{reconciliation_importer} = {
+        class => 'LedgerSMB::Reconciliation::Parser',
+    };
+
     $wire_config{setup_settings} = {
         auth_db  => scalar $cfg->val( 'database', 'auth_db', 'postgres' ),
         admin_db => scalar $cfg->val( 'database', 'admin_db', 'template1' ),
