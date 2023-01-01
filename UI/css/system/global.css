@@ -460,7 +460,9 @@ h2 {
     font-weight: bold;
 }
 
-#reconciliation table {
+#reconciliation #cleared-table,
+#reconciliation #error-table,
+#reconciliation #outstanding-table {
     border: 0;
 }
 
