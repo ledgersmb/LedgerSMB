@@ -34,14 +34,13 @@ not identified as a CAMT053 document.
 =cut
 
 sub new {
-    my ($class, $content) = @_;
-    return unless defined $content;
+    my ($class, $fh) = @_;
+    return unless defined $fh;
 
     my ($dom, $ns);
     try {
-        $dom = XML::LibXML->load_xml(
-            string => $content
-        );
+        binmode $fh; # remove all IO layers as per the docs
+        $dom = XML::LibXML->load_xml(IO => $fh);
         $ns = $dom->documentElement->namespaceURI;
     }
     catch ($e) { }

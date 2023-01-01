@@ -216,8 +216,12 @@ sub _display_report {
     $request->close_form;
     $request->open_form;
 
-    my $file               = LedgerSMB::File->new();
-    $recon->{files}      =
+    my $file                 = LedgerSMB::File->new();
+    $recon->{upload_formats} = [
+        map { +{ name => $_->name } }
+        $request->{_wire}->get('reconciliation_importer')->configurations->@*
+        ];
+    $recon->{files}  =
         [ $file->list({ ref_key    => $request->{report_id},
                         file_class => FC_RECONCILIATION }) ];
     $recon->{file_links} = [ $file->list_links(
@@ -456,15 +460,13 @@ sub pending {
 
 sub _process_upload {
     my ($recon, $request) = @_;
-    my $contents;
-    {
-        my $handle = eval { $request->upload('csv_file') };
-        local $/ = undef;
-        $contents = <$handle> if defined $handle;
-    }
+    my $handle = eval { $request->upload('csv_file') };
 
-    if ($contents) {
-        $recon->add_entries($recon->import_file($contents));
+    if ($handle) {
+        my $cfg = $request->{_wire}->get('reconciliation_importer')
+            ->get_configuration(name => $request->{'trx_format'});
+        my $entries = $cfg->process($handle);
+        $recon->add_entries($entries);
     }
 
     return;

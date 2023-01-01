@@ -84,6 +84,42 @@ printers:
     Epson: lpr -PEpson
   fallback: Laser
 
+reconciliation_importer:
+  $class: LedgerSMB::Reconciliation::Parser
+  configurations:
+  - $class: LedgerSMB::Reconciliation::Parser::OFX
+    name: OFX Bank statement
+  - $class: LedgerSMB::Reconciliation::Parser::CAMT053
+    name: ISO 20022 - CAMT.053 (Customer statement)
+  - $class: LedgerSMB::Reconciliation::Parser::CSV
+    name: PayPal (CSV / Column names)
+    first_row: headers
+    mapping:
+      source:
+        column: Transaction ID
+      amount:
+        column: Gross
+        format: 1'000.00
+      type:
+        column: Type
+      date:
+        column: Date
+        format: DD/MM/YYYY
+  - $class: LedgerSMB::Reconciliation::Parser::CSV
+    name: PayPal (CSV / Column numbers -- no headings)
+    first_row: data
+    mapping:
+      source:
+        column: 13
+      amount:
+        column: 8
+        format: 1'000.00
+      type:
+        column: 5
+      date:
+        column: 1
+        format: DD/MM/YYYY
+
 setup_settings:
   admin_db: template1
   auth_db: postgres

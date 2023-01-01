@@ -86,14 +86,13 @@ not identified as a OFX document.
 =cut
 
 sub new {
-    my ($class, $content) = @_;
-    return unless defined $content;
+    my ($class, $fh) = @_;
+    return unless defined $fh;
 
     my ($dom, $is_ofx);
     try {
-        $dom = XML::LibXML->load_xml(
-            string => $content
-        );
+        binmode $fh; # remove all IO layers, as per the docs
+        $dom = XML::LibXML->load_xml(IO => $fh);
         $is_ofx = $dom->find('/processing-instruction("OFX")')
     }
     catch ($e) { }
