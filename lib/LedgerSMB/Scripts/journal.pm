@@ -12,7 +12,6 @@ list of matching accounts in a ul/li pair
 
 =cut
 
-use LedgerSMB::DBObject::Account;
 use LedgerSMB::Report::GL;
 use LedgerSMB::Report::COA;
 use LedgerSMB::Report::Contact::Purchase;
@@ -76,8 +75,19 @@ occurs to here.
 sub delete_account {
     my ($request) = @_;
 
-    my $account =  LedgerSMB::DBObject::Account->new(%$request);
-    $account->delete;
+    if ($request->{charttype} eq 'A') {
+        $request->call_procedure(
+            funcname => 'account__delete',
+            args     => [ $request->{id} ],
+            );
+    } elsif ($request->{charttype} eq 'H') {
+        $request->call_procedure(
+            funcname => 'account_heading__delete',
+            args     => [ $request->{id} ],
+            );
+    } else {
+        die 'Unknown charttype';
+    }
     return chart_of_accounts($request);
 }
 

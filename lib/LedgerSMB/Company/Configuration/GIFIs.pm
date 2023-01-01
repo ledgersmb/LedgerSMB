@@ -34,7 +34,7 @@ with 'LedgerSMB::Company::Configuration::Collection';
 # required methods from Collection:
 
 sub _resultset {
-    return 'gifi';
+    return 'select accno as code, * from gifi';
 }
 
 sub _class {

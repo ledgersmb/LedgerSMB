@@ -15,6 +15,7 @@ use strict;
 use warnings;
 
 use LedgerSMB::Company;
+use LedgerSMB::Company::Configuration;
 use LedgerSMB::Database;
 use LedgerSMB::PGDate;
 use LedgerSMB::Entity::Person::Employee;
@@ -444,9 +445,8 @@ sub create_part {
     my ($self, $props) = @_;
 
     local $LedgerSMB::App_State::DBH = $self->admin_dbh;
-    my $account = LedgerSMB::DBObject::Account->new();
-    $account->set_dbh($self->admin_dbh);
-    my @accounts = $account->list();
+    my $cfg = LedgerSMB::Company::Configuration->new(dbh => $self->admin_dbh);
+    my @accounts = $cfg->coa_nodes->get(filter => q{not is_heading});
     my %accno_ids = map { $_->{accno} => $_->{id} } @accounts;
 
     $props->{partnumber} //= 'P-' . ($part_count++);
@@ -455,7 +455,7 @@ sub create_part {
     my @values;
     my @placeholders;
 
-    $props->{$_} = $accno_ids{$props->{$_}}
+    $props->{$_} = ($accno_ids{$props->{$_}} =~ s/^A-//r)
        for grep { m/accno/ } keys %$props;
 
     for my $key (keys %$props) {
@@ -492,10 +492,11 @@ sub create_vc {
     $company = $company->save;
 
     local $LedgerSMB::App_State::DBH = $admin_dbh;
-    my $account = LedgerSMB::DBObject::Account->new();
-    $account->set_dbh($admin_dbh);
-    my @accounts = $account->list();
-    my %accno_ids = map { $_->{accno} => $_->{id} } @accounts;
+    my $cfg = LedgerSMB::Company::Configuration->new(dbh => $self->admin_dbh);
+    my @accounts = $cfg->coa_nodes->get(filter => q{not is_heading});
+    my %accno_ids = map {
+        $_->{accno} => ($_->{id} =~ s/^A-//r)
+    } @accounts;
 
     LedgerSMB::Entity::Credit_Account->new(
         entity_id        => $company->entity_id,
