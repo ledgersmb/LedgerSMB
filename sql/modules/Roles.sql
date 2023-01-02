@@ -1180,6 +1180,21 @@ SELECT lsmb__create_role('business_type_all');
 SELECT lsmb__grant_role('business_type_all', 'business_type_create');
 SELECT lsmb__grant_role('business_type_all', 'business_type_edit');
 
+
+SELECT lsmb__create_role('country_create');
+SELECT lsmb__grant_perms('country_create', 'country', 'INSERT');
+SELECT lsmb__grant_menu('country_create', 264, 'allow');
+
+SELECT lsmb__create_role('country_edit');
+SELECT lsmb__grant_perms('country_edit', 'country', ptype)
+  FROM unnest(array['UPDATE'::text, 'DELETE']) ptype;
+SELECT lsmb__grant_menu('country_edit', 264, 'allow');
+
+SELECT lsmb__create_role('country_all');
+SELECT lsmb__grant_role('country_all', 'country_create');
+SELECT lsmb__grant_role('country_all', 'country_edit');
+
+
 SELECT lsmb__create_role('sic_create');
 SELECT lsmb__grant_perms('sic_create', 'sic', 'INSERT');
 SELECT lsmb__grant_menu('sic_create', 153, 'allow');
