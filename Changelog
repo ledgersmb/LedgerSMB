@@ -7,18 +7,20 @@ Changelog for 1.11.0
 
 Added functionalities
 * AR/AP transactions and invoices buttons determined by configuration
+* Bank statement parser for reconciliation through configuration (#7050)
+* System > Users menu item listing users in the company (#7032)
 
 Changed functionalities
-* 
+* More database statistics reported after upgrade completion (#7017)
 
 Removed functionalities
-* 
+* Bank statement parser for reconciliation through customization of the sources (#7050)
 
 Bugs fixed
 * 
 
 Code cleanup
-* 
+* Continued removal of code based on the DBObject coding paradigm
 
 Dependency updates
 * 
