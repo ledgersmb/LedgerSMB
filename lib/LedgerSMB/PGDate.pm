@@ -254,6 +254,7 @@ memoize('_formatter');
 
 # Provide a stringification routine instead of the one inherited
 use overload (
+    fallback => 1,
     q{""}    => 'to_output',
 );
 
