@@ -252,6 +252,12 @@ sub _formatter {
 # table (being GL>Search-ed without restrictions)
 memoize('_formatter');
 
+# Provide a stringification routine instead of the one inherited
+use overload (
+    fallback => 1,
+    q{""}    => 'to_output',
+);
+
 sub to_output {
     my ($self) = @_;
     return '' if not $self->is_date();
