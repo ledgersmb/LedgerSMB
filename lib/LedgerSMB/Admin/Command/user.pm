@@ -424,7 +424,7 @@ Id     Username        Created
         local $LedgerSMB::App_State::DBH = $dbh;
         $user = LedgerSMB::Entity::User->get($_user->{entity_id});
         my $emp = LedgerSMB::Entity::Person::Employee->get($_user->{entity_id});
-        
+
         print STDOUT 'Username: ',$user->{username},
             ', Name: "',$self->_get_salutation_by_id($dbh,$emp->{salutation_id}), ' ',
             $emp->{first_name}, ' ',
