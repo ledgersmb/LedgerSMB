@@ -295,8 +295,10 @@ sub _create_employee {
     my $dbh = $args{dbh};
 
     # Validate
-    my $salutation_id = $self->_get_valid_salutation($dbh);
-    return undef if !$salutation_id;
+    my $salutation_id;
+    $salutation_id = $self->_get_valid_salutation($dbh)
+        if $self->options->{salutation};
+    return undef if $self->options->{salutation} && !$salutation_id;
 
     $self->logger->error('Missing country')
         if !$self->options->{country};
