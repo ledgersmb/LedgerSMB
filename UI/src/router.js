@@ -5,6 +5,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 import Home from "@/views/Home";
 import ServerUI from "@/components/ServerUI";
+import Countries from "@/views/Countries.vue";
 import ImportCsvAaBatch from "@/views/ImportCSV-AA-Batch";
 import ImportCsvCoA from "@/views/ImportCSV-CoA";
 import ImportCsvGl from "@/views/ImportCSV-GL";
@@ -24,6 +25,7 @@ const routes = [
     { name: "warehouses", path: "/warehouses", component: Warehouses },
     { name: "pricegroups", path: "/pricegroups", component: Pricegroups },
     { name: "languages", path: "/languages", component: Languages },
+    { name: "countries", path: "/countries", component: Countries },
     { name: "sics", path: "/sics", component: SIC },
     { name: "gifis", path: "/gifis", component: GIFI },
     {
