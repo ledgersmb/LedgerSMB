@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-10-07 13:32+0000\n"
+"POT-Creation-Date: 2023-01-02 23:47+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
 "Last-Translator: Håvard Sørli <havard@sorli.no>, 2018,2021\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/ledgersmb/ledgersmb/"
@@ -87,7 +87,7 @@ msgstr ""
 msgid "AIM"
 msgstr "Hensikt"
 
-#: old/bin/am.pl:321 UI/Contact/divs/credit.html:198
+#: old/bin/am.pl:322 UI/Contact/divs/credit.html:198
 #: UI/Contact/divs/credit.html:199 UI/Reports/filters/unapproved.html:5
 #: UI/setup/complete.html:21 UI/setup/confirm_operation.html:119
 #: sql/Pg-database.sql:2611
@@ -134,7 +134,7 @@ msgstr "Leverandørkonto er tilgjengelig når leverandører er valgt"
 msgid "AP transaction"
 msgstr "Leverandører postering"
 
-#: old/bin/am.pl:320 UI/Reports/filters/unapproved.html:6
+#: old/bin/am.pl:321 UI/Reports/filters/unapproved.html:6
 #: UI/setup/complete.html:22 UI/setup/confirm_operation.html:120
 #: sql/Pg-database.sql:2610
 msgid "AR"
@@ -193,7 +193,7 @@ msgstr "Skrinlagt"
 msgid "Access Denied"
 msgstr "Nektet Adgang"
 
-#: UI/src/views/LoginPage.vue:102
+#: UI/src/views/LoginPage.vue:103
 msgid "Access denied: Bad username or password"
 msgstr ""
 
@@ -201,17 +201,17 @@ msgstr ""
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:137
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:68
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:70
-#: lib/LedgerSMB/Scripts/report_aging.pm:141 old/bin/aa.pl:609 old/bin/aa.pl:680
-#: old/bin/aa.pl:848 old/bin/ic.pl:1109 old/bin/ir.pl:445 old/bin/ir.pl:917
-#: old/bin/is.pl:1014 old/bin/is.pl:478 old/bin/oe.pl:446
+#: lib/LedgerSMB/Scripts/report_aging.pm:141 old/bin/aa.pl:637 old/bin/aa.pl:712
+#: old/bin/aa.pl:882 old/bin/ic.pl:1110 old/bin/ir.pl:427 old/bin/ir.pl:818
+#: old/bin/is.pl:463 old/bin/is.pl:914 old/bin/oe.pl:449
 #: UI/Contact/contact.html:15 UI/Contact/divs/credit.html:186
 #: UI/Contact/divs/credit.html:187 UI/Reports/filters/aging.html:24
 #: UI/Reports/filters/gl.html:31 UI/Reports/filters/gl.html:294
 #: UI/Reports/filters/invoice_outstanding.html:26
 #: UI/Reports/filters/invoice_search.html:29 UI/Reports/filters/orders.html:29
-#: UI/Reports/filters/orders.html:164
+#: UI/Reports/filters/orders.html:177
 #: UI/Reports/filters/reconciliation_search.html:42 UI/accounts/edit.html:119
-#: UI/budgetting/budget_entry.html:57 UI/journal/journal_entry.html:131
+#: UI/budgetting/budget_entry.html:57 UI/journal/journal_entry.html:132
 #: UI/payments/payment2.html:86 UI/payments/payment2.html:268
 #: UI/payments/payment2.html:345 UI/payments/payments_detail.html:135
 #: UI/payments/payments_detail.html:223 UI/payments/payments_filter.html:62
@@ -245,9 +245,9 @@ msgstr "Kontonavn"
 #: lib/LedgerSMB/Report/PNL/ECA.pm:88
 #: lib/LedgerSMB/Report/Taxform/Details.pm:119
 #: lib/LedgerSMB/Report/Taxform/Details.pm:89
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:82
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:83
 #: lib/LedgerSMB/Report/Trial_Balance.pm:146
-#: lib/LedgerSMB/Scripts/payment.pm:182 old/bin/ic.pl:1015 old/bin/ic.pl:1666
+#: lib/LedgerSMB/Scripts/payment.pm:181 old/bin/ic.pl:1015 old/bin/ic.pl:1669
 #: UI/Contact/divs/bank_act.html:23 UI/Reports/co/filter_bm.html:77
 #: UI/Reports/co/filter_cd.html:61 UI/Reports/filters/contact_search.html:84
 #: UI/accounts/edit.html:39 UI/accounts/edit.html:128
@@ -263,16 +263,16 @@ msgstr "Kontonummer siste"
 msgid "Account Number Start"
 msgstr "Kontonummer første"
 
-#: lib/LedgerSMB/Scripts/payment.pm:187
+#: lib/LedgerSMB/Scripts/payment.pm:186
 msgid "Account Title"
 msgstr "Kontotype"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:85
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:78 UI/accounts/edit.html:210
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:79 UI/accounts/edit.html:156
 msgid "Account Type"
 msgstr "Kontotype"
 
-#: old/bin/gl.pl:570 old/lib/LedgerSMB/GL.pm:226
+#: old/bin/gl.pl:532 old/lib/LedgerSMB/GL.pm:231
 msgid "Account [_1] not found"
 msgstr "Konto [_1] ikke funnet"
 
@@ -346,22 +346,22 @@ msgstr "Aktiv"
 msgid "Active On"
 msgstr "Aktiv på"
 
-#: lib/LedgerSMB/Scripts/admin.pm:72
+#: lib/LedgerSMB/Scripts/admin.pm:122
 msgid "Active Sessions"
 msgstr "Aktiv økt"
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:96
-#: lib/LedgerSMB/Report/File/Internal.pm:84 old/bin/ic.pl:2091
+#: lib/LedgerSMB/Report/File/Internal.pm:84 old/bin/ic.pl:2094
 #: UI/Configuration/currency.html:35 UI/Configuration/ratetype.html:28
 #: UI/src/components/ConfigTableRow.vue:30
 msgid "Add"
 msgstr "Ny"
 
-#: old/bin/aa.pl:382 old/bin/aa.pl:421
+#: old/bin/aa.pl:410 old/bin/aa.pl:449
 msgid "Add AP Transaction"
 msgstr "Ny Postering"
 
-#: old/bin/aa.pl:381
+#: old/bin/aa.pl:409
 msgid "Add AR Transaction"
 msgstr "Ny Postering"
 
@@ -401,11 +401,11 @@ msgstr "Ny klasse"
 msgid "Add Contact"
 msgstr "Ny kontakt"
 
-#: old/bin/is.pl:99
+#: old/bin/is.pl:107
 msgid "Add Credit Invoice"
 msgstr "Ny kreditfaktura"
 
-#: old/bin/aa.pl:419
+#: old/bin/aa.pl:447
 msgid "Add Credit Note"
 msgstr "Ny kreditnota"
 
@@ -414,15 +414,15 @@ msgstr "Ny kreditnota"
 msgid "Add Customer"
 msgstr "Ny kunde"
 
-#: old/bin/is.pl:103
+#: old/bin/is.pl:111
 msgid "Add Customer Return"
 msgstr "Ny kunde retur"
 
-#: old/bin/ir.pl:107 old/bin/ir.pl:144
+#: old/bin/ir.pl:114 old/bin/ir.pl:159
 msgid "Add Debit Invoice"
 msgstr "Ny Faktura"
 
-#: old/bin/aa.pl:417
+#: old/bin/aa.pl:445
 msgid "Add Debit Note"
 msgstr "Ny Regning"
 
@@ -431,7 +431,7 @@ msgstr "Ny Regning"
 msgid "Add Employee"
 msgstr "Ny ansatt"
 
-#: old/bin/oe.pl:1615
+#: old/bin/oe.pl:1624
 msgid "Add Exchange Rate"
 msgstr "Ny vekslingskurs"
 
@@ -467,11 +467,11 @@ msgstr "Ny vare"
 msgid "Add Pricegroup"
 msgstr "Ny prisgruppe"
 
-#: old/bin/io.pl:961 old/bin/oe.pl:63
+#: old/bin/io.pl:966 old/bin/oe.pl:63
 msgid "Add Purchase Order"
 msgstr "Ny innkjøpsordre"
 
-#: old/bin/io.pl:1018 old/bin/oe.pl:75
+#: old/bin/io.pl:1023 old/bin/oe.pl:75
 msgid "Add Quotation"
 msgstr "Nytt tilbud"
 
@@ -479,7 +479,7 @@ msgstr "Nytt tilbud"
 msgid "Add Reporting Unit"
 msgstr "Ny rapport enhet"
 
-#: old/bin/io.pl:999 old/bin/oe.pl:71
+#: old/bin/io.pl:1004 old/bin/oe.pl:71
 msgid "Add Request for Quotation"
 msgstr "Ny tilbudsforespørsel"
 
@@ -491,11 +491,11 @@ msgstr "Legg til retur"
 msgid "Add SIC"
 msgstr "Ny SIC"
 
-#: old/bin/is.pl:108 old/bin/oe.pl:1526
+#: old/bin/is.pl:116 old/bin/oe.pl:1531
 msgid "Add Sales Invoice"
 msgstr "Ny Utgående Faktura"
 
-#: old/bin/io.pl:980 old/bin/oe.pl:67
+#: old/bin/io.pl:985 old/bin/oe.pl:67
 msgid "Add Sales Order"
 msgstr "Ny salgsordre"
 
@@ -511,7 +511,7 @@ msgstr "Legg til MVA skjema"
 msgid "Add Timecard"
 msgstr "Legg til timekort"
 
-#: old/bin/io.pl:1824
+#: old/bin/io.pl:1829
 msgid "Add To List"
 msgstr "Legg til i liste"
 
@@ -523,7 +523,7 @@ msgstr "Ny Postering"
 msgid "Add Unit"
 msgstr "Ny enhet"
 
-#: UI/Contact/divs/employee.html:167 UI/Contact/divs/user.html:135
+#: UI/Contact/divs/employee.html:167 UI/Contact/divs/user.html:139
 #: UI/setup/confirm_operation.html:56 UI/setup/edit_user.html:101
 msgid "Add User"
 msgstr "Ny bruker"
@@ -533,11 +533,11 @@ msgstr "Ny bruker"
 msgid "Add Vendor"
 msgstr "Ny leverandør"
 
-#: old/bin/ir.pl:116 old/bin/oe.pl:1517
+#: old/bin/ir.pl:123 old/bin/oe.pl:1522
 msgid "Add Vendor Invoice"
 msgstr "Ny Inngående Faktura"
 
-#: old/bin/ir.pl:111
+#: old/bin/ir.pl:118
 msgid "Add Vendor Return"
 msgstr "Ny leverandør retur"
 
@@ -545,15 +545,15 @@ msgstr "Ny leverandør retur"
 msgid "Add Warehouse"
 msgstr "Nytt lager"
 
-#: old/bin/io.pl:1637
+#: old/bin/io.pl:1642
 msgid "Add line1"
 msgstr "Legg til linje1"
 
-#: old/bin/io.pl:1640
+#: old/bin/io.pl:1645
 msgid "Add line2"
 msgstr "Legg til linje2"
 
-#: old/bin/io.pl:1644
+#: old/bin/io.pl:1649
 msgid "Add line3 "
 msgstr "Legg til linje3"
 
@@ -581,10 +581,10 @@ msgstr "Lagt til nr [_1]"
 msgid "Adding"
 msgstr ""
 
-#: old/bin/aa.pl:614 old/bin/arap.pl:169 old/bin/ic.pl:1669 old/bin/ir.pl:455
-#: old/bin/is.pl:488 old/bin/oe.pl:451 old/bin/pe.pl:578
-#: UI/Contact/divs/address.html:80 UI/Contact/divs/address.html:121
-#: UI/Contact/divs/address.html:124 UI/Reports/filters/contact_search.html:89
+#: old/bin/aa.pl:642 old/bin/arap.pl:169 old/bin/ic.pl:1672 old/bin/ir.pl:437
+#: old/bin/is.pl:473 old/bin/oe.pl:454 old/bin/pe.pl:578
+#: UI/Contact/divs/address.html:80 UI/Contact/divs/address.html:119
+#: UI/Contact/divs/address.html:122 UI/Reports/filters/contact_search.html:89
 #: UI/Reports/filters/purchase_history.html:67
 msgid "Address"
 msgstr "Adresse"
@@ -601,12 +601,12 @@ msgstr "Adresse:"
 msgid "Address: [_1]"
 msgstr "Adresse1:"
 
-#: lib/LedgerSMB/Scripts/contact.pm:192 UI/Contact/divs/address.html:2
+#: lib/LedgerSMB/Scripts/contact.pm:191 UI/Contact/divs/address.html:2
 #: t/data/04-complex_template.html:30
 msgid "Addresses"
 msgstr "Adresser"
 
-#: old/bin/ic.pl:1266
+#: old/bin/ic.pl:1268
 msgid "Adj"
 msgstr "Just"
 
@@ -646,7 +646,7 @@ msgstr "Aldersfordelt saldoliste"
 #: UI/Reports/filters/invoice_outstanding.html:73
 #: UI/Reports/filters/invoice_search.html:173
 #: UI/Reports/filters/invoice_search.html:220
-#: UI/Reports/filters/invoice_search.html:241 UI/Reports/filters/orders.html:106
+#: UI/Reports/filters/invoice_search.html:241 UI/Reports/filters/orders.html:119
 #: UI/Reports/filters/search_goods.html:17 UI/Reports/filters/timecards.html:42
 #: UI/Reports/filters/trial_balance.html:61 UI/payments/payments_detail.html:298
 msgid "All"
@@ -691,12 +691,12 @@ msgstr "Tillat Innlegg"
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:237
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:281
 #: lib/LedgerSMB/Report/Orders.pm:225
-#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:131 old/bin/aa.pl:678
-#: old/bin/aa.pl:845 old/bin/am.pl:311 old/bin/ir.pl:695 old/bin/ir.pl:914
-#: old/bin/is.pl:1011 old/bin/is.pl:790 old/bin/pe.pl:952
+#: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:131 old/bin/aa.pl:710
+#: old/bin/aa.pl:879 old/bin/am.pl:312 old/bin/ir.pl:595 old/bin/ir.pl:815
+#: old/bin/is.pl:689 old/bin/is.pl:911 old/bin/pe.pl:952
 #: UI/Reports/filters/gl.html:100 UI/Reports/filters/gl.html:106
 #: UI/Reports/filters/invoice_outstanding.html:192
-#: UI/Reports/filters/invoice_search.html:317 UI/Reports/filters/orders.html:177
+#: UI/Reports/filters/invoice_search.html:317 UI/Reports/filters/orders.html:190
 #: UI/payments/payment2.html:349 templates/demo/ap_transaction.html:155
 #: templates/demo/ar_transaction.html:151 templates/demo/ar_transaction.tex:145
 #: templates/demo/invoice.html:190 templates/demo/invoice.tex:168
@@ -714,7 +714,7 @@ msgid "Amount Budgetted"
 msgstr "Beløp Budsjettert"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:257
-#: lib/LedgerSMB/Scripts/payment.pm:936 lib/LedgerSMB/Scripts/payment.pm:941
+#: lib/LedgerSMB/Scripts/payment.pm:934 lib/LedgerSMB/Scripts/payment.pm:939
 #: UI/Reports/filters/invoice_outstanding.html:240
 #: UI/Reports/filters/invoice_search.html:363 templates/demo/check_base.tex:67
 msgid "Amount Due"
@@ -780,11 +780,11 @@ msgstr "Årlig rett linje Daglig"
 msgid "Annual Straight Line Monthly"
 msgstr "Årlig rett linje Månedlig"
 
-#: old/lib/LedgerSMB/Batch.pm:142
+#: old/lib/LedgerSMB/Batch.pm:165
 msgid "Any"
 msgstr "Noen"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1343
+#: lib/LedgerSMB/Scripts/payment.pm:1342
 msgid "Applied discount"
 msgstr "Lagt til rabatt"
 
@@ -792,7 +792,7 @@ msgstr "Lagt til rabatt"
 msgid "Applied discount by an overpayment"
 msgstr "Lagt til rabatt på grunn av overbetaling"
 
-#: lib/LedgerSMB/Scripts/payment.pm:934
+#: lib/LedgerSMB/Scripts/payment.pm:932
 msgid "Apply Disc"
 msgstr "Legg til Disk"
 
@@ -804,7 +804,7 @@ msgstr "Godkjennings  status"
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:228
 #: lib/LedgerSMB/Scripts/asset.pm:528 lib/LedgerSMB/Scripts/asset.pm:644
 #: lib/LedgerSMB/Scripts/asset.pm:746 lib/LedgerSMB/Scripts/asset.pm:852
-#: lib/LedgerSMB/Scripts/budgets.pm:113 UI/reconciliation/report.html:426
+#: lib/LedgerSMB/Scripts/budgets.pm:113 UI/reconciliation/report.html:438
 msgid "Approve"
 msgstr "Godkjenne"
 
@@ -812,7 +812,7 @@ msgstr "Godkjenne"
 #: UI/Reports/filters/batches.html:23 UI/Reports/filters/gl.html:176
 #: UI/Reports/filters/invoice_search.html:228
 #: UI/Reports/filters/reconciliation_search.html:51
-#: UI/Reports/filters/trial_balance.html:48 UI/reconciliation/report.html:431
+#: UI/Reports/filters/trial_balance.html:48 UI/reconciliation/report.html:443
 msgid "Approved"
 msgstr "Godkjent"
 
@@ -829,15 +829,15 @@ msgstr "Godkjent ved"
 msgid "Approved signature"
 msgstr "Godkjent signatur"
 
-#: UI/reconciliation/report.html:430
+#: UI/reconciliation/report.html:442
 msgid "Approving..."
 msgstr ""
 
-#: old/bin/aa.pl:86 old/bin/gl.pl:79 old/bin/io.pl:81
+#: old/bin/aa.pl:87 old/bin/gl.pl:77 old/bin/io.pl:80
 msgid "Apr"
 msgstr "apr"
 
-#: lib/LedgerSMB.pm:573 old/bin/aa.pl:72 old/bin/gl.pl:65 old/bin/io.pl:67
+#: lib/LedgerSMB.pm:573 old/bin/aa.pl:73 old/bin/gl.pl:63 old/bin/io.pl:66
 msgid "April"
 msgstr "april"
 
@@ -850,11 +850,11 @@ msgstr "Ervervet verdi"
 msgid "Aquired Value Remaining"
 msgstr "Ervervet verdi gjennstår"
 
-#: old/bin/oe.pl:1399
+#: old/bin/oe.pl:1404
 msgid "Are you sure you want to delete Order Number"
 msgstr "Er du sikker på at du vil fjerne ordrenummer"
 
-#: old/bin/oe.pl:1404
+#: old/bin/oe.pl:1409
 msgid "Are you sure you want to delete Quotation Number"
 msgstr "Er du sikker på at du vil fjerne tilbudsnummer"
 
@@ -870,11 +870,11 @@ msgstr "Montert"
 msgid "Assemblies"
 msgstr "Sammendrag"
 
-#: old/bin/ic.pl:2211
+#: old/bin/ic.pl:2214
 msgid "Assemblies restocked!"
 msgstr "Monterte omplassert!"
 
-#: UI/Reports/filters/gl.html:135 UI/accounts/edit.html:214
+#: UI/Reports/filters/gl.html:135 UI/accounts/edit.html:160
 #: sql/Pg-database.sql:3529
 msgid "Asset"
 msgstr "Eiendeler"
@@ -935,8 +935,8 @@ msgstr "Eiendel til Egenkapital"
 msgid "Assets to Liabilities"
 msgstr "Eiendel til Gjeld"
 
-#: lib/LedgerSMB/Report/File/Incoming.pm:102 old/bin/aa.pl:1146
-#: old/bin/ic.pl:922 old/bin/ir.pl:1097 old/bin/is.pl:1195 old/bin/oe.pl:990
+#: lib/LedgerSMB/Report/File/Incoming.pm:102 old/bin/aa.pl:1113
+#: old/bin/ic.pl:922 old/bin/ir.pl:1029 old/bin/is.pl:1118 old/bin/oe.pl:995
 #: UI/lib/attachments.html:56
 msgid "Attach"
 msgstr "Tillegg"
@@ -946,6 +946,7 @@ msgid "Attach File"
 msgstr "Tillegg fil"
 
 #: UI/Contact/divs/address.html:106 UI/Contact/divs/contact_info.html:85
+#: UI/Contact/divs/notes.html:35
 msgid "Attach To"
 msgstr "Tillagt"
 
@@ -953,7 +954,7 @@ msgstr "Tillagt"
 msgid "Attach to Credit Account"
 msgstr "Tillagt Kredittkonto"
 
-#: UI/Contact/divs/address.html:110 UI/Contact/divs/contact_info.html:89
+#: UI/Contact/divs/address.html:109 UI/Contact/divs/contact_info.html:88
 #: UI/Contact/divs/files.html:54
 msgid "Attach to Entity"
 msgstr "Lagt til"
@@ -966,31 +967,31 @@ msgstr "Vedlegg til"
 msgid "Attached By"
 msgstr "Tillagt av"
 
-#: old/bin/aa.pl:1118 old/bin/ic.pl:894 old/bin/ir.pl:1071 old/bin/is.pl:1169
-#: old/bin/oe.pl:964 UI/lib/attachments.html:32
+#: old/bin/aa.pl:1085 old/bin/ic.pl:894 old/bin/ir.pl:1003 old/bin/is.pl:1092
+#: old/bin/oe.pl:969 UI/lib/attachments.html:32
 msgid "Attached To"
 msgstr "Koblett til"
 
-#: old/bin/aa.pl:1117 old/bin/ic.pl:893 old/bin/ir.pl:1070 old/bin/is.pl:1168
-#: old/bin/oe.pl:963 UI/lib/attachments.html:31
+#: old/bin/aa.pl:1084 old/bin/ic.pl:893 old/bin/ir.pl:1002 old/bin/is.pl:1091
+#: old/bin/oe.pl:968 UI/lib/attachments.html:31
 msgid "Attached To Type"
 msgstr "Festet til type"
 
-#: old/bin/aa.pl:1094 old/bin/ic.pl:870 old/bin/ir.pl:1047 old/bin/is.pl:1145
-#: old/bin/oe.pl:940 UI/lib/attachments.html:4
+#: old/bin/aa.pl:1061 old/bin/ic.pl:870 old/bin/ir.pl:979 old/bin/is.pl:1068
+#: old/bin/oe.pl:945 UI/lib/attachments.html:4
 msgid "Attached and Linked Files"
 msgstr "Festet og linket filer"
 
-#: old/bin/aa.pl:1098 old/bin/aa.pl:1119 old/bin/ic.pl:874 old/bin/ic.pl:895
-#: old/bin/ir.pl:1051 old/bin/ir.pl:1072 old/bin/is.pl:1149 old/bin/is.pl:1170
-#: old/bin/oe.pl:944 old/bin/oe.pl:965 UI/lib/attachments.html:10
+#: old/bin/aa.pl:1065 old/bin/aa.pl:1086 old/bin/ic.pl:874 old/bin/ic.pl:895
+#: old/bin/ir.pl:1004 old/bin/ir.pl:983 old/bin/is.pl:1072 old/bin/is.pl:1093
+#: old/bin/oe.pl:949 old/bin/oe.pl:970 UI/lib/attachments.html:10
 #: UI/lib/attachments.html:33
 msgid "Attached at"
 msgstr "Festet til"
 
-#: old/bin/aa.pl:1099 old/bin/aa.pl:1120 old/bin/ic.pl:875 old/bin/ic.pl:896
-#: old/bin/ir.pl:1052 old/bin/ir.pl:1073 old/bin/is.pl:1150 old/bin/is.pl:1171
-#: old/bin/oe.pl:945 old/bin/oe.pl:966 UI/lib/attachments.html:11
+#: old/bin/aa.pl:1066 old/bin/aa.pl:1087 old/bin/ic.pl:875 old/bin/ic.pl:896
+#: old/bin/ir.pl:1005 old/bin/ir.pl:984 old/bin/is.pl:1073 old/bin/is.pl:1094
+#: old/bin/oe.pl:950 old/bin/oe.pl:971 UI/lib/attachments.html:11
 #: UI/lib/attachments.html:34
 msgid "Attached by"
 msgstr "Festet av"
@@ -1011,11 +1012,11 @@ msgstr "Vedlegg"
 msgid "Attn: [_1]"
 msgstr "Attn: [_1]"
 
-#: old/bin/aa.pl:90 old/bin/gl.pl:83 old/bin/io.pl:85
+#: old/bin/aa.pl:91 old/bin/gl.pl:81 old/bin/io.pl:84
 msgid "Aug"
 msgstr "aug"
 
-#: lib/LedgerSMB.pm:577 old/bin/aa.pl:76 old/bin/gl.pl:69 old/bin/io.pl:71
+#: lib/LedgerSMB.pm:577 old/bin/aa.pl:77 old/bin/gl.pl:67 old/bin/io.pl:70
 msgid "August"
 msgstr "august"
 
@@ -1023,7 +1024,7 @@ msgstr "august"
 msgid "Author: [_1]"
 msgstr "Revisor: [_1]"
 
-#: old/bin/ir.pl:657 old/bin/is.pl:424 old/bin/is.pl:746
+#: old/bin/ir.pl:556 old/bin/is.pl:409 old/bin/is.pl:644
 msgid "Automatic"
 msgstr "Automatisk"
 
@@ -1069,7 +1070,7 @@ msgstr "BIC/SWIFT Code"
 msgid "BIC/SWIFT Code:"
 msgstr "BIC/SWIFT Code"
 
-#: old/bin/ic.pl:1265
+#: old/bin/ic.pl:1267
 msgid "BOM"
 msgstr "BOM"
 
@@ -1105,13 +1106,9 @@ msgstr "Balanse"
 msgid "Balances as"
 msgstr "Balanse som"
 
-#: UI/reconciliation/report.html:149
+#: UI/reconciliation/report.html:161
 msgid "Bank"
 msgstr "Bank"
-
-#: UI/reconciliation/report.html:83
-msgid "Bank (CSV/OFX/CAMT.053) transaction file:"
-msgstr ""
 
 #: UI/Contact/divs/bank_act.html:59
 msgid "Bank Account"
@@ -1121,11 +1118,15 @@ msgstr "Bankkonto"
 msgid "Bank Account:"
 msgstr "Bankkonto:"
 
-#: lib/LedgerSMB/Scripts/contact.pm:194 UI/Contact/divs/bank_act.html:2
+#: lib/LedgerSMB/Scripts/contact.pm:193 UI/Contact/divs/bank_act.html:2
 #: UI/Contact/divs/bank_act.html:6 t/data/04-complex_template.html:32
 #: t/data/04-complex_template.html:554
 msgid "Bank Accounts"
 msgstr "Bankkontoer"
+
+#: UI/reconciliation/report.html:84
+msgid "Bank transactions upload:"
+msgstr ""
 
 #: old/bin/ic.pl:976
 msgid "Bar Code"
@@ -1139,8 +1140,8 @@ msgstr "Basis valuta"
 msgid "Base system"
 msgstr "Grunn systemet"
 
-#: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:95 old/bin/ir.pl:697
-#: old/bin/is.pl:792
+#: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:95 old/bin/ir.pl:597
+#: old/bin/is.pl:691
 msgid "Basis"
 msgstr "Basis"
 
@@ -1152,7 +1153,7 @@ msgstr "Gruppe"
 msgid "Batch Class"
 msgstr "Gruppe Klasse"
 
-#: old/bin/aa.pl:578
+#: old/bin/aa.pl:606
 msgid "Batch Control Code"
 msgstr "Gruppe kontrollkode"
 
@@ -1168,11 +1169,11 @@ msgstr "Gruppe beskrivelse"
 msgid "Batch ID"
 msgstr "Gruppe ID"
 
-#: old/lib/LedgerSMB/GL.pm:142
+#: old/lib/LedgerSMB/GL.pm:143
 msgid "Batch ID Missing"
 msgstr "Gruppe ID mangler"
 
-#: old/bin/aa.pl:583
+#: old/bin/aa.pl:611
 msgid "Batch Name"
 msgstr "Gruppe navn"
 
@@ -1218,15 +1219,15 @@ msgid "Billion"
 msgstr "Milliard "
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:137
-#: lib/LedgerSMB/Report/Inventory/Search.pm:239 old/bin/ic.pl:2084
-#: old/bin/ic.pl:485 old/bin/io.pl:246 old/bin/oe.pl:1963
+#: lib/LedgerSMB/Report/Inventory/Search.pm:239 old/bin/ic.pl:2087
+#: old/bin/ic.pl:485 old/bin/io.pl:245 old/bin/oe.pl:1972
 #: UI/Reports/filters/search_goods.html:352 templates/demo/bin_list.html:106
 #: templates/demo/bin_list.tex:124 templates/demo/pick_list.html:96
 #: templates/demo/pick_list.tex:117 templates/demo/work_order.html:103
 msgid "Bin"
 msgstr "Boks"
 
-#: old/bin/am.pl:966 old/bin/io.pl:1206 old/bin/oe.pl:274 old/bin/oe.pl:286
+#: old/bin/am.pl:969 old/bin/io.pl:1211 old/bin/oe.pl:277 old/bin/oe.pl:289
 #: old/bin/printer.pl:85 old/bin/printer.pl:99 templates/demo/bin_list.html:16
 #: templates/demo/bin_list.html:32 templates/demo/bin_list.tex:89
 #: sql/Pg-database.sql:2715 sql/Pg-database.sql:2728
@@ -1245,7 +1246,7 @@ msgstr "Fødselsdag"
 msgid "Body"
 msgstr "Body"
 
-#: UI/reconciliation/report.html:141
+#: UI/reconciliation/report.html:153
 msgid "Books"
 msgstr "Regnskap"
 
@@ -1277,7 +1278,7 @@ msgstr "Budsjett Avviksrapport"
 msgid "Budgets"
 msgstr "Budsjetter"
 
-#: old/bin/is.pl:369 old/bin/oe.pl:382 UI/payments/payments_detail.html:171
+#: old/bin/is.pl:354 old/bin/oe.pl:385 UI/payments/payments_detail.html:171
 msgid "Business"
 msgstr "Firma"
 
@@ -1312,7 +1313,7 @@ msgid "CC"
 msgstr "Kopi"
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:132 old/bin/ic.pl:523 old/bin/ic.pl:692
-#: UI/accounts/edit.html:436
+#: UI/accounts/edit.html:433
 msgid "COGS"
 msgstr "Varekostnad"
 
@@ -1326,20 +1327,20 @@ msgstr "Varekostnad Rapport"
 msgid "CSV"
 msgstr "CSV"
 
-#: old/bin/ir.pl:838 old/bin/is.pl:422 old/bin/is.pl:934
+#: old/bin/ir.pl:738 old/bin/is.pl:407 old/bin/is.pl:833
 msgid "Calculate Taxes"
 msgstr "Kalkuler MVA/Avgifter"
 
-#: old/lib/LedgerSMB/GL.pm:199
+#: old/lib/LedgerSMB/GL.pm:204
 msgid "Can't post credits and debits on one line."
 msgstr "Kan ikke spesifisere både debet og kreditt på en linje"
 
-#: old/bin/is.pl:712
+#: old/bin/is.pl:603
 msgid "Can't void a voided invoice!"
 msgstr "Kan ikke annullere en annullert Faktura"
 
-#: lib/LedgerSMB/Scripts/report_aging.pm:157 lib/LedgerSMB/Scripts/setup.pm:185
-#: lib/LedgerSMB/Scripts/setup.pm:241 old/bin/io.pl:1828
+#: lib/LedgerSMB/Scripts/report_aging.pm:157 lib/LedgerSMB/Scripts/setup.pm:184
+#: lib/LedgerSMB/Scripts/setup.pm:240 old/bin/io.pl:1833
 #: UI/templates/widget.html:146 UI/templates/widget.html:162
 #: UI/src/components/ConfigTableRow.vue:22
 msgid "Cancel"
@@ -1349,11 +1350,11 @@ msgstr "Avbryt"
 msgid "Cancel the <b>whole migration</b>"
 msgstr "Avbryt <b>hele overføringen</b>"
 
-#: lib/LedgerSMB/Scripts/setup.pm:306
+#: lib/LedgerSMB/Scripts/setup.pm:305
 msgid "Cancel?"
 msgstr "Avbryt?"
 
-#: old/bin/gl.pl:607
+#: old/bin/gl.pl:569
 msgid "Cannot Repost Transaction"
 msgstr "Kan ikke rapportere Postering"
 
@@ -1385,56 +1386,56 @@ msgstr "Kan ikke lage Tjenester;Kostnads konto eksisterer ikke!"
 msgid "Cannot create Service; Income account does not exist!"
 msgstr "Kan ikke lage Tjenester; Inntekts konto eksisterer ikke!"
 
-#: old/bin/ic.pl:1982
+#: old/bin/ic.pl:1985
 msgid "Cannot delete item!"
 msgstr "Kan ikke slette enkeltdel!"
 
-#: old/bin/oe.pl:1437
+#: old/bin/oe.pl:1442
 msgid "Cannot delete order!"
 msgstr "Kan ikke slette ordre!"
 
-#: old/bin/gl.pl:635
+#: old/bin/gl.pl:597
 msgid "Cannot delete posted transaction"
 msgstr "Kan ikke slette bokførte Posteringer"
 
-#: old/bin/oe.pl:1441
+#: old/bin/oe.pl:1446
 msgid "Cannot delete quotation!"
 msgstr "Kan ikke slette tilbud!"
 
-#: old/bin/ir.pl:1352 old/bin/is.pl:1459
+#: old/bin/ir.pl:1290 old/bin/is.pl:1386
 msgid "Cannot post invoice for a closed period!"
 msgstr "Kan ikke bokføre faktura for en avsluttet periode!"
 
-#: old/bin/aa.pl:1390 old/bin/ir.pl:1367 old/bin/is.pl:1474
+#: old/bin/aa.pl:1384 old/bin/ir.pl:1305 old/bin/is.pl:1401
 msgid "Cannot post payment for a closed period!"
 msgstr "Kan ikke bokføre betaling for en avsluttet periode!"
 
-#: old/bin/aa.pl:1376 old/bin/gl.pl:618
+#: old/bin/aa.pl:1370 old/bin/gl.pl:580
 msgid "Cannot post transaction for a closed period!"
 msgstr "Kan ikke bokføre Postering for en avsluttet periode!"
 
-#: old/bin/gl.pl:657
+#: old/bin/gl.pl:618
 msgid ""
 "Cannot post transaction with a debit and credit entry for the same account!"
 msgstr "Kan ikke bokføre Postering med debet og kredit på samme konto!"
 
-#: old/bin/aa.pl:1436
+#: old/bin/aa.pl:1438
 msgid "Cannot post transaction!"
 msgstr "Kan ikke bokføre Postering!"
 
-#: old/bin/oe.pl:1300
+#: old/bin/oe.pl:1305
 msgid "Cannot save order!"
 msgstr "Kan ikke lagre ordre!"
 
-#: old/bin/oe.pl:1317
+#: old/bin/oe.pl:1322
 msgid "Cannot save quotation!"
 msgstr "Kan ikke lagre tilbud!"
 
-#: old/bin/am.pl:260
+#: old/bin/am.pl:261
 msgid "Cannot save taxes!"
 msgstr "Kan ikke lagre MVA/Avgifter!"
 
-#: old/bin/ic.pl:2214
+#: old/bin/ic.pl:2217
 msgid "Cannot stock assemblies!"
 msgstr "Kan ikke plassere Monterte!"
 
@@ -1490,7 +1491,7 @@ msgstr "Sjekk"
 msgid "Check (base)"
 msgstr "Sjekk (base)"
 
-#: old/bin/ic.pl:2020
+#: old/bin/ic.pl:2023
 msgid "Check Inventory"
 msgstr "Sjekk varebeholdning"
 
@@ -1507,7 +1508,7 @@ msgid "Chord"
 msgstr "Streng"
 
 #: old/bin/arap.pl:171 UI/Contact/divs/address.html:81
-#: UI/Contact/divs/address.html:145 UI/Reports/filters/contact_search.html:94
+#: UI/Contact/divs/address.html:143 UI/Reports/filters/contact_search.html:94
 #: UI/Reports/filters/purchase_history.html:75
 #: t/data/04-complex_template.html:386
 msgid "City"
@@ -1522,25 +1523,25 @@ msgstr "Poststed"
 msgid "Class"
 msgstr "Klasse"
 
-#: lib/LedgerSMB/Scripts/recon.pm:485
+#: lib/LedgerSMB/Scripts/recon.pm:487
 msgid "Clear date"
 msgstr "Slett dato"
 
-#: UI/reconciliation/report.html:192
+#: UI/reconciliation/report.html:204
 msgid "Clear date is [*,_1,day] in the future of after posting"
 msgstr "Oppgjørs datoen er [*,_1,dag] inn i fremtiden etter postering."
 
-#: UI/reconciliation/report.html:198
+#: UI/reconciliation/report.html:210
 msgid "Clear date over [*,_1,day]"
 msgstr "Oppgjørs dato over  [*,_1,day]"
 
 #: lib/LedgerSMB/Report/GL.pm:163 UI/Reports/filters/gl.html:279
-#: UI/reconciliation/report.html:118 UI/reconciliation/report.html:250
-#: UI/reconciliation/report.html:323
+#: UI/reconciliation/report.html:130 UI/reconciliation/report.html:262
+#: UI/reconciliation/report.html:335
 msgid "Cleared"
 msgstr "Slettet"
 
-#: UI/reconciliation/report.html:104
+#: UI/reconciliation/report.html:116
 msgid "Cleared Transactions"
 msgstr "Slettede Posteringer"
 
@@ -1564,8 +1565,8 @@ msgstr "Avslutt år"
 msgid "Close books"
 msgstr "Lukk bokføring"
 
-#: lib/LedgerSMB/Report/Orders.pm:234 old/bin/oe.pl:329
-#: UI/Reports/filters/invoice_search.html:214 UI/Reports/filters/orders.html:100
+#: lib/LedgerSMB/Report/Orders.pm:234 old/bin/oe.pl:332
+#: UI/Reports/filters/invoice_search.html:214 UI/Reports/filters/orders.html:113
 #: UI/Reports/filters/purchase_history.html:209
 #: UI/Reports/filters/timecards.html:35
 msgid "Closed"
@@ -1585,7 +1586,8 @@ msgstr "Avslutt data"
 
 #: lib/LedgerSMB/Report/Listings/Language.pm:49
 #: lib/LedgerSMB/Report/Listings/SIC.pm:47 UI/src/views/GIFI.vue:11
-#: UI/src/views/SIC.vue:11 UI/src/views/Languages.vue:9
+#: UI/src/views/Countries.vue:9 UI/src/views/SIC.vue:11
+#: UI/src/views/Languages.vue:9
 msgid "Code"
 msgstr "Kode"
 
@@ -1617,12 +1619,12 @@ msgid ""
 msgstr ""
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:81
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:74
-#: lib/LedgerSMB/Scripts/contact.pm:186 UI/Contact/contact.html:12
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:75
+#: lib/LedgerSMB/Scripts/contact.pm:185 UI/Contact/contact.html:12
 #: UI/Contact/divs/company.html:2 UI/Reports/aging_report.html:12
 #: UI/Reports/display_report.html:19 UI/main.html:32
 #: templates/demo/display_report.html:49 templates/demo/display_report.tex:37
-#: UI/src/views/LoginPage.vue:36
+#: UI/src/views/LoginPage.vue:37
 msgid "Company"
 msgstr "Firma"
 
@@ -1655,7 +1657,7 @@ msgstr "Firmatelefon"
 msgid "Company Sales Tax ID"
 msgstr "Firmaets MVA nummer"
 
-#: UI/src/views/LoginPage.vue:100
+#: UI/src/views/LoginPage.vue:101
 msgid "Company does not exist"
 msgstr ""
 
@@ -1687,6 +1689,10 @@ msgstr ""
 msgid "Configure Type of Businesses"
 msgstr ""
 
+#: UI/src/views/Countries.vue:18
+msgid "Configure countries"
+msgstr ""
+
 #: UI/src/views/Languages.vue:18
 msgid "Configure languages"
 msgstr ""
@@ -1703,7 +1709,7 @@ msgstr ""
 msgid "Confirm Operation"
 msgstr "Bekreft handling"
 
-#: old/bin/oe.pl:1418
+#: old/bin/oe.pl:1423
 msgid "Confirm!"
 msgstr "Bekreft!"
 
@@ -1711,7 +1717,7 @@ msgstr "Bekreft!"
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
 msgstr "Konflikt med eksisterende data, kanskje ar det lagt inn før?"
 
-#: old/bin/io.pl:1714 UI/Reports/filters/contact_search.html:56
+#: old/bin/io.pl:1719 UI/Reports/filters/contact_search.html:56
 #: templates/demo/bin_list.html:77 templates/demo/packing_list.html:68
 #: templates/demo/pick_list.html:68 templates/demo/product_receipt.html:76
 #: templates/demo/purchase_order.html:77
@@ -1720,8 +1726,8 @@ msgstr "Konflikt med eksisterende data, kanskje ar det lagt inn før?"
 msgid "Contact"
 msgstr "Kontakt"
 
-#: lib/LedgerSMB/Scripts/contact.pm:193 UI/Contact/divs/contact_info.html:2
-#: UI/Contact/divs/contact_info.html:31 UI/Contact/divs/contact_info.html:108
+#: lib/LedgerSMB/Scripts/contact.pm:192 UI/Contact/divs/contact_info.html:2
+#: UI/Contact/divs/contact_info.html:31 UI/Contact/divs/contact_info.html:107
 #: UI/Reports/filters/purchase_history.html:28
 #: t/data/04-complex_template.html:31
 msgid "Contact Info"
@@ -1752,10 +1758,10 @@ msgstr "Kontakter"
 msgid "Content"
 msgstr "Innhold"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1549 lib/LedgerSMB/Scripts/payment.pm:766
-#: lib/LedgerSMB/Scripts/payment.pm:828 old/bin/arap.pl:263 old/bin/ic.pl:1758
-#: old/bin/ic.pl:2039 old/bin/ic.pl:2188 old/bin/ic.pl:949 old/bin/io.pl:639
-#: old/bin/oe.pl:1650 old/bin/oe.pl:2174 old/bin/oe.pl:2670 old/bin/pe.pl:1095
+#: lib/LedgerSMB/Scripts/payment.pm:1547 lib/LedgerSMB/Scripts/payment.pm:764
+#: lib/LedgerSMB/Scripts/payment.pm:826 old/bin/arap.pl:263 old/bin/ic.pl:1761
+#: old/bin/ic.pl:2042 old/bin/ic.pl:2191 old/bin/ic.pl:949 old/bin/io.pl:644
+#: old/bin/oe.pl:1659 old/bin/oe.pl:2183 old/bin/oe.pl:2680 old/bin/pe.pl:1095
 #: old/bin/pe.pl:240 old/bin/pe.pl:659 old/bin/pe.pl:828
 #: UI/Contact/divs/credit.html:526 UI/Reports/co/filter_bm.html:138
 #: UI/Reports/co/filter_cd.html:114 UI/Reports/filters/aging.html:147
@@ -1763,7 +1769,7 @@ msgstr "Innhold"
 #: UI/Reports/filters/income_statement.html:278
 #: UI/Reports/filters/inventory_activity.html:30
 #: UI/Reports/filters/invoice_outstanding.html:289
-#: UI/Reports/filters/invoice_search.html:412 UI/Reports/filters/orders.html:209
+#: UI/Reports/filters/invoice_search.html:412 UI/Reports/filters/orders.html:222
 #: UI/Reports/filters/purchase_history.html:360
 #: UI/Reports/filters/taxforms.html:57 UI/Reports/filters/trial_balance.html:127
 #: UI/asset/begin_approval.html:65 UI/asset/begin_report.html:59
@@ -1777,7 +1783,7 @@ msgstr "Fortsett"
 msgid "Continue Previous Workflow"
 msgstr "Fortsett til forrige vindu"
 
-#: UI/accounts/edit.html:239
+#: UI/accounts/edit.html:256
 msgid "Contra"
 msgstr "Kontra"
 
@@ -1797,7 +1803,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/Search.pm:66
 #: lib/LedgerSMB/Report/Listings/Business_Unit.pm:59
-#: lib/LedgerSMB/Report/PNL/ECA.pm:90 lib/LedgerSMB/Report/Taxform/Summary.pm:86
+#: lib/LedgerSMB/Report/PNL/ECA.pm:90 lib/LedgerSMB/Report/Taxform/Summary.pm:87
 #: old/bin/arap.pl:165 UI/Contact/divs/company.html:51
 #: UI/Contact/divs/person.html:51 UI/Reports/filters/contact_search.html:39
 #: UI/Reports/filters/overpayments.html:9 UI/business_units/edit.html:27
@@ -1809,7 +1815,7 @@ msgstr "Kontrollkode"
 msgid "Copy"
 msgstr "Kopier"
 
-#: old/bin/aa.pl:982 old/bin/gl.pl:256 old/bin/ir.pl:537 old/bin/is.pl:603
+#: old/bin/gl.pl:249
 msgid "Copy to New"
 msgstr "Kopier til Ny"
 
@@ -1818,7 +1824,7 @@ msgid "Copy to New Name"
 msgstr "Kopier til Nytt Navn"
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:127 old/bin/ic.pl:1017
-#: old/bin/ic.pl:1264 old/bin/oe.pl:2514
+#: old/bin/ic.pl:1266 old/bin/oe.pl:2524
 msgid "Cost"
 msgstr "Kostpris"
 
@@ -1830,19 +1836,19 @@ msgstr "Kostnader for solgte varer"
 msgid "Could Not Load Template from DB"
 msgstr "Kunne ikke laste Mal fra DB"
 
-#: UI/src/components/ServerUI.js:112
+#: UI/src/components/ServerUI.js:120
 msgid "Could not connect to server"
 msgstr ""
 
-#: old/bin/ir.pl:1331 old/bin/is.pl:1439 old/bin/oe.pl:1333
+#: old/bin/ir.pl:1269 old/bin/is.pl:1366 old/bin/oe.pl:1338
 msgid "Could not save the data.  Please try again"
 msgstr "Kunne ikke lagre data. Prøv igjen."
 
-#: old/bin/oe.pl:2107
+#: old/bin/oe.pl:2116
 msgid "Could not save!"
 msgstr "Kunne ikke lagre"
 
-#: old/bin/oe.pl:2377
+#: old/bin/oe.pl:2386
 msgid "Could not transfer Inventory!"
 msgstr "Kunne ikke overføre varebeholdning!"
 
@@ -1860,9 +1866,10 @@ msgstr "Motpart"
 msgid "Counterparty Code"
 msgstr "Motpartsnummer"
 
+#: lib/LedgerSMB/Report/Listings/Country.pm:62
 #: lib/LedgerSMB/Report/Payroll/Deduction_Types.pm:34
-#: lib/LedgerSMB/Report/Payroll/Income_Types.pm:34 old/bin/io.pl:1656
-#: UI/Contact/divs/address.html:84 UI/Contact/divs/address.html:174
+#: lib/LedgerSMB/Report/Payroll/Income_Types.pm:34 old/bin/io.pl:1661
+#: UI/Contact/divs/address.html:84 UI/Contact/divs/address.html:172
 #: UI/Contact/divs/company.html:94 UI/Contact/divs/employee.html:96
 #: UI/Contact/divs/person.html:118 UI/Reports/filters/contact_search.html:109
 #: UI/Reports/filters/purchase_history.html:99 UI/payroll/deduction.html:15
@@ -1891,7 +1898,7 @@ msgstr "Opprett konto"
 msgid "Create Batch"
 msgstr "Opprett Gruppe"
 
-#: lib/LedgerSMB/Scripts/setup.pm:287
+#: lib/LedgerSMB/Scripts/setup.pm:286
 msgid "Create Database?"
 msgstr "Opprett Database"
 
@@ -1911,7 +1918,7 @@ msgstr "Opprett nytt MVA skjema"
 msgid "Create User"
 msgstr "Opprett bruker"
 
-#: UI/Contact/divs/user.html:80 UI/setup/new_user.html:44
+#: UI/Contact/divs/user.html:84 UI/setup/new_user.html:44
 msgid "Create new user"
 msgstr "Opprett ny bruker"
 
@@ -1926,11 +1933,11 @@ msgstr "Laget på"
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:91
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:92 UI/Reports/co/filter_bm.html:105
 #: UI/Reports/filters/gl.html:240 UI/Reports/filters/trial_balance.html:5
-#: UI/budgetting/budget_entry.html:62 UI/journal/journal_entry.html:134
+#: UI/budgetting/budget_entry.html:62 UI/journal/journal_entry.html:135
 msgid "Credit"
 msgstr "Kredit"
 
-#: lib/LedgerSMB/Scripts/contact.pm:298
+#: lib/LedgerSMB/Scripts/contact.pm:300
 msgid "Credit Account"
 msgstr "Kredittkonto"
 
@@ -1938,16 +1945,16 @@ msgstr "Kredittkonto"
 msgid "Credit Account Number"
 msgstr "Kredittkontonummer"
 
-#: lib/LedgerSMB/Scripts/contact.pm:191 UI/Contact/divs/credit.html:2
+#: lib/LedgerSMB/Scripts/contact.pm:190 UI/Contact/divs/credit.html:2
 msgid "Credit Accounts"
 msgstr "Kredittkontoer"
 
-#: old/bin/am.pl:959 templates/demo/invoice.html:32
+#: old/bin/am.pl:962 templates/demo/invoice.html:32
 #: templates/demo/invoice.tex:136 sql/Pg-database.sql:2666
 msgid "Credit Invoice"
 msgstr "Kreditfaktura"
 
-#: old/bin/aa.pl:559 old/bin/ir.pl:424 old/bin/is.pl:457 old/bin/oe.pl:426
+#: old/bin/aa.pl:587 old/bin/ir.pl:406 old/bin/is.pl:442 old/bin/oe.pl:429
 #: UI/Contact/divs/credit.html:29 UI/Contact/divs/credit.html:144
 #: UI/Contact/divs/credit.html:145
 msgid "Credit Limit"
@@ -1963,15 +1970,15 @@ msgstr "Kreditnota"
 
 #: lib/LedgerSMB/Report/COA.pm:111 lib/LedgerSMB/Report/GL.pm:131
 #: lib/LedgerSMB/Report/Trial_Balance.pm:176
-#: lib/LedgerSMB/Scripts/payment.pm:209 UI/Reports/co/filter_cd.html:90
-#: UI/reconciliation/report.html:159 UI/reconciliation/report.html:161
+#: lib/LedgerSMB/Scripts/payment.pm:208 UI/Reports/co/filter_cd.html:90
+#: UI/reconciliation/report.html:171 UI/reconciliation/report.html:173
 msgid "Credits"
 msgstr "Kreditt"
 
 #: lib/LedgerSMB/Report/GL.pm:137
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:262
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:278 old/bin/ic.pl:1006
-#: old/bin/ic.pl:1100 old/bin/oe.pl:2519
+#: old/bin/ic.pl:1101 old/bin/oe.pl:2529
 msgid "Curr"
 msgstr "Val"
 
@@ -1980,13 +1987,13 @@ msgstr "Val"
 #: lib/LedgerSMB/Report/Contact/Search.pm:83
 #: lib/LedgerSMB/Report/Inventory/Search.pm:315
 #: lib/LedgerSMB/Report/Orders.pm:230 lib/LedgerSMB/Scripts/currency.pm:240
-#: old/bin/aa.pl:433 old/bin/ir.pl:331 old/bin/is.pl:329 old/bin/oe.pl:1629
-#: old/bin/oe.pl:340 UI/Configuration/rate.html:28
+#: old/bin/aa.pl:461 old/bin/ir.pl:313 old/bin/is.pl:314 old/bin/oe.pl:1638
+#: old/bin/oe.pl:343 UI/Configuration/rate.html:28
 #: UI/Contact/divs/credit.html:220 UI/Contact/divs/credit.html:221
 #: UI/Contact/pricelist.csv:46 UI/Contact/pricelist.html:57
 #: UI/Contact/pricelist.tex:62 UI/Reports/filters/gl.html:246
 #: UI/Reports/filters/invoice_outstanding.html:213
-#: UI/Reports/filters/invoice_search.html:336 UI/Reports/filters/orders.html:192
+#: UI/Reports/filters/invoice_search.html:336 UI/Reports/filters/orders.html:205
 #: UI/Reports/filters/overpayments.html:43 UI/Reports/filters/payments.html:108
 #: UI/Reports/filters/purchase_history.html:272
 #: UI/Reports/filters/search_goods.html:422 UI/payments/payment1.html:66
@@ -2009,7 +2016,7 @@ msgstr "Nåværende"
 msgid "Current earnings"
 msgstr "Nåværende fortjeneste"
 
-#: UI/accounts/edit.html:267
+#: UI/accounts/edit.html:296
 msgid "Custom Flags"
 msgstr "Tilpassede flagg"
 
@@ -2017,7 +2024,7 @@ msgstr "Tilpassede flagg"
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:197
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:251
 #: lib/LedgerSMB/Report/Orders.pm:179 lib/LedgerSMB/Report/Orders.pm:185
-#: old/bin/aa.pl:522 old/bin/ic.pl:1108 old/bin/is.pl:445 old/bin/pe.pl:1074
+#: old/bin/aa.pl:550 old/bin/ic.pl:1109 old/bin/is.pl:430 old/bin/pe.pl:1074
 #: old/bin/pe.pl:924 UI/Contact/divs/credit.html:14
 #: UI/Contact/divs/credit.html:15 UI/Reports/filters/aging.html:14
 #: UI/Reports/filters/invoice_outstanding.html:9
@@ -2047,7 +2054,7 @@ msgstr "Kundenavn"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:117
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:180
-#: lib/LedgerSMB/Scripts/configuration.pm:128 old/bin/io.pl:1594
+#: lib/LedgerSMB/Scripts/configuration.pm:128 old/bin/io.pl:1599
 #: UI/Reports/filters/invoice_outstanding.html:10
 #: UI/Reports/filters/invoice_search.html:11
 #: UI/Reports/filters/overpayments.html:20 UI/Reports/filters/payments.html:14
@@ -2060,7 +2067,7 @@ msgstr "Kundenummer"
 msgid "Customer Search"
 msgstr "Kunde søk"
 
-#: old/bin/aa.pl:1359 old/bin/is.pl:1448 old/bin/oe.pl:1268 old/bin/pe.pl:1153
+#: old/bin/aa.pl:1353 old/bin/is.pl:1375 old/bin/oe.pl:1273 old/bin/pe.pl:1153
 msgid "Customer missing!"
 msgstr "Kunde mangler!"
 
@@ -2072,7 +2079,7 @@ msgstr "Kunde mangler"
 msgid "Customer not on file!"
 msgstr "Kunde mangler i databasen!"
 
-#: UI/setup/complete.html:26 UI/setup/confirm_operation.html:124
+#: UI/setup/complete.html:23 UI/setup/confirm_operation.html:124
 msgid "Customer/Vendor Accounts"
 msgstr "Kunde/Leverandør Kontoer"
 
@@ -2092,15 +2099,15 @@ msgstr "Fødseldato"
 msgid "DOB:"
 msgstr "Fødseldato:"
 
-#: UI/reconciliation/report.html:153
+#: UI/reconciliation/report.html:165
 msgid "Data from your bank statement"
 msgstr "Data fra kontoutskriften"
 
-#: UI/reconciliation/report.html:145
+#: UI/reconciliation/report.html:157
 msgid "Data from your ledger"
 msgstr "Data fra hovedbok"
 
-#: lib/LedgerSMB/Scripts/payment.pm:415 old/bin/aa.pl:1349
+#: lib/LedgerSMB/Scripts/payment.pm:413 old/bin/aa.pl:1343
 msgid "Data not saved.  Please try again."
 msgstr "Data ikke lagret. Prøv igjen."
 
@@ -2141,15 +2148,15 @@ msgstr "Database administrator rettigheter"
 msgid "Database component"
 msgstr "Database komponent"
 
-#: lib/LedgerSMB/Scripts/setup.pm:286
+#: lib/LedgerSMB/Scripts/setup.pm:285
 msgid "Database does not exist."
 msgstr "Databasen eksisterer ikke"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1026
+#: lib/LedgerSMB/Scripts/setup.pm:1023
 msgid "Database exists."
 msgstr "Databasen eksisterer."
 
-#: UI/src/views/LoginPage.vue:104
+#: UI/src/views/LoginPage.vue:105
 msgid "Database version mismatch"
 msgstr ""
 
@@ -2163,10 +2170,10 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:115
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:137
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:94
-#: lib/LedgerSMB/Scripts/asset.pm:464 lib/LedgerSMB/Scripts/payment.pm:192
-#: lib/LedgerSMB/Scripts/payment.pm:930 old/bin/aa.pl:844 old/bin/ir.pl:913
-#: old/bin/is.pl:1010 old/bin/oe.pl:1633 old/bin/pe.pl:937
-#: UI/Reports/filters/gl.html:203 UI/Reports/filters/orders.html:134
+#: lib/LedgerSMB/Scripts/asset.pm:464 lib/LedgerSMB/Scripts/payment.pm:191
+#: lib/LedgerSMB/Scripts/payment.pm:928 old/bin/aa.pl:878 old/bin/ir.pl:814
+#: old/bin/is.pl:910 old/bin/oe.pl:1642 old/bin/pe.pl:937
+#: UI/Reports/filters/gl.html:203 UI/Reports/filters/orders.html:147
 #: UI/asset/begin_report.html:21 UI/inventory/adjustment_setup.html:16
 #: UI/journal/journal_entry.html:40 UI/payments/payment2.html:100
 #: UI/payments/payments_detail.html:333 UI/payments/use_overpayment2.html:85
@@ -2206,7 +2213,7 @@ msgstr "Betalingsdato"
 msgid "Date Range"
 msgstr "Datointervall"
 
-#: old/bin/oe.pl:1838
+#: old/bin/oe.pl:1847
 msgid "Date Received"
 msgstr "Mottaksdato"
 
@@ -2230,7 +2237,7 @@ msgstr "Fra Dato"
 msgid "Date of Birth"
 msgstr "Fødselsdag"
 
-#: old/bin/oe.pl:2092
+#: old/bin/oe.pl:2101
 msgid "Date received missing!"
 msgstr "Mangler mottaksdato"
 
@@ -2246,11 +2253,11 @@ msgstr "Til Dato"
 msgid "Date to register payment"
 msgstr "Dato for å registre betaling"
 
-#: UI/reconciliation/report.html:122
+#: UI/reconciliation/report.html:134
 msgid "Date when the transaction was cleared at your bank"
 msgstr "Dato da transaksjonen ble bokført i banken din"
 
-#: UI/reconciliation/report.html:134
+#: UI/reconciliation/report.html:146
 msgid "Date when the transaction was posted in the ledger"
 msgstr "Dato da transaksjonen ble bokført i hovedboka"
 
@@ -2260,27 +2267,27 @@ msgstr "Dato da transaksjonen ble bokført i hovedboka"
 msgid "Dates"
 msgstr "Datoer"
 
-#: old/bin/am.pl:267 UI/lib/report_base.html:165
+#: old/bin/am.pl:268 UI/lib/report_base.html:165
 #: UI/timecards/entry_filter.html:22
 msgid "Day"
 msgstr "Dag"
 
-#: old/bin/arap.pl:516
+#: old/bin/arap.pl:524
 msgid "Day(s)"
 msgstr "Dag(er)"
 
-#: old/bin/am.pl:268
+#: old/bin/am.pl:269
 msgid "Days"
 msgstr "Dager"
 
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:85
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:86 UI/Reports/filters/gl.html:233
 #: UI/Reports/filters/trial_balance.html:4 UI/budgetting/budget_entry.html:61
-#: UI/journal/journal_entry.html:133
+#: UI/journal/journal_entry.html:134
 msgid "Debit"
 msgstr "Debet"
 
-#: old/bin/am.pl:960 sql/Pg-database.sql:2662
+#: old/bin/am.pl:963 sql/Pg-database.sql:2662
 msgid "Debit Invoice"
 msgstr "Faktura"
 
@@ -2290,16 +2297,16 @@ msgstr "Regning"
 
 #: lib/LedgerSMB/Report/COA.pm:104 lib/LedgerSMB/Report/GL.pm:125
 #: lib/LedgerSMB/Report/Trial_Balance.pm:170
-#: lib/LedgerSMB/Scripts/payment.pm:203 UI/Reports/co/filter_cd.html:82
-#: UI/reconciliation/report.html:158 UI/reconciliation/report.html:160
+#: lib/LedgerSMB/Scripts/payment.pm:202 UI/Reports/co/filter_cd.html:82
+#: UI/reconciliation/report.html:170 UI/reconciliation/report.html:172
 msgid "Debits"
 msgstr "Tilgodehavende"
 
-#: old/bin/aa.pl:94 old/bin/gl.pl:87 old/bin/io.pl:89
+#: old/bin/aa.pl:95 old/bin/gl.pl:85 old/bin/io.pl:88
 msgid "Dec"
 msgstr "des"
 
-#: lib/LedgerSMB.pm:581 old/bin/aa.pl:80 old/bin/gl.pl:73 old/bin/io.pl:75
+#: lib/LedgerSMB.pm:581 old/bin/aa.pl:81 old/bin/gl.pl:71 old/bin/io.pl:74
 msgid "December"
 msgstr "desember"
 
@@ -2387,17 +2394,17 @@ msgstr "Definerte valutakurstyper"
 #: lib/LedgerSMB/Report/COA.pm:123 lib/LedgerSMB/Report/COA.pm:162
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:131
 #: lib/LedgerSMB/Report/Listings/TemplateTrans.pm:121
+#: lib/LedgerSMB/Report/Listings/User.pm:99
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:244
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:234 old/bin/aa.pl:1011
-#: old/bin/aa.pl:955 old/bin/am.pl:67 old/bin/am.pl:79 old/bin/ic.pl:828
-#: old/bin/ic.pl:850 old/bin/ir.pl:1032 old/bin/is.pl:1129 old/bin/oe.pl:696
-#: old/bin/oe.pl:924 old/bin/pe.pl:156 old/bin/pe.pl:518
-#: UI/Contact/divs/address.html:52 UI/Contact/divs/bank_act.html:15
-#: UI/Contact/divs/contact_info.html:11 UI/Contact/pricelist.html:66
-#: UI/accounts/edit.html:104 UI/accounts/edit.html:568
-#: UI/business_units/list_classes.html:94 UI/file/internal-file-list.html:31
-#: UI/reconciliation/report.html:445 t/data/04-complex_template.html:510
-#: UI/src/components/ConfigTableRow.vue:26
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:234 old/bin/aa.pl:992
+#: old/bin/am.pl:67 old/bin/am.pl:79 old/bin/ic.pl:828 old/bin/ic.pl:850
+#: old/bin/ir.pl:919 old/bin/is.pl:1008 old/bin/oe.pl:699 old/bin/oe.pl:929
+#: old/bin/pe.pl:156 old/bin/pe.pl:518 UI/Contact/divs/address.html:52
+#: UI/Contact/divs/bank_act.html:15 UI/Contact/divs/contact_info.html:11
+#: UI/Contact/pricelist.html:66 UI/accounts/edit.html:104
+#: UI/accounts/edit.html:565 UI/business_units/list_classes.html:94
+#: UI/file/internal-file-list.html:31 UI/reconciliation/report.html:457
+#: t/data/04-complex_template.html:510 UI/src/components/ConfigTableRow.vue:26
 msgid "Delete"
 msgstr "Slett"
 
@@ -2405,11 +2412,11 @@ msgstr "Slett"
 msgid "Delete Batch"
 msgstr "Slett Gruppe"
 
-#: old/bin/arap.pl:618 old/bin/arap.pl:624
+#: old/bin/arap.pl:626 old/bin/arap.pl:632
 msgid "Delete Schedule"
 msgstr "Slette Fordelinger"
 
-#: UI/Contact/divs/user.html:37
+#: UI/Contact/divs/user.html:41
 msgid "Delete User"
 msgstr ""
 
@@ -2417,8 +2424,8 @@ msgstr ""
 msgid "Delete Vouchers"
 msgstr "Slette Kuponger"
 
-#: UI/accounts/edit.html:106 UI/accounts/edit.html:570
-#: UI/file/internal-file-list.html:33 UI/reconciliation/report.html:450
+#: UI/accounts/edit.html:106 UI/accounts/edit.html:567
+#: UI/file/internal-file-list.html:33 UI/reconciliation/report.html:462
 #: UI/src/components/ConfigTableRow.vue:82
 msgid "Deleted"
 msgstr ""
@@ -2427,8 +2434,8 @@ msgstr ""
 msgid "Deleting"
 msgstr ""
 
-#: UI/accounts/edit.html:105 UI/accounts/edit.html:569
-#: UI/file/internal-file-list.html:32 UI/reconciliation/report.html:449
+#: UI/accounts/edit.html:105 UI/accounts/edit.html:566
+#: UI/file/internal-file-list.html:32 UI/reconciliation/report.html:461
 msgid "Deleting..."
 msgstr ""
 
@@ -2436,7 +2443,7 @@ msgstr ""
 msgid "Delivery"
 msgstr "Levering"
 
-#: lib/LedgerSMB/Report/Contact/History.pm:107 old/bin/io.pl:265
+#: lib/LedgerSMB/Report/Contact/History.pm:107 old/bin/io.pl:264
 #: UI/Reports/filters/purchase_history.html:314
 msgid "Delivery Date"
 msgstr "Leveringsdato"
@@ -2466,7 +2473,7 @@ msgstr "Avdeling YTD"
 msgid "Dep. this run"
 msgstr "Avdeling denne kjøring"
 
-#: old/bin/aa.pl:463 old/bin/ir.pl:362 old/bin/is.pl:358 old/bin/oe.pl:525
+#: old/bin/aa.pl:491 old/bin/ir.pl:344 old/bin/is.pl:343 old/bin/oe.pl:528
 #: UI/asset/edit_asset.html:147 UI/asset/search_asset.html:135
 #: UI/payments/payment2.html:76 UI/payments/payments_detail.html:129
 msgid "Department"
@@ -2484,7 +2491,7 @@ msgstr "Avskrive"
 msgid "Depreciate Through"
 msgstr "Avskrive igjennom"
 
-#: lib/LedgerSMB/Scripts/asset.pm:511 UI/accounts/edit.html:505
+#: lib/LedgerSMB/Scripts/asset.pm:511 UI/accounts/edit.html:502
 #: sql/Pg-database.sql:2657
 msgid "Depreciation"
 msgstr "Avskrivning"
@@ -2538,30 +2545,30 @@ msgstr "Avskrivnings Start"
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:76 lib/LedgerSMB/Scripts/asset.pm:331
 #: lib/LedgerSMB/Scripts/asset.pm:695 lib/LedgerSMB/Scripts/asset.pm:791
 #: lib/LedgerSMB/Scripts/currency.pm:138 lib/LedgerSMB/Scripts/currency.pm:53
-#: lib/LedgerSMB/Scripts/file.pm:138 old/bin/aa.pl:629 old/bin/aa.pl:681
-#: old/bin/am.pl:302 old/bin/ic.pl:1258 old/bin/ic.pl:2013 old/bin/ic.pl:2080
-#: old/bin/ic.pl:739 old/bin/io.pl:1717 old/bin/io.pl:234 old/bin/ir.pl:472
-#: old/bin/is.pl:513 old/bin/oe.pl:1956 old/bin/oe.pl:2155 old/bin/oe.pl:2228
-#: old/bin/oe.pl:2262 old/bin/oe.pl:2506 old/bin/pe.pl:221 old/bin/pe.pl:267
+#: lib/LedgerSMB/Scripts/file.pm:138 old/bin/aa.pl:657 old/bin/aa.pl:713
+#: old/bin/am.pl:303 old/bin/ic.pl:1260 old/bin/ic.pl:2016 old/bin/ic.pl:2083
+#: old/bin/ic.pl:739 old/bin/io.pl:1722 old/bin/io.pl:233 old/bin/ir.pl:454
+#: old/bin/is.pl:498 old/bin/oe.pl:1965 old/bin/oe.pl:2164 old/bin/oe.pl:2237
+#: old/bin/oe.pl:2271 old/bin/oe.pl:2516 old/bin/pe.pl:221 old/bin/pe.pl:267
 #: old/bin/pe.pl:296 old/bin/pe.pl:947 UI/Contact/divs/contact_info.html:30
-#: UI/Contact/divs/contact_info.html:100 UI/Contact/divs/credit.html:28
+#: UI/Contact/divs/contact_info.html:99 UI/Contact/divs/credit.html:28
 #: UI/Contact/divs/credit.html:85 UI/Contact/divs/credit.html:86
 #: UI/Contact/pricelist.csv:11 UI/Contact/pricelist.html:25
 #: UI/Contact/pricelist.tex:17 UI/Reports/filters/batches.html:35
 #: UI/Reports/filters/budget_search.html:28
 #: UI/Reports/filters/cogs_lines.html:18 UI/Reports/filters/gl.html:82
 #: UI/Reports/filters/gl.html:224 UI/Reports/filters/inventory_activity.html:18
-#: UI/Reports/filters/invoice_search.html:140 UI/Reports/filters/orders.html:69
+#: UI/Reports/filters/invoice_search.html:140 UI/Reports/filters/orders.html:82
 #: UI/Reports/filters/purchase_history.html:253
 #: UI/Reports/filters/search_goods.html:63
 #: UI/Reports/filters/search_goods.html:271 UI/accounts/edit.html:53
-#: UI/accounts/edit.html:158 UI/accounts/yearend.html:41
+#: UI/accounts/edit.html:142 UI/accounts/yearend.html:41
 #: UI/budgetting/budget_entry.html:26 UI/budgetting/budget_entry.html:63
 #: UI/create_batch.html:19 UI/create_batch.html:73
 #: UI/file/internal-file-list.html:43 UI/inventory/adjustment_entry.html:25
 #: UI/journal/journal_entry.html:53 UI/payments/payment2.html:188
-#: UI/reconciliation/report.html:138 UI/reconciliation/report.html:253
-#: UI/reconciliation/report.html:326 UI/timecards/timecard-week.html:111
+#: UI/reconciliation/report.html:150 UI/reconciliation/report.html:265
+#: UI/reconciliation/report.html:338 UI/timecards/timecard-week.html:111
 #: UI/timecards/timecard.html:45 templates/demo/bin_list.html:100
 #: templates/demo/bin_list.tex:121 templates/demo/invoice.html:104
 #: templates/demo/invoice.tex:162 templates/demo/packing_list.html:92
@@ -2614,10 +2621,10 @@ msgstr "Rab"
 msgid "Disc %"
 msgstr "Rab %"
 
-#: lib/LedgerSMB/Scripts/payment.pm:933 old/bin/ic.pl:1111
+#: lib/LedgerSMB/Scripts/payment.pm:931 old/bin/ic.pl:1112
 #: UI/Contact/divs/credit.html:166 UI/Contact/divs/credit.html:167
-#: UI/Reports/filters/purchase_history.html:303 UI/accounts/edit.html:365
-#: UI/accounts/edit.html:415 UI/payments/payments_detail.html:340
+#: UI/Reports/filters/purchase_history.html:303 UI/accounts/edit.html:362
+#: UI/accounts/edit.html:412 UI/payments/payments_detail.html:340
 msgid "Discount"
 msgstr "Rabatt"
 
@@ -2655,7 +2662,7 @@ msgstr "Deponert Rapport [_1] på dato [_2]"
 msgid "Division by 0 error"
 msgstr "Feil, dividert på 0"
 
-#: old/bin/io.pl:1942
+#: old/bin/io.pl:1947
 msgid "Do not keep field empty [_1]"
 msgstr "Doble kundenummer"
 
@@ -2667,11 +2674,11 @@ msgstr "Dokument"
 msgid "Document Type"
 msgstr "Dokumenttype"
 
-#: lib/LedgerSMB/Scripts/setup.pm:504
+#: lib/LedgerSMB/Scripts/setup.pm:501
 msgid "Don't know what to do with backup"
 msgstr "Vei ikke hvordan å bruke backup"
 
-#: old/bin/oe.pl:2053 old/bin/oe.pl:2061
+#: old/bin/oe.pl:2062 old/bin/oe.pl:2070
 msgid "Done"
 msgstr "Ferdig"
 
@@ -2691,7 +2698,7 @@ msgstr ""
 msgid "Dr."
 msgstr "Dr."
 
-#: old/bin/aa.pl:1232 old/bin/aa.pl:1481 old/bin/gl.pl:110 old/bin/ir.pl:88
+#: old/bin/aa.pl:1222 old/bin/aa.pl:1488 old/bin/gl.pl:106 old/bin/ir.pl:95
 msgid "Draft Posted"
 msgstr "Kladd Sendt"
 
@@ -2702,6 +2709,10 @@ msgstr "Søk kladd"
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:144
 msgid "Draft Type"
 msgstr "Kladd type"
+
+#: old/bin/aa.pl:153 old/bin/ir.pl:141 old/bin/is.pl:134
+msgid "Draft deleted"
+msgstr ""
 
 #: sql/Pg-database.sql:2632
 msgid "Drafts"
@@ -2729,18 +2740,18 @@ msgstr "Forfall"
 #: lib/LedgerSMB/Report/Aging.pm:130
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:107
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:270
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:299 old/bin/aa.pl:657
-#: old/bin/ir.pl:499 old/bin/is.pl:551
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:299 old/bin/aa.pl:685
+#: old/bin/ir.pl:481 old/bin/is.pl:536
 #: UI/Reports/filters/invoice_outstanding.html:234
 #: UI/Reports/filters/invoice_search.html:357
 msgid "Due Date"
 msgstr "Forfallsdato"
 
-#: old/bin/aa.pl:1364
+#: old/bin/aa.pl:1358
 msgid "Due Date missing!"
 msgstr "Forfallsdato mangler!"
 
-#: UI/Contact/divs/user.html:10 UI/setup/edit_user.html:11
+#: UI/Contact/divs/user.html:14 UI/setup/edit_user.html:11
 msgid "Duplicate User Found: Importing User"
 msgstr "Dublikat bruker funnet: Import bruker"
 
@@ -2748,13 +2759,12 @@ msgstr "Dublikat bruker funnet: Import bruker"
 msgid "Duplicate employee numbers"
 msgstr "Ansattnummer finnes fra før"
 
-#: old/bin/am.pl:315 old/bin/arap.pl:396 old/bin/is.pl:1128 old/bin/is.pl:618
-#: old/bin/oe.pl:2060 old/bin/oe.pl:660 old/bin/oe.pl:923
-#: UI/Reports/filters/contact_search.html:48
+#: old/bin/am.pl:316 old/bin/arap.pl:404 old/bin/is.pl:1007 old/bin/oe.pl:2069
+#: old/bin/oe.pl:663 old/bin/oe.pl:928 UI/Reports/filters/contact_search.html:48
 msgid "E-mail"
 msgstr "Epost"
 
-#: old/bin/am.pl:931
+#: old/bin/am.pl:934
 msgid "E-mail address missing!"
 msgstr "Epost-adresse mangler!"
 
@@ -2762,7 +2772,7 @@ msgstr "Epost-adresse mangler!"
 msgid "E-mail aging reminder status"
 msgstr ""
 
-#: old/bin/arap.pl:438
+#: old/bin/arap.pl:446
 msgid "E-mail message"
 msgstr "E-post melding"
 
@@ -2782,17 +2792,17 @@ msgstr "EDI ID"
 msgid "EDI Interchange ID"
 msgstr "EDI forandre ID internt"
 
-#: old/bin/aa.pl:148 old/bin/arapprn.pl:67 UI/Contact/divs/address.html:51
+#: old/bin/aa.pl:159 old/bin/arapprn.pl:67 UI/Contact/divs/address.html:51
 #: UI/Contact/divs/contact_info.html:10 UI/templates/widget.html:125
 #: t/data/04-complex_template.html:506
 msgid "Edit"
 msgstr "Endre"
 
-#: old/bin/aa.pl:384 old/bin/aa.pl:422
+#: old/bin/aa.pl:412 old/bin/aa.pl:450
 msgid "Edit AP Transaction"
 msgstr "Endre Leverandører Postering"
 
-#: old/bin/aa.pl:383
+#: old/bin/aa.pl:411
 msgid "Edit AR Transaction"
 msgstr "Endre Kunde Postering"
 
@@ -2804,11 +2814,11 @@ msgstr "Endre montering"
 msgid "Edit Asset Class"
 msgstr "Endre Eiendel Klasse"
 
-#: old/bin/is.pl:136
+#: old/bin/is.pl:152
 msgid "Edit Credit Invoice"
 msgstr "Endre Kreditfaktura"
 
-#: old/bin/aa.pl:420
+#: old/bin/aa.pl:448
 msgid "Edit Credit Note"
 msgstr "Endre Kreditnota"
 
@@ -2817,11 +2827,11 @@ msgstr "Endre Kreditnota"
 msgid "Edit Customer"
 msgstr "Endre kundeopplysninger"
 
-#: old/bin/is.pl:133
+#: old/bin/is.pl:149
 msgid "Edit Customer Return"
 msgstr "Endre Kunde retur"
 
-#: old/bin/aa.pl:418
+#: old/bin/aa.pl:446
 msgid "Edit Debit Note"
 msgstr "Endre Faktura"
 
@@ -2862,7 +2872,7 @@ msgstr "Endre Rapport Enhet"
 msgid "Edit Request for Quotation"
 msgstr "Endre ønske om tilbud"
 
-#: old/bin/is.pl:139
+#: old/bin/is.pl:155
 msgid "Edit Sales Invoice"
 msgstr "Endre Utgående Faktura"
 
@@ -2887,15 +2897,15 @@ msgstr "Endre bruker"
 msgid "Edit Vendor"
 msgstr "Endre leverandør"
 
-#: old/bin/ir.pl:147
+#: old/bin/ir.pl:162
 msgid "Edit Vendor Invoice"
 msgstr "Endre Inngående Faktura"
 
-#: old/bin/ir.pl:141
+#: old/bin/ir.pl:156
 msgid "Edit Vendor Return"
 msgstr "Endre Leverandør Retur"
 
-#: UI/Contact/divs/user.html:13 UI/setup/edit_user.html:14
+#: UI/Contact/divs/user.html:17 UI/setup/edit_user.html:14
 msgid "Editing User"
 msgstr "Endre Bruker"
 
@@ -2923,8 +2933,8 @@ msgstr "Eleve-o"
 msgid "Email"
 msgstr "E-mail"
 
-#: lib/LedgerSMB/Report/Orders.pm:254 lib/LedgerSMB/Scripts/contact.pm:188
-#: old/bin/aa.pl:490 old/bin/oe.pl:549 old/bin/pe.pl:774
+#: lib/LedgerSMB/Report/Orders.pm:254 lib/LedgerSMB/Scripts/contact.pm:187
+#: old/bin/aa.pl:518 old/bin/oe.pl:552 old/bin/pe.pl:774
 #: UI/Contact/divs/employee.html:2 UI/Reports/filters/contact_search.html:64
 #: UI/timecards/entry_filter.html:12 t/data/04-complex_template.html:43
 #: templates/demo/ap_transaction.html:76 templates/demo/ap_transaction.tex:84
@@ -3012,7 +3022,7 @@ msgstr "Slutt Hovedbok Balanse"
 msgid "Ending Statement Balance:"
 msgstr "Sluttoppgjør Balanse"
 
-#: old/bin/am.pl:308
+#: old/bin/am.pl:309
 msgid "Ends"
 msgstr "Slutt"
 
@@ -3045,7 +3055,7 @@ msgstr "Lagt inn ved"
 msgid "Entered at: [_1]"
 msgstr "Lagt inn ved: [_1]"
 
-#: lib/LedgerSMB/Scripts/contact.pm:296
+#: lib/LedgerSMB/Scripts/contact.pm:298
 #: lib/LedgerSMB/Scripts/report_aging.pm:136 sql/Pg-database.sql:1036
 msgid "Entity"
 msgstr "Eksisterende"
@@ -3054,11 +3064,11 @@ msgstr "Eksisterende"
 msgid "Entity Class"
 msgstr "Eksisterende Klasse"
 
-#: old/bin/ir.pl:442 old/bin/is.pl:475 old/bin/oe.pl:443
+#: old/bin/ir.pl:424 old/bin/is.pl:460 old/bin/oe.pl:446
 msgid "Entity Code"
 msgstr "Eksisterende Kode"
 
-#: old/bin/aa.pl:599
+#: old/bin/aa.pl:627
 msgid "Entity Control Code"
 msgstr "Eksisterende Kontollkode"
 
@@ -3074,7 +3084,8 @@ msgstr "Navn på enhet"
 msgid "Entry ID"
 msgstr "Eksisterende ID"
 
-#: old/bin/is.pl:1103 old/bin/printer.pl:104 UI/templates/widget.html:45
+#: old/bin/ir.pl:935 old/bin/is.pl:1024 old/bin/printer.pl:104
+#: UI/templates/widget.html:45
 msgid "Envelope"
 msgstr "Konvulutt"
 
@@ -3083,7 +3094,7 @@ msgid "Environment"
 msgstr "miljø"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:227 lib/LedgerSMB/Report/PNL.pm:209
-#: UI/Reports/filters/gl.html:151 UI/accounts/edit.html:216
+#: UI/Reports/filters/gl.html:151 UI/accounts/edit.html:162
 msgid "Equity"
 msgstr "Egenkapital"
 
@@ -3091,7 +3102,7 @@ msgstr "Egenkapital"
 msgid "Equity & Liabilities"
 msgstr "Egenkapital & Gjeld"
 
-#: UI/accounts/edit.html:217
+#: UI/accounts/edit.html:163
 msgid "Equity (Temporary)"
 msgstr "Egenkapital (midlertidig)"
 
@@ -3099,7 +3110,7 @@ msgstr "Egenkapital (midlertidig)"
 msgid "Equity to Liabilities"
 msgstr "Egenkapital til Gjeld"
 
-#: lib/LedgerSMB/Scripts/setup.pm:458
+#: lib/LedgerSMB/Scripts/setup.pm:455
 msgid "Error creating backup file"
 msgstr "Feil ved kreering av backup fil"
 
@@ -3115,7 +3126,7 @@ msgstr "Feil fra Funksjon "
 msgid "Error loading data..."
 msgstr ""
 
-#: old/lib/LedgerSMB/DBObject/Account.pm:144
+#: lib/LedgerSMB/Scripts/account.pm:163
 msgid "Error: Cannot include summary account in other dropdown menus"
 msgstr "Feil: Kan ikke inkludere sumkonto i andre nedtrekksmenyer"
 
@@ -3123,32 +3134,32 @@ msgstr "Feil: Kan ikke inkludere sumkonto i andre nedtrekksmenyer"
 msgid "Est. Life"
 msgstr "Est. Levetid"
 
-#: old/bin/am.pl:313 old/bin/arap.pl:539
+#: old/bin/am.pl:314 old/bin/arap.pl:547
 msgid "Every"
 msgstr "Hver"
 
-#: old/bin/aa.pl:846 old/bin/ir.pl:915 old/bin/is.pl:1012
+#: old/bin/aa.pl:880 old/bin/ir.pl:816 old/bin/is.pl:912
 msgid "Exch"
 msgstr "Vxl"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:117
-#: lib/LedgerSMB/Scripts/payment.pm:940 old/bin/aa.pl:440 old/bin/ir.pl:340
-#: old/bin/is.pl:338 old/bin/oe.pl:1637 old/bin/oe.pl:350 old/bin/oe.pl:358
+#: lib/LedgerSMB/Scripts/payment.pm:938 old/bin/aa.pl:468 old/bin/ir.pl:322
+#: old/bin/is.pl:323 old/bin/oe.pl:1646 old/bin/oe.pl:353 old/bin/oe.pl:361
 #: UI/Reports/filters/overpayments.html:50 UI/Reports/filters/payments.html:113
 #: UI/payments/payment2.html:136 UI/payments/payments_detail.html:148
 #: UI/payments/payments_detail.html:157 UI/payments/use_overpayment2.html:98
 msgid "Exchange Rate"
 msgstr "Vekslingskurs"
 
-#: old/bin/aa.pl:1397 old/bin/ir.pl:1375 old/bin/is.pl:1482
+#: old/bin/aa.pl:1391 old/bin/ir.pl:1313 old/bin/is.pl:1409
 msgid "Exchange rate for payment missing!"
 msgstr "Vekslingskurs for betaling mangler!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1240
+#: lib/LedgerSMB/Scripts/payment.pm:1238
 msgid "Exchange rate hasn't been defined!"
 msgstr "Vekslingskurs er ikke definert!"
 
-#: old/bin/aa.pl:1379 old/bin/ir.pl:1355 old/bin/is.pl:1462 old/bin/oe.pl:1272
+#: old/bin/aa.pl:1373 old/bin/ir.pl:1293 old/bin/is.pl:1389 old/bin/oe.pl:1277
 msgid "Exchange rate missing!"
 msgstr "Vekslingskurs mangler!"
 
@@ -3160,8 +3171,8 @@ msgstr ""
 msgid "Expected"
 msgstr "Ventet"
 
-#: old/bin/ic.pl:656 UI/Reports/filters/gl.html:167 UI/accounts/edit.html:219
-#: UI/accounts/edit.html:475 UI/accounts/edit.html:514
+#: old/bin/ic.pl:656 UI/Reports/filters/gl.html:167 UI/accounts/edit.html:165
+#: UI/accounts/edit.html:472 UI/accounts/edit.html:511
 msgid "Expense"
 msgstr "Utgift"
 
@@ -3169,7 +3180,7 @@ msgstr "Utgift"
 msgid "Expense Account"
 msgstr "Utgiftskonto"
 
-#: UI/accounts/edit.html:378
+#: UI/accounts/edit.html:375
 msgid "Expense/Asset"
 msgstr "Utgift/Eiendel"
 
@@ -3181,7 +3192,7 @@ msgstr "Utgifter"
 msgid "Experimental features"
 msgstr "Eksperimentelle funksjoner"
 
-#: old/bin/io.pl:244 templates/demo/invoice.html:110
+#: old/bin/io.pl:243 templates/demo/invoice.html:110
 msgid "Extended"
 msgstr "Sum"
 
@@ -3194,7 +3205,7 @@ msgid "FAQ"
 msgstr ""
 
 #: UI/budgetting/budget_entry.html:59 UI/journal/journal_entry.html:106
-#: UI/journal/journal_entry.html:132
+#: UI/journal/journal_entry.html:133
 msgid "FX"
 msgstr "Faks"
 
@@ -3252,11 +3263,11 @@ msgstr "Faks:"
 msgid "Fax: [_1]"
 msgstr "Faks: [_1]"
 
-#: old/bin/aa.pl:84 old/bin/gl.pl:77 old/bin/io.pl:79
+#: old/bin/aa.pl:85 old/bin/gl.pl:75 old/bin/io.pl:78
 msgid "Feb"
 msgstr "feb"
 
-#: lib/LedgerSMB.pm:571 old/bin/aa.pl:70 old/bin/gl.pl:63 old/bin/io.pl:65
+#: lib/LedgerSMB.pm:571 old/bin/aa.pl:71 old/bin/gl.pl:61 old/bin/io.pl:64
 msgid "February"
 msgstr "februar"
 
@@ -3286,22 +3297,22 @@ msgstr "Filnavn"
 msgid "File Type"
 msgstr "Filtype"
 
-#: lib/LedgerSMB/Scripts/file.pm:137 old/bin/aa.pl:1096 old/bin/aa.pl:1115
-#: old/bin/ic.pl:872 old/bin/ic.pl:891 old/bin/ir.pl:1049 old/bin/ir.pl:1068
-#: old/bin/is.pl:1147 old/bin/is.pl:1166 old/bin/oe.pl:942 old/bin/oe.pl:961
+#: lib/LedgerSMB/Scripts/file.pm:137 old/bin/aa.pl:1063 old/bin/aa.pl:1082
+#: old/bin/ic.pl:872 old/bin/ic.pl:891 old/bin/ir.pl:1000 old/bin/ir.pl:981
+#: old/bin/is.pl:1070 old/bin/is.pl:1089 old/bin/oe.pl:947 old/bin/oe.pl:966
 #: UI/Contact/divs/files.html:9 UI/lib/attachments.html:8
 #: UI/lib/attachments.html:29
 msgid "File name"
 msgstr "Filnavn"
 
-#: old/bin/aa.pl:1097 old/bin/aa.pl:1116 old/bin/ic.pl:873 old/bin/ic.pl:892
-#: old/bin/ir.pl:1050 old/bin/ir.pl:1069 old/bin/is.pl:1148 old/bin/is.pl:1167
-#: old/bin/oe.pl:943 old/bin/oe.pl:962 UI/lib/attachments.html:9
+#: old/bin/aa.pl:1064 old/bin/aa.pl:1083 old/bin/ic.pl:873 old/bin/ic.pl:892
+#: old/bin/ir.pl:1001 old/bin/ir.pl:982 old/bin/is.pl:1071 old/bin/is.pl:1090
+#: old/bin/oe.pl:948 old/bin/oe.pl:967 UI/lib/attachments.html:9
 #: UI/lib/attachments.html:30
 msgid "File type"
 msgstr "Filtype"
 
-#: lib/LedgerSMB/Scripts/contact.pm:196 UI/Contact/divs/files.html:2
+#: lib/LedgerSMB/Scripts/contact.pm:195 UI/Contact/divs/files.html:2
 msgid "Files"
 msgstr "Filer"
 
@@ -3345,15 +3356,15 @@ msgstr "Fem"
 msgid "Five Hundred"
 msgstr "Femhundre"
 
-#: UI/accounts/edit.html:496
+#: UI/accounts/edit.html:493
 msgid "Fixed Asset"
 msgstr "Faste Eiendeler"
 
-#: UI/accounts/edit.html:490 sql/Pg-database.sql:2687
+#: UI/accounts/edit.html:487 sql/Pg-database.sql:2687
 msgid "Fixed Assets"
 msgstr "Faste Eiendeler"
 
-#: old/bin/arap.pl:544
+#: old/bin/arap.pl:552
 msgid "For"
 msgstr "For"
 
@@ -3393,7 +3404,7 @@ msgstr "Fjorten"
 msgid "Fri"
 msgstr "Fri"
 
-#: old/bin/ic.pl:1114 old/bin/oe.pl:2236 old/bin/pe.pl:745
+#: old/bin/ic.pl:1115 old/bin/oe.pl:2245 old/bin/pe.pl:745
 #: UI/Contact/divs/credit.html:432 UI/Reports/co/filter_bm.html:20
 #: UI/Reports/co/filter_cd.html:38 UI/Reports/filters/contact_search.html:116
 #: UI/Reports/filters/income_statement.html:125
@@ -3414,7 +3425,7 @@ msgstr "Fra Beløp"
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:188
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:182
 #: lib/LedgerSMB/Report/Taxform/Details.pm:116
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:110
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:111
 #: lib/LedgerSMB/Report/Timecards.pm:147
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:148
 #: UI/Reports/filters/unapproved.html:35
@@ -3425,7 +3436,7 @@ msgstr "Fra Dato"
 msgid "From File"
 msgstr "Fra Fil"
 
-#: old/bin/oe.pl:2249
+#: old/bin/oe.pl:2258
 msgid "From Warehouse"
 msgstr "Fra Lager"
 
@@ -3439,7 +3450,7 @@ msgstr "Fra Dato"
 msgid "Full"
 msgstr "Full"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1155
+#: lib/LedgerSMB/Scripts/setup.pm:1152
 msgid "Full Permissions"
 msgstr "Fulle Rettigheter"
 
@@ -3450,7 +3461,7 @@ msgstr "Fulle Rettigheter"
 #: UI/Reports/filters/balance_sheet.html:13
 #: UI/Reports/filters/balance_sheet.html:30 UI/Reports/filters/gl.html:306
 #: UI/Reports/filters/income_statement.html:49
-#: UI/Reports/filters/income_statement.html:66 UI/accounts/edit.html:189
+#: UI/Reports/filters/income_statement.html:66 UI/accounts/edit.html:226
 #: UI/lib/report_base.html:78 UI/setup/select_coa.html:53
 #: sql/Pg-database.sql:2615
 msgid "GIFI"
@@ -3461,8 +3472,8 @@ msgstr "SRU"
 msgid "GIFI accounts not in \"gifi\" table"
 msgstr "SRU kontoer ikke i \"sru\" tabeller"
 
-#: old/bin/am.pl:322 UI/Reports/filters/unapproved.html:7
-#: UI/setup/complete.html:23 UI/setup/confirm_operation.html:121
+#: old/bin/am.pl:323 UI/Reports/filters/unapproved.html:7
+#: UI/setup/complete.html:24 UI/setup/confirm_operation.html:121
 msgid "GL"
 msgstr "Hovedbok"
 
@@ -3470,7 +3481,7 @@ msgstr "Hovedbok"
 msgid "GL Reference Number"
 msgstr "GL Referansenummer"
 
-#: UI/accounts/edit.html:523
+#: UI/accounts/edit.html:520
 msgid "Gain"
 msgstr "Overskudd"
 
@@ -3511,11 +3522,11 @@ msgstr "Generer"
 msgid "Generate Control Code"
 msgstr "Generer Kontrollkode"
 
-#: old/bin/oe.pl:2616
+#: old/bin/oe.pl:2626
 msgid "Generate Orders"
 msgstr "Generer orderere"
 
-#: old/bin/oe.pl:2521
+#: old/bin/oe.pl:2531
 msgid "Generate Purchase Orders"
 msgstr "Generer innkjøpsorderere"
 
@@ -3559,9 +3570,9 @@ msgstr "Varer og Tjeneste Historikk"
 msgid "Grand Total"
 msgstr "Grand Total"
 
-#: lib/LedgerSMB/Report/Inventory/Partsgroups.pm:55 old/bin/ic.pl:1267
-#: old/bin/ic.pl:418 old/bin/io.pl:268 old/bin/oe.pl:2159 old/bin/oe.pl:2232
-#: old/bin/oe.pl:2267 old/bin/pe.pl:127
+#: lib/LedgerSMB/Report/Inventory/Partsgroups.pm:55 old/bin/ic.pl:1269
+#: old/bin/ic.pl:418 old/bin/io.pl:267 old/bin/oe.pl:2168 old/bin/oe.pl:2241
+#: old/bin/oe.pl:2276 old/bin/pe.pl:127
 msgid "Group"
 msgstr "Gruppe"
 
@@ -3597,7 +3608,7 @@ msgstr ""
 msgid "HTML Templates"
 msgstr "HTML-Maler"
 
-#: UI/accounts/edit.html:21 UI/accounts/edit.html:67 UI/accounts/edit.html:172
+#: UI/accounts/edit.html:21 UI/accounts/edit.html:67 UI/accounts/edit.html:176
 msgid "Heading"
 msgstr "Overskrift"
 
@@ -3643,9 +3654,9 @@ msgstr "Hundre"
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:132
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:89
 #: lib/LedgerSMB/Scripts/asset.pm:458 lib/LedgerSMB/Scripts/report_aging.pm:130
-#: old/bin/am.pl:301 UI/Reports/filters/gl.html:196
+#: old/bin/am.pl:302 UI/Reports/filters/gl.html:196
 #: UI/Reports/filters/invoice_outstanding.html:131
-#: UI/Reports/filters/invoice_search.html:255 UI/Reports/filters/orders.html:121
+#: UI/Reports/filters/invoice_search.html:255 UI/Reports/filters/orders.html:134
 #: UI/business_units/list_classes.html:8 templates/demo/timecard.html:44
 #: templates/demo/timecard.tex:39
 msgid "ID"
@@ -3702,7 +3713,7 @@ msgstr "Importer SRU"
 msgid "Import Inventory"
 msgstr "Importer Lagerbeholdning"
 
-#: UI/Contact/divs/user.html:92 UI/setup/new_user.html:56
+#: UI/Contact/divs/user.html:96 UI/setup/new_user.html:56
 msgid "Import existing user"
 msgstr "Importer eksisterende bruker"
 
@@ -3723,20 +3734,20 @@ msgstr ""
 msgid "In-line"
 msgstr "Inne i"
 
-#: old/bin/arap.pl:366
+#: old/bin/arap.pl:374
 msgid "Include Payment"
 msgstr "Inkluder betaling"
 
 #: UI/Reports/co/filter_bm.html:67 UI/Reports/co/filter_cd.html:53
 #: UI/Reports/filters/aging.html:70 UI/Reports/filters/gl.html:114
 #: UI/Reports/filters/invoice_outstanding.html:97
-#: UI/Reports/filters/invoice_search.html:196 UI/Reports/filters/orders.html:81
+#: UI/Reports/filters/invoice_search.html:196 UI/Reports/filters/orders.html:94
 #: UI/Reports/filters/purchase_history.html:160
 #: UI/Reports/filters/search_goods.html:249
 msgid "Include in Report"
 msgstr "Inkludér i rapport"
 
-#: UI/accounts/edit.html:316
+#: UI/accounts/edit.html:313
 msgid "Include in drop-down menus"
 msgstr "Inkludér i rullegardin-menyer"
 
@@ -3750,8 +3761,8 @@ msgstr "Varenummer"
 
 #: lib/LedgerSMB/Report/Balance_Sheet.pm:201 lib/LedgerSMB/Report/PNL.pm:194
 #: lib/LedgerSMB/Scripts/configuration.pm:103 old/bin/ic.pl:519
-#: old/bin/ic.pl:652 UI/Reports/filters/gl.html:159 UI/accounts/edit.html:218
-#: UI/accounts/edit.html:325 UI/accounts/edit.html:427 UI/accounts/edit.html:466
+#: old/bin/ic.pl:652 UI/Reports/filters/gl.html:159 UI/accounts/edit.html:164
+#: UI/accounts/edit.html:322 UI/accounts/edit.html:424 UI/accounts/edit.html:463
 msgid "Income"
 msgstr "Inntekt"
 
@@ -3781,11 +3792,11 @@ msgstr "Driftsregnskap"
 msgid "Incoming Files"
 msgstr "Inntekts Filer"
 
-#: old/lib/LedgerSMB/DBObject/User.pm:71
+#: old/lib/LedgerSMB/User.pm:155
 msgid "Incorrect Password"
 msgstr "Ugyldig Passord"
 
-#: old/bin/ic.pl:1274
+#: old/bin/ic.pl:1276
 msgid "Individual Items"
 msgstr "Individuelle elementer"
 
@@ -3804,8 +3815,8 @@ msgstr "Intern Database Error"
 msgid "Internal Files"
 msgstr "Interne Filer"
 
-#: old/bin/aa.pl:816 old/bin/ir.pl:812 old/bin/ir.pl:820 old/bin/is.pl:909
-#: old/bin/is.pl:917 old/bin/oe.pl:833
+#: old/bin/aa.pl:850 old/bin/ir.pl:712 old/bin/ir.pl:720 old/bin/is.pl:808
+#: old/bin/is.pl:816 old/bin/oe.pl:837
 msgid "Internal Notes"
 msgstr "Interne notater"
 
@@ -3813,7 +3824,7 @@ msgstr "Interne notater"
 msgid "Invalid Reporting Basis"
 msgstr "Invalid Rapport Grunnlag"
 
-#: lib/LedgerSMB/Scripts/setup.pm:454
+#: lib/LedgerSMB/Scripts/setup.pm:451
 msgid "Invalid backup request"
 msgstr "Invalid backup forespørsel"
 
@@ -3821,16 +3832,16 @@ msgstr "Invalid backup forespørsel"
 msgid "Invalid date/time entered"
 msgstr "Invalid Dato/Tid lagt inn"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1064 lib/LedgerSMB/Scripts/setup.pm:1071
+#: lib/LedgerSMB/Scripts/setup.pm:1061 lib/LedgerSMB/Scripts/setup.pm:1068
 msgid "Invalid request"
 msgstr "Ugyldig forespørsel"
 
-#: lib/LedgerSMB/Scripts/recon.pm:340
+#: lib/LedgerSMB/Scripts/recon.pm:344
 msgid "Invalid statement balance.  Hint: Try entering a number"
 msgstr "Invalid Rapport Saldo. Hint: Prøv å legge inn et nummer"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:100 old/bin/ic.pl:515
-#: UI/accounts/edit.html:291 sql/Pg-database.sql:2705
+#: UI/accounts/edit.html:202 sql/Pg-database.sql:2705
 msgid "Inventory"
 msgstr "Varebeholdning"
 
@@ -3854,24 +3865,24 @@ msgstr "Varebeholdning"
 msgid "Inventory and COGS"
 msgstr "Lagerbeholdning og Varekostnad"
 
-#: old/bin/ic.pl:1800
+#: old/bin/ic.pl:1803
 msgid ""
 "Inventory quantity must be zero before you can set this assembly obsolete!"
 msgstr ""
 "Varebeholdning må være null for at du kan sette denne monteringen som "
 "foreldet!"
 
-#: old/bin/ic.pl:1799
+#: old/bin/ic.pl:1802
 msgid "Inventory quantity must be zero before you can set this part obsolete!"
 msgstr ""
 "Varebeholdning må være null for at du kan sette denne sammensetningen som "
 "foreldet!"
 
-#: old/bin/oe.pl:2104
+#: old/bin/oe.pl:2113
 msgid "Inventory saved!"
 msgstr "Varebeholdning lagret"
 
-#: old/bin/oe.pl:2374
+#: old/bin/oe.pl:2383
 msgid "Inventory transferred!"
 msgstr "Varebeholdning overført"
 
@@ -3879,8 +3890,8 @@ msgstr "Varebeholdning overført"
 #: lib/LedgerSMB/Report/Inventory/Search.pm:303
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:178
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:269
-#: lib/LedgerSMB/Scripts/payment.pm:929 old/bin/am.pl:958 old/bin/io.pl:1146
-#: old/bin/is.pl:1486 old/bin/is.pl:257 old/bin/printer.pl:48
+#: lib/LedgerSMB/Scripts/payment.pm:927 old/bin/am.pl:961 old/bin/io.pl:1151
+#: old/bin/is.pl:1413 old/bin/is.pl:273 old/bin/printer.pl:48
 #: UI/templates/widget.html:47 templates/demo/invoice.html:16
 #: templates/demo/invoice.tex:138 templates/demo/printPayment.html:44
 #: sql/Pg-database.sql:1037 sql/Pg-database.sql:2608 sql/Pg-database.sql:2707
@@ -3898,24 +3909,28 @@ msgstr "Faktura"
 msgid "Invoice #"
 msgstr "Faktura nummer"
 
-#: old/bin/aa.pl:649 old/bin/ir.pl:491 old/bin/is.pl:543
+#: old/bin/aa.pl:677 old/bin/ir.pl:473 old/bin/is.pl:528
 msgid "Invoice Created"
 msgstr "Faktura Opprettet"
 
-#: old/bin/aa.pl:1365
+#: old/bin/aa.pl:1359
 msgid "Invoice Created Date missing!"
 msgstr "Faktura Opprettet Dato mangler!"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:125
-#: lib/LedgerSMB/Report/Invoices/COGS.pm:96 old/bin/aa.pl:653 old/bin/ir.pl:495
-#: old/bin/is.pl:547 UI/Reports/filters/invoice_outstanding.html:158
+#: lib/LedgerSMB/Report/Invoices/COGS.pm:96 old/bin/aa.pl:681 old/bin/ir.pl:477
+#: old/bin/is.pl:532 UI/Reports/filters/invoice_outstanding.html:158
 #: UI/Reports/filters/invoice_search.html:283
 msgid "Invoice Date"
 msgstr "Fakturadato"
 
-#: old/bin/aa.pl:1363 old/bin/io.pl:1259 old/bin/ir.pl:1340 old/bin/is.pl:1447
+#: old/bin/aa.pl:1357 old/bin/io.pl:1264 old/bin/ir.pl:1278 old/bin/is.pl:1374
 msgid "Invoice Date missing!"
 msgstr "Fakturadato mangler!"
+
+#: UI/setup/complete.html:25
+msgid "Invoice Lines"
+msgstr ""
 
 #: templates/demo/receipt.tex:79
 msgid "Invoice No."
@@ -3925,8 +3940,8 @@ msgstr "Fakturanummer."
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:67
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:90
 #: lib/LedgerSMB/Report/PNL/Invoice.pm:81
-#: lib/LedgerSMB/Report/Taxform/Details.pm:93 old/bin/aa.pl:640
-#: old/bin/ir.pl:481 old/bin/is.pl:534
+#: lib/LedgerSMB/Report/Taxform/Details.pm:93 old/bin/aa.pl:668
+#: old/bin/ir.pl:463 old/bin/is.pl:519
 #: UI/Reports/filters/invoice_outstanding.html:137
 #: UI/Reports/filters/invoice_search.html:89
 #: UI/Reports/filters/invoice_search.html:262 UI/asset/edit_asset.html:205
@@ -3935,7 +3950,7 @@ msgstr "Fakturanummer."
 msgid "Invoice Number"
 msgstr "Fakturanummer"
 
-#: old/bin/io.pl:1269
+#: old/bin/io.pl:1274
 msgid "Invoice Number missing!"
 msgstr "Fakturanummer mangler!"
 
@@ -3964,7 +3979,7 @@ msgstr "Fakturadato"
 msgid "Invoice due"
 msgstr "Fakturaforfall"
 
-#: old/lib/LedgerSMB/DBObject/Asset.pm:255
+#: old/lib/LedgerSMB/DBObject/Asset.pm:257
 msgid "Invoice not found"
 msgstr "Faktura ikke funnet"
 
@@ -3972,12 +3987,12 @@ msgstr "Faktura ikke funnet"
 msgid "Invoice sum"
 msgstr "Fakturasum"
 
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:94
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:95
 #: UI/Reports/filters/purchase_history.html:171
 msgid "Invoices"
 msgstr "Fakturaer"
 
-#: old/bin/ic.pl:1248 old/bin/io.pl:229 UI/payments/payment2.html:344
+#: old/bin/ic.pl:1250 old/bin/io.pl:228 UI/payments/payment2.html:344
 #: templates/demo/bin_list.html:98 templates/demo/bin_list.tex:120
 #: templates/demo/invoice.html:102 templates/demo/invoice.tex:160
 #: templates/demo/packing_list.html:90 templates/demo/packing_list.tex:128
@@ -3989,11 +4004,11 @@ msgstr "Fakturaer"
 msgid "Item"
 msgstr "Artikkel"
 
-#: old/bin/ic.pl:1979
+#: old/bin/ic.pl:1982
 msgid "Item deleted!"
 msgstr "Elementet slettet!"
 
-#: old/bin/io.pl:609
+#: old/bin/io.pl:614
 msgid "Item not on file!"
 msgstr "Elementet mangler i databasen!"
 
@@ -4016,15 +4031,15 @@ msgstr ""
 "fra [_1] før varer returneres. Returer må sendes forhåndsbetalt og "
 "tilstrekkelig forsikret. [_1] er ikke ansvarlig for skader under transport."
 
-#: old/bin/aa.pl:83 old/bin/gl.pl:76 old/bin/io.pl:78
+#: old/bin/aa.pl:84 old/bin/gl.pl:74 old/bin/io.pl:77
 msgid "Jan"
 msgstr "jan"
 
-#: lib/LedgerSMB.pm:570 old/bin/aa.pl:69 old/bin/gl.pl:62 old/bin/io.pl:64
+#: lib/LedgerSMB.pm:570 old/bin/aa.pl:70 old/bin/gl.pl:60 old/bin/io.pl:63
 msgid "January"
 msgstr "januar"
 
-#: UI/src/components/ServerUI.js:109
+#: UI/src/components/ServerUI.js:117
 msgid "JavaScript error: "
 msgstr ""
 
@@ -4044,23 +4059,23 @@ msgstr "Jobb/Prosjekt #"
 msgid "Journal Entry"
 msgstr "Postering"
 
-#: UI/setup/complete.html:24 UI/setup/confirm_operation.html:122
+#: UI/setup/complete.html:26 UI/setup/confirm_operation.html:122
 msgid "Journal Lines"
 msgstr "Protokoll Linjer"
 
-#: old/bin/aa.pl:89 old/bin/gl.pl:82 old/bin/io.pl:84
+#: old/bin/aa.pl:90 old/bin/gl.pl:80 old/bin/io.pl:83
 msgid "Jul"
 msgstr "jul"
 
-#: lib/LedgerSMB.pm:576 old/bin/aa.pl:75 old/bin/gl.pl:68 old/bin/io.pl:70
+#: lib/LedgerSMB.pm:576 old/bin/aa.pl:76 old/bin/gl.pl:66 old/bin/io.pl:69
 msgid "July"
 msgstr "juli"
 
-#: old/bin/aa.pl:88 old/bin/gl.pl:81 old/bin/io.pl:83
+#: old/bin/aa.pl:89 old/bin/gl.pl:79 old/bin/io.pl:82
 msgid "Jun"
 msgstr "jun"
 
-#: lib/LedgerSMB.pm:575 old/bin/aa.pl:74 old/bin/gl.pl:67 old/bin/io.pl:69
+#: lib/LedgerSMB.pm:575 old/bin/aa.pl:75 old/bin/gl.pl:65 old/bin/io.pl:68
 #: t/data/04-strings-for-translation.html:6
 msgid "June"
 msgstr "juni"
@@ -4129,7 +4144,7 @@ msgstr "Siste Oppdatering"
 msgid "Last name"
 msgstr "Etternavn"
 
-#: old/bin/oe.pl:2517 sql/Pg-database.sql:516
+#: old/bin/oe.pl:2527 sql/Pg-database.sql:516
 msgid "Lead"
 msgstr "Lede"
 
@@ -4146,43 +4161,43 @@ msgstr "forsinkelsestid"
 msgid "Ledger sum"
 msgstr "Hovedbok sum"
 
-#: lib/LedgerSMB/Scripts/setup.pm:230
+#: lib/LedgerSMB/Scripts/setup.pm:229
 msgid "LedgerSMB 1.10 db found."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:235
+#: lib/LedgerSMB/Scripts/setup.pm:234
 msgid "LedgerSMB 1.11 db found."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:189
+#: lib/LedgerSMB/Scripts/setup.pm:188
 msgid "LedgerSMB 1.2 db found."
 msgstr "LedgerSMB 1.2 db found."
 
-#: lib/LedgerSMB/Scripts/setup.pm:194
+#: lib/LedgerSMB/Scripts/setup.pm:193
 msgid "LedgerSMB 1.3 db found."
 msgstr "LedgerSMB 1.3 db found."
 
-#: lib/LedgerSMB/Scripts/setup.pm:199
+#: lib/LedgerSMB/Scripts/setup.pm:198
 msgid "LedgerSMB 1.4 db found."
 msgstr "LedgerSMB 1.4 db found."
 
-#: lib/LedgerSMB/Scripts/setup.pm:205
+#: lib/LedgerSMB/Scripts/setup.pm:204
 msgid "LedgerSMB 1.5 db found."
 msgstr "LedgerSMB 1.5 db found."
 
-#: lib/LedgerSMB/Scripts/setup.pm:210
+#: lib/LedgerSMB/Scripts/setup.pm:209
 msgid "LedgerSMB 1.6 db found."
 msgstr "LedgerSMB 1.6 database funnet"
 
-#: lib/LedgerSMB/Scripts/setup.pm:215
+#: lib/LedgerSMB/Scripts/setup.pm:214
 msgid "LedgerSMB 1.7 db found."
 msgstr "LedgerSMB 1.7 database funnet."
 
-#: lib/LedgerSMB/Scripts/setup.pm:220
+#: lib/LedgerSMB/Scripts/setup.pm:219
 msgid "LedgerSMB 1.8 db found."
 msgstr "LedgerSMB 1.8 database funnet."
 
-#: lib/LedgerSMB/Scripts/setup.pm:225
+#: lib/LedgerSMB/Scripts/setup.pm:224
 msgid "LedgerSMB 1.9 db found."
 msgstr "LedgerSMB 1.9 database funnet."
 
@@ -4243,7 +4258,7 @@ msgstr "Brevhode"
 msgid "Liabilities"
 msgstr "Passiva"
 
-#: UI/Reports/filters/gl.html:143 UI/accounts/edit.html:215
+#: UI/Reports/filters/gl.html:143 UI/accounts/edit.html:161
 msgid "Liability"
 msgstr "Gjeld"
 
@@ -4267,7 +4282,7 @@ msgstr "Antall linjer"
 msgid "Link Accounts"
 msgstr "Kople kontoer"
 
-#: old/bin/ic.pl:1262
+#: old/bin/ic.pl:1264
 msgid "List"
 msgstr "List"
 
@@ -4324,11 +4339,11 @@ msgstr "Vis Firma Typer"
 msgid "Load Templates"
 msgstr "Hente Maler"
 
-#: UI/src/components/ServerUI.js:79
+#: UI/src/components/ServerUI.js:67
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ServerUI.js:27 UI/src/components/ServerUI.js:41
+#: UI/src/components/ServerUI.js:41 UI/src/components/ServerUI.js:27
 #: UI/src/components/ConfigTable.vue:59
 msgid "Loading..."
 msgstr ""
@@ -4354,15 +4369,15 @@ msgstr "Låst av [_1]"
 msgid "Logged out due to inactivity"
 msgstr "Logget ut på grunn av ikke aktivitet"
 
-#: UI/src/views/LoginPage.vue:45
+#: UI/src/views/LoginPage.vue:46
 msgid "Logging in... Please wait."
 msgstr ""
 
-#: UI/setup/credentials.html:91 UI/src/views/LoginPage.vue:40
+#: UI/setup/credentials.html:91 UI/src/views/LoginPage.vue:41
 msgid "Login"
 msgstr "Login"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1028
+#: lib/LedgerSMB/Scripts/setup.pm:1025
 msgid "Login?"
 msgstr "Logg inn?"
 
@@ -4374,7 +4389,7 @@ msgstr "Logg ut"
 msgid "Logout Successful"
 msgstr "Logg ut Vellyket"
 
-#: UI/accounts/edit.html:532
+#: UI/accounts/edit.html:529
 msgid "Loss"
 msgstr "Tap"
 
@@ -4420,7 +4435,7 @@ msgstr ""
 "Forsikre deg om at alle navn kun består av alfanumeriske tegn (og "
 "understreker) og er minst ett tegn langt"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1154
+#: lib/LedgerSMB/Scripts/setup.pm:1151
 msgid "Manage Users"
 msgstr "Behandle Brukere"
 
@@ -4437,15 +4452,15 @@ msgstr "Behandler"
 msgid "Manager:"
 msgstr "Behandler:"
 
-#: old/bin/ir.pl:661 old/bin/is.pl:428 old/bin/is.pl:750
+#: old/bin/ir.pl:560 old/bin/is.pl:413 old/bin/is.pl:648
 msgid "Manual"
 msgstr "Bruksanvisning"
 
-#: old/bin/aa.pl:85 old/bin/gl.pl:78 old/bin/io.pl:80
+#: old/bin/aa.pl:86 old/bin/gl.pl:76 old/bin/io.pl:79
 msgid "Mar"
 msgstr "mar"
 
-#: lib/LedgerSMB.pm:572 old/bin/aa.pl:71 old/bin/gl.pl:64 old/bin/io.pl:66
+#: lib/LedgerSMB.pm:572 old/bin/aa.pl:72 old/bin/gl.pl:62 old/bin/io.pl:65
 msgid "March"
 msgstr "mars"
 
@@ -4462,15 +4477,15 @@ msgstr "Maks antall Fakturaer pr. Sjekktalong"
 msgid "Max per dropdown"
 msgstr "Maks pr. nedtrekk"
 
-#: lib/LedgerSMB.pm:574 old/bin/aa.pl:73 old/bin/aa.pl:87 old/bin/gl.pl:66
-#: old/bin/gl.pl:80 old/bin/io.pl:68 old/bin/io.pl:82
+#: lib/LedgerSMB.pm:574 old/bin/aa.pl:74 old/bin/aa.pl:88 old/bin/gl.pl:64
+#: old/bin/gl.pl:78 old/bin/io.pl:67 old/bin/io.pl:81
 msgid "May"
 msgstr "mai"
 
-#: lib/LedgerSMB/Report/GL.pm:158 lib/LedgerSMB/Scripts/payment.pm:935
-#: old/bin/aa.pl:850 old/bin/ir.pl:699 old/bin/ir.pl:919 old/bin/is.pl:1016
-#: old/bin/is.pl:794 UI/Reports/filters/gl.html:73
-#: UI/Reports/filters/gl.html:273 UI/journal/journal_entry.html:136
+#: lib/LedgerSMB/Report/GL.pm:158 lib/LedgerSMB/Scripts/payment.pm:933
+#: old/bin/aa.pl:884 old/bin/ir.pl:599 old/bin/ir.pl:820 old/bin/is.pl:693
+#: old/bin/is.pl:916 UI/Reports/filters/gl.html:73
+#: UI/Reports/filters/gl.html:273 UI/journal/journal_entry.html:137
 #: UI/payments/payment2.html:348 templates/demo/ap_transaction.html:154
 msgid "Memo"
 msgstr "Notat"
@@ -4514,7 +4529,7 @@ msgstr "Mime Type"
 msgid "Min Empty Lines"
 msgstr "Min. Tomme linjer"
 
-#: old/bin/ic.pl:1116 UI/Contact/pricelist.csv:40 UI/Contact/pricelist.html:52
+#: old/bin/ic.pl:1117 UI/Contact/pricelist.csv:40 UI/Contact/pricelist.html:52
 #: UI/Contact/pricelist.tex:54
 msgid "Min Qty"
 msgstr "Min antall"
@@ -4527,7 +4542,7 @@ msgstr "Min. MVA pliktig"
 msgid "Misc Settings"
 msgstr "Min. Skattepliktig"
 
-#: UI/reconciliation/report.html:240
+#: UI/reconciliation/report.html:252
 msgid "Mismatched Transactions (from upload)"
 msgstr ""
 
@@ -4549,16 +4564,16 @@ msgstr ""
 msgid "Mon"
 msgstr "Man"
 
-#: old/bin/am.pl:269 old/bin/pe.pl:731 UI/Reports/co/filter_bm.html:57
+#: old/bin/am.pl:270 old/bin/pe.pl:731 UI/Reports/co/filter_bm.html:57
 #: UI/lib/report_base.html:177 UI/lib/report_base.html:259
 msgid "Month"
 msgstr "Måned"
 
-#: old/bin/arap.pl:518
+#: old/bin/arap.pl:526
 msgid "Month(s)"
 msgstr "Måned(er)"
 
-#: old/bin/am.pl:270
+#: old/bin/am.pl:271
 msgid "Months"
 msgstr "Måneder"
 
@@ -4601,10 +4616,13 @@ msgstr "INGEN"
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:144
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:62
 #: lib/LedgerSMB/Report/Contact/Search.pm:104
-#: lib/LedgerSMB/Report/Contact/Search.pm:61 lib/LedgerSMB/Report/Orders.pm:221
+#: lib/LedgerSMB/Report/Contact/Search.pm:61
+#: lib/LedgerSMB/Report/Listings/Country.pm:50
+#: lib/LedgerSMB/Report/Listings/User.pm:62 lib/LedgerSMB/Report/Orders.pm:221
 #: lib/LedgerSMB/Report/PNL/ECA.pm:86 old/bin/arap.pl:163
 #: UI/Contact/divs/company.html:75 UI/Reports/filters/contact_search.html:33
 #: UI/Reports/filters/overpayments.html:31 UI/payments/payments_detail.html:225
+#: UI/src/views/Countries.vue:10
 msgid "Name"
 msgstr "Navn"
 
@@ -4620,8 +4638,8 @@ msgstr "Netto bokført verdi"
 msgid "Net Due"
 msgstr "Netto Forfall"
 
-#: old/bin/aa.pl:1024 old/bin/aa.pl:480 old/bin/gl.pl:254 old/bin/ir.pl:357
-#: old/bin/ir.pl:568 old/bin/is.pl:353 old/bin/is.pl:635 old/bin/oe.pl:520
+#: old/bin/aa.pl:508 old/bin/gl.pl:247 old/bin/ir.pl:339 old/bin/is.pl:338
+#: old/bin/oe.pl:523
 msgid "New"
 msgstr "Ny"
 
@@ -4637,7 +4655,7 @@ msgstr "Søk etter Ny Eiendel rapport"
 msgid "New Reconciliation Report"
 msgstr "Ny Avstemnings Rapport"
 
-#: UI/Contact/divs/user.html:16 UI/setup/edit_user.html:17
+#: UI/Contact/divs/user.html:20 UI/setup/edit_user.html:17
 msgid "New User"
 msgstr "Ny Bruker"
 
@@ -4649,16 +4667,16 @@ msgstr "Nytt vindu"
 msgid "New password"
 msgstr "Nytt passord"
 
-#: old/bin/am.pl:304 UI/inventory/adjustment_entry.html:82
+#: old/bin/am.pl:305 UI/inventory/adjustment_entry.html:82
 #: UI/setup/select_coa.html:92
 msgid "Next"
 msgstr "Neste"
 
-#: old/bin/arap.pl:375
+#: old/bin/arap.pl:383
 msgid "Next Date"
 msgstr "Neste dato"
 
-#: old/bin/am.pl:375
+#: old/bin/am.pl:377
 msgid "Next Number"
 msgstr "Neste nr"
 
@@ -4687,21 +4705,13 @@ msgstr "Nitti"
 msgid "No"
 msgstr "Nei"
 
-#: lib/LedgerSMB/Scripts/contact.pm:604
+#: lib/LedgerSMB/Scripts/contact.pm:607
 msgid "No AR or AP Account Selected"
 msgstr "Ingen Kundekonto eller Leverandørkonto er valgt"
-
-#: old/lib/LedgerSMB/DBObject/TransTemplate.pm:67
-msgid "No Account id for [_1]"
-msgstr "Ingen Konto id for [_1] "
 
 #: lib/LedgerSMB/Report/File.pm:51
 msgid "No File Class Specified"
 msgstr "Ingen Fil Klasse Spesifisert"
-
-#: old/lib/LedgerSMB/DBObject/Draft.pm:59 old/lib/LedgerSMB/DBObject/Draft.pm:77
-msgid "No ID Set"
-msgstr "Ingen ID satt inn"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:533
 msgid "No NULL Amounts"
@@ -4715,11 +4725,11 @@ msgstr "Ingen NULL Annsattnummer"
 msgid "No Old Password"
 msgstr "Ikke noe gammelt passord"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1156
+#: lib/LedgerSMB/Scripts/setup.pm:1153
 msgid "No changes"
 msgstr "Ingen forandringer"
 
-#: old/bin/aa.pl:210 old/bin/ir.pl:167 old/bin/is.pl:160
+#: old/bin/aa.pl:221 old/bin/ir.pl:182 old/bin/is.pl:176
 msgid "No currencies defined.  Please set these up under System/Defaults."
 msgstr "Ingen valutakurser satt. Gjør dette i System/Standard"
 
@@ -4735,7 +4745,7 @@ msgstr "Ingen fil lastet opp"
 msgid "No open Projects!"
 msgstr "Ignen åpne prosjekter!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1398
+#: lib/LedgerSMB/Scripts/payment.pm:1396
 msgid "No overpayment account selected.  Was one set up?"
 msgstr "Ingen for mye betalt konto valgt. Finnes det noen?"
 
@@ -4747,12 +4757,12 @@ msgstr "Ingen referanse nøkkel satt og ingen overskrivning gitt"
 msgid "No report specified"
 msgstr "Ingen Rapport Spesifisert"
 
-#: lib/LedgerSMB/Scripts/taxform.pm:129
+#: lib/LedgerSMB/Scripts/taxform.pm:126
 msgid "No tax form selected"
 msgstr "Ingen MVA fra valgte"
 
 #: UI/Reports/filters/invoice_outstanding.html:125
-#: UI/Reports/filters/invoice_search.html:249 UI/Reports/filters/orders.html:115
+#: UI/Reports/filters/invoice_search.html:249 UI/Reports/filters/orders.html:128
 #: UI/Reports/filters/search_goods.html:255
 msgid "No."
 msgstr "Nr."
@@ -4773,7 +4783,7 @@ msgstr "Ingen eksisterende kunde prisgruppe i part kunde"
 msgid "Non-existing vendor pricegroups in partsvendor"
 msgstr "Ingen eksisterende leverandør prisgruppe i part leverandør"
 
-#: UI/accounts/edit.html:460
+#: UI/accounts/edit.html:457
 msgid "Non-tracking Items"
 msgstr "Ikke sporbare artikler"
 
@@ -4810,7 +4820,7 @@ msgstr "Ikke lagt til"
 msgid "Not set up for hierarchy reporting, please see linked instructions"
 msgstr "Ikke satt opp for hierarki rapportering, se tilkoblede instruksjoner "
 
-#: UI/Contact/divs/notes.html:35 UI/Contact/divs/notes.html:39
+#: UI/Contact/divs/notes.html:39
 msgid "Note Class"
 msgstr "Merknad klasse"
 
@@ -4824,8 +4834,8 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Search.pm:295
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:274
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:302
-#: lib/LedgerSMB/Scripts/contact.pm:195 old/bin/aa.pl:815 old/bin/ic.pl:764
-#: old/bin/ir.pl:809 old/bin/is.pl:904 old/bin/oe.pl:832
+#: lib/LedgerSMB/Scripts/contact.pm:194 old/bin/aa.pl:849 old/bin/ic.pl:764
+#: old/bin/ir.pl:709 old/bin/is.pl:803 old/bin/oe.pl:836
 #: UI/Contact/divs/notes.html:2 UI/Contact/divs/notes.html:6
 #: UI/Contact/divs/notes.html:46 UI/Contact/divs/notes.html:47
 #: UI/Reports/filters/contact_search.html:75 UI/Reports/filters/gl.html:90
@@ -4846,23 +4856,23 @@ msgstr "Merknader"
 msgid "Notes:<br />"
 msgstr "Merknader:<br />"
 
-#: old/bin/oe.pl:2101
+#: old/bin/oe.pl:2110
 msgid "Nothing entered!"
 msgstr "Ingenting lagt inn!"
 
-#: old/bin/oe.pl:2392 old/bin/oe.pl:2650 old/bin/pe.pl:1070
+#: old/bin/oe.pl:2401 old/bin/oe.pl:2660 old/bin/pe.pl:1070
 msgid "Nothing selected!"
 msgstr "Ingenting valgt!"
 
-#: old/bin/oe.pl:2118
+#: old/bin/oe.pl:2127
 msgid "Nothing to transfer!"
 msgstr "Ingenting å overføre!"
 
-#: old/bin/aa.pl:93 old/bin/gl.pl:86 old/bin/io.pl:88
+#: old/bin/aa.pl:94 old/bin/gl.pl:84 old/bin/io.pl:87
 msgid "Nov"
 msgstr "nov"
 
-#: lib/LedgerSMB.pm:580 old/bin/aa.pl:79 old/bin/gl.pl:72 old/bin/io.pl:74
+#: lib/LedgerSMB.pm:580 old/bin/aa.pl:80 old/bin/gl.pl:70 old/bin/io.pl:73
 msgid "November"
 msgstr "november"
 
@@ -4878,8 +4888,8 @@ msgstr "Null lag nummer"
 msgid "Null model numbers"
 msgstr "Null modell nummer"
 
-#: old/bin/ic.pl:1255 old/bin/ic.pl:2007 old/bin/ic.pl:2076 old/bin/ic.pl:738
-#: old/bin/io.pl:231 old/bin/oe.pl:1953 old/bin/pe.pl:178 old/bin/pe.pl:260
+#: old/bin/ic.pl:1257 old/bin/ic.pl:2010 old/bin/ic.pl:2079 old/bin/ic.pl:738
+#: old/bin/io.pl:230 old/bin/oe.pl:1962 old/bin/pe.pl:178 old/bin/pe.pl:260
 #: old/bin/pe.pl:292 UI/Contact/divs/credit.html:26
 #: UI/Contact/divs/credit.html:77 UI/Contact/divs/credit.html:78
 #: UI/am-taxes.html:16 templates/demo/bin_list.html:99
@@ -4898,7 +4908,7 @@ msgstr "Nummer"
 msgid "Number Format"
 msgstr "Numerisk format"
 
-#: old/bin/io.pl:949
+#: old/bin/io.pl:954
 msgid "Number missing in Row [_1]"
 msgstr "Nummer mangler i rad [_1]"
 
@@ -4911,7 +4921,7 @@ msgstr "Nummer:"
 msgid "ODS"
 msgstr "ODS"
 
-#: old/bin/io.pl:248
+#: old/bin/io.pl:247
 msgid "OH"
 msgstr "OH"
 
@@ -4920,7 +4930,7 @@ msgid "OVERPAYMENT / ADVANCE PAYMENT / PREPAYMENT"
 msgstr "OVERBETALT / FORHÅNDSBETALT / BETALT"
 
 #: lib/LedgerSMB/Scripts/budgets.pm:128 old/bin/ic.pl:703
-#: UI/Reports/filters/search_goods.html:32 UI/accounts/edit.html:143
+#: UI/Reports/filters/search_goods.html:32 UI/accounts/edit.html:287
 msgid "Obsolete"
 msgstr "Foreldet"
 
@@ -4928,15 +4938,15 @@ msgstr "Foreldet"
 msgid "Obsolete By"
 msgstr "Foreldet ved"
 
-#: old/bin/aa.pl:92 old/bin/gl.pl:85 old/bin/io.pl:87
+#: old/bin/aa.pl:93 old/bin/gl.pl:83 old/bin/io.pl:86
 msgid "Oct"
 msgstr "okt"
 
-#: lib/LedgerSMB.pm:579 old/bin/aa.pl:78 old/bin/gl.pl:71 old/bin/io.pl:73
+#: lib/LedgerSMB.pm:579 old/bin/aa.pl:79 old/bin/gl.pl:69 old/bin/io.pl:72
 msgid "October"
 msgstr "oktober"
 
-#: old/bin/aa.pl:967 old/bin/ir.pl:517 old/bin/is.pl:583 old/bin/is.pl:890
+#: old/bin/is.pl:789
 msgid "Off Hold"
 msgstr "Av vent"
 
@@ -4951,8 +4961,7 @@ msgstr "Gammelt Passord"
 msgid "On Hand"
 msgstr "På lager"
 
-#: old/bin/aa.pl:969 old/bin/ir.pl:519 old/bin/is.pl:585 old/bin/is.pl:892
-#: UI/Reports/filters/invoice_outstanding.html:89
+#: old/bin/is.pl:791 UI/Reports/filters/invoice_outstanding.html:89
 #: UI/Reports/filters/invoice_search.html:188
 msgid "On Hold"
 msgstr "På vent"
@@ -4978,8 +4987,8 @@ msgstr "Bare Brukere"
 msgid "Only for Employees"
 msgstr "Bare for ansatte"
 
-#: old/bin/oe.pl:326 UI/Reports/filters/invoice_search.html:208
-#: UI/Reports/filters/orders.html:94
+#: old/bin/oe.pl:329 UI/Reports/filters/invoice_search.html:208
+#: UI/Reports/filters/orders.html:107
 #: UI/Reports/filters/purchase_history.html:200
 #: UI/Reports/filters/timecards.html:28
 msgid "Open"
@@ -4993,7 +5002,7 @@ msgstr "Åpnings balanse"
 msgid "Opening balance"
 msgstr "Åpnings balanse"
 
-#: UI/accounts/edit.html:230
+#: UI/accounts/edit.html:247
 msgid "Options"
 msgstr "Tillegg"
 
@@ -5007,7 +5016,7 @@ msgstr "Eller legg til parti"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:307
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:220
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:272 old/bin/oe.pl:2510
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:272 old/bin/oe.pl:2520
 msgid "Order"
 msgstr "Ordre"
 
@@ -5021,16 +5030,16 @@ msgstr "Ordre"
 msgid "Order #"
 msgstr "Ordre #"
 
-#: UI/reconciliation/report.html:388
+#: UI/reconciliation/report.html:400
 msgid "Order By"
 msgstr "Ordre av"
 
-#: old/bin/oe.pl:1908 old/bin/oe.pl:403 templates/demo/purchase_order.html:75
+#: old/bin/oe.pl:1917 old/bin/oe.pl:406 templates/demo/purchase_order.html:75
 #: templates/demo/sales_order.html:78 templates/demo/work_order.html:77
 msgid "Order Date"
 msgstr "Ordredato"
 
-#: old/bin/io.pl:1261 old/bin/oe.pl:1258 old/bin/oe.pl:1459
+#: old/bin/io.pl:1266 old/bin/oe.pl:1263 old/bin/oe.pl:1464
 msgid "Order Date missing!"
 msgstr "Ordredato mangler!"
 
@@ -5038,24 +5047,28 @@ msgstr "Ordredato mangler!"
 msgid "Order Entry"
 msgstr "Ordrer"
 
-#: lib/LedgerSMB/Report/Contact/Purchase.pm:71 old/bin/aa.pl:645
-#: old/bin/ir.pl:486 old/bin/is.pl:538 old/bin/oe.pl:1903 old/bin/oe.pl:397
+#: UI/setup/complete.html:28
+msgid "Order Lines"
+msgstr ""
+
+#: lib/LedgerSMB/Report/Contact/Purchase.pm:71 old/bin/aa.pl:673
+#: old/bin/ir.pl:468 old/bin/is.pl:523 old/bin/oe.pl:1912 old/bin/oe.pl:400
 #: UI/Reports/filters/invoice_outstanding.html:144
 #: UI/Reports/filters/invoice_search.html:99
-#: UI/Reports/filters/invoice_search.html:269 UI/Reports/filters/orders.html:39
-#: UI/Reports/filters/orders.html:128
+#: UI/Reports/filters/invoice_search.html:269 UI/Reports/filters/orders.html:40
+#: UI/Reports/filters/orders.html:141
 msgid "Order Number"
 msgstr "Ordrenummer"
 
-#: old/bin/io.pl:1271 old/bin/oe.pl:1458
+#: old/bin/io.pl:1276 old/bin/oe.pl:1463
 msgid "Order Number missing!"
 msgstr "Ordrenummer mangler!"
 
-#: old/bin/oe.pl:1436
+#: old/bin/oe.pl:1441
 msgid "Order deleted!"
 msgstr "Ordre slettet!"
 
-#: old/bin/oe.pl:2639
+#: old/bin/oe.pl:2649
 msgid "Order generation failed!"
 msgstr "Ordre opprettelse feilet"
 
@@ -5067,7 +5080,7 @@ msgstr "Ordre/Faktura"
 msgid "Ordering"
 msgstr "Ordre"
 
-#: UI/Reports/filters/purchase_history.html:180 UI/setup/complete.html:25
+#: UI/Reports/filters/purchase_history.html:180 UI/setup/complete.html:27
 #: UI/setup/confirm_operation.html:123
 msgid "Orders"
 msgstr "Ordrer"
@@ -5080,15 +5093,15 @@ msgstr "Ordre Generert"
 msgid "Other Actions"
 msgstr "Andre handlinger"
 
-#: lib/LedgerSMB/Scripts/recon.pm:497
+#: lib/LedgerSMB/Scripts/recon.pm:499
 msgid "Our Balance"
 msgstr "Vår balanse"
 
-#: UI/reconciliation/report.html:255 UI/reconciliation/report.html:328
+#: UI/reconciliation/report.html:267 UI/reconciliation/report.html:340
 msgid "Our Credits"
 msgstr "Vår gjeld"
 
-#: UI/reconciliation/report.html:254 UI/reconciliation/report.html:327
+#: UI/reconciliation/report.html:266 UI/reconciliation/report.html:339
 msgid "Our Debits"
 msgstr "Våre tilgodhavender"
 
@@ -5096,7 +5109,7 @@ msgstr "Våre tilgodhavender"
 msgid "Out"
 msgstr "Ut"
 
-#: old/bin/gl.pl:666
+#: old/bin/gl.pl:627
 msgid "Out of balance transaction!"
 msgstr "Posteringer er i ubalanse!"
 
@@ -5104,7 +5117,7 @@ msgstr "Posteringer er i ubalanse!"
 msgid "Outstanding"
 msgstr "Utestående"
 
-#: UI/reconciliation/report.html:315
+#: UI/reconciliation/report.html:327
 msgid "Outstanding Transactions"
 msgstr "Utestående Posteringer"
 
@@ -5116,7 +5129,7 @@ msgstr "Overforfall"
 msgid "Overhead"
 msgstr "Kostnader"
 
-#: UI/accounts/edit.html:355 UI/accounts/edit.html:406
+#: UI/accounts/edit.html:352 UI/accounts/edit.html:403
 msgid "Overpayment"
 msgstr "Overbetaling"
 
@@ -5142,12 +5155,12 @@ msgstr "PO #"
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:75
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:224
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:275
-#: lib/LedgerSMB/Report/Orders.pm:238 old/bin/aa.pl:661 old/bin/is.pl:555
-#: old/bin/oe.pl:1914 old/bin/oe.pl:412
+#: lib/LedgerSMB/Report/Orders.pm:238 old/bin/aa.pl:689 old/bin/is.pl:540
+#: old/bin/oe.pl:1923 old/bin/oe.pl:415
 #: UI/Reports/filters/invoice_outstanding.html:150
 #: UI/Reports/filters/invoice_search.html:109
-#: UI/Reports/filters/invoice_search.html:275 UI/Reports/filters/orders.html:49
-#: UI/Reports/filters/orders.html:141
+#: UI/Reports/filters/invoice_search.html:275 UI/Reports/filters/orders.html:62
+#: UI/Reports/filters/orders.html:154
 msgid "PO Number"
 msgstr "PO nummer"
 
@@ -5159,19 +5172,19 @@ msgstr "Post"
 msgid "POST AND PRINT"
 msgstr "Post og Skriv"
 
-#: old/bin/am.pl:961 old/bin/io.pl:1165 old/bin/is.pl:1102 old/bin/is.pl:259
-#: old/bin/oe.pl:262 old/bin/oe.pl:281 old/bin/printer.pl:76
+#: old/bin/am.pl:964 old/bin/io.pl:1170 old/bin/ir.pl:934 old/bin/is.pl:1023
+#: old/bin/is.pl:275 old/bin/oe.pl:265 old/bin/oe.pl:284 old/bin/printer.pl:76
 #: old/bin/printer.pl:94 templates/demo/packing_list.html:16
 #: templates/demo/packing_list.html:33 templates/demo/packing_list.tex:96
 #: sql/Pg-database.sql:2710 sql/Pg-database.sql:2723
 msgid "Packing List"
 msgstr "Følgeseddel"
 
-#: old/bin/io.pl:1260
+#: old/bin/io.pl:1265
 msgid "Packing List Date missing!"
 msgstr "Dato for følgeseddel mangler!"
 
-#: old/bin/io.pl:1270
+#: old/bin/io.pl:1275
 msgid "Packing List Number missing!"
 msgstr "Nummer for følgeseddel mangler!"
 
@@ -5183,7 +5196,7 @@ msgstr "Følgeseddel"
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:252
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:290
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:145
-#: lib/LedgerSMB/Scripts/payment.pm:932
+#: lib/LedgerSMB/Scripts/payment.pm:930
 #: UI/Reports/filters/invoice_outstanding.html:227
 #: UI/Reports/filters/invoice_search.html:350
 #: UI/payments/payments_detail.html:339 templates/demo/invoice.html:143
@@ -5195,7 +5208,7 @@ msgstr "Betalt"
 msgid "Parent"
 msgstr "Forelder"
 
-#: lib/LedgerSMB/Report/Invoices/COGS.pm:107 old/bin/io.pl:623
+#: lib/LedgerSMB/Report/Invoices/COGS.pm:107 old/bin/io.pl:628
 msgid "Part"
 msgstr "Varegruppe"
 
@@ -5215,8 +5228,8 @@ msgstr "Varegruppe"
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:101
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:162
 #: lib/LedgerSMB/Report/PNL/Product.pm:77
-#: lib/LedgerSMB/Scripts/configuration.pm:125 old/bin/oe.pl:2151
-#: old/bin/oe.pl:2224 old/bin/oe.pl:2258 old/bin/oe.pl:2504 old/bin/pe.pl:942
+#: lib/LedgerSMB/Scripts/configuration.pm:125 old/bin/oe.pl:2160
+#: old/bin/oe.pl:2233 old/bin/oe.pl:2267 old/bin/oe.pl:2514 old/bin/pe.pl:942
 #: UI/Reports/filters/cogs_lines.html:8
 #: UI/Reports/filters/inventory_activity.html:8
 #: UI/Reports/filters/purchase_history.html:243
@@ -5251,7 +5264,7 @@ msgstr "Begrenset Salgs Rapport [_1] på dato [_2]"
 msgid "Partnumber"
 msgstr "Varenummer"
 
-#: UI/Reports/filters/search_goods.html:18
+#: UI/Reports/filters/search_goods.html:18 UI/setup/complete.html:29
 msgid "Parts"
 msgstr "Varer"
 
@@ -5265,7 +5278,7 @@ msgstr "Varegruppe"
 msgid "Partsgroups"
 msgstr "Varegruppe"
 
-#: UI/Contact/divs/user.html:55 UI/setup/credentials.html:68
+#: UI/Contact/divs/user.html:59 UI/setup/credentials.html:68
 #: UI/setup/edit_user.html:49 UI/setup/new_user.html:29
 #: UI/src/views/LoginPage.vue:32
 msgid "Password"
@@ -5275,7 +5288,7 @@ msgstr "Passord"
 msgid "Password Duration (days)"
 msgstr "Passord varighet (dager)"
 
-#: old/lib/LedgerSMB/DBObject/User.pm:59
+#: old/lib/LedgerSMB/User.pm:145
 msgid "Passwords must match."
 msgstr "Passordet må stemme"
 
@@ -5283,7 +5296,7 @@ msgstr "Passordet må stemme"
 msgid "Pay From"
 msgstr "Betal Fra"
 
-#: lib/LedgerSMB/Scripts/payment.pm:177 UI/Contact/divs/credit.html:96
+#: lib/LedgerSMB/Scripts/payment.pm:176 UI/Contact/divs/credit.html:96
 #: UI/Contact/divs/credit.html:97 UI/payments/payments_filter.html:91
 msgid "Pay To"
 msgstr "Betal Til"
@@ -5292,13 +5305,13 @@ msgstr "Betal Til"
 msgid "Pay in behalf of"
 msgstr "Betal på vegne av"
 
-#: UI/accounts/edit.html:372
+#: UI/accounts/edit.html:369
 msgid "Payables"
 msgstr "Utbetalinger"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1159 UI/Contact/divs/credit.html:208
-#: UI/Contact/divs/credit.html:209 UI/accounts/edit.html:335
-#: UI/accounts/edit.html:387 UI/payments/payments_detail.html:227
+#: lib/LedgerSMB/Scripts/payment.pm:1157 UI/Contact/divs/credit.html:208
+#: UI/Contact/divs/credit.html:209 UI/accounts/edit.html:332
+#: UI/accounts/edit.html:384 UI/payments/payments_detail.html:227
 #: UI/templates/widget.html:55 t/data/04-complex_template.html:282
 #: sql/Pg-database.sql:2563
 msgid "Payment"
@@ -5332,11 +5345,11 @@ msgstr "Betalingsbetingelser"
 msgid "Payment Type"
 msgstr "Betalingstype"
 
-#: lib/LedgerSMB/Scripts/payment.pm:291
+#: lib/LedgerSMB/Scripts/payment.pm:289
 msgid "Payment batch"
 msgstr "Betalings bunt"
 
-#: old/bin/aa.pl:1387 old/bin/ir.pl:1364 old/bin/is.pl:1471
+#: old/bin/aa.pl:1381 old/bin/ir.pl:1302 old/bin/is.pl:1398
 msgid "Payment date missing!"
 msgstr "Betalingsdato mangler!"
 
@@ -5348,7 +5361,7 @@ msgstr "Betalingsforfall NET [_1] dager fra Faktura dato."
 msgid "Payment due by [_1]."
 msgstr "Betalingsforfall på [_1]."
 
-#: old/bin/aa.pl:829 old/bin/ir.pl:902 old/bin/is.pl:999
+#: old/bin/aa.pl:863 old/bin/ir.pl:803 old/bin/is.pl:899
 #: UI/payments/payment1.html:22 UI/payments/payments_detail.html:6
 #: templates/demo/ap_transaction.html:140 templates/demo/ap_transaction.tex:125
 #: templates/demo/ar_transaction.html:137 templates/demo/ar_transaction.tex:142
@@ -5357,7 +5370,7 @@ msgstr "Betalingsforfall på [_1]."
 msgid "Payments"
 msgstr "Betalinger"
 
-#: old/bin/is.pl:720
+#: old/bin/is.pl:611
 msgid "Payments associated with voided invoice may need to be reversed."
 msgstr "Betalinger koblet ti annullerte fakturaer trenge å bli reversert. "
 
@@ -5388,7 +5401,7 @@ msgstr "Valgt periode"
 msgid "Periods"
 msgstr "Perioder"
 
-#: lib/LedgerSMB/Scripts/contact.pm:187 UI/Contact/divs/person.html:2
+#: lib/LedgerSMB/Scripts/contact.pm:186 UI/Contact/divs/person.html:2
 msgid "Person"
 msgstr "Person"
 
@@ -5404,8 +5417,8 @@ msgstr "Tlf"
 msgid "Physical"
 msgstr "Fysisk"
 
-#: old/bin/am.pl:962 old/bin/io.pl:1188 old/bin/is.pl:258 old/bin/oe.pl:261
-#: old/bin/oe.pl:280 old/bin/printer.pl:72 old/bin/printer.pl:90
+#: old/bin/am.pl:965 old/bin/io.pl:1193 old/bin/is.pl:274 old/bin/oe.pl:264
+#: old/bin/oe.pl:283 old/bin/printer.pl:72 old/bin/printer.pl:90
 #: templates/demo/pick_list.html:16 templates/demo/pick_list.html:32
 #: templates/demo/pick_list.tex:89 sql/Pg-database.sql:2711
 #: sql/Pg-database.sql:2724
@@ -5521,7 +5534,7 @@ msgstr "Gi pris og leveringstid for følgende produkter:"
 msgid "Please select a customer with unused overpayments"
 msgstr "Velg en kunde med ubrukt overbetalte fakturaer"
 
-#: lib/LedgerSMB/Scripts/account.pm:111
+#: lib/LedgerSMB/Scripts/account.pm:138
 msgid "Please select a valid heading"
 msgstr "Velg en gyldig overskrift"
 
@@ -5545,10 +5558,8 @@ msgstr "Bruk v. 1.2 UI for å legge til SRU kontoer."
 msgid "Please use the 1.3 UI to add the GIFI accounts"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:237 old/bin/aa.pl:1000
-#: old/bin/aa.pl:1004 old/bin/aa.pl:951 old/bin/aa.pl:996 old/bin/gl.pl:241
-#: old/bin/gl.pl:243 old/bin/ir.pl:1028 old/bin/ir.pl:545 old/bin/ir.pl:591
-#: old/bin/is.pl:1124 old/bin/is.pl:611 old/bin/is.pl:661
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:237 old/bin/aa.pl:988
+#: old/bin/gl.pl:234 old/bin/gl.pl:236 old/bin/ir.pl:915 old/bin/is.pl:1003
 #: UI/payments/payment2.html:508
 msgid "Post"
 msgstr "Bokfør"
@@ -5557,7 +5568,7 @@ msgstr "Bokfør"
 msgid "Post Batch"
 msgstr "Bokfør Batch"
 
-#: lib/LedgerSMB/Scripts/recon.pm:493 UI/create_batch.html:76
+#: lib/LedgerSMB/Scripts/recon.pm:495 UI/create_batch.html:76
 msgid "Post Date"
 msgstr "Bokfør Dato"
 
@@ -5565,13 +5576,12 @@ msgstr "Bokfør Dato"
 msgid "Post Yearend"
 msgstr "Bokfør Årsavslutning"
 
-#: old/bin/aa.pl:954 old/bin/ir.pl:1029 old/bin/ir.pl:550 old/bin/is.pl:1127
+#: old/bin/aa.pl:991 old/bin/ir.pl:916 old/bin/is.pl:1006
 msgid "Post as new"
 msgstr "Bokfør som ny"
 
-#: old/bin/aa.pl:1006 old/bin/aa.pl:998 old/bin/ir.pl:547 old/bin/ir.pl:593
-#: old/bin/is.pl:613 old/bin/is.pl:663 UI/reconciliation/report.html:130
-#: UI/reconciliation/report.html:252 UI/reconciliation/report.html:325
+#: UI/reconciliation/report.html:142 UI/reconciliation/report.html:264
+#: UI/reconciliation/report.html:337
 msgid "Posted"
 msgstr "Bokført"
 
@@ -5579,26 +5589,21 @@ msgstr "Bokført"
 msgid "Posting Date"
 msgstr "Bokført dato"
 
-#: old/bin/am.pl:835
+#: old/bin/am.pl:838
 msgid "Posting GL Transaction [_1]"
 msgstr "Bokfør Hovedbok Postering [_1]"
 
-#: old/bin/am.pl:667
+#: old/bin/am.pl:670
 msgid "Posting Sales Invoice [_1]"
 msgstr "Bokført Utgående Faktura [_1]"
 
-#: old/bin/am.pl:689 old/bin/am.pl:698
+#: old/bin/am.pl:692 old/bin/am.pl:701
 msgid "Posting Transaction [_1]"
 msgstr "Bokfør Postering [_1]"
 
-#: old/bin/am.pl:677
+#: old/bin/am.pl:680
 msgid "Posting Vendor Invoice [_1]"
 msgstr "Bokført Inngående Faktura"
-
-#: old/bin/aa.pl:1005 old/bin/aa.pl:997 old/bin/ir.pl:546 old/bin/ir.pl:592
-#: old/bin/is.pl:612 old/bin/is.pl:662
-msgid "Posting..."
-msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1228
 msgid ""
@@ -5636,7 +5641,7 @@ msgstr "Innstillinger for [_1]"
 msgid "Prefix"
 msgstr "Prefix"
 
-#: old/bin/io.pl:241 templates/demo/invoice.tex:166
+#: old/bin/io.pl:240 templates/demo/invoice.tex:166
 #: templates/demo/product_receipt.html:99 templates/demo/purchase_order.html:101
 #: templates/demo/sales_order.html:104 templates/demo/sales_quotation.html:86
 #: templates/demo/sales_quotation.tex:105
@@ -5658,7 +5663,7 @@ msgstr "Prisgrupper"
 msgid "Price Updated"
 msgstr "Oppdatert Pris"
 
-#: old/bin/ic.pl:1095 UI/Contact/divs/credit.html:246
+#: old/bin/ic.pl:1096 UI/Contact/divs/credit.html:246
 #: UI/Contact/divs/credit.html:247
 msgid "Pricegroup"
 msgstr "Prisgruppe"
@@ -5677,10 +5682,9 @@ msgid "Primary Phone"
 msgstr "Sentralbord tlf"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:140
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:133 old/bin/aa.pl:950
-#: old/bin/aa.pl:984 old/bin/am.pl:316 old/bin/arap.pl:471 old/bin/ir.pl:540
-#: old/bin/is.pl:1123 old/bin/is.pl:606 old/bin/oe.pl:2057 old/bin/oe.pl:648
-#: old/bin/oe.pl:916 UI/payments/payments_detail.html:511
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:134 old/bin/aa.pl:987
+#: old/bin/am.pl:317 old/bin/arap.pl:479 old/bin/is.pl:1002 old/bin/oe.pl:2066
+#: old/bin/oe.pl:651 old/bin/oe.pl:921 UI/payments/payments_detail.html:511
 #: UI/timecards/timecard.html:159
 msgid "Print"
 msgstr "Skriv ut"
@@ -5689,11 +5693,11 @@ msgstr "Skriv ut"
 msgid "Print Batch"
 msgstr "Skriv Batch"
 
-#: old/bin/oe.pl:664 old/bin/oe.pl:919
+#: old/bin/oe.pl:667 old/bin/oe.pl:924
 msgid "Print and Save"
 msgstr "Skriv ut og lagre"
 
-#: old/bin/oe.pl:672 old/bin/oe.pl:922
+#: old/bin/oe.pl:675 old/bin/oe.pl:927
 msgid "Print and Save as new"
 msgstr "Skriv ut og lagre som ny"
 
@@ -5705,43 +5709,43 @@ msgstr "Skrevet ut"
 msgid "Printer"
 msgstr "Skriver"
 
-#: old/bin/am.pl:870
+#: old/bin/am.pl:873
 msgid "Printing Bin List [_1]"
 msgstr "Skriver ut bank id liste  [_1]"
 
-#: old/bin/am.pl:863
+#: old/bin/am.pl:866
 msgid "Printing Credit Invoice [_1]"
 msgstr "Skriv Kreditfaktura [_1]"
 
-#: old/bin/am.pl:864
+#: old/bin/am.pl:867
 msgid "Printing Debit Invoice [_1]"
 msgstr "Skriver Faktura [_1]"
 
-#: old/bin/am.pl:862
+#: old/bin/am.pl:865
 msgid "Printing Invoice [_1]"
 msgstr "Skrive Faktura [_1]"
 
-#: old/bin/am.pl:865
+#: old/bin/am.pl:868
 msgid "Printing Packing List [_1]"
 msgstr "Skrive Pakkeliste [_1]"
 
-#: old/bin/am.pl:866
+#: old/bin/am.pl:869
 msgid "Printing Pick List [_1]"
 msgstr "Skrive Plukkliste [_1]"
 
-#: old/bin/am.pl:869
+#: old/bin/am.pl:872
 msgid "Printing Purchase Order [_1]"
 msgstr "Skrive Innkjøpsordre [_1]"
 
-#: old/bin/am.pl:867
+#: old/bin/am.pl:870
 msgid "Printing Sales Order [_1]"
 msgstr "Skrive Salgsordre [_1]"
 
-#: old/bin/am.pl:861
+#: old/bin/am.pl:864
 msgid "Printing Transaction [_1]"
 msgstr "Skriver Postering [_1]"
 
-#: old/bin/am.pl:868
+#: old/bin/am.pl:871
 msgid "Printing Work Order [_1]"
 msgstr "Skrive Arbeidsordre [_1]"
 
@@ -5757,13 +5761,13 @@ msgstr "Prioritert gjennom"
 msgid "Proceeds"
 msgstr "Fortsettelser"
 
-#: old/bin/am.pl:435 UI/am-list-recurring.html:64
+#: old/bin/am.pl:437 UI/am-list-recurring.html:64
 msgid "Process Transactions"
 msgstr "Behandle Posteringer"
 
-#: old/bin/ir.pl:1007 templates/demo/product_receipt.html:16
-#: templates/demo/product_receipt.html:32 templates/demo/product_receipt.tex:116
-#: sql/Pg-database.sql:2736 sql/Pg-database.sql:2737
+#: templates/demo/product_receipt.html:16 templates/demo/product_receipt.html:32
+#: templates/demo/product_receipt.tex:116 sql/Pg-database.sql:2736
+#: sql/Pg-database.sql:2737
 msgid "Product Receipt"
 msgstr "Produkt Kvittering"
 
@@ -5775,7 +5779,7 @@ msgstr "Produkt kvittering"
 msgid "Profit and Loss"
 msgstr "Fortjeneste og Tap"
 
-#: old/bin/aa.pl:1091 old/bin/ic.pl:938 old/bin/ir.pl:1044 old/bin/is.pl:1142
+#: old/bin/aa.pl:1058 old/bin/ic.pl:938 old/bin/ir.pl:976 old/bin/is.pl:1065
 msgid "Profit/Loss"
 msgstr "Fortjeneste/tap"
 
@@ -5783,7 +5787,7 @@ msgstr "Fortjeneste/tap"
 msgid "Proft/Loss on Inventory Sales"
 msgstr "Fortjeneste/Tap på lagersalg"
 
-#: old/bin/io.pl:267 old/bin/pe.pl:800
+#: old/bin/io.pl:266 old/bin/pe.pl:800
 msgid "Project"
 msgstr "Prosjekt"
 
@@ -5818,9 +5822,9 @@ msgstr "Innkjøpsdato:"
 msgid "Purchase History"
 msgstr "Innkjøpshistorikk"
 
-#: old/bin/am.pl:740 old/bin/am.pl:965 old/bin/io.pl:1199 old/bin/ir.pl:1031
-#: old/bin/ir.pl:554 old/bin/oe.pl:1294 old/bin/oe.pl:273 old/bin/oe.pl:689
-#: old/bin/oe.pl:930 old/bin/printer.pl:81 UI/Contact/divs/credit.html:352
+#: old/bin/am.pl:743 old/bin/am.pl:968 old/bin/io.pl:1204 old/bin/ir.pl:918
+#: old/bin/oe.pl:1299 old/bin/oe.pl:276 old/bin/oe.pl:692 old/bin/oe.pl:935
+#: old/bin/printer.pl:81 UI/Contact/divs/credit.html:352
 #: t/data/04-complex_template.html:343 templates/demo/purchase_order.html:16
 #: templates/demo/purchase_order.html:32 templates/demo/purchase_order.tex:116
 #: sql/Pg-database.sql:1883 sql/Pg-database.sql:2573 sql/Pg-database.sql:2714
@@ -5833,7 +5837,7 @@ msgid "Purchase Order Number"
 msgstr "Innkjøpsordrenummer"
 
 #: lib/LedgerSMB/Report/Orders.pm:181 lib/LedgerSMB/Report/Orders.pm:273
-#: old/bin/am.pl:324 UI/Reports/filters/search_goods.html:163
+#: old/bin/am.pl:325 UI/Reports/filters/search_goods.html:163
 #: sql/Pg-database.sql:2576 sql/Pg-database.sql:2578 sql/Pg-database.sql:2581
 msgid "Purchase Orders"
 msgstr "Innkjøpsordrer"
@@ -5857,8 +5861,8 @@ msgstr "Kjøpt"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:88
 #: lib/LedgerSMB/Report/Inventory/History.pm:158
-#: lib/LedgerSMB/Report/Inventory/Search.pm:319 old/bin/ic.pl:1250
-#: old/bin/ic.pl:2087 old/bin/io.pl:237 old/bin/oe.pl:1959 old/bin/oe.pl:2241
+#: lib/LedgerSMB/Report/Inventory/Search.pm:319 old/bin/ic.pl:1252
+#: old/bin/ic.pl:2090 old/bin/io.pl:236 old/bin/oe.pl:1968 old/bin/oe.pl:2250
 #: old/bin/pe.pl:950 UI/Reports/filters/purchase_history.html:283
 #: UI/timecards/timecard-week.html:99 templates/demo/bin_list.html:103
 #: templates/demo/bin_list.tex:123 templates/demo/invoice.html:106
@@ -5878,7 +5882,7 @@ msgstr "Antall"
 msgid "Quantity"
 msgstr "Antall"
 
-#: old/bin/ic.pl:2204
+#: old/bin/ic.pl:2207
 msgid "Quantity exceeds available units to stock!"
 msgstr "Antallet overstiger tilgjengelig varebeholdning"
 
@@ -5888,8 +5892,8 @@ msgid "Quarter"
 msgstr "Kvartal"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:311
-#: lib/LedgerSMB/Report/Orders.pm:242 old/bin/io.pl:1213 old/bin/io.pl:1220
-#: old/bin/oe.pl:1305 old/bin/oe.pl:239 old/bin/oe.pl:680 old/bin/oe.pl:927
+#: lib/LedgerSMB/Report/Orders.pm:242 old/bin/io.pl:1218 old/bin/io.pl:1225
+#: old/bin/oe.pl:1310 old/bin/oe.pl:242 old/bin/oe.pl:683 old/bin/oe.pl:932
 #: old/bin/printer.pl:54 UI/Contact/divs/credit.html:368
 #: templates/demo/sales_quotation.html:16 templates/demo/sales_quotation.html:33
 #: templates/demo/sales_quotation.tex:85 sql/Pg-database.sql:1884
@@ -5901,23 +5905,23 @@ msgstr "Tilbud"
 msgid "Quotation #"
 msgstr "Tilbud #"
 
-#: old/bin/oe.pl:494
+#: old/bin/oe.pl:497
 msgid "Quotation Date"
 msgstr "Tilbudsdato"
 
-#: old/bin/io.pl:1262 old/bin/oe.pl:1261 old/bin/oe.pl:1465
+#: old/bin/io.pl:1267 old/bin/oe.pl:1266 old/bin/oe.pl:1470
 msgid "Quotation Date missing!"
 msgstr "Mangler tilbudsdato"
 
-#: old/bin/oe.pl:471
+#: old/bin/oe.pl:474
 msgid "Quotation Number"
 msgstr "Tilbudsnummer"
 
-#: old/bin/io.pl:1272 old/bin/oe.pl:1464
+#: old/bin/io.pl:1277 old/bin/oe.pl:1469
 msgid "Quotation Number missing!"
 msgstr "Mangler tilbudsnummer"
 
-#: old/bin/oe.pl:1440
+#: old/bin/oe.pl:1445
 msgid "Quotation deleted!"
 msgstr "Tilbud slettet!"
 
@@ -5928,7 +5932,11 @@ msgstr "Tilbud slettet!"
 msgid "Quotations"
 msgstr "Tilbud"
 
-#: old/bin/oe.pl:248 old/bin/oe.pl:691 old/bin/oe.pl:928 old/bin/printer.pl:59
+#: UI/Reports/filters/orders.html:51
+msgid "Quote Number"
+msgstr ""
+
+#: old/bin/oe.pl:251 old/bin/oe.pl:694 old/bin/oe.pl:933 old/bin/printer.pl:59
 #: UI/Contact/divs/credit.html:355 t/data/04-complex_template.html:352
 #: sql/Pg-database.sql:1885 sql/Pg-database.sql:2586 sql/Pg-database.sql:2718
 #: sql/Pg-database.sql:2733
@@ -5940,7 +5948,7 @@ msgstr "Tilbudsforespørsel"
 msgid "RFQ #"
 msgstr "Tilbudsforespørsel #"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:124 old/bin/oe.pl:482
+#: lib/LedgerSMB/Scripts/configuration.pm:124 old/bin/oe.pl:485
 msgid "RFQ Number"
 msgstr "Tilbudsforespørslelsnummer"
 
@@ -5949,12 +5957,12 @@ msgstr "Tilbudsforespørslelsnummer"
 msgid "RFQs"
 msgstr "Tilbudsforespørsler"
 
-#: lib/LedgerSMB/Report/Inventory/Search.pm:235 old/bin/ic.pl:2089
+#: lib/LedgerSMB/Report/Inventory/Search.pm:235 old/bin/ic.pl:2092
 #: old/bin/ic.pl:478 UI/Reports/filters/search_goods.html:359
 msgid "ROP"
 msgstr "Etterbestill ved"
 
-#: lib/LedgerSMB/Scripts/currency.pm:256 old/bin/ir.pl:696 old/bin/is.pl:791
+#: lib/LedgerSMB/Scripts/currency.pm:256 old/bin/ir.pl:596 old/bin/is.pl:690
 #: UI/Configuration/rate.html:49 templates/demo/timecard.html:107
 #: templates/demo/timecard.tex:60
 msgid "Rate"
@@ -5988,14 +5996,14 @@ msgstr "Gjenåpne periode"
 msgid "Read receipt"
 msgstr "Se kvittering"
 
-#: lib/LedgerSMB/Scripts/setup.pm:206 lib/LedgerSMB/Scripts/setup.pm:211
-#: lib/LedgerSMB/Scripts/setup.pm:216 lib/LedgerSMB/Scripts/setup.pm:221
-#: lib/LedgerSMB/Scripts/setup.pm:226 lib/LedgerSMB/Scripts/setup.pm:231
-#: lib/LedgerSMB/Scripts/setup.pm:236
+#: lib/LedgerSMB/Scripts/setup.pm:205 lib/LedgerSMB/Scripts/setup.pm:210
+#: lib/LedgerSMB/Scripts/setup.pm:215 lib/LedgerSMB/Scripts/setup.pm:220
+#: lib/LedgerSMB/Scripts/setup.pm:225 lib/LedgerSMB/Scripts/setup.pm:230
+#: lib/LedgerSMB/Scripts/setup.pm:235
 msgid "Rebuild/Upgrade?"
 msgstr "Rebygg/Oppgrader?"
 
-#: old/bin/io.pl:178 old/bin/oe.pl:1943 templates/demo/bin_list.html:104
+#: old/bin/io.pl:177 old/bin/oe.pl:1952 templates/demo/bin_list.html:104
 msgid "Recd"
 msgstr "Mottatt"
 
@@ -6016,7 +6024,7 @@ msgstr "Kviteringsresultat"
 msgid "Receipts"
 msgstr "Kvitteringer"
 
-#: UI/accounts/edit.html:319
+#: UI/accounts/edit.html:316
 msgid "Receivables"
 msgstr "Innbetalinger"
 
@@ -6024,15 +6032,15 @@ msgstr "Innbetalinger"
 msgid "Receive"
 msgstr "Motta"
 
-#: old/bin/oe.pl:1836
+#: old/bin/oe.pl:1845
 msgid "Receive Merchandise"
 msgstr "Motta varer"
 
-#: lib/LedgerSMB/Scripts/payment.pm:997
+#: lib/LedgerSMB/Scripts/payment.pm:995
 msgid "Received"
 msgstr "Mottatt"
 
-#: UI/accounts/edit.html:249
+#: UI/accounts/edit.html:266
 msgid "Recon"
 msgstr "Forsonlig"
 
@@ -6052,7 +6060,7 @@ msgstr "Avstemnings Rapport"
 msgid "Reconciliation Reports"
 msgstr "Avstemningsrapporter"
 
-#: old/bin/ir.pl:466 old/bin/is.pl:507
+#: old/bin/ir.pl:448 old/bin/is.pl:492
 msgid "Record in"
 msgstr "Bokfør på"
 
@@ -6060,11 +6068,11 @@ msgstr "Bokfør på"
 msgid "Recording time for"
 msgstr "Registrerings tid for"
 
-#: old/bin/arap.pl:551
+#: old/bin/arap.pl:559
 msgid "Recurring Transaction for [_1]"
 msgstr "Gjentagende Posteringer for [_1]"
 
-#: old/bin/am.pl:280 UI/am-list-recurring.html:11 sql/Pg-database.sql:2685
+#: old/bin/am.pl:281 UI/am-list-recurring.html:11 sql/Pg-database.sql:2685
 msgid "Recurring Transactions"
 msgstr "Gjentagende Posteringer"
 
@@ -6074,15 +6082,15 @@ msgstr "Gjentagende Posteringer"
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:106
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:120
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:146
-#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:99 old/bin/am.pl:297
-#: old/bin/arap.pl:572 UI/Reports/filters/budget_search.html:18
+#: lib/LedgerSMB/Report/Unapproved/Drafts.pm:99 old/bin/am.pl:298
+#: old/bin/arap.pl:580 UI/Reports/filters/budget_search.html:18
 #: UI/Reports/filters/gl.html:23 UI/Reports/filters/gl.html:210
 #: UI/Reports/filters/unapproved.html:29 UI/accounts/yearend.html:32
 #: UI/budgetting/budget_entry.html:16 UI/journal/journal_entry.html:19
 msgid "Reference"
 msgstr "Referanse"
 
-#: old/bin/io.pl:1273
+#: old/bin/io.pl:1278
 msgid "Reference Number Missing"
 msgstr "Referansenummer mangler"
 
@@ -6103,15 +6111,15 @@ msgstr "Registrering [_1]"
 msgid "Regular"
 msgstr "Regelmessig"
 
-#: lib/LedgerSMB/Scripts/budgets.pm:119 UI/reconciliation/report.html:435
+#: lib/LedgerSMB/Scripts/budgets.pm:119 UI/reconciliation/report.html:447
 msgid "Reject"
 msgstr "Avvist"
 
-#: UI/reconciliation/report.html:439
+#: UI/reconciliation/report.html:451
 msgid "Rejected"
 msgstr ""
 
-#: UI/reconciliation/report.html:438
+#: UI/reconciliation/report.html:450
 msgid "Rejecting..."
 msgstr ""
 
@@ -6119,7 +6127,7 @@ msgstr ""
 msgid "Rem. Life"
 msgstr "Resterende Levetid"
 
-#: old/bin/aa.pl:561 old/bin/ir.pl:429 old/bin/is.pl:462 old/bin/oe.pl:431
+#: old/bin/aa.pl:589 old/bin/ir.pl:411 old/bin/is.pl:447 old/bin/oe.pl:434
 msgid "Remaining"
 msgstr "Resterende"
 
@@ -6132,7 +6140,7 @@ msgstr "Merknad"
 msgid "Remark:"
 msgstr "Merknad:"
 
-#: old/bin/arap.pl:535
+#: old/bin/arap.pl:543
 msgid "Repeat"
 msgstr "Repiter"
 
@@ -6193,15 +6201,15 @@ msgstr "Rapport enhet filtere"
 msgid "Reports"
 msgstr "Rapporter"
 
-#: old/bin/arap.pl:338
+#: old/bin/arap.pl:346
 msgid "Reposting Not Allowed"
 msgstr "Reføring ikke lov"
 
-#: old/bin/oe.pl:2512
+#: old/bin/oe.pl:2522
 msgid "Req"
 msgstr "Be om"
 
-#: old/bin/oe.pl:1311 templates/demo/request_quotation.html:16
+#: old/bin/oe.pl:1316 templates/demo/request_quotation.html:16
 #: templates/demo/request_quotation.html:32
 #: templates/demo/request_quotation.tex:116
 msgid "Request for Quotation"
@@ -6211,7 +6219,7 @@ msgstr "Tilbudsforespørsel"
 msgid "Request for quotation"
 msgstr "Tilbudsforespørsel"
 
-#: UI/Reports/filters/orders.html:150
+#: UI/Reports/filters/orders.html:163
 msgid "Required By"
 msgstr "Nødvendig ved"
 
@@ -6219,7 +6227,7 @@ msgstr "Nødvendig ved"
 msgid "Required Date"
 msgstr "Nødvendig Dato"
 
-#: old/bin/io.pl:274 old/bin/oe.pl:407 old/bin/oe.pl:466
+#: old/bin/io.pl:273 old/bin/oe.pl:410 old/bin/oe.pl:469
 #: templates/demo/product_receipt.tex:122 templates/demo/purchase_order.html:76
 #: templates/demo/purchase_order.tex:122
 #: templates/demo/request_quotation.html:76
@@ -6237,7 +6245,7 @@ msgstr "Obligatorisk inntasting ikke utført"
 msgid "Required period type"
 msgstr "Krever type periode"
 
-#: UI/Contact/divs/user.html:127 UI/setup/edit_user.html:92
+#: UI/Contact/divs/user.html:131 UI/setup/edit_user.html:92
 msgid "Reset Password"
 msgstr "Resett Passord"
 
@@ -6261,7 +6269,7 @@ msgstr "Retturner til Oppsett"
 msgid "Return to the login screen."
 msgstr "Retturner til Logg inn skjerm"
 
-#: old/bin/ic.pl:527 UI/accounts/edit.html:454
+#: old/bin/ic.pl:527 UI/accounts/edit.html:451
 msgid "Returns"
 msgstr "Inntekt"
 
@@ -6322,19 +6330,19 @@ msgstr "SIC"
 msgid "SIC:"
 msgstr "SIC:"
 
-#: old/bin/io.pl:269 old/bin/oe.pl:1945 old/bin/oe.pl:2502
+#: old/bin/io.pl:268 old/bin/oe.pl:1954 old/bin/oe.pl:2512
 msgid "SKU"
 msgstr "SKU"
 
-#: old/bin/ir.pl:503
+#: old/bin/ir.pl:485
 msgid "SO Number"
 msgstr "SO Number"
 
-#: lib/LedgerSMB/Scripts/setup.pm:176
+#: lib/LedgerSMB/Scripts/setup.pm:175
 msgid "SQL-Ledger 3.0 database detected."
 msgstr "SQL-Ledger 3.0 database funnet."
 
-#: lib/LedgerSMB/Scripts/setup.pm:152
+#: lib/LedgerSMB/Scripts/setup.pm:151
 msgid "SQL-Ledger database detected."
 msgstr "SQL-Ledger database funnet."
 
@@ -6355,7 +6363,7 @@ msgstr "Salg"
 msgid "Sales"
 msgstr "Salg"
 
-#: old/bin/is.pl:1101 old/bin/oe.pl:676 old/bin/oe.pl:925
+#: old/bin/ir.pl:933 old/bin/is.pl:1022 old/bin/oe.pl:679 old/bin/oe.pl:930
 #: sql/Pg-database.sql:2664
 msgid "Sales Invoice"
 msgstr "Utgående Faktura"
@@ -6364,9 +6372,9 @@ msgstr "Utgående Faktura"
 msgid "Sales Invoice/AR Transaction Number"
 msgstr "Utgående Faktura Posterings nummer"
 
-#: old/bin/am.pl:734 old/bin/am.pl:963 old/bin/io.pl:1151 old/bin/is.pl:1130
-#: old/bin/is.pl:620 old/bin/oe.pl:1288 old/bin/oe.pl:259 old/bin/oe.pl:678
-#: old/bin/oe.pl:929 old/bin/printer.pl:64 UI/Contact/divs/credit.html:365
+#: old/bin/am.pl:737 old/bin/am.pl:966 old/bin/io.pl:1156 old/bin/is.pl:1009
+#: old/bin/oe.pl:1293 old/bin/oe.pl:262 old/bin/oe.pl:681 old/bin/oe.pl:934
+#: old/bin/printer.pl:64 UI/Contact/divs/credit.html:365
 #: templates/demo/sales_order.html:16 templates/demo/sales_order.html:33
 #: templates/demo/sales_order.tex:115 sql/Pg-database.sql:1882
 #: sql/Pg-database.sql:2572 sql/Pg-database.sql:2712 sql/Pg-database.sql:2725
@@ -6378,7 +6386,7 @@ msgid "Sales Order Number"
 msgstr "Salgsordrenummer"
 
 #: lib/LedgerSMB/Report/Orders.pm:178 lib/LedgerSMB/Report/Orders.pm:271
-#: old/bin/am.pl:323 UI/Reports/filters/search_goods.html:142
+#: old/bin/am.pl:324 UI/Reports/filters/search_goods.html:142
 #: sql/Pg-database.sql:2575 sql/Pg-database.sql:2577 sql/Pg-database.sql:2580
 #: sql/Pg-database.sql:2594
 msgid "Sales Orders"
@@ -6406,8 +6414,8 @@ msgstr "Salg:"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:121
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:282
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:308 old/bin/aa.pl:489
-#: old/bin/is.pl:386 old/bin/oe.pl:539 UI/Reports/filters/contact_search.html:61
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:308 old/bin/aa.pl:517
+#: old/bin/is.pl:371 old/bin/oe.pl:542 UI/Reports/filters/contact_search.html:61
 #: UI/Reports/filters/invoice_outstanding.html:178
 #: UI/Reports/filters/invoice_search.html:303
 #: templates/demo/ar_transaction.html:74 templates/demo/invoice.html:82
@@ -6429,34 +6437,33 @@ msgid "Sat"
 msgstr "Lør"
 
 #: lib/LedgerSMB/Scripts/asset.pm:354 lib/LedgerSMB/Scripts/budgets.pm:104
-#: old/bin/aa.pl:1046 old/bin/aa.pl:989 old/bin/am.pl:65 old/bin/am.pl:73
-#: old/bin/am.pl:84 old/bin/ic.pl:826 old/bin/ic.pl:835 old/bin/ir.pl:572
-#: old/bin/ir.pl:600 old/bin/is.pl:641 old/bin/is.pl:670 old/bin/oe.pl:653
-#: old/bin/oe.pl:918 old/bin/pe.pl:149 old/bin/pe.pl:517
-#: UI/Configuration/sequence.html:7 UI/Configuration/sequence.html:117
-#: UI/Configuration/settings.html:91 UI/Contact/divs/bank_act.html:74
-#: UI/Contact/divs/company.html:151 UI/Contact/divs/employee.html:150
-#: UI/Contact/divs/notes.html:54 UI/Contact/divs/person.html:157
-#: UI/Contact/pricelist.html:96 UI/accounts/edit.html:87
-#: UI/accounts/edit.html:551 UI/am-taxes.html:76 UI/asset/edit_asset.html:216
-#: UI/asset/edit_class.html:60 UI/asset/import_asset.html:26
-#: UI/business_units/edit.html:93 UI/business_units/edit.html:105
-#: UI/business_units/list_classes.html:84 UI/inventory/adjustment_entry.html:89
-#: UI/payroll/deduction.html:93 UI/payroll/income.html:98
-#: UI/reconciliation/report.html:409 UI/taxform/add_taxform.html:84
-#: UI/templates/widget.html:142 UI/templates/widget.html:156
-#: UI/timecards/timecard-week.html:125 UI/timecards/timecard.html:168
-#: UI/users/preferences.html:151 t/data/04-complex_template.html:131
-#: t/data/04-complex_template.html:310 t/data/04-complex_template.html:620
-#: t/data/04-complex_template.html:644 UI/src/components/ConfigTableRow.vue:20
+#: old/bin/am.pl:65 old/bin/am.pl:73 old/bin/am.pl:84 old/bin/ic.pl:826
+#: old/bin/ic.pl:835 old/bin/oe.pl:656 old/bin/oe.pl:923 old/bin/pe.pl:149
+#: old/bin/pe.pl:517 UI/Configuration/sequence.html:7
+#: UI/Configuration/sequence.html:117 UI/Configuration/settings.html:91
+#: UI/Contact/divs/bank_act.html:74 UI/Contact/divs/company.html:151
+#: UI/Contact/divs/employee.html:150 UI/Contact/divs/notes.html:54
+#: UI/Contact/divs/person.html:157 UI/Contact/pricelist.html:96
+#: UI/accounts/edit.html:87 UI/accounts/edit.html:548 UI/am-taxes.html:76
+#: UI/asset/edit_asset.html:216 UI/asset/edit_class.html:60
+#: UI/asset/import_asset.html:26 UI/business_units/edit.html:93
+#: UI/business_units/edit.html:105 UI/business_units/list_classes.html:84
+#: UI/inventory/adjustment_entry.html:89 UI/payroll/deduction.html:93
+#: UI/payroll/income.html:98 UI/reconciliation/report.html:421
+#: UI/taxform/add_taxform.html:84 UI/templates/widget.html:142
+#: UI/templates/widget.html:156 UI/timecards/timecard-week.html:125
+#: UI/timecards/timecard.html:168 UI/users/preferences.html:151
+#: t/data/04-complex_template.html:131 t/data/04-complex_template.html:310
+#: t/data/04-complex_template.html:620 t/data/04-complex_template.html:644
+#: UI/src/components/ConfigTableRow.vue:20
 msgid "Save"
 msgstr "Lagre"
 
-#: UI/Contact/divs/contact_info.html:126
+#: UI/Contact/divs/contact_info.html:125
 msgid "Save As New"
 msgstr "Lagre som Ny"
 
-#: lib/LedgerSMB/Scripts/payment.pm:276
+#: lib/LedgerSMB/Scripts/payment.pm:274
 msgid "Save Batch"
 msgstr "Lagre Batch"
 
@@ -6464,23 +6471,19 @@ msgstr "Lagre Batch"
 msgid "Save Changes"
 msgstr "Lagre Forandringer"
 
-#: UI/Contact/divs/contact_info.html:119 t/data/04-complex_template.html:546
+#: UI/Contact/divs/contact_info.html:118 t/data/04-complex_template.html:546
 msgid "Save Contact"
 msgstr "Lagre Kontakt"
 
-#: old/bin/gl.pl:246
+#: old/bin/gl.pl:239
 msgid "Save Draft"
 msgstr "Lagre Kladd"
 
-#: UI/Contact/divs/user.html:195 UI/setup/edit_user.html:151
+#: UI/Contact/divs/user.html:199 UI/setup/edit_user.html:151
 msgid "Save Groups"
 msgstr "Lagre Grupper"
 
-#: old/bin/aa.pl:1017 old/bin/ir.pl:563 old/bin/is.pl:630
-msgid "Save Info"
-msgstr "Lagre Informasjon"
-
-#: UI/Contact/divs/address.html:186 t/data/04-complex_template.html:485
+#: UI/Contact/divs/address.html:184 t/data/04-complex_template.html:485
 msgid "Save Location"
 msgstr "Lagre Sted"
 
@@ -6488,29 +6491,25 @@ msgstr "Lagre Sted"
 msgid "Save New"
 msgstr "Lagre Ny"
 
-#: UI/Contact/divs/address.html:194
+#: UI/Contact/divs/address.html:192
 msgid "Save New Location"
 msgstr "Lagre nytt Sted"
 
-#: old/bin/arap.pl:617 old/bin/arap.pl:622
+#: old/bin/arap.pl:625 old/bin/arap.pl:630
 msgid "Save Schedule"
 msgstr "Lagre Planlagt"
 
-#: old/bin/aa.pl:1022 old/bin/gl.pl:248
+#: old/bin/gl.pl:241
 msgid "Save Template"
 msgstr "Lagre Maler"
 
-#: UI/accounts/edit.html:634
+#: UI/accounts/edit.html:631
 msgid "Save Translations"
 msgstr "Lagre oversettelser"
 
-#: old/bin/aa.pl:1050
-msgid "Save as New"
-msgstr "Lagre som ny"
-
-#: old/bin/am.pl:66 old/bin/am.pl:75 old/bin/gl.pl:250 old/bin/ic.pl:827
-#: old/bin/ic.pl:844 old/bin/oe.pl:668 old/bin/oe.pl:921
-#: UI/accounts/edit.html:96 UI/accounts/edit.html:560
+#: old/bin/am.pl:66 old/bin/am.pl:75 old/bin/gl.pl:243 old/bin/ic.pl:827
+#: old/bin/ic.pl:844 old/bin/oe.pl:671 old/bin/oe.pl:926
+#: UI/accounts/edit.html:96 UI/accounts/edit.html:557
 msgid "Save as new"
 msgstr "Lagre som ny"
 
@@ -6518,23 +6517,21 @@ msgstr "Lagre som ny"
 msgid "Save the fixes provided and attempt to continue migration"
 msgstr "Lagre de gitte endringene og forsøk å fortsette overføringen."
 
-#: old/bin/aa.pl:1019 old/bin/aa.pl:1048 old/bin/aa.pl:991 old/bin/ir.pl:565
-#: old/bin/ir.pl:574 old/bin/ir.pl:602 old/bin/is.pl:632 old/bin/is.pl:643
-#: old/bin/is.pl:672 old/bin/oe.pl:655 UI/Configuration/sequence.html:119
+#: old/bin/oe.pl:658 UI/Configuration/sequence.html:119
 #: UI/Contact/pricelist.html:98 UI/accounts/edit.html:89
-#: UI/accounts/edit.html:553 UI/am-taxes.html:78 UI/asset/edit_asset.html:222
+#: UI/accounts/edit.html:550 UI/am-taxes.html:78 UI/asset/edit_asset.html:222
 #: UI/asset/edit_class.html:66 UI/asset/import_asset.html:32
 #: UI/business_units/edit.html:99 UI/business_units/edit.html:111
 #: UI/business_units/list_classes.html:86 UI/inventory/adjustment_entry.html:95
 #: UI/payments/payments_detail.html:495 UI/payroll/deduction.html:95
-#: UI/payroll/income.html:100 UI/reconciliation/report.html:413
+#: UI/payroll/income.html:100 UI/reconciliation/report.html:425
 #: UI/setup/edit_user.html:156 UI/taxform/add_taxform.html:89
 #: UI/timecards/timecard-week.html:131 UI/timecards/timecard.html:170
 #: UI/src/components/ConfigTableRow.vue:86
 msgid "Saved"
 msgstr ""
 
-#: UI/accounts/edit.html:636
+#: UI/accounts/edit.html:633
 msgid "Saved Translations"
 msgstr ""
 
@@ -6546,11 +6543,11 @@ msgstr "Lageret nr [_1]"
 msgid "Saving"
 msgstr ""
 
-#: UI/accounts/edit.html:635
+#: UI/accounts/edit.html:632
 msgid "Saving Translations..."
 msgstr ""
 
-#: old/bin/am.pl:778
+#: old/bin/am.pl:781
 msgid "Saving [_1] [_2]"
 msgstr "Lagre [_1] [_2]"
 
@@ -6558,32 +6555,29 @@ msgstr "Lagre [_1] [_2]"
 msgid "Saving over an existing document.  Continue?"
 msgstr "Lagre over et eksisterende dokument. Fortsett?"
 
-#: old/bin/aa.pl:1018 old/bin/aa.pl:1047 old/bin/aa.pl:990 old/bin/ir.pl:564
-#: old/bin/ir.pl:573 old/bin/ir.pl:601 old/bin/is.pl:631 old/bin/is.pl:642
-#: old/bin/is.pl:671 old/bin/oe.pl:654 UI/Configuration/sequence.html:118
+#: old/bin/oe.pl:657 UI/Configuration/sequence.html:118
 #: UI/Contact/pricelist.html:97 UI/accounts/edit.html:88
-#: UI/accounts/edit.html:552 UI/am-taxes.html:77 UI/asset/edit_asset.html:221
+#: UI/accounts/edit.html:549 UI/am-taxes.html:77 UI/asset/edit_asset.html:221
 #: UI/asset/edit_class.html:65 UI/asset/import_asset.html:31
 #: UI/business_units/edit.html:98 UI/business_units/edit.html:110
 #: UI/business_units/list_classes.html:85 UI/inventory/adjustment_entry.html:94
 #: UI/payments/payments_detail.html:494 UI/payroll/deduction.html:94
-#: UI/payroll/income.html:99 UI/reconciliation/report.html:412
+#: UI/payroll/income.html:99 UI/reconciliation/report.html:424
 #: UI/setup/edit_user.html:155 UI/taxform/add_taxform.html:88
 #: UI/timecards/timecard-week.html:130 UI/timecards/timecard.html:169
 msgid "Saving..."
 msgstr ""
 
-#: old/bin/aa.pl:1009 old/bin/aa.pl:952 old/bin/gl.pl:252 old/bin/ir.pl:1030
-#: old/bin/ir.pl:557 old/bin/is.pl:1125 old/bin/is.pl:622 old/bin/oe.pl:694
-#: old/bin/oe.pl:917
+#: old/bin/aa.pl:989 old/bin/gl.pl:245 old/bin/ir.pl:917 old/bin/is.pl:1004
+#: old/bin/oe.pl:697 old/bin/oe.pl:922
 msgid "Schedule"
 msgstr "Planlagt"
 
-#: old/bin/printer.pl:154 UI/journal/journal_entry.html:313
+#: old/bin/printer.pl:154 UI/journal/journal_entry.html:326
 msgid "Scheduled"
 msgstr "Planlagt"
 
-#: lib/LedgerSMB/Scripts/payment.pm:691 lib/LedgerSMB/Template/UI.pm:124
+#: lib/LedgerSMB/Scripts/payment.pm:689 lib/LedgerSMB/Template/UI.pm:124
 #: old/bin/printer.pl:129 UI/lib/utilities.html:44
 msgid "Screen"
 msgstr "Skjerm"
@@ -6708,7 +6702,7 @@ msgstr "Andre valg Telefon"
 msgid "Security Settings"
 msgstr "Sikkerhets Instillinger"
 
-#: UI/reconciliation/report.html:403
+#: UI/reconciliation/report.html:415
 msgid "Select All"
 msgstr "Velg alle"
 
@@ -6720,11 +6714,11 @@ msgstr "Velg kunde"
 msgid "Select Templates to Load"
 msgstr "Velg Maler for å vise"
 
-#: old/bin/oe.pl:2621
+#: old/bin/oe.pl:2631
 msgid "Select Vendor"
 msgstr "Velg leverandør"
 
-#: old/bin/arapprn.pl:310 old/bin/is.pl:1531 old/bin/oe.pl:1375
+#: old/bin/arapprn.pl:310 old/bin/is.pl:1454 old/bin/oe.pl:1380
 msgid "Select a Printer!"
 msgstr "Velg en skriver!"
 
@@ -6732,7 +6726,7 @@ msgstr "Velg en skriver!"
 msgid "Select by Default:"
 msgstr "Velg Standard"
 
-#: old/bin/arap.pl:178 old/bin/ic.pl:1675 old/bin/pe.pl:582
+#: old/bin/arap.pl:178 old/bin/ic.pl:1678 old/bin/pe.pl:582
 msgid "Select from one of the names below"
 msgstr "Velg ett av navnene under"
 
@@ -6744,12 +6738,12 @@ msgstr "Velg Fakturaer"
 msgid "Select or Enter User"
 msgstr "Velg eller skriv inn bruker"
 
-#: old/bin/arapprn.pl:308 old/bin/arapprn.pl:86 old/bin/is.pl:1529
-#: old/bin/oe.pl:1373
+#: old/bin/arapprn.pl:308 old/bin/arapprn.pl:86 old/bin/is.pl:1452
+#: old/bin/oe.pl:1378
 msgid "Select postscript or PDF!"
 msgstr "Velg postscript eller PDF!"
 
-#: old/bin/io.pl:1118
+#: old/bin/io.pl:1123
 msgid "Select txt, postscript or PDF!"
 msgstr "Velg txt, postscript eller PDF!"
 
@@ -6763,60 +6757,60 @@ msgstr "Velg å bruke"
 msgid "Selected"
 msgstr "Valgt"
 
-#: old/bin/ic.pl:1260
+#: old/bin/ic.pl:1262
 msgid "Sell"
 msgstr "Selg"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:98
 #: lib/LedgerSMB/Report/Inventory/History.pm:154
-#: lib/LedgerSMB/Report/Inventory/Search.pm:253 old/bin/ic.pl:1112
+#: lib/LedgerSMB/Report/Inventory/Search.pm:253 old/bin/ic.pl:1113
 #: old/bin/ic.pl:431 UI/Contact/pricelist.csv:31 UI/Contact/pricelist.html:43
 #: UI/Contact/pricelist.tex:42 UI/Reports/filters/purchase_history.html:263
 #: UI/Reports/filters/search_goods.html:316
 msgid "Sell Price"
 msgstr "Salgspris"
 
-#: old/bin/am.pl:918
+#: old/bin/am.pl:921
 msgid "Sending Bin List [_1]"
 msgstr "Send Bin liste [_1]"
 
-#: old/bin/am.pl:911
+#: old/bin/am.pl:914
 msgid "Sending Credit Invoice [_1]"
 msgstr "Skriv Kreditfaktura [_1]"
 
-#: old/bin/am.pl:912
+#: old/bin/am.pl:915
 msgid "Sending Debit Invoice [_1]"
 msgstr "Sender Faktura [_1]"
 
-#: old/bin/am.pl:910
+#: old/bin/am.pl:913
 msgid "Sending Invoice [_1]"
 msgstr "Sende Faktura [_1]"
 
-#: old/bin/am.pl:913
+#: old/bin/am.pl:916
 msgid "Sending Packing List [_1]"
 msgstr "Sende Pakkliste [_1]"
 
-#: old/bin/am.pl:914
+#: old/bin/am.pl:917
 msgid "Sending Pick List [_1]"
 msgstr "Send Plukkliste [_1]"
 
-#: old/bin/am.pl:917
+#: old/bin/am.pl:920
 msgid "Sending Purchase Order [_1]"
 msgstr "Sende innkjøpsordre [_1]"
 
-#: old/bin/am.pl:915
+#: old/bin/am.pl:918
 msgid "Sending Sales Order [_1]"
 msgstr "Sende Salgsordre [_1]"
 
-#: old/bin/am.pl:909
+#: old/bin/am.pl:912
 msgid "Sending Transaction [_1]"
 msgstr "Sende Postering [_1]"
 
-#: old/bin/am.pl:916
+#: old/bin/am.pl:919
 msgid "Sending Work Order [_1]"
 msgstr "Sende Arbeidsordre [_1]"
 
-#: old/bin/aa.pl:91 old/bin/gl.pl:84 old/bin/io.pl:86
+#: old/bin/aa.pl:92 old/bin/gl.pl:82 old/bin/io.pl:85
 msgid "Sep"
 msgstr "sep"
 
@@ -6824,7 +6818,7 @@ msgstr "sep"
 msgid "Separate Duties"
 msgstr "Saperate Plikter"
 
-#: lib/LedgerSMB.pm:578 old/bin/aa.pl:77 old/bin/gl.pl:70 old/bin/io.pl:72
+#: lib/LedgerSMB.pm:578 old/bin/aa.pl:78 old/bin/gl.pl:68 old/bin/io.pl:71
 msgid "September"
 msgstr "september"
 
@@ -6840,7 +6834,7 @@ msgstr "Sekvenser"
 msgid "Serial #"
 msgstr "Serie #"
 
-#: old/bin/io.pl:266 old/bin/oe.pl:1966
+#: old/bin/io.pl:265 old/bin/oe.pl:1975
 msgid "Serial No."
 msgstr "Serienummer"
 
@@ -6858,11 +6852,11 @@ msgstr "Serienummer"
 msgid "Serialnumber"
 msgstr "Serienummer"
 
-#: UI/src/components/ServerUI.js:114
+#: UI/src/components/ServerUI.js:122
 msgid "Server returned insecure response"
 msgstr ""
 
-#: old/bin/io.pl:625
+#: old/bin/io.pl:630
 msgid "Service"
 msgstr "Tjeneste"
 
@@ -6906,13 +6900,13 @@ msgstr "Sytten"
 msgid "Seventy"
 msgstr "Sytti"
 
-#: lib/LedgerSMB/Scripts/order.pm:70 old/bin/io.pl:171 old/bin/oe.pl:1939
+#: lib/LedgerSMB/Scripts/order.pm:70 old/bin/io.pl:170 old/bin/oe.pl:1948
 #: templates/demo/packing_list.html:96 templates/demo/pick_list.html:94
 #: sql/Pg-database.sql:2582
 msgid "Ship"
 msgstr "Send"
 
-#: old/bin/oe.pl:1831
+#: old/bin/oe.pl:1840
 msgid "Ship Merchandise"
 msgstr "Send varer"
 
@@ -6935,19 +6929,19 @@ msgstr "Send til:"
 #: UI/Reports/filters/invoice_outstanding.html:60
 #: UI/Reports/filters/invoice_outstanding.html:267
 #: UI/Reports/filters/invoice_search.html:160
-#: UI/Reports/filters/invoice_search.html:390 UI/Reports/filters/orders.html:59
-#: UI/Reports/filters/orders.html:170 templates/demo/product_receipt.html:78
+#: UI/Reports/filters/invoice_search.html:390 UI/Reports/filters/orders.html:72
+#: UI/Reports/filters/orders.html:183 templates/demo/product_receipt.html:78
 #: templates/demo/purchase_order.html:79 templates/demo/sales_order.html:82
 #: templates/demo/sales_order.tex:125 templates/demo/work_order.html:81
 msgid "Ship Via"
 msgstr "Send via"
 
-#: old/bin/aa.pl:953 old/bin/io.pl:1580 old/bin/is.pl:1126 old/bin/is.pl:616
-#: old/bin/oe.pl:2059 old/bin/oe.pl:658 old/bin/oe.pl:920
+#: old/bin/aa.pl:990 old/bin/io.pl:1585 old/bin/is.pl:1005 old/bin/oe.pl:2068
+#: old/bin/oe.pl:661 old/bin/oe.pl:925
 msgid "Ship to"
 msgstr "Send til"
 
-#: old/bin/is.pl:523 old/bin/oe.pl:1892 old/bin/oe.pl:606
+#: old/bin/is.pl:508 old/bin/oe.pl:1901 old/bin/oe.pl:609
 #: templates/demo/bin_list.html:80 templates/demo/invoice.html:84
 #: templates/demo/invoice.tex:149 templates/demo/packing_list.html:71
 #: templates/demo/packing_list.tex:108 templates/demo/pick_list.html:71
@@ -6964,23 +6958,23 @@ msgstr "Send via"
 msgid "Shipping"
 msgstr "Frakt"
 
-#: old/bin/oe.pl:1833
+#: old/bin/oe.pl:1842
 msgid "Shipping Date"
 msgstr "Leveringsdato"
 
-#: old/bin/oe.pl:2088
+#: old/bin/oe.pl:2097
 msgid "Shipping Date missing!"
 msgstr "Mangler leveringsdato"
 
-#: old/bin/is.pl:1104 old/bin/printer.pl:108
+#: old/bin/ir.pl:936 old/bin/is.pl:1025 old/bin/printer.pl:108
 msgid "Shipping Label"
 msgstr "Sendings Etikett"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:115
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:290
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:314
-#: lib/LedgerSMB/Report/Orders.pm:246 old/bin/is.pl:519 old/bin/oe.pl:1887
-#: old/bin/oe.pl:602 UI/Reports/filters/invoice_outstanding.html:261
+#: lib/LedgerSMB/Report/Orders.pm:246 old/bin/is.pl:504 old/bin/oe.pl:1896
+#: old/bin/oe.pl:605 UI/Reports/filters/invoice_outstanding.html:261
 #: UI/Reports/filters/invoice_search.html:384 templates/demo/bin_list.html:79
 #: templates/demo/bin_list.tex:99 templates/demo/invoice.html:83
 #: templates/demo/invoice.tex:148 templates/demo/packing_list.html:70
@@ -7002,6 +6996,10 @@ msgstr "Sendings etikett"
 #: UI/Reports/filters/search_goods.html:31
 msgid "Short"
 msgstr "Kort"
+
+#: lib/LedgerSMB/Report/Listings/Country.pm:46
+msgid "Short name"
+msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:134
 msgid "Show Credit Limit"
@@ -7051,16 +7049,16 @@ msgstr "Noen"
 #: lib/LedgerSMB/Report/GL.pm:246
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:81
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:136
-#: lib/LedgerSMB/Scripts/payment.pm:198 lib/LedgerSMB/Scripts/recon.pm:489
-#: old/bin/aa.pl:849 old/bin/ir.pl:918 old/bin/is.pl:1015
+#: lib/LedgerSMB/Scripts/payment.pm:197 lib/LedgerSMB/Scripts/recon.pm:491
+#: old/bin/aa.pl:883 old/bin/ir.pl:819 old/bin/is.pl:915
 #: UI/Reports/filters/gl.html:67 UI/Reports/filters/gl.html:267
 #: UI/Reports/filters/inventory_adj.html:13
 #: UI/Reports/filters/invoice_search.html:130
 #: UI/Reports/filters/payments.html:64 UI/inventory/adjustment_setup.html:26
-#: UI/journal/journal_entry.html:135 UI/payments/payment2.html:113
+#: UI/journal/journal_entry.html:136 UI/payments/payment2.html:113
 #: UI/payments/payment2.html:281 UI/payments/payment2.html:347
-#: UI/payments/payments_detail.html:315 UI/reconciliation/report.html:126
-#: UI/reconciliation/report.html:251 UI/reconciliation/report.html:324
+#: UI/payments/payments_detail.html:315 UI/reconciliation/report.html:138
+#: UI/reconciliation/report.html:263 UI/reconciliation/report.html:336
 #: templates/demo/ap_transaction.html:153 templates/demo/ar_transaction.html:150
 #: templates/demo/invoice.html:189 templates/demo/printPayment.html:50
 msgid "Source"
@@ -7120,7 +7118,7 @@ msgstr "Start kilde nummerering med:"
 msgid "Start using LedgerSMB"
 msgstr "Start å bruke LedgerSMB"
 
-#: old/bin/arap.pl:576 UI/Reports/filters/purchase_history.html:110
+#: old/bin/arap.pl:584 UI/Reports/filters/purchase_history.html:110
 msgid "Startdate"
 msgstr "Startdato"
 
@@ -7138,11 +7136,11 @@ msgstr "Start Dato"
 msgid "Starting Date:"
 msgstr "Start Dato:"
 
-#: old/bin/io.pl:1650
+#: old/bin/aa.pl:693 old/bin/io.pl:1655 old/bin/ir.pl:489 old/bin/is.pl:544
 msgid "State"
 msgstr "Start"
 
-#: UI/Contact/divs/address.html:82 UI/Contact/divs/address.html:153
+#: UI/Contact/divs/address.html:82 UI/Contact/divs/address.html:151
 #: UI/Reports/filters/contact_search.html:99
 #: UI/Reports/filters/purchase_history.html:83
 #: t/data/04-complex_template.html:387
@@ -7187,7 +7185,7 @@ msgstr "Status"
 msgid "Stock"
 msgstr "Lager"
 
-#: old/bin/ic.pl:1989 old/bin/ic.pl:2096 sql/Pg-database.sql:2697
+#: old/bin/ic.pl:1992 old/bin/ic.pl:2099 sql/Pg-database.sql:2697
 msgid "Stock Assembly"
 msgstr "Lagermontering"
 
@@ -7217,7 +7215,7 @@ msgstr "Emne: [_1]"
 msgid "Submission Status"
 msgstr "Anførsel status"
 
-#: UI/reconciliation/report.html:417
+#: UI/reconciliation/report.html:429
 msgid "Submit"
 msgstr "Avgi"
 
@@ -7226,10 +7224,10 @@ msgstr "Avgi"
 msgid "Submitted"
 msgstr "Avgitt"
 
-#: old/bin/io.pl:1299 old/bin/ir.pl:781 old/bin/is.pl:863 old/bin/oe.pl:814
+#: old/bin/io.pl:1304 old/bin/ir.pl:681 old/bin/is.pl:762 old/bin/oe.pl:818
 #: UI/Reports/filters/gl.html:318
 #: UI/Reports/filters/invoice_outstanding.html:275
-#: UI/Reports/filters/invoice_search.html:398 UI/Reports/filters/orders.html:200
+#: UI/Reports/filters/invoice_search.html:398 UI/Reports/filters/orders.html:213
 #: UI/Reports/filters/search_goods.html:436 UI/payments/payment2.html:333
 #: UI/payments/payment2.html:477 UI/payments/use_overpayment2.html:138
 #: UI/payments/use_overpayment2.html:326 templates/demo/ap_transaction.html:107
@@ -7251,7 +7249,7 @@ msgstr "Endelse"
 msgid "Summary"
 msgstr "Oppsummert"
 
-#: UI/accounts/edit.html:282
+#: UI/accounts/edit.html:193
 msgid "Summary account for"
 msgstr "Oppsummert konto for"
 
@@ -7302,9 +7300,9 @@ msgstr "Merkelappapp"
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:242
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:284 old/bin/ic.pl:535
 #: old/bin/ic.pl:664 UI/Reports/filters/invoice_outstanding.html:199
-#: UI/Reports/filters/invoice_search.html:323 UI/Reports/filters/orders.html:185
-#: UI/accounts/edit.html:260 UI/accounts/edit.html:345 UI/accounts/edit.html:396
-#: UI/accounts/edit.html:445 UI/accounts/edit.html:484
+#: UI/Reports/filters/invoice_search.html:323 UI/Reports/filters/orders.html:198
+#: UI/accounts/edit.html:277 UI/accounts/edit.html:342 UI/accounts/edit.html:393
+#: UI/accounts/edit.html:442 UI/accounts/edit.html:481
 msgid "Tax"
 msgstr "MVA/Avgift"
 
@@ -7312,17 +7310,17 @@ msgstr "MVA/Avgift"
 msgid "Tax Account"
 msgstr "MVA konto"
 
-#: old/bin/ir.pl:698 old/bin/is.pl:793
+#: old/bin/ir.pl:598 old/bin/is.pl:692
 msgid "Tax Code"
 msgstr "MVA kode"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:118
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:112 UI/Contact/divs/credit.html:264
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:113 UI/Contact/divs/credit.html:264
 #: UI/Contact/divs/credit.html:265
 msgid "Tax Form"
 msgstr "MVA Skjema"
 
-#: old/bin/aa.pl:682
+#: old/bin/aa.pl:714
 msgid "Tax Form Applied"
 msgstr "MVA Skjema Brukt"
 
@@ -7334,7 +7332,7 @@ msgstr "MVA Skjema Detaljrapport"
 msgid "Tax Form List"
 msgstr "MVA Skjema Liste"
 
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:122
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:123
 msgid "Tax Form Report"
 msgstr "MVA Skjema Rapport"
 
@@ -7346,7 +7344,7 @@ msgstr "MVA Skjema Rapporter"
 msgid "Tax Forms"
 msgstr "MVA Skjemaer"
 
-#: old/bin/aa.pl:604 old/bin/ir.pl:450 old/bin/is.pl:483
+#: old/bin/aa.pl:632 old/bin/ir.pl:432 old/bin/is.pl:468
 msgid "Tax ID"
 msgstr "MVA ID"
 
@@ -7354,7 +7352,7 @@ msgstr "MVA ID"
 msgid "Tax ID/SSN"
 msgstr "MVA ID/SSN"
 
-#: old/bin/ir.pl:686 old/bin/is.pl:780 old/bin/oe.pl:787
+#: old/bin/ir.pl:585 old/bin/is.pl:678 old/bin/oe.pl:790
 #: UI/Contact/divs/credit.html:316 UI/Contact/divs/credit.html:317
 msgid "Tax Included"
 msgstr "Inkl. MVA/Avgifter"
@@ -7392,7 +7390,7 @@ msgstr ""
 "Skatteposter kan legges til listen på denne siden ved å merke "
 "avkrysningsmuligheten \"Skatt\" på kontokonfigurasjonsiden."
 
-#: old/bin/io.pl:250
+#: old/bin/io.pl:249
 msgid "TaxForm"
 msgstr "MVA Skjema"
 
@@ -7404,7 +7402,7 @@ msgstr "MVA/Avgifter"
 msgid "Taxes"
 msgstr "MVA/Avgifter"
 
-#: old/bin/am.pl:257
+#: old/bin/am.pl:258
 msgid "Taxes saved!"
 msgstr "MVA/Avgifter Lagret!"
 
@@ -7455,7 +7453,7 @@ msgstr "Mal"
 msgid "Template Listing"
 msgstr "Mal  Oversikt"
 
-#: old/bin/aa.pl:1203 old/bin/gl.pl:352
+#: old/bin/aa.pl:1187 old/bin/gl.pl:360
 msgid "Template Saved!"
 msgstr "Mal  lagret"
 
@@ -7471,7 +7469,7 @@ msgstr "Maler"
 msgid "Ten"
 msgstr "Ti"
 
-#: old/bin/oe.pl:372
+#: old/bin/oe.pl:375
 msgid "Terms"
 msgstr "Vilkår"
 
@@ -7517,15 +7515,15 @@ msgid ""
 "                  contribute to the project are:"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/recon.pm:501
+#: lib/LedgerSMB/Scripts/recon.pm:503
 msgid "Their Balance"
 msgstr "Balanse"
 
-#: UI/reconciliation/report.html:257
+#: UI/reconciliation/report.html:269
 msgid "Their Credits"
 msgstr "Deres Gjeld"
 
-#: UI/reconciliation/report.html:256
+#: UI/reconciliation/report.html:268
 msgid "Their Debits"
 msgstr "Deres Tilgodehavende"
 
@@ -7586,12 +7584,12 @@ msgstr ""
 msgid "This document has been approved by"
 msgstr "Dette dokumentet er godkjent av"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1258
+#: lib/LedgerSMB/Scripts/payment.pm:1256
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr ""
 "Denne hovedbok forandringen, er et resultat av overbetaling i en Postering."
 
-#: lib/LedgerSMB/Scripts/payment.pm:1990
+#: lib/LedgerSMB/Scripts/payment.pm:1988
 msgid "This gl movement, is the result of a overpayment transaction"
 msgstr ""
 "Denne hovedbok forandringen, er et resultat av overbetaling i en Postering."
@@ -7679,7 +7677,7 @@ msgstr "Timekort Kriterier"
 msgid "Timecards"
 msgstr "Timekort"
 
-#: old/bin/am.pl:314
+#: old/bin/am.pl:315
 msgid "Times"
 msgstr "Ganger"
 
@@ -7687,7 +7685,7 @@ msgstr "Ganger"
 msgid "Timing"
 msgstr "Timing"
 
-#: old/bin/ic.pl:1115 old/bin/oe.pl:2239 old/bin/pe.pl:748
+#: old/bin/ic.pl:1116 old/bin/oe.pl:2248 old/bin/pe.pl:748
 #: UI/Contact/divs/credit.html:444 UI/Reports/co/filter_bm.html:26
 #: UI/Reports/co/filter_cd.html:44 UI/Reports/filters/aging.html:33
 #: UI/Reports/filters/income_statement.html:137
@@ -7710,7 +7708,7 @@ msgstr "Til Beløp"
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:190
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:184
 #: lib/LedgerSMB/Report/Taxform/Details.pm:117
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:111
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:112
 #: lib/LedgerSMB/Report/Timecards.pm:149
 #: lib/LedgerSMB/Report/Trial_Balance.pm:198
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:150
@@ -7722,7 +7720,7 @@ msgstr "Til Dato"
 msgid "To Pay"
 msgstr "Til Betaling"
 
-#: old/bin/oe.pl:2254
+#: old/bin/oe.pl:2263
 msgid "To Warehouse"
 msgstr "Til lager"
 
@@ -7742,7 +7740,7 @@ msgstr "Til E-mail"
 msgid "To my browser"
 msgstr "Til min Browser"
 
-#: lib/LedgerSMB/Scripts/payment.pm:989
+#: lib/LedgerSMB/Scripts/payment.pm:987
 msgid "To pay"
 msgstr "Å betale"
 
@@ -7766,14 +7764,15 @@ msgstr "Topplan"
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:247
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:287
 #: lib/LedgerSMB/Report/Taxform/Details.pm:105
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:99 lib/LedgerSMB/Scripts/asset.pm:492
-#: lib/LedgerSMB/Scripts/payment.pm:931 old/bin/ir.pl:845 old/bin/is.pl:942
-#: old/bin/oe.pl:846 UI/Reports/filters/invoice_outstanding.html:206
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:100
+#: lib/LedgerSMB/Scripts/asset.pm:492 lib/LedgerSMB/Scripts/payment.pm:929
+#: old/bin/ir.pl:745 old/bin/is.pl:841 old/bin/oe.pl:850
+#: UI/Reports/filters/invoice_outstanding.html:206
 #: UI/Reports/filters/invoice_search.html:329 UI/payments/payment1.html:99
 #: UI/payments/payment1.html:109 UI/payments/payment2.html:482
 #: UI/payments/payment2.html:491 UI/payments/payments_detail.html:338
-#: UI/reconciliation/report.html:218 UI/reconciliation/report.html:290
-#: UI/reconciliation/report.html:364 templates/demo/ap_transaction.html:104
+#: UI/reconciliation/report.html:230 UI/reconciliation/report.html:302
+#: UI/reconciliation/report.html:376 templates/demo/ap_transaction.html:104
 #: templates/demo/ap_transaction.html:119 templates/demo/ar_transaction.html:102
 #: templates/demo/ar_transaction.html:117 templates/demo/invoice.html:139
 #: templates/demo/invoice.tex:194 templates/demo/product_receipt.html:120
@@ -7800,15 +7799,15 @@ msgstr "Totalt Utestående"
 msgid "Total Paid"
 msgstr "Totalt Betalt"
 
-#: UI/accounts/edit.html:421
+#: UI/accounts/edit.html:418
 msgid "Tracking Items"
 msgstr "Spore Artikler"
 
-#: old/bin/is.pl:372 old/bin/oe.pl:386
+#: old/bin/is.pl:357 old/bin/oe.pl:389
 msgid "Trade Discount"
 msgstr "Handelsrabatt"
 
-#: old/bin/aa.pl:961 old/bin/am.pl:957
+#: old/bin/aa.pl:998 old/bin/am.pl:960
 msgid "Transaction"
 msgstr "Postering"
 
@@ -7822,7 +7821,7 @@ msgstr "Godkjenne Postering"
 msgid "Transaction Date"
 msgstr "Posterings dato"
 
-#: old/bin/gl.pl:613
+#: old/bin/gl.pl:575
 msgid "Transaction Date missing!"
 msgstr "Posterings dato mangler!"
 
@@ -7832,29 +7831,29 @@ msgstr "Posterings datoer"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:189
 #: UI/Reports/filters/batches.html:12 UI/Reports/filters/unapproved.html:20
-#: UI/reconciliation/report.html:114 UI/reconciliation/report.html:249
+#: UI/reconciliation/report.html:126 UI/reconciliation/report.html:261
 msgid "Transaction Type"
 msgstr "Posterings type"
 
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:90
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:91
 #: UI/setup/confirm_operation.html:125
 msgid "Transactions"
 msgstr "Posteringer"
 
-#: old/bin/oe.pl:2243 old/bin/oe.pl:2359 sql/Pg-database.sql:2584
+#: old/bin/oe.pl:2252 old/bin/oe.pl:2368 sql/Pg-database.sql:2584
 #: sql/Pg-database.sql:2619
 msgid "Transfer"
 msgstr "Overføre"
 
-#: old/bin/oe.pl:2125 old/bin/oe.pl:2270
+#: old/bin/oe.pl:2134 old/bin/oe.pl:2279
 msgid "Transfer Inventory"
 msgstr "Overfør varebeholdning"
 
-#: old/bin/oe.pl:2143
+#: old/bin/oe.pl:2152
 msgid "Transfer from"
 msgstr "Overfør fra"
 
-#: old/bin/oe.pl:2147
+#: old/bin/oe.pl:2156
 msgid "Transfer to"
 msgstr "Overfør til"
 
@@ -7866,7 +7865,7 @@ msgstr "Oversettelse"
 msgid "Translation deleted!"
 msgstr "Oversettelse slettet"
 
-#: UI/accounts/edit.html:582 sql/Pg-database.sql:2595 sql/Pg-database.sql:2698
+#: UI/accounts/edit.html:579 sql/Pg-database.sql:2595 sql/Pg-database.sql:2698
 msgid "Translations"
 msgstr "Oversettelser"
 
@@ -7941,8 +7940,8 @@ msgstr "To"
 #: lib/LedgerSMB/Report/Inventory/History.pm:149
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:128
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:85
-#: lib/LedgerSMB/Scripts/asset.pm:470 old/bin/io.pl:1711
-#: UI/Contact/divs/address.html:79 UI/Contact/divs/address.html:118
+#: lib/LedgerSMB/Scripts/asset.pm:470 old/bin/io.pl:1716
+#: UI/Contact/divs/address.html:79 UI/Contact/divs/address.html:117
 #: UI/Contact/divs/contact_info.html:29 UI/Contact/divs/credit.html:25
 #: UI/Contact/divs/wage.html:7 UI/Reports/filters/search_goods.html:13
 #: t/data/04-complex_template.html:384
@@ -8004,8 +8003,8 @@ msgstr "Unike ikke foreldete varenummer"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:92
 #: lib/LedgerSMB/Report/Inventory/History.pm:133
-#: lib/LedgerSMB/Report/Inventory/Search.pm:231 old/bin/ic.pl:1252
-#: old/bin/ic.pl:783 old/bin/io.pl:239 old/bin/oe.pl:1961
+#: lib/LedgerSMB/Report/Inventory/Search.pm:231 old/bin/ic.pl:1254
+#: old/bin/ic.pl:783 old/bin/io.pl:238 old/bin/oe.pl:1970
 #: UI/Reports/filters/purchase_history.html:293
 #: UI/Reports/filters/search_goods.html:287 UI/payroll/income.html:68
 #: templates/demo/invoice.tex:165 templates/demo/product_receipt.tex:135
@@ -8021,7 +8020,7 @@ msgstr "Enhets Pris"
 msgid "Unknown "
 msgstr "Ukjent"
 
-#: UI/src/components/ServerUI.js:119
+#: UI/src/components/ServerUI.js:127
 msgid "Unknown (JavaScript) error"
 msgstr ""
 
@@ -8037,11 +8036,11 @@ msgstr ""
 msgid "Unknown charttype; should be H(eader)/A(ccount)"
 msgstr "Ukjent diagram type; skulle være H(Overskrift)/A(Konto)"
 
-#: lib/LedgerSMB/Scripts/setup.pm:304
+#: lib/LedgerSMB/Scripts/setup.pm:303
 msgid "Unknown database found."
 msgstr "Ukjent database funnet"
 
-#: UI/src/views/LoginPage.vue:106
+#: UI/src/views/LoginPage.vue:107
 msgid "Unknown error preventing login"
 msgstr ""
 
@@ -8057,7 +8056,7 @@ msgstr "Lås opp gruppe"
 msgid "Unneeded Reconciliations"
 msgstr "Unødvendige avstemminger"
 
-#: lib/LedgerSMB/Scripts/setup.pm:240
+#: lib/LedgerSMB/Scripts/setup.pm:239
 msgid "Unsupported LedgerSMB version detected."
 msgstr "Ikke støttet LedgerSMB versjon oppdaget."
 
@@ -8065,7 +8064,7 @@ msgstr "Ikke støttet LedgerSMB versjon oppdaget."
 msgid "Unsupported Number"
 msgstr "Ikke understøttet Nummer"
 
-#: lib/LedgerSMB/Scripts/setup.pm:183
+#: lib/LedgerSMB/Scripts/setup.pm:182
 msgid "Unsupported SQL-Ledger version detected."
 msgstr "Ikke understøttet SQL-Ledger versjon oppdaget."
 
@@ -8077,7 +8076,7 @@ msgstr "Ikke understøttet konto kategorier"
 msgid "Unsupported account link combinations"
 msgstr "Ikke understøttet konto link kombinasjoner"
 
-#: lib/LedgerSMB/Scripts/contact.pm:450
+#: lib/LedgerSMB/Scripts/contact.pm:453
 msgid "Unsupported account type"
 msgstr "Ikke understøttet konto type"
 
@@ -8093,22 +8092,20 @@ msgstr "Ikke i bruk"
 msgid "Up"
 msgstr "Opp"
 
-#: lib/LedgerSMB/Scripts/budgets.pm:98 old/bin/aa.pl:949 old/bin/aa.pl:978
-#: old/bin/gl.pl:237 old/bin/ic.pl:825 old/bin/ic.pl:834 old/bin/ir.pl:1027
-#: old/bin/ir.pl:527 old/bin/is.pl:1122 old/bin/is.pl:593 old/bin/oe.pl:2056
-#: old/bin/oe.pl:643 old/bin/oe.pl:915 old/bin/pe.pl:516 UI/am-taxes.html:71
-#: UI/payments/payment2.html:502 UI/payments/payments_detail.html:483
-#: UI/payroll/deduction.html:85 UI/payroll/income.html:90
-#: UI/reconciliation/report.html:397
+#: lib/LedgerSMB/Scripts/budgets.pm:98 old/bin/aa.pl:986 old/bin/gl.pl:230
+#: old/bin/ic.pl:825 old/bin/ic.pl:834 old/bin/ir.pl:914 old/bin/is.pl:1001
+#: old/bin/oe.pl:2065 old/bin/oe.pl:646 old/bin/oe.pl:920 old/bin/pe.pl:516
+#: UI/am-taxes.html:71 UI/payments/payment2.html:502
+#: UI/payments/payments_detail.html:483 UI/payroll/deduction.html:85
+#: UI/payroll/income.html:90 UI/reconciliation/report.html:409
 msgid "Update"
 msgstr "Oppdatér"
 
-#: old/bin/aa.pl:980 old/bin/ic.pl:776 old/bin/ir.pl:529 old/bin/is.pl:595
-#: old/bin/oe.pl:645
+#: old/bin/ic.pl:776 old/bin/oe.pl:648
 msgid "Updated"
 msgstr "Oppdatert"
 
-#: old/bin/aa.pl:979 old/bin/ir.pl:528 old/bin/is.pl:594 old/bin/oe.pl:644
+#: old/bin/oe.pl:647
 msgid "Updating..."
 msgstr ""
 
@@ -8124,6 +8121,10 @@ msgstr "Oppgradert Info"
 #: UI/file/internal-file-list.html:76 UI/templates/widget.html:130
 msgid "Upload"
 msgstr "Opplast"
+
+#: UI/reconciliation/report.html:92
+msgid "Upload file format"
+msgstr ""
 
 #: UI/Configuration/rate.html:87 UI/file/attachment_screen.html:47
 #: UI/file/internal-file-list.html:78
@@ -8166,11 +8167,11 @@ msgstr "Bruk Kunde Overbetaling"
 msgid "Use Overpayment"
 msgstr "Bruk Overbetaling"
 
-#: old/bin/io.pl:1820
+#: old/bin/io.pl:1825
 msgid "Use Shipto"
 msgstr "Bruk send til"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1868
+#: lib/LedgerSMB/Scripts/payment.pm:1866
 msgid "Use overpayment/prepayment"
 msgstr "Bruk overbetaling/forhånsbetaling"
 
@@ -8183,7 +8184,7 @@ msgstr "Bruk webtjeneste for gjeldende valutakurser"
 msgid "Used"
 msgstr "Brukt"
 
-#: lib/LedgerSMB/Scripts/contact.pm:189 UI/Contact/divs/user.html:3
+#: lib/LedgerSMB/Scripts/contact.pm:188 UI/Contact/divs/user.html:7
 #: UI/main.html:28 t/data/04-complex_template.html:36
 msgid "User"
 msgstr "Bruker"
@@ -8192,23 +8193,23 @@ msgstr "Bruker"
 msgid "User Name"
 msgstr "Bruker Navn"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1233
+#: lib/LedgerSMB/Scripts/setup.pm:1230
 msgid "User already exists. Import?"
 msgstr "Bruker eksisterer allerede. Importer?"
 
-#: UI/Contact/divs/user.html:68 UI/setup/new_user.html:39
+#: UI/Contact/divs/user.html:72 UI/setup/new_user.html:39
 msgid "User creation"
 msgstr "Opprett bruker"
 
-#: UI/Contact/divs/user.html:28 UI/Contact/divs/user.html:48
-#: UI/setup/edit_user.html:29 UI/setup/edit_user.html:42
-#: UI/setup/list_users.html:11 UI/setup/new_user.html:21
-#: UI/setup/ui-db-credentials.html:4
+#: lib/LedgerSMB/Report/Listings/User.pm:57 UI/Contact/divs/user.html:32
+#: UI/Contact/divs/user.html:52 UI/setup/edit_user.html:29
+#: UI/setup/edit_user.html:42 UI/setup/list_users.html:11
+#: UI/setup/new_user.html:21 UI/setup/ui-db-credentials.html:4
 msgid "Username"
 msgstr "Brukenavn"
 
-#: UI/setup/complete.html:27 UI/setup/confirm_operation.html:50
-#: UI/setup/confirm_operation.html:126
+#: lib/LedgerSMB/Report/Listings/User.pm:81 UI/setup/complete.html:30
+#: UI/setup/confirm_operation.html:50 UI/setup/confirm_operation.html:126
 msgid "Users"
 msgstr "Brukere"
 
@@ -8226,7 +8227,7 @@ msgstr "Gyldig Til"
 msgid "Valid from"
 msgstr "Gyldig fra"
 
-#: old/bin/oe.pl:465 templates/demo/sales_quotation.html:61
+#: old/bin/oe.pl:468 templates/demo/sales_quotation.html:61
 #: templates/demo/sales_quotation.tex:92
 msgid "Valid until"
 msgstr "Gyldig til"
@@ -8252,8 +8253,8 @@ msgstr "Forandring:"
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:195
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:248
 #: lib/LedgerSMB/Report/Orders.pm:182 lib/LedgerSMB/Report/Orders.pm:188
-#: old/bin/aa.pl:525 old/bin/ic.pl:1014 old/bin/ir.pl:410 old/bin/oe.pl:2508
-#: old/bin/oe.pl:2659 old/bin/pe.pl:1075 old/bin/pe.pl:925
+#: old/bin/aa.pl:553 old/bin/ic.pl:1014 old/bin/ir.pl:392 old/bin/oe.pl:2518
+#: old/bin/oe.pl:2669 old/bin/pe.pl:1075 old/bin/pe.pl:925
 #: UI/Contact/divs/credit.html:11 UI/Contact/divs/credit.html:12
 #: UI/Reports/filters/aging.html:13
 #: UI/Reports/filters/invoice_outstanding.html:5
@@ -8272,7 +8273,7 @@ msgstr "Leverandørkonto"
 msgid "Vendor History"
 msgstr "Leverandørhistorikk"
 
-#: old/bin/oe.pl:684 old/bin/oe.pl:926 UI/Contact/divs/credit.html:349
+#: old/bin/oe.pl:687 old/bin/oe.pl:931 UI/Contact/divs/credit.html:349
 #: t/data/04-complex_template.html:334 sql/Pg-database.sql:2660
 msgid "Vendor Invoice"
 msgstr "Inngående Faktura"
@@ -8288,7 +8289,7 @@ msgstr "Leverandør Navn"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:115
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:178
-#: lib/LedgerSMB/Scripts/configuration.pm:129 old/bin/io.pl:1595
+#: lib/LedgerSMB/Scripts/configuration.pm:129 old/bin/io.pl:1600
 #: UI/Reports/filters/invoice_outstanding.html:6
 #: UI/Reports/filters/invoice_search.html:6
 #: UI/Reports/filters/overpayments.html:19 UI/Reports/filters/payments.html:15
@@ -8311,7 +8312,7 @@ msgstr "Leverandørens Referansenummer"
 msgid "Vendor Search"
 msgstr "Leverandør søk"
 
-#: old/bin/aa.pl:1360 old/bin/ir.pl:1341 old/bin/oe.pl:1269
+#: old/bin/aa.pl:1354 old/bin/ir.pl:1279 old/bin/oe.pl:1274
 msgid "Vendor missing!"
 msgstr "Leverandør mangler!"
 
@@ -8332,10 +8333,6 @@ msgstr "Leverandør/Kunde"
 msgid "Verify"
 msgstr "Bekrefte"
 
-#: old/bin/is.pl:626
-msgid "Void"
-msgstr "Annullert"
-
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:148
 msgid "Voucher List"
 msgstr "Kupong Liste"
@@ -8348,11 +8345,11 @@ msgstr "Kuponger"
 msgid "Wages and Deductions"
 msgstr "Lønninger og Skattekort"
 
-#: lib/LedgerSMB/Scripts/contact.pm:190
+#: lib/LedgerSMB/Scripts/contact.pm:189
 msgid "Wages/Deductions"
 msgstr "Lønninger/Skatt"
 
-#: old/bin/oe.pl:1843 UI/Reports/filters/search_goods.html:415
+#: old/bin/oe.pl:1852 UI/Reports/filters/search_goods.html:415
 #: templates/demo/bin_list.html:78 templates/demo/bin_list.tex:97
 #: templates/demo/packing_list.html:69 templates/demo/packing_list.tex:105
 #: templates/demo/pick_list.html:69 templates/demo/pick_list.tex:97
@@ -8391,7 +8388,7 @@ msgstr "Advarsel: Passordet ditt slutter å virke i dag. "
 msgid "Wed"
 msgstr "Ons"
 
-#: old/bin/am.pl:271 UI/lib/report_base.html:171
+#: old/bin/am.pl:272 UI/lib/report_base.html:171
 #: UI/timecards/entry_filter.html:23
 msgid "Week"
 msgstr "Uke"
@@ -8400,7 +8397,7 @@ msgstr "Uke"
 msgid "Week Starting"
 msgstr "Uke start"
 
-#: old/bin/arap.pl:517
+#: old/bin/arap.pl:525
 msgid "Week(s)"
 msgstr "Uke(r)"
 
@@ -8408,7 +8405,7 @@ msgstr "Uke(r)"
 msgid "Weekly Time and Materials Entry"
 msgstr "Ukentlig Tid og Vare Ankomst"
 
-#: old/bin/am.pl:272
+#: old/bin/am.pl:273
 msgid "Weeks"
 msgstr "Uker"
 
@@ -8429,7 +8426,7 @@ msgstr ""
 msgid "What is LedgerSMB"
 msgstr ""
 
-#: old/bin/io.pl:616
+#: old/bin/io.pl:621
 msgid "What type of item is this?"
 msgstr "Hvilken type ting er dette?"
 
@@ -8445,7 +8442,7 @@ msgstr "Hele Måneden i rett linje"
 msgid "Widgit Themes"
 msgstr "Widgit Themes"
 
-#: old/bin/am.pl:964 old/bin/io.pl:1158 old/bin/oe.pl:260 old/bin/printer.pl:68
+#: old/bin/am.pl:967 old/bin/io.pl:1163 old/bin/oe.pl:263 old/bin/printer.pl:68
 #: templates/demo/work_order.html:16 templates/demo/work_order.html:32
 #: templates/demo/work_order.tex:124 sql/Pg-database.sql:2713
 #: sql/Pg-database.sql:2726
@@ -8456,11 +8453,11 @@ msgstr "Arbeidsordre"
 msgid "Work order"
 msgstr "Arbeidsordre"
 
-#: lib/LedgerSMB/Scripts/setup.pm:154
+#: lib/LedgerSMB/Scripts/setup.pm:153
 msgid "Would you like to migrate the database?"
 msgstr "Vil du migrere databasen"
 
-#: lib/LedgerSMB/Scripts/setup.pm:157
+#: lib/LedgerSMB/Scripts/setup.pm:156
 msgid "Would you like to upgrade the database?"
 msgstr "Vil du oppgradere databasen?"
 
@@ -8478,7 +8475,7 @@ msgstr "XLSX"
 msgid "Yahoo"
 msgstr "Yahoo"
 
-#: old/bin/am.pl:273 old/bin/pe.pl:735 UI/lib/report_base.html:189
+#: old/bin/am.pl:274 old/bin/pe.pl:735 UI/lib/report_base.html:189
 #: UI/lib/report_base.html:274
 msgid "Year"
 msgstr "År"
@@ -8487,7 +8484,7 @@ msgstr "År"
 msgid "Year End"
 msgstr "Årsavslutning"
 
-#: old/bin/arap.pl:519
+#: old/bin/arap.pl:527
 msgid "Year(s)"
 msgstr "År"
 
@@ -8499,11 +8496,11 @@ msgstr "Årsavslutning"
 msgid "Yearend complete"
 msgstr "Årsavslutning avsluttet"
 
-#: old/bin/am.pl:274
+#: old/bin/am.pl:275
 msgid "Years"
 msgstr "År"
 
-#: lib/LedgerSMB/Report/Taxform/List.pm:100 old/bin/oe.pl:1423
+#: lib/LedgerSMB/Report/Taxform/List.pm:100 old/bin/oe.pl:1428
 #: UI/Configuration/settings.html:37 UI/setup/confirm_operation.html:29
 msgid "Yes"
 msgstr "Ja"
@@ -8522,11 +8519,11 @@ msgstr "Postnummer"
 msgid "Zero"
 msgstr "Null"
 
-#: old/bin/io.pl:1653
+#: old/bin/io.pl:1658
 msgid "Zip Code"
 msgstr "Postnummer"
 
-#: UI/Contact/divs/address.html:83 UI/Contact/divs/address.html:160
+#: UI/Contact/divs/address.html:83 UI/Contact/divs/address.html:158
 msgid "Zip/Post Code"
 msgstr "Postnummer"
 
@@ -8547,19 +8544,19 @@ msgstr ""
 "[_1]\n"
 "[_2]"
 
-#: old/bin/gl.pl:174
+#: old/bin/gl.pl:170
 msgid "[_1] Cash Transfer Transaction"
 msgstr "[_1] Kontant Overførings Postering"
 
-#: old/bin/aa.pl:401
+#: old/bin/aa.pl:429
 msgid "[_1] Credit Note"
 msgstr "[_1] Keditnota"
 
-#: old/bin/aa.pl:405
+#: old/bin/aa.pl:433
 msgid "[_1] Debit Note"
 msgstr "[_1] Regning"
 
-#: old/bin/gl.pl:177
+#: old/bin/gl.pl:173
 msgid "[_1] General Ledger Transaction"
 msgstr "[_1] Hovedboks Postering"
 
@@ -8567,15 +8564,15 @@ msgstr "[_1] Hovedboks Postering"
 msgid "[_1] Number"
 msgstr "[_1] Nummer"
 
-#: old/bin/aa.pl:394
+#: old/bin/aa.pl:422
 msgid "[_1] [_2] Transaction"
 msgstr "[_1] [_2] Postering"
 
-#: old/bin/ic.pl:1633
+#: old/bin/ic.pl:1636
 msgid "[_1]: Customer not on file!"
 msgstr "[_1] Kunde ikke i rgistret"
 
-#: old/bin/ic.pl:1555
+#: old/bin/ic.pl:1558
 msgid "[_1]: Vendor not on file!"
 msgstr "[_1] Leverandør ikke i registret"
 
@@ -8595,7 +8592,7 @@ msgstr ""
 msgid "bug"
 msgstr ""
 
-#: old/bin/io.pl:1647
+#: old/bin/io.pl:1652
 msgid "city"
 msgstr "by"
 
@@ -8603,7 +8600,7 @@ msgstr "by"
 msgid "csv"
 msgstr "csv"
 
-#: old/bin/ic.pl:1075 old/bin/oe.pl:374 UI/Contact/divs/credit.html:162
+#: old/bin/ic.pl:1076 old/bin/oe.pl:377 UI/Contact/divs/credit.html:162
 #: UI/Contact/divs/credit.html:180 t/data/04-complex_template.html:215
 #: t/data/04-complex_template.html:255
 msgid "days"
@@ -8617,7 +8614,7 @@ msgstr "tilgode"
 msgid "default"
 msgstr "standard"
 
-#: lib/LedgerSMB/Scripts/admin.pm:67 lib/LedgerSMB/Scripts/currency.pm:160
+#: lib/LedgerSMB/Scripts/admin.pm:117 lib/LedgerSMB/Scripts/currency.pm:160
 #: lib/LedgerSMB/Scripts/currency.pm:270 lib/LedgerSMB/Scripts/currency.pm:75
 msgid "delete"
 msgstr "slett"
@@ -8630,8 +8627,8 @@ msgstr "nedskrivning"
 msgid "disposal"
 msgstr "disposisjon"
 
-#: old/bin/am.pl:707 old/bin/am.pl:783 old/bin/am.pl:840 old/bin/am.pl:889
-#: old/bin/am.pl:941
+#: old/bin/am.pl:710 old/bin/am.pl:786 old/bin/am.pl:843 old/bin/am.pl:892
+#: old/bin/am.pl:944
 msgid "done"
 msgstr "gjort"
 
@@ -8639,11 +8636,11 @@ msgstr "gjort"
 msgid "e"
 msgstr "e"
 
-#: old/bin/ir.pl:1302 old/bin/is.pl:1414 old/bin/oe.pl:1235
+#: old/bin/ir.pl:1236 old/bin/is.pl:1337 old/bin/oe.pl:1240
 msgid "ea"
 msgstr "stk"
 
-#: old/bin/am.pl:786 old/bin/am.pl:892 old/bin/am.pl:944
+#: old/bin/am.pl:789 old/bin/am.pl:895 old/bin/am.pl:947
 msgid "failed"
 msgstr "feilet"
 
@@ -8675,19 +8672,19 @@ msgstr "i år"
 msgid "invoicing"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:2018
+#: lib/LedgerSMB/Scripts/payment.pm:2016
 msgid "is bigger than the amount available"
 msgstr "er større enn tilgjengelig beløp"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1719
+#: lib/LedgerSMB/Scripts/payment.pm:1717
 msgid "is lesser than 0"
 msgstr "er mindre enn 0"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1713
+#: lib/LedgerSMB/Scripts/payment.pm:1711
 msgid "is lesser than the amount to be paid"
 msgstr "er mindre en beløpet som skal betales"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1975
+#: lib/LedgerSMB/Scripts/payment.pm:1973
 msgid "is null"
 msgstr "er null"
 
@@ -8735,7 +8732,7 @@ msgstr "tex"
 msgid "time"
 msgstr "gang"
 
-#: old/bin/arap.pl:546
+#: old/bin/arap.pl:554
 msgid "time(s)"
 msgstr "gang(er)"
 
@@ -8751,10 +8748,25 @@ msgstr ""
 msgid "tracking of unpaid invoices"
 msgstr ""
 
-#: old/bin/ic.pl:1426
+#: old/bin/ic.pl:1429
 msgid "unexpected error!"
 msgstr "uventet feil!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:2027 lib/LedgerSMB/Scripts/payment.pm:2046
+#: lib/LedgerSMB/Scripts/payment.pm:2025 lib/LedgerSMB/Scripts/payment.pm:2044
 msgid "use of an overpayment"
 msgstr "bruk en overbetaling"
+
+#~ msgid "No Account id for [_1]"
+#~ msgstr "Ingen Konto id for [_1] "
+
+#~ msgid "No ID Set"
+#~ msgstr "Ingen ID satt inn"
+
+#~ msgid "Save Info"
+#~ msgstr "Lagre Informasjon"
+
+#~ msgid "Save as New"
+#~ msgstr "Lagre som ny"
+
+#~ msgid "Void"
+#~ msgstr "Annullert"
