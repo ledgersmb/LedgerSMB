@@ -3,6 +3,12 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.9
+* Various fixes to make tax forms work (#7037 and #7040)
+* Fix error when retrieving template GL transactions (#7030)
+* Fix borders on sort order drop-down in reconciliation screen (#7052)
+
+
 Changelog for 1.10.8
 * Fix rendering performance of search results on Chrome-based browsers (#7018)
 * Improve request performance by loading document formatters on server startup
