@@ -80,8 +80,9 @@
      [% ELSE %]
     <th class="[% COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type %]">[%
 
-IF attributes.order_url and not COL.toggle
-%]<a href="[% order_url | url %]&amp;order_by=[% COL.col_id %]">[% COL.name %]</a>[%
+IF attributes.order_url and not COL.toggle ;
+# the order url is already to be URL encoded -- Report.pm takes care of that
+%]<a href="[% order_url %]&amp;order_by=[% COL.col_id %]">[% COL.name %]</a>[%
 ELSIF COL.toggle ;
   query = "input[name^=\\'" _ PFX _ COL.col_id _ "_\\']";
 %]<button type="button" data-dojo-type="lsmb/ToggleIncludeButton" data-dojo-props="query:'[% query %]'">[% COL.name %]</button>[%
