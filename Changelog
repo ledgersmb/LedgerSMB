@@ -33,6 +33,7 @@ Changelog for 1.10.9
 * Various fixes to make tax forms work (#7037 and #7040)
 * Fix error when retrieving template GL transactions (#7030)
 * Fix borders on sort order drop-down in reconciliation screen (#7052)
+* Fix report-sorting dropping results on each sort for some searches (#7057)
 
 
 Changelog for 1.10.8
