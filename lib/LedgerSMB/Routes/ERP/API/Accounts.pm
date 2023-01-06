@@ -50,6 +50,7 @@ get '/accounts/', sub {
                             || ($a->{label} cmp $b->{label})
                     }
                     grep { (! $label) || $_->{label} =~ m/\Q$label\E/i }
+                    grep { not $_->{obsolete} }
                     map { $_->{label} = $_->{accno} . '--' . $_->{description};
                           $_ }
                     $account->list()
