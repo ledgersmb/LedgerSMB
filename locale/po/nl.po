@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.9.23-beta\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2022-12-22 23:30+0000\n"
+"POT-Creation-Date: 2023-01-06 12:58+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2021\n"
 "Language-Team: Dutch (https://www.transifex.com/ledgersmb/teams/58325/nl/)\n"
 "Language: nl\n"
@@ -607,7 +607,7 @@ msgstr "Adres:"
 msgid "Address: [_1]"
 msgstr "Adres: [_1]"
 
-#: lib/LedgerSMB/Scripts/contact.pm:192 t/data/04-complex_template.html:30
+#: lib/LedgerSMB/Scripts/contact.pm:193 t/data/04-complex_template.html:30
 #: UI/Contact/divs/address.html:2
 msgid "Addresses"
 msgstr "Adressen"
@@ -1153,7 +1153,7 @@ msgstr "Bankrekening"
 msgid "Bank Account:"
 msgstr "Bankrekening:"
 
-#: lib/LedgerSMB/Scripts/contact.pm:194 t/data/04-complex_template.html:32
+#: lib/LedgerSMB/Scripts/contact.pm:195 t/data/04-complex_template.html:32
 #: t/data/04-complex_template.html:554 UI/Contact/divs/bank_act.html:2
 #: UI/Contact/divs/bank_act.html:6
 msgid "Bank Accounts"
@@ -1661,7 +1661,7 @@ msgstr "Verkooporders combineren"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:81
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:74
-#: lib/LedgerSMB/Scripts/contact.pm:186 templates/demo/display_report.html:33
+#: lib/LedgerSMB/Scripts/contact.pm:187 templates/demo/display_report.html:33
 #: templates/demo/display_report.tex:35 templates/xedemo/display_report.html:33
 #: templates/xedemo/display_report.tex:35 UI/Contact/contact.html:12
 #: UI/Contact/divs/company.html:2 UI/login.html:86 UI/main.html:31
@@ -1736,7 +1736,7 @@ msgstr "Conflicteert met bestaande gegevens. Misschien heeft u het al ingevoerd"
 msgid "Contact"
 msgstr "Contact"
 
-#: lib/LedgerSMB/Scripts/contact.pm:193 t/data/04-complex_template.html:31
+#: lib/LedgerSMB/Scripts/contact.pm:194 t/data/04-complex_template.html:31
 #: UI/Contact/divs/contact_info.html:2 UI/Contact/divs/contact_info.html:31
 #: UI/Contact/divs/contact_info.html:111
 #: UI/Reports/filters/purchase_history.html:28
@@ -1940,7 +1940,7 @@ msgstr "Gemaakt op"
 msgid "Credit"
 msgstr "Credit"
 
-#: lib/LedgerSMB/Scripts/contact.pm:298
+#: lib/LedgerSMB/Scripts/contact.pm:302
 msgid "Credit Account"
 msgstr "Crediteurenrekening"
 
@@ -1948,7 +1948,7 @@ msgstr "Crediteurenrekening"
 msgid "Credit Account Number"
 msgstr "Nummer crediteurenrekening"
 
-#: lib/LedgerSMB/Scripts/contact.pm:191 UI/Contact/divs/credit.html:2
+#: lib/LedgerSMB/Scripts/contact.pm:192 UI/Contact/divs/credit.html:2
 msgid "Credit Accounts"
 msgstr "Crediteurenrekeningen"
 
@@ -2973,7 +2973,7 @@ msgstr "Elf"
 msgid "Email"
 msgstr "E-mail"
 
-#: lib/LedgerSMB/Report/Orders.pm:254 lib/LedgerSMB/Scripts/contact.pm:188
+#: lib/LedgerSMB/Report/Orders.pm:254 lib/LedgerSMB/Scripts/contact.pm:189
 #: old/bin/aa.pl:487 old/bin/oe.pl:552 old/bin/pe.pl:861
 #: t/data/04-complex_template.html:43 templates/demo/ap_transaction.html:76
 #: templates/demo/ap_transaction.tex:74 templates/demo/ar_transaction.tex:91
@@ -3098,7 +3098,7 @@ msgstr "Ingeboekt op"
 msgid "Entered at: [_1]"
 msgstr "Ingevoerd op: [_1]"
 
-#: lib/LedgerSMB/Scripts/contact.pm:296 sql/Pg-database.sql:1057
+#: lib/LedgerSMB/Scripts/contact.pm:300 sql/Pg-database.sql:1057
 msgid "Entity"
 msgstr "Bedrijfseenheid"
 
@@ -3350,7 +3350,7 @@ msgstr "Bestandsnaam"
 msgid "File type"
 msgstr "Bestandstype"
 
-#: lib/LedgerSMB/Scripts/contact.pm:196 UI/Contact/divs/files.html:2
+#: lib/LedgerSMB/Scripts/contact.pm:197 UI/Contact/divs/files.html:2
 msgid "Files"
 msgstr "Bestanden"
 
@@ -4767,7 +4767,7 @@ msgstr "Negentig"
 msgid "No"
 msgstr "Nee"
 
-#: lib/LedgerSMB/Scripts/contact.pm:604
+#: lib/LedgerSMB/Scripts/contact.pm:609
 msgid "No AR or AP Account Selected"
 msgstr "Geen crediteuren- of debiteurenrekening geselecteerd"
 
@@ -4906,7 +4906,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Search.pm:295
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:266
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:302
-#: lib/LedgerSMB/Scripts/contact.pm:195 old/bin/aa.pl:806 old/bin/ic.pl:763
+#: lib/LedgerSMB/Scripts/contact.pm:196 old/bin/aa.pl:806 old/bin/ic.pl:763
 #: old/bin/ir.pl:734 old/bin/is.pl:838 old/bin/oe.pl:830
 #: t/data/04-complex_template.html:33 t/data/04-complex_template.html:626
 #: templates/demo/printPayment.html:99 templates/demo/product_receipt.html:162
@@ -5515,7 +5515,7 @@ msgstr ""
 msgid "Periods"
 msgstr "Perioden"
 
-#: lib/LedgerSMB/Scripts/contact.pm:187 UI/Contact/divs/person.html:2
+#: lib/LedgerSMB/Scripts/contact.pm:188 UI/Contact/divs/person.html:2
 msgid "Person"
 msgstr "Individu"
 
@@ -8296,7 +8296,7 @@ msgstr "Niet-ondersteunde rekeningcategorie"
 msgid "Unsupported account link combinations"
 msgstr "Niet-ondersteunde rekening-link-combinatie"
 
-#: lib/LedgerSMB/Scripts/contact.pm:450
+#: lib/LedgerSMB/Scripts/contact.pm:455
 msgid "Unsupported account type"
 msgstr "Niet-ondersteund account type"
 
@@ -8387,7 +8387,7 @@ msgstr ""
 msgid "Used"
 msgstr "al in gebruik"
 
-#: lib/LedgerSMB/Scripts/contact.pm:189 t/data/04-complex_template.html:36
+#: lib/LedgerSMB/Scripts/contact.pm:190 t/data/04-complex_template.html:36
 #: UI/Contact/divs/user.html:3 UI/main.html:27
 msgid "User"
 msgstr "Gebruiker"
@@ -8555,7 +8555,7 @@ msgstr "Tegoed Bon"
 msgid "Wages and Deductions"
 msgstr "Lonen en inhoudingen"
 
-#: lib/LedgerSMB/Scripts/contact.pm:190
+#: lib/LedgerSMB/Scripts/contact.pm:191
 msgid "Wages/Deductions"
 msgstr "Lonen/Inhoudingen"
 
