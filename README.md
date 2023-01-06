@@ -37,9 +37,9 @@ fast customization. Supported output formats are PDF, CSV, HTML, ODF and more.
 # System requirements
 
 Note that these are the system requirements for LedgerSMB 1.11.0-dev, the current
-development version. Please check the system requirements for [the 1.8 old stable
-version](https://github.com/ledgersmb/LedgerSMB/tree/1.8#system-requirements)
-and [the 1.9 version](https://github.com/ledgersmb/LedgerSMB/tree/1.9#system-requirements).
+development version. Please check the system requirements for [the 1.10 stable
+version](https://github.com/ledgersmb/LedgerSMB/tree/1.10#system-requirements)
+and [the 1.9 'old stable' version](https://github.com/ledgersmb/LedgerSMB/tree/1.9#system-requirements).
 
 ## Server
 
@@ -61,28 +61,28 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome              | 2017-09  | 61-81, 83-107                               |
-| Edge                | 2020-01  | 79-81, 83-107                               |
-| Firefox             | 2018-05  | 60-106                                      |
-| Opera               | 2017-09  | 48-58, 60, 62-91                            |
+| Chrome              | 2017-09  | 61-81, 83-108                               |
+| Edge                | 2020-01  | 79-81, 83-108                               |
+| Firefox             | 2018-05  | 60-107                                      |
+| Opera               | 2017-09  | 48-58, 60, 62-92                            |
 | Safari              | 2017-09  | 11, 11.1, 12, 12.1, 13, 13.1, 14, 14.1,     |
-|                     |          | 15, 15.1, 15.2-15.6, 16.0-16.1              |
+|                     |          | 15, 15.1, 15.2-15.6, 16.0-16.2              |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome for Android  | 2022-10  | 107                                         |
-| Firefox for Android | 2022-10  | 106                                         |
+| Chrome for Android  | 2022-12  | 108                                         |
+| Firefox for Android | 2022-11  | 107                                         |
 | QQ Browser          | 2022-09  | 13.1                                        |
 | UC Browser for Android | 2021-10  | 13.4                                        |
-| Android Browser     | 2022-10  | 107                                         |
+| Android Browser     | 2022-12  | 108                                         |
 | Baidu Browser       | 2022-09  | 13.18                                       |
 | Safari on iOS       | 2017-09  | 11.0-11.4, 12.0-12.5, 13.0-13.7,            |
-|                     |          | 14.0-14.8, 15.0-15.6, 16.0-16.1             |
-| Opera Mobile        | 2021-02  | 64                                          |
+|                     |          | 14.0-14.8, 15.0-15.6, 16.0-16.2             |
+| Opera Mobile        | 2022-10  | 72                                          |
 | Samsung Internet    | 2018-12  | 8.2, 9.2, 10.1, 11.1-11.2, 12.0, 13.0,      |
-|                     |          | 14.0, 15.0, 16.0, 17.0, 18.0                |
+|                     |          | 14.0, 15.0, 16.0, 17.0, 18.0, 19.0          |
 
 
 **Note**: Earliest dates and versions come from http://caniuse.com. Only the most
