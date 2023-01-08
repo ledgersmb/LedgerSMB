@@ -374,6 +374,7 @@ sub form_header {
 | if $form->{selectemployee};
 
     $i     = ($form->{rowcount} // 0) + 1;
+    $focus = "partnumber_$i";
 
     $form->header;
 
@@ -383,6 +384,7 @@ sub form_header {
 <form method="post"
       id="invoice"
       data-dojo-type="lsmb/Invoice"
+      data-lsmb-focus="${focus}"
       action="$form->{script}" >
 |;
 

@@ -6,7 +6,10 @@
 <body class="lsmb [% dojo_theme %]">
 <div id="journal-entry">
 
-<form data-dojo-type="lsmb/Form" method="post" action="[% form.script %]">
+  <form data-dojo-type="lsmb/Form"
+        data-lsmb-focus="[% form.focus %]"
+        method="post"
+        action="[% form.script %]">
 <table width="100%">
 <tr>
     <th class="listtop" >[% form.title %]</th>
@@ -24,7 +27,7 @@
                         type = "text",
                         size = "20",
                         class = 'reference'
-                        id = "ref_1"
+                        id = "reference"
                 };
              IF form.sequences;
                  PROCESS select element_data = {
