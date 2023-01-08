@@ -330,11 +330,12 @@ sub form_header {
     $form->header;
 
     print qq|
-<body class="lsmb $form->{dojo_theme}" onLoad="document.forms[0].${focus}.focus()" />
+<body>
 | . $form->open_status_div($status_div_id) . qq|
 <form method="post"
       id="invoice"
       data-dojo-type="lsmb/Invoice"
+      data-lsmb-focus="${focus}"
       action="$form->{script}" >
 |;
     if ($form->{notice}){

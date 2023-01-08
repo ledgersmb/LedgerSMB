@@ -507,7 +507,10 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
  print qq|
 <body> | .
 $form->open_status_div($status_div_id) . qq|
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post"
+      data-dojo-type="lsmb/Form"
+      data-lsmb-focus="${focus}"
+      action=$form->{script}>
 <input type=hidden name=type value="$form->{formname}">
 <input type=hidden name=title value="$title">
 
@@ -728,7 +731,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     $taxformcheck=qq|<td><input type="checkbox" data-dojo-type="dijit/form/CheckBox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
         print qq|
     <tr valign=top class="transaction-line $form->{ARAP}" id="line-$i">
-     <td><input data-dojo-type="dijit/form/TextBox" name="amount_$i" size=10 value="$form->{"amount_$i"}"></td>
+     <td><input data-dojo-type="dijit/form/TextBox" id="amount_$i" name="amount_$i" size=10 value="$form->{"amount_$i"}"></td>
      <td>| . (($form->{currency} ne $form->{defaultcurrency})
               ? $form->format_amount(\%myconfig, $form->parse_amount( \%myconfig, $form->{"amount_$i"} )
                                                   * $form->{exchangerate}, $form->{_setting_decimal_places})
