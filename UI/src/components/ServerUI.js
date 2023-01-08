@@ -81,6 +81,7 @@ export default {
                                 });
                                 topic.publish("lsmb/page-fresh-content");
                                 maindiv.setAttribute("data-lsmb-done", "true");
+                                this._setFormFocus();
                             },
                             (e) => {
                                 if (dismiss) {
@@ -101,6 +102,18 @@ export default {
                 }
                 this._report_error(e);
             }
+        },
+        _setFormFocus() {
+            [ ...document.forms ].forEach(
+                (form) => {
+                    if (form.hasAttribute('data-lsmb-focus')) {
+                        let focus = form.getAttribute('data-lsmb-focus');
+                        let elm = document.getElementById(focus);
+                        if (elm) {
+                            elm.select();
+                        }
+                    }
+                });
         },
         _recursively_resize(widget) {
             widget.getChildren().forEach((child) => {
