@@ -262,8 +262,10 @@ CREATE TYPE asset_class_result AS (
 CREATE OR REPLACE FUNCTION asset_class__search
 (in_asset_account_id int, in_dep_account_id int,
 in_method int, in_label text)
-RETURNS SETOF asset_class_result STABLE AS
+RETURNS SETOF asset_class_result AS
 $$
+BEGIN
+RETURN QUERY EXECUTE $sql$
                 SELECT ac.id, ac.asset_account_id, aa.accno, aa.description,
                         ac.dep_account_id, ad.accno, ad.description,
                         m.method, ac.method,
@@ -273,15 +275,18 @@ $$
                 LEFT JOIN account ad ON (ad.id = ac.dep_account_id)
                 JOIN asset_dep_method m ON (ac.method = m.id)
                 WHERE
-                        (in_asset_account_id is null
-                                or in_asset_account_id = ac.asset_account_id)
-                        AND (in_dep_account_id is null OR
-                                in_dep_account_id = ac.dep_account_id)
-                        AND (in_method is null OR in_method = ac.method)
-                        AND (in_label IS NULL OR ac.label LIKE
-                                '%' || in_label || '%')
+                        ($1 is null
+                                or $1 = ac.asset_account_id)
+                        AND ($2 is null OR
+                                $2 = ac.dep_account_id)
+                        AND ($3 is null OR $3 = ac.method)
+                        AND ($4 IS NULL OR ac.label LIKE
+                                '%' || $4 || '%')
                ORDER BY label
-$$ language sql;
+$sql$
+USING in_asset_account_id, in_dep_account_id, in_method, in_label;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION asset_class__search
 (in_asset_account_id int, in_dep_account_id int,
@@ -351,22 +356,29 @@ CREATE OR REPLACE FUNCTION asset__search
 (in_asset_class int, in_description text, in_tag text,
 in_purchase_date date, in_purchase_value numeric,
 in_usable_life numeric, in_salvage_value numeric)
-RETURNS SETOF asset_item STABLE AS $$
+RETURNS SETOF asset_item AS
+$$
+BEGIN
+RETURN QUERY EXECUTE $sql$
                 SELECT * FROM asset_item
-                WHERE (in_asset_class is null
-                        or asset_class_id = in_asset_class)
-                        AND (in_description is null or description
-                                LIKE '%' || in_description || '%')
-                        and (in_tag is null or tag like '%'||in_tag||'%')
-                        AND (in_purchase_date is null
-                                or purchase_date = in_purchase_date)
-                        AND (in_purchase_value is null
-                                or in_purchase_value = purchase_value)
-                        AND (in_usable_life is null
-                                or in_usable_life = usable_life)
-                        AND (in_salvage_value is null
-                                OR in_salvage_value = salvage_value);
-$$ LANGUAGE SQL;
+                WHERE ($1 is null
+                        or asset_class_id = $1)
+                        AND ($2 is null or description
+                                LIKE '%' || $2 || '%')
+                        and ($3 is null or tag like '%'||$3||'%')
+                        AND ($4 is null
+                                or purchase_date = $4)
+                        AND ($5 is null
+                                or $5 = purchase_value)
+                        AND ($6 is null
+                                or $6 = usable_life)
+                        AND ($7 is null
+                                OR $7 = salvage_value)
+$sql$
+USING in_asset_class, in_description, in_tag, in_purchase_date,
+ in_purchase_value, in_usable_life, in_salvage_value;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION asset__search
 (in_asset_class int, in_description text, in_tag text,
@@ -480,29 +492,37 @@ in_usable_life numeric, in_salvage_value numeric,
 in_start_depreciation date, in_warehouse_id int,
 in_department_id int, in_invoice_id int,
 in_asset_account_id int, in_dep_account_id int)
-returns setof asset_item STABLE as
+returns setof asset_item as
 $$
+BEGIN
+RETURN QUERY EXECUTE $sql$
          SELECT * FROM asset_item
-          WHERE (id = in_id or in_id is null)
-                and (asset_class_id = in_asset_class or in_asset_class is null)
-                and (description like '%'||in_description||'%'
-                     or in_description is null)
-                and (tag like '%' || in_tag || '%' or in_tag is null)
-                and (purchase_value = in_purchase_value
-                    or in_purchase_value is null)
-                and (in_purchase_date = purchase_date
-                    or in_purchase_date is null)
-                and (start_depreciation = in_start_depreciation
-                    or in_start_depreciation is null)
-                and (in_warehouse_id = location_id OR in_warehouse_id is null)
-                and (department_id = in_department_id
-                    or in_department_id is null)
-                and (in_invoice_id = invoice_id OR in_invoice_id IS NULL)
-                and (asset_account_id = in_asset_account_id
-                    or in_asset_account_id is null)
-                and (dep_account_id = in_dep_account_id
-                    or in_dep_account_id is null);
-$$ language sql;
+          WHERE (id = $1 or $1 is null)
+                and (asset_class_id = $2 or $2 is null)
+                and (description like '%'||$3||'%'
+                     or $3 is null)
+                and (tag like '%' || $4 || '%' or $4 is null)
+                and (purchase_value = $6
+                    or $6 is null)
+                and ($5 = purchase_date
+                    or $5 is null)
+                and (start_depreciation = $9
+                    or $9 is null)
+                and ($10 = location_id OR $10 is null)
+                and (department_id = $11
+                    or $11 is null)
+                and ($12 = invoice_id OR $12 IS NULL)
+                and (asset_account_id = $13
+                    or $13 is null)
+                and (dep_account_id = $14
+                    or $14 is null)
+$sql$
+USING in_id, in_asset_class, in_description, in_tag,
+in_purchase_date, in_purchase_value, in_usable_life, in_salvage_value,
+in_start_depreciation, in_warehouse_id, in_department_id, in_invoice_id,
+in_asset_account_id, in_dep_account_id;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION asset_item__search
 (in_id int, in_asset_class int, in_description text, in_tag text,
@@ -657,8 +677,10 @@ CREATE TYPE asset_nbv_line AS (
 
 
 CREATE OR REPLACE FUNCTION asset_nbv_report ()
-returns setof asset_nbv_line STABLE AS
+returns setof asset_nbv_line AS
 $$
+BEGIN
+RETURN QUERY EXECUTE $sql$
    SELECT ai.id, ai.tag, ai.description, ai.start_depreciation,
           adm.short_name, ai.usable_life
            - months_passed(ai.start_depreciation,
@@ -680,8 +702,10 @@ LEFT JOIN asset_report r on (rl.report_id = r.id)
    HAVING (NOT 2 = ANY(array_agg(r.report_class)))
           AND (NOT 4 = ANY(array_agg(r.report_class)))
           OR max(r.report_class) IS NULL
- ORDER BY ai.id, ai.tag, ai.description;
-$$ language sql;
+ ORDER BY ai.id, ai.tag, ai.description
+$sql$;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION asset_nbv_report () IS
 $$ Returns the current net book value report.$$;

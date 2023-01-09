@@ -22,8 +22,10 @@ in_from_date date, in_to_date date, in_amount_lt numeric, in_amount_gt numeric);
 
 CREATE OR REPLACE FUNCTION draft__search(in_type text, in_reference text,
 in_from_date date, in_to_date date, in_amount_lt numeric, in_amount_gt numeric)
-returns setof draft_search_result STABLE AS
+returns setof draft_search_result AS
 $$
+BEGIN
+RETURN QUERY EXECUTE $sql$
         SELECT id, transdate, invoice, reference, eca_name, description,
                type, amount FROM (
             SELECT id, transdate, reference, null::text as eca_name,
@@ -34,7 +36,7 @@ $$
                            and line.trans_id = gl.id) as amount,
                    'gl' as type
               from gl
-             WHERE (lower(in_type) = 'gl' or in_type is null)
+             WHERE (lower($1) = 'gl' or $1 is null)
                   AND NOT approved
                   AND NOT EXISTS (SELECT 1
                                     FROM voucher v
@@ -44,7 +46,7 @@ $$
                 (SELECT name FROM eca__get_entity(entity_credit_account)) as eca_name,
                 description, invoice, amount_bc as amount, 'ap' as type
               FROM ap
-             WHERE (lower(in_type) = 'ap' or in_type is null)
+             WHERE (lower($1) = 'ap' or $1 is null)
                    AND NOT approved
                    AND NOT EXISTS (SELECT 1
                                      FROM voucher v
@@ -54,18 +56,21 @@ $$
                 (SELECT name FROM eca__get_entity(entity_credit_account)) as eca_name,
                 description, invoice, amount_bc as amount, 'ar' as type
               FROM ar
-             WHERE (lower(in_type) = 'ar' or in_type is null)
+             WHERE (lower($1) = 'ar' or $1 is null)
                    AND NOT approved
                    AND NOT EXISTS (SELECT 1
                                      FROM voucher v
                                     WHERE v.trans_id = ar.id)) trans
-        WHERE (in_from_date IS NULL or trans.transdate >= in_from_date)
-          AND (in_to_date IS NULL or trans.transdate <= in_to_date)
-          AND (in_amount_gt IS NULL or amount >= in_amount_gt)
-          AND (in_amount_lt IS NULL or amount <= in_amount_lt)
-          AND (in_reference IS NULL or trans.reference = in_reference)
-        ORDER BY trans.reference;
-$$ language sql;
+        WHERE ($3 IS NULL or trans.transdate >= $3)
+          AND ($4 IS NULL or trans.transdate <= $4)
+          AND ($6 IS NULL or amount >= $6)
+          AND ($5 IS NULL or amount <= $5)
+          AND ($2 IS NULL or trans.reference = $2)
+        ORDER BY trans.reference
+$sql$
+USING in_type, in_reference, in_from_date, in_to_date, in_amount_lt, in_amount_gt;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION draft__search(in_type text, in_with_accno text,
 in_from_date date, in_to_date date, in_amount_le numeric, in_amount_ge numeric)

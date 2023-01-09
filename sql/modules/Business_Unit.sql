@@ -5,9 +5,10 @@ set client_min_messages = 'warning';
 BEGIN;
 
 CREATE OR REPLACE FUNCTION business_unit__list_classes(in_active bool, in_module text)
-RETURNS SETOF business_unit_class STABLE AS
+RETURNS SETOF business_unit_class AS
 $$
-
+BEGIN
+RETURN QUERY EXECUTE $sql$
 SELECT bc.*
   FROM business_unit_class bc
  WHERE     (active = $1 OR $1 IS NULL)
@@ -16,9 +17,11 @@ SELECT bc.*
                      JOIN lsmb_module mod ON mod.id = bcm.module_id
                     WHERE lower(label) = lower($2))
             OR $2 is null)
-ORDER BY ordering;
-
-$$ LANGUAGE SQL;
+ORDER BY ordering
+$sql$
+USING in_active, in_module;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION business_unit__list_classes(in_active bool, in_module text) IS
 $$ This function lists all business unit clases.  If in_active is true, then
@@ -32,18 +35,23 @@ $$ SELECT * FROM business_unit WHERE id = $1; $$ LANGUAGE SQL;
 CREATE OR REPLACE FUNCTION business_unit__list_by_class
 (in_business_unit_class_id int, in_active_on date, in_credit_id int,
 in_strict_credit bool)
-RETURNS SETOF business_unit STABLE AS
+RETURNS SETOF business_unit AS
 $$
+BEGIN
+RETURN QUERY EXECUTE $sql$
 SELECT * FROM business_unit
-              WHERE (in_active_on BETWEEN coalesce(start_date, in_active_on)
-                                      AND coalesce(end_date, in_active_on)
-                      OR in_active_on IS NULL)
-                    AND (in_credit_id = credit_id
-                        OR (credit_id IS NULL and in_strict_credit IS NOT TRUE)
-                        OR (in_credit_id IS NULL))
-                    AND class_id = in_business_unit_class_id
-           ORDER BY control_code;
-$$ LANGUAGE SQL;
+              WHERE ($2 BETWEEN coalesce(start_date, $2)
+                                      AND coalesce(end_date, $2)
+                      OR $2 IS NULL)
+                    AND ($3 = credit_id
+                        OR (credit_id IS NULL and $4 IS NOT TRUE)
+                        OR ($3 IS NULL))
+                    AND class_id = $1
+           ORDER BY control_code
+$sql$
+USING in_business_unit_class_id, in_active_on, in_credit_id, in_strict_credit;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION business_unit__list_by_class
 (in_business_unit_class_id int, in_active_on date, in_credit_id int,
@@ -70,8 +78,10 @@ level int
 );
 
 CREATE OR REPLACE FUNCTION business_unit__get_tree_for(in_id int)
-RETURNS SETOF business_unit_short STABLE AS
+RETURNS SETOF business_unit_short AS
 $$
+BEGIN
+RETURN QUERY EXECUTE $sql$
 WITH RECURSIVE tree  (id, control_code, description,  start_date, end_date,
                       parent_id, path, level)
 AS (
@@ -85,7 +95,10 @@ AS (
      FROM business_unit bu JOIN tree t ON t.parent_id = bu.id
 )
 SELECT * FROM tree ORDER BY path;
-$$ LANGUAGE SQL;
+$sql$
+USING in_id;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION business_unit__get_tree_for(in_id int) IS
 $$ This function returns tree-related records with the root of the tree being
@@ -105,11 +118,17 @@ SELECT true;
 $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION business_unit_class__get_modules(in_id int)
-RETURNS SETOF lsmb_module STABLE AS
-$$ SELECT * FROM lsmb_module
+RETURNS SETOF lsmb_module AS
+$$
+BEGIN
+RETURN QUERY EXECUTE $sql$
+ SELECT * FROM lsmb_module
     WHERE id IN (select module_id from bu_class_to_module where bu_class_id = $1)
- ORDER BY id;
-$$ language sql;
+ ORDER BY id
+$sql$
+USING in_id;
+END
+$$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION business_unit_class__save
 (in_id int, in_label text, in_active bool, in_ordering int)

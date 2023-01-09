@@ -40,8 +40,10 @@ CREATE OR REPLACE FUNCTION ar_ap__transaction_search
  in_notes text, in_shipvia text, in_from_date date, in_to_date date,
  in_on_hold bool, in_inc_open bool, in_inc_closed bool, in_as_of date,
  in_entity_class int, in_approved bool)
-RETURNS SETOF purchase_info STABLE AS
+RETURNS SETOF purchase_info AS
 $$
+BEGIN
+RETURN QUERY EXECUTE $sql$
    SELECT gl.id, gl.invoice,
           gl.invnumber, gl.ordnumber, gl.ponumber, gl.transdate,
           e.name, eca.meta_number::text, e.id, gl.amount_bc,
@@ -55,13 +57,13 @@ $$
                   description, notes, shipvia, shippingpoint, amount_bc,
                   netamount_bc, curr, entity_credit_account, on_hold,
                   approved
-             FROM ar WHERE in_entity_class = 2
+             FROM ar WHERE $17 = 2
             UNION
            select id, invoice, invnumber, ordnumber, ponumber, transdate, duedate,
                   description, notes, shipvia, shippingpoint, amount_bc,
                   netamount_bc, curr, entity_credit_account, on_hold,
                   approved
-             FROM ap WHERE in_entity_class = 1) gl
+             FROM ap WHERE $17 = 1) gl
      JOIN entity_credit_account eca ON gl.entity_credit_account = eca.id
      JOIN entity e ON e.id = eca.entity_id
      JOIN acc_trans ac ON gl.id = ac.trans_id
@@ -83,33 +85,40 @@ LEFT JOIN (SELECT array_agg(ARRAY[buc.label, bu.control_code])
              JOIN business_unit_inv buinv ON buinv.bu_id = bu.id
          GROUP BY buinv.entry_id) bui
                                  ON bui.entry_id = inv.id
-    WHERE (in_account_id IS NULL OR ac.chart_id = in_account_id)
-          AND (in_name_part IS NULL
+    WHERE ($1 IS NULL OR ac.chart_id = $1)
+          AND ($2 IS NULL
                 OR to_tsvector(get_default_lang()::regconfig, e.name)
-                   @@ plainto_tsquery(get_default_lang()::regconfig, in_name_part))
-          AND (in_meta_number IS NULL
-                OR eca.meta_number LIKE in_meta_number || '%')
-          AND (in_invnumber IS NULL or gl.invnumber LIKE in_invnumber || '%')
-          AND (in_ordnumber IS NULL or gl.ordnumber LIKE in_ordnumber || '%')
-          AND (in_ponumber IS NULL or gl.ponumber LIKE in_ponumber || '%')
-          AND (in_description IS NULL
+                   @@ plainto_tsquery(get_default_lang()::regconfig, $2))
+          AND ($3 IS NULL
+                OR eca.meta_number LIKE $3 || '%')
+          AND ($4 IS NULL or gl.invnumber LIKE $4 || '%')
+          AND ($5 IS NULL or gl.ordnumber LIKE $5 || '%')
+          AND ($6 IS NULL or gl.ponumber LIKE $6 || '%')
+          AND ($8 IS NULL
                 or to_tsvector(get_default_lang()::regconfig, gl.description)
-                  @@ plainto_tsquery(get_default_lang()::regconfig, in_description))
-          AND (in_notes IS NULL OR
+                  @@ plainto_tsquery(get_default_lang()::regconfig, $8))
+          AND ($9 IS NULL OR
                 to_tsvector(get_default_lang()::regconfig, gl.notes)
-                 @@ plainto_tsquery(get_default_lang()::regconfig, in_notes))
-          AND (in_from_date IS NULL OR in_from_date <= gl.transdate)
-          AND (in_to_date IS NULL OR in_to_date >= gl.transdate)
-          AND (in_on_hold IS NULL OR in_on_hold = gl.on_hold)
-          AND (in_as_of IS NULL OR in_as_of >= ac.transdate)
-          AND (in_approved is null
-               OR (gl.approved = in_approved AND ac.approved = in_approved))
+                 @@ plainto_tsquery(get_default_lang()::regconfig, $9))
+          AND ($11 IS NULL OR $11 <= gl.transdate)
+          AND ($12 IS NULL OR $12 >= gl.transdate)
+          AND ($13 IS NULL OR $13 = gl.on_hold)
+          AND ($16 IS NULL OR $16 >= ac.transdate)
+          AND ($18 is null
+               OR (gl.approved = $18 AND ac.approved = $18))
  GROUP BY gl.id, gl.invnumber, gl.ordnumber, gl.ponumber, gl.transdate,
           gl.duedate, e.name, eca.meta_number, gl.amount_bc,
           gl.netamount_bc, gl.curr, gl.duedate,
           gl.notes, gl.shippingpoint, gl.shipvia, e.id, gl.invoice
-   HAVING in_source = ANY(array_agg(ac.source)) or in_source IS NULL;
-$$ LANGUAGE SQL;
+   HAVING $7 = ANY(array_agg(ac.source)) or $7 IS NULL
+$sql$
+USING in_account_id, in_name_part, in_meta_number, in_invnumber,
+ in_ordnumber, in_ponumber, in_source, in_description,
+ in_notes, in_shipvia, in_from_date, in_to_date,
+ in_on_hold, in_inc_open, in_inc_closed, in_as_of,
+ in_entity_class, in_approved;
+END
+$$ LANGUAGE PLPGSQL;
 
 DROP FUNCTION IF EXISTS ar_ap__transaction_search_summary
 (in_account_id int, in_name_part text, in_meta_number text, in_invnumber text,
@@ -123,31 +132,43 @@ CREATE OR REPLACE FUNCTION ar_ap__transaction_search_summary
  in_notes text, in_shipvia text, in_from_date date, in_to_date date,
  in_on_hold bool, in_inc_open bool, in_inc_closed bool, in_as_of date,
  in_entity_class int, in_approved bool)
-RETURNS SETOF purchase_info STABLE AS
+RETURNS SETOF purchase_info AS
 $$
+BEGIN
+RETURN QUERY EXECUTE $sql$
        SELECT null::int, null::bool, null::text, null::text, null::text,
               null::date, entity_name, meta_number, entity_id, sum(amount_bc),
               sum(amount_paid), sum(tax), currency, null::date,
               null::text, null::text, null::text, null::text[]
          FROM ar_ap__transaction_search
-              (in_account_id, in_name_part, in_meta_number, in_invnumber,
-              in_ordnumber, in_ponumber, in_source, in_description,
-              in_notes, in_shipvia, in_from_date, in_to_date,
-              in_on_hold, in_inc_open, in_inc_closed, in_as_of,
-              in_entity_class, in_approved)
-     GROUP BY entity_name, meta_number, entity_id, currency;
-$$ language sql;
+              ($1, $2, $3, $4,
+              $5, $6, $7, $8,
+              $9, $10, $11, $12,
+              $13, $14, $15, $16,
+              $17, $18)
+     GROUP BY entity_name, meta_number, entity_id, currency
+$sql$
+USING in_account_id, in_name_part, in_meta_number, in_invnumber,
+ in_ordnumber, in_ponumber, in_source, in_description,
+ in_notes, in_shipvia, in_from_date, in_to_date,
+ in_on_hold, in_inc_open, in_inc_closed, in_as_of,
+ in_entity_class, in_approved;
+END
+$$ LANGUAGE PLPGSQL;
 
 
 
 CREATE OR REPLACE FUNCTION credit_limit__used(in_eca int)
-RETURNS numeric STABLE AS
+RETURNS numeric AS
 $$
-
-  SELECT sum(total.used)     /
+DECLARE
+  _used_tc numeric;
+BEGIN
+  EXECUTE $sql$
+    SELECT sum(total.used)     /
          CASE WHEN (SELECT curr
                      FROM entity_credit_account
-                    WHERE id = in_eca) =
+                    WHERE id = $1) =
                    (SELECT value
                       FROM defaults
                      WHERE setting_key = 'curr') THEN
@@ -156,10 +177,10 @@ $$
              (SELECT coalesce(rate, 'NaN'::numeric) AS rate
                 FROM exchangerate__get(
                       (SELECT curr FROM entity_credit_account
-                      WHERE id = in_eca),
+                      WHERE id = $1),
                       1,
                       current_date))
-         END AS used_tc
+         END into _used_tc
    FROM (
      SELECT sum(ac.amount_bc *
                 CASE WHEN al.description = 'AR' THEN -1 ELSE 1 END) AS used
@@ -169,7 +190,7 @@ $$
        JOIN account_link al ON al.account_id = ac.chart_id
       WHERE al.description IN ('AR', 'AP')
         AND ac.approved
-        AND a.entity_credit_account = in_eca
+        AND a.entity_credit_account = $1
       UNION ALL
      SELECT sum(o.amount_tc * coalesce(e.rate, 'NaN'::numeric))
        FROM oe o
@@ -178,9 +199,13 @@ $$
                    WHERE rate_type = 1
                      AND current_date BETWEEN valid_from AND valid_to ) e
             ON o.curr = e.curr
-      WHERE o.entity_credit_account = in_eca
+      WHERE o.entity_credit_account = $1
    ) total;
-$$ language sql;
+   $sql$
+   INTO _used_tc
+   USING in_eca;
+END
+$$ language PLPGSQL;
 
 
 COMMENT ON FUNCTION credit_limit__used(int) IS

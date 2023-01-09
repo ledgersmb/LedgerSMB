@@ -38,22 +38,27 @@ CREATE OR REPLACE FUNCTION payment_get_entity_accounts
  in_vc_idn  text,
  in_datefrom date,
  in_dateto date)
- returns SETOF payment_vc_info STABLE AS
- $$
+ returns SETOF payment_vc_info AS
+$$
+BEGIN
+RETURN QUERY EXECUTE $sql$
               SELECT ec.id, coalesce(ec.pay_to_name, e.name ||
                      coalesce(':' || ec.description,'')) as name,
                      e.entity_class, ec.discount_account_id, ec.meta_number
                 FROM entity_credit_account ec
                 JOIN entity e ON (ec.entity_id = e.id)
-                WHERE ec.entity_class = in_account_class
-                AND (e.name ilike coalesce('%'||in_vc_name||'%','%%')
+                WHERE ec.entity_class = $1
+                AND (e.name ilike coalesce('%'||$2||'%','%%')
                     OR EXISTS (select 1 FROM company
-                                WHERE entity_id = e.id AND tax_id = in_vc_idn))
+                                WHERE entity_id = e.id AND tax_id = $3))
                 AND (coalesce(ec.enddate, now()::date)
-                     >= coalesce(in_datefrom, now()::date))
+                     >= coalesce($4, now()::date))
                 AND (coalesce(ec.startdate, now()::date)
-                     <= coalesce(in_dateto, now()::date))
- $$ LANGUAGE SQL;
+                     <= coalesce($5, now()::date))
+$sql$
+USING in_account_class, in_vc_name, in_vc_idn, in_datefrom, in_dateto;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment_get_entity_accounts
 (in_account_class int,
@@ -66,8 +71,12 @@ as needed for discount calculations and the like.$$;
 
 CREATE OR REPLACE FUNCTION payment_get_entity_account_payment_info
 (in_entity_credit_id int)
-RETURNS payment_vc_info
-STABLE AS $$
+RETURNS payment_vc_info AS
+$$
+DECLARE
+  t_retval payment_vc_info;
+BEGIN
+EXECUTE $sql$
  SELECT ec.id, coalesce(ec.pay_to_name, cp.name  || coalesce(':' || ec.description, ''), '') as name,
         e.entity_class, ec.discount_account_id, ec.meta_number
  FROM entity_credit_account ec
@@ -79,8 +88,12 @@ STABLE AS $$
    select entity_id, first_name || coalesce(' ' || middle_name || ' ', '') || last_name
    from person
  ) cp ON (cp.entity_id = e.id)
- WHERE ec.id = in_entity_credit_id;
-$$ LANGUAGE SQL;
+ WHERE ec.id = $1
+$sql$
+INTO t_retval
+USING in_entity_credit_id;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment_get_entity_account_payment_info
 (in_entity_credit_id int)
@@ -101,17 +114,19 @@ DROP FUNCTION IF EXISTS payment_get_open_accounts(int, date, date);
 -- refactored and redesigned.  -- CT
 CREATE OR REPLACE FUNCTION payment_get_open_accounts
 (in_account_class int, in_datefrom date, in_dateto date)
-returns SETOF payment_open_account STABLE AS
+returns SETOF payment_open_account AS
 $$
+BEGIN
+RETURN QUERY EXECUTE $sql$
                 SELECT ec.id, e.name, ec.entity_class
                 FROM entity e
                 JOIN entity_credit_account ec ON (ec.entity_id = e.id)
-                        WHERE ec.entity_class = in_account_class
+                        WHERE ec.entity_class = $1
                         AND (coalesce(ec.enddate, now()::date)
-                             <= coalesce(in_dateto, now()::date))
+                             <= coalesce($3, now()::date))
                         AND (coalesce(ec.startdate, now()::date)
-                             >= coalesce(in_datefrom, now()::date))
-                        AND CASE WHEN in_account_class = 1 THEN
+                             >= coalesce($2, now()::date))
+                        AND CASE WHEN $1 = 1 THEN
                                 ec.id IN
                                 (SELECT entity_credit_account
                                    FROM acc_trans
@@ -121,7 +136,7 @@ $$
                                    GROUP BY chart_id,
                                          trans_id, entity_credit_account
                                    HAVING SUM(acc_trans.amount_bc) <> 0)
-                               WHEN in_account_class = 2 THEN
+                               WHEN $1 = 2 THEN
                                 ec.id IN (SELECT entity_credit_account
                                    FROM acc_trans
                                    JOIN account_link l ON (acc_trans.chart_id = l.account_id)
@@ -130,8 +145,11 @@ $$
                                    GROUP BY chart_id,
                                          trans_id, entity_credit_account
                                    HAVING SUM(acc_trans.amount_bc) <> 0)
-                          END;
-$$ LANGUAGE SQL;
+                          END
+$sql$
+USING in_account_class, in_datefrom, in_dateto;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment_get_open_accounts(int, date, date) IS
 $$ This function takes a single argument (1 for vendor, 2 for customer as
@@ -140,14 +158,19 @@ always) and returns all entities with open accounts of the appropriate type. $$;
 DROP FUNCTION if exists payment_get_all_accounts(int);
 
 CREATE OR REPLACE FUNCTION payment_get_all_accounts(in_account_class int)
-RETURNS SETOF payment_open_account STABLE AS
+RETURNS SETOF payment_open_account AS
 $$
+BEGIN
+RETURN QUERY EXECUTE $sql$
                 SELECT  ec.id,
                         e.name, ec.entity_class
                 FROM entity e
                 JOIN entity_credit_account ec ON (ec.entity_id = e.id)
-                                WHERE e.entity_class = in_account_class
-$$ LANGUAGE SQL;
+                                WHERE e.entity_class = $1
+$sql$
+USING in_account_class;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment_get_all_accounts(int) IS
 $$ This function takes a single argument (1 for vendor, 2 for customer)
@@ -193,24 +216,26 @@ CREATE OR REPLACE FUNCTION payment_get_open_invoices
  in_amountfrom numeric,
  in_amountto   numeric,
  in_datepaid   date)
-RETURNS SETOF payment_invoice STABLE AS
+RETURNS SETOF payment_invoice AS
 $$
+BEGIN
+RETURN QUERY EXECUTE $sql$
                 SELECT a.id AS invoice_id, a.invnumber AS invnumber,a.invoice AS invoice,
                        a.transdate AS invoice_date, a.amount_bc AS amount,
                        a.amount_tc,
-                       (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce(in_datepaid, current_date), a.transdate)
+                       (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce($8, current_date), a.transdate)
                         THEN 0
                         ELSE (coalesce(ac.due, a.amount_bc)) * coalesce(c.discount, 0) / 100
                         END) AS discount,
-                       (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce(in_datepaid, current_date), a.transdate)
+                       (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce($8, current_date), a.transdate)
                         THEN 0
                         ELSE (coalesce(ac.due_fx, a.amount_tc)) * coalesce(c.discount, 0) / 100
                         END) AS discount_tc,
-                       ac.due - (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce(in_datepaid, current_date), a.transdate)
+                       ac.due - (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce($8, current_date), a.transdate)
                         THEN 0
                         ELSE (coalesce(ac.due, a.amount_bc)) * coalesce(c.discount, 0) / 100
                         END) AS due,
-                       ac.due_fx - (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce(in_datepaid, current_date), a.transdate)
+                       ac.due_fx - (CASE WHEN (c.discount_terms||' days')::interval < age(coalesce($8, current_date), a.transdate)
                         THEN 0
                         ELSE (coalesce(ac.due_fx, a.amount_tc)) * coalesce(c.discount, 0) / 100
                          END) AS due_fx,
@@ -232,38 +257,42 @@ $$
                          FROM ar
                          ) a
                 JOIN (SELECT trans_id, chart_id,
-                             sum(CASE WHEN in_account_class = 1 THEN amount_bc
-                                      WHEN in_account_class = 2 THEN amount_bc * -1
+                             sum(CASE WHEN $1 = 1 THEN amount_bc
+                                      WHEN $1 = 2 THEN amount_bc * -1
                                   END) as due,
-                             sum(CASE WHEN in_account_class = 1 THEN amount_tc
-                                      WHEN in_account_class = 2 THEN amount_tc * -1
+                             sum(CASE WHEN $1 = 1 THEN amount_tc
+                                      WHEN $1 = 2 THEN amount_tc * -1
                                  END) as due_fx
                         FROM acc_trans
                       GROUP BY trans_id, chart_id) ac ON (ac.trans_id = a.id)
                         JOIN account_link l ON (l.account_id = ac.chart_id)
                         JOIN entity_credit_account c ON (c.id = a.entity_credit_account)
                 --        OR (a.entity_credit_account IS NULL and a.entity_id = c.entity_id))
-                        WHERE ((l.description = 'AP' AND in_account_class = 1)
-                              OR (l.description = 'AR' AND in_account_class = 2))
-                        AND a.invoice_class = in_account_class
-                        AND c.entity_class = in_account_class
-                        AND c.id = in_entity_credit_id
+                        WHERE ((l.description = 'AP' AND $1 = 1)
+                              OR (l.description = 'AR' AND $1 = 2))
+                        AND a.invoice_class = $1
+                        AND c.entity_class = $1
+                        AND c.id = $2
                         --### short term: ignore fractional cent differences
-                        AND a.curr = in_curr
-                        AND (a.transdate >= in_datefrom
-                             OR in_datefrom IS NULL)
-                        AND (a.transdate <= in_dateto
-                             OR in_dateto IS NULL)
-                        AND (a.amount_bc >= in_amountfrom
-                             OR in_amountfrom IS NULL)
-                        AND (a.amount_bc <= in_amountto
-                             OR in_amountto IS NULL)
+                        AND a.curr = $3
+                        AND (a.transdate >= $5
+                             OR $5 IS NULL)
+                        AND (a.transdate <= $5
+                             OR $5 IS NULL)
+                        AND (a.amount_bc >= $6
+                             OR $6 IS NULL)
+                        AND (a.amount_bc <= $7
+                             OR $7 IS NULL)
                         AND due <> 0
                         AND a.approved = true
                         GROUP BY a.invnumber, a.transdate, a.amount_bc, amount_tc,
               discount, discount_tc, ac.due, ac.due_fx, a.id, c.discount_terms,
-              a.curr, a.invoice, a.description;
-$$ LANGUAGE SQL;
+              a.curr, a.invoice, a.description
+$sql$
+USING in_account_class, in_entity_credit_id, in_curr, in_datefrom,
+ in_dateto, in_amountfrom, in_amountto, in_datepaid;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment_get_open_invoices(int, int, char(3),
 date, date, numeric, numeric, date) IS
@@ -290,13 +319,19 @@ CREATE OR REPLACE FUNCTION payment_get_open_invoice
  in_amountto   numeric,
  in_invnumber text,
  in_datepaid  date)
-RETURNS SETOF payment_invoice STABLE AS
+RETURNS SETOF payment_invoice AS
 $$
-                SELECT * from payment_get_open_invoices(in_account_class, in_entity_credit_id, in_curr, in_datefrom, in_dateto, in_amountfrom,
-                in_amountto, in_datepaid)
-                WHERE (invnumber like in_invnumber OR in_invnumber IS NULL);
-
-$$ LANGUAGE SQL;
+BEGIN
+RETURN QUERY EXECUTE $sql$
+                SELECT * from payment_get_open_invoices($1, $2, $3, $4, $5, $6,
+                $7, $9)
+                WHERE (invnumber like $8 OR $8 IS NULL)
+$sql$
+USING in_account_class, in_entity_credit_id, in_curr, in_datefrom,
+ in_dateto, in_amountfrom, in_amountto, in_invnumber,
+ in_datepaid;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment_get_open_invoice(int, int, char(3), date, date, numeric, numeric, text, date) IS
 $$
@@ -327,8 +362,10 @@ CREATE OR REPLACE FUNCTION payment_get_all_contact_invoices
         in_date_from date, in_date_to date, in_batch_id int,
         in_ar_ap_accno text, in_meta_number text, in_contact_name text,
         in_payment_date date)
-RETURNS SETOF payment_contact_invoice STABLE AS
+RETURNS SETOF payment_contact_invoice AS
 $$
+BEGIN
+RETURN QUERY EXECUTE $sql$
                   SELECT c.id AS contact_id, e.control_code as econtrol_code,
                         c.description as eca_description,
                         e.name AS contact_name,
@@ -338,7 +375,7 @@ $$
                              THEN
                               coalesce(p.due::numeric, 0) -
                               CASE WHEN (c.discount_terms||' days')::interval
-                                        > age(coalesce(in_payment_date, current_date), a.transdate)
+                                        > age(coalesce($10, current_date), a.transdate)
                                    THEN 0
                                    ELSE (coalesce(p.due::numeric, 0)) *
                                         coalesce(c.discount::numeric, 0) / 100
@@ -349,13 +386,13 @@ $$
                               a.id::text, a.invnumber, a.transdate::text,
                               a.amount_bc::text, (a.amount_bc - p.due)::text,
                               (CASE WHEN (c.discount_terms||' days')::interval
-                                        < age(coalesce(in_payment_date, current_date), a.transdate)
+                                        < age(coalesce($10, current_date), a.transdate)
                                    THEN 0
                                    ELSE (coalesce(p.due, 0) * coalesce(c.discount, 0) / 100)
                               END)::text,
                               (coalesce(p.due, 0) -
                               (CASE WHEN (c.discount_terms||' days')::interval
-                                        < age(coalesce(in_payment_date, current_date), a.transdate)
+                                        < age(coalesce($10, current_date), a.transdate)
                                    THEN 0
                                    ELSE (coalesce(p.due, 0)) * coalesce(c.discount, 0) / 100
                               END))::text,
@@ -366,7 +403,7 @@ $$
                                 END,
                                 COALESCE(u.username, 0::text)
                                 ]),
-                              sum(case when a.batch_id = in_batch_id then 1
+                              sum(case when a.batch_id = $6 then 1
                                   else 0 END),
                               bool_and(lock_record(a.id, (select max(session_id)
                                 FROM "session" where users_id = (
@@ -382,7 +419,7 @@ $$
                             FROM ap
                        LEFT JOIN (select * from voucher where batch_class = 1) v
                                  ON (ap.id = v.trans_id)
-                           WHERE in_account_class = 1
+                           WHERE $1 = 1
                                  AND (v.batch_class = 1 or v.batch_id IS NULL)
                            UNION
                           SELECT ar.id, invnumber, transdate, amount_bc, entity_id,
@@ -392,49 +429,54 @@ $$
                             FROM ar
                        LEFT JOIN (select * from voucher where batch_class = 2) v
                                  ON (ar.id = v.trans_id)
-                           WHERE in_account_class = 2
+                           WHERE $1 = 2
                                  AND (v.batch_class = 2 or v.batch_id IS NULL)
                         ORDER BY transdate
                          ) a ON (a.entity_credit_account = c.id)
                     JOIN transactions t ON (a.id = t.id)
                     JOIN (SELECT acc_trans.trans_id,
-                                 sum(CASE WHEN in_account_class = 1 THEN amount_bc
-                                          WHEN in_account_class = 2
+                                 sum(CASE WHEN $1 = 1 THEN amount_bc
+                                          WHEN $1 = 2
                                           THEN amount_bc * -1
                                      END) AS due
                             FROM acc_trans
                             JOIN account coa ON (coa.id = acc_trans.chart_id)
                             JOIN account_link al ON (al.account_id = coa.id)
                        LEFT JOIN voucher v ON (acc_trans.voucher_id = v.id)
-                           WHERE ((al.description = 'AP' AND in_account_class = 1)
-                                 OR (al.description = 'AR' AND in_account_class = 2))
+                           WHERE ((al.description = 'AP' AND $1 = 1)
+                                 OR (al.description = 'AR' AND $1 = 2))
                            AND (approved IS TRUE or v.batch_class IN (3, 6))
                         GROUP BY acc_trans.trans_id) p ON (a.id = p.trans_id)
                 LEFT JOIN "session" s ON (s."session_id" = t.locked_by)
                 LEFT JOIN users u ON (u.id = s.users_id)
-                   WHERE (a.batch_id = in_batch_id
-                          OR (a.invoice_class = in_account_class
+                   WHERE (a.batch_id = $6
+                          OR (a.invoice_class = $1
                              AND a.approved
                          AND due <> 0
                          AND NOT a.on_hold
-                         AND a.curr = in_currency
+                         AND a.curr = $3
                          AND EXISTS (select trans_id FROM acc_trans
                                       WHERE trans_id = a.id AND
                                             chart_id = (SELECT id from account
                                                          WHERE accno
-                                                               = in_ar_ap_accno)
+                                                               = $7)
                                     )))
-                         AND (in_meta_number IS NULL OR
-                              in_meta_number = c.meta_number)
-                         AND (in_contact_name IS NULL OR
-                              e.name ilike '%' || in_contact_name || '%')
+                         AND ($8 IS NULL OR
+                              $8 = c.meta_number)
+                         AND ($9 IS NULL OR
+                              e.name ilike '%' || $9 || '%')
                 GROUP BY c.id, e.name, c.meta_number, c.threshold,
                         e.control_code, c.description
                   HAVING  c.threshold is null or (sum(p.due) >= c.threshold
-                        OR sum(case when a.batch_id = in_batch_id then 1
+                        OR sum(case when a.batch_id = $6 then 1
                                   else 0 END) > 0)
-        ORDER BY c.meta_number ASC;
-$$ LANGUAGE sql;
+        ORDER BY c.meta_number ASC
+$sql$
+USING in_account_class, in_business_id, in_currency, in_date_from,
+ in_date_to, in_batch_id, in_ar_ap_accno, in_meta_number,
+ in_contact_name, in_payment_date;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment_get_all_contact_invoices
 (in_account_class int, in_business_id int, in_currency char(3),
@@ -1162,8 +1204,10 @@ CREATE TYPE payment_location_result AS (
 --  This should be unified on the API when we get things working - David Mora
 --
 CREATE OR REPLACE FUNCTION payment_get_vc_info(in_entity_credit_id int, in_location_class_id int)
-RETURNS SETOF payment_location_result STABLE AS
+RETURNS SETOF payment_location_result AS
 $$
+BEGIN
+RETURN QUERY EXECUTE $sql$
                 SELECT l.id, l.line_one, l.line_two, l.line_three, l.city,
                        l.state, l.mail_code, c.name, lc.class
                 FROM location l
@@ -1172,10 +1216,13 @@ $$
                 JOIN location_class lc ON (ctl.location_class = lc.id)
                 JOIN country c ON (c.id = l.country_id)
                 JOIN entity_credit_account ec ON (ec.entity_id = cp.id)
-                WHERE ec.id = in_entity_credit_id AND
-                      lc.id = in_location_class_id
+                WHERE ec.id = $1 AND
+                      lc.id = $2
                 ORDER BY lc.id, l.id, c.name
-$$ LANGUAGE SQL;
+$sql$
+USING in_entity_credit_id, in_location_class_id;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment_get_vc_info(in_entity_id int, in_location_class_id int) IS
 $$ This function returns vendor or customer info $$;
@@ -1202,8 +1249,10 @@ CREATE OR REPLACE FUNCTION payment__search
 (in_source text, in_from_date date, in_to_date date, in_credit_id int,
         in_cash_accno text, in_entity_class int, in_currency char(3),
         in_meta_number text)
-RETURNS SETOF payment_record STABLE AS
+RETURNS SETOF payment_record AS
 $$
+BEGIN
+RETURN QUERY EXECUTE $sql$
    select p.id, sum(case when c.entity_class = 1 then a.amount_bc
                     else -1*a.amount_bc end),
           c.meta_number, c.id, e.name,
@@ -1220,31 +1269,35 @@ $$
      join account act on a.chart_id = act.id
      left join voucher v on a.voucher_id = v.id
      left join batch b on v.batch_id = b.id
-    where (in_from_date is null
-           or in_from_date <= p.payment_date)
-          and (in_to_date is null
-               or in_to_date >= p.payment_date)
-          and (in_credit_id is null
-               or c.id = in_credit_id)
-          and (in_entity_class is null
-               or c.entity_class = in_entity_class)
-          and (in_currency is null
-               or p.currency = in_currency)
-          and (in_meta_number is null
-               or c.meta_number = in_meta_number)
-          and (in_source is null
-               or a.source = in_source)
-          and ((in_cash_accno is null
+    where ($2 is null
+           or $2 <= p.payment_date)
+          and ($3 is null
+               or $3 >= p.payment_date)
+          and ($4 is null
+               or c.id = $4)
+          and ($6 is null
+               or c.entity_class = $6)
+          and ($7 is null
+               or p.currency = $7)
+          and ($8 is null
+               or c.meta_number = $8)
+          and ($1 is null
+               or a.source = $1)
+          and (($5 is null
                 and exists (select 1
                              from account_link al
                             where al.description in ('AR_paid', 'AP_paid')
                               and al.account_id = act.id))
                or a.chart_id = (select id from account
-                                 where accno = in_cash_accno))
+                                 where accno = $5))
         group by p.id, c.meta_number, c.id, e.name,
                  a.source, b.control_code, b.description,
-                 v.id, p.payment_date;
-$$ language sql;
+                 v.id, p.payment_date
+$sql$
+USING in_source, in_from_date, in_to_date, in_credit_id,
+ in_cash_accno, in_entity_class, in_currency, in_meta_number;
+END
+$$ LANGUAGE PLPGSQL;
 
 
 COMMENT ON FUNCTION payment__search
@@ -1354,8 +1407,10 @@ notes text
 );
 -- I NEED TO PLACE THE COMPANY TELEPHONE AND ALL THAT STUFF
 CREATE OR REPLACE FUNCTION payment_gather_header_info(in_account_class int, in_payment_id int)
- RETURNS SETOF payment_header_item STABLE AS
- $$
+ RETURNS SETOF payment_header_item AS
+$$
+BEGIN
+RETURN QUERY EXECUTE $sql$
    SELECT p.id as payment_id, p.reference as payment_reference, p.payment_date,
           c.legal_name as legal_name, am.amount_bc as amount, em.first_name, em.last_name, p.currency, p.notes
    FROM payment p
@@ -1371,11 +1426,14 @@ CREATE OR REPLACE FUNCTION payment_gather_header_info(in_account_class int, in_p
                 JOIN payment_links pl ON (pl.entry_id=a.entry_id)
                 WHERE al.description in
                        ('AP_paid', 'AP_discount', 'AR_paid', 'AR_discount')
-                       and ((in_account_class = 1 AND al.description like 'AP%')
-                       or (in_account_class = 2 AND al.description like 'AR%'))
+                       and (($1 = 1 AND al.description like 'AP%')
+                       or ($1 = 2 AND al.description like 'AR%'))
              ) am ON (true)
-   WHERE p.id = in_payment_id;
- $$ language sql;
+   WHERE p.id = $2
+$sql$
+USING in_account_class, in_payment_id;
+END
+$$ LANGUAGE PLPGSQL;
 
 
 COMMENT ON FUNCTION payment_gather_header_info(int,int) IS
@@ -1402,8 +1460,10 @@ CREATE TYPE payment_line_item AS (
 );
 
 CREATE OR REPLACE FUNCTION payment_gather_line_info(in_account_class int, in_payment_id int)
- RETURNS SETOF payment_line_item STABLE AS
- $$
+ RETURNS SETOF payment_line_item AS
+$$
+BEGIN
+RETURN QUERY EXECUTE $sql$
      SELECT pl.payment_id, ac.entry_id, pl.type as link_type, ac.trans_id, a.invnumber as invoice_number,
      ac.chart_id, ch.accno as chart_accno, ch.description as chart_description,
      ac.amount_bc, ac.transdate as trans_date, ac.source, ac.cleared,
@@ -1412,13 +1472,16 @@ CREATE OR REPLACE FUNCTION payment_gather_line_info(in_account_class int, in_pay
      JOIN payment_links pl ON (pl.entry_id = ac.entry_id )
      JOIN account ch ON (ch.id = ac.chart_id)
      LEFT JOIN (SELECT id,invnumber
-                 FROM ar WHERE in_account_class = 2
+                 FROM ar WHERE $1 = 2
                  UNION
                  SELECT id,invnumber
-                 FROM ap WHERE in_account_class = 1
+                 FROM ap WHERE $1 = 1
                 ) a ON (ac.trans_id = a.id)
-     WHERE pl.payment_id = in_payment_id;
- $$ language sql;
+     WHERE pl.payment_id = $2
+$sql$
+USING in_account_class, in_payment_id;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment_gather_line_info(int,int) IS
 $$ This function finds a payment based on the id and retrieves all the line records,
@@ -1448,39 +1511,36 @@ GROUP BY p.id, c.accno, p.reference, p.payment_class, p.closed, p.payment_date,
       eca.entity_id, eca.discount, eca.meta_number, eca.entity_class;
 
 CREATE OR REPLACE FUNCTION payment_get_open_overpayment_entities(in_account_class int)
- returns SETOF payment_vc_info STABLE AS
- $$
+ returns SETOF payment_vc_info AS
+$$
+BEGIN
+RETURN QUERY EXECUTE $sql$
                 SELECT DISTINCT entity_credit_id, legal_name, e.entity_class, null::int, o.meta_number
                 FROM overpayments o
                 JOIN entity e ON (e.id=o.entity_id)
-                WHERE available <> 0 AND in_account_class = payment_class;
-$$ LANGUAGE SQL;
+                WHERE available <> 0 AND $1 = payment_class
+$sql$
+USING in_account_class;
+END
+$$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION payment_get_unused_overpayment(
 in_account_class int, in_entity_credit_id int, in_chart_id int)
 returns SETOF overpayments AS
 $$
+BEGIN
+RETURN QUERY EXECUTE $sql$
               SELECT DISTINCT *
               FROM overpayments
-              WHERE payment_class  = in_account_class
-              AND entity_credit_id = in_entity_credit_id
+              WHERE payment_class  = $1
+              AND entity_credit_id = $2
               AND available <> 0
-              AND (in_chart_id IS NULL OR chart_id = in_chart_id )
-              ORDER BY payment_date;
-$$ LANGUAGE SQL;
-
-CREATE OR REPLACE FUNCTION payment_get_unused_overpayment(
-in_account_class int, in_entity_credit_id int, in_chart_id int)
-returns SETOF overpayments STABLE AS
-$$
-              SELECT DISTINCT *
-              FROM overpayments
-              WHERE payment_class  = in_account_class
-              AND entity_credit_id = in_entity_credit_id
-              AND available <> 0
-              AND (in_chart_id IS NULL OR chart_id = in_chart_id )
-              ORDER BY payment_date;
-$$ LANGUAGE SQL;
+              AND ($3 IS NULL OR chart_id = $3 )
+              ORDER BY payment_date
+$sql$
+USING in_account_class, in_entity_credit_id, in_chart_id;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment_get_unused_overpayment(
 in_account_class int, in_entity_credit_id int, in_chart_id int) IS
@@ -1496,14 +1556,19 @@ CREATE TYPE payment_overpayments_available_amount AS (
 
 CREATE OR REPLACE FUNCTION payment_get_available_overpayment_amount(
 in_account_class int, in_entity_credit_id int)
-returns SETOF payment_overpayments_available_amount STABLE AS
+returns SETOF payment_overpayments_available_amount AS
 $$
+BEGIN
+RETURN QUERY EXECUTE $sql$
               SELECT chart_id, accno,   chart_description, available
               FROM overpayments
-              WHERE payment_class  = in_account_class
-              AND entity_credit_id = in_entity_credit_id
+              WHERE payment_class  = $1
+              AND entity_credit_id = $2
               AND available <> 0;
-$$ LANGUAGE SQL;
+$sql$
+USING in_account_class, in_entity_credit_id;
+END
+$$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment_get_unused_overpayment(
 in_account_class int, in_entity_credit_id int, in_chart_id int) IS
