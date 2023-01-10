@@ -93,8 +93,10 @@ BEGIN
 EXECUTE $sql$
 SELECT * FROM entity_credit_account
  WHERE entity_class = $2 AND meta_number = $1
-$sql$ INTO t_retval
+$sql$
+INTO t_retval
 USING in_meta_number, in_entity_class;
+RETURN t_retval;
 END
 $$ LANGUAGE PLPGSQL;
 

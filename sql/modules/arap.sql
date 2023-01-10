@@ -180,7 +180,7 @@ BEGIN
                       WHERE id = $1),
                       1,
                       current_date))
-         END into _used_tc
+         END
    FROM (
      SELECT sum(ac.amount_bc *
                 CASE WHEN al.description = 'AR' THEN -1 ELSE 1 END) AS used
@@ -204,6 +204,7 @@ BEGIN
    $sql$
    INTO _used_tc
    USING in_eca;
+   RETURN _used_tc;
 END
 $$ language PLPGSQL;
 

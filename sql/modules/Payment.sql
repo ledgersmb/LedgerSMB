@@ -92,6 +92,7 @@ EXECUTE $sql$
 $sql$
 INTO t_retval
 USING in_entity_credit_id;
+RETURN t_retval;
 END
 $$ LANGUAGE PLPGSQL;
 
