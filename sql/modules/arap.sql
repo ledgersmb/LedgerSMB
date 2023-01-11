@@ -137,7 +137,7 @@ $$
 BEGIN
 RETURN QUERY EXECUTE $sql$
        SELECT null::int, null::bool, null::text, null::text, null::text,
-              null::date, entity_name, meta_number, entity_id, sum(amount_bc),
+              null::date, entity_name, meta_number::text, entity_id, sum(amount_bc),
               sum(amount_paid), sum(tax), currency, null::date,
               null::text, null::text, null::text, null::text[]
          FROM ar_ap__transaction_search

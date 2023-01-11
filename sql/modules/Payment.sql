@@ -370,7 +370,7 @@ RETURN QUERY EXECUTE $sql$
                   SELECT c.id AS contact_id, e.control_code as econtrol_code,
                         c.description as eca_description,
                         e.name AS contact_name,
-                         c.meta_number AS account_number,
+                         c.meta_number::text AS account_number,
                          sum( case when u.username IS NULL or
                                        u.username = SESSION_USER
                              THEN
@@ -1256,7 +1256,7 @@ BEGIN
 RETURN QUERY EXECUTE $sql$
    select p.id, sum(case when c.entity_class = 1 then a.amount_bc
                     else -1*a.amount_bc end),
-          c.meta_number, c.id, e.name,
+          c.meta_number::text, c.id, e.name,
           array_agg(array[act.id::text, act.accno,
                                      act.description]),
           a.source, b.control_code, b.description,

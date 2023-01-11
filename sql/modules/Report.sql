@@ -54,7 +54,7 @@ $$ LANGUAGE PLPGSQL;
 DROP TYPE IF EXISTS report_aging_item CASCADE;
 CREATE TYPE report_aging_item AS (
         entity_id int,
-        account_number varchar(24),
+        account_number text,
         name text,
         contact_name text,
         "language" text,
@@ -97,7 +97,7 @@ RETURN QUERY EXECUTE $sql$
                   FROM business_unit bu
                   JOIN bu_tree ON bu_tree.id = bu.parent_id
                        )
-                SELECT c.entity_id, c.meta_number, e.name,
+                SELECT c.entity_id, c.meta_number::text, e.name,
                        e.name as contact_name, c.language_code as "language",
                        a.invnumber, a.transdate, a.till, a.ordnumber,
                        a.ponumber, a.notes,
@@ -462,7 +462,7 @@ $$
 BEGIN
 RETURN QUERY EXECUTE $sql$
 
-SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
+SELECT a.id, a.invoice, eeca.id, eca.meta_number::text, eeca.name, a.transdate,
        a.invnumber, a.ordnumber, a.ponumber, a.curr, a.amount_bc, a.netamount_bc,
        a.amount_bc - a.netamount_bc as tax,
        a.amount_bc - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
@@ -538,7 +538,7 @@ $$
 BEGIN
 RETURN QUERY EXECUTE $sql$
 
-SELECT null::int as id, null::bool as invoice, entity_id, meta_number,
+SELECT null::int as id, null::bool as invoice, entity_id, meta_number::text,
        entity_name, null::date as transdate, count(*)::text as invnumber,
        null::text as ordnumber, null::text as ponumber, curr,
        sum(amount) as amount, sum(netamount) as netamount, sum(tax) as tax,
@@ -585,7 +585,7 @@ $$
 BEGIN
 RETURN QUERY EXECUTE $sql$
 
-SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
+SELECT a.id, a.invoice, eeca.id, eca.meta_number::text, eeca.name,
        a.transdate, a.invnumber, a.ordnumber, a.ponumber, a.curr,
        a.amount_bc as amount, a.netamount_bc as netamount,
        a.amount_bc - a.netamount_bc as tax, a.amount_bc - p.due,

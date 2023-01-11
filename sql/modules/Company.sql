@@ -142,7 +142,7 @@ RETURN QUERY EXECUTE $sql$
                   having (($17 and sum(acc_trans.amount_bc) = 0)
                       or ($18 and 0 <> sum(acc_trans.amount_bc)))
      )
-     SELECT eca.id, e.name, eca.meta_number,
+     SELECT eca.id, e.name, eca.meta_number::text,
             a.id as invoice_id, a.invnumber, a.curr::text,
             p.id AS parts_id, p.partnumber,
             a.description,
@@ -249,7 +249,7 @@ RETURNS SETOF  eca_history_result AS
 $$
 BEGIN
 RETURN QUERY EXECUTE $sql$
-SELECT id, name, meta_number, null::int, null::text, curr, parts_id, partnumber,
+SELECT id, name, meta_number::text, null::int, null::text, curr, parts_id, partnumber,
        description, sum(qty), unit, null::numeric, null::numeric, null::date,
        null::text, null::numeric,
        null::int, null::text, null::date
@@ -355,7 +355,7 @@ RETURN QUERY EXECUTE $sql$
                                where name ilike '%' || $9 || '%'
                                   or short_name ilike '%' || $9 || '%'))
                        )
-   SELECT e.id, e.control_code, ec.id, ec.meta_number,
+   SELECT e.id, e.control_code, ec.id, ec.meta_number::text,
           ec.description, ec.entity_class,
           c.legal_name, c.sic_code, b.description , ec.curr::text
      FROM entity e
@@ -590,7 +590,7 @@ RETURN QUERY EXECUTE $sql$
                 SELECT  ec.id, e.id, ec.entity_class, ec.discount,
                         ec.discount_terms,
                         ec.taxincluded, ec.creditlimit, ec.terms,
-                        ec.meta_number, ec.description, ec.business_id,
+                        ec.meta_number::text, ec.description, ec.business_id,
                         ec.language_code,
                         ec.pricegroup_id, ec.curr::text, ec.startdate,
                         ec.enddate, ec.ar_ap_account_id, ec.cash_account_id,
