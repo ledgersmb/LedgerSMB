@@ -301,11 +301,11 @@ END ;
         <tr>
           <?lsmb IF report.legacy_hierarchy ?>
             <?lsmb IF path_prefix_len > 0 ?>
-            <th colspan="<?lsmb path_prefix_len ?>" class="indent"></th>
+            <th colspan="<?lsmb path_prefix_len ?>" class="indent">&nbsp;</th>
             <?lsmb END ?>
           <?lsmb ELSE ?>
             <?lsmb
-             colspan = 1;
+             colspan = 0;
              WHILE colspan <= path_prefix_len;
              colspan = colspan + 1;
              -?>
