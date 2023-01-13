@@ -205,7 +205,7 @@ BEGIN
 
    UPDATE lsmb_sequence SET sequence = new_value WHERE label = in_label;
 
-   retval := row(t_seq.setting_key, t_seq.prefix || t_seq.sequence || t_seq.suffix);
+   retval := row(t_seq.setting_key, t_seq.prefix || new_value || t_seq.suffix);
    return retval;
 
 END;
