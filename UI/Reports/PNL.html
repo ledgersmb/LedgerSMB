@@ -72,11 +72,11 @@ END ;
                   END %]>
   [% IF report.legacy_hierarchy %]
     [% IF path_prefix_len > 0 %]
-    <th colspan="[% path_prefix_len %]" class="indent"></th>
+    <th colspan="[% path_prefix_len %]" class="indent">&nbsp;</th>
     [% END %]
   [% ELSE %]
   [%
-    colspan = 1;
+    colspan = 0;
   WHILE colspan <= path_prefix_len;
     colspan = colspan + 1;
   -%]
