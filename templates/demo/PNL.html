@@ -234,6 +234,34 @@ h2 {
     color: black;
     text-decoration: none;
 }
+
+.heading3.H {
+  padding-bottom: 1em;
+}
+.heading2.H {
+  padding-bottom: 1.5em;
+}
+.heading4.H {
+  padding-bottom: 0.75em;
+}
+.section1 {
+  font-size: 140%;
+}
+.section2 {
+  font-size: 120%;
+}
+.section3 {
+  font-size: 110%;
+}
+.H {
+  font-style: italic;
+}
+.section4 {
+  font-size: 105%;
+}
+th {
+    font-weight: normal;
+}
   </style>
 </head><?lsmb
 account_data = report.account_data;
@@ -312,11 +340,11 @@ END ;
              <th class="indent">&nbsp;</th>
              <?lsmb- END -?>
            <?lsmb- END -?>
-          <th colspan="<?lsmb path_suffix_len ?>">
+          <th colspan="<?lsmb path_suffix_len ?>" <?lsmb class ?>>
           <?lsmb IF report.rheads.ids.$row.props.section_for ;
           head_id = report.rheads.ids.$row.props.section_for;
           report.rheads.ids.$head_id.props.account_description; ?></th>
-          <th colspan="<?lsmb report.cheads.ids.keys.size ?>">
+          <th colspan="<?lsmb report.cheads.ids.keys.size ?>" <?lsmb class ?>>
           <?lsmb ELSE -?><?lsmb IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -?><?lsmb report.rheads.ids.$row.props.account_number ?>&nbsp;-&nbsp;<?lsmb END; -?>
           <?lsmb report.rheads.ids.$row.props.account_description ?></th><?lsmb FOREACH col IN report.sorted_col_ids -?>
           <td class="amount <?lsmb clazz ?>">
