@@ -121,6 +121,7 @@ business_unit_class__get_modules
 business_unit_class__save
 business_unit_class__save_modules
 business_unit_get
+cdc_update_last_updated
 chart_get_ar_ap
 chart_list_all
 chart_list_cash
