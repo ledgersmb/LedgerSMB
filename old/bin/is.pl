@@ -312,19 +312,19 @@ sub form_header {
     $exchangerate = qq|<tr>|;
     $exchangerate .= qq|
         <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" id="currency" name="currency" $readonly>$form->{selectcurrency}</select></td>
+        <td><select data-dojo-type="dijit/form/Select" id="currency" name="currency" $readonly>$form->{selectcurrency}</select>
 | if $form->{defaultcurrency};
 
     if (   $form->{defaultcurrency}
         && $form->{currency} ne $form->{defaultcurrency} )
     {
         $exchangerate .=
-                qq|<th align=right>|
+                qq|</td><th align=right>|
               . $locale->text('Exchange Rate')
-              . qq|</th><td><input data-dojo-type="dijit/form/TextBox" name="exchangerate" size="10" value="$form->{exchangerate}" $readonly></td>|;
+              . qq|</th><td><input data-dojo-type="dijit/form/TextBox" name="exchangerate" size="10" value="$form->{exchangerate}" $readonly>|;
     }
     $exchangerate .= qq|
-<input type=hidden name="forex" value="$form->{forex}">
+<input type=hidden name="forex" value="$form->{forex}"></td>
 </tr>
 |;
 
@@ -430,9 +430,10 @@ sub form_header {
         <table>
           <tr>
         <th align=right nowrap><label for="customer">| . $locale->text('Customer') . qq|</label></th>
-        <td colspan=3>$customer</td>
+        <td colspan=3>$customer
         <input type=hidden name="customer_id" value="$form->{customer_id}">
         <input type=hidden name="oldcustomer" value="$form->{oldcustomer}">
+</td>
           </tr>
           <tr>
         <td></td>
@@ -523,8 +524,8 @@ sub form_header {
           </tr>
           <tr>
         <th align=right nowrap><label for="ordnumber">| . $locale->text('Order Number') . qq|</label></th>
-        <td><input data-dojo-type="dijit/form/TextBox" name="ordnumber" id="ordnumber" size="20" value="$form->{ordnumber}" $readonly></td>
-<input type=hidden name="quonumber" value="$form->{quonumber}">
+        <td><input data-dojo-type="dijit/form/TextBox" name="ordnumber" id="ordnumber" size="20" value="$form->{ordnumber}" $readonly>
+<input type=hidden name="quonumber" value="$form->{quonumber}"></td>
           </tr>
           <tr class="crdate-row">
         <th align=right><label for="crdate">| . $locale->text('Invoice Created') . qq|</label></th>

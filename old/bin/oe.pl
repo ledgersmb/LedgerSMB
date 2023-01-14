@@ -351,8 +351,8 @@ sub form_header {
             $exchangerate .=
                 qq|<th align=right>|
               . $locale->text('Exchange Rate')
-              . qq|</th><td>$form->{exchangerate}</td>
-      <input type=hidden name=exchangerate value=$form->{exchangerate}>
+              . qq|</th><td>$form->{exchangerate}
+      <input type=hidden name=exchangerate value=$form->{exchangerate}></td>
 |;
         }
         else {
@@ -399,8 +399,8 @@ sub form_header {
           <tr class="ordnumber-row">
         <th width=70% align=right nowrap>| . $locale->text('Order Number') . qq|</th>
                 <td><input data-dojo-type="dijit/form/TextBox" id=ordnumber name=ordnumber size=20 value="$form->{ordnumber}">
-                     $sequences</td>
-        <input type=hidden name=quonumber value="$form->{quonumber}">
+                     $sequences
+        <input type=hidden name=quonumber value="$form->{quonumber}"></td>
           </tr>
           <tr class="transdate-row">
         <th align=right nowrap>| . $locale->text('Order Date') . qq|</th>
@@ -474,8 +474,8 @@ sub form_header {
               . $locale->text('Quotation Number')
               . qq|</th>
         <td><input data-dojo-type="dijit/form/TextBox" id=quonumber name=quonumber size=20 value="$form->{quonumber}">
-                    $sequences</td>
-        <input type=hidden name=ordnumber value="$form->{ordnumber}">
+                    $sequences
+        <input type=hidden name=ordnumber value="$form->{ordnumber}"></td>
           </tr>
 |;
         }
@@ -484,8 +484,8 @@ sub form_header {
           <tr class="rfqnumber-row">
         <th width=70% align=right nowrap>| . $locale->text('RFQ Number') . qq|</th>
         <td><input data-dojo-type="dijit/form/TextBox" id=quonumber name=quonumber size=20 value="$form->{quonumber}">
-                    $sequences</td>
-        <input type=hidden name=ordnumber value="$form->{ordnumber}">
+                    $sequences
+        <input type=hidden name=ordnumber value="$form->{ordnumber}"></td>
           </tr>
 |;
 
@@ -594,9 +594,9 @@ sub form_header {
         <table width=100%>
           <tr>
         <th align=right>$vclabel</th>
-        <td colspan=3>$vc</td>
+        <td colspan=3>$vc
         <input type=hidden name=$form->{vc}_id value=$form->{"$form->{vc}_id"}>
-        <input type=hidden name="old$form->{vc}" value="$form->{"old$form->{vc}"}">
+        <input type=hidden name="old$form->{vc}" value="$form->{"old$form->{vc}"}"></td>
           </tr>
           $creditremaining
           $business
@@ -856,10 +856,10 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
       </td>
     </tr>
       </table>
-    </td>
-  </tr>
 <input type=hidden name=oldinvtotal value=$form->{oldinvtotal}>
 <input type=hidden name=oldtotalpaid value=$totalpaid>
+    </td>
+  </tr>
   <tr>
     <td>
       <table width=100%>
@@ -1888,9 +1888,9 @@ sub display_ship_receive {
         <table width=100%>
           <tr>
         <th align=right>$vclabel</th>
-        <td colspan=3>$form->{$form->{vc}}</td>
+        <td colspan=3>$form->{$form->{vc}}
         <input type=hidden name=$form->{vc} value="$form->{$form->{vc}}">
-        <input type=hidden name="$form->{vc}_id" value=$form->{"$form->{vc}_id"}>
+        <input type=hidden name="$form->{vc}_id" value=$form->{"$form->{vc}_id"}></td>
           </tr>
           $department
           <tr>
@@ -1911,19 +1911,19 @@ sub display_ship_receive {
           $employee
           <tr>
         <th align=right nowrap>| . $locale->text('Order Number') . qq|</th>
-        <td>$form->{ordnumber}</td>
-        <input type=hidden name=ordnumber value="$form->{ordnumber}">
+        <td>$form->{ordnumber}
+        <input type=hidden name=ordnumber value="$form->{ordnumber}"></td>
           </tr>
           <tr>
         <th align=right nowrap>| . $locale->text('Order Date') . qq|</th>
-        <td>$form->{transdate}</td>
-        <input type=hidden name=transdate value=$form->{transdate}>
+        <td>$form->{transdate}
+        <input type=hidden name=transdate value=$form->{transdate}></td>
           </tr>
           <tr>
         <th align=right nowrap>| . ($form->{type} =~ /purchase_/ ?
             $locale->text('SO Number') : $locale->text('PO Number')) . qq|</th>
-        <td>$form->{ponumber}</td>
-        <input type=hidden name=ponumber value="$form->{ponumber}">
+        <td>$form->{ponumber}
+        <input type=hidden name=ponumber value="$form->{ponumber}"></td>
           </tr>
           <tr>
         <th align=right nowrap>$shipped</th>
