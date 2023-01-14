@@ -45,7 +45,7 @@ jobs:
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
@@ -125,16 +125,19 @@ jobs:
             postgres: "13"
             BROWSER: "chrome"
             COVERAGE: 1
+            JOB_COUNT: 2
 
           - perl: "5.32"
             postgres: "latest"
             BROWSER: "firefox"
             COA_TESTING: 1
+            JOB_COUNT: 5
 
           - perl: "5.32"
             postgres: "12"
             BROWSER: "operablink"
             DB_TESTING: 1
+            JOB_COUNT: 5
 
     services:
       # Label used to access the service container
@@ -160,8 +163,8 @@ jobs:
       BROWSER: ${{ matrix.BROWSER }}
       COA_TESTING: ${{ matrix.COA_TESTING }}
       DB_TESTING: ${{ matrix.DB_TESTING }}
-      DEVEL_COVER_OPTIONS: -silent,1,+ignore,'((^x?t|^utils)/|^\.local/|\.lttc\$\$|^/(usr|opt)/|starman\$\$)',-summary,1
-      JOB_COUNT: 5
+      DEVEL_COVER_OPTIONS: -silent,1,+ignore,^x?t,+ignore,^utils,+ignore,local/,+ignore,^/usr/,+ignore,^/opt/,+ignore,\\.lttc,+ignore,starman\\b,-summary,1
+      JOB_COUNT: ${{ matrix.JOB_COUNT }}
       LSMB_BASE_URL: http://lsmb:5000
       LSMB_NEW_DB: lsmb_test
       LSMB_NEW_DB_API: lsmb_test_api
@@ -209,7 +212,7 @@ jobs:
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3
 
       - name: Install GNU gettext
         run: sudo apt -q -y install gettext
@@ -262,24 +265,17 @@ jobs:
 
       - name: Setup coverage
         run: |
-          echo "STARMAN_DEVEL_COVER_OPTIONS=-MDevel::Cover=${{ env.DEVEL_COVER_OPTIONS }}" >> $GITHUB_ENV
+          echo "STARMAN_DEVEL_COVER_OPTIONS=-MDevel::Cover=${{ env.DEVEL_COVER_OPTIONS }} -MSyntax::Keyword::Try::Deparse" >> $GITHUB_ENV
           echo "YATH_DEVEL_COVER_OPTIONS=--cover=${{ env.DEVEL_COVER_OPTIONS }}" >> $GITHUB_ENV
-          echo "JOB_COUNT=2" >> $GITHUB_ENV
-          echo "UITESTS=--coverage" >> $GITHUB_ENV
-          echo "PERL5OPT=-MSyntax::Keyword::Try::Deparse" >> $GITHUB_ENV
+          echo "JSCOVERAGE=--coverage" >> $GITHUB_ENV
         if: ${{ matrix.COVERAGE }}
 
       - name: Starting 'starman'
         run: |
-          PERL5OPT="$PERL5OPT $STARMAN_DEVEL_COVER_OPTIONS" \
+          PERL5OPT="$STARMAN_DEVEL_COVER_OPTIONS" \
           starman --preload-app --pid starman.pid --workers $JOB_COUNT \
                   --max-requests 5000 --error-log logs/starman-error.log \
                   -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
-
-      # Fix the condition to debug
-      - name: Setup upterm session
-        uses: mxschmitt/action-tmate@v3
-        if: ${{ matrix.BROWSER == 'chrome' && 0 }}
 
       # Do API Tests
       - uses: actions/download-artifact@v3
@@ -291,17 +287,23 @@ jobs:
 
       - name: Run API tests
         run: |
-          PERL5LIB="lib:old/lib:$PERL5LIB" make jstest TESTS="$UITESTS"
+          PERL5LIB="lib:old/lib:$PERL5LIB" make jstest TESTS="$JSCOVERAGE"
+
+      # Fix the condition to debug
+      - name: Setup upterm session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ matrix.BROWSER == 'chrome' && 0 }}
 
       # Do perl tests
       - name: Run Perl tests
         run: |
-          make devtest TESTS="$TESTS --no-progress --job-count $JOB_COUNT $YATH_DEVEL_COVER_OPTIONS t xt"
+          make devtest TESTS="--no-progress --job-count $JOB_COUNT $YATH_DEVEL_COVER_OPTIONS t xt"
         env:
           LSMB_TEST_DB: 1
           COA_TESTING: ${{ matrix.COA_TESTING }}
           COVERAGE: ${{ matrix.COVERAGE }}
           DB_TESTING: ${{ matrix.DB_TESTING }}
+          PERL5OPT: -MSyntax::Keyword::Try::Deparse
 
       # Send UI coverage before Perl
       - name: Upload UI coverage data
@@ -356,7 +358,7 @@ jobs:
         if: always()
 
   build-dev:
-    if: github.event.action == 'closed' && github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
 
     runs-on: ubuntu-latest
 
@@ -365,7 +367,7 @@ jobs:
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v3.3.0
+        uses: actions/checkout@v3
 
       - name: Check if merge must trigger
         id: pr_trigger
