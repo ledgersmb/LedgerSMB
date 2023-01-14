@@ -559,12 +559,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" id="notes_$i" name="notes_$i" 
     }
 
     print qq|
-      </table>
-    </td>
-  </tr>
-|;
-
-    $form->hide_form(qw(audittrail));
+      </table>|;
 
     print qq|
 
@@ -575,8 +570,12 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" id="notes_$i" name="notes_$i" 
 <input type=hidden name=selectprojectnumber value="|
       . ($form->escape( $form->{selectprojectnumber}, 1 )//'') . qq|">
 
+
+    </td>
+  </tr>
 |;
 
+    $form->hide_form(qw(audittrail));
 }
 
 sub new_item {
@@ -1676,8 +1675,8 @@ sub ship_to {
                                 print qq|
                            <tr>
 
-                              <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio id="shiptoradio_$i" value="$i"  $checked ></td>
-                              <input name="shiptolocationid_$i" id="shiptolocationid_$i" type="hidden" value="$form->{"shiptolocationid_$i"}" readonly>
+                              <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio id="shiptoradio_$i" value="$i"  $checked >
+                              <input name="shiptolocationid_$i" id="shiptolocationid_$i" type="hidden" value="$form->{"shiptolocationid_$i"}" readonly></td>
                               <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress1_$i size=12 maxlength=64 id="ad1_$i" value="$form->{"shiptoaddress1_$i"}" readonly></td>
                               <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress2_$i size=12 maxlength=64 id="ad2_$i" value="$form->{"shiptoaddress2_$i"}" readonly></td>
                               <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress3_$i size=12 maxlength=64 id="ad3_$i" value="$form->{"shiptoaddress3_$i"}" readonly></td>
