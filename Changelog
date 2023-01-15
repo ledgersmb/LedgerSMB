@@ -181,6 +181,10 @@ Dependency updates
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.24
+* Don't show obsolete accounts in account selection drop-downs (#7062)
+
+
 Changelog for 1.9.23
 * Various fixes to make tax forms work (#7037 and #7040)
 * Fix borders on sort order drop-down in reconciliation screen (#7052)
