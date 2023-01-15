@@ -9,9 +9,11 @@ Added functionalities
 * AR/AP transactions and invoices buttons determined by configuration
 * Bank statement parser for reconciliation through configuration (#7050)
 * System > Users menu item listing users in the company (#7032)
+* More webservice APIs (#7056, ...)
 
 Changed functionalities
 * More database statistics reported after upgrade completion (#7017)
+* System > Sequences lists next value (instead of last - same as System > Defaults) (#7054)
 
 Removed functionalities
 * Bank statement parser for reconciliation through customization of the sources (#7050)
