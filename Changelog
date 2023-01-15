@@ -3,6 +3,14 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.10
+* Don't show obsolete accounts in account drop-downs (#7061)
+* Focus the first empty line on Update in AR, AP, Orders and Quotes (#1584)
+* Correct alignment in HTML income statement and balance sheet (#7074)
+* Improved layout of balance sheet and P&L reports for hierarchical CoA (#7086)
+* Fixed database creation and upgrades failing for non-superuser admin (#7073)
+
+
 Changelog for 1.10.9
 * Various fixes to make tax forms work (#7037 and #7040)
 * Fix error when retrieving template GL transactions (#7030)
