@@ -97,6 +97,17 @@ END;
 ' LANGUAGE PLPGSQL;
 
 
+create or replace function cdc_update_last_updated()
+  returns trigger as
+$$
+BEGIN
+  IF TG_OP <> 'DELETE' THEN
+    NEW.last_updated := NOW();
+  END IF;
+  RETURN NEW;
+END;
+$$ language plpgsql;
+
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
