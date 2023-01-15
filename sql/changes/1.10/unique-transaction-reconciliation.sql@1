@@ -37,12 +37,6 @@ INSERT trigger on the 'cr_report_line_links' table ensures the value to be
 correct when creating new records.
 $$;
 
-update cr_report_line_links rll
-  set cleared = (select r.approved and rl.cleared
-                   from cr_report r join cr_report_line rl
-                                        on r.id = rl.report_id
-                   where rl.id = rll.report_line_id);
-
 /*
   Note that the query below sets *every* entry_id with 'unique_exempt'='f'
   exactly once. For those which have multiple occurrances, it sets the second
@@ -53,13 +47,15 @@ update cr_report_line_links rll
 update cr_report_line_links a
    set unique_exempt = (b.rn<>1)
 from (select report_line_id, entry_id,
-             row_number() over ( partition by entry_id
-                                order by report_line_id ) as rn
-        from cr_report_line_links
-       where cleared) b
- where a.cleared
-   and a.entry_id = b.entry_id
-   and a.report_line_id = b.report_line_id;
+             row_number() over( partition by entry_id order by report_line_id ) as rn
+        from cr_report_line_links) b
+where a.entry_id = b.entry_id
+      and a.report_line_id = b.report_line_id;
+
+update cr_report_line_links rll
+  set cleared = (select r.approved and rl.cleared
+                    from cr_report r join cr_report_line rl on r.id = rl.report_id
+                   where rl.id = rll.report_line_id);
 
 create unique index idx_cr_report_line_links_unique
     on cr_report_line_links (entry_id)
