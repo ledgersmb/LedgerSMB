@@ -357,7 +357,7 @@ RETURN QUERY EXECUTE $sql$
                        )
    SELECT e.id, e.control_code, ec.id, ec.meta_number::text,
           ec.description, ec.entity_class,
-          c.legal_name, c.sic_code, b.description , ec.curr::text
+          c.legal_name, c.sic_code::text, b.description , ec.curr::text
      FROM entity e
      JOIN entities_matching_name c ON c.entity_id = e.id
 LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
