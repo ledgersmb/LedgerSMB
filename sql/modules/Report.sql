@@ -98,7 +98,7 @@ RETURN QUERY EXECUTE $sql$
                   JOIN bu_tree ON bu_tree.id = bu.parent_id
                        )
                 SELECT c.entity_id, c.meta_number::text, e.name,
-                       e.name as contact_name, c.language_code as "language",
+                       e.name as contact_name, c.language_code::text as "language",
                        a.invnumber, a.transdate, a.till, a.ordnumber,
                        a.ponumber, a.notes,
                        CASE WHEN a.age/30 = 0

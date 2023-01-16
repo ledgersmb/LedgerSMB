@@ -591,7 +591,7 @@ RETURN QUERY EXECUTE $sql$
                         ec.discount_terms,
                         ec.taxincluded, ec.creditlimit, ec.terms,
                         ec.meta_number::text, ec.description, ec.business_id,
-                        ec.language_code,
+                        ec.language_code::text,
                         ec.pricegroup_id, ec.curr::text, ec.startdate,
                         ec.enddate, ec.ar_ap_account_id, ec.cash_account_id,
                         ec.discount_account_id,
