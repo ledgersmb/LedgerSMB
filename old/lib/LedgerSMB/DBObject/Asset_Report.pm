@@ -129,15 +129,15 @@ sub get {
     $self->{report_lines} = [];
     if ($self->{report_class} == 1){
         @{$self->{report_lines}} = $self->call_dbmethod(
-                                  funcname => 'asset_report__get_lines'
+            funcname => 'asset_report__get_lines'
         );
     } elsif ($self->{report_class} == 2) {
         @{$self->{report_lines}} = $self->call_dbmethod(
-                                  funcname => 'asset_report__get_disposal'
+            funcname => 'asset_report__get_disposal'
         );
     } elsif ($self->{report_class} == 4) {  ## no critic (ProhibitMagicNumbers) sniff
        @{$self->{report_lines}} = $self->call_dbmethod(
-                                   funcname => 'asset_report_partial_disposal_details'
+           funcname => 'asset_report_partial_disposal_details'
        );
     }
     return;

@@ -679,7 +679,12 @@ sub partial_disposal_details {
             type   => 'text',
         },
         {
-            col_id => 'begin_depreciation',
+            col_id => 'description',
+            name   => $locale->text('Description'),
+            type   => 'text',
+        },
+        {
+            col_id => 'start_dep',
             name   => $locale->text('Dep. Starts'),
             type   => 'text',
             class  => 'date',
@@ -689,11 +694,6 @@ sub partial_disposal_details {
             name   => $locale->text('Aquired Value'),
             type   => 'text',
             class  => 'amount',
-        },
-        {
-            col_id => 'description',
-            name   => $locale->text('Description'),
-            type   => 'text',
         },
         {
             col_id => 'percent_disposed',
@@ -798,6 +798,12 @@ sub disposal_details {
             class  => 'date',
         },
         {
+            col_id => 'purchase_value',
+            name   => $locale->text('Aquired Value'),
+            type   => 'text',
+            class  => 'amount',
+        },
+        {
             col_id => 'disposed_on',
             name   => $locale->text('Disposal Date'),
             type   => 'text',
@@ -807,12 +813,6 @@ sub disposal_details {
             col_id => 'dm',
             name   => $locale->text('D M'),
             type   => 'text',
-        },
-        {
-            col_id => 'purchase_value',
-            name   => $locale->text('Aquired Value'),
-            type   => 'text',
-            class  => 'amount',
         },
         {
             col_id => 'accum_depreciation',

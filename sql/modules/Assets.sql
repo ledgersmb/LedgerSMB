@@ -611,17 +611,17 @@ $$ Disposes of an asset.  in_dm is the disposal method id.$$;
 DROP TYPE IF EXISTS asset_disposal_report_line CASCADE;
 CREATE TYPE asset_disposal_report_line
 AS (
-       id int,
-       tag text,
-       description text,
-       start_dep date,
-       disposed_on date,
-       dm char(1),
-       purchase_value numeric,
-       accum_depreciation numeric,
-       disposal_amt numeric,
-       adj_basis numeric,
-       gain_loss numeric
+  id int,
+  tag text,
+  description text,
+  start_dep date,
+  disposed_on date,
+  dm char(1),
+  purchase_value numeric,
+  accum_depreciation numeric,
+  disposal_amt numeric,
+  adj_basis numeric,
+  gain_loss numeric
 );
 
 CREATE OR REPLACE FUNCTION asset_report__get_disposal (in_id int)
@@ -712,22 +712,22 @@ $$ Returns the current net book value report.$$;
 
 DROP TYPE IF EXISTS partial_disposal_line CASCADE;
 CREATE TYPE partial_disposal_line AS (
-id int,
-tag text,
-begin_depreciation date,
-purchase_value numeric,
-description text,
-disposal_date date,
-percent_disposed numeric,
-disposed_acquired_value numeric,
-percent_remaining numeric,
-remaining_aquired_value numeric
+  id int,
+  tag text,
+  description text,
+  start_dep date,
+  purchase_value numeric,
+  disposal_date date,
+  percent_disposed numeric,
+  disposed_acquired_value numeric,
+  percent_remaining numeric,
+  remaining_aquired_value numeric
 );
 
 CREATE OR REPLACE FUNCTION asset_report_partial_disposal_details(in_id int)
 RETURNS SETOF PARTIAL_DISPOSAL_LINE AS
 $$
-SELECT ai.id, ai.tag, ai.start_depreciation, ai.purchase_value, ai.description,
+SELECT ai.id, ai.tag, ai.description, ai.start_depreciation, ai.purchase_value,
        ar.report_date, arld.percent_disposed,
        (arld.percent_disposed / 100) * ai.purchase_value,
        100 - arld.percent_disposed,
