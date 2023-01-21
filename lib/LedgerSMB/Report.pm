@@ -501,6 +501,10 @@ sub _render {
             }
         }
     }
+    my @col_ids = map { $_->{col_id} } @columns;
+    push @col_ids, 'row_id';
+    my @rows = map { +{ $_->%{@col_ids} } } $self->rows->@*;
+    $self->rows([]);
 
     # needed to get aroud escaping of header line names
     # i.e. ignore_yearends -> ignore\_yearends
@@ -516,6 +520,7 @@ sub _render {
     return $args{renderer}->(
         $template, $self,
         {
+            # 'rows' has been set to an empty array to prevent encoding the same data twice
             report          => $self,
             company_name    => $setting->get('company_name'),
             company_address => $setting->get('company_address'),
@@ -527,7 +532,7 @@ sub _render {
             order_url       => $self->order_url,
             buttons         => $self->buttons,
             options         => $self->options,
-            rows            => $self->rows,
+            rows            => \@rows,
 
             DBNAME          => $request->{company},
         });
