@@ -502,7 +502,17 @@ sub _render {
         }
     }
     my @col_ids = map { $_->{col_id} } @columns;
-    push @col_ids, 'row_id';
+
+    # values expected by dynatable:
+    push @col_ids, (
+        map {
+            ($_ . '_href_suffix',
+             $_ . '_NOHREF',
+             $_ . '_ROWSPAN',
+             $_ . '_ROWSPANNED')
+        } @col_ids);
+    push @col_ids, 'row_id', 'NOINPUT', 'html_class';
+
     my @rows = map { +{ $_->%{@col_ids} } } $self->rows->@*;
     $self->rows([]);
 
