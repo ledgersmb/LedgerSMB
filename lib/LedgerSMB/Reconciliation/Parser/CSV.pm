@@ -111,7 +111,7 @@ transactions inn the ISO-20022/CAMT.053 XML file.
 
 sub _process_named_columns {
     my ($self, $csv, $fh) = @_;
-    my @cols = $csv->getline;
+    my $cols = $csv->getline($fh);
     my @entries;
     my $source = $self->mapping->{source}->{column};
     my $type = $self->mapping->{type}->{column};
@@ -120,13 +120,13 @@ sub _process_named_columns {
     my $amount = $self->mapping->{amount}->{column};
     my $amount_fmt = { format => $self->mapping->{amount}->{format} };
 
-    while (my $row = $csv->getline) {
+    while (my $row = $csv->getline($fh)) {
         my %row;
-        @row{@cols} = @$row;
+        @row{@$cols} = @$row;
         push @entries, {
             amount => LedgerSMB::PGNumber->from_input($row{$amount}, $amount_fmt),
             date   => LedgerSMB::PGDate->from_input($row{$date}, $date_fmt),
-            source => $row{$source},
+            scn    => $row{$source},
             type   => $row{$type}
         };
     }
@@ -143,11 +143,11 @@ sub _process_numbered_columns {
     my $amount = $self->mapping->{amount}->{column};
     my $amount_fmt = { format => $self->mapping->{amount}->{format} };
 
-    while (my $row = $csv->getline) {
+    while (my $row = $csv->getline($fh)) {
         push @entries, {
             amount => LedgerSMB::PGNumber->from_input($row->[$amount], $amount_fmt),
             date   => LedgerSMB::PGDate->from_input($row->[$date], $date_fmt),
-            source => $row->[$source],
+            scn    => $row->[$source],
             type   => $row->[$type]
         };
     }
@@ -157,11 +157,11 @@ sub _process_numbered_columns {
 sub process {
     my $self = shift;
     my $fh   = shift;
-    my $csv = Text::CSV->new(
+    my $csv = Text::CSV->new({
         sep_char    => $self->column_separator,
         quote_char  => $self->column_quote,
         escape_char => $self->column_value_escape,
-        );
+        });
 
     if ($self->first_row eq 'headers') {
         return $self->_process_named_columns($csv, $fh);
