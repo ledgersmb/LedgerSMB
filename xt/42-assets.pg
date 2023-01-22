@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(39);
+    SELECT plan(40);
 
     -- Add data
 
@@ -46,12 +46,13 @@ BEGIN;
     SELECT has_function('asset_report__get_disposal',array['integer']);
     SELECT has_function('asset_nbv_report','{}'::text[]);
     SELECT has_function('asset_report_partial_disposal_details',array['integer']);
-    SELECT has_function('asset_report__approve',array['integer', 'integer', 'integer', 'integer']);
-    SELECT has_function('asset_report__disposal_gl',array['integer', 'integer', 'integer']);
+    SELECT has_function('asset_report__approve',array['integer', 'integer', 'integer', 'integer', 'integer']);
+    SELECT has_function('asset_report__disposal_gl',array['integer', 'integer', 'integer', 'integer']);
     SELECT has_function('asset_item__add_note',array['integer', 'text', 'text']);
     SELECT has_function('asset_report__get_expense_accts','{}'::text[]);
     SELECT has_function('asset_report__get_gain_accts','{}'::text[]);
     SELECT has_function('asset_report__get_loss_accts','{}'::text[]);
+    SELECT has_function('asset_report__get_cash_accts','{}'::text[]);
     SELECT has_function('asset_report__get',array['integer']);
     SELECT has_function('asset_report__get_lines',array['integer']);
     SELECT has_function('asset_report__search',array['date', 'date', 'integer', 'boolean', 'integer']);
@@ -95,7 +96,7 @@ BEGIN;
     select asset_report__save(null, '2010-11-01'::date, :asset_report_type_depreciation,
                               (:'new_class'::asset_class).id, true) as new_report
     \gset
-    select asset_report__approve((:'new_report'::asset_report).id, :exp_acc_id, null, null) as approved_report
+    select asset_report__approve((:'new_report'::asset_report).id, :exp_acc_id, null, null, null) as approved_report
     \gset
 
 
@@ -107,7 +108,7 @@ BEGIN;
     select asset_report__dispose((:'disposal_report'::asset_report).id, (:'new_asset'::asset_item).id,
                                  0.00, (select id from asset_disposal_method where short_label = 'A'), 50);
     select asset_report__approve((:'disposal_report'::asset_report).id, :exp_acc_id,
-                                 :gain_acc_id, :loss_acc_id) as approved_report
+                                 :gain_acc_id, :loss_acc_id, null) as approved_report
     \gset
 
 
@@ -119,7 +120,7 @@ BEGIN;
     select asset_report__dispose((:'full_disposal_report'::asset_report).id, (:'new_asset'::asset_item).id,
                                  0.00, (select id from asset_disposal_method where short_label = 'A'), 100);
     select asset_report__approve((:'disposal_report'::asset_report).id, :exp_acc_id,
-                                 :gain_acc_id, :loss_acc_id) as approved_report
+                                 :gain_acc_id, :loss_acc_id, null) as approved_report
     \gset
 
 

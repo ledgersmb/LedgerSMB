@@ -236,7 +236,10 @@ sub get_metadata {
     @{$self->{loss_accounts}} = $self->call_dbmethod(
                    funcname => 'asset_report__get_loss_accts'
     );
-    for my $atype (qw(exp_accounts gain_accounts loss_accounts)){
+    @{$self->{cash_accounts}} = $self->call_dbmethod(
+                   funcname => 'asset_report__get_cash_accts'
+    );
+    for my $atype (qw(exp_accounts gain_accounts loss_accounts cash_accounts)){
         for my $acct (@{$self->{$atype}}){
             $acct->{text} = $acct->{accno}. '--'. $acct->{description};
         }

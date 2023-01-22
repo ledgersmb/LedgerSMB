@@ -73,6 +73,7 @@ asset_report__dispose
 asset_report__generate
 asset_report__generate_gl
 asset_report__get
+asset_report__get_cash_accts
 asset_report__get_disposal
 asset_report__get_disposal_methods
 asset_report__get_expense_accts
