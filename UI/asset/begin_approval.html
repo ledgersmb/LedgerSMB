@@ -55,6 +55,16 @@
      label = text('Loss Account') #'
 } %]
 </div>
+<div class="inputgroup" id="cashgroup">
+[% PROCESS select element_data = {
+     name = "cash_acct"
+     class = "account"
+     options = asset_report.cash_accounts
+     value_attr = "id"
+     default_blank = 1
+     label = text('Cash Account') #'
+} %]
+</div>
 [% END %]
 </div>
 <div class="inputrow" id="buttonrow">
