@@ -211,6 +211,20 @@ reconciliation_importer:
   - $class: LedgerSMB::Reconciliation::Parser::CAMT053
     name: ISO 20022 - CAMT.053 (Customer statement)
   - $class: LedgerSMB::Reconciliation::Parser::CSV
+    name: Raw CSV (with column names)
+    first_row: headers
+    mapping:
+      source:
+        column: scn
+      amount:
+        column: amount
+        format: '1000.00'
+      type:
+        column: type
+      date:
+        column: cleared_date
+        format: YYYY-MM-DD
+  - $class: LedgerSMB::Reconciliation::Parser::CSV
     name: PayPal (CSV / Column names)
     first_row: headers
     mapping:
