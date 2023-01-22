@@ -235,8 +235,8 @@ sub _display_report {
     $recon->{decimal_places} = $request->setting->get('decimal_places');
     _set_sort_options($recon, $request);
 
-    $recon->get;
     _process_upload($recon, $request) unless $recon->{submitted};
+    $recon->get;
     $recon->build_totals;
 
     if ($recon->{account_info}->{category} eq 'A') {
