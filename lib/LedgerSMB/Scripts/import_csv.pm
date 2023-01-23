@@ -573,12 +573,32 @@ sub _parse_file {
     my $self = shift @_;
 
     my $handle = $self->upload('import_file');
-    my $csv = Text::CSV->new;
+    my $csv = Text::CSV->new({ blank_is_undef => 1 });
     $csv->header($handle);
     $self->{import_entries} = $csv->getline_all($handle);
 
     return ([$csv->fields], @{$self->{import_entries}});
 }
+
+
+
+=head2 begin_import
+This displays the begin data entry screen.
+=cut
+
+sub begin_import {
+    my ($request) = @_;
+    my $template_file =
+        ($template_file{$request->{type}}) ?
+        $template_file{$request->{type}} : 'import_csv';
+
+    if (ref($template_setup->{$request->{type}}) eq 'CODE') {
+        $template_setup->{$request->{type}}($request);
+    }
+    return [ 200, [ 'Content-Type' => 'text/plain' ], [ '' ] ];
+}
+
+
 
 =head2 run_import
 
