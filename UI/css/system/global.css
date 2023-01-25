@@ -700,6 +700,13 @@ h2 {
     grid-template: none / repeat(6, auto);
 }
 
+.two-column-grid,
+.four-column-grid,
+.six-column-grid {
+    gap: 4px;
+    margin: 4px 0;
+}
+
 .two-column-grid lsmb-text,
 .two-column-grid lsmb-password,
 .two-column-grid lsmb-date,
