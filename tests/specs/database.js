@@ -35,8 +35,8 @@ export function create_database(username, password, company) {
             `--password=${password}`,
             "--employeenumber=1",
             "--country=Canada",
-            `--first_name=${username}`,
-            `--last_name=${password}`,
+            `--first-name=${username}`,
+            `--last-name=${password}`,
             "--permission='Full Permissions'"
         ],
         {

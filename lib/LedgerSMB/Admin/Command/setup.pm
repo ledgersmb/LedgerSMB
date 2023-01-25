@@ -49,13 +49,15 @@ sub load {
 sub _before_dispatch {
     my ($self, $options, @args) = @_;
     my $db_uri = (@args) ? $args[0] : undef;
+    my $connect_data = {
+        $self->config->get('connect_data')->%*,
+        $self->connect_data_from_arg($db_uri)->%*,
+    };
     $self->db(
         LedgerSMB::Database->new(
-            connect_data => {
-                $self->config->get('connect_data')->%*,
-                $self->connect_data_from_arg($db_uri)->%*,
-            },
-            schema => $self->config->get('schema'),
+            connect_data => $connect_data,
+            source_dir   => $self->config->sql_directory,
+            schema       => $self->config->get('schema'),
         ));
 
     return (LedgerSMB::Company->new(dbh => $self->db->connect),
