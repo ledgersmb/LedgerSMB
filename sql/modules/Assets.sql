@@ -912,7 +912,7 @@ $$ language sql;
 CREATE OR REPLACE FUNCTION asset_report__get_cash_accts()
 RETURNS SETOF account
 AS $$
-  SELECT * FROM account;
+  SELECT * FROM account where not obsolete;
 $$ language sql;
 
 COMMENT ON FUNCTION asset_report__get_loss_accts() IS
