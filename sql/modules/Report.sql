@@ -466,7 +466,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number::text, eeca.name, a.transdate,
        a.invnumber, a.ordnumber, a.ponumber, a.curr, a.amount_bc, a.netamount_bc,
        a.amount_bc - a.netamount_bc as tax,
        a.amount_bc - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
-       a.till, ee.name, me.name, a.shippingpoint, a.shipvia,
+       a.till::text, ee.name, me.name, a.shippingpoint, a.shipvia,
        '{}'::text[] as business_units -- TODO
   FROM (select id, transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
                notes, till, person_id, entity_credit_account, invoice,
@@ -591,7 +591,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number::text, eeca.name,
        a.amount_bc - a.netamount_bc as tax, a.amount_bc - p.due,
        p.due, p.last_payment,
        a.duedate, a.notes,
-       a.till, eee.name as employee, mee.name as manager, a.shippingpoint,
+       a.till::text, eee.name as employee, mee.name as manager, a.shippingpoint,
        a.shipvia, '{}'::text[]
 
   FROM (select id, transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
