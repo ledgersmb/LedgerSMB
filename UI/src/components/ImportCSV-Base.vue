@@ -9,7 +9,7 @@
             <div v-if="multi"
                  class="listheading">Batch Information</div>
             <div :class="transaction_fields ? 'two-column-grid' : 'non-grid'"
-                 style="width:fit-content;grid-gap:4px">
+                 style="width:fit-content">
                 <template v-if="transaction_fields">
                     <lsmb-text class="reference"
                                name="reference"
