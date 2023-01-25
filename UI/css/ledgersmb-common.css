@@ -7,7 +7,7 @@
 
 /* stylelint-disable no-descending-specificity */
 
-@import "system/global.css";
+@import url("system/global.css");
 
 td.money {
     text-align: right;
@@ -542,37 +542,36 @@ span.indicator {
     text-decoration: none;
 }
 
-
 .financial-statement .heading3.H {
-  padding-bottom: 1em;
+    padding-bottom: 1em;
 }
 
 .financial-statement .heading2.H {
-  padding-bottom: 1.5em;
+    padding-bottom: 1.5em;
 }
 
 .financial-statement .heading4.H {
-  padding-bottom: 0.75em;
+    padding-bottom: 0.75em;
 }
 
 .financial-statement .section1 {
-  font-size: 140%;
+    font-size: 140%;
 }
 
 .financial-statement .section2 {
-  font-size: 120%;
+    font-size: 120%;
 }
 
 .financial-statement .section3 {
-  font-size: 110%;
+    font-size: 110%;
 }
 
 .financial-statement .H {
-  font-style: italic;
+    font-style: italic;
 }
 
 .financial-statement .section4 {
-  font-size: 105%;
+    font-size: 105%;
 }
 
 #plDebug .plDebugPanelContent {
