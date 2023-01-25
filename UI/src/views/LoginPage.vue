@@ -73,7 +73,7 @@ export default defineComponent({
    },
    computed: {
       loginDisabled() {
-         return !this.username || !this.password || !this.company
+         return !this.username || !this.password
       }
    },
    methods: {
