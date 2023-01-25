@@ -600,8 +600,8 @@ RETURN QUERY EXECUTE $sql$
                 FROM entity e
                 JOIN entity_credit_account ec ON (e.id = ec.entity_id)
                 WHERE e.id = $1
-                       AND (ec.entity_class = $1
-                            or $1 is null)
+                       AND (ec.entity_class = $2
+                            or $2 is null)
 $sql$
 USING in_entity_id, in_entity_class;
 END
