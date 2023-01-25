@@ -20,23 +20,29 @@
                 LedgerSMB {{ version }}
               </h1>
               <div>
-                <div id="company_div">
-                  <lsmb-text name="login" size="20"
-                             id="username" :title="$t('User Name')"
-                             tabindex="1"
-                             :value="username"
-                             v-update:username=""
-                             autocomplete="off" />
-                  <lsmb-password name="password"
-                                 id="password" size="20"
-                                 :title="$t('Password')"
-                                 :value="password" v-update:password=""
-                                 tabindex="2" autocomplete="off" />
-                  <lsmb-text name="company"
-                             id="company" size="20"
-                             :title="$t('Company')" tabindex="3"
-                             :value="company"
-                             v-update:company="" />
+                  <div id="company_div">
+                      <lsmb-text name="login" size="20"
+                                 id="username" :title="$t('User Name')"
+                                 tabindex="1"
+                                 :value="username"
+                                 v-update:username=""
+                                 autocomplete="off"
+                                 @keyup.enter="login"
+                      />
+                      <lsmb-password name="password"
+                                     id="password" size="20"
+                                     :title="$t('Password')"
+                                     :value="password" v-update:password=""
+                                     tabindex="2" autocomplete="off"
+                                     @keyup.enter="login"
+                      />
+                      <lsmb-text name="company"
+                                 id="company" size="20"
+                                 :title="$t('Company')" tabindex="3"
+                                 :value="company"
+                                 v-update:company=""
+                                 @keyup.enter="login"
+                      />
                 </div>
                 <lsmb-button tabindex="4" id="login" @click="login" :disabled="loginDisabled">{{ $t('Login') }}</lsmb-button>
               </div>
@@ -78,7 +84,11 @@ export default defineComponent({
       }
    },
    methods: {
-      async login() {
+       async login() {
+           if (this.loginDisabled) {
+               return;
+           }
+
           this.inProgress = true;
           let r = await fetch("login.pl?action=authenticate&company=" + encodeURI(this.company), {
              method: "POST",
