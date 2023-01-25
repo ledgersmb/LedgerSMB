@@ -445,7 +445,7 @@ sub report_results {
              $base_href .= '&depreciation=1';
     } else {
              $base_href .= "&gain_acct=$ar->{gain_acct}&loss_acct=".
-                            "$ar->{loss_acct}";
+                            "$ar->{loss_acct}&cash_acct=$ar->{cash_acct}";
     }
     $base_href .= '&id=';
     my $cols = [
@@ -497,6 +497,7 @@ sub report_results {
     my $hiddens = {
         gain_acct => $request->{gain_acct},
         loss_acct => $request->{loss_acct},
+        cash_acct => $request->{cash_acct},
     };
     my $count = 0;
     for my $r (@results){
@@ -758,6 +759,7 @@ sub partial_disposal_details {
             id        => $report->{id},
             gain_acct => $report->{gain_acct},
             loss_acct => $report->{loss_acct},
+            cash_acct => $report->{cash_acct},
         },
         FORM_ID => $request->{form_id},
         name    => $title,
@@ -865,6 +867,7 @@ sub disposal_details {
             id        => $report->{id},
             gain_acct => $report->{gain_acct},
             loss_acct => $report->{loss_acct},
+            cash_acct => $report->{cash_acct},
         },
         FORM_ID => $request->{form_id},
         name    => $title,
@@ -892,7 +895,7 @@ Approves disposal details.  id must be set,
 For disposal reports, gain_acct and loss_acct must be set to appropriate
 account id's.
 
-For depreciation reports, expense_acct must be set to an appropriate accont id.
+For depreciation reports, expense_acct must be set to an appropriate account id.
 
 =cut
 
@@ -907,7 +910,7 @@ sub report_details_approve {
 
 Loops through the input and approves all selected reports.
 
-For disposal reports, gain_acct and loss_acct must be set to appropriate
+For disposal reports, gain_acct, loss_acct and cash_acct must be set to appropriate
 account id's.
 
 For depreciation reports, expense_acct must be set to an appropriate accont id.

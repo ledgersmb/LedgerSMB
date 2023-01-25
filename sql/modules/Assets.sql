@@ -1,6 +1,31 @@
 
 set client_min_messages = 'warning';
 
+/*
+
+
+  asset_report__generate_gl   - creates GL transaction upon approval of depreciation report
+  asset_report__disposal_gl   - creates GL transaction upon approval of a disposal (sale/abandonment)
+  asset_disposal__approve     - creates GL transaction upon approval of *partial* disposal (sale/abandonment)
+  asset__import_from_disposal - creates new assets from partially disposed assets, upon approval
+  asset_report__get_disposal  - returns a line per disposed asset in a disposal report with disposal details
+
+
+  call tree:
+
+    asset_report__approve
+      report_class of
+        '1': (depreciation)
+          asset_report__generate_gl
+        '2': (full disposal)
+          asset_report__disposal_gl
+            asset_report__get_disposal
+        '4': (partial disposal)
+          asset_disposal__approve
+            asset__import_from_disposal
+
+*/
+
 
 BEGIN;
 
@@ -719,8 +744,10 @@ $$ LANGUAGE SQL;
 COMMENT ON FUNCTION asset_report_partial_disposal_details(in_id int) IS
 $$ Returns the partial disposal details for a partial disposal report.$$;
 
+DROP FUNCTION IF EXISTS asset_report__approve(int, int, int, int);
+
 CREATE OR REPLACE FUNCTION asset_report__approve
-(in_id int, in_expense_acct int, in_gain_acct int, in_loss_acct int)
+(in_id int, in_expense_acct int, in_gain_acct int, in_loss_acct int, in_cash_acct int)
 RETURNS asset_report AS
 $$
 DECLARE ret_val asset_report;
@@ -735,7 +762,7 @@ BEGIN
                     PERFORM asset_report__generate_gl(in_id, in_expense_acct);
                 ELSIF ret_val.report_class = 2 THEN
                     PERFORM asset_report__disposal_gl(
-                                 in_id, in_gain_acct, in_loss_acct);
+                                 in_id, in_gain_acct, in_loss_acct, in_cash_acct);
                 ELSIF ret_val.report_class = 4 THEN
                     PERFORM asset_disposal__approve(in_id, in_gain_acct, in_loss_acct, (select asset_account_id from asset_class
                                                                                          where id = ret_val.asset_class)
@@ -747,25 +774,25 @@ BEGIN
         RETURN ret_val;
 end;
 $$ language plpgsql;
-revoke execute on function asset_report__approve(int, int, int, int) from public;
+revoke execute on function asset_report__approve(int, int, int, int, int) from public;
 
-COMMENT ON function asset_report__approve(int, int, int, int) is
+COMMENT ON function asset_report__approve(int, int, int, int, int) is
 $$ This function approves an asset report (whether depreciation or disposal).
 Also generates relevant GL drafts for review and posting.$$;
 
+DROP FUNCTION IF EXISTS asset_report__disposal_gl(int, int, int);
+
 CREATE OR REPLACE FUNCTION asset_report__disposal_gl
-(in_id int, in_gain_acct int, in_loss_acct int)
+(in_id int, in_gain_acct int, in_loss_acct int, in_cash_acct int)
 RETURNS bool AS
 $$
   INSERT INTO gl (reference, description, transdate, approved, trans_type_code)
   SELECT setting_increment('glnumber'), 'Asset Report ' || asset_report.id,
                 report_date, false, 'fd'
     FROM asset_report
-    JOIN asset_report_line ON (asset_report.id = asset_report_line.report_id)
-    JOIN asset_item        ON (asset_report_line.asset_id = asset_item.id)
-   WHERE asset_report.id = in_id
-GROUP BY asset_report.id, asset_report.report_date;
+  WHERE asset_report.id = in_id;
 
+  -- Clear cumulative depreciation account
   INSERT
     INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc,
                     approved, transdate)
@@ -774,7 +801,20 @@ GROUP BY asset_report.id, asset_report.report_date;
          TRUE, r.disposed_on
     FROM asset_report__get_disposal(in_id) r
     JOIN asset_item a ON (r.id = a.id)
-GROUP BY a.dep_account_id, r.disposed_on;
+   GROUP BY a.dep_account_id, r.disposed_on
+  HAVING sum(r.accum_depreciation) <> 0;
+
+  -- Add cash from sale(=disposal)
+  INSERT
+    INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc,
+                    approved, transdate)
+  SELECT in_cash_acct, currval('id')::int, sum(r.disposal_amt) * -1,
+         defaults_get_defaultcurrency(), sum(r.disposal_amt) * -1,
+         TRUE, r.disposed_on
+    FROM asset_report__get_disposal(in_id) r
+    JOIN asset_item ai ON (r.id = ai.id)
+   GROUP BY r.disposed_on
+  HAVING sum(r.disposal_amt) <> 0;
 
   -- GAIN is negative since it is a debit
   INSERT
@@ -786,8 +826,9 @@ GROUP BY a.dep_account_id, r.disposed_on;
          TRUE, r.disposed_on
     FROM asset_report__get_disposal(in_id) r
     JOIN asset_item ai ON (r.id = ai.id)
-GROUP BY r.disposed_on;
+   GROUP BY r.disposed_on;
 
+  -- Clear asset from asset account
   INSERT
     INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc,
                     approved, transdate)
@@ -796,14 +837,15 @@ GROUP BY r.disposed_on;
          TRUE, r.disposed_on
     FROM asset_report__get_disposal(in_id) r
     JOIN asset_item a ON (r.id = a.id)
-GROUP BY a.asset_account_id, r.disposed_on;
+   GROUP BY a.asset_account_id, r.disposed_on
+  HAVING sum(r.purchase_value) <> 0;
 
 
   SELECT TRUE;
 $$ language sql;
 
 COMMENT ON  FUNCTION asset_report__disposal_gl
-(in_id int, in_gain_acct int, in_loss_acct int) IS
+(in_id int, in_gain_acct int, in_loss_acct int, in_cash_acct int) IS
 $$ Generates GL transactions for ful disposal reports.$$;
 
 
@@ -841,6 +883,12 @@ CREATE OR REPLACE FUNCTION asset_report__get_loss_accts()
 RETURNS SETOF account
 AS $$
     SELECT * FROM account__get_by_link_desc('asset_loss');
+$$ language sql;
+
+CREATE OR REPLACE FUNCTION asset_report__get_cash_accts()
+RETURNS SETOF account
+AS $$
+  SELECT * FROM account where not obsolete;
 $$ language sql;
 
 COMMENT ON FUNCTION asset_report__get_loss_accts() IS
@@ -1090,7 +1138,7 @@ $$ language plpgsql;
 
 COMMENT ON FUNCTION asset_report__begin_disposal
 (in_asset_class int, in_report_date date, in_report_class int) IS
-$$ Creates the asset report recofd for the asset disposal report.$$;
+$$ Creates the asset report record for the asset disposal report.$$;
 
 create or replace function asset_report__record_approve(in_id int)
 returns asset_report

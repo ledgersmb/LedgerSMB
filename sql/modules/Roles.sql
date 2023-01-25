@@ -1275,7 +1275,7 @@ SELECT lsmb__grant_perms('assets_approve', obj, 'SELECT')
   FROM unnest(array['asset_report'::text, 'asset_report_line', 'asset_item',
                     'asset_class']) obj;
 
-SELECT lsmb__grant_exec('assets_approve', 'asset_report__approve(int, int, int, int)');
+SELECT lsmb__grant_exec('assets_approve', 'asset_report__approve(int, int, int, int, int)');
 SELECT lsmb__grant_menu('assets_approve', id, 'allow')
   FROM unnest(array[239,240]) id;
 
