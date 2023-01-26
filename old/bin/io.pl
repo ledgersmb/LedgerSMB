@@ -1677,16 +1677,14 @@ sub ship_to {
 
                               <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio id="shiptoradio_$i" value="$i"  $checked >
                               <input name="shiptolocationid_$i" id="shiptolocationid_$i" type="hidden" value="$form->{"shiptolocationid_$i"}" readonly></td>
-                              <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress1_$i size=12 maxlength=64 id="ad1_$i" value="$form->{"shiptoaddress1_$i"}" readonly></td>
-                              <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress2_$i size=12 maxlength=64 id="ad2_$i" value="$form->{"shiptoaddress2_$i"}" readonly></td>
-                              <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress3_$i size=12 maxlength=64 id="ad3_$i" value="$form->{"shiptoaddress3_$i"}" readonly></td>
-                              <td><input data-dojo-type="dijit/form/TextBox" name=shiptocity_$i size=8 maxlength=32 id="ci_$i" value="$form->{"shiptocity_$i"}" readonly></td>
-                              <td><input data-dojo-type="dijit/form/TextBox" name=shiptostate_$i size=10 maxlength=32 id="st_$i" value="$form->{"shiptostate_$i"}" readonly></td>
-                              <td><input data-dojo-type="dijit/form/TextBox" name=shiptozipcode_$i size=8 maxlength=10 id="zi_$i" value="$form->{"shiptozipcode_$i"}" readonly></td>
-                              <td><input data-dojo-type="dijit/form/TextBox" name=shiptocountry_$i size=5 maxlength=32 id="co_$i" value="$form->{"shiptocountry_$i"}" readonly></td>
-
+                              <td>$form->{"shiptoaddress1_$i"}</td>
+                              <td>$form->{"shiptoaddress2_$i"}</td>
+                              <td>$form->{"shiptoaddress3_$i"}</td>
+                              <td>$form->{"shiptocity_$i"}</td>
+                              <td>$form->{"shiptostate_$i"}</td>
+                              <td>$form->{"shiptozipcode_$i"}</td>
+                              <td>$form->{"shiptocountry_$i"}</td>
                              <tr>
-
                                 |;
 
                              }
@@ -1729,9 +1727,9 @@ sub ship_to {
                         print qq|
                               <tr>
                                   <td>&nbsp</td>
-                                  <td><input data-dojo-type="dijit/form/TextBox" name=shiptotype_$i size=5 maxlength=100 value="$form->{"shiptotype_$i"}" readonly></td>
-                                  <td><input data-dojo-type="dijit/form/TextBox" name=shiptocontact_$i size=11 maxlength=100 value="$form->{"shiptocontact_$i"}" readonly></td>
-                                  <td><input data-dojo-type="dijit/form/TextBox" name=shiptodescription_$i size=12 maxlength=100 value="$form->{"shiptodescription_$i"}" readonly></td>
+                                  <td>$form->{"shiptotype_$i"}</td>
+                                  <td>$form->{"shiptocontact_$i"}</td>
+                                  <td>$form->{"shiptodescription_$i"}</td>
                              </tr>    |;
 
                               }
