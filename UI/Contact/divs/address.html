@@ -91,9 +91,9 @@
                 value= DISPLAY.id
         };
 %]
-  [% IF credit_act.id; %]
         <div class="two-column-grid" style="width:fit-content">
-                    [% IF DISPLAY.is_for_credit;
+  [% IF credit_act.id;
+                    IF DISPLAY.is_for_credit;
                        attach_to = 3;
                     ELSE;
                        attach_to = 1;
@@ -104,12 +104,10 @@
                           default_values  = [attach_to]
                           options         = attach_level_options
                           label = text('Attach To') #'
-                       }; %]
-        </div>
-                    [% ELSE %]
-        <label>[% text('Attach to Entity'); %]</label>
+                       };
+                     ELSE %]
+            <label>[% text('Attach to Entity'); %]</label><span>&nbsp;</span>
                    [% END; %]
-        <div class="two-column-grid" style="width:fit-content">
                 [% INCLUDE select element_data = {
                        name           = "location_class"
                        default_values = [DISPLAY.location_class]
@@ -118,11 +116,10 @@
                        value_attr     = "id"
                        label = text('Type')
                 } %]
-        </div>
-        <div class="four-column-grid" style="width:fit-content">
+            <label style="grid-row: span 3">[% text('Address') %]</label>
                 [% INCLUDE input element_data = {
                         name = "line_one"
-                        label = text('Address'),
+                        title = text('Address'),
                         value = DISPLAY.line_one,
                         type = "text",
                         size = "20",
@@ -140,8 +137,6 @@
                         type = "text"
                         size = "20"
                 } %]
-        </div>
-        <div class="two-column-grid" style="width:fit-content">
                 [% PROCESS input element_data = {
                         label = text('City'),
                         name = "city",
