@@ -71,7 +71,6 @@ define([
         model: model,
         showRoot: false,
         openOnClick: true,
-        load_link: null,
         postCreate: function () {
             this.inherited(arguments);
 
@@ -147,11 +146,11 @@ define([
                 // function).
                 url += "#" + Date.now();
 
-                if (this.load_link) {
+                if (window.__lsmbLoadLink) {
                     if (url.charAt(0) !== "/") {
                         url = "/" + url;
                     }
-                    this.load_link(url);
+                    window.__lsmbLoadLink(url);
                 }
             }
         },
