@@ -190,8 +190,10 @@ export default {
             .getElementById("maindiv")
             .setAttribute("data-lsmb-done", "true");
         this.$nextTick(() => this.updateContent(this.uiURL));
-        window.__lsmbSubmitForm = (req) =>
-            this.updateContent(req.url, req.options);
+        window.__lsmbSubmitForm =
+            (req) => this.updateContent(req.url, req.options);
+        window.__lsmbReportError =
+            (err) => this._report_error(err);
     },
     beforeUpdate() {
         this._cleanWidgets();
