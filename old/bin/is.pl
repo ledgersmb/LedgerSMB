@@ -794,6 +794,15 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
         $hold_button_text = $locale->text('On Hold');
     }
 
+    $totalpaid = 0;
+    foreach my $i ( 1 .. $form->{paidaccounts} ) {
+        next if $readonly and not $form->{"datepaid_$i"};
+        $totalpaid += $form->{"paid_$i"};
+    }
+    $remaining_balance = $form->{invtotal} - $totalpaid;
+    $totalpaid = $form->format_amount( \%myconfig, $totalpaid, $form->{_setting_decimal_places}, 0 );
+    $remaining_balance = $form->format_amount( \%myconfig, $remaining_balance, $form->{_setting_decimal_places}, 0 );
+
     print qq|
   <tr>
     <td>
@@ -846,6 +855,18 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
       (($form->{currency} ne $form->{defaultcurrency})
        ? "<tr><td><!-- total --></td><td align=right>$invtotal_bc</td><td>$form->{defaultcurrency}</td></tr>" : '')
       . qq|
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+      <tr class="invoice-total-paid">
+        <th>| . $locale->text('Total paid') . qq|</th><td align=right>$totalpaid</td><td>$form->{currency}</td>
+      </tr>
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+      <tr class="invoice-remaining-balance">
+        <th>| . $locale->text('Remaining balance') . qq|</th><td align=right>$remaining_balance</td><td>$form->{currency}</td>
+      </tr>
           $taxincluded
         </table>
       </td>
