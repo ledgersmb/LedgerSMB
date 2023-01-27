@@ -3,6 +3,17 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.11
+* Stricter allowance for non-uniquely reconciled lines during migration (#7078)
+* Rounding crash in reports with huge numbers (#7100)
+* Unbalanced fixed asset disposal (through sale) transaction (#5180)
+* Correctly show populated reconciliation after bank statement upload (#6183)
+* CSV imports throwing a 'missing function' error (#7108)
+* Restore logging into the default company entering the name (#7114)
+* Addresses not aligning correctly with labels in some cases (#7117)
+* <ENTER> not triggering login from input fields on login page (#7121)
+
+
 Changelog for 1.10.10
 * Don't show obsolete accounts in account drop-downs (#7061)
 * Focus the first empty line on Update in AR, AP, Orders and Quotes (#1584)
