@@ -846,6 +846,10 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
                  $selectARAP
               </select></td>
         </tr>
+        <tr><td>&nbsp;</td></td>
+        <tr class="transaction-total-paid"><td>| . $form->format_amount(\%myconfig, $form->{oldtotalpaid}, $form->{_setting_decimal_places} ) . qq|</td><td></td><td>| . $locale->text('Total paid') . qq|</td></tr>
+        <tr class="transaction-remaining-balance"><td>| . $form->format_amount(\%myconfig, $form->{invtotal} - $form->{oldtotalpaid}, $form->{_setting_decimal_places} ) . qq|</td><td></td><td>| . $locale->text('Remaining balance') . qq|</td></tr>
+        <tr><td>&nbsp;</td></td>
         <tr>
            <td>&nbsp;</td>
            <td>&nbsp;</td>
