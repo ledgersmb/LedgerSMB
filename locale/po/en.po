@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.11-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2023-01-15 20:21+0000\n"
+"POT-Creation-Date: 2023-01-27 15:17+0000\n"
 "PO-Revision-Date: 2022-01-09T21:20:15.970Z\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
@@ -183,7 +183,7 @@ msgstr ""
 msgid "Access Denied"
 msgstr ""
 
-#: UI/src/views/LoginPage.vue:102
+#: UI/src/views/LoginPage.vue:113
 msgid "Access denied: Bad username or password"
 msgstr ""
 
@@ -312,7 +312,7 @@ msgstr ""
 msgid "Accrual Basis:"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:819
+#: lib/LedgerSMB/Scripts/asset.pm:821
 msgid "Accum. Depreciation"
 msgstr ""
 
@@ -604,7 +604,7 @@ msgstr ""
 msgid "Adjusted"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:825
+#: lib/LedgerSMB/Scripts/asset.pm:827
 msgid "Adjusted Basis"
 msgstr ""
 
@@ -786,8 +786,8 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:125
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:228
-#: lib/LedgerSMB/Scripts/asset.pm:528 lib/LedgerSMB/Scripts/asset.pm:644
-#: lib/LedgerSMB/Scripts/asset.pm:746 lib/LedgerSMB/Scripts/asset.pm:852
+#: lib/LedgerSMB/Scripts/asset.pm:529 lib/LedgerSMB/Scripts/asset.pm:645
+#: lib/LedgerSMB/Scripts/asset.pm:747 lib/LedgerSMB/Scripts/asset.pm:854
 #: lib/LedgerSMB/Scripts/budgets.pm:113 UI/reconciliation/report.html:426
 msgid "Approve"
 msgstr ""
@@ -825,12 +825,12 @@ msgstr ""
 msgid "April"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:579 lib/LedgerSMB/Scripts/asset.pm:689
-#: lib/LedgerSMB/Scripts/asset.pm:813
+#: lib/LedgerSMB/Scripts/asset.pm:580 lib/LedgerSMB/Scripts/asset.pm:690
+#: lib/LedgerSMB/Scripts/asset.pm:815
 msgid "Aquired Value"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:718
+#: lib/LedgerSMB/Scripts/asset.pm:719
 msgid "Aquired Value Remaining"
 msgstr ""
 
@@ -1431,7 +1431,8 @@ msgstr ""
 msgid "Cash"
 msgstr ""
 
-#: UI/payments/payment2.html:346 UI/Reports/filters/payments.html:50
+#: UI/asset/begin_approval.html:65 UI/payments/payment2.html:346
+#: UI/Reports/filters/payments.html:50
 msgid "Cash Account"
 msgstr ""
 
@@ -1492,7 +1493,7 @@ msgid "Chord"
 msgstr ""
 
 #: old/bin/arap.pl:171 t/data/04-complex_template.html:386
-#: UI/Contact/divs/address.html:81 UI/Contact/divs/address.html:143
+#: UI/Contact/divs/address.html:81 UI/Contact/divs/address.html:141
 #: UI/Reports/filters/contact_search.html:94
 #: UI/Reports/filters/purchase_history.html:75
 msgid "City"
@@ -1607,7 +1608,7 @@ msgstr ""
 #: templates/demo/display_report.tex:37 UI/Contact/contact.html:12
 #: UI/Contact/divs/company.html:2 UI/main.html:32
 #: UI/Reports/aging_report.html:12 UI/Reports/display_report.html:19
-#: UI/src/views/LoginPage.vue:36
+#: UI/src/views/LoginPage.vue:41
 msgid "Company"
 msgstr ""
 
@@ -1640,7 +1641,7 @@ msgstr ""
 msgid "Company Sales Tax ID"
 msgstr ""
 
-#: UI/src/views/LoginPage.vue:100
+#: UI/src/views/LoginPage.vue:111
 msgid "Company does not exist"
 msgstr ""
 
@@ -1742,7 +1743,7 @@ msgstr ""
 #: old/bin/ic.pl:2042 old/bin/ic.pl:2191 old/bin/ic.pl:949 old/bin/io.pl:640
 #: old/bin/oe.pl:1656 old/bin/oe.pl:2180 old/bin/oe.pl:2677 old/bin/pe.pl:1095
 #: old/bin/pe.pl:240 old/bin/pe.pl:659 old/bin/pe.pl:828
-#: UI/asset/begin_approval.html:65 UI/asset/begin_report.html:59
+#: UI/asset/begin_approval.html:75 UI/asset/begin_report.html:59
 #: UI/Contact/divs/credit.html:526 UI/create_batch.html:44
 #: UI/inventory/adjustment_setup.html:34 UI/oe-save-warn.html:18
 #: UI/payments/payments_filter.html:138 UI/Reports/co/filter_bm.html:138
@@ -1846,7 +1847,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Payroll/Deduction_Types.pm:34
 #: lib/LedgerSMB/Report/Payroll/Income_Types.pm:34 old/bin/io.pl:1657
 #: t/data/04-complex_template.html:389 UI/Contact/divs/address.html:84
-#: UI/Contact/divs/address.html:172 UI/Contact/divs/company.html:94
+#: UI/Contact/divs/address.html:170 UI/Contact/divs/company.html:94
 #: UI/Contact/divs/employee.html:96 UI/Contact/divs/person.html:118
 #: UI/payroll/deduction.html:15 UI/payroll/income.html:16
 #: UI/Reports/filters/contact_search.html:109
@@ -2059,7 +2060,7 @@ msgstr ""
 msgid "Customer/Vendor Accounts"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:808
+#: lib/LedgerSMB/Scripts/asset.pm:810
 msgid "D M"
 msgstr ""
 
@@ -2132,7 +2133,7 @@ msgstr ""
 msgid "Database exists."
 msgstr ""
 
-#: UI/src/views/LoginPage.vue:104
+#: UI/src/views/LoginPage.vue:115
 msgid "Database version mismatch"
 msgstr ""
 
@@ -2424,16 +2425,16 @@ msgstr ""
 msgid "Delivery Date"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:596
+#: lib/LedgerSMB/Scripts/asset.pm:597
 msgid "Dep. Basis"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:585
+#: lib/LedgerSMB/Scripts/asset.pm:586
 msgid "Dep. Method"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:573 lib/LedgerSMB/Scripts/asset.pm:683
-#: lib/LedgerSMB/Scripts/asset.pm:796
+#: lib/LedgerSMB/Scripts/asset.pm:574 lib/LedgerSMB/Scripts/asset.pm:684
+#: lib/LedgerSMB/Scripts/asset.pm:798
 msgid "Dep. Starts"
 msgstr ""
 
@@ -2441,11 +2442,11 @@ msgstr ""
 msgid "Dep. Through"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:620
+#: lib/LedgerSMB/Scripts/asset.pm:621
 msgid "Dep. YTD"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:614
+#: lib/LedgerSMB/Scripts/asset.pm:615
 msgid "Dep. this run"
 msgstr ""
 
@@ -2467,7 +2468,7 @@ msgstr ""
 msgid "Depreciate Through"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:511 UI/accounts/edit.html:505
+#: lib/LedgerSMB/Scripts/asset.pm:512 UI/accounts/edit.html:505
 #: sql/Pg-database.sql:2657
 msgid "Depreciation"
 msgstr ""
@@ -2519,7 +2520,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:110
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:74
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:76 lib/LedgerSMB/Scripts/asset.pm:331
-#: lib/LedgerSMB/Scripts/asset.pm:695 lib/LedgerSMB/Scripts/asset.pm:791
+#: lib/LedgerSMB/Scripts/asset.pm:696 lib/LedgerSMB/Scripts/asset.pm:793
 #: lib/LedgerSMB/Scripts/currency.pm:138 lib/LedgerSMB/Scripts/currency.pm:53
 #: lib/LedgerSMB/Scripts/file.pm:138 old/bin/aa.pl:633 old/bin/aa.pl:685
 #: old/bin/am.pl:303 old/bin/ic.pl:1260 old/bin/ic.pl:2016 old/bin/ic.pl:2083
@@ -2614,16 +2615,16 @@ msgstr ""
 msgid "Discount:"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:706
+#: lib/LedgerSMB/Scripts/asset.pm:707
 msgid "Disp. Aquired Value"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:512 sql/Pg-database.sql:2655
+#: lib/LedgerSMB/Scripts/asset.pm:513 sql/Pg-database.sql:2655
 #: sql/Pg-database.sql:2658
 msgid "Disposal"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:802
+#: lib/LedgerSMB/Scripts/asset.pm:804
 msgid "Disposal Date"
 msgstr ""
 
@@ -2631,7 +2632,7 @@ msgstr ""
 msgid "Disposal Method"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:859
+#: lib/LedgerSMB/Scripts/asset.pm:861
 msgid "Disposal Report [_1] on date [_2]"
 msgstr ""
 
@@ -3101,7 +3102,7 @@ msgstr ""
 msgid "Error: Cannot include summary account in other dropdown menus"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:590
+#: lib/LedgerSMB/Scripts/asset.pm:591
 msgid "Est. Life"
 msgstr ""
 
@@ -3254,7 +3255,7 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:1067
+#: lib/LedgerSMB/Scripts/asset.pm:1070
 msgid "File Imported"
 msgstr ""
 
@@ -3457,7 +3458,7 @@ msgstr ""
 msgid "Gain"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:837
+#: lib/LedgerSMB/Scripts/asset.pm:839
 msgid "Gain (Loss)"
 msgstr ""
 
@@ -3465,7 +3466,7 @@ msgstr ""
 msgid "Gain Account"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:725
+#: lib/LedgerSMB/Scripts/asset.pm:726
 msgid "Gain/Loss"
 msgstr ""
 
@@ -4296,7 +4297,7 @@ msgstr ""
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ServerUI.js:27 UI/src/components/ServerUI.js:41
+#: UI/src/components/ServerUI.js:41 UI/src/components/ServerUI.js:27
 #: UI/src/components/ConfigTable.vue:59
 msgid "Loading..."
 msgstr ""
@@ -4322,11 +4323,11 @@ msgstr ""
 msgid "Logged out due to inactivity"
 msgstr ""
 
-#: UI/src/views/LoginPage.vue:45
+#: UI/src/views/LoginPage.vue:52
 msgid "Logging in... Please wait."
 msgstr ""
 
-#: UI/setup/credentials.html:91 UI/src/views/LoginPage.vue:40
+#: UI/setup/credentials.html:91 UI/src/views/LoginPage.vue:47
 msgid "Login"
 msgstr ""
 
@@ -5200,7 +5201,7 @@ msgstr ""
 msgid "Partial"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:730
+#: lib/LedgerSMB/Scripts/asset.pm:731
 msgid "Partial Disposal Report [_1] on date [_2]"
 msgstr ""
 
@@ -5231,7 +5232,7 @@ msgstr ""
 
 #: UI/Contact/divs/user.html:55 UI/setup/credentials.html:68
 #: UI/setup/edit_user.html:49 UI/setup/new_user.html:29
-#: UI/src/views/LoginPage.vue:32
+#: UI/src/views/LoginPage.vue:34
 msgid "Password"
 msgstr ""
 
@@ -5329,11 +5330,11 @@ msgstr ""
 msgid "Percent"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:700
+#: lib/LedgerSMB/Scripts/asset.pm:701
 msgid "Percent Disposed"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:712
+#: lib/LedgerSMB/Scripts/asset.pm:713
 msgid "Percent Remaining"
 msgstr ""
 
@@ -5688,15 +5689,15 @@ msgstr ""
 msgid "Printing Work Order [_1]"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:608
+#: lib/LedgerSMB/Scripts/asset.pm:609
 msgid "Prior Dep."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:602
+#: lib/LedgerSMB/Scripts/asset.pm:603
 msgid "Prior Through"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:374 lib/LedgerSMB/Scripts/asset.pm:831
+#: lib/LedgerSMB/Scripts/asset.pm:374 lib/LedgerSMB/Scripts/asset.pm:833
 msgid "Proceeds"
 msgstr ""
 
@@ -6096,7 +6097,7 @@ msgstr ""
 msgid "Report Name"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:541
+#: lib/LedgerSMB/Scripts/asset.pm:542
 msgid "Report Results"
 msgstr ""
 
@@ -6108,7 +6109,7 @@ msgstr ""
 msgid "Report Type"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:633
+#: lib/LedgerSMB/Scripts/asset.pm:634
 msgid "Report [_1] on date [_2]"
 msgstr ""
 
@@ -6427,7 +6428,7 @@ msgstr ""
 msgid "Save Info"
 msgstr ""
 
-#: t/data/04-complex_template.html:485 UI/Contact/divs/address.html:184
+#: t/data/04-complex_template.html:485 UI/Contact/divs/address.html:182
 msgid "Save Location"
 msgstr ""
 
@@ -6435,7 +6436,7 @@ msgstr ""
 msgid "Save New"
 msgstr ""
 
-#: UI/Contact/divs/address.html:192
+#: UI/Contact/divs/address.html:190
 msgid "Save New Location"
 msgstr ""
 
@@ -7092,7 +7093,7 @@ msgid "State"
 msgstr ""
 
 #: t/data/04-complex_template.html:387 UI/Contact/divs/address.html:82
-#: UI/Contact/divs/address.html:151 UI/Reports/filters/contact_search.html:99
+#: UI/Contact/divs/address.html:149 UI/Reports/filters/contact_search.html:99
 #: UI/Reports/filters/purchase_history.html:83
 msgid "State/Province"
 msgstr ""
@@ -7236,8 +7237,8 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:75
 #: lib/LedgerSMB/Report/Listings/Asset.pm:128
-#: lib/LedgerSMB/Report/Listings/Asset.pm:90 lib/LedgerSMB/Scripts/asset.pm:568
-#: lib/LedgerSMB/Scripts/asset.pm:678 lib/LedgerSMB/Scripts/asset.pm:786
+#: lib/LedgerSMB/Report/Listings/Asset.pm:90 lib/LedgerSMB/Scripts/asset.pm:569
+#: lib/LedgerSMB/Scripts/asset.pm:679 lib/LedgerSMB/Scripts/asset.pm:788
 msgid "Tag"
 msgstr ""
 
@@ -7722,7 +7723,7 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:626
+#: lib/LedgerSMB/Scripts/asset.pm:627
 msgid "Total Accum. Dep."
 msgstr ""
 
@@ -7970,7 +7971,7 @@ msgstr ""
 msgid "Unknown database found."
 msgstr ""
 
-#: UI/src/views/LoginPage.vue:106
+#: UI/src/views/LoginPage.vue:117
 msgid "Unknown error preventing login"
 msgstr ""
 
@@ -8456,7 +8457,7 @@ msgstr ""
 msgid "Zip Code"
 msgstr ""
 
-#: UI/Contact/divs/address.html:83 UI/Contact/divs/address.html:158
+#: UI/Contact/divs/address.html:83 UI/Contact/divs/address.html:156
 msgid "Zip/Post Code"
 msgstr ""
 
@@ -8627,7 +8628,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/views/Home.vue:36 UI/src/views/Home.vue:51
+#: UI/src/views/Home.vue:51 UI/src/views/Home.vue:36
 msgid "mailing lists"
 msgstr ""
 
