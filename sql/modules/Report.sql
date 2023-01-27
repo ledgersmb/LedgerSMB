@@ -60,7 +60,7 @@ CREATE TYPE report_aging_item AS (
         "language" text,
         invnumber text,
         transdate date,
-        till varchar(20),
+        till text,
         ordnumber text,
         ponumber text,
         notes text,
@@ -99,7 +99,7 @@ RETURN QUERY EXECUTE $sql$
                        )
                 SELECT c.entity_id, c.meta_number::text, e.name,
                        e.name as contact_name, c.language_code::text as "language",
-                       a.invnumber, a.transdate, a.till, a.ordnumber,
+                       a.invnumber, a.transdate, a.till::text, a.ordnumber,
                        a.ponumber, a.notes,
                        CASE WHEN a.age/30 = 0
                                  THEN (a.sign * sum(ac.amount_bc))
