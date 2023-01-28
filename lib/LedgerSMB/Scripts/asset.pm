@@ -20,7 +20,6 @@ use warnings;
 
 use Text::CSV;
 
-use LedgerSMB::DBObject::Asset_Report;
 use LedgerSMB::Magic qw( MONTHS_PER_YEAR  RC_PARTIAL_DISPOSAL RC_DISPOSAL );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Assets::Net_Book_Value;
@@ -278,7 +277,7 @@ sub asset_save {
     $request->call_procedure(
         funcname => 'asset_item__add_note',
         args      => [
-            $request->{id},
+            $newasset->{id},
             'Vendor/Invoice Note',
             qq|
 Vendor: $request->{meta_number}
@@ -297,14 +296,66 @@ report_init inputs can be used to set defaults.
 
 =cut
 
+sub _asset_report_get {
+    my ($request, $id) = @_;
+
+    my ($ref) = $request->call_procedure(
+        funcname => 'asset_report__get',
+        args     => [ $id ]);
+
+    if ($ref->{report_class} == 1) {
+        $ref->{report_lines} = [
+            $request->call_procedure(
+                funcname => 'asset_report__get_lines',
+                args     => [ $id ])
+            ];
+    }
+    elsif ($ref->{report_class} == 2) {
+        $ref->{report_lines} = [
+            $request->call_procedure(
+                funcname => 'asset_report__get_disposal',
+                args     => [ $id ])
+            ];
+    }
+    elsif ($ref->{report_class} == 4) {
+        $ref->{report_lines} = [
+            $request->call_procedure(
+                funcname => 'asset_report_partial_disposal_details',
+                args     => [ $id ])
+            ];
+    }
+
+    return $ref;
+}
+
+sub _asset_report_get_metadata {
+    my ($request) = @_;
+
+    return {
+        asset_classes => [ $request->call_procedure( funcname => 'asset_class__list', args => [] ) ],
+        disp_methods  => [ $request->call_procedure( funcname => 'asset_report__get_disposal_methods', args => [] ) ],
+        cash_accounts => [
+            map { $_->{text} = $_->{accno} . '--' . $_->{description}; $_ }
+            $request->call_procedure( funcname => 'asset_report__get_cash_accts', args => [] ) ],
+        exp_accounts => [
+            map { $_->{text} = $_->{accno} . '--' . $_->{description}; $_ }
+            $request->call_procedure( funcname => 'asset_report__get_expense_accts', args => [] ) ],
+        gain_accounts => [
+            map { $_->{text} = $_->{accno} . '--' . $_->{description}; $_ }
+            $request->call_procedure( funcname => 'asset_report__get_gain_accts', args => [] ) ],
+        loss_accounts => [
+            map { $_->{text} = $_->{accno} . '--' . $_->{description}; $_ }
+            $request->call_procedure( funcname => 'asset_report__get_loss_accts', args => [] ) ],
+    };
+}
+
 sub new_report {
     my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Asset_Report->new(%$request);
-    $report->get_metadata;
+
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'asset/begin_report',
                              { request => $request,
-                               report => $report });
+                               report => _asset_report_get_metadata($request) });
 }
 
 =item report_init
@@ -319,9 +370,26 @@ Inputs expected:
 
 sub report_init {
     my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Asset_Report->new(%$request);
-    $report->generate;
-    return display_report($request, $report);
+
+    my @assets = $request->call_procedure(
+        funcname => 'asset_report__generate',
+        args     => [
+            $request->{depreciation},
+            $request->{asset_class},
+            $request->{report_date}
+        ]);
+    if ($request->{depreciation}) {
+        $_->{checked} = "CHECKED" for @assets;
+    }
+    return display_report($request,
+                          {
+                              assets => \@assets,
+                              depreciation => $request->{depreciation},
+                              asset_class => $request->{asset_class},
+                              report_date => $request->{report_date},
+                              id => $request->{id},
+                              accum_account_id => $request->{accum_account_id}
+                          });
 }
 
 =item report_save
@@ -334,16 +402,55 @@ see LedgerSMB::DBObject::Asset_Report->save() for expected inputs.
 
 sub report_save{
     my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Asset_Report->new(%$request);
-    $report->{asset_ids} = [];
-    for my $count (1 .. $request->{rowcount_}){
-        my $id = $request->{"row_$count"};
-        if ($request->{"asset_$count"}){
-           push @{$report->{asset_ids}}, $id;
+
+    my @ids =
+        (map { $request->{"row_$_"} }
+         grep { $request->{"asset_$_"} }
+         1 .. $request->{rowcount_});
+
+    if ($request->{depreciation}) {
+        my ($ref) = $request->call_procedure(
+            funcname => 'asset_report__save',
+            args     => [
+                $request->@{qw( id report_date report_class asset_class )}
+            ]);
+
+        my $id = $ref->{id};
+        my ($dep) = $request->call_procedure(
+            funcname => 'asset_class__get_dep_method',
+            args     => [ $request->{asset_class} ]);
+        $request->call_procedure(
+            funcname => $dep->{sproc},
+            args     => [
+                \@ids,
+                $request->{report_date},
+                $id
+            ]);
+    }
+    else {
+        my ($ref) = $request->call_procedure(
+            funcname => 'asset_report__begin_disposal',
+            args     => [
+                $request->{asset_class},
+                $request->{report_date},
+                $request->{report_class}
+            ]);
+
+        for my $i (grep { $request->{"asset_$_"}  }
+                   0 .. $request->{rowcount_}) {
+            my $id = $request->{"asset_$i"};
+            $request->call_procedure(
+                funcname => 'asset_report__dispose',
+                args     => [
+                    $ref->{id},
+                    $id,
+                    $request->{"amount_$id"},
+                    $request->{"dm_$id"},
+                    $request->{"percent_$id"}
+                ]);
         }
     }
-    $report->save;
-    my $ar = LedgerSMB::DBObject::Asset_Report->new(%$request);
+
     return new_report($request);
 }
 
@@ -355,9 +462,7 @@ Retrieves the report identified by the id input and displays it.
 
 sub report_get {
     my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Asset_Report->new(%$request);
-    $report->get;
-    return display_report($request, $report);
+    return display_report($request, asset_report_get($request, $request->{id}));
 }
 
 =item display_report
@@ -479,12 +584,11 @@ LedgerSMB::DBObject::Asset_Report->search() for a list of such inputs.
 sub search_reports {
     my ($request) = @_;
     $request->{title} = $request->{_locale}->text('Search reports');
-    my $ar = LedgerSMB::DBObject::Asset_Report->new(%$request);
-    $ar->get_metadata;
+
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'asset/begin_approval',
                              { request => $request,
-                               asset_report => $ar });
+                               asset_report => _asset_report_get_metadata($request) });
 }
 
 =item report_results
@@ -498,16 +602,21 @@ inputs.
 sub report_results {
     my ($request) = @_;
     my $locale = $request->{_locale};
-    my $ar = LedgerSMB::DBObject::Asset_Report->new(%$request);
-    $ar->get_metadata;
-    my @results = $ar->search;
+    my $ar = _asset_report_get_metadata($request);
+
+    my @results = $request->call_procedure(
+        funcname => 'asset_report__search',
+        args     => [
+            $request->@{qw(start_date end_date asset_class approved entered_by)}
+        ]);
+
     my $base_href = 'asset.pl?action=report_details&'.
-                     "expense_acct=$ar->{expense_acct}";
-    if ($ar->{depreciation}){
+                     "expense_acct=$request->{expense_acct}";
+    if ($request->{depreciation}){
              $base_href .= '&depreciation=1';
     } else {
-             $base_href .= "&gain_acct=$ar->{gain_acct}&loss_acct=".
-                            "$ar->{loss_acct}&cash_acct=$ar->{cash_acct}";
+             $base_href .= "&gain_acct=$request->{gain_acct}&loss_acct=".
+                            "$request->{loss_acct}&cash_acct=$request->{cash_acct}";
     }
     $base_href .= '&id=';
     my $cols = [
@@ -563,8 +672,8 @@ sub report_results {
     };
     my $count = 0;
     for my $r (@results){
-        next if (($r->{report_class} != 1 and $ar->{depreciation})
-                 or ($r->{report_class} == 1 and not $ar->{depreciation}));
+        next if (($r->{report_class} != 1 and $request->{depreciation})
+                 or ($r->{report_class} == 1 and not $request->{depreciation}));
         $hiddens->{"id_$count"} = $r->{id};
         my $ref = {
             select         => 0,
@@ -595,7 +704,7 @@ sub report_results {
                    value => 'report_results_approve'
                    },
         ];
-    $ar->{hiddens} = $hiddens;
+
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'Reports/display_report', {
          FORM_ID => $request->{form_id},
@@ -618,12 +727,11 @@ set which represents the id of the report.
 sub report_details {
     my ($request) = @_;
     my $locale = $request->{_locale};
-    my $report = LedgerSMB::DBObject::Asset_Report->new(%$request);
-    $report->get;
+    my $report = _asset_report_get($request, $request->{id});
     if ($report->{report_class} == RC_DISPOSAL) {
-      return disposal_details($report);
+      return disposal_details($request, $report);
     } elsif ($report->{report_class} == RC_PARTIAL_DISPOSAL ) {
-      return partial_disposal_details($report);
+      return partial_disposal_details($request, $report);
     }
     my $cols = [
         {
@@ -731,10 +839,9 @@ id of the report desired.
 =cut
 
 sub partial_disposal_details {
-    my ($request) = @_;
+    my ($request, $report) = @_;
     my $locale = $request->{_locale};
-    my $report = LedgerSMB::DBObject::Asset_Report->new(%$request);
-    $report->get;
+
     my $cols = [
         {
             col_id => 'tag',
@@ -840,10 +947,9 @@ id must be set to the id of the report to be displayed.
 =cut
 
 sub disposal_details {
-    my ($request) = @_;
+    my ($request, $report) = @_;
     my $locale = $request->{_locale};
-    my $report = LedgerSMB::DBObject::Asset_Report->new(%$request);
-    $report->get;
+
     my $cols = [
         {
             col_id => 'tag',
