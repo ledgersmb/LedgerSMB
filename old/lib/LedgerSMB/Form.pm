@@ -351,6 +351,7 @@ This function replaces explicit 'exit()' calls.
 =cut
 
 sub finalize_request {
+    undef $@;
     die;
 }
 
