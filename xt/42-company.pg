@@ -55,7 +55,7 @@ BEGIN;
     SELECT has_function('entity__list_locations',ARRAY['integer']);
     SELECT has_function('entity__list_notes',ARRAY['integer']);
     SELECT has_function('_entity_location_save',ARRAY['integer','integer','integer','text','text','text','text','text','text','integer']);
-    SELECT has_function('entity__location_save',ARRAY['integer','integer','integer','text','text','text','text','text','integer','date']);
+    SELECT has_function('entity__location_save',ARRAY['integer','integer','integer','text','text','text','text','text','text','integer','date']);
     SELECT has_function('entity__save_bank_account',ARRAY['integer','integer','text','text','text','integer']);
     SELECT has_function('entity__save_contact',ARRAY['integer','integer','text','text','text','integer']);
     SELECT has_function('entity__save_notes',ARRAY['integer','text','text']);
