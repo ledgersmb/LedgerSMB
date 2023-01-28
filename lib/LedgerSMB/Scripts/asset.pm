@@ -355,7 +355,11 @@ sub new_report {
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'asset/begin_report',
                              { request => $request,
-                               report => _asset_report_get_metadata($request) });
+                               report => {
+                                   depreciation => $request->{depreciation},
+                                   _asset_report_get_metadata($request)->%*
+                               }
+                             });
 }
 
 =item report_init
@@ -379,7 +383,7 @@ sub report_init {
             $request->{report_date}
         ]);
     if ($request->{depreciation}) {
-        $_->{checked} = "CHECKED" for @assets;
+        $_->{checked} = 'CHECKED' for @assets;
     }
     return display_report($request,
                           {
@@ -387,6 +391,7 @@ sub report_init {
                               depreciation => $request->{depreciation},
                               asset_class => $request->{asset_class},
                               report_date => $request->{report_date},
+                              report_class => $request->{report_clas},
                               id => $request->{id},
                               accum_account_id => $request->{accum_account_id}
                           });
@@ -478,7 +483,10 @@ dm (disposal method id) and amount (amount to depreciate).
 
 sub display_report {
     my ($request, $report) = @_;
-    $report->get_metadata;
+    $report = {
+        $report->%*,
+        _asset_report_get_metadata($request)->%*
+    };
     my $locale = $request->{_locale};
     my @disp_methods = (
         map { { text => $_->{label},
@@ -1069,8 +1077,12 @@ For depreciation reports, expense_acct must be set to an appropriate account id.
 
 sub report_details_approve {
     my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Asset_Report->new(%$request);
-    $report->approve;
+
+    $request->call_procedure(
+        funcname => 'asset_report__aprove',
+        args     => [
+            $request->@{qw( id expense_acct gain_acct loss_acct cash_acct )}
+        ]);
     return search_reports($request);
 }
 
@@ -1092,13 +1104,15 @@ sub report_results_approve {
     my ($request) = @_;
     for my $l (0 .. $request->{rowcount_}){
         if ($request->{"select_$l"}){
-            my $approved = LedgerSMB::DBObject::Asset_Report->new(%$request);
-            $approved->{id} = $request->{"select_$l"};
-            $approved->approve;
+            $request->call_procedure(
+                funcname => 'asset_report__approve',
+                args     => [
+                    $request->{"select_$l"},
+                    $request->@{qw( expense_acct gain_acct loss_acct cash_acct )}
+                ]);
         }
     }
    return search_reports($request);
-
 }
 
 =item display_nbv
