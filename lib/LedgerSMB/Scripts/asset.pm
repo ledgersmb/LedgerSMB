@@ -169,11 +169,6 @@ sub asset_search {
     my ($request) = @_;
     my $asset = LedgerSMB::DBObject::Asset->new(%$request);
     $asset->get_metadata;
-    unshift @{$asset->{asset_classes}}, {};
-    unshift @{$asset->{locations}}, {};
-    unshift @{$asset->{departments}}, {};
-    unshift @{$asset->{asset_accounts}}, {};
-    unshift @{$asset->{dep_accounts}}, {};
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'asset/search_asset',
                              { request => $request,
