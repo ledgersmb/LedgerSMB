@@ -1316,8 +1316,8 @@ BEGIN
     PERFORM asset_report__import(
         ai.description,
         ai.tag,
-        ai.purchase_value * rld.percent_disposed / 100,
-        ai.salvage_value * rld.percent_disposed / 100,
+        ai.purchase_value * ( 100 - rld.percent_disposed ) / 100,
+        ai.salvage_value * ( 100 - rld.percent_disposed ) / 100,
         ai.usable_life,
         ai.purchase_date,
         ai.start_depreciation,
@@ -1329,7 +1329,7 @@ BEGIN
         ai.asset_class_id,
         ai.invoice_id,
         t_import.id,
-        r.accum_depreciation * rld.percent_disposed / 100,
+        r.accum_depreciation * ( 100 - rld.percent_disposed ) / 100,
         TRUE)
     FROM asset_item ai
     JOIN asset_report__get_disposal(t_report.id) r  ON (ai.id = r.id)
