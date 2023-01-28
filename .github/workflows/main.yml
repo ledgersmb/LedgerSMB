@@ -24,6 +24,15 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
+  cancel-prior:
+    if: github.repository != 'ledgersmb/LedgerSMB' || contains('refs/pull', github.ref)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+
   webpack:
 
     if: github.event.action != 'closed' || github.event.pull_request.merged == true
@@ -33,10 +42,6 @@ jobs:
     steps:
       # Dump environment variables & event
       - uses: hmarr/debug-action@v2
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
@@ -178,11 +183,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ github.token }}
-
       - name: Install TinyTex
         uses: r-lib/actions/setup-tinytex@v2
 
