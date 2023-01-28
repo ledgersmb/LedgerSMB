@@ -2076,17 +2076,4 @@ sub post_overpayment {
 
 =cut
 
-{
-    local ($!, $@) = (undef, undef);
-    my $do_ = 'scripts/custom/payment.pl';
-    if ( -e $do_ ) {
-        unless ( do $do_ ) {
-            if ($! or $@) {
-                warn "\nFailed to execute $do_ ($!): $@\n";
-                die (  "Status: 500 Internal server error(payment.pm)\n\n" );
-            }
-        }
-    }
-};
-
 1;

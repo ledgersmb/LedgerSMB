@@ -110,19 +110,6 @@ sub logout {
 }
 
 
-{
-    local ($!, $@) = ( undef, undef);
-    my $do_ = 'scripts/custom/login.pl';
-    if ( -e $do_ ) {
-        unless ( do $do_ ) {
-            if ($! or $@) {
-                warn "\nFailed to execute $do_ ($!): $@\n";
-                die (  "Status: 500 Internal server error (login.pm)\n\n" );
-            }
-        }
-    }
-};
-
 =back
 
 =head1 LICENSE AND COPYRIGHT

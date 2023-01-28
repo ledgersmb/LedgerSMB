@@ -30,10 +30,6 @@ use LedgerSMB::Report::Listings::Asset_Class;
 use LedgerSMB::Report::Listings::Asset;
 use LedgerSMB::Template::UI;
 
-our @file_columns = qw(tag purchase_date description asset_class location vendor
-                      invoice department asset_account purchase_value
-                      accum_dep nbv start_depreciation usable_life
-                      usable_life_remaining); # override in custom/asset.pl
 
 our $default_dep_account = '5010'; # Override in custom/asset.pl
 our $default_asset_account = '1300'; # Override in custom/asset.pl
@@ -1019,6 +1015,12 @@ sub run_import {
     for my $a (@{$asset->{dep_accounts}}){
        $dep_account->{"$a->{accno}"} = $a;
     }
+
+    my @file_columns =
+        qw(tag purchase_date description asset_class location vendor
+           invoice department asset_account purchase_value
+           accum_dep nbv start_depreciation usable_life
+           usable_life_remaining);
     for my $ail (_import_file($request)){
         my $ai = LedgerSMB::DBObject::Asset->new(%$request);
         for (0 .. $#file_columns){
@@ -1071,25 +1073,7 @@ sub run_import {
     return begin_import($request);
 }
 
-{
-    local ($!, $@) = ( undef, undef);
-    my $do_ = 'scripts/custom/asset.pl';
-    if ( -e $do_ ) {
-        unless ( do $do_ ) {
-            if ($! or $@) {
-                warn "\nFailed to execute $do_ ($!): $@\n";
-                die ( "Status: 500 Internal server error (asset.pm)\n\n" );
-            }
-        }
-    }
-};
-
 =back
-
-=head1 CUSTOMIZATION NOTES
-
-The handling of CSV imports of fixed assets is handled by @file_columns.  This
-can be set in a custom/ file.
 
 =head1 LICENSE AND COPYRIGHT
 

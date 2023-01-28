@@ -439,20 +439,6 @@ sub pending {
 }
 
 
-{
-    local ($!, $@) = (undef, undef);
-    my $do_ = 'scripts/custom/recon.pl';
-    if ( -e $do_ ) {
-        unless ( do $do_ ) {
-            if ($! or $@) {
-                warn "\nFailed to execute $do_ ($!): $@\n";
-                die (  "Status: 500 Internal server error (recon.pm)\n\n" );
-            }
-        }
-    }
-};
-
-
 # _process_upload($recon, $request)
 #
 # If the request data includes a csv_file upload, import it and
