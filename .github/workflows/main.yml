@@ -25,8 +25,7 @@ on:
 jobs:
 
   cancel-prior:
-    if: ${{ env.GITHUB_REPOSITORY != 'ledgersmb/LedgerSMB'
-            || contains('refs/pull', env.GITHUB_REF) }}
+    if: github.repository != 'ledgersmb/LedgerSMB' || contains('refs/pull', github.ref)
     runs-on: ubuntu-latest
     steps:
       - name: Cancel Previous Runs
