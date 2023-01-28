@@ -240,20 +240,6 @@ sub list_all {
 
 =back
 
-=cut
-
-{
-    local ($!, $@) = (undef, undef);
-    my $do_ = 'scripts/custom/taxform.pl';
-    if ( -e $do_ ) {
-        unless ( do $do_ ) {
-            if ($! or $@) {
-                warn "\nFailed to execute $do_ ($!): $@\n";
-                die (  "Status: 500 Internal server error (taxform.pm)\n\n" );
-            }
-        }
-    }
-};
 
 =head1 LICENSE AND COPYRIGHT
 

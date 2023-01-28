@@ -344,45 +344,6 @@ $$ language plpgsql;
 
 DROP TYPE IF EXISTS cash_summary_item CASCADE;
 
-CREATE TYPE cash_summary_item AS (
-   account_id int,
-   accno text,
-   is_heading bool,
-   description text,
-   document_type text,
-   debits numeric,
-   credits numeric
-);
-
-CREATE OR REPLACE FUNCTION report__cash_summary
-(in_from_date date, in_to_date date, in_from_accno text, in_to_accno text)
-RETURNS SETOF cash_summary_item AS
-$$
-BEGIN
-RETURN QUERY EXECUTE $sql$
-SELECT a.id, a.accno, a.is_heading, a.description, t.label,
-       sum(CASE WHEN ac.amount_bc < 0 THEN ac.amount_bc * -1 ELSE NULL END),
-       sum(CASE WHEN ac.amount_bc > 0 THEN ac.amount_bc ELSE NULL END)
-  FROM (select id, accno, false as is_heading, description FROM account
-       UNION
-        SELECT id, accno, true, description FROM account_heading) a
-  LEFT
-  JOIN acc_trans ac ON ac.chart_id = a.id
-  LEFT
-  JOIN (select id, case when table_name ilike 'ar' THEN 'rcpt'
-                        when table_name ilike 'ap' THEN 'pmt'
-                        when table_name ilike 'gl' THEN 'xfer'
-                    END AS label
-          FROM transactions) t ON t.id = ac.trans_id
- WHERE accno BETWEEN $3 AND $4
-        and ac.transdate BETWEEN $1 AND $2
-GROUP BY a.id, a.accno, a.is_heading, a.description, t.label
-ORDER BY accno
-$sql$
-USING in_from_date, in_to_date, in_from_accno, in_to_accno;
-END
-$$ LANGUAGE PLPGSQL;
-
 DROP TYPE IF EXISTS general_balance_line CASCADE;
 
 CREATE TYPE general_balance_line AS (

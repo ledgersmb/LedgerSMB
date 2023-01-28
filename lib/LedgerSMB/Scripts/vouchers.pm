@@ -40,19 +40,6 @@ use HTTP::Status qw( HTTP_OK);
 our $VERSION = '0.1';
 our $custom_batch_types = {};
 
-{
-    local ($!, $@) = (undef, undef);
-    my $do_ = 'scripts/custom/vouchers.pl';
-    if ( -e $do_ ) {
-        unless ( do $do_ ) {
-            if ($! or $@) {
-                warn "\nFailed to execute $do_ ($!): $@\n";
-                die (  'Status: 500 Internal server error ('
-                        . __FILE__ . '.pm - ' . __LINE__ . ")\n\n" );
-            }
-        }
-    }
-}
 
 =head2 create_batch($request)
 

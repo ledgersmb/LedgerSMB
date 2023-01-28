@@ -131,20 +131,6 @@ sub search_purchases {
 }
 
 
-{
-    local ($!, $@) = (undef, undef);
-    my $do_ = 'scripts/custom/journal.pl';
-    if ( -e $do_ ) {
-        unless ( do $do_ ) {
-            if ($! or $@) {
-                warn "\nFailed to execute $do_ ($!): $@\n";
-                die (  "Status: 500 Internal server error (journal.pm)\n\n" );
-            }
-        }
-    }
-};
-
-
 =head1 LICENSE AND COPYRIGHT
 
 Copyright (C) 2011-2018 The LedgerSMB Core Team
