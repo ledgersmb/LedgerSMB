@@ -1117,17 +1117,24 @@ CREATE OR REPLACE FUNCTION company__next_id() returns bigint as $$
 
 $$ language 'sql';
 
-CREATE OR REPLACE FUNCTION entity__location_save (
+DROP FUNCTION IF EXISTS entity__location_save (
     in_entity_id int, in_id int,
     in_location_class int, in_line_one text, in_line_two text,
     in_city TEXT, in_state TEXT, in_mail_code text, in_country_id int,
     in_created date
+);
+
+CREATE OR REPLACE FUNCTION entity__location_save (
+    in_entity_id int, in_id int,
+    in_location_class int, in_line_one text, in_line_two text,
+    in_line_three text, in_city TEXT, in_state TEXT, in_mail_code text,
+    in_country_id int, in_created date
 ) returns int AS $$
     BEGIN
     return _entity_location_save(
         in_entity_id, in_id,
         in_location_class, in_line_one, in_line_two,
-        '', in_city , in_state, in_mail_code, in_country_id);
+        in_line_three, in_city , in_state, in_mail_code, in_country_id);
     END;
 
 $$ language 'plpgsql';
@@ -1135,8 +1142,8 @@ $$ language 'plpgsql';
 COMMENT ON FUNCTION entity__location_save (
     in_entity_id int, in_id int,
     in_location_class int, in_line_one text, in_line_two text,
-    in_city TEXT, in_state TEXT, in_mail_code text, in_country_id int,
-    in_created date
+    in_line_three text, in_city TEXT, in_state TEXT, in_mail_code text,
+    in_country_id int, in_created date
 ) IS
 $$ Saves a location to a company.  Returns the location id.$$;
 
