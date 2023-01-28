@@ -12,7 +12,6 @@ import { useSessionUserStore } from "@/store/sessionUser";
 
 import { createPinia } from "pinia";
 
-const registry = require("dijit/registry");
 const dojoParser = require("dojo/parser");
 
 let app;
@@ -36,23 +35,16 @@ if (document.getElementById("main")) {
             return { t };
         },
         mounted() {
-            let m = document.getElementById("main");
-
-            this.$nextTick(() => {
-                dojoParser.parse(m).then(() => {
-                    let r = registry.byId("top_menu");
-                    if (r) {
-                        // Setup doesn't have top_menu
-                        r.load_link = (url) => this.$router.push(url);
-                    }
-                    document.body.setAttribute("data-lsmb-done", "true");
-                });
-            });
             window.__lsmbLoadLink = (url) =>
                 this.$router.push(
                     // eslint-disable-next-line no-useless-escape
                     url.replace(/^https?:\/\/(?:[^@\/]+)/, "")
                 );
+
+            let m = document.getElementById("main");
+            dojoParser.parse(m).then(() => {
+                document.body.setAttribute("data-lsmb-done", "true");
+            });
         },
         beforeUpdate() {
             document.body.removeAttribute("data-lsmb-done");
