@@ -328,7 +328,7 @@ $$
 
    SELECT r.id, r.transdate, r.source, r.trans_id
      FROM inventory_report r
-     JOIN inventory_report_line l ON l.adjust_id = r.id
+  LEFT JOIN inventory_report_line l ON l.adjust_id = r.id
      JOIN parts p ON l.parts_id = p.id
     WHERE ($1 is null or $1 <= r.transdate) AND
           ($2 is null OR $2 >= r.transdate) AND
