@@ -20,11 +20,12 @@ define([
 ) {
     return declare("lsmb/PrintButton", [Button], {
         minimalGET: true,
-        onClick: function (evt) {
+        onClick: async function (evt) {
             var f = this.valueNode.form;
             if (f.media.value === "screen") {
                 var data;
 
+                event.stop(evt);
                 if (this.minimalGET) {
                     data = {
                         action: this.get("value"),
@@ -47,54 +48,44 @@ define([
                     data[this.get("name")] = this.get("value");
                 }
 
-                var client = new XMLHttpRequest();
-                client.open("POST", domattr.get(f, "action"));
-                client.responseType = "blob";
-                client.onreadystatechange = function () {
-                    if (client.readyState === XMLHttpRequest.DONE) {
-                        var status = client.status;
-                        if (status === 0 || (status >= 200 && status < 400)) {
-                            var disp = client.getResponseHeader(
-                                "Content-Disposition"
-                            );
-                            var cd = contentDisposition.parse(disp);
-                            if (cd.parameters.filename === undefined) {
-                                cd.parameters.filename = "unknown";
-                            }
-                            if (cd.type && cd.type === "attachment") {
-                                var a = document.createElement("a");
-                                var h = URL.createObjectURL(client.response);
-
-                                a.download = cd.parameters.filename;
-                                a.href = h;
-                                a.click();
-
-                                a.remove();
-                                URL.revokeObjectURL(h);
-                            } else {
-                                var d = registry.byId("errorDialog");
-                                d.set(
-                                    "content",
-                                    "Server sent unexpected response."
-                                );
-                                d.show();
-                            }
-                        } else {
-                            var err = {
-                                response: {
-                                    data: client.response
-                                }
-                            };
-                            registry.byId("maindiv").report_request_error(err);
-                        }
+                let base = window.location.pathname.replace(/[^/]*$/, "");
+                let r = await fetch(base + domattr.get(f, "action"), {
+                    method: "POST",
+                    body: dojo.objectToQuery(data),
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Content-Type": "application/x-www-form-urlencoded"
                     }
+                });
+
+                if (r.ok) {
+                    let rh = r.headers;
+                    var disp = rh.get("Content-Disposition");
+                    var cd = contentDisposition.parse(disp);
+                    if (cd.parameters.filename === undefined) {
+                        cd.parameters.filename = "unknown";
+                    }
+                    if (cd.type && cd.type === "attachment") {
+                        var a = document.createElement("a");
+                        var h = URL.createObjectURL(await r.blob());
+
+                        a.download = cd.parameters.filename;
+                        a.href = h;
+                        a.click();
+
+                        a.remove();
+                        URL.revokeObjectURL(h);
+                    } else {
+                        var d = registry.byId("errorDialog");
+                        d.set(
+                            "content",
+                            "Server sent unexpected response."
+                        );
+                        d.show();
+                    }
+                } else {
+                    window.__lsmbReportError(r);
                 };
-                client.setRequestHeader(
-                    "Content-Type",
-                    "application/x-www-form-urlencoded"
-                );
-                client.send(dojo.objectToQuery(data));
-                event.stop(evt);
                 return;
             }
 
