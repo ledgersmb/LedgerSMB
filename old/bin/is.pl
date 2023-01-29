@@ -876,44 +876,11 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
   </tr>
   <tr>
     <td>
-      <table width=100%>
-         <caption>History</caption>
 |;
-    # insert history items
-    my ($wf_id) =
-        $form->{dbh}->selectrow_array(
-            q{select workflow_id from transactions where id = ?},
-            {}, $form->{id});
-    my $wf = $form->{_wire}->get('workflows')
-        ->fetch_workflow( 'AR/AP', $wf_id );
-    if ($wf) {
-        my @history = $wf->get_history;
-        for my $h (sort { $a->id <=> $b->{id} } @history) {
-            my ($desc, $addn) = split( /[|]/, $h->description, 2);
-            my $link = '';
-            if ($addn) {
-                my %items = split(/[|:]/, $addn);
-                my %links = (
-                    'AR/AP|customer' => 'is.pl?action=edit&amp;workflow_id=',
-                    'AR/AP|vendor'   => 'ir.pl?action=edit&amp;workflow_id=',
-                    'Order/Quote'    => 'oe.pl?action=edit&amp;workflow_id=',
-                    'Email'          => 'email.pl?action=render&amp;id=',
-                    );
-                my ($id, $workflow) = split(/,/, $items{spawned_workflow}, 2);
-                $link = ($links{$workflow}
-                         // $links{"$workflow|$form->{vc}"}) . $id;
-                $link .= "&amp;callback=$form->{script}%3Faction%3D$form->{action}%26id%3D$form->{id}";
-            }
-            if ($link) {
-                print qq|<tr><td><a href="$link">$desc</a></td></tr>|;
-            }
-            else {
-                print qq|<tr><td>$desc</td></tr>|;
-            }
-        }
-    }
+
+    IIAA->print_wf_history_table($form);
+
     print qq|
-      </table>
     </td>
   </tr>
   <tr>
