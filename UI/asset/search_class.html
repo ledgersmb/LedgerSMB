@@ -25,17 +25,6 @@
         name = 'method_id'
 } %]
 </span>
-<span class="inputgroup" id="Units">
-[%
-        PROCESS select element_data = {
-        label = text('Lifetime Measured In') #'
-        options = asset_class.life_units
-        name = "life_unit"
-   default_blank = 1
-        text_attr = "unit"
-        value_atr = "id"
-} %]
-</span>
 </div>
 <div class="inputrow" id="accountsrow">
 <span class="inputgroup" id="assetaccgroup">
