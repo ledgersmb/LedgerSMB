@@ -10,16 +10,21 @@ Added functionalities
 * Bank statement parser for reconciliation through configuration (#7050)
 * System > Users menu item listing users in the company (#7032)
 * More webservice APIs (#7056, ...)
+* Total paid and Remaining balance summaries added to invoices (#7130)
 
 Changed functionalities
 * More database statistics reported after upgrade completion (#7017)
-* System > Sequences lists next value (instead of last - same as System > Defaults) (#7054)
+* System > Sequences lists next value for consistency with Defaults (#7054)
+* Posted transactions show as read-only to differentiate saved transactions
 
 Removed functionalities
-* Bank statement parser for reconciliation through customization of the sources (#7050)
+* Reconciliation file parser setup customization (#7050)
+* Inaccessible (partially duplicated) Colombian reports (#7138)
+* Customization through import of 'scripts/custom/*.pl' (#7138)
 
 Bugs fixed
-* 
+* Performance fixes for stored procedures being slow on huge databases (#7072)
+* Multiple fixes on AR/AP template transactions
 
 Code cleanup
 * Continued removal of code based on the DBObject coding paradigm
