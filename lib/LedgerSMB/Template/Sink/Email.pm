@@ -88,7 +88,7 @@ sub append {
                      mime_type   => $template->{mimetype},
                      file_name   => $args{filename},
                  });
-    $wf->execute_action( 'Attach' );
+    $wf->execute_action( 'attach' );
 
     return $wf;
 }
