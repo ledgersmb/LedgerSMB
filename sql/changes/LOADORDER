@@ -171,3 +171,4 @@ mc/delete-migration-validation-data.sql
 # 1.11 changes
 1.11/menu-system-users.sql
 1.11/country-config.sql
+1.11/workflow-user.sql

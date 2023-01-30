@@ -470,6 +470,7 @@ trial_balance__generate
 trial_balance__heading_accounts
 trial_balance__list_headings
 trigger_parts_short
+trigger_workflow_user
 unlock
 unlock_all
 user__change_password

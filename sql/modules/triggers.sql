@@ -108,6 +108,16 @@ BEGIN
 END;
 $$ language plpgsql;
 
+CREATE OR REPLACE FUNCTION trigger_workflow_user() RETURNS TRIGGER
+AS $$
+BEGIN
+  IF TG_OP <> 'DELETE' THEN
+    NEW.workflow_user = CURRENT_USER;
+    NEW.workflow_entity_id = person__get_my_entity_id();
+  END IF;
+  RETURN NEW;
+END;
+$$ language plpgsql;
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
