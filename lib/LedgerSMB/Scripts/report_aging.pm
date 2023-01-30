@@ -218,7 +218,7 @@ sub cancel {
         if ($nested_wf and
             grep { $_ eq 'Cancel' } $nested_wf->get_current_actions
             ) {
-            $nested_wf->execute_action( 'Cancel' );
+            $nested_wf->execute_action( 'cancel' );
         }
     }
 
