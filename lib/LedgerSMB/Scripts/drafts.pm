@@ -73,11 +73,28 @@ sub approve {
         list_drafts($request);
         return;
     }
+
     my $draft= LedgerSMB::DBObject::Draft->new(%$request);
+    my $sth = $request->{dbh}->prepare(
+        q|select workflow_id from transactions where id = ?|
+        ) or die $request->{dbh}->errstr;
     for my $row (1 .. $request->{rowcount_}){
-        if ($draft->{"select_$row"}){
+        my $id = $request->{"select_$row"};
+        if ($id){
+            $request->{dbh}->do(
+                q|update ar
+                     set invnumber = setting_increment('sinumber')
+                   where id = ? and invnumber is null|,
+                {},
+                $id)
+                or die $request->{dbh}->errstr;
              $draft->{id} = $draft->{"select_$row"};
              $draft->approve;
+
+            my ($workflow_id) = $sth->fetchrow_array;
+            my $wf = $request->{_wire}->get('workflows')
+                ->fetch_workflow( 'AR/AP', $workflow_id );
+            $wf->execute_action( 'approve' ) if $wf;
         }
     }
     return search($request);
