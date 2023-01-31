@@ -3009,52 +3009,7 @@ sub update_defaults {
 
     my $dbh = $self->{dbh};
 
-    my $query = qq|
-        SELECT value FROM defaults
-         WHERE setting_key = ? FOR UPDATE|;
-    my $sth = $dbh->prepare($query);
-    $sth->execute($fld);
-    my ($dbvar) = $sth->fetchrow_array();
-
-    $dbvar //= "0";
-    my $var = $dbvar;
-    my $num = $dbvar;
-    my ($prefix, $suffix);
-    ($prefix, $num, $suffix) = $num =~ /(\D*)(\d+)(\D*)$/;
-
-    if ( defined $num ) {
-        my $incnum;
-
-        # if we have leading zeros check how long it is
-
-        if ( $num =~ /^0/ ) {
-            my $l = length $num;
-            $incnum = $num + 1;
-            $l -= length $incnum;
-
-            # pad it out with zeros
-            my $padzero = "0" x $l;
-            $incnum = ( "0" x $l ) . $incnum;
-        }
-        else {
-            $incnum = $num + 1;
-        }
-
-        $dbvar =~ s/\Q$prefix$num$suffix\E$/$prefix$incnum$suffix/;
-    }
-
-
-    $query = qq|
-        UPDATE defaults
-           SET value = ?
-         WHERE setting_key = ?|;
-
-    $sth = $self->{dbh}->prepare($query);
-    $sth->execute(
-        $dbvar,
-        $fld
-    ) || $self->dberror($query);
-
+    my $var = $dbh->selectrow_array('select setting_increment(?)', {}, $fld);
     return $var;
 }
 
@@ -3094,25 +3049,14 @@ If invnumber is not set, updates it.  Used when gapless numbering is in effect
 
 sub update_invnumber {
     my $self = shift;
-    my $query = 'select invnumber from ar where id = ?';
-    my $sth = $self->{dbh}->prepare($query)
+    my $query =
+        q|update ar
+             set invnumber = setting_increment('sinumber')
+           where id = ? and invnumber is null|;
+    $self->{dbh}->do($query,
+                     {},
+                     $self->{id})
         or $self->dberror($query);
-    $sth->execute($self->{id}) or $self->dberror($query);
-    my ($invnumber) = $sth->fetchrow_array;
-    $self->dberror($query) if $sth->err;
-
-    return if defined $invnumber or !$sth->rows;
-    $sth->finish;
-    $query = 'update ar set invnumber = ? where id = ?';
-    $sth = $self->{dbh}->prepare($query)
-        or $self->dberror($query);
-    $sth->execute(
-        $self->update_defaults(
-            LedgerSMB::App_State::User(),
-            'sinumber'
-        ),
-        $self->{id}
-    ) or $self->dberror($query);
 }
 
 =item $form->db_prepare_vars(var1, var2, ..., varI<n>)

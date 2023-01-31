@@ -72,11 +72,28 @@ sub approve {
         list_drafts($request);
         return;
     }
+    my $sth = $request->{dbh}->prepare(
+        q|select workflow_id from transactions where id = ?|
+        ) or die $request->{dbh}->errstr;
     for my $row (1 .. $request->{rowcount_}){
-        if ($request->{"select_$row"}){
+        my $id = $request->{"select_$row"};
+        if ($id){
+            $request->{dbh}->do(
+                q|update ar
+                     set invnumber = setting_increment('sinumber')
+                   where id = ? and invnumber is null|,
+                {},
+                $id)
+                or die $request->{dbh}->errstr;
             $request->call_procedure(
                 funcname => 'draft_approve',
-                args     => [ $request->{"select_$row"} ]);
+                args     => [ $id ]);
+            $sth->execute( $id )
+                or die $sth->errstr;
+            my ($workflow_id) = $sth->fetchrow_array;
+            my $wf = $request->{_wire}->get('workflows')
+                ->fetch_workflow( 'AR/AP', $workflow_id );
+            $wf->execute_action( 'approve' ) if $wf;
         }
     }
     return search($request);
