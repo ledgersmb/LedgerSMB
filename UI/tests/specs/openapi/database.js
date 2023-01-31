@@ -87,7 +87,8 @@ export function initialize(company, file) {
             cwd: process.env.PWD,
             env: {
                 ...process.env,
-                PG_PASSWORD: pg_pwd
+                PG_PASSWORD: pg_pwd,
+                PERL5OPT: ''
             }
         }
         );
@@ -103,7 +104,16 @@ export function initialize(company, file) {
 }
 
 export function drop_database(company) {
-    let cmd = spawnSync("dropdb", [company]);
+    let cmd = spawnSync(
+        "dropdb",
+        [company],
+        {
+            env: {
+                ...process.env,
+                PERL5OPT: ''
+            }
+        }
+    );
     if (cmd.status !== 0) {
         throw new Error(cmd.stderr.toString());
     }

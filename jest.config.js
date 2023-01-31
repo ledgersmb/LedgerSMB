@@ -26,13 +26,15 @@ module.exports = {
     collectCoverageFrom: [
         "UI/**/*.{js,jsx,vue}",
         "!UI/js/**/*",
-        "!**/*.spec.js"
+        "!UI/tests/**/*",
+        "!coverage/**/*",
+        "!.*/**/*"
     ],
 
     // The directory where Jest should output its coverage files
     coverageDirectory: "coverage",
 
-    coveragePathIgnorePatterns: ["/node_modules/", "/tests/", "/.local/"],
+    coveragePathIgnorePatterns: ["/node_modules/"],
 
     // An array of regexp pattern strings used to skip coverage collection
     // coveragePathIgnorePatterns: ["node_modules", "<rootDir>/test/*.*"],
@@ -234,7 +236,7 @@ module.exports = {
     ],
 
     // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-    testPathIgnorePatterns: ["/node_modules/", "tmp/", ".vscode"],
+    testPathIgnorePatterns: ["/node_modules/", "tmp/", ".vscode/"],
 
     // The regexp pattern or array of patterns that Jest uses to detect test files
     testRegex: [],

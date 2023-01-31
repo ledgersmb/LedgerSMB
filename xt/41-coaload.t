@@ -68,7 +68,7 @@ $dbh->rollback;
 $dbh->disconnect;
 
 capture {
-    system('dropdb', $db);
+    system('PERL5OPT="" dropdb', $db);
 };
 
 done_testing;
