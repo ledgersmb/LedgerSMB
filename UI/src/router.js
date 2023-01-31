@@ -35,13 +35,13 @@ const routes = [
         name: "importCSV-AR-Batch",
         path: "/import-csv/ar_multi",
         component: ImportCsvAaBatch,
-        props: { type: "ar", multi: true }
+        props: { type: "ar_multi", multi: true }
     },
     {
         name: "importCSV-AP-Batch",
         path: "/import-csv/ap_multi",
         component: ImportCsvAaBatch,
-        props: { type: "ap", multi: true }
+        props: { type: "ap_multi", multi: true }
     },
     {
         name: "importCSV-CoA",
