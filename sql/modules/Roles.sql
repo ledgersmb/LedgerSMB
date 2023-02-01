@@ -1183,6 +1183,7 @@ SELECT lsmb__grant_role('business_type_all', 'business_type_edit');
 
 SELECT lsmb__create_role('country_create');
 SELECT lsmb__grant_perms('country_create', 'country', 'INSERT');
+SELECT lsmb__grant_perms('country_create', 'country_id_seq', 'ALL');
 SELECT lsmb__grant_menu('country_create', 264, 'allow');
 
 SELECT lsmb__create_role('country_edit');
