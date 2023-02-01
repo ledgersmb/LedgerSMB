@@ -101,8 +101,8 @@ is($$accounts[0]->{accno}, '1002', 'accounts_by_link returns correct account');
 
 # Increment a field
 ok($setting->set('TEST_SETTING_KEY', 'A-123-1234-B'), 'set increment test key');
-is($setting->increment(undef, 'TEST_SETTING_KEY'), 'A-123-1235-B', 'increment returned ok');
-is($setting->get('TEST_SETTING_KEY'), 'A-123-1235-B', 'increment round-trip from database');
+is($setting->increment(undef, 'TEST_SETTING_KEY'), 'A-123-1234-B', 'increment returned ok');
+is($setting->get('TEST_SETTING_KEY'), 'A-123-1235-B', 'setting lists next value in database');
 
 
 # Don't commit any of our changes
