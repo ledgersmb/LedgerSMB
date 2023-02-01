@@ -61,7 +61,7 @@ export default {
     data() {
        return {
           multi: true,
-          type: 'gl'
+          type: 'gl_multi'
        };
     }
 };
