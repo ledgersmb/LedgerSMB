@@ -91,7 +91,11 @@ AS
 $$
         UPDATE defaults SET value = setting__increment_base(value)
         WHERE setting_key = in_key
-        RETURNING value;
+  RETURNING (
+    -- return the old value
+    -- note: only works at the 'read committed' isolation or lower
+    select value from defaults where setting_key = in_key
+  );
 
 $$ LANGUAGE SQL;
 
