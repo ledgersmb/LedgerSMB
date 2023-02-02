@@ -168,6 +168,7 @@ mc/delete-migration-validation-data.sql
 1.10/unique-transaction-reconciliation.sql
 1.10/missing-fkeys.sql
 1.10/file-tranaction-cascade-delete.sql
+1.10/fix-arap-approval-state.sql
 # 1.11 changes
 1.11/menu-system-users.sql
 1.11/country-config.sql
