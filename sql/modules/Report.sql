@@ -80,8 +80,12 @@ DROP FUNCTION IF EXISTS report__invoice_aging_detail
 (in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
  in_business_units int[], in_use_duedate bool);
 
-CREATE OR REPLACE FUNCTION report__invoice_aging_detail
+DROP FUNCTION IF EXISTS report__invoice_aging_detail
 (in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
+ in_business_units int[], in_use_duedate bool, in_name_part text);
+
+CREATE OR REPLACE FUNCTION report__invoice_aging_detail
+(in_entity_id int, in_entity_class int, in_credit_id int, in_accno text, in_to_date date,
  in_business_units int[], in_use_duedate bool, in_name_part text)
 RETURNS SETOF report_aging_item AS
 $$
@@ -90,8 +94,8 @@ RETURN QUERY EXECUTE $sql$
      WITH RECURSIVE bu_tree (id, path) AS (
                 SELECT id, ARRAY[id]::int[] AS path
                   FROM business_unit
-                 WHERE id = any($5)
-                       OR $5 IS NULL
+                 WHERE id = any($6)
+                       OR $6 IS NULL
                  UNION
                 SELECT bu.id, array_append(bu_tree.path, bu.id)
                   FROM business_unit bu
@@ -124,14 +128,14 @@ RETURN QUERY EXECUTE $sql$
                                 FROM parts p
                                 JOIN invoice i ON (i.parts_id = p.id)
                                 WHERE i.trans_id = a.id) AS line_items,
-                   (coalesce($4, now())::date - a.transdate) as age
+                   (coalesce($5, now())::date - a.transdate) as age
                   FROM (select id, invnumber, till, ordnumber, amount_bc, duedate,
                                curr, ponumber, notes, entity_credit_account,
                                -1 AS sign, transdate, force_closed,
-                               CASE WHEN $6
-                                    THEN coalesce($4, now())::date
+                               CASE WHEN $7
+                                    THEN coalesce($5, now())::date
                                          - duedate
-                                    ELSE coalesce($4, now())::date
+                                    ELSE coalesce($5, now())::date
                                          - transdate
                                END as age
                           FROM ar
@@ -140,10 +144,10 @@ RETURN QUERY EXECUTE $sql$
                         SELECT id, invnumber, null, ordnumber, amount_bc, duedate,
                                curr, ponumber, notes, entity_credit_account,
                                1 as sign, transdate, force_closed,
-                               CASE WHEN $6
-                                    THEN coalesce($4, now())::date
+                               CASE WHEN $7
+                                    THEN coalesce($5, now())::date
                                          - duedate
-                                    ELSE coalesce($4, now())::date
+                                    ELSE coalesce($5, now())::date
                                          - transdate
                                END as age
                           FROM ap
@@ -166,32 +170,37 @@ RETURN QUERY EXECUTE $sql$
              LEFT JOIN location l ON l.id = e2l.location_id
              LEFT JOIN country ON (country.id = l.country_id)
                  WHERE (e.id = $1 OR $1 IS NULL)
-                       AND ($3 IS NULL or acc.accno = $3)
+                       AND ($3 IS NULL or c.id = $3)
+                       AND ($4 IS NULL or acc.accno = $4)
                        AND a.force_closed IS NOT TRUE
-                       AND ($7 IS NULL
-                            OR e.name like '%' || $7 || '%')
+                       AND ($8 IS NULL
+                            OR e.name like '%' || $8 || '%')
               GROUP BY c.entity_id, c.meta_number, e.name, c.language_code,
                        l.line_one, l.line_two, l.line_three,
                        l.city, l.state, l.mail_code, country.name,
                        a.invnumber, a.transdate, a.till, a.ordnumber,
                        a.ponumber, a.notes, a.amount_bc, a.sign,
                        a.duedate, a.id, a.curr, a.age
-                HAVING ($5 is null
-                        or $5 <@ compound_array(bu_tree.path))
+                HAVING ($6 is null
+                        or $6 <@ compound_array(bu_tree.path))
                        AND sum(ac.amount_bc::numeric(20,2)) <> 0
-              ORDER BY entity_id, curr, transdate, invnumber
+              ORDER BY entity_id, meta_number, curr, transdate, invnumber
 $sql$
-USING in_entity_id, in_entity_class, in_accno, in_to_date,
+USING in_entity_id, in_entity_class, in_credit_id, in_accno, in_to_date,
  in_business_units, in_use_duedate, in_name_part;
 END
 $$ LANGUAGE PLPGSQL;
 
 DROP FUNCTION IF EXISTS report__invoice_aging_summary
-(in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
+(in_entity_id int, in_entity_class int, in_credit_id int, in_accno text, in_to_date date,
  in_business_units int[], in_use_duedate bool);
 
-CREATE OR REPLACE FUNCTION report__invoice_aging_summary
+DROP FUNCTION IF EXISTS report__invoice_aging_summary
 (in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
+ in_business_units int[], in_use_duedate bool, in_name_part text);
+
+CREATE OR REPLACE FUNCTION report__invoice_aging_summary
+(in_entity_id int, in_entity_class int, in_credit_id int, in_accno text, in_to_date date,
  in_business_units int[], in_use_duedate bool, in_name_part text)
 RETURNS SETOF report_aging_item AS
 $$
@@ -202,11 +211,11 @@ SELECT entity_id, account_number, name, contact_name, "language",
        null::text, null::text, null::text, null::text,
        sum(c0), sum(c30), sum(c60), sum(c90), null::date, null::int, curr,
        null::numeric, null::text[], null::int
-  FROM report__invoice_aging_detail($1, $2, $3, $4, $5, $6, $7)
+  FROM report__invoice_aging_detail($1, $2, $3, $4, $5, $6, $7, $8)
  GROUP BY entity_id, account_number, name, contact_name, "language", curr
  ORDER BY account_number
 $sql$
-USING in_entity_id, in_entity_class, in_accno, in_to_date,
+USING in_entity_id, in_entity_class, in_credit_id, in_accno, in_to_date,
  in_business_units, in_use_duedate, in_name_part;
 END
 $$ LANGUAGE PLPGSQL;

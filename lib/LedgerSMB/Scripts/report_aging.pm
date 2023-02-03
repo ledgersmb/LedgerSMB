@@ -313,11 +313,13 @@ sub generate_statement {
         my @contact_info = LedgerSMB::Entity::Contact->list(
                  {entity_id => $entity_id, credit_id => $credit_act->{id} }
         );
-        $request->{entity_id} = $entity_id;
         my $aging_report = LedgerSMB::Report::Aging->new(
+            %$request,
             (ref $filters{$eca}) ? (details_filter => $filters{$eca}) : (),
             languages => $request->enabled_languages,
-            %$request);
+            entity_id => $entity_id,
+            credit_id => $credit_act->id
+            );
         $aging_report->run_report($request);
         my $statement = {
               aging => $aging_report,
