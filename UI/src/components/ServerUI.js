@@ -71,6 +71,7 @@ export default {
                         // Vue won't re-render... so don't rerun the parser!
                         return;
                     }
+                    this._cleanWidgets();
                     this.content = newContent;
                     this.$nextTick(() => {
                         let maindiv = document.getElementById("maindiv");
@@ -195,9 +196,6 @@ export default {
             (req) => this.updateContent(req.url, req.options);
         window.__lsmbReportError =
             (err) => this._report_error(err);
-    },
-    beforeUpdate() {
-        this._cleanWidgets();
     },
     render() {
         let body = this.content.match(/<body[^>]*>([\s\S]*)(<\/body>)?/i);
