@@ -207,6 +207,16 @@ Dependency updates
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.25
+* Random errors reported at the bottom of invoices without good reason (#7144)
+* Asset disposal results in asset of disposed amount (#7143)
+* Third address line on entity screen not saved for credit accounts (#7127)
+* Empty inventory reports don't show in searches (#2661)
+* Align SQL setting-increment function with Perl implementation (#7186)
+* Order number filter on invoice search ignored (#7178)
+* Fix notes from orders being on wrong invoice line (#7179)
+
+
 Changelog for 1.9.24
 * Don't show obsolete accounts in account selection drop-downs (#7062)
 
