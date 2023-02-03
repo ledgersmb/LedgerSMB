@@ -92,7 +92,7 @@ Prefix search on noted order number
 
 =cut
 
-has ornumber => (is => 'ro', isa => 'Str', required => 0);
+has ordnumber => (is => 'ro', isa => 'Str', required => 0);
 
 =item ponumber string
 
