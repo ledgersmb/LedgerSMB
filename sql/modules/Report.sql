@@ -77,8 +77,12 @@ DROP FUNCTION IF EXISTS report__invoice_aging_detail
 (in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
  in_business_units int[], in_use_duedate bool);
 
-CREATE OR REPLACE FUNCTION report__invoice_aging_detail
+DROP FUNCTION IF EXISTS report__invoice_aging_detail
 (in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
+ in_business_units int[], in_use_duedate bool, in_name_part text);
+
+CREATE OR REPLACE FUNCTION report__invoice_aging_detail
+(in_entity_id int, in_entity_class int, in_credit_id int, in_accno text, in_to_date date,
  in_business_units int[], in_use_duedate bool, in_name_part text)
 RETURNS SETOF report_aging_item
 STABLE AS
@@ -162,6 +166,7 @@ $$
              LEFT JOIN location l ON l.id = e2l.location_id
              LEFT JOIN country ON (country.id = l.country_id)
                  WHERE (e.id = in_entity_id OR in_entity_id IS NULL)
+                       AND (in_credit_id IS NULL or c.id = in_credit_id)
                        AND (in_accno IS NULL or acc.accno = in_accno)
                        AND a.force_closed IS NOT TRUE
                        AND (in_name_part IS NULL
@@ -179,11 +184,15 @@ $$
 $$ language sql;
 
 DROP FUNCTION IF EXISTS report__invoice_aging_summary
-(in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
+(in_entity_id int, in_entity_class int, in_credit_id int, in_accno text, in_to_date date,
  in_business_units int[], in_use_duedate bool);
 
-CREATE OR REPLACE FUNCTION report__invoice_aging_summary
+DROP FUNCTION IF EXISTS report__invoice_aging_summary
 (in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
+ in_business_units int[], in_use_duedate bool, in_name_part text);
+
+CREATE OR REPLACE FUNCTION report__invoice_aging_summary
+(in_entity_id int, in_entity_class int, in_credit_id int, in_accno text, in_to_date date,
  in_business_units int[], in_use_duedate bool, in_name_part text)
 RETURNS SETOF report_aging_item
 STABLE AS $$
@@ -192,7 +201,7 @@ SELECT entity_id, account_number, name, contact_name, "language",
        null::text, null::text, null::text, null::text,
        sum(c0), sum(c30), sum(c60), sum(c90), null::date, null::int, curr,
        null::numeric, null::text[], null::int
-  FROM report__invoice_aging_detail($1, $2, $3, $4, $5, $6, $7)
+  FROM report__invoice_aging_detail($1, $2, $3, $4, $5, $6, $7, $8)
  GROUP BY entity_id, account_number, name, contact_name, "language", curr
  ORDER BY account_number
 $$ LANGUAGE SQL;
