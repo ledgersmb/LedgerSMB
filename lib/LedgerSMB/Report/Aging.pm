@@ -102,6 +102,11 @@ sub columns {
          type => 'text',
        pwidth => 1, },
 
+      {col_id => 'account_number',
+         name => $self->Text('Account'),
+         type => 'text',
+       pwidth => 1, },
+
       {col_id => 'language',
          name => $self->Text('Language'),
          type => 'select',
@@ -248,6 +253,14 @@ Customer/Vendor entity id
 has entity_id => (is => 'ro', isa => 'Maybe[Int]');
 has name_part => (is => 'ro', isa => 'Maybe[Str]');
 
+=item credit_id
+
+Entity Credit Account id
+
+=cut
+
+has credit_id => (is => 'ro', isa => 'Maybe[Int]');
+
 =item details_filter
 
 =cut
@@ -288,8 +301,8 @@ sub run_report{
         push @result, $row;
 
         if ($self->report_type eq 'detail') {
-            $row_span{$row->{entity_id}} //= 0;
-            $row_span{$row->{entity_id}}++;
+            $row_span{"$row->{account_number}:$row->{entity_id}"} //= 0;
+            $row_span{"$row->{account_number}:$row->{entity_id}"}++;
             $row->{row_id} =
                 "$row->{account_number}:$row->{entity_id}:$row->{id}";
         } else {
@@ -304,12 +317,16 @@ sub run_report{
     }
     if (%row_span) {
         for my $row (@result) {
-            if ($row_span{$row->{entity_id}} > 1) {
-                $row->{language_ROWSPAN} = $row_span{$row->{entity_id}};
-                $row_span{$row->{entity_id}} *= -1;
+            if ($row_span{"$row->{account_number}:$row->{entity_id}"} > 1) {
+                $row->{language_ROWSPAN} = $row_span{"$row->{account_number}:$row->{entity_id}"};
+                $row->{name_ROWSPAN} = $row->{language_ROWSPAN};
+                $row->{account_number_ROWSPAN} = $row->{language_ROWSPAN};
+                $row_span{"$row->{account_number}:$row->{entity_id}"} *= -1;
             }
-            elsif ($row_span{$row->{entity_id}} < 0) {
+            elsif ($row_span{"$row->{account_number}:$row->{entity_id}"} < 0) {
                 $row->{language_ROWSPANNED} = 1;
+                $row->{name_ROWSPANNED} = 1;
+                $row->{account_number_ROWSPANNED} = 1;
             }
         }
     }
@@ -320,7 +337,7 @@ sub run_report{
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team
+Copyright (C) 2012-2023 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

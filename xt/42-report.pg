@@ -25,8 +25,8 @@ BEGIN;
     SELECT has_function('report__general_balance',ARRAY['date','date']);
     SELECT has_function('report__gl',ARRAY['text','text','character','text','text','text','date','date','boolean','numeric','numeric','integer[]']);
     SELECT has_function('report__incoming_cogs_line',ARRAY['date','date','text','text']);
-    SELECT has_function('report__invoice_aging_detail',ARRAY['integer','integer','text','date','integer[]','boolean','text']);
-    SELECT has_function('report__invoice_aging_summary',ARRAY['integer','integer','text','date','integer[]','boolean','text']);
+    SELECT has_function('report__invoice_aging_detail',ARRAY['integer','integer','integer','text','date','integer[]','boolean','text']);
+    SELECT has_function('report__invoice_aging_summary',ARRAY['integer','integer','integer','text','date','integer[]','boolean','text']);
 
     -- Set specific data
 
