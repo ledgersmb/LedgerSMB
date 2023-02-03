@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.12-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2023-01-27 15:17+0000\n"
+"POT-Creation-Date: 2023-02-03 11:17+0000\n"
 "Language-Team: Japanese (https://www.transifex.com/ledgersmb/teams/58325/"
 "ja/)\n"
 "Language: ja\n"
@@ -8627,7 +8627,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/views/Home.vue:51 UI/src/views/Home.vue:36
+#: UI/src/views/Home.vue:36 UI/src/views/Home.vue:51
 msgid "mailing lists"
 msgstr ""
 
