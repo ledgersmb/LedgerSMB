@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.9.25-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2023-01-15 20:06+0000\n"
+"POT-Creation-Date: 2023-02-03 11:04+0000\n"
 "Last-Translator: Mikael Arhelger <mikaelarhelger@gmail.com>, 2022\n"
 "Language-Team: German (https://www.transifex.com/ledgersmb/teams/58325/de/)\n"
 "Language: de\n"
@@ -340,7 +340,7 @@ msgstr "Periodenabgrenzung:"
 msgid "Accum. Depreciation"
 msgstr "Summierte Abschreibungen"
 
-#: old/lib/LedgerSMB/Form.pm:488 UI/journal/journal_entry.html:15
+#: old/lib/LedgerSMB/Form.pm:489 UI/journal/journal_entry.html:15
 msgid "Action: [_1], ID: [_2]"
 msgstr "Aktion: [_1], ID: [_2]"
 
@@ -5280,7 +5280,7 @@ msgstr "Überzahlungskonto"
 msgid "Overpayments"
 msgstr "Überzahlungen"
 
-#: old/bin/am.pl:981 old/lib/LedgerSMB/Form.pm:1178
+#: old/bin/am.pl:981 old/lib/LedgerSMB/Form.pm:1179
 #: UI/Contact/pricelist.html:103 UI/Reports/aging_report.html:97
 #: UI/Reports/balance_sheet.html:120 UI/Reports/display_report.html:72
 #: UI/Reports/PNL.html:105
@@ -5751,7 +5751,7 @@ msgstr "Transaktion buchen [_1]"
 msgid "Posting Vendor Invoice [_1]"
 msgstr "Lieferantenrechnung buchen [_1]"
 
-#: old/bin/am.pl:980 old/bin/printer.pl:149 old/lib/LedgerSMB/Form.pm:1176
+#: old/bin/am.pl:980 old/bin/printer.pl:149 old/lib/LedgerSMB/Form.pm:1177
 msgid "Postscript"
 msgstr "Postscript"
 

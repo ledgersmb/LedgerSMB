@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.9.25-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2023-01-15 20:06+0000\n"
+"POT-Creation-Date: 2023-02-03 11:04+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2021\n"
 "Language-Team: Swedish (https://www.transifex.com/ledgersmb/teams/58325/sv/)\n"
 "Language: sv\n"
@@ -332,7 +332,7 @@ msgstr ""
 msgid "Accum. Depreciation"
 msgstr ""
 
-#: old/lib/LedgerSMB/Form.pm:488 UI/journal/journal_entry.html:15
+#: old/lib/LedgerSMB/Form.pm:489 UI/journal/journal_entry.html:15
 msgid "Action: [_1], ID: [_2]"
 msgstr ""
 
@@ -5221,7 +5221,7 @@ msgstr ""
 msgid "Overpayments"
 msgstr ""
 
-#: old/bin/am.pl:981 old/lib/LedgerSMB/Form.pm:1178
+#: old/bin/am.pl:981 old/lib/LedgerSMB/Form.pm:1179
 #: UI/Contact/pricelist.html:103 UI/Reports/aging_report.html:97
 #: UI/Reports/balance_sheet.html:120 UI/Reports/display_report.html:72
 #: UI/Reports/PNL.html:105
@@ -5690,7 +5690,7 @@ msgstr ""
 msgid "Posting Vendor Invoice [_1]"
 msgstr ""
 
-#: old/bin/am.pl:980 old/bin/printer.pl:149 old/lib/LedgerSMB/Form.pm:1176
+#: old/bin/am.pl:980 old/bin/printer.pl:149 old/lib/LedgerSMB/Form.pm:1177
 msgid "Postscript"
 msgstr "Blankt papper"
 
