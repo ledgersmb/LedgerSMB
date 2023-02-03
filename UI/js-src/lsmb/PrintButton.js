@@ -20,7 +20,7 @@ define([
 ) {
     return declare("lsmb/PrintButton", [Button], {
         minimalGET: true,
-        onClick: async function (evt) {
+        onClick: function (evt) {
             var f = this.valueNode.form;
             if (f.media.value === "screen") {
                 var data;
@@ -49,47 +49,49 @@ define([
                 }
 
                 let base = window.location.pathname.replace(/[^/]*$/, "");
-                let r = await fetch(base + domattr.get(f, "action"), {
+                fetch(base + domattr.get(f, "action"), {
                     method: "POST",
                     body: dojo.objectToQuery(data),
                     headers: {
                         "X-Requested-With": "XMLHttpRequest",
                         "Content-Type": "application/x-www-form-urlencoded"
                     }
-                });
+                }).then((r) => {
+                    if (r.ok) {
+                        let rh = r.headers;
+                        var disp = rh.get("Content-Disposition");
+                        var cd = contentDisposition.parse(disp);
+                        if (cd.parameters.filename === undefined) {
+                            cd.parameters.filename = "unknown";
+                        }
+                        if (cd.type && cd.type === "attachment") {
+                            r.blob().then((c) => {
+                                var a = document.createElement("a");
+                                var h = URL.createObjectURL(c);
 
-                if (r.ok) {
-                    let rh = r.headers;
-                    var disp = rh.get("Content-Disposition");
-                    var cd = contentDisposition.parse(disp);
-                    if (cd.parameters.filename === undefined) {
-                        cd.parameters.filename = "unknown";
-                    }
-                    if (cd.type && cd.type === "attachment") {
-                        var a = document.createElement("a");
-                        var h = URL.createObjectURL(await r.blob());
+                                a.download = cd.parameters.filename;
+                                a.href = h;
+                                a.click();
 
-                        a.download = cd.parameters.filename;
-                        a.href = h;
-                        a.click();
-
-                        a.remove();
-                        URL.revokeObjectURL(h);
+                                a.remove();
+                                URL.revokeObjectURL(h);
+                            });
+                        } else {
+                            var d = registry.byId("errorDialog");
+                            d.set(
+                                "content",
+                                "Server sent unexpected response."
+                            );
+                            d.show();
+                        }
                     } else {
-                        var d = registry.byId("errorDialog");
-                        d.set(
-                            "content",
-                            "Server sent unexpected response."
-                        );
-                        d.show();
-                    }
-                } else {
-                    window.__lsmbReportError(r);
-                };
-                return;
+                        window.__lsmbReportError(r);
+                    };
+                });
             }
-
-            this.inherited(arguments);
+            else {
+                this.inherited(arguments);
+            }
         }
     });
 });
