@@ -3,6 +3,20 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.12
+* Random errors reported at the bottom of invoices without good reason (#7144)
+* Asset disposal results in asset of disposed amount (#7143)
+* Third address line on entity screen not saved for credit accounts (#7127)
+* Print buttons call removed function (#7151)
+* Empty inventory reports don't show in searches (#2661)
+* Error thrown while mailing AR aging statements (#7158)
+* CSV batch import fails due to incorrect function name (#7160)
+* Align SQL setting-increment function with Perl implementation (#7186)
+* Transaction Approval > Drafts doesn't set workflow state to POSTED (#7170)
+* Order number filter on invoice search ignored (#7178)
+* Fix notes from orders being on wrong invoice line (#7179)
+
+
 Changelog for 1.10.11
 * Stricter allowance for non-uniquely reconciled lines during migration (#7078)
 * Rounding crash in reports with huge numbers (#7100)
