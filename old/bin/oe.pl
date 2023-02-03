@@ -1696,7 +1696,7 @@ sub create_backorder {
     }
 
     @flds =
-      qw(partnumber description qty ship unit sellprice discount oldqty orderitems_id id bin weight listprice lastcost taxaccounts pricematrix sku onhand deliverydate reqdate projectnumber partsgroup assembly serialnumber);
+      qw(partnumber description qty ship unit sellprice discount oldqty orderitems_id id bin weight listprice lastcost taxaccounts pricematrix sku onhand deliverydate reqdate projectnumber partsgroup assembly notes serialnumber);
 
     foreach my $i ( 1 .. $form->{rowcount} ) {
         for (qw(qty sellprice discount)) {
