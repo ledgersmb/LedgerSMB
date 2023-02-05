@@ -8,7 +8,6 @@
 
 // Import test packages
 import axios from "axios";
-import http from "axios/lib/adapters/http";
 import jestOpenAPI from "jest-openapi";
 import { StatusCodes } from "http-status-codes";
 import { create_database, drop_database, load_coa, initialize } from "./database";
@@ -30,7 +29,7 @@ let headers = {};
 
 // For all tests
 beforeAll(() => {
-    axios.defaults.adapter = http;
+    axios.defaults.adapter = 'http';
     create_database(username, password, company);
     load_coa(username, password, company, "locale/coa/us/General.xml");
     initialize(company,"UI/tests/specs/data/Invoices.sql");
