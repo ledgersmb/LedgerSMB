@@ -112,7 +112,7 @@ $$
      JOIN entity_employee ee on (ee.entity_id = p.entity_id)
      JOIN entity e ON (p.entity_id = e.id)
 LEFT JOIN salutation s on (p.salutation_id = s.id)
-LEFT JOIN person mp ON ee.manager_id = p.entity_id
+LEFT JOIN person mp ON ee.manager_id = mp.entity_id
     WHERE ee.is_manager
  ORDER BY ee.employeenumber;
 $$ LANGUAGE SQL;
