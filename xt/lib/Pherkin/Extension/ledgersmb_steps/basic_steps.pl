@@ -8,7 +8,7 @@ use warnings;
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
-use Selenium::Remote::Driver;
+#use Selenium::Remote::Driver;
 
 Given qr/a user named "(.*)" with a password "(.*)"/, sub {
     # note: the LedgerSMB extension has a *very* similar pattern!
