@@ -19,7 +19,7 @@ export class LsmbBaseInput extends LsmbDijit {
     }
 
     _valueAttrs() {
-        return ["title", "name", "value", "tabindex"];
+        return ["label", "title", "name", "value", "tabindex"];
     }
 
     _labelRoot() {
@@ -81,9 +81,6 @@ export class LsmbBaseInput extends LsmbDijit {
 
         this.dojoWidget = new (this._widgetClass())(this._collectProps());
 
-        if (this.hasAttribute("title") && !this.hasAttribute("label")) {
-            this.setAttribute("label", this.getAttribute("title"));
-        }
         if (
             this.hasAttribute("label") &&
             this.getAttribute("label") !== "_none_"
@@ -132,7 +129,9 @@ export class LsmbBaseInput extends LsmbDijit {
             registry.remove(this.dojoWidget.id);
             this.dojoWidget.destroy(false);
             this.dojoWidget = null;
+        }
 
+        if (this.dojoLabel) {
             this.dojoLabel.remove();
             this.dojoLabel = null;
         }

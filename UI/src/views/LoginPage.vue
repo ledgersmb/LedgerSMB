@@ -22,7 +22,7 @@
               <div>
                   <div id="company_div">
                       <lsmb-text name="login" size="20"
-                                 id="username" :title="$t('User Name')"
+                                 id="username" :label="$t('User Name')"
                                  tabindex="1"
                                  :value="username"
                                  v-update:username=""
@@ -31,14 +31,14 @@
                       />
                       <lsmb-password name="password"
                                      id="password" size="20"
-                                     :title="$t('Password')"
+                                     :label="$t('Password')"
                                      :value="password" v-update:password=""
                                      tabindex="2" autocomplete="off"
                                      @keyup.enter="login"
                       />
                       <lsmb-text name="company"
                                  id="company" size="20"
-                                 :title="$t('Company')" tabindex="3"
+                                 :label="$t('Company')" tabindex="3"
                                  :value="company"
                                  v-update:company=""
                                  @keyup.enter="login"
