@@ -13,17 +13,17 @@
                 <template v-if="transaction_fields">
                     <lsmb-text class="reference"
                                name="reference"
-                               title="Reference"
+                               label="Reference"
                                value=""
                                size="15"
                                @input="status=null" />
                     <lsmb-text class="description"
                                name="description"
-                               title="Description"
+                               label="Description"
                                value=""
                                required
                                @input="status=null" />
-                    <lsmb-date title="Transaction Date"
+                    <lsmb-date label="Transaction Date"
                                name="transdate"
                                size="12"
                                required
