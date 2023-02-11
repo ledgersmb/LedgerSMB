@@ -1,6 +1,6 @@
 <template>
    <div id="import-chart">
-      <import-csv :type="type">
+      <import-csv :type="type" :transaction_fields="false">
         <template v-slot:title>Import Chart of Accounts
         </template>
         <template v-slot:info>
