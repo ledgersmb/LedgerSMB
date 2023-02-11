@@ -1,6 +1,6 @@
 <template>
    <div :id="'import-' + type">
-      <import-csv :type="type">
+       <import-csv :type="type" :transaction_fields="false">
         <template v-slot:title>Import {{ type }}</template>
         <template v-slot:info>The uploaded file contains one {{ type }} item
              per row; no header fields need to be entered below.</template>
