@@ -6,8 +6,8 @@ import { LsmbDijit } from "@/elements/lsmb-dijit";
 const registry = require("dijit/registry");
 
 export class LsmbBaseInput extends LsmbDijit {
-    dojoLabel = null;
 
+    dojoLabel = null;
     connected = false;
 
     constructor() {
@@ -79,7 +79,17 @@ export class LsmbBaseInput extends LsmbDijit {
         }
         this.connected = true;
 
-        this.dojoWidget = new (this._widgetClass())(this._collectProps());
+        let props = this._collectProps();
+        if (this.hasAttribute('id')) {
+            // move the ID property to the widget we're creating
+            // in order to correctly link any labels
+            props.id = this.getAttribute('id');
+            this.removeAttribute('id');
+        }
+        let widgetElm = document.createElement("span");
+        [ ...this.children ].forEach((c) => { widgetElm.appendChild(c); });
+        this._widgetRoot().appendChild(widgetElm);
+        this.dojoWidget = new (this._widgetClass())(props, widgetElm);
 
         if (
             this.hasAttribute("label") &&
@@ -88,26 +98,26 @@ export class LsmbBaseInput extends LsmbDijit {
             this.dojoLabel = document.createElement("label");
             this.dojoLabel.innerHTML = this.getAttribute("label");
             this.dojoLabel.classList.add("label");
+            this.dojoLabel.setAttribute('for', props.id);
 
             // without this handler, we bubble 2 events "to the outside"
             this.dojoLabel.addEventListener("click", (e) =>
                 e.stopPropagation()
             );
-        }
-        const labelBefore =
-            !this.hasAttribute("label-pos") ||
-            this.getAttribute("label-pos") !== "after";
-        if (labelBefore && this.dojoLabel) {
-            this._labelRoot().appendChild(this.dojoLabel);
+
+            const labelBefore =
+                  !this.hasAttribute("label-pos") ||
+                this.getAttribute("label-pos") !== "after";
+
+            // using 'firstChild', because Dojo replaced widgetElm...
+            if (labelBefore) {
+                this._widgetRoot().insertBefore(this.dojoLabel, this.firstChild);
+            }
+            else {
+                this._widgetRoot().insertAfter(this.dojoLabel, this.firstChild);
+            }
         }
 
-        this.dojoWidget.placeAt(this._widgetRoot());
-        if (!labelBefore && this.dojoLabel) {
-            this._labelRoot().appendChild(this.dojoLabel);
-        }
-        if (this.dojoLabel) {
-            this.dojoLabel.setAttribute("for", this.dojoWidget.id);
-        }
         this.dojoWidget.on("input", (e) => {
             let evt = new InputEvent("input", {
                 data: e.charOrCode
