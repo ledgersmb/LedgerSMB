@@ -8,6 +8,13 @@ const dojoCheckBox = require("dijit/form/CheckBox");
 export class LsmbCheckBox extends LsmbBaseChecked {
     widgetWrapper = null;
 
+    _stdProps() {
+        return {
+            ...super._stdProps(),
+            value: 1
+        };
+    }
+
     _widgetRoot() {
         if (this.widgetWrapper) {
             return this.widgetWrapper;

@@ -7,7 +7,11 @@ const dojoTextBox = require("dijit/form/ValidationTextBox");
 
 export class LsmbText extends LsmbBaseInput {
     _stdProps() {
-        return { type: "text" };
+        return {
+            ...super._stdProps(),
+            size: 60,
+            type: "text"
+        };
     }
 
     _valueAttrs() {

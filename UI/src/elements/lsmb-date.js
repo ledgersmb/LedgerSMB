@@ -9,7 +9,22 @@ export class LsmbDate extends LsmbBaseInput {
     widgetWrapper = null;
 
     _stdProps() {
-        return { size: 10 };
+        return {
+            ...super._stdProps(),
+            size: 10
+        };
+    }
+
+    _collectProps() {
+        let props = super._collectProps();
+        if ("value" in props && !props.value) {
+            // a value of "" is interpreted as Unix 'epoch'
+            // instead, we want it to be interpreted as 'empty'
+            // so, delete the property
+            delete props.value;
+        }
+
+        return props;
     }
 
     _widgetRoot() {

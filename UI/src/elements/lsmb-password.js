@@ -5,7 +5,10 @@ import { LsmbText } from "@/elements/lsmb-text";
 
 export class LsmbPassword extends LsmbText {
     _stdProps() {
-        return { type: "password" };
+        return {
+            ...super._stdProps(),
+            type: "password"
+        };
     }
 
     constructor() {
