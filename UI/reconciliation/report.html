@@ -110,15 +110,15 @@ END %]
 [% i = 1 %]
 <table border=0 id="cleared-table">
     <tr class="listtop">
-        <th colspan="10">[% INCLUDE input element_data = {
-        type = "toggle"
-        name = "b_cleared_table"
-        label = text('Cleared Transactions')
-        checked = b_cleared_table
-        "data-dojo-type" = "lsmb/PublishToggleButton"
-        "data-dojo-props" = "topic:'ui/reconciliation/report/b_cleared_table'"
-        }
-        %]</th>
+      <th colspan="10"><label for="b-cleared-table">[% text('Cleared Transactions') %]</label>
+        <input
+          type="toggle"
+          name="b_cleared_table"
+          id="b-cleared-table"
+          checked="[% b_cleared_table %]"
+          data-dojo-type="lsmb/PublishToggleButton"
+          data-dojo-props="topic:'ui/reconciliation/report/b_cleared_table'" />
+      </th>
     </tr>
     <tr class="listheading">
         <th class="header" rowspan="2" scope="rowgroup"></th>
@@ -246,15 +246,16 @@ END;
 IF have_mismatches ; -%]
 <table border=0 id="error-table">
     <tr class="listtop">
-        <th colspan="10">[% INCLUDE input element_data = {
-        type = "toggle"
-        name = "b_mismatch_table"
-        label = text('Mismatched Transactions (from upload)')
-        checked = b_mismatch_table
-        "data-dojo-type" = "lsmb/PublishToggleButton"
-        "data-dojo-props" = "topic:'ui/reconciliation/report/b_mismatch_table'"
-        }
-        %]</th>
+      <th colspan="10"><label for="b-mismatch-table">[%
+          text('Mismatched Transactions (from upload)') %]</label>
+        <input
+          type="toggle"
+          name="b_mismatch_table"
+          id="b-mismatch-table"
+          checked="[% b_mismatch_table %]"
+          data-dojo-type="lsmb/PublishToggleButton"
+          data-dojo-props="topic:'ui/reconciliation/report/b_mismatch_table'" />
+      </th>
     </tr>
     <tr class="listheading">
         <th class="header"></th>
@@ -321,15 +322,15 @@ IF have_outstanding ;
 -%]
 <table id="outstanding-table">
     <tr class="listtop">
-        <th colspan="6">[% INCLUDE input element_data = {
-        type = "toggle"
-        name = "b_outstanding_table"
-        label = text('Outstanding Transactions')
-        checked = b_outstanding_table
-        "data-dojo-type" = "lsmb/PublishToggleButton"
-        "data-dojo-props" = "topic:'ui/reconciliation/report/b_outstanding_table'"
-        }
-        %]</th>
+        <th colspan="6"><label for="b-outstanding-table">[% text('Outstanding Transactions') %]</label>
+        <input
+          type="toggle"
+          name="b_outstanding_table"
+          id="b-outstanding-table"
+          checked="[% b_outstanding_table %]"
+          data-dojo-type="lsmb/PublishToggleButton"
+          data-dojo-props="topic:'ui/reconciliation/report/b_outstanding_table'" />
+        </th>
     </tr>
     <tr class="listheading">
         <th class="header">[% text('Cleared') %]</th>
