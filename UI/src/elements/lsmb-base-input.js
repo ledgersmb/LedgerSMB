@@ -6,6 +6,7 @@ import { LsmbDijit } from "@/elements/lsmb-dijit";
 const registry = require("dijit/registry");
 
 export class LsmbBaseInput extends LsmbDijit {
+    static idRegex = /[^\p{IsAlnum}]/g;
 
     dojoLabel = null;
 
@@ -35,6 +36,13 @@ export class LsmbBaseInput extends LsmbDijit {
         throw new Error(
             "lsmb-base-input is an abstract base class! don't use directly!"
         );
+    }
+
+    _setIdProp(props) {
+        if (props.name) {
+            /* eslint-disable no-param-reassign */
+            props.id = props.name.replaceAll(LsmbBaseInput.idRegex, "-");
+        }
     }
 
     static get observedAttributes() {
@@ -87,6 +95,9 @@ export class LsmbBaseInput extends LsmbDijit {
             props.id = this.getAttribute('id');
             this.removeAttribute('id');
         }
+        if (!props.id) {
+            this._setIdProp(props);
+        }
         let widgetElm = document.createElement("span");
         [ ...this.children ].forEach((c) => { widgetElm.appendChild(c); });
         this._widgetRoot().appendChild(widgetElm);
@@ -100,6 +111,7 @@ export class LsmbBaseInput extends LsmbDijit {
             this.dojoLabel.innerHTML = this.getAttribute("label");
             this.dojoLabel.classList.add("label");
             this.dojoLabel.setAttribute('for', props.id);
+            this.dojoLabel.setAttribute('id', props.id + '-label');
 
             // without this handler, we bubble 2 events "to the outside"
             this.dojoLabel.addEventListener("click", (e) =>

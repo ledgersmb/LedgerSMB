@@ -8,6 +8,13 @@ const dojoRadioButton = require("dijit/form/RadioButton");
 export class LsmbRadioButton extends LsmbBaseChecked {
     widgetWrapper = null;
 
+    _setIdProp(props) {
+        if (props.name && props.value) {
+            /* eslint-disable no-param-reassign */
+            props.id = (props.name + "-" + props.value).replaceAll(LsmbRadioButton.idRegex, "-");
+        }
+    }
+
     _widgetRoot() {
         if (this.widgetWrapper) {
             return this.widgetWrapper;

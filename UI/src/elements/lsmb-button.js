@@ -7,6 +7,8 @@ const Button = require("dijit/form/Button");
 const registry = require("dijit/registry");
 
 export class LsmbButton extends LsmbDijit {
+    static idRegex = /[^\p{IsAlnum}]/g;
+
     label = null;
 
     constructor() {
@@ -14,7 +16,7 @@ export class LsmbButton extends LsmbDijit {
     }
 
     _valueAttrs() {
-        return ["type"];
+        return ["name", "type", "value"];
     }
 
     connectedCallback() {
@@ -22,6 +24,16 @@ export class LsmbButton extends LsmbDijit {
         this.innerHTML = "";
         let props = this._collectProps();
         props.label = this.label;
+        if (this.hasAttribute('id')) {
+            // move the ID property to the widget we're creating
+            // in order to correctly link any labels
+            props.id = this.getAttribute('id');
+            this.removeAttribute('id');
+        }
+        if (!props.id && props.name && props.value) {
+            /* eslint-disable no-param-reassign */
+            props.id = (props.name + "-" + props.value).replaceAll(LsmbButton.idRegex, "-");
+        }
 
         this.dojoWidget = new Button(props);
         this.appendChild(this.dojoWidget.domNode);
