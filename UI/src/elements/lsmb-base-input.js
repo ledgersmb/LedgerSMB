@@ -8,6 +8,7 @@ const registry = require("dijit/registry");
 export class LsmbBaseInput extends LsmbDijit {
 
     dojoLabel = null;
+
     connected = false;
 
     constructor() {
