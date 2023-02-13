@@ -48,7 +48,12 @@
        END;
     %]
     <script>
-        window.alert("[% ALERT %]");
+      let h;
+      h = () => {
+          window.removeEventListener('DOMContentLoaded', h);
+          window.alert("[% ALERT %]");
+      };
+      window.addEventListener('DOMContentLoaded', h);
     </script>
     [% END %]
     <script>
