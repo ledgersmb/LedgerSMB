@@ -23,7 +23,6 @@ if (TARGET !== "readme") {
     const StylelintPlugin = require("stylelint-webpack-plugin");
     const UnusedWebpackPlugin = require("unused-webpack-plugin");
     const VirtualModulesPlugin = require("webpack-virtual-modules");
-    const VueI18nPlugin = require("@intlify/unplugin-vue-i18n/webpack");
     const { VueLoaderPlugin } = require("vue-loader");
     // eslint-disable-next-line
     const { WebpackDeduplicationPlugin } = require("webpack-deduplication-plugin");
@@ -258,11 +257,6 @@ if (TARGET !== "readme") {
 
         // Add Vue
         new VueLoaderPlugin(),
-
-        VueI18nPlugin({
-            // locale messages resources pre-compile option
-            include: [path.resolve(__dirname, "./UI/src/locales/**")]
-        }),
 
         // Add Dojo
         new DojoWebpackPlugin(DojoWebpackPluginOptions),
