@@ -459,14 +459,10 @@ Copies the existing database to a new name.
 
 sub copy {
     my ($self, $new_name) = @_;
-    my $rc = $self->new($self->export, (dbname => $new_name)
-        )->create(copy_of => $self->dbname);
+    my $new_db = $self->new($self->export, (dbname => $new_name));
+    my $rc = $new_db->create(copy_of => $self->dbname);
 
-    (__PACKAGE__->new(
-         dbname    => $new_name,
-         username  => $self->username,
-         password  => $self->password,
-     ))->connect({ AutoCommit => 1 })->do(
+    $new_db->connect({ AutoCommit => 1 })->do(
         q|SELECT setting__set('role_prefix',
                               coalesce((setting_get('role_prefix')).value,?))|,
         undef, 'lsmb_' . $self->dbname . '__');
