@@ -3,6 +3,14 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.13
+* Aging reports per account; do not all entity invoices (#7177)
+* Follow up to Print buttons fix -- Dojo doesn't support 'async') (#7131)
+* Fix JOIN in 'all_managers' stored procedure (#7201)
+* On CoA, Service, Goods and OOverhead import, hide transaction fields (#7212)
+* Fix cloning companies being dependent on PG* environment vars (#7220)
+
+
 Changelog for 1.10.12
 * Random errors reported at the bottom of invoices without good reason (#7144)
 * Asset disposal results in asset of disposed amount (#7143)
