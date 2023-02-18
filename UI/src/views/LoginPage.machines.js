@@ -11,21 +11,13 @@ import {
     state,
     transition
 } from "@/robot-vue";
-const registry = require("dijit/registry");
-
-const not = (fn) => (
-    (...args) => !fn(...args)
-);
-const formValid =
-      (ctx) => registry.findWidgets(ctx.form.value).reduce(
-            (acc, w) => (acc && (w.disabled || !w.validate || w.validate())),
-            true
-        );
-const okResponse = (ctx) => ctx.response.ok;
-const responseStatus = (status) => (
-    (ctx) => (ctx.response.status === status)
-);
-
+import {
+    testNot,
+    testResponseOkFn,
+    testResponseStatusFn,
+    transitionFormValid,
+    transitionFormInvalid
+} from "@/machine-helpers.js";
 
 function submitLogin(ctx) {
     return fetch("login.pl?action=authenticate&company=" + encodeURI(ctx.company.value), {
@@ -42,22 +34,14 @@ function submitLogin(ctx) {
     });
 }
 
-const transitionToInvalid =
-    (event) => transition(event, 'invalid',
-                                guard(not(formValid)));
-const transitionToReady =
-    (event) => transition(event, 'ready',
-                                guard(formValid));
-
-
 function createLoginMachine(initialContext) {
     return interpret(
         createMachine({
             invalid: state(
-                transitionToReady('input'),
+                transitionFormValid("input", "ready"),
             ),
             ready: state(
-                transitionToInvalid('input'),
+                transitionFormInvalid("input", "invalid"),
                 transition('submit', 'submitting'),
             ),
             submitting: invoke(
@@ -74,21 +58,21 @@ function createLoginMachine(initialContext) {
             submitted: state(
                 immediate(
                     'failed',
-                    guard(responseStatus(401)),
+                    guard(testResponseStatusFn(401)),
                     action((ctx) => {
                         ctx.errorText.value = ctx.t("Access denied: Bad username or password");
                     }),
                 ),
                 immediate(
                     'failed',
-                    guard(responseStatus(521)),
+                    guard(testResponseStatusFn(521)),
                     action((ctx) => {
                         ctx.errorText.value = ctx.t("Database version mismatch");
                     }),
                 ),
                 immediate(
                     'ready',
-                    guard(not(okResponse)),
+                    guard(testNot(testResponseOkFn())),
                     action((ctx) => {
                         alert(ctx.t("Unknown error preventing login")); // eslint-disable-line no-alert
                     }),
@@ -106,8 +90,8 @@ function createLoginMachine(initialContext) {
                     reduce((ctx, e) => ({ ...ctx, error: e.data }))),
             ),
             failed: state(
-                transitionToReady('input'),
-                transitionToInvalid('input'),
+                transitionFormValid("input", "ready"),
+                transitionFormInvalid("input", "invalid"),
             ),
             final: state(),
             error: state(),

@@ -11,36 +11,10 @@ import {
     state,
     transition
 } from "@/robot-vue";
-
-function progressNotify(fn, progress) {
-    return async (ctx) => {
-        let dismiss;
-
-        if (progress) {
-            let cbp = ctx.notifications[progress];
-            if (cbp) {
-                cbp(ctx, (d) => {
-                    dismiss = d;
-                });
-            }
-        }
-        return fn(ctx).finally((value) => {
-            if (dismiss) {
-                dismiss();
-            }
-            return value;
-        });
-    };
-}
-
-function notify(notification) {
-    return (ctx) => {
-        let cb = ctx.notifications[notification];
-        if (cb) {
-            cb(ctx);
-        }
-    };
-}
+import {
+    progressNotify,
+    notify
+} from "@/machine-helpers.js";
 
 function handleError(ctx, error) {
     return { ...ctx, error };

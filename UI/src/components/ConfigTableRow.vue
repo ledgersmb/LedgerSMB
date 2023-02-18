@@ -57,31 +57,31 @@ const { service, send, state } = createRowMachine(props.store, {
         rowId: props.id,
         adding: props.type === "new",
         notifications: {
-            "acquiring": (ctx, cb) => {
+            "acquiring": (ctx, { dismissReceiver }) => {
                 notify({
                     title: t("Getting latest data"),
                     type: "info",
-                    dismissReceiver: cb
+                    dismissReceiver
                 });
             },
-            "adding": (ctx, cb) => {
+            "adding": (ctx, { dismissReceiver }) => {
                 notify({
                     title: t("Adding"),
                     type: "info",
-                    dismissReceiver: cb
+                    dismissReceiver
                 });
             },
             "added": (ctx) => { notify({ title: t("Added") }); },
-            "deleting": (ctx, cb) => {
+            "deleting": (ctx, { dismissReceiver }) => {
                 notify({
                     title: t("Deleting"),
                     type: "info",
-                    dismissReceiver: cb
+                    dismissReceiver
                 });
             },
             "deleted": (ctx) => { notify({ title: t("Deleted") }); },
-            "saving": (ctx, cb) => {
-                notify({ title: t("Saving"), type: "info", dismissReceiver: cb });
+            "saving": (ctx, { dismissReceiver }) => {
+                notify({ title: t("Saving"), type: "info", dismissReceiver });
             },
             "saved": (ctx) => { notify({ title: t("Saved") }); },
         }
