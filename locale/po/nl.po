@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.13-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2023-02-03 11:17+0000\n"
+"POT-Creation-Date: 2023-02-18 21:23+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: Dutch (https://www.transifex.com/ledgersmb/teams/58325/nl/)\n"
 "Language: nl\n"
@@ -194,6 +194,7 @@ msgstr "Toegang geweigerd"
 msgid "Access denied: Bad username or password"
 msgstr ""
 
+#: lib/LedgerSMB/Report/Aging.pm:106
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:228
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:137
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:68
@@ -631,7 +632,7 @@ msgstr "Details van aanpassing"
 msgid "Aged"
 msgstr "Verlopen"
 
-#: lib/LedgerSMB/Report/Aging.pm:188 UI/Reports/filters/aging.html:6
+#: lib/LedgerSMB/Report/Aging.pm:193 UI/Reports/filters/aging.html:6
 msgid "Aging Report"
 msgstr "Verouderingsrapportage"
 
@@ -1990,7 +1991,7 @@ msgstr "Val."
 msgid "Currency"
 msgstr "Valuta"
 
-#: lib/LedgerSMB/Report/Aging.pm:137 old/bin/pe.pl:729
+#: lib/LedgerSMB/Report/Aging.pm:142 old/bin/pe.pl:729
 #: templates/demo/statement.html:62 templates/demo/statement.tex:54
 #: UI/lib/report_base.html:159 UI/lib/report_base.html:252
 #: UI/Reports/co/filter_bm.html:52 UI/Reports/filters/aging.html:98
@@ -2146,7 +2147,7 @@ msgstr "Database bestaat al."
 msgid "Database version mismatch"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Aging.pm:125 lib/LedgerSMB/Report/GL.pm:99
+#: lib/LedgerSMB/Report/Aging.pm:130 lib/LedgerSMB/Report/GL.pm:99
 #: lib/LedgerSMB/Report/Inventory/History.pm:145
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:102
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:207
@@ -2498,7 +2499,7 @@ msgstr "Afschrijvingsmethode"
 msgid "Depreciation Starts"
 msgstr "Afschrijving begint"
 
-#: lib/LedgerSMB/Report/Aging.pm:120
+#: lib/LedgerSMB/Report/Aging.pm:125
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:79
 #: lib/LedgerSMB/Report/Budget/Search.pm:87
 #: lib/LedgerSMB/Report/Budget/Variance.pm:120
@@ -2720,7 +2721,7 @@ msgstr "Selectielijsten"
 msgid "Due"
 msgstr "Verschuldigd op"
 
-#: lib/LedgerSMB/Report/Aging.pm:130
+#: lib/LedgerSMB/Report/Aging.pm:135
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:107
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:270
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:299 old/bin/aa.pl:661
@@ -3869,7 +3870,7 @@ msgstr "Voorraad opgeslagen!"
 msgid "Inventory transferred!"
 msgstr "Voorraad overgeheveld!"
 
-#: lib/LedgerSMB/Report/Aging.pm:114
+#: lib/LedgerSMB/Report/Aging.pm:119
 #: lib/LedgerSMB/Report/Inventory/Search.pm:303
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:178
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:269
@@ -4090,7 +4091,7 @@ msgstr "Arbeids-/Overheadkosten"
 msgid "Labor/Service Code"
 msgstr "Arbeid-/dienstcode"
 
-#: lib/LedgerSMB/Report/Aging.pm:106
+#: lib/LedgerSMB/Report/Aging.pm:111
 #: lib/LedgerSMB/Report/Listings/Language.pm:65
 #: lib/LedgerSMB/Report/Listings/Templates.pm:72 old/bin/pe.pl:300
 #: old/bin/pe.pl:473 UI/Contact/divs/credit.html:275
@@ -7733,7 +7734,7 @@ msgstr "Vink alle verwijder-aankruisvakjes aan"
 msgid "Top-level"
 msgstr "Hoogste Niveau"
 
-#: lib/LedgerSMB/Report/Aging.pm:161
+#: lib/LedgerSMB/Report/Aging.pm:166
 #: lib/LedgerSMB/Report/Inventory/History.pm:163
 #: lib/LedgerSMB/Report/Inventory/Search.pm:324
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:122
@@ -8672,7 +8673,7 @@ msgstr ""
 msgid "label"
 msgstr "label"
 
-#: UI/src/views/Home.vue:36 UI/src/views/Home.vue:51
+#: UI/src/views/Home.vue:51 UI/src/views/Home.vue:36
 msgid "mailing lists"
 msgstr ""
 
