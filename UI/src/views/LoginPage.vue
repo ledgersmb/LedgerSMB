@@ -2,7 +2,7 @@
 <!-- eslint-disable -->
 
 <template>
-    <form name="login" style="max-width:fit-content">
+    <form name="login" style="max-width:fit-content" ref="form">
       <div class="login" id="logindiv">
         <div class="login" align="center">
           <a href="http://www.ledgersmb.org/"
@@ -21,35 +21,48 @@
               </h1>
               <div>
                   <div id="company_div">
-                      <lsmb-text name="login" size="20"
-                                 id="username" :label="$t('User Name')"
-                                 tabindex="1"
+                      <lsmb-text name="username"
+                                 id="username"
+                                 size="20"
+                                 :label="$t('User Name')"
                                  :value="username"
-                                 v-update:username=""
+                                 tabindex="1"
                                  autocomplete="off"
-                                 @keyup.enter="login"
+                                 required
+                                 @keyup.enter="machine.send('submit')"
+                                 @input="update"
                       />
                       <lsmb-password name="password"
-                                     id="password" size="20"
+                                     id="password"
+                                     size="20"
                                      :label="$t('Password')"
-                                     :value="password" v-update:password=""
-                                     tabindex="2" autocomplete="off"
-                                     @keyup.enter="login"
+                                     :value="password"
+                                     tabindex="2"
+                                     autocomplete="off"
+                                     required
+                                     @keyup.enter="machine.send('submit')"
+                                     @input="update"
                       />
                       <lsmb-text name="company"
                                  id="company" size="20"
                                  :label="$t('Company')" tabindex="3"
                                  :value="company"
-                                 v-update:company=""
-                                 @keyup.enter="login"
+                                 @keyup.enter="machine.send('submit')"
+                                 @input="update"
                       />
                 </div>
-                <lsmb-button tabindex="4" id="login" @click="login" :disabled="loginDisabled">{{ $t('Login') }}</lsmb-button>
+                <lsmb-button
+                    v-if="state !== 'failed'"
+                    tabindex="4"
+                    id="login"
+                    @click="machine.send('submit')"
+                    :disabled="state !== 'ready'">{{ $t('Login') }}</lsmb-button>
+                <div v-else style="background-color:red;border-radius:3px;padding:3px;font-weight:bold">{{ errorText }}</div>
               </div>
             </div>
           </div>
           <transition>
-             <div v-if="inProgress">{{ $t("Logging in... Please wait.") }}</div>
+              <div v-if="state === 'submitting'">{{ $t("Logging in... Please wait.") }}</div>
           </transition>
         </div>
       </div>
@@ -58,66 +71,39 @@
 
 <script>
 /* eslint-disable */
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { setI18nLanguage } from "@/i18n";
+import { createLoginMachine } from "./LoginPage.machines.js";
+
 
 export default defineComponent({
-   name: "LoginPage",
-   setup() {
-      const { t, locale } = useI18n({ useScope: "global" });
-      setI18nLanguage(locale);
-      return { t };
-   },
-   data() {
-      return {
-         version: window.lsmbConfig.version,
-         password: "",
-         username: "",
-         company: "",
-         inProgress: false
-      };
-   },
-   computed: {
-      loginDisabled() {
-         return !this.username || !this.password
-      }
-   },
-   methods: {
-       async login() {
-           if (this.loginDisabled) {
-               return;
-           }
+    name: "LoginPage",
+    setup(props, context) {
+        const { t, locale } = useI18n({ useScope: "global" });
+        setI18nLanguage(locale);
+        let data = {
+            t: t,
+            password: ref(""),
+            username: ref(""),
+            company: ref(""),
+            form: ref(null),
+            errorText: ref(""),
+        };
+        let { service, state } = createLoginMachine(data);
 
-          this.inProgress = true;
-          let r = await fetch("login.pl?action=authenticate&company=" + encodeURI(this.company), {
-             method: "POST",
-             body: JSON.stringify({
-                company: this.company,
-                password: this.password,
-                login: this.username
-             }),
-             headers: new Headers({
-                "X-Requested-With": "XMLHttpRequest",
-                "Content-Type": "application/json"
-             })
-         });
-         if (r.ok) {
-            let data = await r.json();
-            window.location.href = data.target;
-            return;
-         }
-         if (r.status === 454) {
-            alert(this.$t("Company does not exist"));
-         } else if (r.status === 401) {
-            alert(this.$t("Access denied: Bad username or password"));
-         } else if (r.status === 521) {
-            alert(this.$t("Database version mismatch"));
-         } else {
-            alert(this.$t("Unknown error preventing login"));
-         }
-         this.inProgress = false;
-      }
+        return {
+            machine: service,
+            version: window.lsmbConfig.version,
+            state,
+            ...data
+        };
+    },
+    methods: {
+        update(e) {
+            this[e.target.name] = e.target.value;
+            this.machine.send('input', e);
+        }
    },
    mounted() {
      document.body.setAttribute("data-lsmb-done", "true");

@@ -38,6 +38,6 @@ if (props.data.dismissReceiver) {
          @mouseenter="send('hold')"
          @mouseleave="send('release')">
         <div class="title" >{{ title }}</div>
-        <div v-if="text">{{ text }}</div>
+        <div v-if="text" style="margin-top:1em">{{ text }}</div>
     </div>
 </template>

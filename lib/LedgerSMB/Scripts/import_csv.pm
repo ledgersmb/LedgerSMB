@@ -19,6 +19,8 @@ This module doesn't specify any methods.
 use strict;
 use warnings;
 
+use JSON::PP;
+use Feature::Compat::Try;
 
 use LedgerSMB::AA;
 use LedgerSMB::Batch;
@@ -607,20 +609,29 @@ data in $request and processes it according to the dispatch tables.
 
 =cut
 
+my $json = JSON::PP->new;
+
 sub run_import {
     my ($request) = @_;
 
-    my @entries = _parse_file($request);
-    my $headers = shift @entries;
-    if (ref($preprocess->{$request->{type}}) eq 'CODE'){
-        $preprocess->{$request->{type}}($request, \@entries, $headers);
-    }
-    if ($process->{$request->{type}}($request, \@entries)){
-        if (ref($postprocess->{$request->{type}}) eq 'CODE'){
-            $postprocess->{$request->{type}}($request, \@entries);
+    try {
+        my @entries = _parse_file($request);
+        my $headers = shift @entries;
+        if (ref($preprocess->{$request->{type}}) eq 'CODE'){
+            $preprocess->{$request->{type}}($request, \@entries, $headers);
         }
+        if ($process->{$request->{type}}($request, \@entries)){
+            if (ref($postprocess->{$request->{type}}) eq 'CODE'){
+                $postprocess->{$request->{type}}($request, \@entries);
+            }
+        }
+        return begin_import($request);
     }
-    return begin_import($request);
+    catch ($e) {
+        return [ 500,
+                 [ 'Content-Type' => 'application/json' ],
+                 [ $json->encode({ error => "$e" }) ] ];
+    }
 }
 
 =head1 LICENSE AND COPYRIGHT

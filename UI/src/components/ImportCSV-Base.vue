@@ -4,7 +4,7 @@
             <div class="listtop"><slot name="title" /></div>
             <div class="info"><slot name="info" /></div>
         </template>
-        <form name="csvupload">
+        <form name="csvupload" ref="form">
             <input type="hidden" name="type" :value="type">
             <div v-if="multi"
                  class="listheading">Batch Information</div>
@@ -16,34 +16,37 @@
                                label="Reference"
                                value=""
                                size="15"
-                               @input="status=null" />
+                               @input="machine.send('input')" />
                     <lsmb-text class="description"
                                name="description"
                                label="Description"
                                value=""
                                required
-                               @input="status=null" />
+                               @input="machine.send('input')" />
                     <lsmb-date label="Transaction Date"
                                name="transdate"
                                size="12"
                                required
-                               @change="status=null" />
+                               @input="machine.send('input')"
+                               @change="machine.send('input')" />
                 </template>
                 <lsmb-file name="import_file"
                            label="From File"
                            accept=".csv"
                            required
-                           @change="status=null" />
+                           @input="machine.send('input')"
+                           @change="machine.send('input')" />
             </div>
             <div class="inputrow"
                  :class="transaction_fields ? '' : 'non-grid'"
                  id="buttonrow" >
                 <input type="hidden" name="trans_type" />
-                <lsmb-button class="submit"
-                             name="action" @click="upload">{{ "Save" }}</lsmb-button>
-            </div>
-            <div v-show="status!==null" :class='status ? "success" : "failure"'>
-                {{ message }}
+                <lsmb-button
+                    class="submit"
+                    name="action"
+                    @click="machine.send('submit')"
+                    :disabled="state !== 'ready'"
+                >{{ "Save" }}</lsmb-button>
             </div>
             <div class="details">
                 <slot />
@@ -82,36 +85,54 @@
 
 
 <script>
+import { ref, inject } from "vue";
+import { useI18n } from "vue-i18n";
+import { createImportMachine } from "./ImportCSV-Base.machines.js";
 
 export default {
-    data() {
-       return {
-          message: "",
-          status: null
-       };
-    },
-    methods: {
-       async upload() {
-          let data = new FormData(document.forms.csvupload);
-          data.append("action", "run_import");
-
-          let r = await fetch("import_csv.pl", {
-             method: "POST",
-             body: data,
-             headers: new Headers({
-                "X-Requested-With": "XMLHttpRequest"
-             })
-          });
-
-          if (r.ok) {
-             document.forms.csvupload.reset();
-             this.message = "Upload succeeded";
-             this.status = true;
-          } else {
-             this.message = await r.text();
-             this.status = false;
-          }
-       }
+    setup() {
+        const { t } = useI18n();
+        let notify = inject("notify");
+        let form = ref(null);
+        let { service, state } = createImportMachine({
+            form,
+            notifications: {
+                "submitting": (ctx, { dismissReceiver }) => {
+                    notify({
+                        title: t("Uploading CSV..."),
+                        type: "info",
+                        dissmissReceiver
+                    });
+                },
+                "success": () => { notify({ title: t("Uploaded") }); },
+                "submitError": (ctx, { event }) => {
+                    notify({
+                        title: t("Failure sending CSV"),
+                        text: event.error,
+                        type: "error"
+                    });
+                },
+                "processingError": (ctx, { event }) => {
+                    notify({
+                        title: t("Failure processing CSV"),
+                        text: event.data.error,
+                        type: "error"
+                    });
+                },
+                "responseError": (ctx, { event }) => {
+                    notify({
+                        title: t("Failed to process server response"),
+                        text: event.error,
+                        type: "error"
+                    });
+                }
+            },
+        });
+        return {
+            form, notify, state,
+            machine: service,
+            message: "",
+        };
     },
     props: {
         "multi": {},
