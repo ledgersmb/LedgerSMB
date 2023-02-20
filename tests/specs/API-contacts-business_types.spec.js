@@ -2,7 +2,6 @@
 
 // Import test packages
 import axios from "axios";
-import http from "axios/lib/adapters/http";
 import jestOpenAPI from "jest-openapi";
 import { StatusCodes } from "http-status-codes";
 import { create_database, drop_database } from "./database";
@@ -24,7 +23,7 @@ let headers = {};
 
 // For all tests
 beforeAll(() => {
-    axios.defaults.adapter = http;
+    axios.defaults.adapter = 'http';
     create_database(username, password, company);
 });
 
