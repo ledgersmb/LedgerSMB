@@ -120,6 +120,7 @@ module.exports = {
 
     // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
     moduleNameMapper: {
+        "^@/i18n": "<rootDir>/UI/tests/common/i18n", // Jest doesn't support esm or top level await well 
         "^@/(.*)$": "<rootDir>/UI/src/$1"
     },
 

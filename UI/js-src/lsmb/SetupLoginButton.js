@@ -23,11 +23,11 @@ define([
                 password: password
             }).then(
                 function () {
-                    window.location.href =
+                    window.location.assign(
                         "setup.pl?action=" +
                         self.action +
                         "&database=" +
-                        company;
+                        company);
                 },
                 function (err) {
                     var status = err.response.status;

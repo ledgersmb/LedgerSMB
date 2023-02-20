@@ -1,11 +1,41 @@
 /* eslint-disable no-console */
 
-import { beforeAll, afterAll, afterEach } from "@jest/globals";
+import { jest, beforeAll, afterAll, afterEach } from "@jest/globals";
 import "whatwg-fetch";
 
+import "./mocks/lsmb_elements";
 import { server } from './mocks/server.js'
 
+Object.defineProperty(window, "lsmbConfig", {
+    writable: true,
+    value: {
+        version: "1.10",
+        language: "en"
+    }
+});
+
+// Enable i18n
+import { config } from '@vue/test-utils'
+import { i18n } from '../common/i18n'
+    
+config.global.plugins = [i18n]
+
+const oldWindowLocation = window.location;
+
 beforeAll(() => {
+  delete window.location
+
+  window.location = Object.defineProperties(
+    {},
+    {
+      ...Object.getOwnPropertyDescriptors(oldWindowLocation),
+      assign: {
+        configurable: true,
+        value: jest.fn(),
+      }
+    },
+  )
+
   // Establish API mocking before all tests.
   server.listen({
     onUnhandledRequest(req) {
@@ -19,6 +49,10 @@ beforeAll(() => {
 })
 
 afterAll(() => {
+  // restore `window.location` to the original `jsdom`
+  // `Location` object
+  window.location = oldWindowLocation
+
   // Clean up after the tests are finished.
   server.close();
 })

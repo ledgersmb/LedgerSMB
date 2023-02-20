@@ -10,6 +10,9 @@ import { sessionUserHandlers } from "./store_sessionUser_handlers";
 import { sicsHandlers } from "./store_sics_handlers";
 import { warehousesHandlers } from "./store_warehouses_handlers";
 
+// Views
+import { loginHandlers } from "./login_handlers";
+
 export const handlers = [
   // Stores
   ...businessTypesHandlers,
@@ -20,5 +23,7 @@ export const handlers = [
   ...sessionUserHandlers,
   ...sicsHandlers,
   ...warehousesHandlers,
+  // Views
+  ...loginHandlers
 ];
 
