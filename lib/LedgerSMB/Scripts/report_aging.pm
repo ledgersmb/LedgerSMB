@@ -72,38 +72,44 @@ sub _billing_mail_addresses {
     # Select billing or regular addresses from the ECA
     for my $class (CC_BILLING_EMAIL_TO, CC_EMAIL_TO) {
         last if @to;
-        @to = grep {
+        @to = map { $_->contact }
+        grep {
             $_->class_id == $class and $_->credit_id
         } $contacts->@*;
     }
     for my $class (CC_BILLING_EMAIL_CC, CC_EMAIL_CC) {
         last if @cc;
-        @cc = grep {
+        @cc = map { $_->contact }
+        grep {
             $_->class_id == $class and $_->credit_id
         } $contacts->@*;
     }
     for my $class (CC_BILLING_EMAIL_BCC, CC_EMAIL_BCC) {
         last if @bcc;
-        @bcc = grep {
+        @bcc = map { $_->contact }
+        grep {
             $_->class_id == $class and $_->credit_id
         } $contacts->@*;
     }
     # Select billing or regular addresses from the entity
     for my $class (CC_BILLING_EMAIL_TO, CC_EMAIL_TO) {
         last if @to;
-        @to = grep {
+        @to = map { $_->contact }
+        grep {
             $_->class_id == $class and not $_->credit_id
         } $contacts->@*;
     }
     for my $class (CC_BILLING_EMAIL_CC, CC_EMAIL_CC) {
         last if @cc;
-        @cc = grep {
+        @cc = map { $_->contact }
+        grep {
             $_->class_id == $class and not $_->credit_id
         } $contacts->@*;
     }
     for my $class (CC_BILLING_EMAIL_BCC, CC_EMAIL_BCC) {
         last if @bcc;
-        @bcc = grep {
+        @bcc = map { $_->contact }
+        grep {
             $_->class_id == $class and not $_->credit_id
         } $contacts->@*;
     }
