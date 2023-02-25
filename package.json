@@ -51,7 +51,7 @@
     "babel-loader": "9.1.2",
     "browserslist": "4.21.5",
     "buffer": "6.0.3",
-    "caniuse-lite": "1.0.30001456",
+    "caniuse-lite": "1.0.30001457",
     "clean-webpack-plugin": "4.0.0",
     "compression-webpack-plugin": "10.0.0",
     "copy-webpack-plugin": "11.0.0",
@@ -88,7 +88,7 @@
     "npm-run-all": "4.1.5",
     "path-browserify": "1.0.1",
     "prettier": "2.8.4",
-    "stylelint": "15.1.0",
+    "stylelint": "15.2.0",
     "stylelint-bare-webpack-plugin": "2.1.0",
     "stylelint-config-standard": "30.0.1",
     "stylelint-no-unsupported-browser-features": "6.1.0",
@@ -100,7 +100,7 @@
     "webpack-cli": "5.0.1",
     "webpack-merge": "5.8.0",
     "webpack-sources": "3.2.3",
-    "yargs": "17.7.0"
+    "yargs": "17.7.1"
   },
   "dependencies": {
     "content-disposition": "0.5.4",
