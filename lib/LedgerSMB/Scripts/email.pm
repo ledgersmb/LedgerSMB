@@ -92,11 +92,11 @@ sub render {
 
     my $template = LedgerSMB::Template::UI->new_UI;
     return $template->render($request, 'email', {
-        callback    => uri_unescape($request->{callback}),
         id          => $wf->id,
         ( map { (s/^_//r) => scalar $wf->context->param($_) }
           qw( from to cc bcc notify subject body sent_date
-              _attachments expansions ) ),
+              _attachments expansions callback ) ),
+        callback    => uri_unescape($request->{callback}),
         actions     => [ map { { text  => $_->text,
                                  value => $_->name } }
                          sort { $a->{order} <=> $b->{order} }
