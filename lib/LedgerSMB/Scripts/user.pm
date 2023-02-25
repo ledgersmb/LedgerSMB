@@ -67,7 +67,10 @@ my $numberformats = [
     ];
 
 sub _css_options {
-    opendir CSS, 'UI/css/.';
+    my ($wire) = shift;
+
+    my $ui_root = $wire->get('ui')->{root} // './UI/';
+    opendir CSS,  "${ui_root}css";
     my @cssfiles =
         map { +{ file => $_ } }
         grep { /.*\.css$/ }
@@ -126,7 +129,7 @@ sub preference_screen {
         {
             request => $request,
             user => {
-                cssfiles         => _css_options(),
+                cssfiles         => _css_options($request->{_wire}),
                 dateformats      => $dateformats,
                 language_codes   => _language_options(
                     $request,

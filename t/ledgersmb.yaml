@@ -16,4 +16,4 @@ ui:
   lifecycle: eager
   args:
     cache: lsmb_templates/
-    root: ./
+    root: ./UI/

@@ -305,8 +305,9 @@ sub _main_screen {
     $request->close_form() if eval {$request->can('close_form')};
     $request->open_form() if eval {$request->can('close_form')};
 
-    opendir(my $dh2, 'UI/Contact/plugins') || die "can't opendir plugins directory: $!";
-    my @plugins = grep { /^[^.]/ && -f "UI/Contact/plugins/$_" } readdir($dh2);
+    my $ui_root = $request->{_wire}->get('ui')->{root} // './UI/';
+    opendir(my $dh2, "${ui_root}Contact/plugins") || die "can't opendir plugins directory: $!";
+    my @plugins = grep { /^[^.]/ && -f "${ui_root}Contact/plugins/$_" } readdir($dh2);
     closedir $dh2;
 
     my @country_list = $request->enabled_countries->@*;

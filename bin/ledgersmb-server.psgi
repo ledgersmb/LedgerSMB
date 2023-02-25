@@ -260,7 +260,7 @@ ui:
   $method: new_UI
   $lifecycle: eager
   cache: lsmb_templates/
-  root: ./
+  root: ./UI/
 workflows:
   $class: LedgerSMB::Workflow::Loader
   $lifecycle: eager

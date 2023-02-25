@@ -48,13 +48,13 @@ sub new_UI {
     my $class = shift;
     my %args = @_;
     my $cache = $args{cache} // 'lsmb_templates/';
-    my $root = $args{root} // './';
+    my $root = $args{root} // './UI/';
 
     if (! defined $singleton) {
         if (!defined $engine) {
             $engine = Template->new(
                 INCLUDE_PATH => [
-                    map { $root . $_ } ('UI/js', 'UI/', 'UI/lib/') ],
+                    map { $root . $_ } ('js', '', 'lib') ],
                 ENCODING => 'utf8',
                 TRIM => 1,
                 START_TAG => quotemeta('[%'),
@@ -72,6 +72,7 @@ sub new_UI {
         }
 
         $singleton = bless {
+            root => $root,
             standard_vars => {
             },
         }, __PACKAGE__;
@@ -87,7 +88,8 @@ Adds template variables C<USER>, C<DBNAME>, C<locale> and C<SETTINGS>
 from C<$request>.
 
 Renders the template stored in the file indicated by C<$template>.
-The file is looked up in C<UI/> or C<UI/lib/> and should be a relative
+The file is looked up in the root templates directory as configured
+or in the C<lib/> subdirectory of it and should be a relative
 path to either of those.
 
 The values of the variables specified in C<$vars> will be HTML-encoded
@@ -164,6 +166,14 @@ sub render_string {
           %{$cvars // {}}
         )
     };
+    if (defined $cleanvars->{form}->{stylesheet}
+        and not defined $cleanvars->{stylesheet}) {
+        $cleanvars->{stylesheet} = $cleanvars->{form}->{stylesheet};
+    }
+    if (defined $cleanvars->{stylesheet}
+        and not -e ($self->{root} . 'css/' . $cleanvars->{stylesheet})) {
+        $cleanvars->{stylesheet} = 'ledgersmb.css';
+    }
 
     my $output;
     if (! $engine->process(
