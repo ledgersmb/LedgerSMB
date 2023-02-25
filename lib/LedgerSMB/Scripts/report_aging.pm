@@ -184,7 +184,7 @@ sub _render_statement_batch {
     }
     return $template->render(
         $request,
-        'Reports/display_report',
+        'Reports/aging_batch',
         {
             buttons => \@buttons,
             callback => 'report_aging.pl?action=render_statement_batch&workflow_id=' . $request->{workflow_id},
