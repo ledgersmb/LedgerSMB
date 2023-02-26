@@ -59,6 +59,17 @@ extends 'LedgerSMB::Template::Sink';
 
 has from => (is => 'ro', required => 1);
 
+=head2 cc
+
+=cut
+
+has cc => (is => 'ro', required => 0);
+
+=head2 bcc
+
+=cut
+
+has bcc => (is => 'ro', required => 0);
 
 =head1 METHODS
 
@@ -73,12 +84,13 @@ sub append {
 
     my $wf  = FACTORY()->create_workflow('Email');
     my $ctx = $wf->context;
-    $ctx->param( 'from'    => $self->from );
-    $ctx->param( 'to'      => join(', ', $args{to}->@*) );
-    $ctx->param( 'cc'      => join(', ', $args{cc}->@*) );
-    $ctx->param( 'bcc'     => join(', ', $args{bcc}->@*) );
-    $ctx->param( 'body'    => $args{body} );
-    $ctx->param( 'subject' => $args{subject} );
+    $ctx->param( 'from'     => $self->from );
+    $ctx->param( 'to'       => join(', ', $args{to}->@*) );
+    $ctx->param( 'cc'       => join(', ', $args{cc}->@*) || $self->cc );
+    $ctx->param( 'bcc'      => join(', ', $args{bcc}->@*) || $self->bcc );
+    $ctx->param( 'body'     => $args{body} );
+    $ctx->param( 'subject'  => $args{subject} );
+    $ctx->param( 'callback' => $args{callback} );
 
     my $content = $template->{output};
     utf8::encode($content) if utf8::is_utf8($content);   ## no critic
