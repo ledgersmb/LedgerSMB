@@ -154,15 +154,7 @@ module.exports = {
     projects: [],
 
     // Use this configuration option to add custom reporters to Jest
-    reporters: [
-        [
-            "jest-tap-reporter",
-            {
-                logLevel: "INFO",
-                showInternalStackTraces: false
-            }
-        ]
-    ],
+    // reporters: [],
 
     // Automatically reset mock state before every test
     resetMocks: false,
