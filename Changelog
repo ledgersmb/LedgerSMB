@@ -11,6 +11,8 @@ Added functionalities
 * System > Users menu item listing users in the company (#7032)
 * More webservice APIs (#7056, ...)
 * Total paid and Remaining balance summaries added to invoices (#7130)
+* Configurable directories (directory for UI templates) (#7236)
+* Tracking of user name in AR/AP history (#5023)
 
 Changed functionalities
 * More database statistics reported after upgrade completion (#7017)
@@ -168,6 +170,7 @@ Changed functionalities
 * Localization of setup.pl & login.pl based on browser preferences
 * Some variables in document templates (e.g. 'company_name') renamed (#6672)
 * Simplified and fixed 'display_report.tex' and 'dynatable.tex' templates (#6676)
+* Stricter database schema to ensure reconciliation correctness (#2485)
 
 Removed functionalities
 * HTML 'accesskey' attribute, based on WebAIM.org guidance
