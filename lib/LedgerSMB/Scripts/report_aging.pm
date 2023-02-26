@@ -184,9 +184,10 @@ sub _render_statement_batch {
     }
     return $template->render(
         $request,
-        'Reports/display_report',
+        'Reports/aging_batch',
         {
             buttons => \@buttons,
+            callback => 'report_aging.pl?action=render_statement_batch&workflow_id=' . $request->{workflow_id},
             columns => \@columns,
             HIDDENS => {
                 workflow_id => $wf_id,
@@ -344,6 +345,8 @@ sub generate_statement {
     if ($request->{media} eq 'email') {
         $sink = LedgerSMB::Template::Sink::Email->new(
             from => $request->setting->get( 'default_email_from' ),
+            cc   => $request->setting->get( 'default_email_cc' ),
+            bcc  => $request->setting->get( 'default_email_bcc' ),
             );
     }
     elsif ($request->{media} eq 'screen') {
@@ -383,6 +386,7 @@ sub generate_statement {
 
         my $wf = $sink->append(
             $template,
+            callback       => 'reports.pl?action=start_report&report_name=aging&module_name=gl&entity_class=2',
             filename       => "aging-report.$extension",
             name           => $statement->{entity}->name,
             credit_account => $statement->{credit_account}->description,
