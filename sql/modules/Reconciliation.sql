@@ -200,7 +200,7 @@ $$
                           join cr_report_line_links crll on crl.id = crll.report_line_id
                   where cr.approved
                     and cr.chart_id = in_chart_id
-                    and cr.end_date < in_report_date
+                    and cr.end_date <= in_report_date
                     and crl.cleared
                     and crll.entry_id = ac.entry_id)
     GROUP BY c.id, c.category;

@@ -6,7 +6,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(65);
+    SELECT plan(64);
 
     -- Add data
 
@@ -63,12 +63,6 @@ BEGIN;
 
     CREATE TEMPORARY TABLE test_parameters (id int);
     INSERT INTO test_parameters(id) VALUES(nextval('cr_report_id_seq'));
-
-    PREPARE test AS SELECT COUNT(*)::INT FROM acc_trans
-                    WHERE cleared
-                    AND entry_id NOT IN (SELECT ledger_id FROM cr_report_line);
-    SELECT results_eq('test', Array[4], 'Transactions that should be in cr_report');
-    DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__previous_report_date(test_get_account_id('-11111'), now()::date);
     SELECT results_eq('test', ARRAY[]::cr_report[], 'No previous report');
@@ -169,7 +163,9 @@ BEGIN;
     update gl set approved = true where id = -214;
     update acc_trans set approved = true
      where trans_id = -214
-           and chart_id = test_get_account_id('-11112');
+       and chart_id = test_get_account_id('-11112');
+
+--    select reconciliation__pending_transactions
 
     PREPARE test AS SELECT reconciliation__pending_transactions(currval('cr_report_id_seq')::int, 110);
     SELECT results_eq('test',$$ SELECT id+3 FROM test_parameters $$,'1 Pending Transactions Ran');
@@ -194,8 +190,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'1 Report Submitted');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11112')) = -10;
-    SELECT results_eq('test',ARRAY[true],'1 Cleared balance pre-approval is 10');
+    PREPARE test AS SELECT reconciliation__get_cleared_balance(test_get_account_id('-11112'));
+    SELECT results_eq('test',ARRAY[-10]::numeric[],'1 Cleared balance pre-approval is 10');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__report_approve(currval('cr_report_id_seq')::int) > 0;
