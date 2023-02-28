@@ -288,20 +288,36 @@ CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int,
    in_report_date date DEFAULT date_trunc('second', now()))
 RETURNS numeric AS
 $$
-    SELECT sum(ac.amount_bc) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
-        FROM account c
-        JOIN acc_trans ac ON (ac.chart_id = c.id)
-    JOIN (select id from transactions where approved) g ON g.id = ac.trans_id
-    WHERE c.id = $1 AND cleared
-      AND ac.approved IS true
-      AND ac.transdate <= in_report_date
+  SELECT sum(ac.amount_bc) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
+    FROM account c
+           JOIN acc_trans ac ON ac.chart_id = c.id
+           JOIN transactions g ON g.id = ac.trans_id
+   WHERE g.approved
+     AND c.id = in_chart_id
+     AND ac.approved
+     -- cleared using a report on or before in_report_date:
+     AND EXISTS (select 1
+                   from cr_report cr
+                          join cr_report_line crl on cr.id = crl.report_id
+                          join cr_report_line_links crll on crl.id = crll.report_line_id
+                  where cr.approved
+                    and cr.chart_id = in_chart_id
+                    and cr.end_date < in_report_date
+                    and crl.cleared
+                    and crll.entry_id = ac.entry_id)
     GROUP BY c.id, c.category;
 $$ LANGUAGE sql;
 
 COMMENT ON FUNCTION reconciliation__get_cleared_balance(in_chart_id int,in_report_date date) IS
-$$ Gets the cleared balance of the account specified by chart_id, as of in_report_date.
-This is specified in normal format (i.e. positive numbers for debits for asset
-and espense accounts, and positive numbers for credits in other accounts
+$$ Gets the cleared balance of the account specified by chart_id, as cleared by reports
+on and before in_report_date.
+
+Please note that the cleared balance amount as at a sperific date may differ from the value
+returned by this function, if transactions prior to in_report_date are cleared using reports
+on a date later than in_report_date.
+
+The returned value is specified in normal format (i.e. positive numbers for debits for asset
+and expense accounts, and positive numbers for credits in other accounts.
 
 Note that currently contra accounts will show negative balances.$$;
 
