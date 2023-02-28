@@ -167,14 +167,21 @@ values (-203, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10,'1');
 
 
 -- Don't include cleared or unapproved transactions
+select reconciliation__new_report_id(test_get_account_id('-11112'), 10, '1000-01-04', false);
+  insert into cr_report_line (report_id, scn, their_balance, our_balance, "user", trans_type, cleared)
+  values (currval('cr_report_id_seq'), 'test', 10, 10, (select entity_id from users limit 1), '', true);
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source, cleared, approved)
 values (-200, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10, '1', true, false);
+insert into cr_report_line_links (report_line_id, entry_id, cleared)
+values (currval('cr_report_line_id_seq'), currval('acc_trans_entry_id_seq'), true);
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source, cleared)
 values (-212, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10, '1', true);
+insert into cr_report_line_links (report_line_id, entry_id, cleared)
+values (currval('cr_report_line_id_seq'), currval('acc_trans_entry_id_seq'), true);
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source, approved)
 values (-214, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10, '1', false);
-
-
+update cr_report set submitted = true where id = currval('cr_report_id_seq');
+update cr_report set approved = true where id = currval('cr_report_id_seq');
 
 insert into payment_links (payment_id, entry_id, type)
 select -201, entry_id, 1
