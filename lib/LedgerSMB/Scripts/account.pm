@@ -26,7 +26,6 @@ use Log::Any;
 use Feature::Compat::Try;
 
 use LedgerSMB;
-use LedgerSMB::Template::UI;
 
 
 =item new_account
@@ -263,7 +262,7 @@ sub _display_account_screen {
         funcname => 'person__list_languages'
     );
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'accounts/edit', {
         form => $account,
         gifis => [ $request->call_procedure(funcname => 'gifi__list') ],
@@ -283,7 +282,7 @@ sub yearend_info {
     my ($closed_date) = map {
         $_->{end_date}
     } $request->call_procedure(funcname => 'eoy__latest_checkpoint');
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render(
         $request, 'accounts/yearend',
         {
@@ -321,7 +320,7 @@ sub post_yearend {
             $request->{description},
             $request->{retention_acc_id}
         ]);
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'accounts/yearend_complete', {});
 }
 

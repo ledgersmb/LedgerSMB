@@ -39,7 +39,6 @@ use LedgerSMB::File::Reconciliation;
 use LedgerSMB::Magic qw(  FC_TRANSACTION FC_ORDER FC_PART FC_ENTITY FC_ECA
     FC_INTERNAL FC_INCOMING FC_EMAIL FC_RECONCILIATION );
 use LedgerSMB::Request::Helper::ParameterMap qw( input_map spec_for_dynatable );
-use LedgerSMB::Template::UI;
 
 our $fileclassmap = {
    FC_TRANSACTION()    => 'LedgerSMB::File::Transaction',
@@ -148,7 +147,7 @@ sub list_internal_files {
         $f->{row_id}                = $f->{id};
         $f->{file_name_href_suffix} = $f->{id};
     }
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'file/internal-file-list',
                              {
                                  files => \@files,
@@ -165,7 +164,7 @@ Show the attachment or upload screen.
 sub show_attachment_screen {
     my ($request) = @_;
     my @flds = split/\s/, $request->{additional};
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'file/attachment_screen', $request);
 }
 

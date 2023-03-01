@@ -28,7 +28,6 @@ use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Setting;
-use LedgerSMB::Template::UI;
 
 use LedgerSMB::old_code qw(dispatch);
 
@@ -71,7 +70,7 @@ sub create_batch {
 
     $batch->get_search_results({mini => 1});
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'create_batch',
                              { request => $request,
                                batch => $batch });

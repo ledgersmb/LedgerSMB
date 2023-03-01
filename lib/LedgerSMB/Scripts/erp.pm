@@ -18,7 +18,6 @@ This script contains the request handlers for returning the SPA.
 use strict;
 use warnings;
 
-use LedgerSMB::Template::UI;
 
 =item root
 
@@ -32,7 +31,7 @@ sub root {
     $request->{title} = "LedgerSMB $request->{version} -- ".
     "$request->{login} -- $request->{company}";
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'main', $request);
 }
 

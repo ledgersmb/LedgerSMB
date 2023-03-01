@@ -25,7 +25,6 @@ use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Assets::Net_Book_Value;
 use LedgerSMB::Report::Listings::Asset_Class;
 use LedgerSMB::Report::Listings::Asset;
-use LedgerSMB::Template::UI;
 
 
 our $default_dep_account = '5010'; # Override in custom/asset.pl
@@ -67,7 +66,7 @@ sub asset_category_screen {
     }
 
     $ac //= {};
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'asset/edit_class',
                              {
                                  request => $request,
@@ -108,7 +107,7 @@ Displays the asset category search screen
 sub asset_category_search {
     my ($request) = @_;
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'asset/search_class',
                              { request => $request,
                                asset_class => _asset_class_get_metadata($request) });
@@ -203,7 +202,7 @@ can be used to set defaults.
 sub asset_screen {
     my ($request, $asset) = @_;
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render(
         $request, 'asset/edit_asset',
         {
@@ -227,7 +226,7 @@ Any inputs for asset_results can be used here to set defaults.
 
 sub asset_search {
     my ($request) = @_;
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render(
         $request, 'asset/search_asset',
         {
@@ -352,7 +351,7 @@ sub _asset_report_get_metadata {
 sub new_report {
     my ($request) = @_;
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'asset/begin_report',
                              { request => $request,
                                report => {
@@ -566,7 +565,7 @@ sub display_report {
     {
         $hiddens->{$hide} = $request->{$hide};
     }
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'Reports/display_report', {
         FORM_ID => $request->{form_id},
         HIDDENS => $hiddens,
@@ -593,7 +592,7 @@ sub search_reports {
     my ($request) = @_;
     $request->{title} = $request->{_locale}->text('Search reports');
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'asset/begin_approval',
                              { request => $request,
                                asset_report => _asset_report_get_metadata($request) });
@@ -713,7 +712,7 @@ sub report_results {
                    },
         ];
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'Reports/display_report', {
          FORM_ID => $request->{form_id},
          HIDDENS => $hiddens,
@@ -827,7 +826,7 @@ sub report_details {
                    value => 'report_details_approve'
                    },
     ];
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'Reports/display_report', {
         FORM_ID => $request->{form_id},
         HIDDENS => { id => $report->{id} },
@@ -929,7 +928,7 @@ sub partial_disposal_details {
                    },
         ];
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'Reports/display_report', {
         SCRIPT  => $request->{script},
         HIDDENS => {
@@ -1036,7 +1035,7 @@ sub disposal_details {
         ];
     my $title = $locale->text('Disposal Report [_1] on date [_2]',
                      $report->{id}, $report->{report_date});
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'Reports/display_report', {
         SCRIPT  => $request->{script},
         HIDDENS => {
@@ -1141,7 +1140,7 @@ No inputs required.
 
 sub begin_import {
     my ($request) = @_;
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'asset/import_asset', $request);
 }
 

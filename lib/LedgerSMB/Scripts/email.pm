@@ -24,7 +24,6 @@ use Log::Any;
 use URI::Escape qw(uri_unescape);
 
 
-use LedgerSMB::Template::UI;
 
 
 =head2 render
@@ -90,7 +89,7 @@ sub render {
     }
 
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'email', {
         id          => $wf->id,
         ( map { (s/^_//r) => scalar $wf->context->param($_) }

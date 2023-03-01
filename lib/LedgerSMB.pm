@@ -245,7 +245,6 @@ use LedgerSMB::Company_Config;
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Setting;
 use LedgerSMB::Template;
-use LedgerSMB::Template::UI;
 
 our $VERSION = '1.11.0-dev';
 
@@ -633,7 +632,7 @@ sub enabled_countries {
 
 sub report_renderer_ui {
   my ($request) = @_;
-  my $ui = LedgerSMB::Template::UI->new_UI;
+  my $ui = $request->{_wire}->get('ui');
   my $uri = $request->{_uri}->clone;
   if (not pairgrep { $a eq 'company' } $uri->query_form) {
       $uri->query_form(

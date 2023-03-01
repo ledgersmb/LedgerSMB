@@ -24,7 +24,6 @@ use LedgerSMB::File;
 use LedgerSMB::Magic qw( FC_RECONCILIATION );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Reconciliation::Summary;
-use LedgerSMB::Template::UI;
 
 =over
 
@@ -128,7 +127,7 @@ sub submit_recon_set {
         {allowed_roles => ['reconciliation_approve']}
     );
     if ( !$can_approve ) {
-        my $template = LedgerSMB::Template::UI->new_UI;
+        my $template = $request->{_wire}->get('ui');
         return $template->render($request, 'reconciliation/submitted',
                                  $recon);
     }
@@ -193,7 +192,7 @@ sub search {
     $recon->set_dbh($request->{dbh});
     $recon->get_accounts();
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render(
         $request,
         'Reports/filters/reconciliation_search',
@@ -284,7 +283,7 @@ sub _display_report {
         $recon->{$field} = $recon->{$field}->to_output(money => 1);
     }
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'reconciliation/report', $recon);
 }
 
@@ -308,7 +307,7 @@ sub new_report {
     $recon->set_dbh($request->{dbh});
     $recon->get_accounts();
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render(
         $request,
         'reconciliation/new_report',
@@ -415,7 +414,7 @@ sub approve {
     my $code = $recon->approve;
     my $template = $code == 0 ? 'reconciliation/approved'
         : 'reconciliation/report';
-    return LedgerSMB::Template::UI->new_UI
+    return $request->{_wire}->get('ui')
         ->render($request, $template, $recon);
 }
 
@@ -434,7 +433,7 @@ sub pending {
 
     my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
 
-    my $template= LedgerSMB::Template::UI->new_UI;
+    my $template= $request->{_wire}->get('ui');
     return $template->render($request, 'reconciliation/pending', {});
 }
 

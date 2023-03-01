@@ -62,7 +62,6 @@ use LedgerSMB::PGNumber;
 use LedgerSMB::Report::Invoices::Payments;
 use LedgerSMB::Request::Helper::ParameterMap;
 use LedgerSMB::Template;
-use LedgerSMB::Template::UI;
 
 
 # CT:  A few notes for future refactoring of this code:
@@ -103,7 +102,7 @@ sub payments {
     my $payment = LedgerSMB::DBObject::Payment->new(%$payment_data);
     $payment->get_metadata();
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'payments/payments_filter',
                              { request => $request,
                                        payment => $payment });
@@ -141,7 +140,7 @@ sub get_search_criteria {
     my $payment = LedgerSMB::DBObject::Payment->new(%$payment_data);
     $payment->get_metadata();
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render(
         $request,
         'Reports/filters/payments',
@@ -278,7 +277,7 @@ sub pre_bulk_post_report {
     }];
     delete $request->{$_}
        for qw(action dbh);
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render(
         $request,
         'Reports/display_report',
@@ -696,7 +695,7 @@ sub display_payments {
         ];
     $payment->{can_print} = scalar @{$payment->{format_options}};
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'payments/payments_detail',
                              { request => $request,
                                        payment => $payment });
@@ -765,7 +764,7 @@ sub payment {
         }
     };
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'payments/payment1', $select);
 }
 
@@ -826,7 +825,7 @@ sub payment1_5 {
                                text =>  $request->{_locale}->text('Continue')}
         };
 
-        my $template = LedgerSMB::Template::UI->new_UI;
+        my $template = $request->{_wire}->get('ui');
         return $template->render($request, 'payments/payment1_5', $select);
     }
 }
@@ -1218,7 +1217,7 @@ sub payment2 {
 
     $select->{selected_account} = $vc_options[0]->{cash_account_id}
       unless defined $select->{selected_account};
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'payments/payment2', $select);
 }
 
@@ -1546,7 +1545,7 @@ sub use_overpayment {
         value => 'use_overpayment2',
         text => $locale->text('Continue')
     };
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'payments/use_overpayment1', $ui);
 }
 
@@ -1870,7 +1869,7 @@ sub use_overpayment2 {
 
     $ui->{hiddens} = \@hiddens;
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'payments/use_overpayment2', $ui);
 }
 

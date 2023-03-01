@@ -23,7 +23,6 @@ use warnings;
 use LedgerSMB::I18N;
 use LedgerSMB::Payroll::Income_Type;
 use LedgerSMB::Report::Payroll::Income_Types;
-use LedgerSMB::Template::UI;
 
 =head1 METHODS
 
@@ -49,7 +48,7 @@ sub show_income_type {
        funcname => 'payroll_pic__list', args => [$request->{country_id}]
     ) if $request->{country_id};
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'payroll/income', $request);
 }
 
@@ -89,7 +88,7 @@ sub search_income_type {
     my ($request) = @_;
     my @country_list = $request->enabled_countries->@*;
 
-    return LedgerSMB::Template::UI->new_UI
+    return $request->{_wire}->get('ui')
         ->render($request, 'payroll/income_search', $request);
 }
 

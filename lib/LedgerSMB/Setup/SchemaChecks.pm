@@ -26,7 +26,6 @@ use Digest::MD5 qw(md5_hex);
 use Text::Markdown qw(markdown);
 
 use LedgerSMB::Database::ChangeChecks qw/ run_with_formatters /;
-use LedgerSMB::Template::UI;
 
 our @EXPORT = ## no critic
     qw| html_formatter_context |;
@@ -61,7 +60,7 @@ sub _unpack_grid_data {
 sub _wrap_html {
     my ($request) = shift;
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     unshift @HTML, $template->render_string(
         $request,
         'setup/upgrade/preamble',
@@ -72,7 +71,7 @@ sub _wrap_html {
             action_url => $request->{_uri}->as_string,
         });
 
-    $template = LedgerSMB::Template::UI->new_UI;
+    $template = $request->{_wire}->get('ui');
     push @HTML, $template->render_string($request,
                                          'setup/upgrade/epilogue');
 
@@ -89,7 +88,7 @@ sub _format_confirm {
 
     my $seq = 0;
     while (@confirmations) {
-        my $template = LedgerSMB::Template::UI->new_UI;
+        my $template = $request->{_wire}->get('ui');
         push @HTML, $template->render_string(
             $request,
             'setup/upgrade/confirm',
@@ -112,7 +111,7 @@ sub _format_describe {
     $failing_check = $check;
 
     $msg //= $check->{description};
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     push @HTML, $template->render_string(
         $request,
         'setup/upgrade/describe',
@@ -181,7 +180,7 @@ sub _format_grid {
         id => $args{name},
     };
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     push @HTML, $template->render_string(
         $request,
         'setup/upgrade/grid',

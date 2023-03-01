@@ -33,7 +33,6 @@ use LedgerSMB::IR;
 use LedgerSMB::IS;
 use LedgerSMB::Magic qw( EC_VENDOR EC_CUSTOMER );
 use LedgerSMB::Setting::Sequence;
-use LedgerSMB::Template::UI;
 use LedgerSMB::Timecard;
 
 use List::MoreUtils qw{ any };
