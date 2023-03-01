@@ -25,7 +25,6 @@ use warnings;
 
 use LedgerSMB::I18N;
 use LedgerSMB::Setting::Sequence;
-use LedgerSMB::Template::UI;
 
 sub _default_settings {
     my ($request) = @_;
@@ -317,7 +316,7 @@ sub defaults_screen {
         },
     );
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'Configuration/settings', {
         form => $request,
         # hiddens => \%hiddens,
@@ -348,7 +347,7 @@ sub sequence_screen {
         }
         ++$count;
     }
-    return LedgerSMB::Template::UI->new_UI
+    return $request->{_wire}->get('ui')
         ->render($request, 'Configuration/sequence', $request);
 }
 

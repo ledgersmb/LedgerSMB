@@ -45,7 +45,6 @@ use HTTP::Status qw(HTTP_OK HTTP_SEE_OTHER);
 use Workflow::Factory qw(FACTORY);
 
 
-use LedgerSMB::Template::UI;
 
 use Moose;
 use namespace::autoclean;

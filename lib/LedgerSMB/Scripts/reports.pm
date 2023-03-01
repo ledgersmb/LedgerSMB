@@ -28,7 +28,6 @@ use LedgerSMB::Report::Listings::SIC;
 use LedgerSMB::Report::Listings::Overpayments;
 use LedgerSMB::Report::Listings::Warehouse;
 use LedgerSMB::Setting;
-use LedgerSMB::Template::UI;
 
 our $VERSION = '1.0';
 
@@ -107,7 +106,7 @@ sub start_report {
         );
 
     $request->{earn_id} = $request->setting->get('earn_id');
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request,
                              'Reports/filters/' . $request->{report_name},
                              $request);

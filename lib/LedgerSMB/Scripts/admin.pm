@@ -19,7 +19,6 @@ This module provides the workflow scripts for managing users and permissions.
 
 use LedgerSMB::Entity::User;
 use LedgerSMB::Report::Listings::User;
-use LedgerSMB::Template::UI;
 
 
 use Log::Any;
@@ -74,7 +73,7 @@ sub edit_user {
         args => [ $request->{id} ]
         );
     my $user_data = LedgerSMB::Entity::User->get($user->{entity_id});
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'Contact/divs/user', {
         stand_alone => 1,
         user        => $user_data,
@@ -117,7 +116,7 @@ sub list_sessions {
         $s->{drop} = '[' . $request->{_locale}->text('delete') . ']';
         $s->{row_id} = $s->{id};
     }
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'Reports/display_report', {
         name    => $request->{_locale}->text('Active Sessions'),
         columns => $columns,

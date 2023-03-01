@@ -49,7 +49,6 @@ use LedgerSMB::IS;
 use LedgerSMB::PE;
 use LedgerSMB::Setting;
 use LedgerSMB::Tax;
-use LedgerSMB::Template::UI;
 use LedgerSMB::Legacy_Util;
 
 
@@ -1298,7 +1297,7 @@ sub _save {
 
     if ( !$form->{repost}  && $form->{id}) {
         $form->{repost} = 1;
-        my $template = LedgerSMB::Template::UI->new_UI;
+        my $template = $form->{_wire}->get('ui');
         return LedgerSMB::Legacy_Util::render_psgi(
             $form,
             $template->render($form, 'oe-save-warn',

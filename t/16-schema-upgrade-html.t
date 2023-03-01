@@ -38,6 +38,13 @@ sub test_request {
                     directory => './locale/po/',
                 }
             },
+            ui => {
+                class => 'LedgerSMB::Template::UI',
+                method => 'new_UI',
+                args => {
+                    root => './UI/',
+                }
+            }
         });
     $plack_req->env->{'lsmb.script'}   = 'script.pl';
     my $req = LedgerSMB->new($plack_req, $wire);

@@ -46,7 +46,6 @@ use LedgerSMB::Scripts::login;
 use LedgerSMB::Setting;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Tax;
-use LedgerSMB::Template::UI;
 
 
 =head1 LICENSE AND COPYRIGHT

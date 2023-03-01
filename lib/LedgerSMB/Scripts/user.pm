@@ -32,7 +32,6 @@ use DateTime::Format::Duration::ISO8601;
 use Locale::CLDR;
 
 use LedgerSMB::Locale;
-use LedgerSMB::Template::UI;
 use LedgerSMB::User;
 
 our $VERSION = 1.0;
@@ -122,7 +121,7 @@ sub preference_screen {
     my $pwe = $format->parse_duration(
         $pw_expiration->{user__check_my_expiration});
     my $login = $request->{_req}->env->{'lsmb.session'}->{login};
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render(
         $request,
         'users/preferences',

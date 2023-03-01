@@ -44,7 +44,6 @@ use LedgerSMB::IIAA;
 use LedgerSMB::OE;
 use LedgerSMB::Tax;
 use LedgerSMB::Template;
-use LedgerSMB::Template::UI;
 use LedgerSMB::Setting;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::File;

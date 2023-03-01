@@ -49,7 +49,6 @@ use LedgerSMB::PGDate;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setting;
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
-use LedgerSMB::Template::UI;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Database::Upgrade;
 use LedgerSMB::User;
@@ -87,7 +86,7 @@ sub authenticate {
 
 sub __default {
     my ($request) = @_;
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'setup/credentials', $request);
 }
 
@@ -257,7 +256,7 @@ sub login {
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     my $settings = $request->{_wire}->get( 'setup_settings' );
     my $auth_db = ($settings and $settings->{auth_db}) // 'postgres';
     my $version_info = $database->get_info($auth_db);
@@ -344,7 +343,7 @@ sub list_databases {
     # for now we simply use a fixed regex. It will cover many if not most use cases.
     @{$request->{dbs}} = map {+{ row_id => $_, db  => $_ }} grep { ! m/^(postgres|template0|template1)$/ } @results ;
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'setup/list_databases', $request);
 }
 
@@ -363,7 +362,7 @@ sub list_users {
     for my $user (@users) {
         push @{$request->{users}}, {row_id => $user->{id}, name => $user->{username} };
     }
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'setup/list_users', $request);
 }
 
@@ -417,7 +416,7 @@ sub _begin_backup {
         # suppress the exception: all we want to know is if there is a value
         $request->{_wire}->get( 'miscellaneous/backup_email_from' );
     };
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'setup/begin_backup', $request);
 };
 
@@ -471,7 +470,7 @@ sub run_backup {
         );
         $mail->send;
         unlink $backupfile;
-        my $template = LedgerSMB::Template::UI->new_UI;
+        my $template = $request->{_wire}->get('ui');
         return $template->render($request, 'setup/complete', $request);
     }
     elsif ($request->{backup_type} eq 'browser') {
@@ -524,7 +523,7 @@ sub revert_migration {
     $dbh->do("ALTER SCHEMA $src_schema RENAME TO public");
     $dbh->commit();
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
 
     return $template->render($request, 'setup/complete_migration_revert',
                              $request);
@@ -544,7 +543,7 @@ sub template_screen {
           sort keys %{ LedgerSMB::Database::Config->new(
                            templates_dir => $request->{_wire}->get( 'paths/templates' ),
                            )->templates } ];
-    return LedgerSMB::Template::UI->new_UI
+    return $request->{_wire}->get('ui')
         ->render($request, 'setup/template_info',
                  { %$request, templates_action => $entrypoint });
 }
@@ -826,7 +825,7 @@ sub upgrade {
                                           $upgrade_run_step{$upgrade_type});
     }
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
 
     my $step = $upgrade_run_step{$upgrade_type};
     my $upgrade_action = $upgrade_next_steps{$step};
@@ -933,7 +932,7 @@ verify_check => md5_hex($check->test_query),
         }
     }
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'setup/migration_step', {
            form               => $request,
            headers            => [
@@ -1025,7 +1024,7 @@ sub create_db {
             $request->{_locale}->text('Login?');
         $request->{next_action} = 'login';
 
-        my $template = LedgerSMB::Template::UI->new_UI;
+        my $template = $request->{_wire}->get('ui');
         return $template->render($request, 'setup/confirm_operation', $request);
     }
 
@@ -1107,7 +1106,7 @@ sub select_coa {
                                 values %$coa_data ];
     }
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'setup/select_coa', $request);
 }
 
@@ -1153,7 +1152,7 @@ sub _render_user {
         {id => '-1', label => $locale->text('No changes')},
         );
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'setup/new_user',
                              { %$request, save_action => $entrypoint });
 }
@@ -1335,7 +1334,7 @@ sub edit_user_roles {
     return $reauth if $reauth;
 
     local $LedgerSMB::App_State::User = {};
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     my ($user) = $request->call_procedure(
         funcname => 'admin__get_user',
         args     => [ $request->{id} ]);
@@ -1521,7 +1520,7 @@ sub _complete {
 
     my $temp = $database->loader_log_filename();
     $request->{lsmb_info} = $database->stats();
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'setup/complete', $request);
 }
 
@@ -1549,7 +1548,7 @@ sub system_info {
         modules => \%INC,
     };
     $request->{info} = $info;
-    return LedgerSMB::Template::UI->new_UI
+    return $request->{_wire}->get('ui')
         ->render($request, 'setup/system_info', $request);
 }
 

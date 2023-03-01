@@ -33,7 +33,6 @@ use LedgerSMB::PGDate;
 use LedgerSMB::PGTimestamp;
 use LedgerSMB::Report::Timecards;
 use LedgerSMB::Template;
-use LedgerSMB::Template::UI;
 use LedgerSMB::Timecard;
 use LedgerSMB::Timecard::Type;
 
@@ -60,7 +59,7 @@ This begins the timecard workflow.  The following may be set as a default:
 sub new {
     my ($request) = @_;
     @{$request->{bu_class_list}} = LedgerSMB::Business_Unit_Class->list();
-    return LedgerSMB::Template::UI->new_UI
+    return $request->{_wire}->get('ui')
         ->render($request, 'timecards/entry_filter', $request);
 }
 
@@ -91,7 +90,7 @@ sub display {
         $request->setting->get_currencies;
     $tcard->{total} =
         ($tcard->{qty} // 0) + ($tcard->{non_billable} // 0);
-     my $template = LedgerSMB::Template::UI->new_UI;
+     my $template = $request->{_wire}->get('ui');
      return $template->render($request, 'timecards/timecard', $tcard);
 }
 
@@ -121,7 +120,7 @@ sub timecard_screen {
          }
          $request->{num_lines} = 1 unless $request->{num_lines};
          $request->{transdates} = \@dates;
-         my $template = LedgerSMB::Template::UI->new_UI;
+         my $template = $request->{_wire}->get('ui');
          return
              $template->render($request, 'timecards/timecard-week', $request);
     }

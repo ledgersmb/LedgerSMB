@@ -39,7 +39,6 @@ use LedgerSMB::User;
 use LedgerSMB::GL;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::PGDate;
-use LedgerSMB::Template::UI;
 
 # end of main
 
@@ -170,7 +169,7 @@ sub display_taxes {
         $hiddens{$taxmodule};
     }
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $form->{_wire}->get('ui');
     LedgerSMB::Legacy_Util::render_psgi(
         $form,
         $template->render($form, 'am-taxes',
@@ -439,7 +438,7 @@ sub recurring_transactions {
         class => 'submit',
     };
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $form->{_wire}->get('ui');
     LedgerSMB::Legacy_Util::render_psgi(
         $form,
         $template->render($form, 'am-list-recurring',

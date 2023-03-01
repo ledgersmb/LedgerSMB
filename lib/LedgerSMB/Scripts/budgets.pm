@@ -18,7 +18,6 @@ use LedgerSMB::Budget;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Magic qw( EDIT_BUDGET_ROWS NEW_BUDGET_ROWS );
-use LedgerSMB::Template::UI;
 
 =head1 REQUIRES
 
@@ -136,7 +135,7 @@ sub _render_screen {
            rowcount => $budget->{rowcount},
                  id => $budget->{id},
     };
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'budgetting/budget_entry', $budget);
 }
 

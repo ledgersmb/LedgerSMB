@@ -37,7 +37,6 @@ use LedgerSMB::I18N;
 use LedgerSMB::Magic qw( EC_EMPLOYEE );
 use LedgerSMB::Part;
 use LedgerSMB::Setting;
-use LedgerSMB::Template::UI;
 
 use LedgerSMB::old_code qw(dispatch);
 
@@ -322,7 +321,7 @@ sub _main_screen {
     $roles = $user->list_roles if $user;
 
     # Template info and rendering
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'Contact/contact', {
                      DIVS => \@DIVS,
                 DIV_LABEL => \%DIV_LABEL,
@@ -817,7 +816,7 @@ sub get_pricelist {
     my $pricelist = $credit->get_pricematrix;
     $request->merge($credit) if $credit;
     $request->merge($pricelist) if $pricelist;
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'Contact/pricelist', $request);
 }
 

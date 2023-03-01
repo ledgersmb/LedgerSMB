@@ -27,7 +27,6 @@ use warnings;
 use LedgerSMB;
 use LedgerSMB::Report::Listings::Templates;
 use LedgerSMB::Template::DB;
-use LedgerSMB::Template::UI;
 
 =head1 METHODS
 
@@ -57,7 +56,7 @@ Displays a template for review
 sub display {
     my ($request) = @_;
 
-    return LedgerSMB::Template::UI->new_UI
+    return $request->{_wire}->get('ui')
         ->render($request, 'templates/widget',
                  {
                      language       => $request->{language_code},

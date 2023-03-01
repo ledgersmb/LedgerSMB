@@ -22,7 +22,6 @@ use HTTP::Status qw( HTTP_OK );
 use JSON::MaybeXS;
 
 use LedgerSMB::PSGI::Util;
-use LedgerSMB::Template::UI;
 
 our $VERSION = 1.0;
 
@@ -38,7 +37,7 @@ sub __default {
     $request->{_req}->env->{'lsmb.session.expire'} = 1;
     $request->{stylesheet} = 'ledgersmb.css';
     $request->{titlebar} = "LedgerSMB $request->{version}";
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'login', $request);
 }
 
@@ -105,7 +104,7 @@ sub logout {
     $request->{callback}   = '';
 
     $request->{_logout}->();
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'logout', $request);
 }
 

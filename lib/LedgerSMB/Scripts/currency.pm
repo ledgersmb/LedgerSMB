@@ -23,7 +23,6 @@ use LedgerSMB::Currency;
 use LedgerSMB::Exchangerate;
 use LedgerSMB::Exchangerate_Type;
 use LedgerSMB::Setting;
-use LedgerSMB::Template::UI;
 
 use Log::Any;
 use Text::CSV;
@@ -77,7 +76,7 @@ sub list_currencies {
         push @$rows, $s;
     }
     my $title = $request->{_locale}->text('Defined currencies');
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'Configuration/currency', {
         name    => $title,
         request => $request,
@@ -162,7 +161,7 @@ sub list_exchangerate_types {
         push @$rows, $s;
     }
     my $title = $request->{_locale}->text('Defined exchange rate types');
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'Configuration/ratetype', {
         name    => $title,
         request => $request,
@@ -274,7 +273,7 @@ sub _list_exchangerates {
         push @$rows, $s;
     }
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'Configuration/rate', {
         name       => $request->{title},
         request    => $request,

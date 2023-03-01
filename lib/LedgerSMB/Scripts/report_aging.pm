@@ -34,7 +34,6 @@ use LedgerSMB::Template;
 use LedgerSMB::Template::Sink::Email;
 use LedgerSMB::Template::Sink::Printer;
 use LedgerSMB::Template::Sink::Screen;
-use LedgerSMB::Template::UI;
 
 our $VERSION = '1.0';
 
@@ -174,7 +173,7 @@ sub _render_statement_batch {
         };
     }
 
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     my $rows = [ $results->@* ];
     for my $row ($rows->@*) {
         $row->{id_href_suffix} = $row->{id};

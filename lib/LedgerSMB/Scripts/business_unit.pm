@@ -26,7 +26,6 @@ use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::PGDate;
 use LedgerSMB::Report::Listings::Business_Unit;
 use LedgerSMB::Setting::Sequence;
-use LedgerSMB::Template::UI;
 
 =head1 FUNCTIONS
 
@@ -44,7 +43,7 @@ sub list_classes {
     my $lsmb_modules = LedgerSMB::App_Module->new(%$request);
     @{$request->{classes}} = $bu_class->list;
     @{$request->{modules}} = $lsmb_modules->list;
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'business_units/list_classes',
                              {request => $request});
 }
@@ -94,7 +93,7 @@ sub edit {
 
 sub _display {
     my ($request, $bu) = @_;
-    my $template = LedgerSMB::Template::UI->new_UI;
+    my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'business_units/edit', $bu);
 
 }
