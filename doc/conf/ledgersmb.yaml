@@ -76,6 +76,12 @@ paths:
   config:
     locale: ./locale/po/
     templates: ./templates/
+    UI: ./UI/
+    UI_cache: lsmb_templates/
+    workflows:
+    - ./workflows/
+    - ./custom_workflows/
+
 
 printers:
   $class: LedgerSMB::Printers
@@ -129,8 +135,10 @@ ui:
   method: new_UI
   lifecycle: eager
   args:
-    cache: lsmb_templates/
-    root: ./UI/
+    cache:
+      $ref: paths/UI_cache
+    root:
+      $ref: paths/UI
 
 workflows:
   class: LedgerSMB::Workflow::Loader
@@ -138,6 +146,5 @@ workflows:
   method: load
   args:
     directories:
-      - workflows/
-      - custom_workflows/
+    - $ref: paths/workflows
     lifecycle: eager
