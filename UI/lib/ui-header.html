@@ -26,9 +26,7 @@
     <%= htmlWebpackPlugin.tags.headTags %>
     <link href="js/dojo/resources/dojo.css" rel="stylesheet">
     <link href="js/css/[% dojo_theme %].css" rel="stylesheet">
-    [%- IF form.stylesheet %]
-    <link href="js/css/[% form.stylesheet %]" rel="stylesheet">
-    [%- ELSIF stylesheet %]
+    [%- IF stylesheet %]
     <link href="js/css/[% stylesheet %]" rel="stylesheet">
     [%- END %]
     [%- FOREACH s = include_stylesheet %]
