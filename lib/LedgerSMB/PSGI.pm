@@ -375,7 +375,7 @@ sub setup_url_space {
             }
         };
 
-        mount '/' => Plack::App::File->new( root => 'UI' )->to_app;
+        mount '/' => Plack::App::File->new( root => $wire->get('paths/UI') )->to_app;
     };
 
 }

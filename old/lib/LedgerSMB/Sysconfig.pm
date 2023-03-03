@@ -187,7 +187,10 @@ sub ini2wire {
         '$class' => 'Beam::Wire',
         config => {
             locale => scalar $cfg->val( 'paths', 'localepath', './locale/po/' ),
+            sql => scalar $cfg->val( 'paths', 'sql', './sql/'),
             templates => scalar $cfg->val( 'paths', 'templates', './templates/' ),
+            UI => scalar $cfg->val( 'paths', 'UI', './UI/' ),
+            UI_cache => scalar $cfg->val( 'paths', 'UI_cache', 'lsmb_templates/' ),
         }
     };
 
@@ -196,8 +199,8 @@ sub ini2wire {
         lifecycle => 'eager',
         method => 'new_UI',
         args => {
-            cache => scalar $cfg->val(
-                'paths', 'templates_cache', 'lsmb_templates/' ),
+            cache => { '$ref' => 'paths/UI_cache' },
+            root  => { '$ref' => 'paths/UI' },
         }
     };
 

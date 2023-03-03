@@ -61,6 +61,18 @@ have been loaded. When none is provided, the default ('public') is assumed.
 
 has schema => (is => 'ro', default => 'public');
 
+=head2 source_dir
+
+Indicates the path to the directory which holds the 'Pg-database.sql' file
+and the associated changes, charts and gifi files.
+
+The default value is relative to the current directory, which is assumed
+to be the root of the LedgerSMB source tree.
+
+=cut
+
+has source_dir => (is => 'ro', default => './sql');
+
 =head1 METHODS
 
 =head2 instance( user => $username, password => $password, %overriden_connect_data )
@@ -84,7 +96,8 @@ sub instance {
             $self->connect_data->%*,
             %args
         },
-        schema => $self->schema );
+        schema     => $self->schema,
+        source_dir => $self->source_dir);
 }
 
 

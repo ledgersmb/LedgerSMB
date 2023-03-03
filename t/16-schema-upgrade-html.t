@@ -38,11 +38,19 @@ sub test_request {
                     directory => './locale/po/',
                 }
             },
+            paths => {
+                class => 'Beam::Wire',
+                args => {
+                    config => {
+                        UI => './UI/'
+                    }
+                }
+            },
             ui => {
                 class => 'LedgerSMB::Template::UI',
                 method => 'new_UI',
                 args => {
-                    root => './UI/',
+                    root => { '$ref' => 'paths/UI' }
                 }
             }
         });

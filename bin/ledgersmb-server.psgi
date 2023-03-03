@@ -162,6 +162,8 @@ db:
   $class: LedgerSMB::Database::Factory
   connect_data:
     sslmode: prefer
+  source_dir:
+    $ref: paths/sql
 default_locale:
   $class: LedgerSMB::LanguageResolver
   directory:
@@ -198,7 +200,13 @@ paths:
   $class: Beam::Wire
   config:
     locale: ./locale/po/
+    sql: ./sql/
     templates: ./templates/
+    UI: ./UI/
+    UI_cache: lsmb_templates/
+    workflows:
+    - workflows/
+    - custom_workflows/
 printers:
   $class: LedgerSMB::Printers
   printers: {}
@@ -259,13 +267,14 @@ ui:
   $class: LedgerSMB::Template::UI
   $method: new_UI
   $lifecycle: eager
-  cache: lsmb_templates/
-  root: ./UI/
+  cache:
+    $ref: paths/UI_cache
+  root:
+    $ref: paths/UI
 workflows:
   $class: LedgerSMB::Workflow::Loader
   $lifecycle: eager
   $method: load
   directories:
-  - workflows/
-  - custom_workflows/
+  - $ref: paths/workflows
   lifecycle: eager
