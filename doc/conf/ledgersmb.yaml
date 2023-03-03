@@ -8,6 +8,8 @@ db:
   $class: LedgerSMB::Database::Factory
   connect_data:
     sslmode: prefer
+  source_dir:
+    $ref: paths/sql
 
 default_locale:
   $class: LedgerSMB::LanguageResolver
@@ -75,13 +77,13 @@ paths:
   $class: Beam::Wire
   config:
     locale: ./locale/po/
+    sql: ./sql/
     templates: ./templates/
     UI: ./UI/
     UI_cache: lsmb_templates/
     workflows:
     - ./workflows/
     - ./custom_workflows/
-
 
 printers:
   $class: LedgerSMB::Printers
