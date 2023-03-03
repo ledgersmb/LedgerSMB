@@ -38,6 +38,12 @@ Dependency updates
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.14
+* Fix e-mail addresses on aging statement mails (#7235)
+* Fix error popup after successfully sending aging statement mail (#7242)
+* Fix 'cleared balance' on overlapping approved reconciliations (#7244)
+
+
 Changelog for 1.10.13
 * Aging reports per account; do not all entity invoices (#7177)
 * Follow up to Print buttons fix -- Dojo doesn't support 'async') (#7131)
