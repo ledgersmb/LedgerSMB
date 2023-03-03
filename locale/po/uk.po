@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.14-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2023-02-18 21:23+0000\n"
+"POT-Creation-Date: 2023-03-03 07:53+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: Ukrainian (https://www.transifex.com/ledgersmb/teams/58325/"
 "uk/)\n"
@@ -198,7 +198,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:137
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:68
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:70
-#: lib/LedgerSMB/Scripts/report_aging.pm:141 old/bin/aa.pl:613 old/bin/aa.pl:684
+#: lib/LedgerSMB/Scripts/report_aging.pm:147 old/bin/aa.pl:613 old/bin/aa.pl:684
 #: old/bin/aa.pl:853 old/bin/ic.pl:1110 old/bin/ir.pl:401 old/bin/ir.pl:875
 #: old/bin/is.pl:436 old/bin/is.pl:974 old/bin/oe.pl:449
 #: t/data/04-complex_template.html:27 templates/demo/invoice.html:188
@@ -1313,7 +1313,7 @@ msgid "COGS Lots Report"
 msgstr ""
 
 #: UI/Contact/pricelist.html:127 UI/Reports/aging_report.html:101
-#: UI/Reports/balance_sheet.html:116 UI/Reports/display_report.html:59
+#: UI/Reports/balance_sheet.html:116 UI/Reports/display_report.html:60
 #: UI/Reports/PNL.html:117
 msgid "CSV"
 msgstr ""
@@ -1330,7 +1330,7 @@ msgstr ""
 msgid "Can't void a voided invoice!"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/report_aging.pm:157 lib/LedgerSMB/Scripts/setup.pm:185
+#: lib/LedgerSMB/Scripts/report_aging.pm:163 lib/LedgerSMB/Scripts/setup.pm:185
 #: lib/LedgerSMB/Scripts/setup.pm:236 old/bin/io.pl:1829
 #: UI/templates/widget.html:146 UI/templates/widget.html:162
 #: UI/src/components/ConfigTableRow.vue:22
@@ -1660,7 +1660,7 @@ msgstr ""
 msgid "Comparison Periods"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/report_aging.pm:166
+#: lib/LedgerSMB/Scripts/report_aging.pm:172
 msgid "Complete"
 msgstr ""
 
@@ -2750,7 +2750,7 @@ msgstr "Ел. пошта"
 msgid "E-mail address missing!"
 msgstr "Не вказана адреса ел. пошти!"
 
-#: lib/LedgerSMB/Scripts/report_aging.pm:197
+#: lib/LedgerSMB/Scripts/report_aging.pm:204
 msgid "E-mail aging reminder status"
 msgstr ""
 
@@ -3036,7 +3036,7 @@ msgid "Entered at: [_1]"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/contact.pm:300
-#: lib/LedgerSMB/Scripts/report_aging.pm:136 sql/Pg-database.sql:1036
+#: lib/LedgerSMB/Scripts/report_aging.pm:142 sql/Pg-database.sql:1036
 msgid "Entity"
 msgstr ""
 
@@ -3633,7 +3633,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:105
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:132
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:89
-#: lib/LedgerSMB/Scripts/asset.pm:458 lib/LedgerSMB/Scripts/report_aging.pm:130
+#: lib/LedgerSMB/Scripts/asset.pm:458 lib/LedgerSMB/Scripts/report_aging.pm:136
 #: old/bin/am.pl:302 templates/demo/timecard.html:44
 #: templates/demo/timecard.tex:39 UI/business_units/list_classes.html:8
 #: UI/Reports/filters/gl.html:196
@@ -4306,7 +4306,7 @@ msgstr ""
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ServerUI.js:41 UI/src/components/ServerUI.js:27
+#: UI/src/components/ServerUI.js:27 UI/src/components/ServerUI.js:41
 #: UI/src/components/ConfigTable.vue:59
 msgid "Loading..."
 msgstr ""
@@ -4881,7 +4881,7 @@ msgid "Number:"
 msgstr ""
 
 #: UI/Contact/pricelist.html:123 UI/Reports/aging_report.html:113
-#: UI/Reports/display_report.html:63
+#: UI/Reports/display_report.html:64
 msgid "ODS"
 msgstr ""
 
@@ -5103,7 +5103,7 @@ msgid "Overpayments"
 msgstr ""
 
 #: UI/Contact/pricelist.html:105 UI/Reports/aging_report.html:96
-#: UI/Reports/balance_sheet.html:110 UI/Reports/display_report.html:55
+#: UI/Reports/balance_sheet.html:110 UI/Reports/display_report.html:56
 #: UI/Reports/PNL.html:109
 msgid "PDF"
 msgstr "PDF"
@@ -7135,8 +7135,8 @@ msgstr ""
 msgid "Statement Date To"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/report_aging.pm:146
-#: lib/LedgerSMB/Scripts/report_aging.pm:192
+#: lib/LedgerSMB/Scripts/report_aging.pm:152
+#: lib/LedgerSMB/Scripts/report_aging.pm:199
 #: UI/Reports/filters/search_goods.html:25
 msgid "Status"
 msgstr ""
@@ -8405,12 +8405,12 @@ msgid "Would you like to upgrade the database?"
 msgstr ""
 
 #: UI/Contact/pricelist.html:111 UI/Reports/aging_report.html:105
-#: UI/Reports/display_report.html:67
+#: UI/Reports/display_report.html:68
 msgid "XLS"
 msgstr ""
 
 #: UI/Contact/pricelist.html:117 UI/Reports/aging_report.html:109
-#: UI/Reports/display_report.html:71
+#: UI/Reports/display_report.html:72
 msgid "XLSX"
 msgstr ""
 
@@ -8649,7 +8649,7 @@ msgstr ""
 msgid "partial disposal"
 msgstr ""
 
-#: UI/Reports/aging_report.html:92 UI/Reports/display_report.html:52
+#: UI/Reports/aging_report.html:92 UI/Reports/display_report.html:53
 msgid "permalink"
 msgstr ""
 
