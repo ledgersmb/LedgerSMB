@@ -122,7 +122,7 @@ jobs:
             COVERAGE: 1
 
           - perl: "5.32"
-            postgres: "latest"
+            postgres: "14"
             BROWSER: "firefox"
             COA_TESTING: 1
 
