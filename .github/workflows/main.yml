@@ -122,19 +122,19 @@ jobs:
       matrix:
         include:
           - perl: "5.34"
-            postgres: "13"
+            postgres: "14"
             BROWSER: "chrome"
             COVERAGE: 1
             JOB_COUNT: 2
 
           - perl: "5.32"
-            postgres: "latest"
+            postgres: "15"
             BROWSER: "firefox"
             COA_TESTING: 1
             JOB_COUNT: 5
 
           - perl: "5.32"
-            postgres: "12"
+            postgres: "13"
             BROWSER: "operablink"
             DB_TESTING: 1
             JOB_COUNT: 5
