@@ -104,7 +104,15 @@ This command creates a new database to hold the data restored from C<filename>.
 NOTE: The content should be restored into a database by the same name that
 it was backup-ed from, however nothing ensures this.
 
+=head3 OPTIONS
 
+=over
+
+=item schema C<string>
+
+Restore from public schema to user specified one
+
+=back
 
 =head1 SUBCOMMANDS
 
