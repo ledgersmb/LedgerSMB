@@ -1,5 +1,4 @@
 <template>
-  <!-- eslint-disable vue/first-attribute-linebreak -->
     <form ref="form" name="login" style="max-width:fit-content">
       <div id="logindiv" class="login">
         <div class="login" align="center">
@@ -8,12 +7,8 @@
             <img src="images/ledgersmb.png"
                  class="logo"
                  alt="LedgerSMB Logo" /></a>
-          <div id="maindiv" style="position:relative; min-width:max-content; height:15em;">
-            <div style="z-index: 10; position: absolute;
-                top: 50%; left: 50%;
-                transform: translate(-50%, -50%);
-                width: fit-content;
-                height: fit-content;">
+          <div id="maindiv">
+            <div class="maindivContent">
               <h1 class="login" align="center">
                 LedgerSMB {{ version }}
               </h1>
@@ -41,8 +36,7 @@
                                      @keyup.enter="machine.send('submit')"
                                      @input="update"
                       />
-                      <lsmb-text
-id="company"
+                      <lsmb-text id="company"
                                  name="company" size="20"
                                  :label="$t('Company')" tabindex="3"
                                  :value="company"
@@ -50,12 +44,11 @@ id="company"
                                  @input="update"
                       />
                 </div>
-                <lsmb-button
-                    v-if="state !== 'failed'"
-                    id="login"
-                    tabindex="4"
-                    :disabled="state !== 'ready'"
-                    @click="machine.send('submit')">
+                <lsmb-button v-if="state !== 'failed'"
+                  id="login"
+                  tabindex="4"
+                  :disabled="state !== 'ready'"
+                  @click="machine.send('submit')">
                   {{ $t('Login') }}
                 </lsmb-button>
                 <div v-else id="errorText" >{{ errorText }}</div>
@@ -78,7 +71,7 @@ import { createLoginMachine } from "./LoginPage.machines.js";
 
 export default defineComponent({
     name: "LoginPage",
-    setup(props, context) { // eslint-disable-line no-unused-vars
+    setup() {
         const { t, locale } = useI18n({ useScope: "global" });
         setI18nLanguage(locale);
         let data = {
@@ -109,3 +102,20 @@ export default defineComponent({
     }
 });
 </script>
+
+<style scoped>
+#maindiv {
+  position:relative;
+  min-width:max-content;
+  height:15em;
+}
+.maindivContent {
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
+  height: fit-content;
+}
+</style>

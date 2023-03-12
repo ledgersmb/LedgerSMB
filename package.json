@@ -362,7 +362,8 @@
       "no-restricted-syntax": [
         "error",
         "SequenceExpression"
-      ]
+      ],
+      "vue/first-attribute-linebreak": "off"
     }
   },
   "stylelint": {
