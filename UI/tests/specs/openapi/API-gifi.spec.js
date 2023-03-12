@@ -40,7 +40,7 @@ beforeAll(() => {
     server.listen({
         onUnhandledRequest: 'bypass'
     });
-})
+});
 
 
 afterAll(() => {
