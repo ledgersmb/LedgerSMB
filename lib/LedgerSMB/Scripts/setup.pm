@@ -40,6 +40,7 @@ use LedgerSMB::App_State;
 use LedgerSMB::Company;
 use LedgerSMB::Database;
 use LedgerSMB::Database::Config;
+use LedgerSMB::Database::ConsistencyChecks;
 use LedgerSMB::Entity::User;
 use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::I18N;
@@ -502,6 +503,29 @@ sub run_backup {
         die $request->{_locale}->text('Don\'t know what to do with backup');
     }
 }
+
+=item consistency
+
+=cut
+
+sub consistency {
+    my ($request) = @_;
+    my ($reauth, $database) = _get_database($request);
+    return $reauth if $reauth;
+
+    my $dbh = $database->connect({PrintError => 0, AutoCommit => 0});
+    my $paths = find_checks($request->{_wire}->get( 'paths/sql' ) );
+    my $checks = load_checks( $paths );
+    my $results = run_checks( $dbh, $checks );
+
+    return $request->{_wire}->get('ui')->render(
+        $request,
+        'setup/consistency_results',
+        {
+            results => $results
+        });
+}
+
 
 =item revert_migration
 
