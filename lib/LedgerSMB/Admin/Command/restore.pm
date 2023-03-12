@@ -1,4 +1,3 @@
-
 package LedgerSMB::Admin::Command::restore;
 
 =head1 NAME
@@ -9,7 +8,10 @@ LedgerSMB::Admin::Command::restore - ledgersmb-admin 'restore' command
 
 use strict;
 use warnings;
+use version;
 
+use File::Temp;
+use Getopt::Long qw(GetOptionsFromArray);
 use LedgerSMB::Admin::Command;
 use LedgerSMB::Database;
 
@@ -19,21 +21,56 @@ use namespace::autoclean;
 
 use Feature::Compat::Try;
 
+my $schema = 'public';
+
+sub _option_spec {
+    my ($self, $command) = @_;
+    my %option_spec = ();
+
+    if ( $command eq 'restore' ) {
+        %option_spec = (
+            'schema:s' => \$schema
+        );
+    }
+    return %option_spec;
+}
+
 
 sub run {
-    my ($self, $dbname, $filename) = @_;
+    my ($self, $dbname, $filename, @args) = @_;
 
     return $self->help('restore')
         if !$dbname || $dbname eq 'help';
 
+    my %options = ();
+    my $fixed_fh = File::Temp->new(UNLINK => 0);
+    Getopt::Long::Configure(qw(bundling require_order));
+    GetOptionsFromArray(\@args, \%options, $self->_option_spec('restore'));
+
     my $logger = $self->logger;
+
+    print $fixed_fh "CREATE SCHEMA IF NOT EXISTS $schema;ALTER SCHEMA $schema OWNER TO postgres;"
+        if $schema && $schema ne 'public';
+
+    open my $fh, '<', $filename
+        or die "Can't create config file $filename: $!";
+
     my $connect_data = {
         $self->config->get('connect_data')->%*,
         $self->connect_data_from_arg($dbname)->%*,
     };
     $self->db(LedgerSMB::Database->new(
                   connect_data => $connect_data,
-              ));
+                  schema       => $schema
+             ));
+
+    for my $line (<$fh>) {
+        $line =~ s/\bpublic\./$schema./g
+            if $schema;
+        print $fixed_fh $line;
+    }
+    $filename = $fixed_fh->filename;
+
     try {
         $self->db->create;
         $self->db->restore(file => $filename);
@@ -58,7 +95,7 @@ __END__
 
 =head1 SYNOPSIS
 
-   ledgersmb-admin restore <db-uri> <filename>
+   ledgersmb-admin restore <db-uri> <filename> [options]
 
 =head1 DESCRIPTION
 
@@ -67,7 +104,15 @@ This command creates a new database to hold the data restored from C<filename>.
 NOTE: The content should be restored into a database by the same name that
 it was backup-ed from, however nothing ensures this.
 
+=head3 OPTIONS
 
+=over
+
+=item schema C<string>
+
+Restore from public schema to user specified one
+
+=back
 
 =head1 SUBCOMMANDS
 
