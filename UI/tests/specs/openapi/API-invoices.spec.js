@@ -11,6 +11,7 @@ import axios from "axios";
 import jestOpenAPI from "jest-openapi";
 import { StatusCodes } from "http-status-codes";
 import { create_database, drop_database, load_coa, initialize } from "./database";
+import { server } from '../../common/mocks/server.js'
 
 // Load an OpenAPI file (YAML or JSON) into this plugin
 jestOpenAPI(process.env.PWD + "/openapi/API.yaml");
@@ -23,7 +24,7 @@ const id = Math.random().toString(36).substr(2, 6);
 const username = `Jest${id}`;
 const password = "Tester";
 const company = `lsmb_test_api_${id}`;
-const server = process.env.LSMB_BASE_URL;
+const serverUrl = process.env.LSMB_BASE_URL;
 
 let headers = {};
 
@@ -33,6 +34,11 @@ beforeAll(() => {
     create_database(username, password, company);
     load_coa(username, password, company, "locale/coa/us/General.xml");
     initialize(company,"UI/tests/specs/data/Invoices.sql");
+
+    // Establish API mocking before all tests.
+    server.listen({
+        onUnhandledRequest: 'bypass'
+    });
 });
 
 afterAll(() => {
@@ -42,7 +48,7 @@ afterAll(() => {
 // Log in before each test
 beforeEach(async () => {
     let r = await axios.post(
-        server + "/login.pl?action=authenticate&company=" + encodeURI(company),
+        serverUrl + "/login.pl?action=authenticate&company=" + encodeURI(company),
         {
             company: company,
             password: password,
@@ -58,14 +64,14 @@ beforeEach(async () => {
     if (r.status === StatusCodes.OK) {
         headers = {
             cookie: r.headers["set-cookie"],
-            referer: server + "/" + r.data.target,
+            referer: serverUrl + "/" + r.data.target,
             authorization: "Basic " + btoa(username + ":" + password)
         };
     }
 });
 // Log out after each test
 afterEach(async () => {
-    let r = await axios.get(server + "/login.pl?action=logout&target=_top");
+    let r = await axios.get(serverUrl + "/login.pl?action=logout&target=_top");
     if (r.status === StatusCodes.OK) {
         headers = {};
     }
@@ -75,7 +81,7 @@ afterEach(async () => {
 describe("Retrieving all invoices", () => {
     it("GET /invoices fail", async () => {
         await expect(
-            axios.get(server + "/" + api + "/invoices", {
+            axios.get(serverUrl + "/" + api + "/invoices", {
                 headers: headers
             })
         ).rejects.toThrow(
@@ -89,11 +95,11 @@ describe("Adding the new Invoice", () => {
         let res;
         try {
             res = await axios.post(
-                server + "/" + api + "/invoices",
+                serverUrl + "/" + api + "/invoices",
                 {
                     eca: {
                         number: "Customer 1",
-                        type: "customer" // Watch for exact case or watch server stack dump
+                        type: "customer" // Watch for exact case or watch serverUrl stack dump
                     },
                     account: {
                         accno: "1200"
@@ -168,7 +174,7 @@ describe("Adding the new Invoice", () => {
 describe("Retrieving all invoices with old syntax should fail", () => {
     it("GET /invoices/ should fail", async () => {
         await expect(
-            axios.get(server + "/" + api + "/invoices/", {
+            axios.get(serverUrl + "/" + api + "/invoices/", {
                 headers: headers
             })
         ).rejects.toThrow(
@@ -179,7 +185,7 @@ describe("Retrieving all invoices with old syntax should fail", () => {
 
 describe("Retrieve first invoice", () => {
     it("GET /invoices/1 should work and satisfy the OpenAPI spec", async () => {
-        let res = await axios.get(server + "/" + api + "/invoices/1", {
+        let res = await axios.get(serverUrl + "/" + api + "/invoices/1", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
@@ -195,7 +201,7 @@ describe("Retrieve first invoice", () => {
 describe("Retrieve non-existant Invoice", () => {
     it("GET /invoices/2 should not retrieve Invoice 2", async () => {
         await expect(
-            axios.get(server + "/" + api + "/invoices/2", {
+            axios.get(serverUrl + "/" + api + "/invoices/2", {
                 headers: headers
             })
         ).rejects.toThrow(
@@ -207,17 +213,17 @@ describe("Retrieve non-existant Invoice", () => {
 /*
 describe("Modifying the Invoice 1", () => {
     it("PUT /invoices/1 should allow updating Invoice 1", async () => {
-        let res = await axios.get(server + "/" + api + "/invoices/1", {
+        let res = await axios.get(serverUrl + "/" + api + "/invoices/1", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
         expect(res.headers.etag).toBeDefined();
         res = await axios.put(
-            server + "/" + api + "/invoices/1",
+            serverUrl + "/" + api + "/invoices/1",
             {
                     eca: {
                         number: "Customer 1",
-                        type: "customer" // Watch for exact case or watch server stack dump
+                        type: "customer" // Watch for exact case or watch serverUrl stack dump
                     },
                     account: {
                         accno: "1200"
@@ -294,13 +300,13 @@ describe("Modifying the Invoice 1", () => {
  * Not implemented yet
 describe("Updating the Invoice 1", () => {
     it("PATCH /invoices/1 should allow updating Invoice 1", async () => {
-        let res = await axios.get(server + "/" + api + "/invoices/1", {
+        let res = await axios.get(serverUrl + "/" + api + "/invoices/1", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
         expect(res.headers.etag).toBeDefined();
         res = await axios.patch(
-            server + "/" + api + "/invoices/1",
+            serverUrl + "/" + api + "/invoices/1",
             {
                 ...
             },
@@ -320,14 +326,14 @@ describe("Updating the Invoice 1", () => {
 
 describe("Not removing Invoice 1", () => {
     it("DELETE /invoices/1 should allow deleting Invoice 1", async () => {
-        let res = await axios.get(server + "/" + api + "/invoices/1", {
+        let res = await axios.get(serverUrl + "/" + api + "/invoices/1", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
         expect(res.headers.etag).toBeDefined();
 
         await expect(
-            axios.delete(server + "/" + api + "/invoices/1", {
+            axios.delete(serverUrl + "/" + api + "/invoices/1", {
                 headers: { ...headers, "If-Match": res.headers.etag }
             })
         ).rejects.toThrow(

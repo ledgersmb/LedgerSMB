@@ -7,7 +7,7 @@ export const useSICsStore = defineStore("sics", {
     ...configStoreTemplate,
     state: () => {
         return {
-            fields: ["code", "description"],
+            fields: ["code", "sictype", "description"],
             id: "code",
             items: [],
             _links: [],

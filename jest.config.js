@@ -34,13 +34,11 @@ module.exports = {
     // The directory where Jest should output its coverage files
     coverageDirectory: "coverage",
 
-    coveragePathIgnorePatterns: ["/node_modules/"],
-
     // An array of regexp pattern strings used to skip coverage collection
-    // coveragePathIgnorePatterns: ["node_modules", "<rootDir>/test/*.*"],
+    coveragePathIgnorePatterns: ["node_modules", "<rootDir>/UI/tests/*.*"],
 
     // Indicates which provider should be used to instrument code for coverage
-    coverageProvider: "babel",
+    coverageProvider: "v8",
 
     // A list of reporter names that Jest uses when writing coverage reports
     coverageReporters: ["text", "lcov"],
@@ -116,18 +114,13 @@ module.exports = {
     // An array of file extensions your modules use
     moduleFileExtensions: [
         "js",
-        "mjs",
-        "cjs",
-        "jsx",
-        "ts",
-        "tsx",
         "json",
-        "node",
         "vue"
     ],
 
     // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
     moduleNameMapper: {
+        "^@/i18n": "<rootDir>/UI/tests/common/i18n", // Jest doesn't support esm or top level await well 
         "^@/(.*)$": "<rootDir>/UI/src/$1"
     },
 
@@ -153,7 +146,6 @@ module.exports = {
 
     prettierPath: "prettier",
 
-
     // A preset that is used as a base for Jest's configuration
     // preset: 'ts-jest',
 
@@ -163,15 +155,7 @@ module.exports = {
     projects: [],
 
     // Use this configuration option to add custom reporters to Jest
-    reporters: [
-        [
-            "jest-tap-reporter",
-            {
-                logLevel: "INFO",
-                showInternalStackTraces: false
-            }
-        ]
-    ],
+    // reporters: [],
 
     // Automatically reset mock state before every test
     resetMocks: false,
@@ -208,7 +192,7 @@ module.exports = {
     // setupFiles: [],
 
     // A list of paths to modules that run some code to configure or set up the testing framework before each test
-    setupFilesAfterEnv: [],
+    setupFilesAfterEnv: ["<rootDir>/UI/tests/common/jest-setup.js"],
 
     skipFilter: false,
 
@@ -219,7 +203,7 @@ module.exports = {
     snapshotSerializers: [],
 
     // The test environment that will be used for testing
-    testEnvironment: "node",
+    testEnvironment: "jsdom",
 
     // Options that will be passed to the testEnvironment
     testEnvironmentOptions: {
@@ -249,9 +233,8 @@ module.exports = {
 
     // A map from regular expressions to paths to transformers
     transform: {
-        // "\\.tsx?$": "ts-jest",
-        ".*\\.(js)$": "babel-jest",
-        ".+\\.(vue)$": "@vue/vue3-jest"
+        "^.+\\.js$": "babel-jest",
+        "^.+\\.vue$": "@vue/vue3-jest"
     },
 
     // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation

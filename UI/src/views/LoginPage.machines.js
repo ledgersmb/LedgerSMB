@@ -17,7 +17,7 @@ import {
     testResponseStatusFn,
     transitionFormValid,
     transitionFormInvalid
-} from "@/machine-helpers.js";
+} from "@/machine-helpers";
 
 function submitLogin(ctx) {
     return fetch("login.pl?action=authenticate&company=" + encodeURI(ctx.company.value), {
@@ -83,7 +83,7 @@ function createLoginMachine(initialContext) {
                 ctx => ctx.response.json(),
                 transition(
                     'done', 'final',
-                    action((ctx, e) => { window.location.href = e.data.target; }),
+                    action((ctx, e) => { window.location.assign(e.data.target); }),
                 ),
                 transition(
                     'error', 'error',

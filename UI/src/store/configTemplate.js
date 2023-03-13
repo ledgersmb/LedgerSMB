@@ -65,9 +65,12 @@ export const configStoreTemplate = {
             }
         },
         async get(id) {
-            const index = this.items.findIndex((w) => w[this.id] === id);
+            let index = this.items.findIndex((w) => w[this.id] === id);
+            if ( index === -1 ) {
+                index = this.items.length;
+            }
             const warehouse = this.items[index];
-            if (!warehouse._meta || warehouse._meta.invalidated) {
+            if (!warehouse || !warehouse._meta || warehouse._meta.invalidated) {
                 const response = await fetch(`./erp/api/v0/${this.url}/${id}`, {
                     method: "GET"
                 });

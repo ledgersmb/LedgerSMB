@@ -11,6 +11,7 @@ import axios from "axios";
 import jestOpenAPI from "jest-openapi";
 import { StatusCodes } from "http-status-codes";
 import { create_database, drop_database } from "./database";
+import { server } from '../../common/mocks/server.js'
 
 // Load an OpenAPI file (YAML or JSON) into this plugin
 jestOpenAPI(process.env.PWD + "/openapi/API.yaml");
@@ -24,7 +25,7 @@ const id = Math.random().toString(36).substr(2, 6);
 const username = `Jest${id}`;
 const password = "Tester";
 const company = `lsmb_test_api_${id}`;
-const server = process.env.LSMB_BASE_URL;
+const serverUrl = process.env.LSMB_BASE_URL;
 
 let headers = {};
 
@@ -32,6 +33,11 @@ let headers = {};
 beforeAll(() => {
     axios.defaults.adapter = 'http';
     create_database(username, password, company);
+
+    // Establish API mocking before all tests.
+    server.listen({
+        onUnhandledRequest: 'bypass'
+    });
 });
 
 afterAll(() => {
@@ -41,7 +47,7 @@ afterAll(() => {
 // Log in before each test
 beforeEach(async () => {
     let r = await axios.post(
-        server + "/login.pl?action=authenticate&company=" + encodeURI(company),
+        serverUrl + "/login.pl?action=authenticate&company=" + encodeURI(company),
         {
             company: company,
             password: password,
@@ -57,14 +63,14 @@ beforeEach(async () => {
     if (r.status === StatusCodes.OK) {
         headers = {
             cookie: r.headers["set-cookie"],
-            referer: server + "/" + r.data.target,
+            referer: serverUrl + "/" + r.data.target,
             authorization: "Basic " + btoa(username + ":" + password)
         };
     }
 });
 // Log out after each test
 afterEach(async () => {
-    let r = await axios.get(server + "/login.pl?action=logout&target=_top");
+    let r = await axios.get(serverUrl + "/login.pl?action=logout&target=_top");
     if (r.status === StatusCodes.OK) {
         headers = {};
     }
@@ -73,8 +79,8 @@ afterEach(async () => {
 // Language tests
 describe("Retrieving all languages", () => {
     it("GET /languages should satisfy OpenAPI spec", async () => {
-        // Get an HTTP response from your server
-        let res = await axios.get(server + "/" + api + "/languages", {
+        // Get an HTTP response from your serverUrl
+        let res = await axios.get(serverUrl + "/" + api + "/languages", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
@@ -87,7 +93,7 @@ describe("Retrieving all languages", () => {
 describe("Retrieving all languages with old syntax should fail", () => {
     it("GET /languages/ should fail", async () => {
         await expect(
-            axios.get(server + "/" + api + "/languages/", {
+            axios.get(serverUrl + "/" + api + "/languages/", {
                 headers: headers
             })
         ).rejects.toThrow(
@@ -98,7 +104,7 @@ describe("Retrieving all languages with old syntax should fail", () => {
 
 describe("Retrieve English language", () => {
     it("GET /language/en should work and satisfy the OpenAPI spec", async () => {
-        let res = await axios.get(server + "/" + api + "/languages/en", {
+        let res = await axios.get(serverUrl + "/" + api + "/languages/en", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
@@ -114,7 +120,7 @@ describe("Retrieve English language", () => {
 describe("Retrieve non-existant Navaho language", () => {
     it("GET /languages/nv should not retrieve Navajo language", async () => {
         await expect(
-            axios.get(server + "/" + api + "/languages/nv", {
+            axios.get(serverUrl + "/" + api + "/languages/nv", {
                 headers: headers
             })
         ).rejects.toThrow(
@@ -126,7 +132,7 @@ describe("Retrieve non-existant Navaho language", () => {
 describe("Adding the new Navaho Language", () => {
     it("POST /languages/nv should allow adding Navaho language", async () => {
         let res = await axios.post(
-            server + "/" + api + "/languages",
+            serverUrl + "/" + api + "/languages",
             {
                 code: "nv",
                 description: "Navaho"
@@ -144,13 +150,13 @@ describe("Adding the new Navaho Language", () => {
 
 describe("Modifying the new Navajo language", () => {
     it("PUT /languages/nv should allow updating Navajo language", async () => {
-        let res = await axios.get(server + "/" + api + "/languages/nv", {
+        let res = await axios.get(serverUrl + "/" + api + "/languages/nv", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
         expect(res.headers.etag).toBeDefined();
         res = await axios.put(
-            server + "/" + api + "/languages/nv",
+            serverUrl + "/" + api + "/languages/nv",
             {
                 code: "nv",
                 description: "Navajo"
@@ -173,13 +179,13 @@ describe("Modifying the new Navajo language", () => {
  * Not implemented yet
 describe("Updating the new Navaho language", () => {
     it("PATCH /languages/nv should allow updating Navajo language", async () => {
-        let res = await axios.get(server + "/" + api + "/languages/nv", {
+        let res = await axios.get(serverUrl + "/" + api + "/languages/nv", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
         expect(res.headers.etag).toBeDefined();
         res = await axios.patch(
-            server + "/" + api + "/languages/nv",
+            serverUrl + "/" + api + "/languages/nv",
             {
                 code: "nv",
                 description: "Navaho"
@@ -201,14 +207,14 @@ describe("Updating the new Navaho language", () => {
 
 describe("Not removing the new Navajo language", () => {
     it("DELETE /languages/nv should allow deleting Navajo language", async () => {
-        let res = await axios.get(server + "/" + api + "/languages/nv", {
+        let res = await axios.get(serverUrl + "/" + api + "/languages/nv", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
         expect(res.headers.etag).toBeDefined();
 
         await expect(
-            axios.delete(server + "/" + api + "/languages/nv", {
+            axios.delete(serverUrl + "/" + api + "/languages/nv", {
                 headers: { ...headers, "If-Match": res.headers.etag }
             })
         ).rejects.toThrow(

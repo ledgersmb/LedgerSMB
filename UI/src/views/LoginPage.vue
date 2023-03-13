@@ -1,28 +1,21 @@
-<!-- @format -->
-<!-- eslint-disable -->
-
 <template>
-    <form name="login" style="max-width:fit-content" ref="form">
-      <div class="login" id="logindiv">
+    <form ref="form" name="login" style="max-width:fit-content">
+      <div id="logindiv" class="login">
         <div class="login" align="center">
           <a href="http://www.ledgersmb.org/"
              target="_top">
             <img src="images/ledgersmb.png"
                  class="logo"
                  alt="LedgerSMB Logo" /></a>
-          <div id="maindiv" style="position:relative; min-width:max-content; height:15em;">
-            <div style="z-index: 10; position: absolute;
-                     top: 50%; left: 50%;
-                     transform: translate(-50%, -50%);
-                     width: fit-content;
-                     height: fit-content;">
+          <div id="maindiv">
+            <div class="maindivContent">
               <h1 class="login" align="center">
                 LedgerSMB {{ version }}
               </h1>
               <div>
                   <div id="company_div">
-                      <lsmb-text name="username"
-                                 id="username"
+                      <lsmb-text id="username"
+                                 name="username"
                                  size="20"
                                  :label="$t('User Name')"
                                  :value="username"
@@ -32,8 +25,8 @@
                                  @keyup.enter="machine.send('submit')"
                                  @input="update"
                       />
-                      <lsmb-password name="password"
-                                     id="password"
+                      <lsmb-password id="password"
+                                     name="password"
                                      size="20"
                                      :label="$t('Password')"
                                      :value="password"
@@ -43,21 +36,22 @@
                                      @keyup.enter="machine.send('submit')"
                                      @input="update"
                       />
-                      <lsmb-text name="company"
-                                 id="company" size="20"
+                      <lsmb-text id="company"
+                                 name="company" size="20"
                                  :label="$t('Company')" tabindex="3"
                                  :value="company"
                                  @keyup.enter="machine.send('submit')"
                                  @input="update"
                       />
                 </div>
-                <lsmb-button
-                    v-if="state !== 'failed'"
-                    tabindex="4"
-                    id="login"
-                    @click="machine.send('submit')"
-                    :disabled="state !== 'ready'">{{ $t('Login') }}</lsmb-button>
-                <div v-else style="background-color:red;border-radius:3px;padding:3px;font-weight:bold">{{ errorText }}</div>
+                <lsmb-button v-if="state !== 'failed'"
+                  id="login"
+                  tabindex="4"
+                  :disabled="state !== 'ready'"
+                  @click="machine.send('submit')">
+                  {{ $t('Login') }}
+                </lsmb-button>
+                <div v-else id="errorText" >{{ errorText }}</div>
               </div>
             </div>
           </div>
@@ -70,16 +64,14 @@
 </template>
 
 <script>
-/* eslint-disable */
 import { defineComponent, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { setI18nLanguage } from "@/i18n";
 import { createLoginMachine } from "./LoginPage.machines.js";
 
-
 export default defineComponent({
     name: "LoginPage",
-    setup(props, context) {
+    setup() {
         const { t, locale } = useI18n({ useScope: "global" });
         setI18nLanguage(locale);
         let data = {
@@ -99,14 +91,31 @@ export default defineComponent({
             ...data
         };
     },
+    mounted() {
+        document.body.setAttribute("data-lsmb-done", "true");
+    },
     methods: {
         update(e) {
             this[e.target.name] = e.target.value;
             this.machine.send('input', e);
         }
-   },
-   mounted() {
-     document.body.setAttribute("data-lsmb-done", "true");
-   }
+    }
 });
 </script>
+
+<style scoped>
+#maindiv {
+  position:relative;
+  min-width:max-content;
+  height:15em;
+}
+.maindivContent {
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
+  height: fit-content;
+}
+</style>
