@@ -5,10 +5,14 @@ import { createImportMachine } from "./ImportCSV-Base.machines.js";
 
 export default {
     props: {
-        "multi": {},
-        "type": {},
-        "heading": {
-            "default": true
+        multi: {
+            default: false
+        },
+        type: {
+            default: ""
+        },
+        heading: {
+            default: true
         },
         "transaction_fields": {
             default: true

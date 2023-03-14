@@ -3,7 +3,10 @@
 import { createToastMachine } from "@/components/Toaster.machines";
 import { computed } from "vue";
 
-const props = defineProps({"data": { }, "type": { default: "success" }});
+const props = defineProps({
+    data: { default: "" },
+    type: { default: "success" }
+});
 const emit = defineEmits(["remove"]);
 
 const title = computed(() => props.data.title || "Title");
