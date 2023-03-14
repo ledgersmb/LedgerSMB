@@ -15,15 +15,26 @@ our @EXPORT = ## no critic
 
 =head1 NAME
 
+LedgerSMB::Database::ConsistencyChecks - Asserting data validity
+
 =head1 DESCRIPTION
 
+A module to run a set of validation checks against a company database
+schema.
+
 =head1 SYNOPSIS
+
+  use LedgerSMB::Database::ConsistencyChecks;
+
+  my $check_paths = find_checks( $path );
+  my $checks = load_checks( $check_paths );
+  my $results = $run_checks( $checks );
 
 =head1 METHODS
 
 =head1 FUNCTIONS
 
-=head2 find_checks
+=head2 find_checks( $path )
 
 =cut
 
@@ -36,7 +47,7 @@ sub find_checks {
     return \@checks;
 }
 
-=head2 load_checks
+=head2 load_checks( $paths )
 
 =cut
 
@@ -61,7 +72,34 @@ sub load_checks {
         } $paths->@* ];
 }
 
-=head2 run_checks
+=head2 run_checks( $checks )
+
+Returns a reference to an array of hash references. Each hash holds
+the following keys:
+
+=over
+
+=item path
+
+The location at which the source file of the check is stored.
+
+=item query
+
+The query to be executed returning rows failing the correctness criterion.
+
+=item frontmatter
+
+A hash containing the metadata read from the input source file.
+
+=item result
+
+Indicates whether the check failed (C<failed>) or succeeded (C<consistent>).
+
+=item count
+
+Number of failures in case the check failed.
+
+=back
 
 =cut
 
