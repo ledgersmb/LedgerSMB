@@ -1,4 +1,4 @@
---- yaml front matter
+--- yaml frontmatter
 title: Records in 'transactions' have an associated ar/ap/gl record
 ---
 

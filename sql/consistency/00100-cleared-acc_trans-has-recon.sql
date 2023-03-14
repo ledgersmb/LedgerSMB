@@ -1,4 +1,4 @@
---- yaml front matter
+--- yaml frontmatter
 title: Cleared journal lines have an associated reconciliation account
 ---
 
