@@ -16,18 +16,6 @@ const store = useGIFIsStore();
 
 </script>
 
-<style scoped>
-
-.import-section {
-    margin-top: 3em;
-}
-
-.import-section h2 {
-    text-align: left;
-}
-
-</style>
-
 <template>
     <h1 class="listtop">{{ t("Configure GIFI codes") }}</h1>
     <ConfigTable
@@ -41,3 +29,15 @@ const store = useGIFIsStore();
         <ImportCsvGifi />
     </div>
 </template>
+
+<style scoped>
+
+.import-section {
+    margin-top: 3em;
+}
+
+.import-section h2 {
+    text-align: left;
+}
+
+</style>

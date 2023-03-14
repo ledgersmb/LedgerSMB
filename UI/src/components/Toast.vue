@@ -31,9 +31,9 @@ if (props.data.dismissReceiver) {
 </script>
 
 <template>
-    <div class="toast dijitContentPane dijitBorderContainer-child edgePanel"
+    <div v-show="state !== 'pending'"
+         class="toast dijitContentPane dijitBorderContainer-child edgePanel"
          :class="type"
-         v-show="state !== 'pending'"
          @click="send('dismiss-immediate')"
          @mouseenter="send('hold')"
          @mouseleave="send('release')">

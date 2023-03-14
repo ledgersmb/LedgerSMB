@@ -1,11 +1,29 @@
+<script>
+
+import ImportCSVBase from "@/components/ImportCSV-Base";
+
+
+export default {
+    components: {
+       "import-csv": ImportCSVBase
+    },
+    props: ["multi"],
+    data() {
+       return {
+          type: "inventory"
+       };
+    }
+};
+</script>
+
 <template>
    <div :id="'import-inventory-' + (multi ? 'batch' : 'single')">
       <import-csv :type="type" :multi="multi">
-        <template v-slot:title>Import inventory <span v-if="multi">batch</span></template>
-        <template v-slot:info>The uploaded file contains one inventory count
+        <template #title>Import inventory <span v-if="multi">batch</span></template>
+        <template #info>The uploaded file contains one inventory count
           for one stocked item per line. From the counts, adjustments will
           be calculated.</template>
-        <template v-slot:default>
+        <template #default>
            The following fields are expected (in this order):
 
            <dl>
@@ -35,21 +53,3 @@ dl > dd {
   margin-left: 4em;
 }
 </style>
-
-<script>
-
-import ImportCSVBase from "@/components/ImportCSV-Base";
-
-
-export default {
-    components: {
-       "import-csv": ImportCSVBase
-    },
-    props: ["multi"],
-    data() {
-       return {
-          type: "inventory"
-       };
-    }
-};
-</script>

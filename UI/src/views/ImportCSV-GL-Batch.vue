@@ -1,11 +1,29 @@
+<script>
+
+import ImportCSVBase from "@/components/ImportCSV-Base";
+
+
+export default {
+    components: {
+       "import-csv": ImportCSVBase
+    },
+    data() {
+       return {
+          multi: true,
+          type: 'gl_multi'
+       };
+    }
+};
+</script>
+
 <template>
    <div id="import-gl-batch">
       <import-csv :type="type" :multi="multi">
-        <template v-slot:title>Import GL transaction batch</template>
-        <template v-slot:info>The uploaded file contains the details of all
+        <template #title>Import GL transaction batch</template>
+        <template #info>The uploaded file contains the details of all
              transactions; the batch data is entered into the fields
              below.</template>
-        <template v-slot:default>
+        <template #default>
            The first row of the file contains the field names; each following row
            will be transformed into a transaction of two lines. The following fields are expected (in this order):
 
@@ -48,21 +66,3 @@ dl > dd {
   margin-left: 4em;
 }
 </style>
-
-<script>
-
-import ImportCSVBase from "@/components/ImportCSV-Base";
-
-
-export default {
-    components: {
-       "import-csv": ImportCSVBase
-    },
-    data() {
-       return {
-          multi: true,
-          type: 'gl_multi'
-       };
-    }
-};
-</script>
