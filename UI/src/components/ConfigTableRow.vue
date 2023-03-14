@@ -37,7 +37,7 @@ const { service, send, state } = createRowMachine(props.store, {
                     dismissReceiver
                 });
             },
-            "added": (ctx) => { notify({ title: t("Added") }); },
+            "added": () => { notify({ title: t("Added") }); },
             "deleting": (ctx, { dismissReceiver }) => {
                 notify({
                     title: t("Deleting"),
@@ -45,11 +45,11 @@ const { service, send, state } = createRowMachine(props.store, {
                     dismissReceiver
                 });
             },
-            "deleted": (ctx) => { notify({ title: t("Deleted") }); },
+            "deleted": () => { notify({ title: t("Deleted") }); },
             "saving": (ctx, { dismissReceiver }) => {
                 notify({ title: t("Saving"), type: "info", dismissReceiver });
             },
-            "saved": (ctx) => { notify({ title: t("Saved") }); },
+            "saved": () => { notify({ title: t("Saved") }); },
         }
     },
     cb: {
