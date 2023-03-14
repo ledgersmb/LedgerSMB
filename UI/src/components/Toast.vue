@@ -1,14 +1,14 @@
 <script setup>
 
 import { createToastMachine } from "@/components/Toaster.machines";
+import { computed } from "vue";
 
 const props = defineProps({"data": { }, "type": { default: "success" }});
 const emit = defineEmits(["remove"]);
 
-const title = props.data.title || "Title";
-const text = props.data.text;
-const duration = text ? 10 : 2;
-
+const title = computed(() => props.data.title || "Title");
+const text = computed(() => props.data.text);
+const duration = props.data.text ? 10 : 2;
 
 const { send, state } = createToastMachine(
     {
