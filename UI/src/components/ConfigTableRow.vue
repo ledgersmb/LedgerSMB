@@ -85,6 +85,7 @@ watch(() => props.editingId,
 <template>
     <tr class="data-row">
         <td v-for="column in columns"
+            :key="column.key"
             class="data-entry">
             <input
                 :type="column.type"
