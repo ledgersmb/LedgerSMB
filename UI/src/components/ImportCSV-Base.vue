@@ -25,7 +25,7 @@ export default {
                     notify({
                         title: t("Uploading CSV..."),
                         type: "info",
-                        dissmissReceiver
+                        dismissReceiver
                     });
                 },
                 "success": () => { notify({ title: t("Uploaded") }); },
