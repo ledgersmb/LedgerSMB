@@ -18,7 +18,7 @@ export default {
     <div id="import-sic">
         <import-csv type="sic"
                     :heading="false"
-                    :transaction_fields="false" >
+                    :transactionFields="false" >
             <template #title>Import
                 <abbr
                     title="Standard Industrial Classification">SIC</abbr> codes</template>

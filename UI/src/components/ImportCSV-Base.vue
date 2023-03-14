@@ -14,7 +14,7 @@ export default {
         heading: {
             default: true
         },
-        "transaction_fields": {
+        "transactionFields": {
             default: true
         }
     },
@@ -75,9 +75,9 @@ export default {
             <input type="hidden" name="type" :value="type">
             <div v-if="multi"
                  class="listheading">Batch Information</div>
-            <div :class="transaction_fields ? 'two-column-grid' : 'non-grid'"
+            <div :class="transactionFields ? 'two-column-grid' : 'non-grid'"
                  style="width:fit-content">
-                <template v-if="transaction_fields">
+                <template v-if="transactionFields">
                     <lsmb-text class="reference"
                                name="reference"
                                label="Reference"
@@ -106,7 +106,7 @@ export default {
             </div>
             <div id="buttonrow"
                  class="inputrow"
-                 :class="transaction_fields ? '' : 'non-grid'" >
+                 :class="transactionFields ? '' : 'non-grid'" >
                 <input type="hidden" name="trans_type" />
                 <lsmb-button
                     class="submit"

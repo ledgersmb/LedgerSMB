@@ -17,7 +17,7 @@ export default {
 
 <template>
    <div :id="'import-' + type">
-       <import-csv :type="type" :transaction_fields="false">
+       <import-csv :type="type" :transactionFields="false">
         <template #title>Import {{ type }}</template>
         <template #info>The uploaded file contains one {{ type }} item
              per row; no header fields need to be entered below.</template>

@@ -17,7 +17,7 @@ export default {
 
 <template>
    <div id="import-chart">
-      <import-csv :type="type" :transaction_fields="false">
+      <import-csv :type="type" :transactionFields="false">
         <template #title>Import Chart of Accounts
         </template>
         <template #info>

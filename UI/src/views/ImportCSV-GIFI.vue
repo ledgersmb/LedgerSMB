@@ -18,7 +18,7 @@ export default {
     <div id="import-gifi">
         <import-csv type="gifi"
                     :heading="false"
-                    :transaction_fields="false" >
+                    :transactionFields="false" >
             <template #title>Import
                 <abbr
                     title="General Index of Financial Information">GIFI</abbr> codes
