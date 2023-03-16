@@ -1,11 +1,29 @@
+<script>
+
+import ImportCSVBase from "@/components/ImportCSV-Base";
+
+
+export default {
+    components: {
+       "import-csv": ImportCSVBase
+    },
+    data() {
+       return {
+          multi: true,
+          type: 'timecard'
+       };
+    }
+};
+</script>
+
 <template>
    <div id="import-timecard">
       <import-csv :type="type">
-        <template v-slot:title>Import timecards</template>
-        <template v-slot:info>The uploaded file contains one timecard per row;
+        <template #title>Import timecards</template>
+        <template #info>The uploaded file contains one timecard per row;
              as there is no functionality to put timecards into batches,\
              no header fields need to be entered below.</template>
-        <template v-slot:default>
+        <template #default>
            The following fields are expected (in this order):
 
            <dl>
@@ -49,21 +67,3 @@ dl > dd {
   margin-left: 4em;
 }
 </style>
-
-<script>
-
-import ImportCSVBase from "@/components/ImportCSV-Base";
-
-
-export default {
-    components: {
-       "import-csv": ImportCSVBase
-    },
-    data() {
-       return {
-          multi: true,
-          type: 'timecard'
-       };
-    }
-};
-</script>

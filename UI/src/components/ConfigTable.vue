@@ -71,11 +71,11 @@ function u(relURL) {
                 <tbody>
                     <ConfigTableRow
                         v-for="item in items"
+                        :id="item[props.storeId]"
                         :key="item[props.storeId]"
                         :columns="props.columns"
                         :deletable="props.deletable"
                         :editingId="editingId"
-                        :id="item[props.storeId]"
                         :store="props.store"
                         :type="hasEdit ? 'existing' : 'uneditable'"
                         @modifying="send({ type: 'modify', rowId: item[props.storeId] })"
@@ -84,9 +84,9 @@ function u(relURL) {
                 </tbody>
                 <tfoot v-if="hasCreate">
                     <ConfigTableRow
+                        id=""
                         :columns="props.columns"
                         :editingId="editingId"
-                        id=""
                         :store="props.store"
                         type="new"
                         @modifying="send({ type: 'modify', rowId: -1 })"

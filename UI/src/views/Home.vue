@@ -1,3 +1,9 @@
+<script>
+
+export default {
+};
+</script>
+
 <template>
     <div>
         <div id="welcome" class="width100">
@@ -61,12 +67,6 @@
         </div>
     </div>
 </template>
-
-<script>
-
-export default {
-};
-</script>
 
 <style scoped>
 .width100 {

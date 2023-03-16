@@ -1,14 +1,17 @@
 <script setup>
 
 import { createToastMachine } from "@/components/Toaster.machines";
+import { computed } from "vue";
 
-const props = defineProps({"data": { }, "type": { default: "success" }});
+const props = defineProps({
+    data: { default: "" },
+    type: { default: "success" }
+});
 const emit = defineEmits(["remove"]);
 
-const title = props.data.title || "Title";
-const text = props.data.text;
-const duration = text ? 10 : 2;
-
+const title = computed(() => props.data.title || "Title");
+const text = computed(() => props.data.text);
+const duration = props.data.text ? 10 : 2;
 
 const { send, state } = createToastMachine(
     {
@@ -31,9 +34,9 @@ if (props.data.dismissReceiver) {
 </script>
 
 <template>
-    <div class="toast dijitContentPane dijitBorderContainer-child edgePanel"
+    <div v-show="state !== 'pending'"
+         class="toast dijitContentPane dijitBorderContainer-child edgePanel"
          :class="type"
-         v-show="state !== 'pending'"
          @click="send('dismiss-immediate')"
          @mouseenter="send('hold')"
          @mouseleave="send('release')">

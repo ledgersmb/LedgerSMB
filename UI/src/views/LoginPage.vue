@@ -1,3 +1,43 @@
+<script>
+import { defineComponent, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { setI18nLanguage } from "@/i18n";
+import { createLoginMachine } from "./LoginPage.machines.js";
+
+export default defineComponent({
+    name: "LoginPage",
+    setup() {
+        const { t, locale } = useI18n({ useScope: "global" });
+        setI18nLanguage(locale);
+        let data = {
+            t: t,
+            password: ref(""),
+            username: ref(""),
+            company: ref(""),
+            form: ref(null),
+            errorText: ref(""),
+        };
+        let { service, state } = createLoginMachine(data);
+
+        return {
+            machine: service,
+            version: window.lsmbConfig.version,
+            state,
+            ...data
+        };
+    },
+    mounted() {
+        document.body.setAttribute("data-lsmb-done", "true");
+    },
+    methods: {
+        update(e) {
+            this[e.target.name] = e.target.value;
+            this.machine.send('input', e);
+        }
+    }
+});
+</script>
+
 <template>
     <form ref="form" name="login" style="max-width:fit-content">
       <div id="logindiv" class="login">
@@ -62,46 +102,6 @@
       </div>
     </form>
 </template>
-
-<script>
-import { defineComponent, ref } from "vue";
-import { useI18n } from "vue-i18n";
-import { setI18nLanguage } from "@/i18n";
-import { createLoginMachine } from "./LoginPage.machines.js";
-
-export default defineComponent({
-    name: "LoginPage",
-    setup() {
-        const { t, locale } = useI18n({ useScope: "global" });
-        setI18nLanguage(locale);
-        let data = {
-            t: t,
-            password: ref(""),
-            username: ref(""),
-            company: ref(""),
-            form: ref(null),
-            errorText: ref(""),
-        };
-        let { service, state } = createLoginMachine(data);
-
-        return {
-            machine: service,
-            version: window.lsmbConfig.version,
-            state,
-            ...data
-        };
-    },
-    mounted() {
-        document.body.setAttribute("data-lsmb-done", "true");
-    },
-    methods: {
-        update(e) {
-            this[e.target.name] = e.target.value;
-            this.machine.send('input', e);
-        }
-    }
-});
-</script>
 
 <style scoped>
 #maindiv {

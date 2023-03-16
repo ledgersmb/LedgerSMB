@@ -1,37 +1,3 @@
-<template>
-    <tr>
-        <td v-for="column in columns"
-            class="data-entry">
-            <input
-                :type="column.type"
-                :value="data[column.key]"
-                :name="column.key"
-                :readonly="!editing"
-                @input="(e) => send({ type: 'update', key: column.key, value: e.target.value })"
-                :class="editing ? 'editing':'neutral'"
-                class="input-box"
-            />
-        </td>
-        <td>
-            <template v-if="props.type === 'existing'">
-                <lsmb-button :disabled="!modifiable"
-                        @click="send('modify')">{{$t('Modify')}}</lsmb-button>
-                <lsmb-button :disabled="!editing"
-                        @click="send('save')">{{$t('Save')}}</lsmb-button>
-                <lsmb-button :disabled="!editing"
-                        @click="send('cancel')">{{$t('Cancel')}}</lsmb-button>
-                <lsmb-button
-                    v-if="props.deletable"
-                    :disabled="!editing"
-                    @click="send('delete')">{{$t('Delete')}}</lsmb-button>
-            </template>
-            <lsmb-button v-if="props.type === 'new'"
-                    :disabled="state !== 'idle'"
-                    @click="send('add')">{{$t('Add')}}</lsmb-button>
-        </td>
-    </tr>
-</template>
-
 <script setup>
 
 import { createRowMachine } from "@/components/ConfigTable.machines.js";
@@ -71,7 +37,7 @@ const { service, send, state } = createRowMachine(props.store, {
                     dismissReceiver
                 });
             },
-            "added": (ctx) => { notify({ title: t("Added") }); },
+            "added": () => { notify({ title: t("Added") }); },
             "deleting": (ctx, { dismissReceiver }) => {
                 notify({
                     title: t("Deleting"),
@@ -79,11 +45,11 @@ const { service, send, state } = createRowMachine(props.store, {
                     dismissReceiver
                 });
             },
-            "deleted": (ctx) => { notify({ title: t("Deleted") }); },
+            "deleted": () => { notify({ title: t("Deleted") }); },
             "saving": (ctx, { dismissReceiver }) => {
                 notify({ title: t("Saving"), type: "info", dismissReceiver });
             },
-            "saved": (ctx) => { notify({ title: t("Saved") }); },
+            "saved": () => { notify({ title: t("Saved") }); },
         }
     },
     cb: {
@@ -115,3 +81,38 @@ watch(() => props.editingId,
 );
 
 </script>
+
+<template>
+    <tr class="data-row">
+        <td v-for="column in columns"
+            :key="column.key"
+            class="data-entry">
+            <input
+                :type="column.type"
+                :value="data[column.key]"
+                :name="column.key"
+                :readonly="!editing"
+                :class="editing ? 'editing':'neutral'"
+                class="input-box"
+                @input="(e) => send({ type: 'update', key: column.key, value: e.target.value })"
+            />
+        </td>
+        <td>
+            <template v-if="props.type === 'existing'">
+                <lsmb-button :disabled="!modifiable"
+                        @click="send('modify')">{{$t('Modify')}}</lsmb-button>
+                <lsmb-button :disabled="!editing"
+                        @click="send('save')">{{$t('Save')}}</lsmb-button>
+                <lsmb-button :disabled="!editing"
+                        @click="send('cancel')">{{$t('Cancel')}}</lsmb-button>
+                <lsmb-button
+                    v-if="props.deletable"
+                    :disabled="!editing"
+                    @click="send('delete')">{{$t('Delete')}}</lsmb-button>
+            </template>
+            <lsmb-button v-if="props.type === 'new'"
+                    :disabled="state !== 'idle'"
+                    @click="send('add')">{{$t('Add')}}</lsmb-button>
+        </td>
+    </tr>
+</template>

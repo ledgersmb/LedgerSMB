@@ -1,16 +1,32 @@
+<script>
+
+import ImportCSVBase from "@/components/ImportCSV-Base";
+
+
+export default {
+    components: {
+       "import-csv": ImportCSVBase
+    },
+    data() {
+       return {
+       };
+    }
+};
+</script>
+
 <template>
     <div id="import-gifi">
         <import-csv type="gifi"
                     :heading="false"
-                    :transaction_fields="false" >
-            <template v-slot:title>Import
+                    :transactionFields="false" >
+            <template #title>Import
                 <abbr
                     title="General Index of Financial Information">GIFI</abbr> codes
             </template>
-            <template v-slot:info>
+            <template #info>
                 The uploaded file contains one GIFI code per line.
             </template>
-            <template v-slot:default>
+            <template #default>
                 The following fields are expected (in this order):
                 <dl>
                     <dt>accno</dt>
@@ -33,19 +49,3 @@ dl > dd {
   margin-left: 4em;
 }
 </style>
-
-<script>
-
-import ImportCSVBase from "@/components/ImportCSV-Base";
-
-
-export default {
-    components: {
-       "import-csv": ImportCSVBase
-    },
-    data() {
-       return {
-       };
-    }
-};
-</script>

@@ -143,11 +143,13 @@
     "analyzer": "webpack-bundle-analyzer logs/stats.json UI/js -h 0.0.0.0",
     "build": "webpack --mode=production --stats errors-warnings",
     "build:dev": "webpack --progress --mode=development --stats errors-warnings",
-    "lint": "npm run lint:css;npm run lint:js;npm run lint:markdown",
+    "lint": "npm run lint:css;npm run lint:js;npm run lint:markdown;npm run lint:vue",
     "lint:css": "stylelint UI/css/*.css",
     "lint:js": "eslint --ext .js ./",
     "lint:js:fix": "eslint --fix --ext .js ./",
     "lint:markdown": "markdownlint --config .markdownlint.json --ignore ./node_modules .",
+    "lint:vue": "eslint --ext .vue ./",
+    "lint:vue:fix": "eslint --fix --ext .vue ./",
     "profile": "webpack --progress=profile --json > logs/stats.json",
     "readme": "webpack --mode production --stats errors-warnings",
     "serve": "webpack serve --mode development",
@@ -272,7 +274,7 @@
       "no-else-return": "error",
       "no-lonely-if": "error",
       "no-multi-assign": "error",
-      "no-multi-spaces": "error",
+      "no-multi-spaces": "off",
       "no-new-object": "error",
       "no-param-reassign": "error",
       "no-plusplus": 0,
@@ -363,7 +365,20 @@
         "error",
         "SequenceExpression"
       ],
-      "vue/first-attribute-linebreak": "off"
+      "vue/attribute-hyphenation": "off",
+      "vue/first-attribute-linebreak": "off",
+      "vue/multi-word-component-names": "off",
+      "vue/require-prop-types": "off",
+      "vue/component-tags-order": [
+        "error", 
+        { "order": [
+            "script:not([setup])",
+            "script[setup]",
+            "template",
+            "style:not([scoped])",
+            "style[scoped]"
+          ]
+        }]
     }
   },
   "stylelint": {

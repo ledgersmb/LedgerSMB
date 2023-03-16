@@ -1,12 +1,29 @@
+<script>
+
+import ImportCSVBase from "@/components/ImportCSV-Base";
+
+
+export default {
+    components: {
+       "import-csv": ImportCSVBase
+    },
+    data() {
+       return {
+          type: "chart"
+       };
+    }
+};
+</script>
+
 <template>
    <div id="import-chart">
-      <import-csv :type="type" :transaction_fields="false">
-        <template v-slot:title>Import Chart of Accounts
+      <import-csv :type="type" :transactionFields="false">
+        <template #title>Import Chart of Accounts
         </template>
-        <template v-slot:info>
+        <template #info>
            The uploaded file contains one account or heading per line.
         </template>
-        <template v-slot:default>
+        <template #default>
            The following fields are expected (in this order):
 
            <dl>
@@ -44,20 +61,3 @@ dl > dd {
   margin-left: 4em;
 }
 </style>
-
-<script>
-
-import ImportCSVBase from "@/components/ImportCSV-Base";
-
-
-export default {
-    components: {
-       "import-csv": ImportCSVBase
-    },
-    data() {
-       return {
-          type: "chart"
-       };
-    }
-};
-</script>

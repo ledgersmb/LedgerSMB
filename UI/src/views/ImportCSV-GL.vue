@@ -1,11 +1,28 @@
+<script>
+
+import ImportCSVBase from "@/components/ImportCSV-Base";
+
+
+export default {
+    components: {
+       "import-csv": ImportCSVBase
+    },
+    data() {
+       return {
+          type: 'gl'
+       };
+    }
+};
+</script>
+
 <template>
    <div id="import-gl">
       <import-csv :type="type">
-        <template v-slot:title>Import GL transaction</template>
-        <template v-slot:info>The uploaded file contains the lines in the
+        <template #title>Import GL transaction</template>
+        <template #info>The uploaded file contains the lines in the
            transaction; the header data is entered into the fields below.
         </template>
-        <template v-slot:default>
+        <template #default>
            The first row of the file contains the field names; all following rows
            contain lines to be uploaded. The following fields are expected (in
            this order):
@@ -60,20 +77,3 @@ dl > dd {
   margin-left: 4em;
 }
 </style>
-
-<script>
-
-import ImportCSVBase from "@/components/ImportCSV-Base";
-
-
-export default {
-    components: {
-       "import-csv": ImportCSVBase
-    },
-    data() {
-       return {
-          type: 'gl'
-       };
-    }
-};
-</script>

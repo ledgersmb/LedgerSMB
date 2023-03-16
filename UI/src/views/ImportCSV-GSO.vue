@@ -1,10 +1,27 @@
+<script>
+
+import ImportCSVBase from "@/components/ImportCSV-Base";
+
+
+export default {
+    components: {
+       "import-csv": ImportCSVBase
+    },
+    props: ["multi", "type"],
+    data() {
+       return {
+       };
+    }
+};
+</script>
+
 <template>
    <div :id="'import-' + type">
-       <import-csv :type="type" :transaction_fields="false">
-        <template v-slot:title>Import {{ type }}</template>
-        <template v-slot:info>The uploaded file contains one {{ type }} item
+       <import-csv :type="type" :transactionFields="false">
+        <template #title>Import {{ type }}</template>
+        <template #info>The uploaded file contains one {{ type }} item
              per row; no header fields need to be entered below.</template>
-        <template v-slot:default>
+        <template #default>
            The following fields are expected (in this order):
 
            <dl>
@@ -88,20 +105,3 @@ dl > dd {
   margin-left: 4em;
 }
 </style>
-
-<script>
-
-import ImportCSVBase from "@/components/ImportCSV-Base";
-
-
-export default {
-    components: {
-       "import-csv": ImportCSVBase
-    },
-    props: ["multi", "type"],
-    data() {
-       return {
-       };
-    }
-};
-</script>
