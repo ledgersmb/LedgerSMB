@@ -9,8 +9,8 @@ export const sicsHandlers = [
       ctx.status(200),
       ctx.json({
         items: [
-          { code: "541330", sictype: "A", description: "Engineering service" },
-          { code: "611430", sictype: "A", description: "Professional and management development training" }
+          { code: "541330", description: "Engineering service" },
+          { code: "611430", description: "Professional and management development training" }
         ],
         _links: [{
           title : "HTML",
@@ -29,7 +29,7 @@ export const sicsHandlers = [
           'ETag': ['1234567890']
       }),
       ctx.json(
-        { code: "541330", sictype: "A", description: "Engineering service" }
+        { code: "541330", description: "Engineering service" }
         ),
     )
   }),
@@ -39,7 +39,7 @@ export const sicsHandlers = [
     return res(
       ctx.status(404),
       ctx.json(
-          { code: "", sictype: "", description: "" }
+          { code: "", description: "" }
         ),
     )
   }),
@@ -53,7 +53,6 @@ export const sicsHandlers = [
       }),
       ctx.json({
         code: "541510",
-        sictype: "A",
         description: "Design of computer systems",
       }),
     )
@@ -69,7 +68,6 @@ export const sicsHandlers = [
       ctx.json(
         {
           code: "541330",
-          sictype: "A",
           description: "Engineering services"
         }
       )

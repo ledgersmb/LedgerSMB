@@ -23,8 +23,8 @@ describe("Sic Store", () => {
         await sics.initialize();
         expect(sics.fields).toStrictEqual(["code", "sictype", "description"]);
         expect(sics.items).toStrictEqual([
-            { code: "541330", sictype: "A", description: "Engineering service" },
-            { code: "611430", sictype: "A", description: "Professional and management development training" }
+            { code: "541330", description: "Engineering service" },
+            { code: "611430", description: "Professional and management development training" }
         ]);
         expect(sics._links).toStrictEqual([{
             title : "HTML",
@@ -39,7 +39,6 @@ describe("Sic Store", () => {
         expect(sic).toStrictEqual({
             _meta: { ETag: "1234567890" },
             code: "541330",
-            sictype: "A",
             description: "Engineering service"
         });
     });
@@ -47,10 +46,10 @@ describe("Sic Store", () => {
     it("save Computer Systems Design and Related Services sic 541330", async () => {
         await sics.initialize();
         await sics.get("541330");
-        await sics.save("541330", { code: "541330", sictype: "A", description: "Engineering services" });
+        await sics.save("541330", { code: "541330", description: "Engineering services" });
         expect(sics.items).toStrictEqual([
-            { code: "541330", sictype: "A", description: "Engineering services" },
-            { code: "611430", sictype: "A", description: "Professional and management development training" }
+            { code: "541330", description: "Engineering services" },
+            { code: "611430", description: "Professional and management development training" }
         ]);
     });
 
@@ -65,7 +64,6 @@ describe("Sic Store", () => {
         expect(sics.items[sics.items.length-1]).toStrictEqual({
             _meta: { ETag: "1234567891" },
             code: "541510",
-            sictype: "A",
             description: "Design of computer systems"
         });
     });

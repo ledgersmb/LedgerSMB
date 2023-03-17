@@ -1,0 +1,453 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GIFI - register as a component should show dialog 1`] = `
+<div
+  data-v-app=""
+>
+  
+  <!-- eslint-disable vue/attribute-hyphenation -->
+  <h1
+    class="listtop"
+  >
+    Configure GIFI codes
+  </h1>
+  
+  <div>
+    <table
+      class="dynatable"
+    >
+      <thead>
+        <tr>
+          
+          <th>
+            Code
+          </th>
+          <th>
+            Description
+          </th>
+          
+          <th />
+        </tr>
+      </thead>
+      
+      <tbody
+        class="dynatableData"
+      >
+        
+        <tr
+          class="data-row"
+        >
+          
+          <td
+            class="data-entry"
+          >
+            <input
+              class="neutral input-box"
+              name="accno"
+              readonly=""
+              type="text"
+            />
+          </td>
+          <td
+            class="data-entry"
+          >
+            <input
+              class="neutral input-box"
+              name="description"
+              readonly=""
+              type="text"
+            />
+          </td>
+          
+          <td>
+            <!--v-if-->
+            <!--v-if-->
+          </td>
+        </tr>
+        <tr
+          class="data-row"
+        >
+          
+          <td
+            class="data-entry"
+          >
+            <input
+              class="neutral input-box"
+              name="accno"
+              readonly=""
+              type="text"
+            />
+          </td>
+          <td
+            class="data-entry"
+          >
+            <input
+              class="neutral input-box"
+              name="description"
+              readonly=""
+              type="text"
+            />
+          </td>
+          
+          <td>
+            <!--v-if-->
+            <!--v-if-->
+          </td>
+        </tr>
+        
+      </tbody>
+      <!--v-if-->
+      
+    </table>
+  </div>
+  <div>
+    <span>
+      Download: 
+    </span>
+    
+    <span>
+      <a
+        href="http://localhost/erp/api/v0/gl/gifi?format=HTML"
+        target="_blank"
+      >
+        [ HTML ]
+      </a>
+    </span>
+    
+  </div>
+  
+  <div
+    class="import-section"
+  >
+    <h2
+      class="listheading"
+    >
+      Import
+    </h2>
+    <div
+      id="import-gifi"
+    >
+      <div
+        id="gifi"
+      >
+        <!--v-if-->
+        <form
+          name="csvupload"
+        >
+          <input
+            name="type"
+            type="hidden"
+            value="gifi"
+          />
+          <!--v-if-->
+          <div
+            class="non-grid"
+          >
+            <!--v-if-->
+            <div>
+              <label>
+                From File
+              </label>
+              <span>
+                <input
+                  accept=".csv"
+                  name="import_file"
+                  required=""
+                  type="file"
+                />
+              </span>
+            </div>
+          </div>
+          <div
+            class="inputrow non-grid"
+            id="buttonrow"
+          >
+            <input
+              name="trans_type"
+              type="hidden"
+            />
+            <button
+              class="submit"
+              disabled=""
+              name="action"
+            >
+              
+              Save
+              
+            </button>
+          </div>
+          <div
+            class="details"
+          >
+            
+             The following fields are expected (in this order): 
+            <dl>
+              <dt>
+                accno
+              </dt>
+              <dd />
+              <dt>
+                description
+              </dt>
+              <dd />
+            </dl>
+            
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+</div>
+`;
+
+exports[`GIFI - register as a component should show dialog with editable data 1`] = `
+<div
+  data-v-app=""
+>
+  
+  <!-- eslint-disable vue/attribute-hyphenation -->
+  <h1
+    class="listtop"
+  >
+    Configure GIFI codes
+  </h1>
+  
+  <div>
+    <table
+      class="dynatable"
+    >
+      <thead>
+        <tr>
+          
+          <th>
+            Code
+          </th>
+          <th>
+            Description
+          </th>
+          
+          <th />
+        </tr>
+      </thead>
+      
+      <tbody
+        class="dynatableData"
+      >
+        
+        <tr
+          class="data-row"
+        >
+          
+          <td
+            class="data-entry"
+          >
+            <input
+              class="neutral input-box"
+              name="accno"
+              readonly=""
+              type="text"
+            />
+          </td>
+          <td
+            class="data-entry"
+          >
+            <input
+              class="neutral input-box"
+              name="description"
+              readonly=""
+              type="text"
+            />
+          </td>
+          
+          <td>
+            
+            <button
+              name="modify"
+            >
+              
+              Modify
+              
+            </button>
+            <button
+              disabled=""
+              name="save"
+            >
+              
+              Save
+              
+            </button>
+            <button
+              disabled=""
+              name="cancel"
+            >
+              
+              Cancel
+              
+            </button>
+            <!--v-if-->
+            
+            <!--v-if-->
+          </td>
+        </tr>
+        <tr
+          class="data-row"
+        >
+          
+          <td
+            class="data-entry"
+          >
+            <input
+              class="neutral input-box"
+              name="accno"
+              readonly=""
+              type="text"
+            />
+          </td>
+          <td
+            class="data-entry"
+          >
+            <input
+              class="neutral input-box"
+              name="description"
+              readonly=""
+              type="text"
+            />
+          </td>
+          
+          <td>
+            
+            <button
+              name="modify"
+            >
+              
+              Modify
+              
+            </button>
+            <button
+              disabled=""
+              name="save"
+            >
+              
+              Save
+              
+            </button>
+            <button
+              disabled=""
+              name="cancel"
+            >
+              
+              Cancel
+              
+            </button>
+            <!--v-if-->
+            
+            <!--v-if-->
+          </td>
+        </tr>
+        
+      </tbody>
+      <!--v-if-->
+      
+    </table>
+  </div>
+  <div>
+    <span>
+      Download: 
+    </span>
+    
+    <span>
+      <a
+        href="http://localhost/erp/api/v0/gl/gifi?format=HTML"
+        target="_blank"
+      >
+        [ HTML ]
+      </a>
+    </span>
+    
+  </div>
+  
+  <div
+    class="import-section"
+  >
+    <h2
+      class="listheading"
+    >
+      Import
+    </h2>
+    <div
+      id="import-gifi"
+    >
+      <div
+        id="gifi"
+      >
+        <!--v-if-->
+        <form
+          name="csvupload"
+        >
+          <input
+            name="type"
+            type="hidden"
+            value="gifi"
+          />
+          <!--v-if-->
+          <div
+            class="non-grid"
+          >
+            <!--v-if-->
+            <div>
+              <label>
+                From File
+              </label>
+              <span>
+                <input
+                  accept=".csv"
+                  name="import_file"
+                  required=""
+                  type="file"
+                />
+              </span>
+            </div>
+          </div>
+          <div
+            class="inputrow non-grid"
+            id="buttonrow"
+          >
+            <input
+              name="trans_type"
+              type="hidden"
+            />
+            <button
+              class="submit"
+              disabled=""
+              name="action"
+            >
+              
+              Save
+              
+            </button>
+          </div>
+          <div
+            class="details"
+          >
+            
+             The following fields are expected (in this order): 
+            <dl>
+              <dt>
+                accno
+              </dt>
+              <dd />
+              <dt>
+                description
+              </dt>
+              <dd />
+            </dl>
+            
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+</div>
+`;

@@ -7,8 +7,8 @@ export const useCountriesStore = defineStore("countries", {
     ...configStoreTemplate,
     state: () => {
         return {
-            fields: ["code", "name"],
-            id: "code",
+            fields: ["short_name", "name"],
+            id: "short_name",
             items: [],
             _links: [],
             url: "countries"

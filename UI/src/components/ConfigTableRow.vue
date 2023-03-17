@@ -99,18 +99,18 @@ watch(() => props.editingId,
         </td>
         <td>
             <template v-if="props.type === 'existing'">
-                <lsmb-button :disabled="!modifiable"
+                <lsmb-button :disabled="!modifiable" name="modify"
                         @click="send('modify')">{{$t('Modify')}}</lsmb-button>
-                <lsmb-button :disabled="!editing"
+                <lsmb-button :disabled="!editing" name="save"
                         @click="send('save')">{{$t('Save')}}</lsmb-button>
-                <lsmb-button :disabled="!editing"
+                <lsmb-button :disabled="!editing" name="cancel"
                         @click="send('cancel')">{{$t('Cancel')}}</lsmb-button>
                 <lsmb-button
-                    v-if="props.deletable"
+                    v-if="props.deletable" name="delete"
                     :disabled="!editing"
                     @click="send('delete')">{{$t('Delete')}}</lsmb-button>
             </template>
-            <lsmb-button v-if="props.type === 'new'"
+            <lsmb-button v-if="props.type === 'new'" name="add"
                     :disabled="state !== 'idle'"
                     @click="send('add')">{{$t('Add')}}</lsmb-button>
         </td>

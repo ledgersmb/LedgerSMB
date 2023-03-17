@@ -1,3 +1,5 @@
+<!-- eslint-disable vue/multi-word-component-names -->
+
 <script setup>
 
 import { useCountriesStore } from "@/store/countries";
@@ -15,7 +17,7 @@ const store = useCountriesStore();
 </script>
 
 <template>
-    <h1 class="listtop">{{ t("Configure countries") }}</h1>
+    <h1 class="listtop">{{ $t("Configure countries") }}</h1>
     <ConfigTable
         :columns="COLUMNS"
         :store="store"

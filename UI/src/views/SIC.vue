@@ -8,7 +8,7 @@ import ImportCsvSic from "@/views/ImportCSV-SIC";
 
 const { t } = useI18n();
 const COLUMNS = [
-    { key: "code", type: "text",            head: t("Code") },
+    { key: "code",        type: "text",     head: t("Code") },
     { key: "description", type: "text",     head: t("Description") },
 ];
 
