@@ -1,0 +1,308 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Warehouses - register as a component should show dialog 1`] = `
+<div
+  data-v-app=""
+>
+  
+  <h1
+    class="listtop"
+  >
+    Configure warehouses
+  </h1>
+  
+  <div>
+    <table
+      class="dynatable"
+    >
+      <thead>
+        <tr>
+          
+          <th>
+            Description
+          </th>
+          
+          <th />
+        </tr>
+      </thead>
+      
+      <tbody
+        class="dynatableData"
+      >
+        
+        <tr
+          class="data-row"
+        >
+          
+          <td
+            class="data-entry"
+          >
+            <input
+              class="neutral input-box"
+              name="description"
+              readonly=""
+              type="text"
+            />
+          </td>
+          
+          <td>
+            <!--v-if-->
+            <!--v-if-->
+          </td>
+        </tr>
+        <tr
+          class="data-row"
+        >
+          
+          <td
+            class="data-entry"
+          >
+            <input
+              class="neutral input-box"
+              name="description"
+              readonly=""
+              type="text"
+            />
+          </td>
+          
+          <td>
+            <!--v-if-->
+            <!--v-if-->
+          </td>
+        </tr>
+        <tr
+          class="data-row"
+        >
+          
+          <td
+            class="data-entry"
+          >
+            <input
+              class="neutral input-box"
+              name="description"
+              readonly=""
+              type="text"
+            />
+          </td>
+          
+          <td>
+            <!--v-if-->
+            <!--v-if-->
+          </td>
+        </tr>
+        
+      </tbody>
+      <!--v-if-->
+      
+    </table>
+  </div>
+  <div>
+    <span>
+      Download: 
+    </span>
+    
+    <span>
+      <a
+        href="http://localhost/erp/api/v0/products/warehouses?format=HTML"
+        target="_blank"
+      >
+        [ HTML ]
+      </a>
+    </span>
+    
+  </div>
+  
+  
+</div>
+`;
+
+exports[`Warehouses - register as a component should show dialog with editable data 1`] = `
+<div
+  data-v-app=""
+>
+  
+  <h1
+    class="listtop"
+  >
+    Configure warehouses
+  </h1>
+  
+  <div>
+    <table
+      class="dynatable"
+    >
+      <thead>
+        <tr>
+          
+          <th>
+            Description
+          </th>
+          
+          <th />
+        </tr>
+      </thead>
+      
+      <tbody
+        class="dynatableData"
+      >
+        
+        <tr
+          class="data-row"
+        >
+          
+          <td
+            class="data-entry"
+          >
+            <input
+              class="neutral input-box"
+              name="description"
+              readonly=""
+              type="text"
+            />
+          </td>
+          
+          <td>
+            
+            <button
+              name="modify"
+            >
+              
+              Modify
+              
+            </button>
+            <button
+              disabled=""
+              name="save"
+            >
+              
+              Save
+              
+            </button>
+            <button
+              disabled=""
+              name="cancel"
+            >
+              
+              Cancel
+              
+            </button>
+            <!--v-if-->
+            
+            <!--v-if-->
+          </td>
+        </tr>
+        <tr
+          class="data-row"
+        >
+          
+          <td
+            class="data-entry"
+          >
+            <input
+              class="neutral input-box"
+              name="description"
+              readonly=""
+              type="text"
+            />
+          </td>
+          
+          <td>
+            
+            <button
+              name="modify"
+            >
+              
+              Modify
+              
+            </button>
+            <button
+              disabled=""
+              name="save"
+            >
+              
+              Save
+              
+            </button>
+            <button
+              disabled=""
+              name="cancel"
+            >
+              
+              Cancel
+              
+            </button>
+            <!--v-if-->
+            
+            <!--v-if-->
+          </td>
+        </tr>
+        <tr
+          class="data-row"
+        >
+          
+          <td
+            class="data-entry"
+          >
+            <input
+              class="neutral input-box"
+              name="description"
+              readonly=""
+              type="text"
+            />
+          </td>
+          
+          <td>
+            
+            <button
+              name="modify"
+            >
+              
+              Modify
+              
+            </button>
+            <button
+              disabled=""
+              name="save"
+            >
+              
+              Save
+              
+            </button>
+            <button
+              disabled=""
+              name="cancel"
+            >
+              
+              Cancel
+              
+            </button>
+            <!--v-if-->
+            
+            <!--v-if-->
+          </td>
+        </tr>
+        
+      </tbody>
+      <!--v-if-->
+      
+    </table>
+  </div>
+  <div>
+    <span>
+      Download: 
+    </span>
+    
+    <span>
+      <a
+        href="http://localhost/erp/api/v0/products/warehouses?format=HTML"
+        target="_blank"
+      >
+        [ HTML ]
+      </a>
+    </span>
+    
+  </div>
+  
+  
+</div>
+`;
