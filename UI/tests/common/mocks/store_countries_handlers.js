@@ -9,8 +9,8 @@ export const countriesHandlers = [
       ctx.status(200),
       ctx.json({
         items: [
-          { code: "ca", name: "Canada" },
-          { code: "us", name: "United States" }
+          { short_name: "ca", name: "Canada" },
+          { short_name: "us", name: "United States" }
         ],
         _links: [{
           title : "HTML",
@@ -29,7 +29,7 @@ export const countriesHandlers = [
           'ETag': ['1234567890']
       }),
       ctx.json(
-          { code: "us", name: "United States" }
+          { short_name: "us", name: "United States" }
         ),
     )
   }),
@@ -39,7 +39,7 @@ export const countriesHandlers = [
     return res(
       ctx.status(404),
       ctx.json(
-          { code: "", name: "" }
+          { short_name: "", name: "" }
         ),
     )
   }),
@@ -52,7 +52,7 @@ export const countriesHandlers = [
           'ETag': ['1234567891']
       }),
       ctx.json({
-        code: "zz",
+        short_name: "zz",
         name: "Atlantida",
       }),
     )
@@ -66,7 +66,7 @@ export const countriesHandlers = [
           'ETag': ['1234567891']
       }),
       ctx.json(
-        { code: "us", name: "America" }
+        { short_name: "us", name: "America" }
       )
     )
   })
