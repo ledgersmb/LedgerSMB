@@ -18,7 +18,7 @@ beforeEach(() => {
     pricegroups = usePricegroupsStore(pinia);
 });
 
-describe("Language Store", () => {
+describe("Pricegroup Store", () => {
     it("initialize", async () => {
         await pricegroups.initialize();
         expect(pricegroups.fields).toStrictEqual(["id", "description"]);
