@@ -53,14 +53,14 @@ function u(relURL) {
                     <th></th>
                 </tr>
             </thead>
-            <tbody v-if="state == 'loading'">
+            <tbody v-if="state == 'loading'" class="dynatableLoading">
                 <tr>
                     <th :colspan="props.columns.length + 1">
                         {{ $t("Loading...")}}
                     </th>
                 </tr>
             </tbody>
-            <tbody v-else-if="state == 'error'">
+            <tbody v-else-if="state == 'error'" class="dynatableError">
                 <tr>
                     <th :colspan="props.columns.length + 1">
                         {{ $t("Error loading data...")}}
@@ -68,7 +68,7 @@ function u(relURL) {
                 </tr>
             </tbody>
             <template v-else>
-                <tbody>
+                <tbody class="dynatableData" >
                     <ConfigTableRow
                         v-for="item in items"
                         :id="item[props.storeId]"
@@ -97,7 +97,7 @@ function u(relURL) {
         </table>
     </div>
     <div v-if="_links.length > 0">
-        <span>{{ t("Download: ") }}</span>
+        <span>{{ $t("Download: ") }}</span>
         <span v-for="link in _links" :key="link.href">
             <a :href="u(link.href)" target="_blank">[ {{ link.title }} ]</a>
         </span>
