@@ -17,7 +17,8 @@ const store = useGIFIsStore();
 </script>
 
 <template>
-    <h1 class="listtop">{{ t("Configure GIFI codes") }}</h1>
+    <!-- eslint-disable vue/attribute-hyphenation -->
+    <h1 class="listtop">{{ $t("Configure GIFI codes") }}</h1>
     <ConfigTable
         :columns="COLUMNS"
         :store="store"
@@ -25,7 +26,7 @@ const store = useGIFIsStore();
         editRole="gifi_edit"
         createRole="gifi_create" />
     <div class="import-section">
-        <h2 class="listheading">{{ t("Import") }}</h2>
+        <h2 class="listheading">{{ $t("Import") }}</h2>
         <ImportCsvGifi />
     </div>
 </template>
