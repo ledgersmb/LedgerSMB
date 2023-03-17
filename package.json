@@ -154,7 +154,7 @@
     "readme": "webpack --mode production --stats errors-warnings",
     "serve": "webpack serve --mode development",
     "test": "jest",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "jest --group=test:unit"
   },
   "babel": {
     "presets": [
