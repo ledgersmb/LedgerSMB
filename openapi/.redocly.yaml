@@ -1,11 +1,21 @@
 # See https://redocly.com/docs/cli/configuration/
 
+extends:
+  - recommended
+
 apis:
   # Update the apiName with your actual API name, and the version with your actual API version.
-  apiName@version:
+  ledgersmb@v0.01:
     # Update the path to your OpenAPI root file
     root: ./openapi/openapi.yaml
 
-lint:
-  extends:
-    - recommended
+theme:
+  openapi:
+    defaultSampleLanguage: JavaScript
+    schemaExpansionLevel: 2
+    generateCodeSamples:
+      languages:
+        - lang: JavaScript
+        - lang: curl
+        - lang: Python
+    layout: "three-panel"
