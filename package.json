@@ -101,6 +101,7 @@
     "jest-environment-jsdom": "29.5.0",
     "jest-openapi": "0.14.2",
     "jest-runner-groups": "2.2.0",
+    "jest-serializer-vue": "3.1.0",
     "jsdom": "21.1.1",
     "markdown-include": "0.4.3",
     "markdownlint": "0.27.0",
