@@ -235,7 +235,7 @@ jobs:
 
       - name: Run Coverage Perl tests
         run: |
-          make devtest TESTS="--no-progress --job-count $JOB_COUNT \"--cover=${{ env.DEVEL_COVER_OPTIONS }}\" t xt"
+          make devtest TESTS="--no-progress --job-count 3 \"--cover=${{ env.DEVEL_COVER_OPTIONS }}\" t xt"
         env:
           LSMB_TEST_DB: 1
           COA_TESTING: ${{ matrix.COA_TESTING }}
