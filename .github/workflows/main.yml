@@ -106,7 +106,7 @@ jobs:
       # Label used to access the service container
       postgres:
         # Docker database image
-        image: ledgersmbdev/ledgersmb-dev-postgres
+        image: ghcr.io/ledgersmb/dev-postgres
         # Maps tcp port 5432 on service container to the host
         ports:
           - 5432:5432
@@ -235,7 +235,7 @@ jobs:
 
       - name: Run Coverage Perl tests
         run: |
-          make devtest TESTS="--no-progress --job-count $JOB_COUNT \"--cover=${{ env.DEVEL_COVER_OPTIONS }}\" t xt"
+          make devtest TESTS="--no-progress --job-count 3 \"--cover=${{ env.DEVEL_COVER_OPTIONS }}\" t xt"
         env:
           LSMB_TEST_DB: 1
           COA_TESTING: ${{ matrix.COA_TESTING }}
