@@ -17,9 +17,23 @@ while (<>) {
         or die "Error opening '$file' for reading: $!";
 
     my $line_no = 0;
-    while (<SOURCE>) {
+    my $cont = 0;
+    my $line = '';
+    while (my $l = <SOURCE>) {
         ++$line_no;
-        if (m/(?<!make)text\s*\(\s*"((\\.|[^"])*)"/) {
+        chomp($l);
+        # Handle continuation lines
+        if ( $l =~ m/\s*_$/) {
+            $line .= $l;
+            --$line_no; ++$cont;
+            next;
+        } else {
+            $line .= $l;
+        }
+        if ( $cont ) {
+            $line =~ s/'\s*_\s*'//g;
+        }
+        if ($line =~ m/(?<!make)text\s*\(\s*"((\\.|[^"])*)"/) {
             my $match = $1;
 
             if ($match !~ m/(?<!\\)\$/g) {
@@ -30,7 +44,7 @@ while (<>) {
                 warn "$file:$line_no: Direct variable interpolation not supported; use bracketed ([_1]) syntax! ($match)";
             }
         }
-        elsif (m/(?<!make)text\s*\(\s*'((''|[^'])*)'/) {
+        elsif ($line =~ m/(?<!make)text\s*\(\s*'((''|[^'])*)'/) {
             my $match = $1;
 
             # recode 'match' to double quoting
@@ -41,6 +55,7 @@ while (<>) {
             &ensure_entry($match);
             push @{$dict{$match}}, "#: $file:$line_no";
         }
+        $line = ''; $line_no += $cont; $cont = 0;
     }
     close SOURCE;
 }
