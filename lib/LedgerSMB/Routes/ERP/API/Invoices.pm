@@ -39,7 +39,6 @@ use List::Util qw( reduce sum0 uniq );
 use Plack::Request::WithEncoding;
 use Scalar::Util qw( blessed reftype );
 use Workflow::Context;
-use Workflow::Factory qw( FACTORY );
 use YAML::PP;
 
 use LedgerSMB::App_State;
@@ -325,7 +324,8 @@ sub _get_invoices_by_id {
     die $sth->errstr if not $trans and $sth->err;
 
     local $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
-    my $wf = FACTORY()->fetch_workflow( 'AR/AP', $trans->{workflow_id} );
+    my $wf = $env->{wire}->get('workflows')
+        ->fetch_workflow( 'AR/AP', $trans->{workflow_id} );
 
     $inv{workflow} = {
         state => $wf->state,
@@ -905,7 +905,8 @@ sub _post_invoices {
     my $ctx = Workflow::Context->new;
     $ctx->param( trans_id => $inv_id );
     local $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
-    my $wf  = FACTORY()->create_workflow( 'AR/AP', $ctx );
+    my $wf  = $env->{wire}->get('workflows')
+        ->create_workflow( 'AR/AP', $ctx );
     $env->{'lsmb.db'}->do(q{UPDATE transactions SET workflow_id = ? where id = ?},
              {}, $wf->id, $inv_id)
         or die $env->{'lsmb.db'}->errstr;
