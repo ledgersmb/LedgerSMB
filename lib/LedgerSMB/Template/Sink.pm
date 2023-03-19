@@ -55,6 +55,15 @@ use namespace::autoclean;
 
 This class has no attributes.
 
+=head2 wire
+
+Contains the Beam::Wire dependency injection instance tobe used to retrieve
+configuration from.
+
+=cut
+
+has wire => (is => 'ro', required => 1);
+
 =head1 METHODS
 
 =head2 append( $template, %arguments )
