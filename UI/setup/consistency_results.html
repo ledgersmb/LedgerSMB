@@ -1,0 +1,32 @@
+[% INCLUDE "ui-header.html"
+          stylesheet="ledgersmb.css"
+          include_stylesheet=["setup.css"]
+       %]
+[% PROCESS elements.html %]
+<body id="setup-system-info" class="lsmb [% dojo_theme %]">
+<div><div class="setupconsole">
+<h2>[% text('Consistency check results') %]</h2>
+[% INCLUDE 'setup/ui-db-credentials.html' %]
+<p>[% text('Note: '); %]</p>
+
+<table>
+  <caption>[% text('LedgerSMB consistency check results') %]</caption>
+  <tbody>
+    [% FOR item IN results %]
+    <tr>
+      <td style="text-align: right">
+        [% IF item.result == 'consistent' %]
+        <span style="font-weight:bold;color:green">✓</span>
+        [% ELSE %]
+        <span style="color:red" title="[% item.count %] failed row(s)">✗</span>[% END %]
+      </td>
+      <th>[% item.frontmatter.title %]</th>
+    </tr>
+    [% END %]
+  </tbody>
+</table>
+
+
+</div></div>
+</body>
+[% end_html %]
