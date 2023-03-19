@@ -1,9 +1,8 @@
 --- yaml frontmatter
 title: Submitted reconciliation report journal line link status
 description: |
-  Each ledger link of a submitted report must have a
-  'cleared' status, if the report line has a 'cleared'
-  status.
+  Each journal line link of a submitted report must have a
+  'cleared' status, if the report line has a 'cleared' status.
 ---
 
 select *

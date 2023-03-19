@@ -1,5 +1,9 @@
 --- yaml frontmatter
 title: All transactions are balanced
+description: |
+  Transactions must be balanced; a balance sheet must be balanced
+  at all times and transactions being the building blocks of a
+  balance sheet, they need to be balanced too.
 ---
 
 select trans_id
