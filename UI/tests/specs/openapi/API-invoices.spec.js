@@ -164,9 +164,8 @@ describe("Adding the new Invoice", () => {
         );
         } catch(e) {
             console.log(e.response.data);
-            console.dir(e.response.data.errors,{ depth: null });
         }
-        expect(await res.status).toEqual(StatusCodes.CREATED);
+        expect(res.status).toEqual(StatusCodes.CREATED);
         expect(res.headers.location).toMatch('./1');
     });
 });
