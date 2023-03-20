@@ -59,7 +59,6 @@ use Email::Sender::Simple;
 use Email::Stuffer;
 
 use Log::Any qw($log);
-use Workflow::Factory qw(FACTORY);
 
 
 my @PROPS = qw( action );
@@ -141,7 +140,7 @@ keys:
 
 sub attach {
     my ($self, $wf) = @_;
-    my $persister   = FACTORY()->get_persister( $wf->type );
+    my $persister   = $wf->_factory->get_persister( $wf->type );
     my $att         = $wf->context->delete_param( 'attachment' );
 
     $persister->attach( $wf, $att );
@@ -270,7 +269,7 @@ workflow creation.
 sub initial_save {
     my ($self, $wf) = @_;
 
-    my $persister   = FACTORY()->get_persister( $wf->type );
+    my $persister   = $wf->_factory->get_persister( $wf->type );
     my $atts        = $wf->context->delete_param( '_attachments' );
 
     for my $att ( $atts->@* ) {

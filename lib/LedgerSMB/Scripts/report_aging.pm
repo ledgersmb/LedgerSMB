@@ -343,6 +343,7 @@ sub generate_statement {
     my $sink;
     if ($request->{media} eq 'email') {
         $sink = LedgerSMB::Template::Sink::Email->new(
+            wire => $request->{_wire},
             from => $request->setting->get( 'default_email_from' ),
             cc   => $request->setting->get( 'default_email_cc' ),
             bcc  => $request->setting->get( 'default_email_bcc' ),
@@ -350,6 +351,7 @@ sub generate_statement {
     }
     elsif ($request->{media} eq 'screen') {
         $sink = LedgerSMB::Template::Sink::Screen->new(
+            wire         => $request->{_wire},
             archive_name => 'aging-report.zip',
             );
     }
@@ -359,6 +361,7 @@ sub generate_statement {
             die "No printer configured for '$request->{media}'";
         }
         $sink = LedgerSMB::Template::Sink::Printer->new(
+            wire    => $request->{_wire},
             command => $cmd,
             );
     }
