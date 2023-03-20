@@ -4,7 +4,7 @@ const MarkdownInclude = require("markdown-include");
 
 const browserslist = require("browserslist");
 const lite = require("caniuse-lite");
-const packageJson = require("../../package.json");
+const packageJson = require("../package.json");
 const timestamp = require("unix-timestamp");
 
 function _isNextVersion(v1, v2) {
@@ -174,4 +174,21 @@ MarkdownInclude.registerPlugin({
 });
 
 // do something with compiled files
-MarkdownInclude.compileFiles("doc/markdown.json");
+var tmp = require('tmp');
+var fs = require('fs');
+
+tmp.file(
+    {
+        prefix: 'markdown-',
+        postfix: '.json',
+        keep: false
+    },
+    function (err, path) {
+        if (err) {throw err;}
+        fs.writeFileSync(path, `{
+            "build" : "../README.md",
+            "files" : ["../doc/sources/_README.md"]
+        }`);
+        MarkdownInclude.compileFiles(path);
+    }
+);
