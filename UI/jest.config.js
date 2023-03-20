@@ -24,9 +24,9 @@ module.exports = {
 
     // An array of glob patterns indicating a set of files for which coverage information should be collected
     collectCoverageFrom: [
-        "UI/**/*.{js,jsx,vue}",
-        "!UI/js/**/*",
-        "!UI/tests/**/*",
+        "**/*.{js,jsx,vue}",
+        "!js/**/*",
+        "!tests/**/*",
         "!coverage/**/*",
         "!.*/**/*"
     ],
@@ -35,7 +35,7 @@ module.exports = {
     coverageDirectory: "coverage",
 
     // An array of regexp pattern strings used to skip coverage collection
-    coveragePathIgnorePatterns: ["node_modules", "<rootDir>/UI/tests/*.*"],
+    coveragePathIgnorePatterns: ["node_modules", "<rootDir>/tests/*.*"],
 
     // Indicates which provider should be used to instrument code for coverage
     coverageProvider: "v8",
@@ -120,8 +120,8 @@ module.exports = {
 
     // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
     moduleNameMapper: {
-        "^@/i18n": "<rootDir>/UI/tests/common/i18n", // Jest doesn't support esm or top level await well 
-        "^@/(.*)$": "<rootDir>/UI/src/$1"
+        "^@/i18n": "<rootDir>/tests/common/i18n", // Jest doesn't support esm or top level await well 
+        "^@/(.*)$": "<rootDir>/src/$1"
     },
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -192,7 +192,7 @@ module.exports = {
     // setupFiles: [],
 
     // A list of paths to modules that run some code to configure or set up the testing framework before each test
-    setupFilesAfterEnv: ["<rootDir>/UI/tests/common/jest-setup.js"],
+    setupFilesAfterEnv: ["<rootDir>/tests/common/jest-setup.js"],
 
     skipFilter: false,
 
@@ -220,7 +220,7 @@ module.exports = {
     ],
 
     // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-    testPathIgnorePatterns: ["/node_modules/", "tmp/", ".vscode/"],
+    testPathIgnorePatterns: ["node_modules/", "tmp/", ".vscode/"],
 
     // The regexp pattern or array of patterns that Jest uses to detect test files
     testRegex: [],

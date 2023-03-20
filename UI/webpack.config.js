@@ -67,26 +67,26 @@ if (TARGET !== "readme") {
 
     // Compute used data-dojo-type
     glob.sync("**/*.html", {
-        ignore: ["lib/ui-header.html", "js/**", "js-src/{dojo,dijit,util}/**"],
-        cwd: "UI"
+        ignore: ["lib/ui-header.html", "js/**", "node_modules/**"],
+        // cwd: "."
     }).map(function (filename) {
-        const requires = findDataDojoTypes("UI/" + filename);
-        return includedRequires.push(...requires);
-    });
-
-    glob.sync("old/bin/*.pl").map(function (filename) {
         const requires = findDataDojoTypes(filename);
         return includedRequires.push(...requires);
     });
 
-    // Pull UI/js-src/lsmb
+    glob.sync("../old/bin/*.pl").map(function (filename) {
+        const requires = findDataDojoTypes(filename);
+        return includedRequires.push(...requires);
+    });
+
+    // Pull js-src/lsmb
     includedRequires = includedRequires
         .concat(
             glob
                 .sync(
                     "{js-src/lsmb/**/!(webpack.loaderConfig|main).js,src/*.js,src/elements/*.js}",
                     {
-                        cwd: "UI"
+                        // cwd: "."
                     }
                 )
                 .map(function (file) {
@@ -159,7 +159,7 @@ if (TARGET !== "readme") {
     }; // delete all files in the js directory without deleting this folder
 
     const ESLintPluginOptions = {
-        files: "**/*.js",
+        files: ["**/*.js","**/*.vue"],
         exclude: ["node_modules", "./bootstrap.js"],
         emitError: prodMode,
         emitWarning: !prodMode
@@ -172,10 +172,10 @@ if (TARGET !== "readme") {
     // Copy non-packed resources needed by the app to the release directory
     const CopyWebpackPluginOptions = {
         patterns: [
-            { context: "../node_modules", from: "dijit/icons/**/*", to: "." },
-            { context: "../node_modules", from: "dijit/nls/**/*", to: "." },
-            { context: "../node_modules", from: "dojo/nls/**/*", to: "." },
-            { context: "../node_modules", from: "dojo/resources/**/*", to: "." }
+            { context: "node_modules", from: "dijit/icons/**/*", to: "." },
+            { context: "node_modules", from: "dijit/nls/**/*", to: "." },
+            { context: "node_modules", from: "dojo/nls/**/*", to: "." },
+            { context: "node_modules", from: "dojo/resources/**/*", to: "." }
         ],
         options: {
             concurrency: 100
@@ -183,10 +183,10 @@ if (TARGET !== "readme") {
     };
 
     const DojoWebpackPluginOptions = {
-        loaderConfig: require("./UI/js-src/lsmb/webpack.loaderConfig.js"),
-        environment: { dojoRoot: "UI/js" }, // used at run time for non-packed resources (e.g. blank.gif)
+        loaderConfig: require("./js-src/lsmb/webpack.loaderConfig.js"),
+        environment: { dojoRoot: "js" }, // used at run time for non-packed resources (e.g. blank.gif)
         buildEnvironment: { dojoRoot: "node_modules" }, // used at build time
-        locales: getPOFilenames("locale/po", ".po"),
+        locales: getPOFilenames("src/locales", ".json"),
         noConsole: true
     };
 
@@ -209,11 +209,14 @@ if (TARGET !== "readme") {
 
     const UnusedWebpackPluginOptions = {
         // Source directories
-        directories: ["js-src/lsmb", "src"],
+        directories: [
+            path.join(__dirname, "js-src/lsmb"), 
+            path.join(__dirname, "src")
+        ],
         // Exclude patterns
-        exclude: ["*.test.js"],
+        exclude: ["*.test.js", "webpack.loaderConfig.js"],
         // Root directory (optional)
-        root: path.join(__dirname, "UI")
+        root: __dirname
     };
 
     // Generate entries from file pattern
@@ -225,7 +228,7 @@ if (TARGET !== "readme") {
 
     const _dijitThemes = "+(claro|nihilo|soria|tundra)";
     const lsmbCSS = {
-        ...mapFilenamesToEntries(path.resolve("UI/css/*.css")),
+        ...mapFilenamesToEntries(path.resolve("css/*.css")),
         ...mapFilenamesToEntries(
             path.resolve(
                 "node_modules/dijit/themes/" +
@@ -329,7 +332,7 @@ if (TARGET !== "readme") {
         new webpack.DefinePlugin({
             "process.env.VUE_APP_I18N_LOCALE": "en",
             "process.env.VUE_APP_I18N_FALLBACK_LOCALE": "en",
-            __SUPPORTED_LOCALES: getPOFilenames("locale/po", ".po").map(
+            __SUPPORTED_LOCALES: getPOFilenames("../locale/po", ".po").map(
                 function (po) {
                     return "'" + po + "'";
                 }
@@ -353,7 +356,7 @@ if (TARGET !== "readme") {
 
     var pluginsList = prodMode
         ? [
-              // Clean UI/js before building (must be first)
+              // Clean js before building (must be first)
               new CleanWebpackPlugin(CleanWebpackPluginOptions),
               ...pluginsProd
           ]
@@ -406,7 +409,7 @@ if (TARGET !== "readme") {
             topLevelAwait: true
         },
 
-        context: path.join(__dirname, "UI"),
+        context: path.join(__dirname, ""),
 
         entry: {
             bootstrap: "./bootstrap.js", // Virtual file
@@ -414,7 +417,7 @@ if (TARGET !== "readme") {
         },
 
         output: {
-            path: path.join(__dirname, "UI/js"), // js path
+            path: path.join(__dirname, "js"), // js path
             publicPath: "js/", // images path
             pathinfo: !prodMode, // keep source references?
             filename: "_scripts/[name].[contenthash].js",
@@ -433,7 +436,7 @@ if (TARGET !== "readme") {
                 pinia$: "pinia/dist/pinia.esm-browser.js",
                 "vue-i18n": "vue-i18n/dist/vue-i18n.esm-bundler.js",
                 "@pinia": path.join(__dirname, "node_modules/@pinia"), // Fix eslint importer
-                "@": path.join(__dirname, "UI/src/")
+                "@": path.join(__dirname, "src/")
             },
             extensions: [".js", ".vue"],
             fallback: {
@@ -494,18 +497,18 @@ if (TARGET !== "readme") {
             },
             static: [
                 {
-                    directory: path.join(__dirname, "/UI"),
+                    directory: path.join(__dirname, ""),
                     publicPath: '/'
                 },
                 {
-                    directory: path.join(__dirname, "/UI"),
+                    directory: path.join(__dirname, ""),
                     publicPath: '/app'
                 }
             ],
             watchFiles: [
                 "webpack.config.js",
-                "UI/**/*",
-                "!UI/js/*",
+                "**/*",
+                "!js/*",
                 "node_modules/**/*"
             ]
         },
@@ -518,6 +521,6 @@ if (TARGET !== "readme") {
     const { merge } = require("webpack-merge");
 
     /* Include Markdown compiling for README.md */
-    const WebpackCompileMarkdown = require("./UI/js-src/webpack-compile-markdown.js");
+    const WebpackCompileMarkdown = require("./js-src/webpack-compile-markdown.js");
     module.exports = merge({ entry: {} }, WebpackCompileMarkdown);
 }

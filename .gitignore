@@ -48,7 +48,7 @@ META.yml
 /coverage/*
 
 # Webpack
-/node_modules/
+/UI/node_modules/
 
 # local configurations
 *.local
