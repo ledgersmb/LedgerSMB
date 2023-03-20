@@ -276,5 +276,5 @@ workflows:
   $lifecycle: eager
   $method: load
   directories:
-  - $ref: paths/workflows
+    $ref: paths/workflows
   lifecycle: eager
