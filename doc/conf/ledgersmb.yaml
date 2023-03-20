@@ -81,9 +81,8 @@ paths:
     templates: ./templates/
     UI: ./UI/
     UI_cache: lsmb_templates/
-    workflows:
-    - ./workflows/
-    - ./custom_workflows/
+    workflows: ./workflows/
+    custom_workflows: ./custom_workflows/
 
 printers:
   $class: LedgerSMB::Printers
@@ -149,4 +148,5 @@ workflows:
   args:
     directories:
     - $ref: paths/workflows
+    - $ref: paths/custom_workflows
     lifecycle: eager
