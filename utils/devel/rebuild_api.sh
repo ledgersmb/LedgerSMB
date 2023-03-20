@@ -4,7 +4,7 @@
 gitDirName=`git rev-parse --show-toplevel 2>/dev/null`
 
 # Allow finding openapi modules 
-PATH="$gitDirName/node_modules/.bin:$PATH"
+PATH="$gitDirName/UI/node_modules/.bin:$PATH"
 
 # Build in a temporary directory
 TMPDIR=$(mktemp -d)

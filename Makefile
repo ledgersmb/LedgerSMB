@@ -83,29 +83,29 @@ dbdocs:
 	$(DOCKER_CMD) dot -Tpdf doc/database/ledgersmb.dot -o doc/database/ledgersmb.pdf
 
 npm_install:
-	$(DOCKER_CMD) npm $(NPM_COMMAND) --no-save
+	$(DOCKER_CMD) cd UI && npm $(NPM_COMMAND) --no-save
 
 dojo: npm_install
-	$(DOCKER_CMD) npm run build
+	$(DOCKER_CMD) cd UI && npm run build
 
 devdojo: npm_install
-	$(DOCKER_CMD) npm run build:dev
+	$(DOCKER_CMD) cd UI && npm run build:dev
 
 js: npm_install
-	$(DOCKER_CMD) npm run build
+	$(DOCKER_CMD) cd UI && npm run build
 
 jsdev: npm_install
-	$(DOCKER_CMD) npm run build:dev
+	$(DOCKER_CMD) cd UI && npm run build:dev
 
 jslint:
 ifneq ($(origin FIX),undefined)
-	$(DOCKER_CMD) npm run lint:js:fix
+	$(DOCKER_CMD) cd UI && npm run lint:js:fix
 else
-	$(DOCKER_CMD) npm run lint:js
+	$(DOCKER_CMD) cd UI && npm run lint:js
 endif
 
 readme: npm_install
-	$(DOCKER_CMD) npm run readme
+	$(DOCKER_CMD) cd UI && npm run readme
 
 # TravisCI specific target -- need to find a way to get rid of it
 dojo_archive: dojo
@@ -179,7 +179,7 @@ ifneq ($(origin DOCKER_CMD),undefined)
 	$(DOCKER_CMD) make jstest
 else
 	# Test API answer
-	./node_modules/.bin/jest $(TESTS)
+	cd UI && ./node_modules/.bin/jest $(TESTS)
 endif
 
 serve:
@@ -187,7 +187,7 @@ ifneq ($(origin DOCKER_CMD),undefined)
 #       if there's a docker container, jump into it and run from there
 	$(DOCKER_CMD) make serve
 else
-	npx webpack serve
+	cd UI && npx webpack serve
 endif
 
 pherkin: TESTS ?= xt/
