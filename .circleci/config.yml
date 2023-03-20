@@ -127,7 +127,7 @@ commands:
           keys:
             # Find a cache corresponding to this specific package-lock.json checksum
             # when this file is changed, this key will fail
-            - v1-npm-deps-{{ checksum "package-lock.json" }}
+            - v1-npm-deps-{{ checksum "UI/package-lock.json" }}
             # Find the most recently generated cache used from any branch
             - v1-npm-deps-
 
@@ -138,7 +138,7 @@ commands:
             make readme
 
       - save_cache:
-          key: v1-npm-deps-{{ checksum "package-lock.json" }}
+          key: v1-npm-deps-{{ checksum "UI/package-lock.json" }}
           paths:
             - $HOME/.npm
 

@@ -63,7 +63,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-npm != 'true'
-        run: npm ci --ignore-scripts
+        run: cd UI && npm ci --ignore-scripts
 
       - name: Cache node modules
         id: cache-node_modules
@@ -74,7 +74,7 @@ jobs:
             modules-${{ hashFiles('**/package-lock.json') }}
 
       - name: 'Tar node_modules files'
-        run: tar -cf ~/node_modules.tar node_modules
+        run: tar -cf ~/node_modules.tar UI/node_modules
 
       - uses: actions/upload-artifact@v3
         with:
