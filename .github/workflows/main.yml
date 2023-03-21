@@ -312,7 +312,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: ui
           parallel: true
-          path-to-lcov: ${{ github.workspace }}/coverage/lcov.info
+          path-to-lcov: ${{ github.workspace }}/UI/coverage/lcov.info
         if: ${{ matrix.COVERAGE }}
 
         # Upload coverage data if needed
@@ -332,7 +332,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true
-          path-to-lcov: ${{ github.workspace }}/coverage/lcov.info
+          path-to-lcov: ${{ github.workspace }}/coverage/UI/lcov.info
         if: ${{ matrix.COVERAGE }}
 
       # Run the build hook again (Coveralls suggested patch)
