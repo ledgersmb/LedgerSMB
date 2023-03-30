@@ -45,7 +45,7 @@ META.yml
 
 # Coverage
 /cover_db/*
-/coverage/*
+/UI/coverage/*
 
 # Webpack
 /UI/node_modules/
