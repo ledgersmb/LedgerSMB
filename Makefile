@@ -55,7 +55,7 @@ Help on using this Makefile
     - test         : Runs tests (TESTS='t/')
     - serve        : Runs the 'webpack serve' command
     - devtest      : Runs all tests including development tests (TESTS='t/ xt/')
-	- jstest	   : Runs all UI tests (TESTS='UI/tests')
+    - jstest       : Runs all UI tests (TESTS='UI/tests')
     - pherkin      : Runs all BDD tests with 'pherkin' (instead of 'prove')
 
     - blacklist    : Builds sql blacklist (required after adding functions)
