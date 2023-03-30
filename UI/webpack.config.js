@@ -409,7 +409,7 @@ if (TARGET !== "readme") {
             topLevelAwait: true
         },
 
-        context: path.join(__dirname, ""),
+        context: __dirname,
 
         entry: {
             bootstrap: "./bootstrap.js", // Virtual file
@@ -497,11 +497,11 @@ if (TARGET !== "readme") {
             },
             static: [
                 {
-                    directory: path.join(__dirname, ""),
+                    directory: __dirname,
                     publicPath: '/'
                 },
                 {
-                    directory: path.join(__dirname, ""),
+                    directory: __dirname,
                     publicPath: '/app'
                 }
             ],
