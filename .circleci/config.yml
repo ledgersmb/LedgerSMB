@@ -43,7 +43,15 @@ commands:
           command: |
             export PWD="${CIRCLE_WORKING_DIRECTORY/#\~/$HOME}"
             export PERL5LIB="lib:old/lib:$PERL5LIB"
-            make jstest
+            if [ "x$COVERAGE" == "x1" ]
+            then
+              make jstest TESTS='--coverage'
+              # Make Coverage appear from root instead of UI to integrate in Coveralls
+              sed -i -E "s~^SF:(js-src|src)/~SF:UI/\1/~g" UI/coverage/lcov.info
+            else
+              make jstest
+            fi
+
     
       - run:
           command: |
