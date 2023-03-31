@@ -63,7 +63,7 @@ jobs:
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-npm != 'true'
-        run: npm ci --ignore-scripts
+        run: cd UI && npm ci --ignore-scripts
 
       - name: Cache node modules
         id: cache-node_modules
@@ -74,7 +74,7 @@ jobs:
             modules-${{ hashFiles('**/package-lock.json') }}
 
       - name: 'Tar node_modules files'
-        run: tar -cf ~/node_modules.tar node_modules
+        run: tar -cf ~/node_modules.tar UI/node_modules
 
       - uses: actions/upload-artifact@v3
         with:
@@ -305,6 +305,12 @@ jobs:
           DB_TESTING: ${{ matrix.DB_TESTING }}
           PERL5OPT: -MSyntax::Keyword::Try::Deparse
 
+      # Make Coverage appear from root instead of UI to integrate in Coveralls
+      - name: Fix UI Coverage report
+        run: |
+          sed -i -E "s~^SF:(js-src|src)/~SF:UI/\1/~g" UI/coverage/lcov.info
+        if: ${{ matrix.COVERAGE }}
+
       # Send UI coverage before Perl
       - name: Upload UI coverage data
         uses: coverallsapp/github-action@v2.0.0
@@ -312,7 +318,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: ui
           parallel: true
-          path-to-lcov: ${{ github.workspace }}/coverage/lcov.info
+          path-to-lcov: ${{ github.workspace }}/UI/coverage/lcov.info
         if: ${{ matrix.COVERAGE }}
 
         # Upload coverage data if needed
@@ -332,7 +338,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true
-          path-to-lcov: ${{ github.workspace }}/coverage/lcov.info
+          path-to-lcov: ${{ github.workspace }}/coverage/UI/lcov.info
         if: ${{ matrix.COVERAGE }}
 
       # Run the build hook again (Coveralls suggested patch)

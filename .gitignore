@@ -45,10 +45,10 @@ META.yml
 
 # Coverage
 /cover_db/*
-/coverage/*
+/UI/coverage/*
 
 # Webpack
-/node_modules/
+/UI/node_modules/
 
 # local configurations
 *.local

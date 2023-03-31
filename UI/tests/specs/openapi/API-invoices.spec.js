@@ -14,8 +14,8 @@ import { create_database, drop_database, load_coa, initialize } from "./database
 import { server } from '../../common/mocks/server.js'
 
 // Load an OpenAPI file (YAML or JSON) into this plugin
-jestOpenAPI(process.env.PWD + "/openapi/API.yaml");
-
+const openapi = process.env.PWD.replace("/UI","");
+jestOpenAPI( openapi + "/openapi/API.yaml");
 // Set API version to use
 const api = "erp/api/v0";
 

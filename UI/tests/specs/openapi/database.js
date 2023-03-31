@@ -13,7 +13,7 @@ export function create_database(username, password, company) {
         "./bin/ledgersmb-admin",
         ["create", `${pg_user}@${pg_host}/${company}#xyz`],
         {
-            cwd: process.env.PWD
+            cwd: process.env.PWD + "/.."
         }
     );
     if (cmd.status !== 0) {
@@ -40,7 +40,7 @@ export function create_database(username, password, company) {
             "--permission='Full Permissions'"
         ],
         {
-            cwd: process.env.PWD
+            cwd: process.env.PWD + "/.."
         }
     );
     if (cmd.status !== 0) {
@@ -59,7 +59,7 @@ export function load_coa(username, password, company, coa) {
         "./bin/ledgersmb-admin",
         ["setup", "load", `${pg_user}@${pg_host}/${company}#xyz`, coa],
         {
-            cwd: process.env.PWD
+            cwd: process.env.PWD + "/.."
         }
         );
     if (cmd.status !== 0) {
@@ -84,7 +84,7 @@ export function initialize(company, file) {
             "-f", file
         ],
         {
-            cwd: process.env.PWD,
+            cwd: process.env.PWD + "/..",
             env: {
                 ...process.env,
                 PG_PASSWORD: pg_pwd,
