@@ -321,8 +321,8 @@ sub save_temp {
                  ( $form->{"debit_fx_$iter"} * -1 );
              push @lines, {
                  accno => $acc_id,
-                 amount => $amount,
-                 amount_fx => $amount_fx,
+                 amount => $form->parse_amount( \%my_config, $amount),
+                 amount_fx => $form->parse_amount( \%my_config, $amount_fx),
                  curr => $form->{"curr_$iter"},
              };
         }
