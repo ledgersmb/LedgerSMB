@@ -202,6 +202,11 @@ Dependency updates
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.26
+* Fix failure to save GL template transactions due to number formatting (#7302)
+* Fix JOIN in 'all_managers' stored procedure (#7201)
+
+
 Changelog for 1.9.25
 * Random errors reported at the bottom of invoices without good reason (#7144)
 * Asset disposal results in asset of disposed amount (#7143)
