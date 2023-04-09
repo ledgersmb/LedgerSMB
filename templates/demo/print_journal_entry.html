@@ -1,0 +1,226 @@
+<?lsmb#   This is a comment block; it's ignored by the template engine.
+
+   Version:  1.0
+   Date:     2023-04-03
+   File:     print_journal_entry.html
+   Set:      demo
+
+Template version numbers are explicitly not aligned across templates or
+releases. No explicit versioning was applied before 2021-01-04.
+
+-?>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta
+      name="generator"
+      content="HTML Tidy for HTML5 for Linux version 5.6.0"
+    />
+    <title><?lsmb form.print_title ?></title>
+    <style type="text/css">
+      body {
+        margin: 10px 20px;
+      }
+      span {
+        display: block;
+      }
+      label {
+        display: block;
+        font-weight: bold;
+        margin-right: 15px;
+      }
+      label::after {
+        content: ':';
+        float: right;
+      }
+      table {
+        width: 100%;
+      }
+      table, td, th {
+        border: 0.5px solid darkgray;
+      }
+      th {
+        background-color: lightgray;
+      }
+      h4 {
+        margin: 10px 0;
+      }
+      .header-area {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+      }
+      .logo {
+        align-self: end;
+      }
+      .logo > img {
+        width: 160px;
+        height: 120px;
+      }
+      .company-info {
+        align-self: end;
+        padding-left: 20px;
+        border-bottom: 2px solid black;
+      }
+      .company-name {
+        margin: 10px 0 0 0;
+      }
+      .title {
+        border-bottom: 2px solid black;
+        align-self: end;
+      }
+      .title > h3 {
+        margin: 0;
+        text-transform: uppercase;
+      }
+      .voucher-header {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-top: 10px;
+      }
+      .flex-label {
+        display: flex;
+      }
+      .flex-label > div {
+        display: flex;
+        flex-direction: column;
+      }
+      .flex-label > div:first-child {
+        width: fit-content;
+      }
+      .flex-label > div > * {
+        padding: 3px 0;
+      }
+      .voucher-info {
+        justify-self: end;
+        margin-right: 40px;
+      }
+      .left-border {
+        border: 0;
+        border-left: 0.5px solid darkgray;
+        width: 5em;
+        padding: 10px 0;
+      }
+      .right-border {
+        border: 0;
+        border-right: 0.5px solid darkgray;
+        padding-right: 10px;
+        padding-top: 15px;
+      }
+      .signature-area {
+        margin-top: 10px;
+      }
+      .signature-area th,
+      .signature-area td {
+        padding-left: 20px;
+      }
+      footer {
+        width: 100%;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <?lsmb column_count = 0 -?>
+    <div class="header-area">
+      <div class="logo">
+        <!-- If you want to use a logo uncomment following line, remove # from dbfile_base64 and set images file name -->
+        <!-- <img class="logo" src="data:image/png;base64,<?lsmb #dbfile_base64('logo.jpg') ?>"/> -->
+      </div>
+      <div class="company-info">
+        <h2 class="company-name"><?lsmb form.company ?></h2>
+        <span class="company-address"><?lsmb form.address ?></span>
+        <span class="company-phone">Ph: <?lsmb form.tel ?></span>
+      </div>
+      <div class="title">
+        <h3><?lsmb form.print_title ?></h3>
+      </div>
+    </div>
+    <div class="voucher-header">
+      <div class="eca-info flex-label">
+        <div>
+          <label>Reference</label>
+          <label>Description</label>
+          <label>Notes</label>
+        </div>
+        <div>
+          <span><?lsmb form.reference ?></span>
+          <span><?lsmb form.description ?></span>
+          <span><?lsmb form.notes ?></span>
+        </div>
+      </div>
+      <div class="voucher-info flex-label">
+        <div>
+          <label>Date</label>
+        </div>
+        <div>
+          <span><?lsmb form.transdate ?></span>
+        </div>
+      </div>
+    </div>
+    <div class="invoice-data">
+      <table cellspacing="0">
+        <tr align="center">
+          <th>Account</th>
+          <th>Curr</th>
+          <th>Debit</th>
+          <th>Credit</th>
+          <th>Source</th>
+          <th>Memo</th>
+          <?lsmb FOREACH cls IN form.bu_class ?>
+          <th class="listheading"><?lsmb cls.label ?></th>
+          <?lsmb END ?>
+        </tr>
+        <?lsmb FOREACH displayrow IN displayrows;
+          IF displayrow.accno; ?>
+        <tr>
+          <td><?lsmb displayrow.accno ?></td>
+          <td><?lsmb displayrow.curr ?></td>
+          <td align="right"><?lsmb displayrow.debit ?></td>
+          <td align="right"><?lsmb displayrow.credit ?></td>
+          <td><?lsmb displayrow.source ?></td>
+          <td><?lsmb displayrow.memo ?></td>
+          <?lsmb FOREACH cls IN form.bu_class ?>
+          <td>
+              <?lsmb clsid = cls.id;
+                    bucid = "b_unit_$clsid";
+                    displayrow.${bucid}; ?>
+          </td>
+          <?lsmb END ?>
+        </tr>
+        <?lsmb END;
+        END -?>
+        <tr>
+          <td colspan="2">&nbsp;</td>
+          <td align="right"><?lsmb form.totaldebit ?></td>
+          <td align="right"><?lsmb form.totalcredit ?></td>
+          <td colspan="15">&nbsp;</td>
+        </tr>
+      </table>
+    </div>
+    <div class="signature-area">
+      <table cellspacing="0">
+        <tr>
+          <th colspan="2" align="left">Approved By</th>
+          <th colspan="2" align="left">Received By</th>
+          <th colspan="2" align="left">Paid By</th>
+        </tr>
+        <tr>
+          <td class="left-border">Signature</td>
+          <td class="right-border"><hr/></td>
+          <td class="left-border">Signature</td>
+          <td class="right-border"><hr/></td>
+          <td class="left-border">Signature</td>
+          <td class="right-border"><hr/></td>
+        </tr>
+        <tr>
+          <td class="left-border">Name</td>
+          <td class="right-border"><hr/></td>
+          <td class="left-border">Name</td>
+          <td class="right-border"><hr/></td>
+          <td class="left-border">Name</td>
+          <td class="right-border"><hr/></td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

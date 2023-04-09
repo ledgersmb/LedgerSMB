@@ -50,6 +50,7 @@ use LedgerSMB::GL;
 use LedgerSMB::PE;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Legacy_Util;
+use LedgerSMB::Num2text;
 
 require "old/bin/arap.pl";
 
@@ -631,6 +632,81 @@ sub save_as_new {
     for (qw(id printed emailed)) { delete $form->{$_} }
     delete $form->{approved};
     &post;
+}
+
+sub print {
+    # Get all the business units required to render
+    $form->all_business_units($form->{transdate}, undef, 'GL');
+    # Get the actual je transaction
+    &display_row(@_);
+
+    my $templateName = "print_journal_entry";
+    my $filename = "Journal_Entry_" . $form->{id} . ".html";
+    $form->{print_title} = "Journal Entry Transaction";
+
+    if($form->{transfer}) {
+        $templateName = "print_cash_transfer";
+        $filename = "Cash_Transfer_" . $form->{id} . ".html";
+        $form->{print_title} = "Transfer Voucher";
+
+        my $amount = $form->{"debit_0"} eq "" ? $form->{"credit_0"} : $form->{"debit_0"};
+        my $amount_fx = $form->{"debit_fx_0"} eq "" ? $form->{"credit_fx_0"} : $form->{"debit_fx_0"};
+
+        $form->{exchange_rate} = LedgerSMB::PGNumber->from_input($amount) / LedgerSMB::PGNumber->from_input($amount_fx);
+        $form->{exchange_rate} = $form->format_amount( \%myconfig, $form->{exchange_rate}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
+
+        $form->{curr} = $form->{"curr_0"};;
+
+        $form->{amount} = $form->{totaldebit};
+        my $fmt = LedgerSMB::Num2text->new($form->{_locale});
+        $form->{text_amount} = $fmt->num2text(LedgerSMB::PGNumber->from_input($form->{amount}));
+    } else {
+        # render the code--description for all business unit instead of id
+        for my $drow (@displayrows) {
+            for my $cls (@{$form->{bu_class}}) {
+                if(scalar @{$form->{b_units}->{$cls->{id}}}) {
+                    for my $bu (@{$form->{b_units}->{"$cls->{id}"}}) {
+                        if ($drow->{"b_unit_$cls->{id}"} eq $bu->{id}) {
+                            $drow->{"b_unit_$cls->{id}"} = $bu->{control_code} . '--' . $bu->{description};
+                            last;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    my %copy_settings = (
+        email => 'company_email',
+        company => 'company_name',
+        businessnumber => 'businessnumber',
+        address => 'company_address',
+        tel => 'company_phone',
+        fax => 'company_fax',
+    );
+    while (my ($key, $setting) = each %copy_settings ) {
+        $form->{$key} = $form->get_setting($setting);
+    }
+
+    my %output_options = (
+        filename => $filename
+    );
+    my $template = LedgerSMB::Template->new(
+        user => \%myconfig,
+        template => $templateName,
+        dbh => $form->{dbh},
+        path => 'DB',
+        locale => $locale,
+        output_options => \%output_options,
+        format_plugin => $form->{_wire}->get( 'output_formatter' )->get( 'HTML' ),
+    );
+    $template->render(
+        {
+            form => $form,
+            displayrows => \@displayrows
+        }
+    );
+    LedgerSMB::Legacy_Util::output_template($template, $form);
 }
 
 1;

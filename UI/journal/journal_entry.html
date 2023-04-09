@@ -324,6 +324,25 @@
                 }; END %]
 
 [% FOREACH button IN buttons; PROCESS button element_data=button; END %]
+[% IF form.id;
+# Media set with 'screen' value as hidden since UI doesn't have media selector
+# and lsmb/PrintButton need media value
+  PROCESS input element_data = {
+    type = "hidden"
+    name = "media"
+    value = "screen"
+  };
+  PROCESS button element_data = {
+    id = "btn_print"
+    name = "action"
+    text = text('Print')
+    class = "submit"
+    value = "print"
+    "data-dojo-type" = "lsmb/PrintButton"
+    "data-dojo-props" = "minimalGET: false"
+  };
+END;
+%]
 [% IF form.recurringset ==1 %]
           [% PROCESS label element_data = {
                 text => text('Scheduled')
