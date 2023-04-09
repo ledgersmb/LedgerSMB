@@ -3,6 +3,10 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.15
+* Fix failure to save GL template transactions due to number formatting (#7302)
+
+
 Changelog for 1.10.14
 * Fix e-mail addresses on aging statement mails (#7235)
 * Fix error popup after successfully sending aging statement mail (#7242)
