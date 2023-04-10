@@ -37,7 +37,7 @@ body {
 }
 
 .cornerlogo {
-    background: #f5f5b5;
+    background: inherit;
     border: 1px solid #000;
     margin-left: 1px;
     padding: 4px;

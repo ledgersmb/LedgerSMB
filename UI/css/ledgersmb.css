@@ -14,7 +14,7 @@
     --body-menu-bg: initial;
     --body-menu-bg-clr: #eee;
     --body-menu-ul-bg-clr: initial;
-    --cornerlogo-bg: #fff;
+    --cornerlogo-bg: inherit;
     --div-autocomplete-bg-clr: white;
     --div-autocomplete-ul-li-selected-bg-clr: #ccc;
     --hr-bg-clr: initial;
