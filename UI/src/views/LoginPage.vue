@@ -40,7 +40,7 @@ export default defineComponent({
 
 <template>
     <form ref="form" name="login" style="max-width:fit-content">
-      <div id="logindiv" class="login">
+      <div id="logindiv">
         <div class="login" align="center">
           <a href="http://www.ledgersmb.org/"
              target="_top">
@@ -49,9 +49,6 @@ export default defineComponent({
                  alt="LedgerSMB Logo" /></a>
           <div id="maindiv">
             <div class="maindivContent">
-              <h1 class="login" align="center">
-                LedgerSMB {{ version }}
-              </h1>
               <div>
                   <div id="company_div">
                       <lsmb-text id="username"
@@ -101,6 +98,9 @@ export default defineComponent({
         </div>
       </div>
     </form>
+    <h1 class="login" align="center">
+        {{ version }}
+    </h1>
 </template>
 
 <style scoped>

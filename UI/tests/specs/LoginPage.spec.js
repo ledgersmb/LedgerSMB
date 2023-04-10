@@ -16,7 +16,7 @@ let wrapper;
 describe("LoginPage", () => {
     it("should show dialog", () => {
         wrapper = mount(LoginPage);
-        expect(wrapper.find(".login").text()).toMatch(/LedgerSMB [\d.](-dev)?/);
+        expect(wrapper.find("h1.login").text()).toMatch(/[\d.](-dev)?/);
 
         expect(wrapper.get("#username").element.value).toBe("");
         expect(wrapper.get("#password").element.value).toBe("");

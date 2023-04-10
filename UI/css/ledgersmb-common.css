@@ -129,7 +129,14 @@ body#app-login {
 }
 
 h1.login {
+    bottom: 0;
+    display: block;
     font-size: var(--h1-login-font-size);
+    margin-bottom: 1em;
+    margin-top: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
 }
 
 table.login {

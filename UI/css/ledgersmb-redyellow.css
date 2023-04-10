@@ -13,7 +13,7 @@
     --body-login-bg: initial;
     --body-menu-bg: #fcc;
     --body-menu-ul-bg-clr: initial;
-    --cornerlogo-bg: #fff;
+    --cornerlogo-bg: inherit;
     --div-autocomplete-bg-clr: white;
     --div-autocomplete-ul-li-selected-bg-clr: #ccc;
     --hr-bg-clr: initial;

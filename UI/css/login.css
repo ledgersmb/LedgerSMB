@@ -1,6 +1,7 @@
 div.login {
     background-color: white;
-    border-style: outset;
+    border-radius: 12px;
+    box-shadow: 6px 6px 4px black;
     margin-left: auto;
     margin-right: auto;
     min-width: 25em;
