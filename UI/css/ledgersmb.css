@@ -9,7 +9,7 @@
     --a-hover-bg-clr: transparent;
     --body-bg-clr: #fff;
     --body-admin-bg-clr: #fff;
-    --body-app-login-bg: #5a7d9b;
+    --body-app-login-bg: #acd8f6;
     --body-login-bg: initial;
     --body-menu-bg: initial;
     --body-menu-bg-clr: #eee;
@@ -148,7 +148,7 @@
     --company_info-font-size: smaller;
     --div-autocomplete-ul-li-font-size: 10px;
     --div-title-font-size: large;
-    --h1-login-font-size: 18pt;
+    --h1-login-font-size: initial;  /* 18pt; */
     --h2-confirm-font-size: 14pt;
     --h2-error-font-size: 14pt;
     --input-font-size: 11px;
