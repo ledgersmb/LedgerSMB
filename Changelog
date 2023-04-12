@@ -11,10 +11,14 @@ Added functionalities
 * System > Users menu item listing users in the company (#7032)
 * More webservice APIs (#7056, ...)
 * Total paid and Remaining balance summaries added to invoices (#7130)
-* Configurable directories (directory for UI templates) (#7236)
+* Configurable directories (e.g. directory for UI templates) (#7236)
 * Tracking of user name in AR/AP history (#5023)
+* Printing of GL and cash transfer transactions (#7310)
+* JavaScript unit tests built on Jest
+* Database content consistency checks in setup.pl (#7265)
 
 Changed functionalities
+* Fresh new application logo and login page layout (#7317, #7319)
 * More database statistics reported after upgrade completion (#7017)
 * System > Sequences lists next value for consistency with Defaults (#7054)
 * Posted transactions show as read-only to differentiate saved transactions
