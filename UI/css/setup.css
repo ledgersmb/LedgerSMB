@@ -8,7 +8,6 @@ div#loading {
     background: white;
     height: 100%;
     left: 0;
-    position: absolute;
     top: 0;
     width: 100%;
     z-index: 100;
@@ -16,23 +15,18 @@ div#loading {
 
 div.setupconsole {
     background-color: white;
-    border-style: outset;
+    border: 1px solid black;
+    border-radius: 12px;
+    box-shadow: 6px 6px 4px black;
     margin: 2em auto;
     min-width: 21em;
-    padding: 2em;
-    padding-bottom: 2em;
+    padding: 4em;
+    width: max-content;
 }
 
 div#logindiv {
-    height: calc(100% - 4em);
-    left: 0;
     margin: 0 auto;
-    padding: 2em;
-    position: absolute;
     text-align: center;
-    top: 0;
-    width: calc(100% - 4em);
-    z-index: 90;
 }
 
 form#loginform {
