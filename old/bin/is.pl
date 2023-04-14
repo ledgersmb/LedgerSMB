@@ -929,9 +929,11 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
   <tr>
     <td>
       <table width=100% id="invoice-payments-table">
-    <tr class=listheading>
-      <th colspan=7 class=listheading>| . $locale->text('Payments') . qq|</th>
-    </tr>
+        <thead>
+          <tr class=listheading>
+            <th colspan=7 class=listheading>| . $locale->text('Payments') . qq|</th>
+          </tr>
+        </thead>
 |;
 
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
@@ -1008,18 +1010,17 @@ qq|<td align="center"><input class="date" data-dojo-type="lsmb/DateTextBox" name
         $column_data{source} =
 qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="source_$i" id="source_$i" size="11" value="$form->{"source_$i"}"></td>|;
         $column_data{memo} =
-qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id="memo_$i" size="11" value="$form->{"memo_$i"}"></td>|;
+qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id="memo_$i" size="11" value="$form->{"memo_$i"}"></td><td style="display:none">|;
 
         for (@column_index) { print qq|$column_data{$_}\n| }
-        print "
-        </tr>\n";
+        print "</td></tr>\n";
     }
+    print "</table>";
 
     $form->{oldtotalpaid} = $totalpaid;
     $form->hide_form(qw(paidaccounts oldinvtotal oldtotalpaid));
 
     print qq|
-      </table>
     </td>
   </tr>
   <tr>
