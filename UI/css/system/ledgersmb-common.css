@@ -7,7 +7,7 @@
 
 /* stylelint-disable no-descending-specificity */
 
-@import url("system/global.css");
+@import url("global.css");
 
 td.money {
     text-align: right;
@@ -221,14 +221,14 @@ body.menu,
 }
 
 .menu_open {
-    background-image: url("../images/up.gif");
+    background-image: url("../../images/up.gif");
     background-position: 0 0;
     background-repeat: no-repeat;
     padding-left: 12px;
 }
 
 .menu_closed {
-    background-image: url("../images/down.gif");
+    background-image: url("../../images/down.gif");
     background-position: 0 0;
     background-repeat: no-repeat;
     padding-left: 12px;
