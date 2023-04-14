@@ -252,12 +252,14 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
       <table width=100% id="invoice-lines"
                         data-dojo-type="lsmb/InvoiceLines"
                         data-dojo-attach-point="lines">
+<thead>
     <tr class=listheading>|;
 
     for (@column_index) { print "\n$column_data{$_}" }
 
     print qq|
         </tr>
+</thead>
 |;
 
     $deliverydate  = $locale->text('Delivery Date');
@@ -476,7 +478,7 @@ qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" id="qt
         }
 
         print qq|
-        </tr>
+<td style="display:none">
 <input type=hidden name="oldqty_$i" value="$form->{"qty_$i"}">
 |;
 
@@ -487,6 +489,9 @@ qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" id="qt
             $form->hide_form("${_}_$i");
         }
 
+        print qq|
+        </td></tr>
+|;
         if ($form->{selectprojectnumber}) {
             $form->{selectprojectnumber} =~ s/ selected="selected"//;
             $form->{selectprojectnumber} =~
