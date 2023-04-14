@@ -1,5 +1,5 @@
 --- yaml frontmatter
-title: 'gl' Records in 'transactions' are linked to the 'gl' table
+title: "'gl' Records in 'transactions' are linked to the 'gl' table"
 description: |
   The 'transactions' table exists to prevent records with the same ID from being
   inserted into the 'ar', 'ap' and 'gl' tables by maintaining which table the record
