@@ -43,11 +43,36 @@ use strict;
 use LedgerSMB::PGDate;
 
 
+sub process_form_barcode {
+    my ($self, $myconfig, $form, $row, $barcode) = @_;
+    my $dbh = $form->{dbh};
+    my $query = q|
+SELECT partnumber
+  FROM parts
+  JOIN makemodel ON parts.id = makemodel.parts_id
+ WHERE barcode = ?
+|;
+
+    my $sth = $dbh->prepare($query)
+        or $form->dberror($dbh->errstr);
+    $sth->execute( $barcode )
+        or $form->dberror($sth->errstr);
+    my ($partnumber) = $sth->fetchrow_array;
+    if ($sth->err) {
+        $form->dberror($sth->errstr);
+    }
+    if (not $partnumber) {
+        die "No part with barcode $barcode";
+    }
+
+    $form->{"partnumber_$row"} = $partnumber;
+}
+
 sub process_form_payments {
 
     my ($self, $myconfig, $form) = @_;
     my $dbh = $form->{dbh};
-    my $query = qq|
+    my $query = q|
 SELECT payment_post(?, ?, ?, ?, ?,
                     ?, ?, ARRAY[(select id from account where accno = ?)], ?,
                     ?, ?, ?, ?, ?,
