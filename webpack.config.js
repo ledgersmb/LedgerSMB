@@ -46,6 +46,20 @@ function findDataDojoTypes(fileName) {
     ).filter((x, i, a) => a.indexOf(x) === i);
 }
 
+/* eslint-disable-next-line no-inner-declarations */
+function globCssEntries(globPath) {
+    const files = glob.sync(globPath);
+    let entries = {};
+
+    for (var i = 0; i < files.length; i++) {
+        const entry = files[i];
+            const dirName = path.dirname(entry).replace(/\.\/UI\/css\/?/,"");
+        const keyName = (dirName ? dirName + "/" : "" ) + path.basename(entry, path.extname(entry));
+        entries[keyName] = path.join(__dirname, entry);
+    }
+    return entries;
+}
+
 // Compute used data-dojo-type
 glob.sync("**/*.html", {
     ignore: ["lib/ui-header.html", "js/**", "js-src/{dojo,dijit,util}/**"],
@@ -246,7 +260,7 @@ var pluginsProd = [
         minify: false, // Adjust t/16-schema-upgrade-html.t if prodMode is used,
         filename: "ui-header.html",
         mode: prodMode ? "production" : "development",
-        excludeChunks: [...Object.keys(lsmbCSS)],
+            excludeChunks: [...Object.keys(lsmbCSS),...Object.keys(globCssEntries("./UI/css/**/*.css"))],
         template: "lib/ui-header.html"
     }),
 
@@ -340,7 +354,8 @@ const webpackConfigs = {
             dependOn: 'shared'
         },
         shared: [ ...includedRequires ],
-        ...lsmbCSS
+        ...lsmbCSS,
+            ...globCssEntries("./UI/css/**/*.css")
     },
 
     output: {
