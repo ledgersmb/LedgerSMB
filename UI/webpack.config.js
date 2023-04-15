@@ -65,6 +65,20 @@ if (TARGET !== "readme") {
             .sort();
     }
 
+    /* eslint-disable-next-line no-inner-declarations */
+    function globCssEntries(globPath) {
+        var files = glob.sync(globPath);
+        var entries = {};
+
+        for (var i = 0; i < files.length; i++) {
+            var entry = files[i];
+            const dirName = path.dirname(entry).replace(/\.\/css\/?/,"");
+            const keyName = (dirName ? dirName + "/" : "" ) + path.basename(entry, path.extname(entry));
+            entries[keyName] = path.join(__dirname, entry);
+        }
+        return entries;
+    }
+
     // Compute used data-dojo-type
     glob.sync("**/*.html", {
         ignore: ["lib/ui-header.html", "js/**", "node_modules/**"],
@@ -303,7 +317,7 @@ if (TARGET !== "readme") {
             minify: false, // Adjust t/16-schema-upgrade-html.t if prodMode is used,
             filename: "ui-header.html",
             mode: prodMode ? "production" : "development",
-            excludeChunks: [...Object.keys(lsmbCSS)],
+            excludeChunks: [...Object.keys(lsmbCSS),...Object.keys(globCssEntries("./css/**/*.css"))],
             template: "lib/ui-header.html"
         }),
 
@@ -413,7 +427,8 @@ if (TARGET !== "readme") {
 
         entry: {
             bootstrap: "./bootstrap.js", // Virtual file
-            ...lsmbCSS
+            ...lsmbCSS,
+            ...globCssEntries("./css/**/*.css")
         },
 
         output: {
