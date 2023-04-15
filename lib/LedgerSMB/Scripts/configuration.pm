@@ -78,7 +78,7 @@ sub _default_settings {
                 label => $locale->text('Password Duration (days)')
               },
               { name => 'session_timeout',
-        label => $locale->text('Session Timeout (e.g. "90 minutes")'), },
+                label => $locale->text('Session Timeout (e.g. "90 minutes")'), },
               { name => 'separate_duties',
                 label => $locale->text('Separate Duties'),
                 type => 'YES_NO', },
@@ -131,6 +131,8 @@ sub _default_settings {
           items => [
               { name => 'show_creditlimit', type => 'YES_NO',
                 label => $locale->text('Show Credit Limit') },
+              { name => 'have_barcodes', type => 'YES_NO_AUTO',
+                label => $locale->text('Barcode entry on invoices') },
               { name => 'dojo_theme',
                 type => 'SELECT_ONE',
                 label => $locale->text('Widgit Themes') },

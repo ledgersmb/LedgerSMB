@@ -352,7 +352,7 @@ sub form_header {
     $n = ( $form->{creditremaining} < 0 ) ? "0" : "1";
 
     $i     = $form->{rowcount} + 1;
-    $focus = "partnumber_$i";
+    $focus = $form->{barcode} ? "barcode" : "partnumber_$i";
 
     $form->header;
 
@@ -706,7 +706,11 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
     $totalpaid = $form->format_amount( \%myconfig, $totalpaid, $form->{_setting_decimal_places}, 0 );
     $remaining_balance = $form->format_amount( \%myconfig, $remaining_balance, $form->{_setting_decimal_places}, 0 );
 
+    my $display_barcode = $form->get_setting('have_barcodes') ? "initial" : "none";
     print qq|
+  <tr style="display:$display_barcode">
+   <td colspan="5"><b><label for="barcode">Barcode</label></b>: <input data-dojo-type="dijit/form/TextBox" id=barcode name=barcode></td>
+  </tr>
   <tr>
     <td>
       <table width=100%>
@@ -1095,6 +1099,10 @@ sub update {
                || ! ( ( $form->{"partnumber_$i"} eq "" )
                       && ( $form->{"description_$i"} eq "" )
                       && ( $form->{"partsgroup_$i"}  eq "" ) );
+    }
+    if ($form->{barcode}) {
+        $non_empty_rows++;
+        IIAA->process_form_barcode(\%myconfig, $form, $non_empty_rows, $form->{barcode});
     }
 
     my $current_empties = $form->{rowcount} - $non_empty_rows;

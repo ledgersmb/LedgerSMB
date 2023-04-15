@@ -22,11 +22,17 @@
                        'data-dojo-type' = 'dijit/form/NumberTextBox',
                        'data-dojo-props' = 'constraints:{min:0.00001,max:3653}',
                };
-             ELSIF ITEM.type == 'YES_NO';
-               IF form.${ITEM.name};
+             ELSIF ITEM.type == 'YES_NO' OR ITEM.type == 'YES_NO_AUTO';
+               IF form.${ITEM.name} == 'auto';
+                 AUTO="CHECKED";
+                 YES=undef;
+                 NO=undef;
+               ELSIF form.${ITEM.name};
+                 AUTO=undef
                  YES="CHECKED";
                  NO=undef;
                ELSE;
+                 AUTO=undef
                  NO="CHECKED";
                  YES=undef;
                END;
@@ -46,6 +52,16 @@
                        value = 0
                        checked = NO
                        };
+               IF ITEM.type == 'YES_NO_AUTO';
+                 PROCESS input element_data = {
+                         name = ITEM.name
+                         id = ITEM.name _ '-auto'
+                         type = 'radio'
+                         label = text('Automatic')
+                         value = 'auto'
+                         checked = AUTO
+                         };
+               END;
              ELSIF ITEM.type == 'SELECT_ONE';
                PROCESS select element_data= selects.${ITEM.name};
              ELSIF ITEM.type == 'TEXTAREA';
