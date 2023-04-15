@@ -141,7 +141,7 @@ sub _default_settings {
                 label =>  $locale->text('Max Invoices per Check Stub') },
               { name => 'decimal_places',
                 label =>  $locale->text('Decimal Places for Money') },
-              { name => 'template_immages',
+              { name => 'template_images',
                 label => $locale->text('Images in Templates'),
                 type => 'YES_NO', },
               { name => 'min_empty',
