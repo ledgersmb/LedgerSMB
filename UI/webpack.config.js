@@ -67,11 +67,11 @@ if (TARGET !== "readme") {
 
     /* eslint-disable-next-line no-inner-declarations */
     function globCssEntries(globPath) {
-        var files = glob.sync(globPath);
-        var entries = {};
+        const files = glob.sync(globPath);
+        let entries = {};
 
         for (var i = 0; i < files.length; i++) {
-            var entry = files[i];
+            const entry = files[i];
             const dirName = path.dirname(entry).replace(/\.\/css\/?/,"");
             const keyName = (dirName ? dirName + "/" : "" ) + path.basename(entry, path.extname(entry));
             entries[keyName] = path.join(__dirname, entry);
