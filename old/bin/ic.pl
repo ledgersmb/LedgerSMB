@@ -51,19 +51,12 @@ require "old/bin/io.pl";
 sub add {
 
     %label = (
-        part     => 'Part',
-        service  => 'Service',
-        assembly => 'Assembly',
-        labor    => 'Labor/Overhead',
+        part     => $locale->text( 'Add Part' ),
+        service  => $locale->text( 'Add Service' ),
+        assembly => $locale->text( 'Add Assembly' ),
+        labor    => $locale->text( 'Add Labor/Overhead' ),
     );
-
-    # $locale->text('Add Part')
-    # $locale->text('Add Service')
-    # $locale->text('Add Assembly')
-    # $locale->text('Add Labor/Overhead')
-
-    $label = "Add $label{$form->{item}}";
-    $form->{title} = $locale->maketext($label);
+    $form->{title} = $label{$form->{item}};
 
     $form->{callback} = "$form->{script}?action=add&item=$form->{item}"
       unless $form->{callback};
@@ -85,21 +78,14 @@ sub add {
 sub edit {
 
     %label = (
-        part     => 'Part',
-        service  => 'Service',
-        assembly => 'Assembly',
-        labor    => 'Labor/Overhead',
+        part     => $locale->text( 'Edit Part' ),
+        service  => $locale->text( 'Edit Service' ),
+        assembly => $locale->text( 'Edit Assembly' ),
+        labor    => $locale->text( 'Edit Labor/Overhead' ),
     );
-
-    # $locale->text('Edit Part')
-    # $locale->text('Edit Service')
-    # $locale->text('Edit Assembly')
-    # $locale->text('Edit Labor/Overhead')
+    $form->{title} = $label{$form->{item}};
 
     IC->get_part( \%myconfig, \%$form );
-
-    $label = "Edit $label{$form->{item}}";
-    $form->{title} = $locale->maketext($label);
 
     $form->{previousform} = $form->escape( $form->{previousform}, 1 )
       if $form->{previousform};
