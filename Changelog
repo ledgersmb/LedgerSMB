@@ -16,12 +16,14 @@ Added functionalities
 * Printing of GL and cash transfer transactions (#7310)
 * JavaScript unit tests built on Jest
 * Database content consistency checks in setup.pl (#7265)
+* Barcode support added (back) on invoices (regressed since 1.5) (#1584)
 
 Changed functionalities
 * Fresh new application logo and login page layout (#7317, #7319)
 * More database statistics reported after upgrade completion (#7017)
 * System > Sequences lists next value for consistency with Defaults (#7054)
 * Posted transactions show as read-only to differentiate saved transactions
+* 'ledgersmb-common.css' moved from UI/css/ to UI/css/global/ (#7316)
 
 Removed functionalities
 * Reconciliation file parser setup customization (#7050)
@@ -31,6 +33,7 @@ Removed functionalities
 Bugs fixed
 * Performance fixes for stored procedures being slow on huge databases (#7072)
 * Multiple fixes on AR/AP template transactions
+* Second and further make/model/barcode can't be added to part (#7342)
 
 Code cleanup
 * Continued removal of code based on the DBObject coding paradigm
