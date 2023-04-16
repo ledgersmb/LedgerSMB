@@ -252,13 +252,15 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}</option>\n|;
     }
 
     # setup make and models
-    $i = 1;
-    foreach my $ref ( @{ $form->{makemodels} } ) {
-        for (qw(make model barcode)) { $form->{"${_}_$i"} = $ref->{$_} }
-        $i++;
+    if ($form->{makemodels}) {
+        $i = 1;
+        foreach my $ref ( @{ $form->{makemodels} } ) {
+            for (qw(make model barcode)) { $form->{"${_}_$i"} = $ref->{$_} }
+            $i++;
+        }
+        $form->{makemodel_rows} = $i - 1;
+        delete $form->{makemodels};
     }
-    $form->{makemodel_rows} = $i - 1;
-    delete $form->{makemodels};
 
     # setup vendors
     if ( @{ $form->{all_vendor} } ) {
@@ -976,8 +978,9 @@ sub makemodel_row {
     </tr>
 |;
 
-    foreach my $i ( 1 .. $numrows ) {
-        print qq|
+     foreach my $i ( 1 .. $numrows ) {
+       $form->{"${_}_$i"} //= '' for (qw(make model barcode));
+       print qq|
     <tr>
       <td><input data-dojo-type="dijit/form/TextBox" name="make_$i" size=30 value="$form->{"make_$i"}"></td>
       <td><input data-dojo-type="dijit/form/TextBox" name="model_$i" size=30 value="$form->{"model_$i"}"></td>
