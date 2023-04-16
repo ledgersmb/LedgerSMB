@@ -34,6 +34,10 @@ form#loginform {
 }
 
 .login_form {
+    column-gap: 0.3em;
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: 0.3em;
     text-align: left;
 }
 
@@ -62,19 +66,11 @@ caption {
 }
 
 label {
-    border-width: 1px;
-    float: left;
     margin: 0;
-    margin-top: 0.5em;
-    padding-right: 0.5em;
     width: 10em;
 }
 
 input {
-    border-width: 3px;
-    float: left;
-    margin: 0;
-    margin-top: 0.5em;
     text-align: left;
     width: 14em;
 }
