@@ -3,196 +3,178 @@ stylesheet="ledgersmb.css"
 include_stylesheet=["system/setup.css"] %]
 [% PROCESS elements.html %]
 <body id="setup-new-user" class="lsmb [% dojo_theme %]">
-<div><div class="setupconsole">
-<h2>[% text('Database Management Console') %]</h2>
-<div class="listtop">[% text('Enter User') %]</div>
-<form data-dojo-type="lsmb/SimpleForm"
-      action="setup.pl" method="POST" name="new_user">
-[% INCLUDE input element_data = {
-    name = 'database'
-    type = 'hidden'
-   value = database
-} %]
-<div class="form">
-<div class="input_row">
-[% INCLUDE input element_data = {
-                            name  = 'username'
-                            type  = 'text'
-                           label  = text('Username')
-                            class = 'username'
-                            value = username
-                         required = 'required'
-} %]
-</div>
-<div class="input_row">
-<label id="password-label" for="password" class="password">[%
-text('Password') %]</label>
-[% PROCESS input element_data = {
-                 name='password'
-                 type='password'
-                 class = 'password'
-       size='60',
-       attributes = { autocomplete = 'off' }
-       } %]
-</div>
-<div class="input_row">
-  <label>[% text('User creation') %]</label>
-  <div class="input_group">
-    <div>
-      [%
-         PROCESS input element_data = {
-         label   = text("Create new user")
-         value   = '0'
-         checked = 'CHECKED'
-         name    = 'pls_import'
-         type    = 'radio'
-         }
-         label_pos = 1 ;
-         %]
+  <div>
+    <div class="setupconsole">
+      <h2>[% text('Database Management Console') %]</h2>
+      <div class="listtop">[% text('Enter User') %]</div>
+      <form data-dojo-type="lsmb/SimpleForm"
+            action="setup.pl" method="POST" name="new_user">
+        [% INCLUDE input element_data = {
+                      name = 'database'
+                      type = 'hidden'
+                      value = database
+        } %]
+        <div style="display:grid;gap:0.3em;grid-template-columns:auto auto">
+          [% INCLUDE input element_data = {
+                      name  = 'username'
+                      type  = 'text'
+                      label = text('Username')
+                      class = 'username'
+                      value = username
+                      required = 'required'
+          } %]
+          <label id="password-label" for="password" class="password">[%
+            text('Password') %]</label>
+          [% PROCESS input element_data = {
+                      name='password'
+                      type='password'
+                      class = 'password'
+                      size='60',
+                      attributes = { autocomplete = 'off' }
+          } %]
+          <label>[% text('User creation') %]</label>
+          <div class="input_group">
+            <div>
+              [%
+                label_pos = 1 ;
+                PROCESS input element_data = {
+                      label   = text("Create new user")
+                      value   = '0'
+                      checked = 'CHECKED'
+                      name    = 'pls_import'
+                      type    = 'radio'
+              }
+               %]
+            </div>
+            <div style="float:left">
+              [% label_pos = 1;
+                 PROCESS input element_data = {
+                      label   = text("Import existing user")
+                      value   = '1'
+                      checked = ''
+                      name    = 'pls_import'
+                      type    = 'radio'
+              } ;
+              label_pos = -1;
+              %]
+            </div>
+            [%- IF notice -%]
+            <div class="notice" style="float:left">[% notice %]</div>
+            [%- END # IF notice -%]
+            <div data-dojo-type="dijit/Tooltip"
+                 data-dojo-props="connectId:'pls-import-1',position:['below']">
+              <div style="width:30em">
+                <b>Import an existing user (from another database)</b>
+                <br /><br />
+                This username exists because it is being used with another
+                database; using it with the current database requires it to
+                be <em>imported</em>.
+                <br /><br />
+                <em>The password for both databases will be the same. Providing
+                  a password when importing a user, also resets the password
+                  for the other companies.
+                </em>
+                <br /><br />
+                Note that technically any existing PostgreSQL &quot;role&quot;
+                that is to be used as a username needs to be imported this way,
+                regardless of whether it is a username in a different database.
+              </div>
+            </div>
+            <div data-dojo-type="dijit/Tooltip"
+                 data-dojo-props="connectId:'pls-import-0'">
+              <div style="width:30em">
+                <b>Creates a new user</b><br />
+                This username <em>must not</em> be used by any of the other
+                databases. If you want to use a username that is already used
+                with another database, you can do so by selecting the
+                <b>Import</b> option.
+              </div>
+            </div>
+          </div>
+          [% INCLUDE select element_data = {
+                options       = salutations
+                text_attr     = 'salutation'
+                value_attr    = 'id'
+                default_blank = 1
+                default_values = [salutation_id]
+                name           = 'salutation_id'
+                label          = 'Salutation'
+                required       = 'required'
+          };
+          INCLUDE input element_data = {
+                name     = 'first_name'
+                class    = 'name'
+                type     = 'text'
+                size     = '15'
+                value    = first_name
+                label    = text('First Name')
+                required = 'required'
+          };
+          INCLUDE input element_data = {
+                name     = 'last_name'
+                class    = 'name'
+                type     = 'text'
+                size     = '15'
+                value    = last_name
+                label    = text('Last name')
+                required = 'required'
+          };
+          INCLUDE input element_data = {
+                name = 'employeenumber'
+                class = 'control_code'
+                type = 'text'
+                size = '15'
+                label = text('Employee Number')
+                value = employeenumber
+                required = 'required'
+          };
+          INCLUDE input element_data = {
+                name = 'dob'
+                type = 'date'
+                size = '10'
+                label = text('Date of Birth')
+                value = dob
+                required = 'required'
+          };
+          INCLUDE input element_data = {
+                name = 'ssn'
+                class = 'tax_id'
+                type = 'text'
+                size = '15'
+                label = text('Tax ID/SSN')
+                value = ssn
+                required = 'required'
+          };
+          INCLUDE select element_data = {
+                options = countries
+                text_attr = 'name'
+                value_attr = 'id'
+                default_blank = 1
+                default_values = [country_id]
+                name = 'country_id'
+                label = 'Country'
+                required = 'required'
+          };
+          INCLUDE select element_data = {
+                options = perm_sets
+                text_attr = 'label'
+                value_attr = 'id'
+                name = 'perms'
+                default_blank = 1
+                default_values = [perms]
+                label = 'Assign Permissions'
+                required = 'required'
+          };
+          INCLUDE button element_data = {
+                text = text('Create User') #';
+                name = 'action'
+                value = save_action
+                type = 'submit'
+                class = 'submit'
+          } %]
+        </div>
+      </form>
     </div>
-    <div style="float:left">
-      [%
-         PROCESS input element_data = {
-         label   = text("Import existing user")
-         value   = '1'
-         checked = ''
-         name    = 'pls_import'
-         type    = 'radio'
-         }
-         label_pos = 1 ; %]
-    </div>
-    [%- IF notice -%]
-    <div class="notice" style="float:left">[% notice %]</div>
-    [%- END # IF notice -%]
   </div>
-  <div data-dojo-type="dijit/Tooltip"
-       data-dojo-props="connectId:'pls-import-1',position:['below']">
-    <div style="width:30em">
-      <b>Import an existing user (from another database)</b><br /><br />
-      This username exists because it is being used with another database;
-      using it with the current database requires it to be <em>imported</em>.
-      <br /><br />
-      <em>The password for both databases will be the same. Providing a password
-        when importing a user, also resets the password for the other companies.
-      </em>
-      <br /><br />
-      Note that technically any existing PostgreSQL &quot;role&quot; that is to
-      be used as a username needs to be imported this way, regardless of whether
-      it is a username in a different database.
-    </div>
-  </div>
-  <div data-dojo-type="dijit/Tooltip"
-       data-dojo-props="connectId:'pls-import-0'">
-    <div style="width:30em">
-      <b>Creates a new user</b><br />
-      This username <em>must not</em> be used by any of the other databases. If
-      you want to use a username that is already used with another database,
-      you can do so by selecting the <b>Import</b> option.
-    </div>
-  </div>
-</div>
-<div class="input_row">
-[% INCLUDE select element_data = {
-          options = salutations
-        text_attr = 'salutation'
-       value_attr = 'id'
-    default_blank = 1
-   default_values = [salutation_id]
-             name = 'salutation_id'
-            label = 'Salutation'
-         required = 'required'
-} %]
-</div>
-<div class="input_row">
-[% INCLUDE input element_data = {
-    name = 'first_name'
-   class = 'name'
-    type = 'text'
-    size = '15'
-   value = first_name
-   label = text('First Name') #'
-required = 'required'
-} %]
-</div>
-<div class="input_row">
-[% INCLUDE input element_data = {
-    name = 'last_name'
-   class = 'name'
-    type = 'text'
-    size = '15'
-   value = last_name
-   label = text('Last name') #'
-required = 'required'
-} %]
-</div>
-<div class="input_row">
-[% INCLUDE input element_data = {
-    name = 'employeenumber'
-   class = 'control_code'
-    type = 'text'
-    size = '15'
-   label = text('Employee Number') #'
-   value = employeenumber
-required = 'required'
-} %]
-</div>
-<div class="input_row">
-[% INCLUDE input element_data = {
-    name = 'dob'
-    type = 'date'
-    size = '10'
-   label = text('Date of Birth') #'
-   value = dob
-required = 'required'
-} %]
-</div>
-<div class="input_row">
-[% INCLUDE input element_data = {
-    name = 'ssn'
-   class = 'tax_id'
-    type = 'text'
-    size = '15'
-   label = text('Tax ID/SSN') #'
-   value = ssn
-required = 'required'
-} %]
-</div>
-<div class="input_row">
-[%
-INCLUDE select element_data = {
-          options = countries
-        text_attr = 'name'
-       value_attr = 'id'
-    default_blank = 1
-   default_values = [country_id]
-             name = 'country_id'
-            label = 'Country'
-         required = 'required'
-} %]
-</div>
-<div class="input_row">
-[% INCLUDE select element_data = {
-          options = perm_sets
-        text_attr = 'label'
-       value_attr = 'id'
-             name = 'perms'
-    default_blank = 1
-   default_values = [perms]
-            label = 'Assign Permissions'
-         required = 'required'
-} %]
-</div>
-<div class="input_row">
-[% INCLUDE button element_data = {
-    text = text('Create User') #';
-    name = 'action'
-   value = save_action
-    type = 'submit'
-   class = 'submit'
-} %]
-</div>
-</div>
-</form>
-</div></div>
 </body>
 [% end_html %]
