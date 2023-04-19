@@ -555,8 +555,6 @@ sub form_header {
   </tr>
   <tr>
     <td>
-    </td>
-  </tr>
 |;
 
     $form->hide_form(
@@ -566,6 +564,13 @@ sub form_header {
     foreach my $item ( split / /, $form->{taxaccounts} ) {
         $form->hide_form( "${item}_rate", "${item}_taxnumber" );
     }
+
+    print q|
+    </td>
+  </tr>
+|;
+
+
     if ( !$form->{readonly} ) {
         print "<tr><td>";
 
