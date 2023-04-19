@@ -751,8 +751,8 @@ sub form_header {
     for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
         $form->print_button( \%button, $_ );
     }
-    print "</td></tr>";
     $form->hide_form(qw(defaultcurrency workflow_id));
+    print "</td></tr>";
 }
 
 sub form_footer {
@@ -2011,11 +2011,13 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" id="serialnumber_$i" name="ser
 
         for (@column_index) { print "\n$column_data{$_}" }
 
-        print qq|
-        </tr>
+        print q|
+        <td style="display:none">
 |;
         $form->hide_form( "orderitems_id_$i", "id_$i", "partsgroup_$i" );
-
+        print q|
+        </tr>
+|;
     }
 
     print qq|
