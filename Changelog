@@ -3,6 +3,13 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.16
+* Hide CSS files from the theme drop-down which render the app unusable (#7326)
+* Improve HTML compliance by moving INPUT tags around inside TABLE tags (#7323)
+* Fix addition of second and further make/model rows in parts (#7346)
+* Fix typo in setting name (#7337)
+
+
 Changelog for 1.10.15
 * Fix failure to save GL template transactions due to number formatting (#7302)
 
