@@ -3,6 +3,13 @@
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.27
+* Hide CSS files from the theme drop-down which render the app unusable (#7326)
+* Improve HTML compliance by moving INPUT tags around inside TABLE tags (#7323)
+* Fix addition of second and further make/model rows in parts (#7346)
+* Fix typo in setting name (#7337)
+
+
 Changelog for 1.9.26
 * Fix failure to save GL template transactions due to number formatting (#7302)
 * Fix JOIN in 'all_managers' stored procedure (#7201)
