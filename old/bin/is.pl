@@ -516,6 +516,10 @@ sub form_header {
           </tr>
         </table>
       </td>
+      <td style="vertical-align:middle">| .
+        ($form->{reversing} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversing}">|. ($form->{approved} ? $locale->text('This transaction reverses transaction [_1]', $form->{reversing}) : $locale->text('This transaction will reverse transaction [_1]', $form->{reversing})) . q|</a><br />| : '') .
+        ($form->{reversed_by} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversed_by}"> | . $locale->text('This transaction is reversed by transaction [_1]', $form->{reversed_by}) . q|</a>| : '') .
+      qq|</td>
       <td align=right>
         <table>
           $employee

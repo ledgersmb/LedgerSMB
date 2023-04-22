@@ -9,6 +9,11 @@
   <condition name="is_invoice"
              test="not $context->{is_transaction}"
              class="Workflow::Condition::Evaluate" />
+  <condition name="is_sales_invoice"
+             class="Workflow::Condition::LazyAND">
+    <param name="condition" value="is_invoice" />
+    <param name="condition" value="is_sales" />
+  </condition>
   <condition name="is-batch-member"
              test="$context->{'batch-id'}"
              class="Workflow::Condition::Evaluate" />

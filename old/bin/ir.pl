@@ -459,6 +459,10 @@ sub form_header {
             </tr>
         </table>
       </td>
+      <td style="vertical-align:middle">| .
+        ($form->{reversing} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversing}">|. ($form->{approved} ? $locale->text('This transaction reverses transaction [_1]', $form->{reversing}) : $locale->text('This transaction will reverse transaction [_1]', $form->{reversing})) . q|</a><br />| : '') .
+        ($form->{reversed_by} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversed_by}"> | . $locale->text('This transaction is reversed by transaction [_1]', $form->{reversed_by}) . q|</a>| : '') .
+      qq|</td>
       <td align=right>
         <table>
           <tr>
@@ -535,6 +539,26 @@ sub form_header {
         $form->hide_form( "${_}_rate" );
     }
 }
+
+sub reverse {
+    $form->{reverse} = 1;
+    $form->{paidaccounts} = 1;
+    if ($form->{paid_1}){
+       warn $locale->text(
+             'Payments associated with voided invoice may need to be reversed.'
+        );
+        delete $form->{paid_1};
+    }
+    $form->{reversing} = delete $form->{id};
+
+    my $wf = $form->{_wire}->get('workflows')
+        ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    $wf->execute_action( $form->{action} );
+
+    delete $form->{workflow_id};
+    &post_as_new;
+}
+
 
 sub form_footer {
     my $readonly =

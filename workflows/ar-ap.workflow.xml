@@ -67,6 +67,9 @@
       <condition name="is_sales" />
       <condition name="is_invoice" />
     </action>
+    <action name="reverse" resulting_state="REVERSED">
+      <condition name="!is_sales_invoice" />
+    </action>
     <action name="hold" resulting_state="ONHOLD" />
     <action name="schedule" resulting_state="NOCHANGE" />
     <action name="print" resulting_state="NOCHANGE" />
@@ -88,6 +91,10 @@
     <action name="release" resulting_state="POSTED" />
   </state>
   <state name="VOIDED">
+    <action name="save_info" resulting_state="NOCHANGE" />
+    <action name="copy_to_new" resulting_state="NOCHANGE" />
+  </state>
+  <state name="REVERSED">
     <action name="save_info" resulting_state="NOCHANGE" />
     <action name="copy_to_new" resulting_state="NOCHANGE" />
   </state>

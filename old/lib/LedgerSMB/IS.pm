@@ -759,9 +759,9 @@ sub post_invoice {
 
         ( $form->{id} ) = $sth->fetchrow_array;
 
-        $query = q|UPDATE transactions SET workflow_id = ? WHERE id = ? AND workflow_id IS NULL|;
+        $query = q|UPDATE transactions SET workflow_id = ?, reversing = ? WHERE id = ? AND workflow_id IS NULL|;
         $sth   = $dbh->prepare($query);
-        $sth->execute( $form->{workflow_id}, $form->{id} )
+        $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{id} )
             || $form->dberror($query);
     }
 
