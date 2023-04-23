@@ -542,7 +542,7 @@ sub form_header {
 }
 
 sub reverse {
-    $form->{reverse} = 1;
+    $form->{reverse} = not $form->{reverse};
     $form->{paidaccounts} = 1;
     if ($form->{paid_1}){
        warn $locale->text(

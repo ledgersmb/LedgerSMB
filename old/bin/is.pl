@@ -612,13 +612,8 @@ sub form_header {
 }
 
 sub void {
-    if ($form->{invnumber} =~ /-VOID$/){
-       $form->error($locale->text(
-           "Can't void a voided invoice!"
-       ));
-    }
     my $invnumber = $form->{invnumber} . '-VOID';
-    $form->{reverse} = 1;
+    $form->{reverse} = not $form->{reverse};
     $form->{paidaccounts} = 1;
     if ($form->{paid_1}){
        warn $locale->text(
