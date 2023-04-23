@@ -2,6 +2,7 @@
   <persister
       name="Email"
       class="LedgerSMB::Workflow::Persister::Email"
+      date_format="%Y-%m-%d %H:%M:%S"
       driver="Pg"
       extra_table="email"
       extra_data_field="from,to,cc,bcc,notify,subject,body,sent_date,expansions">
