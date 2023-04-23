@@ -617,7 +617,7 @@ sub void {
            "Can't void a voided invoice!"
        ));
     }
-    $form->{invnumber} .= '-VOID';
+    my $invnumber = $form->{invnumber} . '-VOID';
     $form->{reverse} = 1;
     $form->{paidaccounts} = 1;
     if ($form->{paid_1}){
@@ -633,7 +633,7 @@ sub void {
     $wf->execute_action( $form->{action} );
 
     delete $form->{workflow_id};
-    &post_as_new;
+    &post_as_new( invnumber => $invnumber );
 }
 
 sub form_footer {
