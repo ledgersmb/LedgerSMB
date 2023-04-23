@@ -178,6 +178,7 @@ sub reverse {
 
     &create_links;
 
+    delete $form->{workflow_id};
     $form->{reversing} = delete $form->{id};
     delete $form->{approved};
     $form->{reverse} = $form->{reverse} ? 0 : 1;
@@ -247,7 +248,7 @@ sub display_form {
     if ( $form->{vc} eq 'vendor' ) {
         $invnumber = "vinumber";
     }
-    $form->{sequence_select} = $form->sequence_dropdown($invnumber)
+    $form->{sequence_select} = $form->sequence_dropdown($invnumber, $args{readonly})
         unless $form->{id} and ($form->{vc} eq 'vendor');
     $form->{format} = $form->get_setting('format') unless $form->{format};
     $form->close_form;
@@ -462,6 +463,7 @@ sub form_header {
             ->create_workflow( 'AR/AP',
                                Workflow::Context->new(
                                    'batch-id' => $form->{batch_id},
+                                   'table_name' => lc($form->{ARAP}),
                                    is_transaction => 1
                                ) );
         $form->{workflow_id} = $wf->id;
@@ -1079,8 +1081,6 @@ sub form_footer {
                                   {text=> $locale->text('Transaction'), value => 'transaction'},
                                 ]
                    };
-        %button;
-
         $wf->context->param( _is_closed => $form->is_closed( $transdate ) );
         %button_types = (
             print => 'lsmb/PrintButton'

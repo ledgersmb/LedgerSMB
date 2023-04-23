@@ -64,8 +64,7 @@
     <action name="save_info" resulting_state="NOCHANGE" />
     <action name="copy_to_new" resulting_state="NOCHANGE" />
     <action name="void" resulting_state="VOIDED">
-      <condition name="is_sales" />
-      <condition name="is_invoice" />
+      <condition name="is_sales_invoice" />
     </action>
     <action name="reverse" resulting_state="REVERSED">
       <condition name="!is_sales_invoice" />
