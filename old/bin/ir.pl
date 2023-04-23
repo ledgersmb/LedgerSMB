@@ -285,6 +285,7 @@ sub prepare_invoice {
 sub form_header {
     my $readonly =
         ($form->{reversing} or $form->{approved}) ? 'readonly="readonly"' : '';
+    my $readonly_headers = $form->{approved} ? 'readonly="readonly"' : '';
     $form->{nextsub} = 'update';
 
     $status_div_id = 'AP-invoice';
@@ -455,7 +456,7 @@ sub form_header {
             <tr>
                <th align="right" nowrap><label for="description">| . $locale->text('Description') . qq|</label></th>
                <td><input data-dojo-type="dijit/form/TextBox" type="text" id="description" name="description" size="40"
-                   value="| . $form->{description} . qq|" $readonly /></td>
+                   value="| . $form->{description} . qq|" $readonly_headers /></td>
             </tr>
         </table>
       </td>
@@ -467,7 +468,7 @@ sub form_header {
         <table>
           <tr>
         <th align=right nowrap><label for="invnumber">| . $locale->text('Invoice Number') . qq|</label></th>
-        <td><input data-dojo-type="dijit/form/TextBox" id=invnumber name=invnumber size=20 value="$form->{invnumber}" $readonly>
+        <td><input data-dojo-type="dijit/form/TextBox" id=invnumber name=invnumber size=20 value="$form->{invnumber}" $readonly_headers>
                    | .  $form->sequence_dropdown('vinumber') . qq|</td>
           </tr>
           <tr>
@@ -481,15 +482,15 @@ sub form_header {
               </tr>
           <tr>
         <th align=right nowrap><label for="transdate">| . $locale->text('Invoice Date') . qq|</label></th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate" data-dojo-props="defaultIsToday:true" $readonly></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate" data-dojo-props="defaultIsToday:true" $readonly_headers></td>
           </tr>
           <tr>
         <th align=right nowrap><label for="duedate">| . $locale->text('Due Date') . qq|</label></th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=duedate size=11 title="$myconfig{dateformat}" value="$form->{duedate}" id="duedate" $readonly></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=duedate size=11 title="$myconfig{dateformat}" value="$form->{duedate}" id="duedate" $readonly_headers></td>
           </tr>
           <tr>
         <th align=right nowrap><label for="ponumber">| . $locale->text('SO Number') . qq|</label></th>
-        <td><input data-dojo-type="dijit/form/TextBox" id=ponumber name=ponumber size=20 value="$form->{ponumber}" $readonly></td>
+        <td><input data-dojo-type="dijit/form/TextBox" id=ponumber name=ponumber size=20 value="$form->{ponumber}" $readonly_headers></td>
           </tr>
           <tr>
           <th align=right nowrap>| . $locale->text('State') . qq|</th>
@@ -563,6 +564,7 @@ sub reverse {
 sub form_footer {
     my $readonly =
         ($form->{reversing} or $form->{approved}) ? 'readonly="readonly"' : '';
+    my $readonly_headers = $form->{approved} ? 'readonly="readonly"' : '';
     my $manual_tax;
     if ($form->{approved}){
         $manual_tax =
@@ -599,7 +601,7 @@ sub form_footer {
     }
     $rows = ( $rows > $introws ) ? $rows : $introws;
     $notes =
-qq|<textarea data-dojo-type="dijit/form/Textarea" id=notes name=notes rows=$rows cols=35 wrap=soft $readonly>$form->{notes}</textarea>|;
+qq|<textarea data-dojo-type="dijit/form/Textarea" id=notes name=notes rows=$rows cols=35 wrap=soft $readonly_headers>$form->{notes}</textarea>|;
     $intnotes =
 qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</textarea>|;
     $tax = "";

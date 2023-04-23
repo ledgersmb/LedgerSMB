@@ -142,7 +142,7 @@ sub approve {
 }
 
 sub display_row {
-    my $readonly = $form->{approved} ? 'readonly="readonly"' : '';
+    my $readonly = ($form->{reversing} or $form->{approved}) ? 'readonly="readonly"' : '';
     my $numrows = shift;
     my $min_lines = $form->get_setting('min_empty') // 0;
     my $lsmb_module;
