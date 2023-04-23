@@ -167,7 +167,8 @@ sub display_row {
         $column_data{ship} =
             qq|<th class="listheading ship" align=center width="auto">|
           . $locale->text('Ship')
-          . qq|</th>|;
+            . qq|</th>|;
+        $readonly = '';
     }
     if ( $form->{type} eq "purchase_order" ) {
         push @column_index, "ship";
@@ -175,6 +176,7 @@ sub display_row {
             qq|<th class="listheading ship" align=center width="auto">|
           . $locale->text('Recd')
           . qq|</th>|;
+        $readonly = '';
     }
 
     for (qw(projectnumber partsgroup)) {
