@@ -1,5 +1,6 @@
 <persisters>
   <persister name="Order"
              class="LedgerSMB::Workflow::Persister::Order"
+             date_format="%Y-%m-%d %H:%M:%S"
              driver="Pg" />
 </persisters>

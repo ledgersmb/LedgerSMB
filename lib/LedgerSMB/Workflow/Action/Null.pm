@@ -56,7 +56,7 @@ Implements the C<Workflow::Action> protocol.
 sub execute {
     my ($self, $wf) = @_;
 
-    if ($self->description) {
+    if ($self->history_text) {
         $wf->add_history(
             {
                 action      => $self->name,

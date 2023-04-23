@@ -38,6 +38,7 @@ TODO! Check workflow when 'separate duties' is false!
           text="Post"
           doing="Posting..."
           done="Posted"
+          history-text="Posted"
           class="LedgerSMB::Workflow::Action::Null" />
   <action name="batch-approve"
           group="main"
@@ -49,6 +50,7 @@ TODO! Check workflow when 'separate duties' is false!
           text="Post"
           doing="Posting..."
           done="Posted"
+          history-text="Posted"
           class="LedgerSMB::Workflow::Action::Null" />
   <action name="post_reversing"
           group="main"
@@ -56,6 +58,7 @@ TODO! Check workflow when 'separate duties' is false!
           text="Post"
           doing="Posting..."
           done="Posted"
+          history-text="Posted"
           class="LedgerSMB::Workflow::Action::Null" />
   <action name="post"
           group="main"
