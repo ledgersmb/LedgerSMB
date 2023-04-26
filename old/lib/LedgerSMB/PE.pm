@@ -71,7 +71,7 @@ sub delete_partsgroup {
     $sth   = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
-    $query = qq|DELETE FROM translation_partsgroup WHERE trans_id = ?|;
+    $query = qq|DELETE FROM partsgroup_translation WHERE trans_id = ?|;
     $sth   = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
