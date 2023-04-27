@@ -22,10 +22,10 @@ beforeEach(() => {
 describe("Country Store", () => {
     it("initialize", async () => {
         await countries.initialize();
-        expect(countries.fields).toStrictEqual(["short_name", "name"]);
+        expect(countries.fields).toStrictEqual(["code", "name"]);
         expect(countries.items).toStrictEqual([
-            { short_name: "ca", name: "Canada" },
-            { short_name: "us", name: "United States" }
+            { code: "ca", name: "Canada" },
+            { code: "us", name: "United States" }
         ]);
         expect(countries._links).toStrictEqual([{
             title : "HTML",
@@ -39,7 +39,7 @@ describe("Country Store", () => {
         const country = await countries.get("us");
         expect(country).toStrictEqual({
             _meta: { ETag: "1234567890" },
-            short_name: "us",
+            code: "us",
             name: "United States"
         });
     });
@@ -47,10 +47,10 @@ describe("Country Store", () => {
     it("save America country us", async () => {
         await countries.initialize();
         await countries.get("us");
-        await countries.save("us", { short_name: "us", name: "America" });
+        await countries.save("us", { code: "us", name: "America" });
         expect(countries.items).toStrictEqual([
-            { short_name: "ca", name: "Canada" },
-            { short_name: "us", name: "America" }
+            { code: "ca", name: "Canada" },
+            { code: "us", name: "America" }
         ]);
     });
 
@@ -61,10 +61,10 @@ describe("Country Store", () => {
 
     it("add Atlantida country zz", async () => {
         await countries.initialize();
-        await countries.add({ short_name: "zz", name: "Atlantida" });
+        await countries.add({ code: "zz", name: "Atlantida" });
         expect(countries.items[countries.items.length-1]).toStrictEqual({
             _meta: { ETag: "1234567891" },
-            short_name: "zz",
+            code: "zz",
             name: "Atlantida"
         });
     });
