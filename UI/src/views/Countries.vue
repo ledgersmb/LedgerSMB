@@ -8,7 +8,7 @@ import ConfigTable from "@/components/ConfigTable.vue";
 
 const { t } = useI18n();
 const COLUMNS = [
-    { key: "short_name", type: "text",            head: t("Code") },
+    { key: "code",       type: "text",            head: t("Code") },
     { key: "name",       type: "text",            head: t("Name") },
 ];
 
@@ -21,7 +21,7 @@ const store = useCountriesStore();
     <ConfigTable
         :columns="COLUMNS"
         :store="store"
-        storeId="short_name"
+        storeId="code"
         editRole="country_edit"
         createRole="country_create" />
 </template>

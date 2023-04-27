@@ -42,7 +42,7 @@ exports[`Countries - register as a component should show dialog 1`] = `
           >
             <input
               class="neutral input-box"
-              name="short_name"
+              name="code"
               readonly=""
               type="text"
             />
@@ -72,7 +72,7 @@ exports[`Countries - register as a component should show dialog 1`] = `
           >
             <input
               class="neutral input-box"
-              name="short_name"
+              name="code"
               readonly=""
               type="text"
             />
@@ -161,7 +161,7 @@ exports[`Countries - register as a component should show dialog with editable da
           >
             <input
               class="neutral input-box"
-              name="short_name"
+              name="code"
               readonly=""
               type="text"
             />
@@ -216,7 +216,7 @@ exports[`Countries - register as a component should show dialog with editable da
           >
             <input
               class="neutral input-box"
-              name="short_name"
+              name="code"
               readonly=""
               type="text"
             />
