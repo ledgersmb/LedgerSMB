@@ -61,29 +61,35 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome              | 2017-09  | 61-81, 83-108                               |
-| Edge                | 2020-01  | 79-81, 83-108                               |
-| Firefox             | 2018-05  | 60-107                                      |
-| Opera               | 2017-09  | 48-58, 60, 62-92                            |
+| Chrome              | 2017-09  | 61-81, 83-112                               |
+| Edge                | 2020-01  | 79-81, 83-112                               |
+| Firefox             | 2018-05  | 60-112                                      |
+| Opera               | 2017-09  | 48-58, 60, 62-95                            |
 | Safari              | 2017-09  | 11, 11.1, 12, 12.1, 13, 13.1, 14, 14.1,     |
-|                     |          | 15, 15.1, 15.2-15.6, 16.0-16.2              |
+|                     |          | 15, 15.1, 15.2-15.6, 16.0-16.4              |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome for Android  | 2022-12  | 108                                         |
-| Firefox for Android | 2022-11  | 107                                         |
+| Chrome for Android  | 2023-04  | 112                                         |
+| Firefox for Android | 2023-02  | 110                                         |
 | QQ Browser          | 2022-09  | 13.1                                        |
 | UC Browser for Android | 2021-10  | 13.4                                        |
-| Android Browser     | 2022-12  | 108                                         |
+| Android Browser     | 2023-04  | 112                                         |
 | Baidu Browser       | 2022-09  | 13.18                                       |
 | Safari on iOS       | 2017-09  | 11.0-11.4, 12.0-12.5, 13.0-13.7,            |
-|                     |          | 14.0-14.8, 15.0-15.6, 16.0-16.2             |
-| Opera Mobile        | 2022-10  | 72                                          |
+|                     |          | 14.0-14.8, 15.0-15.6, 16.0-16.4             |
+| KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
+| Opera Mobile        | 2023-01  | 73                                          |
 | Samsung Internet    | 2018-12  | 8.2, 9.2, 10.1, 11.1-11.2, 12.0, 13.0,      |
-|                     |          | 14.0, 15.0, 16.0, 17.0, 18.0, 19.0          |
+|                     |          | 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20      |
 
+
+**Note**: Safari is very sensitive to using LedgerSMB over HTTPS; using it with
+a regular HTTP connection is unsupported by the project team. Please be aware that
+using HTTPS is the recommended setup, so that Safari is considered to be fully
+supported.
 
 **Note**: Earliest dates and versions come from http://caniuse.com. Only the most
 recent data is available for Mobile browsers other than Safari, because they

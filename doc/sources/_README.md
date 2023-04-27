@@ -58,6 +58,11 @@ and a range of versions.
 
 <<browsers_list>>
 
+**Note**: Safari is very sensitive to using LedgerSMB over HTTPS; using it with
+a regular HTTP connection is unsupported by the project team. Please be aware that
+using HTTPS is the recommended setup, so that Safari is considered to be fully
+supported.
+
 **Note**: Earliest dates and versions come from http://caniuse.com. Only the most
 recent data is available for Mobile browsers other than Safari, because they
 are pushed out to the devices as soon as they are releases, so the number of
