@@ -154,6 +154,7 @@ IF employee.first_name or stand_alone %]
         <hr />
         <form data-dojo-type="lsmb/Form" name="groups" method="POST" action="[% request.script %]">
             <input type="hidden" name="entity_id" value="[% entity_id %]" />
+            <input type="hidden" name="id" value="[% user.id %]" />
             [% PROCESS input element_data = {
                type="hidden"
                name="user_id"
