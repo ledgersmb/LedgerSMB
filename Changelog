@@ -18,6 +18,7 @@ Added functionalities
 * JavaScript unit tests built on Jest
 * Database content consistency checks in setup.pl (#7265)
 * Barcode support added (back) on invoices (regressed since 1.5) (#1584)
+* Loading template-sets with 'ledgersmb-admin template load-all' (#7367)
 
 Changed functionalities
 * Fresh new application logo and login page layout (#7317, #7319)
@@ -34,6 +35,7 @@ Removed functionalities
 Bugs fixed
 * Performance fixes for stored procedures being slow on huge databases (#7072)
 * Multiple fixes on AR/AP template transactions
+* Command 'setup' of ledgersmb-admin erroneously marked unimplemented (#7367)
 
 Code cleanup
 * Continued removal of code based on the DBObject coding paradigm
