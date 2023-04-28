@@ -12,9 +12,12 @@ use warnings;
 
 use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
 use DateTime::Format::Strptime;
+use File::Spec;
 
 use LedgerSMB::Admin::Command;
+use LedgerSMB::App_State;
 use LedgerSMB::Database;
+use LedgerSMB::Template::DB;
 
 use Moose;
 extends 'LedgerSMB::Admin::Command';
@@ -152,6 +155,39 @@ sub load {
     return 0;
 }
 
+
+sub load_all {
+    my ($self, $dbh, $options, @args) = @_;
+    my ($db, $dir) = @args;
+
+    local $LedgerSMB::App_State::DBH = $dbh;
+    if (opendir my $dh, $dir) {
+        for my $template (readdir $dh) {
+            next if ($template eq '.' or $template eq '..');
+            my $path = File::Spec->catfile($dir, $template);
+            if (-f $path) {
+                $self->logger->info("Loading template $template");
+                my $dbtemp = LedgerSMB::Template::DB->get_from_file($path);
+                $dbtemp->save;
+            }
+            else {
+                $self->logger->debug("Skipping non-file path $template in templates directory");
+            }
+        }
+        closedir $dh
+            or $self->logger->warn("Failed to close directory: $@");
+    }
+    else {
+        $self->logger->error("Failed to read file list from directory '$dir': $@");
+        $dbh->rollback;
+    }
+
+    $dbh->commit;
+    $dbh->disconnect;
+    return 0;
+}
+
+
 sub _before_dispatch {
     my ($self, $options, @args) = @_;
 
@@ -182,6 +218,7 @@ __END__
    ledgersmb-admin template dump <db-uri> <name> <format> [<language>]
    ledgersmb-admin template archive <db-uri> <archive> <name> <format> [<language>]
    ledgersmb-admin template load <db-uri> <name> <format> [<language>]
+   ledgersmb-admin template load-all <db-uri> <directory>
 
 =head1 DESCRIPTION
 
@@ -214,9 +251,24 @@ The values of the arguments must be equal to in the output of the
 'list' command. When not specified, <language> is assumed to be
 equal to 'all'.
 
+=head2 load-all <db-uri> <directory>
+
+Stores the content of all templates read from the input directory into
+the database similar to selecting the template-set from the company
+creation process in C<setup.pl>.
+
+Important: if the templates in the database have been edited, these edits
+are lost as all templates are overwritten.
+
+=head1 METHODS
+
+=head2 load_all
+
+This method implements the 'load-all' command.
+
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2020 The LedgerSMB Core Team
+Copyright (C) 2020-2023 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

@@ -36,7 +36,7 @@ is created as a LedgerSMB company. These are the common commands:
 
   template   Import, export, list (printed) document templates
   setting*   Add or change setting values
-  setup*     Import, export or update configuration
+  setup      Import, export or update configuration
   user*      Create, delete, list users and change access rights
 
 Additionally, the C<config*> command can be used to manage the content

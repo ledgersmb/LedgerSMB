@@ -180,113 +180,136 @@ sub _remove_permissions{
 sub change {
     my ($self, $dbh, $options, @args) = @_;
 
-    my %options = ();
-    Getopt::Long::Configure(qw(bundling require_order));
-    GetOptionsFromArray(\@args, \%options, $self->_option_spec('change'));
-    return 1 if !$self->options->{username};
+    try {
+        my %options = ();
+        Getopt::Long::Configure(qw(bundling require_order));
+        GetOptionsFromArray(\@args, \%options, $self->_option_spec('change'));
+        if (! $self->options->{username}) {
+            $self->logger->error('Missing option --username');
+            return 1;
+        }
 
-    my $_user = $self->_get_user($dbh);
-    if (!$_user) {
-        my $username = $self->options->{username};
-        $self->logger->error("User '$username' does not exists");
-        $dbh->rollback;
-        return 1;
-    }
+        my $_user = $self->_get_user($dbh);
+        if (!$_user) {
+            my $username = $self->options->{username};
+            $self->logger->error("User '$username' does not exists");
+            return 1;
+        }
 
-    local $LedgerSMB::App_State::User = {};
-    local $LedgerSMB::App_State::DBH = $dbh;
-    my $user = LedgerSMB::Entity::User->get($_user->{entity_id});
-    my $emp = LedgerSMB::Entity::Person::Employee->get($_user->{entity_id});
-    my $_country = $self->_get_valid_country($dbh);
+        local $LedgerSMB::App_State::User = {};
+        local $LedgerSMB::App_State::DBH = $dbh;
+        my $user = LedgerSMB::Entity::User->get($_user->{entity_id});
+        my $emp = LedgerSMB::Entity::Person::Employee->get($_user->{entity_id});
+        my $_country = $self->_get_valid_country($dbh);
 
-    if ( $self->options->{password} ) {
-        $user->reset_password($self->options->{password});
-    }
-    my $needs_save = 0;
-    for my $setting (qw(dob employeenumber end_date first_name
-                        is_manager last_name manager middle_name role sales
-                        salutation ssn start_date)) {
-        if ($self->options->{$setting}) {
-            $emp->{$setting} = $self->options->{$setting};
+        if ( $self->options->{password} ) {
+            $user->reset_password($self->options->{password});
+        }
+        my $needs_save = 0;
+        for my $setting (qw(dob employeenumber end_date first_name
+                            is_manager last_name manager middle_name role sales
+                            salutation ssn start_date)) {
+            if ($self->options->{$setting}) {
+                $emp->{$setting} = $self->options->{$setting};
+                $needs_save = 1;
+            }
+        }
+        if ($self->options->{country}) {
+            $emp->{country} = $_country->{name};
+            $emp->{country_id} = $_country->{id};
             $needs_save = 1;
         }
+
+        $emp->save if $needs_save;
+
+        # Add permissions
+        return 1 if ($self->options->{permission}
+                     and not $self->_add_permissions($dbh, $user));
+
+        # Remove permissions
+        return 1 if ($self->options->{no_permission}
+                     and not $self->_remove_permissions($dbh, $user));
+
+        $dbh->commit;
+        $dbh->disconnect;
+        $dbh = undef;
+        $self->logger->warn('User successfully changed');
+
+        return 0;
     }
-    if ($self->options->{country}) {
-        $emp->{country} = $_country->{name};
-        $emp->{country_id} = $_country->{id};
-        $needs_save = 1;
+    catch ($e) {
+        $self->logger->error("Unhandled error caught during user modification: $e");
     }
-
-    $emp->save if $needs_save;
-
-    # Add permissions
-    return 1 if ($self->options->{permission}
-                 and not $self->_add_permissions($dbh, $user));
-
-    # Remove permissions
-    return 1 if ($self->options->{no_permission}
-                 and not $self->_remove_permissions($dbh, $user));
-
-    $dbh->commit if not $dbh->{AutoCommit};
-    $dbh->disconnect;
-    $self->logger->warn('User successfully changed');
-
-    return 0;
+    finally {
+        if ($dbh) {
+            $dbh->rollback;
+            $dbh->disconnect;
+        }
+    }
 }
 
 sub create {
     my ($self, $dbh, $options, @args) = @_;
 
-    my %options = ();
-    Getopt::Long::Configure(qw(bundling require_order));
-    GetOptionsFromArray(\@args, \%options, $self->_option_spec('create'));
-    if (!$self->options->{username} || !$self->options->{password}){
-        $self->logger->error('Missing username or password');
-        return 1;
+    try {
+        my %options = ();
+        Getopt::Long::Configure(qw(bundling require_order));
+        GetOptionsFromArray(\@args, \%options, $self->_option_spec('create'));
+        if (!$self->options->{username} || !$self->options->{password}){
+            $self->logger->error('Missing --username or --password option');
+            return 1;
+        }
+
+        if ($self->_get_user($dbh)) {
+            my $username = $self->options->{username};
+            $self->logger->error("User '$username' already exists");
+            return 1;
+        }
+        my $emp = $self->_create_employee(dbh => $dbh);
+        if (!$emp) {
+            $self->logger->error('Invalid employee');
+            return 1;
+        }
+        my $user = $self->_create_user(
+            dbh => $dbh,
+            entity_id => $emp->entity_id,
+            username => $self->options->{username},
+            password => $self->options->{password}
+            );
+        if (!$user) {
+            $self->logger->error('Invalid user');
+            return 1;
+        }
+        #TODO: Fix validity
+        my $ident_username=$dbh->quote_identifier($self->options->{username});
+        $dbh->do(qq(ALTER USER $ident_username VALID UNTIL 'infinity'));
+
+        # Add permissions
+        return 1
+            if ($self->options->{permission}
+                and not $self->_add_permissions($dbh, $user));
+
+        # Remove permissions
+        return 1
+            if ($self->options->{no_permission}
+                and not $self->_remove_permissions($dbh, $user));
+
+        $dbh->commit;
+        $dbh->disconnect;
+        $dbh = undef;
+        $self->logger->warn('User successfully created');
+
+        return 0;
     }
-
-    if ($self->_get_user($dbh)) {
-        my $username = $self->options->{username};
-        $self->logger->error("User '$username' already exists");
-        $dbh->rollback;
-        return 1;
+    catch ($e) {
+        $self->logger->error("Unhandled exception during user creation: $e");
     }
-    my $emp = $self->_create_employee(dbh => $dbh);
-    if (!$emp) {
-        $self->logger->error('Invalid employee');
-        $dbh->rollback;
-        return 1;
+    finally {
+        if ($dbh) {
+            $dbh->rollback;
+            $dbh->disconnect;
+        }
     }
-    my $user = $self->_create_user(
-        dbh => $dbh,
-        entity_id => $emp->entity_id,
-        username => $self->options->{username},
-        password => $self->options->{password}
-    );
-    if (!$user) {
-        $self->logger->error('Invalid user');
-        $dbh->rollback;
-        return 1;
-    }
-    #TODO: Fix validity
-    my $ident_username=$dbh->quote_identifier($self->options->{username});
-    $dbh->do(qq(ALTER USER $ident_username VALID UNTIL 'infinity'));
-
-    # Add permissions
-    return 1
-        if ($self->options->{permission}
-            and not $self->_add_permissions($dbh, $user));
-
-    # Remove permissions
-    return 1
-        if ($self->options->{no_permission}
-            and not $self->_remove_permissions($dbh, $user));
-
-    $dbh->commit if ! $dbh->{AutoCommit};
-    $dbh->disconnect;
-    $self->logger->warn('User successfully created');
-
-    return 0;
 }
 
 sub _create_employee {
@@ -356,35 +379,48 @@ sub _create_user {
 sub delete {
     my ($self, $dbh, $options, @args) = @_;
 
-    my %options = ();
-    Getopt::Long::Configure(qw(bundling require_order));
-    GetOptionsFromArray(\@args, \%options, $self->_option_spec('delete'));
-    return 1 if !$self->options->{username};
+    try {
+        my %options = ();
+        Getopt::Long::Configure(qw(bundling require_order));
+        GetOptionsFromArray(\@args, \%options, $self->_option_spec('delete'));
+        if (!$self->options->{username}) {
+            $self->logger->error('Missing --username option');
+            return 1;
+        }
 
-    my $user = $self->_get_user($dbh);
-    if (!$user) {
-        my $username = $self->options->{username};
-        $self->logger->error("User '$username' does not exists");
-        $dbh->rollback;
-        return 1;
-    }
-    my $d =
-        $dbh->do('DELETE FROM person WHERE entity_id = ?',
-                 {}, $user->{entity_id})
-        && $dbh->do('DELETE FROM employees WHERE entity_id= ?',
-                    {}, $user->{entity_id})
-        && $dbh->do('DELETE FROM users WHERE id = ?', {}, $user->{id});
 
-    if ($d) {
-        $dbh->commit if ! $dbh->{AutoCommit};
+        my $user = $self->_get_user($dbh);
+        if (!$user) {
+            my $username = $self->options->{username};
+            $self->logger->error("User '$username' does not exists");
+            return 1;
+        }
+        my $d =
+            $dbh->do('DELETE FROM person WHERE entity_id = ?',
+                     {}, $user->{entity_id})
+            && $dbh->do('DELETE FROM employees WHERE entity_id= ?',
+                        {}, $user->{entity_id})
+            && $dbh->do('DELETE FROM users WHERE id = ?', {}, $user->{id});
+
+        if (!$d) {
+            $self->logger->error('User delete failed');
+            return 1;
+        }
+        $dbh->commit;
         $dbh->disconnect;
+        $dbh = undef;
         $self->logger->info('User successfully deleted');
         return 0;
     }
-    $dbh->rollback;
-        $dbh->disconnect;
-        $self->logger->error('User delete failed');
-    return 1;
+    catch ($e) {
+        $self->logger->error("Unhandled error during user deletion: $e");
+    }
+    finally {
+        if ($dbh) {
+            $dbh->rollback;
+            $dbh->disconnect;
+        }
+    }
 }
 
 sub list {
@@ -468,10 +504,10 @@ __END__
 
 =head1 SYNOPSIS
 
-   ledgersmb-admin user list <db-uri> <user>
-   ledgersmb-admin user create <db-uri> [options] 
-   ledgersmb-admin user delete <db-uri>
-   ledgersmb-admin user change <db-uri> [options]
+   ledgersmb-admin user list <db-uri> user1
+   ledgersmb-admin user create <db-uri> --username user1 --password secret [options...]
+   ledgersmb-admin user delete <db-uri> --username user1 [options...]
+   ledgersmb-admin user change <db-uri> --username user1 [options...]
 
 =head1 DESCRIPTION
 
@@ -623,7 +659,7 @@ Remove a permission for the user
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2022 The LedgerSMB Core Team
+Copyright (C) 2022-2023 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
