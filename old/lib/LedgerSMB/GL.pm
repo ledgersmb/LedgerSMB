@@ -119,6 +119,11 @@ sub post_transaction {
             || $form->dberror($query);
 
         ( $form->{id} ) = $sth->fetchrow_array();
+        $query = q|UPDATE transactions SET reversing = ? WHERE id = ? AND workflow_id IS NULL|;
+        $sth   = $dbh->prepare($query);
+        $form->{reversing} ||= undef; # convert empty string to NULL
+        $sth->execute( $form->{reversing}, $form->{id} )
+            || $form->dberror($query);
     }
 
     ( $null, $department_id ) =
