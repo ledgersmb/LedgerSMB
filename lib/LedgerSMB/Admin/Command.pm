@@ -100,12 +100,13 @@ sub connect_data_from_arg {
 sub dispatch {
     my ($self, $command, @args) = @_;
 
-    $command //= 'help';
-    my $dispatch = $self->can($command);
-    die "Unknown command '$command'"
+    my $func = $command // 'help';
+    $func =~ tr/\-/_/;
+    my $dispatch = $self->can($func);
+    die "Unknown command '$command' ($func)"
         if (not $dispatch
             or ($command eq 'run')
-            or ($command !~ m/^([a-zA-Z]+)$/));
+            or ($func !~ m/^([a-zA-Z_]+)$/));
 
     return $self->help($command, @args)
         if $command eq 'help';
