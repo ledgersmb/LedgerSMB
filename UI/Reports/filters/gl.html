@@ -111,10 +111,47 @@
                          } %]</td>
             </tr>
             <tr>
-              <th align="right">[% text('Include in Report') %]</th>
+              <th align="right" valign="top">[% text('Transaction status') %]</th>
 
               <td colspan="5">
                 <table class='criteria'>
+                  <tr>
+                    <td>
+                      [% PROCESS input element_data = {
+                                name = 'is_approved'
+                                type = 'radio'
+                               value = 'All'
+                             checked = 'CHECKED'
+                      }; %]&nbsp;[% text('All'); %]</td>
+                    <td>[% PROCESS input element_data = {
+                                name = 'is_approved'
+                                type = 'radio'
+                               value = 'Y'
+                      }; %]&nbsp;[% text('Approved'); %]</td><td>
+                    [% PROCESS input element_data = {
+                                name = 'is_approved'
+                                type = 'radio'
+                               value = 'N'
+                    }; %]&nbsp;[% text('Unapproved'); %]</td>
+                  </tr>
+                  <tr>
+                    <td>[% PROCESS input element_data = {
+                                name = 'is_voided'
+                                type = 'radio'
+                               value = 'All'
+                             checked = 'CHECKED'
+                      }; %]&nbsp;[% text('All'); %]</td>
+                    <td>[% PROCESS input element_data = {
+                                name = 'is_voided'
+                                type = 'radio'
+                               value = 'Y'
+                    }; %]&nbsp;[% text('Reversed'); %]</td><td>
+                    [% PROCESS input element_data = {
+                                name = 'is_voided'
+                                type = 'radio'
+                               value = 'N'
+                    }; %]&nbsp;[% text('Non-reversed'); %]</td>
+                  </tr>
                   <tr>
                     <td>
                       [% PROCESS input element_data = {
@@ -125,7 +162,7 @@
                              value="X"
                              checked = "checked"
                              } %]&nbsp;[% text('All') %]</td>
-                      <td align="left">
+                    <td align="left">
                       [% PROCESS input element_data = {
                              name="category"
                              id="category-asset"
@@ -133,7 +170,7 @@
                              type="radio"
                              value="A"
                              } %]&nbsp;[% text('Asset') %]</td>
-                      <td align="left">
+                    <td align="left">
                       [% PROCESS input element_data = {
                              name="category"
                              id="category-liability"
@@ -141,7 +178,7 @@
                              type="radio"
                              value="L"
                              } %]&nbsp;[% text('Liability') %]</td>
-                      <td align="left">
+                    <td align="left">
                       [% PROCESS input element_data = {
                              name="category"
                              id="category-equity"
@@ -149,7 +186,7 @@
                              type="radio"
                              value="Q"
                              } %]&nbsp;[% text('Equity') %]</td>
-                      <td align="left">
+                    <td align="left">
                       [% PROCESS input element_data = {
                              name="category"
                              id="category-income"
@@ -157,7 +194,7 @@
                              type="radio"
                              value="I"
                              } %]&nbsp;[% text('Income') %]</td>
-                      <td align="left">
+                    <td align="left">
                       [% PROCESS input element_data = {
                              name="category"
                              id="category-expense"
@@ -165,29 +202,16 @@
                              type="radio"
                              value="E"
                              } %]&nbsp;[% text('Expense') %]
-                      </td>
+                    </td>
                   </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <th align="right" valign="top">[% text('Include in Report') %]</th>
+              <td colspan="5">
+                <table>
                   <tr>
-                    <td>[% PROCESS input element_data = {
-                                name = 'is_approved'
-                                type = 'radio'
-                               value = 'Y'
-                             checked = 'CHECKED'
-                    }; %]&nbsp;[% text('Approved'); %]</td><td>
-                    [% PROCESS input element_data = {
-                                name = 'is_approved'
-                                type = 'radio'
-                               value = 'N'
-                    }; %]&nbsp;[% text('Unapproved'); %]</td><td>
-                    [% PROCESS input element_data = {
-                                name = 'is_approved'
-                                type = 'radio'
-                               value = 'All'
-                    }; %]&nbsp;[% text('All'); %]</td>
-                  </tr>
-                  <tr>
-                    <table>
-                      <tr>
                         <td nowrap>[% PROCESS input element_data = {
                                           name="col_id"
                                           class="checkbox"
@@ -222,8 +246,8 @@
                                           value="1"
                                           checked="checked"
                                           } %] [% text('Description') %]</td>
-                      </tr>
-                      <tr>
+                  </tr>
+                  <tr>
                         <td nowrap>[% PROCESS input element_data = {
                                           name="col_debits"
                                           class="checkbox"
@@ -256,8 +280,8 @@
                                           type="checkbox"
                                           value="1"
                                           } %] [% text('FX Credit') %]</td>
-                      </tr>
-                      <tr>
+                  </tr>
+                  <tr>
                         <td nowrap>[% PROCESS input element_data = {
                                           name="col_source"
                                           class="checkbox"
@@ -283,8 +307,8 @@
                                           type="checkbox"
                                           value="1"
                                           } %] [% text('Till') %]</td>
-                      </tr>
-                      <tr>
+                  </tr>
+                  <tr>
                         <td nowrap>[% PROCESS input element_data = {
                                           name="col_accno"
                                           class="checkbox"
@@ -316,13 +340,10 @@
                                           type="checkbox"
                                           value="1"
                                           } %] [% text('Subtotal') %]</td>
-                      </tr>
-                    </table>
                   </tr>
                 </table>
               </td>
             </tr>
-
           </table>
         </td>
       </tr>

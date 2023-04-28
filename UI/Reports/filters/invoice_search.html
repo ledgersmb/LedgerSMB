@@ -167,44 +167,39 @@
        } %]</td>
 </tr>
 [% PROCESS date_row %]
-<tr id="onhold-row">
-  <th>[% text('Invoice Status') %]</th>
-  <td>[% label_pos = 1; PROCESS input element_data = {
-        label = text('All')
-         type = 'radio'
-         name = 'on_hold'
-         id   = 'on_hold-all'
-        value = ''
-      checked = 'CHECKED'
-     };
-     PROCESS input element_data = {
-        label = text('Active')
-         type = 'radio'
-         name = 'on_hold'
-         id   = 'on_hold-active'
-        value = '0'
-     };
-     PROCESS input element_data = {
-        label = text('On Hold') #'
-         type = 'radio'
-         name = 'on_hold'
-         id   = 'on_hold-hold'
-        value = '1'
-     }; %]</td>
-</tr>
 <tr>
-<th colspan="4" class="centered">[% text('Include in Report') %]</th>
-</tr>
-<tr>
-  <th>&nbsp;</th>
-  <td colspan="3">
+  <th valign="top">[% text('Invoice Status') %]</th>
+  <td colspan="4">
     <table>
+      <tr id="onhold-row">
+        <td>[% label_pos = 1; PROCESS input element_data = {
+          label = text('Active')
+          type = 'radio'
+          name = 'on_hold'
+          id   = 'on_hold-active'
+          value = '0'
+          }; %]</td>
+        <td>[% PROCESS input element_data = {
+          label = text('On Hold')
+          type = 'radio'
+          name = 'on_hold'
+          id   = 'on_hold-hold'
+          value = '1'
+          }; %]</td>
+        <td>[% PROCESS input element_data = {
+          label = text('All')
+          type = 'radio'
+          name = 'on_hold'
+          id   = 'on_hold-all'
+          value = ''
+          checked = 'CHECKED'
+          }; %]</td>
+      </tr>
       <tr>
         <td>[% PROCESS input element_data = {
                     name = 'oc_state'
                     type = 'radio'
                    value = 'open'
-                 checked = 'CHECKED'
                    label = text('Open')
         } %]</td>
         <td>[% PROCESS input element_data = {
@@ -218,6 +213,7 @@
                     type = 'radio'
                    value = 'all'
                    label = text('All')
+                 checked = 'CHECKED'
         } %]</td>
       </tr>
       <tr>
@@ -226,7 +222,6 @@
                     type = 'radio'
                    value = 'Y'
                    label = text('Approved')
-                 checked = 'CHECKED'
         }; %]</td>
         <td>[% PROCESS input element_data = {
                     name = 'is_approved'
@@ -239,8 +234,37 @@
                     type = 'radio'
                    value = 'All'
                    label = text('All')
+                 checked = 'CHECKED'
         }; %]</td>
       </tr>
+      <tr>
+        <td>[% PROCESS input element_data = {
+                    name = 'is_voided'
+                    type = 'radio'
+                   value = 'Y'
+                   label = text('Voided')
+        }; %]</td>
+        <td>[% PROCESS input element_data = {
+                    name = 'is_voided'
+                    type = 'radio'
+                   value = 'N'
+                   label = text('Unvoided')
+        }; %]</td>
+        <td>[% PROCESS input element_data = {
+                    name = 'is_voided'
+                    type = 'radio'
+                   value = 'All'
+                   label = text('All')
+                 checked = 'CHECKED'
+        }; %]</td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <th valign="top">[% text('Include in Report') %]</th>
+  <td colspan="4">
+    <table>
       <tr>
         <td>[% PROCESS input element_data = {
                     name = 'col_running_number'
@@ -259,20 +283,20 @@
                     name = 'col_invnumber'
                     type = 'checkbox'
                    value = '1'
-                   label = text('Invoice Number') #'
+                   label = text('Invoice Number')
                  checked = 'CHECKED'
         } %]</td>
         <td>[% PROCESS input element_data = {
                     name = 'col_ordnumber'
                     type = 'checkbox'
                    value = '1'
-                   label = text('Order Number') #'
+                   label = text('Order Number')
         } %]</td>
         <td>[% PROCESS input element_data = {
                     name = 'col_ponumber'
                     type = 'checkbox'
                    value = '1'
-                   label = text('PO Number') #'
+                   label = text('PO Number')
         } %]</td>
       </tr>
       <tr>
@@ -280,14 +304,14 @@
                     name = 'col_transdate'
                     type = 'checkbox'
                    value = '1'
-                   label = text('Invoice Date') #'
+                   label = text('Invoice Date')
                  checked = 'CHECKED'
         } %]</td>
         <td>[% PROCESS input element_data = {
                     name = 'col_business_units'
                     type = 'checkbox'
                    value = '1'
-                   label = text('Business Units') #'
+                   label = text('Business Units')
         } %]</td>
         <td>[% PROCESS input element_data = {
                     name = 'col_entity_name'
@@ -339,7 +363,7 @@
                     name = 'col_last_payment'
                     type = 'checkbox'
                    value = '1'
-                   label = text('Date Paid') #'
+                   label = text('Date Paid')
         } %]</td>
       </tr>
       <tr>
@@ -354,13 +378,13 @@
                     name = 'col_due_date'
                     type = 'checkbox'
                    value = '1'
-                   label = text('Due Date') #'
+                   label = text('Due Date')
         } %]</td>
         <td>[% PROCESS input element_data = {
                     name = 'col_due'
                     type = 'checkbox'
                    value = '1'
-                   label = text('Amount Due') #'
+                   label = text('Amount Due')
                  checked = 'CHECKED'
         } %]</td>
         <td>[% PROCESS input element_data = {
@@ -381,13 +405,13 @@
                     name = 'col_shipping_point'
                     type = 'checkbox'
                    value = '1'
-                   label = text('Shipping Point') #'
+                   label = text('Shipping Point')
         } %]</td>
         <td>[% PROCESS input element_data = {
                     name = 'col_ship_via'
                     type = 'checkbox'
                    value = '1'
-                   label = text('Ship Via') #'
+                   label = text('Ship Via')
         } %]</td>
       </tr>
       <tr>
