@@ -5,28 +5,38 @@ set client_min_messages = 'warning';
 
 BEGIN;
 
-CREATE OR REPLACE FUNCTION track_global_sequence()
-  RETURNS trigger AS
+CREATE OR REPLACE FUNCTION track_global_sequence() RETURNS trigger AS
 $BODY$
+  DECLARE
+  t_new_reference text;
+  t_old_reference text;
 BEGIN
-        IF tg_op = 'INSERT' THEN
-                INSERT INTO transactions (id, table_name, transdate, approved)
-                VALUES (new.id, TG_RELNAME, new.transdate, new.approved);
-        ELSEIF tg_op = 'UPDATE' THEN
-                IF new.id = old.id
-                   AND new.approved  = old.approved
-                   AND new.transdate = old.transdate THEN
-                        return new;
-                ELSE
-                        UPDATE transactions SET id = new.id,
-                                                approved = new.approved,
-                                                transdate = new.transdate
-                         WHERE id = old.id;
-                END IF;
-        ELSE
-                DELETE FROM transactions WHERE id = old.id;
-        END IF;
-        RETURN new;
+  if tg_relname in ('ar','ap') then
+    t_new_reference := new.invnumber;
+    t_old_reference := old.invnumber;
+  else
+    t_new_reference := new.reference;
+    t_old_reference := old.reference;
+  end if;
+  IF tg_op = 'INSERT' THEN
+    INSERT INTO transactions (id, table_name, transdate, approved, reference)
+    VALUES (new.id, TG_RELNAME, new.transdate, new.approved, t_new_reference);
+  ELSEIF tg_op = 'UPDATE' THEN
+    IF new.id <> old.id
+      OR new.approved <> old.approved
+      OR new.transdate <> old.transdate
+      OR t_new_reference <> t_old_reference THEN
+        UPDATE transactions
+           SET id = new.id,
+               approved = new.approved,
+               transdate = new.transdate,
+               reference = t_new_reference
+         WHERE id = old.id;
+    END IF;
+  ELSE
+    DELETE FROM transactions WHERE id = old.id;
+  END IF;
+  RETURN new;
 END;
 $BODY$
   LANGUAGE plpgsql;

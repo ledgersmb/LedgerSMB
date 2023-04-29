@@ -274,7 +274,7 @@ sub transaction {
         @{$form->{currencies}} =
             (LedgerSMB::Setting->new(%$form))->get_currencies;
 
-        $query = qq|SELECT g.*, t.reversing, t.reversed_by
+        $query = qq|SELECT g.*, t.reversing, t.reversing_reference, t.reversed_by, t.reversed_by_reference
                  FROM gl g JOIN transactions_reversal t on g.id = t.id
                 WHERE g.id = ?|;
 

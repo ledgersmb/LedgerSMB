@@ -166,6 +166,7 @@ sub reverse {
     _reverse_amounts();
 
     $form->{reversing} = delete $form->{id};
+    $form->{reversing_reference} = $form->{reference};
     delete $form->{approved};
 
     display_form();

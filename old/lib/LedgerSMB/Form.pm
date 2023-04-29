@@ -1977,7 +1977,8 @@ sub create_links {
                 a.approved, ctf.default_reportable,
                 a.description, a.on_hold, a.crdate,
                 ns.location_id as locationid, a.is_return, $seq,
-                t.workflow_id, t.reversing, t.reversed_by
+                t.workflow_id, t.reversing, t.reversing_reference,
+                t.reversed_by, t.reversed_by_reference
             FROM $arap a
             JOIN transactions_reversal t ON t.id = a.id
             JOIN entity_credit_account c

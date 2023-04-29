@@ -121,15 +121,15 @@
     </td>
     <td style="vertical-align: middle;"><a href="gl.pl?action=edit&amp;id=[% form.reversed_by %]">
       [% IF form.reversed_by ;
-           text('This transaction has been reversed by transaction [_1]', form.reversed_by);
+           text('This transaction has been reversed by transaction [_1] with ID [_2]', form.reversed_by_reference, form.reversed_by);
          END %]
       </a><br/>
       <a href="gl.pl?action=edit&amp;id=[% form.reversing %]">
       [% IF form.reversing ;
            IF form.approved ;
-              text('This transaction reverses transaction [_1]', form.reversing);
+              text('This transaction reverses transaction [_1] with ID [_2]', form.reversing_reference, form.reversing);
            ELSE ;
-              text('This transaction will reverse transaction [_1]', form.reversing);
+              text('This transaction will reverse transaction [_1] with ID [_2]', form.reversing_reference, form.reversing);
            END ;
       END %]
       </a>
