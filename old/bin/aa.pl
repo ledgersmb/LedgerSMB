@@ -167,10 +167,79 @@ sub edit {
         } else {
             $form->error("Unknown AR/AP selection value: $form->{ARAP}");
         }
-
     }
 
     &display_form;
+}
+
+sub reverse {
+    $form->{title}     = $locale->text('Add');
+    $form->{invnumber} .= '-VOID';
+
+    &create_links;
+
+    delete $form->{workflow_id};
+    $form->{reversing} = delete $form->{id};
+    delete $form->{approved};
+    $form->{reverse} = $form->{reverse} ? 0 : 1;
+    $form->{paidaccounts} = 0;
+    if ($form->{reverse}){
+        if ($form->{ARAP} eq 'AR'){
+            $form->{subtype} = 'credit_note';
+            $form->{type} = 'transaction';
+        } elsif ($form->{ARAP} eq 'AP'){
+            $form->{subtype} = 'debit_note';
+            $form->{type} = 'transaction';
+        } else {
+            $form->error("Unknown AR/AP selection value: $form->{ARAP}");
+        }
+    }
+
+    &display_form;
+}
+
+sub post_reversing {
+    # we should save only the reference, sequence, transdate, description and notes;
+    # get the rest from the transaction being reversed.
+
+    $form->error(
+        $locale->text('Cannot post transaction for a closed period!') )
+        if ( $transdate and $form->is_closed( $transdate ) );
+    if (not $form->{id}) {
+        do {
+            local $form->{id} = $form->{reversing};
+
+            # save data we want to use from the posted form,
+            # not from the reversed transaction.
+            local $form->{reversing};
+            local $form->{reverse};
+            local $form->{notes};
+            local $form->{description};
+            local $form->{reference};
+            local $form->{approved};
+
+            &create_links; # create_links overwrites 'reversing'
+        };
+
+        AA->post_transaction( \%myconfig, \%$form );
+        my $query = q{UPDATE transactions SET reversing = ? WHERE id = ?};
+        $form->{dbh}->do(
+            $query,
+            {},
+            $form->{reversing},
+            $form->{id})
+            or $form->dberror($query);
+    }
+    else {
+        my $query = <<~'QUERY';
+        UPDATE gl
+           SET reference = ?,
+               description = ?,
+               transdate = ?,
+               notes = ?
+         WHERE id = ?
+        QUERY
+    }
 }
 
 sub display_form {
@@ -178,15 +247,14 @@ sub display_form {
     if ( $form->{vc} eq 'vendor' ) {
         $invnumber = "vinumber";
     }
-    $form->{sequence_select} = $form->sequence_dropdown($invnumber)
-        unless $form->{id} and ($form->{vc} eq 'vendor');
     $form->{format} = $form->get_setting('format') unless $form->{format};
     $form->close_form;
     $form->generate_selects(\%myconfig);
     $form->open_form;
     AA->get_files($form, $locale);
-    &form_header;
-    &form_footer;
+    my $readonly = $form->{reversing} or $form->{approved};
+    &form_header( readonly => $readonly );
+    &form_footer( readonly => $readonly );
 
 }
 
@@ -376,8 +444,10 @@ sub create_links {
 }
 
 sub form_header {
+    my %args = @_;
     my $min_lines = $form->get_setting('min_empty') // 0;
-    my $readonly = $form->{approved} ? 'readonly="readonly"' : '';
+    my $readonly = ($args{readonly} or $form->{approved}) ? 'readonly="readonly"' : '';
+    my $readonly_headers = $form->{approved} ? 'readonly="readonly"' : ''; # not read only unless approved
 
     $form->generate_selects(\%myconfig) unless $form->{"select$form->{ARAP}"};
 
@@ -392,6 +462,7 @@ sub form_header {
             ->create_workflow( 'AR/AP',
                                Workflow::Context->new(
                                    'batch-id' => $form->{batch_id},
+                                   'table_name' => lc($form->{ARAP}),
                                    is_transaction => 1
                                ) );
         $form->{workflow_id} = $wf->id;
@@ -481,7 +552,7 @@ sub form_header {
     }
     $form->{notes} //= '';
     $notes =
-qq|<textarea data-dojo-type="dijit/form/Textarea" name=notes rows=$rows cols=50 wrap=soft $readonly>$form->{notes}</textarea>|;
+qq|<textarea data-dojo-type="dijit/form/Textarea" name=notes rows=$rows cols=50 wrap=soft $readonly_headers>$form->{notes}</textarea>|;
     $form->{intnotes} //= '';
     $intnotes =
 qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</textarea>|;
@@ -520,7 +591,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
         $employee = qq|
           <tr>
         <th align=right nowrap><label for="employee">$label</label></th>
-        <td><select data-dojo-type="dijit/form/Select" id=employee name=employee>$form->{selectemployee}</select></td>
+        <td><select data-dojo-type="dijit/form/Select" id=employee name=employee $readonly>$form->{selectemployee}</select></td>
         <input type=hidden name=selectemployee value="|
           . $form->escape( $form->{selectemployee}, 1 ) . qq|">
           </tr>
@@ -546,7 +617,7 @@ $form->open_status_div($status_div_id) . qq|
         qw(batch_id approved id printed emailed sort
            oldtransdate audittrail recurring checktax reverse subtype
            entity_control_code tax_id meta_number default_reportable
-           address city zipcode state country workflow_id)
+           address city zipcode state country workflow_id reversing)
     );
 
     if ( $form->{vc} eq 'customer' ) {
@@ -652,6 +723,8 @@ $form->open_status_div($status_div_id) . qq|
                              ponumber));
      $myconfig{dateformat} //= '';
      $employee //= '';
+     $form->{sequence_select} = $form->sequence_dropdown($invnumber, $readonly_headers)
+         unless $form->{id} and ($form->{vc} eq 'vendor');
      $form->{sequence_select} //= '';
      print qq|
           $exchangerate
@@ -660,16 +733,20 @@ $form->open_status_div($status_div_id) . qq|
                <th align="right" nowrap><label for="description">| . $locale->text('Description') . qq|</label>
                </th>
                <td><input data-dojo-type="dijit/form/TextBox" type="text" name="description" id="description" size="40"
-                   value="| . ($form->{description} // '') . qq|" $readonly /></td>
+                   value="| . ($form->{description} // '') . qq|" $readonly_headers /></td>
             </tr>
         </table>
       </td>
+      <td style="vertical-align:middle">| .
+         ($form->{reversing} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversing}">| . ($form->{approved} ? $locale->text('This transaction reverses transaction [_1] with ID [_2]', $form->{reversing_reference}, $form->{reversing}) : $locale->text('This transaction will reverse transaction [_1]', $form->{reversing})) .q|</a><br />| : '') .
+         ($form->{reversed_by} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversed_by}"> | . $locale->text('This transaction is reversed by transaction [_1] with ID [_2]', $form->{reversed_by_reference}, $form->{reversed_by}) . q|</a>| : '') .
+    qq|</td>
       <td align=right>
         <table>
           $employee
           <tr>
         <th align=right nowrap><label for="invnum">| . $locale->text('Invoice Number') . qq|</label></th>
-        <td><input data-dojo-type="dijit/form/TextBox" name=invnumber id=invnum size=20 value="$form->{invnumber}" $readonly>
+        <td><input data-dojo-type="dijit/form/TextBox" name=invnumber id=invnum size=20 value="$form->{invnumber}" $readonly_headers>
                       $form->{sequence_select}</td>
           </tr>
           <tr>
@@ -678,15 +755,15 @@ $form->open_status_div($status_div_id) . qq|
           </tr>
               <tr>
                 <th align=right nowrap><label for="crdate">| . $locale->text('Invoice Created') . qq|</label></th>
-                <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=crdate id=crdate size=11 title="($myconfig{'dateformat'})" value="$form->{crdate}" data-dojo-props="defaultIsToday:true" $readonly></td>
+                <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=crdate id=crdate size=11 title="($myconfig{'dateformat'})" value="$form->{crdate}" data-dojo-props="defaultIsToday:true" $readonly_headers></td>
               </tr>
           <tr>
         <th align=right nowrap><label for="transdate">| . $locale->text('Invoice Date') . qq|</label></th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate id=transdate size=11 title="($myconfig{'dateformat'})" value="$form->{transdate}" data-dojo-props="defaultIsToday:true" $readonly></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate id=transdate size=11 title="($myconfig{'dateformat'})" value="$form->{transdate}" data-dojo-props="defaultIsToday:true" $readonly_headers></td>
           </tr>
           <tr>
         <th align=right nowrap><label for="duedate">| . $locale->text('Due Date') . qq|</label></th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=duedate id=duedate size=11 title="$myconfig{'dateformat'}" value=$form->{duedate} $readonly></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=duedate id=duedate size=11 title="$myconfig{'dateformat'}" value=$form->{duedate} $readonly_headers></td>
           </tr>
           <tr>
         <th align=right nowrap><label for="ponum">| . $locale->text('PO Number') . qq|</label></th>
@@ -757,7 +834,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     if($form->{"taxformcheck_$i"} or ($form->{default_reportable} and ($i == $form->{rowcount})))
     {
         $taxchecked=qq|CHECKED="CHECKED"|;
-
+        $taxchecked.=q| disabled="disabled"| if $readonly;
     }
 
     $taxformcheck=qq|<td><input type="checkbox" data-dojo-type="dijit/form/CheckBox" name="taxformcheck_$i" value="1" $taxchecked $readonly></td>|;
@@ -799,7 +876,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 
     }
      my $tax_base = $form->{invtotal};
-    foreach my $item ( split / /, $form->{taxaccounts} ) {
+     foreach my $item ( split / /, $form->{taxaccounts} ) {
         $form->{"calctax_$item"} =
           ( $form->{"calctax_$item"} ) ? "checked" : "";
         $form->{"tax_$item"} =
@@ -1005,8 +1082,6 @@ sub form_footer {
                                   {text=> $locale->text('Transaction'), value => 'transaction'},
                                 ]
                    };
-        %button;
-
         $wf->context->param( _is_closed => $form->is_closed( $transdate ) );
         %button_types = (
             print => 'lsmb/PrintButton'
@@ -1023,6 +1098,13 @@ sub form_footer {
                 type  => $button_types{$action->ui},
                 tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
             };
+        }
+        ###TODO: Move "reversing" state to the workflow!
+        if ($form->{reversing}) {
+            delete $button{$_} for (qw(schedule update save_temp edit_and_save));
+        }
+        if (not $form->{approved}) {
+            delete $button{reverse};
         }
 
 

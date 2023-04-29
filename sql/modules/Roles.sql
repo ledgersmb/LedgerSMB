@@ -1334,6 +1334,7 @@ SELECT lsmb__grant_perms('base_user', obj, 'ALL')
                     'user_preference_id_seq',
                     'user_preference', 'status', 'recurring',
                     'recurringemail', 'recurringprint', 'transactions',
+                    'transactions_reversal',
                     'ac_tax_form', 'invoice_tax_form', 'lsmb_sequence']) obj;
 -- transactions table needs to be better locked down in 1.5
 

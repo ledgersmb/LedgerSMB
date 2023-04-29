@@ -247,10 +247,16 @@ CREATE TYPE gl_report_item AS (
     business_units int[]
 );
 
-CREATE OR REPLACE FUNCTION report__gl
+DROP FUNCTION IF EXISTS report__gl
 (in_reference text, in_accno text, in_category char(1),
 in_source text, in_memo text,  in_description text, in_from_date date,
 in_to_date date, in_approved bool, in_from_amount numeric, in_to_amount numeric,
+in_business_units int[]);
+
+CREATE OR REPLACE FUNCTION report__gl
+(in_reference text, in_accno text, in_category char(1),
+in_source text, in_memo text,  in_description text, in_from_date date,
+in_to_date date, in_approved bool, in_voided bool, in_from_amount numeric, in_to_amount numeric,
 in_business_units int[])
 RETURNS SETOF gl_report_item STABLE AS
 $$
@@ -332,6 +338,11 @@ FOR retval IN
                    or (in_approved is false
                        and (g.approved is false
                             or ac.approved is false)))
+              AND (in_voided is null
+                   or in_voided is not distinct from (exists (select 1
+                                                                from transactions t
+                                                               where t.approved
+                                                                 and t.reversing = g.id)))
               AND (in_from_amount IS NULL
                    OR abs(ac.amount_bc) >= in_from_amount)
               AND (in_to_amount IS NULL
@@ -542,6 +553,14 @@ DROP FUNCTION IF EXISTS report__aa_transactions
  in_shipvia text, in_from_date date, in_to_date date, in_on_hold bool,
  in_taxable bool, in_tax_account_id int, in_open bool, in_closed bool,
  in_approved bool);
+DROP FUNCTION IF EXISTS report__aa_transactions
+(in_entity_class int, in_account_id int, in_entity_name text,
+ in_meta_number text,
+ in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text,
+ in_ponumber text, in_source text, in_description text, in_notes text,
+ in_shipvia text, in_from_date date, in_to_date date, in_on_hold bool,
+ in_taxable bool, in_tax_account_id int, in_open bool, in_closed bool,
+ in_approved bool, in_partnumber text);
 CREATE OR REPLACE FUNCTION report__aa_transactions
 (in_entity_class int, in_account_id int, in_entity_name text,
  in_meta_number text,
@@ -549,7 +568,7 @@ CREATE OR REPLACE FUNCTION report__aa_transactions
  in_ponumber text, in_source text, in_description text, in_notes text,
  in_shipvia text, in_from_date date, in_to_date date, in_on_hold bool,
  in_taxable bool, in_tax_account_id int, in_open bool, in_closed bool,
- in_approved bool, in_partnumber text)
+ in_approved bool, in_voided bool, in_partnumber text)
 RETURNS SETOF aa_transactions_line AS
 $$
 BEGIN
@@ -642,19 +661,26 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number::text, eeca.name,
                OR ($20 IS TRUE AND ( a.force_closed IS NOT TRUE AND
                  abs(p.due) > 0.005) IS NOT TRUE)
             )
+            AND (
+              $22 IS NULL
+              OR $22 IS NOT DISTINCT FROM (EXISTS (SELECT 1
+                                                     FROM transactions t
+                                                    WHERE t.approved
+                                                      AND t.reversing = a.id))
+            )
             AND  -- by partnumber
-              ($22 IS NULL
+              ($23 IS NULL
                  OR a.id IN (
                     select i.trans_id
                       FROM invoice i JOIN parts p ON i.parts_id = p.id
-                     WHERE p.partnumber = $22))
+                     WHERE p.partnumber = $23))
 $sql$
 USING in_entity_class, in_account_id, in_entity_name, in_meta_number,
  in_employee_id, in_manager_id, in_invnumber, in_ordnumber,
  in_ponumber, in_source, in_description, in_notes,
  in_shipvia, in_from_date, in_to_date, in_on_hold,
  in_taxable, in_tax_account_id, in_open, in_closed,
- in_approved, in_partnumber;
+ in_approved, in_voided, in_partnumber;
 END
 $$ LANGUAGE PLPGSQL;
 

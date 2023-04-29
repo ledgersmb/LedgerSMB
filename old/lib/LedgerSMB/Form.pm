@@ -1954,7 +1954,6 @@ sub create_links {
             }
         }
     }
-
     $sth->finish;
 
     my $arap = ( $vc eq 'customer' ) ? 'ar' : 'ap';
@@ -1970,17 +1969,18 @@ sub create_links {
                 a.duedate, a.ordnumber,
                 a.taxincluded, a.curr AS currency, a.notes,
                 a.intnotes, ce.name AS $vc,
-            a.amount_tc AS oldinvtotal,
-            case when a.amount_tc = 0 then 0
-            else a.amount_bc / a.amount_tc end as exchangerate,
+                a.amount_tc AS oldinvtotal,
+                case when a.amount_tc = 0 then 0
+                else a.amount_bc / a.amount_tc end as exchangerate,
                 a.person_id as employee_id, e.name AS employee,
                 c.language_code, a.ponumber, a.reverse,
-                                a.approved, ctf.default_reportable,
-                                a.description, a.on_hold, a.crdate,
-                                ns.location_id as locationid, a.is_return, $seq,
-                                t.workflow_id
+                a.approved, ctf.default_reportable,
+                a.description, a.on_hold, a.crdate,
+                ns.location_id as locationid, a.is_return, $seq,
+                t.workflow_id, t.reversing, t.reversing_reference,
+                t.reversed_by, t.reversed_by_reference
             FROM $arap a
-            JOIN transactions t ON t.id = a.id
+            JOIN transactions_reversal t ON t.id = a.id
             JOIN entity_credit_account c
                 ON (a.entity_credit_account = c.id)
             JOIN entity ce ON (ce.id = c.entity_id)
@@ -3121,7 +3121,7 @@ sub get_batch_description {
 
 }
 
-=item sequence_dropdown(setting_key)
+=item sequence_dropdown(setting_key, readonly)
 
 This function returns the HTML code for a dropdown box for a given setting
 key.  It is not generally to be used with code on new templates.
@@ -3129,10 +3129,11 @@ key.  It is not generally to be used with code on new templates.
 =cut
 
 sub sequence_dropdown{
-    my ($self, $setting_key) = @_;
+    my ($self, $setting_key, $readonly) = @_;
     return undef if $self->{id} and ($setting_key ne 'sinumber');
     my @sequences = LedgerSMB::Setting::Sequence->list($setting_key);
-    my $retval = qq|<select data-dojo-type="dijit/form/Select" name='setting_sequence' class='sequence'>\n|;
+    $readonly = $readonly ? 'readonly="readonly"' : '';
+    my $retval = qq|<select data-dojo-type="dijit/form/Select" name='setting_sequence' class='sequence' $readonly>\n|;
     $retval .= qq|<option></option>|;
 
     for my $seq (@sequences){

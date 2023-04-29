@@ -318,9 +318,11 @@ sub add_transaction {
 }
 
 sub post_as_new {
+    my %args = @_;
 
     $form->{old_workflow_id} = $form->{workflow_id};
     for (qw(id printed emailed workflow_id invnumber)) { delete $form->{$_} }
+    $form->{invnumber} = $args{invnumber} // '';
 
     my $wf = $form->{_wire}->get('workflows')
         ->create_workflow( 'AR/AP' );

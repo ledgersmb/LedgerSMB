@@ -142,7 +142,7 @@ sub approve {
 }
 
 sub display_row {
-    my $readonly = $form->{approved} ? 'readonly="readonly"' : '';
+    my $readonly = ($form->{reversing} or $form->{approved}) ? 'readonly="readonly"' : '';
     my $numrows = shift;
     my $min_lines = $form->get_setting('min_empty') // 0;
     my $lsmb_module;
@@ -167,7 +167,8 @@ sub display_row {
         $column_data{ship} =
             qq|<th class="listheading ship" align=center width="auto">|
           . $locale->text('Ship')
-          . qq|</th>|;
+            . qq|</th>|;
+        $readonly = '';
     }
     if ( $form->{type} eq "purchase_order" ) {
         push @column_index, "ship";
@@ -175,6 +176,7 @@ sub display_row {
             qq|<th class="listheading ship" align=center width="auto">|
           . $locale->text('Recd')
           . qq|</th>|;
+        $readonly = '';
     }
 
     for (qw(projectnumber partsgroup)) {
@@ -419,7 +421,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
         if ($form->{"partnumber_$i"}){
             $column_data{deleteline} = qq|
 <td rowspan="2" valign="middle">|;
-            if (not $form->{approved}) {
+            if (not $form->{approved} and not $readonly) {
                 $column_data{deleteline} .= qq|
 <button data-dojo-type="dijit/form/Button"><span>X</span>
 <script type="dojo/on" data-dojo-event="click">

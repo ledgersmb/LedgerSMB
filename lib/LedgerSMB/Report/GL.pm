@@ -31,7 +31,9 @@ use LedgerSMB::Report;
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Report';
-with 'LedgerSMB::Report::Dates', 'LedgerSMB::Report::Approval_Option';
+with 'LedgerSMB::Report::Dates',
+    'LedgerSMB::Report::Approval_Option',
+    'LedgerSMB::Report::Voided_Option';
 
 =head1 PROPERTIES
 

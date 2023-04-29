@@ -12,7 +12,7 @@
         action="[% form.script %]">
 <table width="100%">
 <tr>
-    <th class="listtop" >[% form.title %]</th>
+    <th class="listtop" colspan="2">[% form.title %]</th>
 </tr>
 
 <tr>
@@ -119,10 +119,25 @@
         </tr>
       </table>
     </td>
+    <td style="vertical-align: middle;"><a href="gl.pl?action=edit&amp;id=[% form.reversed_by %]">
+      [% IF form.reversed_by ;
+           text('This transaction has been reversed by transaction [_1] with ID [_2]', form.reversed_by_reference, form.reversed_by);
+         END %]
+      </a><br/>
+      <a href="gl.pl?action=edit&amp;id=[% form.reversing %]">
+      [% IF form.reversing ;
+           IF form.approved ;
+              text('This transaction reverses transaction [_1] with ID [_2]', form.reversing_reference, form.reversing);
+           ELSE ;
+              text('This transaction will reverse transaction [_1] with ID [_2]', form.reversing_reference, form.reversing);
+           END ;
+      END %]
+      </a>
+    </td>
  </tr>
 
 <tr>
-    <td>
+    <td colspan="2">
       <table width="100%" id="transaction-table"
              [% IF form.fx_transaction ;
                     'class="fx-transaction"' ;
@@ -165,7 +180,7 @@
                                       text_attr = 'accno'
                                       value_attr = 'id'
                                       class = 'AccountBox'
-                                      readonly = form.approved
+                                      readonly = (form.approved || form.reversing)
                                       'data-dojo-type' = 'lsmb/accounts/AccountSelector'
                                       'data-dojo-props' = 'required: false'
                               } %]
@@ -193,7 +208,7 @@
                                   value = displayrow.debit
                                   name = "debit_$INDEX"
                                   type = "text"
-                                  readonly = form.approved
+                                  readonly = (form.approved || form.reversing)
                                   size = 12
                                   id = "deb_$INDEX"
                                               }  %]
@@ -205,7 +220,7 @@
                                   value = displayrow.credit
                                   name = "credit_$INDEX"
                                   type = "text"
-                                  readonly = form.approved
+                                  readonly = (form.approved || form.reversing)
                                   size = 12
                                   id = "cre_$INDEX"
                                       }  %]
@@ -217,7 +232,7 @@
                                   value = displayrow.source
                                   name = "source_$INDEX"
                                   type = "text"
-                                  readonly = form.approved
+                                  readonly = (form.approved || form.reversing)
                                   size = 10
                                   id = "sou_$INDEX"
 
@@ -229,7 +244,7 @@
                           [% PROCESS textarea element_data = {
                                   value = displayrow.memo
                                   name = "memo_$INDEX"
-                                  readonly = form.approved
+                                  readonly = (form.approved || form.reversing)
                                   size = 30
                                   id = "mem_$INDEX"
                                      }  %]
@@ -246,7 +261,8 @@
                        INCLUDE select element_data = {
                               text_attr = "control_code"
                              value_attr = "id"
-                               readonly = form.approved
+                               readonly = (form.approved || form.reversing)
+
                          default_values = [displayrow.${bucid}]
                           default_blank = 1
                                    name = "$burow"
@@ -263,7 +279,7 @@
                   options = curr
                   name = "curr_$INDEX"
                   default_values = [displayrow.curr]
-                  readonly = form.approved
+                  readonly = (form.approved || form.reversing)
                   } %]</td>
 
        <td>
@@ -271,7 +287,7 @@
                         value = displayrow.debit_fx
                         name = "debit_fx_$INDEX"
                         type = "text"
-                                  readonly = form.approved
+                                  readonly = (form.approved || form.reversing)
                                   size = 12
                                   id = "deb_fx_$INDEX"
                                               }  %]
@@ -282,7 +298,7 @@
                                   value = displayrow.credit_fx
                                   name = "credit_fx_$INDEX"
                                   type = "text"
-                                  readonly = form.approved
+                                  readonly = (form.approved || form.reversing)
                                   size = 12
                                   id = "cre_fx_$INDEX"
                                       }  %]
@@ -313,7 +329,7 @@
     </td>
 </tr>
  <tr>
-    <td><hr size="3" /></td>
+    <td colspan="2"><hr size="3" /></td>
   </tr>
 </table>
 [% FOREACH hidden IN hiddens.keys;

@@ -19,7 +19,8 @@ extends 'LedgerSMB::Report';
 with
     'LedgerSMB::Report::Dates',
     'LedgerSMB::Report::Approval_Option',
-    'LedgerSMB::Report::OpenClosed_Option';
+    'LedgerSMB::Report::OpenClosed_Option',
+    'LedgerSMB::Report::Voided_Option';
 
 =head1 DESCRIPTION
 
@@ -187,7 +188,7 @@ has '+order_by' => (default => 'transdate');
 
 =back
 
-=head1 INTERNLS
+=head1 INTERNALS
 
 =head2 columns
 

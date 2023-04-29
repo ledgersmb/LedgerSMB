@@ -366,9 +366,9 @@ sub post_transaction {
     $sth = $dbh->prepare($query) or $form->dberror($query);
     $sth->execute(@queryargs) or $form->dberror($query);
     ($form->{id}) = $sth->fetchrow_array() or $form->dberror($query);
-    $query = q|UPDATE transactions SET workflow_id = ? WHERE id = ? AND workflow_id IS NULL|;
+    $query = q|UPDATE transactions SET workflow_id = ?, reversing = ? WHERE id = ? AND workflow_id IS NULL|;
     $sth   = $dbh->prepare($query);
-    $sth->execute( $form->{workflow_id}, $form->{id} )
+    $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{id} )
         || $form->dberror($query);
 
     if (defined $form->{approved}) {

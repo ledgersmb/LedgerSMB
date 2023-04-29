@@ -282,7 +282,9 @@ sub prepare_invoice {
 }
 
 sub form_header {
-    my $readonly = $form->{approved} ? 'readonly="readonly"' : '';
+    my $readonly =
+        ($form->{reversing} or $form->{approved}) ? 'readonly="readonly"' : '';
+    my $readonly_headers = $form->{approved} ? 'readonly="readonly"' : '';
     $form->{nextsub} = 'update';
     $form->{ARAP} = 'AR';
     $form->generate_selects(\%myconfig) unless $form->{selectAR};
@@ -501,7 +503,7 @@ sub form_header {
                <th align="right" nowrap><label for="description">| . $locale->text('Description') . qq|</label>
                </th>
                <td><input data-dojo-type="dijit/form/TextBox" type="text" id="description" name="description" size="40"
-                   value="| . $form->{description} . qq|" $readonly /></td>
+                   value="| . $form->{description} . qq|" $readonly_headers /></td>
             </tr>
           <tr>
         <th align=right nowrap><label for="shippingpoint">| . $locale->text('Shipping Point') . qq|</label></th>
@@ -515,12 +517,16 @@ sub form_header {
           </tr>
         </table>
       </td>
+      <td style="vertical-align:middle">| .
+        ($form->{reversing} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversing}">|. ($form->{approved} ? $locale->text('This transaction reverses transaction [_1] with ID [_2]', $form->{reversing_reference}, $form->{reversing}) : $locale->text('This transaction will reverse transaction [_1]', $form->{reversing})) . q|</a><br />| : '') .
+        ($form->{reversed_by} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversed_by}"> | . $locale->text('This transaction is reversed by transaction [_1] with ID [_2]', $form->{reversed_by_reference}, $form->{reversed_by}) . q|</a>| : '') .
+      qq|</td>
       <td align=right>
         <table>
           $employee
           <tr>
         <th align=right nowrap><label for="invnumber">| . $locale->text('Invoice Number') . qq|</label></th>
-        <td><input data-dojo-type="dijit/form/TextBox" name="invnumber" id="invnumber" size="20" value="$form->{invnumber}" $readonly>| .  $form->sequence_dropdown('sinumber') . qq|</td>
+        <td><input data-dojo-type="dijit/form/TextBox" name="invnumber" id="invnumber" size="20" value="$form->{invnumber}" $readonly_headers>| .  $form->sequence_dropdown('sinumber', $readonly_headers) . qq|</td>
           </tr>
           <tr>
         <th align=right nowrap><label for="ordnumber">| . $locale->text('Order Number') . qq|</label></th>
@@ -529,15 +535,15 @@ sub form_header {
           </tr>
           <tr class="crdate-row">
         <th align=right><label for="crdate">| . $locale->text('Invoice Created') . qq|</label></th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" id="crdate" data-dojo-props="defaultIsToday:true" $readonly ></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" id="crdate" data-dojo-props="defaultIsToday:true" $readonly_headers ></td>
           </tr>
           <tr class="transdate-row">
         <th align=right><label for="transdate">| . $locale->text('Invoice Date') . qq|</label></th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="transdate" id="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}" data-dojo-props="defaultIsToday:true" $readonly ></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="transdate" id="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}" data-dojo-props="defaultIsToday:true" $readonly_headers ></td>
           </tr>
           <tr>
         <th align=right><label for="duedate">| . $locale->text('Due Date') . qq|</label></th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="duedate" id="duedate" size="11" title="$myconfig{dateformat}" value="$form->{duedate}" $readonly ></td>
+        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="duedate" id="duedate" size="11" title="$myconfig{dateformat}" value="$form->{duedate}" $readonly_headers ></td>
           </tr>
           <tr>
         <th align=right nowrap><label for="ponumber">| . $locale->text('PO Number') . qq|</label></th>
@@ -606,13 +612,8 @@ sub form_header {
 }
 
 sub void {
-    if ($form->{invnumber} =~ /-VOID$/){
-       $form->error($locale->text(
-           "Can't void a voided invoice!"
-       ));
-    }
-    $form->{invnumber} .= '-VOID';
-    $form->{reverse} = 1;
+    my $invnumber = $form->{invnumber} . '-VOID';
+    $form->{reverse} = not $form->{reverse};
     $form->{paidaccounts} = 1;
     if ($form->{paid_1}){
        warn $locale->text(
@@ -627,11 +628,13 @@ sub void {
     $wf->execute_action( $form->{action} );
 
     delete $form->{workflow_id};
-    &post_as_new;
+    &post_as_new( invnumber => $invnumber );
 }
 
 sub form_footer {
-    my $readonly = $form->{approved} ? 'readonly="readonly"' : '';
+    my $readonly =
+        ($form->{reversing} or $form->{approved}) ? 'readonly="readonly"' : '';
+    my $readonly_headers = $form->{approved} ? 'readonly="readonly"' : '';
     my $manual_tax;
     if ($form->{approved}){
         $manual_tax =
@@ -669,7 +672,7 @@ sub form_footer {
     $rows = ( $rows > $introws ) ? $rows : $introws;
     $form->{notes} //= '';
     $notes =
-        qq|<textarea data-dojo-type="dijit/form/Textarea" id="notes" name="notes" rows="$rows" cols="40" wrap="soft" $readonly>$form->{notes}</textarea>|;
+        qq|<textarea data-dojo-type="dijit/form/Textarea" id="notes" name="notes" rows="$rows" cols="40" wrap="soft" $readonly_headers>$form->{notes}</textarea>|;
     $form->{intnotes} //= '';
     $intnotes =
 qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes}</textarea>|;
