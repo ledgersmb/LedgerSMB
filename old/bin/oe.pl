@@ -1223,25 +1223,6 @@ sub update {
                 }
 
             }
-            else {
-
-            # ok, so this is a new part
-            # ask if it is a part or service item
-
-                if (   $form->{"partsgroup_$i"}
-                    && ( $form->{"partsnumber_$i"} eq "" )
-                    && ( $form->{"description_$i"} eq "" ) )
-                {
-                    $form->{rowcount}--;
-                    &display_form;
-                }
-                else {
-
-                    $form->{"id_$i"}   = 0;
-                    $form->{"unit_$i"} = $locale->text('ea');
-                    &new_item;
-                }
-            }
         }
     }
     $form->all_vc(\%myconfig, $form->{vc}, $form->{transdate}, 1) if ! @{$form->{"all_$form->{vc}"}};
