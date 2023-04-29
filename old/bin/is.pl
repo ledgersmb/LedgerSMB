@@ -1336,28 +1336,6 @@ sub update {
                       $form->format_amount( \%myconfig, $form->{"${_}_$i"} );
                 }
 
-            } else {
-
-                # ok, so this is a new part
-                # ask if it is a part or service item
-
-                if (   $form->{"partsgroup_$i"}
-                    && ( $form->{"partsnumber_$i"} eq "" )
-                    && ( $form->{"description_$i"} eq "" ) )
-                {
-                    $form->{rowcount}--;
-                    $form->{id} = $form_id;
-                    &display_form;
-                }
-                else {
-
-                    $form->{"id_$i"}   = 0;
-                    $form->{"unit_$i"} = $locale->text('ea');
-
-                    $form->{id} = $form_id;
-                    &new_item;
-
-                }
             }
         }
     }
