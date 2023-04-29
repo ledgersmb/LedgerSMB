@@ -421,7 +421,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
         if ($form->{"partnumber_$i"}){
             $column_data{deleteline} = qq|
 <td rowspan="2" valign="middle">|;
-            if (not $form->{approved}) {
+            if (not $form->{approved} and not $readonly) {
                 $column_data{deleteline} .= qq|
 <button data-dojo-type="dijit/form/Button"><span>X</span>
 <script type="dojo/on" data-dojo-event="click">
