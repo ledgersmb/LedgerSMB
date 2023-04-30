@@ -3,6 +3,14 @@ alter table transactions
   add column reversing int,
   add column reference text;
 
+comment on column transactions.reference is
+  $$For GL transactions, this field contains gl.reference;
+For AR/AP transactions, this field contains the invnumber field.$$;
+
+comment on column transactions.reversing is
+  $$This transaction is a reversal transaction. This field holds
+the transactions.id of the transaction being reversed.$$;
+
 update transactions t
    set reference = ar.invnumber
        from ar
