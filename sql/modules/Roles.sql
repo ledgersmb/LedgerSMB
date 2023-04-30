@@ -7,7 +7,7 @@ BEGIN;
 DELETE FROM menu_acl WHERE node_id in (206, 210);
 
 DROP FUNCTION IF EXISTS lsmb__create_role(text);
-CREATE OR REPLACE FUNCTION lsmb__create_role(in_role text) RETURNS bool
+CREATE OR REPLACE FUNCTION lsmb__create_role(in_role text, in_documentation text default null) RETURNS bool
 LANGUAGE PLPGSQL AS
 $$
 DECLARE
@@ -23,13 +23,15 @@ BEGIN
       USING ERRCODE = 'name_too_long';
   END IF;
   PERFORM rolname FROM pg_roles WHERE rolname = t_in_role;
-  IF FOUND THEN
-     RETURN TRUE;
+  IF NOT FOUND THEN
+    EXECUTE 'CREATE ROLE ' || quote_ident(t_in_role)
+      || ' WITH INHERIT NOLOGIN';
   END IF;
 
-  EXECUTE 'CREATE ROLE ' || quote_ident(t_in_role)
-  || ' WITH INHERIT NOLOGIN';
-
+  IF in_documentation IS NOT NULL THEN
+    EXECUTE 'COMMENT ON ROLE ' || quote_ident(t_in_role)
+      || ' IS ' || quote_literal(in_documentation);
+  END IF;
   RETURN TRUE;
 END;
 $$ SECURITY INVOKER; -- intended only to be used for setup scripts
@@ -195,16 +197,37 @@ GRANT SELECT ON location_class_to_entity_class TO PUBLIC;
 
 
 \echo BASE ROLES
-SELECT lsmb__create_role('base_user');
+SELECT lsmb__create_role(
+  'base_user',
+  $DOC$
+  Users need to be given this role in order to be granted access to the database schema which holds all LedgerSMB objects.
+  $DOC$
+  );
 SELECT lsmb__grant_schema('base_user', :'lsmb_schema');
 
 
 \echo BUDGETS
-SELECT lsmb__create_role('budget_enter');
-SELECT lsmb__create_role('budget_view');
-SELECT lsmb__create_role('budget_approve');
+SELECT lsmb__create_role('budget_enter',
+                         $DOC$
+                         This role allows creation and updating of budgets.
+                         $DOC$
+);
+SELECT lsmb__create_role('budget_view',
+                         $DOC$
+                         This role allows searching and viewing of budgets.
+                         $DOC$
+);
+SELECT lsmb__create_role('budget_approve',
+                         $DOC$
+                         This role allows searching, viewing and approving of budgets.
+                         $DOC$
+);
 SELECT lsmb__grant_role('budget_approve', 'budget_view');
-SELECT lsmb__create_role('budget_obsolete');
+SELECT lsmb__create_role('budget_obsolete',
+                         $DOC$
+                         This role allows searching, viewing and marking as obsolete of budgets.
+                         $DOC$
+);
 
 SELECT lsmb__grant_role('budget_obsolete', 'budget_view');
 SELECT lsmb__grant_perms('budget_view', 'budget_info', 'SELECT');
@@ -225,7 +248,11 @@ SELECT lsmb__grant_menu('budget_view', 253, 'allow');
 SELECT lsmb__grant_exec('budget_approve', 'budget__reject(in_id int)');
 
 \echo BUSINESS UNITS
-SELECT lsmb__create_role('business_units_manage');
+SELECT lsmb__create_role('business_units_manage',
+                         $DOC$
+                         This role allows searching, viewing, creation and editing of business (reporting) classes and their members.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('business_units_manage', 'business_unit_class',
        'INSERT');
 SELECT lsmb__grant_perms('business_units_manage', 'business_unit_class',
@@ -249,10 +276,11 @@ GRANT SELECT ON business_unit_class, business_unit, bu_class_to_module
    TO PUBLIC;
 
 \echo Exchange rate creation (requires insert/update on exchangerate table)
-SELECT lsmb__create_role('exchangerate_edit');
---### TODO: advisory rates still need to work!
---SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'INSERT');
---SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'UPDATE');
+SELECT lsmb__create_role('exchangerate_edit',
+                         $DOC$
+                         This role allows searching, viewing and editing of currencies, exchange rates and exchange rate types.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('exchangerate_edit', 'currency', 'INSERT');
 SELECT lsmb__grant_perms('exchangerate_edit', 'currency', 'UPDATE');
 SELECT lsmb__grant_perms('exchangerate_edit', 'currency', 'DELETE');
@@ -278,7 +306,11 @@ GRANT SELECT ON exchangerate_default TO PUBLIC;
 
 
 \echo Basic file attachments
-SELECT lsmb__create_role('file_read');
+SELECT lsmb__create_role('file_read',
+                         $DOC$
+                         This role allows reading of files attachments and files uploaded through the system menu.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('file_read', 'file_base', 'SELECT');
 SELECT lsmb__grant_perms('file_read', 'file_eca', 'SELECT');
 SELECT lsmb__grant_perms('file_read', 'file_entity', 'SELECT');
@@ -290,17 +322,29 @@ SELECT lsmb__grant_perms('file_read', 'file_part', 'SELECT');
 SELECT lsmb__grant_perms('file_read', 'file_secondary_attachment', 'SELECT');
 SELECT lsmb__grant_perms('file_read', 'file_transaction', 'SELECT');
 
-SELECT lsmb__create_role('file_upload');
+SELECT lsmb__create_role('file_upload',
+                         $DOC$
+                         This role allows uploading of files through the system menu.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('file_upload', 'file_internal', 'ALL');
 SELECT lsmb__grant_menu('file_upload', 27, 'allow');
 
-SELECT lsmb__create_role('file_attach_tx');
+SELECT lsmb__create_role('file_attach_tx',
+                         $DOC$
+                         This role allows attaching files to transactions and invoices.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('file_attach_tx', 'file_transaction', 'INSERT');
 SELECT lsmb__grant_perms('file_attach_tx', 'file_transaction', 'UPDATE');
 SELECT lsmb__grant_perms('file_attach_tx', 'file_order_to_tx', 'INSERT');
 SELECT lsmb__grant_perms('file_attach_tx', 'file_order_to_tx', 'UPDATE');
 
-SELECT lsmb__create_role('file_attach_order');
+SELECT lsmb__create_role('file_attach_order',
+                         $DOC$
+                         This role allows attaching files to orders and quotes.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('file_attach_order', 'file_order', 'INSERT');
 SELECT lsmb__grant_perms('file_attach_order', 'file_order', 'UPDATE');
 SELECT lsmb__grant_perms('file_attach_order', 'file_order_to_order', 'INSERT');
@@ -308,15 +352,27 @@ SELECT lsmb__grant_perms('file_attach_order', 'file_order_to_order', 'UPDATE');
 SELECT lsmb__grant_perms('file_attach_order', 'file_tx_to_order', 'INSERT');
 SELECT lsmb__grant_perms('file_attach_order', 'file_tx_to_order', 'UPDATE');
 
-SELECT lsmb__create_role('file_attach_part');
+SELECT lsmb__create_role('file_attach_part',
+                         $DOC$
+                         This role allows attaching files to goods and services.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('file_attach_part', 'file_part', 'INSERT');
 SELECT lsmb__grant_perms('file_attach_part', 'file_part', 'UPDATE');
 
-SELECT lsmb__create_role('file_attach_eca');
+SELECT lsmb__create_role('file_attach_eca',
+                         $DOC$
+                         This role allows attaching files to entity credit accounts (customers/vendors).
+                         $DOC$
+);
 SELECT lsmb__grant_perms('file_attach_eca', 'file_eca', 'INSERT');
 SELECT lsmb__grant_perms('file_attach_eca', 'file_eca', 'UPDATE');
 
-SELECT lsmb__create_role('file_attach_entity');
+SELECT lsmb__create_role('file_attach_entity',
+                         $DOC$
+                         This role allows attaching files to entities (contacts).
+                         $DOC$
+);
 SELECT lsmb__grant_perms('file_attach_entity', 'file_entity', 'INSERT');
 SELECT lsmb__grant_perms('file_attach_entity', 'file_entity', 'UPDATE');
 
@@ -326,7 +382,14 @@ SELECT lsmb__grant_perms(role, 'file_incoming', 'DELETE'),
                     'file_attach_part', 'file_attach_eca']) role;
 
 \echo Contact Management
-SELECT lsmb__create_role('contact_read');
+SELECT lsmb__create_role('contact_read',
+                         $DOC$
+                         This role allows searching and viewing entities, persons and companies (contacts).
+
+                         Combine this role with one or more 'contact_class_*' roles to be able to access
+                         contacts of the specific class. By itself, this role does not provide sufficient rights.
+                         $DOC$
+);
 SELECT lsmb__grant_role('contact_read', 'file_read');
 SELECT lsmb__grant_perms('contact_read', 'partsvendor', 'SELECT');
 SELECT lsmb__grant_perms('contact_read', 'partscustomer', 'SELECT');
@@ -356,18 +419,75 @@ SELECT lsmb__grant_perms('contact_read', 'file_entity', 'SELECT');
 SELECT lsmb__grant_exec('contact_read', 'eca__list_notes(int)');
 SELECT lsmb__grant_menu('contact_read', 14, 'allow');
 
-SELECT lsmb__create_role('contact_class_vendor');
-SELECT lsmb__create_role('contact_class_customer');
-SELECT lsmb__create_role('contact_class_employee');
-SELECT lsmb__create_role('contact_class_contact');
-SELECT lsmb__create_role('contact_class_referral');
-SELECT lsmb__create_role('contact_class_lead');
-SELECT lsmb__create_role('contact_class_hot_lead');
-SELECT lsmb__create_role('contact_class_cold_lead');
-SELECT lsmb__create_role('contact_class_sub_contractor');
-SELECT lsmb__create_role('contact_class_robot');
+SELECT lsmb__create_role('contact_class_vendor',
+                         $DOC$
+                         This role allows access to vendor contact data.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         $DOC$
+);
+SELECT lsmb__create_role('contact_class_customer',
+                         $DOC$
+                         This role allows access to customer contact data.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         $DOC$
+);
+SELECT lsmb__create_role('contact_class_employee',
+                         $DOC$
+                         This role allows access to employee contact data.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         $DOC$
+);
+SELECT lsmb__create_role('contact_class_contact',
+                         $DOC$
+                         This role allows access to contact data (e-mail, phone, etc) of all kinds of contacts (customer/vendor/...).
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         $DOC$
+);
+SELECT lsmb__create_role('contact_class_referral',
+                         $DOC$
+                         This role allows access to referral contact data.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         $DOC$
+);
+SELECT lsmb__create_role('contact_class_lead',
+                         $DOC$
+                         This role allows access to sales lead contact data.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         $DOC$
+);
+SELECT lsmb__create_role('contact_class_hot_lead',
+                         $DOC$
+                         This role allows access to hot sales lead contact data.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         $DOC$
+);
+SELECT lsmb__create_role('contact_class_cold_lead',
+                         $DOC$
+                         This role allows access to cold sales lead contact data.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         $DOC$
+);
+SELECT lsmb__create_role('contact_class_sub_contractor',
+                         $DOC$
+                         This role allows access to subcontractor contact data.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         $DOC$
+);
+SELECT lsmb__create_role('contact_class_robot',
+                         $DOC$
+                         This role allows access to robot (automated process, acting on behalf of...) contact data.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         $DOC$
+);
 
-SELECT lsmb__create_role('contact_create');
+SELECT lsmb__create_role('contact_create',
+                         $DOC$
+                         This role allows searching and viewing existing contacts and creation of new contacts.
+
+                         Combine this role with one or more 'contact_class_*' roles to be able to access
+                         contacts of the specific class. By itself, this role does not provide sufficient rights.
+                         $DOC$
+);
 SELECT lsmb__grant_role('contact_create', 'contact_read');
 SELECT lsmb__grant_perms('contact_create', 'entity', 'INSERT');
 SELECT lsmb__grant_perms('contact_create', 'entity_id_seq', 'ALL');
@@ -400,7 +520,11 @@ SELECT lsmb__grant_perms('contact_create', obj, 'ALL')
 
 SELECT lsmb__grant_menu('contact_create', 12, 'allow');
 
-SELECT lsmb__create_role('employees_manage');
+SELECT lsmb__create_role('employees_manage',
+                         $DOC$
+                         This role allows creation, updating and searching of employees.
+                         $DOC$
+);
 SELECT lsmb__grant_role('employees_manage', 'contact_read');
 SELECT lsmb__grant_perms('employees_manage', 'entity_employee', 'ALL');
 SELECT lsmb__grant_perms('employees_manage', 'person', 'ALL');
@@ -415,7 +539,14 @@ SELECT lsmb__grant_menu('employees_manage', 49, 'allow');
 GRANT select ON employees TO public;
 
 
-SELECT lsmb__create_role('contact_edit');
+SELECT lsmb__create_role('contact_edit',
+                         $DOC$
+                         This role allows editing of existing contacts.
+
+                         Combine this role with one or more 'contact_class_*' roles to be able to access
+                         contacts of the specific class. By itself, this role does not provide sufficient rights.
+                         $DOC$
+);
 SELECT lsmb__grant_role('contact_edit', 'contact_read');
 SELECT lsmb__grant_role('contact_create', 'contact_edit');
 SELECT lsmb__grant_perms('contact_edit', 'entity', 'UPDATE');
@@ -434,7 +565,14 @@ SELECT lsmb__grant_perms('contact_edit', 'eca_to_contact', 'ALL');
 SELECT lsmb__grant_perms('contact_edit', 'eca_to_location', 'ALL');
 SELECT lsmb__grant_perms('contact_edit', 'eca_tax', 'ALL');
 
-SELECT lsmb__create_role('contact_delete');
+SELECT lsmb__create_role('contact_delete',
+                         $DOC$
+                         This role allows editing of existing contacts.
+
+                         Combine this role with one or more 'contact_class_*' roles to be able to access
+                         contacts of the specific class. By itself, this role does not provide sufficient rights.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('contact_delete', obj, 'DELETE')
   FROM unnest(ARRAY['entity'::text, 'company', 'person', 'location',
                     'entity_credit_account', 'eca_tax', 'entity_note',
@@ -442,7 +580,11 @@ SELECT lsmb__grant_perms('contact_delete', obj, 'DELETE')
                     'eca_to_contact', 'entity_to_contact', 'entity_other_name',
                     'entity_bank_account', 'person_to_company']) obj;
 
-SELECT lsmb__create_role('contact_all_rights');
+SELECT lsmb__create_role('contact_all_rights',
+                         $DOC$
+                         This role combines all 'contact_class_*' and 'contact_*' roles and grants all access rights to all contact classes.
+                         $DOC$
+);
 SELECT lsmb__grant_role('contact_all_rights', 'contact_class_vendor');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_class_customer');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_class_employee');
