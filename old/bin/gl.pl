@@ -189,6 +189,7 @@ sub post_reversing {
             local $form->{notes};
             local $form->{description};
             local $form->{reference};
+            local $form->{reversing_reference} = $form->{reference};
             local $form->{approved};
 
             &create_links; # create_links overwrites 'reversing'
@@ -286,7 +287,8 @@ sub display_form
         'callback' => $form->{callback},
         'form_id' => $form->{form_id},
         'separate_duties' => $form->{separate_duties},
-        'reversing' => $form->{reversing}
+        'reversing' => $form->{reversing},
+        'reversing_reference' => $form->{reversing_reference}
     );
 
 
