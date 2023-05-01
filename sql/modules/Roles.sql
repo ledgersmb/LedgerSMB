@@ -201,6 +201,8 @@ SELECT lsmb__create_role(
   'base_user',
   $DOC$
   Users need to be given this role in order to be granted access to the database schema which holds all LedgerSMB objects.
+
+  This role only allows access to menu items Preferences, Logout, and New Window. The user basically cannot do anything without added additional roles.
   $DOC$
   );
 SELECT lsmb__grant_schema('base_user', :'lsmb_schema');
@@ -225,7 +227,7 @@ SELECT lsmb__create_role('budget_approve',
 SELECT lsmb__grant_role('budget_approve', 'budget_view');
 SELECT lsmb__create_role('budget_obsolete',
                          $DOC$
-                         This role allows searching, viewing and marking as obsolete of budgets.
+                         This role allows searching and viewing budgets as well as marking them  obsolete (=no longer applicable).
                          $DOC$
 );
 
@@ -482,7 +484,7 @@ SELECT lsmb__create_role('contact_class_robot',
 
 SELECT lsmb__create_role('contact_create',
                          $DOC$
-                         This role allows searching and viewing existing contacts and creation of new contacts.
+                         This role allows creation of new contacts.
 
                          Combine this role with one or more 'contact_class_*' roles to be able to access
                          contacts of the specific class. By itself, this role does not provide sufficient rights.
@@ -541,7 +543,7 @@ GRANT select ON employees TO public;
 
 SELECT lsmb__create_role('contact_edit',
                          $DOC$
-                         This role allows editing of existing contacts.
+                         This role allows editing of existing contacts and creation of new ones.
 
                          Combine this role with one or more 'contact_class_*' roles to be able to access
                          contacts of the specific class. By itself, this role does not provide sufficient rights.
@@ -567,7 +569,7 @@ SELECT lsmb__grant_perms('contact_edit', 'eca_tax', 'ALL');
 
 SELECT lsmb__create_role('contact_delete',
                          $DOC$
-                         This role allows editing of existing contacts.
+                         This role allows removal of existing contacts.
 
                          Combine this role with one or more 'contact_class_*' roles to be able to access
                          contacts of the specific class. By itself, this role does not provide sufficient rights.
@@ -599,7 +601,11 @@ SELECT lsmb__grant_role('contact_all_rights', 'contact_read');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_delete');
 
 \echo Batches and Vouchers
-SELECT lsmb__create_role('batch_create');
+SELECT lsmb__create_role('batch_create',
+                         $DOC$
+                         This role allows creation of new batches and vouchers.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('batch_create', 'batch', 'INSERT');
 SELECT lsmb__grant_perms('batch_create', 'batch_id_seq', 'ALL');
 SELECT lsmb__grant_perms('batch_create', 'batch_class', 'SELECT');
@@ -607,17 +613,33 @@ SELECT lsmb__grant_perms('batch_create', 'voucher', 'INSERT');
 SELECT lsmb__grant_perms('batch_create', 'voucher_id_seq', 'ALL');
 SELECT lsmb__grant_exec('batch_create', 'batch__lock_for_update(int)');
 
-SELECT lsmb__create_role('batch_post');
+SELECT lsmb__create_role('batch_post',
+                         $DOC$
+                         This role allows posting batches of e.g. transactions, payments and invoices.
+                         $DOC$
+);
 SELECT lsmb__grant_exec('batch_post', 'batch_post(int)');
 SELECT lsmb__grant_menu('batch_post', 206, 'allow');
 SELECT lsmb__grant_menu('batch_post', 210, 'allow');
 
-SELECT lsmb__create_role('voucher_delete');
+SELECT lsmb__create_role('voucher_delete',
+                         $DOC$
+                         This role allows deletion of vouchers (i.e. groups of e.g. payments).
+                         $DOC$
+);
 SELECT lsmb__grant_exec('voucher_delete', 'voucher__delete(int)');
 SELECT lsmb__grant_exec('voucher_delete', 'batch_delete(int)');
 
-SELECT lsmb__create_role('draft_modify');
-SELECT lsmb__create_role('draft_post');
+SELECT lsmb__create_role('draft_modify',
+                         $DOC$
+                         This role allows modification of existing draft (= saved) transactions.
+                         $DOC$
+);
+SELECT lsmb__create_role('draft_post',
+                         $DOC$
+                         This role allows posting of saved transactions to the ledger.
+                         $DOC$
+);
 SELECT lsmb__grant_menu('draft_post', 210, 'allow');
 
 
