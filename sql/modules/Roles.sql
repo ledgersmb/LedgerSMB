@@ -386,10 +386,12 @@ SELECT lsmb__grant_perms(role, 'file_incoming', 'DELETE'),
 \echo Contact Management
 SELECT lsmb__create_role('contact_read',
                          $DOC$
-                         This role allows searching and viewing entities, persons and companies (contacts).
+                         When paired with one or more 'contact_class_*' role/-s, this role allows
+                         searching and viewing entities, persons and companies (contacts).
 
-                         Combine this role with one or more 'contact_class_*' roles to be able to access
-                         contacts of the specific class. By itself, this role does not provide sufficient rights.
+                         Each contact_class_<resource> role, when paired with contact_read, enables
+                         this access for the specific <resource>. On it's own, the contact_read-role
+                         does not provide any rights.
                          $DOC$
 );
 SELECT lsmb__grant_role('contact_read', 'file_read');
@@ -424,70 +426,82 @@ SELECT lsmb__grant_menu('contact_read', 14, 'allow');
 SELECT lsmb__create_role('contact_class_vendor',
                          $DOC$
                          This role allows access to vendor contact data.
-                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' and/or 'contact_delete' to determine
+                         the type of access granted.
                          $DOC$
 );
 SELECT lsmb__create_role('contact_class_customer',
                          $DOC$
                          This role allows access to customer contact data.
-                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' and/or 'contact_delete' to determine
+                         the type of access granted.
                          $DOC$
 );
 SELECT lsmb__create_role('contact_class_employee',
                          $DOC$
                          This role allows access to employee contact data.
-                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' and/or 'contact_delete' to determine
+                         the type of access granted.
                          $DOC$
 );
 SELECT lsmb__create_role('contact_class_contact',
                          $DOC$
                          This role allows access to contact data (e-mail, phone, etc) of all kinds of contacts (customer/vendor/...).
-                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' and/or 'contact_delete' to determine
+                         the type of access granted.
                          $DOC$
 );
 SELECT lsmb__create_role('contact_class_referral',
                          $DOC$
                          This role allows access to referral contact data.
-                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' and/or 'contact_delete' to determine
+                         the type of access granted.
                          $DOC$
 );
 SELECT lsmb__create_role('contact_class_lead',
                          $DOC$
                          This role allows access to sales lead contact data.
-                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' and/or 'contact_delete' to determine
+                         the type of access granted.
                          $DOC$
 );
 SELECT lsmb__create_role('contact_class_hot_lead',
                          $DOC$
                          This role allows access to hot sales lead contact data.
-                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' and/or 'contact_delete' to determine
+                         the type of access granted.
                          $DOC$
 );
 SELECT lsmb__create_role('contact_class_cold_lead',
                          $DOC$
                          This role allows access to cold sales lead contact data.
-                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' and/or 'contact_delete' to determine
+                         the type of access granted.
                          $DOC$
 );
 SELECT lsmb__create_role('contact_class_sub_contractor',
                          $DOC$
                          This role allows access to subcontractor contact data.
-                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' and/or 'contact_delete' to determine
+                         the type of access granted.
                          $DOC$
 );
 SELECT lsmb__create_role('contact_class_robot',
                          $DOC$
                          This role allows access to robot (automated process, acting on behalf of...) contact data.
-                         Combine with 'contact_read', 'contact_create', 'contact_edit' to determine the type of access granted.
+                         Combine with 'contact_read', 'contact_create', 'contact_edit' and/or 'contact_delete' to determine
+                         the type of access granted.
                          $DOC$
 );
 
 SELECT lsmb__create_role('contact_create',
                          $DOC$
-                         This role allows creation of new contacts.
+                         When paired with one or more 'contact_class_*' role/-s, this role allows
+                         creation of new entities, persons and companies (contacts).
 
-                         Combine this role with one or more 'contact_class_*' roles to be able to access
-                         contacts of the specific class. By itself, this role does not provide sufficient rights.
+                         Each contact_class_<resource> role, when paired with contact_read, enables
+                         this access for the specific <resource>. On it's own, the contact_create-role
+                         does not provide any rights.
                          $DOC$
 );
 SELECT lsmb__grant_role('contact_create', 'contact_read');
@@ -543,10 +557,12 @@ GRANT select ON employees TO public;
 
 SELECT lsmb__create_role('contact_edit',
                          $DOC$
-                         This role allows editing of existing contacts and creation of new ones.
+                         When paired with one or more 'contact_class_*' role/-s, this role allows
+                         editing of existing entities, persons and companies (contacts).
 
-                         Combine this role with one or more 'contact_class_*' roles to be able to access
-                         contacts of the specific class. By itself, this role does not provide sufficient rights.
+                         Each contact_class_<resource> role, when paired with contact_read, enables
+                         this access for the specific <resource>. On it's own, the contact_edit-role
+                         does not provide any rights.
                          $DOC$
 );
 SELECT lsmb__grant_role('contact_edit', 'contact_read');
@@ -569,10 +585,15 @@ SELECT lsmb__grant_perms('contact_edit', 'eca_tax', 'ALL');
 
 SELECT lsmb__create_role('contact_delete',
                          $DOC$
-                         This role allows removal of existing contacts.
+                         When paired with one or more 'contact_class_*' role/-s, this role allows
+                         removal of existing entities, persons and companies (contacts).
 
-                         Combine this role with one or more 'contact_class_*' roles to be able to access
-                         contacts of the specific class. By itself, this role does not provide sufficient rights.
+                         Note that in order to be able to search for contacts to be deleted, the user
+                         needs to be assigned the 'contact_read' role.
+
+                         Each contact_class_<resource> role, when paired with contact_read, enables
+                         this access for the specific <resource>. On it's own, the contact_delete-role
+                         does not provide any rights.
                          $DOC$
 );
 SELECT lsmb__grant_perms('contact_delete', obj, 'DELETE')
