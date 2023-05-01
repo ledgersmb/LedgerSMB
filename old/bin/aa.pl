@@ -174,6 +174,7 @@ sub edit {
 
 sub reverse {
     $form->{title}     = $locale->text('Add');
+    $form->{reversing_reference} = $form->{invnumber};
     $form->{invnumber} .= '-VOID';
 
     &create_links;
@@ -738,7 +739,7 @@ $form->open_status_div($status_div_id) . qq|
         </table>
       </td>
       <td style="vertical-align:middle">| .
-         ($form->{reversing} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversing}">| . ($form->{approved} ? $locale->text('This transaction reverses transaction [_1] with ID [_2]', $form->{reversing_reference}, $form->{reversing}) : $locale->text('This transaction will reverse transaction [_1]', $form->{reversing})) .q|</a><br />| : '') .
+         ($form->{reversing} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversing}">| . ($form->{approved} ? $locale->text('This transaction reverses transaction [_1] with ID [_2]', $form->{reversing_reference}, $form->{reversing}) : $locale->text('This transaction will reverse transaction [_1] with ID [_2]', $form->{reversing_reference}, $form->{reversing})) .q|</a><br />| : '') .
          ($form->{reversed_by} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversed_by}"> | . $locale->text('This transaction is reversed by transaction [_1] with ID [_2]', $form->{reversed_by_reference}, $form->{reversed_by}) . q|</a>| : '') .
     qq|</td>
       <td align=right>
