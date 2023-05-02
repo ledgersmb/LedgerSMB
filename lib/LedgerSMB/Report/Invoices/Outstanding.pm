@@ -157,8 +157,6 @@ has '+order_by' => (default => 'meta_number');
 
 =item notes
 
-=item till
-
 =item employee_name
 
 =item manager_name
@@ -274,10 +272,6 @@ sub columns {
            name => $self->Text('Notes'),
            type => 'text',
          pwidth => 15, },
-        {col_id => 'till',
-           name => $self->Text('Till'),
-           type => 'text',
-         pwidth => 8, },
         {col_id => 'salesperson',
            name => $self->Text('Salesperson'),
            type => 'text',

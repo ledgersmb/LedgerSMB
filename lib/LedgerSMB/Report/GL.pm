@@ -166,11 +166,6 @@ sub columns {
        type => 'text',
      pwidth => '3', },
 
-    {col_id => 'till',
-       name => $self->Text('Till'),
-       type => 'text',
-     pwidth => '1', },
-
     {col_id => 'chart_id',
        name => $self->Text('Chart ID'),
        type => 'text',

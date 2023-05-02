@@ -224,8 +224,6 @@ This is the customer or vendor name
 
 =item notes text
 
-=item till text
-
 =item salesperson text
 
 =item manager text
@@ -301,9 +299,6 @@ sub columns {
            type => 'text'},
        { col_id => 'notes',
            name => $self->Text('Notes'),
-           type => 'text'},
-       { col_id => 'till',
-           name => $self->Text('Till'),
            type => 'text'},
        { col_id => 'salesperson',
            name => $self->Text('Salesperson'),
