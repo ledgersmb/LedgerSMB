@@ -21,8 +21,10 @@ This module doesn't export any methods.
 use strict;
 use warnings;
 
+use LedgerSMB::Router appname => 'erp/api';
 
 
+set api_schema => openapi_schema(\*DATA);
 
 
 =head1 LICENSE AND COPYRIGHT
@@ -51,13 +53,55 @@ info:
   license:
     name: GPL-2.0-or-later
     url: https://spdx.org/licenses/GPL-2.0-or-later.html
-servers: 
+servers:
   - url: 'http://lsmb/erp/api/v0'
+security:
+  - cookieAuth: []
 components:
+  headers:
+    ETag:
+      description: |
+        The API uses the ETag parameter to prevent different clients modifying
+        the same resource around the same time from overwriting each other's
+        data: the later updates will be rejected based on verification of this
+        parameter.
+        Clients need to retain the ETag returned on a request when they might
+        want to update the values later.
+      required: true
+      schema:
+        type: string
+  parameters:
+    if-match:
+      name: If-Match
+      in: header
+      description: |
+        Clients need to provide the If-Match parameter on update operations
+        (PUT and PATCH) with the ETag obtained in the request from which
+        data are being updated. Requests missing this header will be rejected
+        with HTTP response code 428. Requests trying to update outdated content
+        will be rejected with HTTP response code 412.
+      required: true
+      schema:
+        type: string
+  responses:
+    304:
+      description: Not modified
+    400:
+      description: Bad request
+    401:
+      description: Unauthorized
+    403:
+      description: Forbidden
+    404:
+      description: Not Found
+    412:
+      description: Precondition failed (If-Match header)
+    413:
+      description: Payload too large
+    428:
+      description: Precondition required
   securitySchemes:
     cookieAuth:
       type: apiKey
       in: cookie
       name: LedgerSMB-1.10
-security:
-  - cookieAuth: []

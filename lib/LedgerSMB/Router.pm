@@ -53,6 +53,7 @@ use warnings;
 use parent 'Exporter';
 
 use Carp;
+use Hash::Merge;
 use HTML::Escape qw( escape_html );
 use HTTP::Negotiate qw( choose );
 use HTTP::Status qw( HTTP_BAD_REQUEST HTTP_NOT_FOUND HTTP_UNSUPPORTED_MEDIA_TYPE
@@ -80,6 +81,7 @@ use constant {
 
 my $appname;
 my $router = {};
+my @cumulative_settings = qw/ api_schema /;
 
 
 our @EXPORT = ## no critic (ProhibitAutomaticExportation)
@@ -106,7 +108,9 @@ sub import {
 
     $appname = $args{appname} // caller;
     $router->{$appname} //= __PACKAGE__->new;
-    $router->{$appname}->{settings} = {};
+    $router->{$appname}->{settings} = {
+        $router->{$appname}->{settings}->%{@cumulative_settings}
+    };
 
     my @keywords = @{$args{keywords} // []};
     __PACKAGE__->export_to_level(1, $pkg, @{$args{keywords}});
@@ -118,8 +122,6 @@ sub _alloc_entry {
 }
 
 =head2 new (constructor)
-
-
 
 =cut
 
@@ -195,6 +197,21 @@ sub add_mapping {
 
     return;
 }
+
+=head2 api_validator()
+
+Returns a C<JSONSchema::Validator> instance initialized from the accumulated
+schema fragment definitions declared in the various router definition modules.
+
+=cut
+
+sub api_validator {
+    return $_[0]->{_validator} //=
+        JSONSchema::Validator->new(
+            schema        => $_[0]->setting('api_schema'),
+            specification => 'OAS30');
+}
+
 
 =head2 lookup($path)
 
@@ -279,7 +296,6 @@ sub dispatch {
 }
 
 =head2 hooks($name [ => @hooks])
-
 
 
 =cut
@@ -451,13 +467,14 @@ sub put     { _add_mapping(['put'], @_); }
 
 sub api {
     my ($path, $code) = @_;
-    my $schema = $router->{$appname}->setting('api_schema');
+    my $settings = $router->{$appname};
 
     return (
         $path => sub {
             my @args = @_;
             my $env = shift @args;
             my $params = shift @args;
+            my $schema = $settings->api_validator;
             my $req = Plack::Request::WithEncoding->new($env);
             my $has_body = ($req->headers->content_length() // 0) > 0;
             my $body = ($req->headers->content_type eq 'application/json') ?
@@ -521,19 +538,20 @@ sub api {
         })
 }
 
+my $reader = YAML::PP->new(boolean => 'JSON::PP');
+my $merger = Hash::Merge->new('LEFT_PRECEDENT');
 sub openapi_schema {
     my $fh = shift;
+    my $schema_text = do {
+        # slurp __DATA__ section
+        local $/ = undef;
+        <$fh>;
+    };
 
-    my $reader = YAML::PP->new(boolean => 'JSON::PP');
-    my $schema = $reader->load_string(
-        do {
-            # slurp __DATA__ section
-            local $/ = undef;
-            <$fh>;
-        });
-    return JSONSchema::Validator->new(
-        schema => $schema,
-        specification => 'OAS30');
+    my $rv = $merger->merge(
+        $router->{$appname}->setting('api_schema') // {},
+        $reader->load_string($schema_text));
+    return $rv;
 }
 
 my $variants = [
@@ -616,8 +634,7 @@ sub locale {
 sub set {
     my ($setting, $value) = @_;
 
-    $router->{$appname}->setting($setting, $value);
-
+    $router->{$appname}->setting($setting => $value);
     return;
 }
 

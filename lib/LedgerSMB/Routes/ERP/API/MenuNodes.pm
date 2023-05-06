@@ -81,7 +81,9 @@ paths:
       operationId: getUserMenuNodes
       responses:
         200:
-          description: ...
+          description: |
+            Returns the full set of menu nodes accessible
+            by the requesting user.
           content:
              application/json:
                schema:
@@ -113,13 +115,3 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
-components:
-  responses:
-    400:
-      description: Bad request
-    401:
-      description: Unauthorized
-    403:
-      description: Forbidden
-    404:
-      description: Not Found
