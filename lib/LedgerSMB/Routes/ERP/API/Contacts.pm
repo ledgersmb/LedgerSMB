@@ -501,13 +501,11 @@ paths:
                   - items
                 properties:
                   _links:
+                    type: object
+                  items:
                     type: array
                     items:
-                      type: object
-                items:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/SIC'
+                      $ref: '#/components/schemas/SIC'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -688,10 +686,10 @@ paths:
                     type: array
                     items:
                       type: object
-                items:
-                  type: array
                   items:
-                    $ref: '#/components/schemas/BusinessType'
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BusinessType'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -870,18 +868,14 @@ components:
       type: number
       format: int64
     BusinessType:
-      type: object
-      required:
-        - id
-        - description
-      properties:
-        id:
-          $ref: '#/components/schemas/business-type-id'
-        description:
-          type: string
-        discount:
-          type: number
-          format: float
+      allOf:
+      - $ref: '#/components/schemas/NewBusinessType'
+      - type: object
+        required:
+          - id
+        properties:
+          id:
+            $ref: '#/components/schemas/business-type-id'
     NewBusinessType:
       type: object
       required:
@@ -889,3 +883,6 @@ components:
       properties:
         description:
           type: string
+        discount:
+          type: number
+          format: float

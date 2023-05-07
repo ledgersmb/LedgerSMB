@@ -42,14 +42,27 @@ your software.
 
 
 __DATA__
-openapi: 3.0.0
+openapi: 3.1.0
 info:
   title: LedgerSMB API
   version: 0.0.1
   contact:
     name: "LedgerSMB API Support"
     url: "https://github.com/ledgersmb/LedgerSMB/issues"
-  description: LedgerSMB API
+    email: devel@lists.ledgersmb.org
+  description: |
+    LedgerSMB comes with a web service API. The version number assigned follows
+    the [rules of semantic versioning](https://semver.org/). The current major
+    version is 0 (zero), meaning that it's not considered to have stabilized
+    yet. The main reason is that not all functions have been ironed out yet:
+    filtering, sorting and pagination are to be specified and implemented.
+
+    The API is hosted on `erp/api/v0`, on the same root as `login.pl`. That is
+    to say that if LedgerSMB's login screen is hosted at
+    `https://example.org/login.pl` then the API can be found at
+    `https://example.org/erp/api/v0`. All paths mentioned in this document will
+    be appended to that. E.g. the items in the menu for the authenticated user
+    can be accessed through `https://example.org/erp/api/v0/menu-nodes`.
   license:
     name: GPL-2.0-or-later
     url: https://spdx.org/licenses/GPL-2.0-or-later.html
@@ -105,3 +118,22 @@ components:
       type: apiKey
       in: cookie
       name: LedgerSMB-1.10
+      description: |
+        The authenticating cookie can be obtained by sending a `POST` request
+        to `login.pl?action=authenticate&company=<url-encoded-company` with a
+        JSON object in the body of the request, containing these three fields
+
+        * company
+        * username
+        * password
+
+        as if they had been entered on the login page in the browser. Please
+        note that the request `Content-Type` must be set to `application/json`
+        and that an `X-Requested-With` header is expected with the value
+        `XMLHttpRequest`.
+
+        **Note**: the cookie value is updated on each response; the next
+        request *must* be executed with the new cookie value.
+
+        **Note 2**: the validity of the cookie is as long the user's timeout
+        when logged into the application (default: 90 minutes).
