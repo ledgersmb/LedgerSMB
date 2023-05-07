@@ -282,10 +282,10 @@ paths:
                     type: array
                     items:
                       type: object
-                items:
-                  type: array
                   items:
-                    $ref: '#/components/schemas/GIFI'
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GIFI'
         400:
           $ref: '#/components/responses/400'
         401:

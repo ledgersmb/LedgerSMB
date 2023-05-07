@@ -283,10 +283,10 @@ paths:
                     type: array
                     items:
                       type: object
-                items:
-                  type: array
                   items:
-                    $ref: '#/components/schemas/Country'
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Country'
         400:
           $ref: '#/components/responses/400'
         401:

@@ -495,10 +495,10 @@ paths:
                     type: array
                     items:
                       type: object
-                items:
-                  type: array
                   items:
-                    $ref: '#/components/schemas/Pricegroup'
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Pricegroup'
         400:
           $ref: '#/components/responses/400'
         401:
