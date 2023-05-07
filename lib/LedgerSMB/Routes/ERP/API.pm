@@ -77,9 +77,9 @@ components:
       description: |
         Clients need to provide the If-Match parameter on update operations
         (PUT and PATCH) with the ETag obtained in the request from which
-        data are being updated. Requests missing this header will be rejected
-        with HTTP response code 428. Requests trying to update outdated content
-        will be rejected with HTTP response code 412.
+        data are being updated. Requests missing this header will be
+        rejected with HTTP response code 428. Requests trying to update
+        outdated content will be rejected with HTTP response code 412.
       required: true
       schema:
         type: string
