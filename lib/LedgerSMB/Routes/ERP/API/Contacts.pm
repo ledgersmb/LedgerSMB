@@ -501,7 +501,9 @@ paths:
                   - items
                 properties:
                   _links:
-                    type: object
+                    type: array
+                    items:
+                      type: object
                   items:
                     type: array
                     items:
