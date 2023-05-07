@@ -27,6 +27,7 @@ use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Report::Inventory::Pricegroups;
 use LedgerSMB::Report::Listings::Warehouse;
 use LedgerSMB::Router appname => 'erp/api';
+use LedgerSMB::Routes::ERP::API;
 
 set logger => 'erp.api.products';
 set api_schema => openapi_schema(\*DATA);
@@ -472,10 +473,6 @@ your software.
 
 
 __DATA__
-openapi: 3.0.0
-info:
-  title: Managing products and related configuration
-  version: 0.0.1
 paths:
   /products/pricegroups:
     description: Managing products and related configuration

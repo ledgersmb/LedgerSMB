@@ -26,6 +26,7 @@ use HTTP::Status qw( HTTP_OK HTTP_NO_CONTENT HTTP_CREATED HTTP_CONFLICT HTTP_FOR
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Report::Listings::Country;
 use LedgerSMB::Router appname => 'erp/api';
+use LedgerSMB::Routes::ERP::API;
 
 set logger => 'erp.api.countries';
 set api_schema => openapi_schema(\*DATA);
@@ -260,10 +261,6 @@ your software.
 
 
 __DATA__
-openapi: 3.0.0
-info:
-  title: Management of country configuration
-  version: 0.0.1
 paths:
   /countries:
     description: Management of country configuration

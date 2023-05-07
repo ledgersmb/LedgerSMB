@@ -26,6 +26,7 @@ use HTTP::Status qw( HTTP_OK HTTP_NO_CONTENT HTTP_CREATED HTTP_CONFLICT HTTP_FOR
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Report::Listings::GIFI;
 use LedgerSMB::Router appname => 'erp/api';
+use LedgerSMB::Routes::ERP::API;
 
 set logger => 'erp.api.gl';
 set api_schema => openapi_schema(\*DATA);
@@ -259,10 +260,6 @@ your software.
 
 
 __DATA__
-openapi: 3.0.0
-info:
-  title: Management of GIFI (canadian accounting) codes configuration
-  version: 0.0.1
 paths:
   /gl/gifi:
     description: A list of GIFI

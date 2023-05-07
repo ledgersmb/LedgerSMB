@@ -24,6 +24,7 @@ use warnings;
 use HTTP::Status qw( HTTP_OK );
 
 use LedgerSMB::Router appname => 'erp/api';
+use LedgerSMB::Routes::ERP::API;
 
 set logger => 'erp.api.menu-nodes';
 set api_schema => openapi_schema(\*DATA);
@@ -67,10 +68,6 @@ your software.
 
 
 __DATA__
-openapi: 3.0.0
-info:
-  title: Menu items for the active user
-  version: 0.0.1
 paths:
   /menu-nodes:
     description: Menu items for the active user

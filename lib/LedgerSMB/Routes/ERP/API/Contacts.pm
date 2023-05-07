@@ -27,6 +27,7 @@ use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Report::Listings::Business_Type;
 use LedgerSMB::Report::Listings::SIC;
 use LedgerSMB::Router appname => 'erp/api';
+use LedgerSMB::Routes::ERP::API;
 
 set logger => 'erp.api.contacts';
 set api_schema => openapi_schema(\*DATA);
@@ -481,10 +482,6 @@ your software.
 
 
 __DATA__
-openapi: 3.0.0
-info:
-  title: Management of industry codes configuration
-  version: 0.0.1
 paths:
   /contacts/sic:
     description: Collection of Standard Industry Codes (SICs)
