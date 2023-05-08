@@ -260,10 +260,6 @@ your software.
 
 
 __DATA__
-openapi: 3.0.0
-info:
-  title: Management of language configuration
-  version: 0.0.1
 paths:
   /languages:
     description: Management of language configuration
