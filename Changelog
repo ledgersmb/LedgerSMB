@@ -40,6 +40,7 @@ Bugs fixed
 
 Code cleanup
 * Continued removal of code based on the DBObject coding paradigm
+* Removed unused 'entity_id' field from AR and AP tables (#7390)
 
 Dependency updates
 * 
