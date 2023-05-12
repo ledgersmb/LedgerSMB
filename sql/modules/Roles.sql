@@ -665,7 +665,11 @@ SELECT lsmb__grant_menu('draft_post', 210, 'allow');
 
 
 \echo AR
-SELECT lsmb__create_role('ar_transaction_create');
+SELECT lsmb__create_role('ar_transaction_create',
+                         $DOC$
+                         This role allows creation of new sales transactions (not nvoices).
+                         $DOC$
+);
 SELECT lsmb__grant_role('ar_transaction_create', 'contact_read');
 SELECT lsmb__grant_role('ar_transaction_create', 'exchangerate_edit');
 SELECT lsmb__grant_perms('ar_transaction_create', 'ar', 'INSERT');
@@ -678,7 +682,7 @@ SELECT lsmb__grant_perms('ar_transaction_create', 'eca_invoice', 'SELECT');
 SELECT lsmb__grant_perms('ar_transaction_create', 'journal_line', 'INSERT');
 SELECT lsmb__grant_perms('ar_transaction_create', 'journal_line', 'SELECT');
 SELECT lsmb__grant_perms('ar_transaction_create', 'business_unit_jl', 'INSERT');
-SELECT lsmb__grant_perms('ar_transaction_create', 'oe', 'SELECT');
+SELECT lsmb__grant_perms('ar_transaction_create', 'oe', 'SELECT'); --@@TODO: Why??
 SELECT lsmb__grant_perms('ar_transaction_create', 'id', 'ALL');
 SELECT lsmb__grant_perms('ar_transaction_create', 'acc_trans', 'INSERT');
 SELECT lsmb__grant_perms('ar_transaction_create', 'acc_trans_entry_id_seq', 'ALL');
@@ -688,7 +692,11 @@ SELECT lsmb__grant_menu('ar_transaction_create', 2, 'allow');
 SELECT lsmb__grant_menu('ar_transaction_create', 129, 'allow');
 SELECT lsmb__grant_menu('ar_transaction_create', 194, 'allow');
 
-SELECT lsmb__create_role('ar_transaction_create_voucher');
+SELECT lsmb__create_role('ar_transaction_create_voucher',
+                         $DOC$
+                         This role allows creation of batches of new sales transactions (not invoices).
+                         $DOC$
+);
 SELECT lsmb__grant_role('ar_transaction_create_voucher', 'contact_read');
 SELECT lsmb__grant_role('ar_transaction_create_voucher', 'batch_create');
 SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'ar', 'INSERT');
@@ -705,9 +713,13 @@ SELECT lsmb__grant_menu('ar_transaction_create_voucher',20,'allow');
 SELECT lsmb__grant_menu('ar_transaction_create_voucher',11,'allow');
 SELECT lsmb__grant_menu('ar_transaction_create_voucher',244,'allow');
 
-SELECT lsmb__create_role('ar_invoice_create');
+SELECT lsmb__create_role('ar_invoice_create',
+                         $DOC$
+                         This role allows creation of new sales invoices (not sales transactions).
+                         $DOC$
+);
 SELECT lsmb__grant_role('ar_invoice_create', 'ar_transaction_create');
--- ### old code needs update
+-- ### old code needs UPDATE
 SELECT lsmb__grant_perms('ar_invoice_create', tname, ptype)
   FROM unnest('{invoice,new_shipto,business_unit_inv}'::text[]) tname
  CROSS JOIN unnest('{SELECT,INSERT,UPDATE}'::text[]) ptype;
@@ -715,7 +727,11 @@ SELECT lsmb__grant_perms('ar_invoice_create', tname, ptype)
 SELECT lsmb__grant_menu('ar_invoice_create', 3, 'allow');
 SELECT lsmb__grant_menu('ar_invoice_create', 195, 'allow');
 
-SELECT lsmb__create_role('ar_invoice_create_voucher');
+SELECT lsmb__create_role('ar_invoice_create_voucher',
+                         $DOC$
+                         This role allows creation of batches of new sales invoices (not sales transactions).
+                         $DOC$
+);
 SELECT lsmb__grant_role('ar_invoice_create_voucher', 'contact_read');
 SELECT lsmb__grant_role('ar_invoice_create_voucher', 'batch_create');
 SELECT lsmb__grant_role('ar_invoice_create_voucher', 'ar_transaction_create_voucher');
@@ -725,7 +741,11 @@ SELECT lsmb__grant_perms('ar_invoice_create_voucher', 'invoice_id_seq', 'ALL');
 SELECT lsmb__grant_perms('ar_invoice_create_voucher', 'warehouse_inventory_entry_id_seq', 'ALL');
 -- TODO add Menu ACLs
 
-SELECT lsmb__create_role('ar_transaction_list');
+SELECT lsmb__create_role('ar_transaction_list',
+                         $DOC$
+                         This role allows viewing of sales transactions and invoices.
+                         $DOC$
+);
 SELECT lsmb__grant_role('ar_transaction_list', 'contact_read');
 SELECT lsmb__grant_role('ar_transaction_list', 'file_read');
 SELECT lsmb__grant_perms('ar_transaction_list', tname, 'SELECT')
@@ -738,16 +758,28 @@ SELECT lsmb__grant_perms('ar_transaction_list', tname, 'SELECT')
 SELECT lsmb__grant_menu('ar_transaction_list', node_id, 'allow')
   FROM unnest( array[5,7,9,10,15]) node_id;
 
-SELECT lsmb__create_role('ar_voucher_all');
+SELECT lsmb__create_role('ar_voucher_all',
+                         $DOC$
+                         This role allows creation of batches of both sales transactions and invoices.
+                         $DOC$
+);
 SELECT lsmb__grant_role('ar_voucher_all', 'ar_transaction_create_voucher');
 SELECT lsmb__grant_role('ar_voucher_all', 'ar_invoice_create_voucher');
 
-SELECT lsmb__create_role('ar_transaction_all');
+SELECT lsmb__create_role('ar_transaction_all',
+                         $DOC$
+                         This role allows creating and viewing sales transactions and accounts as well as creating attachments.
+                         $DOC$
+);
 SELECT lsmb__grant_role('ar_transaction_all', rname)
   FROM unnest(ARRAY['ar_transaction_create'::text, 'ar_invoice_create',
                     'ar_transaction_list', 'file_attach_tx']) rname;
 
-SELECT lsmb__create_role('sales_order_create');
+SELECT lsmb__create_role('sales_order_create',
+                         $DOC$
+                         This role allows creating sales orders.
+                         $DOC$
+);
 SELECT lsmb__grant_role('sales_order_create', 'contact_read');
 SELECT lsmb__grant_role('sales_order_create', 'exchangerate_edit');
 SELECT lsmb__grant_perms('sales_order_create', obj, 'ALL')
@@ -761,15 +793,36 @@ SELECT lsmb__grant_perms('sales_order_create', 'business_unit_oitem', 'UPDATE');
 SELECT lsmb__grant_perms('sales_order_create', 'new_shipto_id_seq', 'ALL');
 SELECT lsmb__grant_menu('sales_order_create', '51', 'allow');
 
-SELECT lsmb__create_role('sales_order_edit');
+SELECT lsmb__create_role('sales_order_edit',
+                         $DOC$
+                         This role allows (searching for and) modifying existing sales orders.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('sales_order_edit', 'orderitems', 'DELETE');
 SELECT lsmb__grant_perms('sales_order_edit', 'business_unit_oitem', 'DELETE');
 SELECT lsmb__grant_perms('sales_order_edit', 'new_shipto', 'DELETE');
 SELECT lsmb__grant_perms('sales_order_edit', 'new_shipto_id_seq', 'ALL');
 
-SELECT lsmb__create_role(dt || '_delete')
-  FROM unnest(array['sales_order'::text, 'sales_quotation', 'purchase_order',
-              'rfq']) dt;
+SELECT lsmb__create_role('sales_order_delete',
+                         $DOC$
+                         This role allows (searching for and) deleting existing sales orders.
+                         $DOC$
+);
+SELECT lsmb__create_role('sales_quotation_delete',
+                         $DOC$
+                         This role allows (searching for and) deleting existing sales quotations.
+                         $DOC$
+);
+SELECT lsmb__create_role('purchase_order_delete',
+                         $DOC$
+                         This role allows (searching for and) deleting existing purchase orders.
+                         $DOC$
+);
+SELECT lsmb__create_role('rfq_delete',
+                         $DOC$
+                         This role allows (searching for and) deleting existing requests for quotation.
+                         $DOC$
+);
 SELECT lsmb__grant_perms(dt || '_delete', obj, 'DELETE')
   FROM unnest(ARRAY['oe'::TEXT, 'orderitems', 'business_unit_oitem',
                     'new_shipto']) obj
@@ -777,7 +830,11 @@ SELECT lsmb__grant_perms(dt || '_delete', obj, 'DELETE')
   JOIN unnest(array['sales_order'::text, 'sales_quotation', 'purchase_order',
               'rfq']) dt;
 
-SELECT lsmb__create_role('sales_quotation_create');
+SELECT lsmb__create_role('sales_quotation_create',
+                         $DOC$
+                         This role allows creating sales quotations.
+                         $DOC$
+);
 SELECT lsmb__grant_role('sales_quotation_create', 'contact_read');
 SELECT lsmb__grant_role('sales_quotation_create', 'exchangerate_edit');
 SELECT lsmb__grant_perms('sales_quotation_create', obj, 'ALL')
@@ -790,7 +847,11 @@ SELECT lsmb__grant_perms('sales_quotation_create', 'new_shipto_id_seq', 'ALL');
 
 SELECT lsmb__grant_menu('sales_quotation_create', 68, 'allow');
 
-SELECT lsmb__create_role('sales_order_list');
+SELECT lsmb__create_role('sales_order_list',
+                         $DOC$
+                         This role allows searching and viewing sales orders.
+                         $DOC$
+);
 SELECT lsmb__grant_role('sales_order_list', 'contact_read');
 SELECT lsmb__grant_role('sales_order_list', 'file_read');
 SELECT lsmb__grant_perms('sales_order_list', obj, 'SELECT')
@@ -798,7 +859,11 @@ SELECT lsmb__grant_perms('sales_order_list', obj, 'SELECT')
 
 SELECT lsmb__grant_menu('sales_order_list', 54, 'allow');
 
-SELECT lsmb__create_role('sales_quotation_list');
+SELECT lsmb__create_role('sales_quotation_list',
+                         $DOC$
+                         This role allows searching and viewing sales quotations.
+                         $DOC$
+);
 SELECT lsmb__grant_role('sales_quotation_list', 'contact_read');
 SELECT lsmb__grant_role('sales_quotation_list', 'file_read');
 SELECT lsmb__grant_perms('sales_quotation_list', obj, 'SELECT')
@@ -806,7 +871,11 @@ SELECT lsmb__grant_perms('sales_quotation_list', obj, 'SELECT')
 
 SELECT lsmb__grant_menu('sales_quotation_list', 71, 'allow');
 
-SELECT lsmb__create_role('ar_all');
+SELECT lsmb__create_role('ar_all',
+                         $DOC$
+                         This role combines all (batches of) sales transaction and invoices permissions.
+                         $DOC$
+);
 SELECT lsmb__grant_role('ar_all', rname)
   FROM unnest(array['ar_voucher_all'::text, 'ar_transaction_all',
                     'file_attach_tx']) rname;
