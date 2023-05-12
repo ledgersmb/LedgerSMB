@@ -55,7 +55,7 @@ BEGIN;
 
     SELECT account__save(null, accno, description, category, null,
                          (select id from account_heading limit 1),
-                         false, false, array[link], false, false)
+                         null, false, false, array[link], false, false)
       FROM (VALUES ('00001', 'testing', 'L', 'AP'),
                    ('00001AP2', 'testing', 'L', 'AP'),
                    ('00002', 'testing2', 'E', 'AP_amount'),

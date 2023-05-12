@@ -261,6 +261,7 @@ CREATE TYPE account_config AS (
   category CHAR(1),
   gifi_accno text,
   heading int,
+  heading_negative_balance int,
   contra bool,
   tax bool,
   obsolete bool,
@@ -270,13 +271,15 @@ CREATE TYPE account_config AS (
 DROP FUNCTION IF EXISTS account_get(int);
 CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS account_config AS
 $$
-select c.*, string_agg(l.description, ':') as link
+  select c.id, c.accno, c.description, c.is_temp, c.category, c.gifi_accno,
+  c.heading, c.heading_negative_balance, c.contra, c.tax, c.obsolete,
+  string_agg(l.description, ':') as link
   from account c
   left join account_link l
     ON (c.id = l.account_id)
   where  id = $1
 group by c.id, c.accno, c.description, c.category,
-         c.heading, c.gifi_accno, c.contra, c.tax;
+         c.heading, c.heading_negative_balance, c.gifi_accno, c.contra, c.tax;
 $$ LANGUAGE sql;
 
 COMMENT ON FUNCTION account_get(in_id int) IS
@@ -404,9 +407,14 @@ COMMENT ON FUNCTION account_has_transactions (in_id int) IS
 $$ Checks to see if any transactions use this account.  If so, returns true.
 If not, returns false.$$;
 
-CREATE OR REPLACE FUNCTION account__save
+DROP FUNCTION IF EXISTS account__save
 (in_id int, in_accno text, in_description text, in_category char(1),
 in_gifi_accno text, in_heading int, in_contra bool, in_tax bool,
+in_link text[], in_obsolete bool, in_is_temp bool);
+
+CREATE OR REPLACE FUNCTION account__save
+(in_id int, in_accno text, in_description text, in_category char(1),
+in_gifi_accno text, in_heading int, in_heading_negative_balance int, in_contra bool, in_tax bool,
 in_link text[], in_obsolete bool, in_is_temp bool)
 RETURNS int AS $$
 DECLARE
@@ -433,14 +441,15 @@ BEGIN
 
         UPDATE account
         SET accno = in_accno,
-                description = in_description,
-                category = in_category,
-                gifi_accno = in_gifi_accno,
-                heading = in_heading,
-                contra = in_contra,
-                obsolete = coalesce(in_obsolete,'f'),
-                tax = t_tax,
-                is_temp = coalesce(in_is_temp,'f')
+            description = in_description,
+            category = in_category,
+            gifi_accno = in_gifi_accno,
+            heading = in_heading,
+            heading_negative_balance = in_heading_negative_balance,
+            contra = in_contra,
+            obsolete = coalesce(in_obsolete,'f'),
+            tax = t_tax,
+            is_temp = coalesce(in_is_temp,'f')
         WHERE id = in_id;
 
         IF FOUND THEN
@@ -449,9 +458,10 @@ BEGIN
                 -- can't obsolete on insert, but this can be changed if users
                 -- request it --CT
                 INSERT INTO account (accno, description, category, gifi_accno,
-                        heading, contra, tax, is_temp)
+                        heading, heading_negative_balance, contra, tax, is_temp)
                 VALUES (in_accno, in_description, in_category, in_gifi_accno,
-                        in_heading, in_contra, in_tax, coalesce(in_is_temp, 'f'));
+                        in_heading, in_heading_negative_balance, in_contra,
+                        in_tax, coalesce(in_is_temp, 'f'));
 
                 t_id := currval('account_id_seq');
         END IF;
@@ -472,8 +482,9 @@ $$ language plpgsql;
 
 COMMENT ON FUNCTION account__save
 (in_id int, in_accno text, in_description text, in_category char(1),
-in_gifi_accno text, in_heading int, in_contra bool, in_tax bool,
-in_link text[], in_obsolete bool, in_is_temp bool) IS
+in_gifi_accno text, in_heading int, in_heading_negative_balance int,
+in_contra bool, in_tax bool, in_link text[], in_obsolete bool,
+in_is_temp bool) IS
 $$ This deletes existing account_link entries, where the
 account_link.description is not designated as a custom one in the
 account_link_description table.
