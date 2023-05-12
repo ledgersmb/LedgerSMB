@@ -413,7 +413,7 @@ RETURN QUERY EXECUTE $sql$
 
                     FROM entity e
                     JOIN entity_credit_account c ON (e.id = c.entity_id)
-                    JOIN (SELECT ap.id, invnumber, transdate, amount_bc, entity_id,
+                    JOIN (SELECT ap.id, invnumber, transdate, amount_bc,
                                  curr, 1 as invoice_class,
                                  entity_credit_account, on_hold, v.batch_id,
                                  approved
@@ -423,7 +423,7 @@ RETURN QUERY EXECUTE $sql$
                            WHERE $1 = 1
                                  AND (v.batch_class = 1 or v.batch_id IS NULL)
                            UNION
-                          SELECT ar.id, invnumber, transdate, amount_bc, entity_id,
+                          SELECT ar.id, invnumber, transdate, amount_bc,
                                  curr, 2 as invoice_class,
                                  entity_credit_account, on_hold, v.batch_id,
                                  approved
