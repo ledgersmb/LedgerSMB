@@ -187,6 +187,21 @@
     }; %]
    </div>
 </div>
+<div class="inputline" id="heading-line2">
+   <label class="line" for="heading-a" title="[% text('Heading for negative assets reclassified as (positive) liabilities or the other way around') %]">[% text('Negative balance heading') %]</label>
+   <div class="inputgroup">
+      [%
+    INCLUDE select element_data = {
+                  name = 'heading_negative_balance'
+               options = form.all_headings
+         default_blank = 1
+        default_values = [form.heading_negative_balance]
+             text_attr = 'text'
+            value_attr = 'id'
+                 class = 'account'
+    }; %]
+   </div>
+</div>
 <fieldset id="accdetails" style="border:1px solid lightgrey;border-radius:4px;margin-top:2em;padding:1em;width:max-content">
   <legend style="padding-left:1em;padding-right:1em;font-size:120%;font-weight:bold">Configuration</legend>
 <div class="inputline" id="summary-line">

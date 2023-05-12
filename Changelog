@@ -6,6 +6,7 @@ Unreleased
 Changelog for 1.11.0
 
 Added functionalities
+* Reclassification of negative assets to liabilities and vice versa (#7389)
 * AR/AP transactions and invoices buttons determined by configuration
 * AR/AP invoice history shows more actions, user and timestamp (#5873)
 * Bank statement parser for reconciliation through configuration (#7050)

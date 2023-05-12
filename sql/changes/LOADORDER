@@ -176,4 +176,5 @@ mc/delete-migration-validation-data.sql
 1.11/workflow-user.sql
 1.11/enable-barcode-on-invoices.sql
 1.11/reversed-transactions.sql
+1.11/negative-assets-liablilities-reclass.sql
 1.11/rm-aa-entity_id.sql

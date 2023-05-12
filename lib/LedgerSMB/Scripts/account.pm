@@ -148,7 +148,7 @@ sub save {
                 funcname => 'account__save',
                 args     => [
                     $request->@{qw(id accno description category
-                                   gifi_accno heading)},
+                                   gifi_accno heading heading_negative_balance)},
                     $request->{contra} // '0',
                     $request->{tax} // '0',
                     _generate_links($request),

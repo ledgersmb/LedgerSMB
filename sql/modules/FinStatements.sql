@@ -606,54 +606,89 @@ hdr_meta AS (
 ),
 acc_meta AS (
   SELECT a.id, a.accno, coalesce(at.description, a.description) as description,
-         aht.path, a.category, 'A'::char as account_type, contra,
+         a.category, 'A'::char as account_type, contra,
          a.gifi_accno, gifi.description as gifi_description
      FROM account a
-    INNER JOIN account_heading_tree aht on a.heading = aht.id
      LEFT JOIN gifi ON a.gifi_accno = gifi.accno
      LEFT JOIN (SELECT trans_id, description
                   FROM account_translation
                  WHERE language_code =
                         coalesce(in_language, preference__get('language'))) at
                ON a.id = at.trans_id
+),
+acc_balance AS (
+  SELECT b.id,
+         case when a.heading_negative_balance is not null
+           then (
+             case when ((b.balance > 0 and a.category = 'A')
+                        or (b.balance < 0 and a.category = 'L'))
+               then a.heading_negative_balance
+             else a.heading
+             end)
+         else a.heading
+         end as heading,
+         case when a.heading_negative_balance is not null
+           then (
+             case when ((b.balance > 0 and a.category = 'A')
+                        or (b.balance < 0 and a.category = 'L'))
+               then nht.path
+             else aht.path
+             end)
+         else aht.path
+         end as path,
+         case when a.heading_negative_balance is not null
+           then (
+             case when (b.balance > 0 and a.category = 'A')
+               then 'L'
+             when (b.balance < 0 and a.category = 'L')
+               then 'A'
+             else a.category
+             end)
+         else a.category
+         end as category,
+         balance
+    FROM (
+      SELECT bal.id, sum(bal.balance) as balance
+        FROM (
+          SELECT account_id as id, amount_bc as balance
+            FROM account_checkpoint
+           WHERE end_date = (select end_date from chkpoint_date)
+
+           UNION ALL
+          SELECT ac.chart_id as id, ac.amount_bc as balance
+            FROM acc_trans ac
+                   JOIN transactions t ON t.approved AND t.id = ac.trans_id
+           WHERE t.approved AND
+                 ac.transdate > (select end_date from chkpoint_date) AND
+                 (in_to_date is null
+                 OR ((in_timing is null OR in_timing='ultimo')
+                     AND ac.transdate <= in_to_date
+                     AND ac.trans_id IS DISTINCT FROM (SELECT trans_id
+                                                         FROM yearend
+                                                        WHERE transdate = in_to_date
+                                                          AND NOT reversed))
+                                                          OR (in_timing='primo'
+                                                              AND ac.transdate < in_to_date))
+        ) bal
+       GROUP BY bal.id
+      HAVING sum(bal.balance) <> 0.00
+    ) b
+           INNER JOIN account a
+               ON b.id = a.id
+           INNER JOIN account_heading_tree aht on a.heading = aht.id
+           LEFT JOIN account_heading_tree nht on a.heading_negative_balance = nht.id
      WHERE array_endswith((SELECT value::int FROM defaults
                             WHERE setting_key = 'earn_id'), aht.path)
            -- legacy (no earn_id) returns all accounts; bug?
            OR (NOT aht.path @> ARRAY[(SELECT value::int FROM defaults
                                       WHERE setting_key = 'earn_id')])
 ),
-acc_balance AS (
-   SELECT bal.id, sum(bal.balance) as balance
-     FROM (
-   SELECT account_id as id, amount_bc as balance
-     FROM account_checkpoint
-    WHERE end_date = (select end_date from chkpoint_date)
-
-   UNION ALL
-   SELECT ac.chart_id as id, ac.amount_bc as balance
-     FROM acc_trans ac
-     JOIN transactions t ON t.approved AND t.id = ac.trans_id
-    WHERE t.approved AND
-          ac.transdate > (select end_date from chkpoint_date) AND
-          (in_to_date is null
-           OR ((in_timing is null OR in_timing='ultimo')
-               AND ac.transdate <= in_to_date
-               AND ac.trans_id IS DISTINCT FROM (SELECT trans_id
-                                                   FROM yearend
-                                                  WHERE transdate = in_to_date
-                                                    AND NOT reversed))
-           OR (in_timing='primo'  AND ac.transdate < in_to_date))
-    ) bal
- GROUP BY bal.id
-   HAVING sum(bal.balance) <> 0.00
-),
 hdr_balance AS (
-   select ahd.id, sum(balance) as balance
-     FROM acc_balance ab
-    INNER JOIN account acc ON ab.id = acc.id
-    INNER JOIN account_heading_descendant ahd
-            ON acc.heading = ahd.descendant_id
-    GROUP BY ahd.id
+   select id, sum(balance) as balance
+     FROM (
+       select UNNEST(path) as id, balance from acc_balance ab
+     ) a
+    GROUP BY id
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
           null::text as gifi_accno,
@@ -662,9 +697,9 @@ hdr_balance AS (
      FROM hdr_meta hm
     INNER JOIN hdr_balance hb ON hm.id = hb.id
    UNION
-   SELECT am.id, am.accno, am.description, am.account_type, am.category,
+   SELECT am.id, am.accno, am.description, am.account_type, ab.category,
           am.gifi_accno, am.gifi_description, am.contra,
-          ab.balance, am.path
+          ab.balance, ab.path
      FROM acc_meta am
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
