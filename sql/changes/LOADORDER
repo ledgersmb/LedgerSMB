@@ -178,3 +178,4 @@ mc/delete-migration-validation-data.sql
 1.11/reversed-transactions.sql
 1.11/negative-assets-liablilities-reclass.sql
 1.11/rm-aa-entity_id.sql
+1.11/ar-ap-role-naming-consistency.sql

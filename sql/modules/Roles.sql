@@ -950,14 +950,9 @@ SELECT lsmb__grant_perms('ap_transaction_list', obj, 'SELECT')
 SELECT lsmb__grant_menu('ap_transaction_list', node_id, 'allow')
   FROM unnest(array[25,29,34]) node_id;
 
-SELECT lsmb__create_role('ap_all_vouchers');
-SELECT lsmb__grant_role('ap_all_vouchers', 'ap_transaction_create_voucher');
-SELECT lsmb__grant_role('ap_all_vouchers', 'ap_invoice_create_voucher');
-
-SELECT lsmb__create_role('ap_all_transactions');
-SELECT lsmb__grant_role('ap_all_transactions', 'ap_transaction_create');
-SELECT lsmb__grant_role('ap_all_transactions', 'ap_invoice_create');
-SELECT lsmb__grant_role('ap_all_transactions', 'ap_transaction_list');
+SELECT lsmb__create_role('ap_voucher_all');
+SELECT lsmb__grant_role('ap_voucher_all', 'ap_transaction_create_voucher');
+SELECT lsmb__grant_role('ap_voucher_all', 'ap_invoice_create_voucher');
 
 SELECT lsmb__create_role('ap_transaction_all');
 SELECT lsmb__grant_role('ap_transaction_all', rname)
@@ -1008,8 +1003,8 @@ SELECT lsmb__grant_perms('rfq_list', obj, 'SELECT')
 
 SELECT lsmb__create_role('ap_all');
 SELECT lsmb__grant_role('ap_all', rname)
-  FROM unnest(array['ap_all_vouchers'::text, 'file_attach_tx',
-       'ap_all_transactions']) rname;
+  FROM unnest(array['ap_voucher_all'::text, 'ap_transaction_all',
+                    'file_attach_tx']) rname;
 
 \echo CASH
 
