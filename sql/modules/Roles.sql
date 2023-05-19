@@ -1113,7 +1113,11 @@ SELECT lsmb__create_role('reconciliation_all',
 SELECT lsmb__grant_role('reconciliation_all', 'reconciliation_approve');
 SELECT lsmb__grant_role('reconciliation_all', 'reconciliation_enter');
 
-SELECT lsmb__create_role('payment_process');
+SELECT lsmb__create_role('payment_process',
+                         $DOC$
+                         This role allows entry of payments to vendors.
+                         $DOC$
+);
 SELECT lsmb__grant_role('payment_process', 'ap_transaction_list');
 SELECT lsmb__grant_role('payment_process', 'exchangerate_edit');
 SELECT lsmb__grant_menu('payment_process', node_id, 'allow')
@@ -1128,7 +1132,11 @@ SELECT lsmb__grant_perms('payment_process', obj, ptype)
   FROM unnest(array['payment_links'::text, 'overpayments', 'acc_trans']) obj,
        unnest(array['SELECT'::text, 'INSERT']) ptype;
 
-SELECT lsmb__create_role('receipt_process');
+SELECT lsmb__create_role('receipt_process',
+                         $DOC$
+                         This role allows entry of receipts from customers.
+                         $DOC$
+);
 SELECT lsmb__grant_role('receipt_process', 'ap_transaction_list');
 SELECT lsmb__grant_role('receipt_process', 'exchangerate_edit');
 SELECT lsmb__grant_menu('receipt_process', node_id, 'allow')
@@ -1143,14 +1151,25 @@ SELECT lsmb__grant_perms('receipt_process', obj, ptype)
   FROM unnest(array['payment_links'::text, 'overpayments', 'acc_trans']) obj,
        unnest(array['SELECT'::text, 'INSERT']) ptype;
 
-SELECT lsmb__create_role('cash_all');
+SELECT lsmb__create_role('cash_all',
+                         $DOC$
+                         This role combines the all reconciliation rights with the rights to enter payments and receipts.
+                         $DOC$
+);
 SELECT lsmb__grant_role('cash_all', rname)
   FROM unnest(array['reconciliation_all'::text, 'payment_process',
               'receipt_process']) rname;
 
 \echo INVENTORY CONTROL
 
-SELECT lsmb__create_role('part_create');
+SELECT lsmb__create_role('part_create',
+                         $DOC$
+                         This role allows creation of new parts.
+
+                         So as to let the user of this role see/manage pricing per customer, this role includes
+                         the ability to read contacts.
+                         $DOC$
+);
 SELECT lsmb__grant_role('part_create', 'contact_read');
 SELECT lsmb__grant_menu('part_create', node_id, 'allow')
   FROM unnest(array[78,79,80,81,82,259,260,261]) node_id;
@@ -1164,7 +1183,11 @@ SELECT lsmb__grant_perms('part_create', obj, 'INSERT')
   FROM unnest(array['parts'::text, 'makemodel', 'partsgroup', 'assembly',
                     'partstax']) obj;
 
-SELECT lsmb__create_role('part_edit');
+SELECT lsmb__create_role('part_edit',
+                         $DOC$
+                         This role allows changing existing parts.
+                         $DOC$
+);
 SELECT lsmb__grant_role('part_edit', 'file_read');
 SELECT lsmb__grant_menu('part_edit', node_id, 'allow')
   FROM unnest(array[86,91]) node_id;
@@ -1182,11 +1205,19 @@ SELECT lsmb__grant_perms('part_edit', obj, 'SELECT')
   FROM unnest(array['assembly'::text, 'orderitems', 'jcitems', 'invoice',
                     'business_unit_oitem']) obj;
 
-SELECT lsmb__create_role('part_delete');
+SELECT lsmb__create_role('part_delete',
+                         $DOC$
+                         This role allows deletion of existing parts.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('part_delete', obj, 'DELETE')
   FROM unnest(array['parts'::text, 'partsgroup', 'assembly']) obj;
 
-SELECT lsmb__create_role('inventory_reports');
+SELECT lsmb__create_role('inventory_reports',
+                         $DOC$
+                         This role allows searching for and reading existing inventory adjustment reports.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('inventory_reports', obj, 'SELECT')
   FROM unnest(array['ar'::text, 'ap', 'warehouse_inventory',
                     'invoice', 'acc_trans']) obj;
@@ -1194,7 +1225,11 @@ SELECT lsmb__grant_perms('inventory_reports', obj, 'SELECT')
 SELECT lsmb__grant_menu('inventory_reports', 114, 'allow');
 SELECT lsmb__grant_menu('inventory_reports', 75, 'allow');
 
-SELECT lsmb__create_role('inventory_adjust');
+SELECT lsmb__create_role('inventory_adjust',
+                         $DOC$
+                         This role allows adjusting inventory by creating inventory adjustment reports.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('inventory_adjust', obj, 'SELECT')
   FROM unnest(array['parts'::text, 'ar', 'ap', 'invoice']) obj;
 
@@ -1207,7 +1242,11 @@ SELECT lsmb__grant_perms('inventory_adjust', obj, 'ALL')
 SELECT lsmb__grant_menu('inventory_adjust', node_id, 'allow')
   FROM unnest(array[6,16]) node_id;
 
-SELECT lsmb__create_role('inventory_approve');
+SELECT lsmb__create_role('inventory_approve',
+                         $DOC$
+                         This role allows confirmation of inventory adjustments by approval of inventory adjustment reports.
+                         $DOC$
+);
 SELECT lsmb__grant_menu('inventory_approve', 59, 'allow');
 SELECT lsmb__grant_role('inventory_approve', 'ar_invoice_create');
 SELECT lsmb__grant_role('inventory_approve', 'ap_invoice_create');
