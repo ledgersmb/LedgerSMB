@@ -65,7 +65,7 @@ requires 'Locale::CLDR::Locales::Sv';
 requires 'Locale::CLDR::Locales::Tr';
 requires 'Locale::CLDR::Locales::Uk';
 requires 'Locale::CLDR::Locales::Zh';
-requires 'Locale::Maketext::Lexicon', '1.00';
+requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Locales';
 requires 'Log::Any';
 requires 'Log::Any::Adapter';
