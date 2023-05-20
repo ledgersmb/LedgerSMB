@@ -4,7 +4,7 @@
     ],
     "baseBranches": [ "master", "1.10", "1.9" ],
     "cpanfile": {
-        "enable": false
+        "enabled": false
     },
     "packageRules": [
         {
@@ -20,11 +20,11 @@
             "automerge": true
         },
         {
-            "packagePatterns": ["^selenium/"],
+            "matchPackagePatterns": ["^selenium/"],
             "allowedVersions": "<4"
         },
         {
-            "packagePatterns": ["^@intlify/unplugin-vue-i18n"],
+            "matchPackagePatterns": ["^@intlify/unplugin-vue-i18n"],
             "allowedVersions": "<0.8"
         },
         {
