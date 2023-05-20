@@ -27,7 +27,7 @@ requires 'HTTP::Headers::Fast', '0.21'; # for content_is_text() method
 requires 'HTTP::Status';
 requires 'IO::Scalar';
 requires 'JSON::MaybeXS';
-recommends 'Cpanel::JSON::XS', '3.0206'; # 3.0206 adds 'allow_bignum' option
+recommends 'Cpanel::JSON::XS', '4.36'; # 3.0206 adds 'allow_bignum' option
 recommends 'JSON::PP', '2.00'; # 1.99_01 adds 'allow_bignum'
 requires 'List::MoreUtils';
 requires 'Locale::CLDR';
