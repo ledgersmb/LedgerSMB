@@ -4,7 +4,7 @@
     ],
     "baseBranches": [ "master", "1.9" ],
     "cpanfile": {
-        "enable": false
+        "enabled": false
     },
     "packageRules": [
         {
@@ -20,7 +20,7 @@
             "automerge": true
         },
         {
-            "packagePatterns": ["^selenium/"],
+            "matchPackagePatterns": ["^selenium/"],
             "allowedVersions": "<4"
         },
         {
