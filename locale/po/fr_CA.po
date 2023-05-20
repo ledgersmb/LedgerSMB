@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.9.28-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2023-04-21 19:05+0000\n"
+"POT-Creation-Date: 2023-05-20 13:59+0000\n"
 "Last-Translator: ylavoie <ylavoie@yveslavoie.com>, 2023\n"
 "Language-Team: French (Canada) (https://app.transifex.com/ledgersmb/"
 "teams/58325/fr_CA/)\n"
@@ -446,7 +446,7 @@ msgstr "Ajouter une note de débit"
 msgid "Add Employee"
 msgstr "Ajouter employé"
 
-#: old/bin/oe.pl:1608
+#: old/bin/oe.pl:1589
 msgid "Add Exchange Rate"
 msgstr "Ajouter taux de change"
 
@@ -506,7 +506,7 @@ msgstr ""
 msgid "Add SIC"
 msgstr "Ajouter code secteur économique"
 
-#: old/bin/is.pl:109 old/bin/oe.pl:1519
+#: old/bin/is.pl:109 old/bin/oe.pl:1500
 msgid "Add Sales Invoice"
 msgstr "Établir facture de vente"
 
@@ -548,7 +548,7 @@ msgstr "Ajouter utilisateur"
 msgid "Add Vendor"
 msgstr "Ajouter fournisseur"
 
-#: old/bin/ir.pl:116 old/bin/oe.pl:1510
+#: old/bin/ir.pl:116 old/bin/oe.pl:1491
 msgid "Add Vendor Invoice"
 msgstr "Établir facture d'achat"
 
@@ -874,11 +874,11 @@ msgstr "Valeur acquise"
 msgid "Aquired Value Remaining"
 msgstr "Valeur acquise restante"
 
-#: old/bin/oe.pl:1393
+#: old/bin/oe.pl:1374
 msgid "Are you sure you want to delete Order Number"
 msgstr "Êtes vous sûr de vouloir supprimer la commande n°"
 
-#: old/bin/oe.pl:1398
+#: old/bin/oe.pl:1379
 msgid "Are you sure you want to delete Quotation Number"
 msgstr "Êtes vous sûr de vouloir supprimer le devis n°"
 
@@ -1264,7 +1264,7 @@ msgstr "Milliard"
 
 #: lib/LedgerSMB/Report/Inventory/History.pm:137
 #: lib/LedgerSMB/Report/Inventory/Search.pm:239 old/bin/ic.pl:2085
-#: old/bin/ic.pl:487 old/bin/io.pl:246 old/bin/oe.pl:1956
+#: old/bin/ic.pl:487 old/bin/io.pl:246 old/bin/oe.pl:1937
 #: templates/demo/bin_list.html:106 templates/demo/bin_list.tex:115
 #: templates/demo/pick_list.html:96 templates/demo/pick_list.tex:108
 #: templates/demo/work_order.html:103 templates/xedemo/bin_list.html:106
@@ -1446,7 +1446,7 @@ msgstr "Impossible de créer le service; le compte de revenu n'existe pas!"
 msgid "Cannot delete item!"
 msgstr "Impossible de supprimer l'objet!"
 
-#: old/bin/oe.pl:1431
+#: old/bin/oe.pl:1412
 msgid "Cannot delete order!"
 msgstr "Impossible de supprimer la commande!"
 
@@ -1454,15 +1454,15 @@ msgstr "Impossible de supprimer la commande!"
 msgid "Cannot delete posted transaction"
 msgstr "Impossible de supprimer une transaction enregistrée"
 
-#: old/bin/oe.pl:1435
+#: old/bin/oe.pl:1416
 msgid "Cannot delete quotation!"
 msgstr "Impossible de supprimer le devis!"
 
-#: old/bin/ir.pl:1275 old/bin/is.pl:1401
+#: old/bin/ir.pl:1254 old/bin/is.pl:1379
 msgid "Cannot post invoice for a closed period!"
 msgstr "Impossible d'enregistrer la facture sur un exercice clos!"
 
-#: old/bin/aa.pl:1343 old/bin/ir.pl:1290 old/bin/is.pl:1416
+#: old/bin/aa.pl:1343 old/bin/ir.pl:1269 old/bin/is.pl:1394
 msgid "Cannot post payment for a closed period!"
 msgstr "Impossible d'enregistrer le paiement sur un exercice clos!"
 
@@ -1481,11 +1481,11 @@ msgstr ""
 msgid "Cannot post transaction!"
 msgstr "Impossible d'enregistrer l'écriture!"
 
-#: old/bin/oe.pl:1298
+#: old/bin/oe.pl:1279
 msgid "Cannot save order!"
 msgstr "Impossible d'enregistrer la commande!"
 
-#: old/bin/oe.pl:1315
+#: old/bin/oe.pl:1296
 msgid "Cannot save quotation!"
 msgstr "Impossible d'enregistrer le devis!"
 
@@ -1724,7 +1724,7 @@ msgstr "Composer un courriel"
 msgid "Confirm Operation"
 msgstr "Confirmer l'opération"
 
-#: old/bin/am.pl:457 old/bin/oe.pl:1412
+#: old/bin/am.pl:457 old/bin/oe.pl:1393
 msgid "Confirm!"
 msgstr "Confirmer!"
 
@@ -1782,7 +1782,7 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/payment.pm:1566 lib/LedgerSMB/Scripts/payment.pm:770
 #: lib/LedgerSMB/Scripts/payment.pm:832 old/bin/arap.pl:263 old/bin/ic.pl:1759
 #: old/bin/ic.pl:2040 old/bin/ic.pl:2189 old/bin/ic.pl:950 old/bin/io.pl:644
-#: old/bin/oe.pl:1643 old/bin/oe.pl:2169 old/bin/oe.pl:2666 old/bin/pe.pl:1182
+#: old/bin/oe.pl:1624 old/bin/oe.pl:2150 old/bin/oe.pl:2647 old/bin/pe.pl:1182
 #: old/bin/pe.pl:326 old/bin/pe.pl:745 old/bin/pe.pl:915
 #: UI/asset/begin_approval.html:65 UI/asset/begin_report.html:59
 #: UI/Contact/divs/credit.html:536 UI/create_batch.html:44
@@ -1847,7 +1847,7 @@ msgid "Copy to New Name"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Activity.pm:127 old/bin/ic.pl:1018
-#: old/bin/ic.pl:1264 old/bin/oe.pl:2510
+#: old/bin/ic.pl:1264 old/bin/oe.pl:2491
 msgid "Cost"
 msgstr "Coût"
 
@@ -1859,15 +1859,15 @@ msgstr "Coût des produits vendus"
 msgid "Could Not Load Template from DB"
 msgstr "Impossible de charger le modèle à partir de la base de données"
 
-#: old/bin/ir.pl:1253 old/bin/is.pl:1380 old/bin/oe.pl:1331
+#: old/bin/ir.pl:1232 old/bin/is.pl:1358 old/bin/oe.pl:1312
 msgid "Could not save the data.  Please try again"
 msgstr "Impossible d'enregistrer les données. Veuillez réessayer"
 
-#: old/bin/oe.pl:2102
+#: old/bin/oe.pl:2083
 msgid "Could not save!"
 msgstr "Enregistrement impossible!"
 
-#: old/bin/oe.pl:2372
+#: old/bin/oe.pl:2353
 msgid "Could not transfer Inventory!"
 msgstr "Impossible de transférer l'inventaire!"
 
@@ -1996,7 +1996,7 @@ msgstr "Crédits"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:254
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:278 old/bin/ic.pl:1007
-#: old/bin/ic.pl:1102 old/bin/oe.pl:2515
+#: old/bin/ic.pl:1102 old/bin/oe.pl:2496
 msgid "Curr"
 msgstr "Dev."
 
@@ -2005,7 +2005,7 @@ msgstr "Dev."
 #: lib/LedgerSMB/Report/Contact/Search.pm:84
 #: lib/LedgerSMB/Report/Inventory/Search.pm:315
 #: lib/LedgerSMB/Report/Orders.pm:230 lib/LedgerSMB/Scripts/currency.pm:240
-#: old/bin/aa.pl:430 old/bin/ir.pl:285 old/bin/is.pl:287 old/bin/oe.pl:1622
+#: old/bin/aa.pl:430 old/bin/ir.pl:285 old/bin/is.pl:287 old/bin/oe.pl:1603
 #: old/bin/oe.pl:343 templates/demo/printPayment.html:68
 #: templates/xedemo/printPayment.html:68 UI/Configuration/rate.html:28
 #: UI/Contact/divs/credit.html:220 UI/Contact/divs/credit.html:221
@@ -2088,7 +2088,7 @@ msgstr "Numéro de client"
 msgid "Customer Search"
 msgstr "Recherche client"
 
-#: old/bin/aa.pl:1311 old/bin/is.pl:1389 old/bin/oe.pl:1266 old/bin/pe.pl:1240
+#: old/bin/aa.pl:1311 old/bin/is.pl:1367 old/bin/oe.pl:1247 old/bin/pe.pl:1240
 msgid "Customer missing!"
 msgstr "Client manquant!"
 
@@ -2189,7 +2189,7 @@ msgstr "La base de données existe."
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:95
 #: lib/LedgerSMB/Scripts/asset.pm:465 lib/LedgerSMB/Scripts/payment.pm:193
 #: lib/LedgerSMB/Scripts/payment.pm:934 old/bin/aa.pl:835 old/bin/ir.pl:839
-#: old/bin/is.pl:951 old/bin/oe.pl:1626 old/bin/pe.pl:1024
+#: old/bin/is.pl:951 old/bin/oe.pl:1607 old/bin/pe.pl:1024
 #: templates/demo/ap_transaction.html:60 templates/demo/ap_transaction.html:151
 #: templates/demo/ap_transaction.tex:66 templates/demo/ap_transaction.tex:117
 #: templates/demo/ar_transaction.html:58 templates/demo/ar_transaction.html:148
@@ -2245,7 +2245,7 @@ msgstr "Date de paiement"
 msgid "Date Range"
 msgstr "Plage de dates"
 
-#: old/bin/oe.pl:1831
+#: old/bin/oe.pl:1812
 msgid "Date Received"
 msgstr "Date de réception"
 
@@ -2269,7 +2269,7 @@ msgstr "De"
 msgid "Date of Birth"
 msgstr "Date de naissance"
 
-#: old/bin/oe.pl:2087
+#: old/bin/oe.pl:2068
 msgid "Date received missing!"
 msgstr "Date de réception manquante!"
 
@@ -2566,8 +2566,8 @@ msgstr "Début d'amortissement"
 #: lib/LedgerSMB/Scripts/file.pm:138 old/bin/aa.pl:622 old/bin/aa.pl:674
 #: old/bin/am.pl:774 old/bin/ic.pl:1258 old/bin/ic.pl:2014 old/bin/ic.pl:2081
 #: old/bin/ic.pl:740 old/bin/io.pl:1741 old/bin/io.pl:234 old/bin/ir.pl:423
-#: old/bin/is.pl:463 old/bin/oe.pl:1949 old/bin/oe.pl:2150 old/bin/oe.pl:2223
-#: old/bin/oe.pl:2257 old/bin/oe.pl:2502 old/bin/pe.pl:1034 old/bin/pe.pl:307
+#: old/bin/is.pl:463 old/bin/oe.pl:1930 old/bin/oe.pl:2131 old/bin/oe.pl:2204
+#: old/bin/oe.pl:2238 old/bin/oe.pl:2483 old/bin/pe.pl:1034 old/bin/pe.pl:307
 #: old/bin/pe.pl:353 old/bin/pe.pl:382 templates/demo/bin_list.html:100
 #: templates/demo/bin_list.tex:112 templates/demo/invoice.html:104
 #: templates/demo/invoice.tex:148 templates/demo/packing_list.html:92
@@ -2713,7 +2713,7 @@ msgstr "Type de document"
 msgid "Don't know what to do with backup"
 msgstr "Je ne sais pas quoi faire avec la sauvegarde"
 
-#: old/bin/oe.pl:2048 old/bin/oe.pl:2056
+#: old/bin/oe.pl:2029 old/bin/oe.pl:2037
 msgid "Done"
 msgstr "Fait!"
 
@@ -2793,7 +2793,7 @@ msgid "Duplicate employee numbers"
 msgstr "Numéros d'employés en double"
 
 #: old/bin/am.pl:787 old/bin/arap.pl:396 old/bin/is.pl:1069 old/bin/is.pl:559
-#: old/bin/oe.pl:2055 old/bin/oe.pl:652 old/bin/oe.pl:921
+#: old/bin/oe.pl:2036 old/bin/oe.pl:652 old/bin/oe.pl:921
 #: UI/Reports/filters/contact_search.html:48
 msgid "E-mail"
 msgstr "E-mail"
@@ -3199,7 +3199,7 @@ msgstr "Change"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:118
 #: lib/LedgerSMB/Scripts/payment.pm:944 old/bin/aa.pl:437 old/bin/ir.pl:294
-#: old/bin/is.pl:296 old/bin/oe.pl:1630 old/bin/oe.pl:353 old/bin/oe.pl:361
+#: old/bin/is.pl:296 old/bin/oe.pl:1611 old/bin/oe.pl:353 old/bin/oe.pl:361
 #: UI/orders/order.html:53 UI/payments/payment2.html:136
 #: UI/payments/payments_detail.html:148 UI/payments/payments_detail.html:157
 #: UI/payments/use_overpayment2.html:98 UI/Reports/filters/overpayments.html:50
@@ -3207,7 +3207,7 @@ msgstr "Change"
 msgid "Exchange Rate"
 msgstr "Taux de change"
 
-#: old/bin/aa.pl:1350 old/bin/ir.pl:1297 old/bin/is.pl:1423
+#: old/bin/aa.pl:1350 old/bin/ir.pl:1276 old/bin/is.pl:1401
 msgid "Exchange rate for payment missing!"
 msgstr "Taux de change manquant pour le paiement!"
 
@@ -3215,7 +3215,7 @@ msgstr "Taux de change manquant pour le paiement!"
 msgid "Exchange rate hasn't been defined!"
 msgstr "Le taux de change n'a pas été défini!"
 
-#: old/bin/aa.pl:1332 old/bin/ir.pl:1278 old/bin/is.pl:1404 old/bin/oe.pl:1270
+#: old/bin/aa.pl:1332 old/bin/ir.pl:1257 old/bin/is.pl:1382 old/bin/oe.pl:1251
 msgid "Exchange rate missing!"
 msgstr "Taux de change manquant!"
 
@@ -3459,7 +3459,7 @@ msgstr "Quatorze"
 msgid "Fri"
 msgstr "Ven"
 
-#: old/bin/ic.pl:1116 old/bin/oe.pl:2231 old/bin/pe.pl:832
+#: old/bin/ic.pl:1116 old/bin/oe.pl:2212 old/bin/pe.pl:832
 #: templates/demo/bin_list.html:40 templates/demo/bin_list.tex:41
 #: templates/xedemo/bin_list.html:40 templates/xedemo/bin_list.tex:39
 #: UI/asset/begin_approval.html:22 UI/Contact/divs/credit.html:442
@@ -3494,7 +3494,7 @@ msgstr "Date initiale"
 msgid "From File"
 msgstr "Date initiale"
 
-#: old/bin/oe.pl:2244
+#: old/bin/oe.pl:2225
 msgid "From Warehouse"
 msgstr "Du entrepôt"
 
@@ -3593,11 +3593,11 @@ msgstr "Générer"
 msgid "Generate Control Code"
 msgstr "Générer le code de contrôle"
 
-#: old/bin/oe.pl:2612
+#: old/bin/oe.pl:2593
 msgid "Generate Orders"
 msgstr "Générer commandes"
 
-#: old/bin/oe.pl:2517
+#: old/bin/oe.pl:2498
 msgid "Generate Purchase Orders"
 msgstr "Générer commandes d'achat"
 
@@ -3638,8 +3638,8 @@ msgid "Grand Total"
 msgstr "Grand total"
 
 #: lib/LedgerSMB/Report/Inventory/Partsgroups.pm:55 old/bin/ic.pl:1267
-#: old/bin/ic.pl:420 old/bin/io.pl:270 old/bin/oe.pl:2154 old/bin/oe.pl:2227
-#: old/bin/oe.pl:2262 old/bin/pe.pl:141
+#: old/bin/ic.pl:420 old/bin/io.pl:270 old/bin/oe.pl:2135 old/bin/oe.pl:2208
+#: old/bin/oe.pl:2243 old/bin/pe.pl:141
 msgid "Group"
 msgstr "Groupe"
 
@@ -3952,11 +3952,11 @@ msgid "Inventory quantity must be zero before you can set this part obsolete!"
 msgstr ""
 "La quantité en stock doit être zero avant de pouvoir annuler cette pièce!"
 
-#: old/bin/oe.pl:2099
+#: old/bin/oe.pl:2080
 msgid "Inventory saved!"
 msgstr "Inventaire enregistré!"
 
-#: old/bin/oe.pl:2369
+#: old/bin/oe.pl:2350
 msgid "Inventory transferred!"
 msgstr "Inventaire transféré!"
 
@@ -3965,7 +3965,7 @@ msgstr "Inventaire transféré!"
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:181
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:269
 #: lib/LedgerSMB/Scripts/payment.pm:933 old/bin/am.pl:1434 old/bin/io.pl:1147
-#: old/bin/is.pl:1427 old/bin/is.pl:259 old/bin/printer.pl:49
+#: old/bin/is.pl:1405 old/bin/is.pl:259 old/bin/printer.pl:49
 #: templates/demo/invoice.html:16 templates/demo/invoice.tex:124
 #: templates/demo/printPayment.html:44 templates/xedemo/invoice.html:16
 #: templates/xedemo/invoice.tex:122 templates/xedemo/printPayment.html:44
@@ -4010,7 +4010,7 @@ msgstr "Date de création de facture manquante!"
 msgid "Invoice Date"
 msgstr "Date de facturation"
 
-#: old/bin/aa.pl:1315 old/bin/io.pl:1260 old/bin/ir.pl:1262 old/bin/is.pl:1388
+#: old/bin/aa.pl:1315 old/bin/io.pl:1260 old/bin/ir.pl:1241 old/bin/is.pl:1366
 msgid "Invoice Date missing!"
 msgstr "Date de facture manquante!"
 
@@ -4247,7 +4247,7 @@ msgstr "Dernière mise à jour"
 msgid "Last name"
 msgstr "Nom"
 
-#: old/bin/oe.pl:2513 sql/Pg-database.sql:537
+#: old/bin/oe.pl:2494 sql/Pg-database.sql:537
 msgid "Lead"
 msgstr "Délai"
 
@@ -4956,15 +4956,15 @@ msgstr "Notes"
 msgid "Notes:<br />"
 msgstr "Notes:<br />"
 
-#: old/bin/oe.pl:2096
+#: old/bin/oe.pl:2077
 msgid "Nothing entered!"
 msgstr "Rien n'a été saisi!"
 
-#: old/bin/oe.pl:2387 old/bin/oe.pl:2646 old/bin/pe.pl:1157
+#: old/bin/oe.pl:2368 old/bin/oe.pl:2627 old/bin/pe.pl:1157
 msgid "Nothing selected!"
 msgstr "Pas de sélection!"
 
-#: old/bin/oe.pl:2113
+#: old/bin/oe.pl:2094
 msgid "Nothing to transfer!"
 msgstr "Rien à transférer!"
 
@@ -4989,7 +4989,7 @@ msgid "Null model numbers"
 msgstr "Numéros de modèle nuls"
 
 #: old/bin/ic.pl:1255 old/bin/ic.pl:2008 old/bin/ic.pl:2077 old/bin/ic.pl:739
-#: old/bin/io.pl:231 old/bin/oe.pl:1946 old/bin/pe.pl:264 old/bin/pe.pl:346
+#: old/bin/io.pl:231 old/bin/oe.pl:1927 old/bin/pe.pl:264 old/bin/pe.pl:346
 #: old/bin/pe.pl:378 templates/demo/bin_list.html:99
 #: templates/demo/invoice.html:103 templates/demo/invoice.tex:147
 #: templates/demo/packing_list.html:91 templates/demo/pick_list.html:91
@@ -5137,7 +5137,7 @@ msgstr "Ou ajouter au lot"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:307
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:212
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:272 old/bin/oe.pl:2506
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:272 old/bin/oe.pl:2487
 msgid "Order"
 msgstr "Commande"
 
@@ -5164,14 +5164,14 @@ msgstr "Commande #"
 msgid "Order By"
 msgstr "Commandé par"
 
-#: old/bin/oe.pl:1901 old/bin/oe.pl:406 templates/demo/purchase_order.html:75
+#: old/bin/oe.pl:1882 old/bin/oe.pl:406 templates/demo/purchase_order.html:75
 #: templates/demo/sales_order.html:78 templates/demo/work_order.html:77
 #: templates/xedemo/purchase_order.html:75 templates/xedemo/sales_order.html:78
 #: templates/xedemo/work_order.html:77
 msgid "Order Date"
 msgstr "Date de commande"
 
-#: old/bin/io.pl:1262 old/bin/oe.pl:1256 old/bin/oe.pl:1453
+#: old/bin/io.pl:1262 old/bin/oe.pl:1237 old/bin/oe.pl:1434
 msgid "Order Date missing!"
 msgstr "Date de commande manquante!"
 
@@ -5180,7 +5180,7 @@ msgid "Order Entry"
 msgstr "Commandes"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:72 old/bin/aa.pl:638
-#: old/bin/ir.pl:437 old/bin/is.pl:488 old/bin/oe.pl:1896 old/bin/oe.pl:400
+#: old/bin/ir.pl:437 old/bin/is.pl:488 old/bin/oe.pl:1877 old/bin/oe.pl:400
 #: UI/orders/order.html:83 UI/Reports/filters/invoice_outstanding.html:144
 #: UI/Reports/filters/invoice_search.html:99
 #: UI/Reports/filters/invoice_search.html:269 UI/Reports/filters/orders.html:40
@@ -5188,15 +5188,15 @@ msgstr "Commandes"
 msgid "Order Number"
 msgstr "Numéro de commande"
 
-#: old/bin/io.pl:1272 old/bin/oe.pl:1452
+#: old/bin/io.pl:1272 old/bin/oe.pl:1433
 msgid "Order Number missing!"
 msgstr "Numéro de commande manquant!"
 
-#: old/bin/oe.pl:1430
+#: old/bin/oe.pl:1411
 msgid "Order deleted!"
 msgstr "Commande supprimée!"
 
-#: old/bin/oe.pl:2635
+#: old/bin/oe.pl:2616
 msgid "Order generation failed!"
 msgstr "Génération commande échouée!"
 
@@ -5288,7 +5288,7 @@ msgstr "Bon #"
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:216
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:275
 #: lib/LedgerSMB/Report/Orders.pm:238 old/bin/aa.pl:654 old/bin/is.pl:505
-#: old/bin/oe.pl:1907 old/bin/oe.pl:415 UI/orders/order.html:101
+#: old/bin/oe.pl:1888 old/bin/oe.pl:415 UI/orders/order.html:101
 #: UI/Reports/filters/invoice_outstanding.html:150
 #: UI/Reports/filters/invoice_search.html:109
 #: UI/Reports/filters/invoice_search.html:275 UI/Reports/filters/orders.html:62
@@ -5362,8 +5362,8 @@ msgstr "Groupe de la pièce"
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:101
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:162
 #: lib/LedgerSMB/Report/PNL/Product.pm:77
-#: lib/LedgerSMB/Scripts/configuration.pm:122 old/bin/oe.pl:2146
-#: old/bin/oe.pl:2219 old/bin/oe.pl:2253 old/bin/oe.pl:2500 old/bin/pe.pl:1029
+#: lib/LedgerSMB/Scripts/configuration.pm:122 old/bin/oe.pl:2127
+#: old/bin/oe.pl:2200 old/bin/oe.pl:2234 old/bin/oe.pl:2481 old/bin/pe.pl:1029
 #: UI/Reports/filters/cogs_lines.html:8
 #: UI/Reports/filters/inventory_activity.html:8
 #: UI/Reports/filters/purchase_history.html:243
@@ -5483,7 +5483,7 @@ msgstr "Type de paiements"
 msgid "Payment batch"
 msgstr "Lot de paiements"
 
-#: old/bin/aa.pl:1340 old/bin/ir.pl:1287 old/bin/is.pl:1413
+#: old/bin/aa.pl:1340 old/bin/ir.pl:1266 old/bin/is.pl:1391
 msgid "Payment date missing!"
 msgstr "Date de paiement manquante!"
 
@@ -5854,7 +5854,7 @@ msgstr "Téléphone principal"
 #: lib/LedgerSMB/Report/Taxform/Details.pm:140
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:133 old/bin/aa.pl:939
 #: old/bin/aa.pl:967 old/bin/am.pl:788 old/bin/arap.pl:471 old/bin/ir.pl:482
-#: old/bin/is.pl:1064 old/bin/is.pl:553 old/bin/oe.pl:2052 old/bin/oe.pl:646
+#: old/bin/is.pl:1064 old/bin/is.pl:553 old/bin/oe.pl:2033 old/bin/oe.pl:646
 #: old/bin/oe.pl:914 UI/payments/payments_detail.html:509
 #: UI/timecards/timecard.html:160
 msgid "Print"
@@ -5997,7 +5997,7 @@ msgid "Purchase History"
 msgstr "Historique d'achat"
 
 #: old/bin/am.pl:1214 old/bin/am.pl:1441 old/bin/io.pl:1200 old/bin/ir.pl:490
-#: old/bin/ir.pl:953 old/bin/oe.pl:1292 old/bin/oe.pl:276 old/bin/oe.pl:681
+#: old/bin/ir.pl:953 old/bin/oe.pl:1273 old/bin/oe.pl:276 old/bin/oe.pl:681
 #: old/bin/oe.pl:928 old/bin/printer.pl:82 t/data/04-complex_template.html:343
 #: templates/demo/purchase_order.html:16 templates/demo/purchase_order.html:32
 #: templates/demo/purchase_order.tex:107 templates/xedemo/purchase_order.html:16
@@ -6038,7 +6038,7 @@ msgstr "Acheté"
 #: lib/LedgerSMB/Report/Contact/History.pm:89
 #: lib/LedgerSMB/Report/Inventory/History.pm:158
 #: lib/LedgerSMB/Report/Inventory/Search.pm:319 old/bin/ic.pl:1250
-#: old/bin/ic.pl:2088 old/bin/io.pl:237 old/bin/oe.pl:1952 old/bin/oe.pl:2236
+#: old/bin/ic.pl:2088 old/bin/io.pl:237 old/bin/oe.pl:1933 old/bin/oe.pl:2217
 #: old/bin/pe.pl:1037 templates/demo/bin_list.html:103
 #: templates/demo/bin_list.tex:114 templates/demo/invoice.html:106
 #: templates/demo/invoice.tex:150 templates/demo/packing_list.html:95
@@ -6082,7 +6082,7 @@ msgstr "Trimestre"
 
 #: lib/LedgerSMB/Report/Inventory/Search.pm:311
 #: lib/LedgerSMB/Report/Orders.pm:242 old/bin/io.pl:1214 old/bin/io.pl:1221
-#: old/bin/oe.pl:1303 old/bin/oe.pl:242 old/bin/oe.pl:672 old/bin/oe.pl:925
+#: old/bin/oe.pl:1284 old/bin/oe.pl:242 old/bin/oe.pl:672 old/bin/oe.pl:925
 #: old/bin/printer.pl:55 templates/demo/sales_quotation.html:16
 #: templates/demo/sales_quotation.html:33 templates/demo/sales_quotation.tex:76
 #: templates/xedemo/sales_quotation.html:16
@@ -6101,7 +6101,7 @@ msgstr "Devis #"
 msgid "Quotation Date"
 msgstr "Date de devis"
 
-#: old/bin/io.pl:1263 old/bin/oe.pl:1259 old/bin/oe.pl:1459
+#: old/bin/io.pl:1263 old/bin/oe.pl:1240 old/bin/oe.pl:1440
 msgid "Quotation Date missing!"
 msgstr "Date de devis manqante!"
 
@@ -6109,11 +6109,11 @@ msgstr "Date de devis manqante!"
 msgid "Quotation Number"
 msgstr "Numéro de devis"
 
-#: old/bin/io.pl:1273 old/bin/oe.pl:1458
+#: old/bin/io.pl:1273 old/bin/oe.pl:1439
 msgid "Quotation Number missing!"
 msgstr "Numéro de devis manquant!"
 
-#: old/bin/oe.pl:1434
+#: old/bin/oe.pl:1415
 msgid "Quotation deleted!"
 msgstr "Devis effacé!"
 
@@ -6197,7 +6197,7 @@ msgstr "Accusé de lecture"
 msgid "Rebuild/Upgrade?"
 msgstr "Reconstruire/Mettre à jour?"
 
-#: old/bin/io.pl:178 old/bin/oe.pl:1936 templates/demo/bin_list.html:104
+#: old/bin/io.pl:178 old/bin/oe.pl:1917 templates/demo/bin_list.html:104
 #: templates/xedemo/bin_list.html:104
 msgid "Recd"
 msgstr "Reçu"
@@ -6228,7 +6228,7 @@ msgstr "À recevoir"
 msgid "Receive"
 msgstr "Réception"
 
-#: old/bin/oe.pl:1829
+#: old/bin/oe.pl:1810
 msgid "Receive Merchandise"
 msgstr "Réception marchandise"
 
@@ -6399,11 +6399,11 @@ msgstr "Rapports"
 msgid "Reposting Not Allowed"
 msgstr "Réenregistrement interdit"
 
-#: old/bin/oe.pl:2508
+#: old/bin/oe.pl:2489
 msgid "Req"
 msgstr "Exigence"
 
-#: old/bin/oe.pl:1309 templates/demo/request_quotation.html:16
+#: old/bin/oe.pl:1290 templates/demo/request_quotation.html:16
 #: templates/demo/request_quotation.html:32
 #: templates/demo/request_quotation.tex:107
 #: templates/xedemo/request_quotation.html:16
@@ -6538,7 +6538,7 @@ msgstr "Code secteur économique enregistré!"
 msgid "SIC:"
 msgstr "SIC:"
 
-#: old/bin/io.pl:271 old/bin/oe.pl:1938 old/bin/oe.pl:2498
+#: old/bin/io.pl:271 old/bin/oe.pl:1919 old/bin/oe.pl:2479
 msgid "SKU"
 msgstr "SKU"
 
@@ -6581,7 +6581,7 @@ msgid "Sales Invoice/AR Transaction Number"
 msgstr "Numéro facture de vente/écriture recette"
 
 #: old/bin/am.pl:1208 old/bin/am.pl:1439 old/bin/io.pl:1152 old/bin/is.pl:1071
-#: old/bin/is.pl:561 old/bin/oe.pl:1286 old/bin/oe.pl:262 old/bin/oe.pl:670
+#: old/bin/is.pl:561 old/bin/oe.pl:1267 old/bin/oe.pl:262 old/bin/oe.pl:670
 #: old/bin/oe.pl:927 old/bin/printer.pl:65 templates/demo/sales_order.html:16
 #: templates/demo/sales_order.html:33 templates/demo/sales_order.tex:106
 #: templates/xedemo/sales_order.html:16 templates/xedemo/sales_order.html:33
@@ -6901,11 +6901,11 @@ msgstr "Séléctionner client"
 msgid "Select Templates to Load"
 msgstr "Sélectionnez les modèles à charger"
 
-#: old/bin/oe.pl:2617
+#: old/bin/oe.pl:2598
 msgid "Select Vendor"
 msgstr "Sélectionner vendeur"
 
-#: old/bin/arapprn.pl:352 old/bin/is.pl:1472 old/bin/oe.pl:1371
+#: old/bin/arapprn.pl:352 old/bin/is.pl:1450 old/bin/oe.pl:1352
 msgid "Select a Printer!"
 msgstr "Sélectionner une imprimante!"
 
@@ -6925,8 +6925,8 @@ msgstr "Sélectionnez les factures"
 msgid "Select or Enter User"
 msgstr "Sélectionnez ou entrez l'utilisateur"
 
-#: old/bin/arapprn.pl:350 old/bin/arapprn.pl:86 old/bin/is.pl:1470
-#: old/bin/oe.pl:1369
+#: old/bin/arapprn.pl:350 old/bin/arapprn.pl:86 old/bin/is.pl:1448
+#: old/bin/oe.pl:1350
 msgid "Select postscript or PDF!"
 msgstr "Sélectionner Postscript ou PDF!"
 
@@ -7022,7 +7022,7 @@ msgstr "Séquences"
 msgid "Serial #"
 msgstr "Numéro de série"
 
-#: old/bin/io.pl:268 old/bin/oe.pl:1959
+#: old/bin/io.pl:268 old/bin/oe.pl:1940
 msgid "Serial No."
 msgstr "N° série"
 
@@ -7086,14 +7086,14 @@ msgstr "Dix-sept"
 msgid "Seventy"
 msgstr "Soixante-dix"
 
-#: lib/LedgerSMB/Scripts/order.pm:70 old/bin/io.pl:171 old/bin/oe.pl:1932
+#: lib/LedgerSMB/Scripts/order.pm:70 old/bin/io.pl:171 old/bin/oe.pl:1913
 #: templates/demo/packing_list.html:96 templates/demo/pick_list.html:94
 #: templates/xedemo/packing_list.html:96 templates/xedemo/pick_list.html:94
 #: sql/Pg-database.sql:2605
 msgid "Ship"
 msgstr "Expédier"
 
-#: old/bin/oe.pl:1824
+#: old/bin/oe.pl:1805
 msgid "Ship Merchandise"
 msgstr "Expédier marchandise"
 
@@ -7134,11 +7134,11 @@ msgid "Ship Via"
 msgstr "Expédier via"
 
 #: old/bin/aa.pl:942 old/bin/io.pl:1604 old/bin/is.pl:1067 old/bin/is.pl:557
-#: old/bin/oe.pl:2054 old/bin/oe.pl:650 old/bin/oe.pl:918
+#: old/bin/oe.pl:2035 old/bin/oe.pl:650 old/bin/oe.pl:918
 msgid "Ship to"
 msgstr "Expédier à"
 
-#: old/bin/is.pl:473 old/bin/oe.pl:1885 old/bin/oe.pl:609
+#: old/bin/is.pl:473 old/bin/oe.pl:1866 old/bin/oe.pl:609
 #: templates/demo/bin_list.html:80 templates/demo/invoice.html:84
 #: templates/demo/invoice.tex:135 templates/demo/packing_list.html:71
 #: templates/demo/packing_list.tex:99 templates/demo/pick_list.html:71
@@ -7164,11 +7164,11 @@ msgstr "Expédier via"
 msgid "Shipping"
 msgstr "Expédition"
 
-#: old/bin/oe.pl:1826
+#: old/bin/oe.pl:1807
 msgid "Shipping Date"
 msgstr "Date d'expédition"
 
-#: old/bin/oe.pl:2083
+#: old/bin/oe.pl:2064
 msgid "Shipping Date missing!"
 msgstr "Date d'expédition manquante!"
 
@@ -7179,7 +7179,7 @@ msgstr "Étiquette d'expédition"
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:116
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:282
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:314
-#: lib/LedgerSMB/Report/Orders.pm:246 old/bin/is.pl:469 old/bin/oe.pl:1880
+#: lib/LedgerSMB/Report/Orders.pm:246 old/bin/is.pl:469 old/bin/oe.pl:1861
 #: old/bin/oe.pl:605 templates/demo/bin_list.html:79
 #: templates/demo/bin_list.tex:90 templates/demo/invoice.html:83
 #: templates/demo/invoice.tex:134 templates/demo/packing_list.html:70
@@ -7955,7 +7955,7 @@ msgstr "Temps"
 msgid "Timing"
 msgstr ""
 
-#: old/bin/ic.pl:1117 old/bin/oe.pl:2234 old/bin/pe.pl:835
+#: old/bin/ic.pl:1117 old/bin/oe.pl:2215 old/bin/pe.pl:835
 #: templates/demo/invoice.html:39 templates/demo/request_quotation.tex:34
 #: templates/demo/sales_order.html:40 templates/demo/work_order.html:39
 #: templates/xedemo/invoice.html:39 templates/xedemo/request_quotation.tex:32
@@ -7992,7 +7992,7 @@ msgstr "Jusqu'à la date"
 msgid "To Pay"
 msgstr "À payer"
 
-#: old/bin/oe.pl:2249
+#: old/bin/oe.pl:2230
 msgid "To Warehouse"
 msgstr "Vers entrepôt"
 
@@ -8130,20 +8130,20 @@ msgstr "Type de la transaction"
 msgid "Transactions"
 msgstr "Mouvements"
 
-#: old/bin/oe.pl:2238 old/bin/oe.pl:2354 sql/Pg-database.sql:2607
+#: old/bin/oe.pl:2219 old/bin/oe.pl:2335 sql/Pg-database.sql:2607
 #: sql/Pg-database.sql:2642
 msgid "Transfer"
 msgstr "Transfert"
 
-#: old/bin/oe.pl:2120 old/bin/oe.pl:2265
+#: old/bin/oe.pl:2101 old/bin/oe.pl:2246
 msgid "Transfer Inventory"
 msgstr "Transfert inventaire"
 
-#: old/bin/oe.pl:2138
+#: old/bin/oe.pl:2119
 msgid "Transfer from"
 msgstr "Transférer de"
 
-#: old/bin/oe.pl:2142
+#: old/bin/oe.pl:2123
 msgid "Transfer to"
 msgstr "Transférer vers"
 
@@ -8295,7 +8295,7 @@ msgstr "Numéros uniques de pièces non obsolètes"
 #: lib/LedgerSMB/Report/Contact/History.pm:93
 #: lib/LedgerSMB/Report/Inventory/History.pm:133
 #: lib/LedgerSMB/Report/Inventory/Search.pm:231 old/bin/ic.pl:1252
-#: old/bin/ic.pl:784 old/bin/io.pl:239 old/bin/oe.pl:1954
+#: old/bin/ic.pl:784 old/bin/io.pl:239 old/bin/oe.pl:1935
 #: templates/demo/invoice.tex:151 templates/demo/product_receipt.tex:126
 #: templates/demo/purchase_order.tex:126 templates/demo/sales_order.tex:127
 #: templates/xedemo/invoice.tex:149 templates/xedemo/product_receipt.tex:124
@@ -8380,7 +8380,7 @@ msgstr "Haut"
 
 #: lib/LedgerSMB/Scripts/budgets.pm:98 old/bin/aa.pl:938 old/bin/aa.pl:964
 #: old/bin/gl.pl:243 old/bin/ic.pl:826 old/bin/ic.pl:835 old/bin/ir.pl:476
-#: old/bin/ir.pl:949 old/bin/is.pl:1063 old/bin/is.pl:547 old/bin/oe.pl:2051
+#: old/bin/ir.pl:949 old/bin/is.pl:1063 old/bin/is.pl:547 old/bin/oe.pl:2032
 #: old/bin/oe.pl:644 old/bin/oe.pl:913 old/bin/pe.pl:602 UI/am-taxes.html:71
 #: UI/payments/payment2.html:490 UI/payments/payments_detail.html:483
 #: UI/payroll/deduction.html:85 UI/payroll/income.html:90
@@ -8524,8 +8524,8 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:187
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:248
 #: lib/LedgerSMB/Report/Orders.pm:182 lib/LedgerSMB/Report/Orders.pm:188
-#: old/bin/aa.pl:524 old/bin/ic.pl:1015 old/bin/ir.pl:364 old/bin/oe.pl:2504
-#: old/bin/oe.pl:2655 old/bin/pe.pl:1012 old/bin/pe.pl:1162
+#: old/bin/aa.pl:524 old/bin/ic.pl:1015 old/bin/ir.pl:364 old/bin/oe.pl:2485
+#: old/bin/oe.pl:2636 old/bin/pe.pl:1012 old/bin/pe.pl:1162
 #: UI/Contact/divs/credit.html:11 UI/Contact/divs/credit.html:12
 #: UI/payments/payments_detail.html:4 UI/payments/payments_filter.html:36
 #: UI/payments/use_overpayment1.html:26 UI/payments/use_overpayment2.html:21
@@ -8584,7 +8584,7 @@ msgstr "Numéro de référence du fournisseur"
 msgid "Vendor Search"
 msgstr "Recherche de fournisseur"
 
-#: old/bin/aa.pl:1312 old/bin/ir.pl:1263 old/bin/oe.pl:1267
+#: old/bin/aa.pl:1312 old/bin/ir.pl:1242 old/bin/oe.pl:1248
 msgid "Vendor missing!"
 msgstr "Fournisseur manquant!"
 
@@ -8625,7 +8625,7 @@ msgstr "Salaires et déductions"
 msgid "Wages/Deductions"
 msgstr "Salaires/Déductions"
 
-#: old/bin/oe.pl:1836 templates/demo/bin_list.html:78
+#: old/bin/oe.pl:1817 templates/demo/bin_list.html:78
 #: templates/demo/bin_list.tex:88 templates/demo/packing_list.html:69
 #: templates/demo/packing_list.tex:96 templates/demo/pick_list.html:69
 #: templates/demo/pick_list.tex:88 templates/xedemo/bin_list.html:78
@@ -8780,7 +8780,7 @@ msgstr "Écriture de fin d'exercice complétée"
 msgid "Years"
 msgstr "Années"
 
-#: lib/LedgerSMB/Report/Taxform/List.pm:100 old/bin/oe.pl:1417
+#: lib/LedgerSMB/Report/Taxform/List.pm:100 old/bin/oe.pl:1398
 #: UI/Configuration/settings.html:37 UI/setup/confirm_operation.html:29
 msgid "Yes"
 msgstr "Oui"
@@ -8910,10 +8910,6 @@ msgstr "fait"
 msgid "e"
 msgstr ""
 
-#: old/bin/ir.pl:1224 old/bin/is.pl:1355 old/bin/oe.pl:1233
-msgid "ea"
-msgstr "pièce(s)"
-
 #: old/bin/am.pl:1261 old/bin/am.pl:1368 old/bin/am.pl:1420
 msgid "failed"
 msgstr "échec"
@@ -9001,3 +8997,6 @@ msgstr "Erreur inattendue!"
 #: lib/LedgerSMB/Scripts/payment.pm:2044 lib/LedgerSMB/Scripts/payment.pm:2063
 msgid "use of an overpayment"
 msgstr "utilisation d'un trop-perçu"
+
+#~ msgid "ea"
+#~ msgstr "pièce(s)"
