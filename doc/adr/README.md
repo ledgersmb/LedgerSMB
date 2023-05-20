@@ -85,3 +85,23 @@ Date: YYYY-MM-DD
 
 
 ```
+
+
+# TODO list for ADRs to be written
+
+* Move from CGI to PSGI
+* Move to Dojo
+* Move to Vue
+* Use of custom web elements to transition UI
+* Use of custom web elements to phase out AMD parser
+  (if we do); and the use of the shim on Safari
+* Move to customizable business processes in Perl
+  (thus not in the database!)
+* Explicit rejection of JSONAPI as REST layer
+  (because it's not REST)
+* Explicit rejection of Dancer (because its API
+  modules don't "do" REST or don't add much value
+  over doing raw PSGI)
+* Use of state machines for front-end functionality
+* Use of state machines to manage resource (e.g.
+  accounting document) life cycle
