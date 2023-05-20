@@ -1254,20 +1254,38 @@ SELECT lsmb__grant_perms('inventory_adjust', obj, 'SELECT')
   FROM unnest(array['inventory_report'::text, 'inventory_report_line']) obj;
 SELECT lsmb__grant_perms('inventory_adjust', 'inventory_report', 'UPDATE');
 
-SELECT lsmb__create_role('pricegroup_create');
+SELECT lsmb__create_role('pricegroup_create',
+                         $DOC$
+                         This role allows creation of new price groups.
+                         $DOC$
+);
+--@@@BUG? Why read contacts??
 SELECT lsmb__grant_role('pricegroup_create', 'contact_read');
 SELECT lsmb__grant_menu('pricegroup_create', 83, 'allow');
 SELECT lsmb__grant_perms('pricegroup_create', 'pricegroup', 'INSERT');
 SELECT lsmb__grant_perms('pricegroup_create', 'pricegroup_id_seq', 'ALL');
+--@@@BUG? Why update entity_credit_accounts??
 SELECT lsmb__grant_perms('pricegroup_create', 'entity_credit_account', 'UPDATE');
 
-SELECT lsmb__create_role('pricegroup_edit');
+SELECT lsmb__create_role('pricegroup_edit',
+                         $DOC$
+                         This role allows changing existing price groups.
+                         $DOC$
+);
+--@@@BUG? Why read contacts??
 SELECT lsmb__grant_role('pricegroup_edit', 'contact_read');
 SELECT lsmb__grant_menu('pricegroup_edit', 83, 'allow');
 SELECT lsmb__grant_perms('pricegroup_edit', 'pricegroup', 'UPDATE');
+--@@@BUG? Why update entity_credit_accounts??
 SELECT lsmb__grant_perms('pricegroup_edit', 'entity_credit_account', 'UPDATE');
 
-SELECT lsmb__create_role('assembly_stock');
+SELECT lsmb__create_role('assembly_stock',
+                         $DOC$
+                         This role allows triggering a stocking action on assemblies.
+
+                         Stocking assemblies means converting labor and parts to stocked assemblies.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('assembly_stock', 'parts', 'UPDATE');
 
 SELECT lsmb__grant_perms('assembly_stock', t_name, perm)
@@ -1282,33 +1300,57 @@ SELECT lsmb__grant_perms('assembly_stock', t_name, perm)
 
 SELECT lsmb__grant_menu('assembly_stock', 84, 'allow');
 
-SELECT lsmb__create_role('inventory_ship');
+SELECT lsmb__create_role('inventory_ship',
+                         $DOC$
+                         This role allows shipping of stocked parts.
+                         $DOC$
+);
 SELECT lsmb__grant_role('inventory_ship', 'sales_order_list');
 SELECT lsmb__grant_menu('inventory_ship', 64, 'allow');
 SELECT lsmb__grant_perms('inventory_ship', 'warehouse_inventory', 'INSERT');
 SELECT lsmb__grant_perms('inventory_ship', 'warehouse_inventory_entry_id_seq', 'ALL');
 
-SELECT lsmb__create_role('inventory_receive');
+SELECT lsmb__create_role('inventory_receive',
+                         $DOC$
+                         This role allows receiving of parts into stock.
+                         $DOC$
+);
 SELECT lsmb__grant_role('inventory_receive', 'purchase_order_list');
 SELECT lsmb__grant_menu('inventory_receive', 65, 'allow');
 SELECT lsmb__grant_perms('inventory_receive', 'warehouse_inventory', 'INSERT');
 SELECT lsmb__grant_perms('inventory_receive', 'warehouse_inventory_entry_id_seq', 'ALL');
 
-SELECT lsmb__create_role('inventory_transfer');
+SELECT lsmb__create_role('inventory_transfer',
+                         $DOC$
+                         This role allows moving stock between warehouses.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('inventory_transfer', 'warehouse_inventory', 'INSERT');
 SELECT lsmb__grant_perms('inventory_transfer', 'warehouse_inventory_entry_id_seq', 'ALL');
 SELECT lsmb__grant_menu('inventory_transfer', 66, 'allow');
 
-SELECT lsmb__create_role('warehouse_create');
+SELECT lsmb__create_role('warehouse_create',
+                         $DOC$
+                         This role allows creation of (configuration of) new warehouses.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('warehouse_create', 'warehouse', 'INSERT');
 SELECT lsmb__grant_perms('warehouse_create', 'warehouse_id_seq', 'ALL');
 SELECT lsmb__grant_menu('warehouse_create', 141, 'allow');
 
-SELECT lsmb__create_role('warehouse_edit');
+SELECT lsmb__create_role('warehouse_edit',
+                         $DOC$
+                         This role allows updating of (configuration of) existing warehouses.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('warehouse_edit', 'warehouse', 'UPDATE');
 SELECT lsmb__grant_menu('warehouse_edit', 141, 'allow');
 
-SELECT lsmb__create_role('inventory_all');
+SELECT lsmb__create_role('inventory_all',
+                         $DOC$
+                         This role grants all rights to manage warehouse configuration, stock receipt, shipping and transfer.
+                         $DOC$
+);
 SELECT lsmb__grant_role('inventory_all', rname)
   FROM unnest(array['warehouse_create'::text, 'warehouse_edit',
               'inventory_transfer', 'inventory_receive', 'inventory_ship',
@@ -1316,7 +1358,11 @@ SELECT lsmb__grant_role('inventory_all', rname)
       ) rname;
 
 \echo GL
-SELECT lsmb__create_role('gl_transaction_create');
+SELECT lsmb__create_role('gl_transaction_create',
+                         $DOC$
+                         This role allows creation of new and updating of saved GL transactions.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('gl_transaction_create', 'gl', ptype)
   FROM unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) ptype;
 
@@ -1330,7 +1376,11 @@ SELECT lsmb__grant_perms('gl_transaction_create', obj, 'ALL')
 SELECT lsmb__grant_menu('gl_transaction_create', node_id, 'allow')
   FROM unnest(array[74,40,245,262]) node_id;
 
-SELECT lsmb__create_role('gl_voucher_create');
+SELECT lsmb__create_role('gl_voucher_create',
+                         $DOC$
+                         This role allows creation of batches of GL transactions.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('gl_voucher_create', obj, 'INSERT')
   FROM unnest(array['gl'::text, 'acc_trans', 'business_unit_ac']) obj;
 
@@ -1338,7 +1388,11 @@ SELECT lsmb__grant_perms('gl_voucher_create', obj, 'ALL')
   FROM unnest(array['id'::text, 'acc_trans_entry_id_seq']) obj;
 -- TODO Add menu permissions
 
-SELECT lsmb__create_role('gl_reports');
+SELECT lsmb__create_role('gl_reports',
+                         $DOC$
+                         This role allows searching transactions in the general ledger.
+                         $DOC$
+);
 SELECT lsmb__grant_role('gl_reports', 'ar_transaction_list');
 SELECT lsmb__grant_role('gl_reports', 'ap_transaction_list');
 SELECT lsmb__grant_menu('gl_reports', node_id, 'allow')
@@ -1347,21 +1401,22 @@ SELECT lsmb__grant_menu('gl_reports', node_id, 'allow')
 SELECT lsmb__grant_perms('gl_reports', obj, 'SELECT')
   FROM unnest(array['gl'::text, 'acc_trans', 'account_checkpoint']) obj;
 
-SELECT lsmb__create_role('yearend_run');
+SELECT lsmb__create_role('yearend_run',
+                         $DOC$
+                         This role allows running the year-end process, i.e. clearing the P&L.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('yearend_run', obj, ptype)
   FROM unnest(array['acc_trans'::text, 'account_checkpoint', 'yearend']) obj,
        unnest(array['SELECT'::text, 'INSERT']) ptype;
 SELECT lsmb__grant_perms('yearend_run', 'account_checkpoint_id_seq','ALL');
 SELECT lsmb__grant_menu('yearend_run', 132, 'allow');
 
-SELECT lsmb__create_role('yearend_run');
-SELECT lsmb__grant_perms('yearend_run', obj, ptype)
-  FROM unnest(array['acc_trans'::text, 'account_checkpoint', 'yearend']) obj,
-       unnest(array['SELECT'::text, 'INSERT']) ptype;
-SELECT lsmb__grant_perms('yearend_run', 'account_checkpoint_id_seq','ALL');
-SELECT lsmb__grant_menu('yearend_run', 132, 'allow');
-
-SELECT lsmb__create_role('yearend_reopen');
+SELECT lsmb__create_role('yearend_reopen',
+                         $DOC$
+                         This role allows undoing a prior year-end run by reversing the year-end transaction.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('yearend_reopen', obj, ptype)
   FROM unnest(array['account_checkpoint'::text]) obj,
        unnest(array['DELETE'::text]) ptype;
@@ -1370,7 +1425,11 @@ SELECT lsmb__grant_perms('yearend_reopen', obj, ptype)
        unnest(array['UPDATE'::text]) ptype;
 -- also needs access to posting of transactions...
 
-SELECT lsmb__create_role('batch_list');
+SELECT lsmb__create_role('batch_list',
+                         $DOC$
+                         This role allows listing existing batches.
+                         $DOC$
+);
 SELECT lsmb__grant_role('batch_list', 'gl_reports');
 SELECT lsmb__grant_perms('batch_list', obj, 'SELECT')
   FROM unnest(array['batch'::text, 'batch_class', 'voucher']) obj;
