@@ -49,6 +49,13 @@ Dependency updates
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.17
+* Change workflow timestamps to per-second granularity (from minutes) (#7360)
+* Fix workflow actions not being logged despite configuration (#7360)
+* Fix deletion of parts groups (#7363)
+* Align invoice/order entry between databases with and without parts (#7374)
+
+
 Changelog for 1.10.16
 * Hide CSS files from the theme drop-down which render the app unusable (#7326)
 * Improve HTML compliance by moving INPUT tags around inside TABLE tags (#7323)
