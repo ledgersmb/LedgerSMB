@@ -3,6 +3,9 @@
       "config:base"
     ],
     "baseBranches": [ "master", "1.10", "1.9" ],
+    "cpanfile": {
+        "enable": false
+    },
     "packageRules": [
         {
             "matchPackagePatterns": [

@@ -33,8 +33,8 @@ requires 'HTTP::Status';
 requires 'IO::Scalar';
 requires 'JSON::MaybeXS';
 requires 'JSONSchema::Validator', '0.010';
-recommends 'Cpanel::JSON::XS', '4.36'; # 3.0206 adds 'allow_bignum' option
-recommends 'JSON::PP', '4.16'; # 1.99_01 adds 'allow_bignum'
+recommends 'Cpanel::JSON::XS', '3.0206'; # 3.0206 adds 'allow_bignum' option
+recommends 'JSON::PP', '2.00'; # 1.99_01 adds 'allow_bignum'
 requires 'JSONSchema::Validator';
 requires 'List::MoreUtils';
 requires 'Locale::CLDR';
@@ -66,7 +66,7 @@ requires 'Locale::CLDR::Locales::Sv';
 requires 'Locale::CLDR::Locales::Tr';
 requires 'Locale::CLDR::Locales::Uk';
 requires 'Locale::CLDR::Locales::Zh';
-requires 'Locale::Maketext::Lexicon', '1.00';
+requires 'Locale::Maketext::Lexicon', '0.62';
 requires 'Locales';
 requires 'Log::Any';
 requires 'Log::Any::Adapter';
@@ -111,7 +111,7 @@ requires 'Pod::Find';
 requires 'Scope::Guard', '0.10';
 requires 'Session::Storage::Secure';
 requires 'String::Random';
-requires 'Template', '3.101';
+requires 'Template', '2.14';
 requires 'Template::Parser';
 requires 'Template::Provider';
 requires 'Text::CSV';
