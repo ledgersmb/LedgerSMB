@@ -33,3 +33,7 @@ credentials received onto the database to authenticate the user.
 - Security audits of PostgreSQL are immediatly inherited by our
   project -- most likely PostgreSQL attracts more eyes than LedgerSMB
   meaning much more thorough review than we could ever wish
+- Usernames are roles; roles are global, meaning every username can
+  only be expended to one person
+- When a username is used across companies, all these companies share
+  the same (unknown) password for this username
