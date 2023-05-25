@@ -100,9 +100,6 @@ Date: YYYY-MM-DD
   (thus not in the database!)
 * Explicit rejection of JSONAPI as REST layer
   (because it's not REST)
-* Explicit rejection of Dancer (because its API
-  modules don't "do" REST or don't add much value
-  over doing raw PSGI)
 * Use of state machines for front-end functionality
 * Use of state machines to manage resource (e.g.
   accounting document) life cycle
