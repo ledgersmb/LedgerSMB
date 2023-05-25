@@ -905,11 +905,22 @@ UPDATE business_unit_class
  WHERE id = 2
    AND EXISTS (select 1 from :slschema.project);
 
+-- Prefill approved status of transactions with gl entries
+INSERT INTO transactions (id, table_name, approved)
+SELECT id,'gl',approved
+FROM :slschema.gl;
+
 INSERT INTO gl(id, reference, description, transdate, person_id, notes)
     SELECT gl.id, reference, description, transdate, p.id, gl.notes
       FROM :slschema.gl
  LEFT JOIN :slschema.employee em ON gl.employee_id = em.id
  LEFT JOIN person p ON em.entity_id = p.id;
+
+-- Prefill approved status of transactions with ar entries
+INSERT INTO transactions (id, table_name, approved)
+SELECT ar.id,'ar',approved
+FROM :slschema.ar
+JOIN :slschema.customer ON (ar.customer_id = customer.id) ;
 
 --TODO: Handle amount_tc and netamount_tc
 insert into ar
@@ -932,6 +943,12 @@ SELECT
         ar.terms, description
 FROM :slschema.ar
 JOIN :slschema.customer ON (ar.customer_id = customer.id) ;
+
+-- Prefill approved status of transactions with ap entries
+INSERT INTO transactions (id, table_name, approved)
+SELECT ap.id,'ap',approved
+FROM :slschema.ap
+JOIN :slschema.vendor ON (ap.vendor_id = vendor.id) ;
 
 insert into ap
 (entity_credit_account, person_id,
