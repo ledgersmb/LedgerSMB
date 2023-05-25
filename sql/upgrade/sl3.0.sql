@@ -1132,7 +1132,7 @@ INSERT INTO cr_report(chart_id, their_total, submitted, end_date, updated, enter
 -- The ID and matching post_date are entered in a temp table to pull the back into cr_report_line immediately after.
 -- Temp table will be dropped automatically at the end of the transaction.
 WITH cr_entry AS (
-SELECT cr.id::INT, cr.end_date, a.source, a.type, a.cleared::TIMESTAMP, a.amount::NUMERIC, a.transdate AS post_date, a.lsmb_entry_id
+SELECT cr.id::INT, cr.end_date, a.source, a.type, a.cleared::DATE, a.amount::NUMERIC, a.transdate AS post_date, a.lsmb_entry_id
     FROM cr_coa_to_account cta
     JOIN account c on cta.chart_id = c.id
     JOIN cr_report cr ON cr.chart_id = c.id
@@ -1167,15 +1167,14 @@ FROM (
 
 -- Patch for suspect clear dates
 -- The UI should reflect this
--- Unsubmit the suspect report to allow easy edition
-UPDATE cr_report SET submitted = false
-WHERE id IN (
-    SELECT DISTINCT report_id FROM cr_report_line
-    WHERE clear_time - post_date > 150
-);
 -- Approve valid reports.
-UPDATE cr_report SET approved = true
-WHERE submitted;
+UPDATE cr_report
+SET approved = true
+WHERE submitted
+  AND id NOT IN (
+    SELECT DISTINCT report_id FROM cr_report_line
+     WHERE NOT (clear_time - post_date BETWEEN 0 AND 150)
+);
 
 -- Log out the Migrator
 DELETE FROM users
