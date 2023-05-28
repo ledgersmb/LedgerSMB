@@ -22,7 +22,7 @@ BEGIN;
 
     -- Check Valid Role creation
     PREPARE test AS SELECT
-                 lsmb__create_role('42_working_role');
+                 lsmb__create_role('42_working_role', 'role docs');
     SELECT results_eq('test',ARRAY[true],'can create normal role');
     DEALLOCATE test;
 
@@ -30,7 +30,7 @@ BEGIN;
 
     -- Check with an invalid role name of 86 characters total
     PREPARE test AS SELECT
-                 lsmb__create_role('42_failing_with_a_much_too_long_role_that_will_have_more_then_63_bytes');
+                 lsmb__create_role('42_failing_with_a_much_too_long_role_that_will_have_more_then_63_bytes', 'role docs');
     SELECT throws_ok('test','42622'); -- 42622 is name_too_long
     DEALLOCATE test;
 
