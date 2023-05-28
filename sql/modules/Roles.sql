@@ -1796,22 +1796,41 @@ SELECT lsmb__grant_exec('base_user', 'admin__get_roles_for_user_by_entity(int)')
 
 
 
-SELECT lsmb__create_role('system_admin');
+SELECT lsmb__create_role('system_admin',
+                         $DOC$
+                         This role combines the rights to manage settings,
+                         GL accounts, types of business, SIC, users and tax
+                         forms.
+                         $DOC$
+);
 SELECT lsmb__grant_role('system_admin', rname)
   FROM unnest(array['system_settings_change'::text, 'account_all',
                     'business_type_all', 'sic_all', 'users_manage',
                     'tax_form_save']) rname;
 
 \echo MANUAL TRANSLATION
-SELECT lsmb__create_role('language_create');
+SELECT lsmb__create_role('language_create',
+                         $DOC$
+                         This role allows creation of new languages.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('language_create', 'language', 'INSERT');
 SELECT lsmb__grant_menu('language_create', 150, 'allow');
 
-SELECT lsmb__create_role('language_edit');
+SELECT lsmb__create_role('language_edit',
+                         $DOC$
+                         This role allows modification of languages.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('language_edit', 'language', 'UPDATE');
 SELECT lsmb__grant_menu('language_edit', 150, 'allow');
 
-SELECT lsmb__create_role('translation_create');
+SELECT lsmb__create_role('translation_create',
+                         $DOC$
+                         This role allows creation of translations for parts,
+                         parts groups and reporting units.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('translation_create', obj, 'ALL')
   FROM unnest(array['parts_translation'::text, 'partsgroup_translation',
                     'business_unit_translation']) obj;
@@ -1820,12 +1839,20 @@ SELECT lsmb__grant_menu('translation_create', id, 'allow')
   FROM unnest(array[96,97,108]) id;
 
 \echo FIXED ASSETS
-SELECT lsmb__create_role('assets_administer');
+SELECT lsmb__create_role('assets_administer',
+                         $DOC$
+                         This role combines all assets rights.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('assets_administer', 'asset_class', 'ALL');
 SELECT lsmb__grant_perms('assets_administer', 'asset_class_id_seq', 'ALL');
 SELECT lsmb__grant_menu('assets_administer', 237, 'allow');
 
-SELECT lsmb__create_role('assets_enter');
+SELECT lsmb__create_role('assets_enter',
+                         $DOC$
+                         This role allows creation of new assets.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('assets_enter', 'asset_item_id_seq', 'ALL');
 SELECT lsmb__grant_perms('assets_enter', 'asset_class', 'SELECT');
 SELECT lsmb__grant_perms('assets_enter', 'asset_item', ptype)
@@ -1836,7 +1863,12 @@ SELECT lsmb__grant_perms('assets_enter', 'asset_note', ptype)
 SELECT lsmb__grant_menu('assets_enter', id, 'allow')
   FROM unnest(array[230, 231, 232, 233, 235]) id;
 
-SELECT lsmb__create_role('assets_depreciate');
+SELECT lsmb__create_role('assets_depreciate',
+                         $DOC$
+                         This role allows running the asset depreciation
+                         procedure.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('assets_depreciate', 'asset_report_id_seq', 'ALL');
 SELECT lsmb__grant_perms('assets_depreciate', 'asset_report', 'UPDATE');
 SELECT lsmb__grant_perms('assets_depreciate', obj, ptype)
@@ -1848,7 +1880,12 @@ SELECT lsmb__grant_perms('assets_depreciate', obj, ptype)
 SELECT lsmb__grant_menu('assets_depreciate', 238, 'allow');
 SELECT lsmb__grant_menu('assets_depreciate', 234, 'allow');
 
-SELECT lsmb__create_role('assets_approve');
+SELECT lsmb__create_role('assets_approve',
+                         $DOC$
+                         This role allows approving the output of the
+                         depreciation procedure.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('assets_approve', obj, 'SELECT')
   FROM unnest(array['asset_report'::text, 'asset_report_line', 'asset_item',
                     'asset_class']) obj;
