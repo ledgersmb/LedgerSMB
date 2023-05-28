@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.18-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2023-05-20 14:12+0000\n"
+"POT-Creation-Date: 2023-05-28 13:41+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: Chinese (Mandarin) (https://app.transifex.com/ledgersmb/"
 "teams/58325/cmn/)\n"
@@ -196,7 +196,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:137
 #: lib/LedgerSMB/Report/co/Balance_y_Mayor.pm:68
 #: lib/LedgerSMB/Report/co/Caja_Diaria.pm:70
-#: lib/LedgerSMB/Scripts/report_aging.pm:147 old/bin/aa.pl:613 old/bin/aa.pl:684
+#: lib/LedgerSMB/Scripts/report_aging.pm:148 old/bin/aa.pl:613 old/bin/aa.pl:684
 #: old/bin/aa.pl:853 old/bin/ic.pl:1112 old/bin/ir.pl:401 old/bin/ir.pl:875
 #: old/bin/is.pl:436 old/bin/is.pl:981 old/bin/oe.pl:449
 #: t/data/04-complex_template.html:27 templates/demo/invoice.html:188
@@ -1328,7 +1328,7 @@ msgstr ""
 msgid "Can't void a voided invoice!"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/report_aging.pm:163 lib/LedgerSMB/Scripts/setup.pm:185
+#: lib/LedgerSMB/Scripts/report_aging.pm:164 lib/LedgerSMB/Scripts/setup.pm:185
 #: lib/LedgerSMB/Scripts/setup.pm:236 old/bin/io.pl:1834
 #: UI/templates/widget.html:146 UI/templates/widget.html:162
 #: UI/src/components/ConfigTableRow.vue:22
@@ -1658,7 +1658,7 @@ msgstr ""
 msgid "Comparison Periods"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/report_aging.pm:172
+#: lib/LedgerSMB/Scripts/report_aging.pm:173
 msgid "Complete"
 msgstr ""
 
@@ -2748,7 +2748,7 @@ msgstr "電子郵件"
 msgid "E-mail address missing!"
 msgstr "未指明电子邮件位址!"
 
-#: lib/LedgerSMB/Scripts/report_aging.pm:204
+#: lib/LedgerSMB/Scripts/report_aging.pm:205
 msgid "E-mail aging reminder status"
 msgstr ""
 
@@ -3034,7 +3034,7 @@ msgid "Entered at: [_1]"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/contact.pm:300
-#: lib/LedgerSMB/Scripts/report_aging.pm:142 sql/Pg-database.sql:1036
+#: lib/LedgerSMB/Scripts/report_aging.pm:143 sql/Pg-database.sql:1036
 msgid "Entity"
 msgstr ""
 
@@ -3631,7 +3631,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:105
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:132
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:89
-#: lib/LedgerSMB/Scripts/asset.pm:458 lib/LedgerSMB/Scripts/report_aging.pm:136
+#: lib/LedgerSMB/Scripts/asset.pm:458 lib/LedgerSMB/Scripts/report_aging.pm:137
 #: old/bin/am.pl:302 templates/demo/timecard.html:44
 #: templates/demo/timecard.tex:39 UI/business_units/list_classes.html:8
 #: UI/Reports/filters/gl.html:196
@@ -4302,7 +4302,7 @@ msgstr ""
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ServerUI.js:27 UI/src/components/ServerUI.js:41
+#: UI/src/components/ServerUI.js:41 UI/src/components/ServerUI.js:27
 #: UI/src/components/ConfigTable.vue:59
 msgid "Loading..."
 msgstr ""
@@ -7131,8 +7131,8 @@ msgstr ""
 msgid "Statement Date To"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/report_aging.pm:152
-#: lib/LedgerSMB/Scripts/report_aging.pm:199
+#: lib/LedgerSMB/Scripts/report_aging.pm:153
+#: lib/LedgerSMB/Scripts/report_aging.pm:200
 #: UI/Reports/filters/search_goods.html:25
 msgid "Status"
 msgstr ""
@@ -8688,6 +8688,3 @@ msgstr "沒有預期的錯誤！"
 #: lib/LedgerSMB/Scripts/payment.pm:2027 lib/LedgerSMB/Scripts/payment.pm:2046
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "ea"
-#~ msgstr "個"
