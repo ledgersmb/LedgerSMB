@@ -18,7 +18,9 @@ div.setupconsole {
     border: 1px solid black;
     border-radius: 12px;
     box-shadow: 6px 6px 4px black;
+    box-sizing: border-box;
     margin: 2em auto;
+    max-width: 100%;
     min-width: 21em;
     padding: 4em;
     width: max-content;
