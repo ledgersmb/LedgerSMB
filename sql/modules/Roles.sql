@@ -1434,12 +1434,22 @@ SELECT lsmb__grant_role('batch_list', 'gl_reports');
 SELECT lsmb__grant_perms('batch_list', obj, 'SELECT')
   FROM unnest(array['batch'::text, 'batch_class', 'voucher']) obj;
 
-SELECT lsmb__create_role('gl_all');
+SELECT lsmb__create_role('gl_all',
+                         $DOC$
+                         This role combines GL transaction and batch creation
+                         with GL reporting and year-end processing.
+                         $DOC$
+);
 SELECT lsmb__grant_role('gl_all', rname)
   FROM unnest(array['gl_transaction_create'::text, 'gl_voucher_create',
                     'yearend_run', 'gl_reports']) rname;
 
-SELECT lsmb__create_role('timecard_add');
+SELECT lsmb__create_role('timecard_add',
+                         $DOC$
+                         This role allows adding time cards for which it needs
+                         read access to customers.
+                         $DOC$
+);
 SELECT lsmb__grant_role('timecard_add', 'contact_read');
 SELECT lsmb__grant_menu('timecard_add', node_id, 'allow')
   FROM unnest(array[100, 106, 8]) node_id;
@@ -1448,13 +1458,24 @@ SELECT lsmb__grant_perms('timecard_add', 'jcitems_id_seq', 'ALL');
 SELECT lsmb__grant_perms('timecard_add', 'jcitems', 'INSERT');
 SELECT lsmb__grant_perms('timecard_add', 'jcitems', 'UPDATE');
 
-SELECT lsmb__create_role('timecard_list');
+SELECT lsmb__create_role('timecard_list',
+                         $DOC$
+                         This role allows viewing the list of time cards;
+                         for which it needs read access to customers.
+                         $DOC$
+);
 SELECT lsmb__grant_role('timecard_list', 'contact_read');
 SELECT lsmb__grant_menu('timecard_list', 106, 'allow');
 SELECT lsmb__grant_perms('timecard_list', 'jcitems', 'SELECT');
 
 \echo ORDER GENERATION
-SELECT lsmb__create_role('orders_generate');
+SELECT lsmb__create_role('orders_generate',
+                         $DOC$
+                         This role combines the rights to generate orders from
+                         time cards, purchase orders from sales orders
+                         and consolidate (purchase and sales) orders.
+                         $DOC$
+);
 SELECT lsmb__grant_role('orders_generate', 'contact_read');
 SELECT lsmb__grant_perms('orders_generate', obj, ptype)
   FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem']) obj,
@@ -1481,6 +1502,7 @@ SELECT lsmb__create_role('orders_sales_consolidate');
 SELECT lsmb__grant_role('orders_sales_consolidate', 'orders_generate');
 SELECT lsmb__grant_menu('orders_sales_consolidate', 61, 'allow');
 
+--###BUG: Duplicate with 'orders_generate'
 SELECT lsmb__create_role('orders_manage');
 SELECT lsmb__grant_role('orders_manage', rname)
   FROM unnest(array['timecard_order_generate'::text, 'orders_sales_to_purchase',
@@ -1488,7 +1510,13 @@ SELECT lsmb__grant_role('orders_manage', rname)
        ) rname;
 
 \echo FINANCIAL REPORTS
-SELECT lsmb__create_role('financial_reports');
+SELECT lsmb__create_role('financial_reports',
+                         $DOC$
+                         This role allows running of financial reports:
+                         Income Statement, Balance Sheet, Trial Balance and
+                         Inventory & COGS.
+                         $DOC$
+);
 SELECT lsmb__grant_role('financial_reports', 'gl_reports');
 SELECT lsmb__grant_menu('financial_reports', node_id, 'allow')
   FROM unnest(array[75,110,111,112,113,114]) node_id;
@@ -1497,37 +1525,70 @@ SELECT lsmb__grant_perms('financial_reports', obj, 'SELECT')
   FROM unnest(array['yearend'::text, 'cash_impact']) obj;
 
 \echo RECURRING TRANSACTIONS
-SELECT lsmb__create_role('recurring');
+SELECT lsmb__create_role('recurring',
+                         $DOC$
+                         This role allows access to the Recurring Transactions
+                         menu; it does not grant rights to list or create
+                         transactions.
+                         $DOC$
+);
 SELECT lsmb__grant_menu('recurring', 115, 'allow');
 SELECT lsmb__grant_menu('recurring', 28, 'allow');
 
 \echo TEMPLATE TRANSACTIONS
-SELECT lsmb__create_role('transaction_template_delete');
+SELECT lsmb__create_role('transaction_template_delete',
+                         $DOC$
+                         This role allows deletion of template (i.e. unposted)
+                         transactions.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('transaction_template_delete', 'eca_invoice', 'DELETE');
 SELECT lsmb__grant_perms('transaction_template_delete', 'journal_entry', 'DELETE');
 SELECT lsmb__grant_perms('transaction_template_delete', 'journal_line', 'DELETE');
 
 \echo TAX FORMS
-SELECT lsmb__create_role('tax_form_save');
+SELECT lsmb__create_role('tax_form_save',
+                         $DOC$
+                         This role allows modification of tax forms.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('tax_form_save', 'country_tax_form', 'ALL');
 SELECT lsmb__grant_perms('tax_form_save', 'country_tax_form_id_seq', 'ALL');
 SELECT lsmb__grant_menu('tax_form_save', id, 'allow')
   FROM unnest(array[218, 225, 226]) id;
 
 \echo SYSTEM SETTINGS
-SELECT lsmb__create_role('system_settings_list');
+SELECT lsmb__create_role('system_settings_list',
+                         $DOC$
+                         This role allows viewing items in the System > Defaults
+                         menu.
+                         $DOC$
+);
 SELECT lsmb__grant_menu('system_settings_list', 131, 'allow');
 
-SELECT lsmb__create_role('system_settings_change');
+SELECT lsmb__create_role('system_settings_change',
+                         $DOC$
+                         This role allow changing items in the
+                         System > Defaults menu.
+                         $DOC$
+);
 SELECT lsmb__grant_role('system_settings_change', 'system_settings_list');
 SELECT lsmb__grant_menu('system_settings_change', 17, 'allow');
 
-SELECT lsmb__create_role('taxes_set');
+SELECT lsmb__create_role('taxes_set',
+                         $DOC$
+                         This role allows changing tax rates on tax accounts.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('taxes_set', 'tax', 'INSERT');
 SELECT lsmb__grant_perms('taxes_set', 'tax', 'UPDATE');
 SELECT lsmb__grant_menu('taxes_set', 130, 'allow');
 
-SELECT lsmb__create_role('account_create');
+SELECT lsmb__create_role('account_create',
+                         $DOC$
+                         This role allows creation of new GL accounts.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('account_create', obj, 'INSERT')
   FROM unnest(array['account'::text, 'cr_coa_to_account',
                     'account_heading', 'account_link',
@@ -1538,7 +1599,11 @@ SELECT lsmb__grant_perms('account_create', obj, 'ALL')
 SELECT lsmb__grant_menu('account_create', id, 'allow')
   FROM unnest(array[246]) id;
 
-SELECT lsmb__create_role('account_edit');
+SELECT lsmb__create_role('account_edit',
+                         $DOC$
+                         This role allows modification of GL accounts.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('account_edit', obj, perm)
   FROM unnest(array['account'::text, 'account_heading', 'account_link',
                     'account_translation', 'account_heading_translation',
@@ -1548,84 +1613,169 @@ SELECT lsmb__grant_perms('account_edit', 'account_link', 'DELETE');
 SELECT lsmb__grant_perms('account_edit', 'account_translation', 'DELETE');
 SELECT lsmb__grant_perms('account_edit', 'account_heading_translation', 'DELETE');
 
-SELECT lsmb__create_role('account_delete');
+SELECT lsmb__create_role('account_delete',
+                         $DOC$
+                         This role allows deletion of GL accounts.
+                         Please note that there are only very few circumstances
+                         where a GL account can be deleted.  Instead of deleting
+                         the account, the user is advised to mark the account
+                         as 'obsolete'.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('account_delete', obj, 'DELETE')
   FROM unnest(array['account'::text, 'account_heading', 'account_link',
                     'account_translation', 'account_heading_translation',
                     'cr_coa_to_account', 'tax']) obj;
 
-SELECT lsmb__create_role('account_link_description_create');
+SELECT lsmb__create_role('account_link_description_create',
+                         $DOC$
+                         This role allows creating new use-cases for GL
+                         accounts (so called "account link descriptions").
+                         $DOC$
+);
 SELECT lsmb__grant_perms('account_link_description_create', 'account_link_description', 'INSERT');
 
-SELECT lsmb__create_role('auditor');
+SELECT lsmb__create_role('auditor',
+                         $DOC$
+                         This role grants read access to the audit trail table.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('auditor', 'audittrail', 'SELECT');
 
-SELECT lsmb__create_role('audit_trail_maintenance');
+SELECT lsmb__create_role('audit_trail_maintenance',
+                         $DOC$
+                         This role grants delete access to the audit trail table.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('audit_trail_maintenance', 'audittrail', 'DELETE');
 
-SELECT lsmb__create_role('gifi_create');
+SELECT lsmb__create_role('gifi_create',
+                         $DOC$
+                         This role allows creation of new GIFI codes.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('gifi_create', 'gifi', 'INSERT');
 SELECT lsmb__grant_menu('gifi_create', 136, 'allow');
 
-SELECT lsmb__create_role('gifi_edit');
+SELECT lsmb__create_role('gifi_edit',
+                         $DOC$
+                         This role allows modification of GIFI codes.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('gifi_edit', 'gifi', 'UPDATE');
 SELECT lsmb__grant_menu('gifi_edit', 136, 'allow');
 
-SELECT lsmb__create_role('account_all');
+SELECT lsmb__create_role('account_all',
+                         $DOC$
+                         This role combines all GL account and GIFI code rights.
+                         $DOC$
+);
 SELECT lsmb__grant_role('account_all', rname)
   FROM unnest(array['account_create'::text, 'taxes_set', 'account_edit',
                     'gifi_create', 'gifi_edit', 'account_delete']) rname;
 
-SELECT lsmb__create_role('business_type_create');
+SELECT lsmb__create_role('business_type_create',
+                         $DOC$
+                         This role allows creation of new 'type of business'
+                         classes.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('business_type_create', 'business', 'INSERT');
 SELECT lsmb__grant_perms('business_type_create', 'business_id_seq', 'ALL');
 SELECT lsmb__grant_menu('business_type_create', 147, 'allow');
 
-SELECT lsmb__create_role('business_type_edit');
+SELECT lsmb__create_role('business_type_edit',
+                         $DOC$
+                         This role allows modification of 'type of business'
+                         classes.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('business_type_edit', 'business', ptype)
   FROM unnest(array['UPDATE'::text, 'DELETE'::text]) ptype;
 
 SELECT lsmb__grant_menu('business_type_edit', 147, 'allow');
 
-SELECT lsmb__create_role('business_type_all');
+SELECT lsmb__create_role('business_type_all',
+                         $DOC$
+                         This role combines the create and edit righs for
+                         'type of business' classes.
+                         $DOC$
+);
 SELECT lsmb__grant_role('business_type_all', 'business_type_create');
 SELECT lsmb__grant_role('business_type_all', 'business_type_edit');
 
 
-SELECT lsmb__create_role('country_create');
+SELECT lsmb__create_role('country_create',
+                         $DOC$
+                         This role allows creation of new countries.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('country_create', 'country', 'INSERT');
 SELECT lsmb__grant_perms('country_create', 'country_id_seq', 'ALL');
 SELECT lsmb__grant_menu('country_create', 264, 'allow');
 
-SELECT lsmb__create_role('country_edit');
+SELECT lsmb__create_role('country_edit',
+                         $DOC$
+                         This role allows modification of countries.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('country_edit', 'country', ptype)
   FROM unnest(array['UPDATE'::text, 'DELETE']) ptype;
 SELECT lsmb__grant_menu('country_edit', 264, 'allow');
 
-SELECT lsmb__create_role('country_all');
+SELECT lsmb__create_role('country_all',
+                         $DOC$
+                         This role combines all rights for countries.
+                         $DOC$
+);
 SELECT lsmb__grant_role('country_all', 'country_create');
 SELECT lsmb__grant_role('country_all', 'country_edit');
 
 
-SELECT lsmb__create_role('sic_create');
+SELECT lsmb__create_role('sic_create',
+                         $DOC$
+                         This role allows creation of new Standardized Industry
+                         Codes (SIC).
+                         $DOC$
+);
 SELECT lsmb__grant_perms('sic_create', 'sic', 'INSERT');
 SELECT lsmb__grant_menu('sic_create', 153, 'allow');
 
-SELECT lsmb__create_role('sic_edit');
+SELECT lsmb__create_role('sic_edit',
+                         $DOC$
+                         This role allows modification of Standardized Industry
+                         Codes (SIC).
+                         $DOC$
+);
 SELECT lsmb__grant_perms('sic_edit', 'sic', ptype)
   FROM unnest(array['UPDATE'::text, 'DELETE']) ptype;
 SELECT lsmb__grant_menu('sic_edit', 153, 'allow');
 
-SELECT lsmb__create_role('sic_all');
+SELECT lsmb__create_role('sic_all',
+                         $DOC$
+                         This role combines all rights for Standardized Industry
+                         Codes (SIC).
+                         $DOC$
+);
 SELECT lsmb__grant_role('sic_all', 'sic_create');
 SELECT lsmb__grant_role('sic_all', 'sic_edit');
 
-SELECT lsmb__create_role('template_edit');
+SELECT lsmb__create_role('template_edit',
+                         $DOC$
+                         This role allows modification of document
+                         (e.g. invoice) templates.
+                         $DOC$
+);
 SELECT lsmb__grant_perms('template_edit', 'template', 'ALL');
 SELECT lsmb__grant_perms('template_edit', 'template_id_seq', 'ALL');
 SELECT lsmb__grant_menu('template_edit', 156, 'allow');
 
-SELECT lsmb__create_role('users_manage');
+SELECT lsmb__create_role('users_manage',
+                         $DOC$
+                         This role allows addition and removal of users to
+                         the current company.
+                         $DOC$
+);
 SELECT lsmb__grant_role('users_manage', 'contact_read');
 SELECT lsmb__grant_role('users_manage', 'contact_create');
 SELECT lsmb__grant_role('users_manage', 'contact_class_employee');
