@@ -555,7 +555,7 @@ Permission(s) to affect to the user.
 Permission can be C<Full Permissions> or a comma separated list of the following roles:
 
 C<account_all> C<account_create> C<account_delete> C<account_edit> C<account_link_description_create>
-C<ap_all> C<ap_all_transactions> C<ap_all_vouchers> C<ap_invoice_create> C<ap_invoice_create_voucher>
+C<ap_all> C<ap_voucher_all> C<ap_invoice_create> C<ap_invoice_create_voucher>
 C<ap_transaction_all> C<ap_transaction_create> C<ap_transaction_create_voucher> C<ap_transaction_list>
 C<ar_all> C<ar_invoice_create> C<ar_invoice_create_voucher> C<ar_transaction_all> C<ar_transaction_create>
 C<ar_transaction_create_voucher> C<ar_transaction_list> C<ar_voucher_all> C<assembly_stock>
@@ -579,7 +579,7 @@ C<sales_order_edit> C<sales_order_list> C<sales_quotation_create> C<sales_quotat
 C<sic_create> C<sic_edit> C<system_admin> C<system_settings_change> C<system_settings_list>
 C<tax_form_save> C<taxes_set> C<template_edit> C<timecard_add> C<timecard_list> C<timecard_order_generate>
 C<transaction_template_delete> C<translation_create> C<users_manage> C<voucher_delete> C<warehouse_create>
-C<warehouse_edit> C<yearend_reopen> C<yearend_run> C<yearend_run> 
+C<warehouse_edit> C<yearend_reopen> C<yearend_run> C<yearend_run>
 
 =item ssn C<string>
 
