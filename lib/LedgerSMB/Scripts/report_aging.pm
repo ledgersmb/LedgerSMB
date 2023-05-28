@@ -123,9 +123,10 @@ sub _render_statement_batch {
     my $results = $wf->context->param( 'results' );
     if (scalar($results->@*) == 1) {
         my ($result) = $results->@*;
+        my $callback = 'callback=reports.pl%3Faction%3Dstart_report%26report_name%3Daging%26module_name%3Dgl%26entity_class%3D2';
 
         return [ HTTP_SEE_OTHER,
-                 [ Location => 'email.pl?action=render&id=' . $result->{id} ],
+                 [ Location => 'email.pl?action=render&' . $callback . '&id=' . $result->{id} ],
                  [ '' ] ];
     }
 
