@@ -49,6 +49,12 @@ Dependency updates
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.18
+* Fix regression since 1.10.16 upgrading old companies while renaming setting
+* Fix selection of default AR/AP accounts while importing databases (#7419)
+* Fix error sending AR Aging statements, even though successful (#7428)
+
+
 Changelog for 1.10.17
 * Change workflow timestamps to per-second granularity (from minutes) (#7360)
 * Fix workflow actions not being logged despite configuration (#7360)
