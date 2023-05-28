@@ -7,7 +7,7 @@ BEGIN;
 DELETE FROM menu_acl WHERE node_id in (206, 210);
 
 DROP FUNCTION IF EXISTS lsmb__create_role(text);
-CREATE OR REPLACE FUNCTION lsmb__create_role(in_role text, in_documentation text default null) RETURNS bool
+CREATE OR REPLACE FUNCTION lsmb__create_role(in_role text, in_documentation text) RETURNS bool
 LANGUAGE PLPGSQL AS
 $$
 DECLARE
@@ -1484,26 +1484,50 @@ SELECT lsmb__grant_perms('orders_generate', obj, ptype)
 SELECT lsmb__grant_perms('orders_generate', obj, 'ALL')
   FROM unnest(array['oe_id_seq'::text, 'orderitems_id_seq']) obj;
 
-SELECT lsmb__create_role('timecard_order_generate');
+SELECT lsmb__create_role('timecard_order_generate',
+                         $DOC$
+                         This role allows generating orders from time cards.
+                         $DOC$
+);
 SELECT lsmb__grant_role('timecard_order_generate', 'orders_generate');
 SELECT lsmb__grant_role('timecard_order_generate', 'timecard_list');
 SELECT lsmb__grant_menu('timecard_order_generate', 102, 'allow');
 
-SELECT lsmb__create_role('orders_sales_to_purchase');
+SELECT lsmb__create_role('orders_sales_to_purchase',
+                         $DOC$
+                         This role allows generating purchase orders
+                         from sales orders.
+                         $DOC$
+);
 SELECT lsmb__grant_role('orders_sales_to_purchase', 'orders_generate');
 SELECT lsmb__grant_menu('orders_sales_to_purchase', node_id, 'allow')
   FROM unnest(array[57,58]) node_id;
 
-SELECT lsmb__create_role('orders_purchase_consolidate');
+SELECT lsmb__create_role('orders_purchase_consolidate',
+                         $DOC$
+                         This role allows generating consolidated purchase
+                         orders from multiple outstanding purchase orders.
+                         $DOC$
+);
 SELECT lsmb__grant_role('orders_purchase_consolidate', 'orders_generate');
 SELECT lsmb__grant_menu('orders_purchase_consolidate', 62, 'allow');
 
-SELECT lsmb__create_role('orders_sales_consolidate');
+SELECT lsmb__create_role('orders_sales_consolidate',
+                         $DOC$
+                         This role allows generating consolidated sales
+                         orders from multiple outstanding sales orders.
+                         $DOC$
+);
 SELECT lsmb__grant_role('orders_sales_consolidate', 'orders_generate');
 SELECT lsmb__grant_menu('orders_sales_consolidate', 61, 'allow');
 
---###BUG: Duplicate with 'orders_generate'
-SELECT lsmb__create_role('orders_manage');
+--###BUG: Duplicate with 'orders_generate'???
+SELECT lsmb__create_role('orders_manage',
+                         $DOC$
+                         This role combines all order generation and
+                         consolidation rights.
+                         $DOC$
+);
 SELECT lsmb__grant_role('orders_manage', rname)
   FROM unnest(array['timecard_order_generate'::text, 'orders_sales_to_purchase',
                     'orders_purchase_consolidate', 'orders_sales_consolidate']
