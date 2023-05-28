@@ -220,6 +220,11 @@ Dependency updates
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.29
+* Fix regression since 1.9.27 upgrading old companies while renaming setting
+* Fix selection of default AR/AP accounts while importing databases (#7419)
+
+
 Changelog for 1.9.28
 * Fix deletion of parts groups (#7363)
 * Align invoice/order entry between databases with and without parts (#7374)
