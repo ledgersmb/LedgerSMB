@@ -83,14 +83,15 @@ Date: YYYY-MM-DD
 <Listing of consequences known at the time of
  decision-taking>.
 
+## Annotations
+
+<comments/remarks regarding this ADR after it has been enacted>
 
 ```
 
 
 # TODO list for ADRs to be written
 
-* Move from CGI to PSGI
-* Move to Dojo
 * Move to Vue
 * Use of custom web elements to transition UI
 * Use of custom web elements to phase out AMD parser
