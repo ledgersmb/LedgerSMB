@@ -260,10 +260,6 @@ your software.
 
 
 __DATA__
-openapi: 3.0.0
-info:
-  title: Management of language configuration
-  version: 0.0.1
 paths:
   /languages:
     description: Management of language configuration
@@ -274,7 +270,7 @@ paths:
       operationId: getLanguages
       responses:
         200:
-          description: ...
+          description: Returns the full set of configured languages
           content:
             application/json:
               schema:
@@ -286,10 +282,10 @@ paths:
                     type: array
                     items:
                       type: object
-                items:
-                  type: array
                   items:
-                    $ref: '#/components/schemas/Language'
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Language'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -310,7 +306,10 @@ paths:
               $ref: '#/components/schemas/Language'
       responses:
         201:
-          description: ...
+          description: |
+            Confirms successfull creation of the new resource (language),
+            returning the data from the resource and in the Location header
+            the canonical location to access the resource.
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -342,7 +341,7 @@ paths:
       operationId: getLanguageById
       responses:
         200:
-          description: ...
+          description: Returns the requested single resource's data
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -351,7 +350,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Language'
         304:
-          description: ...
+          $ref: '#/components/responses/304'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -374,7 +373,9 @@ paths:
               $ref: '#/components/schemas/Language'
       responses:
         200:
-          description: ...
+          description: |
+            Confirms successful replacement of the resource's data,
+            returning the new data of the resource.
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -383,7 +384,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Language'
         304:
-          description: ...
+          $ref: '#/components/responses/304'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -407,7 +408,7 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         204:
-          description: ...
+          description: Confirms successful deletion of the resource
         400:
           $ref: '#/components/responses/400'
         401:
@@ -425,7 +426,9 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         200:
-          description: ...
+          description: |
+            Confirms successful update,
+            returning the new data for the resource
         400:
           $ref: '#/components/responses/400'
         401:
@@ -435,20 +438,6 @@ paths:
         404:
           $ref: '#/components/responses/404'
 components:
-  headers:
-    ETag:
-      description: ...
-      required: true
-      schema:
-        type: string
-  parameters:
-    if-match:
-      name: If-Match
-      in: header
-      description: ...
-      required: true
-      schema:
-        type: string
   schemas:
     language-code:
       type: string
@@ -463,18 +452,4 @@ components:
           $ref: '#/components/schemas/language-code'
         description:
           type: string
-  responses:
-    400:
-      description: Bad request
-    401:
-      description: Unauthorized
-    403:
-      description: Forbidden
-    404:
-      description: Not Found
-    412:
-      description: Precondition failed (If-Match header)
-    413:
-      description: Payload too large
-    428:
-      description: Precondition required
+

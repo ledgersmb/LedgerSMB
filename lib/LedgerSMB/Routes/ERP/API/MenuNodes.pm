@@ -24,6 +24,7 @@ use warnings;
 use HTTP::Status qw( HTTP_OK );
 
 use LedgerSMB::Router appname => 'erp/api';
+use LedgerSMB::Routes::ERP::API;
 
 set logger => 'erp.api.menu-nodes';
 set api_schema => openapi_schema(\*DATA);
@@ -67,10 +68,6 @@ your software.
 
 
 __DATA__
-openapi: 3.0.0
-info:
-  title: Menu items for the active user
-  version: 0.0.1
 paths:
   /menu-nodes:
     description: Menu items for the active user
@@ -81,7 +78,9 @@ paths:
       operationId: getUserMenuNodes
       responses:
         200:
-          description: ...
+          description: |
+            Returns the full set of menu nodes accessible
+            by the requesting user.
           content:
              application/json:
                schema:
@@ -113,13 +112,3 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
-components:
-  responses:
-    400:
-      description: Bad request
-    401:
-      description: Unauthorized
-    403:
-      description: Forbidden
-    404:
-      description: Not Found

@@ -26,6 +26,7 @@ use HTTP::Status qw( HTTP_OK HTTP_NO_CONTENT HTTP_CREATED HTTP_CONFLICT HTTP_FOR
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Report::Listings::Country;
 use LedgerSMB::Router appname => 'erp/api';
+use LedgerSMB::Routes::ERP::API;
 
 set logger => 'erp.api.countries';
 set api_schema => openapi_schema(\*DATA);
@@ -260,10 +261,6 @@ your software.
 
 
 __DATA__
-openapi: 3.0.0
-info:
-  title: Management of country configuration
-  version: 0.0.1
 paths:
   /countries:
     description: Management of country configuration
@@ -274,7 +271,7 @@ paths:
       operationId: getCountries
       responses:
         200:
-          description: ...
+          description: Returns a list of configured countries
           content:
             application/json:
               schema:
@@ -286,10 +283,10 @@ paths:
                     type: array
                     items:
                       type: object
-                items:
-                  type: array
                   items:
-                    $ref: '#/components/schemas/Country'
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Country'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -342,7 +339,7 @@ paths:
       operationId: getCountryById
       responses:
         200:
-          description: ...
+          description: Returns the data associated with the country
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -351,7 +348,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Country'
         304:
-          description: ...
+          $ref: '#/components/responses/304'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -374,7 +371,7 @@ paths:
               $ref: '#/components/schemas/Country'
       responses:
         200:
-          description: ...
+          description: Confirms replacement of country data, returning the new data
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -382,8 +379,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Country'
-        304:
-          description: ...
         400:
           $ref: '#/components/responses/400'
         401:
@@ -407,7 +402,7 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         204:
-          description: ...
+          description: Confirms deletion of the country resource
         400:
           $ref: '#/components/responses/400'
         401:
@@ -416,6 +411,10 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        412:
+          $ref: '#/components/responses/412'
+        428:
+          $ref: '#/components/responses/428'
     patch:
       tags:
         - Countries
@@ -425,7 +424,7 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         200:
-          description: ...
+          description: Confirms updating the country resource, returning the new data
         400:
           $ref: '#/components/responses/400'
         401:
@@ -434,21 +433,13 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        412:
+          $ref: '#/components/responses/412'
+        413:
+          $ref: '#/components/responses/413'
+        428:
+          $ref: '#/components/responses/428'
 components:
-  headers:
-    ETag:
-      description: ...
-      required: true
-      schema:
-        type: string
-  parameters:
-    if-match:
-      name: If-Match
-      in: header
-      description: ...
-      required: true
-      schema:
-        type: string
   schemas:
     country-code:
       type: string
@@ -463,18 +454,3 @@ components:
           $ref: '#/components/schemas/country-code'
         name:
           type: string
-  responses:
-    400:
-      description: Bad request
-    401:
-      description: Unauthorized
-    403:
-      description: Forbidden
-    404:
-      description: Not Found
-    412:
-      description: Precondition failed (If-Match header)
-    413:
-      description: Payload too large
-    428:
-      description: Precondition required

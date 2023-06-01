@@ -27,6 +27,7 @@ use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Report::Inventory::Pricegroups;
 use LedgerSMB::Report::Listings::Warehouse;
 use LedgerSMB::Router appname => 'erp/api';
+use LedgerSMB::Routes::ERP::API;
 
 set logger => 'erp.api.products';
 set api_schema => openapi_schema(\*DATA);
@@ -472,10 +473,6 @@ your software.
 
 
 __DATA__
-openapi: 3.0.0
-info:
-  title: Managing products and related configuration
-  version: 0.0.1
 paths:
   /products/pricegroups:
     description: Managing products and related configuration
@@ -486,7 +483,7 @@ paths:
       operationId: getProductsPricegroups
       responses:
         200:
-          description: ...
+          description: Returns the full list of defined price groups
           content:
             application/json:
               schema:
@@ -498,10 +495,10 @@ paths:
                     type: array
                     items:
                       type: object
-                items:
-                  type: array
                   items:
-                    $ref: '#/components/schemas/Pricegroup'
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Pricegroup'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -522,7 +519,9 @@ paths:
               $ref: '#/components/schemas/NewPricegroup'
       responses:
         201:
-          description: ...
+          description: |
+            Confirms creation of the new resource, returning
+            the new data
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -553,7 +552,8 @@ paths:
       operationId: getProductsPricegroupById
       responses:
         200:
-          description: ...
+          description: |
+            Returns the data for a single resource
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -562,7 +562,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Pricegroup'
         304:
-          description: ...
+          $ref: '#/components/responses/304'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -585,7 +585,9 @@ paths:
               $ref: '#/components/schemas/Pricegroup'
       responses:
         200:
-          description: ...
+          description: |
+            Confirms successful replacement of the
+            resource's data, returning the new state
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -594,7 +596,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Pricegroup'
         304:
-          description: ...
+          $ref: '#/components/responses/304'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -618,7 +620,7 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         204:
-          description: ...
+          description: Confirms successful deletion of the resource
         400:
           $ref: '#/components/responses/400'
         401:
@@ -636,7 +638,9 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         200:
-          description: ...
+          description: |
+            Confirms successful update of the resource, returning
+            the new resource state
         400:
           $ref: '#/components/responses/400'
         401:
@@ -654,7 +658,7 @@ paths:
       operationId: getWarehouses
       responses:
         200:
-          description: ...
+          description: Returns the full set of configured warehouses
           content:
             application/json:
               schema:
@@ -690,7 +694,9 @@ paths:
               $ref: '#/components/schemas/NewWarehouse'
       responses:
         201:
-          description: ...
+          description: |
+            Confirms successful creation of the new resource,
+            returning the new data
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -722,7 +728,7 @@ paths:
       operationId: getWarehousesById
       responses:
         200:
-          description: ...
+          description: Returns the data of a single resource
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -731,7 +737,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Warehouse'
         304:
-          description: ...
+          $ref: '#/components/responses/304'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -754,7 +760,9 @@ paths:
               $ref: '#/components/schemas/Warehouse'
       responses:
         200:
-          description: ...
+          description: |
+            Confirms successful replacement of the resources data,
+            returning the new state
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -763,7 +771,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Warehouse'
         304:
-          description: ...
+          $ref: '#/components/responses/304'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -787,7 +795,7 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         204:
-          description: ...
+          description: Confirms deletion of the resource
         400:
           $ref: '#/components/responses/400'
         401:
@@ -805,7 +813,9 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         200:
-          description: ...
+          description: |
+            Confirms successful update of the resource,
+            returning the new state
         400:
           $ref: '#/components/responses/400'
         401:
@@ -815,20 +825,6 @@ paths:
         404:
           $ref: '#/components/responses/404'
 components:
-  headers:
-    ETag:
-      description: ...
-      required: true
-      schema:
-        type: string
-  parameters:
-    if-match:
-      name: If-Match
-      in: header
-      description: ...
-      required: true
-      schema:
-        type: string
   schemas:
     common-id:
       type: integer
@@ -870,18 +866,3 @@ components:
       properties:
         description:
           type: string
-  responses:
-    400:
-      description: Bad request
-    401:
-      description: Unauthorized
-    403:
-      description: Forbidden
-    404:
-      description: Not Found
-    412:
-      description: Precondition failed (If-Match header)
-    413:
-      description: Payload too large
-    428:
-      description: Precondition required

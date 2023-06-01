@@ -27,6 +27,7 @@ use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Report::Listings::Business_Type;
 use LedgerSMB::Report::Listings::SIC;
 use LedgerSMB::Router appname => 'erp/api';
+use LedgerSMB::Routes::ERP::API;
 
 set logger => 'erp.api.contacts';
 set api_schema => openapi_schema(\*DATA);
@@ -270,7 +271,7 @@ sub _add_businesstype {
         {
             id => $row->{id},
             description => $row->{description},
-            discount => $row->{discount},
+            discount => $row->{discount} + 0 # string to number conversion
         },
         {
             ETag => $row->{etag}
@@ -304,7 +305,7 @@ sub _get_businesstype {
         {
             id => $row->{id},
             description => $row->{description},
-            discount => $row->{discount} + 0 # Force string to float
+            discount => $row->{discount} + 0 # string to number conversion
         },
         {
             ETag => $row->{etag}
@@ -323,7 +324,7 @@ sub _get_businesstypes {
         push @results, {
             id => $row->{id},
             description => $row->{description},
-            discount => $row->{discount} + 0 # Force string to float
+            discount => $row->{discount} + 0 # string to number conversion
         };
     }
     die $sth->errstr if $sth->err;
@@ -481,13 +482,9 @@ your software.
 
 
 __DATA__
-openapi: 3.0.0
-info:
-  title: Management of industry codes configuration
-  version: 0.0.1
 paths:
   /contacts/sic:
-    description: Management of Standard Industry Codes (SICs)
+    description: Collection of Standard Industry Codes (SICs)
     get:
       tags:
         - SICs
@@ -495,7 +492,7 @@ paths:
       operationId: getSICs
       responses:
         200:
-          description: ...
+          description: Returns the list of SIC codes
           content:
             application/json:
               schema:
@@ -507,10 +504,10 @@ paths:
                     type: array
                     items:
                       type: object
-                items:
-                  type: array
                   items:
-                    $ref: '#/components/schemas/SIC'
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SIC'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -531,7 +528,7 @@ paths:
               $ref: '#/components/schemas/SIC'
       responses:
         201:
-          description: ...
+          description: Confirms creation of the new SIC, redirecting to the new resource URI
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -548,6 +545,7 @@ paths:
         404:
           $ref: '#/components/responses/404'
   /contacts/sic/{id}:
+    description: Management of individual Standard Industry Code items
     parameters:
       - name: id
         in: path
@@ -562,7 +560,7 @@ paths:
       operationId: getSICById
       responses:
         200:
-          description: ...
+          description: Returns the data associated with the SIC code
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -571,7 +569,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/SIC'
         304:
-          description: ...
+          $ref: '#/components/responses/304'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -594,7 +592,7 @@ paths:
               $ref: '#/components/schemas/SIC'
       responses:
         200:
-          description: ...
+          description: Confirms replacement of SIC resource, returning the new data
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -602,8 +600,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SIC'
-        304:
-          description: ...
         400:
           $ref: '#/components/responses/400'
         401:
@@ -627,7 +623,7 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         204:
-          description: ...
+          description: Confirms deletion of the SIC resource
         400:
           $ref: '#/components/responses/400'
         401:
@@ -636,6 +632,10 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        412:
+          $ref: '#/components/responses/412'
+        428:
+          $ref: '#/components/responses/428'
     patch:
       tags:
         - SICs
@@ -645,7 +645,14 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         200:
-          description: ...
+          description: Confirms updating the data associated with the SIC code, returning the new SIC data
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SIC'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -654,6 +661,12 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        412:
+          $ref: '#/components/responses/412'
+        413:
+          $ref: '#/components/responses/413'
+        428:
+          $ref: '#/components/responses/428'
   /contacts/business-types:
     description: Manage business types
     get:
@@ -663,7 +676,7 @@ paths:
       operationId: getBusinessTypes
       responses:
         200:
-          description: ...
+          description: Returns the list of business types
           content:
             application/json:
               schema:
@@ -675,10 +688,10 @@ paths:
                     type: array
                     items:
                       type: object
-                items:
-                  type: array
                   items:
-                    $ref: '#/components/schemas/BusinessType'
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BusinessType'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -699,7 +712,7 @@ paths:
               $ref: '#/components/schemas/NewBusinessType'
       responses:
         201:
-          description: ...
+          description: Confirms creation of the new business type, redirecting to the new resource URI
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -731,7 +744,7 @@ paths:
       operationId: getBusinessTypesById
       responses:
         200:
-          description: ...
+          description: Returns the requested business type data
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -740,7 +753,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BusinessType'
         304:
-          description: ...
+          $ref: '#/components/responses/304'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -763,7 +776,7 @@ paths:
               $ref: '#/components/schemas/BusinessType'
       responses:
         200:
-          description: ...
+          description: Confirms replacement of the business type data
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -771,8 +784,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BusinessType'
-        304:
-          description: ...
         400:
           $ref: '#/components/responses/400'
         401:
@@ -796,7 +807,7 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         204:
-          description: ...
+          description: Confirms deletion of the business type resource
         400:
           $ref: '#/components/responses/400'
         401:
@@ -805,6 +816,10 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        412:
+          $ref: '#/components/responses/412'
+        428:
+          $ref: '#/components/responses/428'
     patch:
       tags:
         - Business types
@@ -814,7 +829,14 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         200:
-          description: ...
+          description: Confirms updating the business type data, returning the new resource data
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessType'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -823,21 +845,13 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        412:
+          $ref: '#/components/responses/412'
+        413:
+          $ref: '#/components/responses/413'
+        428:
+          $ref: '#/components/responses/428'
 components:
-  headers:
-    ETag:
-      description: ...
-      required: true
-      schema:
-        type: string
-  parameters:
-    if-match:
-      name: If-Match
-      in: header
-      description: ...
-      required: true
-      schema:
-        type: string
   schemas:
     sic-code:
       type: string
@@ -856,37 +870,21 @@ components:
       type: number
       format: int64
     BusinessType:
+      allOf:
+      - $ref: '#/components/schemas/NewBusinessType'
+      - type: object
+        required:
+          - id
+        properties:
+          id:
+            $ref: '#/components/schemas/business-type-id'
+    NewBusinessType:
       type: object
       required:
-        - id
         - description
       properties:
-        id:
-          $ref: '#/components/schemas/business-type-id'
         description:
           type: string
         discount:
           type: number
           format: float
-    NewBusinessType:
-            type: object
-            required:
-              - description
-            properties:
-              description:
-                type: string
-  responses:
-    400:
-      description: Bad request
-    401:
-      description: Unauthorized
-    403:
-      description: Forbidden
-    404:
-      description: Not Found
-    412:
-      description: Precondition failed (If-Match header)
-    413:
-      description: Payload too large
-    428:
-      description: Precondition required

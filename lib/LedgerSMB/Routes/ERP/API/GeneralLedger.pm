@@ -26,6 +26,7 @@ use HTTP::Status qw( HTTP_OK HTTP_NO_CONTENT HTTP_CREATED HTTP_CONFLICT HTTP_FOR
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Report::Listings::GIFI;
 use LedgerSMB::Router appname => 'erp/api';
+use LedgerSMB::Routes::ERP::API;
 
 set logger => 'erp.api.gl';
 set api_schema => openapi_schema(\*DATA);
@@ -259,10 +260,6 @@ your software.
 
 
 __DATA__
-openapi: 3.0.0
-info:
-  title: Management of GIFI (canadian accounting) codes configuration
-  version: 0.0.1
 paths:
   /gl/gifi:
     description: A list of GIFI
@@ -273,7 +270,7 @@ paths:
       operationId: getWIFIs
       responses:
         200:
-          description: ...
+          description: Returns the full set of GIFI codes
           content:
             application/json:
               schema:
@@ -285,10 +282,10 @@ paths:
                     type: array
                     items:
                       type: object
-                items:
-                  type: array
                   items:
-                    $ref: '#/components/schemas/GIFI'
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GIFI'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -309,7 +306,7 @@ paths:
               $ref: '#/components/schemas/GIFI'
       responses:
         201:
-          description: ...
+          description: Returns the full collection of defined GIFI codes
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -350,7 +347,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GIFI'
         304:
-          description: ...
+          $ref: '#/components/responses/304'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -373,7 +370,9 @@ paths:
               $ref: '#/components/schemas/GIFI'
       responses:
         200:
-          description: ...
+          description: |
+            The resource was succesfully replaced,
+            returning the new data for the resource.
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -382,7 +381,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GIFI'
         304:
-          description: ...
+          $ref: '#/components/responses/304'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -406,7 +405,7 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         204:
-          description: ...
+          description: The resource was succesfully deleted
         400:
           $ref: '#/components/responses/400'
         401:
@@ -424,7 +423,9 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         200:
-          description: ...
+          description: |
+            The resource was succesfully updated,
+            returning the new data for the resource.
         400:
           $ref: '#/components/responses/400'
         401:
@@ -434,20 +435,6 @@ paths:
         404:
           $ref: '#/components/responses/404'
 components:
-  headers:
-    ETag:
-      description: ...
-      required: true
-      schema:
-        type: string
-  parameters:
-    if-match:
-      name: If-Match
-      in: header
-      description: ...
-      required: true
-      schema:
-        type: string
   schemas:
     accno-code:
       type: string
@@ -463,18 +450,3 @@ components:
         description:
           type: string
           minLength: 1
-  responses:
-    400:
-      description: Bad request
-    401:
-      description: Unauthorized
-    403:
-      description: Forbidden
-    404:
-      description: Not Found
-    412:
-      description: Precondition failed (If-Match header)
-    413:
-      description: Payload too large
-    428:
-      description: Precondition required
