@@ -60,7 +60,6 @@ CREATE TYPE report_aging_item AS (
         "language" text,
         invnumber text,
         transdate date,
-        till text,
         ordnumber text,
         ponumber text,
         notes text,
@@ -103,7 +102,7 @@ RETURN QUERY EXECUTE $sql$
                        )
                 SELECT c.entity_id, c.meta_number::text, e.name,
                        e.name as contact_name, c.language_code::text as "language",
-                       a.invnumber, a.transdate, a.till::text, a.ordnumber,
+                       a.invnumber, a.transdate, a.ordnumber,
                        a.ponumber, a.notes,
                        CASE WHEN a.age/30 = 0
                                  THEN (a.sign * sum(ac.amount_bc))
@@ -129,7 +128,7 @@ RETURN QUERY EXECUTE $sql$
                                 JOIN invoice i ON (i.parts_id = p.id)
                                 WHERE i.trans_id = a.id) AS line_items,
                    (coalesce($5, now())::date - a.transdate) as age
-                  FROM (select id, invnumber, till, ordnumber, amount_bc, duedate,
+                  FROM (select id, invnumber, ordnumber, amount_bc, duedate,
                                curr, ponumber, notes, entity_credit_account,
                                -1 AS sign, transdate, force_closed,
                                CASE WHEN $7
@@ -178,7 +177,7 @@ RETURN QUERY EXECUTE $sql$
               GROUP BY c.entity_id, c.meta_number, e.name, c.language_code,
                        l.line_one, l.line_two, l.line_three,
                        l.city, l.state, l.mail_code, country.name,
-                       a.invnumber, a.transdate, a.till, a.ordnumber,
+                       a.invnumber, a.transdate, a.ordnumber,
                        a.ponumber, a.notes, a.amount_bc, a.sign,
                        a.duedate, a.id, a.curr, a.age
                 HAVING ($6 is null
@@ -237,7 +236,6 @@ CREATE TYPE gl_report_item AS (
     amount_tc numeric,
     accno text,
     gifi_accno text,
-    till text,
     cleared bool,
     memo text,
     accname text,
@@ -290,7 +288,7 @@ FOR retval IN
             )
        SELECT g.id, g.type, g.invoice, g.reference, g.eca_name, g.description, ac.transdate,
               ac.source, ac.amount_bc, ac.curr, ac.amount_tc, c.accno, c.gifi_accno,
-              g.till, ac.cleared, ac.memo, c.description AS accname,
+              ac.cleared, ac.memo, c.description AS accname,
               ac.chart_id, ac.entry_id,
               sum(ac.amount_bc) over (order by ac.transdate, ac.trans_id,
                                             c.accno, ac.entry_id)
@@ -298,18 +296,16 @@ FOR retval IN
                 as running_balance,
               array_agg(ARRAY[bac.class_id, bac.bu_id])
          FROM (select id, 'gl' as type, false as invoice, reference,
-                      null::text as eca_name, description, approved,
-                      null::text as till
+                      null::text as eca_name, description, approved
                  FROM gl
                UNION
-               SELECT ar.id, 'ar', invoice, invnumber, e.name, ar.description, approved, till
+               SELECT ar.id, 'ar', invoice, invnumber, e.name, ar.description, approved
                  FROM ar
                  JOIN entity_credit_account eca ON ar.entity_credit_account
                       = eca.id
                  JOIN entity e ON e.id = eca.entity_id
                UNION
-               SELECT ap.id, 'ap', invoice, invnumber, e.name, ap.description, approved,
-                      null as till
+               SELECT ap.id, 'ap', invoice, invnumber, e.name, ap.description, approved
                  FROM ap
                  JOIN entity_credit_account eca ON ap.entity_credit_account
                       = eca.id
@@ -350,7 +346,7 @@ FOR retval IN
               AND (in_category = c.category OR in_category IS NULL)
      GROUP BY g.id, g.type, g.invoice, g.reference, g.eca_name, g.description, ac.transdate,
               ac.source, ac.amount_bc, c.accno, c.gifi_accno,
-              g.till, ac.cleared, ac.memo, c.description,
+              ac.cleared, ac.memo, c.description,
               ac.chart_id, ac.entry_id, ac.trans_id
        HAVING in_business_units is null
               or in_business_units <@ compound_array(bu_tree.path)
@@ -425,7 +421,6 @@ CREATE TYPE aa_transactions_line AS (
     last_payment date,
     due_date date,
     notes text,
-    till text,
     salesperson text,
     manager text,
     shipping_point text,
@@ -447,10 +442,10 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number::text, eeca.name, a.transdate,
        a.invnumber, a.ordnumber, a.ponumber, a.curr, a.amount_bc, a.netamount_bc,
        a.amount_bc - a.netamount_bc as tax,
        a.amount_bc - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
-       a.till::text, ee.name, me.name, a.shippingpoint, a.shipvia,
+       ee.name, me.name, a.shippingpoint, a.shipvia,
        '{}'::text[] as business_units -- TODO
   FROM (select id, transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
-               notes, till, person_id, entity_credit_account, invoice,
+               notes, person_id, entity_credit_account, invoice,
                shippingpoint, shipvia, ordnumber, ponumber, description,
                on_hold, force_closed
           FROM ar
@@ -524,7 +519,7 @@ SELECT null::int as id, null::bool as invoice, entity_id, meta_number::text,
        null::text as ordnumber, null::text as ponumber, curr,
        sum(amount) as amount, sum(netamount) as netamount, sum(tax) as tax,
        sum(paid) as paid, sum(due) as due, max(last_payment) as last_payment,
-       null::date as duedate, null::text as notes, null::text as till,
+       null::date as duedate, null::text as notes,
        null::text as salesperson, null::text as manager,
        null::text as shipping_point, null::text as ship_via,
        null::text[] as business_units
@@ -580,12 +575,12 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number::text, eeca.name,
        a.amount_bc - a.netamount_bc as tax, a.amount_bc - p.due,
        p.due, p.last_payment,
        a.duedate, a.notes,
-       a.till::text, eee.name as employee, mee.name as manager, a.shippingpoint,
+       eee.name as employee, mee.name as manager, a.shippingpoint,
        a.shipvia, '{}'::text[]
 
   FROM (select id, transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
                notes,
-               till, person_id, entity_credit_account, invoice, shippingpoint,
+               person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ar
          WHERE $1 = 2
