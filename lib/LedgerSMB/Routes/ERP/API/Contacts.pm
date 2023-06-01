@@ -271,7 +271,7 @@ sub _add_businesstype {
         {
             id => $row->{id},
             description => $row->{description},
-            discount => $row->{discount},
+            discount => $row->{discount} + 0 # string to number conversion
         },
         {
             ETag => $row->{etag}
@@ -305,7 +305,7 @@ sub _get_businesstype {
         {
             id => $row->{id},
             description => $row->{description},
-            discount => $row->{discount} + 0 # Force string to float
+            discount => $row->{discount} + 0 # string to number conversion
         },
         {
             ETag => $row->{etag}
@@ -324,7 +324,7 @@ sub _get_businesstypes {
         push @results, {
             id => $row->{id},
             description => $row->{description},
-            discount => $row->{discount} + 0 # Force string to float
+            discount => $row->{discount} + 0 # string to number conversion
         };
     }
     die $sth->errstr if $sth->err;
