@@ -510,8 +510,6 @@ sub load_base_schema {
     die 'Base schema failed to load'
         if ! $success;
 
-    $self->_load_module($dbh, 'triggers.sql');
-
     if (opendir(LOADDIR, "$self->{source_dir}/on_load")) {
         while (my $fname = readdir(LOADDIR)) {
             $self->run_file(
