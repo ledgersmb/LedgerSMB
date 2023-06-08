@@ -2376,6 +2376,7 @@ $$
 BEGIN
   -- dummy; actual function defined in modules/triggers.sql
   -- exists here in order to be able to create the triggers below
+  RETURN new;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -2418,6 +2419,7 @@ CREATE FUNCTION prevent_closed_transactions() RETURNS trigger
 BEGIN
   -- dummy; actual function defined in modules/triggers.sql
   -- exists here in order to be able to create the triggers below
+  RETURN new;
 END;
 $$;
 
@@ -2437,6 +2439,11 @@ $$
 BEGIN
   -- dummy; actual function defined in modules/triggers.sql
   -- exists here in order to be able to create the triggers below
+  IF tg_op = 'INSERT' OR tg_op = 'UPDATE' THEN
+    RETURN new;
+  ELSE
+    RETURN NULL;
+  END IF;
 END;
 $$ language plpgsql security definer;
 
@@ -2504,6 +2511,7 @@ AS
 BEGIN
   -- dummy; actual function defined in modules/triggers.sql
   -- exists here in order to be able to create the triggers below
+  RETURN new;
 END;
 ' LANGUAGE PLPGSQL;
 -- end function
