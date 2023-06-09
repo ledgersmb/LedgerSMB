@@ -886,25 +886,6 @@ selectable_values => { business_id => q{SELECT concat(description,' -- ',discoun
     max_version => '3.0'
     );
 
-# push @tests,__PACKAGE__->new(
-#     test_query => "select accno, description, link
-#                     from chart
-#                    where charttype = 'A'
-#                      and link ~ ':?\\(AR|AP|IC\\)\\(:|$\\)'",
-#     display_name => marktext('Unsupported account link combinations'),
-#     name => 'unsupported_account_links',
-#     display_cols => ['accno', 'description', 'link'],
-#  instructions =>
-#          marktext( 'An account can either be a summary account (which have a
-# link of "AR", "AP" or "IC" value) or be linked to dropdowns (having any
-# number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
-#    columns => ['category'],
-#     table => 'chart',
-#     appname => 'sql-ledger',
-#     min_version => '2.7',
-#     max_version => '3.0'
-#     );
-
 push @tests,__PACKAGE__->new(
     test_query => 'select id, customernumber, name
                     from customer
@@ -1244,25 +1225,6 @@ Void the clearing date in the dialog shown or go back to SQL-Ledger if you feel 
        min_version => '2.7',
        max_version => '3.0'
 );
-
-
-### On the vendor side, SL doesn't use pricegroups
-# push @tests, __PACKAGE__->new(
-#     test_query => "select *
-#                      from partsvendor
-#                     where not exists (select 1
-#                                         from pricegroup
-#                                        where id = pricegroup_id)",
-#     display_name => marktext('Non-existing vendor pricegroups in partsvendor'),
-#     name => 'partsvendor_pricegroups_exist',
-#     display_cols => ['parts_id', 'credit_id', 'pricegroup_id'],
-#  instructions =>
-#         marktext('Please fix the pricegroup data in your partsvendor table (no UI available)'),
-#     table => 'partsvendor',
-#     appname => 'sql-ledger',
-#     min_version => '2.7',
-#     max_version => '3.0'
-#     );
 
     return @tests;
 }
