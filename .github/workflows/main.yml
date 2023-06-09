@@ -313,7 +313,7 @@ jobs:
 
       # Send UI coverage before Perl
       - name: Upload UI coverage data
-        uses: coverallsapp/github-action@v2.1.2
+        uses: coverallsapp/github-action@v2.2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: ui
@@ -334,7 +334,7 @@ jobs:
         if: ${{ matrix.COVERAGE }}
 
       - name: Close parallel UI coverage data
-        uses: coverallsapp/github-action@v2.1.2
+        uses: coverallsapp/github-action@v2.2.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true
