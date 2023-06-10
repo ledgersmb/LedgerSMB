@@ -698,34 +698,31 @@ push @tests, __PACKAGE__->new(
   max_version => '1.3'
 );
 
+push @tests, __PACKAGE__->new(
+   test_query => q{select name, contact from customer
+                   where arap_accno_id is null
+                   order by name},
+ display_name => marktext('Empty AR account'),
+         name => 'no_null_ar_accounts',
+ display_cols => [ 'name', 'contact' ],
+ instructions => marktext(q(Please go into the SQL-Ledger UI and correct the empty AR accounts)),
+      appname => 'sql-ledger',
+  min_version => '2.7',
+  max_version => '3.0'
+   );
 
-#=pod
-
-#  push @tests, __PACKAGE__->new(
-#     test_query => "select * from customer where arap_accno_id is null",
-#   display_name => marktext('Empty AR account'),
-#           name => 'no_null_ar_accounts',
-#   display_cols => [ 'name', 'contact' ],
-#   instructions => marktext("Please correct the empty AR accounts"),
-#        appname => 'sql-ledger',
-#    min_version => '2.7',
-#    max_version => '3.0'
-#     );
-
-#  push @tests, __PACKAGE__->new(
-#     test_query => "select * from vendor where arap_accno_id is null",
-#   display_name => marktext('Empty AP account'),
-#           name => 'no_null_ap_accounts',
-#   display_cols => [ 'name', 'contact' ],
-#   instructions => marktext("Please correct the empty AP accounts"),
-#        appname => 'sql-ledger',
-#    min_version => '2.7',
-#    max_version => '3.0'
-#     );
-#*/
-
-#=cut
-
+push @tests, __PACKAGE__->new(
+   test_query => q{select name, contact from vendor
+                   where arap_accno_id is null
+                   order by name},
+ display_name => marktext('Empty AP account'),
+         name => 'no_null_ap_accounts',
+ display_cols => [ 'name', 'contact' ],
+ instructions => marktext(q(Please go into the SQL-Ledger UI and correct the empty AP accounts)),
+      appname => 'sql-ledger',
+  min_version => '2.7',
+  max_version => '3.0'
+   );
 
 push @tests,__PACKAGE__->new(
     test_query => q{ select category, accno, description
