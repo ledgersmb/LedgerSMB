@@ -99,7 +99,7 @@
     "eslint-webpack-plugin": "4.0.1",
     "html-webpack-plugin": "5.5.2",
     "http-status-codes": "2.2.0",
-    "i18next-conv": "13.1.1",
+    "i18next-conv": "14.0.0",
     "jest": "29.5.0",
     "jest-environment-jsdom": "29.5.0",
     "jest-openapi": "0.14.2",
