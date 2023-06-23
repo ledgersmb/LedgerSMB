@@ -3,6 +3,10 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.19
+* Fix handling of updates with consecutive, exactly equal pages (#7464)
+
+
 Changelog for 1.10.18
 * Fix regression since 1.10.16 upgrading old companies while renaming setting
 * Fix selection of default AR/AP accounts while importing databases (#7419)
