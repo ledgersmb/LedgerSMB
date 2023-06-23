@@ -452,7 +452,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number::text, eeca.name, a.transdate,
          WHERE $1 = 2 and approved
          UNION
         SELECT id, transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
-               notes, null, person_id, entity_credit_account, invoice,
+               notes, person_id, entity_credit_account, invoice,
                shippingpoint, shipvia, ordnumber, ponumber, description,
                on_hold, force_closed
           FROM ap
@@ -588,7 +588,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number::text, eeca.name,
          UNION
         SELECT id, transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
                notes,
-               null, person_id, entity_credit_account, invoice, shippingpoint,
+               person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ap
          WHERE $1 = 1
