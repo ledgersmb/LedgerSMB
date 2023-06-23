@@ -62,7 +62,17 @@ export default {
                 });
 
                 if (r.ok && !domReject(r)) {
-                    this.content = await r.text();
+                    let content = await r.text();
+                    if (content === this.content) {
+                        if (dismiss) {
+                            dismiss();
+                        }
+                        this.notify({
+                            title: options.done || this.$t("Loaded")
+                        });
+                        return;
+                    }
+                    this.content = content;
                     this.$nextTick(() => {
                         let maindiv = document.getElementById("maindiv");
                         parser.parse(maindiv).then(
