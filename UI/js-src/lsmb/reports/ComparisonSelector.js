@@ -73,7 +73,7 @@ define([
                 } // invalid input
 
                 domStyle.set(dom.byId("comparison_dates"), "display", "");
-                for (var i = 1; i <= 9; i++) {
+                for (var i = 1; i <= 13; i++) {
                     domStyle.set(
                         dom.byId("comparison_dates_" + i),
                         "display",
