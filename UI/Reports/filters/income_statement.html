@@ -158,12 +158,12 @@
                    value = 0
                    size = '3'
                    "data-dojo-type" = "dijit/form/NumberSpinner"
-                   "data-dojo-props" = "intermediateChanges:true, constraints:{min:0, max:9, places:0}, smallDelta:1, style:'width:7ex'"
+                   "data-dojo-props" = "intermediateChanges:true, constraints:{min:0, max:13, places:0}, smallDelta:1, style:'width:7ex'"
                    };
                    %]</legend>
 
         <div id="comparison_dates" style="display:none">
-          [% FOREACH c IN [1 .. 9]; %]
+          [% FOREACH c IN [1 .. 13]; %]
           <div class="input_row" id="comparison_dates_[% c %]" style="display:none">
             <div class="input_group">
               [% PROCESS input element_data = {
