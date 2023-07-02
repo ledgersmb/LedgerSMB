@@ -140,7 +140,7 @@ RETURN QUERY EXECUTE $sql$
                           FROM ar
                          WHERE $2 = 2
                          UNION
-                        SELECT id, invnumber, null, ordnumber, amount_bc, duedate,
+                        SELECT id, invnumber, ordnumber, amount_bc, duedate,
                                curr, ponumber, notes, entity_credit_account,
                                1 as sign, transdate, force_closed,
                                CASE WHEN $7
@@ -207,7 +207,7 @@ BEGIN
 RETURN QUERY EXECUTE $sql$
 SELECT entity_id, account_number, name, contact_name, "language",
        null::text, null::date,
-       null::text, null::text, null::text, null::text,
+       null::text, null::text, null::text,
        sum(c0), sum(c30), sum(c60), sum(c90), null::date, null::int, curr,
        null::numeric, null::text[], null::int
   FROM report__invoice_aging_detail($1, $2, $3, $4, $5, $6, $7, $8)
