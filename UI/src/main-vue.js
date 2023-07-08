@@ -1,6 +1,12 @@
 /** @format */
 /* eslint-disable no-console, import/no-unresolved, vue/multi-word-component-names */
 
+/* import polyfills */
+
+import '@ungap/custom-elements';
+
+/* continue regular application */
+
 import { createApp } from "vue";
 import router from "@/router";
 import i18n, { setI18nLanguage } from "@/i18n";

@@ -1,6 +1,6 @@
 [% PROCESS elements.html %]
 <body class="lsmb [% dojo_theme %]">
-  <form data-dojo-type="lsmb/Form"
+  <form is="lsmb-form"
         id="system-settings"
         method="post"
         action="[% form.script %]">
@@ -102,7 +102,7 @@
               };
            END;
            PROCESS button element_data={
-                   name => 'action'
+                   name => '__action'
                    value => 'save_defaults'
                    text => text('Save')} %]
   </form>

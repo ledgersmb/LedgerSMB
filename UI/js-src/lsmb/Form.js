@@ -13,19 +13,9 @@ define([
     var c = 0;
     return declare("lsmb/Form", [Form], {
         clickedAction: null,
-        startup: function () {
-            var self = this;
-            this.inherited(arguments);
-
-            // <button> tags get rewritten to <input type="submit" tags...
-            query('input[type="submit"]', this.domNode).forEach(function (b) {
-                on(b, "click", function () {
-                    self.clickedAction = b;
-                });
-            });
-        },
         onSubmit: function (evt) {
             event.stop(evt);
+            this.clickedAction = evt.submitter;
             this.submit();
         },
         submit: function () {
@@ -36,10 +26,16 @@ define([
 
             var method =
                 typeof this.method === "undefined" ? "GET" : this.method;
-            var url = this.action;
+            var url = this.action, o = new URL(window.location);
+            var rel = url.toString().substring(o.origin.length);
+            url = rel;
             var options = { handleAs: "text" };
             options.doing = widget["data-lsmb-doing"];
             options.done = widget["data-lsmb-done"];
+            let effectiveAction = domattr.get(this.clickedAction, "name");
+            if (effectiveAction === "__action") {
+                effectiveAction = "action";
+            }
             if (method.toLowerCase() === "get") {
                 if (!url) {
                     /* eslint no-alert:0 */
@@ -49,7 +45,7 @@ define([
                 c++;
                 var qobj = domform.toQuery(this.domNode);
                 qobj =
-                    domattr.get(this.clickedAction, "name") +
+                    effectiveAction +
                     "=" +
                     domattr.get(this.clickedAction, "value") +
                     "&" +
@@ -62,7 +58,7 @@ define([
                     options.data = new FormData(this.domNode);
                     // FF doesn't add the clicked button
                     options.data.append(
-                        domattr.get(this.clickedAction, "name"),
+                        effectiveAction,
                         domattr.get(this.clickedAction, "value")
                     );
                 } else {
@@ -71,7 +67,7 @@ define([
                         "Content-Type": "application/x-www-form-urlencoded"
                     };
                     options.data =
-                        domattr.get(this.clickedAction, "name") +
+                        effectiveAction +
                         "=" +
                         domattr.get(this.clickedAction, "value") +
                         "&" +
