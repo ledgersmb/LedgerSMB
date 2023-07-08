@@ -35,7 +35,7 @@
     "fails to exclude Edge 16-18"
   ],
   "browserslist": [
-    "supports es6-module and supports async-functions and supports xhr2 and supports bloburls and supports css-variables and supports css3-boxsizing and supports border-radius and supports fetch and supports classlist and supports multicolumn and not edge <= 18"
+    "supports es6-module and supports async-functions and supports xhr2 and supports bloburls and supports css-variables and supports css3-boxsizing and supports border-radius and supports fetch and supports classlist and supports multicolumn and not edge <= 18 and supports css-display-contents"
   ],
   "bugs": "https://github.com/ledgersmb/LedgerSMB/issues",
   "repository": {
