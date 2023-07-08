@@ -176,7 +176,7 @@
               IF request.location_class;
                 PROCESS button element_data = {
                 class = "submit"
-                name = "action"
+                name = "__action"
                 value = "save_location"
                 id = "loc_save_location"
                 text = text('Save Location') #'
@@ -184,7 +184,7 @@
               END; %]
              [% PROCESS button element_data = {
                 class = "submit"
-                name = "action"
+                name = "__action"
                 value = "save_new_location"
                 id = "loc_save_new_location"
                 text = text('Save New Location')

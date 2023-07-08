@@ -405,19 +405,19 @@ IF have_outstanding ;
     class = 'sort'
 } %]
 [% INCLUDE button element_data = {
-    name = "action",
+    name = "__action",
     text = text('Update'),
     value = 'update_recon_set',
     class = "submit"
 } %]
 [% INCLUDE button element_data = {
-        name = "action"
+        name = "__action"
         text = text('Select All') #'
        value = 'select_all_recons'
        class = 'submit'
 } %]
 [% INCLUDE button element_data = {
-    name = "action",
+    name = "__action",
     text = text('Save'),
     value = 'save_recon_set',
     class = "submit"
@@ -425,7 +425,7 @@ IF have_outstanding ;
 'data-lsmb-done' = text('Saved')
 } %]
 [% INCLUDE button element_data = {
-    name = "action",
+    name = "__action",
     text = text('Submit'),
     value = 'submit_recon_set',
     disabled = submit_enabled && !check.unapproved_reports ? 'false' : 'true',
@@ -434,7 +434,7 @@ IF have_outstanding ;
 [% END %]
 [% IF submitted AND NOT approved AND can_approve %]
 [% INCLUDE button element_data = {
-    name = "action",
+    name = "__action",
     text = text('Approve'),
     value = 'approve',
     disabled = submit_enabled ? 'false' : 'true',
@@ -443,7 +443,7 @@ IF have_outstanding ;
 'data-lsmb-done' = text('Approved')
 };
 INCLUDE button element_data = {
-    name = "action",
+    name = "__action",
     text = text('Reject'),
     value = 'reject',
     class = "submit"
@@ -453,7 +453,7 @@ INCLUDE button element_data = {
 [% END %]
 [% IF NOT approved %]
 [% INCLUDE button element_data = {
-        name = "action"
+        name = "__action"
         text = text('Delete')
        value = 'delete_report'
         type = 'submit'

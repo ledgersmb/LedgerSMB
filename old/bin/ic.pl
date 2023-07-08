@@ -932,7 +932,7 @@ sub form_footer {
             <th>| . $locale->text('Date To') . qq|</th>
             <td><input data-dojo-type="dijit/form/TextBox" type="text" size="12" name="date_to" class="date"></td>
         </tr><tr>
-            <td><button data-dojo-type="dijit/form/Button" type="submit" name="action"
+            <td><button data-dojo-type="dijit/form/Button" type="submit" name="__action"
                         value="generate_income_statement"
                         class="submit">| . $locale->text('Continue') .
                         qq|</button><td>
@@ -1745,7 +1745,7 @@ qq|<td>$ref->{meta_number}</td>|;
 <input type=hidden name=nextsub value=name_selected>
 <input type=hidden name=vc value=$table>
 <br>
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 </form>
@@ -2026,7 +2026,7 @@ sub stock_assembly {
 <input type="hidden" name="nextsub" value="list_assemblies">
 
 <br>
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 </form>
@@ -2175,7 +2175,7 @@ qq|<tr class=listrow$j><input name="id_$i" type=hidden value="$ref->{id}">\n|;
 <input type="hidden" name="nextsub" value="restock_assemblies">
 
 <br>
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 

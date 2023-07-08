@@ -93,13 +93,13 @@ sub _render_screen {
     # reports against them.
     if (!$budget->{id}){
        $budget->{buttons} = [
-             {   name => 'action',
+             {   name => '__action',
                  text => $request->{_locale}->text('Update'),
                  type => 'submit',
                 value => 'update',
                 class => 'submit',
              },
-             {   name => 'action',
+             {   name => '__action',
                  text => $request->{_locale}->text('Save'),
                  type => 'submit',
                 value => 'save',
@@ -108,13 +108,13 @@ sub _render_screen {
        ];
      } elsif (!$budget->{approved_by}){
          $budget->{buttons} = [
-             {   name => 'action',
+             {   name => '__action',
                  text => $request->{_locale}->text('Approve'),
                  type => 'submit',
                 value => 'approve',
                 class => 'submit',
              },
-             {   name => 'action',
+             {   name => '__action',
                  text => $request->{_locale}->text('Reject'),
                  type => 'submit',
                 value => 'reject',
@@ -123,7 +123,7 @@ sub _render_screen {
          ];
      } else {
          $budget->{buttons} = [
-             {   name => 'action',
+             {   name => '__action',
                  text => $request->{_locale}->text('Obsolete'),
                  type => 'submit',
                 value => 'obsolete',

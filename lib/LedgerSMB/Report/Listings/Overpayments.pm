@@ -160,7 +160,7 @@ If there is a batch_id, returns the the set of buttons.  Otherwise not.
 sub set_buttons {
    my $self = shift;
    return [
-          { name => 'action',
+          { name => '__action',
             text => $self->Text('Reverse'),
            value => 'reverse_overpayment',
             type => 'submit',

@@ -259,7 +259,7 @@ qq|<td><input name="new_meta_number_$i" type=hidden value="$ref->{meta_number}">
 <input type=hidden name=nextsub value=name_selected>
 <input type=hidden name=vc value="$table">
 <br>
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 </form>

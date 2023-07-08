@@ -117,7 +117,7 @@ sub set_buttons {
 
     if ($self->can_delete) {
         push @buttons, {
-            name => 'action',
+            name => '__action',
             text => $self->Text('Delete'),
            value => 'delete',
             type => 'submit',

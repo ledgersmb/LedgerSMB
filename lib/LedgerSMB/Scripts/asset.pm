@@ -524,7 +524,7 @@ sub display_report {
         push @$rows, $asset;
    }
     my $buttons = [
-        { name  => 'action',
+        { name  => '__action',
           text  => $locale->text('Save'),
           value => 'report_save',
           class => 'submit',
@@ -707,7 +707,7 @@ sub report_results {
                    text  => $locale->text('Approve'),
                    type  => 'submit',
                    class => 'submit',
-                   name  => 'action',
+                   name  => '__action',
                    value => 'report_results_approve'
                    },
         ];
@@ -822,7 +822,7 @@ sub report_details {
                    text  => $locale->text('Approve'),
                    type  => 'submit',
                    class => 'submit',
-                   name =>  'action',
+                   name =>  '__action',
                    value => 'report_details_approve'
                    },
     ];
@@ -923,7 +923,7 @@ sub partial_disposal_details {
                    text  => $locale->text('Approve'),
                    type  => 'submit',
                    class => 'submit',
-                   name =>  'action',
+                   name =>  '__action',
                    value => 'disposal_details_approve'
                    },
         ];
@@ -1029,7 +1029,7 @@ sub disposal_details {
                    text  => $locale->text('Approve'),
                    type  => 'submit',
                    class => 'submit',
-                   name =>  'action',
+                   name =>  '__action',
                    value => 'disposal_details_approve'
                    },
         ];

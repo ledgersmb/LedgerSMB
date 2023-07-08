@@ -1385,7 +1385,7 @@ sub delete {
 
 <h4>$msg $form->{$ordnumber}</h4>
 <p>
-<button data-dojo-type="dijit/form/Button" id="action-yes" name="action" class="submit" type="submit" value="yes">|
+<button data-dojo-type="dijit/form/Button" id="action-yes" name="__action" class="submit" type="submit" value="yes">|
       . $locale->text('Yes')
       . qq|</button>
 </form>
@@ -1616,7 +1616,7 @@ sub backorder_exchangerate {
 
 <br>
 
-<button data-dojo-type="dijit/form/Button" id="action-continue" name="action" class="submit" type="submit" value="continue">|
+<button data-dojo-type="dijit/form/Button" id="action-continue" name="__action" class="submit" type="submit" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 
@@ -2142,7 +2142,7 @@ sub search_transfer {
 <br>
 <input type=hidden name=nextsub value=list_transfer>
 
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-continue" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-continue" name="__action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>|;
 
@@ -2327,7 +2327,7 @@ qq|<td><input type=hidden name="warehouse_id_$i" value="$ref->{warehouse_id}">$r
     $form->hide_form(qw(path login sessionid action));
 
     print qq|
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-transfer" name="action" value="transfer">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-transfer" name="__action" value="transfer">|
       . $locale->text('Transfer')
       . qq|</button>|;
 
@@ -2585,12 +2585,12 @@ qq|<td><input name="ndx_$i" id="ndx_$i" class=checkbox type=checkbox data-dojo-t
     );
 
     print qq|
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-generate-orders" name="action" value="generate_orders">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-generate-orders" name="__action" value="generate_orders">|
       . $locale->text('Generate Orders')
       . qq|</button>|;
 
     print qq|
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-select-vendor" name="action" value="select_vendor">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-select-vendor" name="__action" value="select_vendor">|
       . $locale->text('Select Vendor')
       . qq|</button>|;
 
@@ -2639,7 +2639,7 @@ sub select_vendor {
     $form->hide_form;
 
     print qq|
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-continue" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-continue" name="__action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 

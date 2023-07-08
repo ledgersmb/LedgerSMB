@@ -232,21 +232,21 @@ sub set_buttons {
         # Results comprise only unapproved batches
         $buttons = [
             {
-                name  => 'action',
+                name  => '__action',
                 type  => 'submit',
                 text  => $self->_locale->text('Post'),
                 value => 'batch_approve',
                 class => 'submit',
             },
             {
-                name  => 'action',
+                name  => '__action',
                 type  => 'submit',
                 text  => $self->_locale->text('Delete'),
                 value => 'batch_delete',
                 class => 'submit',
             },
             {
-                name  => 'action',
+                name  => '__action',
                 type  => 'submit',
                 text  => $self->_locale->text('Unlock'),
                 value => 'batch_unlock',

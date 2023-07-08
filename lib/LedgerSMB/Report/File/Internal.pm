@@ -77,7 +77,7 @@ Single button, set to add a new file.
 
 sub set_buttons {
     return [
-        { name => 'action',
+        { name => '__action',
          value => 'add_internal_file',
           type => 'submit',
          class => 'submit',

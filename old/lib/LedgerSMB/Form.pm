@@ -1016,7 +1016,7 @@ sub print_button {
 
     my $title = $button->{$name}{tooltip} || $button->{$name}{value};
     print
-qq|<button data-dojo-type="$type" class="submit" type="submit" name="action" value="$name" id="action-$name-$btn" title="$title" $doing_toast $done_toast>$button->{$name}{value}</button>\n|;
+qq|<button data-dojo-type="$type" class="submit" type="submit" name="__action" value="$name" id="action-$name-$btn" title="$title" $doing_toast $done_toast>$button->{$name}{value}</button>\n|;
 }
 
 

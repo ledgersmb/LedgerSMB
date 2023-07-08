@@ -22,7 +22,7 @@ include_stylesheet=["system/setup.css"] %]
 } %]
 <div class="inputrow">
 [% INCLUDE button element_data = {
-    name = 'action'
+    name = '__action'
    value = next_action
     type = 'submit'
    class = 'submit'
@@ -39,7 +39,7 @@ include_stylesheet=["system/setup.css"] %]
    label = text('Copy to New Name') #'
 }; %]
 [% INCLUDE button element_data = {
-    name = 'action'
+    name = '__action'
    value = 'copy_db'
     type = 'submit'
    class = 'submit'
@@ -49,14 +49,14 @@ include_stylesheet=["system/setup.css"] %]
 <div id="user">
 <div>[% text('Users') %]</div>
 [% INCLUDE button element_data = {
-    name = 'action'
+    name = '__action'
    value = 'add_user'
     type = 'submit'
    class = 'submit'
     text = text('Add User') #'
 }; %]
 [% INCLUDE button element_data = {
-    name = 'action'
+    name = '__action'
    value = 'list_users'
     type = 'submit'
    class = 'submit'
@@ -66,7 +66,7 @@ include_stylesheet=["system/setup.css"] %]
 <div id="templates">
 <div>[% text('Templates') %]</div>
 [% INCLUDE button element_data = {
-    name = 'action'
+    name = '__action'
    value = 'load_templates'
     type = 'submit'
    class = 'submit'
@@ -83,14 +83,14 @@ INCLUDE input element_data = {
 <div id="others">[% text('Backup') %]</div>
 <div class="inputrow">
 [% INCLUDE button element_data = {
-    name = 'action'
+    name = '__action'
    value = 'backup_db'
     type = 'submit'
    class = 'submit'
     text = text('Backup DB') #'
 } %]
 [% INCLUDE button element_data = {
-    name = 'action'
+    name = '__action'
    value = 'backup_roles'
     type = 'submit'
    class = 'next'
@@ -100,14 +100,14 @@ INCLUDE input element_data = {
 <div id="diagnostics">[% text('System diagnostics') %]</div>
 <div class="inputrow">
 [% INCLUDE button element_data = {
-    name = 'action'
+    name = '__action'
    value = 'system_info'
     type = 'submit'
    class = 'submit'
     text = text('System Info') #'
 } %]
 [% INCLUDE button element_data = {
-    name = 'action'
+    name = '__action'
    value = 'consistency'
     type = 'submit'
    class = 'submit'

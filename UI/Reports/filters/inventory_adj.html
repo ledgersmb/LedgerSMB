@@ -32,7 +32,7 @@ PROCESS 'report_base.html'; %]
     [% PROCESS date_row_div %]
     <div class="input_row">
 [% PROCESS button element_data = {
-       name = "action"
+       name = "__action"
       value = "search_adj"
        type = "submit"
        text = text('Run Report') #'

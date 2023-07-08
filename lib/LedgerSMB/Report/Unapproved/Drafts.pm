@@ -223,13 +223,13 @@ has 'amount_lt' => (is => 'rw', coerce => 1, isa =>'LedgerSMB::Moose::Number');
 sub set_buttons {
     my ($self) = @_;
     return [
-      {name => 'action',
+      {name => '__action',
        type => 'submit',
        text => $self->Text('Approve'),
       value => 'approve',
       class => 'submit', },
 
-      {name => 'action',
+      {name => '__action',
        type => 'submit',
        text => $self->Text('Delete'),
       value => 'delete',

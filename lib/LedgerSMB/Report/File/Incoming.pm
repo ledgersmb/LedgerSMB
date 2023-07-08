@@ -89,13 +89,13 @@ Removes a file from the queue and attaches it to the current document.
 
 sub set_buttons {
     return [
-        { name => 'action',
+        { name => '__action',
          value => 'add_incoming_file',
           type => 'submit',
          class => 'submit',
           text => text('Add'),
         },
-        { name => 'action',
+        { name => '__action',
          value => 'attach_incoming_file',
           type => 'submit',
          class => 'submit',

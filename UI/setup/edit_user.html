@@ -90,7 +90,7 @@ include_stylesheet=["system/setup.css"];
            [% IF user.username and not request.pls_import;
                 PROCESS button element_data  = {
                          text = text('Reset Password') #'
-                         name = 'action'
+                         name = '__action'
                          type = 'submit'
                         class = 'submit'
                   value = 'reset_password'
@@ -99,7 +99,7 @@ include_stylesheet=["system/setup.css"];
            ELSE;
                 PROCESS button element_data  = {
                          text = text('Add User') #'
-                         name = 'action'
+                         name = '__action'
                          type = 'submit'
                         class = 'submit'
                         value = 'create_user'
@@ -150,7 +150,7 @@ include_stylesheet=["system/setup.css"];
                     <td>[% PROCESS button element_data = {
                           text = text('Save Groups') #'
                           class = "submit"
-                          name = "action"
+                          name = "__action"
                           value = "save_user_roles"
                           'data-lsmb-doing' = text('Saving...')
                           'data-lsmb-done' = text('Saved')

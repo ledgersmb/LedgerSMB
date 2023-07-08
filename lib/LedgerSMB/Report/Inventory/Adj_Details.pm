@@ -119,13 +119,13 @@ This sets buttons relevant to approving the adjustments.
 sub set_buttons {
     my ($self) = @_;
     return [{
-       name => 'action',
+       name => '__action',
        type => 'submit',
       value => 'approve',
        text => $self->Text('Approve'),
       class => 'submit',
     },{
-       name => 'action',
+       name => '__action',
        type => 'submit',
       value => 'delete',
        text => $self->Text('Delete'),

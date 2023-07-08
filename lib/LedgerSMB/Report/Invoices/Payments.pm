@@ -228,7 +228,7 @@ sub run_report{
     $self->rows(\@rows);
     $self->buttons([{
         text => $self->Text('Reverse Payments'),
-        name => 'action',
+        name => '__action',
         type => 'submit',
        class => 'submit',
        value => 'reverse_payments',

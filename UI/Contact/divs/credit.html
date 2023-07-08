@@ -327,7 +327,7 @@ PROCESS dynatable
                         text = text('Save Changes'), #'
                         class="submit"
                         type="submit"
-                        name="action"
+                        name="__action"
                         value="save_credit"
                 };
                 END;
@@ -335,7 +335,7 @@ PROCESS dynatable
                         text = text('Save New'), #'
                         class="submit"
                         type="submit"
-                        name="action"
+                        name="__action"
                         value="save_credit_new"
                         title="Save Credit Account as New"
                 };
@@ -526,7 +526,7 @@ PROCESS dynatable
      text = text('Continue')
      type = 'submit'
     class = 'submit'
-     name = 'action'
+     name = '__action'
     value = 'generate_income_statement'
 };
 %]

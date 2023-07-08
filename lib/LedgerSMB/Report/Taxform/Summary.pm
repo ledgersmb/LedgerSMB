@@ -129,7 +129,7 @@ sub name {
 
 sub buttons {
     my ($self) = @_;
-    return [{name => 'action',
+    return [{name => '__action',
              type => 'submit',
              text => $self->Text('Print'),
             value => 'print'}];

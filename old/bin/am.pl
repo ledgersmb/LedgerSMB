@@ -85,7 +85,7 @@ sub form_footer_buttons {
 
     for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
         push @{$buttons}, {
-            name => 'action',
+            name => '__action',
             value => $_,
             title => $button{$_}{value},
             text => $button{$_}{value},
@@ -431,7 +431,7 @@ sub recurring_transactions {
 
     my @buttons;
     push @buttons, {
-        name => 'action',
+        name => '__action',
         value => 'process_transactions',
         text => $locale->text('Process Transactions'),
         type => 'submit',

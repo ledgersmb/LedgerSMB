@@ -271,7 +271,7 @@ sub pre_bulk_post_report {
 
     my $buttons = [{
         text  => $request->{_locale}->text('Save Batch'),
-        name  => 'action',
+        name  => '__action',
         value => 'post_payments_bulk',
         class => 'submit',
     }];
@@ -758,7 +758,7 @@ sub payment {
             value => $request->{type}
         },
         action => {
-            name => 'action',
+            name => '__action',
             value => 'payment1_5',
             text => $request->{_locale}->text('Continue'),
         }
@@ -820,7 +820,7 @@ sub payment1_5 {
                                value    => $dbPayment->{account_class}},
             type         => {  name  => 'type',
                                value => $request->{type}},
-            action       => {  name => 'action',
+            action       => {  name => '__action',
                                value => 'payment2',
                                text =>  $request->{_locale}->text('Continue')}
         };
@@ -1541,7 +1541,7 @@ sub use_overpayment {
     $ui->{curr} = \@currOptions;
     $ui->{entities} =  \@entities;
     $ui->{action}   =  {
-        name => 'action',
+        name => '__action',
         value => 'use_overpayment2',
         text => $locale->text('Continue')
     };

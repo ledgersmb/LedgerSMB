@@ -49,7 +49,7 @@ sub call {
 
     my $script_name = $self->script;
     my $action_name =
-        Plack::Request->new($env)->parameters->get('action') // '__default';
+        Plack::Request->new($env)->parameters->get('__action') // '__default';
     my $logger_name = "LedgerSMB.$script_name.$action_name";
     my $logger = Log::Log4perl->get_logger( $logger_name );
     $env->{'psgix.logger'} = sub {

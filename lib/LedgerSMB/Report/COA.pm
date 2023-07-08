@@ -190,14 +190,14 @@ sub set_buttons {
     if($self->_can_create_account) {
         push @buttons, (
             {
-                name  => 'action',
+                name  => '__action',
                 type  => 'submit',
                 text  => $self->_locale->text('Create Account'),
                 value => 'new_account',
                 class => 'submit',
             },
             {
-                name  => 'action',
+                name  => '__action',
                 type  => 'submit',
                 text  => $self->_locale->text('Create Heading'),
                 value => 'new_heading',

@@ -113,14 +113,14 @@ PROCESS dynatable
                 } #' %]
 </div>
         <div>[% PROCESS button element_data = {
-                name = "action",
+                name = "__action",
                 value = "save_contact",
                 text =  text('Save Contact'),
                 class = "submit"
                 } #' %]
         [% IF request.contact.defined %]
         [% PROCESS button element_data = {
-                name = "action",
+                name = "__action",
                 value = "save_contact_new",
                 text =  text('Save As New'),
                 class = "submit"

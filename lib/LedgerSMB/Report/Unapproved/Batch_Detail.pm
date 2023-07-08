@@ -191,35 +191,35 @@ sub set_buttons {
 
     return [
         {
-            name  => 'action',
+            name  => '__action',
             type  => 'submit',
             text  => $self->Text('Post Batch'),
             value => 'single_batch_approve',
             class => 'submit',
         },
         {
-            name  => 'action',
+            name  => '__action',
             type  => 'submit',
             text  => $self->Text('Delete Batch'),
             value => 'single_batch_delete',
             class => 'submit',
         },
         {
-            name  => 'action',
+            name  => '__action',
             type  => 'submit',
             text  => $self->Text('Delete Vouchers'),
             value => 'batch_vouchers_delete',
             class => 'submit',
         },
         {
-            name  => 'action',
+            name  => '__action',
             type  => 'submit',
             text  => $self->Text('Unlock Batch'),
             value => 'single_batch_unlock',
             class => 'submit',
         },
         {
-            name  => 'action',
+            name  => '__action',
             type  => 'submit',
             text  => $self->Text('Print Batch'),
             value => 'print_batch',

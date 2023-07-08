@@ -79,7 +79,7 @@ sub buttons {
     return  [{
          text => $self->Text('Add Tax Form'),
         value => 'add_taxform',
-         name => 'action',
+         name => '__action',
          type => 'submit',
          class => 'submit'
     }];

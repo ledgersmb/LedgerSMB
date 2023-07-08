@@ -158,7 +158,7 @@ sub _render_statement_batch {
 
     if (grep { $_ eq 'cancel' } $wf->get_current_actions) {
         push @buttons, {
-            name => 'action',
+            name => '__action',
             type => 'submit',
             text => $locale->text('Cancel'),
             value => 'cancel',
@@ -167,7 +167,7 @@ sub _render_statement_batch {
 
     if (grep { $_ eq 'complete' } $wf->get_current_actions) {
         push @buttons, {
-            name => 'action',
+            name => '__action',
             type => 'submit',
             text => $locale->text('Complete'),
             value => 'mark_complete',

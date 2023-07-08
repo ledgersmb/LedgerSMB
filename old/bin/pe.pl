@@ -145,14 +145,14 @@ sub partsgroup_footer {
 
     if ( $myconfig{acs} !~ /Goods \& Services--Add Group/ ) {
         print qq|
-<button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="action" value="save">|
+<button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="__action" value="save">|
           . $locale->text('Save')
           . qq|</button>
 |;
 
         if ( $form->{id} && $form->{orphaned} ) {
             print qq|
-<button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="action" value="delete">|
+<button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="__action" value="delete">|
               . $locale->text('Delete')
               . qq|</button>|;
         }
@@ -236,7 +236,7 @@ $sort
     print qq|
 
 <br>
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 </form>
@@ -655,7 +655,7 @@ qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</
     print qq|
 <input type="hidden" name="nextsub" value="name_selected">
 <br>
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 </form>
@@ -824,7 +824,7 @@ qq|<option value="$_->{control_code}--$_->{id}">$_->{control_code}--$_->{descrip
     $form->hide_form(qw(path login sessionid nextsub type vc));
 
     print qq|
-<button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="__action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 
@@ -1041,12 +1041,12 @@ qq|<td><input name="ndx_$i" class=checkbox type=checkbox data-dojo-type="dijit/f
 
     if ( $form->{rowcount} ) {
         print qq|
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="generate_sales_orders">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="generate_sales_orders">|
           . $locale->text('Generate Sales Orders')
           . qq|</button>|;
 
         print qq|
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="select_customer">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="select_customer">|
           . $locale->text('Select Customer')
           . qq|</button>|;
 
@@ -1091,7 +1091,7 @@ sub select_customer {
     $form->hide_form;
 
     print qq|
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 

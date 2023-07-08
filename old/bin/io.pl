@@ -645,7 +645,7 @@ sub new_item {
 
         print qq|
 <p>
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="continue">|
           . $locale->text('Continue')
           . qq|</button>
 </form>
@@ -1824,15 +1824,15 @@ sub ship_to {
 
 print qq|
 
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continuenew">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="continuenew">|
 . $locale->text('Use Shipto')
 . qq|
 </button>
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="updatenew">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="updatenew">|
 . $locale->text('Add To List')
 . qq|
 </button>
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="update">|.
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="update">|.
 $locale->text('Cancel')
 .qq|</button>
 
