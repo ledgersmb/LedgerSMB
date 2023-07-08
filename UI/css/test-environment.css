@@ -11,20 +11,20 @@ td.money {
 /* general stuff */
 
 a:link {
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 a:visited {
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 a:active {
-    text-decoration: underline;
+    text-decoration-line: underline;
 }
 
 a:hover {
     background-color: transparent;
-    text-decoration: underline;
+    text-decoration-line: underline;
 }
 
 body {
@@ -188,13 +188,13 @@ body.menu a:visited {
 
 .submenu a {
     color: #004a80;
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 .submenu a:hover {
     background: #004a80;
     color: #eee;
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 .listtop {
@@ -216,7 +216,7 @@ thead th {
 thead a:link {
     color: white;
     font-weight: bold;
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 a.listheading:link,
@@ -224,7 +224,7 @@ a.listheading:active,
 a.listheading:visited {
     color: white;
     font-weight: bold;
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 .listrow1,
@@ -460,5 +460,5 @@ span.indicator {
 .financial-statement a,
 .financial-statement a:visited {
     color: black;
-    text-decoration: none;
+    text-decoration-line: none;
 }
