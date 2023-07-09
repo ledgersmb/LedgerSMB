@@ -75,7 +75,7 @@ sub edit_and_save {
     if ($form->{workflow_id}) {
         my $wf = $form->{_wire}->get('workflows')
             ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
-        $wf->execute_action( $form->{action} );
+        $wf->execute_action( $form->{__action} );
     }
     edit();
 }
@@ -555,7 +555,7 @@ sub reverse {
 
     my $wf = $form->{_wire}->get('workflows')
         ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
-    $wf->execute_action( $form->{action} );
+    $wf->execute_action( $form->{__action} );
 
     delete $form->{workflow_id};
     &post_as_new;
@@ -1338,7 +1338,7 @@ sub post {
     # m/save_as/ matches both 'print_and_save_as_new' as well as 'save_as_new'
     # note that "post" is modelled through the 'approve' entrypoint
     # and that the 'post' entrypoint actually models the 'save' action
-    if ($form->{action} =~ m/post_as/) {
+    if ($form->{__action} =~ m/post_as/) {
         $wf->execute_action( 'save_as_new' );
     }
     else {
@@ -1346,7 +1346,7 @@ sub post {
         $ctx->param( spawned_type => 'Order/Quote' );
         $ctx->param( spawned_id   => $form->{workflow_id} );
 
-        $wf->execute_action( $form->{action} );
+        $wf->execute_action( $form->{__action} );
     }
 
     delete $form->{old_workflow_id};
@@ -1372,7 +1372,7 @@ sub on_hold {
         if ($form->{workflow_id}) {
             my $wf = $form->{_wire}->get('workflows')
                 ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
-            $wf->execute_action( $form->{action} );
+            $wf->execute_action( $form->{__action} );
         }
         &edit(); # it was already IN edit for this to be reached.
     }
@@ -1408,7 +1408,7 @@ sub save_info {
         if ($form->{workflow_id}) {
             my $wf = $form->{_wire}->get('workflows')
                 ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
-            $wf->execute_action( $form->{action} );
+            $wf->execute_action( $form->{__action} );
         }
         if ($form->{callback}){
         print "Location: $form->{callback}\n";

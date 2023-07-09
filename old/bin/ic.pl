@@ -1210,7 +1210,7 @@ sub assembly_row {
     $form->{callback}     = "$form->{script}?__action=display_form";
 
     # delete action
-    for (qw(action header)) { delete $form->{$_} }
+    for (qw(header)) { delete $form->{$_} }
 
     $form->{baseassembly} = 0;
     $previousform = "";
@@ -1406,7 +1406,7 @@ qq|<td><input type=hidden name="description_$i" value="$form->{"description_$i"}
 
 sub edit_assemblyitem {
 
-    $pn = substr( $form->{action}, 1 );
+    $pn = substr( $form->{__action}, 1 );
 
     $i = 0;
     for ( 1 .. $form->{assembly_rows} - 1 ) {
@@ -1737,7 +1737,7 @@ qq|<td>$ref->{meta_number}</td>|;
 |;
 
     # delete variables
-    for (qw(action nextsub name_list)) { delete $form->{$_} }
+    for (qw(nextsub name_list)) { delete $form->{$_} }
 
     $form->hide_form;
 
@@ -1923,7 +1923,7 @@ sub save {
         }
 
         $form->{"id_$i"} = $parts_id;
-        delete $form->{action};
+        delete $form->{__action};
 
         # restore original callback
         $callback = $form->unescape( $form->{callback} );
@@ -1984,7 +1984,7 @@ sub stock_assembly {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <table width="100%">
   <tr>
@@ -2091,7 +2091,7 @@ sub list_assemblies {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <table width=100%>
   <tr>

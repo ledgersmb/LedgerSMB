@@ -156,7 +156,7 @@ sub psgi_app {
         my $psgi_req = Plack::Request::WithEncoding->new($env);
         my $request = LedgerSMB->new($psgi_req, $wire);
 
-        $request->{action} = $env->{'lsmb.action_name'};
+        $request->{__action} = $env->{'lsmb.action_name'};
         my $res;
         try {
             LedgerSMB::App_State::run_with_state sub {

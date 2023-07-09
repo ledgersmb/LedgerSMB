@@ -591,9 +591,6 @@ sub new_item {
     $form->{callback} =
       $form->escape( "$form->{script}?__action=display_form", 1 );
 
-    # delete action
-    delete $form->{action};
-
     # save all other form variables in a previousform variable
     if ( !$form->{previousform} ) {
         foreach my $key ( keys %$form ) {
@@ -625,7 +622,7 @@ sub new_item {
         print qq|
 <h4>| . $locale->text('What type of item is this?') . qq|</h4>
 
-<form method="post" data-dojo-type="lsmb/Form" action=ic.pl>
+<form method="post" data-dojo-type="lsmb/Form" action="ic.pl">
 
 <p>
 
@@ -876,7 +873,7 @@ sub check_form {
 
         }
     }
-    return if $form->{action} =~ /(save|post)/ or $nodisplay;
+    return if $form->{__action} =~ /(save|post)/ or $nodisplay;
     &display_form;
     $form->finalize_request;
 }
@@ -1086,7 +1083,7 @@ sub e_mail {
     my $old_form = $form;
     $form = Form->new;
     $form->{$_} = $old_form->{$_} for (
-        qw/ action type formname script format language_code vc dbh id /,
+        qw/ __action type formname script format language_code vc dbh id /,
         grep { /^_/ } keys %$old_form
         );
 
@@ -1100,7 +1097,7 @@ sub e_mail {
     }
 
     $form->{$_} = $old_form->{$_} for (
-        qw/ action type formname script format language_code vc dbh id /,
+        qw/ __action type formname script format language_code vc dbh id /,
         grep { /^_/ } keys %$old_form
         );
     $form->{media} = 'email';
@@ -1513,7 +1510,7 @@ sub print_form {
         my $id = $trans_wf->context->param( 'spawned_workflow' );
         if (not $form->{header}) {
             print "Location: email.pl?id=$id&__action=render&callback=$form->{script}%3F"
-                . "id%3D$form->{id}%26action%3Dedit\n";
+                . "id%3D$form->{id}%26__action%3Dedit\n";
             print "Status: 302 Found\n\n";
             $form->{header} = 1;
         }
@@ -1615,7 +1612,7 @@ sub ship_to {
     print qq|
                <body class="lsmb">
 
-<form name="form" method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form name="form" method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <table width=100% cellspacing="0" cellpadding="0" border="0">
     <tr>
@@ -1700,7 +1697,7 @@ sub ship_to {
                               print qq|<input type=hidden name=nextsub value=$nextsub>|;
 
                              # delete shipto
-                              for (qw(action nextsub)) { delete $form->{$_} }
+                              for (qw(__action nextsub)) { delete $form->{$_} }
 
                                   $form->{title} = $title;
 

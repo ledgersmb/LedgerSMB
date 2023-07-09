@@ -88,7 +88,7 @@ sub dispatch {
             $lsmb_legacy::form = Form->new();
             $lsmb_legacy::form->{$_} = $form_args->{$_} for (keys %$form_args);
             $lsmb_legacy::form->{script} = $script;
-            $lsmb_legacy::logger = Log::Any->get_logger(category => "lsmb.$script_module.$lsmb_legacy::form->{action}");
+            $lsmb_legacy::logger = Log::Any->get_logger(category => "lsmb.$script_module.$lsmb_legacy::form->{__action}");
             %lsmb_legacy::myconfig = %$user;
             $lsmb_legacy::form->{_locale} =
                 $lsmb_legacy::locale =

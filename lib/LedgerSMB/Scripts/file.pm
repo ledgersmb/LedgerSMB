@@ -115,7 +115,7 @@ sub delete_internal_files {
             );
         $file->remove;
     }
-    $request->{action} = 'list_internal_files';
+    $request->{__action} = 'list_internal_files';
     return list_internal_files($request);
 }
 

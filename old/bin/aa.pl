@@ -440,7 +440,7 @@ sub create_links {
     }
     delete $form->{selectcurrency};
     #$form->generate_selects(\%myconfig);
-    $form->{$form->{ARAP}} = $form->{"$form->{ARAP}_1"} unless $form->{$form->{ARAP}} and $form->{action} eq 'update';
+    $form->{$form->{ARAP}} = $form->{"$form->{ARAP}_1"} unless $form->{$form->{ARAP}} and $form->{__action} eq 'update';
 
 }
 
@@ -609,7 +609,7 @@ $form->open_status_div($status_div_id) . qq|
 <form method="post"
       data-dojo-type="lsmb/Form"
       data-lsmb-focus="${focus}"
-      action=$form->{script}>
+      action="$form->{script}">
 <input type=hidden name=type value="$form->{formname}">
 <input type=hidden name=title value="$title">
 
@@ -1233,7 +1233,7 @@ sub on_hold {
         if ($form->{workflow_id}) {
             my $wf = $form->{_wire}->get('workflows')
                 ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
-            $wf->execute_action( $form->{action} );
+            $wf->execute_action( $form->{__action} );
         }
         &edit();
     }
@@ -1285,7 +1285,7 @@ sub edit_and_save {
     if ($form->{workflow_id}) {
         my $wf = $form->{_wire}->get('workflows')
             ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
-        $wf->execute_action( $form->{action} );
+        $wf->execute_action( $form->{__action} );
     }
     $form->{rowcount} = 0;
     $form->{paidaccounts} = 0;
@@ -1298,7 +1298,7 @@ sub approve {
 
     my $wf = $form->{_wire}->get('workflows')
         ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
-    $wf->execute_action( $form->{action} );
+    $wf->execute_action( $form->{__action} );
 
     if ($form->{callback}){
         print "Location: $form->{callback}\n";
@@ -1496,7 +1496,7 @@ sub post {
         if ( $form->{id} ) {
             my $id = $form->{old_workflow_id} // $form->{workflow_id};
             my $wf = $form->{_wire}->get('workflows')->fetch_workflow( 'AR/AP', $id );
-            $wf->execute_action( $form->{action} );
+            $wf->execute_action( $form->{__action} );
 
             &repost;
             $form->finalize_request();
@@ -1509,7 +1509,7 @@ sub post {
 
         my $id = $form->{old_workflow_id} // $form->{workflow_id};
         my $wf = $form->{_wire}->get('workflows')->fetch_workflow( 'AR/AP', $id );
-        $wf->execute_action( $form->{action} );
+        $wf->execute_action( $form->{__action} );
 
         $form->update_status;
        if ( $form->{printandpost} ) {
@@ -1564,7 +1564,7 @@ sub save_info {
         if ($form->{workflow_id}) {
             my $wf = $form->{_wire}->get('workflows')
                 ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
-            $wf->execute_action( $form->{action} );
+            $wf->execute_action( $form->{__action} );
         }
         if ($form->{callback}){
         print "Location: $form->{callback}\n";

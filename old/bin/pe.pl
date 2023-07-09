@@ -84,10 +84,10 @@ sub delete {
 
 sub partsgroup_header {
 
-    $form->{action} =~ s/_.*//;
+    $form->{__action} =~ s/_.*//;
     # $locale->text('Add Group')
     # $locale->text('Edit Group')
-    $form->{title} = $locale->maketext( ucfirst $form->{action} . " Group" );
+    $form->{title} = $locale->maketext( ucfirst $form->{__action} . " Group" );
 
 
     $form->{partsgroup} = $form->quote( $form->{partsgroup} );
@@ -98,7 +98,7 @@ sub partsgroup_header {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <input type=hidden name=id value=$form->{id}>
 <input type=hidden name=type value=$form->{type}>
@@ -203,7 +203,7 @@ sub translation {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 |;
 
     $form->hide_form(qw(translation title number));
@@ -373,7 +373,7 @@ sub list_translations {
 
 <br>
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <input name=callback type=hidden value="$form->{callback}">
 |;
@@ -444,7 +444,7 @@ sub translation_header {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <input type=hidden name=$form->{number} value="|
       . $form->quote( $form->{"$form->{number}"} ) . qq|">
@@ -583,7 +583,7 @@ sub select_name {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <table width=100%>
   <tr>
@@ -648,7 +648,7 @@ qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</
 |;
 
     # delete variables
-    for (qw(action nextsub name_list)) { delete $form->{$_} }
+    for (qw(nextsub name_list)) { delete $form->{$_} }
 
     $form->hide_form;
 
@@ -786,7 +786,7 @@ qq|<option value="$_->{control_code}--$_->{id}">$_->{control_code}--$_->{descrip
     print qq|
 <body class="lsmb">
 
-<form id="timecard-generate-salesorders" method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form id="timecard-generate-salesorders" method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <table width=100%>
   <tr>
@@ -960,7 +960,7 @@ sub jcitems {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <table width=100%>
   <tr>
@@ -1079,14 +1079,14 @@ sub select_customer {
     print qq|
 <body class="lsmb $form->{dojo_theme}" onLoad="document.forms[0].$form->{vc}.focus()" />
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <b>$label</b> <input data-dojo-type="dijit/form/TextBox" name=$form->{vc} size=40>
 
 |;
 
     $form->{nextsub} = "$form->{vc}_selected";
-    $form->{action}  = "$form->{vc}_selected";
+    $form->{__action}  = "$form->{vc}_selected";
 
     $form->hide_form;
 

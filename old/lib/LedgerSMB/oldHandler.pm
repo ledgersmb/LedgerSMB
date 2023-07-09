@@ -95,7 +95,7 @@ sub handle {
         @{$session}{qw/ session_id company /};
 
     #make logger available to other old programs
-    $logger = Log::Any->get_logger(category => "lsmb.$script_module.$form->{action}");
+    $logger = Log::Any->get_logger(category => "lsmb.$script_module.$form->{__action}");
 
     local $SIG{__WARN__} = sub {
         my $msg = shift;
@@ -147,17 +147,17 @@ sub handle {
         $logger->trace("requiring old/bin/$script");
         require "old/bin/$script";
 
-        if ( $form->{action}
-             && $form->{action} ne 'redirect'
-             && "lsmb_legacy"->can($form->{action}) ) {
-            $logger->trace("action $form->{action}");
+        if ( $form->{__action}
+             && $form->{__action} ne 'redirect'
+             && "lsmb_legacy"->can($form->{__action}) ) {
+            $logger->trace("__action $form->{__action}");
 
-            &{ $form->{action} }();
+            &{ $form->{__action} }();
             $form->{dbh}->commit;
         }
         else {
             $form->error( __FILE__ . ':' . __LINE__ . ': '
-                          . $locale->text('action not defined!'));
+                          . $locale->text('__action not defined!'));
         }
     }
     catch  ($err) {
@@ -175,7 +175,7 @@ sub handle {
         }
     }
 
-    $logger->trace("leaving after script=old/bin/$form->{script} __action=$form->{action}");#trace flow
+    $logger->trace("leaving after script=old/bin/$form->{script} __action=$form->{__action}");#trace flow
 
     $form->{dbh}->disconnect() if defined $form->{dbh};
     return 1; # PSGI.pm expects a 'true' response

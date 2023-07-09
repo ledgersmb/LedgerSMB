@@ -354,7 +354,7 @@ sub print_wf_history_table {
                 my ($id, $workflow) = split(/,/, $items{spawned_workflow}, 2);
                 $link = ($links{$workflow}
                          // $links{"$workflow|$form->{vc}"}) . $id;
-                $link .= "&amp;callback=$form->{script}%3Faction%3D$form->{action}%26id%3D$form->{id}";
+                $link .= "&amp;callback=$form->{script}%3Faction%3D$form->{__action}%26id%3D$form->{id}";
             }
             my $user = $h->user;
             my $timestamp = $h->date;

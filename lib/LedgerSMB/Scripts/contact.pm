@@ -476,13 +476,13 @@ sub dispatch_legacy {
 
     };
 
-    my $entry = $dispatch->{$request->{action}};
+    my $entry = $dispatch->{$request->{__action}};
     return dispatch($entry->{script},
                     'add',
                     $request->{_user},
                     { %{$entry->{data}},
                       script => $entry->{script},
-                      action => 'add',
+                      __action => 'add',
                       dbh => $request->{dbh} });
 }
 

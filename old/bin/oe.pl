@@ -1313,7 +1313,7 @@ sub _save {
        $ctx->param( spawned_id   => $form->{workflow_id} );
 
        # m/save_as/ matches both print_and_save_as_new as well as save_as_new
-       $wf->execute_action( ($form->{action} =~ m/save_as/
+       $wf->execute_action( ($form->{__action} =~ m/save_as/
                              ? 'save_as_new' : 'save') );
 
        delete $form->{old_workflow_id};
@@ -1374,10 +1374,10 @@ sub delete {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 |;
 
-    $form->{action} = "yes";
+    $form->{__action} = "yes";
     $form->hide_form;
 
     print qq|
@@ -1574,11 +1574,11 @@ sub backorder_exchangerate {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 |;
 
     # delete action variable
-    for (qw(action nextsub exchangerate)) { delete $form->{$_} }
+    for (qw(nextsub exchangerate)) { delete $form->{$_} }
 
     $form->hide_form;
 
@@ -1825,7 +1825,7 @@ sub display_ship_receive {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <input type=hidden name=display_form value=display_ship_receive>
 |;
@@ -2101,7 +2101,7 @@ sub search_transfer {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <table width=100%>
   <tr>
@@ -2248,7 +2248,7 @@ sub list_transfer {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <input type=hidden name=warehouse_id value=$warehouse_id>
 
@@ -2323,8 +2323,8 @@ qq|<td><input type=hidden name="warehouse_id_$i" value="$ref->{warehouse_id}">$r
 <input type=hidden name=rowcount value=$i>
 |;
 
-    $form->{action} = "transfer";
-    $form->hide_form(qw(path login sessionid action));
+    $form->{__action} = "transfer";
+    $form->hide_form(qw(path login sessionid));
 
     print qq|
 <button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-transfer" name="__action" value="transfer">|
@@ -2498,7 +2498,7 @@ sub po_orderitems {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <table width=100%>
   <tr>
@@ -2627,14 +2627,14 @@ sub select_vendor {
     print qq|
 <body class="lsmb $form->{dojo_theme}" onload="document.forms[0].vendor.focus()" />
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <b>| . $locale->text('Vendor') . qq|</b> <input data-dojo-type="dijit/form/TextBox" id=vendor name=vendor size=40>
 
 |;
 
     $form->{nextsub} = "vendor_selected";
-    $form->{action}  = "vendor_selected";
+    $form->{__action}  = "vendor_selected";
 
     $form->hide_form;
 
