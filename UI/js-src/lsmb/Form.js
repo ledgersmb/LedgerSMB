@@ -4,12 +4,10 @@ define([
     "dijit/form/Form",
     "dojo/_base/declare",
     "dojo/_base/event",
-    "dojo/on",
     "dojo/dom-attr",
     "dojo/dom-form",
-    "dojo/query",
     "dijit/registry"
-], function (Form, declare, event, on, domattr, domform, query, registry) {
+], function (Form, declare, event, domattr, domform, registry) {
     var c = 0;
     return declare("lsmb/Form", [Form], {
         clickedAction: null,
@@ -24,10 +22,11 @@ define([
                 return;
             }
 
-            var method =
+            const options = { handleAs: "text" };
+            const method =
                 typeof this.method === "undefined" ? "GET" : this.method;
-            var url = this.action; /* relative; this.domNode.action is absolute */
-            var options = { handleAs: "text" };
+            let url = this.action; /* relative; this.domNode.action is absolute */
+
             options.doing = widget["data-lsmb-doing"];
             options.done = widget["data-lsmb-done"];
             if (method.toLowerCase() === "get") {
@@ -37,7 +36,7 @@ define([
                     return;
                 }
                 c++;
-                var qobj = domform.toQuery(this.domNode);
+                let qobj = domform.toQuery(this.domNode);
                 qobj =
                     domattr.get(this.clickedAction, "name") +
                     "=" +
