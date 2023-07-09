@@ -68,7 +68,7 @@ PROCESS dynatable
                tbody = {rows = batch.search_results}
                columns = [
         { col_id='control_code', type='href', name=text('Batch Number'), #'
-       href_base="vouchers.pl?action=add_vouchers" _
+       href_base="vouchers.pl?__action=add_vouchers" _
                    hidden_url_base _ "&amp;batch_id=" }
         { col_id='description', type='text', name = text('Description') }
         { col_id='created_by', type='text', name = text('Created By') } #'

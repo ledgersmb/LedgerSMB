@@ -88,7 +88,7 @@ sub columns {
           type => 'href',
         pwidth => 1,
           name => $self->Text('Invoice Number'),
-     href_base => 'ir.pl?action=edit&id=', },
+     href_base => 'ir.pl?__action=edit&id=', },
 
       { col_id => 'transdate',
           type => 'text',
@@ -99,7 +99,7 @@ sub columns {
           type => 'href',
         pwidth => 1,
           name => $self->Text('Part Number'),
-     href_base => 'ic.pl?action=edit&id=', },
+     href_base => 'ic.pl?__action=edit&id=', },
 
       { col_id => 'description',
           type => 'text',

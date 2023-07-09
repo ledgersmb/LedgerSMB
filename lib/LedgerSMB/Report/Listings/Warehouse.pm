@@ -42,7 +42,7 @@ sub columns {
     return [{
        col_id => 'description',
         type  => 'href',
-   href_base  => 'am.pl?action=edit_warehouse&id=',
+   href_base  => 'am.pl?__action=edit_warehouse&id=',
         name  => $self->Text('Description'),
     }];
 }

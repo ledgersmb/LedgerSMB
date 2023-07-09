@@ -100,29 +100,29 @@ checking a price deal for a customer.
 
 FORMATS = LIST_FORMATS();
 
-IF FORMATS.grep('PDF').size() %] <a href="[% request.script %]?action=get_pricelist&amp;format=PDF&amp;credit_id=[%
+IF FORMATS.grep('PDF').size() %] <a href="[% request.script %]?__action=get_pricelist&amp;format=PDF&amp;credit_id=[%
              credit_id %]&amp;entity_id=[% entity_id
      %]">[[% text('PDF') %]]</a>
 [% END;
 
 IF FORMATS.grep('XLS').size()
-%] <a href="[% request.script %]?action=get_pricelist&amp;format=XLS&amp;credit_id=[%
+%] <a href="[% request.script %]?__action=get_pricelist&amp;format=XLS&amp;credit_id=[%
              credit_id %]&amp;entity_id=[% entity_id
      %]">[[% text('XLS') %]]</a>
 [% END;
 
 IF FORMATS.grep('XLSX').size()
-%] <a href="[% request.script %]?action=get_pricelist&amp;format=XLSX&amp;credit_id=[%
+%] <a href="[% request.script %]?__action=get_pricelist&amp;format=XLSX&amp;credit_id=[%
              credit_id %]&amp;entity_id=[% entity_id
      %]">[[% text('XLSX') %]]</a>
 [% END;
 
 IF FORMATS.grep('ODS').size()
-%] <a href="[% request.script %]?action=get_pricelist&amp;format=ODS&amp;credit_id=[%
+%] <a href="[% request.script %]?__action=get_pricelist&amp;format=ODS&amp;credit_id=[%
              credit_id %]&amp;entity_id=[% entity_id
      %]">[[% text('ODS') %]]</a>
 [% END %]
- <a href="[% request.script %]?action=get_pricelist&amp;format=CSV&amp;credit_id=[%
+ <a href="[% request.script %]?__action=get_pricelist&amp;format=CSV&amp;credit_id=[%
              credit_id %]&amp;entity_id=[% entity_id
      %]">[[% text('CSV') %]]</a>
 [% IF pricematrix_pricegroup;

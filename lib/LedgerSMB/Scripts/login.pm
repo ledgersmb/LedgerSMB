@@ -88,7 +88,7 @@ sub authenticate {
 
     return [ HTTP_OK,
              [ 'Content-Type' => 'application/json' ],
-             [ '{ "target":  "erp.pl?action=root" }' ]];
+             [ '{ "target":  "erp.pl?__action=root" }' ]];
 }
 
 =item logout

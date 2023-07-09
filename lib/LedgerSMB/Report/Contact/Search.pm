@@ -57,17 +57,17 @@ sub columns {
     return [
        {col_id => 'name',
             type => 'href',
-       href_base => "contact.pl?action=get$entity_class_param",
+       href_base => "contact.pl?__action=get$entity_class_param",
             name => $self->Text('Name') },
 
        {col_id => 'entity_control_code',
             type => 'href',
-       href_base => "contact.pl?action=get$entity_class_param",
+       href_base => "contact.pl?__action=get$entity_class_param",
             name => $self->Text('Control Code') },
 
        {col_id => 'meta_number',
             type => 'href',
-       href_base => "contact.pl?action=get$entity_class_param",
+       href_base => "contact.pl?__action=get$entity_class_param",
             name => $self->Text('Credit Account Number') },
 
        {col_id => 'credit_description',

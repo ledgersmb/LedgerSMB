@@ -51,7 +51,7 @@ sub columns {
     my ($self) = @_;
     return [{col_id => 'partsgroup',
                type => 'href',
-          href_base => 'pe.pl?action=edit&type=partsgroup&id=',
+          href_base => 'pe.pl?__action=edit&type=partsgroup&id=',
                name => $self->Text('Group') }];
 }
 

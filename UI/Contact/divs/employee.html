@@ -156,10 +156,10 @@ default_values = [employee.manager_id]
 [%
 IF manage_users and entity_id;
    IF user_id %]
-       <a href="admin.pl?action=edit_user&amp;user_id=[% user_id %]"
+       <a href="admin.pl?__action=edit_user&amp;user_id=[% user_id %]"
        >[[% text('Edit User') %]]</a>[%
    ELSE %]
-       <a href="admin.pl?action=new_user&amp;first_name=[% first_name | uri
+       <a href="admin.pl?__action=new_user&amp;first_name=[% first_name | uri
                 %]&amp;last_name=[% last_name | uri
                 %]&amp;employeenumber=[% employeenumber | uri
                 %]&amp;country_id=[% country_id | uri

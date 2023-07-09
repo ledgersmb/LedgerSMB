@@ -55,7 +55,7 @@ sub list_currencies {
         {
             col_id => 'drop',
             type   => 'href',
-            href_base => 'currency.pl?action=delete_currency&curr=',
+            href_base => 'currency.pl?__action=delete_currency&curr=',
         },
         ];
     my $rows = [];
@@ -140,7 +140,7 @@ sub list_exchangerate_types {
         {
             col_id => 'drop',
             type   => 'href',
-            href_base => 'currency.pl?action=delete_exchangerate_type&id='
+            href_base => 'currency.pl?__action=delete_exchangerate_type&id='
         },
     ];
     my $rows = [];
@@ -232,7 +232,7 @@ sub _list_exchangerates {
     my @currencies = LedgerSMB::Currency->list();
     shift @currencies; # Remove the default currency
     my %rate_types = map { $_->{id} => $_->{description} } @exchangerate_types;
-    my $base_url = 'currency.pl?action=delete_exchangerate';
+    my $base_url = 'currency.pl?__action=delete_exchangerate';
     my $columns = [
         {
             col_id => 'curr',

@@ -617,7 +617,7 @@ sub report_results {
             $request->@{qw(start_date end_date asset_class approved entered_by)}
         ]);
 
-    my $base_href = 'asset.pl?action=report_details&'.
+    my $base_href = 'asset.pl?__action=report_details&'.
                      "expense_acct=$request->{expense_acct}";
     if ($request->{depreciation}){
              $base_href .= '&depreciation=1';

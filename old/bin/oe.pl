@@ -76,7 +76,7 @@ sub add {
         $form->{vc}    = 'customer';
     }
 
-    $form->{callback} = "$form->{script}?action=add&type=$form->{type}&vc=$form->{vc}"
+    $form->{callback} = "$form->{script}?__action=add&type=$form->{type}&vc=$form->{vc}"
       unless $form->{callback};
 
     $form->{rowcount} = 0;
@@ -519,7 +519,7 @@ sub form_header {
         }
         $vc = qq|<input data-dojo-type="dijit/form/TextBox" id=$form->{vc} name=$form->{vc} value="$form->{$form->{vc}}" size=35>
              <a id="new-contact" target="_blank"
-                 href="erp.pl?action=root#contact.pl?action=add&entity_class=$eclass">
+                 href="erp.pl?__action=root#contact.pl?__action=add&entity_class=$eclass">
                  [| . $locale->text('New') . qq|]</a>|;
     }
 
@@ -928,7 +928,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
         foreach my $file (@{$form->{files}}){
               print qq|
 <tr>
-<td><a href="file.pl?action=get&file_class=2&ref_key=$form->{id}&id=$file->{id}&type=sales_quotation&additional=type"
+<td><a href="file.pl?__action=get&file_class=2&ref_key=$form->{id}&id=$file->{id}&type=sales_quotation&additional=type"
        target="_download">$file->{file_name}</a></td>
 <td>$file->{mime_type}</td>
 <td>|.$file->{uploaded_at}.qq|</td>
@@ -965,9 +965,9 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
        }
        print qq|
 </table>|;
-       $callback = $form->escape("oe.pl?action=edit&id=".$form->{id});
+       $callback = $form->escape("oe.pl?__action=edit&id=".$form->{id});
        print qq|
-<a href="file.pl?action=show_attachment_screen&ref_key=$form->{id}&file_class=2&callback=$callback"
+<a href="file.pl?__action=show_attachment_screen&ref_key=$form->{id}&file_class=2&callback=$callback"
    >[| . $locale->text('Attach') . qq|]</a>|;
     }
 
@@ -2167,7 +2167,7 @@ sub list_transfer {
     OE->get_inventory( \%myconfig, \%$form );
 
     # construct href
-    $href = "$form->{script}?action=list_transfer";
+    $href = "$form->{script}?__action=list_transfer";
     for (qw(direction oldsort path login sessionid)) {
         $href .= "&$_=$form->{$_}";
     }
@@ -2178,7 +2178,7 @@ sub list_transfer {
     $form->sort_order();
 
     # construct callback
-    $callback = "$form->{script}?action=list_transfer";
+    $callback = "$form->{script}?__action=list_transfer";
     for (qw(direction oldsort path login sessionid)) {
         $callback .= "&$_=$form->{$_}";
     }

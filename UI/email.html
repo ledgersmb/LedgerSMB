@@ -98,7 +98,7 @@ IF attachments.size > 0 ;
 FOR att IN attachments ;
 %]
    <tr><td><a
-        href="file.pl?action=get&amp;file_class=8&amp;id=[% att.id %]"
+        href="file.pl?__action=get&amp;file_class=8&amp;id=[% att.id %]"
         target="_blank"
         download="[% att.file_name %]">[% att.file_name %]</a></td><td>[% att.description %]</td></tr>
 [%

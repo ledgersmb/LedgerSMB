@@ -589,7 +589,7 @@ sub new_item {
     # change callback
     $form->{old_callback} = $form->escape( $form->{callback}, 1 );
     $form->{callback} =
-      $form->escape( "$form->{script}?action=display_form", 1 );
+      $form->escape( "$form->{script}?__action=display_form", 1 );
 
     # delete action
     delete $form->{action};
@@ -1512,7 +1512,7 @@ sub print_form {
         $trans_wf->execute_action( 'e_mail' );
         my $id = $trans_wf->context->param( 'spawned_workflow' );
         if (not $form->{header}) {
-            print "Location: email.pl?id=$id&action=render&callback=$form->{script}%3F"
+            print "Location: email.pl?id=$id&__action=render&callback=$form->{script}%3F"
                 . "id%3D$form->{id}%26action%3Dedit\n";
             print "Status: 302 Found\n\n";
             $form->{header} = 1;

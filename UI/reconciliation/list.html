@@ -10,7 +10,7 @@
         </tr>
     [% FOR item IN reports%]
         <tr>
-            <td><a href="recon.pl?action=report&amp;report_id=[% item.report_id%]">[% item.report_id%]</a></td>
+            <td><a href="recon.pl?__action=report&amp;report_id=[% item.report_id%]">[% item.report_id%]</a></td>
             <td>[% item.account%]</td>
             <td>[% item.range%]</td>
             <td>[% item.total%]</td>

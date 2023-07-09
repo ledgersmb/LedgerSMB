@@ -40,7 +40,7 @@ sub columns {
         { col_id => 'label',
             name => $self->Text('Label'),
             type => 'href',
-       href_base => 'payrol.pl?action=edit&id=' },
+       href_base => 'payrol.pl?__action=edit&id=' },
     ];
 }
 

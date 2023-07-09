@@ -210,12 +210,12 @@ sub columns {
    return [
     {col_id => 'id',
        type => 'href',
-  href_base => 'ic.pl?action=edit&id=',
+  href_base => 'ic.pl?__action=edit&id=',
        name => $self->Text('ID'),},
 
     {col_id => 'partnumber',
        type => 'href',
-  href_base => 'ic.pl?action=edit&id=',
+  href_base => 'ic.pl?__action=edit&id=',
        name => $self->Text('Part Number'),},
 
     {col_id => 'description',

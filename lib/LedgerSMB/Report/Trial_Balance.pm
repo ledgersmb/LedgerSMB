@@ -142,19 +142,19 @@ sub columns {
     return [
       {col_id => 'account_number',
          type => 'href',
-    href_base => 'journal.pl?action=search&col_running_balance=Y&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
+    href_base => 'journal.pl?__action=search&col_running_balance=Y&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
          name => $self->Text('Account Number'),
        pwidth => 1,},
 
       {col_id => 'account_desc',
          type => 'href',
-    href_base => 'journal.pl?action=search&col_running_balance=Y&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
+    href_base => 'journal.pl?__action=search&col_running_balance=Y&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
          name => $self->Text('Account Description'),
        pwidth => 3,},
 
       {col_id => 'gifi_accno',
          type => 'href',
-    href_base => 'journal.pl?action=search&col_running_balance=Y&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
+    href_base => 'journal.pl?__action=search&col_running_balance=Y&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
          name => $self->Text('GIFI'),
        pwidth => 1, } ,
 

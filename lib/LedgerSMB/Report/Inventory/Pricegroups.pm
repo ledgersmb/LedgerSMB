@@ -51,7 +51,7 @@ sub columns {
     my ($self) = @_;
     return [{col_id => 'pricegroup',
                type => 'href',
-          href_base => 'pe.pl?action=edit&type=pricegroup&id=',
+          href_base => 'pe.pl?__action=edit&type=pricegroup&id=',
                name => $self->Text('Price Group') }];
 }
 

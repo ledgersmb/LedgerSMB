@@ -274,7 +274,7 @@ sub run_report{
         $script = 'ir' if ($ref->{invoice} and $ref->{batch_class_id} == 3);
         $script = 'is' if ($ref->{invoice} and $ref->{batch_class_id} == 6);
 
-        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{transaction_id}"
+        $ref->{reference_href_suffix} = "$script.pl?__action=edit&id=$ref->{transaction_id}"
             if $script;
     }
     return $self->rows(\@rows);

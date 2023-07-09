@@ -58,7 +58,7 @@ sub add {
     );
     $form->{title} = $label{$form->{item}};
 
-    $form->{callback} = "$form->{script}?action=add&item=$form->{item}"
+    $form->{callback} = "$form->{script}?__action=add&item=$form->{item}"
       unless $form->{callback};
 
     $form->{orphaned} = 1;
@@ -865,7 +865,7 @@ sub form_footer {
         foreach my $file (@{$form->{files}}){
               print qq|
 <tr>
-<td><a href="file.pl?action=get&file_class=3&ref_key=$form->{id}&id=$file->{id}"
+<td><a href="file.pl?__action=get&file_class=3&ref_key=$form->{id}&id=$file->{id}"
        target="_download">$file->{file_name}</a></td>
 <td>$file->{mime_type}</td>
 <td>|.$file->{uploaded_at} . qq|</td>
@@ -903,10 +903,10 @@ sub form_footer {
        print qq|
 </table>|;
        $callback = $form->escape(
-               "ic.pl?action=edit&id=".$form->{id}
+               "ic.pl?__action=edit&id=".$form->{id}
        );
        print qq|
-<a href="file.pl?action=show_attachment_screen&ref_key=$form->{id}&file_class=3&callback=$callback"
+<a href="file.pl?__action=show_attachment_screen&ref_key=$form->{id}&file_class=3&callback=$callback"
    >[| . $locale->text('Attach') . qq|]</a>|;
     }
 
@@ -1207,7 +1207,7 @@ sub assembly_row {
     # change callback
     $form->{old_callback} = $form->{callback};
     $callback             = $form->{callback};
-    $form->{callback}     = "$form->{script}?action=display_form";
+    $form->{callback}     = "$form->{script}?__action=display_form";
 
     # delete action
     for (qw(action header)) { delete $form->{$_} }
@@ -1324,7 +1324,7 @@ qq|<td><select data-dojo-type="dijit/form/Select" id="partsgroup-$i" name="parts
         else {
 
             $column_data{partnumber} =
-qq|<td><a href="ic.pl?action=edit&id=$form->{"id_$i"}" target="new">$form->{"partnumber_$i"}</a></td>
+qq|<td><a href="ic.pl?__action=edit&id=$form->{"id_$i"}" target="new">$form->{"partnumber_$i"}</a></td>
       <input type=hidden name="partnumber_$i" value="$form->{"partnumber_$i"}">|;
 
             $column_data{runningnumber} =
@@ -1422,7 +1422,7 @@ sub edit_assemblyitem {
       : $form->{"assembly_$i"};
 
     $form->{callback} =
-qq|$form->{script}?action=edit&id=$form->{"id_$i"}&rowcount=$i&baseassembly=$form->{baseassembly}&isassemblyitem=1&previousform=$form->{previousform}|;
+qq|$form->{script}?__action=edit&id=$form->{"id_$i"}&rowcount=$i&baseassembly=$form->{baseassembly}&isassemblyitem=1&previousform=$form->{previousform}|;
 
     $form->redirect;
 
@@ -2045,11 +2045,11 @@ sub list_assemblies {
     IC->retrieve_assemblies( \%myconfig, \%$form );
 
     $callback =
-"$form->{script}?action=list_assemblies&direction=$form->{direction}&oldsort=$form->{oldsort}&checkinventory=$form->{checkinventory}";
+"$form->{script}?__action=list_assemblies&direction=$form->{direction}&oldsort=$form->{oldsort}&checkinventory=$form->{checkinventory}";
 
     $form->sort_order();
     $href =
-"$form->{script}?action=list_assemblies&direction=$form->{direction}&oldsort=$form->{oldsort}&checkinventory=$form->{checkinventory}";
+"$form->{script}?__action=list_assemblies&direction=$form->{direction}&oldsort=$form->{oldsort}&checkinventory=$form->{checkinventory}";
 
     if ( $form->{partnumber} ) {
         $callback .= "&partnumber=" . $form->escape( $form->{partnumber}, 1 );
@@ -2124,7 +2124,7 @@ sub list_assemblies {
         }
 
         $column_data{partnumber} =
-"<td width=20%><a href=$form->{script}?action=edit&id=$ref->{id}&callback=$callback>$ref->{partnumber}&nbsp;</a></td>";
+"<td width=20%><a href=$form->{script}?__action=edit&id=$ref->{id}&callback=$callback>$ref->{partnumber}&nbsp;</a></td>";
 
         $column_data{description} =
           qq|<td width=50%>$ref->{description}&nbsp;</td>|;

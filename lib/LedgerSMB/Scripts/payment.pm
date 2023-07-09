@@ -1061,7 +1061,7 @@ sub payment2 {
             $uri_module='??';
         }
         #my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-        my $uri = $uri_module . '.pl?action=edit&id='
+        my $uri = $uri_module . '.pl?__action=edit&id='
             . $invoice->{invoice_id} . '&login=' . $request->{login};
         my $invoice_id = $invoice->{invoice_id};
         my $invoice_amt = $invoice->{amount};
@@ -1717,7 +1717,7 @@ sub use_overpayment2 {
             }
             #lets make the href for the invoice
             my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-            $uri .= '.pl?action=edit&id='
+            $uri .= '.pl?__action=edit&id='
                 . $Payment->{"invoice_id_$count"} . '&login='
                 . $request->{login};
 
@@ -1796,7 +1796,7 @@ sub use_overpayment2 {
 
                 #lets make the href for the invoice
                 my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-                $uri .= '.pl?action=edit&id='
+                $uri .= '.pl?__action=edit&id='
                     . $avble_invoices[$ref]->{invoice_id}
                 . '&login=' . $request->{login};
 

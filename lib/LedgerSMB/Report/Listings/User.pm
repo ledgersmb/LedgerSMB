@@ -53,7 +53,7 @@ sub columns {
         {
             col_id => 'username',
             type  => 'href',
-            href_base  => 'admin.pl?action=edit_user&id=',
+            href_base  => 'admin.pl?__action=edit_user&id=',
             name  => $self->Text('Username'),
         },
         {
@@ -64,7 +64,7 @@ sub columns {
         {
             col_id => 'delete',
             type => 'href',
-            href_base => 'admin.pl?action=delete_user&id=',
+            href_base => 'admin.pl?__action=delete_user&id=',
             name => ''
         },
         ];

@@ -365,21 +365,21 @@ sub run_report{
             $ref->{fx_debits} = 0;
         }
         if ($ref->{type} eq 'gl'){
-           $ref->{reference_href_suffix} = "gl.pl?action=edit&id=$ref->{id}";
+           $ref->{reference_href_suffix} = "gl.pl?__action=edit&id=$ref->{id}";
         } elsif ($ref->{type} eq 'ar'){
            if ($ref->{invoice}){
                 $ref->{reference_href_suffix} = 'is.pl';
            } else {
                 $ref->{reference_href_suffix} = 'ar.pl';
            }
-           $ref->{reference_href_suffix} .= "?action=edit&id=$ref->{id}";
+           $ref->{reference_href_suffix} .= "?__action=edit&id=$ref->{id}";
         } elsif ($ref->{type} eq 'ap'){
            if ($ref->{invoice}){
                 $ref->{reference_href_suffix} = 'ir.pl';
            } else {
                 $ref->{reference_href_suffix} = 'ap.pl';
            }
-           $ref->{reference_href_suffix} .= "?action=edit&id=$ref->{id}";
+           $ref->{reference_href_suffix} .= "?__action=edit&id=$ref->{id}";
         }
         if ($ref->{cleared}){
             $ref->{cleared} = 'X';

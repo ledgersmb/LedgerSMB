@@ -65,7 +65,7 @@ sub columns {
       push @$cols,
          {col_id => 'invnumber',
             type => 'href',
-       #href_base => 'is.pl?action=edit&id=',
+       #href_base => 'is.pl?__action=edit&id=',
             name => $self->Text('Invoice Number') },
 
          {col_id => 'curr',
@@ -343,7 +343,7 @@ sub run_report {
       $script = 'is.pl';
      }
      #$r->{invnumber_href_suffix} = $r->{invoice_id};
-     $r->{invnumber_href_suffix} = "$script?action=edit&id=$r->{inv_id}";
+     $r->{invnumber_href_suffix} = "$script?__action=edit&id=$r->{inv_id}";
     }
     return $self->rows(\@rows);
 }

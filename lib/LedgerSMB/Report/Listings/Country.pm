@@ -42,7 +42,7 @@ sub columns {
     return [{
       col_id => 'short_name',
         type => 'href',
-   href_base => 'am.pl?action=edit_country&short_name=',
+   href_base => 'am.pl?__action=edit_country&short_name=',
         name => $self->Text('Short name'), },
 
     { col_id => 'name',

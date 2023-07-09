@@ -44,7 +44,7 @@ sub columns {
     return [
     { col_id => 'accno',
         type => 'href',
-   href_base => 'am.pl?action=edit_gifi&coa=1&accno=',
+   href_base => 'am.pl?__action=edit_gifi&coa=1&accno=',
         name => $self->Text('GIFI'), },
 
     { col_id => 'description',

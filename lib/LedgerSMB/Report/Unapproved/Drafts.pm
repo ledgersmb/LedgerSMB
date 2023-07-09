@@ -253,7 +253,7 @@ sub run_report{
             $script = 'is' if $script eq 'ar';
             $script = 'ir' if $script eq 'ap';
         }
-        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}";
+        $ref->{reference_href_suffix} = "$script.pl?__action=edit&id=$ref->{id}";
         $ref->{id_href_suffix} = $ref->{reference_href_suffix};
     }
     return $self->rows(\@rows);

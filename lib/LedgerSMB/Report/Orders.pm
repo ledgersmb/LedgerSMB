@@ -207,7 +207,7 @@ sub columns {
        {col_id => 'ordnumber',
           name => $ORDNUMBER,
           type => 'href',
-     href_base => "oe.pl?action=$HREF_ACTION&id=", },
+     href_base => "oe.pl?__action=$HREF_ACTION&id=", },
 
        {col_id => 'reqdate',
           name => $self->Text('Required Date'),

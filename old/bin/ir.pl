@@ -124,7 +124,7 @@ sub add {
         $form->{reverse} = 0;
     }
 
-    $form->{callback} = "$form->{script}?action=add&type=$form->{type}"
+    $form->{callback} = "$form->{script}?__action=add&type=$form->{type}"
       unless $form->{callback};
     &invoice_links;
     &prepare_invoice;
@@ -336,7 +336,7 @@ sub form_header {
     }
     else {
         $vendor = qq|<input data-dojo-type="dijit/form/TextBox" name=vendor id=vendor value="$form->{vendor}" size=35 $roadonly>
-                 <a href="erp.pl?action=root#contact.pl?action=add&entity_class=1"
+                 <a href="erp.pl?__action=root#contact.pl?__action=add&entity_class=1"
                   id="new-contact" target="_blank">[|
                  .  $locale->text('New') . qq|]</a>|;
     }
@@ -425,7 +425,7 @@ sub form_header {
             <tr>
         <th align="right" nowrap>| .
             $locale->text('Entity Code') . qq|</th>
-        <td colspan="2" nowrap><a href="erp.pl?action=root#contact.pl?action=get_by_cc&control_code=$form->{entity_control_code}" target="_blank"><b>$form->{entity_control_code}</b></a></td>
+        <td colspan="2" nowrap><a href="erp.pl?__action=root#contact.pl?__action=get_by_cc&control_code=$form->{entity_control_code}" target="_blank"><b>$form->{entity_control_code}</b></a></td>
         <th align="right" nowrap>| .
             $locale->text('Account') . qq|</th>
         <td colspan=3>$form->{meta_number}</td>
@@ -461,8 +461,8 @@ sub form_header {
         </table>
       </td>
       <td style="vertical-align:middle">| .
-        ($form->{reversing} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversing}">|. ($form->{approved} ? $locale->text('This transaction reverses transaction [_1] with ID [_2]', $form->{reversing_reference}, $form->{reversing}) : $locale->text('This transaction will reverse transaction [_1] with ID [_2]', $form->{reversing_reference}, $form->{reversing})) . q|</a><br />| : '') .
-        ($form->{reversed_by} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversed_by}"> | . $locale->text('This transaction is reversed by transaction [_1] with ID [_2]', $form->{reversed_by_reference}, $form->{reversed_by}) . q|</a>| : '') .
+        ($form->{reversing} ? qq|<a href="$form->{script}?__action=edit&amp;id=$form->{reversing}">|. ($form->{approved} ? $locale->text('This transaction reverses transaction [_1] with ID [_2]', $form->{reversing_reference}, $form->{reversing}) : $locale->text('This transaction will reverse transaction [_1] with ID [_2]', $form->{reversing_reference}, $form->{reversing})) . q|</a><br />| : '') .
+        ($form->{reversed_by} ? qq|<a href="$form->{script}?__action=edit&amp;id=$form->{reversed_by}"> | . $locale->text('This transaction is reversed by transaction [_1] with ID [_2]', $form->{reversed_by_reference}, $form->{reversed_by}) . q|</a>| : '') .
       qq|</td>
       <td align=right>
         <table>
@@ -996,7 +996,7 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
     if ($form->{id}){
         IR->get_files($form, $locale);
         print qq|
-<a href="pnl.pl?action=generate_income_statement&pnl_type=invoice&id=$form->{id}">[| . $locale->text('Profit/Loss') . qq|]</a><br />
+<a href="pnl.pl?__action=generate_income_statement&pnl_type=invoice&id=$form->{id}">[| . $locale->text('Profit/Loss') . qq|]</a><br />
 <table width="100%">
 <tr class="listtop">
 <th colspan="4">| . $locale->text('Attached and Linked Files') . qq|</th>
@@ -1009,7 +1009,7 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
         foreach my $file (@{$form->{files}}){
               print qq|
 <tr>
-<td><a href="file.pl?action=get&file_class=1&ref_key=$form->{id}&id=$file->{id}"
+<td><a href="file.pl?__action=get&file_class=1&ref_key=$form->{id}&id=$file->{id}"
        target="_download">$file->{file_name}</a></td>
 <td>$file->{mime_type}</td>
 <td>| . $file->{uploaded_at} . qq|</td>
@@ -1046,9 +1046,9 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
        }
        print qq|
 </table>|;
-       $callback = $form->escape("ir.pl?action=edit&id=".$form->{id});
+       $callback = $form->escape("ir.pl?__action=edit&id=".$form->{id});
        print qq|
-<a href="file.pl?action=show_attachment_screen&ref_key=$form->{id}&file_class=1&callback=$callback"
+<a href="file.pl?__action=show_attachment_screen&ref_key=$form->{id}&file_class=1&callback=$callback"
    >[| . $locale->text('Attach') . qq|]</a>|;
     }
 

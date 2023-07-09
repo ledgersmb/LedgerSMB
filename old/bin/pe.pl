@@ -27,7 +27,7 @@ use LedgerSMB::OE;
 sub add {
 
     # construct callback
-    $form->{callback} = "$form->{script}?action=add&type=$form->{type}"
+    $form->{callback} = "$form->{script}?__action=add&type=$form->{type}"
       unless $form->{callback};
 
     &{"prepare_$form->{type}"};
@@ -252,7 +252,7 @@ sub list_translations {
     $title = $form->escape( $form->{title}, 1 );
 
     $callback =
-"$form->{script}?action=list_translations&translation=$form->{translation}&number=$form->{number}&title=$title";
+"$form->{script}?__action=list_translations&translation=$form->{translation}&number=$form->{number}&title=$title";
 
     if ( $form->{"$form->{number}"} ) {
         $callback .= qq|&$form->{number}=$form->{"$form->{number}"}|;
@@ -346,7 +346,7 @@ sub list_translations {
         for (@column_index) { $column_data{$_} = "<td>$ref->{$_}&nbsp;</td>" }
 
         $column_data{description} =
-"<td><a href=$form->{script}?action=edit_translation&translation=$form->{translation}&number=$form->{number}&id=$ref->{id}&callback=$callback>$ref->{description}&nbsp;</a></td>";
+"<td><a href=$form->{script}?__action=edit_translation&translation=$form->{translation}&number=$form->{number}&id=$ref->{id}&callback=$callback>$ref->{description}&nbsp;</a></td>";
 
         $i++;
         $i %= 2;
@@ -843,7 +843,7 @@ sub project_jcitems_list {
 
     $form->{projectnumber} = $form->unescape( $form->{projectnumber} );
     $form->{employee}      = $form->unescape( $form->{employee} );
-    $form->{callback}      = "$form->{script}?action=project_jcitems_list";
+    $form->{callback}      = "$form->{script}?__action=project_jcitems_list";
     for (
         qw(month year interval summary transdatefrom transdateto login path sessionid nextsub type vc)
       )

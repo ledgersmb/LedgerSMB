@@ -12,7 +12,7 @@
   </tr>
 [% FOREACH file IN attachments.files %]
   <tr>
-    <td><a href="file.pl?action=get&amp;file_class=1&amp;ref_key=[%
+    <td><a href="file.pl?__action=get&amp;file_class=1&amp;ref_key=[%
                  attachments.ref_key
                  %]&amp;id=[% file.id %]" target="_download"
             >[% file.file_name %]</a></td>
@@ -52,6 +52,6 @@ FOREACH link IN attachments.file_links;
 [% END # FOREACH %]
 </table>
 [% END # IF attachments.file_links.size > 0 -%]
-<a href="file.pl?action=show_attachment_screen&amp;ref_key=[% attachments.ref_key
+<a href="file.pl?__action=show_attachment_screen&amp;ref_key=[% attachments.ref_key
    %]&amp;file_class=[% attachments.file_class %]&amp;callback=[% attachments.callback | uri %]">[[% text('Attach') %]]</a>
 [% END; # block attachments %]

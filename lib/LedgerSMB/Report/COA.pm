@@ -161,13 +161,13 @@ sub run_report{
         }
         $r->{delete} = '['.$self->Text('Delete').']'
                   if !$r->{rowcount};
-        $r->{accno_href_suffix} = 'account.pl?action=edit&id='.$r->{id} .
+        $r->{accno_href_suffix} = 'account.pl?__action=edit&id='.$r->{id} .
            "&charttype=$ct";
         $r->{description_href_suffix} = $r->{accno_href_suffix};
-        $r->{delete_href_suffix} = 'journal.pl?action=delete_account&id='
+        $r->{delete_href_suffix} = 'journal.pl?__action=delete_account&id='
         . $r->{id} . "&charttype=$ct";
         $r->{credit_balance_href_suffix} =
-                'reports.pl?action=start_report&module_name=gl&report_name=gl' .
+                'reports.pl?__action=start_report&module_name=gl&report_name=gl' .
                 "&accno=$r->{accno}--$r->{description}"
                      unless $r->{is_heading};
         $r->{debit_balance_href_suffix} = $r->{credit_balance_href_suffix};

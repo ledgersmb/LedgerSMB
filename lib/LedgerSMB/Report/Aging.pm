@@ -84,10 +84,10 @@ sub columns {
     my $base_href;
     if ($self->entity_class == 1) {
         $credit_label = $self->Text('Vendor');
-        $base_href = 'ap.pl?action=edit&id='; # for details
+        $base_href = 'ap.pl?__action=edit&id='; # for details
     } elsif ($self->entity_class == 2){
         $credit_label = $self->Text('Customer');
-        $base_href = 'ar.pl?action=edit&id='; # for details
+        $base_href = 'ar.pl?__action=edit&id='; # for details
     }
 
     push @COLUMNS,

@@ -133,7 +133,7 @@ sub add {
 
     my $transfer
         = ($form->{transfer}) ? "&transfer=$form->{transfer}" : '';
-    $form->{callback} = "$form->{script}?action=add$transfer"
+    $form->{callback} = "$form->{script}?__action=add$transfer"
       unless $form->{callback};
 
     if (!$form->{rowcount}){

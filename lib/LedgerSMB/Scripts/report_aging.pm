@@ -125,7 +125,7 @@ sub _render_statement_batch {
         my $callback = 'callback=reports.pl%3Faction%3Dstart_report%26report_name%3Daging%26module_name%3Dgl%26entity_class%3D2';
 
         return [ HTTP_SEE_OTHER,
-                 [ Location => 'email.pl?action=render&' . $callback . '&id=' . $result->{id} ],
+                 [ Location => 'email.pl?__action=render&' . $callback . '&id=' . $result->{id} ],
                  [ '' ] ];
     }
 
@@ -135,7 +135,7 @@ sub _render_statement_batch {
             col_id    => 'id',
             name      => $locale->text('ID'),
             type      => 'href',
-            href_base => "email.pl?action=render&callback=report_aging.pl%3Faction%3Drender_statement_batch%26workflow_id%3D$wf_id&id=",
+            href_base => "email.pl?__action=render&callback=report_aging.pl%3Faction%3Drender_statement_batch%26workflow_id%3D$wf_id&id=",
         },
         {
             col_id => 'name',
@@ -187,7 +187,7 @@ sub _render_statement_batch {
         'Reports/aging_batch',
         {
             buttons => \@buttons,
-            callback => 'report_aging.pl?action=render_statement_batch&workflow_id=' . $request->{workflow_id},
+            callback => 'report_aging.pl?__action=render_statement_batch&workflow_id=' . $request->{workflow_id},
             columns => \@columns,
             HIDDENS => {
                 workflow_id => $wf_id,
@@ -389,7 +389,7 @@ sub generate_statement {
 
         my $wf = $sink->append(
             $template,
-            callback       => 'reports.pl?action=start_report&report_name=aging&module_name=gl&entity_class=2',
+            callback       => 'reports.pl?__action=start_report&report_name=aging&module_name=gl&entity_class=2',
             filename       => "aging-report.$extension",
             name           => $statement->{entity}->name,
             credit_account => $statement->{credit_account}->description,

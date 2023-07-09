@@ -47,7 +47,7 @@ sub columns {
     return [
       {col_id => 'form_name',
          type => 'href',
-    href_base => 'taxform.pl?action=edit&id=',
+    href_base => 'taxform.pl?__action=edit&id=',
          name => $self->Text('Form Name')},
 
       {col_id => 'country_name',

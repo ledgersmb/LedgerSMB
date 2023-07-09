@@ -82,7 +82,7 @@ my @internal_files_columns = (
        type => 'checkbox' },
 
     {col_id => 'file_name',
-  href_base => 'file.pl?action=get&file_class=6&id=',
+  href_base => 'file.pl?__action=get&file_class=6&id=',
 href_target => '_blank',
        type => 'href' },
 

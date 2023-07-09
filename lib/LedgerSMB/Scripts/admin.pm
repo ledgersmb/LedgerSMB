@@ -121,7 +121,7 @@ sub list_sessions {
               col_id => $_,
               name => $column_names->{$_}
             }  } qw(id username last_used locks_active) ];
-    my $base_url = 'admin.pl?action=delete_session';
+    my $base_url = 'admin.pl?__action=delete_session';
     push @$columns,
         {
             type => 'href',

@@ -139,7 +139,7 @@ sub columns {
              {col_id => 'end_date',
                 name => $self->Text('Statement Date'),
                 type => 'href',
-           href_base => 'recon.pl?action=display_report&report_id=', },
+           href_base => 'recon.pl?__action=display_report&report_id=', },
              {col_id => 'their_total',
                 name => $self->Text('Statement Balance'),
                money => 1,
