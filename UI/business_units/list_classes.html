@@ -78,7 +78,7 @@
 <div class="td">[% PROCESS button element_data = {
     type = "submit"
    class = "submit"
-    name = "action"
+    name = "__action"
    value = "save_class"
       id = "save_class_$id"
     text = (c.id) ? text('Save') : text('Add Class')
@@ -88,7 +88,7 @@
 PROCESS button element_data = {
     type = "submit"
    class = "submit"
-    name = "action"
+    name = "__action"
    value = "delete_class"
       id = "delete_class_$id"
     text = text('Delete')
@@ -99,7 +99,7 @@ IF c.id;
 PROCESS button element_data = {
     type = "submit"
    class = "submit"
-    name = "action"
+    name = "__action"
       id = "action_$id"
    value = "add"
     text = text('Add Unit') #'
@@ -107,7 +107,7 @@ PROCESS button element_data = {
 PROCESS button element_data = {
     type = "submit"
    class = "submit"
-    name = "action"
+    name = "__action"
    value = "list"
       id = "list_$id"
     text = text('List Units')#'

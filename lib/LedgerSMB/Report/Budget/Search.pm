@@ -68,22 +68,22 @@ sub columns {
     my ($self) = @_;
     return [ {col_id => 'start_date',
                type => 'href',
-          href_base => 'budget_reports.pl?action=variance_report&id=',
+          href_base => 'budget_reports.pl?__action=variance_report&id=',
                name => $self->Text('Start Date') },
 
             {col_id => 'end_date',
                type => 'href',
-          href_base => 'budget_reports.pl?action=variance_report&id=',
+          href_base => 'budget_reports.pl?__action=variance_report&id=',
                name => $self->Text('End Date') },
 
             {col_id => 'reference',
                type => 'href',
-          href_base => 'budgets.pl?action=view_budget&id=',
+          href_base => 'budgets.pl?__action=view_budget&id=',
                name => $self->Text('Reference') },
 
             {col_id => 'description',
                type => 'href',
-          href_base => 'budgets.pl?action=view_budget&id=',
+          href_base => 'budgets.pl?__action=view_budget&id=',
                name => $self->Text('Description') },
 
             {col_id => 'entered_by_name',

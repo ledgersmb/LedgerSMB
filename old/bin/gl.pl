@@ -133,7 +133,7 @@ sub add {
 
     my $transfer
         = ($form->{transfer}) ? "&transfer=$form->{transfer}" : '';
-    $form->{callback} = "$form->{script}?action=add$transfer"
+    $form->{callback} = "$form->{script}?__action=add$transfer"
       unless $form->{callback};
 
     if (!$form->{rowcount}){
@@ -372,7 +372,7 @@ sub display_form
       $i=1;
       @buttons = map {
           {
-              name => 'action',
+              name => '__action',
               value => $_->{action},
               text => $_->{value},
               type => 'submit',
@@ -386,7 +386,7 @@ sub display_form
     unless ($form->{reversed_by}) {
         if ($form->{approved}) {
             push @buttons, {
-                name  => 'action',
+                name  => '__action',
                 value => 'reverse',
                 text  => $locale->text('Reverse'),
                 type  => 'submit',

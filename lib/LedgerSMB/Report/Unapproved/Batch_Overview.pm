@@ -141,7 +141,7 @@ sub columns {
         {col_id => 'control_code',
          name => $self->_locale->text('Batch Number'),
          type => 'href',
-         href_base => 'vouchers.pl?action=get_batch&batch_id=',
+         href_base => 'vouchers.pl?__action=get_batch&batch_id=',
          pwidth => '3', },
 
         {col_id => 'description',
@@ -232,21 +232,21 @@ sub set_buttons {
         # Results comprise only unapproved batches
         $buttons = [
             {
-                name  => 'action',
+                name  => '__action',
                 type  => 'submit',
                 text  => $self->_locale->text('Post'),
                 value => 'batch_approve',
                 class => 'submit',
             },
             {
-                name  => 'action',
+                name  => '__action',
                 type  => 'submit',
                 text  => $self->_locale->text('Delete'),
                 value => 'batch_delete',
                 class => 'submit',
             },
             {
-                name  => 'action',
+                name  => '__action',
                 type  => 'submit',
                 text  => $self->_locale->text('Unlock'),
                 value => 'batch_unlock',

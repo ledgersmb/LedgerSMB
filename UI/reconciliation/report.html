@@ -5,10 +5,10 @@
 <body class="lsmb [% dojo_theme %]">
 <div id="reconciliation">
 [% IF check.unapproved_transactions
-%]<div class="warning"><a href="drafts.pl?action=list_drafts&amp;to_date=[% end_date %]">[% text('There are [_1] unapproved transactions before the end date of this report.',check.unapproved_transactions)
+%]<div class="warning"><a href="drafts.pl?__action=list_drafts&amp;to_date=[% end_date %]">[% text('There are [_1] unapproved transactions before the end date of this report.',check.unapproved_transactions)
 %]</a></div>
 [% END; IF check.unapproved_reports
-%]<div class="warning"><a href="recon.pl?action=get_results&amp;to_date=[% end_date %]&amp;approved=0">[% text('There are [_1] unapproved reconciliations before the end date of this report.',check.unapproved_reports) %]</a></div>
+%]<div class="warning"><a href="recon.pl?__action=get_results&amp;to_date=[% end_date %]&amp;approved=0">[% text('There are [_1] unapproved reconciliations before the end date of this report.',check.unapproved_reports) %]</a></div>
 [% END %]
 [% IF ! defined(b_cleared_table);
     b_cleared_table = 'checked';
@@ -405,19 +405,19 @@ IF have_outstanding ;
     class = 'sort'
 } %]
 [% INCLUDE button element_data = {
-    name = "action",
+    name = "__action",
     text = text('Update'),
     value = 'update_recon_set',
     class = "submit"
 } %]
 [% INCLUDE button element_data = {
-        name = "action"
+        name = "__action"
         text = text('Select All') #'
        value = 'select_all_recons'
        class = 'submit'
 } %]
 [% INCLUDE button element_data = {
-    name = "action",
+    name = "__action",
     text = text('Save'),
     value = 'save_recon_set',
     class = "submit"
@@ -425,7 +425,7 @@ IF have_outstanding ;
 'data-lsmb-done' = text('Saved')
 } %]
 [% INCLUDE button element_data = {
-    name = "action",
+    name = "__action",
     text = text('Submit'),
     value = 'submit_recon_set',
     disabled = submit_enabled && !check.unapproved_reports ? 'false' : 'true',
@@ -434,7 +434,7 @@ IF have_outstanding ;
 [% END %]
 [% IF submitted AND NOT approved AND can_approve %]
 [% INCLUDE button element_data = {
-    name = "action",
+    name = "__action",
     text = text('Approve'),
     value = 'approve',
     disabled = submit_enabled ? 'false' : 'true',
@@ -443,7 +443,7 @@ IF have_outstanding ;
 'data-lsmb-done' = text('Approved')
 };
 INCLUDE button element_data = {
-    name = "action",
+    name = "__action",
     text = text('Reject'),
     value = 'reject',
     class = "submit"
@@ -453,7 +453,7 @@ INCLUDE button element_data = {
 [% END %]
 [% IF NOT approved %]
 [% INCLUDE button element_data = {
-        name = "action"
+        name = "__action"
         text = text('Delete')
        value = 'delete_report'
         type = 'submit'
@@ -469,7 +469,7 @@ INCLUDE button element_data = {
      file_class=9
      files=files
      file_links=file_links
-     callback='recon.pl?action=display_report&report_id=' _ report_id
+     callback='recon.pl?__action=display_report&report_id=' _ report_id
 };
 -%]
 </div>

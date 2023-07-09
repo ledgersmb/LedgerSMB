@@ -47,7 +47,7 @@ sub columns {
     return [
       {col_id => 'form_name',
          type => 'href',
-    href_base => 'taxform.pl?action=edit&id=',
+    href_base => 'taxform.pl?__action=edit&id=',
          name => $self->Text('Form Name')},
 
       {col_id => 'country_name',
@@ -79,7 +79,7 @@ sub buttons {
     return  [{
          text => $self->Text('Add Tax Form'),
         value => 'add_taxform',
-         name => 'action',
+         name => '__action',
          type => 'submit',
          class => 'submit'
     }];

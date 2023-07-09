@@ -483,14 +483,14 @@ fld = "payment_" _ r.contact_id _ "_" _ i.id ;
                 text  = text('Update'),
                 value = 'update_payments'
                 class = "submit"
-                name  = 'action'
+                name  = '__action'
         } %]
         [% INCLUDE button element_data = {
                 text  = text((batch_id) ? 'Save' : 'Post'),
                 # value = 'pre_bulk_post_report'
                 value = 'pre_bulk_post_report'
                 class = "submit"
-                name  = 'action'
+                name  = '__action'
                 'data-lsmb-doing' = text('Saving...')
                 'data-lsmb-done'  = text('Saved')
         } %]
@@ -511,7 +511,7 @@ fld = "payment_" _ r.contact_id _ "_" _ i.id ;
                         text  = text('Print')
                         value = 'print'
                         class = 'submit'
-                       name  = 'action'
+                       name  = '__action'
                        'data-dojo-type' = 'lsmb/PrintButton'
                        'data-dojo-props' = "minimalGET: false"
                 } %]

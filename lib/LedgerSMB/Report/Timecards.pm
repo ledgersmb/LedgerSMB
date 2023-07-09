@@ -96,7 +96,7 @@ sub columns {
     {col_id => 'id',
        name => $self->Text('ID'),
        type => 'href',
-  href_base => 'timecard.pl?action=get&id=',
+  href_base => 'timecard.pl?__action=get&id=',
      pwidth => '1', },
     {col_id => 'partnumber',
        name => $self->Text('Partnumber'),

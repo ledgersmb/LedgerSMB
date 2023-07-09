@@ -69,7 +69,7 @@ has can_delete => (
 
 sub columns {
     my ($self) = @_;
-    my $href_base='transtemplate.pl?action=view&id=';
+    my $href_base='transtemplate.pl?__action=view&id=';
     my @columns;
 
     # Checkbox is only needed for delete option
@@ -117,7 +117,7 @@ sub set_buttons {
 
     if ($self->can_delete) {
         push @buttons, {
-            name => 'action',
+            name => '__action',
             text => $self->Text('Delete'),
            value => 'delete',
             type => 'submit',

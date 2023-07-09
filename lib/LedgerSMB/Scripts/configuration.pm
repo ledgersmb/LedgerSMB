@@ -12,7 +12,7 @@ System > Defaults and System > Sequences.
 
 =head1 SYNPOPSIS
 
-LedgerSMB::Scripts::configuration->can('action')->($request);
+LedgerSMB::Scripts::configuration->can('__action')->($request);
 
 =head1 METHODS
 

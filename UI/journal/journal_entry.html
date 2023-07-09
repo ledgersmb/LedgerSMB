@@ -119,12 +119,12 @@
         </tr>
       </table>
     </td>
-    <td style="vertical-align: middle;"><a href="gl.pl?action=edit&amp;id=[% form.reversed_by %]">
+    <td style="vertical-align: middle;"><a href="gl.pl?__action=edit&amp;id=[% form.reversed_by %]">
       [% IF form.reversed_by ;
            text('This transaction has been reversed by transaction [_1] with ID [_2]', form.reversed_by_reference, form.reversed_by);
          END %]
       </a><br/>
-      <a href="gl.pl?action=edit&amp;id=[% form.reversing %]">
+      <a href="gl.pl?__action=edit&amp;id=[% form.reversing %]">
       [% IF form.reversing ;
            IF form.approved ;
               text('This transaction reverses transaction [_1] with ID [_2]', form.reversing_reference, form.reversing);
@@ -350,7 +350,7 @@
   };
   PROCESS button element_data = {
     id = "btn_print"
-    name = "action"
+    name = "__action"
     text = text('Print')
     class = "submit"
     value = "print"
@@ -373,7 +373,7 @@ END;
       file_class = 1
       files = form.files
       file_links = form.file_links
-      callback = 'gl.pl?action=edit&id=' _ form.id
+      callback = 'gl.pl?__action=edit&id=' _ form.id
   };
 
 END # IF

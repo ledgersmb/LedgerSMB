@@ -78,7 +78,8 @@ sub call {
     }
 
     my $req = Plack::Request->new($env);
-    my $action_name = $req->parameters->get('action') // '__default';
+    my $action_name = $req->parameters->get('__action')
+        // $req->parameters->get('action') // '__default';
     my $module = $self->module;
     my $action = $module->can($action_name);
     return  LedgerSMB::PSGI::Util::internal_server_error(

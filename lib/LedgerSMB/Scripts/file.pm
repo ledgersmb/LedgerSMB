@@ -82,7 +82,7 @@ my @internal_files_columns = (
        type => 'checkbox' },
 
     {col_id => 'file_name',
-  href_base => 'file.pl?action=get&file_class=6&id=',
+  href_base => 'file.pl?__action=get&file_class=6&id=',
 href_target => '_blank',
        type => 'href' },
 
@@ -115,7 +115,7 @@ sub delete_internal_files {
             );
         $file->remove;
     }
-    $request->{action} = 'list_internal_files';
+    $request->{__action} = 'list_internal_files';
     return list_internal_files($request);
 }
 

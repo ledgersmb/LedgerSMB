@@ -42,7 +42,7 @@ sub columns {
     return [
      { col_id => 'file_name',
          type => 'href',
-    href_base => 'file.pl?action=get&file_class=' . _set_file_class() .
+    href_base => 'file.pl?__action=get&file_class=' . _set_file_class() .
                  '&id=',
   href_target => '_download',
          name => text('File Name'), },
@@ -77,7 +77,7 @@ Single button, set to add a new file.
 
 sub set_buttons {
     return [
-        { name => 'action',
+        { name => '__action',
          value => 'add_internal_file',
           type => 'submit',
          class => 'submit',

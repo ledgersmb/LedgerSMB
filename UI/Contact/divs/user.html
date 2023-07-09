@@ -39,7 +39,7 @@ IF employee.first_name or stand_alone %]
                     };
                     PROCESS button element_data  = {
                          text = text('Delete User') #'
-                         name = 'action'
+                         name = '__action'
                          type = 'submit'
                         class = 'submit'
                         value = 'delete_user'
@@ -129,7 +129,7 @@ IF employee.first_name or stand_alone %]
            [% IF user.username and not request.pls_import;
                 PROCESS button element_data  = {
                          text = text('Reset Password') #'
-                         name = 'action'
+                         name = '__action'
                          type = 'submit'
                         class = 'submit'
                         value = 'reset_password'
@@ -137,7 +137,7 @@ IF employee.first_name or stand_alone %]
            ELSE;
                 PROCESS button element_data  = {
                          text = text('Add User') #'
-                         name = 'action'
+                         name = '__action'
                          type = 'submit'
                         class = 'submit'
                         value = 'create_user'
@@ -199,7 +199,7 @@ IF employee.first_name or stand_alone %]
                     <td>[% PROCESS button element_data = {
                           text = text('Save Groups') #'
                           class = "submit"
-                          name = "action"
+                          name = "__action"
                           value = "save_roles"
                     } %]</td>
                 </tr>

@@ -180,7 +180,7 @@ sub select_name {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <table width=100%>
   <tr>
@@ -251,7 +251,7 @@ qq|<td><input name="new_meta_number_$i" type=hidden value="$ref->{meta_number}">
     # delete variables
     for (qw(nextsub name_list)) { delete $form->{$_} }
 
-    $form->{action} = "name_selected";
+    $form->{__action} = "name_selected";
 
     $form->hide_form;
 
@@ -259,7 +259,7 @@ qq|<td><input name="new_meta_number_$i" type=hidden value="$ref->{meta_number}">
 <input type=hidden name=nextsub value=name_selected>
 <input type=hidden name=vc value="$table">
 <br>
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 </form>
@@ -304,7 +304,7 @@ sub add_transaction {
     my ($module) = @_;
 
     delete $form->{script};
-    $form->{action} = "add";
+    $form->{__action} = "add";
     $form->{type} = "invoice" if $module =~ /(is|ir)/;
 
     $form->{callback} = $form->escape( $form->{callback}, 1 );
@@ -327,7 +327,7 @@ sub post_as_new {
     my $wf = $form->{_wire}->get('workflows')
         ->create_workflow( 'AR/AP' );
     $form->{workflow_id} = $wf->id;
-    $form->{action} = 'post';
+    $form->{__action} = 'post';
 
     &post;
 }
@@ -565,7 +565,7 @@ sub schedule {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <table width=100%>
   <tr class=listtop>
@@ -641,7 +641,7 @@ sub schedule {
     }
 
     # delete variables
-    for (qw(action recurring)) { delete $form->{$_} }
+    for (qw(recurring)) { delete $form->{$_} }
     for (
         qw(reference startdate nextdate enddate repeat unit howmany payment print email message)
       )

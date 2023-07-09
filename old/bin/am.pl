@@ -85,7 +85,7 @@ sub form_footer_buttons {
 
     for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
         push @{$buttons}, {
-            name => 'action',
+            name => '__action',
             value => $_,
             title => $button{$_}{value},
             text => $button{$_}{value},
@@ -283,7 +283,7 @@ sub recurring_transactions {
 
     AM->recurring_transactions( \%myconfig, \%$form );
 
-    $href = "$form->{script}?action=recurring_transactions";
+    $href = "$form->{script}?__action=recurring_transactions";
     for (qw(direction oldsort path login sessionid)) {
         $href .= qq|&$_=$form->{$_}|;
     }
@@ -376,7 +376,7 @@ sub recurring_transactions {
               : $locale->text('Next Number');
             $column_data{reference} = {
                 text => $reference,
-                href => qq|am.pl?action=edit_recurring&id=$ref->{id}&vc=$ref->{vc}&module=$ref->{module}&transaction=$ref->{transaction}&recurringnextdate=$ref->{nextdate}|,
+                href => qq|am.pl?__action=edit_recurring&id=$ref->{id}&vc=$ref->{vc}&module=$ref->{module}&transaction=$ref->{transaction}&recurringnextdate=$ref->{nextdate}|,
                 };
 
             my $module = "$ref->{module}.pl";
@@ -390,7 +390,7 @@ sub recurring_transactions {
 
             $column_data{id} = {
                 text => $ref->{id},
-                href => qq|$module?action=edit&id=$ref->{id}&vc=$ref->{vc}&type=$type&readonly=1|,
+                href => qq|$module?__action=edit&id=$ref->{id}&vc=$ref->{vc}&type=$type&readonly=1|,
                 };
 
             $column_data{repeat} = $repeat;
@@ -431,7 +431,7 @@ sub recurring_transactions {
 
     my @buttons;
     push @buttons, {
-        name => 'action',
+        name => '__action',
         value => 'process_transactions',
         text => $locale->text('Process Transactions'),
         type => 'submit',
@@ -468,7 +468,7 @@ sub edit_recurring {
         oe => 'prepare_order',
     );
 
-    $form->{callback} = "$form->{script}?action=recurring_transactions";
+    $form->{callback} = "$form->{script}?__action=recurring_transactions";
 
     $form->{type} = "transaction";
 
@@ -848,7 +848,7 @@ sub process_transactions {
         }
     }
 
-    $form->{callback} = "am.pl?action=recurring_transactions&header=1";
+    $form->{callback} = "am.pl?__action=recurring_transactions&header=1";
     $form->{header} = 1;
     $form->redirect;
 
@@ -884,7 +884,7 @@ sub print_recurring {
 
 
             $form->info( "\n" . $f{ $f[$j] } );
-            $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=$media&vc=$form->{vc}&ARAP=$form->{ARAP}";
+            $form->{callback} = "$form->{script}?__action=reprint&module=$form->{module}&type=$form->{type}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=$media&vc=$form->{vc}&ARAP=$form->{ARAP}";
             $ok = !( $form->_redirect() );
 
             if ($ok) {
@@ -936,7 +936,7 @@ sub email_recurring {
 
             $message = $form->escape( $pt->{message}, 1 );
 
-            $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=email&vc=$form->{vc}&ARAP=$form->{ARAP}&message=$message&immediate=1&header=1";
+            $form->{callback} = "$form->{script}?__action=reprint&module=$form->{module}&type=$form->{type}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=email&vc=$form->{vc}&ARAP=$form->{ARAP}&message=$message&immediate=1&header=1";
             $ok = !( $form->_redirect() );
 
             if ($ok) {

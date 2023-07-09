@@ -23,7 +23,7 @@
            } %]
     [% INCLUDE input element_data = {
            type = "hidden"
-           value = "file.pl?action=list_internal_files"
+           value = "file.pl?__action=list_internal_files"
            name = "callback"
            } %]
 
@@ -32,7 +32,7 @@
            'data-lsmb-doing' = text('Deleting...')
            'data-lsmb-done' = text('Deleted')
            value = "delete_internal_files"
-           name = "action"
+           name = "__action"
            type = "submit"
            class = "submit"
            } %]
@@ -77,7 +77,7 @@
                'data-lsmb-doing' = text('Uploading...')
                'data-lsmb-done' = text('Uploaded')
                value = "attach_file"
-               name = "action"
+               name = "__action"
                type = "submit"
                class = "submit"
                } %]

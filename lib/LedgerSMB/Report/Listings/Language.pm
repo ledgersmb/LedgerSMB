@@ -45,7 +45,7 @@ sub columns {
     return [{
       col_id => 'code',
         type => 'href',
-   href_base => 'am.pl?action=edit_language&code=',
+   href_base => 'am.pl?__action=edit_language&code=',
         name => $self->Text('Code'), },
 
     { col_id => 'description',

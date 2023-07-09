@@ -196,7 +196,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
       <tbody>
       <tr class="[% alternating_style %] open-item-row">
         <td class="invoice-number"
-            ><a href="erp.pl?action=root#[% row.invoice.href %]"
+            ><a href="erp.pl?__action=root#[% row.invoice.href %]"
                 target="_blank">[% row.invoice.number %]</a>
         </td>
         [% # we can use an href to link this invoice number to the invoice %]
@@ -497,19 +497,19 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
    <hr />
    [% PROCESS button element_data={
           title       = "UPDATE ALT+U"
-          name        = "action"
+          name        = "__action"
           value       = "update_payment2"
           text        = text("Update")
          } -%]
   [% PROCESS button element_data={
          title       = "POST ALT+P"
-         name        = "action"
+         name        = "__action"
          value       = "post_payment"
          text        = text("Post")
          } -%]
   [% PROCESS button element_data={
          title     = "POST AND PRINT ALT+R"
-         name = "action"
+         name = "__action"
          value = "post_and_print_payment"
          text = text("POST AND PRINT")
          "data-dojo-type" = "lsmb/payments/PostPrintButton"

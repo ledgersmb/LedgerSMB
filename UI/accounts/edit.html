@@ -82,7 +82,7 @@
 
 [%
     INCLUDE button element_data={
-       name = 'action',
+       name = '__action',
        value = 'save'
        text = text('Save')
        'data-lsmb-doing' = text('Saving...')
@@ -91,7 +91,7 @@
 
     IF form.id;
         INCLUDE button element_data={
-           name = 'action',
+           name = '__action',
            value = 'save_as_new'
            text = text('Save as new')
         };
@@ -99,7 +99,7 @@
 
     IF form.orphaned;
         INCLUDE button element_data={
-           name = 'action',
+           name = '__action',
            value = 'delete'
            text = text('Delete')
            'data-lsmb-doing' = text('Deleting...')
@@ -558,7 +558,7 @@
     };
 
     INCLUDE button element_data={
-       name = 'action',
+       name = '__action',
        value = 'save'
        text = text('Save')
        'data-lsmb-doing' = text('Saving...')
@@ -567,7 +567,7 @@
 
     IF form.id;
         INCLUDE button element_data={
-           name = 'action',
+           name = '__action',
            value = 'save_as_new'
            text = text('Save as new')
         };
@@ -575,7 +575,7 @@
 
     IF form.orphaned;
         INCLUDE button element_data={
-           name = 'action',
+           name = '__action',
            value = 'delete'
            text = text('Delete')
            'data-lsmb-doing' = text('Deleting...')
@@ -639,7 +639,7 @@
    value = form.id
 }; %]
 [% PROCESS button element_data = {
-    name = 'action',
+    name = '__action',
     value = 'update_translations',
     type = 'submit',
     class = 'submit',

@@ -299,7 +299,7 @@ sub run_report {
                     $href = 'ar.pl';
                 }
             }
-            $r->{invnumber_href_suffix} = "$href?action=edit&id=$r->{id}";
+            $r->{invnumber_href_suffix} = "$href?__action=edit&id=$r->{id}";
        }
     }
     return $self->rows(\@rows);

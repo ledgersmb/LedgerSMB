@@ -76,7 +76,7 @@ sub add {
         $form->{vc}    = 'customer';
     }
 
-    $form->{callback} = "$form->{script}?action=add&type=$form->{type}&vc=$form->{vc}"
+    $form->{callback} = "$form->{script}?__action=add&type=$form->{type}&vc=$form->{vc}"
       unless $form->{callback};
 
     $form->{rowcount} = 0;
@@ -519,7 +519,7 @@ sub form_header {
         }
         $vc = qq|<input data-dojo-type="dijit/form/TextBox" id=$form->{vc} name=$form->{vc} value="$form->{$form->{vc}}" size=35>
              <a id="new-contact" target="_blank"
-                 href="erp.pl?action=root#contact.pl?action=add&entity_class=$eclass">
+                 href="erp.pl?__action=root#contact.pl?__action=add&entity_class=$eclass">
                  [| . $locale->text('New') . qq|]</a>|;
     }
 
@@ -928,7 +928,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
         foreach my $file (@{$form->{files}}){
               print qq|
 <tr>
-<td><a href="file.pl?action=get&file_class=2&ref_key=$form->{id}&id=$file->{id}&type=sales_quotation&additional=type"
+<td><a href="file.pl?__action=get&file_class=2&ref_key=$form->{id}&id=$file->{id}&type=sales_quotation&additional=type"
        target="_download">$file->{file_name}</a></td>
 <td>$file->{mime_type}</td>
 <td>|.$file->{uploaded_at}.qq|</td>
@@ -965,9 +965,9 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
        }
        print qq|
 </table>|;
-       $callback = $form->escape("oe.pl?action=edit&id=".$form->{id});
+       $callback = $form->escape("oe.pl?__action=edit&id=".$form->{id});
        print qq|
-<a href="file.pl?action=show_attachment_screen&ref_key=$form->{id}&file_class=2&callback=$callback"
+<a href="file.pl?__action=show_attachment_screen&ref_key=$form->{id}&file_class=2&callback=$callback"
    >[| . $locale->text('Attach') . qq|]</a>|;
     }
 
@@ -1313,7 +1313,7 @@ sub _save {
        $ctx->param( spawned_id   => $form->{workflow_id} );
 
        # m/save_as/ matches both print_and_save_as_new as well as save_as_new
-       $wf->execute_action( ($form->{action} =~ m/save_as/
+       $wf->execute_action( ($form->{__action} =~ m/save_as/
                              ? 'save_as_new' : 'save') );
 
        delete $form->{old_workflow_id};
@@ -1374,10 +1374,10 @@ sub delete {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 |;
 
-    $form->{action} = "yes";
+    $form->{__action} = "yes";
     $form->hide_form;
 
     print qq|
@@ -1385,7 +1385,7 @@ sub delete {
 
 <h4>$msg $form->{$ordnumber}</h4>
 <p>
-<button data-dojo-type="dijit/form/Button" id="action-yes" name="action" class="submit" type="submit" value="yes">|
+<button data-dojo-type="dijit/form/Button" id="action-yes" name="__action" class="submit" type="submit" value="yes">|
       . $locale->text('Yes')
       . qq|</button>
 </form>
@@ -1574,11 +1574,11 @@ sub backorder_exchangerate {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 |;
 
     # delete action variable
-    for (qw(action nextsub exchangerate)) { delete $form->{$_} }
+    for (qw(nextsub exchangerate)) { delete $form->{$_} }
 
     $form->hide_form;
 
@@ -1616,7 +1616,7 @@ sub backorder_exchangerate {
 
 <br>
 
-<button data-dojo-type="dijit/form/Button" id="action-continue" name="action" class="submit" type="submit" value="continue">|
+<button data-dojo-type="dijit/form/Button" id="action-continue" name="__action" class="submit" type="submit" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 
@@ -1825,7 +1825,7 @@ sub display_ship_receive {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <input type=hidden name=display_form value=display_ship_receive>
 |;
@@ -2101,7 +2101,7 @@ sub search_transfer {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <table width=100%>
   <tr>
@@ -2142,7 +2142,7 @@ sub search_transfer {
 <br>
 <input type=hidden name=nextsub value=list_transfer>
 
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-continue" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-continue" name="__action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>|;
 
@@ -2167,7 +2167,7 @@ sub list_transfer {
     OE->get_inventory( \%myconfig, \%$form );
 
     # construct href
-    $href = "$form->{script}?action=list_transfer";
+    $href = "$form->{script}?__action=list_transfer";
     for (qw(direction oldsort path login sessionid)) {
         $href .= "&$_=$form->{$_}";
     }
@@ -2178,7 +2178,7 @@ sub list_transfer {
     $form->sort_order();
 
     # construct callback
-    $callback = "$form->{script}?action=list_transfer";
+    $callback = "$form->{script}?__action=list_transfer";
     for (qw(direction oldsort path login sessionid)) {
         $callback .= "&$_=$form->{$_}";
     }
@@ -2248,7 +2248,7 @@ sub list_transfer {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <input type=hidden name=warehouse_id value=$warehouse_id>
 
@@ -2323,11 +2323,11 @@ qq|<td><input type=hidden name="warehouse_id_$i" value="$ref->{warehouse_id}">$r
 <input type=hidden name=rowcount value=$i>
 |;
 
-    $form->{action} = "transfer";
-    $form->hide_form(qw(path login sessionid action));
+    $form->{__action} = "transfer";
+    $form->hide_form(qw(path login sessionid));
 
     print qq|
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-transfer" name="action" value="transfer">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-transfer" name="__action" value="transfer">|
       . $locale->text('Transfer')
       . qq|</button>|;
 
@@ -2498,7 +2498,7 @@ sub po_orderitems {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <table width=100%>
   <tr>
@@ -2585,12 +2585,12 @@ qq|<td><input name="ndx_$i" id="ndx_$i" class=checkbox type=checkbox data-dojo-t
     );
 
     print qq|
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-generate-orders" name="action" value="generate_orders">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-generate-orders" name="__action" value="generate_orders">|
       . $locale->text('Generate Orders')
       . qq|</button>|;
 
     print qq|
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-select-vendor" name="action" value="select_vendor">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-select-vendor" name="__action" value="select_vendor">|
       . $locale->text('Select Vendor')
       . qq|</button>|;
 
@@ -2627,19 +2627,19 @@ sub select_vendor {
     print qq|
 <body class="lsmb $form->{dojo_theme}" onload="document.forms[0].vendor.focus()" />
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <b>| . $locale->text('Vendor') . qq|</b> <input data-dojo-type="dijit/form/TextBox" id=vendor name=vendor size=40>
 
 |;
 
     $form->{nextsub} = "vendor_selected";
-    $form->{action}  = "vendor_selected";
+    $form->{__action}  = "vendor_selected";
 
     $form->hide_form;
 
     print qq|
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-continue" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" id="action-continue" name="__action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 

@@ -120,7 +120,7 @@ sub new_screen {
 sub add {
     $form->{title} = "Add";
 
-    $form->{callback} = "$form->{script}?action=add"
+    $form->{callback} = "$form->{script}?__action=add"
       unless $form->{callback};
     if (defined $form->{type}
         and $form->{type} eq "credit_note"){
@@ -440,7 +440,7 @@ sub create_links {
     }
     delete $form->{selectcurrency};
     #$form->generate_selects(\%myconfig);
-    $form->{$form->{ARAP}} = $form->{"$form->{ARAP}_1"} unless $form->{$form->{ARAP}} and $form->{action} eq 'update';
+    $form->{$form->{ARAP}} = $form->{"$form->{ARAP}_1"} unless $form->{$form->{ARAP}} and $form->{__action} eq 'update';
 
 }
 
@@ -575,7 +575,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
       ( $form->{"select$form->{vc}"} )
       ? qq|<select data-dojo-type="lsmb/FilteringSelect" id="$form->{vc}" name="$form->{vc}" $readonly><option></option>$form->{"select$form->{vc}"}</select>|
       : qq|<input data-dojo-type="dijit/form/TextBox" id="$form->{vc}" name="$form->{vc}" value="$form->{$form->{vc}}" size=35 $readonly>
-                 <a href="erp.pl?action=root#contact.pl?action=add&entity_class=$eclass"
+                 <a href="erp.pl?__action=root#contact.pl?__action=add&entity_class=$eclass"
                     id="new-contact" target="_blank">[|
                  .  $locale->text('New') . qq|]</a>|;
 
@@ -609,7 +609,7 @@ $form->open_status_div($status_div_id) . qq|
 <form method="post"
       data-dojo-type="lsmb/Form"
       data-lsmb-focus="${focus}"
-      action=$form->{script}>
+      action="$form->{script}">
 <input type=hidden name=type value="$form->{formname}">
 <input type=hidden name=title value="$title">
 
@@ -700,7 +700,7 @@ $form->open_status_div($status_div_id) . qq|
             <tr>
         <th align="right" nowrap>| .
             $locale->text('Entity Control Code') . qq|</th>
-        <td colspan=3><a href="erp.pl?action=root#contact.pl?action=get_by_cc&control_code=$form->{entity_control_code}" target="_blank"><b>$form->{entity_control_code}</b></a></td>
+        <td colspan=3><a href="erp.pl?__action=root#contact.pl?__action=get_by_cc&control_code=$form->{entity_control_code}" target="_blank"><b>$form->{entity_control_code}</b></a></td>
           </tr>
             <tr>
         <th align="right" nowrap>| .
@@ -739,8 +739,8 @@ $form->open_status_div($status_div_id) . qq|
         </table>
       </td>
       <td style="vertical-align:middle">| .
-         ($form->{reversing} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversing}">| . ($form->{approved} ? $locale->text('This transaction reverses transaction [_1] with ID [_2]', $form->{reversing_reference}, $form->{reversing}) : $locale->text('This transaction will reverse transaction [_1] with ID [_2]', $form->{reversing_reference}, $form->{reversing})) .q|</a><br />| : '') .
-         ($form->{reversed_by} ? qq|<a href="$form->{script}?action=edit&amp;id=$form->{reversed_by}"> | . $locale->text('This transaction is reversed by transaction [_1] with ID [_2]', $form->{reversed_by_reference}, $form->{reversed_by}) . q|</a>| : '') .
+         ($form->{reversing} ? qq|<a href="$form->{script}?__action=edit&amp;id=$form->{reversing}">| . ($form->{approved} ? $locale->text('This transaction reverses transaction [_1] with ID [_2]', $form->{reversing_reference}, $form->{reversing}) : $locale->text('This transaction will reverse transaction [_1] with ID [_2]', $form->{reversing_reference}, $form->{reversing})) .q|</a><br />| : '') .
+         ($form->{reversed_by} ? qq|<a href="$form->{script}?__action=edit&amp;id=$form->{reversed_by}"> | . $locale->text('This transaction is reversed by transaction [_1] with ID [_2]', $form->{reversed_by_reference}, $form->{reversed_by}) . q|</a>| : '') .
     qq|</td>
       <td align=right>
         <table>
@@ -1145,7 +1145,7 @@ sub form_footer {
     }
     if ($form->{id}){
         print qq|
-<a href="pnl.pl?action=generate_income_statement&pnl_type=invoice&id=$form->{id}">[| . $locale->text('Profit/Loss') . qq|]</a><br />
+<a href="pnl.pl?__action=generate_income_statement&pnl_type=invoice&id=$form->{id}">[| . $locale->text('Profit/Loss') . qq|]</a><br />
 <table width="100%">
 <tr class="listtop">
 <th colspan="4">| . $locale->text('Attached and Linked Files') . qq|</th>
@@ -1158,7 +1158,7 @@ sub form_footer {
         foreach my $file (@{$form->{files}}){
               print qq|
 <tr>
-<td><a href="file.pl?action=get&file_class=1&ref_key=$form->{id}&id=$file->{id}"
+<td><a href="file.pl?__action=get&file_class=1&ref_key=$form->{id}&id=$file->{id}"
        target="_download">$file->{file_name}</a></td>
 <td>$file->{mime_type}</td>
 <td>|. $file->{uploaded_at} .qq|</td>
@@ -1196,10 +1196,10 @@ sub form_footer {
        print qq|
 </table>|;
        $callback = $form->escape(
-               lc($form->{ARAP}) . ".pl?action=edit&id=".$form->{id}
+               lc($form->{ARAP}) . ".pl?__action=edit&id=".$form->{id}
        );
        print qq|
-<a href="file.pl?action=show_attachment_screen&ref_key=$form->{id}&file_class=1&callback=$callback"
+<a href="file.pl?__action=show_attachment_screen&ref_key=$form->{id}&file_class=1&callback=$callback"
    >[| . $locale->text('Attach') . qq|]</a>|;
     }
 
@@ -1233,7 +1233,7 @@ sub on_hold {
         if ($form->{workflow_id}) {
             my $wf = $form->{_wire}->get('workflows')
                 ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
-            $wf->execute_action( $form->{action} );
+            $wf->execute_action( $form->{__action} );
         }
         &edit();
     }
@@ -1285,7 +1285,7 @@ sub edit_and_save {
     if ($form->{workflow_id}) {
         my $wf = $form->{_wire}->get('workflows')
             ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
-        $wf->execute_action( $form->{action} );
+        $wf->execute_action( $form->{__action} );
     }
     $form->{rowcount} = 0;
     $form->{paidaccounts} = 0;
@@ -1298,7 +1298,7 @@ sub approve {
 
     my $wf = $form->{_wire}->get('workflows')
         ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
-    $wf->execute_action( $form->{action} );
+    $wf->execute_action( $form->{__action} );
 
     if ($form->{callback}){
         print "Location: $form->{callback}\n";
@@ -1496,7 +1496,7 @@ sub post {
         if ( $form->{id} ) {
             my $id = $form->{old_workflow_id} // $form->{workflow_id};
             my $wf = $form->{_wire}->get('workflows')->fetch_workflow( 'AR/AP', $id );
-            $wf->execute_action( $form->{action} );
+            $wf->execute_action( $form->{__action} );
 
             &repost;
             $form->finalize_request();
@@ -1509,7 +1509,7 @@ sub post {
 
         my $id = $form->{old_workflow_id} // $form->{workflow_id};
         my $wf = $form->{_wire}->get('workflows')->fetch_workflow( 'AR/AP', $id );
-        $wf->execute_action( $form->{action} );
+        $wf->execute_action( $form->{__action} );
 
         $form->update_status;
        if ( $form->{printandpost} ) {
@@ -1564,7 +1564,7 @@ sub save_info {
         if ($form->{workflow_id}) {
             my $wf = $form->{_wire}->get('workflows')
                 ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
-            $wf->execute_action( $form->{action} );
+            $wf->execute_action( $form->{__action} );
         }
         if ($form->{callback}){
         print "Location: $form->{callback}\n";

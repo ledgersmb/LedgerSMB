@@ -91,7 +91,7 @@ sub columns {
     return [
       {col_id => 'partnumber',
          type => 'href',
-    href_base => 'ic.pl?action=edit&id=',
+    href_base => 'ic.pl?__action=edit&id=',
          name => $self->Text('Part Number') },
       {col_id => 'description',
          type => 'text',
@@ -119,13 +119,13 @@ This sets buttons relevant to approving the adjustments.
 sub set_buttons {
     my ($self) = @_;
     return [{
-       name => 'action',
+       name => '__action',
        type => 'submit',
       value => 'approve',
        text => $self->Text('Approve'),
       class => 'submit',
     },{
-       name => 'action',
+       name => '__action',
        type => 'submit',
       value => 'delete',
        text => $self->Text('Delete'),

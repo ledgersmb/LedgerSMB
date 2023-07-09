@@ -116,7 +116,7 @@ sub search {
             text => $request->{_locale}->text('Combine'),
             type => 'submit',
            class => 'submit',
-            name => 'action',
+            name => '__action',
            value => 'combine',
         }]);
     } elsif ($request->{search_type} eq 'generate'){
@@ -124,7 +124,7 @@ sub search {
             text => $request->{_locale}->text('Generate'),
             type => 'submit',
            class => 'submit',
-            name => 'action',
+            name => '__action',
            value => 'generate',
         }]);
     }

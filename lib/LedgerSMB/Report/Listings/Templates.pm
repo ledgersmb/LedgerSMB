@@ -52,7 +52,7 @@ sub columns {
       { col_id => 'template_name',
           name => $self->Text('File Name'),
           type => 'href',
-     href_base => 'templates.pl?action=display&' },
+     href_base => 'templates.pl?__action=display&' },
       { col_id => 'format',
           name => $self->Text('Format'),
           type => 'text' },

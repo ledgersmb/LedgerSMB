@@ -58,7 +58,7 @@ sub add {
     );
     $form->{title} = $label{$form->{item}};
 
-    $form->{callback} = "$form->{script}?action=add&item=$form->{item}"
+    $form->{callback} = "$form->{script}?__action=add&item=$form->{item}"
       unless $form->{callback};
 
     $form->{orphaned} = 1;
@@ -865,7 +865,7 @@ sub form_footer {
         foreach my $file (@{$form->{files}}){
               print qq|
 <tr>
-<td><a href="file.pl?action=get&file_class=3&ref_key=$form->{id}&id=$file->{id}"
+<td><a href="file.pl?__action=get&file_class=3&ref_key=$form->{id}&id=$file->{id}"
        target="_download">$file->{file_name}</a></td>
 <td>$file->{mime_type}</td>
 <td>|.$file->{uploaded_at} . qq|</td>
@@ -903,10 +903,10 @@ sub form_footer {
        print qq|
 </table>|;
        $callback = $form->escape(
-               "ic.pl?action=edit&id=".$form->{id}
+               "ic.pl?__action=edit&id=".$form->{id}
        );
        print qq|
-<a href="file.pl?action=show_attachment_screen&ref_key=$form->{id}&file_class=3&callback=$callback"
+<a href="file.pl?__action=show_attachment_screen&ref_key=$form->{id}&file_class=3&callback=$callback"
    >[| . $locale->text('Attach') . qq|]</a>|;
     }
 
@@ -932,7 +932,7 @@ sub form_footer {
             <th>| . $locale->text('Date To') . qq|</th>
             <td><input data-dojo-type="dijit/form/TextBox" type="text" size="12" name="date_to" class="date"></td>
         </tr><tr>
-            <td><button data-dojo-type="dijit/form/Button" type="submit" name="action"
+            <td><button data-dojo-type="dijit/form/Button" type="submit" name="__action"
                         value="generate_income_statement"
                         class="submit">| . $locale->text('Continue') .
                         qq|</button><td>
@@ -1207,10 +1207,10 @@ sub assembly_row {
     # change callback
     $form->{old_callback} = $form->{callback};
     $callback             = $form->{callback};
-    $form->{callback}     = "$form->{script}?action=display_form";
+    $form->{callback}     = "$form->{script}?__action=display_form";
 
     # delete action
-    for (qw(action header)) { delete $form->{$_} }
+    for (qw(header)) { delete $form->{$_} }
 
     $form->{baseassembly} = 0;
     $previousform = "";
@@ -1324,7 +1324,7 @@ qq|<td><select data-dojo-type="dijit/form/Select" id="partsgroup-$i" name="parts
         else {
 
             $column_data{partnumber} =
-qq|<td><a href="ic.pl?action=edit&id=$form->{"id_$i"}" target="new">$form->{"partnumber_$i"}</a></td>
+qq|<td><a href="ic.pl?__action=edit&id=$form->{"id_$i"}" target="new">$form->{"partnumber_$i"}</a></td>
       <input type=hidden name="partnumber_$i" value="$form->{"partnumber_$i"}">|;
 
             $column_data{runningnumber} =
@@ -1406,7 +1406,7 @@ qq|<td><input type=hidden name="description_$i" value="$form->{"description_$i"}
 
 sub edit_assemblyitem {
 
-    $pn = substr( $form->{action}, 1 );
+    $pn = substr( $form->{__action}, 1 );
 
     $i = 0;
     for ( 1 .. $form->{assembly_rows} - 1 ) {
@@ -1422,7 +1422,7 @@ sub edit_assemblyitem {
       : $form->{"assembly_$i"};
 
     $form->{callback} =
-qq|$form->{script}?action=edit&id=$form->{"id_$i"}&rowcount=$i&baseassembly=$form->{baseassembly}&isassemblyitem=1&previousform=$form->{previousform}|;
+qq|$form->{script}?__action=edit&id=$form->{"id_$i"}&rowcount=$i&baseassembly=$form->{baseassembly}&isassemblyitem=1&previousform=$form->{previousform}|;
 
     $form->redirect;
 
@@ -1737,7 +1737,7 @@ qq|<td>$ref->{meta_number}</td>|;
 |;
 
     # delete variables
-    for (qw(action nextsub name_list)) { delete $form->{$_} }
+    for (qw(nextsub name_list)) { delete $form->{$_} }
 
     $form->hide_form;
 
@@ -1745,7 +1745,7 @@ qq|<td>$ref->{meta_number}</td>|;
 <input type=hidden name=nextsub value=name_selected>
 <input type=hidden name=vc value=$table>
 <br>
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 </form>
@@ -1923,7 +1923,7 @@ sub save {
         }
 
         $form->{"id_$i"} = $parts_id;
-        delete $form->{action};
+        delete $form->{__action};
 
         # restore original callback
         $callback = $form->unescape( $form->{callback} );
@@ -1984,7 +1984,7 @@ sub stock_assembly {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <table width="100%">
   <tr>
@@ -2026,7 +2026,7 @@ sub stock_assembly {
 <input type="hidden" name="nextsub" value="list_assemblies">
 
 <br>
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 </form>
@@ -2045,11 +2045,11 @@ sub list_assemblies {
     IC->retrieve_assemblies( \%myconfig, \%$form );
 
     $callback =
-"$form->{script}?action=list_assemblies&direction=$form->{direction}&oldsort=$form->{oldsort}&checkinventory=$form->{checkinventory}";
+"$form->{script}?__action=list_assemblies&direction=$form->{direction}&oldsort=$form->{oldsort}&checkinventory=$form->{checkinventory}";
 
     $form->sort_order();
     $href =
-"$form->{script}?action=list_assemblies&direction=$form->{direction}&oldsort=$form->{oldsort}&checkinventory=$form->{checkinventory}";
+"$form->{script}?__action=list_assemblies&direction=$form->{direction}&oldsort=$form->{oldsort}&checkinventory=$form->{checkinventory}";
 
     if ( $form->{partnumber} ) {
         $callback .= "&partnumber=" . $form->escape( $form->{partnumber}, 1 );
@@ -2091,7 +2091,7 @@ sub list_assemblies {
     print qq|
 <body class="lsmb">
 
-<form method="post" data-dojo-type="lsmb/Form" action=$form->{script}>
+<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
 
 <table width=100%>
   <tr>
@@ -2124,7 +2124,7 @@ sub list_assemblies {
         }
 
         $column_data{partnumber} =
-"<td width=20%><a href=$form->{script}?action=edit&id=$ref->{id}&callback=$callback>$ref->{partnumber}&nbsp;</a></td>";
+"<td width=20%><a href=$form->{script}?__action=edit&id=$ref->{id}&callback=$callback>$ref->{partnumber}&nbsp;</a></td>";
 
         $column_data{description} =
           qq|<td width=50%>$ref->{description}&nbsp;</td>|;
@@ -2175,7 +2175,7 @@ qq|<tr class=listrow$j><input name="id_$i" type=hidden value="$ref->{id}">\n|;
 <input type="hidden" name="nextsub" value="restock_assemblies">
 
 <br>
-<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 

@@ -89,7 +89,7 @@ sub columns {
      { col_id => 'tag',
          name => $self->Text('Tag'),
          type => 'href',
-    href_base => 'asset.pl?action=asset_edit&id=', },
+    href_base => 'asset.pl?__action=asset_edit&id=', },
     {  col_id => 'description',
          name => $self->Text('Description'),
          type => 'text', },

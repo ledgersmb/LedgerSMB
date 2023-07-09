@@ -15,8 +15,8 @@ FOREACH ROW IN contacts;
                "&amp;class_id=$ROW.class_id&amp;" _
                "description=" _ ROW.description _
                "&amp;credit_id=$credit_act.id&amp;for_credit=$ROW.credit_id&amp;target_div=contact_info_div";
-    ROW.edit_href_suffix = base_suffix _ '&amp;action=edit';
-    ROW.delete_href_suffix = base_suffix _ '&amp;action=delete_contact';
+    ROW.edit_href_suffix = base_suffix _ '&amp;__action=edit';
+    ROW.delete_href_suffix = base_suffix _ '&amp;__action=delete_contact';
     IF ROW.credit_id;
          ROW.for_credit = 'X';
     END;
@@ -113,14 +113,14 @@ PROCESS dynatable
                 } #' %]
 </div>
         <div>[% PROCESS button element_data = {
-                name = "action",
+                name = "__action",
                 value = "save_contact",
                 text =  text('Save Contact'),
                 class = "submit"
                 } #' %]
         [% IF request.contact.defined %]
         [% PROCESS button element_data = {
-                name = "action",
+                name = "__action",
                 value = "save_contact_new",
                 text =  text('Save As New'),
                 class = "submit"

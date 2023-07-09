@@ -96,7 +96,7 @@ sub columns {
 
      { col_id  => 'total',
        type    => 'href',
-       href_base => 'taxform.pl?action=generate_report&',
+       href_base => 'taxform.pl?__action=generate_report&',
        name    => $self->Text('Total') },
      ];
 }
@@ -129,7 +129,7 @@ sub name {
 
 sub buttons {
     my ($self) = @_;
-    return [{name => 'action',
+    return [{name => '__action',
              type => 'submit',
              text => $self->Text('Print'),
             value => 'print'}];

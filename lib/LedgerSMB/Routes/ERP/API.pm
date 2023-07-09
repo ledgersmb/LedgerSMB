@@ -120,7 +120,7 @@ components:
       name: LedgerSMB-1.10
       description: |
         The authenticating cookie can be obtained by sending a `POST` request
-        to `login.pl?action=authenticate&company=<url-encoded-company` with a
+        to `login.pl?__action=authenticate&company=<url-encoded-company` with a
         JSON object in the body of the request, containing these three fields
 
         * company

@@ -296,12 +296,12 @@ Example:
         my $self = shift;
         return [
             {
-                name => 'action',
+                name => '__action',
                 text => $self->_locale->text('Update'),
                 value => 'update_widget',
             },
             {
-                name => 'action',
+                name => '__action',
                 text => $self->_locale->text('Copy'),
                 value => 'copy_widget',
             },

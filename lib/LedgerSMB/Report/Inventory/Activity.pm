@@ -101,7 +101,7 @@ sub columns {
        class => 'amount',
         name => $self->Text('Sold'),
    href_base => "invoice.pl?&from_date=$from_date&to_date=$to_date"
-                . '&open=1&closed=1&action=invoice_search&'
+                . '&open=1&closed=1&__action=invoice_search&'
                 . 'col_invnumber=1&col_transdate=1&col_entity_name=1&'
                 . 'col_netamount=1&entity_class=2&partnumber=',
      },
@@ -116,7 +116,7 @@ sub columns {
        class => 'amount',
         name => $self->Text('Purchased'),
    href_base => "invoice.pl?&date_from=$self->date_from&date_to=$self->date_to"
-                . '&open=1&closed=1&action=invoice_search&'
+                . '&open=1&closed=1&__action=invoice_search&'
                 . 'col_invnumber=1&col_transdate=1&col_entity_name=1&'
                 . 'col_netamount=1&entity_class=1&partnumber=',
      },

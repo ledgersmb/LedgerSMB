@@ -229,7 +229,7 @@ sub columns {
         {col_id => 'entity_name',
            name => $entity_label,
            type => 'href',
-      href_base => 'contact.pl?action=edit&',
+      href_base => 'contact.pl?__action=edit&',
          pwidth => 15, },
         {col_id => 'netamount',
            name => $self->Text('Amount'),
@@ -332,7 +332,7 @@ sub run_report {
         }
         #tshvr4 avoid 'Use of uninitialized value in concatenation (.) or string at LedgerSMB/Report/Invoices/Outstanding.pm'
         if($r->{id}){
-            $r->{invnumber_href_suffix} = "$script?action=edit&id=$r->{id}";
+            $r->{invnumber_href_suffix} = "$script?__action=edit&id=$r->{id}";
         } else {
             $r->{invnumber_href_suffix} = $r->{meta_number};
         }

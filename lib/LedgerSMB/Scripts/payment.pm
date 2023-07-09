@@ -271,12 +271,12 @@ sub pre_bulk_post_report {
 
     my $buttons = [{
         text  => $request->{_locale}->text('Save Batch'),
-        name  => 'action',
+        name  => '__action',
         value => 'post_payments_bulk',
         class => 'submit',
     }];
     delete $request->{$_}
-       for qw(action dbh);
+       for qw(__action dbh);
     my $template = $request->{_wire}->get('ui');
     return $template->render(
         $request,
@@ -558,7 +558,7 @@ C<$request> is a L<LedgerSMB> object reference.
 Required request parameters:
 
   * dbh
-  * action
+  * __action
   * account_class [1|2]
   * batch_id
   * batch_date
@@ -618,7 +618,7 @@ sub display_payments {
 
         for my $invoice (@{$_->{invoices}}){
             my $req_payment_data = $req_contact_data->{$invoice->{id}};
-            if (($payment->{action} ne 'update_payments')
+            if (($payment->{__action} ne 'update_payments')
                   or (defined $request->{"id_$_->{contact_id}"})){
                 $request->{"paid_$_->{contact_id}"} = ''
                     unless defined $request->{"paid_$_->{contact_id}"};
@@ -636,7 +636,7 @@ sub display_payments {
             }
 
             my $fld = "payment_$_->{id}_$invoice->{id}";
-            if ('display_payments' eq $request->{action}) {
+            if ('display_payments' eq $request->{__action}) {
                 $payment->{$fld} = $invoice->{due};
             }
             else {
@@ -757,8 +757,9 @@ sub payment {
             name  => 'type',
             value => $request->{type}
         },
+        # accessed in the form as 'action'
         action => {
-            name => 'action',
+            name => '__action',
             value => 'payment1_5',
             text => $request->{_locale}->text('Continue'),
         }
@@ -820,7 +821,8 @@ sub payment1_5 {
                                value    => $dbPayment->{account_class}},
             type         => {  name  => 'type',
                                value => $request->{type}},
-            action       => {  name => 'action',
+            # accessed in the form as 'action'
+            action       => {  name => '__action',
                                value => 'payment2',
                                text =>  $request->{_locale}->text('Continue')}
         };
@@ -1061,7 +1063,7 @@ sub payment2 {
             $uri_module='??';
         }
         #my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-        my $uri = $uri_module . '.pl?action=edit&id='
+        my $uri = $uri_module . '.pl?__action=edit&id='
             . $invoice->{invoice_id} . '&login=' . $request->{login};
         my $invoice_id = $invoice->{invoice_id};
         my $invoice_amt = $invoice->{amount};
@@ -1540,8 +1542,9 @@ sub use_overpayment {
 
     $ui->{curr} = \@currOptions;
     $ui->{entities} =  \@entities;
+    # accessed in the form as 'action'
     $ui->{action}   =  {
-        name => 'action',
+        name => '__action',
         value => 'use_overpayment2',
         text => $locale->text('Continue')
     };
@@ -1717,7 +1720,7 @@ sub use_overpayment2 {
             }
             #lets make the href for the invoice
             my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-            $uri .= '.pl?action=edit&id='
+            $uri .= '.pl?__action=edit&id='
                 . $Payment->{"invoice_id_$count"} . '&login='
                 . $request->{login};
 
@@ -1796,7 +1799,7 @@ sub use_overpayment2 {
 
                 #lets make the href for the invoice
                 my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-                $uri .= '.pl?action=edit&id='
+                $uri .= '.pl?__action=edit&id='
                     . $avble_invoices[$ref]->{invoice_id}
                 . '&login=' . $request->{login};
 

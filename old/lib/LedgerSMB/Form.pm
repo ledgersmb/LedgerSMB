@@ -116,7 +116,7 @@ sub new {
             $self->{$p} =~ s/\N{NULL}//g;
         }
         $self->{nextsub} //= '';
-        $self->{action} //= $self->{nextsub};
+        $self->{__action} //= $self->{nextsub};
     }
     $self->{version} = $self->{dbversion} = $LedgerSMB::VERSION;
 
@@ -549,7 +549,7 @@ sub _redirect {
         qw( dbh login favicon stylesheet titlebar password vc header ),
         grep { /^_/ } keys %$self
         );
-    $form->{action} ||= $self->{action}; # default to old action if not set
+    $form->{__action} ||= $self->{__action}; # default to old action if not set
     $form->{script} = $script;
 
     my %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
@@ -560,7 +560,7 @@ sub _redirect {
     $lsmb_legacy::form = $form;
     require "old/bin/$script";
 
-    my $ref = qualify_to_ref $form->{action}, 'lsmb_legacy';
+    my $ref = qualify_to_ref $form->{__action}, 'lsmb_legacy';
     &{ *{$ref} };
 
 }
@@ -1016,7 +1016,7 @@ sub print_button {
 
     my $title = $button->{$name}{tooltip} || $button->{$name}{value};
     print
-qq|<button data-dojo-type="$type" class="submit" type="submit" name="action" value="$name" id="action-$name-$btn" title="$title" $doing_toast $done_toast>$button->{$name}{value}</button>\n|;
+qq|<button data-dojo-type="$type" class="submit" type="submit" name="__action" value="$name" id="action-$name-$btn" title="$title" $doing_toast $done_toast>$button->{$name}{value}</button>\n|;
 }
 
 

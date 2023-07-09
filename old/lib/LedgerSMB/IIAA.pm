@@ -346,15 +346,15 @@ sub print_wf_history_table {
             if ($addn) {
                 my %items = split(/[|:]/, $addn);
                 my %links = (
-                    'AR/AP|customer' => 'is.pl?action=edit&amp;workflow_id=',
-                    'AR/AP|vendor'   => 'ir.pl?action=edit&amp;workflow_id=',
-                    'Order/Quote'    => 'oe.pl?action=edit&amp;workflow_id=',
-                    'Email'          => 'email.pl?action=render&amp;id=',
+                    'AR/AP|customer' => 'is.pl?__action=edit&amp;workflow_id=',
+                    'AR/AP|vendor'   => 'ir.pl?__action=edit&amp;workflow_id=',
+                    'Order/Quote'    => 'oe.pl?__action=edit&amp;workflow_id=',
+                    'Email'          => 'email.pl?__action=render&amp;id=',
                     );
                 my ($id, $workflow) = split(/,/, $items{spawned_workflow}, 2);
                 $link = ($links{$workflow}
                          // $links{"$workflow|$form->{vc}"}) . $id;
-                $link .= "&amp;callback=$form->{script}%3Faction%3D$form->{action}%26id%3D$form->{id}";
+                $link .= "&amp;callback=$form->{script}%3Faction%3D$form->{__action}%26id%3D$form->{id}";
             }
             my $user = $h->user;
             my $timestamp = $h->date;

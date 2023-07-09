@@ -262,7 +262,7 @@ sub columns {
            type => 'text'},
        { col_id => 'entity_name',
            name => $entity_name_label,
-       href_base =>'contact.pl?action=get&entity_class='.$self->entity_class,
+       href_base =>'contact.pl?__action=get&entity_class='.$self->entity_class,
            type => 'href', },
        { col_id => 'invnumber',
            name => $self->Text('Invoice'),
@@ -350,8 +350,8 @@ sub run_report {
         }
         $r->{entity_name_href_suffix} =
                "&entity_id=$r->{entity_id}&meta_number=$r->{meta_number}";
-        $r->{invnumber_href_suffix} = "$script?action=edit&id=$r->{id}";
-        $r->{id_href_suffix} = "$script?action=edit&id=$r->{id}";
+        $r->{invnumber_href_suffix} = "$script?__action=edit&id=$r->{id}";
+        $r->{id_href_suffix} = "$script?__action=edit&id=$r->{id}";
     }
     return $self->rows(\@rows);
 }

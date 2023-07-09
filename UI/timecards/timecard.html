@@ -154,7 +154,7 @@ END; %]
 [%
 IF id;
     PROCESS button element_data = {
-   name = 'action'
+   name = '__action'
   class = 'submit'
    text = text('Print')
    value = 'print'
@@ -162,7 +162,7 @@ IF id;
    };
 ELSE;
    PROCESS button element_data = {
-   name = 'action'
+   name = '__action'
    type = 'submit'
   class = 'submit'
    text = text('Save')

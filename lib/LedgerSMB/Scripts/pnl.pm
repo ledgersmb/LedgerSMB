@@ -9,7 +9,7 @@ LedgerSMB::Scripts::pnl - PNL report workflows for LedgerSMB
 
 Called via lsmb-handler.pl:
 
- LedgerSMB::Scripts::pnl->can($request->{action})->($request);
+ LedgerSMB::Scripts::pnl->can($request->{__action})->($request);
 
 =head1 DESCRIPTION
 

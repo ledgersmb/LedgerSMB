@@ -944,7 +944,7 @@ verify_check => md5_hex($check->test_query),
         if ( $buttons{$_->{label}} && $_->{cond}) {
             push @$enabled_buttons, {
                  type => 'submit',
-                 name => 'action',
+                 name => '__action',
                 value => $_->{value},
               tooltip => { id => 'action-' . $_->{value},
                            msg => $check->{tooltips}->{$_->{label}}

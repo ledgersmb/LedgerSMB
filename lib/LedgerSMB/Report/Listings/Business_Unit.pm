@@ -55,7 +55,7 @@ sub columns {
     return [
       { col_id => 'control_code',
           type => 'href',
-     href_base => 'business_unit.pl?action=edit&id=',
+     href_base => 'business_unit.pl?__action=edit&id=',
           name => $self->Text('Control Code') },
 
       { col_id => 'description',

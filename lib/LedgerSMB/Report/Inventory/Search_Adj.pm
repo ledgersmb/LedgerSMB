@@ -98,20 +98,20 @@ sub columns {
     my ($self) = @_;
     return [{col_id => 'transdate',
                type => 'href',
-          href_base => 'inv_reports.pl?action=adj_detail&id=',
+          href_base => 'inv_reports.pl?__action=adj_detail&id=',
                name => $self->Text('Date')},
             {col_id => 'source',
                type => 'href',
-          href_base => 'inv_reports.pl?action=adj_detail&id=',
+          href_base => 'inv_reports.pl?__action=adj_detail&id=',
                name => $self->Text('Reference')},
             {col_id => 'ar_invnumber',
                type => 'href',
                name => $self->Text('AR Invoice'),
-          href_base => 'is.pl?action=edit&id='},
+          href_base => 'is.pl?__action=edit&id='},
             {col_id => 'ap_invnumber',
                type => 'href',
                name => $self->Text('AP Invoice'),
-          href_base => 'ir.pl?action=edit&id='},
+          href_base => 'ir.pl?__action=edit&id='},
       ];
 }
 
