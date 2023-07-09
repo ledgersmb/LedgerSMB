@@ -13,19 +13,9 @@ define([
     var c = 0;
     return declare("lsmb/Form", [Form], {
         clickedAction: null,
-        startup: function () {
-            var self = this;
-            this.inherited(arguments);
-
-            // <button> tags get rewritten to <input type="submit" tags...
-            query('input[type="submit"]', this.domNode).forEach(function (b) {
-                on(b, "click", function () {
-                    self.clickedAction = b;
-                });
-            });
-        },
         onSubmit: function (evt) {
             event.stop(evt);
+            this.clickedAction = evt.submitter; /* ought to be the same as this.domNode.__action */
             this.submit();
         },
         submit: function () {
@@ -36,7 +26,7 @@ define([
 
             var method =
                 typeof this.method === "undefined" ? "GET" : this.method;
-            var url = this.action;
+            var url = this.action; /* relative; this.domNode.action is absolute */
             var options = { handleAs: "text" };
             options.doing = widget["data-lsmb-doing"];
             options.done = widget["data-lsmb-done"];
