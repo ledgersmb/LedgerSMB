@@ -379,7 +379,6 @@
     "Tax Included": "Podatek Wliczony",
     "Taxable": "Opodatkowane",
     "Terms": "Warunki: Netto",
-    "Till": "Kasa",
     "To": "do",
     "Total": "Wartość Brutto",
     "Trade Discount": "Rabat Handlowy",
@@ -418,6 +417,5 @@
     "Year": "Rok",
     "Yes": "Tak",
     "days": "dni",
-    "done": "wykonane",
-    "ea": "szt"
+    "done": "wykonane"
 }
