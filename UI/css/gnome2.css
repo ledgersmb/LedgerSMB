@@ -13,20 +13,20 @@ This package is free software; you can redistribute it and/or modify it under th
 /* general stuff */
 
 a:link {
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 a:visited {
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 a:active {
-    text-decoration: underline;
+    text-decoration-line: underline;
 }
 
 a:hover {
     background-color: transparent;
-    text-decoration: underline;
+    text-decoration-line: underline;
 }
 
 body {
@@ -382,13 +382,13 @@ body.admin {
 
 .submenu a {
     color: #004a80;
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 .submenu a:hover {
     background: #004a80;
     color: #eee;
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 .listtop {
@@ -408,7 +408,7 @@ body.admin {
 a.listheading:link,
 a.listheading:active,
 a.listheading:visited {
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 .listrow1,

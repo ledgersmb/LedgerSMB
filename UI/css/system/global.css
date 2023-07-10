@@ -298,26 +298,26 @@ body {
 #PNL a {
     background-color: inherit;
     color: inherit;
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 #PNL a:link {
     background-color: inherit;
     color: inherit;
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 #PNL a:visited {
     background-color: inherit;
     color: inherit;
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 #PNL a:hover {
     background-color: inherit;
     border-bottom: thin dashed;
     color: inherit;
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 #PNL td.amount {

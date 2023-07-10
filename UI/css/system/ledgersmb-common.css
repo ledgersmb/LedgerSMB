@@ -32,20 +32,20 @@ th.header {
 /* general stuff */
 
 a:link {
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 a:visited {
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 a:active {
-    text-decoration: underline;
+    text-decoration-line: underline;
 }
 
 a:hover {
     background-color: var(--a-hover-bg-clr);
-    text-decoration: underline;
+    text-decoration-line: underline;
 }
 
 #pwfeedback.success {
@@ -236,13 +236,13 @@ body.menu,
 
 .submenu a {
     color: var(--submenu-a-clr);
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 .submenu a:hover {
     background: var(--submenu-a-hover-clr);
     color: var(--submenu-a-clr);
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 .listtop {
@@ -269,7 +269,7 @@ thead th {
 thead a:link {
     color: var(--thead-a-link-clr);
     font-weight: bold;
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 a.listheading:link,
@@ -277,7 +277,7 @@ a.listheading:active,
 a.listheading:visited {
     color: var(--a-listheading-link-clr);
     font-weight: bold;
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 .listrow1,
@@ -546,7 +546,7 @@ span.indicator {
 .financial-statement a,
 .financial-statement a:visited {
     color: var(--financial-statement-a-clr);
-    text-decoration: none;
+    text-decoration-line: none;
 }
 
 .financial-statement .heading3.H {
