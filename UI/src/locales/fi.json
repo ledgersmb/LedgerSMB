@@ -484,7 +484,6 @@
     "Taxes": "Verot",
     "Taxes saved!": "Verot tallennettu",
     "Terms": "Maksuehto",
-    "Till": "Kassa",
     "Time Card": "Aikakortti",
     "Time In": "Sisääntuloaika",
     "Time Out": "Ulosmenoaika",
@@ -539,7 +538,6 @@
     "Yes": "Kyllä",
     "days": "päivää",
     "done": "valmis",
-    "ea": "kpl",
     "failed": "epäonnistui",
     "time(s)": "kertaa",
     "unexpected error!": "odottamaton virhe"

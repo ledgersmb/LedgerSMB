@@ -343,7 +343,6 @@
     "Tax Included": "Kopā ar nodokļiem",
     "Taxable": "Apliekams ar nodokli",
     "Terms": "Noteikumi: termiņš",
-    "Till": "līdz",
     "To": "uz",
     "Total": "Pavisam Kopā",
     "Trade Discount": "Vairumtirgotāja atlaide",
@@ -378,6 +377,5 @@
     "Work Order": "Darba orderis",
     "Yes": "Jā",
     "days": "dienas",
-    "done": "izdarīts",
-    "ea": "gb"
+    "done": "izdarīts"
 }
