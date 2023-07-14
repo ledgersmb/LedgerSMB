@@ -638,6 +638,7 @@ push @tests, __PACKAGE__->new(
          name => 'missing_gifi_table_rows',
  display_cols => [ 'accno', 'description' ],
         table => 'gifi',
+       insert => 1,
       columns => ['description'],
    id_columns => ['accno'],
  instructions => marktext('Please add the missing GIFI accounts'),
