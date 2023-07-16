@@ -8,7 +8,8 @@ const path = require("path");
 const webpack = require("webpack");
 const { merge } = require("webpack-merge");
 
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin =
+    require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const CompressionPlugin = require("compression-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
@@ -53,8 +54,10 @@ function globCssEntries(globPath) {
 
     for (var i = 0; i < files.length; i++) {
         const entry = files[i];
-            const dirName = path.dirname(entry).replace(/\.\/UI\/css\/?/,"");
-        const keyName = (dirName ? dirName + "/" : "" ) + path.basename(entry, path.extname(entry));
+        const dirName = path.dirname(entry).replace(/\.\/UI\/css\/?/, "");
+        const keyName =
+            (dirName ? dirName + "/" : "") +
+            path.basename(entry, path.extname(entry));
         entries[keyName] = path.join(__dirname, entry);
     }
     return entries;
@@ -111,7 +114,7 @@ const css = {
 
 const images = {
     test: /\.(png|jpe?g|gif)$/i,
-    type: 'asset'
+    type: "asset"
 };
 
 const html = {
@@ -128,7 +131,7 @@ const html = {
 
 const svg = {
     test: /\.svg$/,
-    type: 'asset/resource'
+    type: "asset/resource"
 };
 
 /* PLUGINS */
@@ -260,7 +263,10 @@ var pluginsProd = [
         minify: false, // Adjust t/16-schema-upgrade-html.t if prodMode is used,
         filename: "ui-header.html",
         mode: prodMode ? "production" : "development",
-            excludeChunks: [...Object.keys(lsmbCSS),...Object.keys(globCssEntries("./UI/css/**/*.css"))],
+        excludeChunks: [
+            ...Object.keys(lsmbCSS),
+            ...Object.keys(globCssEntries("./UI/css/**/*.css"))
+        ],
         template: "lib/ui-header.html"
     }),
 
@@ -314,7 +320,7 @@ const optimizationList = {
             parallel: parallelJobs
         })
     ],
-    moduleIds: 'deterministic',
+    moduleIds: "deterministic",
     runtimeChunk: "multiple",
     splitChunks: {
         cacheGroups: {
@@ -336,7 +342,7 @@ const optimizationList = {
                     )[1];
                     return `npm.${packageName.replace("@", "")}`;
                 },
-                chunks: "all",
+                chunks: "all"
             }
         }
     }
@@ -351,11 +357,11 @@ const webpackConfigs = {
         main: {
             filename: "lsmb/main.js",
             import: "lsmb/main",
-            dependOn: 'shared'
+            dependOn: "shared"
         },
-        shared: [ ...includedRequires ],
+        shared: [...includedRequires],
         ...lsmbCSS,
-            ...globCssEntries("./UI/css/**/*.css")
+        ...globCssEntries("./UI/css/**/*.css")
     },
 
     output: {
