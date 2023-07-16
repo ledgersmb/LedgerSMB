@@ -26,7 +26,7 @@ const store = useSICsStore();
         createRole="sic_create" />
     <div class="import-section">
         <h2 class="listheading">{{ t("Import") }}</h2>
-        <ImportCsvSic />
+        <ImportCsvSic @upload-success="store.initialize()" />
     </div>
 </template>
 

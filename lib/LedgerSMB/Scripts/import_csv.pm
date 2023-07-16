@@ -596,7 +596,7 @@ sub begin_import {
     if (ref($template_setup->{$request->{type}}) eq 'CODE') {
         $template_setup->{$request->{type}}($request);
     }
-    return [ 200, [ 'Content-Type' => 'text/plain' ], [ '' ] ];
+    return [ 200, [ 'Content-Type' => 'application/json' ], [ '{}' ] ];
 }
 
 

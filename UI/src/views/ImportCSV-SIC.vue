@@ -5,10 +5,11 @@ import ImportCSVBase from "@/components/ImportCSV-Base";
 
 export default {
     components: {
-       "import-csv": ImportCSVBase
+        "import-csv": ImportCSVBase
     },
+    emits: [ "upload-success", "upload-error" ],
     data() {
-       return {
+        return {
        };
     }
 };
@@ -18,7 +19,9 @@ export default {
     <div id="import-sic">
         <import-csv type="sic"
                     :heading="false"
-                    :transactionFields="false" >
+                    :transactionFields="false"
+                    @upload-success="$emit('upload-success')"
+                    @upload-error="$emit('upload-error')">
             <template #title>Import
                 <abbr
                     title="Standard Industrial Classification">SIC</abbr> codes</template>

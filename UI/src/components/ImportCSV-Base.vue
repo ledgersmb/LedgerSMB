@@ -18,7 +18,8 @@ export default {
             default: true
         }
     },
-    setup() {
+    emits: [ "upload-success", "upload-error" ],
+    setup(props, { emit }) {
         const { t } = useI18n();
         let notify = inject("notify");
         let form = ref(null);
@@ -32,7 +33,10 @@ export default {
                         dismissReceiver
                     });
                 },
-                "success": () => { notify({ title: t("Uploaded") }); },
+                "success": () => {
+                    notify({ title: t("Uploaded") });
+                    emit("upload-success");
+                },
                 "submitError": (ctx, { event }) => {
                     notify({
                         title: t("Failure sending CSV"),
