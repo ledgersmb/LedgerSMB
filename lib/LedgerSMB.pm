@@ -443,11 +443,17 @@ sub upload {
             $encoding = 'UTF-32BE';
             $bom_length = 4;
         }
+        else { # no BOM
+            $encoding = 'UTF-8';
+            $bom_length = 0;
+        }
         sysseek $fh, 0, 0;
     }
 
-    if ($bom_length) {
+    if ($encoding) {
         binmode $fh, ':encoding(' . $encoding . ')';
+    }
+    if ($bom_length) {
         read($fh, my $unused, 1); # read the bom character
     }
 
