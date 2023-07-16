@@ -5,12 +5,13 @@ import ImportCSVBase from "@/components/ImportCSV-Base";
 
 export default {
     components: {
-       "import-csv": ImportCSVBase
+        "import-csv": ImportCSVBase
     },
+    emits: [ "upload-success", "upload-error" ],
     data() {
-       return {
-       };
-    }
+        return {
+        };
+    },
 };
 </script>
 
@@ -18,7 +19,9 @@ export default {
     <div id="import-gifi">
         <import-csv type="gifi"
                     :heading="false"
-                    :transactionFields="false" >
+                    :transactionFields="false"
+                    @upload-success="$emit('upload-success')"
+                    @upload-error="$emit('upload-error')">
             <template #title>Import
                 <abbr
                     title="General Index of Financial Information">GIFI</abbr> codes

@@ -27,7 +27,7 @@ const store = useGIFIsStore();
         createRole="gifi_create" />
     <div class="import-section">
         <h2 class="listheading">{{ $t("Import") }}</h2>
-        <ImportCsvGifi />
+        <ImportCsvGifi @upload-success="store.initialize()" />
     </div>
 </template>
 
