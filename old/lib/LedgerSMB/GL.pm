@@ -119,10 +119,10 @@ sub post_transaction {
             || $form->dberror($query);
 
         ( $form->{id} ) = $sth->fetchrow_array();
-        $query = q|UPDATE transactions SET reversing = ? WHERE id = ? AND workflow_id IS NULL|;
+        $query = q|UPDATE transactions SET workflow_id = ?, reversing = ? WHERE id = ? AND workflow_id IS NULL|;
         $sth   = $dbh->prepare($query);
         $form->{reversing} ||= undef; # convert empty string to NULL
-        $sth->execute( $form->{reversing}, $form->{id} )
+        $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{id} )
             || $form->dberror($query);
     }
 
@@ -274,7 +274,7 @@ sub transaction {
         @{$form->{currencies}} =
             (LedgerSMB::Setting->new(%$form))->get_currencies;
 
-        $query = qq|SELECT g.*, t.reversing, t.reversing_reference, t.reversed_by, t.reversed_by_reference
+        $query = qq|SELECT g.*, t.workflow_id, t.reversing, t.reversing_reference, t.reversed_by, t.reversed_by_reference
                  FROM gl g JOIN transactions_reversal t on g.id = t.id
                 WHERE g.id = ?|;
 
