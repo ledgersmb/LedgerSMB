@@ -82,9 +82,7 @@ sub post_transaction {
     my $sth;
 
     my $id = $dbh->quote( $form->{id} );
-    if ($form->{separate_duties}){
-        $form->{approved} = '0';
-    }
+    $form->{approved} = '0';
     if ( $form->{id} ) {
 
         $query = qq|SELECT id FROM gl WHERE id = $id|;
