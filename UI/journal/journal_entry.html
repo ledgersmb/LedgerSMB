@@ -133,6 +133,9 @@
            END ;
       END %]
       </a>
+      <br />
+      <br />
+      [% text('Status:') %] [% form.status %]
     </td>
  </tr>
 
@@ -347,15 +350,6 @@
     type = "hidden"
     name = "media"
     value = "screen"
-  };
-  PROCESS button element_data = {
-    id = "btn_print"
-    name = "__action"
-    text = text('Print')
-    class = "submit"
-    value = "print"
-    "data-dojo-type" = "lsmb/PrintButton"
-    "data-dojo-props" = "minimalGET: false"
   };
 END;
 %]

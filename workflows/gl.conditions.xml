@@ -1,0 +1,9 @@
+<conditions>
+  <type>GL</type>
+  <condition name="complete"
+             test="$context->{transdate}"
+             class="Workflow::Condition::Evaluate"/>
+  <condition name="is-batch-member"
+             test="$context->{'batch-id'}"
+             class="Workflow::Condition::Evaluate" />
+</conditions>

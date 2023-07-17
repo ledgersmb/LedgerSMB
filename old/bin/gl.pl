@@ -89,11 +89,25 @@ sub edit_and_save {
     check_balanced($form);
     $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
     GL->post_transaction( \%myconfig, \%$form, $locale);
+    if ($form->{workflow_id}) {
+        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+            'GL', $form->{workflow_id}
+            );
+        $wf->context->param( transdate => $form->{transdate} );
+        $wf->execute_action( $form->{__action} );
+    }
     edit();
 }
 
 sub approve {
     $form->call_procedure(funcname=>'draft_approve', args => [ $form->{id} ]);
+    if ($form->{workflow_id}) {
+        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+            'GL', $form->{workflow_id}
+            );
+        $wf->context->param( transdate => $form->{transdate} );
+        $wf->execute_action( $form->{__action} );
+    }
     if ($form->{callback}){
         print "Location: $form->{callback}\n";
         print "Status: 302 Found\n\n";
@@ -103,28 +117,37 @@ sub approve {
                 . qq|here</a>.</body></html>|;
 
     } else {
-        $form->info($locale->text('Draft Posted'));
+        new();
     }
 }
 
 sub new {
-     for my $row (0 .. $form->{rowcount}){
-         for my $fld(qw(accno projectnumber acc debit credit source memo)){
+    for my $row (0 .. $form->{rowcount}){
+        for my $fld(qw(accno projectnumber acc debit credit source memo)){
             delete $form->{"${fld}_${row}"};
-         }
-     }
-     delete $form->{description};
-     delete $form->{reference};
-     delete $form->{rowcount};
-     delete $form->{id};
-     add();
+        }
+    }
+    delete $form->{description};
+    delete $form->{reference};
+    delete $form->{rowcount};
+    delete $form->{id};
+    delete $form->{workflow_id};
+    add();
 }
 
 sub copy_to_new {
-     delete $form->{reference};
-     delete $form->{id};
-     delete $form->{approved};
-     update();
+    if ($form->{workflow_id}) {
+        my $wf = $form->{_wire}->get('workflow')->fetch_workflow(
+            'GL', $form->{workflow_id}
+            );
+        $wf->context->param( transdate => $form->{transdate} );
+        $wf->execute_action( $form->{__action} );
+    }
+    delete $form->{reference};
+    delete $form->{id};
+    delete $form->{approved};
+    delete $form->{workflow_id};
+    update();
 }
 
 sub add {
@@ -161,6 +184,13 @@ sub _reverse_amounts {
 
 sub reverse {
     $form->{title}     = "Reverse";
+    if ($form->{workflow_id}) {
+        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+            'GL', $form->{workflow_id}
+            );
+        $wf->context->param( transdate => $form->{transdate} );
+        $wf->execute_action( $form->{__action} );
+    }
 
     &create_links; # runs GL->transaction()
     _reverse_amounts();
@@ -168,6 +198,7 @@ sub reverse {
     $form->{reversing} = delete $form->{id};
     $form->{reversing_reference} = $form->{reference};
     delete $form->{approved};
+    delete $form->{workflow_id};
 
     display_form();
 }
@@ -273,6 +304,22 @@ sub display_form
                $form->{colrownotes}=0;
     }
 
+    my $wf;
+    if($form->{workflow_id}) {
+        $wf = $form->{_wire}->get('workflows')
+            ->fetch_workflow( 'GL', $form->{workflow_id} );
+    }
+    else {
+        $wf = $form->{_wire}->get('workflows')
+            ->create_workflow( 'GL',
+                               Workflow::Context->new(
+                                   'batch-id' => $form->{batch_id},
+                                   'table_name' => 'gl'
+                               ) );
+        $form->{workflow_id} = $wf->id;
+    }
+    $wf->context->param( transdate => $form->{transdate} );
+    $form->{status} = $wf->state;
     $focus = ( $form->{focus} ) ? $form->{focus} : "debit_$form->{rowcount}";
     our %hiddens = (
         'direction' => $form->{direction},
@@ -288,7 +335,8 @@ sub display_form
         'form_id' => $form->{form_id},
         'separate_duties' => $form->{separate_duties},
         'reversing' => $form->{reversing},
-        'reversing_reference' => $form->{reversing_reference}
+        'reversing_reference' => $form->{reversing_reference},
+        'workflow_id' => $form->{workflow_id}
     );
 
 
@@ -308,92 +356,41 @@ sub display_form
   $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
   my @buttons;
   if ( !$form->{readonly} ) {
-      my $i;
-
-      $i=1;
-      @buttons = (
-          { action => 'update',
-            value => $locale->text('Update') },
-          { action => 'post',
-            value =>
-                ($form->{separate_duties}
-                 ? $locale->text('Save') : $locale->text('Post')),
-            class => 'post' },
-          { action => 'approve', value => $locale->text('Post'),
-            class => 'post' },
-          { action => 'edit_and_save',
-            value => $locale->text('Save Draft') },
-          { action => 'post_reversing',
-            value => ($form->{separate_duties}
-                      ? $locale->text('Save') : $locale->text('Post')), },
-          { action => 'save_temp',
-            value => $locale->text('Save Template') },
-          { action => 'save_as_new',
-            value => $locale->text('Save as new') },
-          { action => 'schedule',
-            value => $locale->text('Schedule') },
-          { action => 'new',
-            value => $locale->text('New') },
-          { action => 'copy_to_new',
-            value => $locale->text('Copy to New') },
+      $wf->context->param( _is_closed => $form->is_closed( $transdate ) );
+      %button_types = (
+          print => 'lsmb/PrintButton'
           );
+      for my $action_name ( $wf->get_current_actions ) {
+          my $action = $wf->get_action( $action_name );
 
-      %a = ();
-      $a{'save_temp'} = not $form->{reversing};
-
-      if ( $form->{id}) {
-          for ( 'new', 'save_as_new', 'copy_to_new' ) {
-              $a{$_} = 1;
-          }
-          for ( 'schedule' ) {
-              $a{$_} = not $form->{reversing};
-          }
-          if (!$form->{approved} && !$form->{batch_id}) {
-            #   Need to check for draft_modify and draft_post
-            if ($form->is_allowed_role(['draft_post'])) {
-                $a{approve} = 1;
-            }
-            if ($form->is_allowed_role(['draft_modify'])) {
-                $a{edit_and_save} = not $form->{reversing};
-                $a{post_reversing} = $form->{reversing};
-            }
-            $a{update} = not $form->{reversing};
-          }
-      } else {
-          if ( not $form->is_closed( $transdate ) ) {
-              for ( 'post' ) { $a{$_} = not $form->{reversing} }
-              for ( 'post_reversing' ) { $a{$_} = $form->{reversing} }
-          }
-          for ( 'update', 'schedule' ) {
-              $a{$_} = not $form->{reversing};
-          }
+          next if ($action->ui // '') eq 'none';
+          push @buttons, {
+              ndx   => $action->order,
+              name  => $action->name,
+              text => $locale->maketext($action->text),
+              doing => ($action->doing ? $locale->maketext($action->doing) : ''),
+              done  => ($action->done ? $locale->maketext($action->done) : ''),
+              type  => $button_types{$action->ui},
+              tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
+          };
       }
 
-      $i=1;
       @buttons = map {
           {
               name => '__action',
-              value => $_->{action},
-              text => $_->{value},
+              value => $_->{name},
+              text => $_->{text},
               type => 'submit',
               class => $_->{class} // 'submit',
-              order => $i++
+              order => $_->{ndx},
+              'data-lsmb-doing' => $_->{doing},
+              'data-lsmb-done' => $_->{done},
+              'data-dojo-type' => $_->{type} // 'dijit/form/Button',
+              'data-dojo-props' => $_->{type} ? 'minimalGET: false' : '',
           }
       }
-      grep { $a{$_->{action}} } @buttons;
+      sort { $a->{ndx} <=> $b->{ndx} } @buttons;
   }
-
-    unless ($form->{reversed_by}) {
-        if ($form->{approved}) {
-            push @buttons, {
-                name  => '__action',
-                value => 'reverse',
-                text  => $locale->text('Reverse'),
-                type  => 'submit',
-                class => 'submit',
-            };
-        }
-    }
 
   $form->{recurringset}=0;
   if ( $form->{recurring} ) {
@@ -416,6 +413,13 @@ sub display_form
 sub save_temp {
     my ($department_name, $department_id) = split/--/, $form->{department};
 
+    if ($form->{workflow_id}) {
+        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+            'GL', $form->{workflow_id}
+            );
+        $wf->context->param( transdate => $form->{transdate} );
+        $wf->execute_action( $form->{__action} );
+    }
     my @lines;
     for my $iter (0 .. $form->{rowcount}){
         if ($form->{"accno_$iter"} and
@@ -670,7 +674,10 @@ sub update {
 }
 
 
-
+sub post_and_approve {
+    post();
+    $form->call_procedure(funcname=>'draft_approve', args => [ $form->{id} ]);
+}
 
 sub post {
     if ($form->{id}){
@@ -681,6 +688,13 @@ sub post {
         $form->finalize_request();
     };
     $form->isblank( "transdate", $locale->text('Transaction Date missing!') );
+    if ($form->{workflow_id}) {
+        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+            'GL', $form->{workflow_id}
+            );
+        $wf->context->param( transdate => $form->{transdate} );
+        $wf->execute_action( $form->{__action} );
+    }
 
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
 
@@ -701,13 +715,20 @@ sub post {
 
 }
 
-sub delete {
+sub del {
     $form->error($locale->text('Cannot delete posted transaction'))
        if ($form->{approved});
+    if ($form->{workflow_id}) {
+        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+            'GL', $form->{workflow_id}
+            );
+        $wf->context->param( transdate => $form->{transdate} );
+        $wf->execute_action( $form->{__action} );
+    }
     $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
     delete $form->{id};
     delete $form->{reference};
-    add();
+    new();
 }
 
 
@@ -738,6 +759,13 @@ sub check_balanced {
 
 sub save_as_new {
     for (qw(id printed emailed)) { delete $form->{$_} }
+    if ($form->{workflow_id}) {
+        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+            'GL', $form->{workflow_id}
+            );
+        $wf->context->param( transdate => $form->{transdate} );
+        $wf->execute_action( $form->{__action} );
+    }
     delete $form->{approved};
     &post;
 }
