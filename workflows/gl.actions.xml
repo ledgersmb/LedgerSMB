@@ -96,11 +96,11 @@ TODO! Check workflow when 'separate duties' is false!
           text="Reverse"
           history-text="Reversed"
           class="LedgerSMB::Workflow::Action::Null" />
-  <!-- action name="save_info"
+  <action name="save_info"
           group="main"
           order="19"
           text="Save Info"
-          class="LedgerSMB::Workflow::Action::Null" / -->
+          class="LedgerSMB::Workflow::Action::Null" />
   <action name="new"
           group="main"
           order="20"

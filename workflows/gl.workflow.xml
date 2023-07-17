@@ -37,14 +37,14 @@
     </action>
   </state>
   <state name="POSTED">
-    <!-- action name="save_info" resulting_state="NOCHANGE" / -->
+    <action name="save_info" resulting_state="NOCHANGE" />
     <action name="copy_to_new" resulting_state="NOCHANGE" />
     <action name="reverse" resulting_state="REVERSED" />
     <action name="schedule" resulting_state="NOCHANGE" />
     <action name="print" resulting_state="NOCHANGE" />
   </state>
   <state name="REVERSED">
-    <!-- action name="save_info" resulting_state="NOCHANGE" / -->
+    <action name="save_info" resulting_state="NOCHANGE" />
     <action name="copy_to_new" resulting_state="NOCHANGE" />
   </state>
   <state name="DELETED" />

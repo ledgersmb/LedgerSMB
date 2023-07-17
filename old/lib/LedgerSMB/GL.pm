@@ -259,6 +259,14 @@ UPDATE gl
     return 1;
 }
 
+sub save_notes {
+    my ( $self, $myconfig, $form ) = @_;
+
+    my $query = 'UPDATE gl SET notes = ? where id = ?';
+    $form->{dbh}->do( $query, {}, $form->{notes}, $form->{id} );
+    $form->dberror( $query ) if $form->{dbh}->err;
+}
+
 sub transaction {
 
     my ( $self, $myconfig, $form ) = @_;

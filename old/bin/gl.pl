@@ -99,6 +99,18 @@ sub edit_and_save {
     edit();
 }
 
+sub save_info {
+    GL->save_notes( \%myconfig, \%$form, $locale);
+    if ($form->{workflow_id}) {
+        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+            'GL', $form->{workflow_id}
+            );
+        $wf->context->param( transdate => $form->{transdate} );
+        $wf->execute_action( $form->{__action} );
+    }
+    edit();
+}
+
 sub approve {
     $form->call_procedure(funcname=>'draft_approve', args => [ $form->{id} ]);
     if ($form->{workflow_id}) {
@@ -127,11 +139,9 @@ sub new {
             delete $form->{"${fld}_${row}"};
         }
     }
-    delete $form->{description};
-    delete $form->{reference};
-    delete $form->{rowcount};
-    delete $form->{id};
-    delete $form->{workflow_id};
+    for my $fld (qw(description reference rowcount id workflow_id transdate notes)) {
+        delete $form->{$fld};
+    }
     add();
 }
 
