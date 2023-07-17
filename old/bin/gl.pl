@@ -728,7 +728,7 @@ sub del {
     $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
     delete $form->{id};
     delete $form->{reference};
-    add();
+    new();
 }
 
 

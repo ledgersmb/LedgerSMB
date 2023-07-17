@@ -112,6 +112,8 @@ TODO! Check workflow when 'separate duties' is false!
           group="main"
           order="21"
           text="Delete"
+          doing="Deleting..."
+          done="Deleted"
           short-help="Remove draft transaction"
           class="LedgerSMB::Workflow::Action::Null" />
 
