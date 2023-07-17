@@ -117,18 +117,11 @@ sub approve {
                 . qq|here</a>.</body></html>|;
 
     } else {
-        $form->info($locale->text('Draft Posted'));
+        new();
     }
 }
 
 sub new {
-    if ($form->{workflow_id}) {
-        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
-            'GL', $form->{workflow_id}
-            );
-        $wf->context->param( transdate => $form->{transdate} );
-        $wf->execute_action( $form->{__action} );
-    }
     for my $row (0 .. $form->{rowcount}){
         for my $fld(qw(accno projectnumber acc debit credit source memo)){
             delete $form->{"${fld}_${row}"};
