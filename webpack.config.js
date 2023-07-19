@@ -148,7 +148,7 @@ const ESLintPluginOptions = {
 };
 
 const StylelintPluginOptions = {
-    files: "**/*.css"
+    files: "UI/css/**/*.css"
 };
 
 // Copy non-packed resources needed by the app to the release directory
