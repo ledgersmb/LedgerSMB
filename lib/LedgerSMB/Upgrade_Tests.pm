@@ -698,34 +698,31 @@ push @tests, __PACKAGE__->new(
   max_version => '1.3'
 );
 
+push @tests, __PACKAGE__->new(
+   test_query => q{select name, contact from customer
+                   where arap_accno_id is null
+                   order by name},
+ display_name => marktext('Empty AR account'),
+         name => 'no_null_ar_accounts',
+ display_cols => [ 'name', 'contact' ],
+ instructions => marktext(q(Please go into the SQL-Ledger UI and correct the empty AR accounts)),
+      appname => 'sql-ledger',
+  min_version => '2.7',
+  max_version => '3.0'
+   );
 
-#=pod
-
-#  push @tests, __PACKAGE__->new(
-#     test_query => "select * from customer where arap_accno_id is null",
-#   display_name => marktext('Empty AR account'),
-#           name => 'no_null_ar_accounts',
-#   display_cols => [ 'name', 'contact' ],
-#   instructions => marktext("Please correct the empty AR accounts"),
-#        appname => 'sql-ledger',
-#    min_version => '2.7',
-#    max_version => '3.0'
-#     );
-
-#  push @tests, __PACKAGE__->new(
-#     test_query => "select * from vendor where arap_accno_id is null",
-#   display_name => marktext('Empty AP account'),
-#           name => 'no_null_ap_accounts',
-#   display_cols => [ 'name', 'contact' ],
-#   instructions => marktext("Please correct the empty AP accounts"),
-#        appname => 'sql-ledger',
-#    min_version => '2.7',
-#    max_version => '3.0'
-#     );
-#*/
-
-#=cut
-
+push @tests, __PACKAGE__->new(
+   test_query => q{select name, contact from vendor
+                   where arap_accno_id is null
+                   order by name},
+ display_name => marktext('Empty AP account'),
+         name => 'no_null_ap_accounts',
+ display_cols => [ 'name', 'contact' ],
+ instructions => marktext(q(Please go into the SQL-Ledger UI and correct the empty AP accounts)),
+      appname => 'sql-ledger',
+  min_version => '2.7',
+  max_version => '3.0'
+   );
 
 push @tests,__PACKAGE__->new(
     test_query => q{ select category, accno, description
@@ -885,25 +882,6 @@ selectable_values => { business_id => q{SELECT concat(description,' -- ',discoun
     min_version => '2.7',
     max_version => '3.0'
     );
-
-# push @tests,__PACKAGE__->new(
-#     test_query => "select accno, description, link
-#                     from chart
-#                    where charttype = 'A'
-#                      and link ~ ':?\\(AR|AP|IC\\)\\(:|$\\)'",
-#     display_name => marktext('Unsupported account link combinations'),
-#     name => 'unsupported_account_links',
-#     display_cols => ['accno', 'description', 'link'],
-#  instructions =>
-#          marktext( 'An account can either be a summary account (which have a
-# link of "AR", "AP" or "IC" value) or be linked to dropdowns (having any
-# number of "AR_*", "AP_*" and/or "IC_*" links concatenated by colons (:).'),
-#    columns => ['category'],
-#     table => 'chart',
-#     appname => 'sql-ledger',
-#     min_version => '2.7',
-#     max_version => '3.0'
-#     );
 
 push @tests,__PACKAGE__->new(
     test_query => 'select id, customernumber, name
@@ -1244,25 +1222,6 @@ Void the clearing date in the dialog shown or go back to SQL-Ledger if you feel 
        min_version => '2.7',
        max_version => '3.0'
 );
-
-
-### On the vendor side, SL doesn't use pricegroups
-# push @tests, __PACKAGE__->new(
-#     test_query => "select *
-#                      from partsvendor
-#                     where not exists (select 1
-#                                         from pricegroup
-#                                        where id = pricegroup_id)",
-#     display_name => marktext('Non-existing vendor pricegroups in partsvendor'),
-#     name => 'partsvendor_pricegroups_exist',
-#     display_cols => ['parts_id', 'credit_id', 'pricegroup_id'],
-#  instructions =>
-#         marktext('Please fix the pricegroup data in your partsvendor table (no UI available)'),
-#     table => 'partsvendor',
-#     appname => 'sql-ledger',
-#     min_version => '2.7',
-#     max_version => '3.0'
-#     );
 
     return @tests;
 }
