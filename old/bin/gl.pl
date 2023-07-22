@@ -135,11 +135,16 @@ sub approve {
 
 sub new {
     for my $row (0 .. $form->{rowcount}){
-        for my $fld(qw(accno projectnumber acc debit credit source memo)){
+        for my $fld (
+            qw(accno projectnumber acc debit credit source memo )
+            ) {
             delete $form->{"${fld}_${row}"};
         }
     }
-    for my $fld (qw(description reference rowcount id workflow_id transdate notes)) {
+    for my $fld (
+        qw(description reference rowcount id workflow_id
+           transdate notes reversing reversing_reference )
+        ) {
         delete $form->{$fld};
     }
     add();
