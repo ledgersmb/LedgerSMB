@@ -20,6 +20,27 @@ Note that to check for open accounting periods, simply check for the negated
 value of this condition by prefixing it with an exclamation
 mark (C<!period-closed>).
 
+=head1 PARAMETERS
+
+=head2 offset
+
+  <condition .... >
+    <param name="offset" value="1 day" />
+  </condition>
+
+Interval to be added to the C<workflow_parameter> to check for being in
+a closed period. Defaults to C<0 days>.
+
+=head2 workflow_parameter
+
+  <condition .... >
+    <param name="workflow_parameter" value="transdate" />
+  </condition>
+
+Name of the parameter in the workflow context which holds the date to check
+for being in a closed period. Defaults to C<transdate>.
+
+
 =head1 METHODS
 
 =cut
@@ -34,6 +55,20 @@ use LedgerSMB::Setting;
 use Log::Any qw($log);
 use Workflow::Exception qw( condition_error );
 
+my @PROPS = qw( offset workflow_parameter );
+__PACKAGE__->mk_accessors(@PROPS);
+
+
+=head2 init( \%params )
+
+=cut
+
+sub init {
+    my ($self, $params) = @_;
+    $self->SUPER::init( $params );
+    $self->offset( $params->{offset} // '0 days' );
+    $self->workflow_parameter( $params->{workflow_parameter} // 'transdate' );
+}
 
 =head2 evaluate( $wf )
 
@@ -46,14 +81,18 @@ sub evaluate {
     my ($self, $wf) = @_;
     my $dbh = $wf->_factory->
         get_persister_for_workflow_type( $wf->type )->handle;
+    my ($opened) = $dbh->selectrow_array(
+        q|SELECT (?::date + ?::interval) > MAX(end_date)
+                 OR MAX(end_date) IS NULL
+            FROM account_checkpoint|,
+        {},
+        $wf->context->param( $self->workflow_parameter ),
+        $self->offset
+        );
+    die $dbh->errstr if $dbh->err;
 
-    # The plan was to query the database for the period being open or
-    # closed, based on the transaction date in the database.
-
-    # However, at the time, it's simpler to get the indicator from the
-    # workflow instead.
-
-    return $wf->context->param( '_is_closed' );
+    condition_error 'Period open' if $opened;
+    return 1;
 }
 
 

@@ -366,7 +366,6 @@ sub display_form
   $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
   my @buttons;
   if ( !$form->{readonly} ) {
-      $wf->context->param( _is_closed => $form->is_closed( $transdate ) );
       %button_types = (
           print => 'lsmb/PrintButton'
           );
