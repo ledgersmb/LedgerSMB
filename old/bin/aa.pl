@@ -468,6 +468,7 @@ sub form_header {
                                ) );
         $form->{workflow_id} = $wf->id;
     }
+    $wf->context->param( transdate => $form->{transdate} );
     $title = $form->{title};
     $form->all_business_units($form->{transdate},
                               $form->{"$form->{vc}_id"},
@@ -1083,7 +1084,7 @@ sub form_footer {
                                   {text=> $locale->text('Transaction'), value => 'transaction'},
                                 ]
                    };
-        $wf->context->param( _is_closed => $form->is_closed( $transdate ) );
+        $wf->context->param( transdate => $transdate );
         %button_types = (
             print => 'lsmb/PrintButton'
             );

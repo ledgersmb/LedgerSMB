@@ -305,6 +305,7 @@ sub form_header {
         $form->{workflow_id} = $wf->id;
     }
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
+    $wf->context->param( transdate => $transdate );
 
     $form->{exchangerate} =
       $form->format_amount( \%myconfig, $form->{exchangerate} );
@@ -507,12 +508,10 @@ sub form_header {
     if ( !$form->{readonly} ) {
         print "<tr><td>";
 
-        %button;
-
-        $wf->context->param( _is_closed => $form->is_closed( $transdate ) );
         %button_types = (
             print => 'lsmb/PrintButton'
             );
+        %button = ();
         for my $action_name ( $wf->get_current_actions( 'main') ) {
             my $action = $wf->get_action( $action_name );
 
@@ -966,8 +965,6 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
         print_select($form, $printops->{format});
         print_select($form, $printops->{media});
 
-
-        $wf->context->param( _is_closed => $form->is_closed( $transdate ) );
         %button_types = (
             print => 'lsmb/PrintButton'
             );
