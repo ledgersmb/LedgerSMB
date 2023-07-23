@@ -1855,8 +1855,8 @@ not contain 'tax', the account number is appended to the space separated list
 $form->{accounts}.  $module is typically 'AR' or 'AP' and is the base type of
 the accounts looked up.
 
-If $form->{id} is not set, check $form->{"$form->{vc}_id"}.  If neither is set,
-use $form->lastname_used to populate the details.  If $form->{id} is set,
+If $form->{id} is not set, check $form->{"$form->{vc}_id"}.
+If $form->{id} is set,
 populate the invnumber, transdate, ${vc}_id, datepaid, duedate, ordnumber,
 taxincluded, currency, notes, intnotes, ${vc}, department_id, department,
 oldinvtotal, employee_id, employee, language_code, ponumber,
@@ -2005,6 +2005,7 @@ sub create_links {
 
         foreach my $key (keys %$ref) {
             $self->{$key} = $ref->{$key} unless defined $self->{$key};
+
         }
 
         $sth->finish;
@@ -2114,12 +2115,6 @@ sub create_links {
 
         $sth->finish;
     }
-    else {
-
-        if ( !$self->{"$self->{vc}_id"} ) {
-            $self->lastname_used($vc);
-        }
-    }
 
     for (qw(separate_duties curr lock_description)) {
         if ($_ eq 'current_date') {
@@ -2216,64 +2211,6 @@ sub is_closed {
     return $is_closed;
 }
 
-=item $form->lastname_used($vc);
-
-Fills the name, currency, ${vc}_id, duedate, and possibly invoice_notes
-attributes of $form with the last used values for the transaction type specified
-by both $vc and $form->{type}.  $vc can be either 'vendor' or 'customer' and if
-unspecified will take on the value given in $form->{vc}, defaulting to 'vendor'.
-If $form->{type} matches /_order/, the transaction type used is order, if it
-matches /_quotation/, quotations are looked through.  If $form->{type} does not
-match either of the above, then ar or ap transactions are used.
-
-=cut
-
-sub lastname_used {
-
-    my ($self, $vc) = @_;
-    $vc ||= $self->{vc};    # add default to correct for improper passing
-    my $arap;
-    my $where;
-    if ($vc eq 'customer') {
-        $arap = 'ar';
-    }
-    else {
-        $arap = 'ap';
-        $vc = 'vendor';
-    }
-
-    my $sth;
-    if ($self->{type} && $self->{type} =~ /_order/ ) {
-        $arap  = 'oe';
-        $where = "quotation = '0'";
-    }
-
-    if ($self->{type} && $self->{type} =~ /_quotation/ ) {
-        $arap  = 'oe';
-        $where = "quotation = '1'";
-    }
-
-    $where = "AND $where " if $where;
-    $where //= '';
-    my $query = qq|
-        SELECT entity.name, ct.curr AS currency, entity_id AS ${vc}_id,
-            current_date + ct.terms AS duedate,
-            ct.curr AS currency
-        FROM entity_credit_account ct
-        JOIN entity ON (ct.entity_id = entity.id)
-        WHERE entity.id = (select entity_id from $arap
-                            where entity_id IS NOT NULL $where
-                                 order by id DESC limit 1)|;
-
-    $sth = $self->{dbh}->prepare($query);
-    $sth->execute() || $self->dberror($query);
-
-    my $ref = $sth->fetchrow_hashref('NAME_lc');
-    for (keys %$ref) {
-        $self->{$_} = $ref->{$_}
-    }
-    $sth->finish;
-}
 
 =item $form->current_date($myconfig[, $thisdate, $days]);
 

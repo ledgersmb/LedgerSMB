@@ -725,16 +725,8 @@ sub retrieve {
         $form->get_recurring;
     }
     else {
-
-        # get last name used
-        $form->lastname_used($form->{vc})
-          unless $form->{"$form->{vc}_id"};
-
         delete $form->{notes};
-
     }
-
-
 }
 
 sub exchangerate_defaults {
