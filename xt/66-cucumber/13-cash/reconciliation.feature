@@ -91,3 +91,26 @@ Scenario: Search for reconciliation report and delete it,
   Then I should see the Reconciliation Search Report screen
    And I expect the report to contain 0 rows
 
+
+Scenario: Update with new GL transaction on a new line
+  Given an existing and empty reconciliation report
+   When I open the reconciliation report
+    And I enter a GL transaction with a balance of 100.00 into the reconciliation period
+    And I update the screen
+   Then I expect the reconciliation report to show one uncleared line
+
+Scenario: Update with new AR transaction on a new line
+  Given an existing and empty reconciliation report
+   When I open the reconciliation report
+    And I enter an AR payment with a balance of 100.00 into the reconciliation period
+    And I update the screen
+   Then I expect the reconciliation report to show one uncleared line
+
+Scenario: Update with new GL transaction on an existing line
+  Given an existing reconciliation report
+    And a GL transaction with a balance of 100.00 into the reconciliation period
+   When I open the reconciliation report
+    And I mark all lines cleared
+    And I enter a GL transaction with a balance of 50.00 into the reconciliation period
+   Then I expect the reconciliation report to show one uncleared line
+
