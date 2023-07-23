@@ -1993,7 +1993,7 @@ sub create_links {
             WHERE a.id = ? AND c.entity_class =
                 (select id FROM entity_class
                 WHERE class ilike ?)|;
-        $sth = $dbh->prepare($query);
+        $sth = $dbh->prepare($query) || $self->dberror($query);
         $sth->execute( $self->{id}, $self->{vc} ) || $self->dberror($query);
 
         $ref = $sth->fetchrow_hashref('NAME_lc');
