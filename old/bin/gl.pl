@@ -135,11 +135,16 @@ sub approve {
 
 sub new {
     for my $row (0 .. $form->{rowcount}){
-        for my $fld(qw(accno projectnumber acc debit credit source memo)){
+        for my $fld (
+            qw(accno projectnumber acc debit credit source memo )
+            ) {
             delete $form->{"${fld}_${row}"};
         }
     }
-    for my $fld (qw(description reference rowcount id workflow_id transdate notes)) {
+    for my $fld (
+        qw(description reference rowcount id workflow_id
+           transdate notes reversing reversing_reference )
+        ) {
         delete $form->{$fld};
     }
     add();
@@ -232,13 +237,27 @@ sub post_reversing {
             local $form->{reference};
             local $form->{reversing_reference} = $form->{reference};
             local $form->{approved};
+            local $form->{workflow_id};
 
             &create_links; # create_links overwrites 'reversing'
         };
+        my $wf = $form->{_wire}->get('workflows')
+            ->create_workflow( 'GL',
+                               Workflow::Context->new(
+                                   'transdate' => $form->{transdate},
+                                   'batch-id' => $form->{batch_id},
+                                   'table_name' => 'gl',
+                                   'reversing' => $form->{reversing}
+                               ) );
+        $form->{workflow_id} = $wf->id;
+        $wf->execute_action( $form->{__action} );
 
         # Why do I not need _reverse_amounts here???
         # _reverse_amounts();
         GL->post_transaction( \%myconfig, \%$form, $locale);
+        $form->call_procedure( funcname=>'draft_approve',
+                               args => [ $form->{id} ]);
+        $form->{approved} = 1;
 
         my $query = q{UPDATE transactions SET reversing = ? WHERE id = ?};
         $form->{dbh}->do(
@@ -324,7 +343,8 @@ sub display_form
             ->create_workflow( 'GL',
                                Workflow::Context->new(
                                    'batch-id' => $form->{batch_id},
-                                   'table_name' => 'gl'
+                                   'table_name' => 'gl',
+                                   'reversing' => $form->{reversing}
                                ) );
         $form->{workflow_id} = $wf->id;
     }

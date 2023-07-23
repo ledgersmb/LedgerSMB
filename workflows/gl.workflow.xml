@@ -2,15 +2,27 @@
   <type>GL</type>
   <persister>JournalEntry</persister>
   <description>Manage the life cycle of a GL document (excluding year-end, inventory adjustment and fixed assets transactions)</description>
+
   <state name="INITIAL">
     <action name="update" resulting_state="NOCHANGE" />
-    <action name="post" resulting_state="SAVED" />
+    <action name="post" resulting_state="SAVED">
+      <condition name="!reversing" />
+      <condition name="!period-closed" />
+      <condition name="complete" />
+    </action>
     <action name="post_and_approve" resulting_state="POSTED">
+      <condition name="!reversing" />
       <condition name="!separate-duties" />
       <condition name="!period-closed" />
       <condition name="complete" />
     </action>
+    <action name="post_reversing" resulting_state="POSTED">
+      <condition name="reversing" />
+      <condition name="!period-closed" />
+      <condition name="acl-draft-post" />
+    </action>
   </state>
+
   <state name="SAVED">
     <!-- action name="save_temp" resulting_state="NOCHANGE">
       <condition name="!is_invoice" />
@@ -36,6 +48,7 @@
       <condition name="is-batch-member" />
     </action>
   </state>
+
   <state name="POSTED">
     <action name="save_info" resulting_state="NOCHANGE" />
     <action name="copy_to_new" resulting_state="NOCHANGE" />
@@ -43,9 +56,11 @@
     <action name="schedule" resulting_state="NOCHANGE" />
     <action name="print" resulting_state="NOCHANGE" />
   </state>
+
   <state name="REVERSED">
     <action name="save_info" resulting_state="NOCHANGE" />
     <action name="copy_to_new" resulting_state="NOCHANGE" />
   </state>
+
   <state name="DELETED" />
 </workflow>

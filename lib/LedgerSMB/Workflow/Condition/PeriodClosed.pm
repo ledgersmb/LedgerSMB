@@ -81,15 +81,20 @@ sub evaluate {
     my ($self, $wf) = @_;
     my $dbh = $wf->_factory->
         get_persister_for_workflow_type( $wf->type )->handle;
-    my ($opened) = $dbh->selectrow_array(
-        q|SELECT (?::date + ?::interval) > MAX(end_date)
-                 OR MAX(end_date) IS NULL
-            FROM account_checkpoint|,
-        {},
-        $wf->context->param( $self->workflow_parameter ),
-        $self->offset
-        );
-    die $dbh->errstr if $dbh->err;
+
+    my $date = $wf->context->param( $self->workflow_parameter );
+    my $opened;
+    if ($date) {
+        ($opened) = $dbh->selectrow_array(
+            q|SELECT (?::date + ?::interval) > MAX(end_date)
+                     OR MAX(end_date) IS NULL
+                FROM account_checkpoint|,
+            {},
+            $date,
+            $self->offset
+            );
+        die $dbh->errstr if $dbh->err;
+    }
 
     condition_error 'Period open' if $opened;
     return 1;

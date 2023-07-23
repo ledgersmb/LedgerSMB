@@ -218,11 +218,28 @@ sub post_reversing {
             local $form->{description};
             local $form->{reference};
             local $form->{approved};
+            local $form->{workflow_id};
 
             &create_links; # create_links overwrites 'reversing'
         };
 
+        my $wf = $form->{_wire}->get('workflows')
+            ->create_workflow( 'AR/AP',
+                               Workflow::Context->new(
+                                   'transdate' => $form->{transdate},
+                                   'batch-id' => $form->{batch_id},
+                                   'table_name' => 'gl',
+                                   'reversing' => $form->{reversing},
+                                   'is_transaction' => 1
+                               ) );
+        $form->{workflow_id} = $wf->id;
+        $wf->execute_action( $form->{__action} );
+
         AA->post_transaction( \%myconfig, \%$form );
+        $form->call_procedure( funcname=>'draft_approve',
+                               args => [ $form->{id} ]);
+        $form->{approved} = 1;
+
         my $query = q{UPDATE transactions SET reversing = ? WHERE id = ?};
         $form->{dbh}->do(
             $query,
@@ -464,7 +481,8 @@ sub form_header {
                                Workflow::Context->new(
                                    'batch-id' => $form->{batch_id},
                                    'table_name' => lc($form->{ARAP}),
-                                   is_transaction => 1
+                                   is_transaction => 1,
+                                   reversing => $form->{reversing},
                                ) );
         $form->{workflow_id} = $wf->id;
     }
@@ -1068,6 +1086,7 @@ sub form_footer {
     my $wf = $form->{_wire}->get('workflows')
         ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
+    $wf->context->param( transdate => $transdate );
 
     # type=submit $locale->text('Update')
     # type=submit $locale->text('Print')

@@ -17,4 +17,7 @@
   <condition name="is-batch-member"
              test="$context->{'batch-id'}"
              class="Workflow::Condition::Evaluate" />
+  <condition name="reversing"
+             test="$context->{'reversing'}"
+             class="Workflow::Condition::Evaluate" />
 </conditions>
