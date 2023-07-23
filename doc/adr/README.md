@@ -67,7 +67,7 @@ Date: YYYY-MM-DD
 
 ## Status
 
-<One of: Draft | Accepted >
+<One of: Proposed | Accepted | Rejected | Replaced by XXXX >
 
 ## Context
 
@@ -89,6 +89,38 @@ Date: YYYY-MM-DD
 
 ```
 
+### Statusses
+
+An ADR can be in one of 4 statusses with the following state diagram:
+
+                     +----------+     +----------+
+                   --| Accepted |-----| Replaced |
+    ------------  /  +----------+     +----------+
+    | Proposed |--
+    ------------  \  +----------+
+                   --| Rejected |
+                     +----------+
+
+The states have the following meaning:
+
+ 1. Proposed  
+    The decision has not taken effect yet. It's under discussion.
+    ADRs can by defition never be in this state for long.
+ 2. Accepted  
+    The decision has taken effect. That means all new code needs to
+    comply with this decision (or an ADR should be submitted to allow
+    exception). Existing code should be transformed to comply with the
+    decision as soon as practically feasible.
+ 3. Replaced  
+    The decision used to be in force, but a newer, conflicting, decision
+    has been put in force since, effectively overruling it.
+ 4. Rejected  
+    The decision has been proposed, but was explicitly not accepted by the
+    project. Its existence is retained for historical purposes.
+
+As long as the ADR has a status "Proposed", it's text can be changed based
+on discussion in the project, meaning that the statusses all relate to the
+idea of the decision, not the current version of the text.
 
 # TODO list for ADRs to be written
 
