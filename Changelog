@@ -12,7 +12,7 @@ Added functionalities
 * System > Users menu item listing users in the company (#7032)
 * More webservice APIs (#7056, ...)
 * Total paid and Remaining balance summaries added to invoices (#7130)
-* Configurable directories (e.g. directory for UI templates) (#7236)
+* Configurable directories (UI, workflows & sql) (#7236, #7250, #7251)
 * Tracking of user name in AR/AP/GL history (#5023)
 * Printing of GL and cash transfer transactions (#7310)
 * Barcode support added on invoices (regressed since 1.5) (#1584)
