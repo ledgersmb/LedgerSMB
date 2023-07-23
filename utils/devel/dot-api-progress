@@ -1,0 +1,163 @@
+#!/usr/bin/env perl
+
+use v5.30.0;
+
+use YAML::PP;
+
+my $parser = YAML::PP->new;
+my $yaml = <<'YAML';
+screens:
+  accountScreen:
+  arapTransactionScreen:
+  batchApprovalScreen:
+  currencyScreens:
+  customersScreen:
+  defaultsScreen:
+  draftApprovalScreen:
+  journalScreen:
+  overpaymentUseScreen:
+  preferencesScreen:
+  reportingUnitScreen:
+  yearPeriodClosingScreen:
+
+apis:
+  accountsAPI:
+  batchesAPI:
+  businessTypesAPI:
+    status: done
+  closedPeriodsAPI:
+  companySettingsAPI:
+  contactsAPI:
+  countriesAPI:
+    status: done
+  currenciesAPI:
+  employeesAPI:
+  gifisAPI:
+    status: done
+  languagesAPI:
+    status: done
+  paymentsAPI:
+  pricegroupsAPI:
+    status: done
+  reportingUnitsAPI:
+  sequencesAPI:
+  taxformsAPI:
+  transactionsAPI:
+  userPreferencesAPI:
+
+screenRequirements:
+  accountScreen:
+  - accountsAPI
+  - gifisAPI
+  arapTransactionScreen:
+  - accountsAPI
+  - currenciesAPI
+  - contactsAPI
+  - employeesAPI
+  - paymentsAPI
+  - reportingUnitsAPI
+  - sequencesAPI
+  batchApprovalScreen:
+  - batchesAPI
+  currencyScreens:
+  - currenciesAPI
+  customersScreen:
+  - accountsAPI
+  - businessTypesAPI
+  - contactsAPI
+  - countriesAPI
+  - currenciesAPI
+  - languagesAPI
+  - pricegroupsAPI
+  - taxformsAPI
+  defaultsScreen:
+  - accountsAPI
+  - companySettingsAPI
+  - countriesAPI
+  - currenciesAPI
+  - languagesAPI
+  draftApprovalScreen:
+  - transactionsAPI
+  journalScreen:
+  - accountsAPI
+  - currenciesAPI
+  - reportingUnitsAPI
+  - sequencesAPI
+  - transactionsAPI
+  overpaymentUseScreen:
+  - accountsAPI
+  - contactsAPI
+  - paymentsAPI
+  preferencesScreen:
+  - languagesAPI
+  - userPreferencesAPI
+  reportingUnitScreen:
+  - reportingUnitsAPI
+  yearPeriodClosingScreen:
+  - accountsAPI
+  - closedPeriodsAPI
+
+YAML
+
+my ($def) = $parser->load_string($yaml);
+
+say <<'HEADER';
+digraph {
+HEADER
+
+my %screen_completeness;
+for my $screen (keys $def->{screenRequirements}->%*) {
+    for my $req ($def->{screenRequirements}->{$screen}->@*) {
+        $screen_completeness{$screen}->{total}++;
+        $screen_completeness{$screen}->{todo}++
+            if (not $def->{apis}->{$req}->{status}
+                or $def->{apis}->{$req}->{status} ne 'done');
+    }
+}
+
+for my $screen (sort keys $def->{screens}->%*) {
+    my $settings = $def->{screens}->{$screen};
+    my $completeness = $screen_completeness{$screen};
+    my $color = '';
+    my $fillcolor = 'orange';
+    if ($completeness->{todo} == 1) {
+        $color = ',color=blue';
+    }
+    elsif ($completeness->{todo} == 0) {
+        $fillcolor = 'grey';
+    }
+    say "  $screen [style=filled,fillcolor=$fillcolor,fontcolor=white$color];";
+}
+say "";
+
+for my $api (sort keys $def->{apis}->%*) {
+    my $settings = $def->{apis}->{$api};
+    if ($settings->{status} and $settings->{status} eq 'done') {
+        say "  $api [style=filled,fillcolor=darkgreen,fontcolor=white];";
+    }
+    else {
+        say "  $api ;";
+    }
+}
+say "  companySettingsAPI;";
+say "";
+
+for my $screen (sort keys $def->{screenRequirements}->%*) {
+    my @reqs = sort $def->{screenRequirements}->{$screen}->@*;
+    for my $req (@reqs) {
+        if ($def->{apis}->{$req}->{status} and $def->{apis}->{$req}->{status} eq 'done') {
+            say "  $screen -> $req [color=lightgrey];";
+        }
+        else {
+            my $next_option = $screen_completeness{$screen}->{todo} == 1 ? '[penwidth=3,color=blue]' : '';
+            say "  $screen -> $req $next_option;";
+        }
+    }
+}
+say "";
+
+say <<'FOOTER';
+}
+
+# Feed the output to: https://dreampuf.github.io/GraphvizOnline/#
+FOOTER
