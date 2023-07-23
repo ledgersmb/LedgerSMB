@@ -7,7 +7,6 @@ Changelog for 1.11.0
 
 Added functionalities
 * Reclassification of negative assets to liabilities and vice versa (#7389)
-* AR/AP/GL transaction and invoice buttons determined by configuration
 * AR/AP invoice history shows more actions, user and timestamp (#5873)
 * Bank statement parser for reconciliation through configuration (#7050)
 * System > Users menu item listing users in the company (#7032)
@@ -16,18 +15,18 @@ Added functionalities
 * Configurable directories (e.g. directory for UI templates) (#7236)
 * Tracking of user name in AR/AP/GL history (#5023)
 * Printing of GL and cash transfer transactions (#7310)
-* JavaScript unit tests built on Jest
-* Database data consistency checks in setup.pl (#7265)
-* Barcode support added (back) on invoices (regressed since 1.5) (#1584)
+* Barcode support added on invoices (regressed since 1.5) (#1584)
 * Loading template-sets with 'ledgersmb-admin template load-all' (#7367)
+* Database restore to user-specified schema with ledgersmb-admin (#7259)
 * GL transaction notes editable after posting (#7517)
+* Cross-referencing reversed and reversing transactions (#6715)
 
 Changed functionalities
 * Fresh new application logo and login page layout (#7317, #7319)
 * More database statistics reported after upgrade completion (#7017)
 * System > Sequences lists next value for consistency with Defaults (#7054)
 * Posted transactions show as read-only to differentiate from saved ones
-* 'ledgersmb-common.css' moved from UI/css/ to UI/css/global/ (#7316)
+* Improve migration of not-the-latest LedgerSMB 1.3 databases
 
 Removed functionalities
 * Reconciliation file parser customization (#7050)
@@ -39,12 +38,23 @@ Bugs fixed
 * Multiple fixes on AR/AP template transactions
 * Command 'setup' of ledgersmb-admin erroneously marked unimplemented (#7367)
 
-Code cleanup
+Code cleanup & architecture improvements
 * Continued removal of code based on the DBObject coding paradigm
-* Removed unused 'entity_id' field from AR and AP tables (#7390)
+* Removed unused 'entity_id' and 'till' fields from AR and AP tables (#7390)
+* Removed broken autoselection of last-used customer/vendor (#7527)
+* JavaScript unit tests built on Jest
+* Factoring AR/AP/GL process into separate state
+* 'ledgersmb-common.css' moved from UI/css/ to UI/css/global/ (#7316)
+* Database data consistency checks in setup.pl (#7265)
+* Architecture Decision Record (ADR) repository added
+* Detach JavaScript front-end build from repository root
+* Resolve naming conflict on 'action' between URL and form parameters
+* Continued migration of table-based pages to CSS Grid (#7344)
+* Output HTML generator (for UI) configurable with dependency injection
+* Vue UI state managed by state machines
 
 Dependency updates
-* 
+* Countless JavaScript dependency updates
 
 
 Changelog for 1.10 Series
