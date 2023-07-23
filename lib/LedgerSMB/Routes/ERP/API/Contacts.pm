@@ -568,6 +568,8 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/SIC'
+              example:
+                $ref: '#/components/examples/validSIC'
         304:
           $ref: '#/components/responses/304'
         400:
@@ -852,6 +854,24 @@ paths:
         428:
           $ref: '#/components/responses/428'
 components:
+  headers:
+    ETag:
+      description: ...
+      required: true
+      schema:
+        type: string
+  parameters:
+    if-match:
+      name: If-Match
+      in: header
+      description: ...
+      required: true
+      schema:
+        type: string
+  examples:
+    validSIC:
+        code: 511191
+        description: Greeting Card Publishers
   schemas:
     sic-code:
       type: string
