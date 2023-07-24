@@ -17,7 +17,8 @@ Scenario: Closed books disallow posting
      | 1060    |   200.00  |             |
      | 2210    |           |   200.00    |
   When I navigate the menu and select the item at "General Journal > Year End"
-   And I select the "Close Period" tab
+   And I enter "2015-11-15" into "Close As-Of"
+   And I press "Close Period"
    And I enter "2015-11-30" into "Close As-Of"
    And I press "Close Period"
   Then I can't post a transaction on 2015-11-16
@@ -25,8 +26,6 @@ Scenario: Closed books disallow posting
 
 Scenario: Reopen a closed period
   When I navigate the menu and select the item at "General Journal > Year End"
-   And I select the "Re-open Books" tab
-   And I enter "2015-11-16" into "Re-Open As Of"
    And I press "Re-open Period"
   Then I can't post a transaction on 2015-11-15
   When I post the following GL transaction on 2015-11-16:
@@ -42,7 +41,6 @@ Scenario: Reopen a closed period
 
 Scenario: Post year-end
   When I navigate the menu and select the item at "General Journal > Year End"
-   And I select the "Close Year" tab
    And I enter these values:
      | label             | value                                 |
      | Yearend           |                            2015-12-31 |

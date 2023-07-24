@@ -182,9 +182,13 @@ RETURNS bool AS
 $$
 BEGIN
         PERFORM count(*) FROM account_checkpoint WHERE end_date = in_end_date;
-
         IF NOT FOUND THEN
                 RETURN FALSE;
+        END IF;
+
+        PERFORM * FROM account_checkpoint WHERE end_date > in_end_date;
+        IF FOUND THEN
+          RAISE EXCEPTION 'Only last closed period can be reopened';
         END IF;
 
         DELETE FROM account_checkpoint WHERE end_date = in_end_date;
