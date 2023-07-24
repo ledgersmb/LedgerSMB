@@ -4,158 +4,127 @@
         id="gl-yearend"
         method="post"
         action="[% request.script %]">
-    <div id="closing-tabs"
-         data-dojo-type="dijit/layout/TabContainer"
-         style="height: 100%" >
-      <div id="closing-year"
-           title="[% text('Close Year') %]"
-           data-dojo-type="dijit/layout/ContentPane" >
-        <table width="100%">
-          <tr><th class="listtop">[% text('Closing data') %]</th></tr>
-          <tr><td> </td></tr>
-          <tr>
-    <td>
-      <table width="100%">
-        <tr>
-          <th align="right"><label
-                               for='end-date'>[% text('Yearend')
-                                                     %]</label></th>
-          <td>[% PROCESS input element_data={
-            class = 'date',
-            name = 'end_date',
-            size = 11,
-            title = user.dateformat,
-            } -%]</td>
+    <table style="width:100%">
+      <thead>
+         <tr>
+          <th colspan="3" class="listtop">Period closing dates</th>
         </tr>
         <tr>
-          <th align="right"><label
-                               for="reference">[% text('Reference')
-                                                  %]</label></th>
-          <td>[% PROCESS input element_data={
-            name = 'reference',
-            size = 20,
-            value = text('Yearend'),
-            } -%]</td>
+          <th colspan="3">
+            Post year closing
+          </th>
         </tr>
         <tr>
-          <th align="right"><label for="description">[% text('Description') %]</label></th>
-          <td>[% PROCESS textarea element_data={
-            name = 'description',
-            rows = 3,
-            cols = 50,
-            } -%]</td>
-        </tr>
-        <tr>
-          <th align="right"><label for="retention-acc-id">[% text('Retained Earnings') %]</label></th>
-          [% FOREACH opt = eoy.earnings_accounts;
-                     opt.text = opt.accno _ '--' _ opt.description;
-                           END -%]
-          <td>[% PROCESS select element_data={
-                     name = "retention_acc_id"
-                     options = eoy.earnings_accounts
-                     value_attr = "id"
-                } -%]</td>
-        </tr>
-        <tr><td colspan="2">
-            <hr size="3" noshade="noshade" />
-            [% FOREACH hidden IN eoy.hiddens.keys;
-                   PROCESS input element_data={
-                            type = 'hidden',
-                            name = hidden,
-                            value = hiddens.item(hidden)
-                   }; END %]</td>
-        </tr>
-        <tr>
-          <td align="left">
-            [% PROCESS button element_data = {
-                        name = "__action"
-                        type = "submit"
-                        class = "submit"
-                        value = "post_yearend"
-                        text = text('Post Yearend') #'
-                   } %]</td></tr>
-      </table>
-    </td>
-          </tr>
-        </table>
-
-      </div>
-
-      <div id="closing-period"
-           title="[% text('Close Period') %]"
-           data-dojo-type="dijit/layout/ContentPane" >
-        <table width="100%">
-          <tr><td>
-              <table width="100%">
-                <tr><th colspan="2"
-                        class="listtop">[% text('Close books') %]</th></tr>
-                <tr><th align="right">[% text('Books closed up to') %]</th>
-                  <td>[% eoy.closed_date %]</td>
-                <tr>
-                  <th align="right">
-                    <label for="period-close-date">[% text('Close As-Of')
-                                                         %]</label></th>
-          <td>[% PROCESS input element_data={
-            class = 'date',
-            name = 'period_close_date',
-            size = 11,
-            title = user.dateformat,
-            } -%]</td></tr>
-                <tr><td colspan="2">
-                    <hr size="3" noshade="noshade" /></td></tr>
-                <td align="left">
+          <td colspan="3">
+            <table style="margin-top:2em;margin-bottom:2em">
+              <tr>
+                <td>
+                  <label for='end-date'>[% text('Yearend') %]</label>
+                </td>
+                <td>[% PROCESS input element_data={
+                  class = 'date',
+                  name = 'end_date',
+                  size = 11,
+                  title = user.dateformat,
+                  } -%]</td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="reference">[% text('Reference') %]</label>
+                </td>
+                <td>[% PROCESS input element_data={
+                  name = 'reference',
+                  size = 20,
+                  value = text('Yearend'),
+                  } -%]</td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="description">[% text('Description') %]</label>
+                </td>
+                <td>[% PROCESS textarea element_data={
+                  name = 'description',
+                  rows = 3,
+                  cols = 50,
+                  } -%]</td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="retention-acc-id">[% text('Retained Earnings') %]</label>
+                </td>
+                [% FOREACH opt = eoy.earnings_accounts;
+                opt.text = opt.accno _ '--' _ opt.description;
+                END -%]
+                <td>[% PROCESS select element_data={
+                  name = "retention_acc_id"
+                  options = eoy.earnings_accounts
+                  value_attr = "id"
+                  } -%]</td>
+                <td>
+                  [% FOREACH hidden IN eoy.hiddens.keys;
+                  PROCESS input element_data={
+                  type = 'hidden',
+                  name = hidden,
+                  value = hiddens.item(hidden)
+                  }; END %]
                   [% PROCESS button element_data = {
-                         name = "__action"
-                         type = "submit"
-                         class = "submit"
-                         value = "close_period"
-                         text = text('Close Period') #'
-                         } %]</td></tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-      </div>
-
-
-    <div id="reopen"
-           title="[% text('Re-open Books') %]"
-           data-dojo-type="dijit/layout/ContentPane" >
-
-        <table width="100%">
-          <tr><td>
-              <table width="100%">
-                <tr><th colspan="2"
-                        class="listtop">[% text('Re-open Books')
-                                               %]</th></tr>
-<tr><th align="right">[% text('Books closed on') %]</th>
-    <td>[% eoy.closed_date %]</td></tr>
-<tr>
-  <th align="right"><label
-                       for="reopen-date">[% text('Re-Open As Of')
-                                                %]</label></th>
+                  name = "__action"
+                  type = "submit"
+                  class = "submit"
+                  value = "post_yearend"
+                  text = text('Post Yearend') #'
+                  } %]</td></tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <th>Date</th>
+          <th>Is Year-end</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
           <td>[% PROCESS input element_data={
-            class = 'date',
-            name = 'reopen_date',
-            size = 11,
-            title = user.dateformat,
-            } -%]</td></tr>
-<tr>
-<tr><td colspan="2">
-<hr size="3" noshade="noshade" /></td></tr>
-<td align="left">
-[% PROCESS button element_data = {
-        name = "__action"
-        type = "submit"
-        class = "submit"
-        value = "reopen_books"
-        text = text('Re-open Period') #'
-} %]</td></tr>
-      </table>
-    </td>
-  </tr>
-</table>
-      </div>
-    </div>
+                  class = 'date',
+                  name = 'period_close_date',
+                  size = 11,
+                  title = 'Close As-Of'
+            } -%]</td>
+          <td>
+            no
+          </td>
+          <td>
+            [% PROCESS button element_data={
+                  name = '__action'
+                  value = 'close_period'
+                  text = 'Close Period'
+                  title = 'Close only, no year-end'
+                  } %]
+          </td>
+        </tr>
+        [% FOREACH closing IN eoy.closing_dates -%]
+        <tr>
+          <td>[% closing.end_date %]</td>
+          <td>[% IF closing.is_yearend %]yes[% ELSE %]no[% END %]</td>
+          <td>[% IF loop.first;
+            PROCESS input element_data = {
+            name = 'reopen_date'
+            value = closing.end_date
+            type = 'hidden'
+            };
+            PROCESS button element_data = {
+            text = "Re-open Period"
+            value = 'reopen_books'
+            name = '__action'
+            id = '__action-' _ loop.count
+            };
+            END %]</td>
+        </tr>
+        [% END %]
+      </tbody>
+      <tfoot>
+      </tfoot>
+    </table>
   </form>
 </body>

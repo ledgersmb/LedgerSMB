@@ -185,7 +185,7 @@ on 'develop' => sub {
     requires 'Perl::Critic';
     requires 'Perl::Critic::Moose';
     requires 'Perl::Critic::Policy::Modules::RequireExplicitInclusion';
-    requires 'Pherkin::Extension::Weasel', '0.15';
+    requires 'Pherkin::Extension::Weasel', '0.16';
     requires 'Pod::ProjectDocs';
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP', '3.33';
@@ -205,9 +205,9 @@ on 'develop' => sub {
     requires 'Test2::Plugin::Feature', '0.001112';
     requires 'Test2::Plugin::pgTAP';
     requires 'Text::Diff';
-    requires 'Weasel', '0.29';
+    requires 'Weasel', '0.31';
     requires 'Weasel::Driver::Selenium2', '0.12';
-    requires 'Weasel::Session', '0.11';
+    requires 'Weasel::Session', '0.30';
     requires 'Weasel::Widgets::Dojo', '0.07';
 
     feature 'debug', 'Debug pane' =>

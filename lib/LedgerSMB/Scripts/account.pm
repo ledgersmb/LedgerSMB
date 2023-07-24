@@ -279,16 +279,29 @@ Shows the yearend screen.  No expected inputs.
 
 sub yearend_info {
     my ($request) = @_;
-    my ($closed_date) = map {
-        $_->{end_date}
-    } $request->call_procedure(funcname => 'eoy__latest_checkpoint');
     my $template = $request->{_wire}->get('ui');
+    my $dbh = $request->{dbh};
+    my @closing_dates = $dbh->selectall_array(
+        q|select end_date,
+                 exists (select *
+                           from yearend y
+                          where y.transdate = x.end_date
+                            and not y.reversed) as is_yearend
+            from (
+              select distinct end_date
+                from account_checkpoint) x
+           order by end_date desc
+           limit 10|,
+        { Slice => {} }
+        );
+    die $dbh->errstr if $dbh->err;
+
     return $template->render(
         $request, 'accounts/yearend',
         {
             request => $request,
             eoy => {
-                closed_date       => $closed_date,
+                closing_dates       => \@closing_dates,
                 earnings_accounts => [
                     $request->call_procedure(
                         funcname => 'eoy_earnings_accounts')
@@ -352,7 +365,7 @@ This reopens books as of $request->{reopen_date}
 sub reopen_books {
     my ($request) = @_;
     $request->call_procedure(
-        funcname => 'eoy__reopen_books_at',
+        funcname => 'eoy_reopen_books',
         args     => [ $request->{reopen_date} ]);
     delete $request->{reopen_date};
     return yearend_info($request);
