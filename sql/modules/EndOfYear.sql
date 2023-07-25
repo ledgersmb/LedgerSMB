@@ -181,43 +181,58 @@ CREATE OR REPLACE FUNCTION eoy_reopen_books(in_end_date date)
 RETURNS bool AS
 $$
 BEGIN
-        PERFORM count(*) FROM account_checkpoint WHERE end_date = in_end_date;
-        IF NOT FOUND THEN
-                RETURN FALSE;
-        END IF;
+  PERFORM count(*) FROM account_checkpoint WHERE end_date = in_end_date;
+  IF NOT FOUND THEN
+    RETURN FALSE;
+  END IF;
 
-        PERFORM * FROM account_checkpoint WHERE end_date > in_end_date;
-        IF FOUND THEN
-          RAISE EXCEPTION 'Only last closed period can be reopened';
-        END IF;
+  PERFORM * FROM account_checkpoint WHERE end_date > in_end_date;
+  IF FOUND THEN
+    RAISE EXCEPTION 'Only last closed period can be reopened';
+  END IF;
 
-        DELETE FROM account_checkpoint WHERE end_date = in_end_date;
+  DELETE FROM account_checkpoint WHERE end_date = in_end_date;
 
-        PERFORM count(*) FROM yearend
-        WHERE transdate = in_end_date and reversed is not true;
+  PERFORM count(*) FROM yearend
+    WHERE transdate = in_end_date and reversed is not true;
 
-        IF FOUND THEN
-                INSERT INTO gl (transdate, reference, description,
-                                approved, trans_type_code)
-                SELECT in_end_date, 'Reversing ' || reference,
-                       'Reversing ' || description,
-                       true, 'ye'
-                FROM gl WHERE id = (select trans_id from yearend
-                        where transdate = in_end_date and reversed is not true);
+  IF FOUND THEN
+    DECLARE
+      t_new_trans_id int;
+    BEGIN
+      INSERT INTO gl (transdate, reference, description, approved, trans_type_code)
+      SELECT in_end_date, 'Reversing ' || reference, 'Reversing ' || description, true, 'ye'
+        FROM gl
+       WHERE id = (select trans_id from yearend
+                    where transdate = in_end_date
+                      and reversed is not true)
+             RETURNING id INTO t_new_trans_id;
 
-                INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc,
-                                       transdate, trans_id, approved)
-                SELECT chart_id, amount_bc * -1, curr, amount_tc * -1,
-                       in_end_date, currval('id'), true
-                FROM acc_trans where trans_id = (select trans_id from yearend
-                        where transdate = in_end_date and reversed is not true);
+      UPDATE transactions
+         SET reversing = (select trans_id
+                            from yearend
+                           where transdate = in_end_date
+                             and reversed is not true)
+       WHERE id = t_new_trans_id;
 
-                UPDATE yearend SET reversed = true where transdate = in_end_date
+      INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc,
+                             transdate, trans_id, approved)
+      SELECT chart_id, amount_bc * -1, curr, amount_tc * -1,
+             in_end_date, t_new_trans_id, true
+        FROM acc_trans where trans_id = (select trans_id
+                                           from yearend
+                                          where transdate = in_end_date
+                                            and reversed is not true);
+
+      UPDATE yearend
+         SET reversed = true
+       where transdate = in_end_date
                         and reversed is not true;
-        END IF;
+    END;
+  END IF;
 
-        DELETE FROM account_checkpoint WHERE end_date = in_end_date;
-        RETURN TRUE;
+  DELETE FROM account_checkpoint WHERE end_date = in_end_date;
+  RETURN TRUE;
 END;
 $$ LANGUAGE PLPGSQL;
 

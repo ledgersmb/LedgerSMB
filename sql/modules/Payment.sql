@@ -1649,6 +1649,8 @@ END IF;
 
 t_id := currval('id');
 
+UPDATE transactions SET reversing = in_id WHERE id = t_id;
+
 INSERT INTO voucher (batch_id, trans_id, batch_class)
 VALUES (in_batch_id, t_id, CASE WHEN in_account_class = 1 THEN 4 ELSE 7 END);
 
