@@ -50,7 +50,7 @@ export async function setI18nLanguage(lang) {
             }
         }
     }
-    if ( !i18n.global.locale.value === locale ){
+    if ( i18n.global.locale.value !== locale ){
         document.querySelector("html").setAttribute("lang", locale);
         if (rtlDetect.isRtlLang(locale)) {
             document.querySelector("html").setAttribute("dir", "rtl");
