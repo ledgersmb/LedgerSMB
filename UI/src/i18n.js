@@ -15,7 +15,7 @@ function _mapLocale(locale) {
 }
 
 // eslint-disable-next-line import/no-unresolved
-import messages from '@/locales/en.json'
+import messages from '@/locales/en.json';
 import { nextTick } from "vue";
 
 const i18n = createI18n({
@@ -30,12 +30,25 @@ const i18n = createI18n({
 });
 
 export async function setI18nLanguage(lang) {
-    const locale = _mapLocale(lang.value);
+    let locale = _mapLocale(lang.value);
 
     // If the language hasn't been loaded yet
-    if (!i18n.global.availableLocales.includes(locale)) {  
-        const _messages = await import(/* webpackChunkName: "lang-[request]" */ `@/locales/${locale}.json`);
-        i18n.global.setLocaleMessage(locale, _messages.default);
+    if (!i18n.global.availableLocales.includes(locale)) {
+        try {
+            const _messages = await import(/* webpackChunkName: "lang-[request]" */ `@/locales/${locale}.json`);
+            i18n.global.setLocaleMessage(locale, _messages.default);
+        }
+        catch (e) {
+            const strippedLocale = locale.replace(/_[a-z]+/i, '');
+            try {
+                const _messages = await import(/* webpackChunkName: "lang-[request]" */ `@/locales/${strippedLocale}.json`);
+                i18n.global.setLocaleMessage(strippedLocale, _messages.default);
+                locale = strippedLocale;
+            }
+            catch (f) {
+                locale = "en";
+            }
+        }
     }
     if ( !i18n.global.locale.value === locale ){
         document.querySelector("html").setAttribute("lang", locale);
