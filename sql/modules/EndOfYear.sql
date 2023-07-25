@@ -193,10 +193,11 @@ BEGIN
         WHERE transdate = in_end_date and reversed is not true;
 
         IF FOUND THEN
-                INSERT INTO gl (reference, description, approved,
-                                trans_type_code)
-                SELECT 'Reversing ' || reference, 'Reversing ' || description,
-                        true, 'ye'
+                INSERT INTO gl (transdate, reference, description,
+                                approved, trans_type_code)
+                SELECT in_end_date, 'Reversing ' || reference,
+                       'Reversing ' || description,
+                       true, 'ye'
                 FROM gl WHERE id = (select trans_id from yearend
                         where transdate = in_end_date and reversed is not true);
 
