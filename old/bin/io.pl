@@ -1678,7 +1678,7 @@ sub ship_to {
                                 print qq|
                            <tr>
 
-                              <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio id="shiptoradio_$i" value="$i"  $checked >
+                              <td><input type=radio data-dojo-type="dijit/form/RadioButton" name="shiptoradio" id="shiptoradio_$i" value="$i"  $checked >
                               <input name="shiptolocationid_$i" id="shiptolocationid_$i" type="hidden" value="$form->{"shiptolocationid_$i"}" readonly></td>
                               <td>$form->{"shiptoaddress1_$i"}</td>
                               <td>$form->{"shiptoaddress2_$i"}</td>
@@ -1981,11 +1981,9 @@ sub setlocation_id
 
        my $loc_id_index=$form->{"shiptoradio"};
 
-       my $index="locationid_".$loc_id_index;
+       my $index="shiptolocationid_".$loc_id_index;
 
-       $form->{"locationid"}=$form->{$index};
-
-
+       $form->{"shiptolocationid"}=$form->{$index};
 }
 
 1;
