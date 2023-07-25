@@ -365,7 +365,7 @@ sub form_header {
            creditlimit creditremaining tradediscount business closedto locked
            shipped oldtransdate recurring reverse batch_id subtype tax_id
            meta_number separate_duties lock_description nextsub
-           default_reportable address city is_return cash_accno)
+           default_reportable address city is_return cash_accno shiptolocationid)
     );
 
     if ($form->{notice}){

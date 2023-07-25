@@ -1317,7 +1317,7 @@ If $is_oe is true, the value of trans_id is NULL and of oe_id is $id.
 sub add_shipto {
 
     my ($self, $id, $is_oe) = @_;
-        if (! $self->{locationid}) {
+    if (! $self->{shiptolocationid}) {
         return;
     }
 
@@ -1343,7 +1343,7 @@ sub add_shipto {
         $sth->execute(
                         $trans_id,
             $oe_id,
-            $self->{locationid}
+            $self->{shiptolocationid}
               ) || $self->dberror($query);
 
     $sth->finish;
