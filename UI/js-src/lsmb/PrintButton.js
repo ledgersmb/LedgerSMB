@@ -28,7 +28,7 @@ define([
                 event.stop(evt);
                 if (this.minimalGET) {
                     data = {
-                        action: this.get("value"),
+                        __action: this.get("value"),
                         type: f.type.value,
                         id: f.id.value,
                         workflow_id: f.workflow_id ? f.workflow_id.value : "",
