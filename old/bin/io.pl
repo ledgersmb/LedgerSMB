@@ -1676,9 +1676,8 @@ sub ship_to {
 
                                 print qq|
                            <tr>
-
-                              <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio id="shiptoradio_$i" value="$i"  $checked ></td>
-                              <input name="shiptolocationid_$i" id="shiptolocationid_$i" type="hidden" value="$form->{"shiptolocationid_$i"}" readonly>
+                              <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio id="shiptoradio_$i" value="$i"  $checked >
+                              <input name="shiptolocationid_$i" id="shiptolocationid_$i" type="hidden" value="$form->{"shiptolocationid_$i"}" readonly></td>
                               <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress1_$i size=12 maxlength=64 id="ad1_$i" value="$form->{"shiptoaddress1_$i"}" readonly></td>
                               <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress2_$i size=12 maxlength=64 id="ad2_$i" value="$form->{"shiptoaddress2_$i"}" readonly></td>
                               <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress3_$i size=12 maxlength=64 id="ad3_$i" value="$form->{"shiptoaddress3_$i"}" readonly></td>
@@ -1686,7 +1685,6 @@ sub ship_to {
                               <td><input data-dojo-type="dijit/form/TextBox" name=shiptostate_$i size=10 maxlength=32 id="st_$i" value="$form->{"shiptostate_$i"}" readonly></td>
                               <td><input data-dojo-type="dijit/form/TextBox" name=shiptozipcode_$i size=8 maxlength=10 id="zi_$i" value="$form->{"shiptozipcode_$i"}" readonly></td>
                               <td><input data-dojo-type="dijit/form/TextBox" name=shiptocountry_$i size=5 maxlength=32 id="co_$i" value="$form->{"shiptocountry_$i"}" readonly></td>
-
                              <tr>
 
                                 |;
@@ -1982,11 +1980,9 @@ sub setlocation_id
 
        my $loc_id_index=$form->{"shiptoradio"};
 
-       my $index="locationid_".$loc_id_index;
+       my $index="shiptolocationid_".$loc_id_index;
 
-       $form->{"locationid"}=$form->{$index};
-
-
+       $form->{"shiptolocationid"}=$form->{$index};
 }
 
 1;
