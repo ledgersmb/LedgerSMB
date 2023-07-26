@@ -954,10 +954,7 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
         my $formname = {
             name => 'formname',
             options => [
-                {text=> $locale->text('Sales Invoice'), value => 'invoice'},
-                {text=> $locale->text('Packing List'),  value => 'packing_list'},
-                {text=> $locale->text('Envelope'),      value => 'envelope'},
-                {text=> $locale->text('Shipping Label'), value=> 'shipping_label'},
+                {text=> $locale->text('Product Receipt'), value => 'product_receipt'},
                 ]
         };
 
