@@ -1354,17 +1354,20 @@ sub print_form {
         }
     }
 
-    # $logger->trace("\$form->{formname}=$form->{formname} \$form->{fax}=$form->{fax} \$shipto=$shipto \$form->{shiptofax}=$form->{shiptofax}");
+    $form->{shipto} = $shipto;
     if (! $shipto) {
         if (   $form->{formname} eq 'purchase_order'
-            || $form->{formname} eq 'request_quotation' )
-        {
+            || $form->{formname} eq 'request_quotation' ) {
             $form->{shiptoname}     = $form->{company};
             $form->{shiptoaddress1} = $form->{address};
         }
         else {
             if ( $form->{formname} !~ /bin_list/ ) {
-                for (@vars) {if($_ ne 'fax'){$form->{"shipto$_"}=$form->{$_}}} #fax contains myCompanyFax
+                for (@vars) {
+                    if($_ ne 'fax') {  #fax contains myCompanyFax
+                        $form->{"shipto$_"} = $form->{$_}
+                    }
+                }
             }
         }
     }
@@ -1443,6 +1446,9 @@ sub print_form {
     totalqty totalship totalweight totalparts totalservices totalweightship
 
     paid subtotal total
+
+    shipto shiptoname shiptoaddress1 shiptoaddress2 shiptocity shiptostate
+    shiptozipcode shiptocountry shiptocontact shiptophone shiptoemail
                        ))};
         my $body = $template->{output};
         utf8::encode($body) if utf8::is_utf8($body);  ## no critic
@@ -1678,7 +1684,7 @@ sub ship_to {
                                 print qq|
                            <tr>
 
-                              <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio id="shiptoradio_$i" value="$i"  $checked >
+                              <td><input type=radio data-dojo-type="dijit/form/RadioButton" name="shiptoradio" id="shiptoradio_$i" value="$i"  $checked >
                               <input name="shiptolocationid_$i" id="shiptolocationid_$i" type="hidden" value="$form->{"shiptolocationid_$i"}" readonly></td>
                               <td>$form->{"shiptoaddress1_$i"}</td>
                               <td>$form->{"shiptoaddress2_$i"}</td>
@@ -1981,11 +1987,9 @@ sub setlocation_id
 
        my $loc_id_index=$form->{"shiptoradio"};
 
-       my $index="locationid_".$loc_id_index;
+       my $index="shiptolocationid_".$loc_id_index;
 
-       $form->{"locationid"}=$form->{$index};
-
-
+       $form->{"shiptolocationid"}=$form->{$index};
 }
 
 1;

@@ -1550,7 +1550,7 @@ sub list_locations_contacts
                     WITH eca AS (select * from entity_credit_account
                                   where id = ?
                     )
-            select  id as locationid,line_one as shiptoaddress1,line_two as shiptoaddress2,line_three as shiptoaddress3,city as shiptocity,
+            select  id as shiptolocationid,line_one as shiptoaddress1,line_two as shiptoaddress2,line_three as shiptoaddress3,city as shiptocity,
                 state as shiptostate,mail_code as shiptozipcode,country as shiptocountry
             from (
                             select (eca__list_locations(id)).*
