@@ -20,6 +20,7 @@ Added functionalities
 * Database restore to user-specified schema with ledgersmb-admin (#7259)
 * GL transaction notes editable after posting (#7517)
 * Cross-referencing reversed and reversing transactions (#6715)
+* Shipto* variables added for expansion in invoice e-mails (#7543)
 
 Changed functionalities
 * Fresh new application logo and login page layout (#7317, #7319)
