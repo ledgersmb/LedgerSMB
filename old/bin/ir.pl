@@ -345,7 +345,7 @@ sub form_header {
         qw(id title vc type terms creditlimit creditremaining closedto locked
            shipped oldtransdate recurring reverse batch_id subtype form_id
            separate_duties nextsub default_reportable address city is_return
-           cash_accno)
+           cash_accno shiptolocationid)
     );
 
     print qq|
