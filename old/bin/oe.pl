@@ -167,9 +167,9 @@ sub order_links {
 
 sub prepare_order {
     my %args          = @_;
-    $form->{format}   = "postscript" if $myconfig{printer};
-    $form->{media}    = $myconfig{printer};
-    $form->{formname} = $form->{type};
+    $form->{format}   //= "postscript" if $myconfig{printer};
+    $form->{media}    //= $myconfig{printer};
+    $form->{formname} //= $form->{type};
     $form->{sortby} ||= "runningnumber";
     $form->{currency} =~ s/ //g;
     $form->{oldcurrency} = $form->{currency};
