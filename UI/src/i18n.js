@@ -51,11 +51,13 @@ export async function setI18nLanguage(lang) {
         }
     }
     if ( i18n.global.locale.value !== locale ){
-        document.querySelector("html").setAttribute("lang", locale);
-        if (rtlDetect.isRtlLang(locale)) {
-            document.querySelector("html").setAttribute("dir", "rtl");
-        }
         i18n.global.locale.value = locale;
+    }
+    document.querySelector("html").setAttribute("lang", locale);
+    if (rtlDetect.isRtlLang(locale)) {
+        document.querySelector("html").setAttribute("dir", "rtl");
+    } else {
+        document.querySelector("html").removeAttribute("dir");
     }
     return nextTick();
 }
