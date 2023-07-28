@@ -868,7 +868,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
     <td>
 |;
 
-    IIAA->print_wf_history_table($form);
+    IIAA->print_wf_history_table($form, 'Order/Quote');
 
     print qq|
     </td>
