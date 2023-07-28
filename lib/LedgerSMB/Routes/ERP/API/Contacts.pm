@@ -508,6 +508,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/SIC'
+                    example:
+                      $ref: '#/components/examples/validSIC'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -568,8 +570,9 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/SIC'
-              example:
-                $ref: '#/components/examples/validSIC'
+              examples:
+                validSIC:
+                  $ref: '#/components/examples/validSIC'
         304:
           $ref: '#/components/responses/304'
         400:
@@ -870,7 +873,10 @@ components:
         type: string
   examples:
     validSIC:
-        code: 511191
+      summary: Valid SIC
+      description: Standard Industry Code
+      value:
+        code: "511191"
         description: Greeting Card Publishers
   schemas:
     sic-code:
