@@ -890,7 +890,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
     <td>
 |;
 
-    IIAA->print_wf_history_table($form);
+    IIAA->print_wf_history_table($form, 'AR/AP');
 
     print qq|
     </td>

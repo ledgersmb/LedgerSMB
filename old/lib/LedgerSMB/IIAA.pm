@@ -322,7 +322,7 @@ sub prepare_invoice {
 }
 
 sub print_wf_history_table {
-    my ($self, $form) = @_;
+    my ($self, $form, $type) = @_;
     my $locale = $form->{_locale};
 
     print sprintf(q|
@@ -332,12 +332,8 @@ sub print_wf_history_table {
          <tbody>
 |, $locale->text('Action'), $locale->text('User Name'), $locale->text('Time'));
     # insert history items
-    my ($wf_id) =
-        $form->{dbh}->selectrow_array(
-            q{select workflow_id from transactions where id = ?},
-            {}, $form->{id});
     my $wf = $form->{_wire}->get('workflows')
-        ->fetch_workflow( 'AR/AP', $wf_id );
+        ->fetch_workflow( $type, $form->{workflow_id} );
     if ($wf) {
         my @history = $wf->get_history;
         for my $h (sort { $a->id <=> $b->{id} } @history) {
