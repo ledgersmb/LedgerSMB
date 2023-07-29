@@ -287,6 +287,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Country'
+                    example:
+                      $ref: '#/components/examples/validCountry'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -347,6 +349,9 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Country'
+              examples:
+                validCountry:
+                  $ref: '#/components/examples/validCountry'
         304:
           $ref: '#/components/responses/304'
         400:
@@ -454,3 +459,10 @@ components:
           $ref: '#/components/schemas/country-code'
         name:
           type: string
+  examples:
+    validCountry:
+      summary: Valid Country
+      description: Netherlands entry
+      value:
+        code: NL
+        name: Netherlands
