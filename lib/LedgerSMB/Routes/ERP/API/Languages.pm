@@ -286,6 +286,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Language'
+                    example:
+                      $ref: '#/components/examples/validLanguage'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -349,6 +351,9 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Language'
+              examples:
+                validLanguage:
+                  $ref: '#/components/examples/validLanguage'
         304:
           $ref: '#/components/responses/304'
         400:
@@ -442,6 +447,7 @@ components:
     language-code:
       type: string
       pattern: '^[a-z]{2}(_[A-Z]{2})?$'
+      example: fr_CA
     Language:
       type: object
       required:
@@ -452,4 +458,12 @@ components:
           $ref: '#/components/schemas/language-code'
         description:
           type: string
+          example: French (Canada)
+  examples:
+    validLanguage:
+      summary: Valid Language
+      description: French Canadian entry
+      value:
+        code: fr_CA
+        description: French (Canada)
 
