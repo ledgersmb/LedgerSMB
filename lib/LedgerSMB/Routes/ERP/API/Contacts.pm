@@ -876,8 +876,8 @@ components:
       summary: Valid SIC
       description: Standard Industry Code
       value:
-        code: "511191"
-        description: Greeting Card Publishers
+        code: "541510"
+        description: Design of computer systems
   schemas:
     sic-code:
       type: string

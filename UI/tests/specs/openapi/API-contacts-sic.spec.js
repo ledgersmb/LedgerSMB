@@ -16,6 +16,10 @@ import { server } from '../../common/mocks/server.js'
 // Load an OpenAPI file (YAML or JSON) into this plugin
 const openapi = process.env.PWD.replace("/UI","");
 jestOpenAPI( openapi + "/openapi/API.yaml");
+
+// Load the API definition
+const API_yaml = require (openapi + "/openapi/API.yaml");
+
 // Set API version to use
 const api = "erp/api/v0";
 
@@ -130,6 +134,24 @@ describe("Adding the IT SIC", () => {
 
         // Assert that the HTTP response satisfies the OpenAPI spec
         expect(res.data).toSatisfySchemaInApiSpec("SIC");
+    });
+});
+
+describe("Validate against the example SIC", () => {
+    it("GET /contacts/sic/541510 should validate IT SIC", async () => {
+        let res = await axios.get(
+            serverUrl + "/" + api + "/contacts/sic/541510",
+            {
+                headers: headers
+            }
+        );
+        expect(res.status).toEqual(StatusCodes.OK);
+
+        // Pick the example
+        const sicExample = API_yaml.components.examples.validSIC.value;
+
+        // Assert that the response matches the example in the spec
+        expect(res.data).toEqual(sicExample);
     });
 });
 
