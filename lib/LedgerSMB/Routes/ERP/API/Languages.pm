@@ -466,4 +466,3 @@ components:
       value:
         code: fr_CA
         description: French (Canada)
-
