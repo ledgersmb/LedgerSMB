@@ -16,6 +16,10 @@ import { server } from '../../common/mocks/server.js'
 // Load an OpenAPI file (YAML or JSON) into this plugin
 const openapi = process.env.PWD.replace("/UI","");
 jestOpenAPI( openapi + "/openapi/API.yaml");
+
+// Load the API definition
+const API_yaml = require (openapi + "/openapi/API.yaml");
+
 // Set API version to use
 const api = "erp/api/v0";
 
@@ -102,8 +106,8 @@ describe("Retrieving all products/warehouses with old syntax should fail", () =>
     });
 });
 
-describe("Retrieve non-existant Pricegroup1", () => {
-    it("GET /products/warehouses/nv should not retrieve Pricegroup1", async () => {
+describe("Retrieve non-existant Warehouse1", () => {
+    it("GET /products/warehouses/nv should not retrieve Warehouse1", async () => {
         await expect(
             axios.get(serverUrl + "/" + api + "/products/warehouses/1", {
                 headers: headers
@@ -114,12 +118,12 @@ describe("Retrieve non-existant Pricegroup1", () => {
     });
 });
 
-describe("Adding the new Price Group", () => {
-    it("POST /products/warehouses/Pricegroup1 should allow adding Pricegroup1", async () => {
+describe("Adding the new Warehouse", () => {
+    it("POST /products/warehouses/Warehouse1 should allow adding Warehouse1", async () => {
         let res = await axios.post(
             serverUrl + "/" + api + "/products/warehouses",
             {
-                description: "Pricegroup1"
+                description: "Warehouse1"
             },
             {
                 headers: headers
@@ -128,12 +132,27 @@ describe("Adding the new Price Group", () => {
         expect(res.status).toEqual(StatusCodes.CREATED);
 
         // Assert that the HTTP response satisfies the OpenAPI spec
-        expect(res.data).toSatisfySchemaInApiSpec("Pricegroup");
+        expect(res.data).toSatisfySchemaInApiSpec("Warehouse");
     });
 });
 
-describe("Modifying the new Price Group", () => {
-    it("PUT /products/warehouses/Pricegroup1 should allow updating Pricegroup1", async () => {
+describe("Validate against the example Warehouse", () => {
+    it("GET /products/warehouses/1", async () => {
+        let res = await axios.get(serverUrl + "/" + api + "/products/warehouses/1", {
+            headers: headers
+        });
+        expect(res.status).toEqual(StatusCodes.OK);
+
+        // Pick the example
+        const warehouseExample = API_yaml.components.examples.validWarehouse.value;
+
+        // Assert that the response matches the example in the spec
+        expect(res.data).toEqual(warehouseExample);
+    });
+});
+
+describe("Modifying the new Warehouse", () => {
+    it("PUT /products/warehouses/Warehouse1 should allow updating Warehouse1", async () => {
         let res = await axios.get(
             serverUrl + "/" + api + "/products/warehouses/1",
             {
@@ -158,14 +177,14 @@ describe("Modifying the new Price Group", () => {
         expect(res).toSatisfyApiSpec();
 
         // Assert that the HTTP response satisfies the OpenAPI spec
-        expect(res.data).toSatisfySchemaInApiSpec("Pricegroup");
+        expect(res.data).toSatisfySchemaInApiSpec("Warehouse");
     });
 });
 
 /*
  * Not implemented yet
-describe("Updating the new Pricegroup1", () => {
-    it("PATCH /products/warehouses/nv should allow updating Pricegroup1", async () => {
+describe("Updating the new Warehouse1", () => {
+    it("PATCH /products/warehouses/nv should allow updating Warehouse1", async () => {
         let res = await axios.get(serverUrl + "/" + api + "/products/warehouses/PriceGroup1", {
             headers: headers
         });
@@ -174,7 +193,7 @@ describe("Updating the new Pricegroup1", () => {
         res = await axios.patch(
             serverUrl + "/" + api + "/products/warehouses/nv",
             {
-                description: "Pricegroup1"
+                description: "Warehouse1"
             },
             {
                 headers: { ...headers, "If-Match": res.headers.etag }
@@ -186,13 +205,13 @@ describe("Updating the new Pricegroup1", () => {
         expect(res).toSatisfyApiSpec();
 
         // Assert that the HTTP response satisfies the OpenAPI spec
-        expect(res.data).toSatisfySchemaInApiSpec("Pricegroup");
+        expect(res.data).toSatisfySchemaInApiSpec("Warehouse");
     });
 });
 */
 
 describe("Not removing the new Price Group", () => {
-    it("DELETE /products/warehouses/PriceGroup1 should allow deleting Pricegroup1", async () => {
+    it("DELETE /products/warehouses/PriceGroup1 should allow deleting Warehouse1", async () => {
         let res = await axios.get(
             serverUrl + "/" + api + "/products/warehouses/1",
             {

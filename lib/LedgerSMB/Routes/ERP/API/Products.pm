@@ -674,6 +674,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Warehouse'
+                    example:
+                      $ref: '#/components/examples/validWarehouse'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -736,6 +738,9 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Warehouse'
+              examples:
+                validWarehouse:
+                  $ref: '#/components/examples/validWarehouse'
         304:
           $ref: '#/components/responses/304'
         400:
@@ -866,3 +871,10 @@ components:
       properties:
         description:
           type: string
+  examples:
+    validWarehouse:
+      summary: Valid Warehouse
+      description: Warehouse entry
+      value:
+        id: 1
+        description: Warehouse1
