@@ -16,6 +16,10 @@ import { server } from '../../common/mocks/server.js'
 // Load an OpenAPI file (YAML or JSON) into this plugin
 const openapi = process.env.PWD.replace("/UI","");
 jestOpenAPI( openapi + "/openapi/API.yaml");
+
+// Load the API definition
+const API_yaml = require (openapi + "/openapi/API.yaml");
+
 // Set API version to use
 const api = "erp/api/v0";
 
@@ -114,6 +118,21 @@ describe("Retrieve English language", () => {
 
         // Assert that the HTTP response satisfies the OpenAPI spec
         expect(res.data).toSatisfySchemaInApiSpec("Language");
+    });
+});
+
+describe("Retrieve the French Canadian language", () => {
+    it("GET /language/fr_CA", async () => {
+        let res = await axios.get(serverUrl + "/" + api + "/languages/fr_CA", {
+            headers: headers
+        });
+        expect(res.status).toEqual(StatusCodes.OK);
+
+        // Pick the example
+        const languageExample = API_yaml.components.examples.validLanguage.value;
+
+        // Assert that the response matches the example in the spec
+        expect(res.data).toEqual(languageExample);
     });
 });
 
