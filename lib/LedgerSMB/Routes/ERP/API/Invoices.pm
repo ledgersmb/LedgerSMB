@@ -1364,66 +1364,119 @@ components:
     Invoice:
       description: ...
       allOf:
-        - $ref: '#/components/schemas/newInvoice'
+        # TODO: Fix inheritance. The definitions below replace the ones
+        # TODO: defined in newInvoice, not complement them
+        #- $ref: '#/components/schemas/newInvoice'
         - type: object
           properties:
             eca:
               type: object
               properties:
+                credit_limit:
+                  type: object
+                  properties:
+                    available:
+                      type: number
+                    total:
+                      type: number
+                    used:
+                      type: number
+                description:
+                  type: string
+                  nullable: true
                 entity:
                   type: object
                   properties:
-                    credit_limit:
-                      type: object
-                      properties:
-                        available:
-                          type: number
-                        total:
-                          type: number
-                        used:
-                          type: number
-                    description:
+                    control_code:
                       type: string
-                    entity:
-                      type: object
-                      properties:
-                        control-code:
-                          type: string
-                        name:
-                          type: string
-                    id:
-                      type: number
-                    pay_to_name:
+                    name:
                       type: string
+                id:
+                  type: number
+                number:
+                  type: string
+                  minLength: 1
+                pay_to_name:
+                  type: string
+                  nullable: true
+                type:
+                  type: string
+                  enum:
+                    - customer
+                    - vendor
             account:
               type: object
               properties:
+                accno:
+                  type: string
+                  minLength: 1
                 description:
                   type: string
+                  minLength: 2
+            description:
+              type: string
+              nullable: true
             lines:
               type: array
               items:
                 type: object
                 properties:
+                  delivery_date:
+                    type: string
+                    format: date
+                    nullable: true
+                  description:
+                    type: string
+                  discount:
+                    description: |
+                      A value of 10 means the customer gets a 10% discount,
+                      if discount_type has a value of '%'
+                    type: number
+                    minimum: 0
+                    maximum: 100
+                  discount_type:
+                    type: string
+                    enum:
+                      - '%'
+                  id:
+                    type: number
+                  item:
+                    type: number
+                  notes:
+                    type: string
+                    nullable: true
+                  price:
+                    type: number
+                  price_fixated:
+                    type: boolean
+                    default: false
+                  unit:
+                    type: string
+                  qty:
+                    type: number
+                    default: 1
+                  serialnumber:
+                    type: string
+                    nullable: true
                   part:
                     type: object
+                    required:
+                      - number
                     properties:
                       _self:
                         type: string
+                      number:
+                        type: string
+                        minLength: 1
+                      description:
+                        type: string
+                      onhand:
+                        type: string
+                      unit:
+                        type: string
+                      weight:
+                        type: string
                   total:
-                    type: number
-            taxes:
-              type: object
-              additionalProperties:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  rate:
-                    type: number
-                    minimum: 0
-                    maximum: 1
-                  calculated-amount:
                     type: number
             payments:
               type: array
@@ -1435,6 +1488,40 @@ components:
                     properties:
                       description:
                         type: string
+            taxes:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  tax:
+                    type: object
+                    required:
+                      - category
+                    properties:
+                      category:
+                        type: string
+                      rate:
+                        type: string
+                      name:
+                        type: string
+                  base-amount:
+                    type: number
+                  amount:
+                    type: number
+                  calculated-amount:
+                    type: number
+                  source:
+                    type: string
+                  memo:
+                    type: string
+            workflow:
+              type: object
+              properties:
+                actions:
+                  type: array
+                state:
+                  type: string
+                  enum: [INITIAL, SAVED, POSTED, ONHOLD, VOIDED, REVERSED, DELETED]
   examples:
     validInvoice:
       summary: Example Invoice
