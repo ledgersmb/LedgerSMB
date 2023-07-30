@@ -499,6 +499,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Pricegroup'
+                    example:
+                      $ref: '#/components/examples/validPricegroup'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -561,6 +563,9 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/Pricegroup'
+              examples:
+                validPricegroup:
+                  $ref: '#/components/examples/validPricegroup'
         304:
           $ref: '#/components/responses/304'
         400:
@@ -872,6 +877,12 @@ components:
         description:
           type: string
   examples:
+    validPricegroup:
+      summary: Valid Pricegroup
+      description: Pricegroup entry
+      value:
+        id: 1
+        description: Pricegroup1
     validWarehouse:
       summary: Valid Warehouse
       description: Warehouse entry
