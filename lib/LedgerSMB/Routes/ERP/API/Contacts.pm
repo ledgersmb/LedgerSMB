@@ -697,6 +697,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/BusinessType'
+                    example:
+                      $ref: '#/components/examples/validBusinessType'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -757,6 +759,9 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/BusinessType'
+              examples:
+                validBusinessType:
+                  $ref: '#/components/examples/validBusinessType'
         304:
           $ref: '#/components/responses/304'
         400:
@@ -878,6 +883,13 @@ components:
       value:
         code: "541510"
         description: Design of computer systems
+    validBusinessType:
+      summary: Valid Business Type
+      description: Business Type Entry
+      value:
+        id: 1
+        description: Big customer
+        discount: 0.05
   schemas:
     sic-code:
       type: string
