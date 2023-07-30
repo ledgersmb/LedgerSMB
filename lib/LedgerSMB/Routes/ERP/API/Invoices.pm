@@ -467,12 +467,13 @@ sub _post_invoices {
     {
         $inv->{lines} = [];
         for my $line ($body->{lines}->@*) {
+            $line->{deliverydate} = delete $line->{delivery_date};
             # set the optional fields
             my $inv_line = {};
             push $inv->{lines}->@*, $inv_line;
 
             foreach my $field (qw( description price price_fixated unit qty
-                               discount discount_type taxform delivery_date note
+                               discount discount_type taxform deliverydate note
                                serialnumber group )) {
                 if (exists $line->{$field}
                     and defined $line->{$field}
@@ -480,6 +481,7 @@ sub _post_invoices {
                     $inv_line->{$field} = $line->{$field};
                 }
             }
+
             $inv_line->{qty}   = $inv_line->{qty} // 1;
 
             # determine price and description
