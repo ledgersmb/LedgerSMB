@@ -111,7 +111,7 @@ weight numeric,
 notes text,
 image text,
 drawing text,
-microfische text,
+microfiche text,
 make text,
 model text
 );
