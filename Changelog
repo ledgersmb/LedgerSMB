@@ -3,6 +3,16 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.20
+* Increase maximum comparison periods from 9 to 13 (#7468)
+* Fix check to complement missing GIFI on SQL-Ledger migration (#7500)
+* Fix CSV imports with non-ascii, valid UTF-8, characters (#7511)
+* Fix multi-currency migration from SQL-Ledger 3.0 (#7519)
+* Fix transaction date of year-end reversals (#6852)
+* Save 'Ship To' data on invoices (#7453)
+* Fix 'Microfiche' column appearing empty on Goods search (#7558)
+
+
 Changelog for 1.10.19
 * Fix handling of updates with consecutive, exactly equal pages (#7464)
 
