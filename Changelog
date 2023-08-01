@@ -3,6 +3,14 @@
 Changelog for 1.9 Series
 Released 2021-09-24
 
+Changelog for 1.9.30
+* Fix check for missing GIFI on SQL-Ledger migration (#7501)
+* Fix CSV import failure on non-ascii, but valid UTF-8, character (#7512)
+* Fix transaction date on year-end reversal (#7540)
+* Save 'Ship To' selection on invoices (#7546)
+* Fix 'Microfiche' appearing empty on Goods search (#7559)
+
+
 Changelog for 1.9.29
 * Fix regression since 1.9.27 upgrading old companies while renaming setting
 * Fix selection of default AR/AP accounts while importing databases (#7419)
