@@ -197,7 +197,8 @@
           "jest/prefer-expect-assertions": "off",
           "jest/no-commented-out-tests": "off",
           "no-console": "off",
-          "camelcase": "off"
+          "camelcase": "off",
+          "vue/no-setup-props-destructure": "off"
         }
       }
     ],
