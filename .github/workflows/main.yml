@@ -88,9 +88,13 @@ jobs:
           path: UI/js
           key: dojo-${{ hashFiles('UI/js-src/**', 'UI/src/**', 'UI/css/**','UI/**/*.html','doc/sources/**') }}
 
+      - name: Linting
+        run: |
+          make lint
+
       - name: Build Dojo
         run: |
-          make dojo
+          make js
           make readme
         if: steps.cache-dojo.outputs.cache-hit != 'true' ||
             steps.cache-node_modules.outputs.cache-hit != 'true'

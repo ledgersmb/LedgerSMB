@@ -17,7 +17,6 @@ if (TARGET !== "readme") {
     const CopyWebpackPlugin = require("copy-webpack-plugin");
     const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
     const DojoWebpackPlugin = require("dojo-webpack-plugin");
-    const ESLintPlugin = require("eslint-webpack-plugin");
     const HtmlWebpackPlugin = require("html-webpack-plugin");
     const MiniCssExtractPlugin = require("mini-css-extract-plugin");
     const StylelintPlugin = require("stylelint-webpack-plugin");
@@ -172,13 +171,6 @@ if (TARGET !== "readme") {
         verbose: false
     }; // delete all files in the js directory without deleting this folder
 
-    const ESLintPluginOptions = {
-        files: ["**/*.js","**/*.vue"],
-        exclude: ["node_modules", "./bootstrap.js"],
-        emitError: prodMode,
-        emitWarning: !prodMode
-    };
-
     const StylelintPluginOptions = {
         files: "**/*.css"
     };
@@ -269,7 +261,6 @@ if (TARGET !== "readme") {
 
     var pluginsProd = [
         // Lint the sources
-        new ESLintPlugin(ESLintPluginOptions),
         new StylelintPlugin(StylelintPluginOptions),
 
         // Add Vue

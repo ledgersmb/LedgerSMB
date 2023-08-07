@@ -97,6 +97,9 @@ js: npm_install
 jsdev: npm_install
 	$(DOCKER_CMD) $(SHELL) -c 'cd UI && npm run build:dev'
 
+lint:
+	$(DOCKER_CMD) $(SHELL) -c 'cd UI && npm run lint'
+
 jslint:
 ifneq ($(origin FIX),undefined)
 	$(DOCKER_CMD) $(SHELL) -c 'cd UI && npm run lint:js:fix'
