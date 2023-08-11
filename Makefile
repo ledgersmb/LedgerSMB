@@ -22,7 +22,7 @@ DOCKER_CMD=docker exec -ti $(CONTAINER)
 endif
 endif
 
-PHERKIN_OPTS ?= --tags ~@wip $(PHERKIN_EXTRA_OPTS)
+PHERKIN_OPTS ?= --tags 'not @wip' $(PHERKIN_EXTRA_OPTS)
 
 
 
@@ -167,8 +167,7 @@ else
 	PGOPTIONS="-c search_path=xyz" yath test --no-color --retry=2 \
             --pgtap-dbname=lsmb_test --pgtap-username=postgres \
             --pgtap-psql=.circleci/psql-wrap \
-            --Feature-tags=~@wip \
-            --Feature-tags=~@extended \
+            --Feature-tags='not (@wip or @extended)' \
             $(TESTS)
 endif
 
