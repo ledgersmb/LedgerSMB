@@ -180,7 +180,7 @@ sub pre_scenario {
     $stash->{"the admin password"} = $self->admin_user_password;
 
     if ($self->last_feature_stash->{"the company"}
-        && any { $_ eq 'one-db' } @{$scenario->tags}) {
+        && any { $_ eq '@one-db' } @{$scenario->tags}) {
         $stash->{"the company"} = $self->last_feature_stash->{"the company"};
     }
 }
