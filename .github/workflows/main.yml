@@ -53,15 +53,14 @@ jobs:
           # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
           node-version: '16'
 
-      - name: Cache npm files
-        id: cache-npm
+      - name: Cache node_module
+        id: cache-node_modules
         uses: actions/cache@v3
         with:
           path: |
-             ~/.npm
              UI/node_modules
           key: |
-            modules-${{ hashFiles('**/package-lock.json') }}
+            modules-${{ hashFiles('UI/yarn.lock') }}
 
       - name: Cache Dojo
         id: cache-dojo
@@ -72,6 +71,7 @@ jobs:
 
       - name: Build Dojo
         run: |
+          make js_deps_install
           make lint
           make js
           make readme
