@@ -121,6 +121,74 @@ jobs:
             --feature=xls
             --feature=edi
 
+  test-pure-perl:
+    runs-on: ubuntu-latest
+    needs: build-perl-env
+    strategy:
+      matrix:
+        include:
+          - perl: "5.34"
+            JOB_COUNT: 5
+            COVERAGE: 1
+
+          - perl: "5.32"
+            JOB_COUNT: 5
+
+    env:
+      DEVEL_COVER_OPTIONS: -silent,1,+ignore,^x?t,+ignore,^utils,+ignore,local/,+ignore,^/usr/,+ignore,^/opt/,+ignore,\\.lttc,+ignore,starman\\b,-summary,1
+      RELEASE_TESTING: 1
+
+    steps:
+      - name: Install TinyTex
+        uses: r-lib/actions/setup-tinytex@v2
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Perl environment
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl }}
+          install-modules-with: cpm
+          install-modules: |
+            Devel::Cover
+            Devel::Cover::Report::Coveralls
+          # Features and Devel modules
+          install-modules-args: >
+            --notest
+            --resolver=metacpan
+            --with-develop
+            --feature=starman
+            --feature=latex-pdf-ps
+            --feature=openoffice
+            --feature=xls
+            --feature=edi
+
+      - name: Setup coverage
+        run: |
+          echo "STARMAN_DEVEL_COVER_OPTIONS=-MDevel::Cover=${{ env.DEVEL_COVER_OPTIONS }} -MSyntax::Keyword::Try::Deparse" >> $GITHUB_ENV
+          echo "YATH_DEVEL_COVER_OPTIONS=--cover=${{ env.DEVEL_COVER_OPTIONS }}" >> $GITHUB_ENV
+          echo "JSCOVERAGE=--coverage" >> $GITHUB_ENV
+        if: ${{ matrix.COVERAGE }}
+
+      - name: Pre-run installation steps
+        run: |
+          sudo apt -q -y install gettext
+
+          # Install missing TeX packages
+          tlmgr update --self
+          tlmgr install koma-script
+
+      # Do perl tests
+      - name: Run Pure Perl tests
+        run: |
+          make test TESTS="--no-progress --job-count $JOB_COUNT $YATH_DEVEL_COVER_OPTIONS t/ xt/[0-3]*"
+        env:
+          LSMB_TEST_DB: 1
+          DB_TESTING: 1
+          JOB_COUNT: ${{ matrix.JOB_COUNT }}
+          PERL5OPT: -MSyntax::Keyword::Try::Deparse
+
 
   test-database:
     runs-on: ubuntu-latest
@@ -169,8 +237,8 @@ jobs:
             --feature=xls
             --feature=edi
 
-      # Do perl tests
-      - name: Run Perl tests
+      # Do database tests
+      - name: Run pgTAP database tests
         run: |
           make devtest TESTS="--no-progress --job-count $JOB_COUNT xt/42-*.pg"
         env:
@@ -194,6 +262,7 @@ jobs:
       LSMB_BASE_URL: http://lsmb:5000
       PSGI_BASE_URL: http://lsmb:5762
       REMOTE_SERVER_ADDRESS: 127.0.0.1
+      DEVEL_COVER_OPTIONS: -silent,1,+ignore,^x?t,+ignore,^utils,+ignore,local/,+ignore,^/usr/,+ignore,^/opt/,+ignore,\\.lttc,+ignore,starman\\b,-summary,1
 
     services:
       # Label used to access the service container
@@ -266,7 +335,7 @@ jobs:
       - name: Starting 'starman'
         run: |
           PERL5OPT="$STARMAN_DEVEL_COVER_OPTIONS" \
-          starman --preload-app --pid starman.pid --workers $JOB_COUNT \
+          starman --preload-app --pid starman.pid --workers 2 \
                   --max-requests 5000 --error-log logs/starman-error.log \
                   -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
 
@@ -306,20 +375,10 @@ jobs:
         if: ${{ matrix.COVERAGE }}
 
 
-
-
-
-  # This workflow contains a single job called "build"
   test-remainder:
-
     if: (github.event.action != 'closed' || github.event.pull_request.merged == true)
-
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
     needs: [ webpack, build-perl-env ]
-
-    # Don't let it run for more than an hour
     timeout-minutes: 60
 
     # Service containers to run
@@ -331,19 +390,19 @@ jobs:
             postgres: "14"
             BROWSER: "chrome"
             COVERAGE: 1
-            JOB_COUNT: 2
+            JOB_COUNT: 3
 
           - perl: "5.32"
             postgres: "15"
             BROWSER: "firefox"
             COA_TESTING: 1
-            JOB_COUNT: 5
+            JOB_COUNT: 7
 
           - perl: "5.32"
             postgres: "13"
             BROWSER: "operablink"
             DB_TESTING: 1
-            JOB_COUNT: 5
+            JOB_COUNT: 7
 
     services:
       # Label used to access the service container
@@ -482,7 +541,7 @@ jobs:
       - name: Starting 'starman'
         run: |
           PERL5OPT="$STARMAN_DEVEL_COVER_OPTIONS" \
-          starman --preload-app --pid starman.pid --workers $JOB_COUNT \
+          starman --preload-app --pid starman.pid --workers 2 \
                   --max-requests 5000 --error-log logs/starman-error.log \
                   -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
 
@@ -492,9 +551,9 @@ jobs:
         if: ${{ matrix.BROWSER == 'chrome' && 0 }}
 
       # Do perl tests
-      - name: Run Perl tests
+      - name: Run Perl + Database + Browser tests
         run: |
-          make devtest TESTS="--no-progress --job-count $JOB_COUNT $YATH_DEVEL_COVER_OPTIONS t xt"
+          make devtest TESTS="--no-progress --job-count $JOB_COUNT $YATH_DEVEL_COVER_OPTIONS xt/4{[01],[3-9]}* xt/[5-9]*"
         env:
           LSMB_TEST_DB: 1
           COA_TESTING: ${{ matrix.COA_TESTING }}
@@ -505,18 +564,21 @@ jobs:
       # Make Coverage appear from root instead of UI to integrate in Coveralls
       - name: Fix UI Coverage report
         run: |
-          sed -i -E "s~^SF:(js-src|src)/~SF:UI/\1/~g" UI/coverage/lcov.info
+          if [[ -e UI/coverage/lcov.info ]]
+          then
+            sed -i -E "s~^SF:(js-src|src)/~SF:UI/\1/~g" UI/coverage/lcov.info
+          fi
         if: ${{ matrix.COVERAGE }}
 
-      # Send UI coverage before Perl
-      - name: Upload UI coverage data
-        uses: coverallsapp/github-action@v2.2.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          flag-name: ui
-          parallel: true
-          file: ${{ github.workspace }}/UI/coverage/lcov.info
-        if: ${{ matrix.COVERAGE }}
+#      # Send UI coverage before Perl
+#      - name: Upload UI coverage data
+#        uses: coverallsapp/github-action@v2.2.1
+#        with:
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          flag-name: ui
+#          parallel: true
+#          file: ${{ github.workspace }}/UI/coverage/lcov.info
+#        if: ${{ matrix.COVERAGE }}
 
         # Upload coverage data if needed
       - name: Upload coverage data
@@ -549,7 +611,7 @@ jobs:
   close-parallel-coverage:
     runs-on: ubuntu-latest
     if: always()
-    needs: [ test-remainder, test-webservices ]
+    needs: [ test-pure-perl, test-remainder, test-webservices ]
     steps:
       - name: Close parallel UI coverage data
         uses: coverallsapp/github-action@v2.2.1

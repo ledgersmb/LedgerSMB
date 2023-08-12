@@ -153,7 +153,7 @@ pot:
 
 test: TESTS ?= t/
 test:
-	$(DOCKER_CMD) prove --time --recurse $(TESTS)
+	$(DOCKER_CMD) yath test --no-color $(TESTS)
 
 devtest: TESTS ?= t/ xt/
 devtest: PGTAP_OPTS ?= --pgtap-dbname=lsmb_test --pgtap-username=postgres \
