@@ -231,19 +231,19 @@ jobs:
         uses: shogo82148/actions-setup-perl@v1
         with:
           perl-version: ${{ matrix.perl }}
-          install-modules-with: cpanm
+          install-modules-with: cpm
           install-modules: |
             Devel::Cover
             Devel::Cover::Report::Coveralls
           # Features and Devel modules
           install-modules-args: >
-            --metacpan
+            --resolver=metacpan
             --with-develop
-            --with-feature=starman
-            --with-feature=latex-pdf-ps
-            --with-feature=openoffice
-            --with-feature=xls
-            --with-feature=edi
+            --feature=starman
+            --feature=latex-pdf-ps
+            --feature=openoffice
+            --feature=xls
+            --feature=edi
 
       - uses: actions/download-artifact@v3
         with:
