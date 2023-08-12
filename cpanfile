@@ -173,7 +173,6 @@ on 'develop' => sub {
     requires 'Capture::Tiny';
     requires 'DBD::Mock', '1.58';
     requires 'File::Grep';
-    requires 'File::Util';
     requires 'HTML::Lint';
     requires 'HTML::Lint::Parser', '2.26';
     requires 'HTML::Lint::Pluggable';

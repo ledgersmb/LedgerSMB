@@ -16,8 +16,9 @@ use Test2::Require::Module 'Test::Pod::Coverage';
 
 use Test::Pod::Coverage;
 
+use Config;
 use File::Find;
-use File::Util;
+use File::Spec;
 use Log::Log4perl qw(:easy);
 Log::Log4perl->easy_init($OFF);
 
@@ -104,11 +105,10 @@ for ('LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894') {
 }
 
 
-my $sep = File::Util::SL();
 for my $f (@on_disk) {
     $f =~ s/\.pm//g;
     $f =~ s#lib/##g;
-    $f =~ s#\Q$sep\E#::#g;
+    $f = join('::', File::Spec->splitdir( $f ) );
 
     module_covered $f;
 }
