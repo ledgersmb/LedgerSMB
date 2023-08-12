@@ -5,9 +5,9 @@ DIST_VER=$(shell git rev-parse --short HEAD)
 DIST_DIR=/tmp
 
 ifeq ($(CI),true)
-	NPM_COMMAND=ci
+	YARN_COMMAND=install --immutable
 else
-	NPM_COMMAND=install
+	YARN_COMMAND=install
 endif
 
 ifeq ($(DIST_VER),travis)
@@ -82,33 +82,33 @@ dbdocs:
 	$(DOCKER_CMD) dot -Tsvg doc/database/ledgersmb.dot -o doc/database/ledgersmb.svg
 	$(DOCKER_CMD) dot -Tpdf doc/database/ledgersmb.dot -o doc/database/ledgersmb.pdf
 
-npm_install:
-	$(DOCKER_CMD) $(SHELL) -c 'cd UI && npm $(NPM_COMMAND) --no-save'
+js_deps_install:
+	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn $(YARN_COMMAND)'
 
-dojo: npm_install
-	$(DOCKER_CMD) $(SHELL) -c 'cd UI && npm run build'
+dojo: js_deps_install
+	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn run build'
 
-devdojo: npm_install
-	$(DOCKER_CMD) $(SHELL) -c 'cd UI && npm run build:dev'
+devdojo: js_deps_install
+	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn run build:dev'
 
-js: npm_install
-	$(DOCKER_CMD) $(SHELL) -c 'cd UI && npm run build'
+js: js_deps_install
+	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn run build'
 
-jsdev: npm_install
-	$(DOCKER_CMD) $(SHELL) -c 'cd UI && npm run build:dev'
+jsdev: js_deps_install
+	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn run build:dev'
 
 lint:
-	$(DOCKER_CMD) $(SHELL) -c 'cd UI && npm run lint'
+	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn run lint'
 
 jslint:
 ifneq ($(origin FIX),undefined)
-	$(DOCKER_CMD) $(SHELL) -c 'cd UI && npm run lint:js:fix'
+	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn run lint:js:fix'
 else
-	$(DOCKER_CMD) $(SHELL) -c 'cd UI && npm run lint:js'
+	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn run lint:js'
 endif
 
-readme: npm_install
-	$(DOCKER_CMD) $(SHELL) -c 'cd UI && npm run readme'
+readme: js_deps_install
+	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn run readme'
 
 # TravisCI specific target -- need to find a way to get rid of it
 dojo_archive: dojo

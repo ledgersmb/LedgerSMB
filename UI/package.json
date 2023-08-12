@@ -145,7 +145,7 @@
     "analyzer": "webpack-bundle-analyzer logs/stats.json UI/js -h 0.0.0.0",
     "build": "webpack --mode=production --stats errors-warnings",
     "build:dev": "webpack --progress --mode=development --stats errors-warnings",
-    "lint": "npm run lint:css && npm run lint:js && npm run lint:markdown && npm run lint:vue",
+    "lint": "yarn run lint:css && yarn run lint:js && yarn run lint:markdown && yarn run lint:vue",
     "lint:css": "stylelint css/*.css",
     "lint:js": "eslint --ext .js ./",
     "lint:js:fix": "eslint --fix --ext .js ./",
