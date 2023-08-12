@@ -293,7 +293,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: ui
           parallel: true
-          path-to-lcov: ${{ github.workspace }}/UI/coverage/lcov.info
+          file: ${{ github.workspace }}/UI/coverage/lcov.info
         if: ${{ matrix.COVERAGE }}
 
         # Upload coverage data if needed
@@ -306,20 +306,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COVERALLS_FLAG_NAME: perl
           COVERALLS_PARALLEL: true
-        if: ${{ matrix.COVERAGE }}
-
-      - name: Close parallel UI coverage data
-        uses: coverallsapp/github-action@v2.2.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true
-          path-to-lcov: ${{ github.workspace }}/coverage/UI/lcov.info
-        if: ${{ matrix.COVERAGE }}
-
-      # Run the build hook again (Coveralls suggested patch)
-      - name: Rerun Build Webhook
-        run: |
-          curl --location --request GET "https://coveralls.io/rerun_build?repo_token=${{ secrets.GITHUB_TOKEN }}&build_num=${GITHUB_RUN_ID}"
         if: ${{ matrix.COVERAGE }}
 
       # Send logs & artifacts
@@ -337,6 +323,25 @@ jobs:
             logs/**
             /tmp/nginx*.log
         if: always()
+
+  close-parallel-coverage:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Close parallel UI coverage data
+        uses: coverallsapp/github-action@v2.2.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
+        if: ${{ matrix.COVERAGE }}
+
+      # Run the build hook again (Coveralls suggested patch)
+      - name: Rerun Build Webhook
+        run: |
+          curl --location --request GET "https://coveralls.io/rerun_build?repo_token=${{ secrets.GITHUB_TOKEN }}&build_num=${GITHUB_RUN_ID}"
+        if: ${{ matrix.COVERAGE }}
+
+
 
   build-dev:
     if: github.event.pull_request.merged == true
