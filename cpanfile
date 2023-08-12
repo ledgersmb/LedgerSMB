@@ -195,7 +195,6 @@ on 'develop' => sub {
     else {
         requires 'Test::Dependencies', '0.25';
     }
-    requires 'Test::Harness', '3.41'; # parallel testing of pipe and socket sources
     requires 'Test::Pod', '1.00';
     requires 'Test::Pod::Coverage';
     requires 'Test2::Harness';
