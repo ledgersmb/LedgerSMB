@@ -137,7 +137,7 @@ else
 	yath test --no-color --retry=2 \
             --pgtap-dbname=lsmb_test --pgtap-username=postgres \
             --pgtap-psql=.circleci/psql-wrap \
-            --Feature-tags=~@wip \
+            --Feature-tags='not @wip' \
             $(TESTS)
 endif
 
