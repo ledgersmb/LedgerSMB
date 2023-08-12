@@ -164,6 +164,9 @@ jobs:
       - name: Install TinyTex
         uses: r-lib/actions/setup-tinytex@v2
 
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Pre-run installation steps
         run: |
           # Install missing TeX packages
@@ -197,10 +200,6 @@ jobs:
           # Start 'nginx' reverse proxy
           nginx -c $GITHUB_WORKSPACE/doc/conf/webserver/nginx-github.conf \
                 -p $GITHUB_WORKSPACE &
-
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout
-        uses: actions/checkout@v3
 
       - name: Cache npm files
         id: cache-npm
