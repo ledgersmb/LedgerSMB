@@ -164,17 +164,16 @@ jobs:
       - name: Install TinyTex
         uses: r-lib/actions/setup-tinytex@v2
 
-      - name: Install missing TeX packages
+      - name: Pre-run installation steps
         run: |
+          # Install missing TeX packages
           tlmgr update --self
           tlmgr install koma-script
 
-      - name: Set host alias (why doesn't Github do it itself)
-        run: |
+          # Set host alias
           hostname -i | awk '{printf("%s lsmb\n",$1)}' | sudo tee -a /etc/hosts
 
-      - name: Sendmail
-        run: |
+          # Set up 'sendmail'
           wget --quiet https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64
           sudo chmod +x mhsendmail_linux_amd64
           sudo mv mhsendmail_linux_amd64 /usr/local/bin/sendmail
@@ -184,6 +183,20 @@ jobs:
                   "And here goes the e-mail body, test test test..\n" | \
             sendmail me@test
           curl lsmb:8025/api/v2/messages
+
+          # Install GNU gettext
+          sudo apt -q -y install gettext
+
+          # Create logging directories
+          mkdir -p logs/screens
+
+          # Set the correct LedgerSMB Server configuration
+          cp doc/conf/ledgersmb.conf.default ledgersmb.conf
+          sed -i -e 's/db_namespace = public/db_namespace = xyz/' ledgersmb.conf
+
+          # Start 'nginx' reverse proxy
+          nginx -c $GITHUB_WORKSPACE/doc/conf/webserver/nginx-github.conf \
+                -p $GITHUB_WORKSPACE &
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
@@ -206,15 +219,6 @@ jobs:
           path: UI/js
           key: dojo-${{ hashFiles('UI/js-src/**', 'UI/src/**', 'UI/css/**','UI/**/*.html','doc/sources/**') }}
 
-      - name: Install GNU gettext
-        run: sudo apt -q -y install gettext
-
-      - name: Create logging directories
-        run: |
-          mkdir -p logs/screens
-          cp doc/conf/ledgersmb.conf.default ledgersmb.conf
-          sed -i -e 's/db_namespace = public/db_namespace = xyz/' ledgersmb.conf
-
       - name: Setup Perl environment
         uses: shogo82148/actions-setup-perl@v1
         with:
@@ -232,11 +236,6 @@ jobs:
             --feature=openoffice
             --feature=xls
             --feature=edi
-
-      - name: Starting 'nginx'
-        run: |
-          nginx -c $GITHUB_WORKSPACE/doc/conf/webserver/nginx-github.conf \
-                -p $GITHUB_WORKSPACE &
 
       # This will start a hub and JOB_COUNT matrix.
       - name: Starting hub with ${{ matrix.BROWSER }}
