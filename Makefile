@@ -156,10 +156,15 @@ test:
 	$(DOCKER_CMD) prove --time --recurse $(TESTS)
 
 devtest: TESTS ?= t/ xt/
+devtest: PGTAP_OPTS ?= --pgtap-dbname=lsmb_test --pgtap-username=postgres \
+            --pgtap-psql=.circleci/psql-wrap
+devtest: BDD_OPTS ?= --Feature-tags='not (@wip or @extended)'
+
 devtest:
 ifneq ($(origin DOCKER_CMD),undefined)
 #       if there's a docker container, jump into it and run from there
-	$(DOCKER_CMD) make devtest TEST_OPTS="$(TEST_OPTS)" TESTS="$(TESTS)"
+	$(DOCKER_CMD) make devtest TEST_OPTS="$(TEST_OPTS)" TESTS="$(TESTS)" \
+                           PGTAP_OPTS="$(PGTAP_OPTS)" BDD_OPTS="$(BDD_OPTS)"
 else
 #        the 'dropdb' command may fail, hence the prefix minus-sign
 	-PERL5OPT="" dropdb --if-exists lsmb_test
@@ -168,10 +173,7 @@ else
 	perl -Ilib bin/ledgersmb-admin create \
             $${PGUSER:-postgres}@$${PGHOST:-localhost}/$${PGDATABASE:-lsmb_test}#xyz
 	PGOPTIONS="-c search_path=xyz" yath test --no-color --retry=2 \
-            --pgtap-dbname=lsmb_test --pgtap-username=postgres \
-            --pgtap-psql=.circleci/psql-wrap \
-            --Feature-tags='not (@wip or @extended)' \
-            $(TEST_OPTS) $(TESTS)
+            $(PGTAP_OPTS) $(BDD_OPTS) $(TEST_OPTS) $(TESTS)
 endif
 
 jstest: TESTS ?= tests

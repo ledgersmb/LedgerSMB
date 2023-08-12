@@ -21,6 +21,17 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+
+env:
+  PGDB: lsmb_test
+  PGHOST: localhost
+  PGPASSWORD: test
+  PGPORT: 5432
+  PGUSER: postgres
+  JOB_COUNT: 5
+
+
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
@@ -111,9 +122,66 @@ jobs:
             --feature=edi
 
 
+  test-database:
+    runs-on: ubuntu-latest
+    needs: build-perl-env
+    strategy:
+      matrix:
+        include:
+          - postgres: "15"
+            perl: "5.34"
+            JOB_COUNT: 5
+
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker database image
+        image: ghcr.io/ledgersmb/dev-postgres:${{ matrix.postgres }}
+        # Maps tcp port 5432 on service container to the host
+        ports:
+          - 5432:5432
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: test
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Perl environment
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl }}
+          install-modules-with: cpm
+          install-modules: |
+            Devel::Cover
+            Devel::Cover::Report::Coveralls
+          # Features and Devel modules
+          install-modules-args: >
+            --notest
+            --resolver=metacpan
+            --with-develop
+            --feature=starman
+            --feature=latex-pdf-ps
+            --feature=openoffice
+            --feature=xls
+            --feature=edi
+
+      # Do perl tests
+      - name: Run Perl tests
+        run: |
+          make devtest TESTS="--no-progress --job-count $JOB_COUNT xt/42-*.pg"
+        env:
+          LSMB_TEST_DB: 1
+          DB_TESTING: 1
+          JOB_COUNT: ${{ matrix.JOB_COUNT }}
+
+
 
   # This workflow contains a single job called "build"
-  build:
+  test-remainder:
 
     if: (github.event.action != 'closed' || github.event.pull_request.merged == true)
 
@@ -178,11 +246,6 @@ jobs:
       LSMB_NEW_DB: lsmb_test
       LSMB_NEW_DB_API: lsmb_test_api
       MONITOR_FILE: cpu-memory-usage
-      PGDB: lsmb_test
-      PGHOST: localhost
-      PGPASSWORD: test
-      PGPORT: 5432
-      PGUSER: postgres
       PSGI_BASE_URL: http://lsmb:5762
       RELEASE_TESTING: 1
       REMOTE_SERVER_ADDR: 127.0.0.1
@@ -360,7 +423,7 @@ jobs:
 
   close-parallel-coverage:
     runs-on: ubuntu-latest
-    needs: build
+    needs: test-remainder
     steps:
       - name: Close parallel UI coverage data
         uses: coverallsapp/github-action@v2.2.1
@@ -379,7 +442,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    needs: build
+    needs: test-remainder
 
     steps:
 
