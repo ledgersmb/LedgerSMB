@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Test::More;
-use YAML::Syck;
+use YAML qw(LoadFile);
 
 # If we choose to depend on environment variables,
 # uncomment the next lines and initialize reqenv with their names
