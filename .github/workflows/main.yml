@@ -57,29 +57,11 @@ jobs:
         id: cache-npm
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: |
+             ~/.npm
+             UI/node_modules
           key: |
             modules-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-npm != 'true'
-        run: cd UI && npm ci --ignore-scripts
-
-      - name: Cache node modules
-        id: cache-node_modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: |
-            modules-${{ hashFiles('**/package-lock.json') }}
-
-      - name: 'Tar node_modules files'
-        run: tar -cf ~/node_modules.tar UI/node_modules
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: node_modules
-          path: ~/node_modules.tar
 
       - name: Cache Dojo
         id: cache-dojo
@@ -88,24 +70,13 @@ jobs:
           path: UI/js
           key: dojo-${{ hashFiles('UI/js-src/**', 'UI/src/**', 'UI/css/**','UI/**/*.html','doc/sources/**') }}
 
-      - name: Linting
-        run: |
-          make lint
-
       - name: Build Dojo
         run: |
+          make lint
           make js
           make readme
         if: steps.cache-dojo.outputs.cache-hit != 'true' ||
             steps.cache-node_modules.outputs.cache-hit != 'true'
-
-      - name: 'Tar Webpacked files'
-        run: tar -cf ~/webpacked_js.tar UI/js
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: webpacked_js
-          path: ~/webpacked_js.tar
 
   # This workflow contains a single job called "build"
   build:
@@ -218,6 +189,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Cache npm files
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: |
+             ~/.npm
+             UI/node_modules
+          key: |
+            modules-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Cache Dojo
+        id: cache-dojo
+        uses: actions/cache@v3
+        with:
+          path: UI/js
+          key: dojo-${{ hashFiles('UI/js-src/**', 'UI/src/**', 'UI/css/**','UI/**/*.html','doc/sources/**') }}
+
       - name: Install GNU gettext
         run: sudo apt -q -y install gettext
 
@@ -244,13 +232,6 @@ jobs:
             --feature=openoffice
             --feature=xls
             --feature=edi
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: webpacked_js
-
-      - name: 'Untar Webpacked files'
-        run: tar -xf webpacked_js.tar
 
       - name: Starting 'nginx'
         run: |
@@ -280,14 +261,6 @@ jobs:
           starman --preload-app --pid starman.pid --workers $JOB_COUNT \
                   --max-requests 5000 --error-log logs/starman-error.log \
                   -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
-
-      # Do API Tests
-      - uses: actions/download-artifact@v3
-        with:
-          name: node_modules
-
-      - name: 'Untar node modules'
-        run: tar -xf node_modules.tar
 
       - name: Run API tests
         run: |
