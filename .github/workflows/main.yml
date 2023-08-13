@@ -184,29 +184,30 @@ jobs:
         run: |
           make test TESTS="--no-progress --job-count $JOB_COUNT $YATH_DEVEL_COVER_OPTIONS t/ xt/[0-3]*"
         env:
+          COVERAGE: ${{ matrix.COVERAGE }}
           LSMB_TEST_DB: 1
           DB_TESTING: 1
           JOB_COUNT: ${{ matrix.JOB_COUNT }}
           PERL5OPT: -MSyntax::Keyword::Try::Deparse
 
       # Make Coverage appear from root instead of UI to integrate in Coveralls
-      - name: Fix UI Coverage report
-        run: |
-          if [[ -e UI/coverage/lcov.info ]]
-          then
-            sed -i -E "s~^SF:(js-src|src)/~SF:UI/\1/~g" UI/coverage/lcov.info
-          fi
-        if: ${{ matrix.COVERAGE }}
+#      - name: Fix UI Coverage report
+#        run: |
+#          if [[ -e UI/coverage/lcov.info ]]
+#          then
+#            sed -i -E "s~^SF:(js-src|src)/~SF:UI/\1/~g" UI/coverage/lcov.info
+#          fi
+#        if: ${{ matrix.COVERAGE }}
 
       # Send UI coverage before Perl
-      - name: Upload UI coverage data
-        uses: coverallsapp/github-action@v2.2.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          flag-name: ui
-          parallel: true
-          file: ${{ github.workspace }}/UI/coverage/lcov.info
-        if: ${{ matrix.COVERAGE }}
+#      - name: Upload UI coverage data
+#        uses: coverallsapp/github-action@v2.2.1
+#        with:
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          flag-name: pure-perl-ui
+#          parallel: true
+#          file: ${{ github.workspace }}/UI/coverage/lcov.info
+#        if: ${{ matrix.COVERAGE }}
 
         # Upload coverage data if needed
       - name: Upload coverage data
@@ -216,7 +217,7 @@ jobs:
           cover -report text > logs/coverage.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_FLAG_NAME: perl
+          COVERALLS_FLAG_NAME: pure-perl
           COVERALLS_PARALLEL: true
         if: ${{ matrix.COVERAGE }}
 
@@ -388,7 +389,7 @@ jobs:
         uses: coverallsapp/github-action@v2.2.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          flag-name: ui
+          flag-name: database-ui
           parallel: true
           file: ${{ github.workspace }}/UI/coverage/lcov.info
         if: ${{ matrix.COVERAGE }}
@@ -401,7 +402,7 @@ jobs:
           cover -report text > logs/coverage.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_FLAG_NAME: perl
+          COVERALLS_FLAG_NAME: database-perl
           COVERALLS_PARALLEL: true
         if: ${{ matrix.COVERAGE }}
 
@@ -593,13 +594,13 @@ jobs:
           PERL5OPT: -MSyntax::Keyword::Try::Deparse
 
       # Make Coverage appear from root instead of UI to integrate in Coveralls
-      - name: Fix UI Coverage report
-        run: |
-          if [[ -e UI/coverage/lcov.info ]]
-          then
-            sed -i -E "s~^SF:(js-src|src)/~SF:UI/\1/~g" UI/coverage/lcov.info
-          fi
-        if: ${{ matrix.COVERAGE }}
+#      - name: Fix UI Coverage report
+#        run: |
+#          if [[ -e UI/coverage/lcov.info ]]
+#          then
+#            sed -i -E "s~^SF:(js-src|src)/~SF:UI/\1/~g" UI/coverage/lcov.info
+#          fi
+#        if: ${{ matrix.COVERAGE }}
 
 #      # Send UI coverage before Perl
 #      - name: Upload UI coverage data
@@ -619,7 +620,7 @@ jobs:
           cover -report text > logs/coverage.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_FLAG_NAME: perl
+          COVERALLS_FLAG_NAME: remainder-perl
           COVERALLS_PARALLEL: true
         if: ${{ matrix.COVERAGE }}
 
