@@ -380,9 +380,9 @@ jobs:
           then
             echo "ERROR: Can't terminate Starman without PID file"
           else
-            kill -quit $(cat starman.pid)
+            kill -term $(cat starman.pid)
             echo "Waiting for Starman to terminate "
-            while [[ -e starman.pid ]]  && kill -0 $(cat starman.pid)
+            while kill -0 $(cat starman.pid) >/dev/null 2>&1
             do
               echo -n "."
               sleep 1
@@ -606,6 +606,22 @@ jobs:
           COVERAGE: ${{ matrix.COVERAGE }}
           DB_TESTING: ${{ matrix.DB_TESTING }}
           PERL5OPT: -MSyntax::Keyword::Try::Deparse
+
+      - name: Stop 'starman'
+        run: |
+          if [[ ! -e starman.pid ]]
+          then
+            echo "ERROR: Can't terminate Starman without PID file"
+          else
+            kill -term $(cat starman.pid)
+            echo "Waiting for Starman to terminate "
+            while kill -0 $(cat starman.pid) >/dev/null 2>&1
+            do
+              echo -n "."
+              sleep 1
+            done
+            echo " "
+          fi
 
       # Make Coverage appear from root instead of UI to integrate in Coveralls
 #      - name: Fix UI Coverage report
