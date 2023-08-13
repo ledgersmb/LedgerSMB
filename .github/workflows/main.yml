@@ -374,6 +374,22 @@ jobs:
         run: |
           PERL5LIB="lib:old/lib:$PERL5LIB" make jstest TESTS="$JSCOVERAGE"
 
+      - name: Stop 'starman'
+        run: |
+          if [[ ! -e starman.pid ]]
+          then
+            echo "ERROR: Can't terminate Starman without PID file"
+          else
+            kill -quit $(cat starman.pid)
+            echo "Waiting for Starman to terminate "
+            while [[ -e starman.pid ]]  && kill -0 $(cat starman.pid)
+            do
+              echo -n "."
+              sleep 1
+            done
+            echo " "
+          fi
+
       # Make Coverage appear from root instead of UI to integrate in Coveralls
       - name: Fix UI Coverage report
         run: |
