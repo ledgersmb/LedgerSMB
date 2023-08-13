@@ -280,7 +280,8 @@ jobs:
 
   test-webservices:
     runs-on: ubuntu-latest
-    needs: build-perl-env
+    # needs webpack because of collectively managed node modules cache
+    needs: [ build-perl-env, webpack ]
     strategy:
       matrix:
         include:
@@ -351,10 +352,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-             ~/.npm
              UI/node_modules
           key: |
-            modules-${{ hashFiles('**/package-lock.json') }}
+            modules-${{ hashFiles('UI/yarn.lock') }}
 
       - name: Setup coverage
         run: |
@@ -522,10 +522,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-             ~/.npm
              UI/node_modules
           key: |
-            modules-${{ hashFiles('**/package-lock.json') }}
+            modules-${{ hashFiles('UI/yarn.lock') }}
 
       - name: Cache Dojo
         id: cache-dojo
@@ -655,6 +654,14 @@ jobs:
         run: |
           curl --location --request GET "https://coveralls.io/rerun_build?repo_token=${{ secrets.GITHUB_TOKEN }}&build_num=${GITHUB_RUN_ID}"
 
+
+  testing-done:
+    runs-on: ubuntu-latest
+    needs: [ test-database, test-pure-perl, test-remainder, test-webservices ]
+    steps:
+      - name: Done
+        run: |
+          echo "DONE!"
 
   build-dev:
     if: github.event.pull_request.merged == true
