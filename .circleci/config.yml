@@ -149,7 +149,7 @@ commands:
       - save_cache:
           key: v1-npm-deps-{{ checksum "UI/yarn.lock" }}
           paths:
-            - UI/node_
+            - UI/node_modules
 
       - run:
           name: Set up dirs and files
