@@ -214,7 +214,6 @@ jobs:
         run: |
           unset PERL5OPT
           cover -report coveralls
-          cover -report text > logs/coverage.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COVERALLS_FLAG_NAME: pure-perl
