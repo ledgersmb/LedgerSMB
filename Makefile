@@ -183,7 +183,7 @@ ifneq ($(origin DOCKER_CMD),undefined)
 	$(DOCKER_CMD) make jstest
 else
 	# Test API answer
-	$(SHELL) -c 'cd UI && ./node_modules/.bin/jest $(TESTS)'
+	$(SHELL) -c 'cd UI && npx jest $(TESTS)'
 endif
 
 serve:
