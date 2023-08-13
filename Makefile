@@ -183,7 +183,7 @@ ifneq ($(origin DOCKER_CMD),undefined)
 	$(DOCKER_CMD) make jstest
 else
 	# Test API answer
-	$(SHELL) -c 'cd UI && npx jest $(TESTS)'
+	$(SHELL) -c 'cd UI && yarn run jest $(TESTS)'
 endif
 
 serve:
@@ -191,7 +191,7 @@ ifneq ($(origin DOCKER_CMD),undefined)
 #       if there's a docker container, jump into it and run from there
 	$(DOCKER_CMD) make serve
 else
-	$(SHELL) -c 'cd UI && npx webpack serve'
+	$(SHELL) -c 'cd UI && yarn run webpack serve'
 endif
 
 pherkin: TESTS ?= xt/
