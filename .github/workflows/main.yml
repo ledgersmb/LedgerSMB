@@ -640,7 +640,6 @@ jobs:
 
   close-parallel-coverage:
     runs-on: ubuntu-latest
-    if: always()
     needs: [ test-pure-perl, test-remainder, test-webservices ]
     steps:
       - name: Close parallel UI coverage data
