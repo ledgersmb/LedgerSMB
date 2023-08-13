@@ -1,0 +1,63 @@
+name: Install TEX & Perl
+description: "Install TEX & packages, Perl"
+
+inputs:
+  perl-version:
+    description: "Required perl version"
+    required: true
+  DEVEL_COVER_OPTIONS:
+    description: "Devel::Cover options base"
+    required: true
+  coverage:
+    description: "Coverage indicator"
+    default: ''
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install TinyTex
+      uses: r-lib/actions/setup-tinytex@v2
+
+    - name: Setup Perl environment
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: ${{ inputs.perl-version }}
+        install-modules-with: cpm
+        install-modules: |
+          Devel::Cover
+          Devel::Cover::Report::Coveralls
+        # Features and Devel modules
+        install-modules-args: >
+          --notest
+          --resolver=metacpan
+          --with-develop
+          --feature=starman
+          --feature=latex-pdf-ps
+          --feature=openoffice
+          --feature=xls
+          --feature=edi
+
+    - name: Setup coverage
+      shell: bash
+      run: |
+        echo "STARMAN_DEVEL_COVER_OPTIONS=-MDevel::Cover=${{ inputs.DEVEL_COVER_OPTIONS }} -MSyntax::Keyword::Try::Deparse" >> $GITHUB_ENV
+        echo "YATH_DEVEL_COVER_OPTIONS=--cover=${{ inputs.DEVEL_COVER_OPTIONS }}" >> $GITHUB_ENV
+        echo "JSCOVERAGE=--coverage" >> $GITHUB_ENV
+      if: ${{ inputs.coverage }}
+
+    - name: Pre-run installation steps
+      shell: bash
+      run: |
+        sudo apt -q -y install gettext
+
+        # Install missing TeX packages
+        tlmgr update --self
+        tlmgr install koma-script
+
+    - name: Starting 'starman'
+      shell: bash
+      run: |
+        PERL5OPT="${{ ENV.STARMAN_DEVEL_COVER_OPTIONS }}" \
+        starman --preload-app --pid starman.pid --workers $JOB_COUNT \
+                --max-requests 5000 --error-log logs/starman-error.log \
+                -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &

@@ -21,7 +21,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-
 env:
   PGDB: lsmb_test
   PGHOST: localhost
@@ -30,11 +29,8 @@ env:
   PGUSER: postgres
   JOB_COUNT: 5
 
-
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-
   cancel-prior:
     if: github.repository != 'ledgersmb/LedgerSMB' || startsWith(github.ref, 'refs/pull')
     runs-on: ubuntu-latest
@@ -89,6 +85,7 @@ jobs:
         if: steps.cache-dojo.outputs.cache-hit != 'true' ||
             steps.cache-node_modules.outputs.cache-hit != 'true'
 
+  # Prep-up the cache
   build-perl-env:
     runs-on: ubuntu-latest
     strategy:
@@ -96,30 +93,14 @@ jobs:
         perl: [ "5.34", "5.32" ]
 
     steps:
-      - name: Install TinyTex
-        uses: r-lib/actions/setup-tinytex@v2
-
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Perl environment
-        uses: shogo82148/actions-setup-perl@v1
+      - name: Setup Perl environment & start starman
+        uses: ./.github/workflows/Install TEX & Perl
         with:
           perl-version: ${{ matrix.perl }}
-          install-modules-with: cpm
-          install-modules: |
-            Devel::Cover
-            Devel::Cover::Report::Coveralls
-          # Features and Devel modules
-          install-modules-args: >
-            --notest
-            --resolver=metacpan
-            --with-develop
-            --feature=starman
-            --feature=latex-pdf-ps
-            --feature=openoffice
-            --feature=xls
-            --feature=edi
+          DEVEL_COVER_OPTIONS: ${{ env.DEVEL_COVER_OPTIONS }}
 
   test-pure-perl:
     runs-on: ubuntu-latest
@@ -139,45 +120,15 @@ jobs:
       RELEASE_TESTING: 1
 
     steps:
-      - name: Install TinyTex
-        uses: r-lib/actions/setup-tinytex@v2
-
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Perl environment
-        uses: shogo82148/actions-setup-perl@v1
+      - name: Setup Perl environment & start starman
+        uses: ./.github/workflows/Install TEX & Perl
         with:
           perl-version: ${{ matrix.perl }}
-          install-modules-with: cpm
-          install-modules: |
-            Devel::Cover
-            Devel::Cover::Report::Coveralls
-          # Features and Devel modules
-          install-modules-args: >
-            --notest
-            --resolver=metacpan
-            --with-develop
-            --feature=starman
-            --feature=latex-pdf-ps
-            --feature=openoffice
-            --feature=xls
-            --feature=edi
-
-      - name: Setup coverage
-        run: |
-          echo "STARMAN_DEVEL_COVER_OPTIONS=-MDevel::Cover=${{ env.DEVEL_COVER_OPTIONS }} -MSyntax::Keyword::Try::Deparse" >> $GITHUB_ENV
-          echo "YATH_DEVEL_COVER_OPTIONS=--cover=${{ env.DEVEL_COVER_OPTIONS }}" >> $GITHUB_ENV
-          echo "JSCOVERAGE=--coverage" >> $GITHUB_ENV
-        if: ${{ matrix.COVERAGE }}
-
-      - name: Pre-run installation steps
-        run: |
-          sudo apt -q -y install gettext
-
-          # Install missing TeX packages
-          tlmgr update --self
-          tlmgr install koma-script
+          DEVEL_COVER_OPTIONS: ${{ env.DEVEL_COVER_OPTIONS }}
+          coverage: ${{ matrix.coverage }}
 
       # Do perl tests
       - name: Run Pure Perl tests
@@ -190,25 +141,6 @@ jobs:
           JOB_COUNT: ${{ matrix.JOB_COUNT }}
           PERL5OPT: -MSyntax::Keyword::Try::Deparse
 
-      # Make Coverage appear from root instead of UI to integrate in Coveralls
-#      - name: Fix UI Coverage report
-#        run: |
-#          if [[ -e UI/coverage/lcov.info ]]
-#          then
-#            sed -i -E "s~^SF:(js-src|src)/~SF:UI/\1/~g" UI/coverage/lcov.info
-#          fi
-#        if: ${{ matrix.COVERAGE }}
-
-      # Send UI coverage before Perl
-#      - name: Upload UI coverage data
-#        uses: coverallsapp/github-action@v2.2.1
-#        with:
-#          github-token: ${{ secrets.GITHUB_TOKEN }}
-#          flag-name: pure-perl-ui
-#          parallel: true
-#          file: ${{ github.workspace }}/UI/coverage/lcov.info
-#        if: ${{ matrix.COVERAGE }}
-
         # Upload coverage data if needed
       - name: Upload coverage data
         run: |
@@ -219,7 +151,6 @@ jobs:
           COVERALLS_FLAG_NAME: pure-perl
           COVERALLS_PARALLEL: true
         if: ${{ matrix.COVERAGE }}
-
 
   test-database:
     runs-on: ubuntu-latest
@@ -250,23 +181,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup Perl environment
-        uses: shogo82148/actions-setup-perl@v1
+        uses: ./.github/workflows/Install TEX & Perl
         with:
           perl-version: ${{ matrix.perl }}
-          install-modules-with: cpm
-          install-modules: |
-            Devel::Cover
-            Devel::Cover::Report::Coveralls
-          # Features and Devel modules
-          install-modules-args: >
-            --notest
-            --resolver=metacpan
-            --with-develop
-            --feature=starman
-            --feature=latex-pdf-ps
-            --feature=openoffice
-            --feature=xls
-            --feature=edi
 
       # Do database tests
       - name: Run pgTAP database tests
@@ -276,7 +193,6 @@ jobs:
           LSMB_TEST_DB: 1
           DB_TESTING: 1
           JOB_COUNT: ${{ matrix.JOB_COUNT }}
-
 
   test-webservices:
     runs-on: ubuntu-latest
@@ -314,25 +230,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Perl environment
-        uses: shogo82148/actions-setup-perl@v1
-        with:
-          perl-version: ${{ matrix.perl }}
-          install-modules-with: cpm
-          install-modules: |
-            Devel::Cover
-            Devel::Cover::Report::Coveralls
-          # Features and Devel modules
-          install-modules-args: >
-            --notest
-            --resolver=metacpan
-            --with-develop
-            --feature=starman
-            --feature=latex-pdf-ps
-            --feature=openoffice
-            --feature=xls
-            --feature=edi
-
       - name: Pre-run installation steps
         run: |
           # Set host alias
@@ -356,19 +253,12 @@ jobs:
           key: |
             modules-${{ hashFiles('UI/yarn.lock') }}
 
-      - name: Setup coverage
-        run: |
-          echo "STARMAN_DEVEL_COVER_OPTIONS=-MDevel::Cover=${{ env.DEVEL_COVER_OPTIONS }} -MSyntax::Keyword::Try::Deparse" >> $GITHUB_ENV
-          echo "YATH_DEVEL_COVER_OPTIONS=--cover=${{ env.DEVEL_COVER_OPTIONS }}" >> $GITHUB_ENV
-          echo "JSCOVERAGE=--coverage" >> $GITHUB_ENV
-        if: ${{ matrix.COVERAGE }}
-
-      - name: Starting 'starman'
-        run: |
-          PERL5OPT="$STARMAN_DEVEL_COVER_OPTIONS" \
-          starman --preload-app --pid starman.pid --workers 2 \
-                  --max-requests 5000 --error-log logs/starman-error.log \
-                  -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
+      - name: Setup Perl environment & start starman
+        uses: ./.github/workflows/Install TEX & Perl
+        with:
+          perl-version: ${{ matrix.perl }}
+          DEVEL_COVER_OPTIONS: ${{ env.DEVEL_COVER_OPTIONS }}
+          coverage: ${{ matrix.coverage }}
 
       - name: Run API tests
         run: |
@@ -420,7 +310,6 @@ jobs:
           COVERALLS_FLAG_NAME: database-perl
           COVERALLS_PARALLEL: true
         if: ${{ matrix.COVERAGE }}
-
 
   test-remainder:
     if: (github.event.action != 'closed' || github.event.pull_request.merged == true)
@@ -493,18 +382,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Install TinyTex
-        uses: r-lib/actions/setup-tinytex@v2
-
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Pre-run installation steps
         run: |
-          # Install missing TeX packages
-          tlmgr update --self
-          tlmgr install koma-script
-
           # Set host alias
           hostname -i | awk '{printf("%s lsmb\n",$1)}' | sudo tee -a /etc/hosts
 
@@ -518,9 +400,6 @@ jobs:
                   "And here goes the e-mail body, test test test..\n" | \
             sendmail me@test
           curl lsmb:8025/api/v2/messages
-
-          # Install GNU gettext
-          sudo apt -q -y install gettext
 
           # Create logging directories
           mkdir -p logs/screens
@@ -549,24 +428,6 @@ jobs:
           path: UI/js
           key: dojo-${{ hashFiles('UI/js-src/**', 'UI/src/**', 'UI/css/**','UI/**/*.html','doc/sources/**') }}
 
-      - name: Setup Perl environment
-        uses: shogo82148/actions-setup-perl@v1
-        with:
-          perl-version: ${{ matrix.perl }}
-          install-modules-with: cpm
-          install-modules: |
-            Devel::Cover
-            Devel::Cover::Report::Coveralls
-          # Features and Devel modules
-          install-modules-args: >
-            --resolver=metacpan
-            --with-develop
-            --feature=starman
-            --feature=latex-pdf-ps
-            --feature=openoffice
-            --feature=xls
-            --feature=edi
-
       # This will start a hub and JOB_COUNT matrix.
       - name: Starting hub with ${{ matrix.BROWSER }}
         run: |
@@ -577,19 +438,12 @@ jobs:
               --detach \
               --scale ${{ matrix.BROWSER }}=$JOB_COUNT \
 
-      - name: Setup coverage
-        run: |
-          echo "STARMAN_DEVEL_COVER_OPTIONS=-MDevel::Cover=${{ env.DEVEL_COVER_OPTIONS }} -MSyntax::Keyword::Try::Deparse" >> $GITHUB_ENV
-          echo "YATH_DEVEL_COVER_OPTIONS=--cover=${{ env.DEVEL_COVER_OPTIONS }}" >> $GITHUB_ENV
-          echo "JSCOVERAGE=--coverage" >> $GITHUB_ENV
-        if: ${{ matrix.COVERAGE }}
-
-      - name: Starting 'starman'
-        run: |
-          PERL5OPT="$STARMAN_DEVEL_COVER_OPTIONS" \
-          starman --preload-app --pid starman.pid --workers 2 \
-                  --max-requests 5000 --error-log logs/starman-error.log \
-                  -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
+      - name: Setup Perl environment & start starman
+        uses: ./.github/workflows/Install TEX & Perl
+        with:
+          perl-version: ${{ matrix.perl }}
+          DEVEL_COVER_OPTIONS: ${{ env.DEVEL_COVER_OPTIONS }}
+          coverage: ${{ matrix.coverage }}
 
       # Fix the condition to debug
       - name: Setup upterm session
@@ -622,25 +476,6 @@ jobs:
             done
             echo " "
           fi
-
-      # Make Coverage appear from root instead of UI to integrate in Coveralls
-#      - name: Fix UI Coverage report
-#        run: |
-#          if [[ -e UI/coverage/lcov.info ]]
-#          then
-#            sed -i -E "s~^SF:(js-src|src)/~SF:UI/\1/~g" UI/coverage/lcov.info
-#          fi
-#        if: ${{ matrix.COVERAGE }}
-
-#      # Send UI coverage before Perl
-#      - name: Upload UI coverage data
-#        uses: coverallsapp/github-action@v2.2.1
-#        with:
-#          github-token: ${{ secrets.GITHUB_TOKEN }}
-#          flag-name: ui
-#          parallel: true
-#          file: ${{ github.workspace }}/UI/coverage/lcov.info
-#        if: ${{ matrix.COVERAGE }}
 
         # Upload coverage data if needed
       - name: Upload coverage data
@@ -684,7 +519,6 @@ jobs:
       - name: Rerun Build Webhook
         run: |
           curl --location --request GET "https://coveralls.io/rerun_build?repo_token=${{ secrets.GITHUB_TOKEN }}&build_num=${GITHUB_RUN_ID}"
-
 
   testing-done:
     runs-on: ubuntu-latest
