@@ -280,6 +280,14 @@ jobs:
             echo " "
           fi
 
+      # Patch
+      - name: Wait until Coverage has finished producing the database (10 minutes max)
+        uses: iFaxity/wait-on-action@v1.1.0
+        with:
+          resource: ./cover_db/digests
+          timeout: 600000
+        if: ${{ matrix.COVERAGE }}
+
       # Make Coverage appear from root instead of UI to integrate in Coveralls
       - name: Fix UI Coverage report
         run: |
@@ -477,7 +485,15 @@ jobs:
             echo " "
           fi
 
-        # Upload coverage data if needed
+      # Patch
+      - name: Wait until Coverage has finished producing the database (10 minutes max)
+        uses: iFaxity/wait-on-action@v1.1.0
+        with:
+          resource: ./cover_db/digests
+          timeout: 600000
+        if: ${{ matrix.COVERAGE }}
+
+      # Upload coverage data if needed
       - name: Upload coverage data
         run: |
           unset PERL5OPT
