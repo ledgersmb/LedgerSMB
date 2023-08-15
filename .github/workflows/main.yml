@@ -303,7 +303,7 @@ jobs:
         uses: coverallsapp/github-action@v2.2.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          flag-name: database-ui
+          flag-name: webservices-ui
           parallel: true
           file: ${{ github.workspace }}/UI/coverage/lcov.info
         if: ${{ matrix.COVERAGE }}
@@ -316,7 +316,7 @@ jobs:
           cover -report text > logs/coverage.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_FLAG_NAME: database-perl
+          COVERALLS_FLAG_NAME: webservices-perl
           COVERALLS_PARALLEL: true
         if: ${{ matrix.COVERAGE }}
 
