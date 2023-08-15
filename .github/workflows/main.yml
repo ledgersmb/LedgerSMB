@@ -270,9 +270,10 @@ jobs:
           then
             echo "ERROR: Can't terminate Starman without PID file"
           else
-            kill -term $(cat starman.pid)
+            pid=$(cat starman.pid)
+            kill -quit $pid
             echo "Waiting for Starman to terminate "
-            while kill -0 $(cat starman.pid) >/dev/null 2>&1
+            while kill -0 $pid >/dev/null 2>&1
             do
               echo -n "."
               sleep 1
@@ -475,9 +476,10 @@ jobs:
           then
             echo "ERROR: Can't terminate Starman without PID file"
           else
-            kill -term $(cat starman.pid)
+            pid=$(cat starman.pid)
+            kill -quit $pid
             echo "Waiting for Starman to terminate "
-            while kill -0 $(cat starman.pid) >/dev/null 2>&1
+            while kill -0 $pid >/dev/null 2>&1
             do
               echo -n "."
               sleep 1
