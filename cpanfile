@@ -170,11 +170,9 @@ feature 'xls', 'Microsoft Excel' =>
 # Even with cpanm --notest, 'test' target of --installdeps
 # will be included, so put our testing requirements in develop...
 on 'develop' => sub {
-    requires 'App::Prove', '3.41'; # parallel testing of pipe and socket sources
     requires 'Capture::Tiny';
     requires 'DBD::Mock', '1.58';
     requires 'File::Grep';
-    requires 'File::Util';
     requires 'HTML::Lint';
     requires 'HTML::Lint::Parser', '2.26';
     requires 'HTML::Lint::Pluggable';
@@ -197,7 +195,6 @@ on 'develop' => sub {
     else {
         requires 'Test::Dependencies', '0.25';
     }
-    requires 'Test::Harness', '3.41'; # parallel testing of pipe and socket sources
     requires 'Test::Pod', '1.00';
     requires 'Test::Pod::Coverage';
     requires 'Test2::Harness';

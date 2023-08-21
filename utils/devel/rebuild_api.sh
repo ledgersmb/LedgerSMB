@@ -22,7 +22,7 @@ find . -name '[A-Z]*.yml' -exec echo -n ",{\"inputFile\": \"{}\"}" \; >> openapi
 echo '],"output": "API.yaml"}'  >> openapi-merge.json
 
 # Merge them into openapi.yaml 
-openapi-merge-cli --config openapi-merge.json
+npx openapi-merge-cli --config openapi-merge.json
 
 # Validate the resulting OpenAPI spec
 cp $gitDirName/openapi/.redocly.yaml .

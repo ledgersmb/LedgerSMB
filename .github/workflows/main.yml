@@ -21,9 +21,17 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  PGDB: lsmb_test
+  PGHOST: localhost
+  PGPASSWORD: test
+  PGPORT: 5432
+  PGUSER: postgres
+  JOB_COUNT: 5
+  DEVEL_COVER_OPTIONS: -silent,1,+ignore,^/home/,+ignore,^x?t,+ignore,UI/tests,+ignore,^utils,+ignore,local/,+ignore,^/usr/,+ignore,^/opt/,+ignore,\\.lttc,+ignore,starman\\b,-summary,1
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-
   cancel-prior:
     if: github.repository != 'ledgersmb/LedgerSMB' || startsWith(github.ref, 'refs/pull')
     runs-on: ubuntu-latest
@@ -53,33 +61,14 @@ jobs:
           # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
           node-version: '16'
 
-      - name: Cache npm files
-        id: cache-npm
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: |
-            modules-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-npm != 'true'
-        run: cd UI && npm ci --ignore-scripts
-
-      - name: Cache node modules
+      - name: Cache node_module
         id: cache-node_modules
         uses: actions/cache@v3
         with:
-          path: ~/.npm
+          path: |
+             UI/node_modules
           key: |
-            modules-${{ hashFiles('**/package-lock.json') }}
-
-      - name: 'Tar node_modules files'
-        run: tar -cf ~/node_modules.tar UI/node_modules
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: node_modules
-          path: ~/node_modules.tar
+            modules-${{ hashFiles('UI/yarn.lock') }}
 
       - name: Cache Dojo
         id: cache-dojo
@@ -88,36 +77,243 @@ jobs:
           path: UI/js
           key: dojo-${{ hashFiles('UI/js-src/**', 'UI/src/**', 'UI/css/**','UI/**/*.html','doc/sources/**') }}
 
-      - name: Linting
-        run: |
-          make lint
-
       - name: Build Dojo
         run: |
+          make js_deps_install
+          make lint
           make js
           make readme
         if: steps.cache-dojo.outputs.cache-hit != 'true' ||
             steps.cache-node_modules.outputs.cache-hit != 'true'
 
-      - name: 'Tar Webpacked files'
-        run: tar -cf ~/webpacked_js.tar UI/js
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: webpacked_js
-          path: ~/webpacked_js.tar
-
-  # This workflow contains a single job called "build"
-  build:
-
-    if: (github.event.action != 'closed' || github.event.pull_request.merged == true)
-
-    # The type of runner that the job will run on
+  # Prep-up the cache
+  build-perl-env:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        perl: [ "5.34", "5.32" ]
 
-    needs: webpack
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    # Don't let it run for more than an hour
+      - name: Setup Perl environment & start starman
+        uses: ./.github/workflows/Install TEX & Perl
+        with:
+          perl-version: ${{ matrix.perl }}
+
+  test-pure-perl:
+    runs-on: ubuntu-latest
+    needs: build-perl-env
+    strategy:
+      matrix:
+        include:
+          - perl: "5.34"
+            JOB_COUNT: 5
+            COVERAGE: 1
+
+          - perl: "5.32"
+            JOB_COUNT: 5
+
+    env:
+      RELEASE_TESTING: 1
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Perl environment & start starman
+        uses: ./.github/workflows/Install TEX & Perl
+        with:
+          perl-version: ${{ matrix.perl }}
+          DEVEL_COVER_OPTIONS: ${{ env.DEVEL_COVER_OPTIONS }}
+          coverage: ${{ matrix.coverage }}
+
+      # Do perl tests
+      - name: Run Pure Perl tests
+        run: |
+          make test TESTS="--no-progress --job-count $JOB_COUNT $YATH_DEVEL_COVER_OPTIONS t/ xt/[0-3]*"
+        env:
+          COVERAGE: ${{ matrix.COVERAGE }}
+          LSMB_TEST_DB: 1
+          DB_TESTING: 1
+          JOB_COUNT: ${{ matrix.JOB_COUNT }}
+          PERL5OPT: -MSyntax::Keyword::Try::Deparse
+
+        # Upload coverage data if needed
+      - name: Upload coverage data
+        run: |
+          unset PERL5OPT
+          cover -report coveralls
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COVERALLS_FLAG_NAME: pure-perl
+          COVERALLS_PARALLEL: true
+        if: ${{ matrix.COVERAGE }}
+
+  test-database:
+    runs-on: ubuntu-latest
+    needs: build-perl-env
+    strategy:
+      matrix:
+        include:
+          - postgres: "15"
+            perl: "5.34"
+            JOB_COUNT: 5
+
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker database image
+        image: ghcr.io/ledgersmb/dev-postgres:${{ matrix.postgres }}
+        # Maps tcp port 5432 on service container to the host
+        ports:
+          - 5432:5432
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: test
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Perl environment
+        uses: ./.github/workflows/Install TEX & Perl
+        with:
+          perl-version: ${{ matrix.perl }}
+
+      # Do database tests
+      - name: Run pgTAP database tests
+        run: |
+          make devtest TESTS="--no-progress --job-count $JOB_COUNT xt/42-*.pg"
+        env:
+          LSMB_TEST_DB: 1
+          DB_TESTING: 1
+          JOB_COUNT: ${{ matrix.JOB_COUNT }}
+
+  test-webservices:
+    runs-on: ubuntu-latest
+    # needs webpack because of collectively managed node modules cache
+    needs: [ build-perl-env, webpack ]
+    strategy:
+      matrix:
+        include:
+          - postgres: "15"
+            perl: "5.34"
+            JOB_COUNT: 5
+            COVERAGE: 1
+
+    env:
+      LSMB_BASE_URL: http://lsmb:5000
+      PSGI_BASE_URL: http://lsmb:5762
+      REMOTE_SERVER_ADDRESS: 127.0.0.1
+
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker database image
+        image: ghcr.io/ledgersmb/dev-postgres:${{ matrix.postgres }}
+        # Maps tcp port 5432 on service container to the host
+        ports:
+          - 5432:5432
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: test
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Pre-run installation steps
+        run: |
+          # Set host alias
+          hostname -i | awk '{printf("%s lsmb\n",$1)}' | sudo tee -a /etc/hosts
+
+          # Set the correct LedgerSMB Server configuration
+          cp doc/conf/ledgersmb.conf.default ledgersmb.conf
+          sed -i -e 's/db_namespace = public/db_namespace = xyz/' ledgersmb.conf
+
+          # Start 'nginx' reverse proxy
+          mkdir logs
+          nginx -c $GITHUB_WORKSPACE/doc/conf/webserver/nginx-github.conf \
+                -p $GITHUB_WORKSPACE &
+
+      - name: Cache npm files
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: |
+             UI/node_modules
+          key: |
+            modules-${{ hashFiles('UI/yarn.lock') }}
+
+      - name: Setup Perl environment & start starman
+        uses: ./.github/workflows/Install TEX & Perl
+        with:
+          perl-version: ${{ matrix.perl }}
+          DEVEL_COVER_OPTIONS: ${{ env.DEVEL_COVER_OPTIONS }}
+          coverage: ${{ matrix.coverage }}
+
+      - name: Run API tests
+        run: |
+          PERL5LIB="lib:old/lib:$PERL5LIB" make jstest TESTS="$JSCOVERAGE"
+
+      - name: Stop 'starman'
+        run: |
+          if [[ ! -e starman.pid ]]
+          then
+            echo "ERROR: Can't terminate Starman without PID file"
+          else
+            pid=$(cat starman.pid)
+            kill -quit $pid
+            echo "Waiting for Starman to terminate "
+            while kill -0 $pid >/dev/null 2>&1
+            do
+              echo -n "."
+              sleep 1
+            done
+            echo " "
+          fi
+
+      # Make Coverage appear from root instead of UI to integrate in Coveralls
+      - name: Fix UI Coverage report
+        run: |
+          if [[ -e UI/coverage/lcov.info ]]
+          then
+            sed -i -E "s~^SF:(js-src|src)/~SF:UI/\1/~g" UI/coverage/lcov.info
+          fi
+        if: ${{ matrix.COVERAGE }}
+
+      # Send UI coverage before Perl
+      - name: Upload UI coverage data
+        uses: coverallsapp/github-action@v2.2.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          flag-name: webservices-ui
+          parallel: true
+          file: ${{ github.workspace }}/UI/coverage/lcov.info
+        if: ${{ matrix.COVERAGE }}
+
+        # Upload coverage data if needed
+      - name: Upload coverage data
+        run: |
+          unset PERL5OPT
+          cover -report coveralls
+          cover -report text > logs/coverage.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COVERALLS_FLAG_NAME: webservices-perl
+          COVERALLS_PARALLEL: true
+        if: ${{ matrix.COVERAGE }}
+
+  test-remainder:
+    if: (github.event.action != 'closed' || github.event.pull_request.merged == true)
+    runs-on: ubuntu-latest
+    needs: [ webpack, build-perl-env ]
     timeout-minutes: 60
 
     # Service containers to run
@@ -129,19 +325,19 @@ jobs:
             postgres: "14"
             BROWSER: "chrome"
             COVERAGE: 1
-            JOB_COUNT: 2
+            JOB_COUNT: 3
 
           - perl: "5.32"
             postgres: "15"
             BROWSER: "firefox"
             COA_TESTING: 1
-            JOB_COUNT: 5
+            JOB_COUNT: 7
 
           - perl: "5.32"
             postgres: "13"
             BROWSER: "operablink"
             DB_TESTING: 1
-            JOB_COUNT: 5
+            JOB_COUNT: 7
 
     services:
       # Label used to access the service container
@@ -167,17 +363,11 @@ jobs:
       BROWSER: ${{ matrix.BROWSER }}
       COA_TESTING: ${{ matrix.COA_TESTING }}
       DB_TESTING: ${{ matrix.DB_TESTING }}
-      DEVEL_COVER_OPTIONS: -silent,1,+ignore,^x?t,+ignore,^utils,+ignore,local/,+ignore,^/usr/,+ignore,^/opt/,+ignore,\\.lttc,+ignore,starman\\b,-summary,1
       JOB_COUNT: ${{ matrix.JOB_COUNT }}
       LSMB_BASE_URL: http://lsmb:5000
       LSMB_NEW_DB: lsmb_test
       LSMB_NEW_DB_API: lsmb_test_api
       MONITOR_FILE: cpu-memory-usage
-      PGDB: lsmb_test
-      PGHOST: localhost
-      PGPASSWORD: test
-      PGPORT: 5432
-      PGUSER: postgres
       PSGI_BASE_URL: http://lsmb:5762
       RELEASE_TESTING: 1
       REMOTE_SERVER_ADDR: 127.0.0.1
@@ -190,20 +380,15 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Install TinyTex
-        uses: r-lib/actions/setup-tinytex@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Install missing TeX packages
+      - name: Pre-run installation steps
         run: |
-          tlmgr update --self
-          tlmgr install koma-script
-
-      - name: Set host alias (why doesn't Github do it itself)
-        run: |
+          # Set host alias
           hostname -i | awk '{printf("%s lsmb\n",$1)}' | sudo tee -a /etc/hosts
 
-      - name: Sendmail
-        run: |
+          # Set up 'sendmail'
           wget --quiet https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64
           sudo chmod +x mhsendmail_linux_amd64
           sudo mv mhsendmail_linux_amd64 /usr/local/bin/sendmail
@@ -214,48 +399,32 @@ jobs:
             sendmail me@test
           curl lsmb:8025/api/v2/messages
 
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install GNU gettext
-        run: sudo apt -q -y install gettext
-
-      - name: Create logging directories
-        run: |
+          # Create logging directories
           mkdir -p logs/screens
+
+          # Set the correct LedgerSMB Server configuration
           cp doc/conf/ledgersmb.conf.default ledgersmb.conf
           sed -i -e 's/db_namespace = public/db_namespace = xyz/' ledgersmb.conf
 
-      - name: Setup Perl environment
-        uses: shogo82148/actions-setup-perl@v1
-        with:
-          perl-version: ${{ matrix.perl }}
-          install-modules-with: cpanm
-          install-modules: |
-            Devel::Cover
-            Devel::Cover::Report::Coveralls
-          # Features and Devel modules
-          install-modules-args: >
-            --metacpan
-            --with-develop
-            --with-feature=starman
-            --with-feature=latex-pdf-ps
-            --with-feature=openoffice
-            --with-feature=xls
-            --with-feature=edi
-
-      - uses: actions/download-artifact@v3
-        with:
-          name: webpacked_js
-
-      - name: 'Untar Webpacked files'
-        run: tar -xf webpacked_js.tar
-
-      - name: Starting 'nginx'
-        run: |
+          # Start 'nginx' reverse proxy
           nginx -c $GITHUB_WORKSPACE/doc/conf/webserver/nginx-github.conf \
                 -p $GITHUB_WORKSPACE &
+
+      - name: Cache npm files
+        id: cache-npm
+        uses: actions/cache@v3
+        with:
+          path: |
+             UI/node_modules
+          key: |
+            modules-${{ hashFiles('UI/yarn.lock') }}
+
+      - name: Cache Dojo
+        id: cache-dojo
+        uses: actions/cache@v3
+        with:
+          path: UI/js
+          key: dojo-${{ hashFiles('UI/js-src/**', 'UI/src/**', 'UI/css/**','UI/**/*.html','doc/sources/**') }}
 
       # This will start a hub and JOB_COUNT matrix.
       - name: Starting hub with ${{ matrix.BROWSER }}
@@ -267,31 +436,12 @@ jobs:
               --detach \
               --scale ${{ matrix.BROWSER }}=$JOB_COUNT \
 
-      - name: Setup coverage
-        run: |
-          echo "STARMAN_DEVEL_COVER_OPTIONS=-MDevel::Cover=${{ env.DEVEL_COVER_OPTIONS }} -MSyntax::Keyword::Try::Deparse" >> $GITHUB_ENV
-          echo "YATH_DEVEL_COVER_OPTIONS=--cover=${{ env.DEVEL_COVER_OPTIONS }}" >> $GITHUB_ENV
-          echo "JSCOVERAGE=--coverage" >> $GITHUB_ENV
-        if: ${{ matrix.COVERAGE }}
-
-      - name: Starting 'starman'
-        run: |
-          PERL5OPT="$STARMAN_DEVEL_COVER_OPTIONS" \
-          starman --preload-app --pid starman.pid --workers $JOB_COUNT \
-                  --max-requests 5000 --error-log logs/starman-error.log \
-                  -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
-
-      # Do API Tests
-      - uses: actions/download-artifact@v3
+      - name: Setup Perl environment & start starman
+        uses: ./.github/workflows/Install TEX & Perl
         with:
-          name: node_modules
-
-      - name: 'Untar node modules'
-        run: tar -xf node_modules.tar
-
-      - name: Run API tests
-        run: |
-          PERL5LIB="lib:old/lib:$PERL5LIB" make jstest TESTS="$JSCOVERAGE"
+          perl-version: ${{ matrix.perl }}
+          DEVEL_COVER_OPTIONS: ${{ env.DEVEL_COVER_OPTIONS }}
+          coverage: ${{ matrix.coverage }}
 
       # Fix the condition to debug
       - name: Setup upterm session
@@ -299,9 +449,9 @@ jobs:
         if: ${{ matrix.BROWSER == 'chrome' && 0 }}
 
       # Do perl tests
-      - name: Run Perl tests
+      - name: Run Perl + Database + Browser tests
         run: |
-          make devtest TESTS="--no-progress --job-count $JOB_COUNT $YATH_DEVEL_COVER_OPTIONS t xt"
+          make devtest TESTS="--no-progress --job-count $JOB_COUNT $YATH_DEVEL_COVER_OPTIONS xt/4{[01],[3-9]}* xt/[5-9]*"
         env:
           LSMB_TEST_DB: 1
           COA_TESTING: ${{ matrix.COA_TESTING }}
@@ -309,23 +459,24 @@ jobs:
           DB_TESTING: ${{ matrix.DB_TESTING }}
           PERL5OPT: -MSyntax::Keyword::Try::Deparse
 
-      # Make Coverage appear from root instead of UI to integrate in Coveralls
-      - name: Fix UI Coverage report
+      - name: Stop 'starman'
         run: |
-          sed -i -E "s~^SF:(js-src|src)/~SF:UI/\1/~g" UI/coverage/lcov.info
-        if: ${{ matrix.COVERAGE }}
+          if [[ ! -e starman.pid ]]
+          then
+            echo "ERROR: Can't terminate Starman without PID file"
+          else
+            pid=$(cat starman.pid)
+            kill -quit $pid
+            echo "Waiting for Starman to terminate "
+            while kill -0 $pid >/dev/null 2>&1
+            do
+              echo -n "."
+              sleep 1
+            done
+            echo " "
+          fi
 
-      # Send UI coverage before Perl
-      - name: Upload UI coverage data
-        uses: coverallsapp/github-action@v2.2.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          flag-name: ui
-          parallel: true
-          path-to-lcov: ${{ github.workspace }}/UI/coverage/lcov.info
-        if: ${{ matrix.COVERAGE }}
-
-        # Upload coverage data if needed
+      # Upload coverage data if needed
       - name: Upload coverage data
         run: |
           unset PERL5OPT
@@ -333,22 +484,8 @@ jobs:
           cover -report text > logs/coverage.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_FLAG_NAME: perl
+          COVERALLS_FLAG_NAME: remainder-perl
           COVERALLS_PARALLEL: true
-        if: ${{ matrix.COVERAGE }}
-
-      - name: Close parallel UI coverage data
-        uses: coverallsapp/github-action@v2.2.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true
-          path-to-lcov: ${{ github.workspace }}/coverage/UI/lcov.info
-        if: ${{ matrix.COVERAGE }}
-
-      # Run the build hook again (Coveralls suggested patch)
-      - name: Rerun Build Webhook
-        run: |
-          curl --location --request GET "https://coveralls.io/rerun_build?repo_token=${{ secrets.GITHUB_TOKEN }}&build_num=${GITHUB_RUN_ID}"
         if: ${{ matrix.COVERAGE }}
 
       # Send logs & artifacts
@@ -367,12 +504,35 @@ jobs:
             /tmp/nginx*.log
         if: always()
 
+  close-parallel-coverage:
+    runs-on: ubuntu-latest
+    needs: [ test-pure-perl, test-remainder, test-webservices ]
+    steps:
+      - name: Close parallel UI coverage data
+        uses: coverallsapp/github-action@v2.2.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
+
+      # Run the build hook again (Coveralls suggested patch)
+      - name: Rerun Build Webhook
+        run: |
+          curl --location --request GET "https://coveralls.io/rerun_build?repo_token=${{ secrets.GITHUB_TOKEN }}&build_num=${GITHUB_RUN_ID}"
+
+  testing-done:
+    runs-on: ubuntu-latest
+    needs: [ test-database, test-pure-perl, test-remainder, test-webservices ]
+    steps:
+      - name: Done
+        run: |
+          echo "DONE!"
+
   build-dev:
     if: github.event.pull_request.merged == true
 
     runs-on: ubuntu-latest
 
-    needs: build
+    needs: test-remainder
 
     steps:
 
