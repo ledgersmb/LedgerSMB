@@ -335,6 +335,14 @@ jobs:
             /tmp/nginx*.log
         if: always()
 
+  testing-done:
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
+      - name: Done
+        run: |
+          echo "DONE!"
+
   build-dev:
     if: github.event.action == 'closed' && github.event.pull_request.merged == true
 
