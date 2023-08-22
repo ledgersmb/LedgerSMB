@@ -44,6 +44,94 @@
   <tr>
     <td><hr size=3 noshade></td>
   </tr>
+  <tr>
+    <th align="right" valign="top">[% text('Include in Report') %]</th>
+  </tr>
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <td nowrap>[%
+            label_pos = 1;
+            PROCESS input element_data = {
+            name="col_legal_name"
+            class="checkbox"
+            type="checkbox"
+            value="1"
+            checked="checked"
+            label=text('Company') } %]</td>
+        </tr>
+        <tr>
+          <td nowrap>[%
+            PROCESS input element_data = {
+            name="col_account_type"
+            class="checkbox"
+            type="checkbox"
+            value="1"
+            checked="checked"
+            label=text('Account Type') } %]</td>
+        </tr>
+        <tr>
+          <td nowrap>[%
+            PROCESS input element_data = {
+            name="col_meta_number"
+            class="checkbox"
+            type="checkbox"
+            value="1"
+            checked="checked"
+            label=text('Account Number') } %]</td>
+        </tr>
+        <tr>
+          <td nowrap>[%
+            PROCESS input element_data = {
+            name="col_control_code"
+            class="checkbox"
+            type="checkbox"
+            value="1"
+            checked="checked"
+            label=text('Control Code') } %]</td>
+        </tr>
+        <tr>
+          <td nowrap>[%
+            PROCESS input element_data = {
+            name="col_tax_id"
+            class="checkbox"
+            type="checkbox"
+            value="1"
+            label=text('Tax ID') } %]</td>
+        </tr>
+        <tr>
+          <td nowrap>[%
+            PROCESS input element_data = {
+            name="col_sales_tax_id"
+            class="checkbox"
+            type="checkbox"
+            value="1"
+            label=text('Sales Tax ID') };
+            PROCESS input element_data={
+            name="col_acc_sum"
+            value="1"
+            type="hidden"
+            };
+            PROCESS input element_data={
+            name="col_invoice_sum"
+            value="1"
+            type="hidden"
+            };
+            PROCESS input element_data={
+            name="col_total"
+            value="1"
+            type="hidden"
+            };
+            %]
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td><hr size=3 noshade></td>
+  </tr>
 </table>
 
 [% PROCESS input element_data = {
