@@ -127,7 +127,7 @@ sub generate_report {
 
     my ($tf) =
         $request->call_procedure(
-            funcname => 'tax_form__get', args => [$request->{id}]);
+            funcname => 'tax_form__get', args => [$request->{tax_form_id}]);
 
     my $report;
     if ($request->{meta_number}){
