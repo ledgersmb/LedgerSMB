@@ -57,6 +57,12 @@ has is_accrual => (is => 'rw', isa => 'Bool', required => 0, default => 0);
 
 =item meta_number
 
+=item control_code
+
+=item tax_id
+
+=item sales_tax_id
+
 =item acc_sum
 
 =item invoice_sum
@@ -85,6 +91,14 @@ sub columns {
      { col_id  => 'control_code',
        type    => 'text',
        name    => $self->Text('Control Code') },
+
+      { col_id => 'tax_id',
+        type   => 'text',
+        name   => $self->Text('Tax ID'), },
+
+     { col_id  => 'sales_tax_id',
+       type    => 'text',
+       name    => $self->Text('Sales Tax ID') },
 
      { col_id  => 'acc_sum',
        type    => 'text',
