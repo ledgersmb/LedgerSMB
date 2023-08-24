@@ -101,13 +101,13 @@ commands:
           background: true
 
       # Restore node_modules
-      - restore_cache:
-          keys:
-            # Find a cache corresponding to this specific package-lock.json checksum
-            # when this file is changed, this key will fail
-            - v1-npm-deps-{{ checksum "package-lock.json" }}
-            # Find the most recently generated cache used from any branch
-            - v1-npm-deps-
+#      - restore_cache:
+#          keys:
+#            # Find a cache corresponding to this specific package-lock.json checksum
+#            # when this file is changed, this key will fail
+#            - v1-npm-deps-{{ checksum "package-lock.json" }}
+#            # Find the most recently generated cache used from any branch
+#            - v1-npm-deps-
 
       - run:
           name: Make JS + README
@@ -115,10 +115,10 @@ commands:
             make js
             make readme
 
-      - save_cache:
-          key: v1-npm-deps-{{ checksum "package-lock.json" }}
-          paths:
-            - $HOME/.npm
+#      - save_cache:
+#          key: v1-npm-deps-{{ checksum "package-lock.json" }}
+#          paths:
+#            - $HOME/.npm
 
       - run:
           name: Set up dirs and files
