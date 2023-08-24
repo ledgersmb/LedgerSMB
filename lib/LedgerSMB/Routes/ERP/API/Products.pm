@@ -679,8 +679,9 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Warehouse'
-                    example:
-                      $ref: '#/components/examples/validWarehouse'
+              examples:
+                validWarehouse:
+                  $ref: '#/components/examples/validWarehouse'
         400:
           $ref: '#/components/responses/400'
         401:
