@@ -329,7 +329,7 @@ sub _get_invoices_by_id {
 
     $inv{workflow} = {
         state => $wf->state,
-        actions => [ $wf->get_current_actions ]
+        actions => [ sort $wf->get_current_actions ]
     };
 
     return [ HTTP_OK,
