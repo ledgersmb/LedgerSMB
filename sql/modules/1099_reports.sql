@@ -22,6 +22,8 @@ CREATE TYPE tax_form_report_item AS (
     entity_class integer,
     control_code text,
     meta_number character varying(32),
+    tax_id text,
+    sales_tax_id text,
     acc_sum numeric,
     invoice_sum numeric,
     total_sum numeric);
@@ -34,6 +36,8 @@ CREATE TYPE tax_form_report_detail_item AS (
     entity_class integer,
     control_code text,
     meta_number character varying(32),
+    tax_id text,
+    sales_tax_id text,
     acc_sum numeric,
     invoice_sum numeric,
     total_sum numeric,
@@ -48,6 +52,7 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                      company.legal_name, company.entity_id,
                      entity_credit_account.entity_class, entity.control_code,
                      entity_credit_account.meta_number,
+                     company.tax_id, company.sales_tax_id,
                      sum(CASE WHEN gl.amount_bc = 0 THEN 0
                               WHEN relation = 'acc_trans'
                           THEN ac.reportable_amount_bc * pmt.amount_bc
@@ -112,7 +117,7 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                 JOIN company ON (entity.id = company.entity_id)
                 JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
                WHERE country_tax_form.id = in_tax_form_id
-             GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, entity_credit_account.id
+             GROUP BY legal_name, meta_number, company.tax_id, company.sales_tax_id, company.entity_id, entity_credit_account.entity_class, entity.control_code, entity_credit_account.id
 $BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_summary_report
@@ -127,6 +132,7 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                      company.legal_name, company.entity_id,
                      entity_credit_account.entity_class, entity.control_code,
                      entity_credit_account.meta_number,
+                     company.tax_id, company.sales_tax_id,
                      sum(CASE WHEN gl.amount_bc = 0 then 0
                               when relation = 'acc_trans'
                           THEN ac.reportable_amount_bc * pmt.amount_bc
@@ -190,7 +196,7 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                      group by ac.trans_id
                      ) pmt ON  (pmt.trans_id = gl.id)
                 WHERE country_tax_form.id = in_tax_form_id AND meta_number = in_meta_number
-                GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, gl.invnumber, gl.duedate, gl.id, entity_credit_account.id
+                GROUP BY legal_name, meta_number, company.entity_id, company.tax_id, company.sales_tax_id, entity_credit_account.entity_class, entity.control_code, gl.invnumber, gl.duedate, gl.id, entity_credit_account.id
 $BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_details_report
@@ -207,6 +213,7 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                      company.legal_name, company.entity_id,
                      entity_credit_account.entity_class, entity.control_code,
                      entity_credit_account.meta_number,
+                     company.tax_id, company.sales_tax_id,
                      sum(CASE WHEN gl.amount_bc = 0 THEN 0
                               WHEN relation = 'acc_trans'
                           THEN ac.reportable_amount_bc
@@ -259,7 +266,7 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                 JOIN company ON (entity.id = company.entity_id)
                 JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
                WHERE country_tax_form.id = in_tax_form_id
-             GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, entity_credit_account.id
+             GROUP BY legal_name, meta_number, company.entity_id, company.tax_id, company.sales_tax_id, entity_credit_account.entity_class, entity.control_code, entity_credit_account.id
 $BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_summary_report_accrual
@@ -275,6 +282,7 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                      company.legal_name, company.entity_id,
                      entity_credit_account.entity_class, entity.control_code,
                      entity_credit_account.meta_number,
+                     company.tax_id, company.sales_tax_id,
                      sum(CASE WHEN gl.amount_bc = 0 then 0
                               when relation = 'acc_trans'
                           THEN ac.reportable_amount_bc
@@ -327,7 +335,7 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                 JOIN company ON (entity.id = company.entity_id)
                 JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
                 WHERE country_tax_form.id = in_tax_form_id AND meta_number = in_meta_number
-                GROUP BY legal_name, meta_number, company.entity_id, entity_credit_account.entity_class, entity.control_code, gl.invnumber, gl.duedate, gl.id, entity_credit_account.id
+                GROUP BY legal_name, meta_number, company.entity_id, company.tax_id, company.sales_tax_id, entity_credit_account.entity_class, entity.control_code, gl.invnumber, gl.duedate, gl.id, entity_credit_account.id
 $BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_details_report_accrual
