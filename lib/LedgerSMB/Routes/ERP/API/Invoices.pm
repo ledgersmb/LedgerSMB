@@ -293,8 +293,8 @@ sub _get_invoices_by_id {
         pay_to_name => $eca->{pay_to_name},
         credit_limit => {
             used => $credit_limit_used->[0] // 0,
-            maximum => $eca->{creditlimit} // 0,
-            remaining => (($eca->{creditlimit} // 0) - ($credit_limit_used->[0] // 0)),
+            total => $eca->{creditlimit} // 0,
+            available => (($eca->{creditlimit} // 0) - ($credit_limit_used->[0] // 0)),
         },
         entity => {
             $entity->%{qw/name control_code/}
@@ -329,7 +329,7 @@ sub _get_invoices_by_id {
 
     $inv{workflow} = {
         state => $wf->state,
-        actions => [ $wf->get_current_actions ]
+        actions => [ sort $wf->get_current_actions ]
     };
 
     return [ HTTP_OK,
@@ -467,12 +467,13 @@ sub _post_invoices {
     {
         $inv->{lines} = [];
         for my $line ($body->{lines}->@*) {
+            $line->{deliverydate} = delete $line->{delivery_date};
             # set the optional fields
             my $inv_line = {};
             push $inv->{lines}->@*, $inv_line;
 
             foreach my $field (qw( description price price_fixated unit qty
-                               discount discount_type taxform delivery_date note
+                               discount discount_type taxform deliverydate note
                                serialnumber group )) {
                 if (exists $line->{$field}
                     and defined $line->{$field}
@@ -480,6 +481,7 @@ sub _post_invoices {
                     $inv_line->{$field} = $line->{$field};
                 }
             }
+
             $inv_line->{qty}   = $inv_line->{qty} // 1;
 
             # determine price and description
@@ -1043,6 +1045,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Invoice'
+                example:
+                  $ref: '#/components/examples/validInvoice'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -1116,6 +1120,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Invoice'
+              examples:
+                validInvoice:
+                  $ref: '#/components/examples/validInvoice'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -1357,53 +1364,119 @@ components:
     Invoice:
       description: ...
       allOf:
-        - $ref: '#/components/schemas/newInvoice'
+        # TODO: Fix inheritance. The definitions below replace the ones
+        # TODO: defined in newInvoice, not complement them
+        #- $ref: '#/components/schemas/newInvoice'
         - type: object
           properties:
             eca:
               type: object
               properties:
+                credit_limit:
+                  type: object
+                  properties:
+                    available:
+                      type: number
+                    total:
+                      type: number
+                    used:
+                      type: number
+                description:
+                  type: string
+                  nullable: true
                 entity:
                   type: object
                   properties:
-                    credit_limit:
-                      type: object
-                      properties:
-                        total:
-                          type: number
-                        used:
-                          type: number
-                        available:
-                          type: number
+                    control_code:
+                      type: string
+                    name:
+                      type: string
+                id:
+                  type: number
+                number:
+                  type: string
+                  minLength: 1
+                pay_to_name:
+                  type: string
+                  nullable: true
+                type:
+                  type: string
+                  enum:
+                    - customer
+                    - vendor
             account:
               type: object
               properties:
+                accno:
+                  type: string
+                  minLength: 1
                 description:
                   type: string
+                  minLength: 2
+            description:
+              type: string
+              nullable: true
             lines:
               type: array
               items:
                 type: object
                 properties:
+                  delivery_date:
+                    type: string
+                    format: date
+                    nullable: true
+                  description:
+                    type: string
+                  discount:
+                    description: |
+                      A value of 10 means the customer gets a 10% discount,
+                      if discount_type has a value of '%'
+                    type: number
+                    minimum: 0
+                    maximum: 100
+                  discount_type:
+                    type: string
+                    enum:
+                      - '%'
+                  id:
+                    type: number
+                  item:
+                    type: number
+                  notes:
+                    type: string
+                    nullable: true
+                  price:
+                    type: number
+                  price_fixated:
+                    type: boolean
+                    default: false
+                  unit:
+                    type: string
+                  qty:
+                    type: number
+                    default: 1
+                  serialnumber:
+                    type: string
+                    nullable: true
                   part:
                     type: object
+                    required:
+                      - number
                     properties:
                       _self:
                         type: string
+                      number:
+                        type: string
+                        minLength: 1
+                      description:
+                        type: string
+                      onhand:
+                        type: string
+                      unit:
+                        type: string
+                      weight:
+                        type: string
                   total:
-                    type: number
-            taxes:
-              type: object
-              additionalProperties:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  rate:
-                    type: number
-                    minimum: 0
-                    maximum: 1
-                  calculated-amount:
                     type: number
             payments:
               type: array
@@ -1415,6 +1488,127 @@ components:
                     properties:
                       description:
                         type: string
+            taxes:
+              type: object
+              additionalProperties:
+                type: object
+                properties:
+                  tax:
+                    type: object
+                    required:
+                      - category
+                    properties:
+                      category:
+                        type: string
+                      rate:
+                        type: string
+                      name:
+                        type: string
+                  base-amount:
+                    type: number
+                  amount:
+                    type: number
+                  calculated-amount:
+                    type: number
+                  source:
+                    type: string
+                  memo:
+                    type: string
+            workflow:
+              type: object
+              properties:
+                actions:
+                  type: array
+                state:
+                  type: string
+                  enum: [INITIAL, SAVED, POSTED, ONHOLD, VOIDED, REVERSED, DELETED]
+  examples:
+    validInvoice:
+      summary: Example Invoice
+      description: Invoice entry
+      value:
+        account:
+          accno: "1200"
+          description: AR
+        currency: "USD"
+        dates:
+          created: "2022-09-01"
+          due: "2022-10-01"
+          book: "2022-10-05"
+        description:
+        eca:
+          number: "Customer 1"
+          type: "customer"
+          credit_limit:
+            total: 0
+            used: 0
+            available: 0
+          description:
+          entity:
+            control_code: C-0
+            name: Customer 1
+          id: 1
+          pay_to_name:
+        id: "1"
+        "internal-notes": "Internal notes"
+        "invoice-number": "2389434"
+        lines:
+          - delivery_date: "2022-10-27"
+            description: "A description"
+            discount: 12
+            discount_type: "%"
+            id: 1
+            item: 1
+            notes:
+            part:
+              description: Part 1
+              number: "p1"
+              onhand: "0"
+              unit: "ea"
+              weight: "0"
+            price: 56.78
+            price_fixated: false
+            qty: 1
+            serialnumber: "1234567890"
+            total: -624.58
+            unit: "lbs"
+        lines_total: -624.58
+        notes: "Notes"
+        "order-number": "order 345"
+        #TODO: Add payments here
+        #payments:
+        #  - account:
+        #      accno: "5010"
+        #    date: "2022-11-05"
+        #    description: Payment 1
+        #    amount: 20
+        #    memo: "depot"
+        #    source: "visa"
+        "po-number": "po 456"
+        "quote-number": ""
+        #TODO: Add/debug ship-to
+        #"ship-to": "ship to there"
+        "ship-via": "ship via"
+        "shipping-point": "shipping from here"
+        taxes:
+          "2150":
+            amount: 6.78
+            "base-amount": 50
+            "calculated-amount": 2.5
+            source: "Part 1"
+            memo: "tax memo"
+            tax:
+              category: "2150"
+              name: Sales Tax
+              rate: "0.05"
+        taxes_total: 6.78
+        total: -617.8
+        type: customer
+        workflow:
+          actions:
+            - post
+            - update
+          state: INITIAL
   responses:
     400:
       description: Bad request

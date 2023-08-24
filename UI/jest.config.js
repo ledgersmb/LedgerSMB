@@ -117,7 +117,7 @@ module.exports = {
 
     // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
     moduleNameMapper: {
-        "^@/i18n": "<rootDir>/tests/common/i18n", // Jest doesn't support esm or top level await well 
+        "^@/i18n": "<rootDir>/tests/common/i18n", // Jest doesn't support esm or top level await well
         "^@/(.*)$": "<rootDir>/src/$1"
     },
 
@@ -230,6 +230,7 @@ module.exports = {
 
     // A map from regular expressions to paths to transformers
     transform: {
+        "^.+\\.yaml$": "yaml-jest-transform",
         "^.+\\.js$": "babel-jest",
         "^.+\\.vue$": "@vue/vue3-jest"
     },

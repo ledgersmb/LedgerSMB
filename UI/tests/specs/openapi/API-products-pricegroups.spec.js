@@ -16,6 +16,10 @@ import { server } from '../../common/mocks/server.js'
 // Load an OpenAPI file (YAML or JSON) into this plugin
 const openapi = process.env.PWD.replace("/UI","");
 jestOpenAPI( openapi + "/openapi/API.yaml");
+
+// Load the API definition
+const API_yaml = require (openapi + "/openapi/API.yaml");
+
 // Set API version to use
 const api = "erp/api/v0";
 
@@ -128,6 +132,21 @@ describe("Adding the new Price Group", () => {
 
         // Assert that the HTTP response satisfies the OpenAPI spec
         expect(res.data).toSatisfySchemaInApiSpec("Pricegroup");
+    });
+});
+
+describe("Validate against the example Pricegroup", () => {
+    it("GET /products/pricegroups/1", async () => {
+        let res = await axios.get(serverUrl + "/" + api + "/products/pricegroups/1", {
+            headers: headers
+        });
+        expect(res.status).toEqual(StatusCodes.OK);
+
+        // Pick the example
+        const pricegroupExample = API_yaml.components.examples.validPricegroup.value;
+
+        // Assert that the response matches the example in the spec
+        expect(res.data).toEqual(pricegroupExample);
     });
 });
 

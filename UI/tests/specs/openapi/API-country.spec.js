@@ -16,6 +16,10 @@ import { server } from '../../common/mocks/server.js'
 // Load an OpenAPI file (YAML or JSON) into this plugin
 const openapi = process.env.PWD.replace("/UI","");
 jestOpenAPI( openapi + "/openapi/API.yaml");
+
+// Load the API definition
+const API_yaml = require (openapi + "/openapi/API.yaml");
+
 // Set API version to use
 const api = "erp/api/v0";
 
@@ -101,6 +105,21 @@ describe("Retrieving all countries with old syntax should fail", () => {
         ).rejects.toThrow(
             "Request failed with status code " + StatusCodes.BAD_REQUEST
         );
+    });
+});
+
+describe("Validate against the example country", () => {
+    it("GET /countries/NL", async () => {
+        let res = await axios.get(serverUrl + "/" + api + "/countries/NL", {
+            headers: headers
+        });
+        expect(res.status).toEqual(StatusCodes.OK);
+
+        // Pick the example
+        const countryExample = API_yaml.components.examples.validCountry.value;
+
+        // Assert that the response matches the example in the spec
+        expect(res.data).toEqual(countryExample);
     });
 });
 

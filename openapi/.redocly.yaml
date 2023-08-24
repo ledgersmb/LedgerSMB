@@ -7,7 +7,7 @@ apis:
   # Update the apiName with your actual API name, and the version with your actual API version.
   ledgersmb@v0.01:
     # Update the path to your OpenAPI root file
-    root: ./openapi/openapi.yaml
+    root: ./openapi/API.yaml
 
 theme:
   openapi:

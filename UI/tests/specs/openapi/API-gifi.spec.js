@@ -16,6 +16,10 @@ import { server } from '../../common/mocks/server.js'
 // Load an OpenAPI file (YAML or JSON) into this plugin
 const openapi = process.env.PWD.replace("/UI","");
 jestOpenAPI( openapi + "/openapi/API.yaml");
+
+// Load the API definition
+const API_yaml = require (openapi + "/openapi/API.yaml");
+
 // Set API version to use
 const api = "erp/api/v0";
 
@@ -133,6 +137,21 @@ describe("Adding the new Test GIFI", () => {
 
         // Assert that the HTTP response satisfies the OpenAPI spec
         expect(res.data).toSatisfySchemaInApiSpec("GIFI");
+    });
+});
+
+describe("Validate against the example GIFI 99999", () => {
+    it("GET /gifi/99999 should validate our new GIFI", async () => {
+        let res = await axios.get(serverUrl + "/" + api + "/gl/gifi/99999", {
+            headers: headers
+        });
+        expect(res.status).toEqual(StatusCodes.OK);
+
+        // Pick the example
+        const gifiExample = API_yaml.components.examples.validGIFI.value;
+
+        // Assert that the response matches the example in the spec
+        expect(res.data).toEqual(gifiExample);
     });
 });
 

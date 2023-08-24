@@ -508,6 +508,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/SIC'
+                    example:
+                      $ref: '#/components/examples/validSIC'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -568,6 +570,9 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/SIC'
+              examples:
+                validSIC:
+                  $ref: '#/components/examples/validSIC'
         304:
           $ref: '#/components/responses/304'
         400:
@@ -692,6 +697,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/BusinessType'
+                    example:
+                      $ref: '#/components/examples/validBusinessType'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -752,6 +759,9 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/BusinessType'
+              examples:
+                validBusinessType:
+                  $ref: '#/components/examples/validBusinessType'
         304:
           $ref: '#/components/responses/304'
         400:
@@ -852,6 +862,34 @@ paths:
         428:
           $ref: '#/components/responses/428'
 components:
+  headers:
+    ETag:
+      description: ...
+      required: true
+      schema:
+        type: string
+  parameters:
+    if-match:
+      name: If-Match
+      in: header
+      description: ...
+      required: true
+      schema:
+        type: string
+  examples:
+    validSIC:
+      summary: Valid SIC
+      description: Standard Industry Code
+      value:
+        code: "541510"
+        description: Design of computer systems
+    validBusinessType:
+      summary: Valid Business Type
+      description: Business Type Entry
+      value:
+        id: 1
+        description: Big customer
+        discount: 0.05
   schemas:
     sic-code:
       type: string

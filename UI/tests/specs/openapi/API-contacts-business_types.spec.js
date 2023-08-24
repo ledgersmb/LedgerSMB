@@ -17,6 +17,9 @@ import { server } from '../../common/mocks/server.js'
 const openapi = process.env.PWD.replace("/UI","");
 jestOpenAPI( openapi + "/openapi/API.yaml");
 
+// Load the API definition
+const API_yaml = require (openapi + "/openapi/API.yaml");
+
 // Set API version to use
 const api = "erp/api/v0";
 
@@ -134,6 +137,21 @@ describe("Adding the IT Business Types", () => {
 
         // Assert that the HTTP response satisfies the OpenAPI spec
         expect(res.data).toSatisfySchemaInApiSpec("NewBusinessType");
+    });
+});
+
+describe("Validate against the default Business Type", () => {
+    it("GET /contacts/business-types/1 should validate the new Business Type", async () => {
+        let res = await axios.get(serverUrl + "/" + api + "/contacts/business-types/1", {
+            headers: headers
+        });
+        expect(res.status).toEqual(StatusCodes.OK);
+
+        // Pick the example
+        const businessTypeExample = API_yaml.components.examples.validBusinessType.value;
+
+        // Assert that the response matches the example in the spec
+        expect(res.data).toEqual(businessTypeExample);
     });
 });
 
