@@ -26,6 +26,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Middleware::RequestID;
 
 use Beam::Wire;
+use File::Spec;
 use Log::Any::Adapter;
 use Log::Log4perl qw(:easy);
 use Log::Log4perl::Layout::PatternLayout;
@@ -91,9 +92,29 @@ do {
         my $yp = YAML::PP->new( header => 0 );
         my $base_config = $yp->load_string( do { local $/ = undef; <DATA> } );
 
+        $config_file = File::Spec->rel2abs( $config_file );
         if (defined $config_file) {
             $config = merge_config_hashes( $base_config,
                                            $yp->load_file( $config_file ) );
+
+            my ($vol, $dirs, $file) = File::Spec->splitpath( $config_file );
+            my $dir = File::Spec->catpath( $vol, $dirs, '' );
+            if (opendir my $dh, $dir) {
+                my @files = sort readdir $dh;
+                while (my $incremental = pop @files) {
+                    next unless $file eq ($incremental =~ s/\.\d+\././r);
+
+                    my $p = File::Spec->catpath( $vol, $dirs, $incremental );
+                    $config = merge_config_hashes( $config,
+                                                   $yp->load_file( $p ) );
+                }
+
+                closedir $dh
+                    or warn "Unable to close directory $dir";
+            }
+            else {
+                warn "Skipping incremental configuration files; unable to open directory '$dir': $!";
+            }
         }
         else {
             $config = $base_config;
