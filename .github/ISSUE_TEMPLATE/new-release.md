@@ -13,6 +13,7 @@ When working toward a non-patch release, it's practical to use an issue to track
 # At branch time (pre-beta)
 
 * [ ] Create stabilization branch
+* [ ] Create a new docker-compose branch
 * [ ] Create a new transifex resource for branch translation
   * [ ] Make sure that `slug` and `name` both contain LedgerSMB-XX
   * [ ] Make sure that the auto-update URL is set
@@ -25,11 +26,9 @@ When working toward a non-patch release, it's practical to use an issue to track
   * [ ] In bin/ledgersmb-server.psgi adjust the version-check regex and the cookie name in the `__DATA__` section
   * [ ] In locale/LedgerSMB.pot, adjust the Project-Id
   * [ ] In t/data/Is_LSMB_running.html, increase the version text
-  * [ ] Update the supported items page: https://ledgersmb.org/faq/which-versions-do-you-support
   * [ ] Update README.md reference to `docker-compose` file (both on the branch and on master)
-  * [ ] Create a new docker-compose branch
   * [ ] Update the cookie's version number in the default config files `doc/conf/ledgersmb.yaml.*`
-  * [ ] Add the new version to renovate.json baseBranches
+* [ ] Add the new version to renovate.json baseBranches
 
 # General preparation
 
@@ -92,6 +91,7 @@ When working toward a non-patch release, it's practical to use an issue to track
 # Post release steps:
 
 * [ ] Remove "Draft" status from 1.9 related items on ledgersmb.org
+* [ ] Update the supported items page: https://ledgersmb.org/faq/which-versions-do-you-support
 * [ ] Update the version number of the 'master' branch:
   * [ ] Update README.md reference to 'prepare for first use'
 * [ ] Update the screenshots
