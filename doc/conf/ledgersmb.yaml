@@ -1,6 +1,6 @@
 
 cookie:
-  name: LedgerSMB-1.11
+  name: LedgerSMB-1.12
   # Leaving the secret empty causes a secret to be dynamically generated
   # secret:
 
