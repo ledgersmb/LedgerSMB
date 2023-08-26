@@ -13,11 +13,13 @@ When working toward a non-patch release, it's practical to use an issue to track
 # At branch time (pre-beta)
 
 * [ ] Create stabilization branch
+* [ ] Set branch protection rules for the release branch
 * [ ] Create a new docker-compose branch
 * [ ] Create a new transifex resource for branch translation
   * [ ] Make sure that `slug` and `name` both contain LedgerSMB-XX
   * [ ] Make sure that the auto-update URL is set
 * [ ] Update the .tx/config section name `[ledgersmb.LedgerSMB]` -> `[ledgersmb.LedgerSMB-XX]`
+* [ ] Update `.github/workflows/codeql.yml`, setting branches to "*" for pushes and pull requests (in line with prior release branches)
 * [ ] Update the version number of the 'master' branch:
   * [ ] sql/Pg-database.sql
   * [ ] package.json
