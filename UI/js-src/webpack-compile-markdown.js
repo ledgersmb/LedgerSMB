@@ -66,6 +66,9 @@ MarkdownInclude.registerPlugin({
                             earliest[category][browser].year = year;
                             earliest[category][browser].time = time;
                         }
+                        else {
+                            earliest[category][browser].year = "<missing>";
+                        }
                     }
                     earliest[category][browser].versions.push(version);
                 }
