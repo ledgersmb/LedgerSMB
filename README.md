@@ -5,10 +5,10 @@ Small and Medium business accounting and ERP
 
 
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/795/badge)](https://bestpractices.coreinfrastructure.org/projects/795)
-[![CI](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml/badge.svg)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml)
-[![CodeQL](https://github.com/ledgersmb/LedgerSMB/actions/workflows/codeql.yml/badge.svg?branch=master)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/codeql.yml)
+[![CI](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml/badge.svg?branch=1.11)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml)
+[![CodeQL](https://github.com/ledgersmb/LedgerSMB/actions/workflows/codeql.yml/badge.svg?branch=1.11)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/codeql.yml)
 [![GPLv2 Licence](https://badges.frapsoft.com/os/gpl/gpl.png?v=103)](https://opensource.org/licenses/GPL-2.0/)
-[![Coverage Status](https://coveralls.io/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=master)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=1.11)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=1.11)
 [![Docker](https://img.shields.io/docker/pulls/ledgersmb/ledgersmb.svg)](https://hub.docker.com/r/ledgersmb/ledgersmb/)
 [![Mentioned in Awesome <awesome-selfhosted>](https://awesome.re/mentioned-badge.svg)](https://github.com/Kickball/awesome-selfhosted#enterprise-resource-planning)
 [![pull requests](https://www.oselvar.com/api/badge?label=pull+requests&csvUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fledgersmb%2Fledgersmb-oselvar%2Fmain%2Fdata%2Fledgersmb%2FLedgerSMB%2FpullRequests.csv)](https://www.oselvar.com/github/ledgersmb/ledgersmb-oselvar/main/ledgersmb/LedgerSMB "3rd quartile cycle time")
@@ -36,11 +36,6 @@ fast customization. Supported output formats are PDF, CSV, HTML, ODF and more.
 
 # System requirements
 
-Note that these are the system requirements for LedgerSMB 1.11.0-dev, the current
-development version. Please check the system requirements for [the 1.10 stable
-version](https://github.com/ledgersmb/LedgerSMB/tree/1.10#system-requirements)
-and [the 1.9 'old stable' version](https://github.com/ledgersmb/LedgerSMB/tree/1.9#system-requirements).
-
 ## Server
 
 * `Perl 5.32+`
@@ -61,10 +56,10 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome              | 2018-03  | 65-81, 83-114                               |
-| Edge                | 2020-01  | 79-81, 83-114                               |
-| Firefox             | 2018-05  | 60-115                                      |
-| Opera               | 2018-03  | 52-58, 60, 62-100                           |
+| Chrome              | 2018-03  | 65-81, 83-116                               |
+| Edge                | 2020-01  | 79-81, 83-115                               |
+| Firefox             | 2018-05  | 60-116                                      |
+| Opera               | 2018-03  | 52-58, 60, 62-101                           |
 | Safari              | 2018-03  | 11.1, 12, 12.1, 13, 13.1, 14, 14.1, 15,     |
 |                     |          | 15.1, 15.2-15.6, 16.0-16.5                  |
 
@@ -72,14 +67,14 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome for Android  | 2023-05  | 114                                         |
-| Firefox for Android | 2023-05  | 113                                         |
+| Chrome for Android  | 2023-07  | 115                                         |
+| Firefox for Android | 2023-07  | 115                                         |
 | QQ Browser          | 2022-09  | 13.1                                        |
-| UC Browser for Android | 2021-10  | 13.4                                        |
-| Android Browser     | 2023-05  | 114                                         |
+| UC Browser for Android | 2023-06  | 15.5                                        |
+| Android Browser     | 2023-07  | 115                                         |
 | Baidu Browser       | 2022-09  | 13.18                                       |
 | Safari on iOS       | 2018-03  | 11.3-11.4, 12.0-12.5, 13.0-13.7,            |
-|                     |          | 14.0-14.8, 15.0-15.6, 16.0-16.5             |
+|                     |          | 14.0-14.8, 15.0-15.7, 16.0-16.5             |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
 | Opera Mobile        | 2023-01  | 73                                          |
 | Samsung Internet    | 2019-04  | 9.2, 10.1, 11.1-11.2, 12.0, 13.0, 14.0,     |
