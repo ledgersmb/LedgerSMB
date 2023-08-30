@@ -46,7 +46,7 @@ When working toward a non-patch release, it's practical to use an issue to track
 * [ ] Update maintenance branch README.md
   * [ ] Point coverage badge to maintenance branch
   * [ ] Point CI badge to maintenance branch
-  * [ ] Remove pointer to "current stable" branches
+  * [ ] Remove pointer to "current stable" branches (system requirements section)
 * [ ] Update Docker image README.md
   * [ ] Docker README listing available tags (on all branches!)
 * [ ] Update the [system requirements listing](https://ledgersmb.org/content/system-requirements)
@@ -64,7 +64,6 @@ When working toward a non-patch release, it's practical to use an issue to track
 # Just before release
 
 * [ ] Change ledgersmb-docker default branch to the new stable release branch (this causes the 'latest' tag in docker to move to the new branch!)
-* [ ] Include the new release on the ledgersmb.org front page
 * [ ] Update the roadmap on ledgersmb.org
 * [ ] Review installation instructions on ledgersmb.org
   * [ ] Including https://ledgersmb.org/content/installing-ledgersmb
@@ -92,6 +91,7 @@ When working toward a non-patch release, it's practical to use an issue to track
 
 # Post release steps:
 
+* [ ] Include the new release on the ledgersmb.org front page
 * [ ] Remove "Draft" status from 1.9 related items on ledgersmb.org
 * [ ] Update the supported items page: https://ledgersmb.org/faq/which-versions-do-you-support
 * [ ] Update the version number of the 'master' branch:
