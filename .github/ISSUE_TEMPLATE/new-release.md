@@ -47,8 +47,6 @@ When working toward a non-patch release, it's practical to use an issue to track
   * [ ] Point coverage badge to maintenance branch
   * [ ] Point CI badge to maintenance branch
   * [ ] Remove pointer to "current stable" branches (system requirements section)
-* [ ] Update Docker image README.md
-  * [ ] Docker README listing available tags (on all branches!)
 * [ ] Update the [system requirements listing](https://ledgersmb.org/content/system-requirements)
 * [ ] Update [list of supported Perl versions](https://ledgersmb.org/faq/which-versions-perl-does-ledgersmb-support)
 * [ ] Update [list of supported PostgreSQL versions](https://ledgersmb.org/faq/installation/what-versions-postgresql-does-ledgersmb-support)
@@ -63,6 +61,8 @@ When working toward a non-patch release, it's practical to use an issue to track
 
 # Just before release
 
+* [ ] Update Docker image README.md
+  * [ ] Docker README listing available tags (on all branches!)
 * [ ] Change ledgersmb-docker default branch to the new stable release branch (this causes the 'latest' tag in docker to move to the new branch!)
 * [ ] Update the roadmap on ledgersmb.org
 * [ ] Review installation instructions on ledgersmb.org
