@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.21-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2023-08-01 22:26+0000\n"
+"POT-Creation-Date: 2023-08-31 20:40+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: Spanish (Paraguay) (https://app.transifex.com/ledgersmb/"
 "teams/58325/es_PY/)\n"
@@ -241,13 +241,14 @@ msgstr ""
 #: lib/LedgerSMB/Report/PNL/ECA.pm:88
 #: lib/LedgerSMB/Report/Taxform/Details.pm:119
 #: lib/LedgerSMB/Report/Taxform/Details.pm:89
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:82
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:88
 #: lib/LedgerSMB/Report/Trial_Balance.pm:146
 #: lib/LedgerSMB/Scripts/payment.pm:182 old/bin/ic.pl:1017 old/bin/ic.pl:1671
 #: t/data/04-complex_template.html:558 UI/accounts/edit.html:39
 #: UI/accounts/edit.html:128 UI/Contact/divs/bank_act.html:23
 #: UI/payments/use_overpayment2.html:121 UI/Reports/co/filter_bm.html:77
 #: UI/Reports/co/filter_cd.html:61 UI/Reports/filters/contact_search.html:84
+#: UI/Reports/filters/taxforms.html:82
 msgid "Account Number"
 msgstr "Número de Cuenta"
 
@@ -264,7 +265,8 @@ msgid "Account Title"
 msgstr "Titulo de Cuenta"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:85
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:78 UI/accounts/edit.html:210
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:84 UI/accounts/edit.html:210
+#: UI/Reports/filters/taxforms.html:72
 msgid "Account Type"
 msgstr "Tipo de cuenta"
 
@@ -1606,12 +1608,12 @@ msgid ""
 msgstr ""
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:81
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:74
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:80
 #: lib/LedgerSMB/Scripts/contact.pm:187 templates/demo/display_report.html:49
 #: templates/demo/display_report.tex:37 UI/Contact/contact.html:12
 #: UI/Contact/divs/company.html:2 UI/main.html:32
 #: UI/Reports/aging_report.html:12 UI/Reports/display_report.html:19
-#: UI/src/views/LoginPage.vue:41
+#: UI/Reports/filters/taxforms.html:62 UI/src/views/LoginPage.vue:41
 msgid "Company"
 msgstr "Empresa"
 
@@ -1757,8 +1759,8 @@ msgstr ""
 #: UI/Reports/filters/invoice_outstanding.html:289
 #: UI/Reports/filters/invoice_search.html:412 UI/Reports/filters/orders.html:222
 #: UI/Reports/filters/purchase_history.html:360
-#: UI/Reports/filters/taxforms.html:57 UI/Reports/filters/trial_balance.html:127
-#: UI/timecards/entry_filter.html:41
+#: UI/Reports/filters/taxforms.html:145
+#: UI/Reports/filters/trial_balance.html:127 UI/timecards/entry_filter.html:41
 msgid "Continue"
 msgstr "Continuar"
 
@@ -1783,12 +1785,12 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/Search.pm:66
 #: lib/LedgerSMB/Report/Listings/Business_Unit.pm:59
-#: lib/LedgerSMB/Report/PNL/ECA.pm:90 lib/LedgerSMB/Report/Taxform/Summary.pm:86
+#: lib/LedgerSMB/Report/PNL/ECA.pm:90 lib/LedgerSMB/Report/Taxform/Summary.pm:92
 #: old/bin/arap.pl:165 UI/business_units/edit.html:27
 #: UI/business_units/filter.html:16 UI/Contact/divs/company.html:51
 #: UI/Contact/divs/person.html:51 UI/payroll/income.html:57
 #: UI/Reports/filters/contact_search.html:39
-#: UI/Reports/filters/overpayments.html:9
+#: UI/Reports/filters/overpayments.html:9 UI/Reports/filters/taxforms.html:92
 msgid "Control Code"
 msgstr ""
 
@@ -3401,7 +3403,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:188
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:182
 #: lib/LedgerSMB/Report/Taxform/Details.pm:116
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:110
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:124
 #: lib/LedgerSMB/Report/Timecards.pm:147
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:148
 #: UI/Reports/filters/unapproved.html:35
@@ -3718,7 +3720,7 @@ msgstr "Incluir Pago"
 #: UI/Reports/filters/invoice_outstanding.html:97
 #: UI/Reports/filters/invoice_search.html:196 UI/Reports/filters/orders.html:94
 #: UI/Reports/filters/purchase_history.html:160
-#: UI/Reports/filters/search_goods.html:249
+#: UI/Reports/filters/search_goods.html:249 UI/Reports/filters/taxforms.html:48
 msgid "Include in Report"
 msgstr "Incluir en informe"
 
@@ -3955,7 +3957,7 @@ msgstr ""
 msgid "Invoice sum"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:94
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:108
 #: UI/Reports/filters/purchase_history.html:171
 msgid "Invoices"
 msgstr "Facturas"
@@ -5608,7 +5610,7 @@ msgid "Primary Phone"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:140
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:133 old/bin/aa.pl:955
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:147 old/bin/aa.pl:955
 #: old/bin/aa.pl:989 old/bin/am.pl:317 old/bin/arap.pl:471 old/bin/ir.pl:496
 #: old/bin/is.pl:1089 old/bin/is.pl:569 old/bin/oe.pl:2046 old/bin/oe.pl:652
 #: old/bin/oe.pl:922 UI/payments/payments_detail.html:511
@@ -6323,7 +6325,8 @@ msgstr "Ordenes de Venta"
 msgid "Sales Quotation Number"
 msgstr "Número de Cotización"
 
-#: UI/Contact/divs/company.html:116
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:100 UI/Contact/divs/company.html:116
+#: UI/Reports/filters/taxforms.html:110
 msgid "Sales Tax ID"
 msgstr ""
 
@@ -7252,7 +7255,7 @@ msgid "Tax Code"
 msgstr "Codigo de Impuesto"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:118
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:112 UI/Contact/divs/credit.html:264
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:126 UI/Contact/divs/credit.html:264
 #: UI/Contact/divs/credit.html:265
 msgid "Tax Form"
 msgstr ""
@@ -7269,7 +7272,7 @@ msgstr ""
 msgid "Tax Form List"
 msgstr "Lista Forma de Impuesto"
 
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:122
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:136
 msgid "Tax Form Report"
 msgstr ""
 
@@ -7281,7 +7284,8 @@ msgstr ""
 msgid "Tax Forms"
 msgstr "Formas de Impuesto"
 
-#: old/bin/aa.pl:608 old/bin/ir.pl:406 old/bin/is.pl:441
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:96 old/bin/aa.pl:608
+#: old/bin/ir.pl:406 old/bin/is.pl:441 UI/Reports/filters/taxforms.html:101
 msgid "Tax ID"
 msgstr "ID Impuesto"
 
@@ -7634,7 +7638,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:190
 #: lib/LedgerSMB/Report/Reconciliation/Summary.pm:184
 #: lib/LedgerSMB/Report/Taxform/Details.pm:117
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:111
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:125
 #: lib/LedgerSMB/Report/Timecards.pm:149
 #: lib/LedgerSMB/Report/Trial_Balance.pm:198
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:150
@@ -7690,12 +7694,13 @@ msgstr "Nivel Raiz"
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:247
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:287
 #: lib/LedgerSMB/Report/Taxform/Details.pm:105
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:99 lib/LedgerSMB/Scripts/asset.pm:492
-#: lib/LedgerSMB/Scripts/payment.pm:931 old/bin/ir.pl:802 old/bin/is.pl:906
-#: old/bin/oe.pl:851 templates/demo/ap_transaction.html:104
-#: templates/demo/ap_transaction.html:119 templates/demo/ar_transaction.html:102
-#: templates/demo/ar_transaction.html:117 templates/demo/invoice.html:139
-#: templates/demo/invoice.tex:194 templates/demo/product_receipt.html:120
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:113
+#: lib/LedgerSMB/Scripts/asset.pm:492 lib/LedgerSMB/Scripts/payment.pm:931
+#: old/bin/ir.pl:802 old/bin/is.pl:906 old/bin/oe.pl:851
+#: templates/demo/ap_transaction.html:104 templates/demo/ap_transaction.html:119
+#: templates/demo/ar_transaction.html:102 templates/demo/ar_transaction.html:117
+#: templates/demo/invoice.html:139 templates/demo/invoice.tex:194
+#: templates/demo/product_receipt.html:120
 #: templates/demo/product_receipt.html:138
 #: templates/demo/product_receipt.html:143
 #: templates/demo/purchase_order.html:122 templates/demo/purchase_order.html:140
@@ -7761,7 +7766,7 @@ msgstr "Fecha de transacciones"
 msgid "Transaction Type"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Taxform/Summary.pm:90
+#: lib/LedgerSMB/Report/Taxform/Summary.pm:104
 #: UI/setup/confirm_operation.html:125
 msgid "Transactions"
 msgstr "Asientos"
@@ -8614,7 +8619,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/views/Home.vue:51 UI/src/views/Home.vue:36
+#: UI/src/views/Home.vue:36 UI/src/views/Home.vue:51
 msgid "mailing lists"
 msgstr ""
 
