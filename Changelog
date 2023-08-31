@@ -3,6 +3,10 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.21
+* Add option to include tax codes to taxform report (#7581)
+
+
 Changelog for 1.10.20
 * Increase maximum comparison periods from 9 to 13 (#7468)
 * Fix check to complement missing GIFI on SQL-Ledger migration (#7500)
