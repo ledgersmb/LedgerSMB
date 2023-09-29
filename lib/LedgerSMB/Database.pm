@@ -271,12 +271,16 @@ sub get_info {
     local $@ = undef;
 
     my $dbh = eval { $self->connect({PrintError => 0, AutoCommit => 0}) };
-    if (!$dbh){ # Could not connect, try to validate existance by connecting
-                # to postgres and checking
+    if ( !$dbh ) {
+        # Could not connect, try to validate existance by connecting
+        # to postgres and checking
+
+        $self->logger->debug(
+            "Can't connect to database; falling through to $authdb"
+            );
         $dbh = $self->new($self->export, (dbname => $authdb))
             ->connect({PrintError=>0});
         return $retval unless $dbh;
-        $self->logger->debug("DBI->connect dbh=$dbh");
         _set_system_info($dbh, $retval);
 
         # don't assign to App_State::DBH, since we're a fallback connection,
@@ -299,15 +303,14 @@ sub get_info {
         $dbh->disconnect();
 
         return $retval;
-   } else { # Got a db handle... try to find the version and app by a few
-            # different means
-       $self->logger->debug("DBI->connect dbh=$dbh");
-
+    }
+    else {
+        # Got a db handle... try to find the version and app by a few
+        # different means
        $retval->{status} = 'exists';
        _set_system_info($dbh, $retval);
 
-       my $sth;
-       $sth = $dbh->prepare('SELECT SESSION_USER');
+       my $sth = $dbh->prepare('SELECT SESSION_USER');
        $sth->execute;
        $retval->{username} = $sth->fetchrow_array();
        $sth->finish();
@@ -327,12 +330,12 @@ sub get_info {
              }
        );
        $sth->execute();
-       my ($have_version_column) =
-       $sth->fetchrow_array();
+       my ($have_version_column) = $sth->fetchrow_array();
        $sth->finish();
 
        if ($have_version_column) {
            # Legacy SL and LSMB
+           $self->logger->trace( "Legacy SL or LSMB database" );
            $sth = $dbh->prepare(
                'SELECT version FROM defaults'
                );
@@ -375,11 +378,14 @@ sub get_info {
        $sth = $dbh->prepare('SELECT fldvalue FROM defaults WHERE fldname = ?');
        $sth->execute('version');
        if (my $ref = $sth->fetchrow_hashref('NAME_lc')){
+            $self->logger->trace( "SL" );
             $retval->{appname} = 'sql-ledger';
             $retval->{full_version} = $ref->{fldvalue};
             $retval->{version} = $ref->{fldvalue};
             $retval->{version} =~ s/(\d+\.\d+).*/$1/g;
        } else {
+            my $schema = $self->schema;
+            $self->logger->debug( "SL; possibly no version set; $schema" );
             $retval->{appname} = 'unknown';
        }
        $dbh->rollback;
