@@ -43,6 +43,7 @@ use warnings;
 
 use Cwd;
 use List::Util qw| any |;
+use Log::Any qw($log);
 
 use LedgerSMB::Database::Change;
 use LedgerSMB::Database::ChangeChecks qw/load_checks run_checks/;
@@ -106,6 +107,8 @@ sub scripts {
         map { $self->_limit_by_tag($_) }
         <$fh>;
     close $fh or die "Cannot open file $self->{_path}";
+    $log->trace( "Considering schema patches: " . join(', ',
+                                                       map { $_->path } @scripts) );
     $self->{_scripts} = \@scripts;
     return @scripts;
 }
