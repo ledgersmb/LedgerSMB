@@ -26,10 +26,12 @@ use strict;
 use warnings;
 use version;
 
+use Carp;
 use Digest::MD5 qw(md5_hex);
 use Encode;
 use File::Spec;
-use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
+use HTML::Escape;
+use HTTP::Status qw( HTTP_OK HTTP_INTERNAL_SERVER_ERROR HTTP_UNAUTHORIZED );
 use Log::Any;
 use MIME::Base64;
 use Scope::Guard;
@@ -681,7 +683,7 @@ sub _dispatch_upgrade_workflow {
         return __PACKAGE__->can($next)->($request);
     }
 
-    die "Upgrade workflow error: no next step for '$step_name'";
+    croak "Upgrade workflow error: no next step for '$step_name'";
 }
 
 sub _select_coa {
@@ -700,17 +702,62 @@ sub _process_and_run_upgrade_script {
 
     my $hdr = $request->{_req}->header( 'Accept-Language' );
     my $lang = $request->{_wire}->get( 'default_locale' )->from_header( $hdr );
+
     my $upgrade = LedgerSMB::Database::Upgrade->new(
         database => $database,
         type     => $type,
         language => $lang
         );
-    $upgrade->run_upgrade_script(
-        {
-            %{$request}{qw( default_country default_ap default_ar
-                            slschema lsmbschema lsmbversion)}
-        });
-    $upgrade->run_post_upgrade_steps;
+    try {
+        my $info = $database->get_info();
+        $upgrade->run_upgrade_script(
+            {
+                sl_version => version->parse($info->{full_version}),
+                %{$request}{qw( default_country default_ap default_ar
+                                slschema lsmbschema lsmbversion)}
+            });
+        $upgrade->run_post_upgrade_steps;
+    }
+    catch ($e) {
+        my $error_text = escape_html( $e );
+        local $/ = undef;
+        my $stdout = '';
+        if ( open( my $out, '<:encoding(UTF-8)', $upgrade->logfiles->{out} ) ) {
+            $stdout = escape_html( <$out> );
+        }
+        else {
+            $logger->warn(
+                "Unable to open psql upgrade script STDOUT logfile: $!"
+                );
+        }
+
+        my $stderr = '';
+        if ( open( my $err, '<:encoding(UTF-8)', $upgrade->logfiles->{err} ) ) {
+            $stderr = escape_html( <$err> );
+        }
+        else {
+            $logger->warn(
+                "Unable to open psql upgrade script STDERR logfile: $!"
+                );
+        }
+
+        return [ HTTP_INTERNAL_SERVER_ERROR,
+                 [ 'Content-Type' => 'text/html; charset=UTF-8' ],
+                 [ <<~EMBEDDED_HTML ] ];
+        <html>
+          <body>
+            <h1>Error!</h1>
+            <p><b>$error_text</b></p>
+
+            <h3>STDERR</h3>
+            <pre style="max-height:30em;overflow:scroll">$stderr</pre>
+
+            <h3>STDOUT</h3>
+            <pre style="max-height:30em;overflow:scroll">$stdout</pre>
+          </body>
+        </html>
+        EMBEDDED_HTML
+    };
 
     return;
 }
@@ -835,6 +882,7 @@ sub upgrade {
         );
 
     my $rv;
+    $logger->debug( "Running upgrade tests for '$upgrade_type'" );
     $upgrade->run_tests(
         sub {
             my ($check, $dbh, $sth) = @_;
@@ -989,6 +1037,7 @@ sub fix_tests {
     my $settings = $request->{_wire}->get( 'setup_settings' );
     my $auth_db = ($settings and $settings->{auth_db}) // 'postgres';
     my $dbinfo = $database->get_info($auth_db);
+    my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
     my $dbh = $request->{dbh};
     $dbh->{AutoCommit} = 0;
 
@@ -996,7 +1045,7 @@ sub fix_tests {
     my $lang = $request->{_wire}->get( 'default_locale' )->from_header( $hdr );
     my $upgrade = LedgerSMB::Database::Upgrade->new(
         database => $database,
-        type     => '.../...',
+        type     => $upgrade_type,
         language => $lang
         );
 
@@ -1005,7 +1054,7 @@ sub fix_tests {
         . 'found no applicable tests for given identifier'
         unless $check;
 
-    die "Inconsistent state fixing date for $request->{check}: "
+    die "Inconsistent state fixing data for $request->{check}: "
         . 'found different test by the same name while fixing data'
         if $request->{verify_check} ne md5_hex($check->test_query);
 
@@ -1014,6 +1063,7 @@ sub fix_tests {
         my %row_data;
         for my $key (@{$check->columns}) {
             $row_data{$key} = $request->{"${key}_$count"};
+            $logger->trace( "Setting row $count field $key to $row_data{$key}" );
         }
         @row_data{@{$check->id_columns}} =
             map {

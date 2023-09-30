@@ -75,6 +75,12 @@ has type => (is => 'ro', required => 1);
 has language => (is => 'ro', default => 'en');
 
 
+=head2 logfiles
+
+=cut
+
+has logfiles => (is => 'ro', default => sub { {} });
+
 
 =head1 METHODS
 
@@ -235,6 +241,8 @@ sub run_upgrade_script {
 
     my $dbh = $self->database->connect({ PrintError => 0, AutoCommit => 0 });
     my $temp = $self->database->loader_log_filename();
+    $self->logfiles->{out} = $temp . '_stdout';
+    $self->logfiles->{err} = $temp . '_stderr';
 
     my $schema = $self->database->schema;
     my $guard = Scope::Guard->new(
@@ -254,8 +262,8 @@ sub run_upgrade_script {
     $dbh->commit;
 
     $self->database->load_base_schema(
-        log     => $temp . '_stdout',
-        errlog  => $temp . '_stderr',
+        log     => $self->logfiles->{out},
+        errlog  => $self->logfiles->{err},
         upto_tag=> $upto
         );
 
@@ -289,8 +297,8 @@ sub run_upgrade_script {
 
     $self->database->run_file(
         file => $tempfile->filename,
-        stdout_log => $temp . '_stdout',
-        errlog => $temp . '_stderr'
+        stdout_log => $self->logfiles->{out},
+        errlog => $self->logfiles->{err},
         );
 
     my $sth = $dbh->prepare(q(select value='yes'

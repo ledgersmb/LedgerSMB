@@ -5,6 +5,7 @@
 -- to all Ledgersmb up to 1.6
 
 -- When moved to an interface, these will all be specified and preprocessed.
+set client_min_messages to 'ERROR';
 \set default_country '''[% default_country %]'''
 \set ar '''[% default_ar %]'''
 \set ap '''[% default_ap %]'''
@@ -408,6 +409,90 @@ UPDATE :slschema.acc_trans SET accno = (SELECT accno
                            FROM :slschema.chart
                           WHERE chart.id = :slschema.acc_trans.chart_id);
 
+
+[% IF sl_version < "2.8.3" %]
+
+-- Upgrade the <2.8.3 schema to 2.8.3 to get minimum compatibility
+
+create table :slschema.paymentmethod (
+  id int primary key default nextval('id'),
+  description text,
+  fee float
+);
+
+alter table :slschema.vendor add paymentmethod_id int;
+alter table :slschema.customer add paymentmethod_id int;
+[% END %]
+
+[% IF sl_version < "2.8.4" %]
+
+-- Upgrade the <2.8.4 schema to 2.8.4 to get minimum compatibility
+
+create sequence :slschema.paymentid;
+
+create table :slschema.payment (
+  id int not null,
+  trans_id int not null,
+  exchangerate float default 1,
+  paymentmethod_id int
+);
+
+update :slschema.acc_trans
+   set id = nextval('paymentid')
+       from :slschema.ar, :slschema.chart
+ where ar.id = acc_trans.trans_id
+   and acc_trans.chart_id = chart.id
+   and chart.link like '%paid%'
+   and acc_trans.fx_transaction = '0'
+   and acc_trans.id is null;
+
+update :slschema.acc_trans
+   set id = nextval('paymentid')
+       from :slschema.ap, :slschema.chart
+ where ap.id = acc_trans.trans_id
+   and acc_trans.chart_id = chart.id
+   and chart.link like '%paid%'
+   and acc_trans.fx_transaction = '0'
+   and acc_trans.id is null;
+
+drop sequence :slschema.paymentid;
+
+
+ALTER TABLE :slschema.gl ADD COLUMN curr char(3);
+ALTER TABLE :slschema.gl ADD COLUMN exchangerate float;
+ALTER TABLE :slschema.ap ADD COLUMN exchangerate float;
+ALTER TABLE :slschema.ar ADD COLUMN exchangerate float;
+ALTER TABLE :slschema.oe ADD COLUMN exchangerate float;
+
+UPDATE :slschema.gl
+   SET exchangerate = 1,
+       curr = (select substr(fldvalue, 1, 3)
+                 from defaults
+                where fldname = 'currencies');
+
+UPDATE :slschema.ap
+   SET exchangerate = coalesce((SELECT sell
+                                  FROM :slschema.exchangerate er
+                                 WHERE ap.transdate = er.transdate
+                                   AND ap.curr = er.curr), 1);
+UPDATE :slschema.ar
+   SET exchangerate = coalesce((SELECT buy
+                                  FROM :slschema.exchangerate er
+                                 WHERE ar.transdate = er.transdate
+                                   AND ar.curr = er.curr), 1);
+
+UPDATE :slschema.oe
+   SET exchangerate = coalesce(
+     (SELECT CASE
+             WHEN customer_id > 0 THEN buy
+             WHEN vendor_id > 0 THEN sell
+             END
+        FROM :slschema.exchangerate er
+       WHERE oe.transdate = er.transdate
+             oe.curr = er.curr);
+
+[% END %]
+
 --Accounts
 
 INSERT INTO gifi
@@ -749,11 +834,24 @@ WHERE entity_class = 10 AND control_code = 'R-1';
 
 INSERT INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
             employeenumber, dob, manager_id)
-    SELECT entity_id, startdate, enddate, r.description, ssn, sales,
-       employeenumber, dob,
-       (SELECT entity_id FROM :slschema.employee WHERE id = em.acsrole_id)
+SELECT entity_id, startdate, enddate,
+       [% IF sl_version < "3.0.0" %]
+         "role",
+       [% ELSE %]
+         r.description,
+       [% END %]
+       ssn, sales,
+           employeenumber, dob,
+           [% IF sl_version < "3.0.0" %]
+                (SELECT ee.entity_id FROM :slschema.employee ee WHERE em.managerid = ee.id)
+           [% ELSE %]
+                (SELECT entity_id FROM :slschema.employee WHERE id = em.acsrole_id)
+           [% END %]
     FROM :slschema.employee em
-    LEFT JOIN :slschema.acsrole r ON em.acsrole_id = r.id;
+[% IF sl_version >= "3.0.0" %]
+     LEFT JOIN :slschema.acsrole r ON em.acsrole_id = r.id
+[% END %]
+;
 
 -- must rebuild this table due to changes since 1.2
 
@@ -941,7 +1039,15 @@ SELECT
         shipvia, ar.language_code, ponumber, shippingpoint,
         onhold, approved, case when amount < 0 then true else false end,
         ar.terms, description
-FROM :slschema.ar
+[% IF sl_version < "2.8.4" %]
+     FROM (select *, coalesce((SELECT buy
+                                 FROM :slschema.exchangerate er
+                                WHERE ar.transdate = er.transdate
+                                  AND ar.curr = er.curr), 1) as exchangerate
+             FROM :slschema.ar) AS ar
+[% ELSE %]
+     FROM :slschema.ar
+[% END %]
 JOIN :slschema.customer ON (ar.customer_id = customer.id) ;
 
 -- Prefill approved status of transactions with ap entries
@@ -970,7 +1076,16 @@ SELECT
         shipvia, ap.language_code, ponumber, shippingpoint,
         onhold, approved, case when amount < 0 then true else false end,
         ap.terms, description
-FROM :slschema.ap JOIN :slschema.vendor ON (ap.vendor_id = vendor.id) ;
+[% IF sl_version < "2.8.4" %]
+     FROM (select *, coalesce((SELECT sell
+                                 FROM :slschema.exchangerate er
+                                WHERE ap.transdate = er.transdate
+                                  AND ap.curr = er.curr), 1) as exchangerate
+             FROM :slschema.ap) AS ap
+[% ELSE %]
+     FROM :slschema.ap
+[% END %]
+    JOIN :slschema.vendor ON (ap.vendor_id = vendor.id) ;
 
 -- ### TODO: there used to be projects here!
 -- ### Move those to business_units
@@ -981,7 +1096,9 @@ INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
     SELECT  id, trans_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, discount, assemblyitem, unit,
             deliverydate, serialnumber
-       FROM :slschema.invoice;
+      FROM :slschema.invoice
+     WHERE EXISTS (SELECT 1 FROM transactions t WHERE t.id = trans_id);
+
 
 update :slschema.acc_trans
   set lsmb_entry_id = nextval('acc_trans_entry_id_seq');
@@ -997,7 +1114,7 @@ INSERT INTO acc_trans (entry_id, trans_id, chart_id, amount_bc, amount_tc, curr,
                           where chart.id = ac.chart_id)),
         ac.amount, ac.amount / coalesce(y.exchangerate, xx.exchangerate, 1),
         xx.curr,
-        transdate, source,
+        ac.transdate, source,
         CASE WHEN cleared IS NOT NULL THEN TRUE ELSE FALSE END,
         memo, approved, cleared, vr_id, invoice.id
    FROM :slschema.acc_trans ac
@@ -1010,7 +1127,11 @@ INSERT INTO acc_trans (entry_id, trans_id, chart_id, amount_bc, amount_tc, curr,
    LEFT JOIN :slschema.invoice ON ac.id = invoice.id
                               AND ac.trans_id = invoice.trans_id
  LEFT JOIN :slschema.payment y ON (y.trans_id = ac.trans_id AND ac.id = y.id)
- WHERE chart_id IS NOT NULL
+ WHERE (select id
+           from account
+          where accno = (select accno
+                           from :slschema.chart
+                          where chart.id = ac.chart_id)) IS NOT NULL
     AND ac.trans_id IN (SELECT id FROM transactions);
 
 --Payments
