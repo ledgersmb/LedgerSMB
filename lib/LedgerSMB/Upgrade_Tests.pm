@@ -18,12 +18,16 @@ This module has a single function that returns upgrade tests.
 use strict;
 use warnings;
 
+use JSON::PP;
+use Log::Any qw($log);
 use Moose;
 use Moose::Util::TypeConstraints;
 use namespace::autoclean;
 use List::Util qw( first );
 
 use LedgerSMB::Locale qw(marktext);
+
+my $json = JSON::PP->new;
 
 =head1 FUNCTIONS
 
@@ -274,11 +278,11 @@ sub fix {
     if ($self->insert) {
         my $columns =
             join ', ',
-            map { $dbh->quote_identifier($_) } @{$self->columns};
+            map { $dbh->quote_identifier($_) } (@{$self->columns}, @{$self->id_columns});
         my $values =
-            join ', ', map { '?' } @{$self->columns};
+            join ', ', map { '?' } (@{$self->columns}, @{$self->id_columns});
         $query = qq{INSERT INTO $table ($columns) VALUES ($values)};
-        @bind_columns = @{$self->columns};
+        @bind_columns = (@{$self->columns}, @{$self->id_columns});
     }
     else {
         my $setters =
@@ -294,6 +298,7 @@ sub fix {
 
     my $sth = $dbh->prepare($query)
         or die "Failed to compile query ($query) to apply fixes: " . $dbh->errstr;
+    $log->debug( "Running fix-query: $query" . $json->encode( { columns => \@bind_columns, values => $fixes } ) );
     for my $row (@$fixes) {
         my $rv = $sth->execute(map { $row->{$_} } @bind_columns);
         if (not $rv) {
@@ -699,27 +704,39 @@ push @tests, __PACKAGE__->new(
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => q{select name, contact from customer
+   test_query => q{select id, name, contact from customer
                    where arap_accno_id is null
                    order by name},
+ instructions => marktext(
+                   'Select and assign the missing AR accounts'),
+selectable_values => {
+    arap_accno_id => q/SELECT description as text, id as value FROM chart WHERE (':' || link || ':') like '%:AR:%'/,
+    },
  display_name => marktext('Empty AR account'),
          name => 'no_null_ar_accounts',
- display_cols => [ 'name', 'contact' ],
- instructions => marktext(q(Please go into the SQL-Ledger UI and correct the empty AR accounts)),
+ display_cols => [ 'name', 'contact', 'arap_accno_id' ],
+      columns => [ 'arap_accno_id' ],
       appname => 'sql-ledger',
+        table => 'customer',
   min_version => '2.7',
   max_version => '3.0'
    );
 
 push @tests, __PACKAGE__->new(
-   test_query => q{select name, contact from vendor
+   test_query => q{select id, name, contact from vendor
                    where arap_accno_id is null
                    order by name},
+ instructions => marktext(
+                   'Select and assign the missing AP accounts'),
+selectable_values => {
+    arap_accno_id => q/SELECT description as text, id as value FROM chart WHERE (':' || link || ':') like '%:AP:%'/,
+    },
  display_name => marktext('Empty AP account'),
          name => 'no_null_ap_accounts',
- display_cols => [ 'name', 'contact' ],
- instructions => marktext(q(Please go into the SQL-Ledger UI and correct the empty AP accounts)),
+ display_cols => [ 'name', 'contact', 'arap_accno_id' ],
+      columns => [ 'arap_accno_id' ],
       appname => 'sql-ledger',
+        table => 'vendor',
   min_version => '2.7',
   max_version => '3.0'
    );
@@ -1019,7 +1036,7 @@ push @tests, __PACKAGE__->new(
     );
 
 push @tests, __PACKAGE__->new(
-   test_query => 'select partnumber, description, sellprice
+   test_query => 'select id, partnumber, description, sellprice
                   from parts where obsolete is not true
                   and partnumber in
                   (select partnumber from parts
