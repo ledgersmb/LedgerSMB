@@ -21,6 +21,7 @@ Added functionalities
 * GL transaction notes editable after posting (#7517)
 * Cross-referencing reversed and reversing transactions (#6715)
 * Shipto* variables added for expansion in invoice e-mails (#7543)
+* SQL Ledger and Ledger123 migrations for SL versions prior to 2.8.4
 
 Changed functionalities
 * Fresh new application logo and login page layout (#7317, #7319)
@@ -38,6 +39,7 @@ Bugs fixed
 * Performance fixes for stored procedures being slow on huge databases (#7072)
 * Multiple fixes on AR/AP template transactions
 * Command 'setup' of ledgersmb-admin erroneously marked unimplemented (#7367)
+* Broken SQL-Ledger 2.8 and Ledger123 migration
 
 Code cleanup & architecture improvements
 * Continued removal of code based on the DBObject coding paradigm
