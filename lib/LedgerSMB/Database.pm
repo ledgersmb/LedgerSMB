@@ -335,7 +335,7 @@ sub get_info {
 
        if ($have_version_column) {
            # Legacy SL and LSMB
-           $self->logger->trace( "Legacy SL or LSMB database" );
+           $self->logger->trace( 'Legacy SL or LSMB database' );
            $sth = $dbh->prepare(
                'SELECT version FROM defaults'
                );
@@ -378,7 +378,7 @@ sub get_info {
        $sth = $dbh->prepare('SELECT fldvalue FROM defaults WHERE fldname = ?');
        $sth->execute('version');
        if (my $ref = $sth->fetchrow_hashref('NAME_lc')){
-            $self->logger->trace( "SL" );
+            $self->logger->trace( 'SL' );
             $retval->{appname} = 'sql-ledger';
             $retval->{full_version} = $ref->{fldvalue};
             $retval->{version} = $ref->{fldvalue};

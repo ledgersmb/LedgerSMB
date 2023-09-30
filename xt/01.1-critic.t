@@ -22,7 +22,7 @@ sub test_files {
     Perl::Critic::Violation::set_format( 'S%s %p %f: %l\n');
 
     for my $file (@$files) {
-        tests critique => { async => (! $ENV{COVERAGE}) }, sub {
+        tests "critique for $file" => { async => (! $ENV{COVERAGE}) }, sub {
             my @findings = map { "$_" } $critic->critique($file);
 
             ok(scalar(@findings) == 0, "Critique for $file");

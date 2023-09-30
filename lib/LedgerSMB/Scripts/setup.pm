@@ -31,7 +31,7 @@ use Digest::MD5 qw(md5_hex);
 use Encode;
 use File::Spec;
 use HTML::Escape;
-use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED );
+use HTTP::Status qw( HTTP_OK HTTP_INTERNAL_SERVER_ERROR HTTP_UNAUTHORIZED );
 use Log::Any;
 use MIME::Base64;
 use Scope::Guard;
@@ -725,14 +725,43 @@ sub _process_and_run_upgrade_script {
     }
     catch ($e) {
         my $error_text = escape_html( $e );
-        local $/;
-        open my $out, '<:encoding(UTF-8)', $upgrade->logfiles->{out};
-        open my $err, '<:encoding(UTF-8)', $upgrade->logfiles->{err};
-        my $stdout = escape_html( <$out> );
-        my $stderr = escape_html( <$err> );
-        return [ 500,
+        local $/ = undef;
+        my $stdout = '';
+        if ( open( my $out, '<:encoding(UTF-8)', $upgrade->logfiles->{out} ) ) {
+            $stdout = escape_html( <$out> );
+        }
+        else {
+            $logger->warn(
+                "Unable to open psql upgrade script STDOUT logfile: $!"
+                );
+        }
+
+        my $stderr = '';
+        if ( open( my $err, '<:encoding(UTF-8)', $upgrade->logfiles->{err} ) ) {
+            $stderr = escape_html( <$err> );
+        }
+        else {
+            $logger->warn(
+                "Unable to open psql upgrade script STDERR logfile: $!"
+                );
+        }
+
+        return [ HTTP_INTERNAL_SERVER_ERROR,
                  [ 'Content-Type' => 'text/html; charset=UTF-8' ],
-                 [ "<html><body><h1>Error!</h1><p><b>$error_text</b></p><h3>STDERR</h3><pre style='max-height:30em;overflow:scroll'>$stderr</pre><h3>STDOUT</h3><pre style='max-height:30em;overflow:scroll'>$stdout</pre></body></html>" ] ];
+                 [ <<~EMBEDDED_HTML ] ];
+        <html>
+          <body>
+            <h1>Error!</h1>
+            <p><b>$error_text</b></p>
+
+            <h3>STDERR</h3>
+            <pre style="max-height:30em;overflow:scroll">$stderr</pre>
+
+            <h3>STDOUT</h3>
+            <pre style="max-height:30em;overflow:scroll">$stdout</pre>
+          </body>
+        </html>
+        EMBEDDED_HTML
     };
 
     return;

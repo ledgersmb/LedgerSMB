@@ -107,8 +107,8 @@ sub scripts {
         map { $self->_limit_by_tag($_) }
         <$fh>;
     close $fh or die "Cannot open file $self->{_path}";
-    $log->trace( "Considering schema patches: " . join(', ',
-                                                       map { $_->path } @scripts) );
+    $log->tracef( 'Considering schema patches: %s',
+                  join(', ', map { $_->path } @scripts) );
     $self->{_scripts} = \@scripts;
     return @scripts;
 }
