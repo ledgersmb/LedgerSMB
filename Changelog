@@ -3,6 +3,10 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.22
+* Fix Math::BigFloat 1.999831 compatibility, included in Perl 5.36+ (#7635)
+
+
 Changelog for 1.10.21
 * Add option to include tax codes to taxform report (#7581)
 
