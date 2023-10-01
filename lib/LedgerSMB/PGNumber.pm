@@ -41,6 +41,9 @@ $accuracy = $precision = undef;
 $round_mode = 'even';
 $div_scale = 40;
 
+# Prevent downgrading to Math::BigInt
+$Math::BigFloat::downgrade = undef;
+
 =head1 INHERITS
 
 =over
