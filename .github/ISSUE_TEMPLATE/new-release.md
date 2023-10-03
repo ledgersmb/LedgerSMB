@@ -62,13 +62,14 @@ about: Tracking the progress on preparing a new release branch
 * [ ] Update Docker image README.md
   * [ ] Docker README listing available tags (on all branches!)
 * [ ] Change ledgersmb-docker default branch to the new stable release branch (this causes the 'latest' tag in docker to move to the new branch!)
+* [ ] Set the release date of the minor series in Changelog
 * [ ] Execute the final release procedure as with a regular (patch) release (but use a different release announcement text)
 
 ## Post release steps:
 
 * [ ] Add/update the release date
-  * [ ] Update the release date of the minor series in Changelog
   * [ ] On the supported items page: https://ledgersmb.org/faq/which-versions-do-you-support
+* [ ] Include the new release on the ledgersmb.org front page
 * [ ] Update https://ledgersmb.org/content/download to include the new release (and remove the old!)
       Update: "current stable release line is X.X."  Update download, install, update url, "Docker Images" and 
       "Keeping up with the latest developments" sections.
@@ -81,12 +82,10 @@ about: Tracking the progress on preparing a new release branch
   * [ ] the release notes
 * [ ] Update the roadmap on ledgersmb.org
 * [ ] Update listing of available tags on Docker Hub (edit the image description directly on the docker hub repository page)
-* [ ] Update the wikipedia page to include the new release (and remove the old!)
-* [ ] Include the new release on the ledgersmb.org front page
-* [ ] Remove "Draft" status from 1.9 related items on ledgersmb.org
 * [ ] Update the supported items page: https://ledgersmb.org/faq/which-versions-do-you-support
 * [ ] Update the version number of the 'master' branch:
   * [ ] Update README.md reference to 'prepare for first use'
+* [ ] Update the wikipedia page to include the new release (and remove the old!)
 * [ ] Update the screenshots
   * [ ] ledgersmb.org
 
