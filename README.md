@@ -98,7 +98,7 @@ devices running old browsers is negligible.
 
 # Quick start
 
-For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-19
+For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-111
 
 ## Installation
 
@@ -124,7 +124,7 @@ The system is installed and should be available for evaluation through
   Normal login for the application
 
 The system is ready for [preparation for first
-use](https://ledgersmb.org/content/preparing-ledgersmb-19-first-use).
+use](https://ledgersmb.org/content/preparing-ledgersmb-111-first-use).
 
 
 **NOTE:** This setup does not use a webserver like nginx or Apache. Setups which
@@ -166,7 +166,7 @@ as well as in the `Transifex` project Timeline.
 # Copyright
 
 ```plain
-Copyright (c) 2006 - 2021 The LedgerSMB Project contributors
+Copyright (c) 2006 - 2023 The LedgerSMB Project contributors
 Copyright (c) 1999 - 2006 DWS Systems Inc (under the name SQL Ledger)
 ```
 
