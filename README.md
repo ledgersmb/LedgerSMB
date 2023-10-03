@@ -56,29 +56,29 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome              | 2018-03  | 65-81, 83-116                               |
-| Edge                | 2020-01  | 79-81, 83-115                               |
-| Firefox             | 2018-05  | 60-116                                      |
-| Opera               | 2018-03  | 52-58, 60, 62-101                           |
+| Chrome              | 2018-03  | 65-81, 83-117                               |
+| Edge                | 2020-01  | 79-81, 83-117                               |
+| Firefox             | 2018-05  | 60-117                                      |
+| Opera               | 2018-03  | 52-58, 60, 62-102                           |
 | Safari              | 2018-03  | 11.1, 12, 12.1, 13, 13.1, 14, 14.1, 15,     |
-|                     |          | 15.1, 15.2-15.6, 16.0-16.5                  |
+|                     |          | 15.1, 15.2-15.6, 16.0-16.6, 17.0            |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome for Android  | 2023-07  | 115                                         |
-| Firefox for Android | 2023-07  | 115                                         |
+| Chrome for Android  | 2023-09  | 117                                         |
+| Firefox for Android | 2023-08  | 117                                         |
 | QQ Browser          | 2022-09  | 13.1                                        |
 | UC Browser for Android | 2023-06  | 15.5                                        |
-| Android Browser     | 2023-07  | 115                                         |
+| Android Browser     | 2023-09  | 117                                         |
 | Baidu Browser       | 2022-09  | 13.18                                       |
 | Safari on iOS       | 2018-03  | 11.3-11.4, 12.0-12.5, 13.0-13.7,            |
-|                     |          | 14.0-14.8, 15.0-15.7, 16.0-16.5             |
+|                     |          | 14.0-14.8, 15.0-15.7, 16.0-16.6, 17.0       |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
 | Opera Mobile        | 2023-01  | 73                                          |
 | Samsung Internet    | 2019-04  | 9.2, 10.1, 11.1-11.2, 12.0, 13.0, 14.0,     |
-|                     |          | 15.0, 16.0, 17.0, 18.0, 19.0, 20-21         |
+|                     |          | 15.0, 16.0, 17.0, 18.0, 19.0, 20-22         |
 
 
 **Note**: Safari is very sensitive to using LedgerSMB over HTTPS; using it with
@@ -93,7 +93,7 @@ devices running old browsers is negligible.
 
 # Quick start
 
-For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-19
+For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-111
 
 ## Installation
 
@@ -101,7 +101,7 @@ This instruction assumes you have [Docker](https://docs.docker.com/get-docker/)
 installed as well as [docker-compose](https://github.com/docker/compose#where-to-get-docker-compose).
 
 ```bash
- $ wget https://raw.githubusercontent.com/ledgersmb/ledgersmb-docker/1.10/docker-compose.yml
+ $ wget https://raw.githubusercontent.com/ledgersmb/ledgersmb-docker/1.11/docker-compose.yml
  $ docker-compose up -d
 ```
 
@@ -161,7 +161,7 @@ as well as in the `Transifex` project Timeline.
 # Copyright
 
 ```plain
-Copyright (c) 2006 - 2021 The LedgerSMB Project contributors
+Copyright (c) 2006 - 2023 The LedgerSMB Project contributors
 Copyright (c) 1999 - 2006 DWS Systems Inc (under the name SQL Ledger)
 ```
 
