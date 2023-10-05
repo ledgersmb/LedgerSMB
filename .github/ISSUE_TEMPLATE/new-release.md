@@ -18,12 +18,11 @@ about: Tracking the progress on preparing a new release branch
   * [ ] package.json
   * [ ] In setup.pm, add support to create databases of the version that 'master' becomes
   * [ ] In LedgerSMB.pm, increase the $VERSION variable
-  * [ ] In bin/ledgersmb-server.psgi adjust the version-check regex and the cookie name in the `__DATA__` section
+  * [ ] In bin/ledgersmb-server.psgi adjust the version-check regex
   * [ ] In locale/LedgerSMB.pot, adjust the Project-Id
   * [ ] In t/data/Is_LSMB_running.html, increase the version text
   * [ ] Update README.md reference to `docker-compose` file (both on the branch and on master)
   * [ ] Create a new docker-compose branch
-  * [ ] Update the cookie's version number in the default config files `doc/conf/ledgersmb.yaml.*`
 * [ ] Add the new version to renovate.json baseBranches
 
 ## General preparation
