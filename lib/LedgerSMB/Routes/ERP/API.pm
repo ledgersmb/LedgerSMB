@@ -117,7 +117,7 @@ components:
     cookieAuth:
       type: apiKey
       in: cookie
-      name: LedgerSMB-1.10
+      name: LedgerSMB-1.11
       description: |
         The authenticating cookie can be obtained by sending a `POST` request
         to `login.pl?__action=authenticate&company=<url-encoded-company` with a
