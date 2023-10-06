@@ -178,7 +178,7 @@ $builder->to_app(
 
 __DATA__
 cookie:
-  name: LedgerSMB-1.12
+  name: LedgerSMB
 db:
   $class: LedgerSMB::Database::Factory
   connect_data:

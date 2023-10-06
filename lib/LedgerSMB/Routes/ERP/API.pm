@@ -117,7 +117,7 @@ components:
     cookieAuth:
       type: apiKey
       in: cookie
-      name: LedgerSMB-1.10
+      name: LedgerSMB
       description: |
         The authenticating cookie can be obtained by sending a `POST` request
         to `login.pl?__action=authenticate&company=<url-encoded-company` with a
@@ -137,3 +137,8 @@ components:
 
         **Note 2**: the validity of the cookie is as long the user's timeout
         when logged into the application (default: 90 minutes).
+
+        **Note 3**: Sites may customize the name of the cookie in order to run
+        multiple versions in parallel. The advice is to append the version name
+        to the cookie, resulting in cookie name `LedgerSMB-1.1` for LedgerSMB
+        version 1.1.
