@@ -12,6 +12,8 @@ use warnings;
 use base qw(LedgerSMB::PGOld);
 
 use Locale::CLDR;
+use Math::BigFloat;
+use Math::BigInt;
 
 use Carp;
 use Log::Any;
@@ -87,7 +89,11 @@ Sets the options for the user preference screen.
 sub get_option_data {
     my $self = shift @_;
     # Load localized data from current locale
-    my $locale = Locale::CLDR->new($self->{prefs}{language});
+    my $locale = do {
+        local $Math::BigInt::upgrade = undef;
+        local $Math::BigFloat::downgrade = undef;
+        Locale::CLDR->new($self->{prefs}{language});
+    };
     $self->{dateformats} = [];
     $self->{numberformats} = [];
     for my $opt (qw(mm-dd-yyyy mm/dd/yyyy dd-mm-yyyy dd/mm/yyyy dd.mm.yyyy yyyy-mm-dd)){
