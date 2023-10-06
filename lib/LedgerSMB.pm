@@ -233,6 +233,8 @@ use List::Util qw( pairgrep );
 use Locale::CLDR;
 use Locales unicode => 1;
 use Log::Any;
+use Math::BigFloat;
+use Math::BigInt;
 use PGObject;
 use Plack;
 use URI;
@@ -625,6 +627,8 @@ sub enabled_languages {
 sub enabled_countries {
     my ($self) = @_;
 
+    local $Math::BigInt::upgrade = undef;
+    local $Math::BigFloat::downgrade = undef;
     my $regions = Locale::CLDR->new($self->{_user}->{language})->all_regions;
     return [
         map {

@@ -21,6 +21,8 @@ we look only to the current locale.
 
 use Locale::CLDR;
 use Locales unicode => 1;
+use Math::BigFloat;
+use Math::BigInt;
 use Moose::Role;
 use namespace::autoclean;
 use LedgerSMB::App_State;
@@ -127,7 +129,11 @@ Get a country localized list to allow user selection
 
 sub get_country_list {
     my $language = shift;
-    my %regions = Locale::CLDR->new($language)->all_regions->%*;
+    my %regions = do {
+        local $Math::BigInt::upgrade = undef;
+        local $Math::BigFloat::downgrade = undef;
+        Locale::CLDR->new($language)->all_regions->%*
+    };
     return [
         sort { $a->{text} cmp $b->{text} }
         map { +{ value => uc($_),
