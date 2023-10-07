@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<initial xmlns="http://ledgersmb.org/xml-schemas/initial-data">
+  <contact-classes>
+    <class name="Primary Phone" /><!-- 1 -->
+    <class name="Secondary Phone" /><!-- 2 -->
+    <class name="Cell Phone" /><!-- 3 -->
+    <class name="AIM" /><!-- 4 -->
+    <class name="Yahoo" /><!-- 5 -->
+    <class name="Gtalk" /><!-- 6 -->
+    <class name="MSN" /><!-- 7 -->
+    <class name="IRC" /><!-- 8 -->
+    <class name="Fax" /><!-- 9 -->
+    <class name="Generic Jabber" /><!-- 10 -->
+    <class name="Home Phone" /><!-- 11 -->
+    <!-- The e-mail classes are hard-coded into LedgerSMB/Form.pm by class_id: i.e. class_id's 12 - 17 -->
+    <class name="Email" /><!-- 12 -->
+    <class name="CC" /><!-- 13 -->
+    <class name="BCC" /><!-- 14 -->
+    <class name="Billing Email" /><!-- 15 -->
+    <class name="Billing CC" /><!-- 16 -->
+    <class name="Billing BCC" /><!-- 17 -->
+    <class name="EDI Interchange ID" /><!-- 18 -->
+    <class name="EDI ID" /><!-- 19 -->
+  </contact-classes>
+  <countries>
+    <country code="AC" description="Ascension Island" />
+    <country code="AD" description="Andorra" />
+    <country code="AE" description="United Arab Emirates" />
+    <country code="AF" description="Afghanistan" />
+    <country code="AG" description="Antigua and Barbuda" />
+    <country code="AI" description="Anguilla" />
+    <country code="AL" description="Albania" />
+    <country code="AM" description="Armenia" />
+    <country code="AN" description="Netherlands Antilles" />
+    <country code="AO" description="Angola" />
+    <country code="AQ" description="Antarctica" />
+    <country code="AR" description="Argentina" />
+    <country code="AS" description="American Samoa" />
+    <country code="AT" description="Austria" />
+    <country code="AU" description="Australia" />
+    <country code="AW" description="Aruba" />
+    <country code="AX" description="Aland Islands" />
+    <country code="AZ" description="Azerbaijan" />
+    <country code="BA" description="Bosnia and Herzegovina" />
+    <country code="BB" description="Barbados" />
+    <country code="BD" description="Bangladesh" />
+    <country code="BE" description="Belgium" />
+    <country code="BF" description="Burkina Faso" />
+    <country code="BG" description="Bulgaria" />
+    <country code="BH" description="Bahrain" />
+    <country code="BI" description="Burundi" />
+    <country code="BJ" description="Benin" />
+    <country code="BM" description="Bermuda" />
+    <country code="BN" description="Brunei Darussalam" />
+    <country code="BO" description="Bolivia" />
+    <country code="BR" description="Brazil" />
+    <country code="BS" description="Bahamas" />
+    <country code="BT" description="Bhutan" />
+    <country code="BV" description="Bouvet Island" />
+    <country code="BW" description="Botswana" />
+    <country code="BY" description="Belarus" />
+    <country code="BZ" description="Belize" />
+    <country code="CA" description="Canada" />
+    <country code="CC" description="Cocos (Keeling) Islands" />
+    <country code="CD" description="Congo, Democratic Republic" />
+    <country code="CF" description="Central African Republic" />
+    <country code="CG" description="Congo" />
+    <country code="CH" description="Switzerland" />
+    <country code="CI" description="Cote D&apos;Ivoire (Ivory Coast)" />
+    <country code="CK" description="Cook Islands" />
+    <country code="CL" description="Chile" />
+    <country code="CM" description="Cameroon" />
+    <country code="CN" description="China" />
+    <country code="CO" description="Colombia" />
+    <country code="CR" description="Costa Rica" />
+    <country code="CS" description="Czechoslovakia (former)" />
+    <country code="CU" description="Cuba" />
+    <country code="CV" description="Cape Verde" />
+    <country code="CX" description="Christmas Island" />
+    <country code="CY" description="Cyprus" />
+    <country code="CZ" description="Czech Republic" />
+    <country code="DE" description="Germany" />
+    <country code="DJ" description="Djibouti" />
+    <country code="DK" description="Denmark" />
+    <country code="DM" description="Dominica" />
+    <country code="DO" description="Dominican Republic" />
+    <country code="DZ" description="Algeria" />
+    <country code="EC" description="Ecuador" />
+    <country code="EE" description="Estonia" />
+    <country code="EG" description="Egypt" />
+    <country code="EH" description="Western Sahara" />
+    <country code="ER" description="Eritrea" />
+    <country code="ES" description="Spain" />
+    <country code="ET" description="Ethiopia" />
+    <country code="FI" description="Finland" />
+    <country code="FJ" description="Fiji" />
+    <country code="FK" description="Falkland Islands (Malvinas)" />
+    <country code="FM" description="Micronesia" />
+    <country code="FO" description="Faroe Islands" />
+    <country code="FR" description="France" />
+    <country code="FX" description="France, Metropolitan" />
+    <country code="GA" description="Gabon" />
+    <country code="GB" description="Great Britain (UK)" />
+    <country code="GD" description="Grenada" />
+    <country code="GE" description="Georgia" />
+    <country code="GF" description="French Guiana" />
+    <country code="GH" description="Ghana" />
+    <country code="GI" description="Gibraltar" />
+    <country code="GL" description="Greenland" />
+    <country code="GM" description="Gambia" />
+    <country code="GN" description="Guinea" />
+    <country code="GP" description="Guadeloupe" />
+    <country code="GQ" description="Equatorial Guinea" />
+    <country code="GR" description="Greece" />
+    <country code="GS" description="S. Georgia and S. Sandwich Isls." />
+    <country code="GT" description="Guatemala" />
+    <country code="GU" description="Guam" />
+    <country code="GW" description="Guinea-Bissau" />
+    <country code="GY" description="Guyana" />
+    <country code="HK" description="Hong Kong" />
+    <country code="HM" description="Heard and McDonald Islands" />
+    <country code="HN" description="Honduras" />
+    <country code="HR" description="Croatia (Hrvatska)" />
+    <country code="HT" description="Haiti" />
+    <country code="HU" description="Hungary" />
+    <country code="ID" description="Indonesia" />
+    <country code="IE" description="Ireland" />
+    <country code="IL" description="Israel" />
+    <country code="IM" description="Isle of Man" />
+    <country code="IN" description="India" />
+    <country code="IO" description="British Indian Ocean Territory" />
+    <country code="IQ" description="Iraq" />
+    <country code="IR" description="Iran" />
+    <country code="IS" description="Iceland" />
+    <country code="IT" description="Italy" />
+    <country code="JE" description="Jersey" />
+    <country code="JM" description="Jamaica" />
+    <country code="JO" description="Jordan" />
+    <country code="JP" description="Japan" />
+    <country code="KE" description="Kenya" />
+    <country code="KG" description="Kyrgyzstan" />
+    <country code="KH" description="Cambodia" />
+    <country code="KI" description="Kiribati" />
+    <country code="KM" description="Comoros" />
+    <country code="KN" description="Saint Kitts and Nevis" />
+    <country code="KP" description="Korea (North)" />
+    <country code="KR" description="Korea (South)" />
+    <country code="KW" description="Kuwait" />
+    <country code="KY" description="Cayman Islands" />
+    <country code="KZ" description="Kazakhstan" />
+    <country code="LA" description="Laos" />
+    <country code="LB" description="Lebanon" />
+    <country code="LC" description="Saint Lucia" />
+    <country code="LI" description="Liechtenstein" />
+    <country code="LK" description="Sri Lanka" />
+    <country code="LR" description="Liberia" />
+    <country code="LS" description="Lesotho" />
+    <country code="LT" description="Lithuania" />
+    <country code="LU" description="Luxembourg" />
+    <country code="LV" description="Latvia" />
+    <country code="LY" description="Libya" />
+    <country code="MA" description="Morocco" />
+    <country code="MC" description="Monaco" />
+    <country code="MD" description="Moldova" />
+    <country code="MG" description="Madagascar" />
+    <country code="MH" description="Marshall Islands" />
+    <country code="MK" description="F.Y.R.O.M. (Macedonia)" />
+    <country code="ML" description="Mali" />
+    <country code="MM" description="Myanmar" />
+    <country code="MN" description="Mongolia" />
+    <country code="MO" description="Macau" />
+    <country code="MP" description="Northern Mariana Islands" />
+    <country code="MQ" description="Martinique" />
+    <country code="MR" description="Mauritania" />
+    <country code="MS" description="Montserrat" />
+    <country code="MT" description="Malta" />
+    <country code="MU" description="Mauritius" />
+    <country code="MV" description="Maldives" />
+    <country code="MW" description="Malawi" />
+    <country code="MX" description="Mexico" />
+    <country code="MY" description="Malaysia" />
+    <country code="MZ" description="Mozambique" />
+    <country code="NA" description="Namibia" />
+    <country code="NC" description="New Caledonia" />
+    <country code="NE" description="Niger" />
+    <country code="NF" description="Norfolk Island" />
+    <country code="NG" description="Nigeria" />
+    <country code="NI" description="Nicaragua" />
+    <country code="NL" description="Netherlands" />
+    <country code="NO" description="Norway" />
+    <country code="NP" description="Nepal" />
+    <country code="NR" description="Nauru" />
+    <country code="NT" description="Neutral Zone" />
+    <country code="NU" description="Niue" />
+    <country code="NZ" description="New Zealand (Aotearoa)" />
+    <country code="OM" description="Oman" />
+    <country code="PA" description="Panama" />
+    <country code="PE" description="Peru" />
+    <country code="PF" description="French Polynesia" />
+    <country code="PG" description="Papua New Guinea" />
+    <country code="PH" description="Philippines" />
+    <country code="PK" description="Pakistan" />
+    <country code="PL" description="Poland" />
+    <country code="PM" description="St. Pierre and Miquelon" />
+    <country code="PN" description="Pitcairn" />
+    <country code="PR" description="Puerto Rico" />
+    <country code="PS" description="Palestinian Territory, Occupied" />
+    <country code="PT" description="Portugal" />
+    <country code="PW" description="Palau" />
+    <country code="PY" description="Paraguay" />
+    <country code="QA" description="Qatar" />
+    <country code="RE" description="Reunion" />
+    <country code="RO" description="Romania" />
+    <country code="RS" description="Serbia" />
+    <country code="RU" description="Russian Federation" />
+    <country code="RW" description="Rwanda" />
+    <country code="SA" description="Saudi Arabia" />
+    <country code="SB" description="Solomon Islands" />
+    <country code="SC" description="Seychelles" />
+    <country code="SD" description="Sudan" />
+    <country code="SE" description="Sweden" />
+    <country code="SG" description="Singapore" />
+    <country code="SH" description="St. Helena" />
+    <country code="SI" description="Slovenia" />
+    <country code="SJ" description="Svalbard &amp; Jan Mayen Islands" />
+    <country code="SK" description="Slovak Republic" />
+    <country code="SL" description="Sierra Leone" />
+    <country code="SM" description="San Marino" />
+    <country code="SN" description="Senegal" />
+    <country code="SO" description="Somalia" />
+    <country code="SR" description="Suriname" />
+    <country code="ST" description="Sao Tome and Principe" />
+    <country code="SU" description="USSR (former)" />
+    <country code="SV" description="El Salvador" />
+    <country code="SY" description="Syria" />
+    <country code="SZ" description="Swaziland" />
+    <country code="TC" description="Turks and Caicos Islands" />
+    <country code="TD" description="Chad" />
+    <country code="TF" description="French Southern Territories" />
+    <country code="TG" description="Togo" />
+    <country code="TH" description="Thailand" />
+    <country code="TJ" description="Tajikistan" />
+    <country code="TK" description="Tokelau" />
+    <country code="TM" description="Turkmenistan" />
+    <country code="TN" description="Tunisia" />
+    <country code="TO" description="Tonga" />
+    <country code="TP" description="East Timor" />
+    <country code="TR" description="Turkey" />
+    <country code="TT" description="Trinidad and Tobago" />
+    <country code="TV" description="Tuvalu" />
+    <country code="TW" description="Taiwan" />
+    <country code="TZ" description="Tanzania" />
+    <country code="UA" description="Ukraine" />
+    <country code="UG" description="Uganda" />
+    <country code="UK" description="United Kingdom" />
+    <country code="UM" description="US Minor Outlying Islands" />
+    <country code="US" description="United States" />
+    <country code="UY" description="Uruguay" />
+    <country code="UZ" description="Uzbekistan" />
+    <country code="VA" description="Vatican City State (Holy See)" />
+    <country code="VC" description="Saint Vincent &amp; the Grenadines" />
+    <country code="VE" description="Venezuela" />
+    <country code="VG" description="British Virgin Islands" />
+    <country code="VI" description="Virgin Islands (U.S.)" />
+    <country code="VN" description="Viet Nam" />
+    <country code="VU" description="Vanuatu" />
+    <country code="WF" description="Wallis and Futuna Islands" />
+    <country code="WS" description="Samoa" />
+    <country code="YE" description="Yemen" />
+    <country code="YT" description="Mayotte" />
+    <country code="YU" description="Yugoslavia (former)" />
+    <country code="ZA" description="South Africa" />
+    <country code="ZM" description="Zambia" />
+    <country code="ZR" description="Zaire" />
+    <country code="ZW" description="Zimbabwe" />
+  </countries>
+  <languages>
+    <language code="ar_EG" description="Arabic (Egypt)" />
+    <language code="es_AR" description="Spanish (Argentina)" />
+    <language code="bg" description="Bulgarian" />
+    <language code="ca" description="Catalan" />
+    <language code="cs" description="Czech" />
+    <language code="da" description="Danish" />
+    <language code="de" description="German" />
+    <language code="de_CH" description="German (Switzerland)" />
+    <language code="el" description="Greek" />
+    <language code="en" description="English" />
+    <language code="en_CA" description="English (Canada)" />
+    <language code="en_US" description="English (US)" />
+    <language code="en_GB" description="English (UK)" />
+    <language code="es" description="Spanish" />
+    <language code="es_CO" description="Spanish (Colombia)" />
+    <language code="es_EC" description="Spanish (Ecuador)" />
+    <language code="es_MX" description="Spanish (Mexico)" />
+    <language code="es_PA" description="Spanish (Panama)" />
+    <language code="es_PY" description="Spanish (Paraguay)" />
+    <language code="es_VE" description="Spanish (Venezuela)" />
+    <language code="et" description="Estonian" />
+    <language code="fi" description="Finnish" />
+    <language code="fr" description="French" />
+    <language code="fr_BE" description="French (Belgium)" />
+    <language code="fr_CA" description="French (Canada)" />
+    <language code="hu" description="Hungarian" />
+    <language code="id" description="Indonesian" />
+    <language code="is" description="Icelandic" />
+    <language code="it" description="Italian" />
+    <language code="lt" description="Latvian" />
+    <language code="ms_MY" description="Malay" />
+    <language code="nb" description="Norwegian" />
+    <language code="nl" description="Dutch" />
+    <language code="nl_BE" description="Dutch (Belgium)" />
+    <language code="pl" description="Polish" />
+    <language code="pt" description="Portuguese" />
+    <language code="pt_BR" description="Portuguese (Brazil)" />
+    <language code="ru" description="Russian" />
+    <language code="sv" description="Swedish" />
+    <language code="tr" description="Turkish" />
+    <language code="uk" description="Ukranian" />
+    <language code="zh_CN" description="Chinese (China)" />
+    <language code="zh_TW" description="Chinese (Taiwan)" />
+  </languages>
+  <salutations>
+    <salutation text="Dr" />
+    <salutation text="Miss." />
+    <salutation text="Mr." />
+    <salutation text="Mrs." />
+    <salutation text="Ms." />
+    <salutation text="Sir." />
+  </salutations>
+</initial>

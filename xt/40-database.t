@@ -123,6 +123,7 @@ $db = LedgerSMB::Database->new(
         user       => $ENV{PGUSER},
         password   => $ENV{PGPASSWORD},
     },
+    data_dir   => './xt/data/40-database',
     source_dir => './xt/data/40-database/module-failure-1',
     schema => 'xyz',
     );
@@ -138,6 +139,7 @@ $db = LedgerSMB::Database->new(
         user       => $ENV{PGUSER},
         password   => $ENV{PGPASSWORD},
     },
+    data_dir   => './xt/data/40-database',
     source_dir => './xt/data/40-database/module-failure-2',
     schema => 'xyz',
     );
