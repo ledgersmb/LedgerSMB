@@ -3,7 +3,7 @@ name: EOL release
 about: Tracking of steps to execute when marking a release branch End-of-Life
 ---
 
-
+* [ ] Remove the release branch from `renovate.json` in the root of the master branch 
 * [ ] Remove the transifex resource (`LedgerSMB-XX`) for the EOL-ed branch
 * [ ] Update the supported items page: https://ledgersmb.org/faq/which-versions-do-you-support
 * [ ] Update Docker image README.md
