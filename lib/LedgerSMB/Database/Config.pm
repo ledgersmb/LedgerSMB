@@ -19,6 +19,8 @@ use namespace::autoclean;
 use File::Find::Rule;
 use File::Spec;
 use Locale::CLDR;
+use Math::BigFloat;
+use Math::BigInt;
 
 =head1 SYNOPSIS
 
@@ -125,8 +127,12 @@ sub charts_of_accounts {
     ###TODO: Define a parameter to the SQL directory!!
     my $basedir = File::Spec->catfile('.', 'locale', 'coa');
     my $countries = _list_directory($basedir);
-    my %regions = %{Locale::CLDR->new($self->language)
-                        ->all_regions};
+    my $cldr = do {
+        local $Math::BigInt::upgrade = undef;
+        local $Math::BigFloat::downgrade = undef;
+        Locale::CLDR->new($self->language);
+    };
+    my %regions = %{$cldr->all_regions};
 
     return {
         map {
