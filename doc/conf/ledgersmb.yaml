@@ -11,6 +11,8 @@ db:
   $class: LedgerSMB::Database::Factory
   connect_data:
     sslmode: prefer
+  data_dir:
+    $ref: paths/sql_data
   source_dir:
     $ref: paths/sql
 
@@ -81,6 +83,7 @@ paths:
   config:
     locale: ./locale/po/
     sql: ./sql/
+    sql_data: ./locale/
     templates: ./templates/
     UI: ./UI/
     UI_cache: lsmb_templates/

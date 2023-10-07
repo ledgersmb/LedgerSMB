@@ -89,6 +89,9 @@ has source_dir => (is => 'ro', default => './sql');
 
 =head2 data_dir
 
+Indicates the path to the directory which holds the 'initial-data.xml' file
+containing the reference and static data to be loaded into the base schema.
+
 =cut
 
 has data_dir => (is => 'ro', default => './locale');

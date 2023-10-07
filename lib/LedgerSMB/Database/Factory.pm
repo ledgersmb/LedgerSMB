@@ -61,6 +61,18 @@ have been loaded. When none is provided, the default ('public') is assumed.
 
 has schema => (is => 'ro', default => 'public');
 
+=head2 data_dir
+
+Indicates the path to the directory which holds the 'initial-data.xml' file
+containing the reference and static data to be loaded into the base schema.
+
+The default value is relative to the current directory, which is assumed
+to be the root of the LedgerSMB source tree.
+
+=cut
+
+has data_dir => (is => 'ro', default => './locale');
+
 =head2 source_dir
 
 Indicates the path to the directory which holds the 'Pg-database.sql' file
@@ -97,6 +109,7 @@ sub instance {
             %args
         },
         schema     => $self->schema,
+        data_dir   => $self->data_dir,
         source_dir => $self->source_dir);
 }
 
