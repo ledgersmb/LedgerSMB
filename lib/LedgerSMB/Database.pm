@@ -34,12 +34,16 @@ C<PGObject::Util::DBAdmin>.
 use strict;
 use warnings;
 
+use Carp;
 use DateTime;
 use DBD::Pg;
 use DBI;
 use File::Spec;
 use File::Temp;
 use PGObject::Util::DBAdmin 'v1.6.1';
+use Scope::Guard;
+use XML::LibXML;
+use XML::LibXML::XPathContext;
 
 use Moose;
 use namespace::autoclean;
@@ -82,6 +86,15 @@ to be the root of the LedgerSMB source tree.
 =cut
 
 has source_dir => (is => 'ro', default => './sql');
+
+=head2 data_dir
+
+Indicates the path to the directory which holds the 'initial-data.xml' file
+containing the reference and static data to be loaded into the base schema.
+
+=cut
+
+has data_dir => (is => 'ro', default => './locale');
 
 =head2 default_connect_options
 
@@ -486,6 +499,84 @@ tag in the LOADORDER file will be applied (the main use-case being migrations).
 
 =cut
 
+sub _load_contact_classes {
+    my ($self, $dbh, $xpc) = @_;
+    my @nodes = $xpc->findnodes( './x:contact-classes/x:class' );
+    return unless @nodes;
+
+    my $sth = $dbh->prepare(
+        q|INSERT INTO contact_class (class) VALUES (?)|
+        ) or die $dbh->errstr;
+    for my $node (@nodes) {
+        my $atts = $node->attributes;
+        my @vals = (
+            $atts->getNamedItem( 'name' )->nodeValue,
+            );
+        $self->logger->tracef( 'Inserting contact class "%s"', @vals );
+        $sth->execute( @vals )
+            or die $sth->errstr;
+    }
+}
+
+sub _load_countries {
+    my ($self, $dbh, $xpc) = @_;
+    my @nodes = $xpc->findnodes( './x:countries/x:country' );
+    return unless @nodes;
+
+    my $sth = $dbh->prepare(
+        q|INSERT INTO country (short_name, name) VALUES (?, ?)|
+        ) or die $dbh->errstr;
+    for my $node (@nodes) {
+        my $atts = $node->attributes;
+        my @vals = (
+            $atts->getNamedItem( 'code' )->nodeValue,
+            $atts->getNamedItem( 'description' )->nodeValue
+            );
+        $self->logger->tracef( 'Inserting country code "%s"/"%s"', @vals );
+        $sth->execute( @vals )
+            or die $sth->errstr;
+    }
+}
+
+sub _load_languages {
+    my ($self, $dbh, $xpc) = @_;
+    my @nodes = $xpc->findnodes( './x:languages/x:language' );
+    return unless @nodes;
+
+    my $sth = $dbh->prepare(
+        q|INSERT INTO language (code, description) VALUES (?, ?)|
+        ) or die $dbh->errstr;
+    for my $node (@nodes) {
+        my $atts = $node->attributes;
+        my @vals = (
+            $atts->getNamedItem( 'code' )->nodeValue,
+            $atts->getNamedItem( 'description' )->nodeValue
+            );
+        $self->logger->tracef( 'Inserting language code "%s"/"%s"', @vals );
+        $sth->execute( @vals )
+            or die $sth->errstr;
+    }
+}
+
+sub _load_salutations {
+    my ($self, $dbh, $xpc) = @_;
+    my @nodes = $xpc->findnodes( './x:salutations/x:salutation' );
+    return unless @nodes;
+
+    my $sth = $dbh->prepare(
+        q|INSERT INTO salutation (salutation) VALUES (?)|
+        ) or die $dbh->errstr;
+    for my $node (@nodes) {
+        my $atts = $node->attributes;
+        my @vals = (
+            $atts->getNamedItem( 'text' )->nodeValue,
+            );
+        $self->logger->tracef( 'Inserting salutation "%s"', @vals );
+        $sth->execute( @vals )
+            or die $sth->errstr;
+    }
+}
+
 sub load_base_schema {
     my ($self, %args) = @_;
 
@@ -515,6 +606,24 @@ sub load_base_schema {
 
     die 'Base schema failed to load'
         if ! $success;
+
+    $dbh->disconnect;
+    $dbh = $self->connect();
+    my $guard = Scope::Guard->new(sub { $dbh->disconnect if $dbh; });
+    my $initial = File::Spec->catfile( $self->data_dir, 'initial-data.xml' );
+    open( my $fh, '<:bytes', $initial )
+        or croak "Failed to open schema seed data file ($initial): $!";
+    my $doc = XML::LibXML->load_xml( IO => $fh );
+    my $xpc = XML::LibXML::XPathContext->new( $doc->documentElement );
+    $xpc->registerNs( 'x', 'http://ledgersmb.org/xml-schemas/initial-data' );
+    close( $fh ) or carp "Failed to close seed data file ($initial): $!";
+    $self->_load_contact_classes( $dbh, $xpc );
+    $self->_load_countries( $dbh, $xpc );
+    $self->_load_languages( $dbh, $xpc );
+    $self->_load_salutations( $dbh, $xpc );
+    $dbh->commit;
+    $dbh->disconnect;
+    $dbh = undef;
 
     if (opendir(LOADDIR, "$self->{source_dir}/on_load")) {
         while (my $fname = readdir(LOADDIR)) {

@@ -15,10 +15,15 @@ use warnings;
 use LedgerSMB::I18N;
 use LedgerSMB::Upgrade_Tests;
 
+use Carp;
+use File::Spec;
 use File::Temp;
-use List::Util qw( first );
+use List::Util qw( any first );
+use Log::Any qw( $log );
 use Scope::Guard qw( guard );
 use Template;
+use XML::LibXML;
+use XML::LibXML::XPathContext;
 
 use Moose;
 use namespace::autoclean;
@@ -50,6 +55,18 @@ my %migration_upto = (
 
 
 =head1 ATTRIBUTES
+
+=head2 data_dir
+
+Indicates the path to the directory which holds the 'initial-data.xml' file
+containing the reference and static data to be loaded into the base schema.
+
+The default value is relative to the current directory, which is assumed
+to be the root of the LedgerSMB source tree.
+
+=cut
+
+has data_dir => (is => 'ro', default => './locale');
 
 =head2 database (required)
 
@@ -178,8 +195,7 @@ my %migration_required_vars = (
 my %required_vars_values = (
     default_ar      => sub { _linked_accounts($_[1], 'AR') },
     default_ap      => sub { _linked_accounts($_[1], 'AP') },
-    default_country => sub {
-        LedgerSMB::I18N::get_country_list($_[0]->language) },
+    default_country => sub { _filtered_languages($_[0]) },
     slschema        => sub { $migration_schema{$_[0]->type} },
     );
 
@@ -208,6 +224,31 @@ sub _linked_accounts {
     $sth->finish();
 
     return \@accounts;
+}
+
+sub _filtered_languages {
+    my $self = shift;
+    my $initial = File::Spec->catfile( $self->data_dir, 'initial-data.xml' );
+    my $langs = LedgerSMB::I18N::get_country_list($self->language);
+
+    open( my $fh, '<:bytes', $initial )
+        or croak "Failed to open schema seed data file ($initial): $!";
+    my $doc = XML::LibXML->load_xml( IO => $fh );
+    my $xpc = XML::LibXML::XPathContext->new( $doc->documentElement );
+    $xpc->registerNs( 'x', 'http://ledgersmb.org/xml-schemas/initial-data' );
+    close( $fh ) or carp "Failed to close seed data file ($initial): $!";
+
+    my @lang_codes = map {
+        my $atts = $_->attributes;
+        lc($atts->getNamedItem( 'code' )->nodeValue)
+    } $xpc->findnodes( './x:countries/x:country' );
+    return [
+        sort { $a->{text} cmp $b->{text} }
+        grep {
+            my $value = lc($_->{value});
+            any { $value eq $_ } @lang_codes
+        } @$langs
+    ];
 }
 
 sub required_vars {
