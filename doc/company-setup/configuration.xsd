@@ -165,6 +165,8 @@
   <xs:element name="configuration">
     <xs:complexType>
       <xs:sequence>
+        <xs:element name="documentation" type="xs:string"
+                    minOccurs="0" maxOccurs="1"/>
         <xs:element name="gifi-list" type="gifi-list"
                     minOccurs="0" maxOccurs="1"/>
         <xs:element name="custom-account-link-list"

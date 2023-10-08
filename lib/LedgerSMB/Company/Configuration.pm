@@ -453,13 +453,17 @@ sub from_xml {
     my $doc  = XML::LibXML->load_xml( $input_type => $source );
     my $root = $doc->documentElement;
     my $item = _skip_text_siblings($root->firstChild);
-
+ 
     # $root is a <configuration> tag, which has the following children:
+    #   documentation            (optional)
     #   gifi-list                (optional)
     #   custom-account-link-list (optional)
     #   coa                      (required)
     #   currencies               (required)
     #   settings                 (required)
+    if ($item and $item->nodeName eq 'documentation') {
+        $item = _skip_text_siblings($item->nextSibling);
+    }
     if ($item and $item->nodeName eq 'gifi-list') {
         $self->_process_gifis($item);
         $item =  _skip_text_siblings($item->nextSibling);
