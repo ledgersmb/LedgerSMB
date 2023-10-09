@@ -1356,10 +1356,15 @@ sub _print_and_save {
 
 sub delete {
 
-    my $wf = $form->{_wire}->get('workflows')
-        ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
-    $wf->execute_action( 'delete' );
-    $form->header;
+    # The actual deletion in executed in the "yes" function below;
+    # if we execute the "delete" action here, we'll land the order/quote
+    # in limbo if the "yes" action isn't performed on the UI side (the
+    # workflow has a DELETED state whereas the quote still exists...)
+    #
+    # my $wf = $form->{_wire}->get('workflows')
+    #     ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    # $wf->execute_action( 'delete' );
+    # $form->header;
 
     if ( $form->{type} =~ /_order$/ ) {
         $msg = $locale->text('Are you sure you want to delete Order Number');
@@ -1397,6 +1402,11 @@ sub delete {
 }
 
 sub yes {
+
+    my $wf = $form->{_wire}->get('workflows')
+        ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    $wf->execute_action( 'delete' );
+    $form->header;
 
     if ( $form->{type} =~ /_order$/ ) {
         $msg = $locale->text('Order deleted!');
