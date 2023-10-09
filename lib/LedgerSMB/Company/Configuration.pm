@@ -453,7 +453,7 @@ sub from_xml {
     my $doc  = XML::LibXML->load_xml( $input_type => $source );
     my $root = $doc->documentElement;
     my $item = _skip_text_siblings($root->firstChild);
- 
+
     # $root is a <configuration> tag, which has the following children:
     #   documentation            (optional)
     #   gifi-list                (optional)
