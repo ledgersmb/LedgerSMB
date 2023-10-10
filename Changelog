@@ -3,6 +3,13 @@
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.1
+* API documentation lists incorrect version in cookie name (#7640)
+* Further Math::BigFloat fixes (combined with Locale::CLDR) (#7646)
+* Order/Quote can't be deleted due to unconfirmed prior deletion (#7654)
+* Fix syntax error in consistency check and add two new ones (#7650)
+
+
 Changelog for 1.11.0
 
 Added functionalities
