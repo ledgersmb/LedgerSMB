@@ -25,7 +25,7 @@ use Moose::Role;
 use namespace::autoclean;
 
 has is_voided => (is => 'ro', isa => 'Str',
-                  default => 'Y');
+                  default => 'All');
 has voided => (is => 'ro', lazy => 1,
                builder => '_voided');
 
