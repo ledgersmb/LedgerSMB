@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.24-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2023-10-10 19:01+0000\n"
+"POT-Creation-Date: 2023-10-22 20:00+0000\n"
 "Last-Translator: ylavoie <ylavoie@yveslavoie.com>, 2023\n"
 "Language-Team: French (https://app.transifex.com/ledgersmb/teams/58325/fr/)\n"
 "Language: fr\n"
@@ -4336,12 +4336,12 @@ msgstr "Liste des types d'entreprises"
 msgid "Load Templates"
 msgstr "Charger des modèles"
 
-#: UI/src/components/ServerUI.js:90 UI/src/components/ServerUI.js:71
+#: UI/src/components/ServerUI.js:71 UI/src/components/ServerUI.js:90
 msgid "Loaded"
 msgstr "Chargé"
 
-#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:27
-#: UI/src/components/ServerUI.js:41
+#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:41
+#: UI/src/components/ServerUI.js:27
 msgid "Loading..."
 msgstr "Chargement..."
 
@@ -8719,7 +8719,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/views/Home.vue:36 UI/src/views/Home.vue:51
+#: UI/src/views/Home.vue:51 UI/src/views/Home.vue:36
 msgid "mailing lists"
 msgstr ""
 
