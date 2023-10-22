@@ -90,7 +90,7 @@
     "eslint-plugin-json": "3.1.0",
     "eslint-plugin-markdown": "3.0.1",
     "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-package-json": "0.1.5",
+    "eslint-plugin-package-json": "0.2.0",
     "eslint-plugin-prettier": "5.0.1",
     "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-snakecasejs": "2.2.0",
@@ -307,7 +307,8 @@
       "jest/valid-expect": "error",
       "package-json/order-properties": [
         "error",
-        [
+        {
+          "order": [
           "name",
           "version",
           "lockfileVersion",
@@ -346,7 +347,7 @@
           "prettier",
           "stylelint",
           "lint-staged"
-        ]
+        ]}
       ],
       "package-json/sort-collections": [
         "error",
