@@ -338,10 +338,13 @@ jobs:
   testing-done:
     runs-on: ubuntu-latest
     needs: [ build ]
+    if: failure()
+    # This job gets skipped on successful completion of the dependent jobs
+    # Skipped jobs are interpreted as 'success' condition in branch protection rules...
     steps:
-      - name: Done
+      - name: Failed
         run: |
-          echo "DONE!"
+          exit 1
 
   build-dev:
     if: github.event.action == 'closed' && github.event.pull_request.merged == true
