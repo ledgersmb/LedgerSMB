@@ -75,6 +75,10 @@ Dependency updates
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.24
+* Specify Locale::CLDR minimum version to fix numbers shown as 'HASH()' (#7671)
+
+
 Changelog for 1.10.23
 * Further Math::BigFloat fixes (combined with Locale::CLDR) (#7647)
 * Order/Quote can't be deleted due to unconfirmed prior deletion (#7655)
