@@ -322,7 +322,8 @@
       "jest/valid-expect": "error",
       "package-json/order-properties": [
         "error",
-        [
+        {
+          "order": [
           "name",
           "version",
           "lockfileVersion",
@@ -334,6 +335,7 @@
           "license",
           "maintainers",
           "contributors",
+          "bundlesize",
           "main",
           "browser",
           "_browserslist-comment",
@@ -360,7 +362,7 @@
           "prettier",
           "stylelint",
           "lint-staged"
-        ]
+        ]}
       ],
       "package-json/sort-collections": [
         "error",
