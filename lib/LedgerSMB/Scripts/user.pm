@@ -30,8 +30,6 @@ use feature 'fc';
 
 use DateTime::Format::Duration::ISO8601;
 use Locale::CLDR;
-use Math::BigFloat;
-use Math::BigInt;
 
 use LedgerSMB::Locale;
 use LedgerSMB::User;
@@ -134,11 +132,7 @@ sub preference_screen {
                 dateformats      => $dateformats,
                 language_codes   => _language_options(
                     $request,
-                    do {
-                        local $Math::BigInt::upgrade = undef;
-                        local $Math::BigFloat::downgrade = undef;
-                        Locale::CLDR->new( $prefs->{language} );
-                    }),
+                    Locale::CLDR->new( $prefs->{language} )),
                 login            => $login,
                 numberformats    => $numberformats,
                 password_expires => {
