@@ -3,6 +3,11 @@
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.2
+* Fix trial balance drill down showing partial results (#7657)
+* Specify Locale::CLDR minimum version to fix numbers shown as 'HASH()' (#7671)
+
+
 Changelog for 1.11.1
 * API documentation lists incorrect version in cookie name (#7640)
 * Further Math::BigFloat fixes (combined with Locale::CLDR) (#7646)
