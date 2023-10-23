@@ -152,7 +152,7 @@ sub new {
 
 sub copy_to_new {
     if ($form->{workflow_id}) {
-        my $wf = $form->{_wire}->get('workflow')->fetch_workflow(
+        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
             'GL', $form->{workflow_id}
             );
         $wf->context->param( transdate => $form->{transdate} );
