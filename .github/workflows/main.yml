@@ -58,8 +58,8 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          # Version Spec of the version to use.  Examples: 12.x, 10.15.1, >=10.15.0
-          node-version: '16'
+          # Keep aligned with what's in the dev image...
+          node-version: '20'
 
       - name: Cache node_module
         id: cache-node_modules
