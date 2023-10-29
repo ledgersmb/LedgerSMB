@@ -554,7 +554,7 @@ jobs:
       - name: Repository Dispatch to the Development image
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.DOCKER_TOKEN }}
+          token: ${{ secrets.KICK_DEV_IMG_BUILD_TOKEN }}
           repository: ${{ github.repository_owner }}/ledgersmb-dev-docker
           event-type: master-updated
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
