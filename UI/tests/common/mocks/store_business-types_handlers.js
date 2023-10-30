@@ -1,13 +1,12 @@
 /* eslint-disable no-unused-vars, no-console */
-import { rest } from 'msw'
+import { http, HttpResponse } from 'msw';
 
 export const businessTypesHandlers = [
 
-  rest.get('/erp/api/v0/contacts/business-types', (req, res, ctx) => {
+  http.get('/erp/api/v0/contacts/business-types', () => {
 
-    return res(
-      ctx.status(200),
-      ctx.json({
+    return HttpResponse.json(
+      {
         items: [
             { id: "1", description: "Big customer", discount: 0.05 },
             { id: "2", description: "Bigger customer", discount: 0.15 }
@@ -17,62 +16,61 @@ export const businessTypesHandlers = [
           rel : "download",
           href : "?format=HTML"
         }]
-      })
-    )
+      }, {
+      status: 200,
+    })
   }),
 
-  rest.get('/erp/api/v0/contacts/business-types/2', (req, res, ctx) => {
+  http.get('/erp/api/v0/contacts/business-types/2', () => {
 
-    return res(
-      ctx.status(200),
-      ctx.set({
-          'ETag': ['1234567890']
-      }),
-      ctx.json({
+    return HttpResponse.json(
+      {
         id: "2",
         description: "Bigger customer",
         discount: 0.15
+      }, {
+      status: 200,
+      headers: {
+          'ETag': ['1234567890']
+      }
+    })
+  }),
+
+  http.get('/erp/api/v0/contacts/business-types/3', () => {
+
+    return HttpResponse.json(
+      { id: "", code: "", description: "" }, {
+      status: 404
       })
-    )
   }),
 
-  rest.get('/erp/api/v0/contacts/business-types/3', (req, res, ctx) => {
+  http.post('/erp/api/v0/contacts/business-types', () => {
 
-    return res(
-      ctx.status(404),
-      ctx.json(
-        { id: "", code: "", description: "" }
-      )
-    )
-  }),
-
-  rest.post('/erp/api/v0/contacts/business-types', (req, res, ctx) => {
-
-    return res(
-      ctx.status(201),
-      ctx.set({
-          'ETag': ['1234567891']
-      }),
-      ctx.json({
+    return HttpResponse.json(
+      {
         id: "3",
         description: "Great customer",
         discount: 0.22
-      })
-    )
+      }, {
+      status: 201,
+      headers: {
+          'ETag': ['1234567891']
+      }
+    })
   }),
 
-  rest.put('/erp/api/v0/contacts/business-types/2', (req, res, ctx) => {
+  http.put('/erp/api/v0/contacts/business-types/2', () => {
 
-    return res(
-      ctx.status(200),
-      ctx.set({
-          'ETag': ['1234567891']
-      }),
-      ctx.json({
+    return HttpResponse.json(
+      {
         id: "2",
         description: "Bigger customer",
         discount: 0.25
-      })
-    )
+      }, {
+      status: 200,
+      headers: {
+          'ETag': ['1234567891']
+      }
+    })
   })
 ]

@@ -1,12 +1,11 @@
-import { rest } from 'msw'
+import { http, HttpResponse } from 'msw'
 
 export const gifiHandlers = [
 
-  rest.get('/erp/api/v0/gl/gifi', (req, res, ctx) => {
-  
-    return res(
-      ctx.status(200),
-      ctx.json({
+  http.get('/erp/api/v0/gl/gifi', () => {
+
+    return HttpResponse.json(
+      {
         items : [
           {
             "accno" : "0000",
@@ -24,61 +23,64 @@ export const gifiHandlers = [
             "title" : "HTML"
           }
         ]
-      }),
+      },
+      {
+        status: 200
+      }
     )
   }),
 
-  rest.get('/erp/api/v0/gl/gifi/0000', (req, res, ctx) => {
-  
-    return res(
-      ctx.status(200),
-      ctx.set({
-        'ETag': ['1234567890']
-      }),
-      ctx.json({
+  http.get('/erp/api/v0/gl/gifi/0000', () => {
+
+    return HttpResponse.json(
+      {
         "accno" : "0000",
         "description" : "Dummy account"
-      }),
+      }, {
+        status: 200,
+        headers: {
+          'ETag': ['1234567890']
+        }
+      }
     )
   }),
 
-  rest.get('/erp/api/v0/gl/gifi/0002', (req, res, ctx) => {
+  http.get('/erp/api/v0/gl/gifi/0002', () => {
 
-    return res(
-      ctx.status(404),
-      ctx.json({
+    return HttpResponse.json(
+      {
         code: "",
         description: ""
-      }),
+      },
+      { status: 404 }
     )
   }),
 
-  rest.post('/erp/api/v0/gl/gifi', (req, res, ctx) => {
+  http.post('/erp/api/v0/gl/gifi', () => {
 
-    return res(
-      ctx.status(201),
-      ctx.set({
-        'ETag': ['1234567891']
-      }),
-      ctx.json({
+    return HttpResponse.json(
+      {
         accno: "0002",
         description: "Dummy account 2",
-      }),
-    )
+      }, {
+      status: 201,
+      headers: {
+        'ETag': ['1234567891']
+      }
+    })
   }),
 
-  rest.put('/erp/api/v0/gl/gifi/0000', (req, res, ctx) => {
+  http.put('/erp/api/v0/gl/gifi/0000', () => {
 
-    return res(
-      ctx.status(200),
-      ctx.set({
-        'ETag': ['1234567891']
-      }),
-      ctx.json({
+    return HttpResponse.json(
+      {
         accno: "0000",
         description: "Funny account"
+      }, {
+        status: 200,
+        headers: {
+          'ETag': ['1234567891']
+        }
       })
-    )
   })
-
 ]

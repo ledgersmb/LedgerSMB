@@ -1,13 +1,12 @@
 /* eslint-disable no-unused-vars, no-console */
-import { rest } from 'msw'
+import { http, HttpResponse } from 'msw'
 
 export const languageHandlers = [
 
-  rest.get('/erp/api/v0/languages', (req, res, ctx) => {
+  http.get('/erp/api/v0/languages', () => {
 
-    return res(
-      ctx.status(200),
-      ctx.json({
+    return HttpResponse.json(
+      {
         items: [
           { code: "en", description: "English" },
           { code: "fr", description: "Français" }
@@ -17,57 +16,57 @@ export const languageHandlers = [
           rel : "download",
           href : "?format=HTML"
         }]
-      }),
+      },
+      { status: 200 }
     )
   }),
 
-  rest.get('/erp/api/v0/languages/en', (req, res, ctx) => {
+  http.get('/erp/api/v0/languages/en', () => {
 
-    return res(
-      ctx.status(200),
-      ctx.set({
+    return HttpResponse.json(
+      { code: "en", description: "English" },
+      {
+        status: 200,
+        headers: {
           'ETag': ['1234567890']
-      }),
-      ctx.json(
-          { code: "en", description: "English" }
-        ),
+        }
+      }
     )
   }),
 
-  rest.get('/erp/api/v0/languages/zz', (req, res, ctx) => {
+  http.get('/erp/api/v0/languages/zz', () => {
 
-    return res(
-      ctx.status(404),
-      ctx.json(
-          { code: "", description: "" }
-        ),
+    return HttpResponse.json(
+      { code: "", description: "" },
+      { status: 404 }
     )
   }),
 
-  rest.post('/erp/api/v0/languages', (req, res, ctx) => {
+  http.post('/erp/api/v0/languages', () => {
 
-    return res(
-      ctx.status(201),
-      ctx.set({
-          'ETag': ['1234567891']
-      }),
-      ctx.json({
+    return HttpResponse.json(
+      {
         code: "my",
         description: "Mayan",
-      }),
+      }, {
+        status: 201,
+        headers: {
+          'ETag': ['1234567891']
+        }
+      }
     )
   }),
 
-  rest.put('/erp/api/v0/languages/en', (req, res, ctx) => {
+  http.put('/erp/api/v0/languages/en', () => {
 
-    return res(
-      ctx.status(200),
-      ctx.set({
+    return HttpResponse.json(
+      { code: "en", description: "English (american)" },
+      {
+        status: 200,
+        headers: {
           'ETag': ['1234567891']
-      }),
-      ctx.json(
-        { code: "en", description: "English (american)" }
-      )
+        }
+      }
     )
   })
 ]
