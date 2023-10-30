@@ -1,13 +1,12 @@
 /* eslint-disable no-unused-vars, no-console */
-import { rest } from 'msw'
+import { http, HttpResponse } from 'msw'
 
 export const warehousesHandlers = [
 
-  rest.get('/erp/api/v0/products/warehouses', (req, res, ctx) => {
+  http.get('/erp/api/v0/products/warehouses', () => {
 
-    return res(
-      ctx.status(200),
-      ctx.json({
+    return HttpResponse.json(
+      {
         items: [
           { id: "1", description: "Modern warehouse" },
           { id: "2", description: "Huge warehouse" },
@@ -18,57 +17,58 @@ export const warehousesHandlers = [
           rel : "download",
           href : "?format=HTML"
         }]
-      }),
+      },
+      { status: 200 }
     )
   }),
 
-  rest.get('/erp/api/v0/products/warehouses/2', (req, res, ctx) => {
+  http.get('/erp/api/v0/products/warehouses/2', () => {
 
-    return res(
-      ctx.status(200),
-      ctx.set({
+    return HttpResponse.json(
+      { id: "2", description: "Huge warehouse" },
+      {
+        status: 200,
+        headers: {
           'ETag': ['1234567890']
-      }),
-      ctx.json(
-          { id: "2", description: "Huge warehouse" }
-        ),
+        }
+      }
     )
   }),
 
-  rest.get('/erp/api/v0/products/warehouses/4', (req, res, ctx) => {
+  http.get('/erp/api/v0/products/warehouses/4', () => {
 
-    return res(
-      ctx.status(404),
-      ctx.json(
-          { id: "", description: "" }
-        ),
+    return HttpResponse.json(
+      { id: "", description: "" },
+      { status: 404 }
     )
   }),
 
-  rest.post('/erp/api/v0/products/warehouses', (req, res, ctx) => {
+  http.post('/erp/api/v0/products/warehouses', () => {
 
-    return res(
-      ctx.status(201),
-      ctx.set({
-          'ETag': ['1234567891']
-      }),
-      ctx.json({
+    return HttpResponse.json(
+      {
         id: "4",
         description: "Mars warehouse",
-      }),
+      },
+      {
+        status: 201,
+        headers: {
+          'ETag': ['1234567891']
+        }
+      }
     )
   }),
 
-  rest.put('/erp/api/v0/products/warehouses/2', (req, res, ctx) => {
+  http.put('/erp/api/v0/products/warehouses/2', () => {
 
-    return res(
-      ctx.status(200),
-      ctx.set({
+    return HttpResponse.json(
+      { id: "2", description: "Biggest warehouse" },
+      {
+        status: 200,
+        headers: {
           'ETag': ['1234567891']
-      }),
-      ctx.json(
-        { id: "2", description: "Biggest warehouse" }
-      )
+        }
+      }
     )
   })
 ]
