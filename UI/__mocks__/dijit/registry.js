@@ -1,7 +1,6 @@
 /* eslint-disable no-shadow */
 // Borrowed from dijit/registry to avoid pulling in all Dojo/Dijit
 
-// import { jest } from '@jest/globals';
 const registry = Object.create(null);
 
 function findWidgets(root, skipNode) {

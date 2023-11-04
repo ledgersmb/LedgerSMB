@@ -45,8 +45,11 @@ describe("LoginPage", () => {
     });
 
     it("should fail on bad user", async () => {
+        const jsdomAlert = window.alert; // remember the jsdom alert
+        window.alert = jest.fn(); // provide an empty implementation for window.alert
+
         wrapper = mount(LoginPage);
-    
+
         wrapper.find("#username").setValue("BadUser");
         expect(await wrapper.get("#login").isDisabled()).toBe(true);
 
@@ -61,9 +64,13 @@ describe("LoginPage", () => {
         await retry(() => expect(wrapper.get("#errorText").text()).toBe(
             "Access denied: Bad username or password"
         ));
+        window.alert = jsdomAlert; // restore the jsdom alert
     });
 
     it("should fail on bad version", async () => {
+        const jsdomAlert = window.alert; // remember the jsdom alert
+        window.alert = jest.fn(); // provide an empty implementation for window.alert
+
         wrapper = mount(LoginPage);
 
         await wrapper.find("#username").setValue("MyUser");
@@ -75,6 +82,7 @@ describe("LoginPage", () => {
         await retry (() => expect(wrapper.get("#errorText").text()).toBe(
             "Database version mismatch"
         ));
+        window.alert = jsdomAlert; // restore the jsdom alert
     });
 
     it("should fail unknown error", async () => {
