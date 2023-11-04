@@ -18,7 +18,7 @@ on:
       - '*'
     paths-ignore:
       - '.circleci'
-    types: [opened, reopened, synchronize, closed]
+    types: [opened, reopened, synchronize]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -533,7 +533,7 @@ jobs:
           exit 1
 
   build-dev:
-    if: github.event.pull_request.merged == true
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
 
     runs-on: ubuntu-latest
 
