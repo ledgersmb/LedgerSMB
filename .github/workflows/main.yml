@@ -6,6 +6,8 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
+    tags:
+      - '*'
     paths-ignore:
       - '.circleci'
     branches-ignore:
@@ -16,7 +18,7 @@ on:
       - '*'
     paths-ignore:
       - '.circleci'
-    types: [opened, reopened, synchronize, closed]
+    types: [opened, reopened, synchronize]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -531,7 +533,7 @@ jobs:
           exit 1
 
   build-dev:
-    if: github.event.pull_request.merged == true
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
 
     runs-on: ubuntu-latest
 
