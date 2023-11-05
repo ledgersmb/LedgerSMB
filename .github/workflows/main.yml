@@ -75,7 +75,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: UI/js
-          key: dojo-${{ hashFiles('UI/js-src/**', 'UI/src/**', 'UI/css/**','UI/**/*.html','doc/sources/**') }}
+          key: dojo-${{ hashFiles('UI/js-src/**',
+                                  'UI/src/**',
+                                  'UI/css/**',
+                                  'UI/!(js|.node_modules)/**/*.html',
+                                  'doc/sources/**') }}
 
       - name: Build Dojo
         run: |
@@ -424,7 +428,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: UI/js
-          key: dojo-${{ hashFiles('UI/js-src/**', 'UI/src/**', 'UI/css/**','UI/**/*.html','doc/sources/**') }}
+          key: dojo-${{ hashFiles('UI/js-src/**',
+                                  'UI/src/**',
+                                  'UI/css/**',
+                                  'UI/!(js|.node_modules)/**/*.html',
+                                  'doc/sources/**') }}
 
       # This will start a hub and JOB_COUNT matrix.
       - name: Starting hub with ${{ matrix.BROWSER }}
