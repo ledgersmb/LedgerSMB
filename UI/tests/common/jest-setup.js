@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
-import { jest, beforeAll, afterAll, afterEach } from "@jest/globals";
-import "whatwg-fetch";
+import { jest, beforeAll, afterAll, beforeEach, afterEach } from "@jest/globals";
+import { setGlobalOrigin } from 'undici';
 
 import "./mocks/lsmb_elements";
 import { server } from './mocks/server.js'
@@ -17,7 +17,7 @@ Object.defineProperty(window, "lsmbConfig", {
 // Enable i18n
 import { config } from '@vue/test-utils'
 import { i18n } from '../common/i18n'
-    
+
 config.global.plugins = [i18n]
 
 const oldWindowLocation = window.location;
@@ -55,6 +55,11 @@ afterAll(() => {
 
   // Clean up after the tests are finished.
   server.close();
+})
+
+beforeEach(() => {
+  // Set the global origin (used by fetch) to the url provided in vitest.config.ts
+  setGlobalOrigin(window.location.href)
 })
 
 // Reset any request handlers that we may add during the tests,

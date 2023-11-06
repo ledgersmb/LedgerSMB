@@ -1,13 +1,12 @@
 /* eslint-disable no-unused-vars, no-console */
-import { rest } from 'msw'
+import { http, HttpResponse } from 'msw'
 
 export const pricegroupHandlers = [
 
-  rest.get('/erp/api/v0/products/pricegroups', (req, res, ctx) => {
+  http.get('/erp/api/v0/products/pricegroups', () => {
 
-    return res(
-      ctx.status(200),
-      ctx.json({
+    return HttpResponse.json(
+      {
         items: [
           { id: "1", description: "Price group 1" },
           { id: "2", description: "Price group 2" }
@@ -17,57 +16,58 @@ export const pricegroupHandlers = [
           rel : "download",
           href : "?format=HTML"
         }]
-      }),
+      },
+      { status: 200 }
     )
   }),
 
-  rest.get('/erp/api/v0/products/pricegroups/1', (req, res, ctx) => {
+  http.get('/erp/api/v0/products/pricegroups/1', () => {
 
-    return res(
-      ctx.status(200),
-      ctx.set({
+    return HttpResponse.json(
+      { id: "1", description: "Price group 1" },
+      {
+        status: 200,
+        headers: {
           'ETag': ['1234567890']
-      }),
-      ctx.json(
-        { id: "1", description: "Price group 1" },
-        ),
+        }
+      }
     )
   }),
 
-  rest.get('/erp/api/v0/products/pricegroups/3', (req, res, ctx) => {
+  http.get('/erp/api/v0/products/pricegroups/3', () => {
 
-    return res(
-      ctx.status(404),
-      ctx.json(
-          { id: "", description: "" }
-        ),
+    return HttpResponse.json(
+      { id: "", description: "" },
+      { status: 404 }
     )
   }),
 
-  rest.post('/erp/api/v0/products/pricegroups', (req, res, ctx) => {
+  http.post('/erp/api/v0/products/pricegroups', () => {
 
-    return res(
-      ctx.status(201),
-      ctx.set({
-          'ETag': ['1234567891']
-      }),
-      ctx.json({
+    return HttpResponse.json(
+      {
         id: "3",
         description: "Price Group #3",
-      }),
+      },
+      {
+        status: 201,
+        headers: {
+          'ETag': ['1234567891']
+        }
+      }
     )
   }),
 
-  rest.put('/erp/api/v0/products/pricegroups/1', (req, res, ctx) => {
+  http.put('/erp/api/v0/products/pricegroups/1', () => {
 
-    return res(
-      ctx.status(200),
-      ctx.set({
+    return HttpResponse.json(
+      { id: "1", description: "Price Group #1" },
+      {
+        status: 200,
+        headers: {
           'ETag': ['1234567891']
-      }),
-      ctx.json(
-        { id: "1", description: "Price Group #1" }
-      )
+        }
+      }
     )
   })
 ]

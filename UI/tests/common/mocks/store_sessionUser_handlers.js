@@ -1,13 +1,12 @@
 /* eslint-disable no-unused-vars, no-console */
-import { rest } from 'msw'
+import { http, HttpResponse } from 'msw'
 
 export const sessionUserHandlers = [
 
-  rest.get('/erp/api/v0/session', (req, res, ctx) => {
+  http.get('/erp/api/v0/session', ({ request }) => {
 
-    return res(
-      ctx.status(200),
-      ctx.json({
+    return HttpResponse.json(
+      {
         "password_expiration" : "P1Y",
         "roles" : [
             "account_all",
@@ -22,8 +21,9 @@ export const sessionUserHandlers = [
             "dateformat" : "yyyy-mm-dd",
             "language" : null
         }
-      }),
+      },
+      { status: 200 }
     )
-  }),
+  })
 
 ]

@@ -1,13 +1,12 @@
 /* eslint-disable no-unused-vars, no-console */
-import { rest } from 'msw'
+import { http, HttpResponse } from 'msw'
 
 export const sicsHandlers = [
 
-  rest.get('/erp/api/v0/contacts/sic', (req, res, ctx) => {
+  http.get('/erp/api/v0/contacts/sic', () => {
 
-    return res(
-      ctx.status(200),
-      ctx.json({
+    return HttpResponse.json(
+      {
         items: [
           { code: "541330", description: "Engineering service" },
           { code: "611430", description: "Professional and management development training" }
@@ -17,60 +16,60 @@ export const sicsHandlers = [
           rel : "download",
           href : "?format=HTML"
         }]
-      }),
+      },
+      { status: 200 }
     )
   }),
 
-  rest.get('/erp/api/v0/contacts/sic/541330', (req, res, ctx) => {
+  http.get('/erp/api/v0/contacts/sic/541330', () => {
 
-    return res(
-      ctx.status(200),
-      ctx.set({
+    return HttpResponse.json(
+      { code: "541330", description: "Engineering service" },
+      {
+        status: 200,
+        headers: {
           'ETag': ['1234567890']
-      }),
-      ctx.json(
-        { code: "541330", description: "Engineering service" }
-        ),
+        }
+      }
     )
   }),
 
-  rest.get('/erp/api/v0/contacts/sic/541510', (req, res, ctx) => {
+  http.get('/erp/api/v0/contacts/sic/541510', () => {
 
-    return res(
-      ctx.status(404),
-      ctx.json(
-          { code: "", description: "" }
-        ),
+    return HttpResponse.json(
+      { code: "", description: "" },
+      { status: 404 }
     )
   }),
 
-  rest.post('/erp/api/v0/contacts/sic', (req, res, ctx) => {
+  http.post('/erp/api/v0/contacts/sic', () => {
 
-    return res(
-      ctx.status(201),
-      ctx.set({
-          'ETag': ['1234567891']
-      }),
-      ctx.json({
+    return HttpResponse.json(
+      {
         code: "541510",
         description: "Design of computer systems",
-      }),
+      },
+      {
+      status: 201,
+      headers: {
+          'ETag': ['1234567891']
+      }}
     )
   }),
 
-  rest.put('/erp/api/v0/contacts/sic/541330', (req, res, ctx) => {
+  http.put('/erp/api/v0/contacts/sic/541330', () => {
 
-    return res(
-      ctx.status(200),
-      ctx.set({
+    return HttpResponse.json(
+      {
+        code: "541330",
+        description: "Engineering services"
+      },
+      {
+        status: 200,
+        headers: {
           'ETag': ['1234567891']
-      }),
-      ctx.json(
-        {
-          code: "541330",
-          description: "Engineering services"
         }
-      )
+      }
     )
   })
 ]
