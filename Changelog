@@ -3,6 +3,10 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.25
+* Minimum PGObject::Type::BigFloat version to resolve Math::BigFloat issue (#7704)
+
+
 Changelog for 1.10.24
 * Specify Locale::CLDR minimum version to fix numbers shown as 'HASH()' (#7671)
 
