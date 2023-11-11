@@ -32,6 +32,7 @@
       <condition name="acl-draft-modify" />
     </action>
     <action name="copy_to_new" resulting_state="NOCHANGE" />
+    <action name="new" resulting_state="NOCHANGE" />
     <action name="update" resulting_state="NOCHANGE" />
     <action name="schedule" resulting_state="NOCHANGE">
       <condition name="!is-batch-member" />
@@ -52,6 +53,7 @@
   <state name="POSTED">
     <action name="save_info" resulting_state="NOCHANGE" />
     <action name="copy_to_new" resulting_state="NOCHANGE" />
+    <action name="new" resulting_state="NOCHANGE" />
     <action name="reverse" resulting_state="REVERSED" />
     <action name="schedule" resulting_state="NOCHANGE" />
     <action name="print" resulting_state="NOCHANGE" />

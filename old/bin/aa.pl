@@ -107,7 +107,9 @@ sub copy_to_new{
 }
 
 sub new_screen {
-    my @reqprops = qw(ARAP vc dbh stylesheet batch_id script type _locale _wire);
+    my @reqprops = qw(
+        ARAP vc dbh stylesheet batch_id script type _locale _wire invdate
+        );
     $oldform = $form;
     $form = {};
     bless $form, 'Form';
@@ -120,8 +122,6 @@ sub new_screen {
 sub add {
     $form->{title} = "Add";
 
-    $form->{callback} = "$form->{script}?__action=add"
-      unless $form->{callback};
     if (defined $form->{type}
         and $form->{type} eq "credit_note"){
         $form->{reverse} = 1;
@@ -1329,7 +1329,7 @@ sub approve {
                 . qq|here</a>.</body></html>|;
 
     } else {
-        $form->info($locale->text('Draft Posted'));
+        update();
     }
 }
 
