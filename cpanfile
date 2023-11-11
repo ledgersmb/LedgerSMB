@@ -90,7 +90,7 @@ requires 'PGObject', '2.3.2';
 requires 'PGObject::Simple', '3.1.0';
 requires 'PGObject::Simple::Role', '2.1.1';
 requires 'PGObject::Type::Registry';
-requires 'PGObject::Type::BigFloat', '2.0.1';
+requires 'PGObject::Type::BigFloat', '2.1.1';
 requires 'PGObject::Type::DateTime', '2.0.2';
 requires 'PGObject::Type::ByteString', '1.2.3';
 requires 'PGObject::Util::DBMethod', '1.1.0';
