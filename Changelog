@@ -1,5 +1,26 @@
                                                         -*- fundamental -*-
 
+Changelog for 1.12 Series
+Unreleased
+
+Changelog for 1.12.0
+
+Added functionalities
+* More consistency checks in setup.pl (#7649)
+* Ability to include documentation in Chart of Account definition files (#7651)
+
+Changed functionalities
+* Default cookie names no longer include LedgerSMB version number (#7639)
+
+Removed functionalities
+
+Bugs fixed
+* Countries in setup.pl from Locale::CLDR; use reference data instead (#7648)
+
+Cleanup & architecture improvements
+* Reference data factored out of database schema (#7648)
+
+
 Changelog for 1.11 Series
 Released 2023-10-03
 
