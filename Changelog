@@ -5,7 +5,9 @@ Released 2023-10-03
 
 Changelog for 1.11.3
 * Fix typo to make 'Copy to New' button work on GL screen (#7675)
-* Minimum PGObject::Type::BigFloat version to resolve Math::BigFloat issue (#7704)
+* Minimum PGObject::Type::BigFloat version resolving Math::BigFloat issue (#7704)
+* Show posted AR/AP transaction after Post instead of 'Draft posted' (#7701)
+* Consistency 'New button in GL/AR/AP screens in SAVED + POSTED states (#7702)
 
 
 Changelog for 1.11.2
