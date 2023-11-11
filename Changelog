@@ -24,6 +24,11 @@ Cleanup & architecture improvements
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.3
+* Fix typo to make 'Copy to New' button work on GL screen (#7675)
+* Minimum PGObject::Type::BigFloat version to resolve Math::BigFloat issue (#7704)
+
+
 Changelog for 1.11.2
 * Fix trial balance drill down showing partial results (#7657)
 * Specify Locale::CLDR minimum version to fix numbers shown as 'HASH()' (#7671)
