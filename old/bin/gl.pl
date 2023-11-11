@@ -143,7 +143,7 @@ sub new {
     }
     for my $fld (
         qw(description reference rowcount id workflow_id
-           transdate notes reversing reversing_reference )
+           notes reversing reversing_reference )
         ) {
         delete $form->{$fld};
     }
