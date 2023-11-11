@@ -557,8 +557,11 @@ jobs:
         shell: bash
         run: |
           URL="https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}"
-          if [ -n "$(curl -s -X GET -G $URL | jq -r '.files[].filename' | grep -q "cpanfile")" ]; then
-            echo MUST_TRIGGER=1 >> $GITHUB_OUTPUT
+          if [ -n "$(curl -s -X GET -G $URL | jq -r '.files[].filename' | grep 'cpanfile')" ]; then
+            echo "Setting MUST_TRIGGER to 1"
+            echo "MUST_TRIGGER=1" >> $GITHUB_OUTPUT
+          else
+            echo "MUST_TRIGGER failed; not set"
           fi
 
       - name: Repository Dispatch to the Development image
