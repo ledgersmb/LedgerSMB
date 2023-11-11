@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.11.3-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2023-10-22 20:13+0000\n"
+"POT-Creation-Date: 2023-11-11 22:34+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2023\n"
 "Language-Team: Catalan (https://app.transifex.com/ledgersmb/teams/58325/ca/)\n"
 "Language: ca\n"
@@ -2640,7 +2640,7 @@ msgstr ""
 msgid "Dr."
 msgstr ""
 
-#: old/bin/aa.pl:1332 old/bin/aa.pl:1598 old/bin/ir.pl:95
+#: old/bin/aa.pl:1598 old/bin/ir.pl:95
 msgid "Draft Posted"
 msgstr ""
 
@@ -4305,8 +4305,8 @@ msgstr ""
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:27
-#: UI/src/components/ServerUI.js:41
+#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:41
+#: UI/src/components/ServerUI.js:27
 msgid "Loading..."
 msgstr ""
 
