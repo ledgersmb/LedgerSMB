@@ -120,8 +120,6 @@ sub new_screen {
 sub add {
     $form->{title} = "Add";
 
-    $form->{callback} = "$form->{script}?__action=add"
-      unless $form->{callback};
     if (defined $form->{type}
         and $form->{type} eq "credit_note"){
         $form->{reverse} = 1;
@@ -1329,7 +1327,7 @@ sub approve {
                 . qq|here</a>.</body></html>|;
 
     } else {
-        $form->info($locale->text('Draft Posted'));
+        update();
     }
 }
 
