@@ -529,7 +529,9 @@ sub consistency {
         $request,
         'setup/consistency_results',
         {
-            results => $results
+            database => $request->{database},
+            login    => $request->{login},
+            results  => $results
         });
 }
 
