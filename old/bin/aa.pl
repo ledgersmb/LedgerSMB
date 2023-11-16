@@ -258,6 +258,9 @@ sub post_reversing {
          WHERE id = ?
         QUERY
     }
+
+    delete $form->{__action};
+    display_form();
 }
 
 sub display_form {
@@ -1123,9 +1126,6 @@ sub form_footer {
         ###TODO: Move "reversing" state to the workflow!
         if ($form->{reversing}) {
             delete $button{$_} for (qw(schedule update save_temp edit_and_save));
-        }
-        if (not $form->{approved}) {
-            delete $button{reverse};
         }
 
 
