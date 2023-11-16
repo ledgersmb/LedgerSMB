@@ -176,6 +176,9 @@ sub reverse {
     $form->{title}     = $locale->text('Add');
     $form->{reversing_reference} = $form->{invnumber};
     $form->{invnumber} .= '-VOID';
+    my $wf = $form->{_wire}->get( 'workflows' )
+        ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    $wf->execute_action( 'reverse' );
 
     &create_links;
 
