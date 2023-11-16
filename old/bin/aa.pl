@@ -258,6 +258,9 @@ sub post_reversing {
          WHERE id = ?
         QUERY
     }
+
+    delete $form->{__action};
+    display_form();
 }
 
 sub display_form {
