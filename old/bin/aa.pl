@@ -1127,9 +1127,6 @@ sub form_footer {
         if ($form->{reversing}) {
             delete $button{$_} for (qw(schedule update save_temp edit_and_save));
         }
-        if (not $form->{approved}) {
-            delete $button{reverse};
-        }
 
 
         for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
