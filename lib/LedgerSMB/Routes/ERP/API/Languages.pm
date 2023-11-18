@@ -506,4 +506,5 @@ components:
       description: French Canadian entry
       value:
         code: fr_CA
+        default: false
         description: French (Canada)

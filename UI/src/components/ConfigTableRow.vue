@@ -130,7 +130,7 @@ async function setDefault() {
                     :value="props.id"
                     :checked="props.isDefault" />
                 <lsmb-button
-                    name="change-default"
+                    :id="'set-default-' + props.id"
                     v-show="mouseOverDefault && modifiable"
                     @click="setDefault()">
                     Set
