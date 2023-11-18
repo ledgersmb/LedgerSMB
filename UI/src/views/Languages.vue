@@ -20,6 +20,7 @@ const store = useLanguagesStore();
         :columns="COLUMNS"
         :store="store"
         storeId="code"
+        defaultSelectable="true"
         editRole="language_edit"
         createRole="language_create" />
 </template>
