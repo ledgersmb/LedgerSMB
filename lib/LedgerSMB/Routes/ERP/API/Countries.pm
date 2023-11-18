@@ -77,7 +77,11 @@ sub _del_country {
 sub _get_country {
     my ($c, $code) = @_;
     my $sth = $c->dbh->prepare(
-        q|SELECT *, md5(last_updated::text) as etag FROM country WHERE short_name = ?|
+        q|SELECT *, md5(last_updated::text) as etag,
+                 country.short_name is not distinct from (select "value"
+                                                       from defaults
+                                                      where setting_key = 'default_country') as "default"
+            FROM country WHERE short_name = ?|
         ) or die $c->dbh->errstr;
 
     $sth->execute($code) or die $sth->errstr;
@@ -87,8 +91,9 @@ sub _get_country {
     return undef unless $row;
     return (
         {
-            name => $row->{name},
             code => $row->{short_name},
+            default => $row->{default} ? \1 : \0,
+            name => $row->{name},
         },
         {
             ETag => $row->{etag}
@@ -98,15 +103,24 @@ sub _get_country {
 sub _get_countries {
     my ($c, $formatter) = @_;
     my $sth = $c->dbh->prepare(
-        q|SELECT * FROM country ORDER BY name|
+        q|SELECT *,
+             md5(last_updated::text) as etag,
+             country.short_name is not distinct from (select "value"
+                                from defaults
+                               where setting_key = 'default_country') as "default"
+            FROM country ORDER BY name|
         ) or die $c->dbh->errstr;
 
     $sth->execute() or die $sth->errstr;
     my @results;
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
         push @results, {
-            name => $row->{name},
+            _meta => {
+                ETag => $row->{etag},
+            },
             code => $row->{short_name},
+            default => $row->{default} ? \1 : \0,
+            name => $row->{name},
         };
     }
     die $sth->errstr if $sth->err;
@@ -127,15 +141,32 @@ sub _get_countries {
 
 sub _update_country {
     my ($c, $w, $m) = @_;
+
+    $c->dbh->do('SAVEPOINT set_default')
+        or die $c->dbh->errstr;
+    if ($w->{default}) {
+        $c->dbh->do(q|
+             INSERT INTO defaults (setting_key, value)
+                VALUES ('default_country', $1)
+             ON CONFLICT (setting_key) DO UPDATE SET value = $1
+|, {}, $w->{code})
+            or die $c->dbh->errstr;
+    }
+
     my $sth = $c->dbh->prepare(
         q|UPDATE country SET name = ?
            WHERE short_name = ? AND md5(last_updated::text) = ?
-          RETURNING *, md5(last_updated::text) as etag|
+          RETURNING *, md5(last_updated::text) as etag,
+             country.short_name is not distinct from (select "value"
+                                                   from defaults
+                                                  where setting_key = 'default_country') as "default"|
         ) or die $c->dbh->errstr;
 
     $sth->execute( $w->{name}, $w->{code}, $m->{ETag} )
         or die $sth->errstr;
     if ($sth->rows == 0) {
+        $c->dbh->do('ROLLBACK TO SAVEPOINT set_default')
+            or die $c->dbh->errstr;
         my ($response, $meta) = _get_country($c, $w->{code});
         return (undef, {}) unless $response;
 
@@ -143,12 +174,15 @@ sub _update_country {
         return (undef, { conflict => 1 });
     }
 
+    $c->dbh->do('RELEASE SAVEPOINT set_default')
+        or die $c->dbh->errstr;
     my $row = $sth->fetchrow_hashref('NAME_lc');
     die $sth->errstr if $sth->err;
 
     return (
         {
             name => $row->{name},
+            default => $row->{default} ? \1 : \0,
             code => $row->{short_name}
         },
         {
@@ -214,11 +248,12 @@ get api '/countries/{id}' => sub {
 put api '/countries/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*(?>W\/)?"(.*)"\s*$/);
+    my ($ETag) = ($r->headers->header('If-Match') =~ s/^\s*(W\/)?"|"\s*$//gr);
     my ($response, $meta) = _update_country(
         $c, {
             code => $params->{id},
-            name => $body->{name}
+            default => $body->{default},
+            name    => $body->{name}
         },
         {
             ETag => $ETag
@@ -392,6 +427,8 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        409:
+          $ref: '#/components/responses/409'
         412:
           $ref: '#/components/responses/412'
         413:
@@ -416,6 +453,8 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        409:
+          $ref: '#/components/responses/409'
         412:
           $ref: '#/components/responses/412'
         428:
@@ -455,6 +494,8 @@ components:
         - code
         - name
       properties:
+        _meta:
+          type: object
         code:
           $ref: '#/components/schemas/country-code'
         name:
