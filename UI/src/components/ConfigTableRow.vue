@@ -1,13 +1,15 @@
 <script setup>
 
 import { createRowMachine } from "@/components/ConfigTable.machines.js";
-import { computed, inject, watch } from "vue";
+import { computed, inject, ref, watch } from "vue";
 import { contextRef } from "@/robot-vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
 const props = defineProps([
+    "defaultSelectable",
+    "isDefault",
     "columns",
     "deletable",
     "editingId",
@@ -80,10 +82,61 @@ watch(() => props.editingId,
       }
 );
 
+let mouseOverDefault = ref(false);
+
+async function setDefault() {
+    let dismiss = () => {};
+    notify({
+        title: "Updating default language...",
+        type: "info",
+        dismissReceiver: (cb) => { dismiss = cb }
+    });
+    try {
+        await props.store.setDefault(props.id);
+    }
+    catch {
+        notify({ title: "Updated failed", type: "error" });
+        return;
+    }
+    finally {
+        dismiss();
+    }
+    notify({ title: "Updated default language" });
+}
+
 </script>
 
 <template>
     <tr class="data-row">
+        <td v-if="props.defaultSelectable"
+            style="vertical-align:middle;text-align:center"
+            @mouseover="mouseOverDefault = true"
+            @mouseleave="mouseOverDefault = false">
+            <template v-if="props.type !== 'existing'">
+            </template>
+            <template v-else-if="props.isDefault">
+                <input
+                    type="radio"
+                    name="default"
+                    :value="props.id"
+                    :checked="props.isDefault" />
+            </template>
+            <template v-else>
+                <input
+                    v-show="!mouseOverDefault || !modifiable"
+                    type="radio"
+                    name="default"
+                    :disabled="!modifiable"
+                    :value="props.id"
+                    :checked="props.isDefault" />
+                <lsmb-button
+                    name="change-default"
+                    v-show="mouseOverDefault && modifiable"
+                    @click="setDefault()">
+                    Set
+                </lsmb-button>
+            </template>
+        </td>
         <td v-for="column in columns"
             :key="column.key"
             class="data-entry">
