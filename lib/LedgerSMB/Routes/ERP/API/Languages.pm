@@ -22,6 +22,7 @@ use strict;
 use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_NO_CONTENT HTTP_CREATED HTTP_CONFLICT HTTP_FORBIDDEN );
+use JSON::MaybeXS;
 
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Report::Listings::Language;
