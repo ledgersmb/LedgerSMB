@@ -16,10 +16,10 @@ beforeEach(() => {
 describe("Country Store", () => {
     it("initialize", async () => {
         await countries.initialize();
-        expect(countries.fields).toStrictEqual(["code", "name"]);
+        expect(countries.fields).toStrictEqual(["_meta", "code", "default", "name"]);
         expect(countries.items).toStrictEqual([
-            { code: "ca", name: "Canada" },
-            { code: "us", name: "United States" }
+            { code: "ca", default: false, name: "Canada" },
+            { code: "us", default: false, name: "United States" }
         ]);
         expect(countries._links).toStrictEqual([{
             title : "HTML",
@@ -43,8 +43,8 @@ describe("Country Store", () => {
         await countries.get("us");
         await countries.save("us", { code: "us", name: "America" });
         expect(countries.items).toStrictEqual([
-            { code: "ca", name: "Canada" },
-            { code: "us", name: "America" }
+            { code: "ca", default: false, name: "Canada" },
+            { code: "us", default: false, name: "America" }
         ]);
     });
 

@@ -91,7 +91,7 @@ sub _get_language {
     return (
         {
             code => $row->{code},
-            default => $row->{default} ? \1 : \0,
+            default => $row->{default} ? JSON::MaybeXS->true : JSON::MaybeXS->false,
             description => $row->{description},
         },
         {
@@ -118,7 +118,7 @@ sub _get_languages {
                 ETag => $row->{etag},
             },
             code => $row->{code},
-            default => $row->{default} ? \1 : \0,
+            default => $row->{default} ? JSON::MaybeXS->true : JSON::MaybeXS->false,
             description => $row->{description},
         };
     }
@@ -181,7 +181,7 @@ sub _update_language {
     return (
         {
             code => $row->{code},
-            default => $row->{default} ? \1 : \0,
+            default => $row->{default} ? JSON::MaybeXS->true : JSON::MaybeXS->false,
             description => $row->{description},
         },
         {
@@ -497,6 +497,8 @@ components:
           type: object
         code:
           $ref: '#/components/schemas/language-code'
+        default:
+          type: boolean
         description:
           type: string
           example: French (Canada)

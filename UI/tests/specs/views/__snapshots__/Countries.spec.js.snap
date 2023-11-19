@@ -17,6 +17,9 @@ exports[`Countries - register as a component should show dialog 1`] = `
     >
       <thead>
         <tr>
+          <th>
+            Default
+          </th>
           
           <th>
             Code
@@ -36,6 +39,12 @@ exports[`Countries - register as a component should show dialog 1`] = `
         <tr
           class="data-row"
         >
+          <td
+            style="vertical-align: middle; text-align: center;"
+          >
+            
+            
+          </td>
           
           <td
             class="data-entry"
@@ -66,6 +75,12 @@ exports[`Countries - register as a component should show dialog 1`] = `
         <tr
           class="data-row"
         >
+          <td
+            style="vertical-align: middle; text-align: center;"
+          >
+            
+            
+          </td>
           
           <td
             class="data-entry"
@@ -136,6 +151,9 @@ exports[`Countries - register as a component should show dialog with editable da
     >
       <thead>
         <tr>
+          <th>
+            Default
+          </th>
           
           <th>
             Code
@@ -155,6 +173,25 @@ exports[`Countries - register as a component should show dialog with editable da
         <tr
           class="data-row"
         >
+          <td
+            style="vertical-align: middle; text-align: center;"
+          >
+            
+            <input
+              name="default"
+              type="radio"
+              value="ca"
+            />
+            <button
+              name="change-default"
+              style="display: none;"
+            >
+              
+               Set 
+              
+            </button>
+            
+          </td>
           
           <td
             class="data-entry"
@@ -210,6 +247,25 @@ exports[`Countries - register as a component should show dialog with editable da
         <tr
           class="data-row"
         >
+          <td
+            style="vertical-align: middle; text-align: center;"
+          >
+            
+            <input
+              name="default"
+              type="radio"
+              value="us"
+            />
+            <button
+              name="change-default"
+              style="display: none;"
+            >
+              
+               Set 
+              
+            </button>
+            
+          </td>
           
           <td
             class="data-entry"

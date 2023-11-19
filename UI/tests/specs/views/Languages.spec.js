@@ -77,8 +77,8 @@ describe("Languages", () => {
             return rows.findAll('button').map(row => row.element.name)
         });
         expect(buttons).toEqual([
-        [ 'modify', 'save', 'cancel' ],
-        [ 'modify', 'save', 'cancel' ]
+            [ 'change-default', 'modify', 'save', 'cancel' ],
+            [ 'change-default', 'modify', 'save', 'cancel' ]
         ]);
   });
 

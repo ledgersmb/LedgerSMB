@@ -8,8 +8,8 @@ export const languageHandlers = [
     return HttpResponse.json(
       {
         items: [
-          { code: "en", description: "English" },
-          { code: "fr", description: "Français" }
+            { code: "en", default: false, description: "English" },
+            { code: "fr", default: false, description: "Français" }
         ],
         _links: [{
           title : "HTML",
@@ -60,7 +60,7 @@ export const languageHandlers = [
   http.put('/erp/api/v0/languages/en', () => {
 
     return HttpResponse.json(
-      { code: "en", description: "English (american)" },
+        { code: "en", default: false, description: "English (american)" },
       {
         status: 200,
         headers: {

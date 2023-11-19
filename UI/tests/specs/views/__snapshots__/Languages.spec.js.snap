@@ -17,6 +17,9 @@ exports[`Languages should show dialog 1`] = `
     >
       <thead>
         <tr>
+          <th>
+            Default
+          </th>
           
           <th>
             Code
@@ -36,6 +39,12 @@ exports[`Languages should show dialog 1`] = `
         <tr
           class="data-row"
         >
+          <td
+            style="vertical-align: middle; text-align: center;"
+          >
+            
+            
+          </td>
           
           <td
             class="data-entry"
@@ -66,6 +75,12 @@ exports[`Languages should show dialog 1`] = `
         <tr
           class="data-row"
         >
+          <td
+            style="vertical-align: middle; text-align: center;"
+          >
+            
+            
+          </td>
           
           <td
             class="data-entry"
@@ -136,6 +151,9 @@ exports[`Languages should show dialog with editable data 1`] = `
     >
       <thead>
         <tr>
+          <th>
+            Default
+          </th>
           
           <th>
             Code
@@ -155,6 +173,25 @@ exports[`Languages should show dialog with editable data 1`] = `
         <tr
           class="data-row"
         >
+          <td
+            style="vertical-align: middle; text-align: center;"
+          >
+            
+            <input
+              name="default"
+              type="radio"
+              value="en"
+            />
+            <button
+              name="change-default"
+              style="display: none;"
+            >
+              
+               Set 
+              
+            </button>
+            
+          </td>
           
           <td
             class="data-entry"
@@ -210,6 +247,25 @@ exports[`Languages should show dialog with editable data 1`] = `
         <tr
           class="data-row"
         >
+          <td
+            style="vertical-align: middle; text-align: center;"
+          >
+            
+            <input
+              name="default"
+              type="radio"
+              value="fr"
+            />
+            <button
+              name="change-default"
+              style="display: none;"
+            >
+              
+               Set 
+              
+            </button>
+            
+          </td>
           
           <td
             class="data-entry"

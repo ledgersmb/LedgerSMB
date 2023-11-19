@@ -22,6 +22,7 @@ use strict;
 use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_NO_CONTENT HTTP_CREATED HTTP_CONFLICT HTTP_FORBIDDEN );
+use JSON::MaybeXS;
 
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Report::Listings::Country;
@@ -92,7 +93,7 @@ sub _get_country {
     return (
         {
             code => $row->{short_name},
-            default => $row->{default} ? \1 : \0,
+            default => $row->{default} ? JSON::MaybeXS->true : JSON::MaybeXS->false,
             name => $row->{name},
         },
         {
@@ -119,7 +120,7 @@ sub _get_countries {
                 ETag => $row->{etag},
             },
             code => $row->{short_name},
-            default => $row->{default} ? \1 : \0,
+            default => $row->{default} ? JSON::MaybeXS->true : JSON::MaybeXS->false,
             name => $row->{name},
         };
     }
@@ -182,7 +183,7 @@ sub _update_country {
     return (
         {
             name => $row->{name},
-            default => $row->{default} ? \1 : \0,
+            default => $row->{default} ? JSON::MaybeXS->true : JSON::MaybeXS->false,
             code => $row->{short_name}
         },
         {
@@ -498,6 +499,8 @@ components:
           type: object
         code:
           $ref: '#/components/schemas/country-code'
+        default:
+          type: boolean
         name:
           type: string
   examples:

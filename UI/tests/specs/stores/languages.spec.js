@@ -15,10 +15,10 @@ beforeEach(() => {
 describe("Language Store", () => {
     it("initialize", async () => {
         await languages.initialize();
-        expect(languages.fields).toStrictEqual(["code", "description"]);
+        expect(languages.fields).toStrictEqual(["_meta", "code", "default", "description"]);
         expect(languages.items).toStrictEqual([
-            { code: "en", description: "English" },
-            { code: "fr", description: "Français" }
+            { code: "en", default: false, description: "English" },
+            { code: "fr", default: false, description: "Français" }
         ]);
         expect(languages._links).toStrictEqual([{
             title : "HTML",
@@ -42,8 +42,8 @@ describe("Language Store", () => {
         await languages.get("en");
         await languages.save("en", { code: "en", description: "English (american)" });
         expect(languages.items).toStrictEqual([
-            { code: "en", description: "English (american)" },
-            { code: "fr", description: "Français" }
+            { code: "en", default: false, description: "English (american)" },
+            { code: "fr", default: false, description: "Français" }
         ]);
     });
 

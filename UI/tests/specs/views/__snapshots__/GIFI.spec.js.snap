@@ -18,6 +18,7 @@ exports[`GIFI - register as a component should show dialog 1`] = `
     >
       <thead>
         <tr>
+          <!--v-if-->
           
           <th>
             Code
@@ -37,6 +38,7 @@ exports[`GIFI - register as a component should show dialog 1`] = `
         <tr
           class="data-row"
         >
+          <!--v-if-->
           
           <td
             class="data-entry"
@@ -67,6 +69,7 @@ exports[`GIFI - register as a component should show dialog 1`] = `
         <tr
           class="data-row"
         >
+          <!--v-if-->
           
           <td
             class="data-entry"
@@ -219,6 +222,7 @@ exports[`GIFI - register as a component should show dialog with editable data 1`
     >
       <thead>
         <tr>
+          <!--v-if-->
           
           <th>
             Code
@@ -238,6 +242,7 @@ exports[`GIFI - register as a component should show dialog with editable data 1`
         <tr
           class="data-row"
         >
+          <!--v-if-->
           
           <td
             class="data-entry"
@@ -293,6 +298,7 @@ exports[`GIFI - register as a component should show dialog with editable data 1`
         <tr
           class="data-row"
         >
+          <!--v-if-->
           
           <td
             class="data-entry"

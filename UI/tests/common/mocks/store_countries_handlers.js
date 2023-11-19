@@ -8,8 +8,8 @@ export const countriesHandlers = [
     return HttpResponse.json(
       {
         items: [
-          { code: "ca", name: "Canada" },
-          { code: "us", name: "United States" }
+            { code: "ca", default: false, name: "Canada" },
+            { code: "us", default: false, name: "United States" }
         ],
         _links: [{
           title : "HTML",
@@ -61,13 +61,13 @@ export const countriesHandlers = [
   http.put('/erp/api/v0/countries/us', () => {
 
     return HttpResponse.json(
-      { code: "us", name: "America" },
-      {
-        status: 200,
-        headers: {
-          'ETag': ['1234567891']
+        { code: "us", default: false, name: "America" },
+        {
+            status: 200,
+            headers: {
+                'ETag': ['1234567891']
+            }
         }
-      }
     )
   })
 ]
