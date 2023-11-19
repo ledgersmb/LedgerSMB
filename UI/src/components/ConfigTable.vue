@@ -76,8 +76,8 @@ function u(relURL) {
                     <ConfigTableRow
                         v-for="item in items"
                         :defaultSelectable="props.defaultSelectable"
-                        :isDefault="item.default"
                         :id="item[props.storeId]"
+                        :isDefault="item.default"
                         :key="item[props.storeId]"
                         :columns="props.columns"
                         :deletable="props.deletable"
