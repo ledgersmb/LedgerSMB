@@ -75,10 +75,10 @@ function u(relURL) {
                 <tbody class="dynatableData" >
                     <ConfigTableRow
                         v-for="item in items"
-                        :defaultSelectable="props.defaultSelectable"
                         :id="item[props.storeId]"
-                        :isDefault="item.default"
                         :key="item[props.storeId]"
+                        :defaultSelectable="props.defaultSelectable"
+                        :isDefault="item.default"
                         :columns="props.columns"
                         :deletable="props.deletable"
                         :editingId="editingId"
