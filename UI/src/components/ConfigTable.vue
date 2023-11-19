@@ -91,7 +91,7 @@ function u(relURL) {
                 <tfoot v-if="hasCreate">
                     <ConfigTableRow
                         id=""
-                        :defaultSelectable="false"
+                        :defaultSelectable="props.defaultSelectable"
                         :columns="props.columns"
                         :editingId="editingId"
                         :store="props.store"
