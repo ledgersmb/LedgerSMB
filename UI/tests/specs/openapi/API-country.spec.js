@@ -7,7 +7,6 @@
  */
 
 // Import test packages
-import axios from "axios";
 import jestOpenAPI from "jest-openapi";
 import { StatusCodes } from "http-status-codes";
 import { create_database, drop_database } from "./database";
@@ -37,7 +36,6 @@ let headers = {};
 
 // For all tests
 beforeAll(() => {
-    axios.defaults.adapter = 'http';
     create_database(username, password, company);
 
     // Establish API mocking before all tests.
@@ -50,16 +48,30 @@ afterAll(() => {
     drop_database(company);
 });
 
+const emulateAxiosResponse = async(res) => {
+    return {
+        data: await res.json(),
+        status: res.status,
+        statusText: res.statusText,
+        headers: res.headers,
+        request: {
+            path: res.url,
+            method: 'GET',
+        },
+    };
+}
+
 // Log in before each test
 beforeEach(async () => {
-    let r = await axios.post(
+    let r = await fetch(
         serverUrl + "/login.pl?action=authenticate&company=" + encodeURI(company),
         {
-            company: company,
-            password: password,
-            login: username
-        },
-        {
+            method: "POST",
+            body: JSON.stringify({
+                company: company,
+                password: password,
+                login: username
+            }),
             headers: {
                 "X-Requested-With": "XMLHttpRequest",
                 "Content-Type": "application/json"
@@ -67,16 +79,18 @@ beforeEach(async () => {
         }
     );
     if (r.status === StatusCodes.OK) {
+        const data = await r.json();
         headers = {
-            cookie: r.headers["set-cookie"],
-            referer: serverUrl + "/" + r.data.target,
+            cookie: r.headers.get("set-cookie"),
+            referer: serverUrl + "/" + data.target,
             authorization: "Basic " + btoa(username + ":" + password)
         };
     }
 });
+
 // Log out after each test
 afterEach(async () => {
-    let r = await axios.get(serverUrl + "/login.pl?action=logout&target=_top");
+    let r = await fetch(serverUrl + "/login.pl?action=logout&target=_top");
     if (r.status === StatusCodes.OK) {
         headers = {};
     }
@@ -86,31 +100,29 @@ afterEach(async () => {
 describe("Retrieving all countries", () => {
     it("GET /countries should satisfy OpenAPI spec", async () => {
         // Get an HTTP response from your serverUrl
-        let res = await axios.get(serverUrl + "/" + api + "/countries", {
+        let res = await fetch(serverUrl + "/" + api + "/countries", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
 
         // Assert that the HTTP response satisfies the OpenAPI spec
+        res = await emulateAxiosResponse(res);
         expect(res).toSatisfyApiSpec();
     });
 });
 
 describe("Retrieving all countries with old syntax should fail", () => {
     it("GET /countries/ should fail", async () => {
-        await expect(
-            axios.get(serverUrl + "/" + api + "/countries/", {
+        let res = await fetch(serverUrl + "/" + api + "/countries/", {
                 headers: headers
-            })
-        ).rejects.toThrow(
-            "Request failed with status code " + StatusCodes.BAD_REQUEST
-        );
+        });
+        expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     });
 });
 
 describe("Validate against the example country", () => {
     it("GET /countries/NL", async () => {
-        let res = await axios.get(serverUrl + "/" + api + "/countries/NL", {
+        let res = await fetch(serverUrl + "/" + api + "/countries/NL", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
@@ -119,61 +131,62 @@ describe("Validate against the example country", () => {
         const countryExample = API_yaml.components.examples.validCountry.value;
 
         // Assert that the response matches the example in the spec
+        res = await emulateAxiosResponse(res);
         expect(res.data).toEqual(countryExample);
     });
 });
 
 describe("Retrieve non-existant COUNTRY ZZ should fail", () => {
     it("GET /countries/ZZ should not retrieve invalid COUNTRY", async () => {
-        await expect(
-            axios.get(serverUrl + "/" + api + "/countries/ZZ", {
-                headers: headers
-            })
-        ).rejects.toThrow(
-            "Request failed with status code " + StatusCodes.NOT_FOUND
-        );
+        let res = await fetch(serverUrl + "/" + api + "/countries/ZZ", {
+            headers: headers
+        });
+        expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     });
 });
 
 describe("Adding the new Test COUNTRY ZZ", () => {
     it("POST /countries/ZZ should allow adding a new COUNTRY", async () => {
-        let res = await axios.post(
-            serverUrl + "/" + api + "/countries",
-            {
+        let res = await fetch(serverUrl + "/" + api + "/countries", {
+            method: "POST",
+            body: JSON.stringify({
                 code: "ZZ",
                 name: "Atlantika"
-            },
-            {
-                headers: headers
-            }
-        );
+            }),
+            headers: { ...headers, "Content-Type": "application/json" }
+        });
         expect(res.status).toEqual(StatusCodes.CREATED);
 
         // Assert that the HTTP response satisfies the OpenAPI spec
+        res = await emulateAxiosResponse(res);
         expect(res.data).toSatisfySchemaInApiSpec("Country");
     });
 });
 
 describe("Modifying the new COUNTRY ZZ", () => {
     it("PUT /countries/ZZ should allow modifying Atlantica", async () => {
-        let res = await axios.get(serverUrl + "/" + api + "/countries/ZZ", {
+        let res = await fetch(serverUrl + "/" + api + "/countries/ZZ", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
-        expect(res.headers.etag).toBeDefined();
-        res = await axios.put(
-            serverUrl + "/" + api + "/countries/ZZ",
-            {
+        const etag = res.headers.get("etag");
+        expect(etag).toBeDefined();
+        res = await fetch(serverUrl + "/" + api + "/countries/ZZ", {
+            method: "PUT",
+            body: JSON.stringify({
                 code: "ZZ",
                 name: "Atlantica"
-            },
-            {
-                headers: { ...headers, "If-Match": res.headers.etag }
+            }),
+            headers: {
+                ...headers,
+                "Content-Type": "application/json",
+                "If-Match": etag
             }
-        );
+        });
         expect(res.status).toEqual(StatusCodes.OK);
 
         // Assert that the HTTP response satisfies the OpenAPI spec
+        res = await emulateAxiosResponse(res);
         expect(res).toSatisfyApiSpec();
 
         // Assert that the HTTP response satisfies the OpenAPI spec
@@ -182,27 +195,31 @@ describe("Modifying the new COUNTRY ZZ", () => {
 });
 
 /*
-Not implemented yet
+ * Not implemented yet
 describe("Updating the new COUNTRY ZZ", () => {
     it("PATCH /countries/ZZ should allow updating Atlantica", async () => {
-        let res = await axios.get(serverUrl + "/" + api + "/countries/ZZ", {
+        let res = await fetch(serverUrl + "/" + api + "/countries/ZZ", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
-        expect(res.headers.etag).toBeDefined();
-        res = await axios.patch(
-            serverUrl + "/" + api + "/countries/ZZ",
-            {
+        const etag = res.headers.get("etag");
+        expect(etag).toBeDefined();
+        res = await fetch(serverUrl + "/" + api + "/countries/ZZ", {
+            method: "PATCH",
+            body: JSON.stringify({
                 code: "ZZ",
                 name: "Atlantika"
-            },
-            {
-                headers: { ...headers, "If-Match": res.headers.etag }
+            }),
+            headers: {
+                ...headers,
+                "Content-Type": "application/json",
+                "If-Match": etag
             }
-        );
+        });
         expect(res.status).toEqual(StatusCodes.OK);
 
         // Assert that the HTTP response satisfies the OpenAPI spec
+        res = await emulateAxiosResponse(res);
         expect(res).toSatisfyApiSpec();
 
         // Assert that the HTTP response satisfies the OpenAPI spec
@@ -213,18 +230,17 @@ describe("Updating the new COUNTRY ZZ", () => {
 
 describe("Not Removing COUNTRY ZZ", () => {
     it("DELETE /countries/ZZ should not allow deleting Test COUNTRY", async () => {
-        let res = await axios.get(serverUrl + "/" + api + "/countries/ZZ", {
+        let res = await fetch(serverUrl + "/" + api + "/countries/ZZ", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
-        expect(res.headers.etag).toBeDefined();
+        const etag = res.headers.get("etag");
+        expect(etag).toBeDefined();
 
-        await expect(
-            axios.delete(serverUrl + "/" + api + "/countries/ZZ", {
-                headers: { ...headers, "If-Match": res.headers.etag }
-            })
-        ).rejects.toThrow(
-            "Request failed with status code " + StatusCodes.FORBIDDEN
-        );
+        res = await fetch(serverUrl + "/" + api + "/countries/ZZ", {
+            method: "DELETE",
+            headers: { ...headers, "If-Match": etag }
+        });
+        expect(res.status).toEqual(StatusCodes.FORBIDDEN);
     });
 });

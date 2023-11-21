@@ -18,10 +18,7 @@ describe("Languages", () => {
         wrapper = factory(Languages);
         sessionUser = useSessionUserStore();
     });
-    afterEach(() => {
-        // wrapper.unmount();
-    });
-    
+
     it("should show dialog", async () => {
 
         expect(wrapper.exists()).toBeTruthy();
@@ -47,7 +44,7 @@ describe("Languages", () => {
             ["fr", "Français"]
         ]);
 
-        // TODO: Test links 
+        // TODO: Test links
         // expect that the links displayed match
         // what was returned by the API
     });
