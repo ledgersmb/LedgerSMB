@@ -213,7 +213,7 @@ get api '/languages/{id}' => sub {
 put api '/languages/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
+    my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*(?>W\/)?"(.*)"\s*$/);
     my ($response, $meta) = _update_language(
         $c, {
             code => $params->{id},
