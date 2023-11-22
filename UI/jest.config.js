@@ -62,7 +62,7 @@ module.exports = {
 
     // Force Jest to exit after all tests have completed running.
     // This is useful when resources set up by test code cannot be adequately cleaned up.
-    forceExit: false,
+    forceExit: true,
 
     // Force coverage collection from ignored files using an array of glob patterns
     forceCoverageMatch: [],
