@@ -54,10 +54,10 @@ const emulateAxiosResponse = async(res) => {
         headers: res.headers,
         request: {
             path: res.url,
-            method: 'GET',
-        },
+            method: 'GET'
+        }
     };
-}
+};
 
 // Log in before each test
 beforeEach(async () => {
@@ -85,6 +85,7 @@ beforeEach(async () => {
         };
     }
 });
+
 // Log out after each test
 afterEach(async () => {
     let r = await fetch(serverUrl + "/login.pl?action=logout&target=_top");

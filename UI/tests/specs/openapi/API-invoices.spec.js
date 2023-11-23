@@ -56,10 +56,10 @@ const emulateAxiosResponse = async(res) => {
         headers: res.headers,
         request: {
             path: res.url,
-            method: 'GET',
-        },
+            method: 'GET'
+        }
     };
-}
+};
 
 // Log in before each test
 beforeEach(async () => {
