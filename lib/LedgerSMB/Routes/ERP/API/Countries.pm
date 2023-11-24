@@ -214,7 +214,7 @@ get api '/countries/{id}' => sub {
 put api '/countries/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
+    my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*(?>W\/)?"(.*)"\s*$/);
     my ($response, $meta) = _update_country(
         $c, {
             code => $params->{id},

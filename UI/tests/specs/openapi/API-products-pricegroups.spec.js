@@ -7,7 +7,6 @@
  */
 
 // Import test packages
-import axios from "axios";
 import jestOpenAPI from "jest-openapi";
 import { StatusCodes } from "http-status-codes";
 import { create_database, drop_database } from "./database";
@@ -35,7 +34,6 @@ let headers = {};
 
 // For all tests
 beforeAll(() => {
-    axios.defaults.adapter = 'http';
     create_database(username, password, company);
 
     // Establish API mocking before all tests.
@@ -48,16 +46,30 @@ afterAll(() => {
     drop_database(company);
 });
 
+const emulateAxiosResponse = async(res) => {
+    return {
+        data: await res.json(),
+        status: res.status,
+        statusText: res.statusText,
+        headers: res.headers,
+        request: {
+            path: res.url,
+            method: 'GET'
+        }
+    };
+};
+
 // Log in before each test
 beforeEach(async () => {
-    let r = await axios.post(
+    let r = await fetch(
         serverUrl + "/login.pl?action=authenticate&company=" + encodeURI(company),
         {
-            company: company,
-            password: password,
-            login: username
-        },
-        {
+            method: "POST",
+            body: JSON.stringify({
+                company: company,
+                password: password,
+                login: username
+            }),
             headers: {
                 "X-Requested-With": "XMLHttpRequest",
                 "Content-Type": "application/json"
@@ -65,16 +77,18 @@ beforeEach(async () => {
         }
     );
     if (r.status === StatusCodes.OK) {
+        const data = await r.json();
         headers = {
-            cookie: r.headers["set-cookie"],
-            referer: serverUrl + "/" + r.data.target,
+            cookie: r.headers.get("set-cookie"),
+            referer: serverUrl + "/" + data.target,
             authorization: "Basic " + btoa(username + ":" + password)
         };
     }
 });
+
 // Log out after each test
 afterEach(async () => {
-    let r = await axios.get(serverUrl + "/login.pl?action=logout&target=_top");
+    let r = await fetch(serverUrl + "/login.pl?action=logout&target=_top");
     if (r.status === StatusCodes.OK) {
         headers = {};
     }
@@ -84,7 +98,7 @@ afterEach(async () => {
 describe("Retrieving all products/pricegroups", () => {
     it("GET /products/pricegroups should satisfy OpenAPI spec", async () => {
         // Get an HTTP response from your serverUrl
-        let res = await axios.get(
+        let res = await fetch(
             serverUrl + "/" + api + "/products/pricegroups",
             {
                 headers: headers
@@ -93,51 +107,57 @@ describe("Retrieving all products/pricegroups", () => {
         expect(res.status).toEqual(StatusCodes.OK);
 
         // Assert that the HTTP response satisfies the OpenAPI spec
+        res = await emulateAxiosResponse(res);
         expect(res).toSatisfyApiSpec();
     });
 });
 
 describe("Retrieving all products/pricegroups with old syntax should fail", () => {
     it("GET /products/pricegroups/ should fail", async () => {
-        await expect(
-            axios.get(serverUrl + "/" + api + "/products/pricegroups/", {
-                headers: headers
-            })
-        ).rejects.toThrow("Request failed with status code " + StatusCodes.BAD_REQUEST);
+        let res = await fetch(serverUrl + "/" + api + "/products/pricegroups/", {
+            headers: headers
+        });
+        expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
     });
 });
 
 describe("Retrieve non-existant Pricegroup1", () => {
     it("GET /products/pricegroups/nv should not retrieve Pricegroup1", async () => {
-        await expect(
-            axios.get(serverUrl + "/" + api + "/products/pricegroups/1", {
-                headers: headers
-            })
-        ).rejects.toThrow("Request failed with status code " + StatusCodes.NOT_FOUND);
+        let res = await fetch(serverUrl + "/" + api + "/products/pricegroups/1", {
+            headers: headers
+        });
+        expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     });
 });
 
 describe("Adding the new Price Group", () => {
     it("POST /products/pricegroups/Pricegroup1 should allow adding Pricegroup1", async () => {
-        let res = await axios.post(
+        let res = await fetch(
             serverUrl + "/" + api + "/products/pricegroups",
             {
-                description: "Pricegroup1"
-            },
-            {
-                headers: headers
+                method: "POST",
+                body: JSON.stringify({
+                    name: "Pricegroup1",
+                    description: "Pricegroup1"
+                }),
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Content-Type": "application/json",
+                    ...headers
+                }
             }
         );
         expect(res.status).toEqual(StatusCodes.CREATED);
 
         // Assert that the HTTP response satisfies the OpenAPI spec
+        res = await emulateAxiosResponse(res);
         expect(res.data).toSatisfySchemaInApiSpec("Pricegroup");
     });
 });
 
 describe("Validate against the example Pricegroup", () => {
     it("GET /products/pricegroups/1", async () => {
-        let res = await axios.get(serverUrl + "/" + api + "/products/pricegroups/1", {
+        let res = await fetch(serverUrl + "/" + api + "/products/pricegroups/1", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
@@ -146,33 +166,41 @@ describe("Validate against the example Pricegroup", () => {
         const pricegroupExample = API_yaml.components.examples.validPricegroup.value;
 
         // Assert that the response matches the example in the spec
+        res = await emulateAxiosResponse(res);
         expect(res.data).toEqual(pricegroupExample);
     });
 });
 
 describe("Modifying the new Price Group", () => {
     it("PUT /products/pricegroups/Pricegroup1 should allow updating Pricegroup1", async () => {
-        let res = await axios.get(
+        let res = await fetch(
             serverUrl + "/" + api + "/products/pricegroups/1",
             {
                 headers: headers
             }
         );
         expect(res.status).toEqual(StatusCodes.OK);
-        expect(res.headers.etag).toBeDefined();
-        res = await axios.put(
+        const etag = res.headers.get("etag");
+        expect(etag).toBeDefined();
+        res = await fetch(
             serverUrl + "/" + api + "/products/pricegroups/1",
             {
-                id: 1,
-                description: "PriceGroup1"
-            },
-            {
-                headers: { ...headers, "If-Match": res.headers.etag }
+                method: "PUT",
+                body: JSON.stringify({
+                    id: 1,
+                    description: "PriceGroup1"
+                }),
+                headers: {
+                    ...headers,
+                    "content-type": "application/json",
+                    "If-Match": etag
+                }
             }
         );
         expect(res.status).toEqual(StatusCodes.OK);
 
         // Assert that the HTTP response satisfies the OpenAPI spec
+        res = await emulateAxiosResponse(res);
         expect(res).toSatisfyApiSpec();
 
         // Assert that the HTTP response satisfies the OpenAPI spec
@@ -184,23 +212,31 @@ describe("Modifying the new Price Group", () => {
  * Not implemented yet
 describe("Updating the new Pricegroup1", () => {
     it("PATCH /products/pricegroups/nv should allow updating Pricegroup1", async () => {
-        let res = await axios.get(serverUrl + "/" + api + "/products/pricegroups/PriceGroup1", {
+        let res = await fetch(serverUrl + "/" + api + "/products/pricegroups/PriceGroup1", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
-        expect(res.headers.etag).toBeDefined();
-        res = await axios.patch(
+        const etag = res.headers.get("etag");
+        expect(etag).toBeDefined();
+        res = await fetch(
             serverUrl + "/" + api + "/products/pricegroups/nv",
             {
-                description: "Pricegroup1"
-            },
-            {
-                headers: { ...headers, "If-Match": res.headers.etag }
+                method: "PATCH",
+                body: JSON.stringify({
+                    description: "Pricegroup1"
+                }),
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Content-Type": "application/json",
+                    ...headers,
+                    "If-Match": etag
+                }
             }
         );
         expect(res.status).toEqual(StatusCodes.OK);
 
         // Assert that the HTTP response satisfies the OpenAPI spec
+        res = await emulateAxiosResponse(res);
         expect(res).toSatisfyApiSpec();
 
         // Assert that the HTTP response satisfies the OpenAPI spec
@@ -211,21 +247,20 @@ describe("Updating the new Pricegroup1", () => {
 
 describe("Not removing the new Price Group", () => {
     it("DELETE /products/pricegroups/PriceGroup1 should allow deleting Pricegroup1", async () => {
-        let res = await axios.get(
+        let res = await fetch(
             serverUrl + "/" + api + "/products/pricegroups/1",
             {
                 headers: headers
             }
         );
         expect(res.status).toEqual(StatusCodes.OK);
-        expect(res.headers.etag).toBeDefined();
+        const etag = res.headers.get("etag");
+        expect(etag).toBeDefined();
 
-        await expect(
-            axios.delete(serverUrl + "/" + api + "/products/pricegroups/1", {
-                headers: { ...headers, "If-Match": res.headers.etag }
-            })
-        ).rejects.toThrow(
-            "Request failed with status code " + StatusCodes.FORBIDDEN
-        );
+        res = await fetch(serverUrl + "/" + api + "/products/pricegroups/1", {
+            method: "DELETE",
+            headers: { ...headers, "If-Match": etag }
+        });
+        expect(res.status).toEqual(StatusCodes.FORBIDDEN);
     });
 });
