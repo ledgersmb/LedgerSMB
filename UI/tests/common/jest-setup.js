@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 
 import { jest, beforeAll, afterAll, beforeEach, afterEach } from "@jest/globals";
+import 'core-js';
 import { setGlobalOrigin } from 'undici';
 
 import "./mocks/lsmb_elements";

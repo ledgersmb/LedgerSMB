@@ -1,10 +1,12 @@
 /* global globalThis */
 
 const { TextEncoder, TextDecoder } = require('node:util')
+const { performance } = require('node:perf_hooks')
 
 Object.defineProperties(globalThis, {
     TextDecoder: { value: TextDecoder },
     TextEncoder: { value: TextEncoder },
+    performance: { value: performance }
 })
 
 const { Blob } = require('node:buffer')

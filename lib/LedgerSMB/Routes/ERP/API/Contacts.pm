@@ -215,7 +215,7 @@ get api '/contacts/sic/{id}' => sub {
 put api '/contacts/sic/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
+    my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*(?>W\/)?"(.*)"\s*$/);
     my ($response, $meta) = _update_sic(
         $c, {
             code => $params->{id},
@@ -434,7 +434,7 @@ get api '/contacts/business-types/{id}' => sub {
 put api '/contacts/business-types/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*"(.*)"\s*$/);
+    my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*(?>W\/)?"(.*)"\s*$/);
     my ($response, $meta) = _update_businesstype(
         $c, {
             id => $params->{id},
