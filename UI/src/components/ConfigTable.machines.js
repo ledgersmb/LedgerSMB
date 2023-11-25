@@ -28,6 +28,10 @@ function markIdle(ctx) {
     return { ...ctx, editingId: "" };
 }
 
+function markBlocked(ctx) {
+    return markRowEditing(ctx, { rowId: -1 });
+}
+
 async function initializeTable(ctx) {
     return ctx.store.initialize();
 }
@@ -57,6 +61,10 @@ async function saveItem(ctx) {
     return ctx.store.save(ctx.rowId, ctx.data);
 }
 
+async function saveAsDefault(ctx) {
+    return ctx.store.setDefault(ctx.rowId);
+}
+
 const warehousesMachine = createMachine(
     {
         loading: invoke(
@@ -64,7 +72,10 @@ const warehousesMachine = createMachine(
             transition("done", "idle"),
             transition("error", "error")
         ),
-        idle: state(transition("modify", "modifying", reduce(markRowEditing))),
+        idle: state(
+            transition("modify", "modifying", reduce(markRowEditing)),
+            transition("saveDefault", "modifying", reduce(markBlocked))
+        ),
         modifying: state(transition("complete", "idle", reduce(markIdle))),
         error: state()
     },
@@ -87,6 +98,7 @@ const warehouseMachine = createMachine(
                 guard((ctx) => ctx.adding)
             ),
             transition("modify", "acquiring"),
+            transition("setDefault", "savingAsDefault"),
             transition("disable", "unmodifiable")
         ),
         acquiring: invoke(
@@ -103,6 +115,11 @@ const warehouseMachine = createMachine(
         saving: invoke(
             progressNotify(saveItem, "saving"),
             transition("done", "initializing", action(notify("saved"))),
+            transition("error", "error", reduce(handleError))
+        ),
+        savingAsDefault: invoke(
+            saveAsDefault,
+            transition("done", "idle", action(notify("saved"))),
             transition("error", "error", reduce(handleError))
         ),
         deleting: invoke(

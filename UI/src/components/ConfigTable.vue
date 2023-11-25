@@ -85,6 +85,7 @@ function u(relURL) {
                         :store="props.store"
                         :type="hasEdit ? 'existing' : 'uneditable'"
                         @modifying="send({ type: 'modify', rowId: item[props.storeId] })"
+                        @savingAsDefault="send('saveDefault')"
                         @idle="send('complete')"
                     />
                 </tbody>

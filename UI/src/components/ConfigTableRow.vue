@@ -17,7 +17,7 @@ const props = defineProps([
     "store",
     "type"
 ]);
-const emit = defineEmits(["modifying", "idle"]);
+const emit = defineEmits(["modifying", "savingAsDefault", "idle"]);
 const notify = inject("notify");
 
 const { service, send, state } = createRowMachine(props.store, {
@@ -51,6 +51,12 @@ const { service, send, state } = createRowMachine(props.store, {
             "saving": (ctx, { dismissReceiver }) => {
                 notify({ title: t("Saving"), type: "info", dismissReceiver });
             },
+            "savingAsDefault": (ctx, { dismissReceiver }) => {
+                notify({
+                    title: t("Saving default"),
+                    type: "info", dismissReceiver
+                });
+            },
             "saved": () => { notify({ title: t("Saved") }); },
         }
     },
@@ -60,6 +66,7 @@ const { service, send, state } = createRowMachine(props.store, {
             send("restart");
         },
         modifying: () => emit("modifying"),
+        savingAsDefault: () => emit("savingAsDefault"),
         idle: () => emit("idle")
     }
 });
@@ -83,26 +90,6 @@ watch(() => props.editingId,
 );
 
 let mouseOverDefault = ref(false);
-
-async function setDefault() {
-    let dismiss = () => {};
-    notify({
-        title: "Updating default language...",
-        type: "info",
-        dismissReceiver: (cb) => { dismiss = cb }
-    });
-    try {
-        await props.store.setDefault(props.id);
-    }
-    catch {
-        notify({ title: "Updated failed", type: "error" });
-        return;
-    }
-    finally {
-        dismiss();
-    }
-    notify({ title: "Updated default language" });
-}
 
 </script>
 
@@ -132,7 +119,7 @@ async function setDefault() {
                 <lsmb-button
                     v-show="mouseOverDefault && modifiable"
                     name="change-default"
-                    @click="setDefault()">
+                    @click="(e) => send({ type: 'setDefault', rowId: props.id })">
                     Set
                 </lsmb-button>
             </template>
