@@ -80,7 +80,7 @@ describe("Languages", () => {
             [ 'change-default', 'modify', 'save', 'cancel' ],
             [ 'change-default', 'modify', 'save', 'cancel' ]
         ]);
-  });
+    });
 
     it("should edit a language and save data", async () => {
 
