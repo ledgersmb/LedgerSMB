@@ -906,6 +906,7 @@ sub _post_invoices {
 
     my $ctx = Workflow::Context->new;
     $ctx->param( trans_id => $inv_id );
+    $ctx->param( transdate => $inv->{transdate} );
     local $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
     my $wf  = $env->{wire}->get('workflows')
         ->create_workflow( 'AR/AP', $ctx );
@@ -992,6 +993,7 @@ sub _post_invoices {
         $sth->execute($tax->{'base-amount'}, $tax->{tax}->{rate}, $entry_id)
             or die $sth->errstr;
     }
+    $wf->execute_action( 'post' ); # move to SAVED state
 
     return [
         HTTP_CREATED,
@@ -1606,9 +1608,17 @@ components:
         type: customer
         workflow:
           actions:
-            - post
+            - approve
+            - copy_to_new
+            - del
+            - edit_and_save
+            - new_screen
+            - sales_order
+            - save_info
+            - schedule
+            - ship_to
             - update
-          state: INITIAL
+          state: SAVED
   responses:
     400:
       description: Bad request
