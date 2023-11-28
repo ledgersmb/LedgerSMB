@@ -43,7 +43,8 @@ get api '/menu-nodes' => sub {
             url    => $row->{url},
             menu   => $row->{menu} ? \1 : \0,
             label  => $locale->maketext($row->{label}),
-            parent => $row->{parent}
+            parent => $row->{parent},
+            standalone => $row->{standalone}
         };
     }
     die $sth->errstr if $sth->err;
