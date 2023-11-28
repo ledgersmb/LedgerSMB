@@ -547,7 +547,7 @@ sub _redirect {
     my $form = Form->new($argv);
     $form->{$_} = $self->{$_} for (
         qw( dbh login favicon stylesheet titlebar password vc header ),
-        grep { /^_/ } keys %$self
+        grep { /^_/ and $_ ne '__action' } keys %$self
         );
     $form->{__action} ||= $self->{__action}; # default to old action if not set
     $form->{script} = $script;
