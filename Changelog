@@ -24,6 +24,14 @@ Cleanup & architecture improvements
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.4
+* Show database and user name in setup.pl consistency result screen (#7714)
+* Fix AR/AP transaction Reverse button (#7719, #7717)
+* Fix invoices created from API to be in SAVED state (#7733)
+* Fix 'New Window' menu item throwing an error (#7735)
+* Fix Parts > Group > Add throwing 'Group missing!' (#7737)
+
+
 Changelog for 1.11.3
 * Fix typo to make 'Copy to New' button work on GL screen (#7675)
 * Minimum PGObject::Type::BigFloat version resolving Math::BigFloat issue (#7704)
