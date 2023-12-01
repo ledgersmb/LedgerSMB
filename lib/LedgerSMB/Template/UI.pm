@@ -72,6 +72,7 @@ sub new_UI {
         }
 
         $singleton = bless {
+            stylesheet => $args{stylesheet} // 'ledgersmb.css',
             standard_vars => {
             },
         }, __PACKAGE__;
@@ -164,6 +165,9 @@ sub render_string {
           %{$cvars // {}}
         )
     };
+    if (not defined $cleanvars->{stylesheet}) {
+        $cleanvars->{stylesheet} = $self->{stylesheet};
+    }
 
     my $output;
     if (! $engine->process(

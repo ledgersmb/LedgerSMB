@@ -198,6 +198,9 @@ sub ini2wire {
         args => {
             cache => scalar $cfg->val(
                 'paths', 'templates_cache', 'lsmb_templates/' ),
+            stylesheet => (
+                $cfg->val( 'main', 'suppress_tooltips', '' ) ? 'ledgersmb.css' : 'ledgersmb-test.css'
+            )
         }
     };
 
