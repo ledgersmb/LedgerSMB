@@ -309,7 +309,7 @@ sub defaults_screen {
             name           => 'papersize',
             text_attr      => 'text',
             value_attr     => 'value',
-            default_values => [$request->{'format'}],
+            default_values => [$request->{'papersize'}],
             options        => [
                 {text => 'Letter', value => 'letter'},
                 {text => 'A4', value => 'a4'},
