@@ -1,26 +1,55 @@
 
+#
+# The 'cookie' settings are used for LedgerSMB's HTTP cookie
 cookie:
+  #
   # To run multiple LedgerSMB versions in parallel on the same domain,
   # set the value of the cookie to 'LedgerSMB-<version>'; e.g. for version
   # 1.1, that would become 'LedgerSMB-1.1'
   name: LedgerSMB
+  #
   # Leaving the secret empty causes a secret to be dynamically generated
   # secret:
 
+#
+# The 'db' settings are used to connect to the database from the application server
 db:
   $class: LedgerSMB::Database::Factory
+  #
+  # To specify parameters for the connection, provide them through the
+  # 'connect_data' parameter.  See on https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-PARAMKEYWORDS
+  # which parameters are supported.
   connect_data:
-    sslmode: prefer
+    sslmode: disable
+  #
+  # Use 'schema' to specify an alternative schema for the LedgerSMB objects
+  # schema: public
+  #
+  # 'data_dir' specifies where the schema reference data is stored which is
+  # loaded immediately after the schema is created
   data_dir:
     $ref: paths/sql_data
+  #
+  # 'source_dir' specifies where the schema definitions (*.sql files) and
+  # changes are stored
   source_dir:
     $ref: paths/sql
 
+#
+# The 'default_locale' settings are used as the language to present web pages
+# such as setup.pl and login.pl
 default_locale:
+  #
+  # The 'LedgerSMB::LanguageResolver' class uses the 'Accept-Language' request
+  # header to select the customer the client wants to be served
   $class: LedgerSMB::LanguageResolver
+  #
+  # The directory which hold the *.po and *.json files with translations
   directory:
     $ref: paths/locale
 
+# The environment is completely cleared. Only the names specified below are
+# defined, using the listed values.
 environment_variables:
   class: LedgerSMB::EnvVarSetter
   lifecycle: eager
@@ -28,16 +57,33 @@ environment_variables:
   args:
     PATH: /bin:/usr/bin:/usr/local/bin:/usr/local/pgsql/bin
 
+#
+# To add more handlers to the request/response processing,
+# Plack::Middleware implementations can be added using 'extra_middleware'.
+# See 'ledgersmb.yaml.debug' for an example
 extra_middleware: []
 
+#
+# Logging configuration
 logging:
+  #
+  # Single global logging level setting
+  # For allowable values see https://metacpan.org/pod/Log::Log4perl#Log-Levels
   level: ERROR
+  #
+  # Fine-grained logging configuration
+  # For a minimal example see doc/conf/ledgersmb.log.conf.simple
   # file: ledgersmb.log.conf
 
+#
+# The default database name when none was specified
 login_settings:
   default_db: ledgersmb
 
+#
+# Configuration of the way outgoing mail is to be sent
 mail:
+  # To configure sending mail over SMTP directly, use:
   # transport:
   #   $class: LedgerSMB::Mailer::TransportSMTP
   #   host: example.com
@@ -48,13 +94,17 @@ mail:
   #     callback:
   #       user: the-user
   #       pass: SECURITY-FIRST
-  # when using the sendmail binary, use the following:
+  #
+  # When using the sendmail binary, use the following:
   transport:
     $class: Email::Sender::Transport::Sendmail
-    # optionally use a 'path' argument pointing to the directory
-    # with the 'sendmail' binary:
+    #
+    # To configure the exact location of the 'sendmail' binary
     # path: /usr/bin/ssmtp
 
+#
+# Several settings used throughout the application which have no
+# natural common top-level topic by which they can be combined
 miscellaneous:
   $class: Beam::Wire
   config:
@@ -62,22 +112,35 @@ miscellaneous:
     max_upload_size: 4194304
     proxy_ip: 127.0.0.1/8 ::1/128 ::ffff:127.0.0.1/108
 
+#
+# A list of plugins that transform templates to a specific output
+# format, such as PDF or HTML.
+#
+# Although LaTeX is the default input format to generate PDF output,
+# this configuration allows other PDF output creation, e.g. HTML -> PDF
 output_formatter:
   $class: LedgerSMB::Template::Formatter
   plugins:
+    # PDF output based on LaTeX input
     - $class: LedgerSMB::Template::Plugin::LaTeX
       format: PDF
+    # PostScript output based on LaTeX input
     - $class: LedgerSMB::Template::Plugin::LaTeX
       format: PS
+    # Excel (XLS) output
     - $class: LedgerSMB::Template::Plugin::XLSX
       format: XLS
+    # Excel (XLSX) output
     - $class: LedgerSMB::Template::Plugin::XLSX
       format: XLSX
+    # etc...
     - $class: LedgerSMB::Template::Plugin::ODS
     - $class: LedgerSMB::Template::Plugin::CSV
     - $class: LedgerSMB::Template::Plugin::TXT
     - $class: LedgerSMB::Template::Plugin::HTML
 
+#
+# Centralized list of paths referenced elsewhere in this configuration
 paths:
   $class: Beam::Wire
   config:
@@ -91,6 +154,9 @@ paths:
     - ./workflows/
     - ./custom_workflows/
 
+#
+# A list of printers available from the server,
+# with the commands to pipe the output into
 printers:
   $class: LedgerSMB::Printers
   printers:
@@ -98,8 +164,12 @@ printers:
     Epson: lpr -PEpson
   fallback: Laser
 
+#
+# A list of formats to be used when uploading reconciliation report data
 reconciliation_importer:
   $class: LedgerSMB::Reconciliation::Parser
+  #
+  # Creates actual input parsers mapping to the standard internal representation
   configurations:
   - $class: LedgerSMB::Reconciliation::Parser::OFX
     name: OFX Bank statement
@@ -134,28 +204,46 @@ reconciliation_importer:
         column: 1
         format: DD/MM/YYYY
 
+#
+# Settings used for 'setup.pl' configuration exclusively
 setup_settings:
+  #
+  # The name of the database to log into when no company database has been provided
   admin_db: template1
+  #
+  # The name of the database to use when validating administrator credentials
   auth_db: postgres
 
+#
+# Web UI generator settings
 ui:
   class: LedgerSMB::Template::UI
   method: new_UI
   lifecycle: eager
   args:
+    #
+    # Directory to store parsed templates
     cache:
       $ref: paths/UI_cache
+    #
+    # Directory from which to load template sources
     root:
       $ref: paths/UI
     #
     # The stylesheet to use when none selected by the user
     # stylesheet: ledgersmb.css
 
+#
+# Configuration for loading workflow definitions
 workflows:
   class: LedgerSMB::Workflow::Loader
   lifecycle: eager
   method: load
   args:
+    #
+    # List of directories to search definition files in order of preference;
+    # files in directories named earlier override those with the same name
+    # stored in directories named later in the list
     directories:
       $ref: paths/workflows
     lifecycle: eager
