@@ -33,6 +33,8 @@ log_level = ERROR
 # has been selected.
 #dojo_theme = claro
 
+# This is a setting to enable stable testing
+#suppress_tooltips = yes
 
 [environment]
 # If the server can't find applications, append to the path

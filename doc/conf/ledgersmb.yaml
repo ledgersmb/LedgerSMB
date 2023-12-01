@@ -141,6 +141,9 @@ ui:
       $ref: paths/UI_cache
     root:
       $ref: paths/UI
+    #
+    # The stylesheet to use when none selected by the user
+    # stylesheet: ledgersmb.css
 
 workflows:
   class: LedgerSMB::Workflow::Loader
