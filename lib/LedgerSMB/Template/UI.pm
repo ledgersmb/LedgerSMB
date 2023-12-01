@@ -73,6 +73,7 @@ sub new_UI {
 
         $singleton = bless {
             root => $root,
+            stylesheet => $args{stylesheet} // 'ledgersmb.css',
             standard_vars => {
             },
         }, __PACKAGE__;
@@ -172,7 +173,7 @@ sub render_string {
     }
     if (defined $cleanvars->{stylesheet}
         and not -e ($self->{root} . 'css/' . $cleanvars->{stylesheet})) {
-        $cleanvars->{stylesheet} = 'ledgersmb.css';
+        $cleanvars->{stylesheet} = $self->{stylesheet};
     }
 
     my $output;
