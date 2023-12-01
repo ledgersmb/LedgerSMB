@@ -37,7 +37,7 @@ use LedgerSMB::Setting;
 my @company_settings = qw(templates businessnumber weightunit curr
                           default_email_from default_email_to
                           default_email_bcc  default_email_cc
-                          default_language default_country
+                          default_language default_country papersize
                           separate_duties company_name company_email
                           company_phone company_fax businessnumber vclimit
                           company_address dojo_theme decimal_places min_empty);
@@ -66,6 +66,7 @@ sub initialize{
     };
     $settings->{curr} = [ split (/:/, $settings->{curr}) ];
     $settings->{default_currency} = $settings->{curr}->[0];
+    $settings->{format}           = $settings->{papersize};
 
    return $settings;
 }
