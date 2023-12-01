@@ -246,7 +246,7 @@ jobs:
 
           # Set the correct LedgerSMB Server configuration
           cp doc/conf/ledgersmb.conf.default ledgersmb.conf
-          sed -i -e 's/db_namespace = public/db_namespace = xyz/' ledgersmb.conf
+          sed -i -e 's/db_namespace = public/db_namespace = xyz/ ; s/#suppress_tooltips/suppress_tooltips/' ledgersmb.conf
 
           # Start 'nginx' reverse proxy
           mkdir logs
