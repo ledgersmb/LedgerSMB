@@ -497,11 +497,12 @@ sub _render {
     if ($escape) {
         $cleanvars = {
             %{ preprocess($vars, sub { $self->{format_plugin}->escape(@_) } ) },
-              %{$self->{additional_vars} // {}},
-              %$cvars,
-              text => sub {
-                  return $self->{format_plugin}->escape($self->_maketext(@_));
-              },
+            %{$self->{additional_vars} // {}},
+            %$cvars,
+            escape => $escape,
+            text => sub {
+                return $self->{format_plugin}->escape($self->_maketext(@_));
+            },
         };
     }
     else {
@@ -509,6 +510,7 @@ sub _render {
             ( %$vars,
               %{$self->{additional_vars} // {}},
               %$cvars,
+              escape => sub { $_[0] },
               text => sub { return $self->_maketext(@_); },
             )
         };
