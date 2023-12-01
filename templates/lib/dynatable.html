@@ -1,12 +1,19 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.1
-   Date:     2021-01-07
+   Version:  1.2
+   Date:     2023-12-01
    File:     dynatable.html
    Set:      none; shared
 
 Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
+
+Version   Changes
+1.2       Encode data from the 'columns' input, because the caller stopped its
+          encoding to fix GitHub issue #7739.
+1.1       Simplified version which also works without columns of pre-declared
+          width by using tabular environments to capture 'intentionally multi-
+          line output' into a single cell.
 
 -?>
 <?lsmb# HTML Snippet, for import only ?>
@@ -85,7 +92,7 @@ releases. No explicit versioning was applied before 2021-01-04.
    <tr>
    <?lsmb- FOREACH COL IN columns;
    IF COL.type != 'hidden'; -?>
-   <th class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>"><?lsmb COL.name ?>
+   <th class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type | html ?>"><?lsmb COL.name | html ?>
    </th>
    <?lsmb- END; END; -?>
    </tr>
@@ -116,7 +123,7 @@ releases. No explicit versioning was applied before 2021-01-04.
             END;
 
             NEXT IF TYPE == 'hidden'; -?>
-      <td class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>"<?lsmb ROWSPAN ?>>
+      <td class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type | html ?>"<?lsmb ROWSPAN ?>>
           <?lsmb- IF TYPE == 'boolean_checkmark' OR TYPE == 'checkbox' OR TYPE == 'radio';
                    IF ROW.${COL.col_id};
                       '✓';
@@ -131,8 +138,8 @@ releases. No explicit versioning was applied before 2021-01-04.
                   OPTION_LIST = COL.options(ROW);
 
                   FOREACH option IN OPTION_LIST;
-                    IF option.value == ROW.${COL.col_id};
-                       option.text;
+                    IF (option.value | html) == ROW.${COL.col_id};
+                       option.text | html;
                     END;
                   END;
                  ELSE -?>
@@ -166,7 +173,7 @@ releases. No explicit versioning was applied before 2021-01-04.
              <?lsmb END;
        NEXT IF TYPE == 'hidden';
        -?>
-       <td class="<?lsmb COL.col_id ?>">
+       <td class="<?lsmb COL.col_id | html ?>">
           <?lsmb- IF TYPE == 'boolean_checkmark' OR TYPE == 'checkbox' OR TYPE == 'radio';
                    IF ROW.${COL.col_id};
                        '✓';
