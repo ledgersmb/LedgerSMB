@@ -171,8 +171,9 @@ sub render_string {
         and not defined $cleanvars->{stylesheet}) {
         $cleanvars->{stylesheet} = $cleanvars->{form}->{stylesheet};
     }
-    if (defined $cleanvars->{stylesheet}
-        and not -e ($self->{root} . 'css/' . $cleanvars->{stylesheet})) {
+    if (not defined $cleanvars->{stylesheet}
+        or (defined $cleanvars->{stylesheet}
+            and not -e ($self->{root} . 'css/' . $cleanvars->{stylesheet}))) {
         $cleanvars->{stylesheet} = $self->{stylesheet};
     }
 
