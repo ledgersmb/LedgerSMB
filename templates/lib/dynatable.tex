@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.1
-   Date:     2022-07-27
+   Version:  1.2
+   Date:     2023-12-01
    File:     dynatable.tex
    Set:      none; shared
 
@@ -9,6 +9,8 @@ Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
 Version   Changes
+1.2       Encode data from the 'columns' input, because the caller stopped its
+          encoding to fix GitHub issue #7739.
 1.1       Simplified version which also works without columns of pre-declared
           width by using tabular environments to capture 'intentionally multi-
           line output' into a single cell.
@@ -74,7 +76,7 @@ FOREACH COL IN columns;
         UNLESS loop.first() ;
            ' & ';
         END;
-        COL.name;
+        escape(COL.name);
     END;
 END;
 -?>\tabularnewline

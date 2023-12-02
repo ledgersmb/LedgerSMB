@@ -576,11 +576,13 @@ sub _render {
             new_heads       => $replace_hnames,
             name            => $self->name,
             hlines          => $self->header_lines,
-            columns         => \@columns,
             order_url       => $self->order_url,
             buttons         => $self->buttons,
             options         => $self->options,
             rows            => \@rows,
+        },
+        {
+            columns         => \@columns
         });
 }
 
