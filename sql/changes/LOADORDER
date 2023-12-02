@@ -181,3 +181,4 @@ mc/delete-migration-validation-data.sql
 1.11/aa-column-cleanup.sql
 1.11/rename-action-parameter.sql
 1.11/gl-workflows.sql
+1.11/workflow-for-aa-transactions.sql
