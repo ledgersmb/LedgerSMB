@@ -489,6 +489,8 @@ sub print {
                 } else {
                     $request->error('Invalid Payment Amount Option');
                 }
+                next unless defined $invoice->{paid};
+
                 $check->{amount} += $invoice->{paid};
                 $invoice->{paid} = $invoice->{paid}->to_output(
                     format => '1000.00',
