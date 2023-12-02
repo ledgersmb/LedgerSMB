@@ -1,0 +1,8 @@
+
+@import url("ledgersmb.css");
+
+.dijitTooltip,
+.dijitTooltipContainer,
+.dijitTooltipContent {
+    display: none !important;
+}

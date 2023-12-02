@@ -95,6 +95,7 @@ ui:
   args:
     cache: lsmb_templates/
     root: ./
+    # stylesheet: ledgersmb.css
 
 workflows:
   class: LedgerSMB::Workflow::Loader
