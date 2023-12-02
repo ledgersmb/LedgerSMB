@@ -53,10 +53,7 @@ drop table old_user_preference cascade;
 
 -- insert global defaults as they used to be set
 -- on the columns of the user preference table
---
--- don't install the default stylesheet: it's defaulted in code;
--- this allows us to change the default stylesheet while testing
--- and thereby suppress tooltip popups.
 insert into user_preference ("name", "value")
-values ('dateformat', 'yyyy-mm-dd'),
+values ('stylesheet', 'ledgersmb.css'),
+       ('dateformat', 'yyyy-mm-dd'),
        ('numberformat', '1000.00');
