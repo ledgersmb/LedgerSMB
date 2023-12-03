@@ -127,7 +127,3 @@ idea of the decision, not the current version of the text.
 * Use of custom web elements to transition UI
 * Use of custom web elements to phase out AMD parser
   (if we do); and the use of the shim on Safari
-* Move to customizable business processes in Perl
-  (thus not in the database!)
-* Use of state machines to manage resource (e.g.
-  accounting document) life cycle
