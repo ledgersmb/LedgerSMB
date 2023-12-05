@@ -608,7 +608,8 @@ span.indicator {
     width: 60ex;
 }
 
-#invoice caption {
+#invoice caption,
+#transaction caption {
     font-size: var(--listtop-font-size);
     font-weight: bold;
 }

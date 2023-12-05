@@ -631,7 +631,8 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
  print qq|
 <body> | .
 $form->open_status_div($status_div_id) . qq|
-<form method="post"
+<form id="transaction"
+      method="post"
       data-dojo-type="lsmb/Form"
       data-lsmb-focus="${focus}"
       action="$form->{script}">
@@ -1170,8 +1171,9 @@ sub form_footer {
         print qq|
 <a href="pnl.pl?__action=generate_income_statement&pnl_type=invoice&id=$form->{id}">[| . $locale->text('Profit/Loss') . qq|]</a><br />
 <table width="100%">
-<tr class="listtop">
-<th colspan="4">| . $locale->text('Attached and Linked Files') . qq|</th>
+<tr><td>|;
+        IIAA->print_wf_history_table( $form, 'AR/AP' );
+print q|</td></tr><tr class="listtop"><th colspan="4">| . $locale->text('Attached and Linked Files') . qq|</th>
 <tr class="listheading">
 <th>| . $locale->text('File name') . qq|</th>
 <th>| . $locale->text('File type') . qq|</th>
