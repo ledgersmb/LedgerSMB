@@ -255,15 +255,23 @@ Returns the batch C<approved_on> date (being the current database date).
 sub post {
     my ($self) = @_;
 
-    $self->_iterate_batch_items(
-        sub {
-            my %args = @_;
-            my $wf = $self->{_wire}->get('workflows')->fetch_workflow(
-                $args{type}, $args{workflow_id}
-                );
-            $wf->execute_action( 'batch-approve' );
-            $log->info("Updated workflow $args{workflow_id}, batch-approve");
-        });
+    if (not ($self->{batch_class} == 'payment'
+             or $self->{batch_class} == 'payment_reversal'
+             or $self->{batch_class} == 'receipt'
+             or $self->{batch_class} == 'receipt_reversal')) {
+        # payments and receipts (and reversals) are part of a transaction
+        # which may already have been approved, meaning that 'batch-approve'
+        # isn't available...
+        $self->_iterate_batch_items(
+            sub {
+                my %args = @_;
+                my $wf = $self->{_wire}->get('workflows')->fetch_workflow(
+                    $args{type}, $args{workflow_id}
+                    );
+                $wf->execute_action( 'batch-approve' );
+                $log->info("Updated workflow $args{workflow_id}, batch-approve");
+            });
+    }
 
     ($self->{post_return_ref}) = $self->call_dbmethod(funcname => 'batch_post');
     return $self->{post_return_ref}->{batch_post};
