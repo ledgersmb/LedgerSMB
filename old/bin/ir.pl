@@ -240,6 +240,8 @@ sub invoice_links {
                 # reverse paid
                 $form->{"paid_$i"} =
                   $form->{acc_trans}{$key}->[ $i - 1 ]->{amount};
+                $form->{"paid_${i}_approved"} =
+                    $form->{acc_trans}{$key}->[ $i - 1 ]->{approved};
                 $form->{"datepaid_$i"} =
                   $form->{acc_trans}{$key}->[ $i - 1 ]->{transdate};
                 $form->{"forex_$i"} = $form->{"exchangerate_$i"} =
@@ -859,8 +861,11 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
 
         $form->hide_form("cleared_$i");
 
+        my $approval_status = $form->{"paid_${i}_approved"} ? 'approved' : 'unapproved';
+        my $title = $form->{"paid_${i}_approved"} ? '' : $locale->text('Unapproved');
+        $title = qq|title="$title"| if $title;
         print qq|
-    <tr class="invoice-payment">
+        <tr class="invoice-payment $approval_status" $title>
 |;
 
         $form->{"selectAP_paid_$i"} = $form->{selectAP_paid};

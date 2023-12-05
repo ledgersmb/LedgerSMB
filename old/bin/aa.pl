@@ -369,7 +369,9 @@ sub create_links {
                 $form->{"$form->{ARAP}_paid_$i"} =
 "$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
                 $form->{"paid_$i"} =
-                  $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1 * $ml;
+                    $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1 * $ml;
+                $form->{"paid_${i}_approved"} =
+                    $form->{acc_trans}{$key}->[ $i - 1 ]->{approved};
                 $form->{"datepaid_$i"} =
                   $form->{acc_trans}{$key}->[ $i - 1 ]->{transdate};
                 $form->{"source_$i"} =
@@ -1016,8 +1018,11 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 
         $form->hide_form("cleared_$i");
 
-        print q|
-        <tr class="invoice-payment">
+        my $approval_status = $form->{"paid_${i}_approved"} ? 'approved' : 'unapproved';
+        my $title = $form->{"paid_${i}_approved"} ? '' : $locale->text('Unapproved');
+        $title = qq|title="$title"| if $title;
+        print qq|
+        <tr class="invoice-payment $approval_status" $title>
 |;
 
         $form->{"select$form->{ARAP}_paid_$i"} =
