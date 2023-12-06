@@ -127,3 +127,6 @@ idea of the decision, not the current version of the text.
 * Use of custom web elements to transition UI
 * Use of custom web elements to phase out AMD parser
   (if we do); and the use of the shim on Safari
+* Use of state transitions (actions) on Resource (document) state machines
+  (=workflows) to check user authorization (instead of [or in addition to]
+  data access limitations)
