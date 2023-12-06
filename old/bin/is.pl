@@ -938,12 +938,13 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
 
         $form->hide_form("cleared_$i");
 
-        my $approval_status = $form->{"paid_${i}_approved"} ? 'approved' : 'unapproved';
-        my $title = $form->{"paid_${i}_approved"} ? '' : $locale->text('Pending approval');
+        my ($title, $approval_status, $icon) =
+            $form->{"paid_${i}_approved"} ? ('', 'approved', '')
+            : $form->{"datepaid_$i"} ? ($locale->text('Pending approval'), 'unapproved', '&#x23F2;')
+            : ('', '', '');
         $title = qq|title="$title"| if $title;
-        my $icon = $form->{"paid_${i}_approved"} ? '' : '&#x23F2;';
         print qq|
-        <tr class="invoice-payment $approval_status" $title><td style="text-align:center">$icon</td>
+        <tr class="invoice-payment $approval_status" $title>
 |;
 
         $form->{"selectAR_paid_$i"} = $form->{selectAR_paid};
@@ -977,6 +978,7 @@ qq|<input data-dojo-type="dijit/form/TextBox" name="exchangerate_$i" id="exchang
 <input type="hidden" name="forex_$i" value="$form->{"forex_$i"}">
 |;
 
+        $column_data{status} = qq|<td style="text-align:center">$icon</td>|;
         $column_data{paid} =
 qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id="paid_$i" size="11" value="$form->{"paid_$i"}" $readonly></td>|;
         $column_data{exchangerate} = qq|<td align="center">$exchangerate</td>|;
