@@ -14,12 +14,11 @@ extends 'PageObject';
 use PageObject::App;
 
 __PACKAGE__->self_register(
-              'invoice-payment',
-              './/tr[contains(@class,"invoice-payment")]',
-              tag_name => 'tr',
-              attributes => {
-                  'class' => 'invoice-payment',
-              });
+    'invoice-payment',
+    './/tr[contains(@class,"invoice-payment")]',
+    tag_name => 'tr',
+    classes => ['invoice-payment'],
+    );
 
 # counterparty_type IN ('customer', 'vendor')
 has counterparty_type => (is => 'ro', isa => 'Str', required => 1);

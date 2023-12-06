@@ -369,7 +369,9 @@ sub create_links {
                 $form->{"$form->{ARAP}_paid_$i"} =
 "$form->{acc_trans}{$key}->[$i-1]->{accno}--$form->{acc_trans}{$key}->[$i-1]->{description}";
                 $form->{"paid_$i"} =
-                  $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1 * $ml;
+                    $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1 * $ml;
+                $form->{"paid_${i}_approved"} =
+                    $form->{acc_trans}{$key}->[ $i - 1 ]->{approved};
                 $form->{"datepaid_$i"} =
                   $form->{acc_trans}{$key}->[ $i - 1 ]->{transdate};
                 $form->{"source_$i"} =
@@ -980,12 +982,13 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 |;
 
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
-        @column_index = qw(datepaid source memo paid ARAP_paid);
+        @column_index = qw(status datepaid source memo paid ARAP_paid);
     }
     else {
-        @column_index = qw(datepaid source memo paid exchangerate paidfx ARAP_paid);
+        @column_index = qw(status datepaid source memo paid exchangerate paidfx ARAP_paid);
     }
 
+    $column_data{status}       = "<th></th>";
     $column_data{datepaid}     = "<th>" . $locale->text('Date') . "</th>";
     $column_data{paid}         = "<th>" . $locale->text('Amount') . "</th>";
     $column_data{exchangerate} = "<th>" . $locale->text('Exch') . "</th>";
@@ -1016,8 +1019,13 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 
         $form->hide_form("cleared_$i");
 
-        print q|
-        <tr class="invoice-payment">
+        my ($title, $approval_status, $icon) =
+            $form->{"paid_${i}_approved"} ? ('', 'approved', '')
+            : $form->{"datepaid_$i"} ? ($locale->text('Pending approval'), 'unapproved', '&#x23F2;')
+            : ('', '', '');
+        $title = qq|title="$title"| if $title;
+        print qq|
+        <tr class="invoice-payment $approval_status" $title>
 |;
 
         $form->{"select$form->{ARAP}_paid_$i"} =
@@ -1053,6 +1061,8 @@ qq|<input data-dojo-type="dijit/form/TextBox" name="exchangerate_$i" size=10 val
         $form->{"datepaid_$i"} //= '';
         $form->{"source_$i"} //= '';
         $form->{"memo_$i"} //= '';
+
+        $column_data{status} = qq|<td style="text-align:center;vertical-align:middle">$icon</td>|;
         $column_data{paid} =
 qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id="paid_$i" size=11 value=$form->{"paid_$i"} $readonly></td>|;
         $column_data{ARAP_paid} =

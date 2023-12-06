@@ -581,6 +581,10 @@ span.indicator {
     font-size: 105%;
 }
 
+.invoice-payment.unapproved {
+    background-color: var(--unapproved-payment-bgcolor, orange);
+}
+
 #plDebug .plDebugPanelContent {
     left: 207px;
     right: 207px;

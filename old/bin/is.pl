@@ -231,6 +231,8 @@ sub invoice_links {
                     # reverse paid
                     $form->{"paid_$i"} =
                         $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * -1;
+                    $form->{"paid_${i}_approved"} =
+                        $form->{acc_trans}{$key}->[ $i - 1 ]->{approved};
                     $form->{"datepaid_$i"} =
                         $form->{acc_trans}{$key}->[ $i - 1 ]->{transdate};
                     $form->{"forex_$i"} = $form->{"exchangerate_$i"} =
@@ -906,12 +908,13 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
 |;
 
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
-        @column_index = qw(datepaid source memo paid AR_paid);
+        @column_index = qw(status datepaid source memo paid AP_paid);
     }
     else {
-        @column_index = qw(datepaid source memo paid exchangerate paidfx AR_paid);
+        @column_index = qw(status datepaid source memo paid exchangerate paidfx AP_paid);
     }
 
+    $column_data{status}       = "<th></th>";
     $column_data{datepaid}     = "<th>" . $locale->text('Date') . "</th>";
     $column_data{paid}         = "<th>" . $locale->text('Amount') . "</th>";
     $column_data{exchangerate} = "<th>" . $locale->text('Exch') . "</th>";
@@ -935,8 +938,14 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
 
         $form->hide_form("cleared_$i");
 
-        print qq{
-        <tr class="invoice-payment">\n};
+        my ($title, $approval_status, $icon) =
+            $form->{"paid_${i}_approved"} ? ('', 'approved', '')
+            : $form->{"datepaid_$i"} ? ($locale->text('Pending approval'), 'unapproved', '&#x23F2;')
+            : ('', '', '');
+        $title = qq|title="$title"| if $title;
+        print qq|
+        <tr class="invoice-payment $approval_status" $title>
+|;
 
         $form->{"selectAR_paid_$i"} = $form->{selectAR_paid};
         $form->{"selectAR_paid_$i"} =~
@@ -969,6 +978,7 @@ qq|<input data-dojo-type="dijit/form/TextBox" name="exchangerate_$i" id="exchang
 <input type="hidden" name="forex_$i" value="$form->{"forex_$i"}">
 |;
 
+        $column_data{status} = qq|<td style="text-align:center">$icon</td>|;
         $column_data{paid} =
 qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id="paid_$i" size="11" value="$form->{"paid_$i"}" $readonly></td>|;
         $column_data{exchangerate} = qq|<td align="center">$exchangerate</td>|;

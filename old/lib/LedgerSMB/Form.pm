@@ -2081,7 +2081,8 @@ sub create_links {
                                 array_agg(ARRAY[bul.class_id, bul.bu_id])
                                 AS bu_lines,
                (exists (select 1 from payment_links pl
-                         where a.entry_id = pl.entry_id)) AS payment_line
+                         where a.entry_id = pl.entry_id)) AS payment_line,
+               approved
             FROM acc_trans a
             JOIN account c ON (c.id = a.chart_id)
                    LEFT JOIN business_unit_ac bul ON a.entry_id = bul.entry_id
