@@ -982,12 +982,13 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 |;
 
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
-        @column_index = qw(datepaid source memo paid ARAP_paid);
+        @column_index = qw(status datepaid source memo paid ARAP_paid);
     }
     else {
-        @column_index = qw(datepaid source memo paid exchangerate paidfx ARAP_paid);
+        @column_index = qw(status datepaid source memo paid exchangerate paidfx ARAP_paid);
     }
 
+    $column_data{status}       = "<th></th>";
     $column_data{datepaid}     = "<th>" . $locale->text('Date') . "</th>";
     $column_data{paid}         = "<th>" . $locale->text('Amount') . "</th>";
     $column_data{exchangerate} = "<th>" . $locale->text('Exch') . "</th>";
@@ -1019,10 +1020,11 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
         $form->hide_form("cleared_$i");
 
         my $approval_status = $form->{"paid_${i}_approved"} ? 'approved' : 'unapproved';
-        my $title = $form->{"paid_${i}_approved"} ? '' : $locale->text('Unapproved');
+        my $title = $form->{"paid_${i}_approved"} ? '' : $locale->text('Pending approval');
         $title = qq|title="$title"| if $title;
+        my $icon = $form->{"paid_${i}_approved"} ? '' : '&#x23F2;';
         print qq|
-        <tr class="invoice-payment $approval_status" $title>
+        <tr class="invoice-payment $approval_status" $title><td style="text-align:center;vertical-align:middle">$icon</td>
 |;
 
         $form->{"select$form->{ARAP}_paid_$i"} =
