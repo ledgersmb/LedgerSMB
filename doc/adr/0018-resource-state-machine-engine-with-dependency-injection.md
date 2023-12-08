@@ -58,6 +58,5 @@ all of its 'moving parts' (actions, conditions, state serialization, etc.).
    *database* state needs to happen through the procedural database API.
 2. A design needs to be created supporting easy customization of state
    machines (further: workflows).
-3. 
 
 ## Annotations

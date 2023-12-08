@@ -64,6 +64,5 @@ formats).
    configuration file provides the implementation (with fixed APIs); natural
    candidates are functionalities which have a high likelihood of needing
    customization, such as document generators and bank statement importers.
-3. 
 
 ## Annotations
