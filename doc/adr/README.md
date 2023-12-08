@@ -127,10 +127,6 @@ idea of the decision, not the current version of the text.
 * Use of custom web elements to transition UI
 * Use of custom web elements to phase out AMD parser
   (if we do); and the use of the shim on Safari
-* Move to customizable business processes in Perl
-  (thus not in the database!)
-* Explicit rejection of JSONAPI as REST layer
-  (because it's not REST)
-* Use of state machines for front-end functionality
-* Use of state machines to manage resource (e.g.
-  accounting document) life cycle
+* Use of state transitions (actions) on Resource (document) state machines
+  (=workflows) to check user authorization (instead of [or in addition to]
+  data access limitations)
