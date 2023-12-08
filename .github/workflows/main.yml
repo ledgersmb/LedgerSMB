@@ -80,7 +80,10 @@ jobs:
           key: dojo-${{ hashFiles('UI/js-src/**',
                                   'UI/src/**',
                                   'UI/css/**',
-                                  'UI/!(js|.node_modules)/**/*.html',
+                                  '!UI/(js|.node_modules)/*.html',
+                                  '!UI/(js|.node_modules)/**/*.html',
+                                  'UI/*.html',
+                                  'UI/**/*.html',
                                   'doc/sources/**') }}
 
       - name: Build Dojo
@@ -438,7 +441,10 @@ jobs:
           key: dojo-${{ hashFiles('UI/js-src/**',
                                   'UI/src/**',
                                   'UI/css/**',
-                                  'UI/!(js|.node_modules)/**/*.html',
+                                  '!UI/(js|.node_modules)/*.html',
+                                  '!UI/(js|.node_modules)/**/*.html',
+                                  'UI/*.html',
+                                  'UI/**/*.html',
                                   'doc/sources/**') }}
 
       # This will start a hub and JOB_COUNT matrix.

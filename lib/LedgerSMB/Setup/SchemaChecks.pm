@@ -61,21 +61,19 @@ sub _wrap_html {
     my ($request) = shift;
 
     my $template = $request->{_wire}->get('ui');
-    unshift @HTML, $template->render_string(
-        $request,
-        'setup/upgrade/preamble',
-        {
-            check_id => _check_hashid( $failing_check ),
-            database => $request->{database},
-            resubmit_action => $request->{resubmit_action},
-            action_url => $request->{_uri}->as_string,
-        });
-
-    $template = $request->{_wire}->get('ui');
-    push @HTML, $template->render_string($request,
-                                         'setup/upgrade/epilogue');
-
-    return \@HTML;
+    return [
+        $template->render_string($request,
+                                 'setup/upgrade/wrapper',
+                                 {
+                                     check_id => _check_hashid( $failing_check ),
+                                     database => $request->{database},
+                                     resubmit_action => $request->{resubmit_action},
+                                     action_url => $request->{_uri}->as_string,
+                                 },
+                                 {
+                                     validation_html => join("\n", @HTML)
+                                 })
+        ];
 }
 
 sub _format_confirm {

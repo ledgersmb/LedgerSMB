@@ -1,4 +1,4 @@
-[% INCLUDE 'ui-header.html' %]
+[% WRAPPER 'ui-header.html' %]
 [% PROCESS elements.html %]
 <body class="lsmb [% dojo_theme %]">
 <h1 class="info">
@@ -9,4 +9,4 @@
           END; %]</h1>
 <p><a target="_top" href="login.pl">[% text('Return to the login screen.') %]</a>
 </body>
-[% end_html %]
+[% END %]
