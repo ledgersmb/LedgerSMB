@@ -366,7 +366,7 @@ $check =~ s|\s*\n+\s*|\n|g;
 
 
 ok( index($out,$check)>0, 'Render multiple confirmations')
-    or diff([ split /\n/, $out ],[ split /\n/, $check ],{ STYLE => 'Table', CONTEXT => 2 });
+    or diag diff([ split /\n/, $out ],[ split /\n/, $check ],{ STYLE => 'Table', CONTEXT => 2 });
 
 
 ###############################################

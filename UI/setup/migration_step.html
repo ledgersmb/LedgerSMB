@@ -1,4 +1,4 @@
-[% INCLUDE "ui-header.html"
+[% WRAPPER "ui-header.html"
        stylesheet="ledgersmb.css";
        PROCESS elements.html;
        PROCESS 'dynatable.html' %]
@@ -32,4 +32,4 @@
     </form>
   </div></div>
 </body>
-[% end_html %]
+[% END %]

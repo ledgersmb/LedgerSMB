@@ -1,4 +1,4 @@
-[% INCLUDE "ui-header.html"
+[% WRAPPER "ui-header.html"
 stylesheet="ledgersmb.css"
 include_stylesheet=["system/setup.css"];
        PROCESS "elements.html";
@@ -17,4 +17,4 @@ include_stylesheet=["system/setup.css"];
               id = 'db_list' %]
 </div></div>
 </body>
-[% end_html %]
+[% END %]

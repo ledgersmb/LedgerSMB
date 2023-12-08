@@ -1,4 +1,4 @@
-[% INCLUDE "ui-header.html"
+[% WRAPPER "ui-header.html"
 stylesheet="ledgersmb.css"
 include_stylesheet=["system/setup.css"] %]
 [% PROCESS elements.html %]
@@ -73,4 +73,4 @@ disabled = "disabled"
 </form>
 </div></div>
 </body>
-[% end_html %]
+[% END %]

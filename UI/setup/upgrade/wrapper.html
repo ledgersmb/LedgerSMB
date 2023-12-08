@@ -1,4 +1,4 @@
-[% INCLUDE "ui-header.html"
+[% WRAPPER "ui-header.html"
 stylesheet="ledgersmb.css"
 include_stylesheet=["system/setup.css"] %]
 <body class="[% dojo_theme %]">
@@ -9,3 +9,8 @@ include_stylesheet=["system/setup.css"] %]
     <input type="hidden" name="database" value="[% database %]">
     <input type="hidden" name="check_id" value="[% check_id %]">
 
+  [% validation_html %]
+
+  </form>
+</body>
+[% END %]
