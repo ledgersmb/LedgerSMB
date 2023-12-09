@@ -3,6 +3,15 @@
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.5
+* Load paper size from database settings, if set (#7738)
+* Fix CoA and Trial Balance PDF reports missing data in some columns (#7739)
+* Fix check printing when paying a subset of the available invoices (#7761)
+* Add missing AR/AP workflow context creation in 1.10->1.11 migration (#7765)
+* Show workflow based AR/AP transaction history, same as on invoices (#7774)
+* Fix approval of payment/receipt batches (#7771)
+
+
 Changelog for 1.11.4
 * Show database and user name in setup.pl consistency result screen (#7714)
 * Fix AR/AP transaction Reverse button (#7719, #7717)
