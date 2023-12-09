@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.26-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2023-11-11 22:20+0000\n"
+"POT-Creation-Date: 2023-12-09 10:55+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: Lithuanian (https://app.transifex.com/ledgersmb/teams/58325/"
 "lt/)\n"
@@ -711,7 +711,7 @@ msgid "Amount Budgetted"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:257
-#: lib/LedgerSMB/Scripts/payment.pm:936 lib/LedgerSMB/Scripts/payment.pm:941
+#: lib/LedgerSMB/Scripts/payment.pm:938 lib/LedgerSMB/Scripts/payment.pm:943
 #: templates/demo/check_base.tex:67
 #: UI/Reports/filters/invoice_outstanding.html:240
 #: UI/Reports/filters/invoice_search.html:363
@@ -769,15 +769,15 @@ msgstr ""
 msgid "Any"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1344
+#: lib/LedgerSMB/Scripts/payment.pm:1346
 msgid "Applied discount"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:2005
+#: lib/LedgerSMB/Scripts/payment.pm:2007
 msgid "Applied discount by an overpayment"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:934
+#: lib/LedgerSMB/Scripts/payment.pm:936
 msgid "Apply Disc"
 msgstr ""
 
@@ -1739,8 +1739,8 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1549 lib/LedgerSMB/Scripts/payment.pm:766
-#: lib/LedgerSMB/Scripts/payment.pm:828 old/bin/arap.pl:263 old/bin/ic.pl:1763
+#: lib/LedgerSMB/Scripts/payment.pm:1551 lib/LedgerSMB/Scripts/payment.pm:768
+#: lib/LedgerSMB/Scripts/payment.pm:830 old/bin/arap.pl:263 old/bin/ic.pl:1763
 #: old/bin/ic.pl:2044 old/bin/ic.pl:2193 old/bin/ic.pl:951 old/bin/io.pl:645
 #: old/bin/oe.pl:1647 old/bin/oe.pl:2173 old/bin/oe.pl:2670 old/bin/pe.pl:1095
 #: old/bin/pe.pl:240 old/bin/pe.pl:659 old/bin/pe.pl:828
@@ -2149,7 +2149,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:137
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:94
 #: lib/LedgerSMB/Scripts/asset.pm:464 lib/LedgerSMB/Scripts/payment.pm:192
-#: lib/LedgerSMB/Scripts/payment.pm:930 old/bin/aa.pl:849 old/bin/ir.pl:871
+#: lib/LedgerSMB/Scripts/payment.pm:932 old/bin/aa.pl:849 old/bin/ir.pl:871
 #: old/bin/is.pl:977 old/bin/oe.pl:1630 old/bin/pe.pl:937
 #: templates/demo/ap_transaction.html:60 templates/demo/ap_transaction.html:151
 #: templates/demo/ap_transaction.tex:76 templates/demo/ap_transaction.tex:127
@@ -2599,7 +2599,7 @@ msgstr ""
 msgid "Disc %"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:933 old/bin/ic.pl:1114
+#: lib/LedgerSMB/Scripts/payment.pm:935 old/bin/ic.pl:1114
 #: UI/accounts/edit.html:365 UI/accounts/edit.html:415
 #: UI/Contact/divs/credit.html:166 UI/Contact/divs/credit.html:167
 #: UI/payments/payments_detail.html:340
@@ -3116,7 +3116,7 @@ msgid "Exch"
 msgstr "Kurs."
 
 #: lib/LedgerSMB/Report/Contact/History.pm:117
-#: lib/LedgerSMB/Scripts/payment.pm:940 old/bin/aa.pl:441 old/bin/ir.pl:295
+#: lib/LedgerSMB/Scripts/payment.pm:942 old/bin/aa.pl:441 old/bin/ir.pl:295
 #: old/bin/is.pl:294 old/bin/oe.pl:1634 old/bin/oe.pl:353 old/bin/oe.pl:361
 #: UI/payments/payment2.html:136 UI/payments/payments_detail.html:148
 #: UI/payments/payments_detail.html:157 UI/payments/use_overpayment2.html:98
@@ -3128,7 +3128,7 @@ msgstr "Keitimo kursas"
 msgid "Exchange rate for payment missing!"
 msgstr "Mokėjimo keitimo kurso nėra!"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1240
+#: lib/LedgerSMB/Scripts/payment.pm:1242
 msgid "Exchange rate hasn't been defined!"
 msgstr ""
 
@@ -3859,7 +3859,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Search.pm:303
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:178
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:269
-#: lib/LedgerSMB/Scripts/payment.pm:929 old/bin/am.pl:961 old/bin/io.pl:1152
+#: lib/LedgerSMB/Scripts/payment.pm:931 old/bin/am.pl:961 old/bin/io.pl:1152
 #: old/bin/is.pl:1430 old/bin/is.pl:258 old/bin/printer.pl:48
 #: templates/demo/invoice.html:16 templates/demo/invoice.tex:138
 #: templates/demo/printPayment.html:44 UI/templates/widget.html:47
@@ -4294,12 +4294,12 @@ msgstr ""
 msgid "Load Templates"
 msgstr ""
 
-#: UI/src/components/ServerUI.js:71 UI/src/components/ServerUI.js:90
+#: UI/src/components/ServerUI.js:90 UI/src/components/ServerUI.js:71
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:41
-#: UI/src/components/ServerUI.js:27
+#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:27
+#: UI/src/components/ServerUI.js:41
 msgid "Loading..."
 msgstr ""
 
@@ -4435,7 +4435,7 @@ msgstr ""
 msgid "May"
 msgstr "Geg"
 
-#: lib/LedgerSMB/Report/GL.pm:158 lib/LedgerSMB/Scripts/payment.pm:935
+#: lib/LedgerSMB/Report/GL.pm:158 lib/LedgerSMB/Scripts/payment.pm:937
 #: old/bin/aa.pl:855 old/bin/ir.pl:656 old/bin/ir.pl:877 old/bin/is.pl:758
 #: old/bin/is.pl:983 templates/demo/ap_transaction.html:154
 #: UI/journal/journal_entry.html:139 UI/payments/payment2.html:348
@@ -4704,7 +4704,7 @@ msgstr ""
 msgid "No open Projects!"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1398
+#: lib/LedgerSMB/Scripts/payment.pm:1400
 msgid "No overpayment account selected.  Was one set up?"
 msgstr ""
 
@@ -5145,7 +5145,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:252
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:290
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:145
-#: lib/LedgerSMB/Scripts/payment.pm:932 templates/demo/invoice.html:143
+#: lib/LedgerSMB/Scripts/payment.pm:934 templates/demo/invoice.html:143
 #: templates/demo/invoice.tex:197 UI/payments/payments_detail.html:339
 #: UI/Reports/filters/invoice_outstanding.html:227
 #: UI/Reports/filters/invoice_search.html:350
@@ -5258,7 +5258,7 @@ msgstr ""
 msgid "Payables"
 msgstr "Pirkimai"
 
-#: lib/LedgerSMB/Scripts/payment.pm:1159 t/data/04-complex_template.html:282
+#: lib/LedgerSMB/Scripts/payment.pm:1161 t/data/04-complex_template.html:282
 #: UI/accounts/edit.html:335 UI/accounts/edit.html:387
 #: UI/Contact/divs/credit.html:208 UI/Contact/divs/credit.html:209
 #: UI/payments/payments_detail.html:227 UI/templates/widget.html:55
@@ -5960,7 +5960,7 @@ msgstr ""
 msgid "Receive Merchandise"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:997
+#: lib/LedgerSMB/Scripts/payment.pm:999
 msgid "Received"
 msgstr ""
 
@@ -6516,7 +6516,7 @@ msgstr ""
 msgid "Scheduled"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:691 lib/LedgerSMB/Template/UI.pm:124
+#: lib/LedgerSMB/Scripts/payment.pm:693 lib/LedgerSMB/Template/UI.pm:125
 #: old/bin/printer.pl:129 UI/lib/utilities.html:44
 msgid "Screen"
 msgstr "Ekranas"
@@ -7512,11 +7512,11 @@ msgstr ""
 msgid "This document has been approved by"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1258
+#: lib/LedgerSMB/Scripts/payment.pm:1260
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1990
+#: lib/LedgerSMB/Scripts/payment.pm:1992
 msgid "This gl movement, is the result of a overpayment transaction"
 msgstr ""
 
@@ -7662,7 +7662,7 @@ msgstr ""
 msgid "To my browser"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:989
+#: lib/LedgerSMB/Scripts/payment.pm:991
 msgid "To pay"
 msgstr ""
 
@@ -7687,7 +7687,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:287
 #: lib/LedgerSMB/Report/Taxform/Details.pm:105
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:113
-#: lib/LedgerSMB/Scripts/asset.pm:492 lib/LedgerSMB/Scripts/payment.pm:931
+#: lib/LedgerSMB/Scripts/asset.pm:492 lib/LedgerSMB/Scripts/payment.pm:933
 #: old/bin/ir.pl:802 old/bin/is.pl:906 old/bin/oe.pl:851
 #: templates/demo/ap_transaction.html:104 templates/demo/ap_transaction.html:119
 #: templates/demo/ar_transaction.html:102 templates/demo/ar_transaction.html:117
@@ -8087,7 +8087,7 @@ msgstr ""
 msgid "Use Shipto"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1868
+#: lib/LedgerSMB/Scripts/payment.pm:1870
 msgid "Use overpayment/prepayment"
 msgstr ""
 
@@ -8587,19 +8587,19 @@ msgstr ""
 msgid "invoicing"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:2018
+#: lib/LedgerSMB/Scripts/payment.pm:2020
 msgid "is bigger than the amount available"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1719
+#: lib/LedgerSMB/Scripts/payment.pm:1721
 msgid "is lesser than 0"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1713
+#: lib/LedgerSMB/Scripts/payment.pm:1715
 msgid "is lesser than the amount to be paid"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:1975
+#: lib/LedgerSMB/Scripts/payment.pm:1977
 msgid "is null"
 msgstr ""
 
@@ -8611,7 +8611,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/views/Home.vue:36 UI/src/views/Home.vue:51
+#: UI/src/views/Home.vue:51 UI/src/views/Home.vue:36
 msgid "mailing lists"
 msgstr ""
 
@@ -8671,6 +8671,6 @@ msgstr ""
 msgid "unexpected error!"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/payment.pm:2027 lib/LedgerSMB/Scripts/payment.pm:2046
+#: lib/LedgerSMB/Scripts/payment.pm:2029 lib/LedgerSMB/Scripts/payment.pm:2048
 msgid "use of an overpayment"
 msgstr ""
