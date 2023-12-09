@@ -755,6 +755,40 @@ ALTER TABLE lsmb13.ap ENABLE TRIGGER ALL;
 
 COMMIT;
 
+BEGIN;
+
+ALTER TABLE lsmb13.ar DISABLE TRIGGER ALL;
+ALTER TABLE lsmb13.ap DISABLE TRIGGER ALL;
+
+\echo Removing AR transaction headers without amounts and lines
+DELETE FROM lsmb13.ar
+  WHERE NOT ( (amount IS NULL AND curr IS NULL)
+         OR (amount IS NOT NULL AND curr IS NOT NULL))
+  AND 0 = (select count(*) from lsmb13.acc_trans ac where ar.id = ac.trans_id);
+
+\echo Removing AP transaction headers without amounts and lines
+DELETE FROM lsmb13.ap
+  WHERE NOT ( (amount IS NULL AND curr IS NULL)
+         OR (amount IS NOT NULL AND curr IS NOT NULL))
+  AND 0 = (select count(*) from lsmb13.acc_trans ac where ap.id = ac.trans_id);
+
+ALTER TABLE lsmb13.ar ENABLE TRIGGER ALL;
+ALTER TABLE lsmb13.ap ENABLE TRIGGER ALL;
+
+COMMIT;
+
+BEGIN;
+
+ALTER TABLE lsmb13.acc_trans DISABLE TRIGGER ALL;
+
+UPDATE lsmb13.acc_trans a
+   SET invoice_id = NULL
+ WHERE NOT EXISTS (select 1 from lsmb13.invoice i where a.invoice_id = i.id);
+
+ALTER TABLE lsmb13.acc_trans ENABLE TRIGGER ALL;
+
+COMMIT;
+
 
 ------------------------------------------------------------------------
 --
