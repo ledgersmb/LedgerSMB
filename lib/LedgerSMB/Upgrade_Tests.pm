@@ -653,7 +653,7 @@ push @tests, __PACKAGE__->new(
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => q{select distinct gifi_accno from account
+   test_query => q{select distinct gifi_accno as accno from account
                    where not exists (select 1
                                        from gifi
                                       where gifi.accno = account.gifi_accno)
@@ -661,9 +661,12 @@ push @tests, __PACKAGE__->new(
                          and gifi_accno !~ '^\s*$'},
  display_name => marktext('GIFI accounts not in "gifi" table'),
          name => 'missing_gifi_table_rows',
- display_cols => [ 'gifi_accno' ],
-        table => 'account',
- instructions => marktext('Please use the 1.3 UI to add the GIFI accounts'),
+ display_cols => [ 'accno', 'description' ],
+        table => 'gifi',
+       insert => 1,
+      columns => ['description'],
+   id_columns => ['accno'],
+ instructions => marktext('Please add the missing GIFI accounts'),
       appname => 'ledgersmb',
   min_version => '1.3',
   max_version => '1.3'
