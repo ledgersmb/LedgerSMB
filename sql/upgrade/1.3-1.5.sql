@@ -14,6 +14,9 @@
 --
 -- Chris Travers
 
+\set ON_ERROR_STOP off
+\set ON_ERROR_ROLLBACK on
+
 BEGIN; -- PRE-RC update
 
 ALTER TABLE partscustomer RENAME customer_id TO credit_id;
@@ -733,6 +736,7 @@ COMMIT;
 --
 ------------------------------------------------------------------------
 
+\set ON_ERROR_STOP on
 
 BEGIN;
 
