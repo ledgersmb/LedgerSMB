@@ -677,11 +677,6 @@ acc_balance AS (
                ON b.id = a.id
            INNER JOIN account_heading_tree aht on a.heading = aht.id
            LEFT JOIN account_heading_tree nht on a.heading_negative_balance = nht.id
-     WHERE array_endswith((SELECT value::int FROM defaults
-                            WHERE setting_key = 'earn_id'), aht.path)
-           -- legacy (no earn_id) returns all accounts; bug?
-           OR (NOT aht.path @> ARRAY[(SELECT value::int FROM defaults
-                                      WHERE setting_key = 'earn_id')])
 ),
 hdr_balance AS (
    select id, sum(balance) as balance
@@ -690,18 +685,25 @@ hdr_balance AS (
      ) a
     GROUP BY id
 )
-   SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
-          null::text as gifi_accno,
-          null::text as gifi_description, hm.contra,
-          hb.balance, hm.path
-     FROM hdr_meta hm
-    INNER JOIN hdr_balance hb ON hm.id = hb.id
-   UNION
-   SELECT am.id, am.accno, am.description, am.account_type, ab.category,
-          am.gifi_accno, am.gifi_description, am.contra,
-          ab.balance, ab.path
-     FROM acc_meta am
-    INNER JOIN acc_balance ab on am.id = ab.id
+  SELECT * FROM (
+    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
+           null::text as gifi_accno,
+           null::text as gifi_description, hm.contra,
+           hb.balance, hm.path
+      FROM hdr_meta hm
+             INNER JOIN hdr_balance hb ON hm.id = hb.id
+     UNION
+    SELECT am.id, am.accno, am.description, am.account_type, ab.category,
+           am.gifi_accno, am.gifi_description, am.contra,
+           ab.balance, ab.path
+      FROM acc_meta am
+             INNER JOIN acc_balance ab on am.id = ab.id
+  ) bs
+  WHERE array_endswith((SELECT value::int FROM defaults
+                         WHERE setting_key = 'earn_id'), bs.path)
+     -- legacy (no earn_id) returns all accounts; bug?
+     OR (NOT bs.path @> ARRAY[(SELECT value::int FROM defaults
+                                WHERE setting_key = 'earn_id')])
 $$;
 
 COMMENT ON function report__balance_sheet(date, text, text) IS
