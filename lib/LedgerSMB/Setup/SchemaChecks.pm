@@ -69,6 +69,7 @@ sub _wrap_html {
                                      database => $request->{database},
                                      resubmit_action => $request->{resubmit_action},
                                      action_url => $request->{_uri}->as_string,
+                                     title => $failing_check->{title}
                                  },
                                  {
                                      validation_html => join("\n", @HTML)
@@ -113,9 +114,7 @@ sub _format_describe {
     push @HTML, $template->render_string(
         $request,
         'setup/upgrade/describe',
-        {
-            title => $check->{title},
-        },
+        { }, # no template variables which need HTML encoding
         {
             description => markdown($msg),
         });
