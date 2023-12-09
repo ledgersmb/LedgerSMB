@@ -728,6 +728,32 @@ UPDATE lsmb13.invoice SET vendor_sku = (select min(partnumber) from lsmb13.parts
 COMMIT;
 
 
+BEGIN;
+
+ALTER TABLE lsmb13.ar DISABLE TRIGGER ALL;
+
+UPDATE lsmb13.ar SET person_id = NULL
+ WHERE NOT EXISTS (select 1 from lsmb13.entity_employee emp
+                    where ar.person_id = emp.entity_id);
+\echo Nonexisting person_id in AR
+
+ALTER TABLE lsmb13.ar ENABLE TRIGGER ALL;
+
+COMMIT;
+
+
+BEGIN;
+
+ALTER TABLE lsmb13.ap DISABLE TRIGGER ALL;
+
+UPDATE lsmb13.ap SET person_id = NULL
+ WHERE NOT EXISTS (select 1 from lsmb13.entity_employee emp
+                    where ap.person_id = emp.entity_id);
+\echo Nonexisting person_id in AP
+
+ALTER TABLE lsmb13.ap ENABLE TRIGGER ALL;
+
+COMMIT;
 
 
 ------------------------------------------------------------------------
