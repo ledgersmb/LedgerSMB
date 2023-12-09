@@ -114,6 +114,27 @@
                   101, 100.00, 100.00, 100.00, 100.00
              ]
          ],
+         failure_session => [
+             {
+                 statement => q{
+            SELECT trans_id, transdate, sum(amount_bc) AS amount
+              FROM acc_trans
+             WHERE trans_id IN (
+                      select trans_id
+                        from acc_trans
+                       where transdate is null
+                   )
+               AND transdate IS NOT NULL
+             GROUP BY trans_id, transdate
+               HAVING sum(amount_bc) <> 0.00
+             ORDER BY trans_id, transdate
+},
+                 results => [
+                     [ qw( trans_id transdate amount ) ],
+                     [ 10795, '2020-01-01', -100 ]
+                 ],
+             }
+         ],
          response => {
              confirm => 'save',
              'acc_trans' => [

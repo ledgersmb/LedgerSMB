@@ -191,6 +191,37 @@ Please fill in the missing data and press 'Save' to fix this issue.
             edit_columns => [qw(transdate approved)]
         );
         confirm save => 'Save';
+
+        describe q|
+The table below shows per "trans_id" (transaction id) which dates are
+unbalanced and by which amount, when leaving out the transaction lines
+with the missing dates.
+
+Note that balanced transactions have an amount of 0.00, meaning that
+if a date-less line shows an amount of 100, an exactly matched date
+would show a value of -100 in the table below.
+|;
+        my $unbalanced = $dbh->selectall_arrayref(q|
+            SELECT trans_id, transdate, sum(amount_bc) AS amount
+              FROM acc_trans
+             WHERE trans_id IN (
+                      select trans_id
+                        from acc_trans
+                       where transdate is null
+                   )
+               AND transdate IS NOT NULL
+             GROUP BY trans_id, transdate
+               HAVING sum(amount_bc) <> 0.00
+             ORDER BY trans_id, transdate
+|,
+                                                  { Slice => {} })
+            or die $dbh->errstr;
+
+        grid (
+            $unbalanced,
+            name => 'unbalanced',
+            columns => [qw( trans_id transdate amount )]
+            );
     },
     on_submit => sub {
         my ($dbh, $rows) = @_;

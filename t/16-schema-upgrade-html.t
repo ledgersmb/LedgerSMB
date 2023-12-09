@@ -187,8 +187,9 @@ $out = html_formatter_context {
 $out = filter_js_src($out);
 
 my $check = qq{
+<h1>title</h1>
+
 <div class="description">
-  <h1>title</h1>
   <p>
     <p>a description</p>
   </p>
@@ -197,7 +198,7 @@ my $check = qq{
 $check =~ s|\n+\s*|\n|g;
 
 ok( (index($out,$check)>0), 'Render the description && title')
-    or diff([ split /\n/, $out ], [ split /\n/, $check ],{ STYLE => 'Table', CONTEXT => 1 });
+    or diag diff([ split /\n/, $out ], [ split /\n/, $check ],{ STYLE => 'Table', CONTEXT => 1 });
 
 
 ###############################################
@@ -240,8 +241,9 @@ $out = html_formatter_context {
 } test_request();
 
 $out = filter_js_src($out);
-$check = qq{<div class="description">
+$check = qq{
   <h1>title</h1>
+<div class="description">
   <p>
     <p>another description</p>
   </p>
