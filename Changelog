@@ -8,6 +8,7 @@ Changelog for 1.12.0
 Added functionalities
 * More consistency checks in setup.pl (#7649)
 * Ability to include documentation in Chart of Account definition files (#7651)
+* Highlighting of unapproved payments on invoices and transactions (#7777)
 
 Changed functionalities
 * Default cookie names no longer include LedgerSMB version number (#7639)
@@ -16,6 +17,7 @@ Removed functionalities
 
 Bugs fixed
 * Countries in setup.pl from Locale::CLDR; use reference data instead (#7648)
+* Correctness of HTML pages, now includes 'html' closing tag (#7784)
 
 Cleanup & architecture improvements
 * Reference data factored out of database schema (#7648)
