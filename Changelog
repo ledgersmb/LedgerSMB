@@ -99,6 +99,12 @@ Dependency updates
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.26
+* Load paper size from database settings, if set (#7738)
+* Fix CoA and Trial Balance PDF reports missing data in some columns (#7739)
+* Fix check printing when paying a subset of the available invoices (#7761)
+
+
 Changelog for 1.10.25
 * Minimum PGObject::Type::BigFloat version to resolve Math::BigFloat issue (#7704)
 
