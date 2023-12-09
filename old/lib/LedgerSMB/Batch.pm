@@ -255,10 +255,10 @@ Returns the batch C<approved_on> date (being the current database date).
 sub post {
     my ($self) = @_;
 
-    if (not ($self->{batch_class} == 'payment'
-             or $self->{batch_class} == 'payment_reversal'
-             or $self->{batch_class} == 'receipt'
-             or $self->{batch_class} == 'receipt_reversal')) {
+    if (not ($self->{batch_class} eq 'payment'
+             or $self->{batch_class} eq 'payment_reversal'
+             or $self->{batch_class} eq 'receipt'
+             or $self->{batch_class} eq 'receipt_reversal')) {
         # payments and receipts (and reversals) are part of a transaction
         # which may already have been approved, meaning that 'batch-approve'
         # isn't available...
