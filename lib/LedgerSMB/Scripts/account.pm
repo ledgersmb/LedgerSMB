@@ -180,7 +180,7 @@ sub save {
         my ($ref) = $request->call_procedure(
             funcname => 'account_heading_save',
             args     => [
-                $request->@{qw(id accno description heading)}
+                $request->@{qw(id accno description parent)}
             ]);
         $request->{id} = $ref->{account_heading_save};
     }
