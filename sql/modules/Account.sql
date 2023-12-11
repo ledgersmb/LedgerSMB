@@ -511,6 +511,7 @@ BEGIN
     AND debits = 0
     AND credits = 0;
 
+    DELETE FROM cr_coa_to_account WHERE chart_id = in_id;
     DELETE FROM tax WHERE chart_id = in_id;
     DELETE FROM account_link WHERE account_id = in_id;
     DELETE FROM account WHERE id = in_id;
