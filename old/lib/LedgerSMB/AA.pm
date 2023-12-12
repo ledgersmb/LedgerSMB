@@ -277,65 +277,94 @@ sub post_transaction {
 
     # check if id really exists
     if ( $form->{id} ) {
-        my $id = $dbh->quote( $form->{id} );
-        $keepcleared = 1;
-        $query       = qq|
-            SELECT id
-              FROM $table
-             WHERE id = $id|;
-        my ($exists) = $dbh->selectrow_array($query);
-        if ($exists and $form->{batch_id}) {
+        if ($form->{batch_id}) {
            $query = "SELECT voucher__delete(id)
                        FROM voucher
                       where trans_id = ? and batch_class in (1, 2)";
            $dbh->prepare($query)->execute($form->{id}) || $form->dberror($query);
-        } elsif ($exists) {
-
-           # delete detail records
-
-        $dbh->do($query) || $form->dberror($query);
-            $query = qq|
-                DELETE FROM ac_tax_form
-                                       WHERE entry_id IN
-                                             (SELECT entry_id FROM acc_trans
-                              WHERE trans_id = $id)|;
-
-            $dbh->do($query) || $form->dberror($query);
-
-            $query = qq|
-                DELETE FROM acc_trans
-                 WHERE trans_id = $id|;
-
-            $dbh->do($query) || $form->dberror($query);
-            $dbh->do("DELETE FROM $table where id = $id");
+           delete $form->{id};
         }
+        else {
+            # delete detail records
+            $query = qq|SELECT draft_delete(?)|;
+            $dbh->do($query, {}, $form->{id}) || $form->dberror($query);
+            delete $form->{id};
+        }
+    }
 
+    if (not $form->{id}) {
+        # note that the previous section may have removed $form->{id}, so this can't be an 'else' statement
+        my $uid = localtime;
+        $uid .= "$$";
+
+        $query = qq|
+            INSERT INTO ar (invnumber, person_id, entity_credit_account)
+                 VALUES ('$uid', ?, ?)|;
+        $sth = $dbh->prepare($query);
+        $sth->execute( $form->{employee_id}, $form->{customer_id}) || $form->dberror($query);
+
+        $query = qq|SELECT id FROM ar WHERE invnumber = '$uid'|;
+        $sth   = $dbh->prepare($query);
+        $sth->execute || $form->dberror($query);
+
+        ( $form->{id} ) = $sth->fetchrow_array;
+
+        $query = q|UPDATE transactions SET workflow_id = ?, reversing = ? WHERE id = ? AND workflow_id IS NULL|;
+        $sth   = $dbh->prepare($query);
+        $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{id} )
+            || $form->dberror($query);
     }
 
 
    if ($table eq 'ar') {
     $query = qq|
-      INSERT INTO ar
-        (invnumber, description, ordnumber, transdate, taxincluded,
-         amount_bc, netamount_bc, curr, amount_tc, netamount_tc, duedate,
-         notes, intnotes, ponumber, crdate, reverse,
-         person_id, entity_credit_account, approved,
-         setting_sequence
-        )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      RETURNING id
+      UPDATE ar
+         SET invnumber = ?,
+             description = ?,
+             ordnumber = ?,
+             transdate = ?,
+             taxincluded = ?,
+             amount_bc = ?,
+             netamount_bc = ?,
+             curr = ?,
+             amount_tc = ?,
+             netamount_tc = ?,
+             duedate = ?,
+             notes = ?,
+             intnotes = ?,
+             ponumber = ?,
+             crdate = ?,
+             reverse = ?,
+             person_id = ?,
+             entity_credit_account = ?,
+             approved = ?,
+             setting_sequence = ?
+       WHERE id = ?
     |;
    }
    else {
     $query = qq|
-      INSERT INTO $table
-        (invnumber, description, ordnumber, transdate, taxincluded,
-         amount_bc, netamount_bc, curr, amount_tc, netamount_tc, duedate,
-         notes, intnotes, ponumber, crdate, reverse,
-         person_id, entity_credit_account, approved
-        )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      RETURNING id
+      UPDATE $table
+         SET invnumber = ?,
+             description = ?,
+             ordnumber = ?,
+             transdate = ?,
+             taxincluded = ?,
+             amount_bc = ?,
+             netamount_bc = ?,
+             curr = ?,
+             amount_tc = ?,
+             netamount_tc = ?,
+             duedate = ?,
+             notes = ?,
+             intnotes = ?,
+             ponumber = ?,
+             crdate = ?,
+             reverse = ?,
+             person_id = ?,
+             entity_credit_account = ?,
+             approved = ?
+       WHERE id = ?
     |;
    }
 
@@ -362,14 +391,10 @@ sub post_transaction {
     if ($table eq 'ar') {
         push @queryargs, $form->{setting_sequence}
     }
+    push @queryargs, $form->{id};
 
     $sth = $dbh->prepare($query) or $form->dberror($query);
     $sth->execute(@queryargs) or $form->dberror($query);
-    ($form->{id}) = $sth->fetchrow_array() or $form->dberror($query);
-    $query = q|UPDATE transactions SET workflow_id = ?, reversing = ? WHERE id = ? AND workflow_id IS NULL|;
-    $sth   = $dbh->prepare($query);
-    $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{id} )
-        || $form->dberror($query);
 
     if (defined $form->{approved}) {
         if (!$form->{approved} && $form->{batch_id}){
