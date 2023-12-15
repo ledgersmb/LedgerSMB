@@ -708,6 +708,19 @@ eca(account_id) AS (
     SELECT DISTINCT cash_account_id
       FROM entity_credit_account
 ),
+p(account_id) AS (
+  SELECT DISTINCT inventory_accno_id
+    FROM parts
+           UNION
+  SELECT DISTINCT income_accno_id
+    FROM parts
+           UNION
+  SELECT DISTINCT expense_accno_id
+    FROM parts
+           UNION
+  SELECT DISTINCT returns_accno_id
+    FROM parts
+),
 ta(account_id) AS (
     SELECT chart_id
       FROM eca_tax
@@ -718,7 +731,7 @@ SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno,
             ELSE null::numeric END,
        CASE WHEN sum(ac.amount_bc) > 0 THEN sum(amount_bc)
             ELSE null::numeric END,
-       count(ac.*)+count(hh.*)+count(ha.*)+count(eca.*)+count(ta.*), l.link
+       count(ac.*)+count(hh.*)+count(ha.*)+count(eca.*)+count(p.*)+count(ta.*), l.link
   FROM (SELECT id, heading, false as is_heading, accno, description, gifi_accno
           FROM account
          UNION
@@ -730,6 +743,7 @@ SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno,
  LEFT JOIN hh ON hh.parent_id = a.id AND a.is_heading
  LEFT JOIN ha ON ha.heading = a.id AND a.is_heading
  LEFT JOIN eca ON eca.account_id = a.id AND NOT a.is_heading
+ LEFT JOIN p ON p.account_id = a.id AND NOT a.is_heading
  LEFT JOIN ta ON ta.account_id = a.id AND NOT a.is_heading
   GROUP BY a.id, a.is_heading, a.accno, a.description, a.gifi_accno, l.link
   ORDER BY a.accno;
