@@ -900,7 +900,7 @@ sub delete {
     $sth   = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
-    $query = qq|DELETE FROM translation WHERE trans_id = ?|;
+    $query = qq|DELETE FROM parts_translation WHERE trans_id = ?|;
     $sth   = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
