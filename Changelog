@@ -29,6 +29,14 @@ Cleanup & architecture improvements
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.6
+* Fix 'Current earnings' not showing in the balance sheet report (#7785)
+* Fix saving headings of headings (#7802)
+* Fix saving unused accounts configured for reconciliation (#7805)
+* Fix 'delete' link shown in CoA screen on accounts used with parts (#7812)
+* Fix deletion of parts (#7811)
+
+
 Changelog for 1.11.5
 * Load paper size from database settings, if set (#7738)
 * Fix CoA and Trial Balance PDF reports missing data in some columns (#7739)
