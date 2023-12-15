@@ -3,6 +3,11 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.27
+* Fix 'delete' link shown in CoA screen on accounts used with parts (#7812)
+* Fix deletion of parts (#7811)
+
+
 Changelog for 1.10.26
 * Load paper size from database settings, if set (#7738)
 * Fix CoA and Trial Balance PDF reports missing data in some columns (#7739)
