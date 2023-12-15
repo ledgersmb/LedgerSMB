@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.27-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2023-12-09 10:55+0000\n"
+"POT-Creation-Date: 2023-12-15 21:16+0000\n"
 "Last-Translator: Christian Eriksson, 2023\n"
 "Language-Team: Swedish (https://app.transifex.com/ledgersmb/teams/58325/sv/)\n"
 "Language: sv\n"
@@ -4302,8 +4302,8 @@ msgstr ""
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:27
-#: UI/src/components/ServerUI.js:41
+#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:41
+#: UI/src/components/ServerUI.js:27
 msgid "Loading..."
 msgstr ""
 
