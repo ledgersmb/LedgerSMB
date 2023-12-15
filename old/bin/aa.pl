@@ -1313,8 +1313,6 @@ sub on_hold {
 # }
 
 sub edit_and_save {
-    $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
-    delete $form->{id};
     AA->post_transaction( \%myconfig, \%$form );
 
     if ($form->{workflow_id}) {

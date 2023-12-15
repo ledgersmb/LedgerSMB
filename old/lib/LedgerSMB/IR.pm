@@ -85,9 +85,7 @@ sub post_invoice {
     delete $form->{reverse} unless $form->{reverse};
 
     $form->all_business_units;
-    if ($form->{id}){
-        delete_invoice($self, $myconfig, $form);
-    }
+
     my $dbh = $form->{dbh};
     $form->{invnumber} = $form->update_defaults( $myconfig, "vinumber", $dbh )
       if $form->should_update_defaults('invnumber');
@@ -134,27 +132,40 @@ sub post_invoice {
 
     my %updparts = ();
 
+    # check if id really exists
     if ( $form->{id} ) {
-        $form->error("Can't re-post invoice!");
+        if ($form->{batch_id}) {
+           $query = "SELECT voucher__delete(id)
+                       FROM voucher
+                      where trans_id = ? and batch_class in (1, 2)";
+           $dbh->prepare($query)->execute($form->{id}) || $form->dberror($query);
+           delete $form->{id};
+        }
+        else {
+            # delete detail records
+            $query = qq|SELECT draft_delete(?)|;
+            $dbh->do($query, {}, $form->{id}) || $form->dberror($query);
+            delete $form->{id};
+        }
     }
 
-    my $uid = localtime;
-    $uid .= "$$";
-
-    if ( !$form->{id} ) {
+    if (not $form->{id}) {
+        # note that the previous section may have removed $form->{id}, so this can't be an 'else' statement
+        my $uid = localtime;
+        $uid .= "$$";
 
         $query = qq|
             INSERT INTO ap (invnumber, person_id, entity_credit_account)
-            VALUES ('$uid', person__get_my_entity_id(), ?)|;
+                 VALUES ('$uid', ?, ?)|;
         $sth = $dbh->prepare($query);
-        $sth->execute( $form->{vendor_id} )
-            || $form->dberror($query);
+        $sth->execute( $form->{employee_id}, $form->{vendor_id}) || $form->dberror($query);
 
         $query = qq|SELECT id FROM ap WHERE invnumber = '$uid'|;
         $sth   = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
 
         ( $form->{id} ) = $sth->fetchrow_array;
+
         $query = q|UPDATE transactions SET workflow_id = ?, reversing = ? WHERE id = ? AND workflow_id IS NULL|;
         $sth   = $dbh->prepare($query);
         $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{id} )
@@ -172,7 +183,6 @@ sub post_invoice {
     else {
         $exchangerate = "";
     }
-
     $form->{exchangerate} = $form->parse_amount( $myconfig, $form->{exchangerate} );
 
 

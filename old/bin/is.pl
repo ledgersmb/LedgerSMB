@@ -76,8 +76,6 @@ sub copy_to_new{
 
 sub edit_and_save {
     $form->{ARAP} = 'AR';
-    $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
-    delete $form->{id};
     IS->post_invoice( \%myconfig, \%$form );
 
     if ($form->{workflow_id}) {

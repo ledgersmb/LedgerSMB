@@ -714,10 +714,6 @@ sub post_invoice {
 
     $form->{acc_trans} = ();
 
-    if ($form->{id}){
-        delete_invoice($self, $myconfig, $form);
-    }
-
     ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
     unless ( $form->{employee_id} ) {
         ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
@@ -738,14 +734,27 @@ sub post_invoice {
     my $pth = $dbh->prepare($query) || $form->dberror($query);
     $form->{is_return} ||= 0;
 
+    # check if id really exists
     if ( $form->{id} ) {
-        $form->error("Can't re-post invoices.");
+        if ($form->{batch_id}) {
+           $query = "SELECT voucher__delete(id)
+                       FROM voucher
+                      where trans_id = ? and batch_class in (1, 2)";
+           $dbh->prepare($query)->execute($form->{id}) || $form->dberror($query);
+           delete $form->{id};
+        }
+        else {
+            # delete detail records
+            $query = qq|SELECT draft_delete(?)|;
+            $dbh->do($query, {}, $form->{id}) || $form->dberror($query);
+            delete $form->{id};
+        }
     }
 
-    my $uid = localtime;
-    $uid .= "$$";
-
-    if ( !$form->{id} ) {
+    if (not $form->{id}) {
+        # note that the previous section may have removed $form->{id}, so this can't be an 'else' statement
+        my $uid = localtime;
+        $uid .= "$$";
 
         $query = qq|
             INSERT INTO ar (invnumber, person_id, entity_credit_account)
@@ -768,7 +777,9 @@ sub post_invoice {
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
         $form->{exchangerate} = 1;
     }
-
+    else {
+        $exchangerate = "";
+    }
     $form->{exchangerate} = $form->parse_amount( $myconfig, $form->{exchangerate} );
 
      my $return_cid = 0;
