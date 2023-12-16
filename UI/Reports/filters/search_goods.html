@@ -249,10 +249,10 @@ default_values = [partsgroup_id]
       <legend>[% text('Include in Report') %]</legend>
       <div class="option">
              [% PROCESS input element_data = {
-           name = 'col_running_number'
+           name = 'col_id'
            type = 'checkbox'
           value = '1'
-          label = text('No.')
+          label = text('ID')
       } %]
       </div><div class="option">
        [% PROCESS input element_data = {
