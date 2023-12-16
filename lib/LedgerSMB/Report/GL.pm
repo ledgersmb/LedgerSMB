@@ -109,7 +109,7 @@ sub columns {
      pwidth => '3', },
 
     {col_id => 'eca_name',
-       name => $self->Text('Vendor/Customer'),
+       name => $self->Text('Vendor Customer'),
        type => 'text',
      pwidth => '3', },
 
