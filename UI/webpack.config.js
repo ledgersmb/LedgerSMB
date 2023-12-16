@@ -304,7 +304,7 @@ if (TARGET !== "readme") {
 
         // Handle HTML
         new HtmlWebpackPlugin({
-            inject: false, // Tags are injected manually in the content below
+            inject: 'body', // Tags are injected manually in the content below
             minify: false, // Adjust t/16-schema-upgrade-html.t if prodMode is used,
             filename: "ui-header.html",
             mode: prodMode ? "production" : "development",
