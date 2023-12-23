@@ -1,4 +1,12 @@
 <conditions>
+  <condition name="have-transdate"
+             test="$context->{transdate}"
+             class="Workflow::Condition::Evaluate"/>
+  <condition name="undefined-transdate-or-not-closed-period"
+             class="Workflow::Condition::LazyOR">
+    <param name="condition1" value="!have-transdate"/>
+    <param name="condition2" value="!period-closed" />
+  </condition>
   <condition name="separate-duties"
              class="LedgerSMB::Workflow::Condition::SeparateDuties" />
   <condition name="period-closed"

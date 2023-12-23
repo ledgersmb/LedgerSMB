@@ -7,8 +7,7 @@
     <action name="update" resulting_state="NOCHANGE" />
     <action name="post" resulting_state="SAVED">
       <condition name="!reversing" />
-      <condition name="!period-closed" />
-      <condition name="complete" />
+      <condition name="undefined-transdate-or-not-closed-period" />
     </action>
     <action name="post_and_approve" resulting_state="POSTED">
       <condition name="!reversing" />
