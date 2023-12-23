@@ -37,7 +37,6 @@ use LedgerSMB::Routes::ERP::API::GeneralLedger;
 use LedgerSMB::Routes::ERP::API::Invoices;
 use LedgerSMB::Routes::ERP::API::MenuNodes;
 use LedgerSMB::Routes::ERP::API::Languages;
-use LedgerSMB::Routes::ERP::API::Orders;
 use LedgerSMB::Routes::ERP::API::Products;
 use LedgerSMB::Routes::ERP::API::Session;
 use LedgerSMB::Routes::ERP::API::Templates;
