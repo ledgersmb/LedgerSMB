@@ -73,7 +73,8 @@ sub init {
 =head2 evaluate( $wf )
 
 Implements the C<Workflow::Condition> protocol, throwing a condition
-error in case separation of duties is I<not> enabled.
+error in case the workflow C<transdate> parameter is defined and not
+in a closed period.
 
 =cut
 
