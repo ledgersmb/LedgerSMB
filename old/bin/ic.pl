@@ -198,11 +198,6 @@ sub link_part {
     delete $form->{amount};
 
     $form->get_partsgroup({ all => 1 });
-    if ( $form->{partsgroup} ) {
-        $form->{partsgroup} =
-          $form->quote( $form->{partsgroup} ) . "--$form->{partsgroup_id}";
-    }
-
     if ( $form->{all_partsgroups} and @{ $form->{all_partsgroup} } ) {
         $form->{selectpartsgroup} = qq|<option></option>\n|;
 
@@ -320,6 +315,7 @@ sub form_header {
 
 
     $status_div_id = $form->{item};
+    $markup = '';
     if ( $form->{lastcost} > 0 ) {
         $markup =
           $form->round_amount(
@@ -713,6 +709,13 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
         qw(id item title makemodel alternate onhand orphaned taxaccounts rowcount baseassembly project_id)
     );
 
+    $weight //= '';
+    $onhand //= '';
+    $stock //= '';
+    $rop //= '';
+    $bin //= '';
+    $obsolete //= '';
+    $imagelinks //= '';
     print qq|
 <table style="width: 100%">
   <tr>
@@ -1089,6 +1092,8 @@ sub customer_row {
     $currency = qq|<th class="listheading">| . $locale->text('Curr') . qq|</th>|
       if $form->{selectcurrency};
 
+    $currency //= '';
+    $pricegroup //= '';
     print qq|
   <tr>
     <td>
