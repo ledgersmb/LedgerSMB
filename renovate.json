@@ -27,6 +27,12 @@
             "matchPackagePatterns": ["^@intlify/unplugin-vue-i18n"],
             "allowedVersions": "<0.8"
         },
+	{
+	    "matchPackagePatterns": [
+	       "stylelint"
+	    ],
+            "allowedVersions": "<16",
+	},
         {
             "matchPackagePatterns": [
                 "stylelint"
@@ -34,7 +40,6 @@
             "matchUpdateTypes": [
                 "major"
             ],
-            "allowedVersions": "<16",
             "automerge": false,
             "groupName": "all stylelint related dependencies",
             "groupSlug": "stylelint-major"
