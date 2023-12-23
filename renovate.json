@@ -34,6 +34,7 @@
             "matchUpdateTypes": [
                 "major"
             ],
+            "allowedVersions": "<16",
             "automerge": false,
             "groupName": "all stylelint related dependencies",
             "groupSlug": "stylelint-major"
