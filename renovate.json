@@ -31,7 +31,7 @@
 	    "matchPackagePatterns": [
 	       "stylelint"
 	    ],
-            "allowedVersions": "<16",
+            "allowedVersions": "<16"
 	},
         {
             "matchPackagePatterns": [
