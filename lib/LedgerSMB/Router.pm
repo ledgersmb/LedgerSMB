@@ -397,16 +397,16 @@ Add web service API request/response validation wrapper around the code
 reference. Returns the path and a code reference which can be used as the
 argument list of the api entry point defining keywords:
 
-  post api 'our/path/' => sub {
+  post api '/our/path' => sub {
      my ($env, $req, $company, $body, $params, @rest) = @_;
      ...;
   };
 
 The wrapper wants the C<api_schema> setting to be assigned in order to
-be able to validate the validity of the request and the response.
+be able to validate the request and the response.
 
-In case third element of the PSGI triplet is undefined or the return value
-itself is undefined, a C<404 Not Found> response is generated.
+In case the third element of the PSGI triplet is undefined or the return
+value itself is undefined, a C<404 Not Found> response is generated.
 
 The parameters to the coderef are:
 
