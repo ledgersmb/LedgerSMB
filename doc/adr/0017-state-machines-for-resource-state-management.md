@@ -45,3 +45,6 @@ gl transactions and e-mails.
    actions to web-API responses and requests to trigger actions
 
 ## Annotations
+
+[ADR 0018](./0018-resource-state-machine-engine-with-dependency-injection.md)
+describes the decision requested by Consequence #1.
