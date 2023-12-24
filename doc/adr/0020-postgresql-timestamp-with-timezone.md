@@ -28,7 +28,7 @@ times at a scale most meaningful to the current user.
 ## Decision
 
 The server component, including the database, will be timezone agnostic,
-running entirely in UTC time
+running entirely in UTC time.
 
 ## Consequences
 
@@ -38,3 +38,13 @@ running entirely in UTC time
  3. When no time zone is specified, the time stamp is assumed to be UTC
 
 ## Annotations
+
+Although the above line of reasoning is what determines the implementation as per
+the date of writing this ADR, the writing of the ADR itself triggered discussion
+which came to the conclusion a design with `TIMESTAMP WITH TIME ZONE`, even though
+it stores its data in UTC just as the `WITHOUT TIME ZONE` design, takes time zones
+provided with input data into account -- the current schema will **drop** time zone
+information in case data is accidentally not normalized to UTC.
+To make sure the database output keeps working as expected, the database client should
+set the time zone upon creating a connection using `SET TIME ZONE TO "Etc/UTC";`.  This
+will cause all output dates to have a time zone component `+00`.
