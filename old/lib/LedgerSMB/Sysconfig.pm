@@ -174,9 +174,12 @@ sub ini2wire {
     };
 
     $wire_config{cookie} = {
-        name => scalar $cfg->val( 'main', 'cookie_name' ),
-        secret => scalar $cfg->val( 'main', 'cookie_secret' )
+        name => scalar $cfg->val( 'main', 'cookie_name', 'LedgerSMB' ),
     };
+    if ( $cfg->exists( 'main', 'cookie_secret') ) {
+        $wire_config{cookie}->{secret} =
+            scalar $cfg->val( 'main', 'cookie_secret' )
+    }
 
     $wire_config{default_locale} = {
         '$class' => 'LedgerSMB::LanguageResolver',
