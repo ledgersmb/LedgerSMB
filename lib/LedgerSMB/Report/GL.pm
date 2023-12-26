@@ -313,10 +313,8 @@ The highest value that can match, amount-wise for the line item.
 
 =cut
 
-has 'from_amount' => (is => 'rw', coerce => 1,
-                     isa => 'LedgerSMB::Moose::Number');
-has 'to_amount' => (is => 'rw', coerce => 1,
-                   isa => 'LedgerSMB::Moose::Number');
+has 'from_amount' => (is => 'rw', isa => 'LedgerSMB::PGNumber');
+has 'to_amount' => (is => 'rw', isa => 'LedgerSMB::PGNumber');
 
 =item business_units
 
@@ -410,7 +408,7 @@ sub run_report{
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team
+Copyright (C) 2012-2023 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

@@ -107,8 +107,21 @@ sub search {
     }
     #tshvr4 trying to mix in period from_month from_year interval
     return $request->render_report(
-        LedgerSMB::Report::GL->new(%$request)
-        );
+        LedgerSMB::Report::GL->new(
+            $request->%{qw( reference accno category source memo
+                            business_units
+                            is_voided
+                            is_approved
+                            interval
+                            from_month from_year
+                            comparison_periods comparison_type
+                            comparisons
+                            ) },
+            from_amount => $request->parse_amount( $request->{from_amount} ),
+            to_amount => $request->parse_amount( $request->{to_amount} ),
+            from_date => $request->parse_date( $request->{from_date} ),
+            to_date => $request->parse_date( $request->{to_date} ),
+        ));
 }
 
 =head2 search_purchases
@@ -133,7 +146,7 @@ sub search_purchases {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2011-2018 The LedgerSMB Core Team
+Copyright (C) 2011-2023 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

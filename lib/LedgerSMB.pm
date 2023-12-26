@@ -193,7 +193,16 @@ named argument 'renderer' to the C<LedgerSMB::Report->render> method.
 Renders the report as a document or UI element, depending on whether
 the request's C<format> property has a non-false value.
 
+
+=item parse_amount($amount)
+
+
+=item parse_date($date)
+
+
 =back
+
+
 
 
 =head1 Copyright (C) 2006-2017, The LedgerSMB core team.
@@ -239,12 +248,14 @@ use URI;
 use URI::Escape;
 
 use LedgerSMB::App_State;
-use LedgerSMB::Locale;
-use LedgerSMB::User;
 use LedgerSMB::Company_Config;
+use LedgerSMB::Locale;
+use LedgerSMB::PGDate;
+use LedgerSMB::PGNumber;
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Setting;
 use LedgerSMB::Template;
+use LedgerSMB::User;
 
 our $VERSION = '1.12.0-dev';
 
@@ -708,6 +719,14 @@ sub parse_amount {
     return LedgerSMB::PGNumber->new(
         $amount_str,
         { format => $request->{_user}->{numberformat} }
+        );
+}
+
+sub parse_date {
+    my ($request, $date_str) = @_;
+    return LedgerSMB::PGDate->new(
+        $date_str,
+        { format => $request->{_user}->{dateformat} }
         );
 }
 
