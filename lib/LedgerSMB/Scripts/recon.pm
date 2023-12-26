@@ -61,7 +61,7 @@ and re-renders the reconciliation screen.
 sub update_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
-    $recon->{their_total} = LedgerSMB::PGNumber->from_input(
+    $recon->{their_total} = $request->parse_amount(
         $recon->{their_total}
     ) if defined $recon->{their_total};
     $recon->save() if !$recon->{submitted};
@@ -358,7 +358,7 @@ sub start_report {
     $recon->new_report;
 
     # Format ending balance as a PGNumber - required for display
-    $recon->{their_total} = LedgerSMB::PGNumber->from_input($request->{total});
+    $recon->{their_total} = $request->parse_amount($request->{total});
     delete $recon->{total};
 
     return _display_report($recon, $request);

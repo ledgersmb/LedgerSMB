@@ -525,9 +525,9 @@ sub display_row {
         }
         else {
             $form->{"debit_$i"} =
-                LedgerSMB::PGNumber->from_input($form->{"debit_$i"});
+                $form->parse_amount( \%myconfig,$form->{"debit_$i"});
             $form->{"credit_$i"} =
-                LedgerSMB::PGNumber->from_input($form->{"credit_$i"});
+                $form->parse_amount( \%myconfig,$form->{"credit_$i"});
             $form->{totaldebit}  += ($form->{"debit_$i"} // 0);
             $form->{totalcredit} += ($form->{"credit_$i"} // 0);
 
@@ -817,14 +817,14 @@ sub print {
         my $amount = $form->{"debit_0"} eq "" ? $form->{"credit_0"} : $form->{"debit_0"};
         my $amount_fx = $form->{"debit_fx_0"} eq "" ? $form->{"credit_fx_0"} : $form->{"debit_fx_0"};
 
-        $form->{exchange_rate} = LedgerSMB::PGNumber->from_input($amount) / LedgerSMB::PGNumber->from_input($amount_fx);
+        $form->{exchange_rate} = $form->parse_amount( \%myconfig,$amount) / $form->parse_amount( \%myconfig,$amount_fx);
         $form->{exchange_rate} = $form->format_amount( \%myconfig, $form->{exchange_rate}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
 
         $form->{curr} = $form->{"curr_0"};;
 
         $form->{amount} = $form->{totaldebit};
         my $fmt = LedgerSMB::Num2text->new($form->{_locale});
-        $form->{text_amount} = $fmt->num2text(LedgerSMB::PGNumber->from_input($form->{amount}));
+        $form->{text_amount} = $fmt->num2text($form->parse_amount( \%myconfig,$form->{amount}));
     } else {
         # render the code--description for all business unit instead of id
         for my $drow (@displayrows) {

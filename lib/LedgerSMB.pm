@@ -702,9 +702,18 @@ sub render_report {
     return $report->render( renderer => $renderer);
 }
 
+
+sub parse_amount {
+    my ($request, $amount_str) = @_;
+    return LedgerSMB::PGNumber->new(
+        $amount_str,
+        { format => $request->{_user}->{numberformat} }
+        );
+}
+
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2006-2018 The LedgerSMB Core Team
+Copyright (C) 2006-2023 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

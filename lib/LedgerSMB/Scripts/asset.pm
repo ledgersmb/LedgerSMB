@@ -1214,10 +1214,10 @@ sub run_import {
           $ai->{$file_columns[$_]} = $ail->[$_];
         }
         next if $ai->{purchase_value} !~ /\d/;
-        $ai->{purchase_value} = LedgerSMB::PGNumber->from_input(
+        $ai->{purchase_value} = $request->parse_amount(
              $ai->{purchase_value}
         );
-        $ai->{accum_dep} = LedgerSMB::PGNumber->from_input($ai->{accum_dep});
+        $ai->{accum_dep} = $request->parse_amount($ai->{accum_dep});
         $ai->{dep_account} = $default_dep_account if !$ai->{dep_account};
         $ai->{asset_account} = $default_asset_account if !$ai->{dep_account};
         if (!$ai->{start_depreciation}){

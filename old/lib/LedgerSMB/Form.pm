@@ -741,7 +741,7 @@ sub parse_amount {
 
     return LedgerSMB::PGNumber->from_input(
         $amount,
-                                           {format => $myconfig->{numberformat}}
+        { format => $myconfig->{numberformat} }
     );
 }
 

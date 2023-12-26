@@ -97,7 +97,7 @@ SELECT payment_post(?, ?, ?, ?, ?,
                 # no 'gl description'
                 my ($cashaccno) = split( /--/, $form->{"$form->{ARAP}_paid_$i"} );
                 my $amount =
-                    LedgerSMB::PGNumber->from_input($form->{"paid_$i"})->to_db;
+                    $form->parse_amount( $myconfig, $form->{"paid_$i"})->to_db;
                 # no 'cash approved'
                 my $source = $form->{"source_$i"};
                 my $memo = $form->{"memo_$i"};
