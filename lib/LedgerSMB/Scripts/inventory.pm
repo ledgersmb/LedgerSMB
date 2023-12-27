@@ -84,7 +84,7 @@ required invoices.
 
 sub _lines_from_form {
     # NOTE! A similar implementation is also in import_csv!
-    my ($adjustment, $hashref) = @_;
+    my ($request, $adjustment, $hashref) = @_;
     my @lines;
     for my $ln (1 .. $hashref->{rowcount}){
         next
@@ -92,9 +92,12 @@ sub _lines_from_form {
         my $line = LedgerSMB::Inventory::Adjust_Line->new(
           parts_id => $hashref->{"id_$ln"},
          partnumber => $hashref->{"partnumber_$ln"},
-            counted => $hashref->{"counted_$ln"},
-           expected => $hashref->{"onhand_$ln"},
-           variance => $hashref->{"onhand_$ln"} - $hashref->{"counted_$ln"});
+            counted => $request->parse_amount( $hashref->{"counted_$ln"} ),
+           expected => $request->parse_amount( $hashref->{"onhand_$ln"} ),
+           variance => (
+                $request->parse_amount( $hashref->{"onhand_$ln"} )
+                - $request->parse_amount( $hashref->{"counted_$ln"} ) )
+            );
         push @lines, $line;
     }
     my $rows = $adjustment->rows;
@@ -106,7 +109,7 @@ sub _lines_from_form {
 sub adjustment_save {
     my ($request) = @_;
     my $adjustment = LedgerSMB::Inventory::Adjust->new(%$request);
-    _lines_from_form($adjustment, $request);
+    _lines_from_form($request, $adjustment, $request);
     $adjustment->save;
     return begin_adjust($request);
 }

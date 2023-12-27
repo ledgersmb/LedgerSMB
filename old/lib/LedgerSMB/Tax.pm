@@ -90,7 +90,7 @@ sub init_taxes {
         $ref->{value} = LedgerSMB::PGNumber->from_db($ref->{value});
         $ref->{maxvalue} = LedgerSMB::PGNumber->from_db($ref->{maxvalue});
         $ref->{minvalue} = LedgerSMB::PGNumber->from_db($ref->{minvalue});
-        $ref->{minvalue} //= 0;
+        $ref->{minvalue} //= LedgerSMB::PGNumber->bzero;
 
         my $module = "LedgerSMB/Taxes/$ref->{taxmodulename}.pm";
         require $module;

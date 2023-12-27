@@ -88,8 +88,7 @@ Quantity consumed
 
 =cut
 
-has qty => (isa => 'LedgerSMB::Moose::Number', is => 'ro', required => '1',
-         coerce => 1);
+has qty => (isa => 'LedgerSMB::PGNumber', is => 'ro', required => '1');
 
 
 =item allocated numeric
@@ -98,8 +97,7 @@ Quantities allocated for manufacturing, orders etc.
 
 =cut
 
-has allocated  => (isa => 'LedgerSMB::Moose::Number', is => 'ro',
-              required => '0', coerce => 1);
+has allocated  => (isa => 'LedgerSMB::PGNumber', is => 'ro', required => '0');
 
 =item sellprice numeric
 
@@ -107,8 +105,7 @@ This is the sell price in the master currency.
 
 =cut
 
-has sellprice => (isa => 'LedgerSMB::Moose::Number', is => 'ro',
-             required => '0', coerce => 1);
+has sellprice => (isa => 'LedgerSMB::PGNumber', is => 'ro', required => '0');
 
 
 =item fxsellprice numeric
@@ -117,8 +114,7 @@ This is the sell price in the foreign currency if applicable.
 
 =cut
 
-has fxsellprice => (isa => 'LedgerSMB::Moose::Number', is => 'ro',
-               required => '0', coerce => 1);
+has fxsellprice => (isa => 'LedgerSMB::PGNumber', is => 'ro', required => '0');
 
 
 =item serialnumber text
@@ -167,15 +163,13 @@ has notes => (isa => 'Str', is => 'ro', required => '0');
 
 =cut
 
-has total => (is => 'ro', isa => 'LedgerSMB::Moose::Number', required => 0,
-          coerce => 1);
+has total => (is => 'ro', isa => 'LedgerSMB::PGNumber', required => 0);
 
 =item non_billable numeric
 
 =cut
 
-has non_billable => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
-               required => 1,  coerce => 1);
+has non_billable => (is => 'ro', isa => 'LedgerSMB::PGNumber', required => 1);
 
 =item jctype int
 

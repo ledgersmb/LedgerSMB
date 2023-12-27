@@ -230,8 +230,8 @@ sub _inventory_single_date {
     for my $entry ($entries->@*) {
         my $part =
             $adjustment->get_part_at_date($transdate, $entry->{partnumber});
-        my $counted  = $entry->{onhand};
-        my $expected = $part->{onhand};
+        my $counted  = $request->parse_amount( $entry->{onhand} );
+        my $expected = $request->parse_amount( $part->{onhand} );
         push @rows, LedgerSMB::Inventory::Adjust_Line->new(
             parts_id    => $part->{id},
             partnumber  => $entry->{partnumber},
@@ -414,19 +414,17 @@ sub _process_sic {
 
 sub _process_timecard {
     my ($request, $entries) = @_;
-    my @floats = qw {qty non_billable sellprice allocated};
     for my $entry (@$entries) {
         my $jc = {};
         my $counter = 0;
         for my $col (@{$cols->{timecard}}){
-            if ($request->{sep} eq ';' &&
-                any { $_ eq $col } @floats) {
-                $entry->[$counter] =~ s/,/./;
-                $entry->[$counter] = 0 if $entry->[$counter] eq '';
-            }
             $jc->{$col} = $entry->[$counter];
             ++$counter;
         }
+        for my $col (qw( qty non_billable sellprice allocated )) {
+            $jc->{$col} = $request->parse_amount( $jc->{$col} );
+        }
+        $jc->{transdate} = $request->parse_date( $jc->{transdate} );
         $jc->{total} = $jc->{qty} + $jc->{non_billable}
             if !$jc->{total};
         $jc->{checkedin} = $jc->{transdate} if !$jc->{checkedin};

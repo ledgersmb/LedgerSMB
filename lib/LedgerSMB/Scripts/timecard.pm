@@ -30,6 +30,7 @@ use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Magic qw( MIN_PER_HOUR SEC_PER_HOUR SUNDAY SATURDAY );
 use LedgerSMB::PGDate;
+use LedgerSMB::PGNumber;
 use LedgerSMB::PGTimestamp;
 use LedgerSMB::Report::Timecards;
 use LedgerSMB::Template;
@@ -142,7 +143,19 @@ sub save {
         unless defined $request->{qty}
                or ($request->{checkedin} and $request->{checkedout});
     $request->{qty} //= _get_qty($request->{checkedin}, $request->{checkedout});
-    my $timecard = LedgerSMB::Timecard->new(%$request);
+    my $timecard = LedgerSMB::Timecard->new(
+        $request->%{ qw( id business_unit_id bu_class_id parts_id description
+                         serialnumber person_id notes jctype curr
+                         ) },
+        qty => $request->parse_amount( $request->{qty} ),
+        allocated => $request->parse_amount( $request->{allocated} ),
+        sellprice => $request->parse_amount( $request->{sellprice} ),
+        fxsellprice => $request->parse_amount( $request->{fxsellprice} ),
+        checkedin => $request->parse_timestamp( $request->{checkedin} ),
+        checkedout => $request->parse_timestamp( $request->{checkedout} ),
+        non_billable => $request->parse_amount( $request->{non_billable} ),
+        total => $request->parse_amount( $request->{total} ),
+        );
     $timecard->save;
     $request->{id} = $timecard->id;
     $request->merge($timecard->get($request->{id}));
@@ -168,19 +181,23 @@ sub save_week {
     for my $row(1 .. $request->{rowcount}){
         for my $dow (SUNDAY  .. SATURDAY){
             my $date = $request->{"transdate_$dow"};
-            my $hash = { transdate => LedgerSMB::PGDate->from_input($date),
-                         checkedin => LedgerSMB::PGDate->from_input($date), };
+            my $hash = {
+                transdate => $request->parse_date( $date ),
+                checkedin => $request->parse_date( $date ),
+            };
             $date =~ s#\D#_#g;
             next unless $request->{"partnumber_${date}_${row}"};
             $hash->{$_} = $request->{"${_}_${date}_${row}"}
                  for (qw(business_unit_id partnumber description qty curr
                                  non_billable));
-            $hash->{non_billable} ||= 0;
+            $hash->{non_billable} ||= LedgerSMB::PGNumber->bzero;
             $hash->{parts_id} =  LedgerSMB::Timecard->get_part_id(
                      $hash->{partnumber}
             );
             $hash->{jctype} ||= 1;
-            $hash->{total} = $hash->{qty} + $hash->{non_chargeable};
+            $hash->{qty} = $request->parse_amount( $hash->{qty} );
+            $hash->{non_billable} = $request->parse_amount( $hash->{non_billable} );
+            $hash->{total} = $hash->{qty} + $hash->{non_billable};
             my $timecard = LedgerSMB::Timecard->new(%$hash);
             $timecard->save;
         }
@@ -197,7 +214,14 @@ sub print {
     $request->{parts_id} =  LedgerSMB::Timecard->get_part_id(
            $request->{partnumber}
     );
-    my $timecard = LedgerSMB::Timecard->new(%$request);
+    my $timecard = LedgerSMB::Timecard->new(
+        $request->%{ qw( id business_unit_id bu_class_id parts_id
+                         description serialnumber person_id notes ) },
+        qty => $request->parse_amount( $request->{qty} ),
+        allocated => $request->parse_amount( $request->{allocated} ),
+        sellprice => $request->parse_amount( $request->{sellprice} ),
+        fxsellprice => $request->parse_amount( $request->{fxsellprice} ),
+        );
     my $template = LedgerSMB::Template->new( # printed document
         user     => $request->{_user},
         locale   => $request->{_locale},
