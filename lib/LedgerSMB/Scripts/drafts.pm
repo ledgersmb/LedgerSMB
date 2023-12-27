@@ -156,8 +156,13 @@ sub list_drafts {
 
     $request->open_form;
     return $request->render_report(
-        LedgerSMB::Report::Unapproved::Drafts->new(%$request)
-        );
+        LedgerSMB::Report::Unapproved::Drafts->new(
+            $request->%{ qw( reference type ) },
+            from_date => $request->parse_date( $request->{from_date} ),
+            to_date => $request->parse_date( $request->{to_date} ),
+            amount_gt => $request->parse_amount( $request->{amount_gt} ),
+            amount_lt => $request->parse_amount( $request->{amount_lt} ),
+        ));
 }
 
 

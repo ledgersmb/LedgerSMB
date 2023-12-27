@@ -244,8 +244,13 @@ Searches for asset items and displays them
 sub asset_results {
     my ($request) = @_;
     return $request->render_report(
-        LedgerSMB::Report::Listings::Asset->new(%$request)
-        );
+        LedgerSMB::Report::Listings::Asset->new(
+            $request->%{ qw( asset_class description
+                             tag usable_life) },
+            purchase_date => $request->parse_date( $request->{purchase_date} ),
+            purchase_value => $request->parse_amount( $request->{purchase_value} ),
+            salvage_value => $request->parse_amount( $request->{salvage_value} ),
+        ));
 }
 
 =item asset_save

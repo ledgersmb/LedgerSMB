@@ -26,6 +26,7 @@ use namespace::autoclean;
 use LedgerSMB::App_State;
 use LedgerSMB::Locale;
 
+
 has 'language' => (is => 'ro', isa => 'Maybe[Str]');
 
 has 'locale' => (is => 'ro',

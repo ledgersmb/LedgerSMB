@@ -93,8 +93,7 @@ and if this is not set, an error will be returned during the reversal process.
 
 =cut
 
-has exchange_rate => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
-                required => 0, coerce => 1);
+has exchange_rate => (is => 'ro', isa => 'LedgerSMB::PGNumber', required => 0);
 
 =back
 

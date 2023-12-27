@@ -330,8 +330,11 @@ sub get_search_results {
    account_class => $request->{account_class},
     };
     return $request->render_report(
-        LedgerSMB::Report::Invoices::Payments->new(%$request)
-        );
+        LedgerSMB::Report::Invoices::Payments->new(
+            $request->%{ qw( entity_class meta_number cash_accno
+                             source batch_id curr _locale ) },
+            exchange_rate => $request->parse_amount( $request->{exchange_rate} ),
+        ));
 }
 
 =item reverse_payments

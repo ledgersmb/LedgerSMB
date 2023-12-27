@@ -200,7 +200,7 @@ The amount of the draft must be greater than this for it to show up.
 
 =cut
 
-has 'amount_gt' => (is => 'rw', coerce => 1, isa =>'LedgerSMB::Moose::Number');
+has 'amount_gt' => (is => 'rw', isa =>'LedgerSMB::PGNumber');
 
 =item amount_lt
 
@@ -208,7 +208,7 @@ The amount of the draft must be less than this for it to show up.
 
 =cut
 
-has 'amount_lt' => (is => 'rw', coerce => 1, isa =>'LedgerSMB::Moose::Number');
+has 'amount_lt' => (is => 'rw', isa =>'LedgerSMB::PGNumber');
 
 =back
 

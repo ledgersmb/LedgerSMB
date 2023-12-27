@@ -726,7 +726,7 @@ sub parse_date {
     my ($request, $date_str) = @_;
     return LedgerSMB::PGDate->from_input(
         $date_str,
-        { format => $request->{_user}->{dateformat} }
+        $request->{_user}->{dateformat}
         );
 }
 

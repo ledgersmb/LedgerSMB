@@ -56,12 +56,10 @@ Exact search on salvage value
 has asset_class     => (is => 'ro', isa => 'Int', required => 0);
 has description     => (is => 'ro', isa => 'Str', required => 0);
 has tag             => (is => 'ro', isa => 'Str', required => 0);
-has purchase_date   => (is => 'ro', isa => 'LedgerSMB::Moose::Date',coerce=> 1);
-has purchase_value  => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
-                       coerce => 1);
+has purchase_date   => (is => 'ro', isa => 'LedgerSMB::Moose::Date');
+has purchase_value  => (is => 'ro', isa => 'LedgerSMB::PGNumber');
 has usable_life     => (is => 'ro', isa => 'Int', required => 0);
-has salvage_value   => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
-                       coerce => 1);
+has salvage_value   => (is => 'ro', isa => 'LedgerSMB::PGNumber');
 
 =head1 CONSTANT METHODS
 

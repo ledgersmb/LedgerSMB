@@ -163,8 +163,15 @@ Displays the search results
 sub get_results {
     my ($request) = @_;
     return $request->render_report(
-        LedgerSMB::Report::Reconciliation::Summary->new(%$request)
-        );
+        LedgerSMB::Report::Reconciliation::Summary->new(
+            $request->%{ qw( account_id approved submitted language _locale
+                             interval from_month from_year comparison_periods
+                             comparison_type comparisons ) },
+            balance_from => $request->parse_amount( $request->{balance_from} ),
+            balance_to => $request->parse_amount( $request->{balance_to} ),
+            from_date => $request->parse_date( $request->{from_date} ),
+            to_date => $request->parse_date( $request->{to_date} ),
+        ));
 }
 
 =item search($request)
