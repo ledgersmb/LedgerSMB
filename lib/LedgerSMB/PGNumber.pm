@@ -186,31 +186,21 @@ sub from_input {
         return undef;
     }
     my %args   = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
-    my $format = ($args{format}) ? $args{format}
-                                 : LedgerSMB::App_State::User()->{numberformat};
+    my $format = $args{format};
     die 'LedgerSMB::PGNumber No Format Set' if !$format;
-    #return undef if !defined $string;
+
     my $negate;
     my $pgnum;
     my $newval;
     $negate = 1 if $string =~ /(^\(|DR$)/;
 
-    if (UNIVERSAL::isa($string, 'LedgerSMB::PGNumber')) {
-        return $string;
-    }
-
-    if (UNIVERSAL::isa($string, 'LedgerSMB::PGNumber')) {
-        $pgnum = $string;
-    }
-    else {
-        my $formatter = _formatter(
-            -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
-            -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
+    my $formatter = _formatter(
+        -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
+        -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
         );
-        $newval = $formatter->unformat_number($string);
-        $pgnum = LedgerSMB::PGNumber->new($newval);
-        $self->round_mode('+inf');
-    }
+    $newval = $formatter->unformat_number($string);
+    $pgnum = LedgerSMB::PGNumber->new($newval);
+    $self->round_mode('+inf');
 
     bless $pgnum, $self;
     $pgnum->bmul(-1) if $negate;
