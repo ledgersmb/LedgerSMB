@@ -716,15 +716,15 @@ sub render_report {
 
 sub parse_amount {
     my ($request, $amount_str) = @_;
-    return LedgerSMB::PGNumber->new(
+    return LedgerSMB::PGNumber->from_input(
         $amount_str,
-        { format => $request->{_user}->{numberformat} }
+        format => $request->{_user}->{numberformat}
         );
 }
 
 sub parse_date {
     my ($request, $date_str) = @_;
-    return LedgerSMB::PGDate->new(
+    return LedgerSMB::PGDate->from_input(
         $date_str,
         { format => $request->{_user}->{dateformat} }
         );
