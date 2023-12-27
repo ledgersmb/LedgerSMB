@@ -98,7 +98,7 @@ sub init_taxes {
         my $tax = "LedgerSMB::Taxes::$ref->{taxmodulename}"->new(%$ref);
         $tax->account($taxaccount);
         $tax->taxnumber( $ref->{'taxnumber'} );
-        $tax->value( 0 );
+        $tax->value( LedgerSMB::PGNumber->bzero );
 
         push @taxes, $tax;
     }
