@@ -374,6 +374,8 @@ sub _set_default_locale {
         ->from_header( $self->{_req}->header( 'Accept-Language' ) );
 
     $self->{_user}->{language} = $lang;
+    $self->{_user}->{dateformat} = 'YYYY-MM-DD';
+    $self->{_user}->{numberformat} = '1000.00';
     $self->{_locale}=LedgerSMB::Locale->get_handle($lang);
     $self->error( __FILE__ . ':' . __LINE__
                   . ": Locale ($lang) not loaded: $!\n" )
@@ -723,24 +725,30 @@ sub render_report {
 
 sub parse_amount {
     my ($request, $amount_str) = @_;
+    my $config = $request->{_user};
+
     return LedgerSMB::PGNumber->from_input(
         $amount_str,
-        format => $request->{_user}->{numberformat}
+        format => $config->{numberformat}
         );
 }
 
 sub parse_date {
     my ($request, $date_str) = @_;
+    my $config = $request->{_user};
+
     return LedgerSMB::PGDate->from_input(
         $date_str,
-        $request->{_user}->{dateformat}
+        format => $config->{dateformat}
         );
 }
 
 sub format_amount {
     my ($request, $amount, %args) = @_;
+    my $config = $request->{_user};
+
     return $amount->to_output(
-        format => $request->{_user}->{numberformat},
+        format => $config->{numberformat},
         money_places => $LedgerSMB::Company_Config::settings->{decimal_places},
         %args
         );
@@ -748,9 +756,10 @@ sub format_amount {
 
 sub formatter_options {
     my ($request) = @_;
+    my $config = $request->{_user};
 
     return {
-        $request->{_user}->%{ qw( numberformat dateformat ) },
+        $config->%{ qw( numberformat dateformat ) },
         money_places => $LedgerSMB::Company_Config::settings->{decimal_places},
     };
 }

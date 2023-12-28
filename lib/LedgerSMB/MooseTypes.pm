@@ -26,9 +26,9 @@ use LedgerSMB::PGTimestamp;
 
 =head1 SYNPOSIS
 
- has 'date_from' => (is => 'rw',
-                    isa => 'LedgerSMB::Moose::Date',
-                 coerce => 1
+ has 'file_content' => (is => 'rw',
+                        isa => 'LedgerSMB::Moose::ByteString',
+                        coerce => 1
  );
 
 =head1 METHODS

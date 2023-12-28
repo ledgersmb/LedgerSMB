@@ -5,12 +5,9 @@ use Test2::V0;
 use Data::Dumper;
 use URI;
 
-use LedgerSMB::App_State;
+use LedgerSMB::PGDate;
 use LedgerSMB::Report::PNL::Income_Statement;
 use LedgerSMB::Report::Balance_Sheet;
-
-
-LedgerSMB::App_State::set_User({});
 
 
 #   Test report date and comparison period calculations
@@ -29,8 +26,8 @@ LedgerSMB::App_State::set_User({});
         _uri => URI->new,
         basis => 'accrual',
         ignore_yearend => 'all',
-        from_date => '2016-01-01',
-        to_date => '2016-12-31',
+        from_date => LedgerSMB::PGDate->from_input( '2016-01-01', format => 'YYYY-MM-DD' ),
+        to_date => LedgerSMB::PGDate->from_input( '2016-12-31', format => 'YYYY-MM-DD' ),
         interval => 'year', # just a random valid value
         comparison_type => 'by_dates',
         );
@@ -45,13 +42,13 @@ LedgerSMB::App_State::set_User({});
         _uri => URI->new,
         basis => 'accrual',
         ignore_yearend => 'all',
-        from_date => '2016-01-01',
-        to_date => '2016-12-31',
+        from_date => LedgerSMB::PGDate->from_input( '2016-01-01', format => 'YYYY-MM-DD' ),
+        to_date => LedgerSMB::PGDate->from_input( '2016-12-31', format => 'YYYY-MM-DD' ),
         interval => 'year', # just a random valid value
         comparison_periods => '1',
         comparison_type => 'by_dates',
-        from_date_1 => '2015-01-01',
-        to_date_1 => '2015-12-31',
+        from_date_1 => LedgerSMB::PGDate->from_input( '2015-01-01', format => 'YYYY-MM-DD' ),
+        to_date_1 => LedgerSMB::PGDate->from_input( '2015-12-31', format => 'YYYY-MM-DD' ),
         );
     is($rpt->date_from->to_output, '2016-01-01',
        'pnl, 1 cmp by dates, from date');
@@ -68,7 +65,7 @@ LedgerSMB::App_State::set_User({});
         _uri => URI->new,
         basis => 'accrual',
         ignore_yearend => 'all',
-        from_date => '2016-01-05',
+        from_date => LedgerSMB::PGDate->from_input( '2016-01-05', format => 'YYYY-MM-DD' ),
         interval => 'year', # just a random valid value
         comparison_periods => '1',
         comparison_type => 'by_periods',
@@ -90,8 +87,8 @@ LedgerSMB::App_State::set_User({});
         _uri => URI->new,
         basis => 'accrual',
         ignore_yearend => 'all',
-        from_date => '2016-01-01',
-        to_date => '2016-12-31',
+        from_date => LedgerSMB::PGDate->from_input( '2016-01-01', format => 'YYYY-MM-DD' ),
+        to_date => LedgerSMB::PGDate->from_input( '2016-12-31', format => 'YYYY-MM-DD' ),
         interval => 'year', # just a random valid value
         comparison_periods => '1',
         comparison_type => 'by_periods',
@@ -219,8 +216,8 @@ LedgerSMB::App_State::set_User({});
         _uri => URI->new,
         basis => 'accrual',
         ignore_yearend => 'all',
-        from_date => '2016-01-01',
-        to_date => '2016-12-31',
+        from_date => LedgerSMB::PGDate->from_input( '2016-01-01', format => 'YYYY-MM-DD' ),
+        to_date => LedgerSMB::PGDate->from_input( '2016-12-31', format => 'YYYY-MM-DD' ),
         interval => 'year', # just a random valid value
         comparison_type => 'by_dates',
         );
@@ -234,13 +231,13 @@ LedgerSMB::App_State::set_User({});
     my $rpt = LedgerSMB::Report::Balance_Sheet->new(
         _uri => URI->new,
         ignore_yearend => 'all',
-        from_date => '2016-01-01',
-        to_date => '2016-12-31',
+        from_date => LedgerSMB::PGDate->from_input( '2016-01-01', format => 'YYYY-MM-DD' ),
+        to_date => LedgerSMB::PGDate->from_input( '2016-12-31', format => 'YYYY-MM-DD' ),
         interval => 'year', # just a random valid value
         comparison_periods => '1',
         comparison_type => 'by_dates',
-        from_date_1 => '2015-01-01',
-        to_date_1 => '2015-12-31',
+        from_date_1 => LedgerSMB::PGDate->from_input( '2015-01-01', format => 'YYYY-MM-DD' ),
+        to_date_1 => LedgerSMB::PGDate->from_input( '2015-12-31', format => 'YYYY-MM-DD' ),
         );
     is($rpt->date_from->to_output, '2016-01-01',
        'b/s, 1 cmp by dates, from date');
@@ -258,8 +255,8 @@ LedgerSMB::App_State::set_User({});
     my $rpt = LedgerSMB::Report::Balance_Sheet->new(
         _uri => URI->new,
         ignore_yearend => 'all',
-        from_date => '2016-01-01',
-        to_date => '2016-12-31',
+        from_date => LedgerSMB::PGDate->from_input( '2016-01-01', format => 'YYYY-MM-DD' ),
+        to_date => LedgerSMB::PGDate->from_input( '2016-12-31', format => 'YYYY-MM-DD' ),
         interval => 'year', # just a random valid value
         comparison_periods => '1',
         comparison_type => 'by_periods',
