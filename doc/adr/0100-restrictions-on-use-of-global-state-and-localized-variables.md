@@ -14,7 +14,7 @@ which is the same thing when 'strict' and 'warnings' are turned off).
 Originally, there was *no* use of `my` (local) variables.  This design
 often causes unexpected and breaking side-effects.
 
-In more recent code, global state is used store per-request values such
+In more recent code, global state is used to store per-request values such
 as the database connection object, a user (preference) object and other
 per-request state.  The globally available user preferences are used in
 Moose type coercion, converting strings (containing user-formatted
@@ -59,7 +59,7 @@ hosting falls outside the target audience for LedgerSMB.
  1. The outer-most layers must stop passing data from `$form` or `$request`
     'as-is' to the next layer; instead taking responsibility for explicit
     data type conversion
- 2. `LedgerSMB::App_State` needs to be removed from the code base
+ 2. `LedgerSMB::App_State` needs to be removed
  3. `LedgerSMB::MooseTypes` `coerce`-support needs to be removed
  4. Routines for parsing user input need to be used everywhere where user
     input is expected
@@ -68,10 +68,13 @@ hosting falls outside the target audience for LedgerSMB.
  6. `local` should be used to limit the scope of impact on Perl built-in
     variables such as `$@` and `%ENV` as well as per-request (global)
     variable assignment to ensure automatic state cleanup
- 7. The "domain specific language" (DSL) used to specify API entry points
-    is a good example of the exception to rule (1) as it simplifies the
-    code base; yet the global state is restricted to the start-up phase
-    of the application thereby not hiding side-effects during execution
+
+The "domain specific language" (DSL) used to specify API entry points is a
+good example of the exception to rule (1) as it simplifies the code base:
+while the entry points are loaded, the router keeps a global configuration
+to collect the routes being specified.  This global state is restricted to
+the start-up phase of the application thereby not hiding side-effects during
+execution.
 
 ## Annotations
 
