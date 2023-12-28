@@ -58,6 +58,7 @@ sub run_report{
     return $request->render_report(
         LedgerSMB::Report::Aging->new(
             %$request,
+            formatter_options => $request->formatter_options,
             language => $request->{_user}->{language},
             languages => $request->enabled_languages
         ));

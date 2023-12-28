@@ -133,11 +133,13 @@ sub generate_report {
     if ($request->{meta_number}){
         $report = LedgerSMB::Report::Taxform::Details->new(
             %$request,
+            formatter_options => $request->formatter_options,
             taxform    => $tf->{form_name},
             is_accrual => $tf->{is_accrual});
     } else {
         $report = LedgerSMB::Report::Taxform::Summary->new(
             %$request,
+            formatter_options => $request->formatter_options,
             taxform    => $tf->{form_name},
             is_accrual => $tf->{is_accrual});
     }
@@ -233,8 +235,10 @@ Lists all tax forms.
 sub list_all {
     my $request= shift;
     return $request->render_report(
-        LedgerSMB::Report::Taxform::List->new(%$request)
-        );
+        LedgerSMB::Report::Taxform::List->new(
+            %$request,
+            formatter_options => $request->formatter_options
+        ));
 }
 
 =back

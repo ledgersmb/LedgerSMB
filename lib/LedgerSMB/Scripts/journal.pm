@@ -33,9 +33,11 @@ sub chart_of_accounts {
 
     return $request->render_report(
         LedgerSMB::Report::COA->new(
+            formatter_options => $request->formatter_options,
             _locale => $request->{_locale},
             _uri => $request->{_uri},
-            dbh => $request->{dbh})
+            dbh => $request->{dbh}),
+        formatter_options => $request->formatter_options
         );
 }
 
@@ -117,6 +119,7 @@ sub search {
                             comparison_periods comparison_type
                             comparisons
                             ) },
+            formatter_options => $request->formatter_options,
             from_amount => $request->parse_amount( $request->{from_amount} ),
             to_amount => $request->parse_amount( $request->{to_amount} ),
             from_date => $request->parse_date( $request->{from_date} ),
@@ -139,8 +142,10 @@ sub search_purchases {
                if $request->{"business_unit_$count"};
     }
     return $request->render_report(
-        LedgerSMB::Report::Contact::Purchase->new(%$request)
-        );
+        LedgerSMB::Report::Contact::Purchase->new(
+            %$request,
+            formatter_options => $request->formatter_options
+        ));
 }
 
 

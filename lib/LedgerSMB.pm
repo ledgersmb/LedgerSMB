@@ -200,6 +200,12 @@ the request's C<format> property has a non-false value.
 =item parse_date($date)
 
 
+=item format_amount($amount, %args)
+
+=item formatter_options()
+
+
+
 =back
 
 
@@ -679,6 +685,7 @@ sub report_renderer_doc {
     my $renderer =
         $request->{_wire}->get( 'output_formatter' )->report_doc_renderer(
             $request->{_dbh},
+            $request->formatter_options,
             uc($request->{format}) || 'HTML',
             {
                 SETTINGS => {
@@ -728,6 +735,24 @@ sub parse_date {
         $date_str,
         $request->{_user}->{dateformat}
         );
+}
+
+sub format_amount {
+    my ($request, $amount, %args) = @_;
+    return $amount->to_output(
+        format => $request->{_user}->{numberformat},
+        money_places => $LedgerSMB::Company_Config::settings->{decimal_places},
+        %args
+        );
+}
+
+sub formatter_options {
+    my ($request) = @_;
+
+    return {
+        $request->{_user}->%{ qw( numberformat dateformat ) },
+        money_places => $LedgerSMB::Company_Config::settings->{decimal_places},
+    };
 }
 
 =head1 LICENSE AND COPYRIGHT

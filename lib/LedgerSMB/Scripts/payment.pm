@@ -333,6 +333,7 @@ sub get_search_results {
         LedgerSMB::Report::Invoices::Payments->new(
             $request->%{ qw( entity_class meta_number cash_accno
                              source batch_id curr _locale ) },
+            formatter_options => $request->formatter_options,
             exchange_rate => $request->parse_amount( $request->{exchange_rate} ),
         ));
 }
@@ -447,8 +448,9 @@ sub print {
     $payment->{format_amount} =
         sub {
             my $args = shift;
-            return $request->parse_amount($args->{amount})
-                ->to_output(%$args);
+            return $request->format_amount(
+                $request->parse_amount($args->{amount}),
+                %$args);
     };
 
     my $data = $bulk_post_map->($request);
@@ -492,7 +494,8 @@ sub print {
                 next unless defined $invoice->{paid};
 
                 $check->{amount} += $invoice->{paid};
-                $invoice->{paid} = $invoice->{paid}->to_output(
+                $invoice->{paid} = $request->format_amount(
+                    $invoice->{paid},
                     format => '1000.00',
                     money => 1
                 );
@@ -502,9 +505,10 @@ sub print {
             $amt->bfloor();
             $check->{text_amount} = $fmt->num2text($amt);
             $check->{decimal} = ($check->{amount} - $amt) * 100;
-            $check->{amount} = $check->{amount}->to_output(
-                    format => '1000.00',
-                    money => 1
+            $check->{amount} = $request->format_amount(
+                $check->{amount},
+                format => '1000.00',
+                money => 1
             );
             push @{$payment->{checks}}, $check;
         }
@@ -634,7 +638,9 @@ sub display_payments {
                 $request->parse_amount($req_payment_data->{payment});
 
             for my $fld (qw/ amount paid net due /) {
-                $invoice->{$fld} = $invoice->{$fld}->to_output(money  => 1);
+                $invoice->{$fld} = $request->format_amount(
+                    $invoice->{$fld},
+                    money  => 1);
             }
 
             my $fld = "payment_$_->{id}_$invoice->{id}";
@@ -643,10 +649,11 @@ sub display_payments {
             }
             else {
                 $payment->{$fld} =
-                    $request->parse_amount(
-                        $req_payment_data->{payment} // 0
-                    )
-                    ->to_output(money => 1);
+                    $request->format_amount(
+                        $request->parse_amount(
+                            $req_payment_data->{payment} // 0
+                        ),
+                        money => 1);
             }
         }
 
@@ -681,11 +688,11 @@ sub display_payments {
         if ($payment->{account_class} == 2) {
             $_->{source} = $request->{"source_$_->{contact_id}"};
         }
-        $_->{total_due} = $_->{total_due}->to_output(money  => 1);
-        $_->{contact_total} = $_->{contact_total}->to_output(money  => 1);
-        $_->{to_pay} = $_->{to_pay}->to_output(money  => 1);
+        $_->{total_due} = $request->format_amount( $_->{total_due}, money  => 1);
+        $_->{contact_total} = $request->format_amount( $_->{contact_total}, money  => 1);
+        $_->{to_pay} = $request->format_amount( $_->{to_pay}, money  => 1);
     }
-    $payment->{grand_total} = $payment->{grand_total}->to_output(money  => 1);
+    $payment->{grand_total} = $request->format_amount( $payment->{grand_total}, money  => 1);
     @{$payment->{media_options}} = (
         { text  => $request->{_locale}->text('Screen'),
           value => 'screen' },
@@ -1006,7 +1013,7 @@ sub payment2 {
     my @topay_state;
     my @open_invoices  = $Payment->get_open_invoices();
     for my $invoice (@open_invoices) {
-        $invoice->{invoice_date} = $invoice->{invoice_date}->to_output();
+        $invoice->{invoice_date} = $request->format_amount( $invoice->{invoice_date} );
 
         if ($args{update}
             && ! $request->{"checkbox_$invoice->{invoice_id}"}) {
@@ -1040,7 +1047,7 @@ sub payment2 {
 
 
         my $paid = $invoice->{amount_tc} - $due_fx - $invoice->{discount_tc};
-        my $paid_formatted = $paid->to_output(money => 1);
+        my $paid_formatted = $request->format_amount( $paid, money => 1);
         # Now its time to build the link to the invoice :)
         my $uri_module;
         #TODO move following code to sub getModuleForUri() ?
@@ -1075,10 +1082,10 @@ sub payment2 {
                 id     =>  $invoice_id,
                 href   => $uri },
             invoice_date      => "$invoice->{invoice_date}",
-            amount            => $invoice_amt ? $invoice_amt->to_output(money => 1) : '',
-            due               => $due->to_output(money => 1),
+            amount            => $invoice_amt ? $request->format_amount( $invoice_amt, money => 1) : '',
+            due               => $request->format_amount( $due, money => 1),
             paid              => $paid_formatted,
-            discount          => $request->{"optional_discount_$invoice_id"} ? $invoice->{discount}->to_output(money => 1) : 0 ,
+            discount          => $request->{"optional_discount_$invoice_id"} ? $request->format_amount( $invoice->{discount}, money => 1) : 0 ,
             optional_discount =>  $request->{"optional_discount_$invoice_id"},
             exchange_rate     =>  "$invoice->{exchangerate}",
             due_fx            =>  "$due_fx", # This was set at the begining of the for statement
@@ -1092,12 +1099,14 @@ sub payment2 {
                 name  => "memo_invoice_$invoice_id",
                 value => $request->{"memo_invoice_$invoice_id"}
             },#END HASH
-            orig_topay_fx     => LedgerSMB::PGNumber->new($due_fx)->to_output(money => 1),
+            orig_topay_fx     => $request->format_amount( LedgerSMB::PGNumber->new($due_fx), money => 1),
             topay_fx          =>  {
                 name  => "topay_fx_$invoice_id",
-                value => ($request->{"topay_fx_$invoice_id"}
-                          ? $request->parse_amount($request->{"topay_fx_$invoice_id"})->to_output(money => 1) :
-                          LedgerSMB::PGNumber->new($due_fx)->to_output(money => 1) ),
+                value => $request->format_amount(
+                    ($request->{"topay_fx_$invoice_id"}
+                     ? $request->parse_amount($request->{"topay_fx_$invoice_id"})
+                     : LedgerSMB::PGNumber->new($due_fx) ),
+                    money => 1),
             }#END HASH
         };# END PUSH
 
@@ -1124,7 +1133,9 @@ sub payment2 {
                     split(/--/, $request->{"overpayment_cash_account_$i"});
 
                 push @overpayment, {
-                    amount  => $request->parse_amount($request->{"overpayment_topay_$i"})->to_output(money => 1),
+                    amount  => $request->format_amount(
+                        $request->parse_amount($request->{"overpayment_topay_$i"}),
+                        money => 1),
                     source2 => $request->{"overpayment_source2_$i"},
                     memo    => $request->{"overpayment_memo_$i"},
                     account => {
@@ -1183,9 +1194,11 @@ sub payment2 {
             value => $request->{curr}, },
         column_headers => \@column_headers,
         rows        =>  \@invoice_data,
-        topay_subtotal => LedgerSMB::PGNumber->new(
-             (sum map {$request->parse_amount($_->{topay_fx}->{value} // 0)} @invoice_data) // 0
-        )->to_output(money => 1),
+        topay_subtotal => $request->format_amount(
+            LedgerSMB::PGNumber->new(
+                (sum map {$request->parse_amount($_->{topay_fx}->{value} // 0)} @invoice_data) // 0
+            ),
+            money => 1),
         topay_state   => \@topay_state,
         vendorcustomer => {
             name => 'vendor-customer',
@@ -1208,15 +1221,19 @@ sub payment2 {
         notes => $request->{notes},
         overpayment         => \@overpayment,
         overpayment_account => \@overpayment_account,
-        overpayment_subtotal => LedgerSMB::PGNumber->new(
-              (sum map {$request->parse_amount($_->{amount} // 0)} @overpayment)
-            + $request->parse_amount(0) # never end up with undef
-        )->to_output(money => 1),
-        payment_total => LedgerSMB::PGNumber->new(
-              (sum map {$request->parse_amount($_->{amount} // 0)} @overpayment)
-            + (sum map {$request->parse_amount($_->{topay_fx}->{value}  // 0)} @invoice_data)
-            + $request->parse_amount(0) # never end up with undef
-        )->to_output(money => 1),
+        overpayment_subtotal => $request->format_amount(
+            LedgerSMB::PGNumber->new(
+                (sum map {$request->parse_amount($_->{amount} // 0)} @overpayment)
+                + $request->parse_amount(0) # never end up with undef
+            ),
+            money => 1),
+        payment_total => $request->format_amount(
+            LedgerSMB::PGNumber->new(
+                (sum map {$request->parse_amount($_->{amount} // 0)} @overpayment)
+                + (sum map {$request->parse_amount($_->{topay_fx}->{value}  // 0)} @invoice_data)
+                + $request->parse_amount(0) # never end up with undef
+            ),
+            money => 1),
     };
 
     $select->{selected_account} = $vc_options[0]->{cash_account_id}
@@ -1453,13 +1470,17 @@ sub print_payment {
     # IF YOU NEED MORE INFORMATION ON THE HEADER AND ROWS ITEMS CHECK SQL FUNCTIONS
     # payment_gather_header_info AND payment_gather_line_info
     for my $row (@rows) {
-        $row->{amount} = $row->{amount}->to_output(money => 1);
+        $row->{amount} = $request->format_amount(
+            $row->{amount},
+            money => 1);
     }
     my $select = {
         header        => $header,
         rows          => \@rows,
         format_amount => sub {
-            $request->parse_amount(@_)->to_output(money => 1)
+            $request->format_amount(
+                $request->parse_amount(@_),
+                money => 1)
         }
     };
     my $template = LedgerSMB::Template->new( # printed document

@@ -271,7 +271,7 @@ sub _list_exchangerates {
         ];
     my $rows = [];
     for my $s (@$exchangerates) {
-        $s->{rate} = $s->{rate}->to_output();
+        $s->{rate} = $request->format_amount( $s->{rate} );
         $s->{drop_href_suffix} = "&curr=$s->{curr}&rate_type=$s->{rate_type}&valid_from=" . $s->{valid_from}->to_output();
         $s->{drop} = '[' . $request->{_locale}->text('delete') . ']';
 

@@ -20,6 +20,7 @@ use warnings;
 use base qw(PGObject::Type::BigFloat);
 
 # try using the GMP library for Math::BigFloat for speed
+use Carp;
 use Math::BigFloat try => 'GMP';
 use Memoize;
 use Number::Format;
@@ -186,7 +187,7 @@ sub from_input {
         return undef;
     }
     my %args   = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
-    my $format = $args{format};
+    my $format = $args{format} // $args{numberformat};
     die 'LedgerSMB::PGNumber No Format Set' if !$format;
 
     my $negate;
@@ -222,6 +223,10 @@ Override user's default output format with specified format for this number.
 
 Specifies the number of places to round
 
+=item money_places
+
+Specifies the number of decimal places for for money
+
 =item money
 
 Specifies to round to configured number format for money
@@ -229,8 +234,6 @@ Specifies to round to configured number format for money
 =item neg_format
 
 Specifies the negative format
-
-=item locale
 
 =back
 
@@ -242,13 +245,11 @@ sub to_output {
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
     my $is_neg = $self->is_neg;
 
-    my $format = ($args{format}) ? $args{format}
-                              : LedgerSMB::App_State::User()->{numberformat};
-    die 'LedgerSMB::PGNumber No Format Set, check numberformat in user_preference' if !$format;
+    my $format = $args{format} // $args{numberformat};
+    croak 'LedgerSMB::PGNumber No Format Set, check numberformat in user_preference' if !$format;
 
     my $places = undef;
-    $places = $LedgerSMB::Company_Config::settings->{decimal_places}
-       if $args{money};
+    $places = $args{money_places} if $args{money};
     $places = ($args{places}) ? $args{places} : $places;
     my $str = $self->bstr;
     my $dplaces = $places;

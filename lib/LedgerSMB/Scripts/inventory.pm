@@ -122,8 +122,10 @@ sub adjustment_list {
     my ($request) = @_;
 
     return $request->render_report(
-        LedgerSMB::Report::Inventory::Search_Adj->new(%$request)
-        );
+        LedgerSMB::Report::Inventory::Search_Adj->new(
+            %$request,
+            formatter_options => $request->formatter_options
+        ));
 }
 
 =item adjustment_approve

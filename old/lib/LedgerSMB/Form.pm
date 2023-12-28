@@ -703,19 +703,26 @@ sub format_amount {
     $amount = "" unless defined $amount;
     $places = "0" unless defined $places;
     $dash = "" unless defined $dash;
-    $amount = $self->parse_amount($myconfig, $amount);
     if ($self->{money_precision}){
        $places= $self->{money_precision};
     }
-    $myconfig->{numberformat} = '1000.00' unless $myconfig->{numberformat};
     $amount = $self->parse_amount( $myconfig, $amount )
         unless ref($amount) eq 'LedgerSMB::PGNumber';
+    $myconfig->{numberformat} = '1000.00' unless $myconfig->{numberformat};
     return $amount->to_output({
                places => $places,
                 money => $self->{money_precision},
            neg_format => $dash,
                format => $myconfig->{numberformat},
     });
+}
+
+sub formatter_options {
+    my ( $self ) = @_;
+
+    return {
+        $self->{_user}->%{ qw( dateformat numberformat ) }
+    };
 }
 
 =item $form->parse_amount($myconfig, $amount);

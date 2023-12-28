@@ -123,8 +123,10 @@ Lists the business types.  No inputs expected or used.
 sub list_business_types {
     my ($request) = @_;
     return $request->render_report(
-        LedgerSMB::Report::Listings::Business_Type->new(%$request)
-        );
+        LedgerSMB::Report::Listings::Business_Type->new(
+            %$request,
+            formatter_options => $request->formatter_options
+        ));
 }
 
 =item list_gifi
@@ -136,8 +138,10 @@ List the gifi entries.  No inputs expected or used.
 sub list_gifi {
     my ($request) = @_;
     return $request->render_report(
-        LedgerSMB::Report::Listings::GIFI->new(%$request)
-        );
+        LedgerSMB::Report::Listings::GIFI->new(
+            %$request,
+            formatter_options => $request->formatter_options
+        ));
 }
 
 =item list_warehouse
@@ -149,8 +153,10 @@ List the warehouse entries.  No inputs expected or used.
 sub list_warehouse {
     my ($request) = @_;
     return $request->render_report(
-        LedgerSMB::Report::Listings::Warehouse->new(%$request)
-        );
+        LedgerSMB::Report::Listings::Warehouse->new(
+            %$request,
+            formatter_options => $request->formatter_options
+        ));
 }
 
 =item list_language
@@ -162,8 +168,10 @@ List language entries.  No inputs expected or used.
 sub list_language {
     my ($request) = @_;
     return $request->render_report(
-        LedgerSMB::Report::Listings::Language->new(%$request)
-        );
+        LedgerSMB::Report::Listings::Language->new(
+            %$request,
+            formatter_options => $request->formatter_options
+        ));
 }
 
 =item list_sic
@@ -193,6 +201,7 @@ sub generate_balance_sheet {
     $logger->debug("Stub LedgerSMB::Scripts::reports->generate_balance_sheet\n");
     my $rpt = LedgerSMB::Report::Balance_Sheet->new(
         %$request,
+        formatter_options => $request->formatter_options,
         column_path_prefix => [ 0 ]);
     $rpt->run_report($request);
 
@@ -222,8 +231,10 @@ sub search_overpayments {
                post_date batch_class account_class);
 
     return $request->render_report(
-        LedgerSMB::Report::Listings::Overpayments->new(%$request)
-        );
+        LedgerSMB::Report::Listings::Overpayments->new(
+            %$request,
+            formatter_options => $request->formatter_options
+        ));
 }
 
 =item reverse_overpayment

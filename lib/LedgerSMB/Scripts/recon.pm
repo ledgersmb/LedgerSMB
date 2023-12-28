@@ -167,6 +167,7 @@ sub get_results {
             $request->%{ qw( account_id approved submitted language _locale
                              interval from_month from_year comparison_periods
                              comparison_type comparisons ) },
+            formatter_options => $request->formatter_options,
             balance_from => $request->parse_amount( $request->{balance_from} ),
             balance_to => $request->parse_amount( $request->{balance_to} ),
             from_date => $request->parse_date( $request->{from_date} ),
@@ -260,7 +261,7 @@ sub _display_report {
     /) {
         for my $bal_type (qw/ credits debits/) {
             $recon->{"$amt_name$bal_type"} = (
-                $recon->{"$amt_name$bal_type"}->to_output(money => 1)
+                $request->format_amount( $recon->{"$amt_name$bal_type"}, money => 1)
             );
         }
     }
@@ -274,7 +275,7 @@ sub _display_report {
             their_credits
             their_debits
         /) {
-            $line->{$element} = $line->{$element}->to_output(money => 1);
+            $line->{$element} = $request->format_amount( $line->{$element}, money => 1);
         }
     }
 
@@ -287,7 +288,7 @@ sub _display_report {
         our_total
         beginning_balance
     /) {
-        $recon->{$field} = $recon->{$field}->to_output(money => 1);
+        $recon->{$field} = $request->format_amount( $recon->{$field}, money => 1);
     }
 
     my $template = $request->{_wire}->get('ui');

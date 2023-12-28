@@ -129,8 +129,10 @@ If set, excludes those which are not associated with customers/vendors.
 sub list {
     my ($request) = @_;
     return $request->render_report(
-        LedgerSMB::Report::Listings::Business_Unit->new(%$request)
-        );
+        LedgerSMB::Report::Listings::Business_Unit->new(
+            %$request,
+            formatter_options => $request->formatter_options
+        ));
 }
 
 =item delete

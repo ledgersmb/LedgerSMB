@@ -250,8 +250,10 @@ sub list_batches {
     my ($request) = @_;
     $request->open_form;
     return $request->render_report(
-        LedgerSMB::Report::Unapproved::Batch_Overview->new(approved => 0, %$request)
-        );
+        LedgerSMB::Report::Unapproved::Batch_Overview->new(approved => 0,
+                                                           %$request,
+                                                           formatter_options => $request->formatter_options
+        ));
 }
 
 =head2 get_batch
@@ -275,6 +277,7 @@ sub get_batch {
             language         => $request->{_user}->{language},
             languages        => $request->enabled_languages,
             %$request,
+            formatter_options => $request->formatter_options
         ));
 }
 
@@ -508,8 +511,9 @@ sub print_batch {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(
         %$request,
-        language         => $request->{_user}->{language},
-        languages        => $request->enabled_languages,
+        formatter_options => $request->formatter_options,
+        language          => $request->{_user}->{language},
+        languages         => $request->enabled_languages,
         );
     $request->{format} = 'pdf';
     $request->{media} = 'zip';

@@ -122,8 +122,10 @@ Displays a list of all asset classes.  No inputs required.
 sub asset_category_results {
     my ($request) = @_;
     return $request->render_report(
-        LedgerSMB::Report::Listings::Asset_Class->new(%$request)
-        );
+        LedgerSMB::Report::Listings::Asset_Class->new(
+            %$request,
+            formatter_options => $request->formatter_options
+        ));
 }
 
 =item edit_asset_class
@@ -247,6 +249,7 @@ sub asset_results {
         LedgerSMB::Report::Listings::Asset->new(
             $request->%{ qw( asset_class description
                              tag usable_life) },
+            formatter_options => $request->formatter_options,
             purchase_date => $request->parse_date( $request->{purchase_date} ),
             purchase_value => $request->parse_amount( $request->{purchase_value} ),
             salvage_value => $request->parse_amount( $request->{salvage_value} ),
@@ -697,7 +700,7 @@ sub report_results {
             report_date    => $r->{report_date},
             entered_at     => $r->{entered_at},
             approved_at    => $r->{approved_at},
-            total          => $r->{total}->to_output(money => 1),
+            total          => $request->format_amount($r->{total}, money => 1),
         };
         for my $ac (@{$ar->{asset_classes}}){
             if ($ac->{id} == $r->{asset_class}){
@@ -814,12 +817,12 @@ sub report_details {
 
     my $title =
         $locale->text('Report [_1] on date [_2]',
-                      $report->{id}, $report->{report_date}->to_output);
+                      $report->{id}, $request->format_amount( $report->{report_date} ) );
     my $rows = [];
     for my $r (@{$report->{report_lines}}){
         for my $amt (qw(purchase_value basis prior_dep dep_this_time dep_ytd
                         dep_total)){
-             $r->{$amt} = $r->{$amt}->to_output(money  => 1);
+             $r->{$amt} = $request->format_amount( $r->{$amt}, money  => 1);
         }
         push @$rows, $r;
     }
@@ -916,7 +919,7 @@ sub partial_disposal_details {
         for my $amt (qw(purchase_value disposed_acquired_value
                      remaining_aquired_value percent_disposed
                      percent_remaining)){
-             $r->{$amt} = $r->{$amt}->to_output(money => 1);
+             $r->{$amt} = $request->format_amount( $r->{$amt}, money => 1);
         }
 #        $r->{gain_loss} = $r->{gain_loss}->to_output(
 #                                                    money => 1,
@@ -1026,7 +1029,7 @@ sub disposal_details {
         for my $amt (qw(purchase_value adj_basis accum_depreciation
                         disposal_amt gain_loss)
         ){
-             $r->{$amt} = $r->{$amt}->to_output(money  => 1);
+             $r->{$amt} = $request->format_amount( $r->{$amt}, money  => 1);
         }
         push @$rows, $r;
     }
@@ -1131,8 +1134,10 @@ No inputs required or used.
 sub display_nbv {
     my ($request) = @_;
     return $request->render_report(
-        LedgerSMB::Report::Assets::Net_Book_Value->new(%$request)
-        );
+        LedgerSMB::Report::Assets::Net_Book_Value->new(
+            %$request,
+            formatter_options => $request->formatter_options
+        ));
 }
 
 =item begin_import

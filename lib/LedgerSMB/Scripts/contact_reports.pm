@@ -32,8 +32,10 @@ sub search{
     my ($request) = @_;
 
     return $request->render_report(
-        LedgerSMB::Report::Contact::Search->new(%$request)
-        );
+        LedgerSMB::Report::Contact::Search->new(
+            %$request,
+            formatter_options => $request->formatter_options
+        ));
 }
 
 =item history
@@ -46,8 +48,10 @@ sub history {
     my ($request) = @_;
 
     return $request->render_report(
-        LedgerSMB::Report::Contact::History->new(%$request)
-        );
+        LedgerSMB::Report::Contact::History->new(
+            %$request,
+            formatter_options => $request->formatter_options
+        ));
 }
 
 =back
