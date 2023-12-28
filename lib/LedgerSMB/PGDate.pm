@@ -198,13 +198,18 @@ unless C<$format> has been specified to override it.
 =cut
 
 sub from_input{
-    my ($self, $input, $format) = @_;
+    my $self = shift;
+    my $input = shift;
 
     local $@ = undef;
     return $input if eval {$input->isa(__PACKAGE__)} && $input->is_date;
 
     return __PACKAGE__->new()
         if ! $input; # matches undefined as well as ''
+
+    my %args   = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
+    my $format = $args{format} // $args{dateformat};
+    croak 'LedgerSMB::PGDate No Format Set' if !$format;
 
     my $dt;
     my @fmts;

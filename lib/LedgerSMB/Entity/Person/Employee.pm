@@ -53,7 +53,7 @@ Start date for employee.
 
 =cut
 
-has start_date => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has start_date => (is => 'rw', isa => 'LedgerSMB::PGDate');
 
 =item end_date
 
@@ -61,7 +61,7 @@ End date for employee
 
 =cut
 
-has end_date => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has end_date => (is => 'rw', isa => 'LedgerSMB::PGDate');
 
 =item dob
 
@@ -69,7 +69,7 @@ Date of Birth.  Required.
 
 =cut
 
-has dob => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has dob => (is => 'rw', isa => 'LedgerSMB::PGDate');
 
 =item role
 

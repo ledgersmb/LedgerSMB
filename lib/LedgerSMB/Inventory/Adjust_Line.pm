@@ -88,8 +88,7 @@ This is the counted date, usually set during the variance check.
 
 =cut
 
-has counted_date => (is => 'rw', isa => 'LedgerSMB::Moose::Date', coerce => 1,
-               required => 0);
+has counted_date => (is => 'rw', isa => 'LedgerSMB::PGDate', required => 0);
 
 =back
 

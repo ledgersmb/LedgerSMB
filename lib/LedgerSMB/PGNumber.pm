@@ -188,7 +188,7 @@ sub from_input {
     }
     my %args   = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
     my $format = $args{format} // $args{numberformat};
-    die 'LedgerSMB::PGNumber No Format Set' if !$format;
+    croak 'LedgerSMB::PGNumber No Format Set' if !$format;
 
     my $negate;
     my $pgnum;

@@ -61,8 +61,7 @@ submission.
 =cut
 
 has batch_id => (is => 'ro', isa => 'Int', required => 0);
-has post_date => (is => 'ro', isa => 'LedgerSMB::Moose::Date',
-                required => 0, coerce => 1);
+has post_date => (is => 'ro', isa => 'LedgerSMB::PGDate', required => 0);
 
 has batch_number => (is => 'ro', isa => 'Str', required => 0);
 

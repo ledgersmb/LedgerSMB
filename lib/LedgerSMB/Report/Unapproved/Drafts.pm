@@ -184,7 +184,7 @@ Transaction date must be between from date and to date.
 
 =cut
 
-has 'from_date' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has 'from_date' => (is => 'rw', isa => 'LedgerSMB::PGDate');
 
 =item to_date
 
@@ -192,7 +192,7 @@ Transaction date must be between from date and to date.
 
 =cut
 
-has 'to_date' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has 'to_date' => (is => 'rw', isa => 'LedgerSMB::PGDate');
 
 =item amount_gt
 

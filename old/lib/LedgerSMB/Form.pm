@@ -752,6 +752,25 @@ sub parse_amount {
     );
 }
 
+=item $form->parse_date($myconfig, $date);
+
+=cut
+
+sub parse_date {
+    my ( $self, $myconfig, $date ) = @_;
+    local $@;
+    return $date if eval { $date->isa('LedgerSMB::PGDate') };
+
+    if ( ( ! defined $date ) or ( $date eq '' ) ) {
+        $date = '';
+    }
+
+    return LedgerSMB::PGDate->from_input(
+        $date,
+        { format => $myconfig->{dateformat} }
+    );
+}
+
 =item $form->round_amount($amount, $places);
 
 Rounds the provided $amount to $places decimal places.

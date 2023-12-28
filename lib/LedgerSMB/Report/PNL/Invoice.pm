@@ -49,7 +49,7 @@ Transaction Date
 
 =cut
 
-has transdate => (is => 'rw', isa =>'LedgerSMB::Moose::Date', coerce=> 1);
+has transdate => (is => 'rw', isa =>'LedgerSMB::PGDate');
 
 =item name
 

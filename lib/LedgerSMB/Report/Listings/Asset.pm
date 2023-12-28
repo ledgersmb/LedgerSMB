@@ -56,7 +56,7 @@ Exact search on salvage value
 has asset_class     => (is => 'ro', isa => 'Int', required => 0);
 has description     => (is => 'ro', isa => 'Str', required => 0);
 has tag             => (is => 'ro', isa => 'Str', required => 0);
-has purchase_date   => (is => 'ro', isa => 'LedgerSMB::Moose::Date');
+has purchase_date   => (is => 'ro', isa => 'LedgerSMB::PGDate');
 has purchase_value  => (is => 'ro', isa => 'LedgerSMB::PGNumber');
 has usable_life     => (is => 'ro', isa => 'Int', required => 0);
 has salvage_value   => (is => 'ro', isa => 'LedgerSMB::PGNumber');

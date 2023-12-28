@@ -58,6 +58,7 @@ sub run_report{
     return $request->render_report(
         LedgerSMB::Report::Aging->new(
             %$request,
+            to_date   => $request->parse_date( $request->{to_date} ),
             formatter_options => $request->formatter_options,
             language => $request->{_user}->{language},
             languages => $request->enabled_languages
@@ -323,6 +324,7 @@ sub generate_statement {
         );
         my $aging_report = LedgerSMB::Report::Aging->new(
             %$request,
+            to_date   => $request->parse_date( $request->{to_date} ),
             (ref $filters{$eca}) ? (details_filter => $filters{$eca}) : (),
             languages => $request->enabled_languages,
             entity_id => $entity_id,

@@ -112,7 +112,7 @@ sub timecard_screen {
          );
          @{$request->{currencies}} =
              $request->setting->get_currencies;
-         my $startdate = LedgerSMB::PGDate->from_input($request->{date_from});
+         my $startdate = $request->parse_date($request->{date_from});
 
          my @dates = ();
          for (SUNDAY .. SATURDAY){
@@ -142,7 +142,7 @@ sub save {
     die $request->{_locale}->text('Please submit a start/end time or a qty')
         unless defined $request->{qty}
                or ($request->{checkedin} and $request->{checkedout});
-    $request->{qty} //= _get_qty($request->{checkedin}, $request->{checkedout});
+    $request->{qty} //= _get_qty($request, $request->{checkedin}, $request->{checkedout});
     my $timecard = LedgerSMB::Timecard->new(
         $request->%{ qw( id business_unit_id bu_class_id parts_id description
                          serialnumber person_id notes jctype curr
@@ -164,9 +164,9 @@ sub save {
 }
 
 sub _get_qty {
-    my ($checkedin, $checkedout) = @_;
-    my $when_in = LedgerSMB::PGDate->from_input($checkedin);
-    my $when_out = LedgerSMB::PGDate->from_input($checkedout);
+    my ($request, $checkedin, $checkedout) = @_;
+    my $when_in = $request->parse_date($checkedin);
+    my $when_out = $request->parse_date($checkedout);
     return ($when_in->epoch - $when_out->epoch) / SEC_PER_HOUR;
 }
 

@@ -239,12 +239,10 @@ Active items only to this date.
 =cut
 
 has active_date_from => (is => 'ro',
-                        isa => 'LedgerSMB::Moose::Date',
-                     coerce => 1,
+                        isa => 'LedgerSMB::PGDate',
                    required => 0);
 has active_date_to => (is => 'ro',
-                      isa => 'LedgerSMB::Moose::Date',
-                   coerce => 1,
+                      isa => 'LedgerSMB::PGDate',
                  required => 0);
 
 =item users

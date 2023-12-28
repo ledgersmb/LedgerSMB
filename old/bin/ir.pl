@@ -1073,7 +1073,7 @@ sub update {
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
 
-    $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
+    $form->{$_} = $form->parse_date( \%myconfig, $form->{$_} )->to_output()
        for qw(transdate duedate crdate);
 
     if ( $newname = &check_name('vendor') ) {

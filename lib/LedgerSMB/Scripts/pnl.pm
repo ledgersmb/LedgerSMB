@@ -49,14 +49,33 @@ sub generate_income_statement {
     my $rpt;
     $request->{pnl_type} = '' unless defined $request->{pnl_type};
     if ($request->{pnl_type} eq 'invoice'){
-        $rpt = LedgerSMB::Report::PNL::Invoice->new(%$request);
+        $rpt = LedgerSMB::Report::PNL::Invoice->new(
+            %$request,
+            formatter_options => $request->formatter_options,
+            from_date  => $request->parse_date( $request->{from_date} ),
+            to_date  => $request->parse_date( $request->{to_date} ),
+            transdate => $request->parse_date( $request->{transdate} ),
+            );
     } elsif ($request->{pnl_type} eq 'eca'){
-        $rpt = LedgerSMB::Report::PNL::ECA->new(%$request);
+        $rpt = LedgerSMB::Report::PNL::ECA->new(
+            %$request,
+            formatter_options => $request->formatter_options,
+            from_date  => $request->parse_date( $request->{from_date} ),
+            to_date  => $request->parse_date( $request->{to_date} ),
+            );
     } elsif ($request->{pnl_type} eq 'product'){
-        $rpt = LedgerSMB::Report::PNL::Product->new(%$request);
+        $rpt = LedgerSMB::Report::PNL::Product->new(
+            %$request,
+            formatter_options => $request->formatter_options,
+            from_date  => $request->parse_date( $request->{from_date} ),
+            to_date  => $request->parse_date( $request->{to_date} ),
+            );
     } else {
         $rpt = LedgerSMB::Report::PNL::Income_Statement->new(
             %$request,
+            formatter_options => $request->formatter_options,
+            from_date  => $request->parse_date( $request->{from_date} ),
+            to_date  => $request->parse_date( $request->{to_date} ),
             column_path_prefix => [ 0 ]);
         $rpt->run_report($request);
 

@@ -997,7 +997,7 @@ sub update {
         $form->{transdate},
         1,
     );
-    $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
+    $form->{$_} = $form->parse_date( \%myconfig, $form->{$_} )->to_output()
        for qw(transdate reqdate);
 
 

@@ -334,6 +334,8 @@ sub get_search_results {
             $request->%{ qw( entity_class meta_number cash_accno
                              source batch_id curr _locale ) },
             formatter_options => $request->formatter_options,
+            from_date => $request->parse_date( $request->{from_date} ),
+            to_date => $request->parse_date( $request->{to_date} ),
             exchange_rate => $request->parse_amount( $request->{exchange_rate} ),
         ));
 }
@@ -347,7 +349,7 @@ This reverses payments selected in the search results.
 sub reverse_payments {
     my ($request) = @_;
 
-    my $date_reversed = LedgerSMB::PGDate->from_input(
+    my $date_reversed = $request->parse_date(
         $request->{date_reversed}
     );
 
@@ -394,7 +396,7 @@ sub post_payments_bulk {
             cash_accno    => $request->{cash_accno},
             currency      => $request->{currency},
             exchangerate  => $request->{exchangerate},
-            payment_date  => LedgerSMB::PGDate->from_input(
+            payment_date  => $request->parse_date(
                 $request->{datepaid}),
             );
         my $data = $bulk_post_map->($request);

@@ -250,7 +250,7 @@ Shows invoice balances as of this date.
 
 =cut
 
-has as_of => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has as_of => (is => 'ro', isa => 'LedgerSMB::PGDate');
 
 =item summarize
 

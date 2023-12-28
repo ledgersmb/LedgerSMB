@@ -144,6 +144,9 @@ sub search_purchases {
     return $request->render_report(
         LedgerSMB::Report::Contact::Purchase->new(
             %$request,
+            from_date => $request->parse_date( $request->{from_date} ),
+            to_date => $request->parse_date( $request->{to_date} ),
+            as_of => $request->parse_date( $request->{as_of} ),
             formatter_options => $request->formatter_options
         ));
 }

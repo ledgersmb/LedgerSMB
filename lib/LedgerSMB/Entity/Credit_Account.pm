@@ -204,8 +204,8 @@ The last allowable date for invoices
 
 =cut
 
-has 'startdate' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
-has 'enddate'   => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has 'startdate' => (is => 'rw', isa => 'LedgerSMB::PGDate');
+has 'enddate'   => (is => 'rw', isa => 'LedgerSMB::PGDate');
 
 =item threshold
 

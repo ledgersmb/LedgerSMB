@@ -164,13 +164,13 @@ has description => (is => 'ro', isa => 'Str');
 
 =cut
 
-has start_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has start_date => (is => 'ro', isa => 'LedgerSMB::PGDate');
 
 =item end_date
 
 =cut
 
-has end_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has end_date => (is => 'ro', isa => 'LedgerSMB::PGDate');
 
 =back
 

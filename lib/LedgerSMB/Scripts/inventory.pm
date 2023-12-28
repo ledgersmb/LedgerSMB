@@ -58,7 +58,10 @@ the screen.
 
 sub adjustment_next {
     my ($request) = @_;
-    my $adjustment = LedgerSMB::Inventory::Adjust->new(%$request);
+    my $adjustment = LedgerSMB::Inventory::Adjust->new(
+        %$request,
+        transdate => $request->parse_date( $request->{transdate} ),
+        );
     for my $i (1 .. $request->{rowcount}){
         if ($request->{"id_$i"} eq 'new' or not $request->{"id_$i"}){
             my $item = $adjustment->get_part_at_date(
@@ -108,7 +111,10 @@ sub _lines_from_form {
 
 sub adjustment_save {
     my ($request) = @_;
-    my $adjustment = LedgerSMB::Inventory::Adjust->new(%$request);
+    my $adjustment = LedgerSMB::Inventory::Adjust->new(
+        %$request,
+        transdate => $request->parse_date( $request->{transdate} ),
+        );
     _lines_from_form($request, $adjustment, $request);
     $adjustment->save;
     return begin_adjust($request);

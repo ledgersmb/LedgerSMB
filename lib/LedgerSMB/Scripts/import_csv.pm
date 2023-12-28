@@ -221,7 +221,7 @@ sub _inventory_single_date {
     #  in LedgerSMB::Scripts::inventory::_lines_from_form()
 
     my $adjustment = LedgerSMB::Inventory::Adjust->new(
-        transdate => $transdate,
+        transdate => $request->parse_date( $transdate ),
         source    => 'CSV upload',
         dbh       => $request->{dbh},
         );

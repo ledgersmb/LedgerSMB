@@ -344,7 +344,10 @@ sub _create_employee {
         salutation_id => $salutation_id,
         control_code => $self->options->{employeenumber},
         manager_id => $_manager->{entity_id},
-        dob => LedgerSMB::PGDate->from_input($self->options->{dob}),
+        dob => LedgerSMB::PGDate->from_input(
+            $self->options->{dob},
+            format => 'YYYY-MM-DD'
+        ),
         name => ($self->options->{first_name} . ' ' .
                  ($self->options->{middle_name} ?
                   $self->options->{middle_name} . ' ' : '') .

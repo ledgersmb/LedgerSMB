@@ -53,7 +53,9 @@ sub run {
     return $request->render_report(
         LedgerSMB::Report::Trial_Balance->new(
             %$request,
-            formatter_options => $request->formatter_options
+            formatter_options => $request->formatter_options,
+            from_date => $request->parse_date( $request->{from_date} ),
+            to_date => $request->parse_date( $request->{to_date} ),
         ));
 }
 

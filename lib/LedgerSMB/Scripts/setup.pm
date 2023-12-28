@@ -1296,7 +1296,9 @@ sub _save_user {
     local $LedgerSMB::App_State::User = {};
     my $emp = LedgerSMB::Entity::Person::Employee->new(
         %$request,
-        dob => LedgerSMB::PGDate->from_input($request->{dob})
+        dob => $request->parse_date( $request->{dob} ),
+        start_date => $request->parse_date( $request->{start_date} ),
+        end_date => $request->parse_date( $request->{end_date} ),
         );
     $emp->save;
     $request->{entity_id} = $emp->entity_id;

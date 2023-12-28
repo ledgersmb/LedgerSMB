@@ -202,6 +202,8 @@ sub generate_balance_sheet {
     my $rpt = LedgerSMB::Report::Balance_Sheet->new(
         %$request,
         formatter_options => $request->formatter_options,
+        from_date  => $request->parse_date( $request->{from_date} ),
+        to_date  => $request->parse_date( $request->{to_date} ),
         column_path_prefix => [ 0 ]);
     $rpt->run_report($request);
 
@@ -233,6 +235,9 @@ sub search_overpayments {
     return $request->render_report(
         LedgerSMB::Report::Listings::Overpayments->new(
             %$request,
+            post_date => $request->parse_date( $request->{post_date} ),
+            from_date => $request->parse_date( $request->{from_date} ),
+            to_date => $request->parse_date( $request->{to_date} ),
             formatter_options => $request->formatter_options
         ));
 }

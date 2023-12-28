@@ -630,7 +630,7 @@ sub update {
     my $min_lines = $form->get_setting('min_empty');
     $form->open_form unless $form->check_form;
 
-    $form->{transdate} = LedgerSMB::PGDate->from_input($form->{transdate})->to_output();
+    $form->{transdate} = $form->parse_date( \%myconfig, $form->{transdate} )->to_output();
     if ( $form->{transdate} ne $form->{oldtransdate} ) {
         $form->{oldtransdate} = $form->{transdate};
     }

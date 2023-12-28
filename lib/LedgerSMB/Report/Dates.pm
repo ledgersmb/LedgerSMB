@@ -31,14 +31,14 @@ relevant Moose objects.
 
 =cut
 
-has from_date => (is => 'ro', isa => 'LedgerSMB::Moose::Date', coerce => 1,
+has from_date => (is => 'ro', isa => 'LedgerSMB::PGDate',
                   lazy => 1, builder => '_get_from_date');
 
 =item to_date
 
 =cut
 
-has to_date => (is => 'ro', isa => 'LedgerSMB::Moose::Date', coerce => 1,
+has to_date => (is => 'ro', isa => 'LedgerSMB::PGDate',
                 lazy => 1, builder => '_get_to_date');
 
 =item interval string
