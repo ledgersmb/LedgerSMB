@@ -130,3 +130,7 @@ idea of the decision, not the current version of the text.
 * Use of state transitions (actions) on Resource (document) state machines
   (=workflows) to check user authorization (instead of [or in addition to]
   data access limitations)
+* Security model for database access, using principle of least privilege by
+  authenticating each user separately
+* Separation of concerns between client, webserver, Perl layer and database
+
