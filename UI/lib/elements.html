@@ -58,7 +58,7 @@
   };
 
   # date
-  USER.dojo_dateformat = USER.dateformat.replace('mm','MM');
+  USER.dojo_dateformat = USER.dateformat.lower().replace('mm','MM');
   element_defaults.date = {
     "data-dojo-type" = 'lsmb/DateTextBox',
     'data-dojo-props' = "constraints: {datePattern: '$USER.dojo_dateformat'},placeholder: '$USER.dateformat'"
