@@ -15,7 +15,6 @@ use Plack::Request;
 use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
-use LedgerSMB::App_State;
 
 use Log::Log4perl qw( :easy );
 
@@ -172,14 +171,17 @@ ok(!defined $form->add_date(\%myconfig),
 
 use LedgerSMB::PGDate;
 
-LedgerSMB::App_State::set_User({});
-
 # there are 4 requirements to PGDate that we can verify here:
 is(LedgerSMB::PGDate->from_input('')->to_output, '',
    'round-tripping empty string returns empty string');
 is(LedgerSMB::PGDate->from_input(undef)->to_output, '',
    'round-tripping "undef" returns an empty string (for easy concatenation)');
-is(LedgerSMB::PGDate->from_input('2016-01-01')->to_output, '2016-01-01',
+is(LedgerSMB::PGDate->from_input(
+       '2016-01-01',
+       dateformat => 'YYYY-MM-DD'
+   )->to_output(
+       dateformat => 'YYYY-MM-DD' ),
+   '2016-01-01',
    'round-tripping valid ISO-8601 date returns that date');
 
 foreach my $test (
@@ -220,8 +222,8 @@ foreach my $test (
         date => '20161029',
     },
 ) {
-   LedgerSMB::App_State::set_User( { dateformat => $test->{format} } );
-   is(eval { LedgerSMB::PGDate->from_input($test->{date})->to_output },
+   is(eval { LedgerSMB::PGDate->from_input($test->{date}, format => $test->{format})
+                 ->to_output( format => $test->{format} ) },
       $test->{date},
       "round-tripping valid '$test->{format}' date returns that date");
 }

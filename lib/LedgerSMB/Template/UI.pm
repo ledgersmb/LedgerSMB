@@ -138,6 +138,7 @@ sub render_string {
                         )
                 },
                 sub { return escape_html($_[0]); },
+                $request->formatter_options,
                 )},
           %{$self->{standard_vars}},
           LIST_FORMATS => sub {

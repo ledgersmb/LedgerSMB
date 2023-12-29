@@ -94,7 +94,12 @@ Creates a currency - or if it exists, updates the description.
 sub save_currency {
     my ($request) = @_;
 
-    my $currency = LedgerSMB::Currency->new(%$request);
+    my $currency = LedgerSMB::Currency->new(
+        $request->%{ qw( curr description rate_type ) },
+        valid_from => $request->parse_date( $request->{valid_from} ),
+#        valid_until => $request->parse_timestamp( $request->{valid_until} ),
+        rate => $request->parse_amount( $request->{rate} ),
+        );
     $currency->save;
 
     return &list_currencies($request);
@@ -196,7 +201,9 @@ still referenced in the system.
 sub delete_exchangerate_type {
     my ($request) = @_;
 
-    my $ratetype = LedgerSMB::Exchangerate_Type->new(%$request);
+    my $ratetype = LedgerSMB::Exchangerate_Type->new(
+        %$request
+        );
     $ratetype->delete;
 
     return &list_exchangerate_types($request);
@@ -264,7 +271,7 @@ sub _list_exchangerates {
         ];
     my $rows = [];
     for my $s (@$exchangerates) {
-        $s->{rate} = $s->{rate}->to_output();
+        $s->{rate} = $request->format_amount( $s->{rate} );
         $s->{drop_href_suffix} = "&curr=$s->{curr}&rate_type=$s->{rate_type}&valid_from=" . $s->{valid_from}->to_output();
         $s->{drop} = '[' . $request->{_locale}->text('delete') . ']';
 
@@ -307,7 +314,12 @@ Requires the following request parameters:
 
 sub save_exchangerate {
     my ($request) = @_;
-    my $rate = LedgerSMB::Exchangerate->new(%$request);
+    my $rate = LedgerSMB::Exchangerate->new(
+        $request->%{ qw( curr rate_type ) },
+        valid_from => $request->parse_date( $request->{valid_from} ),
+#        valid_until => $request->parse_timestamp( $request->{valid_until} ),
+        rate => $request->parse_amount( $request->{rate} ),
+        );
     $rate->save;
 
     return &list_exchangerates($request);
@@ -332,7 +344,7 @@ sub delete_exchangerate {
     my $ratetype = LedgerSMB::Exchangerate->new(
         curr => $request->{curr},
         rate_type => $request->{rate_type},
-        valid_from => $request->{valid_from},
+        valid_from => $request->parse_date( $request->{valid_from} ),
     );
     $ratetype->delete;
 
@@ -377,7 +389,12 @@ sub upload_exchangerates {
         }
 
         my %rowhash = map { $csv_upload_fields[$_] => $fields[$_] } 0..$#fields;
-        my $rate = LedgerSMB::Exchangerate->new(%rowhash);
+        my $rate = LedgerSMB::Exchangerate->new(
+            curr => $rowhash{curr},
+            rate_type => $rowhash{rate_type},
+            valid_from => $request->parse_date( $rowhash{valid_from} ),
+            rate => $request->parse_amount( $rowhash{rate} ),
+            );
         push @rows, $rate->save;;
     }
 

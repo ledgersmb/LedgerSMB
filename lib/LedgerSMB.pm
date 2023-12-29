@@ -193,10 +193,28 @@ named argument 'renderer' to the C<LedgerSMB::Report->render> method.
 Renders the report as a document or UI element, depending on whether
 the request's C<format> property has a non-false value.
 
+
+=item parse_amount($amount)
+
+Parses the $amount given the session user's number formatting settings.
+
+=item parse_date($date)
+
+Parses the $date given the session user's date formatting settings.
+
+=item format_amount($amount, %args)
+
+formats the $amount given the session user's number formatting settings.
+
+=item formatter_options()
+
+Returns a hashref containing the session user's number and date formatting
+preferences for use in LedgerSMB::Report-s.
+
 =back
 
 
-=head1 Copyright (C) 2006-2017, The LedgerSMB core team.
+=head1 Copyright (C) 2006-2023, The LedgerSMB core team.
 
  # This work contains copyrighted information from a number of sources
  # all used with permission.
@@ -239,12 +257,14 @@ use URI;
 use URI::Escape;
 
 use LedgerSMB::App_State;
-use LedgerSMB::Locale;
-use LedgerSMB::User;
 use LedgerSMB::Company_Config;
+use LedgerSMB::Locale;
+use LedgerSMB::PGDate;
+use LedgerSMB::PGNumber;
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Setting;
 use LedgerSMB::Template;
+use LedgerSMB::User;
 
 our $VERSION = '1.12.0-dev';
 
@@ -344,9 +364,7 @@ sub initialize_with_db {
 
 sub get_user_info {
     my ($self) = @_;
-    LedgerSMB::App_State::set_User(
-        $self->{_user} =
-        LedgerSMB::User->fetch_config($self));
+    $self->{_user} = LedgerSMB::User->fetch_config($self);
     return $self->{_user}->{language} ||= 'en';
 }
 
@@ -357,6 +375,8 @@ sub _set_default_locale {
         ->from_header( $self->{_req}->header( 'Accept-Language' ) );
 
     $self->{_user}->{language} = $lang;
+    $self->{_user}->{dateformat} = 'YYYY-MM-DD';
+    $self->{_user}->{numberformat} = '1000.00';
     $self->{_locale}=LedgerSMB::Locale->get_handle($lang);
     $self->error( __FILE__ . ':' . __LINE__
                   . ": Locale ($lang) not loaded: $!\n" )
@@ -668,6 +688,7 @@ sub report_renderer_doc {
     my $renderer =
         $request->{_wire}->get( 'output_formatter' )->report_doc_renderer(
             $request->{_dbh},
+            $request->formatter_options,
             uc($request->{format}) || 'HTML',
             {
                 SETTINGS => {
@@ -702,9 +723,51 @@ sub render_report {
     return $report->render( renderer => $renderer);
 }
 
+
+sub parse_amount {
+    my ($request, $amount_str) = @_;
+    my $config = $request->{_user};
+
+    return LedgerSMB::PGNumber->from_input(
+        $amount_str,
+        format => $config->{numberformat}
+        );
+}
+
+sub parse_date {
+    my ($request, $date_str) = @_;
+    my $config = $request->{_user};
+
+    return LedgerSMB::PGDate->from_input(
+        $date_str,
+        format => $config->{dateformat}
+        );
+}
+
+sub format_amount {
+    my ($request, $amount, %args) = @_;
+    my $config = $request->{_user};
+
+    return $amount->to_output(
+        format => $config->{numberformat},
+        money_places => $LedgerSMB::Company_Config::settings->{decimal_places},
+        %args
+        );
+}
+
+sub formatter_options {
+    my ($request) = @_;
+    my $config = $request->{_user};
+
+    return {
+        $config->%{ qw( numberformat dateformat ) },
+        money_places => $LedgerSMB::Company_Config::settings->{decimal_places},
+    };
+}
+
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2006-2018 The LedgerSMB Core Team
+Copyright (C) 2006-2023 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

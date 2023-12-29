@@ -58,8 +58,7 @@ month, or per unit produced.
 
 =cut
 
-has rate => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Number',
-             required => 1);
+has rate => (is => 'rw', isa => 'LedgerSMB::PGNumber', required => 1);
 
 =back
 

@@ -160,7 +160,7 @@ Exact match for the start date
 
 =cut
 
-has 'start_date' => (is=> 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has 'start_date' => (is=> 'rw', isa => 'LedgerSMB::PGDate');
 
 =item end_date
 
@@ -168,7 +168,7 @@ Exact match for end date.
 
 =cut
 
-has 'end_date' => (is=> 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has 'end_date' => (is=> 'rw', isa => 'LedgerSMB::PGDate');
 
 =item buisness_units
 

@@ -61,7 +61,7 @@ and re-renders the reconciliation screen.
 sub update_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
-    $recon->{their_total} = LedgerSMB::PGNumber->from_input(
+    $recon->{their_total} = $request->parse_amount(
         $recon->{their_total}
     ) if defined $recon->{their_total};
     $recon->save() if !$recon->{submitted};
@@ -163,8 +163,16 @@ Displays the search results
 sub get_results {
     my ($request) = @_;
     return $request->render_report(
-        LedgerSMB::Report::Reconciliation::Summary->new(%$request)
-        );
+        LedgerSMB::Report::Reconciliation::Summary->new(
+            $request->%{ qw( account_id approved submitted language _locale
+                             interval from_month from_year comparison_periods
+                             comparison_type comparisons ) },
+            formatter_options => $request->formatter_options,
+            balance_from => $request->parse_amount( $request->{balance_from} ),
+            balance_to => $request->parse_amount( $request->{balance_to} ),
+            from_date => $request->parse_date( $request->{from_date} ),
+            to_date => $request->parse_date( $request->{to_date} ),
+        ));
 }
 
 =item search($request)
@@ -253,7 +261,7 @@ sub _display_report {
     /) {
         for my $bal_type (qw/ credits debits/) {
             $recon->{"$amt_name$bal_type"} = (
-                $recon->{"$amt_name$bal_type"}->to_output(money => 1)
+                $request->format_amount( $recon->{"$amt_name$bal_type"}, money => 1)
             );
         }
     }
@@ -267,7 +275,7 @@ sub _display_report {
             their_credits
             their_debits
         /) {
-            $line->{$element} = $line->{$element}->to_output(money => 1);
+            $line->{$element} = $request->format_amount( $line->{$element}, money => 1);
         }
     }
 
@@ -280,7 +288,7 @@ sub _display_report {
         our_total
         beginning_balance
     /) {
-        $recon->{$field} = $recon->{$field}->to_output(money => 1);
+        $recon->{$field} = $request->format_amount( $recon->{$field}, money => 1);
     }
 
     my $template = $request->{_wire}->get('ui');
@@ -358,7 +366,7 @@ sub start_report {
     $recon->new_report;
 
     # Format ending balance as a PGNumber - required for display
-    $recon->{their_total} = LedgerSMB::PGNumber->from_input($request->{total});
+    $recon->{their_total} = $request->parse_amount($request->{total});
     delete $recon->{total};
 
     return _display_report($recon, $request);

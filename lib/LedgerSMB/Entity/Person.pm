@@ -104,7 +104,7 @@ Date when the  person was entered into LedgerSMB
 
 =cut
 
-has 'created' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has 'created' => (is => 'rw', isa => 'LedgerSMB::PGDate');
 
 =item birthdate
 
@@ -116,7 +116,7 @@ Personal id, such as a passport or other government-issued or other ID.
 
 =cut
 
-has 'birthdate' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has 'birthdate' => (is => 'rw', isa => 'LedgerSMB::PGDate');
 has 'personal_id' => (is => 'ro', isa => 'Maybe[Str]');
 
 =back

@@ -20,6 +20,7 @@ use warnings;
 use base qw(PGObject::Type::BigFloat);
 
 # try using the GMP library for Math::BigFloat for speed
+use Carp;
 use Math::BigFloat try => 'GMP';
 use Memoize;
 use Number::Format;
@@ -186,31 +187,21 @@ sub from_input {
         return undef;
     }
     my %args   = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
-    my $format = ($args{format}) ? $args{format}
-                                 : LedgerSMB::App_State::User()->{numberformat};
-    die 'LedgerSMB::PGNumber No Format Set' if !$format;
-    #return undef if !defined $string;
+    my $format = $args{format} // $args{numberformat};
+    croak 'LedgerSMB::PGNumber No Format Set' if !$format;
+
     my $negate;
     my $pgnum;
     my $newval;
     $negate = 1 if $string =~ /(^\(|DR$)/;
 
-    if (UNIVERSAL::isa($string, 'LedgerSMB::PGNumber')) {
-        return $string;
-    }
-
-    if (UNIVERSAL::isa($string, 'LedgerSMB::PGNumber')) {
-        $pgnum = $string;
-    }
-    else {
-        my $formatter = _formatter(
-            -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
-            -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
+    my $formatter = _formatter(
+        -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
+        -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
         );
-        $newval = $formatter->unformat_number($string);
-        $pgnum = LedgerSMB::PGNumber->new($newval);
-        $self->round_mode('+inf');
-    }
+    $newval = $formatter->unformat_number($string);
+    $pgnum = LedgerSMB::PGNumber->new($newval);
+    $self->round_mode('+inf');
 
     bless $pgnum, $self;
     $pgnum->bmul(-1) if $negate;
@@ -232,6 +223,10 @@ Override user's default output format with specified format for this number.
 
 Specifies the number of places to round
 
+=item money_places
+
+Specifies the number of decimal places for for money
+
 =item money
 
 Specifies to round to configured number format for money
@@ -239,8 +234,6 @@ Specifies to round to configured number format for money
 =item neg_format
 
 Specifies the negative format
-
-=item locale
 
 =back
 
@@ -252,13 +245,11 @@ sub to_output {
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
     my $is_neg = $self->is_neg;
 
-    my $format = ($args{format}) ? $args{format}
-                              : LedgerSMB::App_State::User()->{numberformat};
-    die 'LedgerSMB::PGNumber No Format Set, check numberformat in user_preference' if !$format;
+    my $format = $args{format} // $args{numberformat};
+    croak 'LedgerSMB::PGNumber No Format Set, check numberformat in user_preference' if !$format;
 
     my $places = undef;
-    $places = $LedgerSMB::Company_Config::settings->{decimal_places}
-       if $args{money};
+    $places = $args{money_places} if $args{money};
     $places = ($args{places}) ? $args{places} : $places;
     my $str = $self->bstr;
     my $dplaces = $places;

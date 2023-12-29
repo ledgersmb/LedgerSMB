@@ -70,7 +70,7 @@ sub get_formats {
     return wantarray ? @f : \@f;
 }
 
-=head2 report_doc_renderer( $dbh, $format, $extra_vars )
+=head2 report_doc_renderer( $dbh, $format, $options, $extra_vars )
 
 Returns a renderer function to be passed to the C<render> function of
 C<LedgerSMB::Report>. This renderer causes the report C<render> function
@@ -79,7 +79,7 @@ to return an evaluated C<LedgerSMB::Template>.
 =cut
 
 sub report_doc_renderer {
-    my ($self, $dbh, $format, $extra_vars) = @_;
+    my ($self, $dbh, $format, $options, $extra_vars) = @_;
     $extra_vars //= {};
 
     return sub {
@@ -88,6 +88,9 @@ sub report_doc_renderer {
             template => $template_name,
             path     => 'DB',
             dbh      => $dbh,
+            formatter_options => {
+                $options->%{ qw( numberformat dateformat ) }
+            },
             output_options => {
                 filename => $report->output_name . '.' . lc($format),
             },

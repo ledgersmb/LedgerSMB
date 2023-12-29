@@ -328,7 +328,7 @@ Given qr/inventory has been built up for '(.*)' from these transactions:$/, sub 
         $form->{currency} = 'USD';
         $form->{defaultcurrency} = 'USD';
 
-        IR->post_invoice({}, $form);
+        IR->post_invoice({ numberformat => '1000.00' }, $form);
     }
     S->{ext_lsmb}->admin_dbh->commit
         if ! S->{ext_lsmb}->admin_dbh->{AutoCommit};

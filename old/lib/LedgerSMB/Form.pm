@@ -703,19 +703,26 @@ sub format_amount {
     $amount = "" unless defined $amount;
     $places = "0" unless defined $places;
     $dash = "" unless defined $dash;
-    $amount = $self->parse_amount($myconfig, $amount);
     if ($self->{money_precision}){
        $places= $self->{money_precision};
     }
-    $myconfig->{numberformat} = '1000.00' unless $myconfig->{numberformat};
     $amount = $self->parse_amount( $myconfig, $amount )
         unless ref($amount) eq 'LedgerSMB::PGNumber';
+    $myconfig->{numberformat} = '1000.00' unless $myconfig->{numberformat};
     return $amount->to_output({
                places => $places,
                 money => $self->{money_precision},
            neg_format => $dash,
                format => $myconfig->{numberformat},
     });
+}
+
+sub formatter_options {
+    my ( $self ) = @_;
+
+    return {
+        $self->{_user}->%{ qw( dateformat numberformat ) }
+    };
 }
 
 =item $form->parse_amount($myconfig, $amount);
@@ -741,7 +748,30 @@ sub parse_amount {
 
     return LedgerSMB::PGNumber->from_input(
         $amount,
-                                           {format => $myconfig->{numberformat}}
+        { format => $myconfig->{numberformat} }
+    );
+}
+
+=item $form->parse_date($myconfig, $date);
+
+Return a LedgerSMB::PGDate containing the value of $date where $date is
+formatted as $myconfig->{dateformat}.  If $date is '' or undefined, undef
+is returned.
+
+=cut
+
+sub parse_date {
+    my ( $self, $myconfig, $date ) = @_;
+    local $@;
+    return $date if eval { $date->isa('LedgerSMB::PGDate') };
+
+    if ( ( ! defined $date ) or ( $date eq '' ) ) {
+        $date = '';
+    }
+
+    return LedgerSMB::PGDate->from_input(
+        $date,
+        { format => $myconfig->{dateformat} }
     );
 }
 

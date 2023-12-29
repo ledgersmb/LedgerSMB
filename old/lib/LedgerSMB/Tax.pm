@@ -90,7 +90,7 @@ sub init_taxes {
         $ref->{value} = LedgerSMB::PGNumber->from_db($ref->{value});
         $ref->{maxvalue} = LedgerSMB::PGNumber->from_db($ref->{maxvalue});
         $ref->{minvalue} = LedgerSMB::PGNumber->from_db($ref->{minvalue});
-        $ref->{minvalue} //= 0;
+        $ref->{minvalue} //= LedgerSMB::PGNumber->bzero;
 
         my $module = "LedgerSMB/Taxes/$ref->{taxmodulename}.pm";
         require $module;
@@ -98,7 +98,7 @@ sub init_taxes {
         my $tax = "LedgerSMB::Taxes::$ref->{taxmodulename}"->new(%$ref);
         $tax->account($taxaccount);
         $tax->taxnumber( $ref->{'taxnumber'} );
-        $tax->value( 0 );
+        $tax->value( LedgerSMB::PGNumber->bzero );
 
         push @taxes, $tax;
     }

@@ -54,8 +54,7 @@ the database during the check_variance method.
 
 =cut
 
-has expected => (is => 'rw', isa => 'LedgerSMB::Moose::Number', coerce => 1,
-           required => 0);
+has expected => (is => 'rw', isa => 'LedgerSMB::PGNumber', required => 0);
 
 =item counted
 
@@ -64,8 +63,7 @@ this....
 
 =cut
 
-has counted => (is => 'ro', isa => 'LedgerSMB::Moose::Number', coerce => 1,
-          required => 1);
+has counted => (is => 'ro', isa => 'LedgerSMB::PGNumber', required => 1);
 
 =item variance
 
@@ -74,8 +72,7 @@ or, if expected is set and variance not, on save.
 
 =cut
 
-has variance => (is => 'rw', isa => 'LedgerSMB::Moose::Number', coerce => 1,
-           required => 1);
+has variance => (is => 'rw', isa => 'LedgerSMB::PGNumber', required => 1);
 
 =item adjust_id int
 
@@ -91,8 +88,7 @@ This is the counted date, usually set during the variance check.
 
 =cut
 
-has counted_date => (is => 'rw', isa => 'LedgerSMB::Moose::Date', coerce => 1,
-               required => 0);
+has counted_date => (is => 'rw', isa => 'LedgerSMB::PGDate', required => 0);
 
 =back
 

@@ -80,7 +80,7 @@ Early payment discount percent.
 
 =cut
 
-has 'discount' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Number');
+has 'discount' => (is => 'rw', isa => 'LedgerSMB::PGNumber');
 
 =item description
 
@@ -120,7 +120,7 @@ The total debt that is acceptable for the account
 
 =cut
 
-has 'creditlimit' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Number');
+has 'creditlimit' => (is => 'rw', isa => 'LedgerSMB::PGNumber');
 
 =item current_debt
 
@@ -130,8 +130,8 @@ operation.  Use get_current_debt() to set it.
 
 =cut
 
-has 'current_debt' => (is => 'rw', isa => 'LedgerSMB::Moose::Number',
-                       coerce => 1, lazy => 1, builder => 'get_current_debt');
+has 'current_debt' => (is => 'rw', isa => 'LedgerSMB::PGNumber',
+                       lazy => 1, builder => 'get_current_debt');
 
 =item terms
 
@@ -204,8 +204,8 @@ The last allowable date for invoices
 
 =cut
 
-has 'startdate' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
-has 'enddate'   => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has 'startdate' => (is => 'rw', isa => 'LedgerSMB::PGDate');
+has 'enddate'   => (is => 'rw', isa => 'LedgerSMB::PGDate');
 
 =item threshold
 
@@ -213,7 +213,7 @@ Do not show invoices as available for payment/receipt until over this threshold
 
 =cut
 
-has 'threshold' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Number');
+has 'threshold' => (is => 'rw', isa => 'LedgerSMB::PGNumber');
 
 =item employee_id
 
@@ -445,7 +445,7 @@ sub save_pricematrix {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team
+Copyright (C) 2012-2023 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

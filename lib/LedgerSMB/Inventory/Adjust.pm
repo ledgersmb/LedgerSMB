@@ -74,8 +74,7 @@ this date.  Required.
 
 =cut
 
-has transdate => (is => 'ro',      isa => 'LedgerSMB::Moose::Date',
-              coerce => '1',  required => '1');
+has transdate => (is => 'ro', isa => 'LedgerSMB::PGDate', required => '1');
 
 =item source text
 

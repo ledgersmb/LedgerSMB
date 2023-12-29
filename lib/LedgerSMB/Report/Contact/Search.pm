@@ -8,7 +8,7 @@ and more.
 
 =head1 SYNPOSIS
 
-  my $report = LedgerSMB::Report::GL->new(%$request);
+  my $report = LedgerSMB::Report::Contact::Search->new(%$request);
   $report->render();
 
 =head1 DESCRIPTION
@@ -239,12 +239,10 @@ Active items only to this date.
 =cut
 
 has active_date_from => (is => 'ro',
-                        isa => 'LedgerSMB::Moose::Date',
-                     coerce => 1,
+                        isa => 'LedgerSMB::PGDate',
                    required => 0);
 has active_date_to => (is => 'ro',
-                      isa => 'LedgerSMB::Moose::Date',
-                   coerce => 1,
+                      isa => 'LedgerSMB::PGDate',
                  required => 0);
 
 =item users
@@ -289,7 +287,7 @@ sub run_report {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team
+Copyright (C) 2012-2023 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

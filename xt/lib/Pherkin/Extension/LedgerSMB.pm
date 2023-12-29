@@ -207,7 +207,7 @@ sub create_employee {
     my $emp = LedgerSMB::Entity::Person::Employee->new(
         employeenumber => $employeenumber,
         control_code => $employeenumber,
-        dob => LedgerSMB::PGDate->from_input('2006-09-01'),
+        dob => LedgerSMB::PGDate->from_input('2006-09-01', dateformat => 'YYYY-MM-DD' ),
         salutation_id => 1,
         first_name => 'First',
         last_name => 'Last'.$emp_counter,

@@ -46,8 +46,7 @@ to this.
 
 =cut
 
-has balance_from => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
-              required => 0, coerce => 1);
+has balance_from => (is => 'ro', isa => 'LedgerSMB::PGNumber', required => 0);
 
 =item balance_to
 
@@ -56,8 +55,7 @@ to this.
 
 =cut
 
-has balance_to => (is => 'ro', isa => 'LedgerSMB::Moose::Number', required => 0,
-              coerce => 1);
+has balance_to => (is => 'ro', isa => 'LedgerSMB::PGNumber', required => 0);
 
 =item account_id
 

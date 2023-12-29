@@ -85,7 +85,7 @@ Date when the company was entered into LedgerSMB
 
 =cut
 
-has 'created' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has 'created' => (is => 'rw', isa => 'LedgerSMB::PGDate');
 
 =head1 METHODS
 

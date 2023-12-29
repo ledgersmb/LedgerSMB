@@ -33,8 +33,12 @@ sub search {
     my ($request) = @_;
     LedgerSMB::Report::Budget::Search->prepare_criteria($request);
     return $request->render_report(
-        LedgerSMB::Report::Budget::Search->new(%$request)
-        );
+        LedgerSMB::Report::Budget::Search->new(
+            %$request,
+            start_date => $request->parse_date( $request->{start_date} ),
+            to_date => $request->parse_date( $request->{to_date} ),
+            formatter_options => $request->formatter_options
+        ));
 }
 
 =item variance_report

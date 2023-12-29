@@ -64,6 +64,10 @@ gettext function.
 
 The language for template selection.
 
+=item formatter_options (optional)
+
+C<numberformat> and C<dateformat>.
+
 =item path (optional)
 
 Overrides the template directory.
@@ -124,7 +128,7 @@ desired file extention
 
 =over
 
-=item preprocess ($rawvars, $escape)
+=item preprocess ($rawvars, $escape, $formatter_options)
 
 Preprocess for rendering. This is not an object method, it is a standalone
 subroutine.
@@ -318,7 +322,7 @@ sub new {
 
     $self->{$_} = $args{$_}
         for (qw( template format_plugin language debug locale
-                 format_options output_options ));
+                 format_options output_options formatter_options ));
     $self->{user} = $args{user};
     $self->{include_path} = $args{path};
     if ($self->{language}){ # Language takes precedence over locale
@@ -335,7 +339,7 @@ sub preprocess {
     #  and that the current code is the result of extensive
     #  profiling work.
     #
-    my ($rawvars, $escape) = @_;
+    my ($rawvars, $escape, $formatter_options) = @_;
     return undef unless defined $rawvars;
 
     if (not ref $rawvars) {
@@ -343,14 +347,14 @@ sub preprocess {
     }
 
     if (blessed $rawvars and $rawvars->can('to_output') ){
-        return $escape->( $rawvars->to_output );
+        return $escape->( $rawvars->to_output( %{ $formatter_options // {} } ) );
     }
 
     my $reftype = (reftype $rawvars) // ''; # '' is falsy, but works with EQ
     if ($reftype eq 'HASH') { # Hashes and objects
         return {
             map { $_ => (ref $rawvars->{$_})
-                      ? preprocess( $rawvars->{$_}, $escape )
+                      ? preprocess( $rawvars->{$_}, $escape, $formatter_options )
                       : $escape->($rawvars->{$_}) }
             grep { not /^(?:_|dbh$)/ }
             keys %{$rawvars}
@@ -359,7 +363,7 @@ sub preprocess {
 
     if ( $reftype eq 'ARRAY' ) {
         return [ map { (ref $_)
-                           ? preprocess( $_, $escape )
+                           ? preprocess( $_, $escape, $formatter_options )
                            : $escape->($_)
                  } @{$rawvars} ];
     }
@@ -496,7 +500,10 @@ sub _render {
 
     if ($escape) {
         $cleanvars = {
-            %{ preprocess($vars, sub { $self->{format_plugin}->escape(@_) } ) },
+            %{ preprocess($vars,
+                          sub { $self->{format_plugin}->escape(@_) },
+                          $self->{formatter_options},
+                   ) },
             %{$self->{additional_vars} // {}},
             %$cvars,
             escape => $escape,

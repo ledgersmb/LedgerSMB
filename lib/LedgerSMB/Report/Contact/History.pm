@@ -282,7 +282,7 @@ Include only customers active starting this date.
 
 =cut
 
-has start_from => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has start_from => (is => 'ro', isa => 'LedgerSMB::PGDate');
 
 =item start_to
 
@@ -290,7 +290,7 @@ Include only customers becoming active no later than this date
 
 =cut
 
-has start_to => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has start_to => (is => 'ro', isa => 'LedgerSMB::PGDate');
 
 =item inc_open
 

@@ -38,8 +38,8 @@ Standard to date
 
 =cut
 
-has 'from_date' => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
-has 'to_date' => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has 'from_date' => (is => 'ro', isa => 'LedgerSMB::PGDate');
+has 'to_date' => (is => 'ro', isa => 'LedgerSMB::PGDate');
 
 =item partnumber
 

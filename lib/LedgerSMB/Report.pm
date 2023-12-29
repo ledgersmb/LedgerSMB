@@ -326,6 +326,15 @@ List of select boxes for options for buttons.
 has options => (is => 'rw', isa => 'ArrayRef[Any]',
                 default => sub {[]} );
 
+=head2 formatter_options
+
+Specifies number and date formatting options passed to PGDate and PGNumber's
+C<to_output> routine.
+
+=cut
+
+has formatter_options => (is => 'ro', default => sub { +{} });
+
 =head2 _locale
 
 Locale to be used for the translation/localization of the report.
@@ -538,7 +547,9 @@ sub _render {
                 if ( blessed $row->{$col->{col_id}}
                      and $row->{$col->{col_id}}->can('to_output') ){
                     $row->{$col->{col_id}} =
-                        $row->{$col->{col_id}}->to_output(money => 1);
+                        $row->{$col->{col_id}}->to_output(
+                            money => 1,
+                            $self->formatter_options->%*);
                 }
             }
         }

@@ -133,11 +133,17 @@ sub generate_report {
     if ($request->{meta_number}){
         $report = LedgerSMB::Report::Taxform::Details->new(
             %$request,
+            from_date  => $request->parse_date( $request->{from_date} ),
+            to_date  => $request->parse_date( $request->{to_date} ),
+            formatter_options => $request->formatter_options,
             taxform    => $tf->{form_name},
             is_accrual => $tf->{is_accrual});
     } else {
         $report = LedgerSMB::Report::Taxform::Summary->new(
             %$request,
+            from_date  => $request->parse_date( $request->{from_date} ),
+            to_date  => $request->parse_date( $request->{to_date} ),
+            formatter_options => $request->formatter_options,
             taxform    => $tf->{form_name},
             is_accrual => $tf->{is_accrual});
     }
@@ -181,7 +187,12 @@ sub print {
         args     => [ $request->{tax_form_id} ]);
     $request->{taxform_name} = $taxform->{form_name};
     $request->{format} = 'PDF';
-    my $report = LedgerSMB::Report::Taxform::Summary->new(%$request);
+    my $report = LedgerSMB::Report::Taxform::Summary->new(
+        %$request,
+        formatter_options => $request->formatter_options,
+        from_date  => $request->parse_date( $request->{from_date} ),
+        to_date  => $request->parse_date( $request->{to_date} ),
+        );
     $report->run_report($request);
     if ($request->{meta_number}){
        my @rows = $report->rows;
@@ -233,8 +244,10 @@ Lists all tax forms.
 sub list_all {
     my $request= shift;
     return $request->render_report(
-        LedgerSMB::Report::Taxform::List->new(%$request)
-        );
+        LedgerSMB::Report::Taxform::List->new(
+            %$request,
+            formatter_options => $request->formatter_options
+        ));
 }
 
 =back

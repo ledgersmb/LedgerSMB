@@ -166,7 +166,7 @@ get api '/contacts/sic' => sub {
             _dbh => $c->dbh,
             language => 'en',
             );
-        my $renderer = $formatter->report_doc_renderer( $c->dbh, $format );
+        my $renderer = $formatter->report_doc_renderer( $c->dbh, {}, $format );
 
         return template_response( $report->render( renderer => $renderer ),
                                   disposition => 'attach');
@@ -384,7 +384,7 @@ get api '/contacts/business-types' => sub {
             _dbh => $c->dbh,
             language => 'en',
             );
-        my $renderer = $formatter->report_doc_renderer( $c->dbh, $format );
+        my $renderer = $formatter->report_doc_renderer( $c->dbh, {}, $format );
 
         return template_response( $report->render( renderer => $renderer ),
                                   disposition => 'attach');

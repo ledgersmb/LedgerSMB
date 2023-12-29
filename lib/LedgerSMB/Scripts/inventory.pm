@@ -58,7 +58,10 @@ the screen.
 
 sub adjustment_next {
     my ($request) = @_;
-    my $adjustment = LedgerSMB::Inventory::Adjust->new(%$request);
+    my $adjustment = LedgerSMB::Inventory::Adjust->new(
+        %$request,
+        transdate => $request->parse_date( $request->{transdate} ),
+        );
     for my $i (1 .. $request->{rowcount}){
         if ($request->{"id_$i"} eq 'new' or not $request->{"id_$i"}){
             my $item = $adjustment->get_part_at_date(
@@ -84,7 +87,7 @@ required invoices.
 
 sub _lines_from_form {
     # NOTE! A similar implementation is also in import_csv!
-    my ($adjustment, $hashref) = @_;
+    my ($request, $adjustment, $hashref) = @_;
     my @lines;
     for my $ln (1 .. $hashref->{rowcount}){
         next
@@ -92,9 +95,12 @@ sub _lines_from_form {
         my $line = LedgerSMB::Inventory::Adjust_Line->new(
           parts_id => $hashref->{"id_$ln"},
          partnumber => $hashref->{"partnumber_$ln"},
-            counted => $hashref->{"counted_$ln"},
-           expected => $hashref->{"onhand_$ln"},
-           variance => $hashref->{"onhand_$ln"} - $hashref->{"counted_$ln"});
+            counted => $request->parse_amount( $hashref->{"counted_$ln"} ),
+           expected => $request->parse_amount( $hashref->{"onhand_$ln"} ),
+           variance => (
+                $request->parse_amount( $hashref->{"onhand_$ln"} )
+                - $request->parse_amount( $hashref->{"counted_$ln"} ) )
+            );
         push @lines, $line;
     }
     my $rows = $adjustment->rows;
@@ -105,8 +111,11 @@ sub _lines_from_form {
 
 sub adjustment_save {
     my ($request) = @_;
-    my $adjustment = LedgerSMB::Inventory::Adjust->new(%$request);
-    _lines_from_form($adjustment, $request);
+    my $adjustment = LedgerSMB::Inventory::Adjust->new(
+        %$request,
+        transdate => $request->parse_date( $request->{transdate} ),
+        );
+    _lines_from_form($request, $adjustment, $request);
     $adjustment->save;
     return begin_adjust($request);
 }
@@ -119,8 +128,10 @@ sub adjustment_list {
     my ($request) = @_;
 
     return $request->render_report(
-        LedgerSMB::Report::Inventory::Search_Adj->new(%$request)
-        );
+        LedgerSMB::Report::Inventory::Search_Adj->new(
+            %$request,
+            formatter_options => $request->formatter_options
+        ));
 }
 
 =item adjustment_approve

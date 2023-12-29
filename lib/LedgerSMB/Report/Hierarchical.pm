@@ -239,7 +239,7 @@ before '_render' => sub {
             my $val = $self->cell_value($row_id, $col_id);
             if (blessed $val and $val->can('to_output')) {
                 $self->cell_value($row_id, $col_id,
-                    $val->to_output(money => 1));
+                    $val->to_output(money => 1, $self->formatter_options->%*));
             }
         }
     }

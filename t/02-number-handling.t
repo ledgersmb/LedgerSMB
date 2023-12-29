@@ -7,7 +7,6 @@ use Test2::V0;
 
 use LedgerSMB::Form;
 use LedgerSMB::PGNumber;
-use LedgerSMB::App_State;
 
 use Math::BigFloat;
 use Log::Log4perl qw( :easy );
@@ -20,7 +19,6 @@ ok(defined $form);
 isa_ok($form, 'Form');
 
 
-LedgerSMB::App_State::set_User(\%myconfig);
 like(
     dies { $form->format_amount({'apples' => '1000.00'}, 'foo', 2) },
     qr/LedgerSMB::PGNumber No Format Set/,
@@ -69,7 +67,6 @@ my $test_args = {
 };
 foreach my $format (0 .. $#formats) {
     %myconfig = (numberformat => $formats[$format][0]);
-    $LedgerSMB::App_State::User = \%myconfig;
     $test_args->{format} = $formats[$format][0];
     my $thou = $formats[$format][1];
     my $dec = $formats[$format][2];
@@ -93,7 +90,6 @@ foreach my $format (0 .. $#formats) {
 
 foreach my $format (0 .. $#formats) {
     %myconfig = (numberformat => $formats[$format][0]);
-    $LedgerSMB::App_State::User = \%myconfig;
     my $thou = $formats[$format][1];
     my $dec = $formats[$format][2];
     foreach my $rawValue ('10t000d00', '9t999d99', '333d33',
@@ -114,7 +110,6 @@ foreach my $format (0 .. $#formats) {
 
 foreach my $format (0 .. $#formats) {
     %myconfig = (numberformat => $formats[$format][0]);
-    $LedgerSMB::App_State::User = \%myconfig;
     my $thou = $formats[$format][1];
     my $dec = $formats[$format][2];
     my $rawValue = '6d00';
@@ -165,7 +160,6 @@ is($form->format_amount({'numberformat' => '1000.00'} , '0.0', undef, '0'), '0',
 
 foreach my $format (0 .. $#formats) {
     %myconfig = (numberformat => $formats[$format][0]);
-    $LedgerSMB::App_State::User = \%myconfig;
     my $thou = $formats[$format][1];
     my $dec = $formats[$format][2];
     foreach my $rawValue ('10t000d00', '9t999d99', '333d33',
@@ -187,7 +181,6 @@ foreach my $format (0 .. $#formats) {
 
 foreach my $format (0 .. $#formats) {
     %myconfig = ('numberformat' => $formats[$format][0]);
-    $LedgerSMB::App_State::User = \%myconfig;
     my $thou = $formats[$format][1];
     my $dec = $formats[$format][2];
     foreach my $rawValue ('10t000d00', '9t999d99', '333d33',
@@ -221,7 +214,6 @@ foreach my $format (0 .. $#formats) {
 
 foreach my $format (0 .. $#formats) {
     %myconfig = ('numberformat' => $formats[$format][0]);
-    $LedgerSMB::App_State::User = \%myconfig;
     my $thou = $formats[$format][1];
     my $dec = $formats[$format][2];
     foreach my $rawValue ('10t000d00', '9t999d99', '333d33',

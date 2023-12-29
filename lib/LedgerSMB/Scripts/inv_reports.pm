@@ -37,8 +37,12 @@ use LedgerSMB::Scripts::reports;
 sub search_adj{
     my ($request) = @_;
     return $request->render_report(
-        LedgerSMB::Report::Inventory::Search_Adj->new(%$request)
-        );
+        LedgerSMB::Report::Inventory::Search_Adj->new(
+            %$request,
+            formatter_options => $request->formatter_options,
+            from_date => $request->parse_date( $request->{from_date} ),
+            to_date => $request->parse_date( $request->{to_date} ),
+        ));
 }
 
 =item adj_detail
@@ -51,8 +55,10 @@ sub adj_detail {
     my ($request) = @_;
     $request->{hiddens} = { id => $request->{id}};
     return $request->render_report(
-        LedgerSMB::Report::Inventory::Adj_Details->new(%$request)
-        );
+        LedgerSMB::Report::Inventory::Adj_Details->new(
+            %$request,
+            formatter_options => $request->formatter_options
+        ));
 }
 
 =item approve

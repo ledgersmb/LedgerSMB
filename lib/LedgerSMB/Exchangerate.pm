@@ -51,8 +51,7 @@ Required. This is the first date that the rate is applicable (inclusive).
 
 =cut
 
-has 'valid_from' => (is => 'ro', isa => 'LedgerSMB::Moose::Date',
-   required => '1', coerce => 1);
+has 'valid_from' => (is => 'ro', isa => 'LedgerSMB::PGDate', required => '1');
 
 
 =item valid_until
@@ -76,8 +75,7 @@ Rate as foreign currency units per base currency unit.
 
 =cut
 
-has 'rate' => (is => 'rw', isa => 'LedgerSMB::Moose::Number',
-                 coerce => 1);
+has 'rate' => (is => 'rw', isa => 'LedgerSMB::PGNumber');
 
 =back
 

@@ -39,7 +39,10 @@ my $logger = Log::Any->get_logger(category => 'LedgerSMB::Scripts::admin');
 
 sub list_users {
     my ($request) = @_;
-    my $report = LedgerSMB::Report::Listings::User->new(%$request);
+    my $report = LedgerSMB::Report::Listings::User->new(
+        %$request,
+        formatter_options => $request->formatter_options
+        );
     return $request->render_report($report);
 }
 

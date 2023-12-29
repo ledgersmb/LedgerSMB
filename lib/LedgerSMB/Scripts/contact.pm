@@ -391,7 +391,14 @@ sub save_employee {
     $request->{control_code} = $request->{employeenumber} if defined $request->{employeenumber};
     $request->{employeenumber} ||= $request->{control_code};
     $request->{name} = "$request->{last_name}, $request->{first_name}";
-    my $employee = LedgerSMB::Entity::Person::Employee->new(%$request);
+    my $employee = LedgerSMB::Entity::Person::Employee->new(
+        %$request,
+        dob => $request->parse_date( $request->{dob} ),
+        birthdate => $request->parse_date( $request->{birthdate} ),
+        created => $request->parse_date( $request->{created} ),
+        start_date => $request->parse_date( $request->{start_date} ),
+        end_date => $request->parse_date( $request->{end_date} ),
+        );
     $request->{target_div} = 'employee_div';
     $employee->save;
     return _main_screen($request, undef, $employee);
@@ -558,7 +565,10 @@ sub save_company {
         ($request->{control_code}) = values %$ref;
     }
     $request->{name} ||= $request->{legal_name};
-    my $company = LedgerSMB::Entity::Company->new(%$request);
+    my $company = LedgerSMB::Entity::Company->new(
+        %$request,
+        created => $request->parse_date( $request->{created} ),
+        );
     $request->{target_div} = 'credit_div';
     return _main_screen($request, $company->save);
 }
@@ -616,7 +626,23 @@ sub save_credit {
         }
     }
     if ($request->close_form){
-        my $credit = LedgerSMB::Entity::Credit_Account->new(%$request);
+        my $credit = LedgerSMB::Entity::Credit_Account->new(
+            $request->%{qw( id entity_id entity_class pay_to_name
+                            description discount_terms
+                            discount_account_id taxincluded
+                            terms meta_number business_type
+                            business_id language_code
+                            pricegroup_id curr
+                            employee_id ar_ap_account_id
+                            cash_account_id bank_account tax_ids
+                            taxform_id )},
+            discount => $request->parse_amount( $request->{discount} ),
+            creditlimit => $request->parse_amount( $request->{creditlimit} ),
+            current_debt => $request->parse_amount( $request->{current_debt} ),
+            threshold => $request->parse_amount( $request->{threshold} ),
+            startdate => $request->parse_date( $request->{startdate} ),
+            enddate => $request->parse_date( $request->{enddate} ),
+            );
         $credit = $credit->save();
         $request->{meta_number} = $credit->{meta_number};
     }
@@ -649,7 +675,10 @@ sub save_location {
     if ($request->{attach_to} == 1){
        delete $request->{credit_id};
     }
-    my $location = LedgerSMB::Entity::Location->new(%$request);
+    my $location = LedgerSMB::Entity::Location->new(
+        %$request,
+        inactive_date => $request->parse_date( $request->{inactive_date} ),
+        );
     $request->{credit_id} = $credit_id;
     $location->id($request->{location_id}) if $request->{location_id};
     $location->save;
@@ -1003,7 +1032,7 @@ sub save_roles {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team
+Copyright (C) 2012-2023 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

@@ -756,7 +756,7 @@ sub get_name {
     my $ARAP = uc $arap;
 
     if (LedgerSMB::Setting->new(%$form)->get('show_creditlimit')){
-        $form->{creditlimit} = LedgerSMB::PGNumber->from_input('0') unless
+        $form->{creditlimit} = $form->parse_amount( $myconfig, '0') unless
           $form->{creditlimit} > 0;
         $form->{creditremaining} = $form->{creditlimit};
         # acc_trans.approved is only false in the case of batch payments which

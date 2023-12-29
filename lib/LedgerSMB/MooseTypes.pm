@@ -26,14 +26,9 @@ use LedgerSMB::PGTimestamp;
 
 =head1 SYNPOSIS
 
- has 'date_from' => (is => 'rw',
-                    isa => 'LedgerSMB::Moose::Date',
-                 coerce => 1
- );
-
- has 'amount_from'  => (is => 'rw',
-                       isa => 'LedgerSMB::Moose::Number',
-                    coerce => 1
+ has 'file_content' => (is => 'rw',
+                        isa => 'LedgerSMB::Moose::ByteString',
+                        coerce => 1
  );
 
 =head1 METHODS
@@ -41,29 +36,6 @@ use LedgerSMB::PGTimestamp;
 This module doesn't specify any (public) methods.
 
 =head1 SUBTYPES
-
-=head2 LedgerSMB::Moose::Date
-
-This wraps the LedgerSMB::PGDate class for automagic handling of i18n and
-date formats.
-
-=cut
-
-subtype 'LedgerSMB::Moose::Date', as 'Maybe[LedgerSMB::PGDate]';
-
-
-=head3 Coercions
-
-The only coercion provided is from a string, and it calls the PGDate class's
-from_input method.  A second coercion is provided for
-Maybe[LedgerSMB::Moose::Date].
-
-=cut
-
-coerce 'LedgerSMB::Moose::Date'
-    => from 'Str'
-    => via { LedgerSMB::PGDate->from_input($_) };
-
 
 =head2 LedgerSMB::Moose::Timestamp
 
@@ -85,29 +57,6 @@ Maybe[LedgerSMB::Moose::Timestamp].
 coerce 'LedgerSMB::Moose::Timestamp'
     => from 'Str'
     => via { LedgerSMB::PGTimestamp->from_input($_) };
-
-
-=head2 LedgerSMB::Moose::Number
-
-This wraps the LedgerSMB::PGNumber class for automagic handling of i18n and
-number formats.
-
-=cut
-
-subtype 'LedgerSMB::Moose::Number', as 'LedgerSMB::PGNumber';
-
-
-=head3 Coercions
-
-The only coercion provided is from a string and it calls the PGNumber class's
-from_input method.  A second coercian is provided for
-Maybe[LedgerSMB::Moose::Number]
-
-=cut
-
-coerce 'LedgerSMB::Moose::Number',
-  from 'Str',
-   via { LedgerSMB::PGNumber->from_input($_) };
 
 
 =head2 LedgerSMB::Moose::FileContent

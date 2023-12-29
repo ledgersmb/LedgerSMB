@@ -374,7 +374,7 @@ sub build_totals {
         mismatch_their_credits
         mismatch_their_debits
     )) {
-        $self->{$field} = LedgerSMB::PGNumber->from_input(0);
+        $self->{$field} = LedgerSMB::PGNumber->bzero;
     }
 
     # For some types of account, balances are inverted
@@ -385,21 +385,21 @@ sub build_totals {
 
         # Separate 'their' credits and debits
         if ($l->{their_balance} > 0){
-           $l->{their_debits} = LedgerSMB::PGNumber->from_input(0);
+           $l->{their_debits} = LedgerSMB::PGNumber->bzero;
            $l->{their_credits} = $l->{their_balance}->copy;
         }
         else {
-           $l->{their_credits} = LedgerSMB::PGNumber->from_input(0);
+           $l->{their_credits} = LedgerSMB::PGNumber->bzero;
            $l->{their_debits} = ($l->{their_balance} * -1);
         }
 
         # Separate 'our' credits and debits
         if ($l->{our_balance} > 0){
-           $l->{our_debits} = LedgerSMB::PGNumber->from_input(0);
+           $l->{our_debits} = LedgerSMB::PGNumber->bzero;
            $l->{our_credits} = $l->{our_balance}->copy;
         }
         else {
-           $l->{our_credits} = LedgerSMB::PGNumber->from_input(0);
+           $l->{our_credits} = LedgerSMB::PGNumber->bzero;
            $l->{our_debits} = ($l->{our_balance} * -1);
         }
 

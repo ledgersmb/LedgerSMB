@@ -198,7 +198,8 @@ unless C<$format> has been specified to override it.
 =cut
 
 sub from_input{
-    my ($self, $input, $format) = @_;
+    my $self = shift;
+    my $input = shift;
 
     local $@ = undef;
     return $input if eval {$input->isa(__PACKAGE__)} && $input->is_date;
@@ -206,15 +207,12 @@ sub from_input{
     return __PACKAGE__->new()
         if ! $input; # matches undefined as well as ''
 
-    my $dt;
-    my @fmts;
-    if ($format) {
-        @fmts = @{$regexes->{uc($format)}};
-    }
-    elsif (defined LedgerSMB::App_State::User()->{dateformat}) {
-        @fmts = @{$regexes->{uc(LedgerSMB::App_State::User()->{dateformat})}};
-    }
+    my %args   = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
+    my $format = $args{format} // $args{dateformat};
+    croak 'LedgerSMB::PGDate No Format Set' if !$format;
 
+    my $dt;
+    my @fmts = @{$regexes->{uc($format)}};
     for my $fmt (@fmts, @{$regexes->{'YYYY-MM-DD'}} ) {
         my ($success, %args);
         if ($input =~ $fmt->{regex}) {
@@ -259,14 +257,11 @@ use overload (
 );
 
 sub to_output {
-    my ($self) = @_;
+    my $self = shift @_;
     return '' if not $self->is_date();
-    my $fmt;
-    if (defined LedgerSMB::App_State::User()->{dateformat}){
-        $fmt = LedgerSMB::App_State::User()->{dateformat};
-    } else {
-        $fmt = '%F';
-    }
+    my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
+
+    my $fmt = $args{format} // $args{dateformat} // '%F';
     $fmt = $formats->{uc($fmt)} if defined $formats->{uc($fmt)};
 
     $fmt .= ' %T' if $self->is_time();

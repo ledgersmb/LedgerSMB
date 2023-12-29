@@ -110,7 +110,12 @@ sub search {
     } elsif ($request->{search_type} eq 'ship'){
        $request->{href_action}='ship_receive';
     }
-    my $report = LedgerSMB::Report::Orders->new(%$request);
+    my $report = LedgerSMB::Report::Orders->new(
+        %$request,
+        formatter_options => $request->formatter_options,
+        from_date => $request->parse_date( $request->{from_date} ),
+        to_date => $request->parse_date( $request->{to_date} ),
+        );
     if ($request->{search_type} eq 'combine'){
         $report->buttons([{
             text => $request->{_locale}->text('Combine'),
