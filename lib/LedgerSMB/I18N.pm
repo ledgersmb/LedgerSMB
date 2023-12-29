@@ -23,7 +23,6 @@ use Locale::CLDR;
 use Locales unicode => 1;
 use Moose::Role;
 use namespace::autoclean;
-use LedgerSMB::App_State;
 use LedgerSMB::Locale;
 
 has 'language' => (is => 'ro', isa => 'Maybe[Str]');
@@ -84,41 +83,6 @@ sub Maketext {
 }
 
 
-=item LedgerSMB::I18N::text(@args)
-
-Translates the string using the arguments passed.
-
-Wrapper around the MakeText::maketext function; uses the locale object
-stored in LedgerSMB::App_State->Locale.
-
-Note: The first argument must be a string constant for
- PO file extraction; in case of dynamic string arguments, use
- the C<maketext> method
-
-=cut
-
-sub text {
-    return LedgerSMB::App_State->Locale->maketext(@_);
-}
-
-
-=item $self->maketext(@args)
-
-Translates the string using the arguments passed.
-
-Wrapper around the MakeText::maketext function; uses the locale object
-stored in LedgerSMB::App_State->Locale.
-
-Note: In order for the first string (if it is an inline constant string)
- to be detected for translation and included in PO files, the C<Maketext>
- method should be used.
-
-=cut
-
-sub maketext {
-    return LedgerSMB::App_State->Locale->maketext(@_);
-}
-
 =item get_country_list($language)
 
 Get a country localized list to allow user selection
@@ -140,7 +104,7 @@ sub get_country_list {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team
+Copyright (C) 2012-2023 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
