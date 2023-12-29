@@ -21,7 +21,6 @@ use base qw(PGObject::Type::DateTime);
 use Carp;
 use DateTime::Format::Strptime qw(strptime);
 
-use LedgerSMB::App_State;
 use LedgerSMB::Magic
     qw( MONTHS_PER_QUARTER YEARS_PER_CENTURY FUTURE_YEARS_LIMIT );
 

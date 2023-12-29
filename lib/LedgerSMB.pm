@@ -256,7 +256,6 @@ use Plack;
 use URI;
 use URI::Escape;
 
-use LedgerSMB::App_State;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Locale;
 use LedgerSMB::PGDate;

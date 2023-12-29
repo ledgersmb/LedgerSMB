@@ -29,7 +29,6 @@ use parent qw ( Plack::Middleware );
 
 use Plack::Util;
 
-use LedgerSMB::App_State;
 use LedgerSMB::Setting;
 
 

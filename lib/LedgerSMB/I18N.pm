@@ -11,9 +11,8 @@ LedgerSMB::I18N - Translation role for LedgerSMB Moose classes
 
 =head1 DESCRIPTION
 
-This adds a single method, text() to a role.  This maps to the current
-LedgerSMB::App_State::Locale's text method.  This is safe for cached code since
-we look only to the current locale.
+This adds two methods, Text() and Maketext() to a role, creating a locale
+object from the 'language' property.
 
 =cut
 

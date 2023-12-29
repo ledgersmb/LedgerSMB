@@ -24,7 +24,6 @@ use DateTime::Format::Strptime;
 use Memoize;
 use PGObject;
 
-use LedgerSMB::App_State;
 use LedgerSMB::Magic
     qw( MONTHS_PER_QUARTER YEARS_PER_CENTURY FUTURE_YEARS_LIMIT );
 
