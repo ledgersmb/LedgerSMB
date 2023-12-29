@@ -104,7 +104,7 @@ sub add_interval {
     );
     my $delta_name = $delta_names{$interval};
     #Validate asked interval
-    die "Bad interval: $interval" if not defined $delta_name;
+    croak "Bad interval: $interval" if not defined $delta_name;
 
     $n //= 1;    # Default to 1
     $n *= MONTHS_PER_QUARTER if $interval eq 'quarter'; # A quarter is 3 months
@@ -152,7 +152,8 @@ my $fb_parser =  DateTime::Format::Strptime->new(
 
 
 sub from_input{
-    my ($self, $input) = @_;
+    my $self = shift;
+    my $input = shift;
 
     local $@ = undef;
     return $input if eval {$input->isa(__PACKAGE__)} && $input->is_date;
@@ -163,7 +164,7 @@ sub from_input{
     my $dt = $pref_parser->parse_datetime($input)
         // $fb_parser->parse_datetime($input);
 
-    die "Bad timestamp ($input)" if $input && ! $dt;
+    croak "Bad timestamp ($input)" if $input && ! $dt;
     bless $dt, __PACKAGE__;
     $dt->is_date(1);
     $dt->is_time(($input && $input =~ /\:/) ? 1 : 0); # Define time
@@ -179,30 +180,29 @@ used.  If $format is not supplied, the dateformat of the user is used.
 =cut
 
 sub to_output {
-    my ($self) = @_;
+    my $self = shift @_;
     return '' if not $self->is_date();
-    my $fmt;
-    if (defined LedgerSMB::App_State::User()->{dateformat}){
-        $fmt = LedgerSMB::App_State::User()->{dateformat};
-    } else {
-        $fmt = '%F';
-    }
-    $fmt = $formats->{uc($fmt)} if defined $formats->{uc($fmt)};
+    my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
 
-    $fmt .= ' %T' if $self->is_time();
-    $fmt =~ s/^\s+//;
+    my $fmt = $args{format} // $args{datetimeformat};
+    if (not defined $fmt) {
+        $fmt = $args{dateformat} // '%F';
+        $fmt = $formats->{uc($fmt)} if defined $formats->{uc($fmt)};
+
+        $fmt .= ' %T' if $self->is_time();
+        $fmt =~ s/^\s+//;
+    }
 
     # the hard-coded 'en_US' locale here is no problem: it's used
     # for the %b format ('mon') to look up the names of the months;
     # however, we only support numeric formats
     my $formatter = DateTime::Format::Strptime->new(
-             pattern => $fmt,
-              locale => 'en_US',
-            on_error => 'croak',
-    );
-    my $date = $formatter->format_datetime($self);
-    if ($date =~ /\:/ and not $self->is_time()) { die 'to_output'; }
-    return $date;
+        pattern  => $fmt,
+        locale   => 'en_US',
+        on_error => 'croak',
+        );
+
+    return $formatter->format_datetime($self);;
 }
 
 =item $self->to_sort()

@@ -361,9 +361,7 @@ sub initialize_with_db {
 
 sub get_user_info {
     my ($self) = @_;
-    LedgerSMB::App_State::set_User(
-        $self->{_user} =
-        LedgerSMB::User->fetch_config($self));
+    $self->{_user} = LedgerSMB::User->fetch_config($self);
     return $self->{_user}->{language} ||= 'en';
 }
 

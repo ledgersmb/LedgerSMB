@@ -196,7 +196,6 @@ sub change {
             return 1;
         }
 
-        local $LedgerSMB::App_State::User = {};
         local $LedgerSMB::App_State::DBH = $dbh;
         my $user = LedgerSMB::Entity::User->get($_user->{entity_id});
         my $emp = LedgerSMB::Entity::Person::Employee->get($_user->{entity_id});
@@ -335,7 +334,6 @@ sub _create_employee {
     }
     my $_manager = $self->_get_user($dbh, $self->options->{manager});
 
-    local $LedgerSMB::App_State::User = {};
     my $emp = LedgerSMB::Entity::Person::Employee->new(
         _dbh => $dbh,
         $self->options->%*,
@@ -459,7 +457,6 @@ Id     Username        Created
             return 1;
         }
 
-        local $LedgerSMB::App_State::User = {};
         local $LedgerSMB::App_State::DBH = $dbh;
         $user = LedgerSMB::Entity::User->get($_user->{entity_id});
         my $emp = LedgerSMB::Entity::Person::Employee->get($_user->{entity_id});

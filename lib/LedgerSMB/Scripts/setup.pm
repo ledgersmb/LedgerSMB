@@ -1293,7 +1293,6 @@ sub _save_user {
     $request->{dbh}->{AutoCommit} = 0;
 
     $request->{control_code} = $request->{employeenumber};
-    local $LedgerSMB::App_State::User = {};
     my $emp = LedgerSMB::Entity::Person::Employee->new(
         %$request,
         dob => $request->parse_date( $request->{dob} ),
@@ -1418,7 +1417,6 @@ sub edit_user_roles {
         unless $request->{dbh};
     return $reauth if $reauth;
 
-    local $LedgerSMB::App_State::User = {};
     my $template = $request->{_wire}->get('ui');
     my ($user) = $request->call_procedure(
         funcname => 'admin__get_user',

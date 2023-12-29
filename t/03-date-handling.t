@@ -15,7 +15,6 @@ use Plack::Request;
 use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
-use LedgerSMB::App_State;
 
 use Log::Log4perl qw( :easy );
 
@@ -172,8 +171,6 @@ ok(!defined $form->add_date(\%myconfig),
 
 use LedgerSMB::PGDate;
 
-LedgerSMB::App_State::set_User({});
-
 # there are 4 requirements to PGDate that we can verify here:
 is(LedgerSMB::PGDate->from_input('')->to_output, '',
    'round-tripping empty string returns empty string');
@@ -225,7 +222,6 @@ foreach my $test (
         date => '20161029',
     },
 ) {
-   LedgerSMB::App_State::set_User( { dateformat => $test->{format} } );
    is(eval { LedgerSMB::PGDate->from_input($test->{date}, format => $test->{format})
                  ->to_output( format => $test->{format} ) },
       $test->{date},
