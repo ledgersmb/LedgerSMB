@@ -28,9 +28,6 @@ use Moose::Role;
 use namespace::autoclean;
 with 'PGObject::Simple::Role' => { -excludes => [qw( _get_schema )], };
 
-use LedgerSMB::App_State;
-
-
 sub _get_schema {
     my $self = shift;
     return $self->dbh->{private_LedgerSMB}->{schema};
