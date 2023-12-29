@@ -196,22 +196,25 @@ the request's C<format> property has a non-false value.
 
 =item parse_amount($amount)
 
+Parses the $amount given the session user's number formatting settings.
 
 =item parse_date($date)
 
+Parses the $date given the session user's date formatting settings.
 
 =item format_amount($amount, %args)
 
+formats the $amount given the session user's number formatting settings.
+
 =item formatter_options()
 
-
+Returns a hashref containing the session user's number and date formatting
+preferences for use in LedgerSMB::Report-s.
 
 =back
 
 
-
-
-=head1 Copyright (C) 2006-2017, The LedgerSMB core team.
+=head1 Copyright (C) 2006-2023, The LedgerSMB core team.
 
  # This work contains copyrighted information from a number of sources
  # all used with permission.

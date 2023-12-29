@@ -754,6 +754,10 @@ sub parse_amount {
 
 =item $form->parse_date($myconfig, $date);
 
+Return a LedgerSMB::PGDate containing the value of $date where $date is
+formatted as $myconfig->{dateformat}.  If $date is '' or undefined, undef
+is returned.
+
 =cut
 
 sub parse_date {
