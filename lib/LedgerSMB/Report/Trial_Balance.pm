@@ -176,12 +176,23 @@ sub columns {
          name => $self->Text('Credits'),
        pwidth => 1} ,
 
+      {col_id => 'ending_balance_debit',
+         type => 'text',
+         money => 1,
+         name => $self->Text('Ending Balance Debit'),
+        pwidth => 1} ,
+
+      {col_id => 'ending_balance_credit',
+         type => 'text',
+         money => 1,
+         name => $self->Text('Ending Balance Credit'),
+        pwidth => 1} ,
+
       {col_id => 'ending_balance',
          type => 'text',
          money => 1,
          name => $self->Text('Ending Balance'),
         pwidth => 1} ,
-
 
     ];
 }
