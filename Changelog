@@ -3,6 +3,11 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.28
+* Retain partsgroup selection on Update in parts screen (#7848)
+* Fix missing columns on trial balance 'Ending' report type (#7870)
+
+
 Changelog for 1.10.27
 * Fix 'delete' link shown in CoA screen on accounts used with parts (#7812)
 * Fix deletion of parts (#7811)
