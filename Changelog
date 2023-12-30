@@ -30,6 +30,12 @@ Cleanup & architecture improvements
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.7
+* Fix creating an invoice from an order (#7855)
+* Retain partsgroup selection on Update in parts screen (#7848)
+* Fix missing columns on trial balance 'Ending' report type (#7870)
+
+
 Changelog for 1.11.6
 * Fix 'Current earnings' not showing in the balance sheet report (#7785)
 * Fix saving headings of headings (#7802)
