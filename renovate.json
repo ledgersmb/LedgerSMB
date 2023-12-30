@@ -39,6 +39,7 @@
         "after 11pm on friday",
         "before 7am on saturday"
     ],
+    "updateLockFiles": true,
     "vulnerabilityAlerts": {
         "schedule": null
     }
