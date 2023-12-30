@@ -2,7 +2,7 @@
     "extends": [
       "config:base"
     ],
-    "baseBranches": [ "master", "1.10" ],
+    "baseBranches": [ "1.10" ],
     "cpanfile": {
         "enabled": false
     },
