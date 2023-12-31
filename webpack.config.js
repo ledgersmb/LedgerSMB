@@ -265,7 +265,7 @@ if (TARGET !== "readme") {
             `});`
     };
 
-    var pluginsProd = [
+    var pluginsCommon = [
         // Lint the sources
         new ESLintPlugin(ESLintPluginOptions),
         new StylelintPlugin(StylelintPluginOptions),
@@ -353,12 +353,23 @@ if (TARGET !== "readme") {
                 function (po) {
                     return "'" + po + "'";
                 }
-            )
+            ),
+            __VUE_PROD_DEVTOOLS__: true
         })
     ];
 
+    var pluginsProd = [
+        ...pluginsCommon,
+
+        // Statics from build.
+        new webpack.DefinePlugin({
+            __VUE_PROD_DEVTOOLS__: true
+        })
+    ];
+
+
     var pluginsDev = [
-        ...pluginsProd,
+        ...pluginsCommon,
 
         new UnusedWebpackPlugin(UnusedWebpackPluginOptions),
 
