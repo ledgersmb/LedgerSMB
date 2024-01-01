@@ -7,7 +7,6 @@
     "(+) Salvage Value": "(+) Ликвидационная стоимость",
     "(-) Accum. Dep.": "(-) Накопленный износ",
     "(=) NBV": "(=) Чистая балансовая стоимость",
-    ".": ".",
     "A return authorization must be obtained from [_1] before goods are returned. Returns must be shipped prepaid and properly insured. [_1] will not be responsible for damages during transit.": "Возврат амортизационных отчислений должен быть получен со стороны  [_1]  до того, как товар будет возвращен. Возвраты должны быть отгружены по предоплате и застрахованы должным образом.  [_1] не отвечает за ущерб, принесенный во время пересылки.",
     "AP": "Поступления",
     "AP Aging": "Взаиморасчеты с поставщиками",

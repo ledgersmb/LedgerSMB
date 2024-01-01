@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-01-01 09:10+0000\n"
+"POT-Creation-Date: 2024-01-01 10:01+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
 "Last-Translator: d34703e27442b8aae408ee1a019d49fd_1d2c70b, 2022\n"
 "Language-Team: German (http://www.transifex.com/ledgersmb/ledgersmb/language/"
@@ -44,11 +44,6 @@ msgstr "--FORMAT--"
 #: UI/templates/widget.html:27
 msgid "--TEMPLATE--"
 msgstr "--VORLAGE--"
-
-#: lib/LedgerSMB/Upgrade_Tests.pm:378 lib/LedgerSMB/Upgrade_Tests.pm:399
-#: lib/LedgerSMB/Upgrade_Tests.pm:600 lib/LedgerSMB/Upgrade_Tests.pm:621
-msgid "."
-msgstr "."
 
 #: UI/templates/widget.html:85
 msgid "1099-INT"
@@ -728,14 +723,11 @@ msgstr "Betrag/Rate"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:776
 msgid ""
-"An account can either be a summary account (which have alink of \"AR\", "
-"\"AP\" or \"IC\" value) or be linked to dropdowns (having anynumber of "
-"\"AR_*\", \"AP_*\" and/or \"IC_*\" links concatenated by colons (:)."
+"An account can either be a summary account (which have a\n"
+"link of \"AR\", \"AP\" or \"IC\" value) or be linked to dropdowns (having "
+"any\n"
+"number of \"AR_*\", \"AP_*\" and/or \"IC_*\" links concatenated by colons (:)."
 msgstr ""
-"Ein Konto kann entweder ein zusammenfassendes Konto sein (mit einem „AR“-, "
-"„AP“- oder „IC“ Wert) oder mit Einblendungen verknüpft sein (mit einer "
-"beliebigen Anzahl von „AR_*“-, „AP_*“- und/oder „IC_*“Verknüpfungen, die "
-"durch Doppelpunkte (:) verbunden sind)."
 
 #: sql/Pg-database.sql:3134
 msgid "Annual Straight Line Daily"
@@ -4044,12 +4036,9 @@ msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:895
 msgid ""
-"LedgerSMB customers must be assigned to a valid business.<br>Please review "
-"the selection or select the proper business from the list"
+"LedgerSMB customers must be assigned to a valid business.<br>\n"
+"Please review the selection or select the proper business from the list"
 msgstr ""
-"LedgerSMB-Kunden müssen einem gültigen Unternehmen zugeordnet sein.<br>Bitte "
-"überprüfen Sie die Auswahl oder wählen Sie das richtige Unternehmen aus der "
-"Liste"
 
 #: UI/setup/system_info.html:10
 msgid "LedgerSMB has detected the following system components"
@@ -4079,12 +4068,9 @@ msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:872
 msgid ""
-"LedgerSMB vendors must be assigned to a valid business.<br>Please review the "
-"selection or select the proper business from the list"
+"LedgerSMB vendors must be assigned to a valid business.<br>\n"
+"Please review the selection or select the proper business from the list"
 msgstr ""
-"LedgerSMB-Kreditoren müssen einem gültigen Unternehmen zugeordnet sein. "
-"<br>Bitte überprüfen Sie die Auswahl oder wählen Sie das richtige Unternehmen "
-"aus der Liste"
 
 #: UI/reconciliation/report.html:67
 msgid "Less Outstanding Checks:"
@@ -5254,8 +5240,8 @@ msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:798
 msgid ""
-"Please go into the SQL-Ledger UI and create/rename aheading which sorts "
-"alphanumerically before the first account by accno"
+"Please go into the SQL-Ledger UI and create/rename a\n"
+"heading which sorts alphanumerically before the first account by accno"
 msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1011
@@ -5276,8 +5262,8 @@ msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:756
 msgid ""
-"Please make sure all accounts have a category of(A)sset, (L)iability, "
-"e(Q)uity, (I)ncome or (E)xpense."
+"Please make sure all accounts have a category of\n"
+"(A)sset, (L)iability, e(Q)uity, (I)ncome or (E)xpense."
 msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:969
@@ -5319,6 +5305,12 @@ msgstr ""
 
 #: lib/LedgerSMB/Scripts/timecard.pm:142
 msgid "Please submit a start/end time or a qty"
+msgstr ""
+
+#: lib/LedgerSMB/Upgrade_Tests.pm:703
+msgid ""
+"Please use pgAdmin3 or psql to look up the 'chart_id' value in the 'account' "
+"table and change it to an existing value"
 msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:687
@@ -5379,9 +5371,9 @@ msgstr "Lieferantenrechnung buchen [_1]"
 msgid ""
 "Pre-migration checks found reconciliations on income or expense accounts or "
 "accounts that have not been marked for receipts/payment. Reconciliations "
-"should be on asset, liability or equity accounts only.<br>Void the clearing "
-"date in the dialog shown or go back to SQL-Ledger if you feel that you need "
-"to adjust more before migrating."
+"should be on asset, liability or equity accounts only.<br>\n"
+"Void the clearing date in the dialog shown or go back to SQL-Ledger if you "
+"feel that you need to adjust more before migrating."
 msgstr ""
 
 #: sql/Pg-database.sql:2364
@@ -7255,9 +7247,9 @@ msgstr "Deren Belastungen"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:543
 msgid ""
-"There are NULL values in the amounts column of yoursource database. Please "
-"either find professional help to migrate yourdatabase, or delete the "
-"offending rows through PgAdmin III or psql"
+"There are NULL values in the amounts column of your\n"
+"source database. Please either find professional help to migrate your\n"
+"database, or delete the offending rows through PgAdmin III or psql"
 msgstr ""
 
 #: UI/reconciliation/report.html:11
@@ -7709,9 +7701,9 @@ msgstr ""
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:837
 msgid ""
-"Undefined businesses.<br>Please make sure business used by vendors and "
-"constomers are defined.<br><i><b>Hover on buttons</b> to see their effects "
-"and impacts</i>"
+"Undefined businesses.<br>\n"
+"Please make sure business used by vendors and constomers are defined.<br>\n"
+"<i><b>Hover on buttons</b> to see their effects and impacts</i>"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/template.pm:119
@@ -8148,6 +8140,18 @@ msgstr "Gewichtseinheit"
 msgid "What type of item is this?"
 msgstr "Welche Artikelart ist es?"
 
+#: lib/LedgerSMB/Upgrade_Tests.pm:378 lib/LedgerSMB/Upgrade_Tests.pm:600
+msgid ""
+"When customers are defined, an AR account must be defined,\n"
+" however, your setup doesn't. Please go back and define one."
+msgstr ""
+
+#: lib/LedgerSMB/Upgrade_Tests.pm:399 lib/LedgerSMB/Upgrade_Tests.pm:621
+msgid ""
+"When vendors are defined, an AP account must be defined,\n"
+" however, your setup doesn't. Please go back and define one."
+msgstr ""
+
 #: UI/setup/begin_backup.html:8
 msgid "Where shall we send the backup?"
 msgstr "Wohin sollen wir die Datensicherung schicken?"
@@ -8340,10 +8344,6 @@ msgstr "Disposition"
 msgid "done"
 msgstr "Erledigt"
 
-#: lib/LedgerSMB/Upgrade_Tests.pm:703
-msgid "e"
-msgstr "e"
-
 #: old/bin/am.pl:788 old/bin/am.pl:894 old/bin/am.pl:946
 msgid "failed"
 msgstr "fehlgeschlagen"
@@ -8432,6 +8432,9 @@ msgstr "unerwarteter Fehler!"
 msgid "use of an overpayment"
 msgstr "Nutzen einer Ãœberzahlung"
 
+#~ msgid "."
+#~ msgstr "."
+
 #~ msgid "AIM"
 #~ msgstr "AIM"
 
@@ -8459,6 +8462,16 @@ msgstr "Nutzen einer Ãœberzahlung"
 #~ "„AR“, „AP“ oder „IC“) oder mit Einblendungen verknüpft sein (mit einer "
 #~ "beliebigen# Anzahl von Links „AR_*“, „AP_*“ und/oder „IC_*“, die durch "
 #~ "Doppelpunkte (:) verbunden sind."
+
+#~ msgid ""
+#~ "An account can either be a summary account (which have alink of \"AR\", "
+#~ "\"AP\" or \"IC\" value) or be linked to dropdowns (having anynumber of "
+#~ "\"AR_*\", \"AP_*\" and/or \"IC_*\" links concatenated by colons (:)."
+#~ msgstr ""
+#~ "Ein Konto kann entweder ein zusammenfassendes Konto sein (mit einem „AR“-, "
+#~ "„AP“- oder „IC“ Wert) oder mit Einblendungen verknüpft sein (mit einer "
+#~ "beliebigen Anzahl von „AR_*“-, „AP_*“- und/oder „IC_*“Verknüpfungen, die "
+#~ "durch Doppelpunkte (:) verbunden sind)."
 
 #~ msgid "BCC"
 #~ msgstr "BCC"
@@ -8606,6 +8619,14 @@ msgstr "Nutzen einer Ãœberzahlung"
 #~ msgid "JavaScript error: "
 #~ msgstr "JavaScript-Fehler:"
 
+#~ msgid ""
+#~ "LedgerSMB customers must be assigned to a valid business.<br>Please review "
+#~ "the selection or select the proper business from the list"
+#~ msgstr ""
+#~ "LedgerSMB-Kunden müssen einem gültigen Unternehmen zugeordnet sein."
+#~ "<br>Bitte überprüfen Sie die Auswahl oder wählen Sie das richtige "
+#~ "Unternehmen aus der Liste"
+
 #~ msgid "LedgerSMB has introduced three new system wide default values which "
 #~ msgstr "LedgerSMB hat drei neue systemweite Standardwerte eingeführt, die"
 
@@ -8622,6 +8643,14 @@ msgstr "Nutzen einer Ãœberzahlung"
 #~ msgid ""
 #~ "LedgerSMB supports multiple <em>Accounts receivable (AR)</em> accounts "
 #~ msgstr "LedgerSMB unterstützt mehrere <em>Debitoren-Konten (AR)</em>"
+
+#~ msgid ""
+#~ "LedgerSMB vendors must be assigned to a valid business.<br>Please review "
+#~ "the selection or select the proper business from the list"
+#~ msgstr ""
+#~ "LedgerSMB-Kreditoren müssen einem gültigen Unternehmen zugeordnet sein. "
+#~ "<br>Bitte überprüfen Sie die Auswahl oder wählen Sie das richtige "
+#~ "Unternehmen aus der Liste"
 
 #~ msgid "Lifetime Measured In"
 #~ msgstr "Lebensdauer Gemessen in"
@@ -8729,6 +8758,9 @@ msgstr "Nutzen einer Ãœberzahlung"
 
 #~ msgid "bug"
 #~ msgstr "Fehler"
+
+#~ msgid "e"
+#~ msgstr "e"
 
 #~ msgid "ea"
 #~ msgstr "ea"

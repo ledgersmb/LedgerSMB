@@ -86,10 +86,10 @@ while (<>) {
               $source =~ m/^[^\n]*\b(([Mm]ark)?[tT]ext)[\s\t\n]*\(/gs
               && do { $state = TXT; $text = $1; redo; };
 
-          $state==TXT # All patterns must give $1 for the whole
+         $state==TXT # All patterns must give $1 for the whole
                       # $2 for the separator and $4 for the inner string
             && (    $source =~ m/^( (')  ((([^'\\]++|\\.)*+))     ('))/gsx
-                 || $source =~ m/^( (\bq\()(([^\)\\]|\(.*\)|\\.)*)(\)) )/gsx
+                 || $source =~ m/^( (\bq\()((([^)\\]|\(.*\)|\\.)*))(\)) )/gsx
                  || $source =~ m/^( <<(['`])(\w+)\2;(?:[ \t]*\#[^\n]*)?\n(.+)\n(\3)\n)/gsx
             ) && do {
                       $state = FIN;
@@ -98,6 +98,7 @@ while (<>) {
                           $string =~ s/\\'/'/g;
                           $string =~ s/(?<!\\)"/\\"/g;
                       }
+                      $string =~ s/\n/\\n/g;
                       add_entry($string, $file, $line_no);
                       redo;
               };
@@ -108,6 +109,7 @@ while (<>) {
                  || $source =~ m/^( <<(")?(\w+)"?;(?:[ \t]*\#[^\n]*)?\n(.+)\n(\3)\n)/gsx
             ) && do {
                       my $string = $4;
+                      $string =~ s/\n/\\n/g;
                       if ($string =~ m/(?<!\\)([\$\%\@][\w\[\]\{\}\-\<\>\.]+)/gs) {
                           warn "$file:$line_no: Direct variable interpolation not supported; use bracketed ([_1]) syntax for '$1'!\n";
                           $state = NUL;
