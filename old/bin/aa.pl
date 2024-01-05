@@ -861,10 +861,9 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     if($form->{"taxformcheck_$i"} or ($form->{default_reportable} and ($i == $form->{rowcount})))
     {
         $taxchecked=qq|CHECKED="CHECKED"|;
-        $taxchecked.=q| disabled="disabled"| if $readonly;
     }
 
-    $taxformcheck=qq|<td><input type="checkbox" data-dojo-type="dijit/form/CheckBox" name="taxformcheck_$i" value="1" $taxchecked $readonly></td>|;
+    $taxformcheck=qq|<td><input type="checkbox" data-dojo-type="dijit/form/CheckBox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
         print qq|
     <tr valign=top class="transaction-line $form->{ARAP}" id="line-$i">
      <td><input data-dojo-type="dijit/form/TextBox" id="amount_$i" name="amount_$i" size=10 value="$form->{"amount_$i"}" $readonly></td>
