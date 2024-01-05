@@ -135,16 +135,21 @@ adding a webserver to the installation.
 
 # Project information
 
+
+Security vulnerability reports: [https://ledgersmb.org/contact/security_report](https://ledgersmb.org/contact/security_report)
+
+
 Web site: [https://ledgersmb.org/](https://ledgersmb.org)
 
 Repository: [https://github.com/ledgersmb/LedgerSMB](https://github.com/ledgersmb/LedgerSMB)
 
-Security vulnerability reports: [https://ledgersmb.org/contact/security_report](https://ledgersmb.org/contact/security_report)
+Live chat: [#ledgersmb:matrix.org](https://app.element.io/#/room/#ledgersmb:matrix.org) (Matrix)
 
-Live chat:
+Groups:
 
-* Matrix: [#ledgersmb:matrix.org](https://app.element.io/#/room/#ledgersmb:matrix.org)
-
+* [LinkedIN LedgerSMB group](https://www.linkedin.com/groups/4238725/)
+* [Facebook LedgerSMB page](https://www.facebook.com/LedgerSMB)
+* [Mastodon](https://mastodon.social/@LedgerSMB)
 
 Mailing lists:
 
