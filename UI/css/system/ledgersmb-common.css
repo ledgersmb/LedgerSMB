@@ -22,6 +22,11 @@ td.check {
     text-align: center;
 }
 
+td.text,
+td.href {
+    padding-left: 0.5ex;
+}
+
 div#title {
     font-size: var(--div-title-font-size);
 }
