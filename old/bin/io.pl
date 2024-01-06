@@ -1380,7 +1380,8 @@ sub print_form {
 
     # before we format replace <%var%>
     for (qw(notes intnotes message)) {
-        $form->{$_} =~ s/<%(.*?)%>/$form->{$1}/g;
+        $form->{$_} =~ s/<%(.*?)%>/$form->{$1}/g
+            if $form->{$_};
     }
 
 

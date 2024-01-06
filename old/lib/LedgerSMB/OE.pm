@@ -924,12 +924,12 @@ sub order_details {
                 @{ $form->{ship} },
                 $form->format_amount( $myconfig, $form->{"ship_$i"} )
             );
-            push( @{ $form->{unit} },         qq|$form->{"unit_$i"}| );
-            push( @{ $form->{bin} },          qq|$form->{"bin_$i"}| );
-            push( @{ $form->{serialnumber} }, qq|$form->{"serialnumber_$i"}| );
-            push( @{ $form->{requiredate} },  qq|$form->{"reqdate_$i"}| );
+            push( @{ $form->{unit} },         $form->{"unit_$i"} // '' );
+            push( @{ $form->{bin} },          $form->{"bin_$i"} // '' );
+            push( @{ $form->{serialnumber} }, $form->{"serialnumber_$i"} // '' );
+            push( @{ $form->{requiredate} },  $form->{"reqdate_$i"} // '' );
             push( @{ $form->{projectnumber} },
-                qq|$form->{"projectnumber_$i"}| );
+                  $form->{"projectnumber_$i"} );
 
             push( @{ $form->{sellprice} }, $form->{"sellprice_$i"} );
 
