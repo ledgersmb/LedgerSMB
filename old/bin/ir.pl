@@ -958,15 +958,9 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
     my $wf = $form->{_wire}->get( 'workflows' )->fetch_workflow( 'AR/AP', $form->{workflow_id} );
     if ( $wf and grep { $_ eq 'print' } $wf->get_current_actions ) {
         my $printops = &print_options;
-        my $formname = {
-            name => 'formname',
-            options => [
-                {text=> $locale->text('Product Receipt'), value => 'product_receipt'},
-                ]
-        };
 
         print "<br /><br />";
-        print_select($form, $formname);
+        print_select($form, $printops->{formname});
         print_select($form, $printops->{lang});
         print_select($form, $printops->{format});
         print_select($form, $printops->{media});

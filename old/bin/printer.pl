@@ -44,10 +44,18 @@ sub print_options {
 
     # SC: Option values extracted from other old/bin/ scripts
     if ($form->{type} && $form->{type} eq 'invoice') {
-    push @{$options{formname}{options}}, {
-        text => $locale->text('Invoice'),
-        value => 'invoice',
-        };
+        if ($form->{vc} && $form->{vc} eq 'customer') {
+            push @{$options{formname}{options}}, {
+                text => $locale->text('Invoice'),
+                value => 'invoice',
+            };
+        }
+        elsif ($form->{vc} && $form->{vc} eq 'vendor') {
+            push @{$options{formname}{options}}, {
+                text=> $locale->text('Product Receipt'),
+                value => 'product_receipt'
+            };
+        }
     }
     if ($form->{type} && $form->{type} eq 'sales_quotation') {
         push @{$options{formname}{options}}, {
