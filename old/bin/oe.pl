@@ -297,6 +297,46 @@ sub form_header {
     my $numberfld;
     my $status_div_id = $form->{type};
     $status_div_id =~ s/_/-/g;
+    my $wf;
+    my $class_id;
+    $form->{vc} = ( $form->{vc} eq 'customer' ) ? 'customer' : 'vendor';
+    if ( $form->{type} =~ /_order$/ ) {
+        $quotation = "0";
+        $ordnumber = "ordnumber";
+        if ($form->{vc} eq 'customer'){
+            $numberfld = "sonumber";
+            $class_id = 1;
+        } else {
+            $numberfld = "ponumber";
+            $class_id = 2;
+        }
+    }
+    else {
+        $quotation = "1";
+        $ordnumber = "quonumber";
+        if ( $form->{vc} eq 'customer' ) {
+            $numberfld = "sqnumber";
+            $class_id = OEC_QUOTATION;
+        } else {
+            $numberfld = "rfqnumber";
+            $class_id = OEC_RFQ;
+        }
+    }
+    if($form->{workflow_id}) {
+        $wf = $form->{_wire}->get('workflows')
+            ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    }
+    else {
+        $wf = $form->{_wire}->get('workflows')
+            ->create_workflow( 'Order/Quote',
+                               Workflow::Context->new(
+                                   'batch-id' => $form->{batch_id},
+                                   '_extra' => {
+                                       oe_class_id => $class_id
+                                   }
+                               ) );
+        $form->{workflow_id} = $wf->id;
+    }
     if ( $form->{type} =~ /_order$/ ) {
         $quotation = "0";
         $ordnumber = "ordnumber";
@@ -640,126 +680,34 @@ sub form_header {
 |;
     }
     if ( !$form->{readonly} ) {
-        %button = (
-            'update' => {
-                ndx => 1,
-                key => 'U',
-                value => $locale->text('Update'),
-                doing => $locale->text('Updating...'),
-                done => $locale->text('Updated')
-            },
-            'print' =>
-              { ndx => 2, key => 'P', value => $locale->text('Print'),
-                type => 'lsmb/PrintButton' },
-            'save' => {
-                ndx => 3,
-                key => 'S',
-                value => $locale->text('Save'),
-                doing => $locale->text('Saving...'),
-                done => $locale->text('Saved')
-            },
-            'ship_to' =>
-              { ndx => 4, key => 'T', value => $locale->text('Ship to') },
-            'e_mail' =>
-              { ndx => 5, key => 'E', value => $locale->text('E-mail') },
-            'print_and_save' => {
-                ndx   => 6,
-                key   => 'R',
-                value => $locale->text('Print and Save'),
-                type => 'lsmb/PrintButton'
-            },
-            'save_as_new' =>
-              { ndx => 7, key => 'N', value => $locale->text('Save as new') },
-            'print_and_save_as_new' => {
-                ndx   => 8,
-                key   => 'W',
-                value => $locale->text('Print and Save as new'),
-                type => 'lsmb/PrintButton'
-            },
-            'sales_invoice' =>
-              { ndx => 9, key => 'I', value => $locale->text('Sales Invoice') },
-            'sales_order' =>
-              { ndx => 10, key => 'O', value => $locale->text('Sales Order') },
-            'quotation' =>
-              { ndx => 11, key => 'Q', value => $locale->text('Quotation') },
-            'vendor_invoice' => {
-                ndx   => 12,
-                key   => 'I',
-                value => $locale->text('Vendor Invoice')
-            },
-            'purchase_order' => {
-                ndx   => 13,
-                key   => 'O',
-                value => $locale->text('Purchase Order')
-            },
-            'rfq' => { ndx => 14, key => 'Q', value => $locale->text('RFQ') },
-            # Commented out; see github isue #5295
-#            'schedule' =>
-#              { ndx => 15, key => 'H', value => $locale->text('Schedule') },
-            'delete' =>
-              { ndx => 16, key => 'D', value => $locale->text('Delete') },
-        );
+        print "<tr><td>";
 
-        %a = ();
-        for ( "update", "ship_to", "save", "print_and_save" ) { $a{$_} = 1 }
+        %button_types = (
+            print => 'lsmb/PrintButton'
+            );
+        %button = ();
+        for my $action_name ( $wf->get_current_actions( 'main') ) {
+            my $action = $wf->get_action( $action_name );
 
-        if ( $form->{id} ) {
-
-            $a{'e_mail'}                = 1;
-            $a{'delete'}                = 1;
-            $a{'print'}                 = 1;
-            $a{'save_as_new'}           = 1;
-            $a{'print_and_save_as_new'} = 1;
-
-            if ( $form->{type} =~ /sales_/ ) {
-                if ( $myconfig{acs} !~ /AR--Sales Invoice/ ) {
-                    $a{'sales_invoice'} = 1;
-                }
-            }
-            else {
-                if ( $myconfig{acs} !~ /AP--Vendor Invoice/ ) {
-                    $a{'vendor_invoice'} = 1;
-                }
-            }
-
-            if ( $form->{type} eq 'sales_order' ) {
-                if ( $myconfig{acs} !~ /Quotations--RFQ/ ) {
-                    $a{'quotation'} = 1;
-                }
-            }
-
-            if ( $form->{type} eq 'purchase_order' ) {
-                if ( $myconfig{acs} !~ /Quotations--RFQ/ ) {
-                    $a{'rfq'} = 1;
-                }
-            }
-
-            if ( $form->{type} eq 'sales_quotation' ) {
-                if ( $myconfig{acs} !~ /Order Entry--Sales Order/ ) {
-                    $a{'sales_order'} = 1;
-                }
-            }
-
-            if ( $myconfig{acs} !~ /Order Entry--Purchase Order/ ) {
-                if ( $form->{type} eq 'request_quotation' ) {
-                    $a{'purchase_order'} = 1;
-                }
-            }
+            next if ($action->ui // '') eq 'none';
+            $button{$action_name} = {
+                ndx   => $action->order,
+                value => $locale->maketext($action->text),
+                doing => ($action->doing ? $locale->maketext($action->doing) : ''),
+                done  => ($action->done ? $locale->maketext($action->done) : ''),
+                type  => $button_types{$action->ui},
+                tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
+            };
         }
 
-        # Commented out; see github isue #5295
-#        if ( $form->{type} =~ /_order/ ) {
-#            $a{'schedule'} = 1;
-#        }
+        for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
+              keys %button ) {
+            $form->print_button( \%button, $_ );
+        }
 
+        $form->hide_form(qw(defaultcurrency workflow_id));
+        print "</td></tr>";
     }
-    for ( keys %button ) { delete $button{$_} if !$a{$_} }
-
-    for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
-        $form->print_button( \%button, $_ );
-    }
-    $form->hide_form(qw(defaultcurrency workflow_id));
-    print "</td></tr>";
 }
 
 sub form_footer {
@@ -876,42 +824,49 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
   <tr>
     <td><hr size=3 noshade></td>
   </tr>
-  <tr>
-    <td>
-|;
-
-    $printops = &print_options;
-    print_select($form, $printops->{formname});
-    print_select($form, $printops->{format});
-    print_select($form, $printops->{media});
-    print_select($form, $printops->{lang});
-    print qq|
-    </td>
-  </tr>
 </table>
 
 <br>
 |;
 
-    # type=submit $locale->text('Update')
-    # type=submit $locale->text('Print')
-    # type=submit $locale->text('Schedule')
-    # type=submit $locale->text('Save')
-    # type=submit $locale->text('Print and Save')
-    # type=submit $locale->text('Ship to')
-    # type=submit $locale->text('Save as new')
-    # type=submit $locale->text('Print and Save as new')
-    # type=submit $locale->text('E-mail')
-    # type=submit $locale->text('Delete')
-    # type=submit $locale->text('Sales Invoice')
-    # type=submit $locale->text('Vendor Invoice')
-    # type=submit $locale->text('Quotation')
-    # type=submit $locale->text('RFQ')
-    # type=submit $locale->text('Sales Order')
-    # type=submit $locale->text('Purchase Order')
 
-    for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
+    for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
+    {
         $form->print_button( \%button, $_ );
+    }
+
+    my $wf = $form->{_wire}->get( 'workflows' )->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    if ( $wf and grep { $_ eq 'print' } $wf->get_current_actions ) {
+        my $printops = &print_options;
+
+        print "<br /><br />";
+        print_select($form, $printops->{formname});
+        print_select($form, $printops->{lang});
+        print_select($form, $printops->{format});
+        print_select($form, $printops->{media});
+
+        %button_types = (
+            print => 'lsmb/PrintButton'
+            );
+        %button = ();
+        for my $action_name ( $wf->get_current_actions( 'output') ) {
+            my $action = $wf->get_action( $action_name );
+
+            next if ($action->ui // '') eq 'none';
+            $button{$action_name} = {
+                ndx   => $action->order,
+                value => $locale->maketext($action->text),
+                doing => ($action->doing ? $locale->maketext($action->doing) : ''),
+                done  => ($action->done ? $locale->maketext($action->done) : ''),
+                type  => $button_types{$action->ui},
+                tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
+            };
+        }
+
+        for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
+              keys %button ) {
+            $form->print_button( \%button, $_ );
+        }
     }
     if ($form->{id}){
         OE->get_files($form, $locale);
