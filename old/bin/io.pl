@@ -1538,6 +1538,9 @@ sub print_form {
         dbh => $form->{dbh},
         path => 'DB',
         language => $form->{language_code},
+        #@@@TODO the formatter options need to be based
+        # on the recipient's preferences, not on the current user!
+        formatter_options => $form->formatter_options(),
         output_options => \%output_options,
         filename => $form->{formname} . "-" . $form->{"${inv}number"},
         format_plugin   =>
