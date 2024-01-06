@@ -6,4 +6,7 @@
   <condition name="is_order"
              test="$context->{_extra}->{oe_class_id} &lt;= 2"
              class="Workflow::Condition::Evaluate"/>
+  <condition name="is_purchase_order"
+             test="$context->{_extra}->{oe_class_id} == 2"
+             class="Workflow::Condition::Evaluate"/>
 </conditions>
