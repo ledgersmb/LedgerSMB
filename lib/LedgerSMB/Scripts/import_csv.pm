@@ -371,7 +371,7 @@ sub _process_chart {
         elsif ($settings{charttype} eq 'H') {
             $settings{type} = 'heading';
         }
-        $settings{link} = split /:/, $settings{link};
+        $settings{link} = [ split /:/, $settings{link} ];
 
         die "Unable to resolve heading $settings{heading} to its id; available: " . join(' ', sort keys %imported)
             if ($settings{heading}
