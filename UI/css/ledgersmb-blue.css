@@ -75,12 +75,14 @@
     --input-remove--before-bg: initial;
     --input-remove-checked--before-bg: initial;
     --listheading-bg-clr: #6495ed;
+    --listheading-clr: white;
     --listrow0-bg-clr: #f5f5f5;
     --listrow0-hover-bg-clr: #e8e8e8;
     --listrow1-bg-clr: #dedede;
     --listrow1-hover-bg-clr: #e8e8e8;
     --listsubtotal-bg-clr: #366;
     --listtop-bg-clr: black;
+    --listtop-clr: white;
     --listtotal-bg-clr: black;
     --menuOut-bg-clr: initial;
     --menuOut-a-bg-clr: initial;
