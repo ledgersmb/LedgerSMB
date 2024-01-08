@@ -681,6 +681,8 @@ This is a synonym of get() which is preferred to use for editing operations.
 =cut
 
 sub edit {
+    my ($request) = @_;
+    $request->{action} = 'edit';
     return get (@_);
 }
 
