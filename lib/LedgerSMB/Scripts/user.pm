@@ -161,6 +161,7 @@ screen.
 
 sub save_preferences {
     my ($request) = @_;
+    $request->{action} = 'save_preferences';
     $request->{_user}->{language} = $request->{language};
     my $locale =  LedgerSMB::Locale->get_handle($request->{_user}->{language});
     $request->{_locale} = $locale;

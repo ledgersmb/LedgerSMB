@@ -548,6 +548,8 @@ Displays the bulk payment screen with current data
 =cut
 
 sub update_payments {
+    my ($request) = @_;
+    $request->{action} = 'update_payments';
     return display_payments(@_);
 }
 
