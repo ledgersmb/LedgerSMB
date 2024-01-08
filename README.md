@@ -15,6 +15,15 @@ Small and Medium business accounting and ERP
 [![issues](https://www.oselvar.com/api/badge?label=issues&csvUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fledgersmb%2Fledgersmb-oselvar%2Fmain%2Fdata%2Fledgersmb%2FLedgerSMB%2Fissues.csv)](https://www.oselvar.com/github/ledgersmb/ledgersmb-oselvar/main/ledgersmb/LedgerSMB "3rd quartile cycle time")
 
 
+## Content
+
+ 1. [Description](#description)
+ 2. [System requirements](#system-requirements)
+ 3. [Quick start](#quick-start)
+ 4. [Project information](#project-information)
+ 5. [Copyright](#copyright)
+ 6. [License](#license)
+
 
 # DESCRIPTION
 
@@ -80,7 +89,7 @@ and a range of versions.
 | Baidu Browser       | 2022-09  | 13.18                                       |
 | Safari on iOS       | 2018-03  | 11.3-11.4, 12.0-12.5, 13.0-13.7,            |
 |                     |          | 14.0-14.8, 15.0-15.7, 16.0-16.7,            |
-|                     |          | 17.0-17.1                                   |
+|                     |          | 17.0-17.2                                   |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
 | Opera Mobile        | 2023-01  | 73                                          |
 | Samsung Internet    | 2019-04  | 9.2, 10.1, 11.1-11.2, 12.0, 13.0, 14.0,     |
