@@ -168,6 +168,17 @@ Mailing lists:
 
 Mailing list archives: [https://archive.ledgersmb.org](https://archive.ledgersmb.org)
 
+Translations: [Transifex online translation tool](https://app.transifex.com/ledgersmb/ledgersmb/dashboard/)
+
+Documentation: The book [Running your business with **LedgerSMB**](https://book.ledgersmb.org)
+
+Continuous integration (automated testing):
+
+* [GitHub Actions](https://github.com/ledgersmb/LedgerSMB/actions)
+* [CircleCI](https://app.circleci.com/pipelines/github/ledgersmb)
+
+Code coverage: [Coveralls](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=master)
+
 
 ## Project contributors
 
