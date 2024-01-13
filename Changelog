@@ -3,6 +3,11 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.29
+* Fix formatting of amounts in AR/AP search results (#7896)
+* Explicitly set foreground color on dark backgrounds in blue theme (#7875)
+
+
 Changelog for 1.10.28
 * Retain partsgroup selection on Update in parts screen (#7848)
 * Fix missing columns on trial balance 'Ending' report type (#7870)
