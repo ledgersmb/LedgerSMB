@@ -1328,7 +1328,7 @@ timeout|90 minutes
 sinumber|1
 sonumber|1
 businessnumber|1
-version|1.10.29
+version|1.10.30-dev
 ponumber|1
 sqnumber|1
 rfqnumber|1
