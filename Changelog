@@ -3,6 +3,15 @@
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.8
+* Fix changing Taxform checkmark after posting AR/AP transactions (#7894)
+* Restore customer/vendor name on PNL drilldown after GL column change (#7895)
+* Fix formatting of amounts on AR/AP search results (#7896)
+* Fix import of CoA csv with non-empty 'links' field (#7912)
+* Explicitly set foreground color on dark backgrounds in blue theme (#7875)
+* Fix screens, e.g. contacts, impacted by rename of 'action' parameter (#7918)
+
+
 Changelog for 1.11.7
 * Fix creating an invoice from an order (#7855)
 * Retain partsgroup selection on Update in parts screen (#7848)
