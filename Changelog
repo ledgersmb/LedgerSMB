@@ -413,7 +413,7 @@ Dependency updates
 * Archive::Zip (new)
 
 
-Changelog for 1.9 Series
+Changelog for 1.9 Series (End of Life)
 Released 2021-09-24
 
 Changelog for 1.9.30
@@ -710,7 +710,7 @@ Dependency updates (Perl)
 * YAML (new)
 
 
-Changelog for 1.8 Series
+Changelog for 1.8 Series (End Of Life)
 Released 2020-09-04
 
 Changelog for 1.8.31
@@ -1045,7 +1045,7 @@ Dependency updates
 * XML::Simple (dropped)
 
 
-Changelog for 1.7 Series
+Changelog for 1.7 Series (End of Life)
 Released 2019-10-04
 
 Changelog for 1.7.41
@@ -1402,7 +1402,7 @@ Erik H is Erik Huelsmann
 Chris T is Chris Travers
 
 
-Changelog for 1.6 Series
+Changelog for 1.6 Series (End of Life)
 Released 2018-06-10
 
 Changelog for 1.6.33
@@ -1754,7 +1754,7 @@ Rob R is Rob Ransbottom
 David G is David Godfrey
 
 
-Changelog for 1.5 Series
+Changelog for 1.5 Series (End of Life)
 Released 2016-12-24
 
 Changelog for 1.5.30
@@ -2214,7 +2214,7 @@ ErikH is Erik Huelsmann
 JohnL is John Locke
 
 
-Changelog for 1.4 Series
+Changelog for 1.4 Series (End of Life)
 Released 2014-09-15
 
 Changelog for 1.4.42
@@ -2945,15 +2945,16 @@ Chris T is Chris Travers
 Steven M is Steven Marshall
 Havard S is Havard Sorli
 
-Changelog for 1.3 Series
-Initial Release:  Monday, Oct 12 2011
-Supported Presently
+
+Changelog for 1.3 Series (End of Life)
+Released 2011-10-12
 
 Changelog for 1.3.47
 * Fixed bug 1271, default payment account not set on 2nd line (Chris T)
 * Fixed bug 1275, post error due to trying to double encode arry (Chris T)
 
 Chris T is Chris Travers
+
 
 Changelog for 1.3.46
 * Fixing bug 1257, ordnumber shows all orders open/closd (Chris T)
@@ -2987,6 +2988,7 @@ Changelog for 1.3.45
 Chris T is Chris Travers
 Pongracz I is Pongracz Istvan
 
+
 Changelog for 1.3.44
 * Allow blank salutations, bug 1204. (Chris T)
 * Easier creation of select widgets with blanks. (Chris T)
@@ -2994,6 +2996,7 @@ Changelog for 1.3.44
 * Fixed issue where locked batch prevents login (Chris T)
 
 Chris T is Chris Travers
+
 
 Changelog for 1.3.43
 * Fixed bug 1136, manual tax not respecting user number formats (Chris T)
@@ -3045,6 +3048,7 @@ Changelog for 1.3.40
 Chris T is Chris Travers
 Pongracz I is Pongracz Istvan
 
+
 Changelog for 1.3.39
 * Fixed Internal Server Error clicking through ar/ap report (Chris T, 1022)
 * Fixed internal server error deleting part (Chris T, 1027)
@@ -3059,6 +3063,7 @@ Changelog for 1.3.39
 
 Chris T is Chris Travers
 Robert C is Robert Clay
+
 
 Changelog for 1.3.38
 * Fixed AR/AP transactions resetting currency/exchange rate (Chris T)
@@ -3085,6 +3090,7 @@ Erik H is Erik Huelsmann
 Nick P is Nick Prater
 P. Isvan is Pongracz Istvan
 
+
 Changelog for 1.3.37
 * 1.3-1.2 downgrade now drops extensions (Chris T, 943)
 * Fixed db names with spaces not supported (Chris T, 946)
@@ -3108,6 +3114,7 @@ Changelog for 1.3.37
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
 
+
 Changelog for 1.3.36
 * Set default date for AP invoice creation to current date (Chris T)
 * Removed "apply discount" from use overpayment screen (Chris T)
@@ -3128,6 +3135,7 @@ Chris T is Chris Travers
 Nick P is Nick Prater
 Giovanni B is Giovanni Biscuolo
 P. Istvan is Pongracz Istvan
+
 
 Changelog for 1.3.35
 * Fixed uninitialized value warnings when cached template enabled (Chris T)
@@ -3204,6 +3212,7 @@ Changelog for 1.3.33
 Herman V is Herman Vierendeels
 Chris T is Chris Travers
 
+
 Changelog for 1.3.32
 * Fixed em-dash handling for pdfs (Chris T)
 * Fixed multiple blank line handling for pdfs (Chris T)
@@ -3220,8 +3229,8 @@ Changelog for 1.3.32
 * Fixed department dropdown not showing values (Chris T, 805)
 * Fixed error causing Reconciliation.sql not to be loaded/reloaded (Chris T)
 
-
 Nick P is Nick Prater
+
 
 Changelog for 1.3.31
 * Removed spurious commit saving orders (Chris T)
@@ -3241,6 +3250,7 @@ Changelog for 1.3.31
 * Fixed country changes to companies not saving (Chris T, 3607437)
 * Fixed customer search on address data (Chris T, 3607436)
 
+
 Changelog for 1.3.30
 * Documented behavior of Outstanding Summary report (Chris T, 3601314)
 * Fix for translations showing multiple types (Chris T, 3601737)
@@ -3253,6 +3263,7 @@ Changelog for 1.3.30
 * Fixed DB API for reopening books (Chris T)
 * Fixed menu-selected vendors and customers not working (Chris T)
 * Fixed packing list not found in dropdown on invoices since 1.3 (Chris T)
+
 
 Changelog for 1.3.29
 * Added db routines for role backup and restore for shared hosting
@@ -3281,6 +3292,7 @@ is not a total pain(Chris T)
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
 
+
 Changelog for 1.3.28
 * Added db list to setup.pl when no db is entered and credentials allow login
   to "postgres" db. (Chris T)
@@ -3299,6 +3311,7 @@ Changelog for 1.3.28
 * Moved Fixes.sql to top of LOADORDER to fix some upgrade issues (Chris T)
 * Fixing handling of unknown browsers in logout (Chris T, 3599930)
 * Fixed error generating invoice when mintax threshhold not met Chris T)
+
 
 Changelog for 1.3.27
 * Detect whether ledgersmb.conf exists during Makefile.PL run and create if
@@ -3322,6 +3335,7 @@ Changelog for 1.3.27
 Chris T is Chris Travers
 Havard S is Havard Sorli
 
+
 Changelog for 1.3.26
 * Added db statistics post-upgrade and pre/post rebuild (Chris T, 3586113)
 * Merged in fcgi support from addons (Chris T)
@@ -3341,6 +3355,7 @@ Brian W is Brian Wolf
 Chris T is Chris Travers
 Havard S is Havard Sorli
 Nigel T is Nigel Titley
+
 
 Changelog for 1.3.25
 * Fixed internal server errors on LedgerSMB->error() during new() (Chris T)
@@ -3364,6 +3379,7 @@ Chris T is Chris Travers
 Erik H is Erik Huelsmann
 Kevin B is Kevin Bailey
 Havard S is Havard Sorli
+
 
 Changelog for 1.3.24
 * Fixed error in msgid for "Add Language" (Havard S, h/t Robert C)
@@ -3398,6 +3414,7 @@ Neil S is Neil Smith
 Robert C is Robert James Clay
 Nick P is Nick Prater
 
+
 Changelog for 1.3.23
 * Fixed query string/stdin handling where both stdin and query string are set
 * Moved http error framework to use header methods (Chris T)
@@ -3423,6 +3440,7 @@ Istvan P is Istvan Pongracz
 Brian W is Brian Wolf
 Nick P is Nick Prater
 Robert C is Robert James Clay
+
 
 Changelog for 1.3.22
 * Fixed error when trying to save multiple make/models for a part (Chris T)
@@ -3458,7 +3476,7 @@ Changelog for 1.3.21
 * File->get_for_template now gets most recent parts image (Chris T)
 * Fixed error on generate purchase orders (Chris T, 3544857, h/t Nigel T)
 * Fixed internal server errors with date parsing (Chris T, 3546698)
-* Fixed "Directory Transversal Not Allowed w/fs_cssdir (Chris T, h/t Robert C)
+* Fixed "Directory Transversal Not Allowed" w/fs_cssdir (Chris T, h/t Robert C)
 * Fixed customer/vendor cleared on ship/receive update (Chris T, 3548104)
 * SECURITY FIX for System/Defaults denial of service advisory (Chris T)
 * Added missing ap_transaction_all role (Chris T, h/t Erik H)
@@ -3471,6 +3489,7 @@ Erik H is Erik Huelsmann
 Nick P is Nick Prater
 Nigel T is Nigel Titley
 Robert C is Robert James Clay
+
 
 Changelog for 1.3.20
 * Fixes for es_AR translation, duplicate keys removed (Andres B)
@@ -3494,6 +3513,7 @@ Erik H is Erik Huelsmann
 Jigme D is JigmeDatse
 lbm is Louis Moore
 Matt B is Matthew Bourque
+
 
 Changelog for 1.3.19
 * New link for customer/vendor when not a dropdown (Chris T)
@@ -3563,8 +3583,8 @@ Erik H is Erik Huelsmann
 Herman V is Herman Vierendiels
 Mark L is Matt Lubratt
 
-Changelog for 1.3.16
 
+Changelog for 1.3.16
 * Changes in <head> element for non-Latin characters, HTML invoices (Erik H)
 * Corrected untranslated string in Contact management screen (Chris T)
 * Corrected permissions issue creating pricelist (Chris T, 3513861)
@@ -3600,6 +3620,7 @@ Chris T is Chris Travers
 H Sorli is Havard Sorli
 Robert C is Robert James Clay
 
+
 Changelog for 1.3.14
 * Argentina (Spanish) translation and charts of accounts added. (Andres B)
 * Fixed errors saving when duedate is blank, bug 3503463 (Chris T)
@@ -3631,6 +3652,7 @@ Erik H is Erik Huelsmann
 H Sorli is Havard Sorli
 Robert C is Robert James Clay
 
+
 Changelog for 1.3.13
 * Reduced log messages when upgrading/creating db, for some log levels (Chris T)
 * Changed db setup not to use createdb for simple admin of pg_hba.conf (Chris T)
@@ -3648,6 +3670,7 @@ Changelog for 1.3.13
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
 H Sorli is Havard Sorli
+
 
 Changelog for 1.3.12
 * Corrected processing of <?lsmb tags in order/invoice numbers (Chris T)
@@ -3676,6 +3699,7 @@ Hilton D is Hilton Day
 Frans S is Frans van der Star
 Chris T is Chris Travers
 
+
 Changelog for 1.3.11
 * Fixed outstanding report for payment reversal and partial payments (Chris T)
 * Fixed handling of non-existing roles in menu grants (Chris T)
@@ -3698,6 +3722,7 @@ Chris T is Chris Travers
 Erik H is Erik Huelsmann
 Herman V is Herman Vierendeels
 Robert C is Robert James Clay
+
 
 Changelog for 1.3.10
 * Fixes for permissions for exchangerate table (Erik H)
@@ -3730,6 +3755,7 @@ John L is John Locke
 Michael R is Michael Richardson
 Pongracz I is Pongracz Istvan
 
+
 Changelog for 1.3.9
 * More logging enhancements (Herman V)
 * Translation fixes in tax form reports (Chris T)
@@ -3746,6 +3772,7 @@ Changelog for 1.3.9
 
 Chris T is Chris Travers
 Herman V is Herman Vierendeels
+
 
 Changelog for 1.3.8:
 * Fixed duplicate key error saving taxes (Herman V)
@@ -3771,7 +3798,8 @@ Chris T is Chris Travers
 David B is David Bandel
 Herman V is Herman Vierendeels
 
-Changelog for LedgerSMB 1.3.7 (Categorized due to length)
+
+Changelog for 1.3.7 (Categorized due to length)
 Database
 * Added foreign key of entity_credit_account.language_code (Herman V)
 * Corrected permissions issue for editing assembly (Chris T)
@@ -3818,7 +3846,7 @@ Erik H is Erik Huelsmann
 Herman V is Herman Vierendeels
 
 
-Changelog for LedgerSMB 1.3.6
+Changelog for 1.3.6
 * Including xelatex templates under directory templates/xedemo (Chris T)
 * Fix for company name in order entry (David B)
 * Corrected UI dropdown box issue on ar/ap transaction screen (Herman V)
@@ -3841,7 +3869,8 @@ David B is David Bandel
 Herman V is Herman Vierendeels
 Pongracz I is Pongracz Istvan
 
-Changelog for LedgerSMB 1.3.5
+
+Changelog for 1.3.5
 * Fixing Menu and Permissions bug 3430820 (Chris T)
 * Fixing permissions bug 3433644 (Chris T)
 * Fixing file not found printing HTML invoice (Chris T)
@@ -3867,7 +3896,8 @@ Erik H is Erik Huelsmann
 Herman V is Herman Vierendeels
 Pongracz I is Pongracz Istvan
 
-Changelog for LedgerSMB 1.3.4
+
+Changelog for 1.3.4
 * Corrected case matching error in upgrade script (Chris T)
 * Corrected version number on new databases (Chris T)
 * Corrected multiple load errors on upgrade (David B)
@@ -3885,7 +3915,8 @@ Chris T is Chris Travers
 David B is David Bandel
 Herman V is Herman Vierendeels
 
-Changelog for LedgerSMB 1.3.3
+
+Changelog for 1.3.3
 * Fix for being unable to delete AR/AP drafts (Herman V)
 * Additional button cleanup (Herman V)
 * Fix for is_zero issue with latest Math::BigFloat in AR/AP trans (Chris T)
@@ -3902,7 +3933,8 @@ Herman V is Herman Vierendeels
 Erik H is Erik Huelsman
 Frans S is Frans van der Star
 
-Changelog for LedgerSMB 1.3.2
+
+Changelog for 1.3.2
 * Fixed a few files where suExec fixes were not applied (Chris T)
 * Fixed erroneous buttons marked "Save and Post" showing up (Chris T)
 * Corrected test cases so they do not fail w/o optional LaTeX mods (Chris T)
@@ -3922,7 +3954,8 @@ Chris T is Chris Travers
 Herman V is Herman Vierendeels
 Frans S is Frans van der Star
 
-Changelog for LedgerSMB 1.3.1
+
+Changelog for 1.3.1
 * Language selection for invoice templates fixed (Chris T)
 * Fixed DB errors on project search (Chris T)
 * Fixed DB errors on timecard entry (Chris T)
@@ -3933,7 +3966,8 @@ Changelog for LedgerSMB 1.3.1
 * Fixed upgrade script error importing duplicate customer/vendor numbers
 (Chris T)
 
-Changelog for LedgerSMB 1.3.0
+
+Changelog for 1.3.0
 
 Security:
 * Security is now robustly enforced on the db level (Chris T and Josh D)
@@ -4024,19 +4058,22 @@ Database:
 * Redesigned database schema for reconciliation (Aurynn and Chris T)
 * Redesigned database schema for payments (David M)
 
-Changelog for 1.2 Series
+
+Changelog for 1.2 Series (End of Life)
 Released 2007-04-04
-Currently supported, through at least 2012-03-01
 
 Changelog for 1.2.27
 * Corrected an issue with redirects (Turtle)
+
 
 Changelog for 1.2.26
 * Corrected is_zero errors updating ar/ap transactions (Chris T)
 * Corrected is_zero errors printing invoices (Chris T)
 
+
 Changelog for 1.2.25
 * Corrected sql injection issue (Chris T)
+
 
 Changelog for 1.2.24
 * Corrected (non-exploitable) SQL injection issue in custom field management
@@ -4044,10 +4081,12 @@ stored procs.  Chris T
 * Corrected issues running LedgerSMB with SuExec.  (Matt S Trout)
 * Corrected filenamme bug in batch printing module (Chris T)
 
+
 Changelog for 1.2.23
 * Fix for sales tax incorrect on sales/purchase order screen
 * fix for unreadable characters in HTML templates in some charsets.
 * Correcting backup name on backup by email
+
 
 Changelog for 1.2.22
 * Corrected error for cases where no buttons occur on GL Journal Entry screen
@@ -4057,11 +4096,13 @@ Changelog for 1.2.22
 * Corrected erroneous test case failures due to erroneous order of regexp's in
 test cases (Chris T)
 
+
 Changelog for 1.2.21
 * Corrected a number of templates with HTML issues (Luke)
 * AR/AP Aging Report fixed, ignores payment after report date (Chris T)
 * Minor documentation updates (Chris T)
 * Fixed bug saving SIC (Adam T)
+
 
 Changelog for 1.2.20
 * Commented out credits in ledgersmb-blue.css
@@ -4069,6 +4110,7 @@ Changelog for 1.2.20
 * Minor fixes to release notes (SF User akaihola)
 * Exchange rate fix (SF User Anarcat)
 * Fixed whitespace handling in admin.pl when saving permissions (Chris T)
+
 
 Changelog for 1.2.19
 * Fixed short sales with never-closed books (Chris T)
@@ -4079,10 +4121,12 @@ Changelog for 1.2.19
 * Corrected an issue with URL escaping (M Lubratt)
 * Corrected an issue with email id's (Michael Richardson)
 
+
 Changelog for 1.2.18
 * Corrected httpd configuration bit. (Roderick Anderson)
 * COGS fix for return handling (Sadashiva and Chris T)
 * Cumulative tax handling fix for Quebec users (Jerome Oufella)
+
 
 Changelog for 1.2.17
 * Corrected "Attempt to free unreferenced scalar" error (oe.pl, 5.10.0, Chris T)
@@ -4091,9 +4135,11 @@ Changelog for 1.2.17
 * Corrected defaults not saving properly when not already in db (Sadashiva)
 * Corrected undefined dbh when generating sales orders (Sadashiva)
 
+
 Changelog for 1.2.16
 * Correcting "Attempt to free unreferenced scalar" error on 5.10.0 (Chris T)
 * Correcting "Access Denied" when searching for timecards (Seneca)
+
 
 Changelog for 1.2.15
 * Uppercasing some SQL statements (Chris T)
@@ -4108,6 +4154,7 @@ Changelog for 1.2.15
 * Fixed errors in the backported triggers for transaction table (Jeffk, 1928336)
 * Corrected corner case on ar_ap_summary_fix_1.2.14.sql (Chris T)
 
+
 Changelog for 1.2.14
 * Build.PL now requires Test::Trap (Chris T, 1872529)
 * Fixed double escaping of tex under some circumstances (Seneca)
@@ -4116,6 +4163,7 @@ Changelog for 1.2.14
 * Fixed posting issue behind AR/AP transaction report anomilies (Chris T)
 * Fixed taxes added twice when viewing existing transaction (Chris T)
 * Fixed erroneous discount lines in POS invoice (Chris T)
+
 
 Changelog for 1.2.13
 * Fixed all known implicit cast issues with PostgreSQL 8.3 (Chris T)
@@ -4148,6 +4196,7 @@ Changelog for 1.2.11
 * Fixed the displayed number format for AP invoice taxes (Seneca)
 * Fixed the selection of taxes when validto is involved (Seneca, anarcat's
 addition to 1818792)
+
 
 Changelog for 1.2.10
 * Fixed bug 1765161, post button duplicates invoices.(Chris T)
@@ -4190,14 +4239,13 @@ Changelog for 1.2.10
 * Encoding fixes for the backup routines (Seneca)
 
 
-
-
 Cangelog for 1.2.9
 * Removed GNUisms from find arguments (Seneca)
 * Corrected SQL errors in Belgium, and other COAs (Seneca, 1804712)
 * Added COA load test script (Seneca)
 * Rewritten COGS system (Chris T)
 * Scoping issues fixed (Seneca, 1809384)
+
 
 Changelog for 1.2.8
 * Fix SQL errors saving customer price lists (Chris T, 1754172)
@@ -4227,6 +4275,7 @@ Changelog for 1.2.8
 * Fixed minor documentation errors (Seneca)
 * Adding more NaN checks to transaction posting (Seneca, 1789169)
 
+
 Changelog for 1.2.7
 * Fixed user@company logins (Chris T)
 * Fixed closed books detection (Chris T)
@@ -4248,6 +4297,7 @@ Changelog for 1.2.7
 * fixing vendor taxes displaying improperly when printing PO (Seneca)
 * Corrected security bypass in login.pl (Seneca)
 
+
 Changelog for 1.2.6
 * More date tests added (Seneca)
 * Fixed customer_id error in AP transactions (Chris T)
@@ -4258,6 +4308,7 @@ Changelog for 1.2.6
 * Fixed error db error saving items with custom fields (Chris T)
 * Fixed db error saving project with NULL customer id (Chris T)
 * Improved upgrade_templates' tag handling (Seneca)
+
 
 Changelog for 1.2.5
 * Partsgroup handling corrected on POS and Sales invoice screens (Chris T)
@@ -4272,6 +4323,7 @@ Changelog for 1.2.5
 * Corrected a number of date handling issues and added tests (Seneca).
 * Applied invoice performance patch from Ashley Gittins (Chris T)
 * Applide performance improvements to lastname_used (Chris T)
+
 
 Changelog for 1.2.4
 * Fixed internal functions avgcost() and lastcost() to not use float (Joshua D)
@@ -4290,13 +4342,15 @@ Changelog for 1.2.3
 * Corrected data types for invoice.qty and invoice.allocated in new dbs (CHris T)
 * Corrected suffix error in 1.2.1 to use .sqlc for backups (Joshua D)
 
+
 Changelog for 1.2.2
 * Corrected sales tax display bug in order entry screen (Chris T)
 * Corrected database update unable to connect (Seneca)
 * Corrected login problems on 1.2.1
 * Corrected INSTALL for [GlobalDBH] (Joshua Drake)
 
-Changelog for LedgerSMB 1.2.1
+
+Changelog for 1.2.1
 * Modifed AM.pm to correctly use globals from ledgersmb.conf (Joshua Drake)
 * Simplified backup functions in AM.pm (Joshua Drake)
 * Corrected serious sales tax posting bug (Chris Travers)
@@ -4305,7 +4359,8 @@ Changelog for LedgerSMB 1.2.1
 * Corrected documentation about tax entry (Chris Travers)
 * Corrected logos not printing on PDF/PS invoices (Chris Travers)
 
-Changelog for LedgerSMB 1.2.0
+
+Changelog for 1.2.0
 
 Database:
 * Added script to configure Slony replication (Chris Browne)
@@ -4366,19 +4421,19 @@ Other:
 * ledger-smb.conf is now an ini file (Seneca)
 * Experimental scripting wrapper in utils/cli (Chris T)
 
-Changelog for 1.1 Series
+
+Changelog for 1.1 Series (End of Life)
 Released 2006-09-20
 Unsupported due to major security oversights in inherited code corrected in
 1.2 series
 
-Changelog for LedgerSMB 1.1.1
-
+Changelog for 1.1.1
 * Fixed problem with parts_short trigger not being created
 * Fixed problem with custom fields functions not being created
 * Pg driver is now checked by default.
 
-Changelog for LedgerSMB 1.1.0
 
+Changelog for 1.1.0
 Database
 * Added add_custom_field and drop_custom_field functions.
         -- will be more integrated into API next version
@@ -4408,15 +4463,16 @@ Usability
 * Links between admin and login pages
 * Experimental support for Windows printing
 
-Changelog for LedgerSMB v 1.0.0p1
-* Fixed directory transversal/arbitrary code execution vulnerability.
 
-Changelog for LedgerSMB 1.0 series
+Changelog for 1.0 series (End of Life)
 Released 2006-09-06
 Unsupported for reasons of age and security flaws in inherited code
 
-Changelog for LedgerSMB v 1.0.0
+Changelog for 1.0.0p1
+* Fixed directory transversal/arbitrary code execution vulnerability.
 
+
+Changelog for 1.0.0
 (Changes relative to the pre-fork SQL-Ledger 2.6.17)
 
 * Corrected sessionid security hole allowing bypass of login to main application
@@ -4426,5 +4482,4 @@ Changelog for LedgerSMB v 1.0.0
 * Added an open content manual to the main distribution.
 * New logo.
 * Began whitespace reformatting of main application.
-
 

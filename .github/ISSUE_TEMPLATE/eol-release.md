@@ -3,6 +3,7 @@ name: EOL release
 about: Tracking of steps to execute when marking a release branch End-of-Life
 ---
 
+* [ ] Add ` (End of Life)` to the 'Changelog for X.YY Series' entry in Changelog
 * [ ] Remove the release branch from `renovate.json` in the root of the master branch 
 * [ ] Remove the transifex resource (`LedgerSMB-XX`) for the EOL-ed branch
 * [ ] Update the supported items page: https://ledgersmb.org/faq/which-versions-do-you-support

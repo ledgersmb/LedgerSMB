@@ -1,0 +1,156 @@
+#!/usr/bin/perl
+
+
+use v5.32;
+use warnings;
+
+use Getopt::Long;
+
+sub usage {
+    print <<'EOF';
+changelog-parse [options]
+
+Options:
+
+  --filter-eol=all|eol|supported|unreleased
+                       Filters output based on the series status
+                       all        Does not limit output
+                       eol        Limits output to series with End-of-Life status
+                       supported  Limits output to currently active release series
+                       unreleased Limits output to yet-to-be-released series
+  --[no-]series        Output data for every release series
+  --[no-]releases      Output data for every release
+  --[no-]changelog     Output the changelog text for selected releases
+  --release=[version number]
+
+EOF
+}
+
+my $filter_eol = 'all';
+my $output_series = '';
+my $output_releases = '';
+my $output_release = '';
+my $output_changelog_body = '';
+
+GetOptions(
+    'filter-eol=s' => \$filter_eol,
+    'series' => \$output_series,
+    'releases' => \$output_releases,
+    'release=s' => \$output_release,
+    'changelog' => \$output_changelog_body,
+    )
+    or die "Error in command line arguments\n";
+
+=pod
+
+States:
+* NUL
+* CHANGELOG_SERIES
+* RELEASE_DATE
+* CHANGELOG_RELEASE
+
+=cut
+
+sub series_begin {
+}
+
+
+open( my $log, '<:encoding(UTF-8)', 'Changelog' )
+    or die $!;
+
+my $state = "NUL";
+my $last_changelog_body = '';
+my $last_series = '';
+my $last_release = '';
+my $last_series_eol = '';
+my $last_series_unreleased = '';
+my $last_series_release_date = '';
+my $empty_lines = 0;
+
+
+sub entry_filter {
+    return (($filter_eol eq 'all'
+             or ($filter_eol eq 'eol' and $last_series_eol)
+             or ($filter_eol eq 'supported'
+                 and not $last_series_eol
+                 and not $last_series_unreleased)
+             or ($filter_eol eq 'unreleased'
+                 and $last_series_unreleased))
+            and (not $output_release
+                 or $last_release eq $output_release));
+}
+
+sub output_entry {
+    print join(':',
+               $last_series,
+               $last_release,
+               $last_series_release_date,
+               $last_series_unreleased,
+               $last_series_eol) . "\n";
+}
+
+
+ PROCESS_LINE:
+    while (1) {
+        my $line = <$log> // '';
+
+        if ($line =~ m/^\s*$/ and not eof($log)) {
+            $empty_lines++;
+        }
+        else {
+            if ($empty_lines > 1
+                or eof($log)) {
+                if ($state eq 'CHANGELOG_RELEASE') {
+                    if (entry_filter()
+                        and ($output_releases or $output_release)) {
+                        output_entry() if $output_releases;
+                        print $last_changelog_body
+                            if $output_changelog_body;
+                    }
+                }
+                $state = 'NUL';
+            }
+            $empty_lines = 0;
+        }
+        last if (eof($log));
+
+        if ($state eq 'NUL'
+            and $line =~ m/^Changelog for (\d+\.\d+) Series( \(End of Life\))?/i) {
+            $last_series = $1;
+            $last_release = '';
+            $last_series_release_date = '';
+            $last_series_eol = $2 ? 'End-of-Life' : '';
+            $last_series_unreleased = '';
+            $state = 'CHANGELOG_SERIES';
+            next;
+        }
+
+        if ($state eq 'CHANGELOG_SERIES'
+            and $line =~ m/^Released ([0-9\-]{10})/) {
+            $last_series_release_date = $1;
+            next;
+        }
+
+        if ($state eq 'CHANGELOG_SERIES'
+            and $line =~ m/^Unreleased/i) {
+            $last_series_unreleased = 'unreleased';
+            next;
+        }
+
+        if ($line =~ m/Changelog for (\d+\.\d+\.\d+(p1)?)/) {
+            $last_release = $1;
+            $last_changelog_body = '';
+            if ($state eq 'CHANGELOG_SERIES') {
+                if (entry_filter()) {
+                    output_entry() if $output_series;
+                }
+            }
+            $state = 'CHANGELOG_RELEASE';
+            next;
+        }
+
+        if ($state eq 'CHANGELOG_RELEASE') {
+            $last_changelog_body .= $line;
+            next;
+        }
+}
