@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.29-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2023-12-30 22:09+0000\n"
+"POT-Creation-Date: 2024-01-13 20:02+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: Turkish (https://app.transifex.com/ledgersmb/teams/58325/tr/)\n"
 "Language: tr\n"
@@ -4303,8 +4303,8 @@ msgstr ""
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:27
-#: UI/src/components/ServerUI.js:41
+#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:41
+#: UI/src/components/ServerUI.js:27
 msgid "Loading..."
 msgstr ""
 
@@ -8616,7 +8616,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/views/Home.vue:36 UI/src/views/Home.vue:51
+#: UI/src/views/Home.vue:51 UI/src/views/Home.vue:36
 msgid "mailing lists"
 msgstr ""
 
