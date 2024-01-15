@@ -92,8 +92,8 @@ do {
         my $yp = YAML::PP->new( header => 0 );
         my $base_config = $yp->load_string( do { local $/ = undef; <DATA> } );
 
-        $config_file = File::Spec->rel2abs( $config_file );
         if (defined $config_file) {
+            $config_file = File::Spec->rel2abs( $config_file );
             $config = merge_config_hashes( $base_config,
                                            $yp->load_file( $config_file ) );
 
