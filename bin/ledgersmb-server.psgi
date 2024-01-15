@@ -92,6 +92,7 @@ do {
         my $base_config = $yp->load_string( do { local $/ = undef; <DATA> } );
 
         if (defined $config_file) {
+            $config_file = File::Spec->rel2abs( $config_file );
             $config = merge_config_hashes( $base_config,
                                            $yp->load_file( $config_file ) );
         }
