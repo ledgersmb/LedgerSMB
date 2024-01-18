@@ -112,10 +112,10 @@ login_settings:
 mail:
   # To configure sending mail over SMTP directly, use:
   # transport:
-  #   $class: LedgerSMB::Mailer::TransportSMTP
+  #   $class: Email::Sender::Transport::SMTP
   #   host: example.com
   #   port: 2525
-  #   sasl_username:
+  #   sasl_authenticator:
   #     $class: Authen::SASL
   #     mechanism: PLAIN
   #     callback:

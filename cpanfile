@@ -18,7 +18,7 @@ requires 'DateTime::Format::Duration::ISO8601', '0.008';
 requires 'DateTime::Format::Strptime';
 requires 'Email::MessageID';
 requires 'Email::Sender::Simple';
-requires 'Email::Sender::Transport::SMTP';
+requires 'Email::Sender', '2.601'; # 2.601 adds 'sasl_authenticator'
 requires 'Email::Stuffer';
 requires 'Feature::Compat::Try';
 requires 'File::Find::Rule';
@@ -75,9 +75,8 @@ requires 'Log::Log4perl::Layout::PatternLayout';
 requires 'LWP::Simple';
 requires 'MIME::Types';
 requires 'Module::Runtime';
-requires 'Moo';                           # for Email::Sender::Transport::SMTP workaround
+requires 'Moo';
 requires 'Moo::Role';
-requires 'MooX::Types::MooseLike::Base';  # for Email::Sender::Transport::SMTP workaround
 requires 'Moose';
 requires 'Moose::Role';
 requires 'Moose::Util::TypeConstraints';

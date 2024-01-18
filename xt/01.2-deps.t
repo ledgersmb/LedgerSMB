@@ -22,6 +22,7 @@ push @on_disk, 'bin/ledgersmb-server.psgi';
 ok_dependencies($file, \@on_disk,
                 phases => 'runtime',
                 ignores => [
+                    'Email::Sender', # Loaded through dependency injection
                     'LaTeX::Driver',
                     'LedgerSMB',
                     'Locale::CLDR::Locales',
