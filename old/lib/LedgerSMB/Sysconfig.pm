@@ -132,7 +132,7 @@ sub ini2wire {
 
         $wire_config{mail} = {
             transport => {
-                '$class' => 'LedgerSMB::Mailer::TransportSMTP',
+                '$class' => 'Email::Sender::Transport::SMTP',
                 @options,
             }
         };

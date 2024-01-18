@@ -27,6 +27,9 @@ Cleanup & architecture improvements
 * Removed global state LedgerSMB::App_State::User (#7876)
 * Moved Order/Quote state into separate process (#7908)
 
+Updated dependencies
+* Email::Sender (minimum increased to 2.601)
+
 
 Changelog for 1.11 Series
 Released 2023-10-03
