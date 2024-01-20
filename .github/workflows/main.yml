@@ -63,7 +63,7 @@ jobs:
 
       - name: Cache node_module
         id: cache-node_modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
              UI/node_modules
@@ -72,7 +72,7 @@ jobs:
 
       - name: Cache Dojo
         id: cache-dojo
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: UI/js
           key: dojo-${{ hashFiles('UI/js-src/**',
@@ -248,7 +248,7 @@ jobs:
 
       - name: Cache npm files
         id: cache-npm
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
              UI/node_modules
@@ -416,7 +416,7 @@ jobs:
 
       - name: Cache npm files
         id: cache-npm
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
              UI/node_modules
@@ -425,7 +425,7 @@ jobs:
 
       - name: Cache Dojo
         id: cache-dojo
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: UI/js
           key: dojo-${{ hashFiles('UI/js-src/**',
