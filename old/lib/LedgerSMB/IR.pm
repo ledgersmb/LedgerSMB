@@ -149,11 +149,10 @@ sub post_invoice {
         }
     }
 
+    my $uid = localtime;
+    $uid .= "$$";
     if (not $form->{id}) {
         # note that the previous section may have removed $form->{id}, so this can't be an 'else' statement
-        my $uid = localtime;
-        $uid .= "$$";
-
         $query = qq|
             INSERT INTO ap (invnumber, person_id, entity_credit_account)
                  VALUES ('$uid', ?, ?)|;
