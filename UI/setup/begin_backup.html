@@ -9,6 +9,7 @@ include_stylesheet=["system/setup.css"] %]
 [% # notice, message, and operation are all localized. %]
 <div id="notice">[% notice %]</div>
 <form data-dojo-type="lsmb/SimpleForm" action="setup.pl" method="POST" name="confirm_operation">
+  <input type="hidden" name="csrf_token" value="[% csrf_token %]" />
 [% INCLUDE input element_data = {
     name = 'database'
     type = 'hidden'

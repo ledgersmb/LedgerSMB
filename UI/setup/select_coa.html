@@ -7,6 +7,7 @@ include_stylesheet=["system/setup.css"] %]
 <h2>[% text('Database Management Console') %]</h2>
 <div><div class="listtop">[% title %]</div>
 <form data-dojo-type="lsmb/SimpleForm" action="setup.pl" method="POST" name="credentials">
+  <input type="hidden" name="csrf_token" value="[% csrf_token %]" />
   <div id="sep" class="listheading">
     Pre-defined Chart-of-Accounts selection
   </div>

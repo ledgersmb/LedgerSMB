@@ -13,6 +13,7 @@
           method="post"
           action="[% form.script %]"
           id="migration-step-dynatable">
+      <input type="hidden" name="csrf_token" value="[% csrf_token %]" />
     [% FOREACH header IN headers %]<div class="listtop">
              [% INCLUDE decorated_text element_data = {
                     msg => header };

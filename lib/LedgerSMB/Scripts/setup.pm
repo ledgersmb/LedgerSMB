@@ -384,6 +384,9 @@ Copies db to the name of $request->{new_name}
 
 sub copy_db {
     my ($request) = @_;
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
@@ -402,6 +405,9 @@ Backs up a full db
 
 sub backup_db {
     my $request = shift @_;
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
     $request->{backup} = 'db';
     return _begin_backup($request);
 }
@@ -414,6 +420,9 @@ Backs up roles only (for all db's)
 
 sub backup_roles {
     my $request = shift @_;
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
     $request->{backup} = 'roles';
     return _begin_backup($request);
 }
@@ -439,6 +448,9 @@ Runs the backup.  If backup_type is set to email, emails the
 
 sub run_backup {
     my $request = shift @_;
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
@@ -542,6 +554,9 @@ sub consistency {
 
 sub revert_migration {
     my ($request) = @_;
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
@@ -616,6 +631,9 @@ sub _save_templates {
 sub load_templates {
     my ($request) = @_;
 
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
     return (_save_templates($request, 'load_templates')
             or login($request));
 }
@@ -869,6 +887,9 @@ sub _load_templates {
 
 sub upgrade {
     my ($request) = @_;
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
@@ -1038,6 +1059,9 @@ script.
 sub fix_tests {
     my ($request) = @_;
 
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
@@ -1093,6 +1117,9 @@ sub fix_tests {
 sub create_db {
     my ($request) = @_;
 
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
@@ -1153,6 +1180,9 @@ sub select_coa {
         }
 
         if ($request->{chart}) {
+            if (my $csrf = $request->verify_csrf) {
+                return $csrf;
+            }
             my ($reauth, $database) = _get_database($request);
             return $reauth if $reauth;
 
@@ -1400,6 +1430,9 @@ sub _create_initial_user {
 
 sub add_user {
     my ($request) = @_;
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
 
     return (_create_initial_user($request)
             or login($request));
@@ -1455,6 +1488,9 @@ sub edit_user_roles {
 sub save_user_roles {
     my ($request) = @_;
 
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
     my ($reauth) = _init_db($request);
     return $reauth if $reauth;
 
@@ -1495,6 +1531,9 @@ sub save_user_roles {
 sub reset_password {
     my ($request) = @_;
 
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
     my ($reauth) = _init_db($request);
     return $reauth if $reauth;
 
@@ -1525,6 +1564,9 @@ Force work.  Forgets unmatching tests, applies a curing statement and move on.
 
 sub force {
     my ($request) = @_;
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
@@ -1584,6 +1626,9 @@ sub _rebuild_modules {
 sub rebuild_modules {
     my ($request) = @_;
 
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
     if (my $rv = _rebuild_modules($request, 'rebuild_modules')) {
         return $rv;
     }
@@ -1598,6 +1643,9 @@ Gets the statistics info and shows the complete screen.
 
 sub _complete {
     my ($request) = @_;
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
@@ -1617,6 +1665,9 @@ Asks the various modules for system and version info, showing the result
 
 sub system_info {
     my ($request) = @_;
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
@@ -1640,7 +1691,7 @@ sub system_info {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2011-2022 The LedgerSMB Core Team
+Copyright (C) 2011-2024 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
