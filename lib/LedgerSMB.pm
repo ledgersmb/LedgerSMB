@@ -20,6 +20,16 @@ This method creates a new base request instance. It also validates the
 session/user credentials, as appropriate for the run mode.  Finally, it sets up
 the database connections for the user.
 
+=item verify_csrf()
+
+This method verifies the C<csrf_token> value in request parameters (held in
+C<$self->{csrf_token}>) against the value in the session object.  When one is
+not defined or they are not equal, this function returns a PSGI triplet to be
+used as the response resulting in a 400 -- Bad Request.
+
+When the CSRF token matches, C<undef> is returned indicating processing is to
+continue.
+
 =item open_form()
 
 This sets a $self->{form_id} to be used in later form validation (anti-XSRF
@@ -228,7 +238,7 @@ use Carp;
 use DateTime::Format::Duration::ISO8601;
 use Encode qw(perlio_ok);
 use HTTP::Headers::Fast;
-use HTTP::Status qw( HTTP_OK );
+use HTTP::Status qw( HTTP_OK HTTP_BAD_REQUEST );
 use List::Util qw( pairgrep );
 use Locale::CLDR;
 use Locales unicode => 1;
@@ -290,6 +300,20 @@ sub new {
     $self->_set_default_locale();
 
     return $self;
+}
+
+
+sub verify_csrf {
+    my ($self) = @_;
+    my $got = $self->{csrf_token};
+    my $want = $self->{_req}->env->{'lsmb.session'}->{csrf_token};
+    if (not ($got and $want and $got eq $want)) {
+        $logger->debug( "CSRF have '$got'; want '$want'" );
+        return [ HTTP_BAD_REQUEST,
+                 [ 'Content-Type' => 'text/plain; charset=ascii' ],
+                 [ 'Bad request: CSRF token failure' ] ];
+    }
+    return undef;
 }
 
 sub open_form {

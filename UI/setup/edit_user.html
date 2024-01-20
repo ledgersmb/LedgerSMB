@@ -20,6 +20,7 @@ include_stylesheet=["system/setup.css"];
         </div>
 
     <form data-dojo-type="lsmb/SimpleForm" method="POST" action="[% request.script %]">
+      <input type="hidden" name="csrf_token" value="[% csrf_token %]" />
       <input type="hidden" name="id" value="[% request.id %]" />
       <input type="hidden" name="database" value="[% request.database %]" />
         <table id="user-data">
@@ -110,6 +111,7 @@ include_stylesheet=["system/setup.css"];
     [% IF user.user_id and not request.pls_import%]
         <hr />
         <form data-dojo-type="lsmb/SimpleForm" name="groups" method="POST" action="[% request.script %]">
+          <input type="hidden" name="csrf_token" value="[% csrf_token %]" />
             <input type="hidden" name="database" value="[% request.database %]" />
             [% PROCESS input element_data = {
                type="hidden"

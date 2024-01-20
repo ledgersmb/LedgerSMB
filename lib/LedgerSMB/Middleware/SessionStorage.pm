@@ -33,6 +33,7 @@ use Plack::Util;
 use Plack::Util::Accessor
     qw( cookie cookie_path domain duration inner_serialize secret store );
 use Session::Storage::Secure;
+use String::Random;
 
 use LedgerSMB::PSGI::Util;
 
@@ -101,8 +102,9 @@ sub call {
     my ($env) = @_;
     my $req = Plack::Request->new($env);
 
-    my $cookie      = $req->cookies->{$self->cookie};
-    my $session     = $self->store->decode($cookie);
+    my $cookie             = $req->cookies->{$self->cookie};
+    my $session            = $self->store->decode($cookie);
+    $session->{csrf_token} //= String::Random->new->randpattern('.' x 23);
 
     my $secure = defined($env->{HTTPS}) && $env->{HTTPS} eq 'ON';
     my $path =

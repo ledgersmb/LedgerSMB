@@ -15,6 +15,7 @@ include_stylesheet=["system/setup.css"] %]
       action="setup.pl"
       method="POST"
       name="confirm_operation">
+  <input type="hidden" name="csrf_token" value="[% csrf_token %]" />
 [% INCLUDE input element_data = {
     name = 'database'
     type = 'hidden'
