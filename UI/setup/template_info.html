@@ -6,6 +6,7 @@
 <div><div class="setupconsole">
 <h2>[% text('Database Management Console') %]</h2>
 <form data-dojo-type="lsmb/SimpleForm" action="setup.pl" method="post">
+  <input type="hidden" name="csrf_token" value="[% csrf_token %]" />
 <div class="listtop">[% text('Select Templates to Load') %]</div>
 [%
 PROCESS input element_data = {

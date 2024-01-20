@@ -8,6 +8,7 @@ include_stylesheet=["system/setup.css"] %]
 <div class="listtop">[% text('Enter User') %]</div>
 <form data-dojo-type="lsmb/SimpleForm"
       action="setup.pl" method="POST" name="new_user">
+  <input type="hidden" name="csrf_token" value="[% csrf_token %]" />
 [% INCLUDE input element_data = {
     name = 'database'
     type = 'hidden'

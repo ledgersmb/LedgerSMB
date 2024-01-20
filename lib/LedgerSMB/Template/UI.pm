@@ -133,7 +133,8 @@ sub render_string {
                     },
                     dojo_theme => (
                         $request->{_company_config}->{dojo_theme} || 'claro'
-                        )
+                        ),
+                    csrf_token => $request->{_req}->env->{'lsmb.session'}->{csrf_token},
                 },
                 sub { return escape_html($_[0]); },
                 )},

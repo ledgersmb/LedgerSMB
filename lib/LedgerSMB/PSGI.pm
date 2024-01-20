@@ -354,6 +354,12 @@ sub setup_url_space {
                 script => 'setup.pl';
             enable '+LedgerSMB::Middleware::Log4perl',
                 script => 'setup.pl';
+            enable '+LedgerSMB::Middleware::SessionStorage',
+                domain      => 'setup',
+                cookie      => "$cookie~setup",
+                cookie_path => '/',
+                secret      => $secret,
+                duration    => 60*60*24*90;
             enable '+LedgerSMB::Middleware::SetupAuthentication';
             enable '+LedgerSMB::Middleware::DisableBackButton';
             $psgi_app;
