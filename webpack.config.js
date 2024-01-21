@@ -461,9 +461,9 @@ if (TARGET !== "readme") {
 
         resolve: {
             alias: {
-                vue$: "vue/dist/vue.esm-bundler.js",
-                pinia$: "pinia/dist/pinia.esm-browser.js",
-                "vue-i18n": "vue-i18n/dist/vue-i18n.runtime.esm-bundler.js",
+                vue$: "vue/dist/vue.cjs.js",
+                pinia$: "pinia/dist/pinia.cjs",
+                "vue-i18n": "vue-i18n/dist/vue-i18n.cjs",
                 "@": path.join(__dirname, "UI/src/")
             },
             extensions: [".js", ".vue", ".ts", ".mjs"],
