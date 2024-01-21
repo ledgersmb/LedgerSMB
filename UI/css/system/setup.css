@@ -8,9 +8,30 @@ div#loading {
     background: white;
     height: 100%;
     left: 0;
+    position: absolute;
     top: 0;
     width: 100%;
     z-index: 100;
+}
+
+div.setupconsole {
+    position: relative;
+}
+
+body:not([data-lsmb-done]) #loading {
+    display: block;
+}
+
+body:not([data-lsmb-done]) #logindiv {
+    visibility: hidden;
+}
+
+body[data-lsmb-done="true"] #loading {
+    display: none;
+}
+
+body[data-lsmb-done="true"] #logindiv {
+    visibility: visible;
 }
 
 div.setupconsole {
