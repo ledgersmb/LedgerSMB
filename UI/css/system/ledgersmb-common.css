@@ -10,8 +10,8 @@
 @import url("global.css");
 
 td.money {
-    text-align: right;
     padding-right: 0.5em;
+    text-align: right;
 }
 
 td.date {
