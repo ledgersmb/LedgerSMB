@@ -80,8 +80,7 @@ body {
 }
 
 #maindiv > * {
-    overflow-x: auto;
-    overflow-y: auto;
+    overflow: auto auto;
 }
 
 .financial-statement.flat-hierarchy table {
@@ -667,12 +666,11 @@ h2 {
 }
 
 #logindiv #company_div {
-    column-gap: 1ex;
     display: grid;
+    gap: 4px 1ex;
     grid-template: none / auto auto;
     margin-bottom: 1em;
     margin-top: 2em;
-    row-gap: 4px;
 }
 
 #logindiv #company_div lsmb-text,

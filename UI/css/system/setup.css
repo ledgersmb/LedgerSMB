@@ -14,10 +14,6 @@ div#loading {
     z-index: 100;
 }
 
-div.setupconsole {
-    position: relative;
-}
-
 body:not([data-lsmb-done]) #loading {
     display: block;
 }
@@ -44,6 +40,7 @@ div.setupconsole {
     max-width: 100%;
     min-width: 21em;
     padding: 4em;
+    position: relative;
     width: max-content;
 }
 
@@ -57,10 +54,9 @@ form#loginform {
 }
 
 .login_form {
-    column-gap: 0.3em;
     display: grid;
+    gap: 0.3em 0.3em;
     grid-template-columns: auto auto;
-    row-gap: 0.3em;
     text-align: left;
 }
 
