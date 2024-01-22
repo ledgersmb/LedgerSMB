@@ -1,12 +1,6 @@
 /** @format */
 /* global retry */
 
-/*
- * View tests
- *
- * @group view
- */
-
 import { mount } from "@vue/test-utils";
 
 import LoginPage from "@/views/LoginPage.vue";

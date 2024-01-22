@@ -1,8 +1,3 @@
-/*
- * View tests
- *
- * @group views
- */
 /* global retry */
 
 import Pricegroups from "@/views/Pricegroups.vue";
@@ -47,7 +42,7 @@ describe("Pricegroups - register as a component", () => {
           [ "Price group 2" ]
       ]);
 
-        // TODO: Test links 
+        // TODO: Test links
         // expect that the links displayed match
         // what was returned by the API
     });

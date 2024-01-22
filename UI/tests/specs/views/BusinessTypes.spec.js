@@ -1,8 +1,3 @@
-/*
- * View tests
- *
- * @group views
- */
 /* global retry */
 
 import BusinessTypes from "@/views/BusinessTypes.vue";
@@ -13,7 +8,7 @@ let wrapper;
 let sessionUser;
 
 describe("BusinessTypes - register as a component", () => {
-    
+
     beforeEach(() => {
         wrapper = factory(BusinessTypes);
         sessionUser = useSessionUserStore();
@@ -47,7 +42,7 @@ describe("BusinessTypes - register as a component", () => {
           [ "Bigger customer", "0.15"]
         ]);
 
-        // TODO: Test links 
+        // TODO: Test links
         // expect that the links displayed match
         // what was returned by the API
     });

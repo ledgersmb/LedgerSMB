@@ -1,8 +1,3 @@
-/*
- * View tests
- *
- * @group views
- */
 /* global retry */
 
 import Languages from "@/views/Languages.vue";

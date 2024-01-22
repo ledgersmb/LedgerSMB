@@ -1,8 +1,3 @@
-/*
- * View tests
- *
- * @group views
- */
 /* global retry */
 
 import Warehouses from "@/views/Warehouses.vue";
@@ -47,7 +42,7 @@ describe("Warehouses - register as a component", () => {
           [ "Moon warehouse" ],
     ]);
 
-        // TODO: Test links 
+        // TODO: Test links
         // expect that the links displayed match
         // what was returned by the API
     });

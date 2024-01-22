@@ -1,11 +1,5 @@
 /** @format */
 
-/**
- * OpenAPI tests
- *
- * @group openapi
- */
-
 // Import test packages
 import jestOpenAPI from "jest-openapi";
 import { StatusCodes } from "http-status-codes";

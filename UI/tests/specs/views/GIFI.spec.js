@@ -1,8 +1,3 @@
-/*
- * View tests
- *
- * @group views
- */
 /* global retry */
 
 import GIFI from "@/views/GIFI.vue";
@@ -47,7 +42,7 @@ describe("GIFI - register as a component", () => {
             ["0001", "Dummy account 1"]
         ]);
 
-        // TODO: Test links 
+        // TODO: Test links
         // expect that the links displayed match
         // what was returned by the API
     });
