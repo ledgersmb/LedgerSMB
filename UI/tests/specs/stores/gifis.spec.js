@@ -1,12 +1,6 @@
 /** @format */
 /* eslint-disable no-console */
 
-/*
- * Store tests
- *
- * @group unit
- */
-
 import { createTestingPinia } from "@pinia/testing";
 
 // import any store you want to interact with in tests

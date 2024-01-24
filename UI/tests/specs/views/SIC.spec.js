@@ -1,8 +1,3 @@
-/*
- * View tests
- *
- * @group views
- */
 /* global retry */
 
 import SIC from "@/views/SIC.vue";
@@ -47,7 +42,7 @@ describe("SIC - register as a component", () => {
           [ "611430", "Professional and management development training" ]
         ]);
 
-        // TODO: Test links 
+        // TODO: Test links
         // expect that the links displayed match
         // what was returned by the API
     });

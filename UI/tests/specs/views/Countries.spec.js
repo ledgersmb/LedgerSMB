@@ -1,8 +1,3 @@
-/*
- * View tests
- *
- * @group views
- */
 /* global retry */
 
 import Countries from "@/views/Countries.vue";
@@ -13,7 +8,7 @@ let wrapper;
 let sessionUser;
 
 describe("Countries - register as a component", () => {
-    
+
     beforeEach(() => {
         wrapper = factory(Countries);
         sessionUser = useSessionUserStore();
@@ -21,7 +16,7 @@ describe("Countries - register as a component", () => {
     afterEach(() => {
         // wrapper.unmount();
     });
-    
+
     it("should show dialog", async () => {
 
         expect(wrapper.exists()).toBeTruthy();
@@ -47,7 +42,7 @@ describe("Countries - register as a component", () => {
             ["us", "United States"]
         ]);
 
-        // TODO: Test links 
+        // TODO: Test links
         // expect that the links displayed match
         // what was returned by the API
     });

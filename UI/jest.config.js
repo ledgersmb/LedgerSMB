@@ -175,7 +175,7 @@ module.exports = {
     // ],
 
     // Allows you to use a custom runner instead of Jest's default test runner
-    runner: "groups",
+    // runner: "groups",
 
     // Run all tests serially in the current process, rather than creating a worker pool of child processes that run tests. This can be useful for debugging.
     // runInBand: false,
