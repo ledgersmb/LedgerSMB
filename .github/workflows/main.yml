@@ -61,15 +61,6 @@ jobs:
           # Keep aligned with what's in the dev image...
           node-version: '20'
 
-      - name: Cache node_module
-        id: cache-node_modules
-        uses: actions/cache@v4
-        with:
-          path: |
-             UI/node_modules
-          key: |
-            modules-${{ hashFiles('UI/yarn.lock') }}
-
       - name: Cache Dojo
         id: cache-dojo
         uses: actions/cache@v4
@@ -78,11 +69,18 @@ jobs:
           key: dojo-${{ hashFiles('UI/js-src/**',
                                   'UI/src/**',
                                   'UI/css/**',
-                                  '!UI/js/*.html',
-                                  '!UI/js/**/*.html',
-                                  '!UI/node_modules/*.html',
-                                  '!UI/node_modules/**/*.html',
+                                  'UI/*.html',
+                                  'UI/**/*.html',
                                   'doc/sources/**') }}
+
+      - name: Cache node_module
+        id: cache-node_modules
+        uses: actions/cache@v4
+        with:
+          path: |
+             UI/node_modules
+          key: |
+            modules-${{ hashFiles('UI/yarn.lock') }}
 
       - name: Build Dojo
         run: |
@@ -249,7 +247,7 @@ jobs:
           nginx -c $GITHUB_WORKSPACE/doc/conf/webserver/nginx-github.conf \
                 -p $GITHUB_WORKSPACE &
 
-      - name: Cache npm files
+      - name: Cache node_modules
         id: cache-npm
         uses: actions/cache@v4
         with:
@@ -417,15 +415,6 @@ jobs:
           nginx -c $GITHUB_WORKSPACE/doc/conf/webserver/nginx-github.conf \
                 -p $GITHUB_WORKSPACE &
 
-      - name: Cache npm files
-        id: cache-npm
-        uses: actions/cache@v4
-        with:
-          path: |
-             UI/node_modules
-          key: |
-            modules-${{ hashFiles('UI/yarn.lock') }}
-
       - name: Cache Dojo
         id: cache-dojo
         uses: actions/cache@v4
@@ -434,11 +423,18 @@ jobs:
           key: dojo-${{ hashFiles('UI/js-src/**',
                                   'UI/src/**',
                                   'UI/css/**',
-                                  '!UI/js/*.html',
-                                  '!UI/js/**/*.html',
-                                  '!UI/node_modules/*.html',
-                                  '!UI/node_modules/**/*.html',
+                                  'UI/*.html',
+                                  'UI/**/*.html',
                                   'doc/sources/**') }}
+
+      - name: Cache node_modules
+        id: cache-npm
+        uses: actions/cache@v4
+        with:
+          path: |
+             UI/node_modules
+          key: |
+            modules-${{ hashFiles('UI/yarn.lock') }}
 
       # This will start a hub and JOB_COUNT matrix.
       - name: Starting hub with ${{ matrix.BROWSER }}
