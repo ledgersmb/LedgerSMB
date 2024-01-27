@@ -112,6 +112,7 @@ sub _default_settings {
               ] },
         { title => $locale->text('Next in Sequence'),
           items => [
+              { name => 'batch_cc', label => $locale->text('Batch Number') },
               { name => 'glnumber', label => $locale->text('GL Reference Number') },
               { name => 'sinumber',
                 label => $locale->text('Sales Invoice/AR Transaction Number'), },
@@ -124,6 +125,7 @@ sub _default_settings {
               { name => 'partnumber', label => $locale->text('Part Number') },
               { name => 'projectnumber', label => $locale->text('Business Unit Number') },
               { name => 'employeenumber', label => $locale->text('Employee Number') },
+              { name => 'entity_control', label => $locale->text('Entity number') },
               { name => 'customernumber', label => $locale->text('Customer Number') },
               { name => 'vendornumber', label => $locale->text('Vendor Number') },
               ] },
