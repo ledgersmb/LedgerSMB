@@ -104,7 +104,7 @@
     "jest-environment-jsdom": "29.7.0",
     "jest-openapi": "0.14.2",
     "jest-tap-reporter": "1.9.0",
-    "jsdom": "23.2.0",
+    "jsdom": "24.0.0",
     "markdown-include": "0.4.3",
     "markdownlint": "0.33.0",
     "markdownlint-cli": "0.38.0",
