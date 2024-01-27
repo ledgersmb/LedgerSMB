@@ -63,7 +63,23 @@ jobs:
           # Keep aligned with what's in the dev image...
           node-version: '20'
 
-      - name: Cache node_module
+
+      # This step absolutely MUST come before "uncaching" node_modules!
+      # there are HTML files in the node_modules directory which otherwise
+      # impact the value of the hash
+      - name: Cache JS
+        id: cache-js
+        uses: actions/cache@v4
+        with:
+          path: UI/js
+          key: dojo-${{ hashFiles('UI/js-src/**',
+                                  'UI/src/**',
+                                  'UI/css/**',
+                                  'UI/*.html',
+                                  'UI/**/*.html',
+                                  'doc/sources/**') }}
+
+      - name: Cache node_modules
         id: cache-node_modules
         uses: actions/cache@v4
         with:
@@ -71,22 +87,6 @@ jobs:
              UI/node_modules
           key: |
             modules-${{ hashFiles('UI/yarn.lock') }}
-
-      - name: Cache Dojo
-        id: cache-dojo
-        uses: actions/cache@v4
-        with:
-          path: UI/js
-          key: dojo-${{ hashFiles('UI/js-src/**',
-                                  'UI/src/**',
-                                  'UI/css/**',
-                                  '!UI/js/*.html',
-                                  '!UI/js/**/*.html',
-                                  '!UI/node_modules/*.html',
-                                  '!UI/node_modules/**/*.html',
-                                  'UI/*.html',
-                                  'UI/**/*.html',
-                                  'doc/sources/**') }}
 
       - name: Build Dojo
         run: |
@@ -258,7 +258,7 @@ jobs:
           nginx -c $GITHUB_WORKSPACE/doc/conf/webserver/nginx-github.conf \
                 -p $GITHUB_WORKSPACE &
 
-      - name: Cache node_module
+      - name: Cache node_modules
         id: cache-npm
         uses: actions/cache@v4
         with:
@@ -426,7 +426,22 @@ jobs:
           nginx -c $GITHUB_WORKSPACE/doc/conf/webserver/nginx-github.conf \
                 -p $GITHUB_WORKSPACE &
 
-      - name: Cache npm files
+
+      # This step MUST absolutely run before uncaching node_modules: that contains
+      # HTML files which otherwise interact with the hash being generated
+      - name: Cache JS
+        id: cache-js
+        uses: actions/cache@v4
+        with:
+          path: UI/js
+          key: dojo-${{ hashFiles('UI/js-src/**',
+                                  'UI/src/**',
+                                  'UI/css/**',
+                                  'UI/*.html',
+                                  'UI/**/*.html',
+                                  'doc/sources/**') }}
+
+      - name: Cache node_modules
         id: cache-npm
         uses: actions/cache@v4
         with:
@@ -434,22 +449,6 @@ jobs:
              UI/node_modules
           key: |
             modules-${{ hashFiles('UI/yarn.lock') }}
-
-      - name: Cache Dojo
-        id: cache-dojo
-        uses: actions/cache@v4
-        with:
-          path: UI/js
-          key: dojo-${{ hashFiles('UI/js-src/**',
-                                  'UI/src/**',
-                                  'UI/css/**',
-                                  '!UI/js/*.html',
-                                  '!UI/js/**/*.html',
-                                  '!UI/node_modules/*.html',
-                                  '!UI/node_modules/**/*.html',
-                                  'UI/*.html',
-                                  'UI/**/*.html',
-                                  'doc/sources/**') }}
 
       # This will start a hub and JOB_COUNT matrix.
       - name: Starting hub with ${{ matrix.BROWSER }}
