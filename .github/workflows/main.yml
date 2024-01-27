@@ -72,7 +72,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: UI/js
-          key: dojo-${{ hashFiles('UI/js-src/**',
+          key: js-${{ hashFiles('UI/js-src/**',
                                   'UI/src/**',
                                   'UI/css/**',
                                   'UI/*.html',
@@ -88,13 +88,13 @@ jobs:
           key: |
             modules-${{ hashFiles('UI/yarn.lock') }}
 
-      - name: Build Dojo
+      - name: Build JS
         run: |
           make js_deps_install
           make lint
           make js
           make readme
-        if: steps.cache-dojo.outputs.cache-hit != 'true' ||
+        if: steps.cache-js.outputs.cache-hit != 'true' ||
             steps.cache-node_modules.outputs.cache-hit != 'true'
 
   # Prep-up the cache
@@ -434,7 +434,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: UI/js
-          key: dojo-${{ hashFiles('UI/js-src/**',
+          key: js-${{ hashFiles('UI/js-src/**',
                                   'UI/src/**',
                                   'UI/css/**',
                                   'UI/*.html',
