@@ -346,6 +346,14 @@ sub _create_employee {
             $self->options->{dob},
             format => 'YYYY-MM-DD'
         ),
+        start_date => LedgerSMB::PGDate->from_input(
+            $self->options->{start_date},
+            format => 'YYYY-MM-DD'
+        ),
+        end_date => LedgerSMB::PGDate->from_input(
+            $self->options->{end_date},
+            format => 'YYYY-MM-DD'
+        ),
         name => ($self->options->{first_name} . ' ' .
                  ($self->options->{middle_name} ?
                   $self->options->{middle_name} . ' ' : '') .
