@@ -133,6 +133,7 @@ sub handle {
         # we get rid of myconfig and use User as a real object
         %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
         $form->{_user} = \%myconfig;
+        $form->{_req} = Plack::Request::WithEncoding->new($psgi_env);
         map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
             unless ( $form->{type} and $form->{type} eq 'preferences' );
 
