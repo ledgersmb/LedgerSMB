@@ -3,6 +3,12 @@
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.9
+* Add missing batch and entity sequences to the Defaults screen (#7965)
+* Stop warning during startup without configuration file (#7928)
+* CVE-2024-23831: CSRF attack on 'setup.pl'
+
+
 Changelog for 1.11.8
 * Fix changing Taxform checkmark after posting AR/AP transactions (#7894)
 * Restore customer/vendor name on PNL drilldown after GL column change (#7895)
