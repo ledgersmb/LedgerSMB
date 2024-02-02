@@ -128,6 +128,12 @@ Dependency updates
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.30
+* Add missing batch and entity sequences to the Defaults screen (#7965)
+* Stop warning during startup without configuration file (#7928)
+* CVE-2024-23831: CSRF attack on 'setup.pl'
+
+
 Changelog for 1.10.29
 * Fix formatting of amounts in AR/AP search results (#7896)
 * Explicitly set foreground color on dark backgrounds in blue theme (#7875)
