@@ -3,6 +3,10 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.31
+* Fix GL transaction entry regressed from 1.10.29 (#7984)
+
+
 Changelog for 1.10.30
 * Add missing batch and entity sequences to the Defaults screen (#7965)
 * Stop warning during startup without configuration file (#7928)
