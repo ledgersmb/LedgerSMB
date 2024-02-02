@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.30-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-01-13 20:02+0000\n"
+"POT-Creation-Date: 2024-02-02 14:05+0000\n"
 "Last-Translator: Stig Berg <stig@tmb.no>, 2022\n"
 "Language-Team: Norwegian Bokmål (https://app.transifex.com/ledgersmb/"
 "teams/58325/nb/)\n"
@@ -88,7 +88,7 @@ msgstr "Hensikt"
 
 #: old/bin/am.pl:322 UI/Contact/divs/credit.html:198
 #: UI/Contact/divs/credit.html:199 UI/Reports/filters/unapproved.html:5
-#: UI/setup/complete.html:21 UI/setup/confirm_operation.html:119
+#: UI/setup/complete.html:21 UI/setup/confirm_operation.html:120
 #: sql/Pg-database.sql:2619
 msgid "AP"
 msgstr "Leverandører"
@@ -134,7 +134,7 @@ msgid "AP transaction"
 msgstr "Leverandører postering"
 
 #: old/bin/am.pl:321 UI/Reports/filters/unapproved.html:6
-#: UI/setup/complete.html:22 UI/setup/confirm_operation.html:120
+#: UI/setup/complete.html:22 UI/setup/confirm_operation.html:121
 #: sql/Pg-database.sql:2618
 msgid "AR"
 msgstr "Kunder"
@@ -187,8 +187,8 @@ msgstr "Kunde/Leverandør/Hovedbok Beløp"
 msgid "Abandonment"
 msgstr "Skrinlagt"
 
-#: lib/LedgerSMB.pm:499 lib/LedgerSMB.pm:500
-#: lib/LedgerSMB/Scripts/configuration.pm:366
+#: lib/LedgerSMB.pm:523 lib/LedgerSMB.pm:524
+#: lib/LedgerSMB/Scripts/configuration.pm:368
 msgid "Access Denied"
 msgstr "Nektet Adgang"
 
@@ -526,7 +526,7 @@ msgid "Add Unit"
 msgstr "Ny enhet"
 
 #: UI/Contact/divs/employee.html:167 UI/Contact/divs/user.html:135
-#: UI/setup/confirm_operation.html:56 UI/setup/edit_user.html:101
+#: UI/setup/confirm_operation.html:57 UI/setup/edit_user.html:102
 msgid "Add User"
 msgstr "Ny bruker"
 
@@ -829,7 +829,7 @@ msgstr ""
 msgid "Apr"
 msgstr "apr"
 
-#: lib/LedgerSMB.pm:581 old/bin/aa.pl:73 old/bin/gl.pl:65 old/bin/io.pl:67
+#: lib/LedgerSMB.pm:605 old/bin/aa.pl:73 old/bin/gl.pl:65 old/bin/io.pl:67
 msgid "April"
 msgstr "april"
 
@@ -1008,7 +1008,7 @@ msgstr "Attn: [_1]"
 msgid "Aug"
 msgstr "aug"
 
-#: lib/LedgerSMB.pm:585 old/bin/aa.pl:77 old/bin/gl.pl:69 old/bin/io.pl:71
+#: lib/LedgerSMB.pm:609 old/bin/aa.pl:77 old/bin/gl.pl:69 old/bin/io.pl:71
 msgid "August"
 msgstr "august"
 
@@ -1066,15 +1066,15 @@ msgstr "BIC/SWIFT Kode:"
 msgid "BOM"
 msgstr "BOM"
 
-#: UI/setup/confirm_operation.html:83
+#: UI/setup/confirm_operation.html:84
 msgid "Backup"
 msgstr "Sikkerhetskopi"
 
-#: UI/setup/confirm_operation.html:90
+#: UI/setup/confirm_operation.html:91
 msgid "Backup DB"
 msgstr "Sikkerhetskopier DB"
 
-#: UI/setup/confirm_operation.html:97
+#: UI/setup/confirm_operation.html:98
 msgid "Backup Roles"
 msgstr "Sikkerhetskopi roller"
 
@@ -1169,7 +1169,8 @@ msgstr "Batch ID mangler"
 msgid "Batch Name"
 msgstr "Batch navn"
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:142 UI/create_batch.html:10
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:142
+#: lib/LedgerSMB/Scripts/configuration.pm:116 UI/create_batch.html:10
 #: UI/create_batch.html:70
 msgid "Batch Number"
 msgstr "Batch nummer"
@@ -1291,7 +1292,7 @@ msgstr "Firma type"
 msgid "Business Unit List"
 msgstr "Firma avdelingsliste"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:126
+#: lib/LedgerSMB/Scripts/configuration.pm:127
 msgid "Business Unit Number"
 msgstr "Firma Avdelingsnummer"
 
@@ -1472,7 +1473,7 @@ msgstr "Chart ID"
 msgid "Chart of Accounts"
 msgstr "Kontoplan"
 
-#: UI/setup/select_coa.html:41
+#: UI/setup/select_coa.html:42
 msgid "Chart of accounts"
 msgstr "Kontoplan"
 
@@ -1488,7 +1489,7 @@ msgstr "Sjekk (base)"
 msgid "Check Inventory"
 msgstr "Sjekk varebeholdning"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:138
+#: lib/LedgerSMB/Scripts/configuration.pm:140
 msgid "Check Prefix"
 msgstr "Sjekk Prefix"
 
@@ -1701,7 +1702,7 @@ msgstr "Bekreft handling"
 msgid "Confirm!"
 msgstr "Bekreft!"
 
-#: lib/LedgerSMB.pm:505
+#: lib/LedgerSMB.pm:529
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
 msgstr "Konflikt med eksisterende data, kanskje ar det lagt inn før?"
 
@@ -1800,7 +1801,7 @@ msgstr ""
 msgid "Control Code"
 msgstr "Kontrollkode"
 
-#: UI/setup/confirm_operation.html:46
+#: UI/setup/confirm_operation.html:47
 msgid "Copy"
 msgstr "Kopiere"
 
@@ -1808,7 +1809,7 @@ msgstr "Kopiere"
 msgid "Copy to New"
 msgstr "Kopier til Ny"
 
-#: UI/setup/confirm_operation.html:39
+#: UI/setup/confirm_operation.html:40
 msgid "Copy to New Name"
 msgstr "Kopier til Nytt Navn"
 
@@ -1862,7 +1863,7 @@ msgstr "Motpartskode"
 #: UI/Contact/divs/employee.html:96 UI/Contact/divs/person.html:118
 #: UI/payroll/deduction.html:15 UI/payroll/income.html:16
 #: UI/Reports/filters/contact_search.html:109
-#: UI/Reports/filters/purchase_history.html:99 UI/setup/select_coa.html:75
+#: UI/Reports/filters/purchase_history.html:99 UI/setup/select_coa.html:76
 msgid "Country"
 msgstr "Land"
 
@@ -1874,7 +1875,7 @@ msgstr "Navn på Land"
 msgid "Country:"
 msgstr "Land:"
 
-#: UI/setup/credentials.html:96 UI/templates/widget.html:120
+#: UI/setup/credentials.html:97 UI/templates/widget.html:120
 msgid "Create"
 msgstr "Opprett"
 
@@ -1902,11 +1903,11 @@ msgstr "Opprett ny Rapport"
 msgid "Create New Tax Form"
 msgstr "Opprett nytt MVA skjema"
 
-#: UI/setup/new_user.html:187
+#: UI/setup/new_user.html:188
 msgid "Create User"
 msgstr "Opprett bruker"
 
-#: UI/Contact/divs/user.html:80 UI/setup/new_user.html:44
+#: UI/Contact/divs/user.html:80 UI/setup/new_user.html:45
 msgid "Create new user"
 msgstr "Opprett ny bruker"
 
@@ -2042,7 +2043,7 @@ msgstr "Kundenavn"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:117
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:180
-#: lib/LedgerSMB/Scripts/configuration.pm:128 old/bin/io.pl:1600
+#: lib/LedgerSMB/Scripts/configuration.pm:130 old/bin/io.pl:1600
 #: UI/payments/payments_filter.html:38
 #: UI/Reports/filters/invoice_outstanding.html:10
 #: UI/Reports/filters/invoice_search.html:11
@@ -2067,7 +2068,7 @@ msgstr "Kunde mangler"
 msgid "Customer not on file!"
 msgstr "Kunde mangler i databasen!"
 
-#: UI/setup/complete.html:26 UI/setup/confirm_operation.html:124
+#: UI/setup/complete.html:26 UI/setup/confirm_operation.html:125
 msgid "Customer/Vendor Accounts"
 msgstr "Kunde/Leverandør kontoer"
 
@@ -2075,7 +2076,7 @@ msgstr "Kunde/Leverandør kontoer"
 msgid "D M"
 msgstr "D M"
 
-#: UI/setup/credentials.html:53
+#: UI/setup/credentials.html:54
 msgid "DB admin login"
 msgstr "DB admin login"
 
@@ -2103,7 +2104,7 @@ msgstr "Data ikke lagret. Prøv igjen."
 msgid "Data not saved.  Please update again."
 msgstr "Data ikke lagret. Prøv oppdater igjen."
 
-#: UI/setup/credentials.html:81 UI/setup/list_databases.html:13
+#: UI/setup/credentials.html:82 UI/setup/list_databases.html:13
 #: UI/setup/ui-db-credentials.html:6
 msgid "Database"
 msgstr "Database"
@@ -2140,7 +2141,7 @@ msgstr "Database komponent"
 msgid "Database does not exist."
 msgstr "Databasen eksisterer ikke"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1021
+#: lib/LedgerSMB/Scripts/setup.pm:1048
 msgid "Database exists."
 msgstr "Databasen eksister."
 
@@ -2221,7 +2222,7 @@ msgstr "Dato Arbeidet"
 msgid "Date from"
 msgstr "Fra Dato"
 
-#: UI/setup/new_user.html:144
+#: UI/setup/new_user.html:145
 msgid "Date of Birth"
 msgstr "Fødselsdag"
 
@@ -2294,11 +2295,11 @@ msgstr "Tilgodehavende"
 msgid "Dec"
 msgstr "des"
 
-#: lib/LedgerSMB.pm:589 old/bin/aa.pl:81 old/bin/gl.pl:73 old/bin/io.pl:75
+#: lib/LedgerSMB.pm:613 old/bin/aa.pl:81 old/bin/gl.pl:73 old/bin/io.pl:75
 msgid "December"
 msgstr "desember"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:143
+#: lib/LedgerSMB/Scripts/configuration.pm:145
 msgid "Decimal Places for Money"
 msgstr "Antall desimaler"
 
@@ -2315,11 +2316,11 @@ msgstr "Fradragstype"
 msgid "Deduction Types"
 msgstr "Fradragsklasser"
 
-#: UI/setup/upgrade_info.html:79
+#: UI/setup/upgrade_info.html:80
 msgid "Default AP"
 msgstr "Standard Leverandører"
 
-#: UI/setup/upgrade_info.html:57
+#: UI/setup/upgrade_info.html:58
 msgid "Default AR"
 msgstr "Standard Kunde"
 
@@ -2327,7 +2328,7 @@ msgstr "Standard Kunde"
 msgid "Default Accounts"
 msgstr "Standardkontoer"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:61 UI/setup/upgrade_info.html:43
+#: lib/LedgerSMB/Scripts/configuration.pm:61 UI/setup/upgrade_info.html:44
 msgid "Default Country"
 msgstr "Standard land"
 
@@ -2647,7 +2648,7 @@ msgstr "Deponert Metode"
 msgid "Disposal Report [_1] on date [_2]"
 msgstr "Deponert Rapport [_1] på dato [_2]"
 
-#: lib/LedgerSMB.pm:502
+#: lib/LedgerSMB.pm:526
 msgid "Division by 0 error"
 msgstr "Feil, dividert på 0"
 
@@ -2663,7 +2664,7 @@ msgstr "Dokument"
 msgid "Document Type"
 msgstr "Dokumenttype"
 
-#: lib/LedgerSMB/Scripts/setup.pm:499
+#: lib/LedgerSMB/Scripts/setup.pm:511
 msgid "Don't know what to do with backup"
 msgstr "Vet ikke hva jeg skal gjøre med backup"
 
@@ -2929,8 +2930,8 @@ msgstr "E-post"
 msgid "Employee"
 msgstr "Ansatt"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:127 t/data/04-complex_template.html:92
-#: UI/Contact/divs/employee.html:100 UI/setup/new_user.html:134
+#: lib/LedgerSMB/Scripts/configuration.pm:128 t/data/04-complex_template.html:92
+#: UI/Contact/divs/employee.html:100 UI/setup/new_user.html:135
 msgid "Employee Number"
 msgstr "Ansattnummer"
 
@@ -2945,7 +2946,7 @@ msgstr ""
 "Ansattnavn inneholder ikke de opplysningene som er nødvendig. (f.eks. ikke "
 "tom, alfanumerisk)"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:159
+#: lib/LedgerSMB/Scripts/configuration.pm:161
 msgid "Employee wage screen"
 msgstr "Lønnskjerm for ansatte"
 
@@ -3074,6 +3075,10 @@ msgstr "Eksisterende Kredittkonto"
 msgid "Entity Name"
 msgstr "Navn på enhet"
 
+#: lib/LedgerSMB/Scripts/configuration.pm:129
+msgid "Entity number"
+msgstr ""
+
 #: lib/LedgerSMB/Report/GL.pm:120
 msgid "Entry ID"
 msgstr "Eksisterende ID"
@@ -3103,7 +3108,7 @@ msgstr "Egenkapital (midlertidig)"
 msgid "Equity to Liabilities"
 msgstr "Egenkapital til Gjeld"
 
-#: lib/LedgerSMB/Scripts/setup.pm:453
+#: lib/LedgerSMB/Scripts/setup.pm:465
 msgid "Error creating backup file"
 msgstr "Feil ved kreering av backup fil"
 
@@ -3111,7 +3116,7 @@ msgstr "Feil ved kreering av backup fil"
 msgid "Error creating batch.  Please try again."
 msgstr "Feil ved kreering av Gruppe fil. Prøv igjen."
 
-#: lib/LedgerSMB.pm:506
+#: lib/LedgerSMB.pm:530
 msgid "Error from Function:"
 msgstr "Feil fra Funksjon "
 
@@ -3181,7 +3186,7 @@ msgstr "Utgift/Eiendel"
 msgid "Expenses"
 msgstr "Utgifter"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:156
+#: lib/LedgerSMB/Scripts/configuration.pm:158
 msgid "Experimental features"
 msgstr "Eksperimentelle funksjoner"
 
@@ -3260,7 +3265,7 @@ msgstr "Faks: [_1]"
 msgid "Feb"
 msgstr "feb"
 
-#: lib/LedgerSMB.pm:579 old/bin/aa.pl:71 old/bin/gl.pl:63 old/bin/io.pl:65
+#: lib/LedgerSMB.pm:603 old/bin/aa.pl:71 old/bin/gl.pl:63 old/bin/io.pl:65
 msgid "February"
 msgstr "februar"
 
@@ -3333,7 +3338,7 @@ msgstr "Sortere Kvitteringer"
 msgid "First"
 msgstr "Første"
 
-#: UI/Contact/divs/employee.html:42 UI/setup/new_user.html:113
+#: UI/Contact/divs/employee.html:42 UI/setup/new_user.html:114
 msgid "First Name"
 msgstr "Fornavn"
 
@@ -3445,7 +3450,7 @@ msgstr "Fra Dato"
 msgid "Full"
 msgstr "Full"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1150
+#: lib/LedgerSMB/Scripts/setup.pm:1180
 msgid "Full Permissions"
 msgstr "Fulle Rettigheter"
 
@@ -3456,7 +3461,7 @@ msgstr "Fulle Rettigheter"
 #: UI/lib/report_base.html:78 UI/Reports/filters/balance_sheet.html:13
 #: UI/Reports/filters/balance_sheet.html:30 UI/Reports/filters/gl.html:306
 #: UI/Reports/filters/income_statement.html:49
-#: UI/Reports/filters/income_statement.html:66 UI/setup/select_coa.html:53
+#: UI/Reports/filters/income_statement.html:66 UI/setup/select_coa.html:54
 #: sql/Pg-database.sql:2623
 msgid "GIFI"
 msgstr "Næringsoppgave"
@@ -3467,11 +3472,11 @@ msgid "GIFI accounts not in \"gifi\" table"
 msgstr "Næringsoppgave kontoer ikke i \"Næringsoppgave\" tabeller"
 
 #: old/bin/am.pl:323 UI/Reports/filters/unapproved.html:7
-#: UI/setup/complete.html:23 UI/setup/confirm_operation.html:121
+#: UI/setup/complete.html:23 UI/setup/confirm_operation.html:122
 msgid "GL"
 msgstr "Hovedbok"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:116
+#: lib/LedgerSMB/Scripts/configuration.pm:117
 msgid "GL Reference Number"
 msgstr "Hovedbok Referansenummer"
 
@@ -3673,11 +3678,11 @@ msgstr "Ignorer Årsavslutning"
 msgid "Image"
 msgstr "Bilde"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:145
+#: lib/LedgerSMB/Scripts/configuration.pm:147
 msgid "Images in Templates"
 msgstr "Bilder i Maler"
 
-#: UI/setup/edit_user.html:63 sql/Pg-database.sql:2550 sql/Pg-database.sql:2660
+#: UI/setup/edit_user.html:64 sql/Pg-database.sql:2550 sql/Pg-database.sql:2660
 #: sql/Pg-database.sql:2675 sql/Pg-database.sql:2680 UI/src/views/GIFI.vue:40
 #: UI/src/views/SIC.vue:40
 msgid "Import"
@@ -3707,7 +3712,7 @@ msgstr "Importer næringsoppgave"
 msgid "Import Inventory"
 msgstr "Importer Lagerbeholdning"
 
-#: UI/Contact/divs/user.html:92 UI/setup/new_user.html:56
+#: UI/Contact/divs/user.html:92 UI/setup/new_user.html:57
 msgid "Import existing user"
 msgstr "Importer eksisterende bruker"
 
@@ -3719,7 +3724,7 @@ msgstr "Inn"
 msgid "In Svc"
 msgstr "Inn Svc"
 
-#: UI/setup/upgrade_info.html:33
+#: UI/setup/upgrade_info.html:34
 msgid "In addition to these new defaults LedgerSMB 1.3 adds stricter "
 msgstr ""
 "I tillegg til disse nye standard verdiene legger LedgerSMB 1.3 til strengere"
@@ -3801,7 +3806,7 @@ msgid ""
 "charge."
 msgstr ""
 
-#: lib/LedgerSMB.pm:498
+#: lib/LedgerSMB.pm:522
 msgid "Internal Database Error"
 msgstr "Intern Database Error"
 
@@ -3818,15 +3823,15 @@ msgstr "Interne notater"
 msgid "Invalid Reporting Basis"
 msgstr "Feil rapport grunnlag"
 
-#: lib/LedgerSMB/Scripts/setup.pm:449
+#: lib/LedgerSMB/Scripts/setup.pm:461
 msgid "Invalid backup request"
 msgstr "Invalid backup forespørsel"
 
-#: lib/LedgerSMB.pm:501
+#: lib/LedgerSMB.pm:525
 msgid "Invalid date/time entered"
 msgstr "Invalid Dato/Tid lagt inn"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1059 lib/LedgerSMB/Scripts/setup.pm:1066
+#: lib/LedgerSMB/Scripts/setup.pm:1086 lib/LedgerSMB/Scripts/setup.pm:1093
 msgid "Invalid request"
 msgstr "Ugyldig forespørsel"
 
@@ -4026,7 +4031,7 @@ msgstr ""
 msgid "Jan"
 msgstr "jan"
 
-#: lib/LedgerSMB.pm:578 old/bin/aa.pl:70 old/bin/gl.pl:62 old/bin/io.pl:64
+#: lib/LedgerSMB.pm:602 old/bin/aa.pl:70 old/bin/gl.pl:62 old/bin/io.pl:64
 msgid "January"
 msgstr "januar"
 
@@ -4050,7 +4055,7 @@ msgstr "Jobb/Prosjekt nummer"
 msgid "Journal Entry"
 msgstr "Postering"
 
-#: UI/setup/complete.html:24 UI/setup/confirm_operation.html:122
+#: UI/setup/complete.html:24 UI/setup/confirm_operation.html:123
 msgid "Journal Lines"
 msgstr "Protokoll Linjer"
 
@@ -4058,7 +4063,7 @@ msgstr "Protokoll Linjer"
 msgid "Jul"
 msgstr "jul"
 
-#: lib/LedgerSMB.pm:584 old/bin/aa.pl:76 old/bin/gl.pl:68 old/bin/io.pl:70
+#: lib/LedgerSMB.pm:608 old/bin/aa.pl:76 old/bin/gl.pl:68 old/bin/io.pl:70
 msgid "July"
 msgstr "juli"
 
@@ -4066,7 +4071,7 @@ msgstr "juli"
 msgid "Jun"
 msgstr "jun"
 
-#: lib/LedgerSMB.pm:583 old/bin/aa.pl:75 old/bin/gl.pl:67 old/bin/io.pl:69
+#: lib/LedgerSMB.pm:607 old/bin/aa.pl:75 old/bin/gl.pl:67 old/bin/io.pl:69
 #: t/data/04-strings-for-translation.html:6
 msgid "June"
 msgstr "juni"
@@ -4131,7 +4136,7 @@ msgstr "Etternavn"
 msgid "Last Updated"
 msgstr "Siste Oppdatering"
 
-#: UI/setup/new_user.html:124
+#: UI/setup/new_user.html:125
 msgid "Last name"
 msgstr "Etternavn"
 
@@ -4188,7 +4193,7 @@ msgstr "LedgerSMB 1.8 database funnet."
 msgid "LedgerSMB 1.9 db found."
 msgstr "LedgerSMB 1.9 database funnet."
 
-#: UI/setup/complete.html:17 UI/setup/confirm_operation.html:115
+#: UI/setup/complete.html:17 UI/setup/confirm_operation.html:116
 msgid "LedgerSMB Database Statistics"
 msgstr "LedgerSMB Databasestatistikk"
 
@@ -4208,7 +4213,7 @@ msgstr ""
 msgid "LedgerSMB has detected the following system components"
 msgstr "LedgerSMB har oppdaget følgende systemkomponenter"
 
-#: UI/setup/upgrade_info.html:29
+#: UI/setup/upgrade_info.html:30
 msgid "LedgerSMB has introduced three new system wide default values which "
 msgstr "LedgerSMB har introdusert tre nye system standardverdier som"
 
@@ -4217,11 +4222,11 @@ msgid ""
 "                  variety of related functionalities, such as"
 msgstr ""
 
-#: UI/setup/upgrade_info.html:72
+#: UI/setup/upgrade_info.html:73
 msgid "LedgerSMB supports multiple <em>Accounts payable (AP)</em> accounts "
 msgstr "LedgerSMB støtter flere <em>Leverandør</em> kontoer "
 
-#: UI/setup/upgrade_info.html:50
+#: UI/setup/upgrade_info.html:51
 msgid "LedgerSMB supports multiple <em>Accounts receivable (AR)</em> accounts "
 msgstr "LedgerSMB støtter flere <em>kunde</em> kontoer"
 
@@ -4310,7 +4315,7 @@ msgstr "Vis MVA skjema"
 msgid "List Units"
 msgstr "Vis Enheter"
 
-#: UI/setup/confirm_operation.html:63
+#: UI/setup/confirm_operation.html:64
 msgid "List Users"
 msgstr "Vis Brukere"
 
@@ -4322,16 +4327,16 @@ msgstr "Vis Lagerbeholdning"
 msgid "List of Business Types"
 msgstr "Vis Firma Typer"
 
-#: UI/setup/confirm_operation.html:73 UI/setup/template_info.html:29
+#: UI/setup/confirm_operation.html:74 UI/setup/template_info.html:30
 msgid "Load Templates"
 msgstr "Hente Maler"
 
-#: UI/src/components/ServerUI.js:90 UI/src/components/ServerUI.js:71
+#: UI/src/components/ServerUI.js:71 UI/src/components/ServerUI.js:90
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:41
-#: UI/src/components/ServerUI.js:27
+#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:27
+#: UI/src/components/ServerUI.js:41
 msgid "Loading..."
 msgstr ""
 
@@ -4360,11 +4365,11 @@ msgstr "Logget ut på grunn av ikke aktivitet"
 msgid "Logging in... Please wait."
 msgstr ""
 
-#: UI/setup/credentials.html:91 UI/src/views/LoginPage.vue:47
+#: UI/setup/credentials.html:92 UI/src/views/LoginPage.vue:47
 msgid "Login"
 msgstr "Login"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1023
+#: lib/LedgerSMB/Scripts/setup.pm:1050
 msgid "Login?"
 msgstr "Login?"
 
@@ -4422,7 +4427,7 @@ msgstr ""
 "Forsikre deg om at alle navn kun består av alfanumeriske tegn (og "
 "understreker) og er minst ett tegn langt"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1149
+#: lib/LedgerSMB/Scripts/setup.pm:1179
 msgid "Manage Users"
 msgstr "Behandle Brukere"
 
@@ -4447,7 +4452,7 @@ msgstr "Bruksanvisning"
 msgid "Mar"
 msgstr "mar"
 
-#: lib/LedgerSMB.pm:580 old/bin/aa.pl:72 old/bin/gl.pl:64 old/bin/io.pl:66
+#: lib/LedgerSMB.pm:604 old/bin/aa.pl:72 old/bin/gl.pl:64 old/bin/io.pl:66
 msgid "March"
 msgstr "mars"
 
@@ -4456,15 +4461,15 @@ msgstr "mars"
 msgid "Markup"
 msgstr "Markup"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:141
+#: lib/LedgerSMB/Scripts/configuration.pm:143
 msgid "Max Invoices per Check Stub"
 msgstr "Maks antall Fakturaer pr. Sjekktalong"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:139
+#: lib/LedgerSMB/Scripts/configuration.pm:141
 msgid "Max per dropdown"
 msgstr "Maks pr. nedtrekk"
 
-#: lib/LedgerSMB.pm:582 old/bin/aa.pl:74 old/bin/aa.pl:88 old/bin/gl.pl:66
+#: lib/LedgerSMB.pm:606 old/bin/aa.pl:74 old/bin/aa.pl:88 old/bin/gl.pl:66
 #: old/bin/gl.pl:80 old/bin/io.pl:68 old/bin/io.pl:82
 msgid "May"
 msgstr "mai"
@@ -4512,7 +4517,7 @@ msgstr "Million"
 msgid "Mime Type"
 msgstr "Mime Type"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:148
+#: lib/LedgerSMB/Scripts/configuration.pm:150
 msgid "Min Empty Lines"
 msgstr "Min. Tomme linjer"
 
@@ -4525,7 +4530,7 @@ msgstr "Min antall"
 msgid "Min Taxable"
 msgstr "Min. MVA pliktig"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:131
+#: lib/LedgerSMB/Scripts/configuration.pm:133
 msgid "Misc Settings"
 msgstr "Forskjellige Innstillinger"
 
@@ -4564,7 +4569,7 @@ msgstr "Måned(er)"
 msgid "Months"
 msgstr "Måneder"
 
-#: lib/LedgerSMB.pm:514
+#: lib/LedgerSMB.pm:538
 msgid "More information has been reported in the error logs"
 msgstr "Mer informasjon finnes i feil loggene"
 
@@ -4653,7 +4658,7 @@ msgid "New password"
 msgstr "Nytt passord"
 
 #: old/bin/am.pl:305 UI/inventory/adjustment_entry.html:82
-#: UI/setup/select_coa.html:92
+#: UI/setup/select_coa.html:93
 msgid "Next"
 msgstr "Neste"
 
@@ -4666,7 +4671,7 @@ msgid "Next Number"
 msgstr "Neste nr"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:114
-#: lib/LedgerSMB/Scripts/configuration.pm:342
+#: lib/LedgerSMB/Scripts/configuration.pm:344
 msgid "Next in Sequence"
 msgstr "Neste i kø"
 
@@ -4718,7 +4723,7 @@ msgstr "Ingen NULL Ansattnummer"
 msgid "No Old Password"
 msgstr "Ikke noe gammelt passord"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1151
+#: lib/LedgerSMB/Scripts/setup.pm:1181
 msgid "No changes"
 msgstr "Ingen forandringer"
 
@@ -4813,7 +4818,7 @@ msgstr "Ikke satt opp for hierarki rapportering, se tilkoblede instruksjoner "
 msgid "Note Class"
 msgstr "Merknad klasse"
 
-#: UI/setup/upgrade_info.html:93
+#: UI/setup/upgrade_info.html:94
 msgid "Note that the process invoked by hitting the button below might "
 msgstr ""
 "Legg merke til at prosessen som startes ved å trykke på knappen nedenfor, kan "
@@ -4860,7 +4865,7 @@ msgstr "Ingenting å overføre!"
 msgid "Nov"
 msgstr "nov"
 
-#: lib/LedgerSMB.pm:588 old/bin/aa.pl:80 old/bin/gl.pl:72 old/bin/io.pl:74
+#: lib/LedgerSMB.pm:612 old/bin/aa.pl:80 old/bin/gl.pl:72 old/bin/io.pl:74
 msgid "November"
 msgstr "november"
 
@@ -4930,7 +4935,7 @@ msgstr "Foreldet ved"
 msgid "Oct"
 msgstr "okt"
 
-#: lib/LedgerSMB.pm:587 old/bin/aa.pl:79 old/bin/gl.pl:71 old/bin/io.pl:73
+#: lib/LedgerSMB.pm:611 old/bin/aa.pl:79 old/bin/gl.pl:71 old/bin/io.pl:73
 msgid "October"
 msgstr "oktober"
 
@@ -5066,7 +5071,7 @@ msgid "Ordering"
 msgstr "Ordre"
 
 #: UI/Reports/filters/purchase_history.html:180 UI/setup/complete.html:25
-#: UI/setup/confirm_operation.html:123
+#: UI/setup/confirm_operation.html:124
 msgid "Orders"
 msgstr "Ordrer"
 
@@ -5074,7 +5079,7 @@ msgstr "Ordrer"
 msgid "Orders generated!"
 msgstr "Ordre Generert"
 
-#: UI/setup/confirm_operation.html:32
+#: UI/setup/confirm_operation.html:33
 msgid "Other Actions"
 msgstr "Andre handlinger"
 
@@ -5212,7 +5217,7 @@ msgstr "Varegruppe"
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:101
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:162
 #: lib/LedgerSMB/Report/PNL/Product.pm:77
-#: lib/LedgerSMB/Scripts/configuration.pm:125 old/bin/oe.pl:2150
+#: lib/LedgerSMB/Scripts/configuration.pm:126 old/bin/oe.pl:2150
 #: old/bin/oe.pl:2223 old/bin/oe.pl:2257 old/bin/oe.pl:2504 old/bin/pe.pl:942
 #: UI/Reports/filters/cogs_lines.html:8
 #: UI/Reports/filters/inventory_activity.html:8
@@ -5263,8 +5268,8 @@ msgstr "Varegruppe"
 msgid "Partsgroups"
 msgstr "Varegruppe"
 
-#: UI/Contact/divs/user.html:55 UI/setup/credentials.html:68
-#: UI/setup/edit_user.html:49 UI/setup/new_user.html:29
+#: UI/Contact/divs/user.html:55 UI/setup/credentials.html:69
+#: UI/setup/edit_user.html:50 UI/setup/new_user.html:30
 #: UI/src/views/LoginPage.vue:34
 msgid "Password"
 msgstr "Passord"
@@ -5811,7 +5816,7 @@ msgstr "Innkjøpshistorikk"
 msgid "Purchase Order"
 msgstr "Innkjøpsordre"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:123
+#: lib/LedgerSMB/Scripts/configuration.pm:124
 msgid "Purchase Order Number"
 msgstr "Innkjøpsordrenummer"
 
@@ -5928,7 +5933,7 @@ msgstr "Tilbudsforespørsel"
 msgid "RFQ #"
 msgstr "Tilbudsforespørsel #"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:124 old/bin/oe.pl:485
+#: lib/LedgerSMB/Scripts/configuration.pm:125 old/bin/oe.pl:485
 msgid "RFQ Number"
 msgstr "Tilbudsforespørslelsnummer"
 
@@ -6215,7 +6220,7 @@ msgstr "Nødvendig Dato"
 msgid "Required by"
 msgstr "Leveringsdato"
 
-#: lib/LedgerSMB.pm:503 lib/LedgerSMB.pm:504
+#: lib/LedgerSMB.pm:527 lib/LedgerSMB.pm:528
 msgid "Required input not provided"
 msgstr "Obligatorisk inntasting ikke utført"
 
@@ -6224,7 +6229,7 @@ msgstr "Obligatorisk inntasting ikke utført"
 msgid "Required period type"
 msgstr "Krever type periode"
 
-#: UI/Contact/divs/user.html:127 UI/setup/edit_user.html:92
+#: UI/Contact/divs/user.html:127 UI/setup/edit_user.html:93
 msgid "Reset Password"
 msgstr "Resett Passord"
 
@@ -6288,11 +6293,11 @@ msgstr "Omgjøre Kvitteringer"
 msgid "Rounded"
 msgstr "Avrundet"
 
-#: UI/setup/complete.html:18 UI/setup/confirm_operation.html:116
+#: UI/setup/complete.html:18 UI/setup/confirm_operation.html:117
 msgid "Row counts"
 msgstr "Tellet Rader"
 
-#: UI/setup/begin_backup.html:70
+#: UI/setup/begin_backup.html:71
 msgid "Run Backup"
 msgstr "Kjør Sikkerhetskopi"
 
@@ -6300,7 +6305,7 @@ msgstr "Kjør Sikkerhetskopi"
 msgid "Run Report"
 msgstr "Kjør Rapport"
 
-#: UI/Contact/divs/company.html:107 UI/setup/select_coa.html:66
+#: UI/Contact/divs/company.html:107 UI/setup/select_coa.html:67
 #: sql/Pg-database.sql:2645
 msgid "SIC"
 msgstr "SIC"
@@ -6347,7 +6352,7 @@ msgstr "Salg"
 msgid "Sales Invoice"
 msgstr "Utgående Faktura"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:118
+#: lib/LedgerSMB/Scripts/configuration.pm:119
 msgid "Sales Invoice/AR Transaction Number"
 msgstr "Utgående Faktura Posterings nummer"
 
@@ -6360,7 +6365,7 @@ msgstr "Utgående Faktura Posterings nummer"
 msgid "Sales Order"
 msgstr "Salgsordre"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:119
+#: lib/LedgerSMB/Scripts/configuration.pm:120
 msgid "Sales Order Number"
 msgstr "Salgsordrenummer"
 
@@ -6371,7 +6376,7 @@ msgstr "Salgsordrenummer"
 msgid "Sales Orders"
 msgstr "Salgsordrer"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:120
+#: lib/LedgerSMB/Scripts/configuration.pm:121
 msgid "Sales Quotation Number"
 msgstr "Salg Tilbudsnummer"
 
@@ -6460,7 +6465,7 @@ msgstr "Lagre Kontakt"
 msgid "Save Draft"
 msgstr "Lagre Kladd"
 
-#: UI/Contact/divs/user.html:195 UI/setup/edit_user.html:151
+#: UI/Contact/divs/user.html:195 UI/setup/edit_user.html:153
 msgid "Save Groups"
 msgstr "Lagre Grupper"
 
@@ -6516,7 +6521,7 @@ msgstr "Lagre de gitte endringene og forsøk å fortsette overføringen."
 #: UI/Contact/pricelist.html:98 UI/inventory/adjustment_entry.html:95
 #: UI/payments/payments_detail.html:495 UI/payroll/deduction.html:95
 #: UI/payroll/income.html:100 UI/reconciliation/report.html:413
-#: UI/setup/edit_user.html:156 UI/taxform/add_taxform.html:89
+#: UI/setup/edit_user.html:158 UI/taxform/add_taxform.html:89
 #: UI/timecards/timecard.html:170 UI/timecards/timecard-week.html:131
 #: UI/src/components/ConfigTableRow.vue:86
 msgid "Saved"
@@ -6556,7 +6561,7 @@ msgstr "Lagre over et eksisterende dokument. Fortsett?"
 #: UI/Contact/pricelist.html:97 UI/inventory/adjustment_entry.html:94
 #: UI/payments/payments_detail.html:494 UI/payroll/deduction.html:94
 #: UI/payroll/income.html:99 UI/reconciliation/report.html:412
-#: UI/setup/edit_user.html:155 UI/taxform/add_taxform.html:88
+#: UI/setup/edit_user.html:157 UI/taxform/add_taxform.html:88
 #: UI/timecards/timecard.html:169 UI/timecards/timecard-week.html:130
 msgid "Saving..."
 msgstr ""
@@ -6705,7 +6710,7 @@ msgstr "Velg alle"
 msgid "Select Customer"
 msgstr "Velg kunde"
 
-#: UI/setup/template_info.html:9
+#: UI/setup/template_info.html:10
 msgid "Select Templates to Load"
 msgstr "Velg Maler for å vise"
 
@@ -6729,7 +6734,7 @@ msgstr "Velg ett av navnene under"
 msgid "Select invoices"
 msgstr "Velg Fakturaer"
 
-#: UI/setup/credentials.html:42
+#: UI/setup/credentials.html:43
 msgid "Select or Enter User"
 msgstr "Velg eller skriv inn bruker"
 
@@ -6813,7 +6818,7 @@ msgstr "sep"
 msgid "Separate Duties"
 msgstr "Separate oppgaver"
 
-#: lib/LedgerSMB.pm:586 old/bin/aa.pl:78 old/bin/gl.pl:70 old/bin/io.pl:72
+#: lib/LedgerSMB.pm:610 old/bin/aa.pl:78 old/bin/gl.pl:70 old/bin/io.pl:72
 msgid "September"
 msgstr "september"
 
@@ -6993,7 +6998,7 @@ msgstr "Sendings etikett"
 msgid "Short"
 msgstr "Kort"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:134
+#: lib/LedgerSMB/Scripts/configuration.pm:136
 msgid "Show Credit Limit"
 msgstr "Vis kreditt limit"
 
@@ -7025,7 +7030,7 @@ msgstr "Seksten"
 msgid "Sixty"
 msgstr "Seksti"
 
-#: UI/setup/select_coa.html:101
+#: UI/setup/select_coa.html:102
 msgid "Skip"
 msgstr "Hopp over"
 
@@ -7259,7 +7264,7 @@ msgstr "System"
 msgid "System Defaults"
 msgstr "Systemets standardinnstillinger"
 
-#: UI/setup/confirm_operation.html:107
+#: UI/setup/confirm_operation.html:108
 msgid "System Info"
 msgstr "System info"
 
@@ -7267,7 +7272,7 @@ msgstr "System info"
 msgid "System Information"
 msgstr "Systeminformastjon"
 
-#: UI/setup/confirm_operation.html:100
+#: UI/setup/confirm_operation.html:101
 msgid "System diagnostics"
 msgstr "Systemdiagnostikk"
 
@@ -7339,7 +7344,7 @@ msgstr "MVA Skjemaer"
 msgid "Tax ID"
 msgstr "MVA ID"
 
-#: UI/Contact/divs/employee.html:116 UI/setup/new_user.html:155
+#: UI/Contact/divs/employee.html:116 UI/setup/new_user.html:156
 msgid "Tax ID/SSN"
 msgstr "MVA ID/SSN"
 
@@ -7452,7 +7457,7 @@ msgstr "Mal  lagret"
 msgid "Template Transactions"
 msgstr "Mal  posteringer"
 
-#: UI/setup/confirm_operation.html:67 UI/setup/template_info.html:24
+#: UI/setup/confirm_operation.html:68 UI/setup/template_info.html:25
 msgid "Templates"
 msgstr "Maler"
 
@@ -7723,11 +7728,11 @@ msgstr "Til [_1]"
 msgid "To be used"
 msgstr "For å bruke"
 
-#: UI/setup/begin_backup.html:27 UI/setup/begin_backup.html:41
+#: UI/setup/begin_backup.html:28 UI/setup/begin_backup.html:42
 msgid "To email"
 msgstr "Til E-post"
 
-#: UI/setup/begin_backup.html:59
+#: UI/setup/begin_backup.html:60
 msgid "To my browser"
 msgstr "Til min nettleser"
 
@@ -7828,7 +7833,7 @@ msgid "Transaction Type"
 msgstr "Posterings type"
 
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:104
-#: UI/setup/confirm_operation.html:125
+#: UI/setup/confirm_operation.html:126
 msgid "Transactions"
 msgstr "Posteringer"
 
@@ -8103,7 +8108,7 @@ msgstr "Oppdatert"
 msgid "Updating..."
 msgstr ""
 
-#: UI/setup/upgrade_info.html:98
+#: UI/setup/upgrade_info.html:99
 msgid "Upgrade"
 msgstr "Oppgradert"
 
@@ -8165,7 +8170,7 @@ msgstr "Bruk send til"
 msgid "Use overpayment/prepayment"
 msgstr "Bruk overbetaling/forhåndsinnbetaling"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:150
+#: lib/LedgerSMB/Scripts/configuration.pm:152
 msgid "Use web service for current exchange rates"
 msgstr "Bruk webtjeneste for gjeldende valutakurser"
 
@@ -8183,23 +8188,23 @@ msgstr "Bruker"
 msgid "User Name"
 msgstr "Bruker Navn"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1228
+#: lib/LedgerSMB/Scripts/setup.pm:1258
 msgid "User already exists. Import?"
 msgstr "Bruker eksisterer allerede. Importer?"
 
-#: UI/Contact/divs/user.html:68 UI/setup/new_user.html:39
+#: UI/Contact/divs/user.html:68 UI/setup/new_user.html:40
 msgid "User creation"
 msgstr "Opprett bruker"
 
 #: UI/Contact/divs/user.html:28 UI/Contact/divs/user.html:48
-#: UI/setup/edit_user.html:29 UI/setup/edit_user.html:42
-#: UI/setup/list_users.html:11 UI/setup/new_user.html:21
+#: UI/setup/edit_user.html:30 UI/setup/edit_user.html:43
+#: UI/setup/list_users.html:11 UI/setup/new_user.html:22
 #: UI/setup/ui-db-credentials.html:4
 msgid "Username"
 msgstr "Brukenavn"
 
-#: UI/setup/complete.html:27 UI/setup/confirm_operation.html:50
-#: UI/setup/confirm_operation.html:126
+#: UI/setup/complete.html:27 UI/setup/confirm_operation.html:51
+#: UI/setup/confirm_operation.html:127
 msgid "Users"
 msgstr "Brukere"
 
@@ -8268,7 +8273,7 @@ msgstr "Leverandørhistorikk"
 msgid "Vendor Invoice"
 msgstr "Inngående Faktura"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:122
+#: lib/LedgerSMB/Scripts/configuration.pm:123
 msgid "Vendor Invoice/AP Transaction Number"
 msgstr "Inngående Faktura/Leverandørens Posterings Nummer"
 
@@ -8279,7 +8284,7 @@ msgstr "Leverandørnavn"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:115
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:178
-#: lib/LedgerSMB/Scripts/configuration.pm:129 old/bin/io.pl:1601
+#: lib/LedgerSMB/Scripts/configuration.pm:131 old/bin/io.pl:1601
 #: UI/asset/edit_asset.html:195 UI/asset/search_asset.html:167
 #: UI/payments/payments_filter.html:35
 #: UI/Reports/filters/invoice_outstanding.html:6
@@ -8433,7 +8438,7 @@ msgstr "Hvor skal vi sende sikkerhetskopien?"
 msgid "Whole Month Straight Line"
 msgstr "Hele Måneden i rett linje"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:137
+#: lib/LedgerSMB/Scripts/configuration.pm:139
 msgid "Widgit Themes"
 msgstr "Widgit Themes"
 
@@ -8496,7 +8501,7 @@ msgid "Years"
 msgstr "År"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:100 old/bin/oe.pl:1415
-#: UI/Configuration/settings.html:37 UI/setup/confirm_operation.html:29
+#: UI/Configuration/settings.html:37 UI/setup/confirm_operation.html:30
 msgid "Yes"
 msgstr "Ja"
 
