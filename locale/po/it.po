@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.11.9-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-01-13 20:48+0000\n"
+"POT-Creation-Date: 2024-02-02 16:28+0000\n"
 "Last-Translator: Ferruccio Zamuner <nonsolosoft@diff.org>, 2023\n"
 "Language-Team: Italian (https://app.transifex.com/ledgersmb/teams/58325/it/)\n"
 "Language: it\n"
@@ -86,7 +86,7 @@ msgstr "AIM"
 
 #: old/bin/am.pl:321 UI/Contact/divs/credit.html:198
 #: UI/Contact/divs/credit.html:199 UI/Reports/filters/unapproved.html:5
-#: UI/setup/complete.html:21 UI/setup/confirm_operation.html:126
+#: UI/setup/complete.html:21 UI/setup/confirm_operation.html:127
 #: sql/Pg-database.sql:2619
 msgid "AP"
 msgstr "Debiti Fornitori"
@@ -132,7 +132,7 @@ msgid "AP transaction"
 msgstr ""
 
 #: old/bin/am.pl:320 UI/Reports/filters/unapproved.html:6
-#: UI/setup/complete.html:22 UI/setup/confirm_operation.html:127
+#: UI/setup/complete.html:22 UI/setup/confirm_operation.html:128
 #: sql/Pg-database.sql:2618
 msgid "AR"
 msgstr "Crediti Clienti"
@@ -185,8 +185,8 @@ msgstr "Somma Crediti/Debiti/Libro giornale"
 msgid "Abandonment"
 msgstr ""
 
-#: lib/LedgerSMB.pm:498 lib/LedgerSMB.pm:499
-#: lib/LedgerSMB/Scripts/configuration.pm:367
+#: lib/LedgerSMB.pm:522 lib/LedgerSMB.pm:523
+#: lib/LedgerSMB/Scripts/configuration.pm:369
 msgid "Access Denied"
 msgstr "Accesso negato"
 
@@ -514,7 +514,7 @@ msgid "Add Unit"
 msgstr "Nuova unità"
 
 #: UI/Contact/divs/employee.html:167 UI/Contact/divs/user.html:139
-#: UI/setup/confirm_operation.html:56 UI/setup/edit_user.html:101
+#: UI/setup/confirm_operation.html:57 UI/setup/edit_user.html:102
 msgid "Add User"
 msgstr "Nuovo Utente"
 
@@ -816,7 +816,7 @@ msgstr ""
 msgid "Apr"
 msgstr "Apr"
 
-#: lib/LedgerSMB.pm:580 old/bin/aa.pl:73 old/bin/gl.pl:63 old/bin/io.pl:65
+#: lib/LedgerSMB.pm:604 old/bin/aa.pl:73 old/bin/gl.pl:63 old/bin/io.pl:65
 msgid "April"
 msgstr "Aprile"
 
@@ -995,7 +995,7 @@ msgstr "Att.ne: [_1]"
 msgid "Aug"
 msgstr "Ago"
 
-#: lib/LedgerSMB.pm:584 old/bin/aa.pl:77 old/bin/gl.pl:67 old/bin/io.pl:69
+#: lib/LedgerSMB.pm:608 old/bin/aa.pl:77 old/bin/gl.pl:67 old/bin/io.pl:69
 msgid "August"
 msgstr "Agosto"
 
@@ -1054,15 +1054,15 @@ msgstr ""
 msgid "BOM"
 msgstr "BOM"
 
-#: UI/setup/confirm_operation.html:83
+#: UI/setup/confirm_operation.html:84
 msgid "Backup"
 msgstr "Backup"
 
-#: UI/setup/confirm_operation.html:90
+#: UI/setup/confirm_operation.html:91
 msgid "Backup DB"
 msgstr "Backup DB"
 
-#: UI/setup/confirm_operation.html:97
+#: UI/setup/confirm_operation.html:98
 msgid "Backup Roles"
 msgstr ""
 
@@ -1111,7 +1111,7 @@ msgstr ""
 msgid "Bar Code"
 msgstr "Codice a barre"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:135
+#: lib/LedgerSMB/Scripts/configuration.pm:137
 msgid "Barcode entry on invoices"
 msgstr ""
 
@@ -1160,7 +1160,8 @@ msgstr ""
 msgid "Batch Name"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:142 UI/create_batch.html:10
+#: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:142
+#: lib/LedgerSMB/Scripts/configuration.pm:115 UI/create_batch.html:10
 #: UI/create_batch.html:70
 msgid "Batch Number"
 msgstr ""
@@ -1274,7 +1275,7 @@ msgstr ""
 msgid "Business Unit List"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/configuration.pm:125
+#: lib/LedgerSMB/Scripts/configuration.pm:126
 msgid "Business Unit Number"
 msgstr ""
 
@@ -1455,7 +1456,7 @@ msgstr ""
 msgid "Chart of Accounts"
 msgstr "Piano dei Conti"
 
-#: UI/setup/select_coa.html:41
+#: UI/setup/select_coa.html:42
 msgid "Chart of accounts"
 msgstr "Piano dei conti"
 
@@ -1471,11 +1472,11 @@ msgstr ""
 msgid "Check Inventory"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/configuration.pm:139
+#: lib/LedgerSMB/Scripts/configuration.pm:141
 msgid "Check Prefix"
 msgstr ""
 
-#: UI/setup/confirm_operation.html:114
+#: UI/setup/confirm_operation.html:115
 msgid "Check consistency"
 msgstr ""
 
@@ -1669,7 +1670,7 @@ msgstr ""
 msgid "Confirm!"
 msgstr "Conferma!"
 
-#: lib/LedgerSMB.pm:504
+#: lib/LedgerSMB.pm:528
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
 msgstr ""
 
@@ -1769,11 +1770,11 @@ msgstr ""
 msgid "Control Code"
 msgstr ""
 
-#: UI/setup/confirm_operation.html:46
+#: UI/setup/confirm_operation.html:47
 msgid "Copy"
 msgstr ""
 
-#: UI/setup/confirm_operation.html:39
+#: UI/setup/confirm_operation.html:40
 msgid "Copy to New Name"
 msgstr ""
 
@@ -1828,7 +1829,7 @@ msgstr ""
 #: UI/Contact/divs/employee.html:96 UI/Contact/divs/person.html:118
 #: UI/payroll/deduction.html:15 UI/payroll/income.html:16
 #: UI/Reports/filters/contact_search.html:109
-#: UI/Reports/filters/purchase_history.html:99 UI/setup/select_coa.html:75
+#: UI/Reports/filters/purchase_history.html:99 UI/setup/select_coa.html:76
 msgid "Country"
 msgstr "Nazione"
 
@@ -1840,7 +1841,7 @@ msgstr "Nome nazione"
 msgid "Country:"
 msgstr "Nazione"
 
-#: UI/setup/credentials.html:83 UI/templates/widget.html:124
+#: UI/setup/credentials.html:84 UI/templates/widget.html:124
 msgid "Create"
 msgstr "Crea"
 
@@ -1868,11 +1869,11 @@ msgstr "Nuovo resoconto"
 msgid "Create New Tax Form"
 msgstr ""
 
-#: UI/setup/new_user.html:169
+#: UI/setup/new_user.html:170
 msgid "Create User"
 msgstr "Nuovo utente"
 
-#: UI/Contact/divs/user.html:84 UI/setup/new_user.html:41
+#: UI/Contact/divs/user.html:84 UI/setup/new_user.html:42
 msgid "Create new user"
 msgstr ""
 
@@ -2007,7 +2008,7 @@ msgstr "Nome cliente"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:117
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:180
-#: lib/LedgerSMB/Scripts/configuration.pm:127 old/bin/io.pl:1607
+#: lib/LedgerSMB/Scripts/configuration.pm:129 old/bin/io.pl:1607
 #: UI/payments/payments_filter.html:38
 #: UI/Reports/filters/invoice_outstanding.html:10
 #: UI/Reports/filters/invoice_search.html:11
@@ -2032,7 +2033,7 @@ msgstr ""
 msgid "Customer not on file!"
 msgstr "Cliente non sul file!"
 
-#: UI/setup/complete.html:23 UI/setup/confirm_operation.html:131
+#: UI/setup/complete.html:23 UI/setup/confirm_operation.html:132
 msgid "Customer/Vendor Accounts"
 msgstr "Conti fornitori"
 
@@ -2040,7 +2041,7 @@ msgstr "Conti fornitori"
 msgid "D M"
 msgstr ""
 
-#: UI/setup/credentials.html:46
+#: UI/setup/credentials.html:47
 msgid "DB admin login"
 msgstr ""
 
@@ -2068,7 +2069,7 @@ msgstr ""
 msgid "Data not saved.  Please update again."
 msgstr ""
 
-#: UI/setup/credentials.html:69 UI/setup/list_databases.html:13
+#: UI/setup/credentials.html:70 UI/setup/list_databases.html:13
 #: UI/setup/ui-db-credentials.html:6
 msgid "Database"
 msgstr "Database"
@@ -2105,7 +2106,7 @@ msgstr ""
 msgid "Database does not exist."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1100
+#: lib/LedgerSMB/Scripts/setup.pm:1127
 msgid "Database exists."
 msgstr ""
 
@@ -2186,7 +2187,7 @@ msgstr ""
 msgid "Date from"
 msgstr ""
 
-#: UI/setup/new_user.html:135
+#: UI/setup/new_user.html:136
 msgid "Date of Birth"
 msgstr "Data di nascita"
 
@@ -2257,11 +2258,11 @@ msgstr "Debiti"
 msgid "Dec"
 msgstr "Dic"
 
-#: lib/LedgerSMB.pm:588 old/bin/aa.pl:81 old/bin/gl.pl:71 old/bin/io.pl:73
+#: lib/LedgerSMB.pm:612 old/bin/aa.pl:81 old/bin/gl.pl:71 old/bin/io.pl:73
 msgid "December"
 msgstr "Dicembre"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:144
+#: lib/LedgerSMB/Scripts/configuration.pm:146
 msgid "Decimal Places for Money"
 msgstr "Cifre decimali denaro"
 
@@ -2278,11 +2279,11 @@ msgstr "Tipo deduzione"
 msgid "Deduction Types"
 msgstr "Tipi di deduzione"
 
-#: UI/setup/upgrade_info.html:79
+#: UI/setup/upgrade_info.html:80
 msgid "Default AP"
 msgstr ""
 
-#: UI/setup/upgrade_info.html:57
+#: UI/setup/upgrade_info.html:58
 msgid "Default AR"
 msgstr ""
 
@@ -2290,7 +2291,7 @@ msgstr ""
 msgid "Default Accounts"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/configuration.pm:60 UI/setup/upgrade_info.html:43
+#: lib/LedgerSMB/Scripts/configuration.pm:60 UI/setup/upgrade_info.html:44
 msgid "Default Country"
 msgstr "Nazione di serie"
 
@@ -2609,7 +2610,7 @@ msgstr ""
 msgid "Disposal Report [_1] on date [_2]"
 msgstr ""
 
-#: lib/LedgerSMB.pm:501
+#: lib/LedgerSMB.pm:525
 msgid "Division by 0 error"
 msgstr ""
 
@@ -2621,7 +2622,7 @@ msgstr ""
 msgid "Document Type"
 msgstr "Tipo documento"
 
-#: lib/LedgerSMB/Scripts/setup.pm:505
+#: lib/LedgerSMB/Scripts/setup.pm:517
 msgid "Don't know what to do with backup"
 msgstr ""
 
@@ -2890,8 +2891,8 @@ msgstr ""
 msgid "Employee"
 msgstr "Dipendente"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:126 t/data/04-complex_template.html:92
-#: UI/Contact/divs/employee.html:100 UI/setup/new_user.html:127
+#: lib/LedgerSMB/Scripts/configuration.pm:127 t/data/04-complex_template.html:92
+#: UI/Contact/divs/employee.html:100 UI/setup/new_user.html:128
 msgid "Employee Number"
 msgstr "Dipendente numero"
 
@@ -2904,7 +2905,7 @@ msgid ""
 "Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/configuration.pm:160
+#: lib/LedgerSMB/Scripts/configuration.pm:162
 msgid "Employee wage screen"
 msgstr ""
 
@@ -3032,6 +3033,10 @@ msgstr ""
 msgid "Entity Name"
 msgstr ""
 
+#: lib/LedgerSMB/Scripts/configuration.pm:128
+msgid "Entity number"
+msgstr ""
+
 #: lib/LedgerSMB/Report/GL.pm:122
 msgid "Entry ID"
 msgstr ""
@@ -3061,7 +3066,7 @@ msgstr "Attività (temporanea)"
 msgid "Equity to Liabilities"
 msgstr "Attivita a Passività"
 
-#: lib/LedgerSMB/Scripts/setup.pm:459
+#: lib/LedgerSMB/Scripts/setup.pm:471
 msgid "Error creating backup file"
 msgstr ""
 
@@ -3069,7 +3074,7 @@ msgstr ""
 msgid "Error creating batch.  Please try again."
 msgstr ""
 
-#: lib/LedgerSMB.pm:505
+#: lib/LedgerSMB.pm:529
 msgid "Error from Function:"
 msgstr ""
 
@@ -3139,7 +3144,7 @@ msgstr "Acquisti/Attivit&agrave;"
 msgid "Expenses"
 msgstr "Costi"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:157
+#: lib/LedgerSMB/Scripts/configuration.pm:159
 msgid "Experimental features"
 msgstr ""
 
@@ -3230,7 +3235,7 @@ msgstr ""
 msgid "Feb"
 msgstr "Feb"
 
-#: lib/LedgerSMB.pm:578 old/bin/aa.pl:71 old/bin/gl.pl:61 old/bin/io.pl:63
+#: lib/LedgerSMB.pm:602 old/bin/aa.pl:71 old/bin/gl.pl:61 old/bin/io.pl:63
 msgid "February"
 msgstr "Febbraio"
 
@@ -3303,7 +3308,7 @@ msgstr ""
 msgid "First"
 msgstr ""
 
-#: UI/Contact/divs/employee.html:42 UI/setup/new_user.html:110
+#: UI/Contact/divs/employee.html:42 UI/setup/new_user.html:111
 msgid "First Name"
 msgstr "Nome"
 
@@ -3415,7 +3420,7 @@ msgstr ""
 msgid "Full"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1229
+#: lib/LedgerSMB/Scripts/setup.pm:1259
 msgid "Full Permissions"
 msgstr ""
 
@@ -3426,7 +3431,7 @@ msgstr ""
 #: UI/lib/report_base.html:78 UI/Reports/filters/balance_sheet.html:13
 #: UI/Reports/filters/balance_sheet.html:30 UI/Reports/filters/gl.html:324
 #: UI/Reports/filters/income_statement.html:49
-#: UI/Reports/filters/income_statement.html:66 UI/setup/select_coa.html:53
+#: UI/Reports/filters/income_statement.html:66 UI/setup/select_coa.html:54
 #: sql/Pg-database.sql:2623
 msgid "GIFI"
 msgstr "Codice GIFI"
@@ -3437,11 +3442,11 @@ msgid "GIFI accounts not in \"gifi\" table"
 msgstr ""
 
 #: old/bin/am.pl:322 UI/Reports/filters/unapproved.html:7
-#: UI/setup/complete.html:24 UI/setup/confirm_operation.html:128
+#: UI/setup/complete.html:24 UI/setup/confirm_operation.html:129
 msgid "GL"
 msgstr "Libro giornale"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:115
+#: lib/LedgerSMB/Scripts/configuration.pm:116
 msgid "GL Reference Number"
 msgstr "Riferimento libro giornale n."
 
@@ -3653,11 +3658,11 @@ msgstr "Ignora fine anno"
 msgid "Image"
 msgstr "Immagine"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:146
+#: lib/LedgerSMB/Scripts/configuration.pm:148
 msgid "Images in Templates"
 msgstr ""
 
-#: UI/setup/edit_user.html:63 sql/Pg-database.sql:2550 sql/Pg-database.sql:2660
+#: UI/setup/edit_user.html:64 sql/Pg-database.sql:2550 sql/Pg-database.sql:2660
 #: sql/Pg-database.sql:2675 sql/Pg-database.sql:2680 UI/src/views/GIFI.vue:29
 #: UI/src/views/SIC.vue:28
 msgid "Import"
@@ -3687,7 +3692,7 @@ msgstr ""
 msgid "Import Inventory"
 msgstr ""
 
-#: UI/Contact/divs/user.html:96 UI/setup/new_user.html:52
+#: UI/Contact/divs/user.html:96 UI/setup/new_user.html:53
 msgid "Import existing user"
 msgstr ""
 
@@ -3699,7 +3704,7 @@ msgstr ""
 msgid "In Svc"
 msgstr ""
 
-#: UI/setup/upgrade_info.html:33
+#: UI/setup/upgrade_info.html:34
 msgid ""
 "In addition to these new defaults LedgerSMB 1.3 adds stricter checks on data "
 "validity in the database. Because of these stricter checks it's no longer "
@@ -3785,7 +3790,7 @@ msgid ""
 "charge."
 msgstr ""
 
-#: lib/LedgerSMB.pm:497
+#: lib/LedgerSMB.pm:521
 msgid "Internal Database Error"
 msgstr ""
 
@@ -3802,15 +3807,15 @@ msgstr "Note interne"
 msgid "Invalid Reporting Basis"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:455
+#: lib/LedgerSMB/Scripts/setup.pm:467
 msgid "Invalid backup request"
 msgstr "Richiesta non valida di backup"
 
-#: lib/LedgerSMB.pm:500
+#: lib/LedgerSMB.pm:524
 msgid "Invalid date/time entered"
 msgstr "Data/ora inserita non valida"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1138 lib/LedgerSMB/Scripts/setup.pm:1145
+#: lib/LedgerSMB/Scripts/setup.pm:1165 lib/LedgerSMB/Scripts/setup.pm:1172
 msgid "Invalid request"
 msgstr ""
 
@@ -4005,7 +4010,7 @@ msgstr ""
 msgid "Jan"
 msgstr "Gen"
 
-#: lib/LedgerSMB.pm:577 old/bin/aa.pl:70 old/bin/gl.pl:60 old/bin/io.pl:62
+#: lib/LedgerSMB.pm:601 old/bin/aa.pl:70 old/bin/gl.pl:60 old/bin/io.pl:62
 msgid "January"
 msgstr "Gennaio"
 
@@ -4029,7 +4034,7 @@ msgstr ""
 msgid "Journal Entry"
 msgstr "Scrittura giornale"
 
-#: UI/setup/complete.html:26 UI/setup/confirm_operation.html:129
+#: UI/setup/complete.html:26 UI/setup/confirm_operation.html:130
 msgid "Journal Lines"
 msgstr "Righe giornale"
 
@@ -4037,7 +4042,7 @@ msgstr "Righe giornale"
 msgid "Jul"
 msgstr "Lug"
 
-#: lib/LedgerSMB.pm:583 old/bin/aa.pl:76 old/bin/gl.pl:66 old/bin/io.pl:68
+#: lib/LedgerSMB.pm:607 old/bin/aa.pl:76 old/bin/gl.pl:66 old/bin/io.pl:68
 msgid "July"
 msgstr "Luglio"
 
@@ -4045,7 +4050,7 @@ msgstr "Luglio"
 msgid "Jun"
 msgstr "Giu"
 
-#: lib/LedgerSMB.pm:582 old/bin/aa.pl:75 old/bin/gl.pl:65 old/bin/io.pl:67
+#: lib/LedgerSMB.pm:606 old/bin/aa.pl:75 old/bin/gl.pl:65 old/bin/io.pl:67
 #: t/data/04-strings-for-translation.html:6
 msgid "June"
 msgstr "Giugno"
@@ -4110,7 +4115,7 @@ msgstr "Cognome"
 msgid "Last Updated"
 msgstr "Ultimo aggiornamento"
 
-#: UI/setup/new_user.html:119
+#: UI/setup/new_user.html:120
 msgid "Last name"
 msgstr "Cognome"
 
@@ -4171,7 +4176,7 @@ msgstr ""
 msgid "LedgerSMB 1.9 db found."
 msgstr ""
 
-#: UI/setup/complete.html:17 UI/setup/confirm_operation.html:122
+#: UI/setup/complete.html:17 UI/setup/confirm_operation.html:123
 msgid "LedgerSMB Database Statistics"
 msgstr ""
 
@@ -4193,7 +4198,7 @@ msgstr ""
 msgid "LedgerSMB has detected the following system components"
 msgstr ""
 
-#: UI/setup/upgrade_info.html:29
+#: UI/setup/upgrade_info.html:30
 msgid ""
 "LedgerSMB has introduced three new system wide default values which you will "
 "need to set as part of the upgrade process."
@@ -4204,7 +4209,7 @@ msgid ""
 "                  variety of related functionalities, such as"
 msgstr ""
 
-#: UI/setup/upgrade_info.html:72
+#: UI/setup/upgrade_info.html:73
 msgid ""
 "LedgerSMB supports multiple <em>Accounts payable (AP)</em> accounts per "
 "company. One of those must be the system default. Please select your default "
@@ -4212,7 +4217,7 @@ msgid ""
 "inconsistent state and needs to be fixed first."
 msgstr ""
 
-#: UI/setup/upgrade_info.html:50
+#: UI/setup/upgrade_info.html:51
 msgid ""
 "LedgerSMB supports multiple <em>Accounts receivable (AR)</em> accounts per "
 "company. One of those must be the system default. Please select your default "
@@ -4299,7 +4304,7 @@ msgstr ""
 msgid "List Units"
 msgstr "Elenco unità"
 
-#: UI/setup/confirm_operation.html:63
+#: UI/setup/confirm_operation.html:64
 msgid "List Users"
 msgstr "Elenco utenti"
 
@@ -4311,7 +4316,7 @@ msgstr "Elenco magazzino"
 msgid "List of Business Types"
 msgstr "Lista tipologie aziende"
 
-#: UI/setup/confirm_operation.html:73 UI/setup/template_info.html:29
+#: UI/setup/confirm_operation.html:74 UI/setup/template_info.html:30
 msgid "Load Templates"
 msgstr ""
 
@@ -4349,11 +4354,11 @@ msgstr ""
 msgid "Logging in... Please wait."
 msgstr ""
 
-#: UI/setup/credentials.html:78 UI/src/views/LoginPage.vue:89
+#: UI/setup/credentials.html:79 UI/src/views/LoginPage.vue:89
 msgid "Login"
 msgstr "Login"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1102
+#: lib/LedgerSMB/Scripts/setup.pm:1129
 msgid "Login?"
 msgstr ""
 
@@ -4409,7 +4414,7 @@ msgid ""
 "only and is at least one character long"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1228
+#: lib/LedgerSMB/Scripts/setup.pm:1258
 msgid "Manage Users"
 msgstr "Gestione utenti"
 
@@ -4434,7 +4439,7 @@ msgstr "Manuale"
 msgid "Mar"
 msgstr "Mar"
 
-#: lib/LedgerSMB.pm:579 old/bin/aa.pl:72 old/bin/gl.pl:62 old/bin/io.pl:64
+#: lib/LedgerSMB.pm:603 old/bin/aa.pl:72 old/bin/gl.pl:62 old/bin/io.pl:64
 msgid "March"
 msgstr "Marzo"
 
@@ -4443,15 +4448,15 @@ msgstr "Marzo"
 msgid "Markup"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/configuration.pm:142
+#: lib/LedgerSMB/Scripts/configuration.pm:144
 msgid "Max Invoices per Check Stub"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/configuration.pm:140
+#: lib/LedgerSMB/Scripts/configuration.pm:142
 msgid "Max per dropdown"
 msgstr ""
 
-#: lib/LedgerSMB.pm:581 old/bin/aa.pl:74 old/bin/aa.pl:88 old/bin/gl.pl:64
+#: lib/LedgerSMB.pm:605 old/bin/aa.pl:74 old/bin/aa.pl:88 old/bin/gl.pl:64
 #: old/bin/gl.pl:78 old/bin/io.pl:66 old/bin/io.pl:80
 msgid "May"
 msgstr "Mag"
@@ -4499,7 +4504,7 @@ msgstr "Milione"
 msgid "Mime Type"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/configuration.pm:149
+#: lib/LedgerSMB/Scripts/configuration.pm:151
 msgid "Min Empty Lines"
 msgstr ""
 
@@ -4512,7 +4517,7 @@ msgstr "Q.tà minima"
 msgid "Min Taxable"
 msgstr "Minimo tassabile"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:130
+#: lib/LedgerSMB/Scripts/configuration.pm:132
 msgid "Misc Settings"
 msgstr ""
 
@@ -4551,7 +4556,7 @@ msgstr "Mese(i)"
 msgid "Months"
 msgstr "Mesi"
 
-#: lib/LedgerSMB.pm:513
+#: lib/LedgerSMB.pm:537
 msgid "More information has been reported in the error logs"
 msgstr ""
 
@@ -4637,7 +4642,7 @@ msgid "New Window"
 msgstr "Nuova finestra"
 
 #: old/bin/am.pl:304 UI/inventory/adjustment_entry.html:82
-#: UI/setup/select_coa.html:92
+#: UI/setup/select_coa.html:93
 msgid "Next"
 msgstr "Prossimo"
 
@@ -4650,7 +4655,7 @@ msgid "Next Number"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:113
-#: lib/LedgerSMB/Scripts/configuration.pm:343
+#: lib/LedgerSMB/Scripts/configuration.pm:345
 msgid "Next in Sequence"
 msgstr ""
 
@@ -4690,7 +4695,7 @@ msgstr ""
 msgid "No Null employeenumber"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1230
+#: lib/LedgerSMB/Scripts/setup.pm:1260
 msgid "No changes"
 msgstr "Invariato"
 
@@ -4789,7 +4794,7 @@ msgstr ""
 msgid "Note Class"
 msgstr "Classe di note"
 
-#: UI/setup/upgrade_info.html:93
+#: UI/setup/upgrade_info.html:94
 msgid ""
 "Note that the process invoked by hitting the button below might take long to "
 "complete as it will run the upgrade process and will copy all data from the "
@@ -4841,7 +4846,7 @@ msgstr "Nulla da trasferire!"
 msgid "Nov"
 msgstr "Nov"
 
-#: lib/LedgerSMB.pm:587 old/bin/aa.pl:80 old/bin/gl.pl:70 old/bin/io.pl:72
+#: lib/LedgerSMB.pm:611 old/bin/aa.pl:80 old/bin/gl.pl:70 old/bin/io.pl:72
 msgid "November"
 msgstr "Novembre"
 
@@ -4911,7 +4916,7 @@ msgstr ""
 msgid "Oct"
 msgstr "Ott"
 
-#: lib/LedgerSMB.pm:586 old/bin/aa.pl:79 old/bin/gl.pl:69 old/bin/io.pl:71
+#: lib/LedgerSMB.pm:610 old/bin/aa.pl:79 old/bin/gl.pl:69 old/bin/io.pl:71
 msgid "October"
 msgstr "Ottobre"
 
@@ -5046,7 +5051,7 @@ msgid "Ordering"
 msgstr "Ordinare"
 
 #: UI/Reports/filters/purchase_history.html:180 UI/setup/complete.html:27
-#: UI/setup/confirm_operation.html:130
+#: UI/setup/confirm_operation.html:131
 msgid "Orders"
 msgstr "Ordini"
 
@@ -5054,7 +5059,7 @@ msgstr "Ordini"
 msgid "Orders generated!"
 msgstr "Generati ordini"
 
-#: UI/setup/confirm_operation.html:32
+#: UI/setup/confirm_operation.html:33
 msgid "Other Actions"
 msgstr "Altre azioni"
 
@@ -5192,7 +5197,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:101
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:162
 #: lib/LedgerSMB/Report/PNL/Product.pm:77
-#: lib/LedgerSMB/Scripts/configuration.pm:124 old/bin/oe.pl:2133
+#: lib/LedgerSMB/Scripts/configuration.pm:125 old/bin/oe.pl:2133
 #: old/bin/oe.pl:2206 old/bin/oe.pl:2240 old/bin/oe.pl:2487 old/bin/pe.pl:942
 #: UI/Reports/filters/cogs_lines.html:8
 #: UI/Reports/filters/inventory_activity.html:8
@@ -5243,8 +5248,8 @@ msgstr ""
 msgid "Partsgroups"
 msgstr ""
 
-#: UI/Contact/divs/user.html:59 UI/setup/credentials.html:59
-#: UI/setup/edit_user.html:49 UI/setup/new_user.html:27
+#: UI/Contact/divs/user.html:59 UI/setup/credentials.html:60
+#: UI/setup/edit_user.html:50 UI/setup/new_user.html:28
 #: UI/src/views/LoginPage.vue:68
 msgid "Password"
 msgstr "Password"
@@ -5762,7 +5767,7 @@ msgstr "Storico acquisti"
 msgid "Purchase Order"
 msgstr "Ordine di acquisto"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:122
+#: lib/LedgerSMB/Scripts/configuration.pm:123
 msgid "Purchase Order Number"
 msgstr "Numero ordine d'acquisto"
 
@@ -5879,7 +5884,7 @@ msgstr ""
 msgid "RFQ #"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/configuration.pm:123 old/bin/oe.pl:485
+#: lib/LedgerSMB/Scripts/configuration.pm:124 old/bin/oe.pl:485
 msgid "RFQ Number"
 msgstr ""
 
@@ -6159,7 +6164,7 @@ msgstr "Data richiesta"
 msgid "Required by"
 msgstr "Necessario dal"
 
-#: lib/LedgerSMB.pm:502 lib/LedgerSMB.pm:503
+#: lib/LedgerSMB.pm:526 lib/LedgerSMB.pm:527
 msgid "Required input not provided"
 msgstr ""
 
@@ -6168,7 +6173,7 @@ msgstr ""
 msgid "Required period type"
 msgstr ""
 
-#: UI/Contact/divs/user.html:131 UI/setup/edit_user.html:92
+#: UI/Contact/divs/user.html:131 UI/setup/edit_user.html:93
 msgid "Reset Password"
 msgstr "Ripristina password"
 
@@ -6236,11 +6241,11 @@ msgstr ""
 msgid "Rounded"
 msgstr ""
 
-#: UI/setup/complete.html:18 UI/setup/confirm_operation.html:123
+#: UI/setup/complete.html:18 UI/setup/confirm_operation.html:124
 msgid "Row counts"
 msgstr ""
 
-#: UI/setup/begin_backup.html:70
+#: UI/setup/begin_backup.html:71
 msgid "Run Backup"
 msgstr ""
 
@@ -6248,7 +6253,7 @@ msgstr ""
 msgid "Run Report"
 msgstr "Fai resoconto"
 
-#: UI/Contact/divs/company.html:107 UI/setup/select_coa.html:66
+#: UI/Contact/divs/company.html:107 UI/setup/select_coa.html:67
 #: sql/Pg-database.sql:2645
 msgid "SIC"
 msgstr ""
@@ -6295,7 +6300,7 @@ msgstr "Vendite"
 msgid "Sales Invoice"
 msgstr "Fattura di vendita"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:117
+#: lib/LedgerSMB/Scripts/configuration.pm:118
 msgid "Sales Invoice/AR Transaction Number"
 msgstr ""
 
@@ -6308,7 +6313,7 @@ msgstr ""
 msgid "Sales Order"
 msgstr "Ordine di vendita"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:118
+#: lib/LedgerSMB/Scripts/configuration.pm:119
 msgid "Sales Order Number"
 msgstr "Numero ordine di vendita"
 
@@ -6319,7 +6324,7 @@ msgstr "Numero ordine di vendita"
 msgid "Sales Orders"
 msgstr "Ordini di vendita"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:119
+#: lib/LedgerSMB/Scripts/configuration.pm:120
 msgid "Sales Quotation Number"
 msgstr "Offerta di vendita numero"
 
@@ -6403,7 +6408,7 @@ msgstr ""
 msgid "Save Contact"
 msgstr ""
 
-#: UI/Contact/divs/user.html:200 UI/setup/edit_user.html:151
+#: UI/Contact/divs/user.html:200 UI/setup/edit_user.html:153
 msgid "Save Groups"
 msgstr ""
 
@@ -6444,7 +6449,7 @@ msgstr ""
 #: UI/Configuration/sequence.html:119 UI/Contact/pricelist.html:98
 #: UI/inventory/adjustment_entry.html:95 UI/payments/payments_detail.html:495
 #: UI/payroll/deduction.html:95 UI/payroll/income.html:100
-#: UI/reconciliation/report.html:425 UI/setup/edit_user.html:156
+#: UI/reconciliation/report.html:425 UI/setup/edit_user.html:158
 #: UI/taxform/add_taxform.html:89 UI/timecards/timecard.html:170
 #: UI/timecards/timecard-week.html:131 UI/src/components/ConfigTableRow.vue:52
 msgid "Saved"
@@ -6481,7 +6486,7 @@ msgstr ""
 #: UI/Configuration/sequence.html:118 UI/Contact/pricelist.html:97
 #: UI/inventory/adjustment_entry.html:94 UI/payments/payments_detail.html:494
 #: UI/payroll/deduction.html:94 UI/payroll/income.html:99
-#: UI/reconciliation/report.html:424 UI/setup/edit_user.html:155
+#: UI/reconciliation/report.html:424 UI/setup/edit_user.html:157
 #: UI/taxform/add_taxform.html:88 UI/timecards/timecard.html:169
 #: UI/timecards/timecard-week.html:130
 msgid "Saving..."
@@ -6630,7 +6635,7 @@ msgstr "Scegli tutti"
 msgid "Select Customer"
 msgstr "Scegli cliente"
 
-#: UI/setup/template_info.html:9
+#: UI/setup/template_info.html:10
 msgid "Select Templates to Load"
 msgstr ""
 
@@ -6662,7 +6667,7 @@ msgstr "Seleziona uno dei seguenti nomi"
 msgid "Select invoices"
 msgstr ""
 
-#: UI/setup/credentials.html:35
+#: UI/setup/credentials.html:36
 msgid "Select or Enter User"
 msgstr "Scegli o inserisci un utente"
 
@@ -6746,7 +6751,7 @@ msgstr "Set"
 msgid "Separate Duties"
 msgstr ""
 
-#: lib/LedgerSMB.pm:585 old/bin/aa.pl:78 old/bin/gl.pl:68 old/bin/io.pl:70
+#: lib/LedgerSMB.pm:609 old/bin/aa.pl:78 old/bin/gl.pl:68 old/bin/io.pl:70
 msgid "September"
 msgstr "Settembre"
 
@@ -6930,7 +6935,7 @@ msgstr "Corto"
 msgid "Short name"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/configuration.pm:133
+#: lib/LedgerSMB/Scripts/configuration.pm:135
 msgid "Show Credit Limit"
 msgstr "Mostra limite credito"
 
@@ -6962,7 +6967,7 @@ msgstr "sedici"
 msgid "Sixty"
 msgstr "sessanta"
 
-#: UI/setup/select_coa.html:101
+#: UI/setup/select_coa.html:102
 msgid "Skip"
 msgstr "Salta"
 
@@ -7194,7 +7199,7 @@ msgstr "Sistema"
 msgid "System Defaults"
 msgstr "Valori di serie del sistema"
 
-#: UI/setup/confirm_operation.html:107
+#: UI/setup/confirm_operation.html:108
 msgid "System Info"
 msgstr ""
 
@@ -7202,7 +7207,7 @@ msgstr ""
 msgid "System Information"
 msgstr ""
 
-#: UI/setup/confirm_operation.html:100
+#: UI/setup/confirm_operation.html:101
 msgid "System diagnostics"
 msgstr ""
 
@@ -7274,7 +7279,7 @@ msgstr ""
 msgid "Tax ID"
 msgstr ""
 
-#: UI/Contact/divs/employee.html:116 UI/setup/new_user.html:144
+#: UI/Contact/divs/employee.html:116 UI/setup/new_user.html:145
 msgid "Tax ID/SSN"
 msgstr "Codice Fiscale"
 
@@ -7385,7 +7390,7 @@ msgstr ""
 msgid "Template Transactions"
 msgstr ""
 
-#: UI/setup/confirm_operation.html:67 UI/setup/template_info.html:24
+#: UI/setup/confirm_operation.html:68 UI/setup/template_info.html:25
 msgid "Templates"
 msgstr ""
 
@@ -7656,11 +7661,11 @@ msgstr "Per [_1]"
 msgid "To be used"
 msgstr "Da usarsi"
 
-#: UI/setup/begin_backup.html:27 UI/setup/begin_backup.html:41
+#: UI/setup/begin_backup.html:28 UI/setup/begin_backup.html:42
 msgid "To email"
 msgstr "Per email"
 
-#: UI/setup/begin_backup.html:59
+#: UI/setup/begin_backup.html:60
 msgid "To my browser"
 msgstr ""
 
@@ -7769,7 +7774,7 @@ msgid "Transaction status"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:105
-#: UI/setup/confirm_operation.html:132
+#: UI/setup/confirm_operation.html:133
 msgid "Transactions"
 msgstr "Scritture contabili"
 
@@ -8041,7 +8046,7 @@ msgstr "Aggiornato"
 msgid "Updating..."
 msgstr ""
 
-#: UI/setup/upgrade_info.html:98
+#: UI/setup/upgrade_info.html:99
 msgid "Upgrade"
 msgstr ""
 
@@ -8111,7 +8116,7 @@ msgstr ""
 msgid "Use overpayment/prepayment"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/configuration.pm:151
+#: lib/LedgerSMB/Scripts/configuration.pm:153
 msgid "Use web service for current exchange rates"
 msgstr ""
 
@@ -8129,23 +8134,23 @@ msgstr "Utente"
 msgid "User Name"
 msgstr "Nome utente"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1307
+#: lib/LedgerSMB/Scripts/setup.pm:1337
 msgid "User already exists. Import?"
 msgstr ""
 
-#: UI/Contact/divs/user.html:72 UI/setup/new_user.html:35
+#: UI/Contact/divs/user.html:72 UI/setup/new_user.html:36
 msgid "User creation"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/User.pm:57 UI/Contact/divs/user.html:32
-#: UI/Contact/divs/user.html:52 UI/setup/edit_user.html:29
-#: UI/setup/edit_user.html:42 UI/setup/list_users.html:11
-#: UI/setup/new_user.html:21 UI/setup/ui-db-credentials.html:4
+#: UI/Contact/divs/user.html:52 UI/setup/edit_user.html:30
+#: UI/setup/edit_user.html:43 UI/setup/list_users.html:11
+#: UI/setup/new_user.html:22 UI/setup/ui-db-credentials.html:4
 msgid "Username"
 msgstr "Nome utente"
 
 #: lib/LedgerSMB/Report/Listings/User.pm:81 UI/setup/complete.html:30
-#: UI/setup/confirm_operation.html:50 UI/setup/confirm_operation.html:133
+#: UI/setup/confirm_operation.html:51 UI/setup/confirm_operation.html:134
 msgid "Users"
 msgstr "Utenti"
 
@@ -8214,7 +8219,7 @@ msgstr "Storico fornitore"
 msgid "Vendor Invoice"
 msgstr "Fattura fornitore"
 
-#: lib/LedgerSMB/Scripts/configuration.pm:121
+#: lib/LedgerSMB/Scripts/configuration.pm:122
 msgid "Vendor Invoice/AP Transaction Number"
 msgstr ""
 
@@ -8225,7 +8230,7 @@ msgstr "Nome fornitore"
 
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:115
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:178
-#: lib/LedgerSMB/Scripts/configuration.pm:128 old/bin/io.pl:1608
+#: lib/LedgerSMB/Scripts/configuration.pm:130 old/bin/io.pl:1608
 #: UI/asset/edit_asset.html:195 UI/asset/search_asset.html:167
 #: UI/payments/payments_filter.html:35
 #: UI/Reports/filters/invoice_outstanding.html:6
@@ -8375,7 +8380,7 @@ msgstr "Dove è possibile fare il backup?"
 msgid "Whole Month Straight Line"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/configuration.pm:138
+#: lib/LedgerSMB/Scripts/configuration.pm:140
 msgid "Widgit Themes"
 msgstr ""
 
@@ -8438,7 +8443,7 @@ msgid "Years"
 msgstr "Anni"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:100 old/bin/oe.pl:1394
-#: UI/Configuration/settings.html:43 UI/setup/confirm_operation.html:29
+#: UI/Configuration/settings.html:43 UI/setup/confirm_operation.html:30
 msgid "Yes"
 msgstr "Si"
 
@@ -8511,7 +8516,7 @@ msgstr "Cliente [_1] non in archivio!"
 msgid "[_1]: Vendor not on file!"
 msgstr "Fornitore [_1] non in archivio!"
 
-#: old/lib/LedgerSMB/oldHandler.pm:160
+#: old/lib/LedgerSMB/oldHandler.pm:161
 msgid "__action not defined!"
 msgstr ""
 
@@ -8627,7 +8632,7 @@ msgstr ""
 msgid "label"
 msgstr "etichetta"
 
-#: UI/src/views/Home.vue:42 UI/src/views/Home.vue:57
+#: UI/src/views/Home.vue:57 UI/src/views/Home.vue:42
 msgid "mailing lists"
 msgstr ""
 
