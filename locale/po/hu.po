@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.31-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-02-02 14:05+0000\n"
+"POT-Creation-Date: 2024-02-02 15:38+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: Hungarian (https://app.transifex.com/ledgersmb/teams/58325/"
 "hu/)\n"
@@ -4310,7 +4310,7 @@ msgstr ""
 msgid "Load Templates"
 msgstr ""
 
-#: UI/src/components/ServerUI.js:71 UI/src/components/ServerUI.js:90
+#: UI/src/components/ServerUI.js:90 UI/src/components/ServerUI.js:71
 msgid "Loaded"
 msgstr ""
 
@@ -8516,7 +8516,7 @@ msgstr ""
 msgid "[_1]: Vendor not on file!"
 msgstr ""
 
-#: old/lib/LedgerSMB/oldHandler.pm:160
+#: old/lib/LedgerSMB/oldHandler.pm:161
 msgid "action not defined!"
 msgstr "művelet nincs meghatározva!"
 
@@ -8632,7 +8632,7 @@ msgstr ""
 msgid "label"
 msgstr "Címke"
 
-#: UI/src/views/Home.vue:51 UI/src/views/Home.vue:36
+#: UI/src/views/Home.vue:36 UI/src/views/Home.vue:51
 msgid "mailing lists"
 msgstr ""
 

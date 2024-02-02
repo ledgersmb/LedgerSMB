@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.31-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-02-02 14:05+0000\n"
+"POT-Creation-Date: 2024-02-02 15:38+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: Dutch (https://app.transifex.com/ledgersmb/teams/58325/nl/)\n"
 "Language: nl\n"
@@ -4322,7 +4322,7 @@ msgstr "Lijst van businesstypen"
 msgid "Load Templates"
 msgstr "Laad sjablonen"
 
-#: UI/src/components/ServerUI.js:71 UI/src/components/ServerUI.js:90
+#: UI/src/components/ServerUI.js:90 UI/src/components/ServerUI.js:71
 msgid "Loaded"
 msgstr ""
 
@@ -8547,7 +8547,7 @@ msgstr "[_1]: Klant bestaat niet!"
 msgid "[_1]: Vendor not on file!"
 msgstr "[_1]: Leverancier bestaat niet!"
 
-#: old/lib/LedgerSMB/oldHandler.pm:160
+#: old/lib/LedgerSMB/oldHandler.pm:161
 msgid "action not defined!"
 msgstr "aktie niet gedefinieerd!"
 
@@ -8663,7 +8663,7 @@ msgstr ""
 msgid "label"
 msgstr "label"
 
-#: UI/src/views/Home.vue:51 UI/src/views/Home.vue:36
+#: UI/src/views/Home.vue:36 UI/src/views/Home.vue:51
 msgid "mailing lists"
 msgstr ""
 
