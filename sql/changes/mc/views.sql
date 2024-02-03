@@ -3,14 +3,16 @@
 
 DO $$
 BEGIN
-  PERFORM * FROM information_schema.tables WHERE table_name = 'cash_impact';
-  IF FOUND THEN
-    drop table cash_impact cascade;
-  END IF;
-
-  PERFORM * FROM information_schema.views WHERE table_name = 'cash_impact';
+  PERFORM * FROM information_schema.views
+    WHERE table_name = 'cash_impact';
   IF FOUND THEN
     drop view cash_impact cascade;
+  END IF;
+
+  PERFORM * FROM information_schema.tables
+    WHERE table_name = 'cash_impact' and table_type <> 'VIEW';
+  IF FOUND THEN
+    drop table cash_impact cascade;
   END IF;
 END;
 $$ language plpgsql;
