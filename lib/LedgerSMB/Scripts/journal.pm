@@ -124,6 +124,7 @@ sub search {
             to_amount => $request->parse_amount( $request->{to_amount} ),
             from_date => $request->parse_date( $request->{from_date} ),
             to_date => $request->parse_date( $request->{to_date} ),
+            locale => $request->{_locale},
         ));
 }
 
