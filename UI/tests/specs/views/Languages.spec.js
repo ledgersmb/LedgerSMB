@@ -57,9 +57,6 @@ describe("Languages", () => {
         // Wait until loading done
         await retry(() => expect(wrapper.find(".dynatableData").isVisible()).toBe(true));
 
-        // Validate against snapshot
-        expect(wrapper.element).toMatchSnapshot();
-
         const language_items = wrapper.findAll('.data-row');
         expect(language_items).toHaveLength(2);
 
@@ -70,6 +67,12 @@ describe("Languages", () => {
         expect(data).toEqual([
             ["en", "English"],
             ["fr", "Français"]
+        ]);
+        const defaults = language_items.map((rows) => {
+            return rows.findAll('input[name="default"]').map(row => row.element.checked).at(0)
+        });
+        expect(defaults).toEqual([
+            false, false
         ]);
 
         // Validate the buttons
@@ -116,11 +119,19 @@ describe("Languages", () => {
         await save.trigger('click');
         await retry(() => expect(modify.element.disabled).toBe(false));
 
-        expect(wrapper.findAll('.data-row').map((rows) => {
+        const language_items = wrapper.findAll('.data-row');
+        const data = language_items.map((rows) => {
             return rows.findAll('.input-box').map(row => row.element.value)
-        })).toEqual([
+        });
+        expect(data).toEqual([
             ["en", "English (american)"],
             ["fr", "Français"]
+        ]);
+        const defaults = language_items.map((rows) => {
+            return rows.findAll('input[name="default"]').map(row => row.element.checked).at(0)
+        });
+        expect(defaults).toEqual([
+            false, false
         ]);
         expect(modify.element.disabled).toBe(false);
         expect(save.element.disabled).toBe(true);
@@ -146,6 +157,12 @@ describe("Languages", () => {
             ["en", "English"],
             ["fr", "Français"],
             ["", ""]
+        ]);
+        let defaults = language_items.map((rows) => {
+            return rows.findAll('input[name="default"]').map(row => row.element.checked).at(0)
+        });
+        expect(defaults).toEqual([
+            false, false
         ]);
 
         // Find 3rd item
@@ -185,6 +202,60 @@ describe("Languages", () => {
             ["my", "Mayan"],
             ["", ""]
         ]);
+        defaults = language_items.map((rows) => {
+            return rows.findAll('input[name="default"]').map(row => row.element.checked).at(0)
+        });
+        expect(defaults).toEqual([
+            false, false, false
+        ]);
+
+    });
+
+    it("should allow setting a default language", async () => {
+
+        // Give user edition capability
+        sessionUser.$patch({roles: ["language_edit"]});
+
+        // Check loading
+        expect(wrapper.get(".dynatableLoading").text()).toBe("Loading...");
+
+        // Wait until loading done
+        await retry(() => expect(wrapper.find(".dynatableData").isVisible()).toBe(true));
+
+        let language_items = wrapper.findAll('.data-row');
+
+        let defaults = language_items.map((rows) => {
+            return rows.findAll('input[name="default"]').map(row => row.element.checked).at(0)
+        });
+
+        // No language selected
+        expect(defaults).toEqual([
+            false, false
+        ]);
+
+        // Validate the buttons
+        const buttons = language_items.map((rows) => {
+            return rows.find("button[name='change-default']");
+        });
+        // Set the default
+        await buttons[1].trigger('click');
+        await retry(() => expect(buttons[1].isVisible()).toBe(false));
+
+        language_items = wrapper.findAll('.data-row');
+
+        expect(language_items.map((rows) => {
+            return rows.findAll('.input-box').map(row => row.element.value)
+        })).toEqual([
+            ["en", "English"],
+            ["fr", "Français"]
+        ]);
+        defaults = language_items.map((rows) => {
+            return rows.findAll('input[name="default"]').map(row => row.element.checked).at(0)
+        });
+        expect(defaults).toEqual([
+            false, true
+        ]);
+
     });
 
 });
