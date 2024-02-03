@@ -27,12 +27,6 @@
             "matchPackagePatterns": ["^@intlify/unplugin-vue-i18n"],
             "allowedVersions": "<0.8"
         },
-	{
-	    "matchPackagePatterns": [
-	       "stylelint"
-	    ],
-            "allowedVersions": "<16"
-	},
         {
             "matchPackagePatterns": [
                 "stylelint"
