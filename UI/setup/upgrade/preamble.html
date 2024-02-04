@@ -5,6 +5,7 @@ include_stylesheet=["system/setup.css"] %]
   <form method="POST"
         enctype="multipart/form-data"
         action="[% action_url %]">
+    <input type="hidden" name="csrf_token" value="[% csrf_token %]" />
     <input type="hidden" name="__action" value="[% resubmit_action %]">
     <input type="hidden" name="database" value="[% database %]">
     <input type="hidden" name="check_id" value="[% check_id %]">
