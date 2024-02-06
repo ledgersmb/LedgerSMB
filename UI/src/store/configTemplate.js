@@ -114,7 +114,10 @@ export const configStoreTemplate = {
                 const newData = await response.json();
                 const index = this.items.findIndex((w) => w[this.id] === id);
                 newData[this.id] = id; // prevent overwriting 'id'
-                this.items[index] = newData;
+                newData._meta = {
+                    ETag: response.headers.get("ETag")
+                };
+            this.items[index] = newData;
             } else {
                 throw new Error(`HTTP Error: ${response.status}`);
             }
