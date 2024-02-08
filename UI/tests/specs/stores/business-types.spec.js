@@ -17,8 +17,8 @@ describe("Business Types Store", () => {
         await businessTypes.initialize();
         expect(businessTypes.fields).toStrictEqual(["id", "description", "discount"]);
         expect(businessTypes.items).toStrictEqual([
-            { id: "1", description: "Big customer", discount: 0.05 },
-            { id: "2", description: "Bigger customer", discount: 0.15 }
+            { id: "1", description: "Big customer", discount: 0.05, _meta: { ETag: "1234567890" }},
+            { id: "2", description: "Bigger customer", discount: 0.15, _meta: { ETag: "1234567890" }}
         ]);
         expect(businessTypes._links).toStrictEqual([{
             title : "HTML",
@@ -43,8 +43,8 @@ describe("Business Types Store", () => {
         await businessTypes.get("2");
         await businessTypes.save("2", { description: "Bigger customer", discount: 0.25 });
         expect(businessTypes.items).toStrictEqual([
-            { id: "1", description: "Big customer", discount: 0.05 },
-            { id: "2", description: "Bigger customer", discount: 0.25 }
+            { id: "1", description: "Big customer", discount: 0.05, _meta: { ETag: "1234567890" }},
+            { id: "2", description: "Bigger customer", discount: 0.25, _meta: { ETag: "1234567891" }}
         ]);
     });
 
