@@ -99,7 +99,7 @@ sub _get_sic {
 sub _get_sics {
     my ($c, $formatter) = @_;
     my $sth = $c->dbh->prepare(
-        q|SELECT * FROM sic ORDER BY code|
+        q|SELECT *, md5(last_updated::text) as etag FROM sic ORDER BY code|
         ) or die $c->dbh->errstr;
 
     $sth->execute() or die $sth->errstr;
@@ -108,6 +108,7 @@ sub _get_sics {
         push @results, {
             code => $row->{code},
             description => $row->{description},
+            _meta => { ETag => $row->{etag} }
         };
     }
     die $sth->errstr if $sth->err;

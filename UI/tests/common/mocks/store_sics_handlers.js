@@ -8,8 +8,8 @@ export const sicsHandlers = [
     return HttpResponse.json(
       {
         items: [
-          { code: "541330", description: "Engineering service" },
-          { code: "611430", description: "Professional and management development training" }
+          { code: "541330", description: "Engineering service", _meta: { ETag: "1234567890" } },
+          { code: "611430", description: "Professional and management development training", _meta: { ETag: "1234567889" } }
         ],
         _links: [{
           title : "HTML",
@@ -28,7 +28,7 @@ export const sicsHandlers = [
       {
         status: 200,
         headers: {
-          'ETag': ['1234567890']
+          ETag: '1234567890'
         }
       }
     )
@@ -52,7 +52,7 @@ export const sicsHandlers = [
       {
       status: 201,
       headers: {
-          'ETag': ['1234567891']
+          ETag: '1234567891'
       }}
     )
   }),
@@ -67,7 +67,7 @@ export const sicsHandlers = [
       {
         status: 200,
         headers: {
-          'ETag': ['1234567891']
+          ETag: '1234567891'
         }
       }
     )
