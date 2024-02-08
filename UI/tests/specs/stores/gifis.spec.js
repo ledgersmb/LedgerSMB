@@ -19,8 +19,8 @@ describe("GIFI Store", () => {
         await gifies.initialize();
         expect(gifies.fields).toStrictEqual(["accno", "description"]);
         expect(await gifies.items).toStrictEqual([
-            { accno: "0000", description: "Dummy account" },
-            { accno: "0001", description: "Dummy account 1" }
+            { accno: "0000", description: "Dummy account", _meta: { ETag: "1234567890" } },
+            { accno: "0001", description: "Dummy account 1", _meta: { ETag: "1234567889" } }
         ]);
     });
 
@@ -39,8 +39,8 @@ describe("GIFI Store", () => {
         await gifies.get("0000");
         await gifies.save("0000", { accno: "0000", description: "Funny account" });
         expect(gifies.items).toStrictEqual([
-            { accno: "0000", description: "Funny account" },
-            { accno: "0001", description: "Dummy account 1" }
+            { accno: "0000", description: "Funny account", _meta: { ETag: "1234567891" } },
+            { accno: "0001", description: "Dummy account 1", _meta: { ETag: "1234567889" } }
         ]);
     });
 

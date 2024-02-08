@@ -9,11 +9,13 @@ export const gifiHandlers = [
         items : [
           {
             "accno" : "0000",
-            "description" : "Dummy account"
+            "description" : "Dummy account",
+            _meta: { ETag: "1234567890" }
           },
           {
             "accno" : "0001",
-            "description" : "Dummy account 1"
+            "description" : "Dummy account 1",
+            _meta: { ETag: "1234567889" }
           }
         ],
         _links : [
@@ -39,7 +41,7 @@ export const gifiHandlers = [
       }, {
         status: 200,
         headers: {
-          'ETag': ['1234567890']
+          ETag: '1234567890'
         }
       }
     )
@@ -65,7 +67,7 @@ export const gifiHandlers = [
       }, {
       status: 201,
       headers: {
-        'ETag': ['1234567891']
+        ETag: '1234567891'
       }
     })
   }),
@@ -79,7 +81,7 @@ export const gifiHandlers = [
       }, {
         status: 200,
         headers: {
-          'ETag': ['1234567891']
+          ETag: '1234567891'
         }
       })
   })
