@@ -16,6 +16,7 @@ define([
             var username = dom.byId("s-user").value;
             var password = dom.byId("s-password").value;
             var company = encodeURIComponent(dom.byId("database").value);
+            var token = encodeURIComponent(dom.byId("csrf-token").value);
 
             event.stop(evt);
             xhr(authURL, {
@@ -27,7 +28,9 @@ define([
                         "setup.pl?action=" +
                         self.action +
                         "&database=" +
-                        company;
+                        company +
+                        "&csrf_token=" +
+                        token;
                 },
                 function (err) {
                     var status = err.response.status;
