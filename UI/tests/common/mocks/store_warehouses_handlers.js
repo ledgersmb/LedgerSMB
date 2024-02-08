@@ -8,9 +8,9 @@ export const warehousesHandlers = [
     return HttpResponse.json(
       {
         items: [
-          { id: "1", description: "Modern warehouse" },
-          { id: "2", description: "Huge warehouse" },
-          { id: "3", description: "Moon warehouse" },
+          { id: "1", description: "Modern warehouse", _meta: { ETag: "1234567892" } },
+          { id: "2", description: "Huge warehouse", _meta: { ETag: "1234567890" } },
+          { id: "3", description: "Moon warehouse", _meta: { ETag: "1234567893" } },
       ],
         _links: [{
           title : "HTML",
@@ -29,7 +29,7 @@ export const warehousesHandlers = [
       {
         status: 200,
         headers: {
-          'ETag': ['1234567890']
+          ETag: '1234567890'
         }
       }
     )
@@ -53,7 +53,7 @@ export const warehousesHandlers = [
       {
         status: 201,
         headers: {
-          'ETag': ['1234567891']
+          ETag: '1234567891'
         }
       }
     )
@@ -66,7 +66,7 @@ export const warehousesHandlers = [
       {
         status: 200,
         headers: {
-          'ETag': ['1234567891']
+          ETag: '1234567891'
         }
       }
     )
