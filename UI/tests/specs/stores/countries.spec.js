@@ -18,8 +18,8 @@ describe("Country Store", () => {
         await countries.initialize();
         expect(countries.fields).toStrictEqual(["_meta", "code", "default", "name"]);
         expect(countries.items).toStrictEqual([
-            { code: "ca", default: false, name: "Canada" },
-            { code: "us", default: false, name: "United States" }
+            { code: "ca", default: false, name: "Canada", _meta: { ETag: "2345678901" }},
+            { code: "us", default: false, name: "United States", _meta: { ETag: "1234567890" }}
         ]);
         expect(countries._links).toStrictEqual([{
             title : "HTML",
@@ -34,6 +34,7 @@ describe("Country Store", () => {
         expect(country).toStrictEqual({
             _meta: { ETag: "1234567890" },
             code: "us",
+            default: false,
             name: "United States"
         });
     });
@@ -43,8 +44,8 @@ describe("Country Store", () => {
         await countries.get("us");
         await countries.save("us", { code: "us", name: "America" });
         expect(countries.items).toStrictEqual([
-            { code: "ca", default: false, name: "Canada" },
-            { code: "us", default: false, name: "America" }
+            { code: "ca", default: false, name: "Canada", _meta: { ETag: "2345678901" }},
+            { code: "us", default: false, name: "America", _meta: { ETag: "1234567891" }}
         ]);
     });
 

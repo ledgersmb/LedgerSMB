@@ -8,8 +8,8 @@ export const countriesHandlers = [
     return HttpResponse.json(
       {
         items: [
-            { code: "ca", default: false, name: "Canada", _meta: { ETag: ['2345678901'] }},
-            { code: "us", default: false, name: "United States", _meta: { ETag: ['1234567890'] }}
+            { code: "ca", default: false, name: "Canada", _meta: { ETag: '2345678901' }},
+            { code: "us", default: false, name: "United States", _meta: { ETag: '1234567890' }}
         ],
         _links: [{
           title : "HTML",
@@ -28,7 +28,7 @@ export const countriesHandlers = [
       {
       status: 200,
       headers: {
-          'ETag': ['1234567890']
+          ETag: '1234567890'
         }
       }
     )
@@ -52,7 +52,7 @@ export const countriesHandlers = [
       {
         status: 201,
         headers: {
-          'ETag': ['1234567891']
+          ETag: '1234567891'
         }
       }
     )
@@ -65,7 +65,7 @@ export const countriesHandlers = [
         {
             status: 200,
             headers: {
-                'ETag': ['1234567891']
+                ETag: '1234567891'
             }
         }
     )
@@ -78,7 +78,7 @@ export const countriesHandlers = [
         {
             status: 200,
             headers: {
-                'ETag': ['2345678901']
+                ETag: '2345678901'
             }
         }
     )
