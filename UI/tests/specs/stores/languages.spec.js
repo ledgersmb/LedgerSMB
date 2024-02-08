@@ -17,8 +17,8 @@ describe("Language Store", () => {
         await languages.initialize();
         expect(languages.fields).toStrictEqual(["_meta", "code", "default", "description"]);
         expect(languages.items).toStrictEqual([
-            { code: "en", default: false, description: "English" },
-            { code: "fr", default: false, description: "Français" }
+            { code: "en", default: false, description: "English", _meta: { ETag: '1234567890' } },
+            { code: "fr", default: false, description: "Français", _meta: { ETag: '2345678901' } }
         ]);
         expect(languages._links).toStrictEqual([{
             title : "HTML",
@@ -33,6 +33,7 @@ describe("Language Store", () => {
         expect(language).toStrictEqual({
             _meta: { ETag: "1234567890" },
             code: "en",
+            default: false,
             description: "English"
         });
     });
@@ -42,8 +43,8 @@ describe("Language Store", () => {
         await languages.get("en");
         await languages.save("en", { code: "en", description: "English (american)" });
         expect(languages.items).toStrictEqual([
-            { code: "en", default: false, description: "English (american)" },
-            { code: "fr", default: false, description: "Français" }
+            { code: "en", default: false, description: "English (american)", _meta: { ETag: '1234567891' } },
+            { code: "fr", default: false, description: "Français", _meta: { ETag: '2345678901' } }
         ]);
     });
 

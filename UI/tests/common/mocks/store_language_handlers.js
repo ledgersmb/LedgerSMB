@@ -8,8 +8,8 @@ export const languageHandlers = [
     return HttpResponse.json(
       {
         items: [
-            { code: "en", default: false, description: "English", _meta: { ETag: ['1234567890'] } },
-            { code: "fr", default: false, description: "Français", _meta: { ETag: ['2345678901'] } }
+            { code: "en", default: false, description: "English", _meta: { ETag: '1234567890' } },
+            { code: "fr", default: false, description: "Français", _meta: { ETag: '2345678901' } }
         ],
         _links: [{
           title : "HTML",
@@ -28,7 +28,7 @@ export const languageHandlers = [
       {
         status: 200,
         headers: {
-          'ETag': ['1234567890']
+          'ETag': '1234567890'
         }
       }
     )
@@ -51,7 +51,7 @@ export const languageHandlers = [
       }, {
         status: 201,
         headers: {
-          'ETag': ['1234567891']
+          'ETag': '1234567891'
         }
       }
     )
@@ -64,7 +64,7 @@ export const languageHandlers = [
       {
         status: 200,
         headers: {
-          'ETag': ['1234567891']
+          'ETag': '1234567891'
         }
       }
     )
@@ -77,7 +77,7 @@ export const languageHandlers = [
       {
         status: 200,
         headers: {
-          'ETag': ['2345678910']
+          ETag: '2345678910'
         }
       }
     )
