@@ -9,11 +9,14 @@ export default defineComponent({
     setup() {
         const { t, locale } = useI18n({ useScope: "global" });
         setI18nLanguage(locale);
+        let searchParams = new URL(document.location).searchParams;
+        let username = searchParams.get("login") || "";
+        let company = searchParams.get("company") || "";
         let data = {
             t: t,
             password: ref(""),
-            username: ref(""),
-            company: ref(""),
+            username: ref(username),
+            company: ref(company),
             form: ref(null),
             errorText: ref(""),
         };
