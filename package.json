@@ -116,14 +116,13 @@
     "prettier": "3.2.5",
     "redoc-cli": "0.13.21",
     "rtl-detect": "1.1.2",
-    "stylelint": "15.11.0",
-    "stylelint-config-standard": "34.0.0",
+    "stylelint": "16.2.1",
+    "stylelint-config-standard": "36.0.0",
     "stylelint-declaration-block-no-ignored-properties": "2.8.0",
     "stylelint-no-nested-media": "0.1.0",
-    "stylelint-no-unsupported-browser-features": "7.0.0",
+    "stylelint-no-unsupported-browser-features": "8.0.1",
     "stylelint-order": "6.0.4",
-    "stylelint-webpack-plugin": "4.1.1",
-    "stylelint-z-index-value-constraint": "1.3.0",
+    "stylelint-webpack-plugin": "5.0.0",
     "unix-timestamp": "1.0.4",
     "unused-webpack-plugin": "2.4.0",
     "vue": "3.4.18",
@@ -388,7 +387,6 @@
     ],
     "rules": {
       "declaration-block-no-duplicate-custom-properties": null,
-      "indentation": 4,
       "order/order": [
         "custom-properties",
         "declarations"
