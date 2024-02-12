@@ -51,10 +51,16 @@ RETURN QUERY EXECUTE $sql$
                 AND (e.name ilike coalesce('%'||$2||'%','%%')
                     OR EXISTS (select 1 FROM company
                                 WHERE entity_id = e.id AND tax_id = $3))
-                AND (coalesce(ec.enddate, now()::date)
-                     >= coalesce($4, now()::date))
-                AND (coalesce(ec.startdate, now()::date)
-                     <= coalesce($5, now()::date))
+                AND (
+                  $4 is null
+                  or ec.enddate is null
+                  or ec.enddate >= $4
+                )
+                AND (
+                  $5 is null
+                  or ec.startdate is null
+                  or ec.startdate <= $5
+                )
 $sql$
 USING in_account_class, in_vc_name, in_vc_idn, in_datefrom, in_dateto;
 END
@@ -123,10 +129,16 @@ RETURN QUERY EXECUTE $sql$
                 FROM entity e
                 JOIN entity_credit_account ec ON (ec.entity_id = e.id)
                         WHERE ec.entity_class = $1
-                        AND (coalesce(ec.enddate, now()::date)
-                             <= coalesce($3, now()::date))
-                        AND (coalesce(ec.startdate, now()::date)
-                             >= coalesce($2, now()::date))
+                        AND (
+                          $2 is null
+                          or ec.enddate is null
+                          or ec.enddate >= $2
+                        )
+                        AND (
+                          $3 is null
+                          or ec.startdate is null
+                          or ec.startdate <= $3
+                        )
                         AND CASE WHEN $1 = 1 THEN
                                 ec.id IN
                                 (SELECT entity_credit_account
