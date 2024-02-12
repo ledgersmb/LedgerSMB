@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(44);
+    SELECT plan(53);
 
     -- Add data
 
@@ -229,6 +229,61 @@ BEGIN;
     SELECT results_eq('test', ARRAY[true], 'Locked Invoice not in total');
     DEALLOCATE test;
 
+    UPDATE entity_credit_account SET enddate = '2022-01-01', startdate = null;
+    PREPARE test AS
+      SELECT count(*)::int
+      FROM payment_get_open_accounts(1, null, null);
+    SELECT results_eq('test', ARRAY[1], 'Open accounts(enddate), no startdate & no enddate');
+    DEALLOCATE test;
+
+    PREPARE test AS
+      SELECT count(*)::int
+      FROM payment_get_open_accounts(1, '2020-01-01', null);
+    SELECT results_eq('test', ARRAY[1], 'Open accounts(enddate), startdate(before enddate) & no enddate');
+    DEALLOCATE test;
+
+    PREPARE test AS
+      SELECT count(*)::int
+      FROM payment_get_open_accounts(1, '2023-01-01', null);
+    SELECT results_eq('test', ARRAY[0], 'Open accounts(enddate), startdate(after enddate) & no enddate');
+    DEALLOCATE test;
+
+    PREPARE test AS
+      SELECT count(*)::int
+      FROM payment_get_open_accounts(1, null, '2023-01-01');
+    SELECT results_eq('test', ARRAY[1], 'Open accounts(enddate), no startdate & enddate(after enddate)');
+    DEALLOCATE test;
+
+    UPDATE entity_credit_account SET enddate = null, startdate = '2022-01-01';
+    PREPARE test AS
+      SELECT count(*)::int
+      FROM payment_get_open_accounts(1, null, null);
+    SELECT results_eq('test', ARRAY[1], 'Open accounts(startdate), no startdate & no enddate');
+    DEALLOCATE test;
+
+    PREPARE test AS
+      SELECT count(*)::int
+      FROM payment_get_open_accounts(1, '2020-01-01', null);
+    SELECT results_eq('test', ARRAY[1], 'Open accounts(startdate), startdate(before startdate) & no enddate');
+    DEALLOCATE test;
+
+    PREPARE test AS
+      SELECT count(*)::int
+      FROM payment_get_open_accounts(1, '2023-01-01', null);
+    SELECT results_eq('test', ARRAY[1], 'Open accounts(startdate), startdate(after startdate) & no enddate');
+    DEALLOCATE test;
+
+    PREPARE test AS
+      SELECT count(*)::int
+      FROM payment_get_open_accounts(1, null, '2023-01-01');
+    SELECT results_eq('test', ARRAY[1], 'Open accounts(startdate), no startdate & enddate(after startdate)');
+    DEALLOCATE test;
+
+    PREPARE test AS
+      SELECT count(*)::int
+      FROM payment_get_open_accounts(1, null, '2020-01-01');
+    SELECT results_eq('test', ARRAY[0], 'Open accounts(startdate), no startdate & enddate(before startdate)');
+    DEALLOCATE test;
 
     -- Test vouchers (TODO)
 
