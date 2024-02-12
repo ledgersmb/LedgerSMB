@@ -49,10 +49,16 @@ CREATE OR REPLACE FUNCTION payment_get_entity_accounts
                 AND (e.name ilike coalesce('%'||in_vc_name||'%','%%')
                     OR EXISTS (select 1 FROM company
                                 WHERE entity_id = e.id AND tax_id = in_vc_idn))
-                AND (coalesce(ec.enddate, now()::date)
-                     >= coalesce(in_datefrom, now()::date))
-                AND (coalesce(ec.startdate, now()::date)
-                     <= coalesce(in_dateto, now()::date))
+                AND (
+                  in_datefrom is null
+                  or ec.enddate is null
+                  or ec.enddate >= in_datefrom
+                )
+                AND (
+                  in_dateto is null
+                  or ec.startdate is null
+                  or ec.startdate <= in_dateto
+                )
  $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION payment_get_entity_accounts
@@ -107,10 +113,16 @@ $$
                 FROM entity e
                 JOIN entity_credit_account ec ON (ec.entity_id = e.id)
                         WHERE ec.entity_class = in_account_class
-                        AND (coalesce(ec.enddate, now()::date)
-                             <= coalesce(in_dateto, now()::date))
-                        AND (coalesce(ec.startdate, now()::date)
-                             >= coalesce(in_datefrom, now()::date))
+                        AND (
+                          in_datefrom is null
+                          or ec.enddate is null
+                          or ec.enddate >= in_datefrom
+                        )
+                        AND (
+                          in_dateto is null
+                          or ec.startdate is null
+                          or ec.startdate <= in_dateto
+                        )
                         AND CASE WHEN in_account_class = 1 THEN
                                 ec.id IN
                                 (SELECT entity_credit_account
