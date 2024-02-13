@@ -165,8 +165,10 @@ END
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment_get_open_accounts(int, date, date) IS
-$$ This function takes a single argument (1 for vendor, 2 for customer as
-always) and returns all entities with open accounts of the appropriate type. $$;
+  $$ This function takes an argument (1 for vendor, 2 for customer)
+  and 'from' and 'to' dates and returns all entities with open accounts of the appropriate type
+  which have a validity interval (between 'start' and 'end' dates) which overlaps with the
+  interval between 'from' and 'to' dates. $$;
 
 DROP FUNCTION if exists payment_get_all_accounts(int);
 
