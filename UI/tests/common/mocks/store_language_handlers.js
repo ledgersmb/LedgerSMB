@@ -8,8 +8,8 @@ export const languageHandlers = [
     return HttpResponse.json(
       {
         items: [
-          { code: "en", description: "English" },
-          { code: "fr", description: "Français" }
+            { code: "en", default: false, description: "English", _meta: { ETag: '1234567890' } },
+            { code: "fr", default: false, description: "Français", _meta: { ETag: '2345678901' } }
         ],
         _links: [{
           title : "HTML",
@@ -28,7 +28,7 @@ export const languageHandlers = [
       {
         status: 200,
         headers: {
-          'ETag': ['1234567890']
+          'ETag': '1234567890'
         }
       }
     )
@@ -37,7 +37,7 @@ export const languageHandlers = [
   http.get('/erp/api/v0/languages/zz', () => {
 
     return HttpResponse.json(
-      { code: "", description: "" },
+      { code: "", default: false, description: "" },
       { status: 404 }
     )
   }),
@@ -51,7 +51,7 @@ export const languageHandlers = [
       }, {
         status: 201,
         headers: {
-          'ETag': ['1234567891']
+          'ETag': '1234567891'
         }
       }
     )
@@ -60,11 +60,24 @@ export const languageHandlers = [
   http.put('/erp/api/v0/languages/en', () => {
 
     return HttpResponse.json(
-      { code: "en", description: "English (american)" },
+        { code: "en", default: false, description: "English (american)" },
       {
         status: 200,
         headers: {
-          'ETag': ['1234567891']
+          'ETag': '1234567891'
+        }
+      }
+    )
+  }),
+
+  http.put('/erp/api/v0/languages/fr', () => {
+
+    return HttpResponse.json(
+        { code: "en", default: true, description: "Français" },
+      {
+        status: 200,
+        headers: {
+          ETag: '2345678910'
         }
       }
     )

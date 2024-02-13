@@ -1,13 +1,15 @@
 <script setup>
 
 import { createRowMachine } from "@/components/ConfigTable.machines.js";
-import { computed, inject, watch } from "vue";
+import { computed, inject, ref, watch } from "vue";
 import { contextRef } from "@/robot-vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
 const props = defineProps([
+    "defaultSelectable",
+    "isDefault",
     "columns",
     "deletable",
     "editingId",
@@ -15,7 +17,7 @@ const props = defineProps([
     "store",
     "type"
 ]);
-const emit = defineEmits(["modifying", "idle"]);
+const emit = defineEmits(["modifying", "savingAsDefault", "idle"]);
 const notify = inject("notify");
 
 const { service, send, state } = createRowMachine(props.store, {
@@ -49,6 +51,12 @@ const { service, send, state } = createRowMachine(props.store, {
             "saving": (ctx, { dismissReceiver }) => {
                 notify({ title: t("Saving"), type: "info", dismissReceiver });
             },
+            "savingAsDefault": (ctx, { dismissReceiver }) => {
+                notify({
+                    title: t("Saving default"),
+                    type: "info", dismissReceiver
+                });
+            },
             "saved": () => { notify({ title: t("Saved") }); },
         }
     },
@@ -58,6 +66,7 @@ const { service, send, state } = createRowMachine(props.store, {
             send("restart");
         },
         modifying: () => emit("modifying"),
+        savingAsDefault: () => emit("savingAsDefault"),
         idle: () => emit("idle")
     }
 });
@@ -80,10 +89,41 @@ watch(() => props.editingId,
       }
 );
 
+let mouseOverDefault = ref(false);
+
 </script>
 
 <template>
     <tr class="data-row">
+        <td v-if="props.defaultSelectable"
+            style="vertical-align:middle;text-align:center"
+            @mouseover="mouseOverDefault = true"
+            @mouseleave="mouseOverDefault = false">
+            <template v-if="props.type !== 'existing'">
+            </template>
+            <template v-else-if="props.isDefault">
+                <input
+                    type="radio"
+                    name="default"
+                    :value="props.id"
+                    :checked="props.isDefault" />
+            </template>
+            <template v-else>
+                <input
+                    v-show="!mouseOverDefault || !modifiable"
+                    type="radio"
+                    name="default"
+                    :disabled="!modifiable"
+                    :value="props.id"
+                    :checked="props.isDefault" />
+                <lsmb-button
+                    v-show="mouseOverDefault && modifiable"
+                    name="change-default"
+                    @click="(e) => send({ type: 'setDefault', rowId: props.id })">
+                    Set
+                </lsmb-button>
+            </template>
+        </td>
         <td v-for="column in columns"
             :key="column.key"
             class="data-entry">

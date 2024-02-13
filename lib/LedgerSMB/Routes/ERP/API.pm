@@ -107,6 +107,8 @@ components:
       description: Forbidden
     404:
       description: Not Found
+    409:
+      description: Conflict
     412:
       description: Precondition failed (If-Match header)
     413:

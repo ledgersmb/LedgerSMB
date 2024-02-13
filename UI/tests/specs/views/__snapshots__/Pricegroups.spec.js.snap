@@ -17,6 +17,7 @@ exports[`Pricegroups - register as a component should show dialog 1`] = `
     >
       <thead>
         <tr>
+          <!--v-if-->
           
           <th>
             Description
@@ -33,6 +34,7 @@ exports[`Pricegroups - register as a component should show dialog 1`] = `
         <tr
           class="data-row"
         >
+          <!--v-if-->
           
           <td
             class="data-entry"
@@ -53,6 +55,7 @@ exports[`Pricegroups - register as a component should show dialog 1`] = `
         <tr
           class="data-row"
         >
+          <!--v-if-->
           
           <td
             class="data-entry"
@@ -113,6 +116,7 @@ exports[`Pricegroups - register as a component should show dialog with editable 
     >
       <thead>
         <tr>
+          <!--v-if-->
           
           <th>
             Description
@@ -129,6 +133,7 @@ exports[`Pricegroups - register as a component should show dialog with editable 
         <tr
           class="data-row"
         >
+          <!--v-if-->
           
           <td
             class="data-entry"
@@ -174,6 +179,7 @@ exports[`Pricegroups - register as a component should show dialog with editable 
         <tr
           class="data-row"
         >
+          <!--v-if-->
           
           <td
             class="data-entry"

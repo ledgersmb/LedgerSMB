@@ -8,8 +8,8 @@ export const pricegroupHandlers = [
     return HttpResponse.json(
       {
         items: [
-          { id: "1", description: "Price group 1" },
-          { id: "2", description: "Price group 2" }
+          { id: "1", description: "Price group 1", _meta: { ETag: "1234567890" } },
+          { id: "2", description: "Price group 2", _meta: { ETag: "1234567889" } }
         ],
         _links: [{
           title : "HTML",

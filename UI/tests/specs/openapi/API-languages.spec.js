@@ -185,7 +185,8 @@ describe("Modifying the new Navajo language", () => {
             method: "PUT",
             body: JSON.stringify({
                 code: "nv",
-                description: "Navajo"
+                description: "Navajo",
+                default: true
             }),
             headers: {
                 ...headers,

@@ -17,8 +17,8 @@ describe("Sic Store", () => {
         await sics.initialize();
         expect(sics.fields).toStrictEqual(["code", "sictype", "description"]);
         expect(sics.items).toStrictEqual([
-            { code: "541330", description: "Engineering service" },
-            { code: "611430", description: "Professional and management development training" }
+            { code: "541330", description: "Engineering service", _meta: { ETag: "1234567890" } },
+            { code: "611430", description: "Professional and management development training", _meta: { ETag: "1234567889" } }
         ]);
         expect(sics._links).toStrictEqual([{
             title : "HTML",
@@ -42,8 +42,8 @@ describe("Sic Store", () => {
         await sics.get("541330");
         await sics.save("541330", { code: "541330", description: "Engineering services" });
         expect(sics.items).toStrictEqual([
-            { code: "541330", description: "Engineering services" },
-            { code: "611430", description: "Professional and management development training" }
+            { code: "541330", description: "Engineering services", _meta: { ETag: "1234567891" } },
+            { code: "611430", description: "Professional and management development training", _meta: { ETag: "1234567889" } }
         ]);
     });
 

@@ -22,6 +22,7 @@ const store = useCountriesStore();
         :columns="COLUMNS"
         :store="store"
         storeId="code"
+        defaultSelectable="true"
         editRole="country_edit"
         createRole="country_create" />
 </template>

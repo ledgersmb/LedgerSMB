@@ -99,7 +99,9 @@ sub _get_pricegroup {
 sub _get_pricegroups {
     my ($c, $formatter) = @_;
     my $sth = $c->dbh->prepare(
-        q|SELECT id, pricegroup as description FROM pricegroup ORDER BY id|
+        q|SELECT id, pricegroup as description,
+                 md5(last_updated::text) as etag
+          FROM pricegroup ORDER BY id|
         ) or die $c->dbh->errstr;
 
     $sth->execute() or die $sth->errstr;
@@ -108,6 +110,7 @@ sub _get_pricegroups {
         push @results, {
             id => $row->{id},
             description => $row->{description},
+            _meta => { ETag => $row->{etag} }
         };
     }
     die $sth->errstr if $sth->err;
@@ -311,7 +314,7 @@ sub _get_warehouse {
 sub _get_warehouses {
     my ($c, $formatter) = @_;
     my $sth = $c->dbh->prepare(
-        q|SELECT * FROM warehouse ORDER BY id|
+        q|SELECT *, md5(last_updated::text) as etag FROM warehouse ORDER BY id|
         ) or die $c->dbh->errstr;
 
     $sth->execute() or die $sth->errstr;
@@ -320,6 +323,7 @@ sub _get_warehouses {
         push @results, {
             id => $row->{id},
             description => $row->{description},
+            _meta => { ETag => $row->{etag} }
         };
     }
     die $sth->errstr if $sth->err;

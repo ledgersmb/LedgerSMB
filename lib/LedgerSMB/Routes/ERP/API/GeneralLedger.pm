@@ -98,7 +98,7 @@ sub _get_gifi {
 sub _get_gifis {
     my ($c, $formatter) = @_;
     my $sth = $c->dbh->prepare(
-        q|SELECT * FROM gifi ORDER BY accno|
+        q|SELECT *, md5(last_updated::text) as etag FROM gifi ORDER BY accno|
         ) or die $c->dbh->errstr;
 
     $sth->execute() or die $sth->errstr;
@@ -107,6 +107,7 @@ sub _get_gifis {
         push @results, {
             accno => $row->{accno},
             description => $row->{description},
+            _meta => { ETag => $row->{etag}}
         };
     }
     die $sth->errstr if $sth->err;

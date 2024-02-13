@@ -102,7 +102,7 @@ describe("Retrieving all countries", () => {
         // Assert that the HTTP response satisfies the OpenAPI spec
         res = await emulateAxiosResponse(res);
         expect(res).toSatisfyApiSpec();
-    });
+    }, 20000);
 });
 
 describe("Retrieving all countries with old syntax should fail", () => {

@@ -8,8 +8,8 @@ export const businessTypesHandlers = [
     return HttpResponse.json(
       {
         items: [
-            { id: "1", description: "Big customer", discount: 0.05 },
-            { id: "2", description: "Bigger customer", discount: 0.15 }
+            { id: "1", description: "Big customer", discount: 0.05, _meta: { ETag: "1234567890" }},
+            { id: "2", description: "Bigger customer", discount: 0.15, _meta: { ETag: "1234567890" }}
         ],
         _links: [{
           title : "HTML",
@@ -31,7 +31,7 @@ export const businessTypesHandlers = [
       }, {
       status: 200,
       headers: {
-          'ETag': ['1234567890']
+          ETag: '1234567890'
       }
     })
   }),
@@ -54,7 +54,7 @@ export const businessTypesHandlers = [
       }, {
       status: 201,
       headers: {
-          'ETag': ['1234567891']
+          ETag: '1234567891'
       }
     })
   }),
@@ -69,7 +69,7 @@ export const businessTypesHandlers = [
       }, {
       status: 200,
       headers: {
-          'ETag': ['1234567891']
+          ETag: '1234567891'
       }
     })
   })

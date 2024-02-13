@@ -11,6 +11,7 @@ import ConfigTableRow from "@/components/ConfigTableRow.vue";
 
 const props = defineProps([
     "columns",
+    "defaultSelectable",
     "store",
     "createRole",
     "editRole",
@@ -48,6 +49,9 @@ function u(relURL) {
         <table class="dynatable">
             <thead>
                 <tr>
+                    <th v-if="props.defaultSelectable">
+                        {{ $t("Default") }}
+                    </th>
                     <th v-for="column in props.columns"
                         :key="column.key">{{ column.head }}</th>
                     <th></th>
@@ -73,18 +77,22 @@ function u(relURL) {
                         v-for="item in items"
                         :id="item[props.storeId]"
                         :key="item[props.storeId]"
+                        :defaultSelectable="props.defaultSelectable"
+                        :isDefault="item.default"
                         :columns="props.columns"
                         :deletable="props.deletable"
                         :editingId="editingId"
                         :store="props.store"
                         :type="hasEdit ? 'existing' : 'uneditable'"
                         @modifying="send({ type: 'modify', rowId: item[props.storeId] })"
+                        @savingAsDefault="send('saveDefault')"
                         @idle="send('complete')"
                     />
                 </tbody>
                 <tfoot v-if="hasCreate">
                     <ConfigTableRow
                         id=""
+                        :defaultSelectable="props.defaultSelectable"
                         :columns="props.columns"
                         :editingId="editingId"
                         :store="props.store"

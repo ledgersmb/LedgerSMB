@@ -91,6 +91,7 @@
     "eslint-plugin-sort-dojo-dependency": "0.0.1",
     "eslint-plugin-vue": "9.21.1",
     "eslint-webpack-plugin": "4.0.1",
+    "flush-promises": "1.0.2",
     "html-webpack-plugin": "5.6.0",
     "http-status-codes": "2.3.0",
     "i18next-conv": "14.0.0",
@@ -172,10 +173,16 @@
     },
     "overrides": [
       {
-        "extends": ["plugin:package-json/recommended"],
-        "files": ["package.json"],
+        "extends": [
+          "plugin:package-json/recommended"
+        ],
+        "files": [
+          "package.json"
+        ],
         "parser": "jsonc-eslint-parser",
-        "plugins": ["package-json"],
+        "plugins": [
+          "package-json"
+        ],
         "rules": {
           "package-json/sort-collections": "error",
           "indent": [

@@ -22,6 +22,7 @@ use strict;
 use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_NO_CONTENT HTTP_CREATED HTTP_CONFLICT HTTP_FORBIDDEN );
+use JSON::MaybeXS;
 
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Report::Listings::Language;
@@ -76,7 +77,11 @@ sub _del_language {
 sub _get_language {
     my ($c, $code) = @_;
     my $sth = $c->dbh->prepare(
-        q|SELECT *, md5(last_updated::text) as etag FROM language WHERE code = ?|
+        q|SELECT *, md5(last_updated::text) as etag,
+                 language.code is not distinct from (select "value"
+                                                       from defaults
+                                                      where setting_key = 'default_language') as "default"
+            FROM language WHERE code = ?|
         ) or die $c->dbh->errstr;
 
     $sth->execute($code) or die $sth->errstr;
@@ -87,6 +92,7 @@ sub _get_language {
     return (
         {
             code => $row->{code},
+            default => $row->{default} ? JSON::MaybeXS->true : JSON::MaybeXS->false,
             description => $row->{description},
         },
         {
@@ -97,14 +103,23 @@ sub _get_language {
 sub _get_languages {
     my ($c, $formatter) = @_;
     my $sth = $c->dbh->prepare(
-        q|SELECT * FROM language ORDER BY code|
+        q|SELECT *,
+             md5(last_updated::text) as etag,
+             language.code is not distinct from (select "value"
+                                from defaults
+                               where setting_key = 'default_language') as "default"
+            FROM language ORDER BY code|
         ) or die $c->dbh->errstr;
 
     $sth->execute() or die $sth->errstr;
     my @results;
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
         push @results, {
+            _meta => {
+                ETag => $row->{etag},
+            },
             code => $row->{code},
+            default => $row->{default} ? JSON::MaybeXS->true : JSON::MaybeXS->false,
             description => $row->{description},
         };
     }
@@ -126,15 +141,32 @@ sub _get_languages {
 
 sub _update_language {
     my ($c, $w, $m) = @_;
+
+    $c->dbh->do('SAVEPOINT set_default')
+        or die $c->dbh->errstr;
+    if ($w->{default}) {
+        $c->dbh->do(q|
+                INSERT INTO defaults (setting_key, value)
+                   VALUES ('default_language', $1)
+                 ON CONFLICT (setting_key) DO UPDATE SET value = $1
+|, {}, $w->{code})
+            or die $c->dbh->errstr;
+    }
+
     my $sth = $c->dbh->prepare(
         q|UPDATE language SET description = ?
            WHERE code = ? AND md5(last_updated::text) = ?
-          RETURNING *, md5(last_updated::text) as etag|
+          RETURNING *, md5(last_updated::text) as etag,
+             language.code is not distinct from (select "value"
+                                                   from defaults
+                                                  where setting_key = 'default_language') as "default"|
         ) or die $c->dbh->errstr;
 
     $sth->execute( $w->{description}, $w->{code}, $m->{ETag} )
         or die $sth->errstr;
     if ($sth->rows == 0) {
+        $c->dbh->do('ROLLBACK TO SAVEPOINT set_default')
+            or die $c->dbh->errstr;
         my ($response, $meta) = _get_language($c, $w->{code});
         return (undef, {}) unless $response;
 
@@ -142,13 +174,16 @@ sub _update_language {
         return (undef, { conflict => 1 });
     }
 
+    $c->dbh->do('RELEASE SAVEPOINT set_default')
+        or die $c->dbh->errstr;
     my $row = $sth->fetchrow_hashref('NAME_lc');
     die $sth->errstr if $sth->err;
 
     return (
         {
             code => $row->{code},
-            description => $row->{description}
+            default => $row->{default} ? JSON::MaybeXS->true : JSON::MaybeXS->false,
+            description => $row->{description},
         },
         {
             ETag => $row->{etag}
@@ -213,10 +248,11 @@ get api '/languages/{id}' => sub {
 put api '/languages/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*(?>W\/)?"(.*)"\s*$/);
+    my ($ETag) = ($r->headers->header('If-Match') =~ s/^\s*(W\/)?"|"\s*$//gr);
     my ($response, $meta) = _update_language(
         $c, {
             code => $params->{id},
+            default => $body->{default},
             description => $body->{description}
         },
         {
@@ -398,6 +434,8 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        409:
+          $ref: '#/components/responses/409'
         412:
           $ref: '#/components/responses/412'
         413:
@@ -422,6 +460,8 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        409:
+          $ref: '#/components/responses/409'
     patch:
       tags:
         - Languages
@@ -454,8 +494,12 @@ components:
         - code
         - description
       properties:
+        _meta:
+          type: object
         code:
           $ref: '#/components/schemas/language-code'
+        default:
+          type: boolean
         description:
           type: string
           example: French (Canada)
@@ -465,4 +509,5 @@ components:
       description: French Canadian entry
       value:
         code: fr_CA
+        default: false
         description: French (Canada)

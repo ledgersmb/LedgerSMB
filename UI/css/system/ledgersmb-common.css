@@ -258,6 +258,7 @@ body.menu,
     font-weight: bold;
     padding-bottom: 0.1em;
     padding-left: 1ex;
+    padding-right: 1ex;
     padding-top: 0.1em;
 }
 
@@ -269,6 +270,7 @@ thead th {
     font-weight: bold;
     padding-bottom: 0.1em;
     padding-left: 1ex;
+    padding-right: 1ex;
     padding-top: 0.1em;
 }
 
