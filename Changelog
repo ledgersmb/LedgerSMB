@@ -3,6 +3,13 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.32
+* Fix upgrades from older Pg versions with the 'cash_impact' view (#7987)
+* Fix missing locale parameter creating GL Search report (#7997)
+* Fix setup.pl CSRF regressions (#8007, #8000)
+* Fix date filters on Cash > Receipt/Payment (#8015)
+
+
 Changelog for 1.10.31
 * Fix GL transaction entry regressed from 1.10.29 (#7984)
 
