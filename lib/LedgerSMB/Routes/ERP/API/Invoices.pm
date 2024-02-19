@@ -74,16 +74,8 @@ sub _not_implemented {
 }
 
 sub _get_invoices_by_id {
-    my ($env, $params) = @_;
-
-    return [ HTTP_BAD_REQUEST,
-          [ ],
-          [ ] ]
-      if !$params->{id};
-
-    my $r = Plack::Request::WithEncoding->new($env);
+    my ($env, $r, $c, $body, $params) = @_;
     my %inv = ( id => $params->{id} );
-
 
     my $query = q|
         SELECT 'customer' as type,
@@ -338,34 +330,7 @@ sub _get_invoices_by_id {
 }
 
 sub _post_invoices {
-    my ($env) = @_;
-    my $r = Plack::Request::WithEncoding->new($env);
-    my $c = LedgerSMB::Company->new(dbh => $env->{'lsmb.db'});
-
-    {
-        my $ct = $r->headers->content_type;
-        unless ($ct eq 'application/json') {
-            return error(
-                $r,
-                HTTP_UNSUPPORTED_MEDIA_TYPE,
-                {
-                    msg     => 'Unexpected Content-Type header',
-                    details => "Content-Type value '$ct' provided, but 'application/json expected"
-                });
-        }
-    }
-    my $body = json()->decode($r->content);
-    my ($result, $errors, $warnings) =
-        $validator->validate_request(
-            method => 'POST',
-            openapi_path => '/invoices',
-            parameters => {
-                body => [1, 'application/json', $body]
-            });
-
-    return error($r, HTTP_BAD_REQUEST, [], @$errors)
-        if scalar(@$errors) > 0;
-
+    my ($env, $r, $c, $body, $params) = @_;
     my @errors;
     my $inv = {};
     # lookup the required fields: eca
@@ -1005,9 +970,9 @@ sub _post_invoices {
 
 
 get '/invoices' => \&_not_implemented;
-post '/invoices' => \&_post_invoices;
+post api '/invoices' => \&_post_invoices;
 
-get '/invoices/{id}' => \&_get_invoices_by_id;
+get api '/invoices/{id}' => \&_get_invoices_by_id;
 del '/invoices/{id}' => \&_not_implemented;
 patch '/invoices/{id}' => \&_not_implemented;
 

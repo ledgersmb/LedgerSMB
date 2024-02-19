@@ -591,15 +591,15 @@ $body
 |;
     }
     else {
-        $text = json()->encode({ error => 1,
-                                 msg => 'LedgerSMB API errors',
-                                 errors => \@errors });
+        $text = { error => 1,
+                  msg => 'LedgerSMB API errors',
+                  errors => \@errors };
     }
     return [
         $code,
         [ 'Content-Type' => ($result_type eq 'html'
                              ? 'text/html' : 'application/json') ],
-        [ $text ]
+        $text
         ];
 }
 
