@@ -326,7 +326,7 @@ sub _get_invoices_by_id {
 
     return [ HTTP_OK,
              [ 'Content-Type' => 'application/json' ],
-             [ json()->canonical->encode(\%inv) ] ];
+             \%inv ];
 }
 
 sub _post_invoices {

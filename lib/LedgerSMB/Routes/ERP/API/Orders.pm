@@ -248,7 +248,7 @@ sub _get_orders_by_id {
 
     return [ HTTP_OK,
              [ 'Content-Type' => 'application/json' ],
-             [ json()->canonical->encode(\%ord) ] ];
+             \%ord ];
 }
 
 sub _post_orders {
