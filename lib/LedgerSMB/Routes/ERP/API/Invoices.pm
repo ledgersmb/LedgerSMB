@@ -483,6 +483,8 @@ sub _post_invoices {
             }
 
             $inv_line->{qty}   = $inv_line->{qty} // 1;
+            $inv_line->{discount} = $inv_line->{discount} / 100
+                if $inv_line->{discount_type} eq '%';
 
             # determine price and description
             {
@@ -956,7 +958,7 @@ sub _post_invoices {
         $sth->execute(
             $inv_id, $line->{part}->{id}, $line->{description}, $line->{qty},
             $line->{price}, 0, $line->{price}, ###TODO: single currency
-            (defined $line->{discount} ? $line->{discount}/100 : undef),
+            (defined $line->{discount} ? $line->{discount} : undef),
             (map { $line->{$_} }
              qw/unit deliverydate serialnumber vendor_sku notes/)
             )
@@ -1572,9 +1574,9 @@ components:
             price_fixated: false
             qty: 1
             serialnumber: "1234567890"
-            total: -624.58
+            total: 49.97
             unit: "lbs"
-        lines_total: -624.58
+        lines_total: 49.97
         notes: "Notes"
         "order-number": "order 345"
         #TODO: Add payments here
@@ -1604,7 +1606,7 @@ components:
               name: Sales Tax
               rate: "0.05"
         taxes_total: 6.78
-        total: -617.8
+        total: 56.75
         type: customer
         workflow:
           actions:
