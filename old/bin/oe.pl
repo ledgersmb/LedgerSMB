@@ -46,6 +46,7 @@ use LedgerSMB::OE;
 use LedgerSMB::IIAA;
 use LedgerSMB::IR;
 use LedgerSMB::IS;
+use LedgerSMB::Magic qw(OEC_SALES_ORDER OEC_PURCHASE_ORDER);
 use LedgerSMB::PE;
 use LedgerSMB::Setting;
 use LedgerSMB::Tax;
@@ -1526,6 +1527,9 @@ sub invoice {
     }
     $wf->context->param( 'spawned_id'   => $form->{workflow_id} );
     $wf->context->param( 'spawned_type' => 'AR/AP' );
+    $wf->context->param( '_extra' => {
+        oe_class_id => ($action eq 'sales_invoice') ? OEC_SALES_ORDER() : OEC_PURCHASE_ORDER()
+                         } );
     $wf->execute_action( $action );
 
     &display_form;
