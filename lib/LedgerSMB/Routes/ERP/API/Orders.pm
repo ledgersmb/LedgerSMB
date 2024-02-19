@@ -355,6 +355,8 @@ sub _post_orders {
             }
 
             $ord_line->{qty}   = $ord_line->{qty} // 1;
+            $ord_line->{discount} = $ord_line->{discount} / 100
+                if $ord_line->{discount_type} eq '%';
 
             # determine price and description
             {
@@ -682,8 +684,7 @@ sub _post_orders {
 
     ###BUG: Assert that the invoice is posted in functional currency
 
-    if (not LedgerSMB::Setting->new(dbh => $env->{'lsmb.db'})->get('gapless_ar')
-        and not $ord->{invnumber}) {
+    if (not $ord->{ordnumber}) {
         # generate invoice number; if we have gapless, delay until posting
 
         ###BUG: This does not take "sequences" into account...
@@ -699,8 +700,8 @@ sub _post_orders {
                                               '^(.*?)(\d+)(\D*)$') as p)
                        as parts)
                     as upd)
-             WHERE setting_key = 'sinumber'
-            RETURNING (SELECT "value" FROM defaults WHERE setting_key = 'sinumber');
+             WHERE setting_key = 'sonumber'
+            RETURNING (SELECT "value" FROM defaults WHERE setting_key = 'sonumber');
             /) or die $env->{'lsmb.db'}->errstr;
 
         $sth->execute()
@@ -708,11 +709,9 @@ sub _post_orders {
 
         my ($ordnumber) = $sth->fetchrow_array();
         die $sth->errstr if not $ordnumber and $sth->err;
-        $ord->{invnumber} = $ordnumber;
+        $ord->{ordnumber} = $ordnumber;
     }
     my $sth = $env->{'lsmb.db'}->prepare(
-        # What to do with 'setting_sequence' (for 'ar')?
-        # and why does that not exist for 'ap'??
         q|
         INSERT INTO oe ( oe_class_id,
             ordnumber, quonumber, ponumber,
@@ -759,8 +758,8 @@ sub _post_orders {
     $ctx->param( transdate => $ord->{transdate} );
     local $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
     my $wf  = $env->{wire}->get('workflows')
-        ->create_workflow( 'AR/AP', $ctx );
-    $env->{'lsmb.db'}->do(q{UPDATE transactions SET workflow_id = ? where id = ?},
+        ->create_workflow( 'Order/Quote', $ctx );
+    $env->{'lsmb.db'}->do(q{UPDATE oe SET workflow_id = ? where id = ?},
              {}, $wf->id, $ord_id)
         or die $env->{'lsmb.db'}->errstr;
 
@@ -775,7 +774,6 @@ sub _post_orders {
         |)
         or die $env->{'lsmb.db'}->errstr;
 
-    my $sign = ($ord->{eca}->entity_class == EC_CUSTOMER()) ? -1 : 1;
     for my $line ($ord->{lines}->@*) {
         # generate line in 'orderitems' table
         ###TODO: extract the precision from the 'price'
@@ -783,7 +781,7 @@ sub _post_orders {
         $sth->execute(
             $ord_id, $line->{part}->{id}, $line->{description}, $line->{qty},
             $line->{price}, 0, ###TODO: single currency
-            (defined $line->{discount} ? $line->{discount}/100 : undef),
+            (defined $line->{discount} ? $line->{discount} : undef),
             (map { $line->{$_} }
              qw/unit reqdate serialnumber notes/)
             )
@@ -793,7 +791,7 @@ sub _post_orders {
             if $sth->err;
     }
 
-    $wf->execute_action( 'post' ); # move to SAVED state
+    $wf->execute_action( 'save' ); # move to SAVED state
 
     return [
         HTTP_CREATED,
