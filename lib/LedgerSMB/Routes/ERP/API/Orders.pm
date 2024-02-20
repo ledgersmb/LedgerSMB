@@ -178,8 +178,6 @@ sub _get_orders_by_id {
 
     $ord{taxes} = {};
     ###TODO: calculate taxes here...
-    ###TODO: query payments here...
-    ###TODO: query credit_account and entity here
     $query = q|
         SELECT *
           FROM entity_credit_account eca
@@ -218,6 +216,7 @@ sub _get_orders_by_id {
     my $credit_limit_used = $sth->fetchrow_arrayref();
     die $sth->errstr if not $credit_limit_used and $sth->err;
 
+    $credit_limit_used->[0] = 0 if $credit_limit_used->[0] eq 'NaN';
 
     $ord{eca} = {
         id     => $eca->{id},
@@ -226,9 +225,9 @@ sub _get_orders_by_id {
         description => $eca->{description},
         pay_to_name => $eca->{pay_to_name},
         credit_limit => {
-            used => $credit_limit_used->[0] // 0,
-            total => $eca->{creditlimit} // 0,
-            available => (($eca->{creditlimit} // 0) - ($credit_limit_used->[0] // 0)),
+            used => $credit_limit_used->[0] || 0,
+            total => $eca->{creditlimit} || 0,
+            available => (($eca->{creditlimit} || 0) - ($credit_limit_used->[0] || 0)),
         },
         entity => {
             $entity->%{qw/name control_code/}
@@ -333,8 +332,7 @@ sub _post_orders {
     {
         my %map = ('required-by' => 'reqdate',
                    'order'       => 'transdate');
-        foreach my $d (qw( rquired-by order )) {
-            # due|created|book
+        foreach my $d (qw( required-by order )) {
             next if not $body->{dates}->{$d};
             $ord->{$map{$d}} = $body->{dates}->{$d};
         }
@@ -787,7 +785,7 @@ sub _post_orders {
             $line->{price}, 0, ###TODO: single currency
             (defined $line->{discount} ? $line->{discount} : undef),
             (map { $line->{$_} }
-             qw/unit reqdate serialnumber notes/)
+             qw/unit required-by serialnumber notes/)
             )
             or die $sth->errstr;
         my ($ordline_id) = $sth->fetchrow_array;
@@ -1278,7 +1276,6 @@ components:
         dates:
           order: "2022-09-01"
           required-by: "2022-10-01"
-        description:
         eca:
           number: "Customer 1"
           type: "customer"
@@ -1344,10 +1341,11 @@ components:
             - print
             - print_and_save
             - print_and_save_as_new
+            - purchase_order
             - quotation
+            - sales_invoice
             - save
             - save_as_new
-            - sales_invoice
             - ship_to
             - update
           state: SAVED

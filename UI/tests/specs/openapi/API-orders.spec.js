@@ -76,8 +76,6 @@ beforeEach(async () => {
         const data = await r.json();
         headers = {
             cookie: r.headers.get("set-cookie"),
-            referer: serverUrl + "/" + data.target,
-            authorization: "Basic " + btoa(username + ":" + password)
         };
     }
 });
@@ -115,7 +113,7 @@ describe("Adding the new Order", () => {
                         currency: "USD",
                         dates: {
                             order: "2022-09-01",
-                            "required-by": "2022-10-05"
+                            "required-by": "2022-10-01"
                         },
                         "internal-notes": "Internal notes",
                         lines: [
