@@ -77,6 +77,10 @@ sub _get_invoices_by_id {
     my ($env, $r, $c, $body, $params) = @_;
     my %inv = ( id => $params->{id} );
 
+    return error( $r, HTTP_BAD_REQUEST, [],
+                  [ q|'id' parameter missing| ])
+        if defined $params->{id} and $params->{id} eq '';
+
     my $query = q|
         SELECT 'customer' as type,
               invnumber, ordnumber, quonumber, ponumber, transdate, duedate, crdate,

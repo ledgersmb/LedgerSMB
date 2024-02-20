@@ -75,8 +75,12 @@ sub _not_implemented {
 
 sub _get_orders_by_id {
     my ($env, $r, $c, $body, $params) = @_;
-
     my %ord = ( id => $params->{id} );
+
+    return error( $r, HTTP_BAD_REQUEST, [],
+                  [ q|'id' parameter missing| ])
+        if defined $params->{id} and $params->{id} eq '';
+
     my $query = q|
         SELECT CASE WHEN oe_class_id = 1 THEN 'customer'
                     WHEN oe_class_id = 2 THEN 'vendor'
