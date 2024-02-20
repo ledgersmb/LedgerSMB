@@ -94,7 +94,7 @@ sub _get_orders_by_id {
         |;
     my $sth = $env->{'lsmb.db'}->prepare($query)
         or die $env->{'lsmb.db'}->errstr;
-    $sth->execute( $params->{id}, $params->{id} )
+    $sth->execute( $params->{id} )
         or die $sth->errstr;
 
     my $ref = $sth->fetchrow_hashref( 'NAME_lc' );
