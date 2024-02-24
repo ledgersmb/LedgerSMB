@@ -194,7 +194,7 @@ sub _build_comparisons {
                 from_date => $date,
                 to_date => $date->clone->add_interval($interval)
                     ->add_interval('day', -1),
-                column_path_prefix => [ $c_per ]
+                column_path_prefix => [ sprintf('%02u', $c_per) ]
             };
         }
     }
