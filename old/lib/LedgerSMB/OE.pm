@@ -405,7 +405,7 @@ sub save {
     if (@all_taxes) {
         my (%taxes, %bases, %rates);
         my $query = q|
-INSERT INTO oe_tax (oe_id, tax_id, tax_basis, rate, tax_amount)
+INSERT INTO oe_tax (oe_id, tax_id, basis, rate, amount)
 VALUES (?, (select id from account where accno = ?), ?, ?, ?)
 |;
         my $sth = $dbh->prepare($query)
