@@ -783,7 +783,7 @@ SELECT lsmb__create_role('sales_order_create',
 SELECT lsmb__grant_role('sales_order_create', 'contact_read');
 SELECT lsmb__grant_role('sales_order_create', 'exchangerate_edit');
 SELECT lsmb__grant_perms('sales_order_create', obj, 'ALL')
-  FROM unnest(array['oe'::text, 'oe_id_seq', 'warehouse_inventory', 'orderitems_id_seq'])
+  FROM unnest(array['oe'::text, 'oe_tax', 'oe_id_seq', 'warehouse_inventory', 'orderitems_id_seq'])
        obj;
 SELECT lsmb__grant_perms('sales_order_create', 'oe_id_seq', 'ALL');
 SELECT lsmb__grant_perms('sales_order_create', 'orderitems', 'INSERT');
