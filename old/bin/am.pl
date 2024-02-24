@@ -543,7 +543,7 @@ sub process_transactions {
             # forward to removing this code. --CT
             for ( keys %$form ) { delete $form->{$_}; }
             for (qw(header dbversion company dbh login path sessionid _auth
-                    stylesheet timeout id _locale _wire)
+                    stylesheet timeout id _locale _wire _req)
             ) {
                 $form->{$_} = $pt->{$_};
             }
