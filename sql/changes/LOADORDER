@@ -182,3 +182,5 @@ mc/delete-migration-validation-data.sql
 1.11/rename-action-parameter.sql
 1.11/gl-workflows.sql
 1.11/workflow-for-aa-transactions.sql
+# 1.12 changes
+1.12/migrate_to_identity.sql
