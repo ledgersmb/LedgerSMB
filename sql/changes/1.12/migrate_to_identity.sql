@@ -21,6 +21,7 @@ DECLARE
     seq_name            text = format('%s_%s_seq', table_name_in, column_name_in);
     curr_seq_name       text;
     next_seq_value      int;
+    table_col_exist     boolean;
 
 BEGIN
     -- Verify that the existing sequence exists and get the next value.
@@ -37,7 +38,8 @@ BEGIN
     RAISE NOTICE 'Next % value is %', seq_name, next_seq_value;
 
     -- Verify table and column exist.
-    SELECT
+    SELECT  TRUE
+	INTO    table_col_exist
     FROM    information_schema.columns
     WHERE   table_name = table_name_in
         AND column_name = column_name_in;
