@@ -34,7 +34,7 @@ BEGIN
     IF NOT FOUND THEN
         RAISE EXCEPTION 'Not able to find seq name: %', seq_name;
     END IF;
-    RAISE NOTICE 'Next % value is %', seq_name, next_seq_value
+    RAISE NOTICE 'Next % value is %', seq_name, next_seq_value;
 
     -- Verify table and column exist.
     SELECT
@@ -142,26 +142,13 @@ SELECT migrate_to_identity(table_name_in := 'warehouse', column_name_in := 'id')
 --      ALTER TABLE open_forms ALTER COLUMN id SET DEFAULT floor(random()*(1000000))+1;
 DROP SEQUENCE IF EXISTS open_forms_id_seq;
 
--- Workflow library uses the following from perl (select nextval('workflow_seq')),
+-- Workflow library uses the following 2 sequences from perl (select nextval('workflow_seq')),
 -- so they cannot be converted to IDENTITY:
---      workflow_history_seq
---      workflow_seq
 COMMENT ON SEQUENCE workflow_history_seq IS 'No database dependencies because it is used by the perl Workflow library.';
 COMMENT ON SEQUENCE workflow_seq         IS 'No database dependencies because it is used by the perl Workflow library.';
 
--- We do not convert this to IDENTITY because it is a text field.
--- Evidently, lot numbers do not have to be numeric, but they are numeric text by default.
--- Rename it to follow the sequence naming conventions.
-ALTER SEQUENCE lot_tracking_number RENAME to mfg_lot_lot_number_seq;
-COMMENT ON SEQUENCE mfg_lot_lot_number_seq IS 'Not converted to IDENTITY because it is used in a text field.';
-
--- Since sequence public.id is shared by the ap, ap, gl tables, we cannot convert it to an IDENTITY column.
--- Rename for usage clarity.
-ALTER SEQUENCE id RENAME to ar_ap_gl_id_seq;
-COMMENT ON SEQUENCE ar_ap_gl_id_seq IS 'Was the sequence ''id'' in SQL Ledger. Renamed for clarity.';
-
+-- Both not converted to identity because it is used by inherited tables
 COMMENT ON SEQUENCE file_base_id_seq IS 'Used by inherited tables.';
-
 COMMENT ON SEQUENCE note_id_seq IS 'Used by inherited tables.';
 
 -- Drop the function now that we are done using it.
