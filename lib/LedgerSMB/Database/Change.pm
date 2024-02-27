@@ -344,7 +344,7 @@ sub _split_statements {
                       \$\g{_dollar_block}\$)
    (?<String> (?&QuotedString) | (?&DollarQString) )
    (?<Number>[+-]?[0-9]++(\.[0-9]*)? )
-   (?<Operator> [=<>#^%?@!&~|\/*+-]+|::)
+   (?<Operator> [=<>#^%?@!&~|\/*+-]+|::|:=)
    (?<Array> \[ (?&WhiteSp)
                 (?: (?&ComplexTokenSequence)
                     (?&WhiteSp) )?
