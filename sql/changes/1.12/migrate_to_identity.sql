@@ -39,7 +39,7 @@ BEGIN
 
     -- Verify table and column exist.
     SELECT  TRUE
-	INTO    table_col_exist
+    INTO    table_col_exist
     FROM    information_schema.columns
     WHERE   table_name = table_name_in
         AND column_name = column_name_in;
