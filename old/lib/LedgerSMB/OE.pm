@@ -180,6 +180,10 @@ sub save {
             $sth   = $dbh->prepare($query);
             $sth->execute( $form->{id} ) || $form->dberror($query);
 
+            $query = qq|DELETE FROM oe_tax WHERE oe_id = ?|;
+            $sth   = $dbh->prepare($query);
+            $sth->execute( $form->{id} ) || $form->dberror($query);
+
             $query = qq|DELETE FROM new_shipto WHERE oe_id = ?|;
             $sth   = $dbh->prepare($query);
             $sth->execute( $form->{id} ) || $form->dberror($query);
@@ -255,6 +259,7 @@ sub save {
     my @taxaccounts;
     my %taxaccounts;
     my $netamount = 0;
+    my @all_taxes;
 
     my $rowcount = $form->{rowcount};
     for my $i ( 1 .. $rowcount ) {
@@ -337,6 +342,7 @@ sub save {
                     $taxbase{ $item->account }     += $taxbase;
                 }
             }
+            push @all_taxes, @taxaccounts;
 
             $netamount += $form->{"sellprice_$i"} * $form->{"qty_$i"};
 
@@ -396,6 +402,28 @@ sub save {
     $amount = $form->round_amount( $netamount + $tax, 2 );
     $netamount = $form->round_amount( $netamount, 2 );
 
+    if (@all_taxes) {
+        my (%taxes, %bases, %rates);
+        my $query = q|
+INSERT INTO oe_tax (oe_id, tax_id, basis, rate, amount)
+VALUES (?, (select id from account where accno = ?), ?, ?, ?)
+|;
+        my $sth = $dbh->prepare($query)
+            or $form->dberror($query);
+        for my $tax (@all_taxes) {
+            $taxes{ $tax->account } //= 0;
+            $taxes{ $tax->account } += $tax->value;
+            $rates{ $tax->account } = $tax->rate;
+            $bases{ $tax->account } //= 0;
+            $bases{ $tax->account } += $tax->base;
+        }
+
+        for my $tax (keys %taxes) {
+            $sth->execute( $form->{id}, $tax,
+                           $bases{$tax}, $rates{$tax}, $taxes{$tax})
+                or $form->dberror($query);
+        }
+    }
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
         $form->{exchangerate} = 1;
     }
@@ -524,17 +552,22 @@ sub delete {
     $sth->execute( $form->{id} ) || $form->dberror($query);
     $sth->finish;
 
-    # delete OE record
-    $query = qq|DELETE FROM oe WHERE id = ?|;
-    $sth   = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-    $sth->finish;
-
     # delete individual entries
     $query = qq|DELETE FROM orderitems WHERE trans_id = ?|;
     $sth->finish;
 
     $query = qq|DELETE FROM new_shipto WHERE oe_id = ?|;
+    $sth   = $dbh->prepare($query);
+    $sth->execute( $form->{id} ) || $form->dberror($query);
+    $sth->finish;
+
+    $query = qq|DELETE FROM oe_tax WHERE oe_id = ?|;
+    $sth   = $dbh->prepare($query);
+    $sth->execute( $form->{id} ) || $form->dberror($query);
+    $sth->finish;
+
+    # delete OE record
+    $query = qq|DELETE FROM oe WHERE id = ?|;
     $sth   = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
     $sth->finish;
