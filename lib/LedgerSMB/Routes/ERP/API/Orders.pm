@@ -175,8 +175,20 @@ sub _get_orders_by_id {
     }
     die $sth->errstr if $sth->err;
 
+    $query = q|
+        SELECT oe_tax.*, account.accno
+          FROM oe_tax
+          JOIN account ON oe_tax.tax_id = account.id
+         WHERE oe_id = ?
+    |;
+    $sth = $env->{'lsmb.db'}->prepare($query)
+        or die $env->{'lsmb.db'}->errstr;
+    $sth->execute($ord{id})
+        or die $sth->errstr;
+    $ord{taxes} = $sth->fetchall_hashref('accno');
+    die $sth->errstr
+        if $sth->err;
 
-    $ord{taxes} = {};
     ###TODO: calculate taxes here...
     $query = q|
         SELECT *
@@ -235,7 +247,6 @@ sub _get_orders_by_id {
     };
 
     ###TODO: query shipping in `new_shipto` table
-
     $ord{lines_total} = reduce { $a + $b->{total} } 0, $ord{lines}->@*;
     $ord{taxes_total} = reduce { $a + $b->{amount} } 0, values $ord{taxes}->%*;
     $ord{total}       = $ord{lines_total} + $ord{taxes_total};
@@ -653,6 +664,7 @@ sub _post_orders {
                 my $pass = 0;
 
                 for my $tax (@taxes) {
+                    next unless exists $part_tax{$line->{part}->{id}}->{$tax->{accno}};
                     if ($pass != $tax->{pass}) {
                         $base += $passtax;
                         $passtax = 0;
@@ -791,6 +803,24 @@ sub _post_orders {
         my ($ordline_id) = $sth->fetchrow_array;
         die $sth->errstr
             if $sth->err;
+    }
+
+    $sth = $env->{'lsmb.db'}->prepare(
+        q|
+        INSERT INTO oe_tax (oe_id, tax_id,
+             basis, rate, amount)
+          VALUES (?, ?, ?, ?, ?)
+        |)
+        or die $env->{'lsmb.db'}->errstr;
+    for my $tax (values $ord->{taxes}->%*) {
+        next if not defined $tax->{base};
+
+        $sth->execute($ord_id,
+                      $tax->{id},
+                      $tax->{base},
+                      $tax->{rate},
+                      $tax->{amount})
+            or die $sth->errstr;
     }
 
     $wf->execute_action( 'save' ); # move to SAVED state
@@ -1105,26 +1135,6 @@ components:
                   number:
                     type: string
                     minLength: 1
-        taxes:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              tax:
-                type: object
-                required:
-                  - category
-                properties:
-                  category:
-                    type: string
-              base-amount:
-                type: number
-              amount:
-                type: number
-              source:
-                type: string
-              memo:
-                type: string
     Order:
       description: ...
       allOf:

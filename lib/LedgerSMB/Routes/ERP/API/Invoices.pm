@@ -779,6 +779,7 @@ sub _post_invoices {
                 my $pass = 0;
 
                 for my $tax (@taxes) {
+                    next unless exists $part_tax{$line->{part}->{id}}->{$tax->{accno}};
                     if ($pass != $tax->{pass}) {
                         $base += $passtax;
                         $passtax = 0;
