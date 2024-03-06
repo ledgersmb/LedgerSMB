@@ -40,9 +40,10 @@ define([
 
             /* retrieve format to add it as the placeholder
              * (unless there's a placeholder already) */
+            params.constraints.formatLength ||= "short";
             if (!params.placeholder) {
                 var l = i18n.normalizeLocale(params.locale);
-                var formatLength = params.formatLength || "short";
+                var formatLength = params.constraints.formatLength;
                 var bundle = locale._getGregorianBundle(l);
 
                 if (params.constraints.selector === "year") {
@@ -57,9 +58,10 @@ define([
                         params.constraints.datePattern ||
                         bundle["dateFormat-" + formatLength];
                 }
+                params.constraints.datePattern = params.placeholder;
                 params.placeholder = params.placeholder
                     .replace(/M/g, "m")
-                    .replace(/y/g, "yy");
+                    .replace(/yy?y?y?/g, "yyyy");
             }
         },
         postMixInProperties: function () {
