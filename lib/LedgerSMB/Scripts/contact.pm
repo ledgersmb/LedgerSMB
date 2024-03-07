@@ -292,6 +292,7 @@ sub _main_screen {
 
     my $default_country = $request->setting->get('default_country');
     my ($default_language) = $request->setting->get('default_language');
+    my ($earn_id) = $request->setting->get('earn_id');
 
     my $attach_level_options = [
         {text => $locale->text('Entity'), value => 1} ];
@@ -367,7 +368,8 @@ sub _main_screen {
                all_months =>  $request->all_months->{dropdown},
              all_managers => \@all_managers,
           default_country => $default_country,
-         default_language => $default_language
+         default_language => $default_language,
+                  earn_id => $earn_id
     });
 }
 
