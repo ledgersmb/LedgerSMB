@@ -298,12 +298,12 @@ sub post_transaction {
         $uid .= "$$";
 
         $query = qq|
-            INSERT INTO ar (invnumber, person_id, entity_credit_account)
+            INSERT INTO $table (invnumber, person_id, entity_credit_account)
                  VALUES ('$uid', ?, ?)|;
         $sth = $dbh->prepare($query);
-        $sth->execute( $form->{employee_id}, $form->{customer_id}) || $form->dberror($query);
+        $sth->execute( $form->{employee_id}, $form->{"$form->{vc}_id"}) || $form->dberror($query);
 
-        $query = qq|SELECT id FROM ar WHERE invnumber = '$uid'|;
+        $query = qq|SELECT id FROM $table WHERE invnumber = '$uid'|;
         $sth   = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
 
