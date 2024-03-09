@@ -680,22 +680,24 @@ CREATE TYPE coa_entry AS (
     is_heading bool,
     accno text,
     description text,
+    category char(1),
+    contra boolean,
+    recon boolean,
+    tax boolean,
+    obsolete boolean,
     gifi text,
-    debit_balance numeric,
-    credit_balance numeric,
-    rowcount bigint,
+    has_rows boolean,
     link text
 );
 
 CREATE OR REPLACE FUNCTION report__coa() RETURNS SETOF coa_entry AS
 $$
-WITH ac (chart_id, amount_bc) AS (
-     SELECT chart_id, sum(amount_bc)
+WITH ac (chart_id) AS (
+     SELECT chart_id
        FROM acc_trans
        JOIN (select id, approved from transactions) gl
              ON gl.id = acc_trans.trans_id
       WHERE acc_trans.approved and gl.approved
-      GROUP BY chart_id
 ),
 l(account_id, link) AS (
      SELECT account_id, array_to_string(array_agg(description), ':')
@@ -709,6 +711,9 @@ hh(parent_id) AS (
 ha(heading) AS (
      SELECT heading
        FROM account
+              UNION
+     SELECT heading_negative_balance FROM account
+      WHERE heading_negative_balance IS NOT NULL
 ),
 eca(account_id) AS (
     SELECT DISTINCT discount_account_id
@@ -738,27 +743,28 @@ ta(account_id) AS (
       FROM eca_tax
   GROUP BY 1
 )
-SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno,
-       CASE WHEN sum(ac.amount_bc) < 0 THEN sum(amount_bc) * -1
-            ELSE null::numeric END,
-       CASE WHEN sum(ac.amount_bc) > 0 THEN sum(amount_bc)
-            ELSE null::numeric END,
-       count(ac.*)+count(hh.*)+count(ha.*)+count(eca.*)+count(p.*)+count(ta.*), l.link
-  FROM (SELECT id, heading, false as is_heading, accno, description, gifi_accno
-          FROM account
-         UNION
-        SELECT id, parent_id, true, accno, description, null::text
-          FROM account_heading) a
+  SELECT * FROM (
+  SELECT a.id, false, a.accno, a.description, a.category,
+         a.contra,
+         (EXISTS (select 1 from cr_coa_to_account cca where chart_id = a.id)),
+         a.tax, a.obsolete, a.gifi_accno,
+       (EXISTS (select 1 from ac where a.id = ac.chart_id)
+        OR EXISTS (select 1 from eca where a.id = eca.account_id)
+        OR EXISTS (select 1 from p where a.id = p.account_id)
+        OR EXISTS (select 1 from ta where a.id = ta.account_id)
+        ),
+       link
+  FROM account a
+       LEFT JOIN l ON a.id = l.account_id
+  UNION
+  SELECT id, true, accno, description, null::char(1),
+         null::boolean, null::boolean, null::boolean, null::boolean, null::text,
+         (EXISTS (select 1 from ha where h.id = ha.heading)
+           OR EXISTS (select 1 from hh where h.id = hh.parent_id)),
+         null::text
+   FROM account_heading h
 
- LEFT JOIN ac ON ac.chart_id = a.id AND not a.is_heading
- LEFT JOIN l ON l.account_id = a.id AND NOT a.is_heading
- LEFT JOIN hh ON hh.parent_id = a.id AND a.is_heading
- LEFT JOIN ha ON ha.heading = a.id AND a.is_heading
- LEFT JOIN eca ON eca.account_id = a.id AND NOT a.is_heading
- LEFT JOIN p ON p.account_id = a.id AND NOT a.is_heading
- LEFT JOIN ta ON ta.account_id = a.id AND NOT a.is_heading
-  GROUP BY a.id, a.is_heading, a.accno, a.description, a.gifi_accno, l.link
-  ORDER BY a.accno;
+  ) x ORDER BY accno;
 
 $$ LANGUAGE SQL;
 

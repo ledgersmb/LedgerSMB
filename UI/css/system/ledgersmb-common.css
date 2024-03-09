@@ -18,6 +18,7 @@ td.date {
     white-space: nowrap !important;
 }
 
+td.boolean_checkmark,
 td.check {
     text-align: center;
 }

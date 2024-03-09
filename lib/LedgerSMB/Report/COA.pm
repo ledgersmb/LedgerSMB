@@ -95,24 +95,35 @@ sub columns {
   href_base => '',
      pwidth => '6', },
 
+    {col_id => 'category',
+       name => $self->Text('Category'),
+       type => 'text',
+     pwidth => '1', },
+
+    {col_id => 'contra',
+       name => $self->Text('Contra'),
+       type => 'boolean_checkmark',
+     pwidth => '1', },
+
+    {col_id => 'recon',
+       name => $self->Text('Recon'),
+       type => 'boolean_checkmark',
+     pwidth => '1', },
+
+    {col_id => 'tax',
+       name => $self->Text('Tax'),
+       type => 'boolean_checkmark',
+     pwidth => '1', },
+
+    {col_id => 'obsolete',
+       name => $self->Text('Obsolete'),
+       type => 'boolean_checkmark',
+     pwidth => '1', },
+
     {col_id => 'gifi',
        name => $self->Text('GIFI'),
        type => 'text',
      pwidth => '1', },
-
-    {col_id => 'debit_balance',
-       name => $self->Text('Debits'),
-       type => 'href',
-  href_base => '',
-      money => 1,
-     pwidth => '2', },
-
-    {col_id => 'credit_balance',
-       name => $self->Text('Credits'),
-       type => 'href',
-  href_base => '',
-      money => 1,
-     pwidth => '2', },
 
     {col_id => 'link',
        name => $self->Text('Dropdowns'),
@@ -152,6 +163,13 @@ Runs the report, and assigns rows to $self->rows.
 sub run_report{
     my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'report__coa');
+    my %category = (
+        'A' => $self->Text('Asset'),
+        'L' => $self->Text('Liability'),
+        'Q' => $self->Text('Equity'),
+        'I' => $self->Text('Income'),
+        'E' => $self->Text('Expense')
+        );
     for my $r(@rows){
         my $ct;
         if ($r->{is_heading}){
@@ -160,18 +178,16 @@ sub run_report{
            $ct = 'A';
         }
         $r->{delete} = '['.$self->Text('Delete').']'
-                  if !$r->{rowcount};
+                  if !$r->{has_rows};
         $r->{accno_href_suffix} = 'account.pl?__action=edit&id='.$r->{id} .
            "&charttype=$ct";
         $r->{description_href_suffix} = $r->{accno_href_suffix};
         $r->{delete_href_suffix} = 'journal.pl?__action=delete_account&id='
         . $r->{id} . "&charttype=$ct";
-        $r->{credit_balance_href_suffix} =
-                'reports.pl?__action=start_report&module_name=gl&report_name=gl' .
-                "&accno=$r->{accno}--$r->{description}"
-                     unless $r->{is_heading};
-        $r->{debit_balance_href_suffix} = $r->{credit_balance_href_suffix};
         $r->{html_class} = 'listheading' if $r->{is_heading};
+
+        next if $r->{is_heading};
+        $r->{category} = $category{$r->{category}};
         $r->{link} =~ s/:/\n/g if $r->{link};
     }
     return $self->rows(\@rows);
