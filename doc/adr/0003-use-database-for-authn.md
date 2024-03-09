@@ -1,6 +1,6 @@
 # 0003 Use database as authentication provider
 
-Date: Unknown
+Date: Early in the 1.3 release cycle
 
 ## Status
 

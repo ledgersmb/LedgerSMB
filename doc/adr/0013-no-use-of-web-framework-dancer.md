@@ -1,6 +1,6 @@
 # 0013 No use of Dancer(2) server side web framework
 
-Date: Unknown
+Date: During 1.6 development cycle
 
 ## Status
 

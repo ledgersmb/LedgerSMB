@@ -1,6 +1,6 @@
 # 0004 Use database as authorization provider
 
-Date: Unknown
+Date: Early in the 1.3 release cycle
 
 ## Status
 

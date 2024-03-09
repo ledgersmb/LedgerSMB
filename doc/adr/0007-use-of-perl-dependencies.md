@@ -1,6 +1,6 @@
 # 0007 Use of Perl dependencies
 
-Date: Unknown
+Date: During development of 1.2
 
 ## Status
 

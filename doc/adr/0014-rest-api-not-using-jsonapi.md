@@ -1,6 +1,9 @@
 # 0014 Creation of a REST web service API -- Custom REST service based on HATEOS
 
-Date: Unknown
+Date: October 2016
+
+**Note**: This is derived from the fact that web services appeared on the roadmap
+on 2016-12-11 for the first time.
 
 ## Status
 

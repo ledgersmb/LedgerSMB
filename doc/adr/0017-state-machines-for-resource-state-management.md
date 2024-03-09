@@ -1,6 +1,6 @@
 # 0017 State machines for resource state management
 
-Date: Unknown
+Date: During 1.9 development cycle
 
 ## Status
 

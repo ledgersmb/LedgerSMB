@@ -1,6 +1,6 @@
 # 0012 No use of CDNs for JavaScript dependencies
 
-Date: Unknown
+Date: During 1.3 release cycle (when adding Scriptaculous)
 
 ## Status
 

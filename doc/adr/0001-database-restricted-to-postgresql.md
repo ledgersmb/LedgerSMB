@@ -1,6 +1,6 @@
 # 0001 Only support PostgreSQL at the database layer
 
-Date: Unknown
+Date: Early in the 1.3 release cycle
 
 ## Status
 
