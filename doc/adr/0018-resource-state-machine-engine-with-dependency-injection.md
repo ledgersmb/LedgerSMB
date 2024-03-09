@@ -1,6 +1,6 @@
 # 0018 Resource state machine engine with dependency injection
 
-Date: Unknown
+Date: During 1.9 development cycle
 
 ## Status
 

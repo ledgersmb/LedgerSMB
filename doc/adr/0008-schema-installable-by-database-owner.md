@@ -1,6 +1,6 @@
 # 0008 Database schema should be installable by database owner
 
-Date: Unknown
+Date: During 1.4 or 1.5 development
 
 ## Status
 

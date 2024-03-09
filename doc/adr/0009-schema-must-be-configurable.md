@@ -1,6 +1,6 @@
 # 0009 Database schema must be configurable
 
-Date: Unknown
+Date: During 1.3 development
 
 ## Status
 

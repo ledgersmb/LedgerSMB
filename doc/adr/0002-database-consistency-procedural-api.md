@@ -1,6 +1,6 @@
 # 0002 Ensure database consistency through procedural API
 
-Date: Unknown
+Date: Early in the 1.3 release cycle
 
 ## Status
 

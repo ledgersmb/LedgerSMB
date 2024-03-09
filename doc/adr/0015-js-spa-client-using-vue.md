@@ -1,6 +1,9 @@
 # 0015 Creation of a heavier client in the browser using JavaScript and Vue
 
-Date: Unknown
+Date: During 1.10 development cycle
+
+**Note**: Although talk of moving to Vue started a few years earlier, the development
+cyle of 1.10 added the actual dependency on Vue.
 
 ## Status
 

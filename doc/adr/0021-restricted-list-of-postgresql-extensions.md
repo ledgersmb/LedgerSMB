@@ -1,6 +1,6 @@
 # 0021 Restricted list of PostgreSQL extensions
 
-Date: Unknown
+Date: Irrecoverable; since Pg 9.1
 
 ## Status
 

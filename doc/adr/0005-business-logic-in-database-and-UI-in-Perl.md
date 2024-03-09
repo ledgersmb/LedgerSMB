@@ -1,6 +1,6 @@
 # 0005 Business logic in database and UI in Perl
 
-Date: Unknown
+Date: Early in the 1.3 release cycle
 
 *Note*: This decision was taken when the application was still
 completely a CGI application.

@@ -1,6 +1,6 @@
 # 0020 Time in the database (PostgreSQL timestamp type)
 
-Date: Unknown
+Date: Irrecoverable, but likely during 1.3 timeframe
 
 ## Status
 

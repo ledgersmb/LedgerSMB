@@ -1,6 +1,6 @@
 # 0006 Perl uses Template::Toolkit to process templates
 
-Date: Unknown
+Date: Early in the 1.3 release cycle
 
 ## Status
 

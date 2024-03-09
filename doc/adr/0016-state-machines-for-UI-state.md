@@ -1,6 +1,6 @@
 # 0016 State machines for UI state management
 
-Date: Unknown
+Date: During 1.10 development cycle
 
 ## Status
 

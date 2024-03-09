@@ -1,6 +1,6 @@
 # 0019 Configuration using Dependency Injection
 
-Date: Unknown
+Date: During 1.10 development cycle
 
 ## Status
 
