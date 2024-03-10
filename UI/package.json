@@ -150,7 +150,7 @@
     "lint:css": "stylelint css/*.css",
     "lint:js": "eslint --ext .js ./",
     "lint:js:fix": "eslint --fix --ext .js ./",
-    "lint:markdown": "markdownlint --config ../.markdownlint.json --ignore ./node_modules --ignore ./js .",
+    "lint:markdown": "markdownlint --config ../.markdownlint.json --ignore ./node_modules --ignore ./js ..",
     "lint:vue": "eslint --ext .vue ./",
     "lint:vue:fix": "eslint --fix --ext .vue ./",
     "profile": "webpack --progress=profile --json > logs/stats.json",
