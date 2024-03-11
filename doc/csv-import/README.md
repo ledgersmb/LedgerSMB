@@ -68,13 +68,13 @@ line has the following columns:
   The currency to be used for the transaction; if the transaction does not concern
   foreign currencies, fill out the default currency of the company
 * debit_fx  
-  The foreign currency (transaction currency) debit amount in case of a foreign currency
-  transaction; in case the default currency applies, fill with the same amount as the
-  `debit` field
+  The foreign currency (transaction currency) debit amount in case of a  
+  foreign currency transaction; in case the default currency applies, fill
+  with the same amount as the `debit` field
 * credit_fx  
-  The foreign currency (transaction currency) credit amount in case of a foreign currency
-  transaction; in case the default currency applies, fill with the same amount as the
-  `credit` field
+  The foreign currency (transaction currency) credit amount in case of a  
+  foreign currency transaction; in case the default currency applies, fill  
+  with the same amount as the `credit` field
 * source
   The identifier of the transaction(line) in an external system; used for e.g. bank
   reconciliation

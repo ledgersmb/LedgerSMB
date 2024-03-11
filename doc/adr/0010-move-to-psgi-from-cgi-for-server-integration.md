@@ -12,10 +12,10 @@ With the growing popularity of webservers that do not natively "speak"
 CGI, the project needs to provide a wider range of options to integrate.
 PSGI supports:
 
- * CGI
- * FastCGI
- * mod_perl
- * Various Perl-based HTTP servers
+* CGI
+* FastCGI
+* mod_perl
+* Various Perl-based HTTP servers
 
 At the same time, response generation is significantly slower for version
 1.3 than it ever was for earlier versions, due to longer load-times of the
@@ -52,17 +52,17 @@ web application integration.
 The following [PSGI extensions](https://metacpan.org/dist/PSGI/view/PSGI/Extensions.pod)
 may be assumed to be available:
 
- * psgix.logger
- * psgix.session
+* psgix.logger
+* psgix.session
 
 ## Consequences
 
-- During a transition period, STDOUT must be captured and transformed into
+* During a transition period, STDOUT must be captured and transformed into
   the 3-element PSGI-array for code that hasn't been rewritten to directly
   return PSGI responses.  The codebase will use CGI::Emulate::PSGI for this.
-- Execution of 'old code' needs to take place in a `fork()`-ed process with
+* Execution of 'old code' needs to take place in a `fork()`-ed process with
   the invoker reading the results (CGI results, presumably) from STDIN, waiting
   for the forked process to complete before continuing its own execution.
-- Although PSGI supports CGI deployments, it's not possible to achieve long
+* Although PSGI supports CGI deployments, it's not possible to achieve long
   running processes with it.  The code base will not target startup performance
   required for acceptable use with CGI.

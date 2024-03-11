@@ -46,5 +46,5 @@ it stores its data in UTC just as the `WITHOUT TIME ZONE` design, takes time zon
 provided with input data into account -- the current schema will **drop** time zone
 information in case data is accidentally not normalized to UTC.
 To make sure the database output keeps working as expected, the database client should
-set the time zone upon creating a connection using `SET TIME ZONE TO "Etc/UTC";`.  This
-will cause all output dates to have a time zone component `+00`.
+set the time zone upon creating a connection using `SET TIME ZONE TO "Etc/UTC";`.
+This will cause all output dates to have a time zone component `+00`.

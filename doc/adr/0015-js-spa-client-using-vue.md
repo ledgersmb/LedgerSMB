@@ -34,17 +34,17 @@ side code. Faster and more robust development methods are required.
 While faster, more robust, methods are required, this method needs to support
 a "progressive" approach. The following patterns will need to be supported:
 
- - Server side generated UI must be presented as-is
- - Server side generated UI mixed with Dojo client interactions
- - Client side UI with API (webservice) based server interactions
+* Server side generated UI must be presented as-is
+* Server side generated UI mixed with Dojo client interactions
+* Client side UI with API (webservice) based server interactions
 
 In other words, a "progressive" approach is required in order to prevent a
 "big bang" approach. Several libraries were subject to desk studies to assess
 their fit with these goals:
 
- - Svelte
- - React
- - Vue
+* Svelte
+* React
+* Vue
 
 Additionally, a proof-of-concept implementation was done with Vue.
 

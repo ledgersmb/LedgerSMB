@@ -31,8 +31,8 @@ what's there - using \d - will show actual content.
 
 ## Consequences
 
-- All Perl application code must take into account that the schema
+* All Perl application code must take into account that the schema
   needs to be either explicitly prepended to identifiers, or, that
   the search path needs to be correct.
-- Nothing in the logic may explicitly refer to a schema, instead
+* Nothing in the logic may explicitly refer to a schema, instead
   depending on implicit references based on the search_path setting.

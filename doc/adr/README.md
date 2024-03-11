@@ -93,6 +93,7 @@ Date: YYYY-MM-DD
 
 An ADR can be in one of 4 statusses with the following state diagram:
 
+```plain
                      +----------+     +----------+
                    --| Accepted |-----| Replaced |
     ------------  /  +----------+     +----------+
@@ -100,6 +101,7 @@ An ADR can be in one of 4 statusses with the following state diagram:
     ------------  \  +----------+
                    --| Rejected |
                      +----------+
+```
 
 The states have the following meaning:
 

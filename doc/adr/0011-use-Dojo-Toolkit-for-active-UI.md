@@ -34,16 +34,16 @@ into Dojo widgets dynamically.
 
 ## Consequences
 
-- Resulting HTML response pages will become dependent on potentially
+* Resulting HTML response pages will become dependent on potentially
   many JavaScript, image and CSS files, causing extra files to be
   loaded.
-- Dojo Toolkit (which fortunately has no dependencies of its own)
+* Dojo Toolkit (which fortunately has no dependencies of its own)
   needs to be distributed with LedgerSMB.
-- Resulting HTML response pages will be parsed by Dojo, replacing
+* Resulting HTML response pages will be parsed by Dojo, replacing
   page elements with Dojo widgets, potentially causing flicker while
   the transformation takes place.
-- All code and templates which contain HTML needs to be annotated
+* All code and templates which contain HTML needs to be annotated
   with Dojo widget markers to ensure completeness of the parser results.
-- All code and templates must ensure unique html-'id' attribute values
+* All code and templates must ensure unique html-'id' attribute values
   to be assigned in the resulting HTML page: Dojo deals badly with
   duplicate ID values -- even if it might have generated these itself.

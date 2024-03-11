@@ -38,6 +38,6 @@ it as well.
 
 ## Consequences
 
-- The Perl code concerns itself only with passing data to and from the
+* The Perl code concerns itself only with passing data to and from the
   database, handing the results off to Template::Toolkit to render UI
   and output documents.

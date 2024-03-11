@@ -46,10 +46,10 @@ a ledger transaction being modified.
 
 ## Consequences
 
-- Unlike in many webapps, the database is not just a data storage medium,
+* Unlike in many webapps, the database is not just a data storage medium,
   but an active component
-- The webapp should not trust the database to be doing its work correctly,
+* The webapp should not trust the database to be doing its work correctly,
   meaning it should apply any checks for known data consistency requirements
-- The database may not assume the client having done its work correctly,
+* The database may not assume the client having done its work correctly,
   meaning it should actively check all consistency requirements (the client
   could be an application other than the regular client, e.g. a Python app)
