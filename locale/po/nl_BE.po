@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.11.11-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-02-15 20:33+0000\n"
+"POT-Creation-Date: 2024-03-14 20:59+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2023\n"
 "Language-Team: Dutch (Belgium) (https://app.transifex.com/ledgersmb/"
 "teams/58325/nl_BE/)\n"
@@ -1894,7 +1894,7 @@ msgstr "Gemaakt op"
 msgid "Credit"
 msgstr "Credit"
 
-#: lib/LedgerSMB/Scripts/contact.pm:299
+#: lib/LedgerSMB/Scripts/contact.pm:300
 msgid "Credit Account"
 msgstr "Crediteurenrekening"
 
@@ -3013,7 +3013,7 @@ msgstr "Ingeboekt op"
 msgid "Entered at: [_1]"
 msgstr "Ingevoerd op: [_1]"
 
-#: lib/LedgerSMB/Scripts/contact.pm:297
+#: lib/LedgerSMB/Scripts/contact.pm:298
 #: lib/LedgerSMB/Scripts/report_aging.pm:142 sql/Pg-database.sql:1036
 msgid "Entity"
 msgstr "Bedrijfseenheid"
@@ -4695,7 +4695,7 @@ msgstr "negentig"
 msgid "No"
 msgstr "Nee"
 
-#: lib/LedgerSMB/Scripts/contact.pm:607
+#: lib/LedgerSMB/Scripts/contact.pm:609
 msgid "No AR or AP Account Selected"
 msgstr "Geen crediteuren- of debiteurenrekening geselecteerd"
 
@@ -8043,7 +8043,7 @@ msgstr "Niet-ondersteunde rekeningcategorie"
 msgid "Unsupported account link combinations"
 msgstr "Niet-ondersteunde rekening-link-combinatie"
 
-#: lib/LedgerSMB/Scripts/contact.pm:453
+#: lib/LedgerSMB/Scripts/contact.pm:455
 msgid "Unsupported account type"
 msgstr "Niet-ondersteund account type"
 

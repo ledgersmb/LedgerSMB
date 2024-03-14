@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.11.11-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-02-15 20:33+0000\n"
+"POT-Creation-Date: 2024-03-14 20:59+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2023\n"
 "Language-Team: Norwegian Bokmål (https://app.transifex.com/ledgersmb/"
 "teams/58325/nb/)\n"
@@ -1899,7 +1899,7 @@ msgstr "Laget på"
 msgid "Credit"
 msgstr "Kredit"
 
-#: lib/LedgerSMB/Scripts/contact.pm:299
+#: lib/LedgerSMB/Scripts/contact.pm:300
 msgid "Credit Account"
 msgstr "Kredittkonto"
 
@@ -3018,7 +3018,7 @@ msgstr "Lagt inn ved"
 msgid "Entered at: [_1]"
 msgstr "Lagt inn ved: [_1]"
 
-#: lib/LedgerSMB/Scripts/contact.pm:297
+#: lib/LedgerSMB/Scripts/contact.pm:298
 #: lib/LedgerSMB/Scripts/report_aging.pm:142 sql/Pg-database.sql:1036
 msgid "Entity"
 msgstr "Eksisterende"
@@ -4700,7 +4700,7 @@ msgstr "Nitti"
 msgid "No"
 msgstr "Nei"
 
-#: lib/LedgerSMB/Scripts/contact.pm:607
+#: lib/LedgerSMB/Scripts/contact.pm:609
 msgid "No AR or AP Account Selected"
 msgstr "Ingen Kundekonto eller Leverandørkonto er valgt"
 
@@ -8068,7 +8068,7 @@ msgstr "Ikke støttede konto kategorier"
 msgid "Unsupported account link combinations"
 msgstr "Ikke støttede konto link kombinasjoner"
 
-#: lib/LedgerSMB/Scripts/contact.pm:453
+#: lib/LedgerSMB/Scripts/contact.pm:455
 msgid "Unsupported account type"
 msgstr "Ikke støttet konto type"
 

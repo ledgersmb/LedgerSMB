@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.11.11-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-02-15 20:33+0000\n"
+"POT-Creation-Date: 2024-03-14 20:59+0000\n"
 "Last-Translator: O Kan <teravitk@gmail.com>, 2023\n"
 "Language-Team: Thai (Thailand) (https://app.transifex.com/ledgersmb/"
 "teams/58325/th_TH/)\n"
@@ -1887,7 +1887,7 @@ msgstr ""
 msgid "Credit"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:299
+#: lib/LedgerSMB/Scripts/contact.pm:300
 msgid "Credit Account"
 msgstr ""
 
@@ -3004,7 +3004,7 @@ msgstr ""
 msgid "Entered at: [_1]"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:297
+#: lib/LedgerSMB/Scripts/contact.pm:298
 #: lib/LedgerSMB/Scripts/report_aging.pm:142 sql/Pg-database.sql:1036
 msgid "Entity"
 msgstr ""
@@ -4673,7 +4673,7 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:607
+#: lib/LedgerSMB/Scripts/contact.pm:609
 msgid "No AR or AP Account Selected"
 msgstr ""
 
@@ -8003,7 +8003,7 @@ msgstr ""
 msgid "Unsupported account link combinations"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:453
+#: lib/LedgerSMB/Scripts/contact.pm:455
 msgid "Unsupported account type"
 msgstr ""
 
