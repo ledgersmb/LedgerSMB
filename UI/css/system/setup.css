@@ -13,6 +13,10 @@ div#loading {
     z-index: 100;
 }
 
+body.setup-upgrade {
+    overflow: auto;
+}
+
 div.setupconsole {
     background-color: white;
     border: 1px solid black;
