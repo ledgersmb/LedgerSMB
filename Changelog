@@ -40,6 +40,15 @@ Updated dependencies
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.11
+* Fix 'not set up for hierarchy reporting' on Entity Account screen (#8065)
+* Fix date format presentation misalignment with placeholder (#7983)
+* Fix order of comparison periods in PNL and B/S (#7800)
+* Fix handling of discounts in invoice API (#8030)
+* Restore Hebrew 'nplurals' setting back to 4
+* Enable scroll bars on setup(upgrade) data fix screens (#8071)
+
+
 Changelog for 1.11.10
 * Fix upgrades from older Pg versions with the 'cash_impact' view (#7987)
 * Fix missing locale parameter creating GL Search report (#7997)
