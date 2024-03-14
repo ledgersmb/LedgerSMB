@@ -3,6 +3,14 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.33
+* Enable scroll bars on setup(upgrade) data fix screens (#8071)
+* Fix 'not set up for hierarchy reporting' on Entity Account screen (#8056)
+* Fix order of period comparisons in PNL and B/S (#7800)
+* Fix recurring transactions after setup.pl CSRF mitigation (#8042)
+* Revert Hebrew 'nplurals' back to 4
+
+
 Changelog for 1.10.32
 * Fix upgrades from older Pg versions with the 'cash_impact' view (#7987)
 * Fix missing locale parameter creating GL Search report (#7997)
