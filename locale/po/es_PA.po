@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.33-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-02-15 19:49+0000\n"
+"POT-Creation-Date: 2024-03-14 20:52+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2022\n"
 "Language-Team: Spanish (Panama) (https://app.transifex.com/ledgersmb/"
 "teams/58325/es_PA/)\n"
@@ -1920,7 +1920,7 @@ msgstr ""
 msgid "Credit"
 msgstr "Crédito"
 
-#: lib/LedgerSMB/Scripts/contact.pm:302
+#: lib/LedgerSMB/Scripts/contact.pm:303
 msgid "Credit Account"
 msgstr ""
 
@@ -3042,7 +3042,7 @@ msgstr "Ingresado en"
 msgid "Entered at: [_1]"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:300
+#: lib/LedgerSMB/Scripts/contact.pm:301
 #: lib/LedgerSMB/Scripts/report_aging.pm:143 sql/Pg-database.sql:1036
 msgid "Entity"
 msgstr ""
@@ -4312,7 +4312,7 @@ msgstr ""
 msgid "Load Templates"
 msgstr ""
 
-#: UI/src/components/ServerUI.js:71 UI/src/components/ServerUI.js:90
+#: UI/src/components/ServerUI.js:90 UI/src/components/ServerUI.js:71
 msgid "Loaded"
 msgstr ""
 
@@ -4674,7 +4674,7 @@ msgstr "noventa"
 msgid "No"
 msgstr "No"
 
-#: lib/LedgerSMB/Scripts/contact.pm:609
+#: lib/LedgerSMB/Scripts/contact.pm:611
 msgid "No AR or AP Account Selected"
 msgstr ""
 
@@ -8015,7 +8015,7 @@ msgstr ""
 msgid "Unsupported account link combinations"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/contact.pm:455
+#: lib/LedgerSMB/Scripts/contact.pm:457
 msgid "Unsupported account type"
 msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.33-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-02-15 19:49+0000\n"
+"POT-Creation-Date: 2024-03-14 20:52+0000\n"
 "Last-Translator: ylavoie <ylavoie@yveslavoie.com>, 2023\n"
 "Language-Team: French (France) (https://app.transifex.com/ledgersmb/"
 "teams/58325/fr_FR/)\n"
@@ -1934,7 +1934,7 @@ msgstr "Créé le"
 msgid "Credit"
 msgstr "Crédit"
 
-#: lib/LedgerSMB/Scripts/contact.pm:302
+#: lib/LedgerSMB/Scripts/contact.pm:303
 msgid "Credit Account"
 msgstr "Compte de crédit"
 
@@ -3058,7 +3058,7 @@ msgstr "Entré à"
 msgid "Entered at: [_1]"
 msgstr "Entré à : [_1]"
 
-#: lib/LedgerSMB/Scripts/contact.pm:300
+#: lib/LedgerSMB/Scripts/contact.pm:301
 #: lib/LedgerSMB/Scripts/report_aging.pm:143 sql/Pg-database.sql:1036
 msgid "Entity"
 msgstr "Entité"
@@ -4350,7 +4350,7 @@ msgstr "Liste des types d'entreprises"
 msgid "Load Templates"
 msgstr "Charger des modèles"
 
-#: UI/src/components/ServerUI.js:71 UI/src/components/ServerUI.js:90
+#: UI/src/components/ServerUI.js:90 UI/src/components/ServerUI.js:71
 msgid "Loaded"
 msgstr "Chargé"
 
@@ -4717,7 +4717,7 @@ msgstr "Nonante"
 msgid "No"
 msgstr "Non"
 
-#: lib/LedgerSMB/Scripts/contact.pm:609
+#: lib/LedgerSMB/Scripts/contact.pm:611
 msgid "No AR or AP Account Selected"
 msgstr "Aucun compte AR ou AP sélectionné"
 
@@ -8112,7 +8112,7 @@ msgstr "Catégories de compte non prises en charge"
 msgid "Unsupported account link combinations"
 msgstr "Combinaisons de liens de compte non prises en charge"
 
-#: lib/LedgerSMB/Scripts/contact.pm:455
+#: lib/LedgerSMB/Scripts/contact.pm:457
 msgid "Unsupported account type"
 msgstr "Type de compte non pris en charge"
 
