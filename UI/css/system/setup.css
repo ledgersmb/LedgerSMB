@@ -30,6 +30,10 @@ body[data-lsmb-done="true"] #logindiv {
     visibility: visible;
 }
 
+body.setup-upgrade {
+    overflow: auto;
+}
+
 div.setupconsole {
     background-color: white;
     border: 1px solid black;
