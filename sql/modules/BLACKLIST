@@ -170,6 +170,7 @@ deduction__list_types
 deduction__save
 defaults__get_contra_accounts
 defaults_get_defaultcurrency
+draft__delete_lines
 draft__search
 draft_approve
 draft_delete

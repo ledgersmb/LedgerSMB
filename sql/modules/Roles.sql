@@ -656,6 +656,9 @@ SELECT lsmb__create_role('draft_modify',
                          This role allows modification of existing draft (= saved) transactions.
                          $DOC$
 );
+SELECT lsmb__grant_exec('draft_modify', 'draft__delete_lines(int)');
+SELECT lsmb__grant_exec('draft_modify', 'draft_delete(int)');
+
 SELECT lsmb__create_role('draft_post',
                          $DOC$
                          This role allows posting of saved transactions to the ledger.
