@@ -659,7 +659,7 @@ sub process_bclasses {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012-2018 The LedgerSMB Core Team
+Copyright (C) 2012-2024 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
