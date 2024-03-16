@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.1
-   Date:     2022-07-22
+   Version:  2.0
+   Date:     2024-03-16
    File:     statement.tex
    Set:      demo
 
@@ -9,6 +9,9 @@ Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
 Version   Changes
+2.0       Grouping of amounts by currency, in case of
+          exposure in multiple currencies against a single customer
+
 1.1       Merged xelatex targetting templates with those targetting pdflatex
 
 -?>
@@ -47,29 +50,40 @@ Version   Changes
 
 \vspace{2cm}
 
-\begin{tabular*}{\textwidth}{|ll@{\extracolsep\fill}ccrrrr|}
+\begin{tabular*}{\textwidth}{|ll@{\extracolsep\fill}ccrrrrrl|}
   \hline
   \textbf{<?lsmb text('Invoice #') ?>} & \textbf{<?lsmb text('Order #') ?>}
   & \textbf{<?lsmb text('Date') ?>} & \textbf{<?lsmb text('Due') ?>} &
-  \textbf{<?lsmb text('Current') ?>} & \textbf{30} & \textbf{60} & \textbf{90} \\
+  \textbf{<?lsmb text('Current') ?>} & \textbf{30} & \textbf{60} & \textbf{90} &
+   \textbf{<?lsmb text('Total') ?>} & \textbf{<?lsmb text('Currency') ?>} \\
   \hline
-<?lsmb FOREACH invoice IN statement.aging.rows ?>
+  <?lsmb- FOREACH invoice IN statement.aging.rows -?>
+  <?lsmb- IF invoice.html_class.defined -?>
+  %  \hline
+  \textbf{<?lsmb text('Total') ?>} &
+  & & &
+  \textbf{<?lsmb invoice.c0_tc ?>} &
+  \textbf{<?lsmb invoice.c30_tc ?>} &
+  \textbf{<?lsmb invoice.c60_tc ?>} &
+  \textbf{<?lsmb invoice.c90_tc ?>} &
+  \textbf{<?lsmb invoice.total_tc ?>} &
+  \textbf{<?lsmb invoice.curr ?>} \\
+  <?lsmb- ELSE -?>
   <?lsmb invoice.invnumber ?> &
   <?lsmb invoice.ordnumber ?> &
   <?lsmb invoice.transdate ?> &
   <?lsmb invoice.duedate ?> &
-  <?lsmb invoice.c0 ?> &
-  <?lsmb invoice.c30 ?> &
-  <?lsmb invoice.c60 ?> &
-  <?lsmb invoice.c90 ?> \\
+  <?lsmb invoice.c0_tc ?> &
+  <?lsmb invoice.c30_tc ?> &
+  <?lsmb invoice.c60_tc ?> &
+  <?lsmb invoice.c90_tc ?> &
+  <?lsmb invoice.total_tc ?> &
+  <?lsmb invoice.curr ?> \\
+  <?lsmb- END -?>
+  <?lsmb- IF invoice.html_class.defined -?>
+  \hline
+  <?lsmb- END -?>
 <?lsmb END ?>
-\hline
- & & & &
- <?lsmb statement.aging.c0total ?> &
- <?lsmb statement.aging.c30total ?> &
- <?lsmb statement.aging.c60total ?> &
- <?lsmb statement.aging.c90total ?> \\
-\hline
 \end{tabular*}
 
 \vspace{0.5cm}

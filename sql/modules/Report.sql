@@ -67,6 +67,10 @@ CREATE TYPE report_aging_item AS (
         c30 numeric,
         c60 numeric,
         c90 numeric,
+        c0_tc numeric,
+        c30_tc numeric,
+        c60_tc numeric,
+        c90_tc numeric,
         duedate date,
         id int,
         curr char(3),
@@ -120,6 +124,22 @@ RETURN QUERY EXECUTE $sql$
                             THEN (a.sign * sum(ac.amount_bc))
                             ELSE 0 END
                             as c90,
+                       CASE WHEN a.age/30 = 0
+                                 THEN (a.sign * sum(ac.amount_tc))
+                            ELSE 0 END
+                            as c0_tc,
+                       CASE WHEN a.age/30 = 1
+                                 THEN (a.sign * sum(ac.amount_tc))
+                            ELSE 0 END
+                            as c30_tc,
+                       CASE WHEN a.age/30 = 2
+                            THEN (a.sign * sum(ac.amount_tc))
+                            ELSE 0 END
+                            as c60_tc,
+                       CASE WHEN a.age/30 > 2
+                            THEN (a.sign * sum(ac.amount_tc))
+                            ELSE 0 END
+                            as c90_tc,
                        a.duedate, a.id, a.curr,
                        null::numeric AS exchangerate,
                         (SELECT array_agg(ARRAY[p.partnumber,

@@ -154,14 +154,15 @@ END; %]</th>
                                           name=PFX _ COL.col_id _ '_' _ ROW.row_id
                                           value=ROW.${COL.col_id} };
                ELSIF TYPE == 'checkbox';
-                 PROCESS input element_data = {
-                          id=PFX _ COL.col_id _ '-' _ ROWCOUNT
-                          type="checkbox"
-                          name=PFX _ COL.col_id _ '_' _ ROWCOUNT
-                          class=COL.class
-                          value=ROW.row_id
-                          checked=(ROW.${COL.col_id} ? "checked" : '') };
-
+                 IF ROW.row_id.defined;
+                    PROCESS input element_data = {
+                            id=PFX _ COL.col_id _ '-' _ ROWCOUNT
+                            type="checkbox"
+                            name=PFX _ COL.col_id _ '_' _ ROWCOUNT
+                            class=COL.class
+                            value=ROW.row_id
+                            checked=(ROW.${COL.col_id} ? "checked" : '') };
+                 END;
                ELSIF TYPE == 'boolean_checkmark';
                  IF ROW.${COL.col_id};
                        '✓';

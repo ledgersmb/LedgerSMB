@@ -382,6 +382,7 @@ sub generate_statement {
                 method          => $request->{media},
                 format_plugin   => ($request->{_wire}->get( 'output_formatter' )
                                     ->get( $request->{print_format})),
+                formatter_options => $request->formatter_options,
                 );
 
         $template->render(

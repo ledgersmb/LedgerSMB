@@ -258,6 +258,14 @@ has relative_url => (
     # trick to get the value initialized from the $request object:
     init_arg => '_uri');
 
+=head2 show_totals
+
+bool, determines whether to show totals.
+
+=cut
+
+has show_totals => (is => 'rw', isa => 'Bool', init_arg => 'subtotal', default => 1);
+
 =head2 show_subtotals
 
 bool, determines whether to show subtotals.
@@ -491,44 +499,47 @@ sub _render {
         @$rows = reverse @$rows;
     }
     $self->rows($rows);
-    my $total_row = {html_class => 'listtotal', NOINPUT => 1};
-    my $col_val = undef;
-    my @newrows;
-    my $exclude = $self->_exclude_from_totals;
-    my $subtotal;
-    for my $r (@{$self->rows}){
-        if ($self->show_subtotals
-            and $self->order_by
-            and (not defined $col_val
-                 or ($col_val ne $r->{$self->order_by})) ) {
-            push @newrows, $subtotal
-                if $subtotal;
-            $subtotal = {
-                html_class => 'listsubtotal',
-                NOINPUT => 1,
-                ($self->order_by() . '_NOHREF' => 1),
-                $self->order_by() => $r->{$self->order_by}
-            };
-        }
 
-        for my $k (keys %$r){
-            next if $exclude->{$k};
+    if ($self->show_totals) {
+        my $total_row = {html_class => 'listtotal', NOINPUT => 1};
+        my $col_val = undef;
+        my @newrows;
+        my $exclude = $self->_exclude_from_totals;
+        my $subtotal;
+        for my $r (@{$self->rows}){
+            if ($self->show_subtotals
+                and $self->order_by
+                and (not defined $col_val
+                     or ($col_val ne $r->{$self->order_by})) ) {
+                push @newrows, $subtotal
+                    if $subtotal;
+                $subtotal = {
+                    html_class => 'listsubtotal',
+                    NOINPUT => 1,
+                    ($self->order_by() . '_NOHREF' => 1),
+                    $self->order_by() => $r->{$self->order_by}
+                };
+            }
 
-            if (blessed $r->{$k} and $r->{$k}->isa('LedgerSMB::PGNumber') ){
-                $total_row->{$k} //= LedgerSMB::PGNumber->bzero;
-                $total_row->{$k}->badd($r->{$k});
-                if ($subtotal) {
-                    $subtotal->{$k} //= LedgerSMB::PGNumber->bzero;
-                    $subtotal->{$k}->badd($r->{$k});
+            for my $k (keys %$r){
+                next if $exclude->{$k};
+
+                if (blessed $r->{$k} and $r->{$k}->isa('LedgerSMB::PGNumber') ){
+                    $total_row->{$k} //= LedgerSMB::PGNumber->bzero;
+                    $total_row->{$k}->badd($r->{$k});
+                    if ($subtotal) {
+                        $subtotal->{$k} //= LedgerSMB::PGNumber->bzero;
+                        $subtotal->{$k}->badd($r->{$k});
+                    }
                 }
             }
+            push @newrows, $r;
+            $col_val = $self->order_by ? $r->{$self->order_by} : undef;
         }
-        push @newrows, $r;
-        $col_val = $self->order_by ? $r->{$self->order_by} : undef;
+        push @newrows, $subtotal if $subtotal;
+        push @newrows, $total_row unless $self->manual_totals;
+        $self->rows(\@newrows);
     }
-    push @newrows, $subtotal if $subtotal;
-    push @newrows, $total_row unless $self->manual_totals;
-    $self->rows(\@newrows);
     # Rendering
 
     my %want_col = $self->selected_columns->%*;
