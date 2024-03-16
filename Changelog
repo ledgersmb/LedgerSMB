@@ -26,6 +26,8 @@ Bugs fixed
 * JavaScript dependencies versus dev-dependencies (#8028)
 * AR/AP items in vouchers can be saved only once (#6895)
 * Accounts marked for reconciliation can't be deleted (#7805)
+* Transactions and invoices with attachments can't be saved (#6018)
+* Aging statement shows functional instead of foreign currency amounts (#2162)
 
 Cleanup & architecture improvements
 * Reference data factored out of database schema (#7648)
