@@ -328,9 +328,11 @@ sub generate_statement {
             (ref $filters{$eca}) ? (details_filter => $filters{$eca}) : (),
             languages => $request->enabled_languages,
             entity_id => $entity_id,
-            credit_id => $credit_act->id
+            credit_id => $credit_act->id,
+            formatter_options => $request->formatter_options,
             );
         $aging_report->run_report($request);
+        $aging_report->format_money_columns;
         my $statement = {
               aging => $aging_report,
              entity => $company,

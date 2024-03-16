@@ -166,7 +166,7 @@ sub columns {
        name => $self->Text('Total'),
        type => 'text',
       money => 1,
-     pwidth => '1', },
+     pwidth => '3', },
 
       {col_id => 'curr',
          name => $self->Text('Currency'),

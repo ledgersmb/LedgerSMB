@@ -431,11 +431,42 @@ sub output_name {
     return $name;
 }
 
+=head2 format_money_columns
+
+Formats the data in C<$self->rows> of columns marked as "money" type
+into correctly formatted strings. Invoked as part of C<render>.
+
+=cut
+
+sub format_money_columns {
+    my ($self, $columns) = @_;
+    my @columns = ($columns // $self->columns)->@*;
+
+    for my $col (@columns){
+        if ($col->{money}) {
+            $col->{class} = 'money';
+            for my $row(@{$self->rows}){
+                local $@ = undef;
+                if ( blessed $row->{$col->{col_id}}
+                     and $row->{$col->{col_id}}->can('to_output') ){
+                    $row->{$col->{col_id}} =
+                        $row->{$col->{col_id}}->to_output(
+                            money => 1,
+                            $self->formatter_options->%*);
+                }
+            }
+        }
+    }
+}
+
+
+
 # PRIVATE METHODS
 
 # _render
 #
 # Render the report.
+
 
 sub _render {
     my $self = shift;
@@ -550,24 +581,10 @@ sub _render {
             or ($_->{col_id} =~ m/^bc_/ and $want_col{business_units})
         } $self->columns->@*);
 
-    for my $col (@columns){
-        if ($col->{money}) {
-            $col->{class} = 'money';
-            for my $row(@{$self->rows}){
-                local $@ = undef;
-                if ( blessed $row->{$col->{col_id}}
-                     and $row->{$col->{col_id}}->can('to_output') ){
-                    $row->{$col->{col_id}} =
-                        $row->{$col->{col_id}}->to_output(
-                            money => 1,
-                            $self->formatter_options->%*);
-                }
-            }
-        }
-    }
-    my @col_ids = map { $_->{col_id} } @columns;
 
+    $self->format_money_columns( \@columns );
     # values expected by dynatable:
+    my @col_ids = map { $_->{col_id} } @columns;
     push @col_ids, (
         map {
             ($_ . '_href_suffix',
