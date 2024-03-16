@@ -258,6 +258,14 @@ has relative_url => (
     # trick to get the value initialized from the $request object:
     init_arg => '_uri');
 
+=head2 show_totals
+
+bool, determines whether to show totals.
+
+=cut
+
+has show_totals => (is => 'rw', isa => 'Bool', init_arg => 'subtotal', default => 1);
+
 =head2 show_subtotals
 
 bool, determines whether to show subtotals.
@@ -423,11 +431,42 @@ sub output_name {
     return $name;
 }
 
+=head2 format_money_columns
+
+Formats the data in C<$self->rows> of columns marked as "money" type
+into correctly formatted strings. Invoked as part of C<render>.
+
+=cut
+
+sub format_money_columns {
+    my ($self, $columns) = @_;
+    my @columns = ($columns // $self->columns)->@*;
+
+    for my $col (@columns){
+        if ($col->{money}) {
+            $col->{class} = 'money';
+            for my $row(@{$self->rows}){
+                local $@ = undef;
+                if ( blessed $row->{$col->{col_id}}
+                     and $row->{$col->{col_id}}->can('to_output') ){
+                    $row->{$col->{col_id}} =
+                        $row->{$col->{col_id}}->to_output(
+                            money => 1,
+                            $self->formatter_options->%*);
+                }
+            }
+        }
+    }
+}
+
+
+
 # PRIVATE METHODS
 
 # _render
 #
 # Render the report.
+
 
 sub _render {
     my $self = shift;
@@ -491,44 +530,47 @@ sub _render {
         @$rows = reverse @$rows;
     }
     $self->rows($rows);
-    my $total_row = {html_class => 'listtotal', NOINPUT => 1};
-    my $col_val = undef;
-    my @newrows;
-    my $exclude = $self->_exclude_from_totals;
-    my $subtotal;
-    for my $r (@{$self->rows}){
-        if ($self->show_subtotals
-            and $self->order_by
-            and (not defined $col_val
-                 or ($col_val ne $r->{$self->order_by})) ) {
-            push @newrows, $subtotal
-                if $subtotal;
-            $subtotal = {
-                html_class => 'listsubtotal',
-                NOINPUT => 1,
-                ($self->order_by() . '_NOHREF' => 1),
-                $self->order_by() => $r->{$self->order_by}
-            };
-        }
 
-        for my $k (keys %$r){
-            next if $exclude->{$k};
+    if ($self->show_totals) {
+        my $total_row = {html_class => 'listtotal', NOINPUT => 1};
+        my $col_val = undef;
+        my @newrows;
+        my $exclude = $self->_exclude_from_totals;
+        my $subtotal;
+        for my $r (@{$self->rows}){
+            if ($self->show_subtotals
+                and $self->order_by
+                and (not defined $col_val
+                     or ($col_val ne $r->{$self->order_by})) ) {
+                push @newrows, $subtotal
+                    if $subtotal;
+                $subtotal = {
+                    html_class => 'listsubtotal',
+                    NOINPUT => 1,
+                    ($self->order_by() . '_NOHREF' => 1),
+                    $self->order_by() => $r->{$self->order_by}
+                };
+            }
 
-            if (blessed $r->{$k} and $r->{$k}->isa('LedgerSMB::PGNumber') ){
-                $total_row->{$k} //= LedgerSMB::PGNumber->bzero;
-                $total_row->{$k}->badd($r->{$k});
-                if ($subtotal) {
-                    $subtotal->{$k} //= LedgerSMB::PGNumber->bzero;
-                    $subtotal->{$k}->badd($r->{$k});
+            for my $k (keys %$r){
+                next if $exclude->{$k};
+
+                if (blessed $r->{$k} and $r->{$k}->isa('LedgerSMB::PGNumber') ){
+                    $total_row->{$k} //= LedgerSMB::PGNumber->bzero;
+                    $total_row->{$k}->badd($r->{$k});
+                    if ($subtotal) {
+                        $subtotal->{$k} //= LedgerSMB::PGNumber->bzero;
+                        $subtotal->{$k}->badd($r->{$k});
+                    }
                 }
             }
+            push @newrows, $r;
+            $col_val = $self->order_by ? $r->{$self->order_by} : undef;
         }
-        push @newrows, $r;
-        $col_val = $self->order_by ? $r->{$self->order_by} : undef;
+        push @newrows, $subtotal if $subtotal;
+        push @newrows, $total_row unless $self->manual_totals;
+        $self->rows(\@newrows);
     }
-    push @newrows, $subtotal if $subtotal;
-    push @newrows, $total_row unless $self->manual_totals;
-    $self->rows(\@newrows);
     # Rendering
 
     my %want_col = $self->selected_columns->%*;
@@ -539,24 +581,10 @@ sub _render {
             or ($_->{col_id} =~ m/^bc_/ and $want_col{business_units})
         } $self->columns->@*);
 
-    for my $col (@columns){
-        if ($col->{money}) {
-            $col->{class} = 'money';
-            for my $row(@{$self->rows}){
-                local $@ = undef;
-                if ( blessed $row->{$col->{col_id}}
-                     and $row->{$col->{col_id}}->can('to_output') ){
-                    $row->{$col->{col_id}} =
-                        $row->{$col->{col_id}}->to_output(
-                            money => 1,
-                            $self->formatter_options->%*);
-                }
-            }
-        }
-    }
-    my @col_ids = map { $_->{col_id} } @columns;
 
+    $self->format_money_columns( \@columns );
     # values expected by dynatable:
+    my @col_ids = map { $_->{col_id} } @columns;
     push @col_ids, (
         map {
             ($_ . '_href_suffix',
@@ -631,7 +659,7 @@ sub process_bclasses {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012-2018 The LedgerSMB Core Team
+Copyright (C) 2012-2024 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

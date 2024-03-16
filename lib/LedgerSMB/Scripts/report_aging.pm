@@ -328,9 +328,11 @@ sub generate_statement {
             (ref $filters{$eca}) ? (details_filter => $filters{$eca}) : (),
             languages => $request->enabled_languages,
             entity_id => $entity_id,
-            credit_id => $credit_act->id
+            credit_id => $credit_act->id,
+            formatter_options => $request->formatter_options,
             );
         $aging_report->run_report($request);
+        $aging_report->format_money_columns;
         my $statement = {
               aging => $aging_report,
              entity => $company,
@@ -382,6 +384,7 @@ sub generate_statement {
                 method          => $request->{media},
                 format_plugin   => ($request->{_wire}->get( 'output_formatter' )
                                     ->get( $request->{print_format})),
+                formatter_options => $request->formatter_options,
                 );
 
         $template->render(
@@ -426,7 +429,7 @@ sub generate_statement {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012-2022 The LedgerSMB Core Team
+Copyright (C) 2012-2024 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
