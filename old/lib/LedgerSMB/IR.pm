@@ -134,25 +134,14 @@ sub post_invoice {
 
     # check if id really exists
     if ( $form->{id} ) {
-        if ($form->{batch_id}) {
-           $query = "SELECT voucher__delete(id)
-                       FROM voucher
-                      where trans_id = ? and batch_class in (1, 2)";
-           $dbh->prepare($query)->execute($form->{id}) || $form->dberror($query);
-           delete $form->{id};
-        }
-        else {
-            # delete detail records
-            $query = qq|SELECT draft_delete(?)|;
-            $dbh->do($query, {}, $form->{id}) || $form->dberror($query);
-            delete $form->{id};
-        }
+        # delete detail records
+        $query = qq|SELECT draft__delete_lines(?)|;
+        $dbh->do($query, {}, $form->{id}) || $form->dberror($query);
     }
+    else {
+        my $uid = localtime;
+        $uid .= "$$";
 
-    my $uid = localtime;
-    $uid .= "$$";
-    if (not $form->{id}) {
-        # note that the previous section may have removed $form->{id}, so this can't be an 'else' statement
         $query = qq|
             INSERT INTO ap (invnumber, person_id, entity_credit_account)
                  VALUES ('$uid', ?, ?)|;

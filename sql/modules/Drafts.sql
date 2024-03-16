@@ -119,6 +119,41 @@ $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 COMMENT ON FUNCTION draft_approve(in_id int) IS
 $$ Posts draft to the books.  in_id is the id from the ar, ap, or gl table.$$;
 
+CREATE OR REPLACE FUNCTION draft__delete_lines(in_id int) returns bool as
+  $$
+  begin
+        DELETE FROM ac_tax_form atf
+         WHERE EXISTS (SELECT 1 FROM acc_trans
+                        WHERE entry_id = atf.entry_id
+                              AND trans_id = in_id);
+
+        DELETE FROM payment_links pl
+         WHERE EXISTS (SELECT 1 FROM acc_trans
+                        WHERE entry_id = pl.entry_id
+                              AND trans_id = in_id)
+               AND (SELECT count(distinct ac.trans_id)
+                      FROM payment p
+                      JOIN payment_links pli ON p.id = pli.payment_id
+                      JOIN acc_trans ac ON pli.entry_id = ac.entry_id
+                     WHERE pl.payment_id = p.id) <= 1;
+
+        DELETE FROM acc_trans WHERE trans_id = in_id;
+
+        DELETE FROM invoice_tax_form itf
+           WHERE EXISTS (select 1 from invoice i
+                          where i.trans_id = in_id and itf.invoice_id = i.id);
+        DELETE FROM invoice WHERE trans_id = in_id;
+
+    RETURN true;
+  end;
+  $$ language plpgsql security definer;
+
+REVOKE ALL ON FUNCTION draft__delete_lines(int) FROM PUBLIC;
+
+COMMENT ON FUNCTION draft__delete_lines(in_id int) is
+$$ Deletes the lines from the draft to prepare it for a re-save action.$$;
+
+
 CREATE OR REPLACE FUNCTION draft_delete(in_id int) returns bool as
 $$
 declare
@@ -162,6 +197,9 @@ begin
         RETURN TRUE;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
+
+REVOKE ALL ON FUNCTION draft_delete(int) FROM PUBLIC;
+
 
 COMMENT ON FUNCTION draft_delete(in_id int) is
 $$ Deletes the draft from the book.  Only will delete unapproved transactions.
