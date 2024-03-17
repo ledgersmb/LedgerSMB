@@ -666,6 +666,19 @@ sub save_credit_new {
     return save_credit($request);
 }
 
+=item update_credit($request)
+
+Reload the drop-downs linked to the Class drop-down (customer/vendor)
+
+=cut
+
+
+sub update_credit {
+    my ($request) = @_;
+    $request->{target_div} = 'credit_div';
+    return get($request);
+}
+
 =item save_location
 
 Adds a location to the company as defined in the inherited object
