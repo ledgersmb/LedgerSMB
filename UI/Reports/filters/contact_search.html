@@ -3,13 +3,13 @@
 %]
 <body class="lsmb [% dojo_theme %]">
 [%
-IF !account_class;
+IF !entity_class;
    title = text('Contact Search'); #'
-ELSIF account_class == 1;
+ELSIF entity_class == 1;
    title = text('Vendor Search'); #'
-ELSIF account_class == 2;
+ELSIF entity_class == 2;
    title = text('Customer Search'); #'
-ELSIF account_class == 3;
+ELSIF entity_class == 3;
    title = text('Employee Search'); #'
 ELSE;
    title = text('Unsupported.  Expect errors'); #'
@@ -18,6 +18,9 @@ END -%]
       method="get"
       action="contact_reports.pl"
       id="search-contact">
+[% IF entity_class.defined %]
+<input type="hidden" name="entity_class" value="[% entity_class %]">
+[% END %]
 <table width="100%">
   <tr><th class="listtop">[% title %]</th></tr>
 
@@ -28,7 +31,11 @@ END -%]
         <tr valign="top">
           <td>
             <table>
-              [% PROCESS entity_class %]
+              [%
+              IF NOT entity_class == 3;
+              PROCESS entity_class;
+              END;
+              %]
               <tr>
                 <th align="right">[% text('Name') %]</th>
                 <td>[% INCLUDE input element_data={
@@ -80,11 +87,15 @@ END -%]
           </td>
           <td>
             <table>
+              [%
+              IF NOT entity_class == 3;
+              %]
               <tr>
                 <th align="right">[% text("Account Number") %]</th>
                 <td>[% INCLUDE input element_data={
                            size = '32', name = "meta_number"} %]</td>
               </tr>
+              [% END %]
               <tr>
                 <th align="right">[% text('Address') %]</th>
                 <td>[% INCLUDE input element_data={
@@ -136,10 +147,17 @@ END -%]
     <td><hr size="3" noshade="noshade" /></td>
   </tr>
 </table>
-[% INCLUDE button element_data = {
+[%
+IF entity_class == 3;
+   search_action = "employee_search";
+ELSE;
+   search_action = "search";
+END;
+
+INCLUDE button element_data = {
         text = text('Search')
         name = "__action"
-        value = 'search'
+        value = search_action
         class = "submit"
         type = "submit"
 } %]

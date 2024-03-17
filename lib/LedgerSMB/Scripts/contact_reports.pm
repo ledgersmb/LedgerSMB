@@ -13,6 +13,7 @@ This module provides contact reports and purchase/sales history for LedgerSMB.
 
 =cut
 
+use LedgerSMB::Report::Contact::EmployeeSearch;
 use LedgerSMB::Report::Contact::Search;
 use LedgerSMB::Report::Contact::History;
 use strict;
@@ -22,13 +23,31 @@ our $VERSION = '1.0';
 
 =over
 
+=item employee_search
+
+Runs the employee search report and displays it
+
+=cut
+
+sub employee_search {
+    my ($request) = @_;
+
+    return $request->render_report(
+        LedgerSMB::Report::Contact::EmployeeSearch->new(
+            %$request,
+            active_date_from => $request->parse_date( $request->{active_date_from} ),
+            active_date_to => $request->parse_date( $request->{active_date_to} ),
+            formatter_options => $request->formatter_options
+        ));
+}
+
 =item search
 
 Runs the search report and displays it
 
 =cut
 
-sub search{
+sub search {
     my ($request) = @_;
 
     return $request->render_report(
