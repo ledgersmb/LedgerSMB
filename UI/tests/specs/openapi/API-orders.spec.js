@@ -73,7 +73,7 @@ beforeEach(async () => {
         }
     );
     if (r.status === StatusCodes.OK) {
-        const data = await r.json();
+        await r.json();
         headers = {
             cookie: r.headers.get("set-cookie"),
         };
