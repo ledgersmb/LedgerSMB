@@ -154,7 +154,7 @@ sub _get_orders_by_id {
         # Why?
         $line->{qty} += 0; # Force string to number conversion
         $line->{price} += 0; # Force string to number conversion
-        $line->{total} = ($line->{price} * $line->{qty} * (1 - $line->{discount}));
+        $line->{total} = ($line->{price} * $line->{qty} * (1 - $line->{discount}/100));
 
         my $part = LedgerSMB::Part->new(
             _dbh => $env->{'lsmb.db'}
@@ -176,7 +176,7 @@ sub _get_orders_by_id {
     die $sth->errstr if $sth->err;
 
     $query = q|
-        SELECT oe_tax.*, account.accno
+        SELECT oe_tax.*, account.accno, account.description
           FROM oe_tax
           JOIN account ON oe_tax.tax_id = account.id
          WHERE oe_id = ?
@@ -185,9 +185,24 @@ sub _get_orders_by_id {
         or die $env->{'lsmb.db'}->errstr;
     $sth->execute($ord{id})
         or die $sth->errstr;
-    $ord{taxes} = $sth->fetchall_hashref('accno');
+    $ord{taxes} = {};
+    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+        $ord{taxes}->{$row->{accno}} = $row;
+    }
     die $sth->errstr
         if $sth->err;
+    for my $tax (keys $ord{taxes}->%*) {
+        my $ref = $ord{taxes}->{$tax};
+        $ref->{tax} = {
+            category => delete $ref->{accno},
+            name => delete $ref->{description},
+            rate => delete $ref->{rate},
+        };
+        delete $ref->{oe_id};
+        delete $ref->{tax_id};
+        delete $ref->{exempt} unless $ref->{exempt};
+        delete $ref->{source} unless defined $ref->{source};
+    }
 
     ###TODO: calculate taxes here...
     $query = q|
@@ -582,7 +597,8 @@ sub _post_orders {
     }
     $ord->{lines_total} = reduce { $a + $b->{total} } 0, $ord->{lines}->@*;
 
-    if (not exists $ord->{taxes}) {
+    #    if (not exists $ord->{taxes}) {
+    {
         my $sth = $env->{'lsmb.db'}->prepare(
           q|
             WITH taxes AS (
@@ -664,6 +680,7 @@ sub _post_orders {
                 my $pass = 0;
 
                 for my $tax (@taxes) {
+                    print STDERR "Part: $line->{part}->{id}, tax: $tax->{accno}\n\n";
                     next unless exists $part_tax{$line->{part}->{id}}->{$tax->{accno}};
                     if ($pass != $tax->{pass}) {
                         $base += $passtax;
@@ -1259,15 +1276,11 @@ components:
                         type: string
                       name:
                         type: string
-                  base-amount:
-                    type: number
-                  amount:
-                    type: number
-                  calculated-amount:
-                    type: number
-                  source:
+                  basis:
                     type: string
-                  memo:
+                  amount:
+                    type: string
+                  source:
                     type: string
             workflow:
               type: object
@@ -1319,9 +1332,9 @@ components:
             price_fixated: false
             qty: 1
             serialnumber: "1234567890"
-            total: -624.58
+            total: 49.9664
             unit: "lbs"
-        lines_total: -624.58
+        lines_total: 49.9664
         notes: "Notes"
         "order-number": "order 345"
         "po-number": "po 456"
@@ -1332,17 +1345,14 @@ components:
         "shipping-point": "shipping from here"
         taxes:
           "2150":
-            amount: 6.78
-            "base-amount": 50
-            "calculated-amount": 2.5
-            source: "Part 1"
-            memo: "tax memo"
+            amount: "2.50"
+            basis: "49.97"
             tax:
               category: "2150"
               name: Sales Tax
               rate: "0.05"
-        taxes_total: 6.78
-        total: -617.8
+        taxes_total: 2.50
+        total: 52.4664
         type: customer
         workflow:
           actions:
