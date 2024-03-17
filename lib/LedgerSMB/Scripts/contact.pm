@@ -594,8 +594,10 @@ sub save_person {
                            );
         ($request->{control_code}) = values %$ref;
     }
+    my $birthdate = $request->parse_date($request->{birthdate});
     my $person = LedgerSMB::Entity::Person->new(
-              %$request
+        %$request,
+        birthdate => $birthdate
     );
     $request->{target_div} = 'credit_div';
     $person->save;
