@@ -72,8 +72,8 @@ BEGIN;
            (-5, 'TS5', 'COGS Test Series 5', -5101, -5102, -5104, -5103),
            (-6, 'TS5/part2', 'COGS Test Series 5/part2', -6101, -6102, -6104, -6103);
 
-    INSERT INTO entity (id, name, country_id, entity_class)
-    VALUES (-1000, 'Test act', 232, 1);
+    INSERT INTO entity (id, name, country_id)
+    VALUES (-1000, 'Test act', 232);
 
     INSERT INTO entity_credit_account
             (id, entity_class, meta_number, entity_id, curr, ar_ap_account_id)

@@ -34,8 +34,8 @@ INSERT INTO account(id, accno, description, category, heading, contra)
 values (-201, '-11112', 'Test Act 2', 'A',
         (select id from account_heading WHERE accno  = '000000000000000000000'), false);
 
-INSERT INTO entity (id, control_code, name, entity_class, country_id)
-values (-201, '-11111', 'Test 1', 1, 242);
+INSERT INTO entity (id, control_code, name, country_id)
+values (-201, '-11111', 'Test 1', 242);
 
 INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id, curr)
 values (-201, -200, 'T-11111', 1, -1000, 'XTS');
@@ -197,8 +197,8 @@ values (-202, '-11113', 'Test Act 3', 'A',
         (select id from account_heading WHERE accno  = '000000000000000000000'), false);
 
 
-INSERT INTO entity (id, control_code, name, entity_class, country_id)
-values (-202, '-11113', 'Test 1', 1, 242);
+INSERT INTO entity (id, control_code, name, country_id)
+values (-202, '-11113', 'Test 1', 242);
 INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id, curr)
 values (-202, -202, 'T-11113', 1, -1000, 'XTS');
 

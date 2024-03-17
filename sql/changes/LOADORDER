@@ -185,3 +185,4 @@ mc/delete-migration-validation-data.sql
 # 1.12 changes
 1.12/migrate_to_identity.sql
 1.12/add-stored-order-quote-taxes.sql
+1.12/drop-entity-class-entity-trigger.sql

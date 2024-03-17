@@ -41,8 +41,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'Batch Created');
     DEALLOCATE test;
 
-    INSERT INTO entity (id, name, entity_class, control_code, country_id)
-    values (-3, 'Test', 1, 'test', 242);
+    INSERT INTO entity (id, name, control_code, country_id)
+    values (-3, 'Test', 'test', 242);
     INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id, curr)
     values (-3, -1, 'Test', 1, -1000, 'XTS');
 

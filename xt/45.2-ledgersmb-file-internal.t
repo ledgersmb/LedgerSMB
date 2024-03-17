@@ -74,12 +74,10 @@ $file = LedgerSMB::File::Internal->new(
 $dbh->do("
     INSERT INTO entity(
         name,
-        entity_class,
         control_code,
         country_id
     ) VALUES (
         'LSMB-FILE-TEST',
-        3, -- Employee
         'LSMB-FILE-TEST',
         1  -- Ascension Island
     )
