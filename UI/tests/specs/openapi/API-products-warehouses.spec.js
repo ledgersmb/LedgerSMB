@@ -108,7 +108,7 @@ describe("Retrieving all products/warehouses with old syntax should fail", () =>
         const res = await fetch(serverUrl + "/" + api + "/products/warehouses/", {
             headers: headers
         });
-        expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+        expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     });
 });
 

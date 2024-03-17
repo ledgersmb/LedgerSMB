@@ -253,6 +253,9 @@ sub lookup {
     my %values;
     @values{keys %{$m->[MAP_NAMES]}} =
         @segments[values %{$m->[MAP_NAMES]}] if $m->[MAP_NAMES];
+    for my $named_value (values %values) {
+        return undef unless length $named_value > 0;
+    }
 
     if (wantarray) {
         return ($m->[MAP_HANDLER], \%values, \@wild, $m->[MAP_PATHDEF]);

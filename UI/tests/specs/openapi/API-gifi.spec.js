@@ -109,7 +109,7 @@ describe("Retrieving all gifis with old syntax should fail", () => {
         let res = await fetch(serverUrl + "/" + api + "/gl/gifi/", {
                 headers: headers
         });
-        expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+        expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     });
 });
 
