@@ -10,7 +10,7 @@
       text("Add");
       END ;
       %]</strong></div>
-<form data-dojo-type="lsmb/Form" name="customer" method="post" action="[% request.script %]">
+  <form data-dojo-type="lsmb/Form" name="customer" method="post" action="[% request.script %]">
 [% PROCESS input element_data = { # Only for generate_control_code
                   id = 'person-target-div'
                 type = "hidden"
@@ -148,10 +148,10 @@
                         name="__action"
                         value="save_person"
                 } %]
-</form>
+  </form>
 [% FOREACH n = notes %]
 <div class="note">
-<div class="note_contents">[% n.note %]</div>
+  <div class="note_contents">[% n.note %]</div>
 </div>
 [% END %]
 </div>
