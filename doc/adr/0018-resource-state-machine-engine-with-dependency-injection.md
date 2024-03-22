@@ -1,3 +1,4 @@
+<!-- markdownlint-disable line-length -->
 # 0018 Resource state machine engine with dependency injection
 
 Date: During 1.9 development cycle
@@ -54,7 +55,7 @@ all of its 'moving parts' (actions, conditions, state serialization, etc.).
 
 ## Consequences
 
-1. In combination with [ADR 0002](), this ADR implies that modification of
+1. In combination with [ADR 0002](./0002-database-consistency-procedural-api.md), this ADR implies that modification of
    *database* state needs to happen through the procedural database API.
 2. A design needs to be created supporting easy customization of state
    machines (further: workflows).

@@ -26,14 +26,14 @@ credentials received onto the database to authenticate the user.
 
 ## Consequences
 
-- The webapp does not need to store any passwords itself, defering
+* The webapp does not need to store any passwords itself, defering
   this responsibility to PostgreSQL
-- Whenever PostgreSQL is upgraded to more secure storage methods,
+* Whenever PostgreSQL is upgraded to more secure storage methods,
   the webapp automatically benefits from this upgrade
-- Security audits of PostgreSQL are immediatly inherited by our
+* Security audits of PostgreSQL are immediatly inherited by our
   project -- most likely PostgreSQL attracts more eyes than LedgerSMB
   meaning much more thorough review than we could ever wish
-- Usernames are roles; roles are global, meaning every username can
+* Usernames are roles; roles are global, meaning every username can
   only be expended to one person
-- When a username is used across companies, all these companies share
+* When a username is used across companies, all these companies share
   the same (unknown) password for this username

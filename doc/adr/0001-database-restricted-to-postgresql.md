@@ -40,9 +40,9 @@ processing (OLTP).
 
 ## Consequences
 
-- Every developer has access to the database software (it's freely available
+* Every developer has access to the database software (it's freely available
   on almost every *nix distribution and Windows)
-- Having a single SQL platform limits the variation of SQL engines that need
+* Having a single SQL platform limits the variation of SQL engines that need
   to be targeted, reducing complexity and margin for error
-- PostgreSQL specific features such as the use of PL/pgSQL, custom aggregates
+* PostgreSQL specific features such as the use of PL/pgSQL, custom aggregates
   and NOTIFY/LISTEN can be used.

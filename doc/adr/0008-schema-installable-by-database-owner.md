@@ -25,6 +25,6 @@ run the software must be (non-super user) database owner.
 
 ## Consequences
 
-- No use of PostgreSQL non-trusted extensions.
-- Special care must be taken when checking permissions, such as
+* No use of PostgreSQL non-trusted extensions.
+* Special care must be taken when checking permissions, such as
   when [changing user access rights](https://github.com/ehuelsmann/LedgerSMB/blob/ca16f284a8380e6596f466e467e67483d95e3e05/sql/modules/admin.sql#L141-L146)

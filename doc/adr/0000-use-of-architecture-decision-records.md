@@ -29,6 +29,7 @@ a proposal before the decision is taken.
 
 The following process applies to the creation or amendment of an
 ADR:
+
 * A proposal is submitted by opening a pull request with the changes
 * Comments to the proposal must be made to the pull request; in
   case a proposal is discussed through other channels, the conversation
@@ -48,11 +49,10 @@ contributors that it's beneficial to do so.
 
 ## Consequences
 
-- Developers need to be aware of the formal decisioning process
-- An ADR will need to be written and discussed/decided upon before
+* Developers need to be aware of the formal decisioning process
+* An ADR will need to be written and discussed/decided upon before
   new technology can be introduced in the code base
-- Introduction of new design patterns may mean decommissioning of
+* Introduction of new design patterns may mean decommissioning of
   design patterns that were agreed upon in an earlier ADR, which
   means the old ADR needs to be marked Deprecated as part of the
   acceptance of the new ADR
-

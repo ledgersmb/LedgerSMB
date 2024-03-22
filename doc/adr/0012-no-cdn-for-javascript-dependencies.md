@@ -35,17 +35,17 @@ statistics and user data in the process.
 LedgerSMB will *not* use CDNs for the distribution of its JavaScript
 dependencies, because:
 
- * Access to these externally hosted resources cannot be guaranteed
- * Uncontrolled resources are a bigger security risk than local ones
- * CDNs can be used to collect data about the users visiting sites
-   including them
+* Access to these externally hosted resources cannot be guaranteed
+* Uncontrolled resources are a bigger security risk than local ones
+* CDNs can be used to collect data about the users visiting sites
+  including them
 
 ## Consequences
 
-- All JavaScript, image and CSS dependencies need to be included in
+* All JavaScript, image and CSS dependencies need to be included in
   some shape or form in the distribution tarball.
-- All HTML dependencies need to be loaded from the same URL as the
+* All HTML dependencies need to be loaded from the same URL as the
   main application.
-- The project does not benefit from any optimizing transformations that
+* The project does not benefit from any optimizing transformations that
   have been applied by the CDN networks -- will need to apply its
   own page load optimizations.

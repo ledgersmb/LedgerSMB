@@ -24,19 +24,19 @@ will be used as an (additional) level of access control.
 
 ## Consequences
 
-- Database connections cannot be made with a single, all-encompasing login
+* Database connections cannot be made with a single, all-encompasing login
   account; instead, accounts with authorizations specific for the current
   user will need to be assigned exactly the intended access rights and be
   used to log into the application
-- Fine-grained access rights need to be extended on database and database
+* Fine-grained access rights need to be extended on database and database
   object level, managing CRUD rights on tables, columns and rows
-- By consequence, Row Level Security, column grants and views will need to
+* By consequence, Row Level Security, column grants and views will need to
   be used to provide users with exactly the right data access (and no more
   than that).  Views are a helpful tool to achieve this, because they run
   as the owner, not as the session user, which allows `sudo` type privilege
   escalation with strictly defined scope
-- These fine-grained access rights are assigned to PostgreSQL roles on a
+* These fine-grained access rights are assigned to PostgreSQL roles on a
   per-applicative function granularity; e.g. creation/changing/deletion
   of a new GL account each have their own role
-- These fine-grained roles are assigned to user accounts as per the first
+* These fine-grained roles are assigned to user accounts as per the first
   bullet to determine the access rights of a single user

@@ -1,3 +1,4 @@
+<!-- markdownlint-disable line-length -->
 # 0013 No use of Dancer(2) server side web framework
 
 Date: During 1.6 development cycle
@@ -22,21 +23,21 @@ Among the available extensions are those for [authentication](https://metacpan.o
 Consequently, Dancer(2) was an interesting target to research moving
 the server-side development to.  Findings from this research were:
 
- * The REST modules available didn't add much towards creating a truely
-   REST API; there were only entry-point handlers there -- which were
-   not even true to the HTTP protocol, requiring an extension to indicate
-   the desired return type (which must be dictated by the **Accept** headers,
-   not the *extension*)
- * The main complexity in the server side handling of request data is
-   *not* in the ability to generate a response, but instead in the complexity
-   of translating the submitted data into comprehensive and coherent state
-   representation of the state *in the client*
- * The `Dancer::Plugin::Auth::Extensible` toolchain assumes login pages need
-   just the combination of 'username' and 'password', where LedgerSMB needs
-   the name of the company being logged into as well
- * Dancer plugins are available for a wide range of functionalities to be
-   used to simplify the core LedgerSMB code base; however, many of these
-   exist as `Plack::Middleware` functionality too
+* The REST modules available didn't add much towards creating a truely
+  REST API; there were only entry-point handlers there -- which were
+  not even true to the HTTP protocol, requiring an extension to indicate
+  the desired return type (which must be dictated by the **Accept** headers,
+  not the *extension*)
+* The main complexity in the server side handling of request data is
+  *not* in the ability to generate a response, but instead in the complexity
+  of translating the submitted data into comprehensive and coherent state
+  representation of the state *in the client*
+* The `Dancer::Plugin::Auth::Extensible` toolchain assumes login pages need
+  just the combination of 'username' and 'password', where LedgerSMB needs
+  the name of the company being logged into as well
+* Dancer plugins are available for a wide range of functionalities to be
+  used to simplify the core LedgerSMB code base; however, many of these
+  exist as `Plack::Middleware` functionality too
 
 ## Decision
 

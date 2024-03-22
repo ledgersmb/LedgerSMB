@@ -1,4 +1,4 @@
-
+<!-- markdownlint-disable line-length commands-show-output -->
 # LedgerSMB
 
 Small and Medium business accounting and ERP
@@ -17,12 +17,12 @@ Small and Medium business accounting and ERP
 
 ## Content
 
- 1. [Description](#description)
- 2. [System requirements](#system-requirements)
- 3. [Quick start](#quick-start)
- 4. [Project information](#project-information)
- 5. [Copyright](#copyright)
- 6. [License](#license)
+1. [Description](#description)
+2. [System requirements](#system-requirements)
+3. [Quick start](#quick-start)
+4. [Project information](#project-information)
+5. [Copyright](#copyright)
+6. [License](#license)
 
 
 # DESCRIPTION
