@@ -8,31 +8,31 @@ Background:
     And a logged in admin user
 
 Scenario: Remove a user permission
-  When I navigate the menu and select the item at "Contacts > Search"
-  Then I should see the Contact Search screen
+  When I navigate the menu and select the item at "HR > Employees > Search"
+  Then I should see the Employee Search screen
   When I press "Search"
-  Then I should see the Contact Search Report screen
+  Then I should see the Employee Search Report screen
   When I click Control Code "A-00001"
-  Then I should see the Edit Contact screen
+  Then I should see the Edit Employee screen
   When I select the "User" tab
   Then I expect the "account all" checkbox to be selected
   When I deselect checkbox "account all"
    And I press "Save Groups"
-  Then I should see the Edit Contact screen
+  Then I should see the Edit Employee screen
   When I select the "User" tab
   Then I expect the "account all" checkbox to be not selected
 
 Scenario: Add a user permission
-  When I navigate the menu and select the item at "Contacts > Search"
-  Then I should see the Contact Search screen
+  When I navigate the menu and select the item at "HR > Employees > Search"
+  Then I should see the Employee Search screen
   When I press "Search"
-  Then I should see the Contact Search Report screen
+  Then I should see the Employee Search Report screen
   When I click Control Code "A-00001"
-  Then I should see the Edit Contact screen
+  Then I should see the Edit Employee screen
   When I select the "User" tab
   Then I expect the "account all" checkbox to be not selected
   When I select checkbox "account all"
    And I press "Save Groups"
-  Then I should see the Edit Contact screen
+  Then I should see the Edit Employee screen
   When I select the "User" tab
   Then I expect the "account all" checkbox to be selected

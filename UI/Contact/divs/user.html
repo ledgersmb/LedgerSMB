@@ -23,11 +23,12 @@ IF employee.first_name or stand_alone %]
         </div>
 
     <form data-dojo-type="lsmb/Form" method="POST" action="[% request.script %]">
+        <input type="hidden" name="entity_class" value="[% entity_class %]"/>
         <input type="hidden" name="entity_id" value="[% entity_id %]"/>
         <input type="hidden" name="id" value="[% user.id %]" />
         <table>
 
-            [% IF user.username and not request.pls_import %]
+          [% IF user.username and not request.pls_import %]
             <tr>
                 <td>[% text('Username') %]</td>
                 <td>
@@ -153,6 +154,7 @@ IF employee.first_name or stand_alone %]
     [% IF user.entity_id and not request.pls_import%]
         <hr />
         <form data-dojo-type="lsmb/Form" name="groups" method="POST" action="[% request.script %]">
+            <input type="hidden" name="entity_class" value="[% entity_class %]" />
             <input type="hidden" name="entity_id" value="[% entity_id %]" />
             <input type="hidden" name="id" value="[% user.id %]" />
             [% PROCESS input element_data = {

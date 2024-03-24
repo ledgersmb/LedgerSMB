@@ -3,6 +3,7 @@
 %]
 <body class="lsmb [% dojo_theme %]">
 [%
+DIV_ID = 'search-contact';
 IF !entity_class;
    title = text('Contact Search'); #'
 ELSIF entity_class == 1;
@@ -10,6 +11,7 @@ ELSIF entity_class == 1;
 ELSIF entity_class == 2;
    title = text('Customer Search'); #'
 ELSIF entity_class == 3;
+   DIV_ID = 'search-employee';
    title = text('Employee Search'); #'
 ELSE;
    title = text('Unsupported.  Expect errors'); #'
@@ -17,7 +19,7 @@ END -%]
 <form data-dojo-type="lsmb/Form"
       method="get"
       action="contact_reports.pl"
-      id="search-contact">
+      id="[% DIV_ID %]">
 [% IF entity_class.defined %]
 <input type="hidden" name="entity_class" value="[% entity_class %]">
 [% END %]

@@ -1,12 +1,12 @@
 [% PROCESS 'elements.html';
    PROCESS 'report_base.html';
-PROCESS "dynatable.html"  %]
-[% IF !country_id; country_id = default_country; END -%]
-[% IF !country_id_t; country_id_t = default_country; END -%]
-[%  # Target_div handling now moved to controller script -- CT -%]
-
+   PROCESS "dynatable.html" ;
+   IF !country_id; country_id = default_country; END ;
+   IF !country_id_t; country_id_t = default_country; END ;
+   IF entity_class == 3 ; DIV_ID = "edit_employee" ; ELSE ; DIV_ID = "edit_contact" ; END ;
+-%]
 <body class="lsmb [% dojo_theme %]">
-<div id="edit_contact">
+<div id="[% DIV_ID %]">
 
     [% IF name %]
 <div class="pageheading">[% text('Company') %]: [% name %]</div>
