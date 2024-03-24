@@ -108,7 +108,7 @@ describe("Retrieving all SIC with old syntax should fail", () => {
         let res = await fetch(serverUrl + "/" + api + "/contacts/sic/", {
             headers: headers
         });
-        expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+        expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     });
 });
 

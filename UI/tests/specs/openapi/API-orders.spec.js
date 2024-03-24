@@ -4,7 +4,7 @@
 import jestOpenAPI from "jest-openapi";
 import { StatusCodes } from "http-status-codes";
 import { create_database, drop_database, load_coa, initialize } from "./database";
-import { server } from '../../common/mocks/server.js'
+import { server } from '../../common/mocks/server.js';
 
 // Load an OpenAPI file (YAML or JSON) into this plugin
 const openapi = process.env.PWD.replace("/UI","");
@@ -30,7 +30,7 @@ let headers = {};
 beforeAll(() => {
     create_database(username, password, company);
     load_coa(username, password, company, "locale/coa/us/General.xml");
-    initialize(company,"UI/tests/specs/data/Invoices.sql");
+    initialize(company,"UI/tests/specs/data/Orders.sql");
 
     // Establish API mocking before all tests.
     server.listen({
@@ -73,11 +73,9 @@ beforeEach(async () => {
         }
     );
     if (r.status === StatusCodes.OK) {
-        const data = await r.json();
+        await r.json();
         headers = {
             cookie: r.headers.get("set-cookie"),
-            referer: serverUrl + "/" + data.target,
-            authorization: "Basic " + btoa(username + ":" + password)
         };
     }
 });
@@ -89,22 +87,22 @@ afterEach(async () => {
     }
 });
 
-// Invoice tests
-describe("Retrieving all invoices", () => {
-    it("GET /invoices fail", async () => {
-        let res = await fetch(serverUrl + "/" + api + "/invoices", {
+// Orders tests
+describe("Retrieving all orders", () => {
+    it("GET /orders fail", async () => {
+        let res = await fetch(serverUrl + "/" + api + "/orders", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.NOT_IMPLEMENTED);
     });
 });
 
-describe("Adding the new Invoice", () => {
-    it("POST /invoices should allow adding a new invoice", async () => {
+describe("Adding the new Order", () => {
+    it("POST /orders should allow adding a new order", async () => {
         let res;
         try {
             res = await fetch(
-                serverUrl + "/" + api + "/invoices",
+                serverUrl + "/" + api + "/orders",
                 {
                     method: "POST",
                     body: JSON.stringify({
@@ -112,17 +110,12 @@ describe("Adding the new Invoice", () => {
                             number: "Customer 1",
                             type: "customer" // Watch for exact case or watch serverUrl stack dump
                         },
-                        account: {
-                            accno: "1200"
-                        },
                         currency: "USD",
                         dates: {
-                            created: "2022-09-01",
-                            due: "2022-10-01",
-                            book: "2022-10-05"
+                            order: "2022-09-01",
+                            "required-by": "2022-10-01"
                         },
                         "internal-notes": "Internal notes",
-                        "invoice-number": "2389434",
                         lines: [
                             {
                                 part: {
@@ -136,7 +129,7 @@ describe("Adding the new Invoice", () => {
                                 serialnumber: "1234567890",
                                 discount: 12,
                                 discount_type: "%",
-                                delivery_date: "2022-10-27",
+                                "required-by": "2022-10-27",
                                 description: "A description"
                             }
                         ],
@@ -158,21 +151,10 @@ describe("Adding the new Invoice", () => {
                                 memo: "tax memo" // Could that be optional?
                             },
                         },
-                        payments: [
-                            {
-                                account: {
-                                    accno: "5010"
-                                },
-                                date: "2022-11-05",
-                                amount: 20,
-                                memo: "depot",
-                                source: "visa"
-                            }
-                        ]
                     }),
                     headers: { ...headers, "Content-Type": "application/json" },
                 }
-            )
+            );
         } catch(e) {
             console.log(e.response.data);
         }
@@ -181,101 +163,18 @@ describe("Adding the new Invoice", () => {
     });
 });
 
-/*
-describe("Adding the new Invoice", () => {
-    it("POST /invoices should allow adding a new invoice", async () => {
-        let res;
-        try {
-            res = await fetch(
-                serverUrl + "/" + api + "/invoices",
-                {
-                    method: "POST",
-                    body: JSON.stringify({
-                        eca: {
-                            number: "Customer 1",
-                            type: "customer" // Watch for exact case or watch serverUrl stack dump
-                        },
-                        account: {
-                            accno: "1200"
-                        },
-                        currency: "USD",
-                        dates: {
-                            created: "2022-09-01",
-                            due: "2022-10-01",
-                            book: "2022-10-05"
-                        },
-                        "internal-notes": "Internal notes",
-                        "invoice-number": "2389434",
-                        lines: [
-                            {
-                                part: {
-                                    number: "p1"
-                                },
-                                price: 56.78,
-                                price_fixated: false,
-                                unit: "lbs",
-                                qty: 1,
-                                taxform: true,
-                                serialnumber: "1234567890",
-                                discount: 12,
-                                discount_type: "%",
-                                delivery_date: "2022-10-27",
-                                description: "A description"
-                            }
-                        ],
-                        notes: "Notes",
-                        "order-number": "order 345",
-                        "po-number": "po 456",
-                        "shipping-point": "shipping from here",
-                        // TODO: Debug ship-to
-                        // "ship-to": "ship to there",
-                        "ship-via": "ship via",
-                        taxes: {
-                            "2150": {
-                                tax: {
-                                    category: "2150"
-                                },
-                                "base-amount": 50,
-                                amount: 6.78,
-                                source: "Part 1",
-                                memo: "tax memo" // Could that be optional?
-                            },
-                        },
-                        payments: [
-                            {
-                                account: {
-                                    accno: "5010"
-                                },
-                                date: "2022-11-05",
-                                amount: 20,
-                                memo: "depot",
-                                source: "visa"
-                            }
-                        ]
-                    }),
-                    headers: { ...headers, "Content-Type": "application/json" }
-                });
-        } catch(e) {
-            console.log(e.response.data);
-        }
-        expect(res.status).toEqual(StatusCodes.CREATED);
-        expect(res.headers.location).toMatch('./1');
-    });
-});
-*/
-
-describe("Retrieving all invoices with old syntax should fail", () => {
-    it("GET /invoices/ should fail", async () => {
-        const res = await fetch(serverUrl + "/" + api + "/invoices/", {
+describe("Retrieving all orders with old syntax should fail", () => {
+    it("GET /orders/ should fail", async () => {
+        const res = await fetch(serverUrl + "/" + api + "/orders/", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     });
 });
 
-describe("Retrieve first invoice", () => {
-    it("GET /invoices/1 should work and satisfy the OpenAPI spec", async () => {
-        let res = await fetch(serverUrl + "/" + api + "/invoices/1", {
+describe("Retrieve first order", () => {
+    it("GET /orders/1 should work and satisfy the OpenAPI spec", async () => {
+        let res = await fetch(serverUrl + "/" + api + "/orders/1", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
@@ -285,29 +184,29 @@ describe("Retrieve first invoice", () => {
         expect(res).toSatisfyApiSpec();
 
         // Assert that the HTTP response satisfies the OpenAPI spec
-        expect(res.data).toSatisfySchemaInApiSpec("Invoice");
+        expect(res.data).toSatisfySchemaInApiSpec("Order");
     });
 });
 
-describe("Validate first invoice against example", () => {
-    it("GET /invoices/1 should validate against example", async () => {
-        let res = await fetch(serverUrl + "/" + api + "/invoices/1", {
+describe("Validate first order against example", () => {
+    it("GET /orders/1 should validate against example", async () => {
+        let res = await fetch(serverUrl + "/" + api + "/orders/1", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.OK);
 
         // Pick the example
-        const invoiceExample = API_yaml.components.examples.validInvoice.value;
+        const orderExample = API_yaml.components.examples.validOrder.value;
 
         // Assert that the response matches the example in the spec
         res = await emulateAxiosResponse(res);
-        expect(res.data).toEqual(invoiceExample);
+        expect(res.data).toEqual(orderExample);
     });
 });
 
-describe("Retrieve non-existant Invoice", () => {
-    it("GET /invoices/2 should not retrieve Invoice 2", async () => {
-        let res = await fetch(serverUrl + "/" + api + "/invoices/2", {
+describe("Retrieve non-existant Order", () => {
+    it("GET /orders/2 should not retrieve Order 2", async () => {
+        let res = await fetch(serverUrl + "/" + api + "/orders/2", {
             headers: headers
         });
         expect(res.status).toEqual(StatusCodes.NOT_FOUND);

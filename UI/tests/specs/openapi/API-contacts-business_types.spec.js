@@ -111,7 +111,7 @@ describe("Retrieving all Business Types with old syntax should fail", () => {
         const res = await fetch(serverUrl + "/" + api + "/contacts/business-types/", {
             headers: headers
         });
-        expect(res.status).toEqual(StatusCodes.BAD_REQUEST);
+        expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     });
 });
 

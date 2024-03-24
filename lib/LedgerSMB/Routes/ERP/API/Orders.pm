@@ -1,12 +1,12 @@
-package LedgerSMB::Routes::ERP::API::Invoices;
+package LedgerSMB::Routes::ERP::API::Orders;
 
 =head1 NAME
 
-LedgerSMB::Routes::ERP::API::Invoices - Webservice routes for invoices
+LedgerSMB::Routes::ERP::API::Orders - Webservice routes for orders
 
 =head1 DESCRIPTION
 
-Webservice routes for invoices
+Webservice routes for orders
 
 =head2 Treatment of totals
 
@@ -20,7 +20,7 @@ the recalculated totals.
 
 =head1 SYNOPSIS
 
-  use LedgerSMB::Routes::ERP::API::Invoices;
+  use LedgerSMB::Routes::ERP::API::Orders;
 
 =head1 METHODS
 
@@ -44,14 +44,14 @@ use YAML::PP;
 use LedgerSMB::App_State;
 use LedgerSMB::Company;
 use LedgerSMB::Entity::Credit_Account;
-use LedgerSMB::Magic qw( EC_CUSTOMER EC_VENDOR );
+use LedgerSMB::Magic qw( EC_CUSTOMER EC_VENDOR OEC_SALES_ORDER OEC_PURCHASE_ORDER );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Part;
 use LedgerSMB::Setting;
 
 use LedgerSMB::Router appname => 'erp/api';
 
-set logger => 'erp.api.invoices';
+set logger => 'erp.api.orders';
 
 sub _create_validator {
     my $reader = YAML::PP->new(boolean => 'JSON::PP');
@@ -73,37 +73,28 @@ sub _not_implemented {
     return [ HTTP_NOT_IMPLEMENTED, [], [] ];
 }
 
-sub _get_invoices_by_id {
+sub _get_orders_by_id {
     my ($env, $r, $c, $body, $params) = @_;
-    my %inv = ( id => $params->{id} );
+    my %ord = ( id => $params->{id} );
 
-    return error( $r, HTTP_BAD_REQUEST, [],
-                  [ q|'id' parameter missing| ])
-        if defined $params->{id} and $params->{id} eq '';
+    # return error( $r, HTTP_BAD_REQUEST, [],
+    #               [ q|'id' parameter missing| ])
+    #     if defined $params->{id} and $params->{id} eq '';
 
     my $query = q|
-        SELECT 'customer' as type,
-              invnumber, ordnumber, quonumber, ponumber, transdate, duedate, crdate,
-              approved, on_hold, reverse, is_return, force_closed,
+        SELECT CASE WHEN oe_class_id = 1 THEN 'customer'
+                    WHEN oe_class_id = 2 THEN 'vendor'
+                    ELSE 'unknown' END as type,
+              ordnumber, quonumber, ponumber, transdate, reqdate,
               entity_credit_account, person_id,
-              language_code, description, notes, intnotes, shippingpoint, shipvia,
-              amount_bc, netamount_bc, curr, amount_tc, netamount_tc
-          FROM ar
-        WHERE invoice AND id = ?
-
-        UNION ALL
-        SELECT 'vendor' as type,
-              invnumber, ordnumber, quonumber, ponumber, transdate, duedate, crdate,
-              approved, on_hold, reverse, is_return, force_closed,
-              entity_credit_account, person_id,
-              language_code, description, notes, intnotes, shippingpoint, shipvia,
-              amount_bc, netamount_bc, curr, amount_tc, netamount_tc
-          FROM ap
-        WHERE invoice and id = ?
+              language_code, notes, intnotes, shippingpoint, shipvia,
+              curr, amount_tc, netamount_tc, closed, workflow_id
+          FROM oe
+        WHERE NOT quotation AND oe_class_id IN (1, 2) AND id = ?
         |;
     my $sth = $env->{'lsmb.db'}->prepare($query)
         or die $env->{'lsmb.db'}->errstr;
-    $sth->execute( $params->{id}, $params->{id} )
+    $sth->execute( $params->{id} )
         or die $sth->errstr;
 
     my $ref = $sth->fetchrow_hashref( 'NAME_lc' );
@@ -114,37 +105,33 @@ sub _get_invoices_by_id {
              [ ] ]
         unless $ref;
 
-
-    my %map = ('duedate'    => 'due',
-               'transdate'  => 'book',
-               'crdate'     => 'created');
-    for my $d (qw( transdate duedate crdate )) {
-        $inv{dates}->{$map{$d}} = $ref->{$d};
+    my $workflow_id = $ref->{workflow_id};
+    my %map = ('reqdate'    => 'required-by',
+               'transdate'  => 'order');
+    for my $d (qw( transdate reqdate )) {
+        $ord{dates}->{$map{$d}} = $ref->{$d};
     }
     %map = qw(
-       inv invoice-
        ord order-
        quo quote-
        po  po-
         );
     for my $key (keys %map) {
-        $inv{$map{$key}.'number'} = $ref->{$key.'number'} // '';
+        $ord{$map{$key}.'number'} = $ref->{$key.'number'} // '';
     }
     %map = qw(
         type          type
         curr          currency
-        description   description
         notes         notes
         intnotes      internal-notes
         shippingpoint shipping-point
         shipvia       ship-via
         );
-    @inv{(values %map)} = $ref->@{(keys %map)};
+    @ord{(values %map)} = $ref->@{(keys %map)};
 
     $query = q|
         SELECT *
-          FROM invoice i
-          JOIN acc_trans a ON i.id = a.invoice_id
+          FROM orderitems i
          WHERE i.trans_id = $1
         ORDER BY id
         |;
@@ -153,21 +140,21 @@ sub _get_invoices_by_id {
     $sth->execute( $params->{id} )
         or die $sth->errstr;
 
-    $inv{lines} = [];
+    $ord{lines} = [];
     my $item = 1;
     while (my $line = $sth->fetchrow_hashref( 'NAME_lc' )) {
         $line->{item} = $item;
         delete $line->@{qw(allocated assemblyitem trans_id)};
         $line->{price}         = delete $line->{sellprice};
-        $line->{delivery_date} = delete $line->{deliverydate};
+        $line->{'required-by'} = delete $line->{reqdate};
         $line->{price_fixated} = (delete $line->{priceFixated}) ? \1 : \0;
-        $line->{total} = $line->{amount_tc};
         $line->{discount_type} = defined $line->{discount} ? '%' : '';
         $line->{discount} *= 100 if defined $line->{discount};
 
         # Why?
         $line->{qty} += 0; # Force string to number conversion
         $line->{price} += 0; # Force string to number conversion
+        $line->{total} = ($line->{price} * $line->{qty} * (1 - $line->{discount}/100));
 
         my $part = LedgerSMB::Part->new(
             _dbh => $env->{'lsmb.db'}
@@ -179,8 +166,8 @@ sub _get_invoices_by_id {
         };
         delete $line->{parts_id};
 
-        push $inv{lines}->@*, {
-            $line->%{qw/id item price delivery_date total discount_type
+        push $ord{lines}->@*, {
+            $line->%{qw/id item price required-by total discount_type
                          part description unit price_fixated qty discount
                          notes serialnumber/}
         };
@@ -188,60 +175,36 @@ sub _get_invoices_by_id {
     }
     die $sth->errstr if $sth->err;
 
-
     $query = q|
-        SELECT *
-          FROM tax_extended te
-          JOIN acc_trans ac ON ac.entry_id = te.entry_id
-          JOIN account a ON a.id = ac.chart_id
-         WHERE exists (select 1 from acc_trans ac
-                        where te.entry_id = ac.entry_id
-                              and ac.trans_id = $1)
-        |;
+        SELECT oe_tax.*, account.accno, account.description
+          FROM oe_tax
+          JOIN account ON oe_tax.tax_id = account.id
+         WHERE oe_id = ?
+    |;
     $sth = $env->{'lsmb.db'}->prepare($query)
         or die $env->{'lsmb.db'}->errstr;
-    $sth->execute( $params->{id} )
+    $sth->execute($ord{id})
         or die $sth->errstr;
-
-    $inv{taxes} = {};
-    while (my $tax = $sth->fetchrow_hashref( 'NAME_lc' )) {
-        $inv{taxes}->{$tax->{accno}} = {
-            tax => {
-                category => $tax->{accno},
-                name     => $tax->{description},
-                rate     => $tax->{rate},
-            },
-            'base-amount' => $tax->{tax_basis},
-            'calculated-amount' => ($tax->{tax_basis} * $tax->{rate}),
-            amount => $tax->{amount_tc},
-            source => $tax->{source},
-            memo   => $tax->{memo},
-        };
+    $ord{taxes} = {};
+    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+        $ord{taxes}->{$row->{accno}} = $row;
     }
-    die $sth->errstr if $sth->err;
+    die $sth->errstr
+        if $sth->err;
+    for my $tax (keys $ord{taxes}->%*) {
+        my $ref = $ord{taxes}->{$tax};
+        $ref->{tax} = {
+            category => delete $ref->{accno},
+            name => delete $ref->{description},
+            rate => delete $ref->{rate},
+        };
+        delete $ref->{oe_id};
+        delete $ref->{tax_id};
+        delete $ref->{exempt} unless $ref->{exempt};
+        delete $ref->{source} unless defined $ref->{source};
+    }
 
-
-    $query = q|
-        SELECT *
-          FROM account a
-          JOIN account_link al ON a.id = al.account_id
-         WHERE al.description = $2
-               AND exists (select 1 from acc_trans ac
-                            where a.id = ac.chart_id
-                                  and ac.trans_id = $1)
-        |;
-    $sth = $env->{'lsmb.db'}->prepare($query)
-        or die $env->{'lsmb.db'}->errstr;
-    $sth->execute( $params->{id}, ($inv{type} eq 'customer' ? 'AR':'AP') )
-        or die $sth->errstr;
-
-    my $account = $sth->fetchrow_hashref( 'NAME_lc' );
-    die $sth->errstr if not $account and $sth->err;
-    $inv{account} = { $account->%{qw(accno description)} };
-
-
-    ###TODO: query payments here...
-    ###TODO: query credit_account and entity here
+    ###TODO: calculate taxes here...
     $query = q|
         SELECT *
           FROM entity_credit_account eca
@@ -280,17 +243,18 @@ sub _get_invoices_by_id {
     my $credit_limit_used = $sth->fetchrow_arrayref();
     die $sth->errstr if not $credit_limit_used and $sth->err;
 
+    $credit_limit_used->[0] = 0 if $credit_limit_used->[0] eq 'NaN';
 
-    $inv{eca} = {
+    $ord{eca} = {
         id     => $eca->{id},
         number => $eca->{meta_number},
         type   => ($eca->{entity_class} == EC_CUSTOMER) ? 'customer' : 'vendor',
         description => $eca->{description},
         pay_to_name => $eca->{pay_to_name},
         credit_limit => {
-            used => $credit_limit_used->[0] // 0,
-            total => $eca->{creditlimit} // 0,
-            available => (($eca->{creditlimit} // 0) - ($credit_limit_used->[0] // 0)),
+            used => $credit_limit_used->[0] || 0,
+            total => $eca->{creditlimit} || 0,
+            available => (($eca->{creditlimit} || 0) - ($credit_limit_used->[0] || 0)),
         },
         entity => {
             $entity->%{qw/name control_code/}
@@ -298,45 +262,28 @@ sub _get_invoices_by_id {
     };
 
     ###TODO: query shipping in `new_shipto` table
-
-    $inv{lines_total} = reduce { $a + $b->{total} } 0, $inv{lines}->@*;
-    $inv{taxes_total} = reduce { $a + $b->{amount} } 0, values $inv{taxes}->%*;
-    ###TODO
-    # $inv{payments_total} = reduce { $a + $b->{amount} } 0, $inv{payments}->@*;
-    $inv{total}       = $inv{lines_total} + $inv{taxes_total};
-    ###TODO
-    # $inv{due}         = $inv{total} - $inv{payments_total};
-
-    $query =
-        q|
-        SELECT * FROM transactions WHERE id = ?
-        |;
-    $sth = $env->{'lsmb.db'}->prepare($query)
-        or die $env->{'lsmb.db'}->errstr;
-    $sth->execute( $inv{id} )
-        or die $sth->errstr;
-
-    my $trans = $sth->fetchrow_hashref( 'NAME_lc' );
-    die $sth->errstr if not $trans and $sth->err;
+    $ord{lines_total} = reduce { $a + $b->{total} } 0, $ord{lines}->@*;
+    $ord{taxes_total} = reduce { $a + $b->{amount} } 0, values $ord{taxes}->%*;
+    $ord{total}       = $ord{lines_total} + $ord{taxes_total};
 
     local $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
     my $wf = $env->{wire}->get('workflows')
-        ->fetch_workflow( 'AR/AP', $trans->{workflow_id} );
+        ->fetch_workflow( 'Order/Quote', $workflow_id );
 
-    $inv{workflow} = {
+    $ord{workflow} = {
         state => $wf->state,
         actions => [ sort $wf->get_current_actions ]
     };
 
     return [ HTTP_OK,
              [ 'Content-Type' => 'application/json' ],
-             \%inv ];
+             \%ord ];
 }
 
-sub _post_invoices {
+sub _post_orders {
     my ($env, $r, $c, $body, $params) = @_;
     my @errors;
-    my $inv = {};
+    my $ord = {};
     # lookup the required fields: eca
     {
         my %map = ( 'customer' => EC_CUSTOMER(),
@@ -346,15 +293,15 @@ sub _post_invoices {
             entity_class => $map{$body->{eca}->{type}},
             );
         if (exists $body->{eca}->{id}) {
-            $inv->{eca} = $eca->get_by_id($body->{eca}->{id});
+            $ord->{eca} = $eca->get_by_id($body->{eca}->{id});
         }
         else {
-            $inv->{eca} = $eca->get_by_meta_number(
+            $ord->{eca} = $eca->get_by_meta_number(
                 $body->{eca}->{number},
                 $map{$body->{eca}->{type}},
                 );
         }
-        unless ($inv->{eca}->{id}) {
+        unless ($ord->{eca}->{id}) {
             push @errors, {
                 msg => q|Specified customer/vendor not found|,
             };
@@ -378,21 +325,7 @@ sub _post_invoices {
             };
         }
 
-        $inv->{curr} = $body->{currency};
-    }
-
-    # look up the AR/AP account by accno
-    {
-        my $account = $c->configuration->coa_nodes
-            ->get(by => (accno => $body->{account}->{accno}));
-        if (blessed $account) {
-            $inv->{account} = $account;
-        }
-        else {
-            push @errors, {
-                msg => qq|Specified account ($body->{account}->{accno}) not found|,
-            };
-        }
+        $ord->{curr} = $body->{currency};
     }
 
     # set the optional fields
@@ -413,7 +346,7 @@ sub _post_invoices {
         if (exists $body->{$field}
             and defined $body->{$field}
             and $body->{$field} ne '') {
-            $inv->{$optmap{$field}} = $body->{$field};
+            $ord->{$optmap{$field}} = $body->{$field};
         }
     }
 
@@ -423,47 +356,45 @@ sub _post_invoices {
     }
 
     {
-        my %map = ('due'     => 'duedate',
-                   'book'    => 'transdate',
-                   'created' => 'crdate');
-        foreach my $d (qw( due book created )) {
-            # due|created|book
+        my %map = ('required-by' => 'reqdate',
+                   'order'       => 'transdate');
+        foreach my $d (qw( required-by order )) {
             next if not $body->{dates}->{$d};
-            $inv->{$map{$d}} = $body->{dates}->{$d};
+            $ord->{$map{$d}} = $body->{dates}->{$d};
         }
     }
 
     {
-        $inv->{lines} = [];
+        $ord->{lines} = [];
         for my $line ($body->{lines}->@*) {
-            $line->{deliverydate} = delete $line->{delivery_date};
+            $line->{reqdate} = delete $line->{reqdate};
             # set the optional fields
-            my $inv_line = {};
-            push $inv->{lines}->@*, $inv_line;
+            my $ord_line = {};
+            push $ord->{lines}->@*, $ord_line;
 
             foreach my $field (qw( description price price_fixated unit qty
-                               discount discount_type taxform deliverydate note
+                               discount discount_type taxform required-by note
                                serialnumber group )) {
                 if (exists $line->{$field}
                     and defined $line->{$field}
                     and $line->{$field} ne '') {
-                    $inv_line->{$field} = $line->{$field};
+                    $ord_line->{$field} = $line->{$field};
                 }
             }
 
-            $inv_line->{qty}   = $inv_line->{qty} // 1;
-            $inv_line->{discount} = $inv_line->{discount} / 100
-                if $inv_line->{discount_type} eq '%';
+            $ord_line->{qty}   = $ord_line->{qty} // 1;
+            $ord_line->{discount} = $ord_line->{discount} / 100
+                if $ord_line->{discount_type} eq '%';
 
             # determine price and description
             {
                 my $part = LedgerSMB::Part->new(
                     _dbh => $env->{'lsmb.db'}
                     );
-                $inv_line->{part} = $part->get_by_partnumber(
+                $ord_line->{part} = $part->get_by_partnumber(
                     $line->{part}->{number}
                     );
-                unless ($inv_line->{part}->{id}) {
+                unless ($ord_line->{part}->{id}) {
                     push @errors, {
                         msg => q|Specified part not found|,
                         val => $line->{part}->{number},
@@ -474,53 +405,24 @@ sub _post_invoices {
                 # into the sales invoice....
                 # Map either into the 'price' field, so we
                 # can have unified handling from here.
-                if ($inv->{eca}->entity_class == EC_CUSTOMER()) {
-                    $inv_line->{part}->{price} =
-                        delete $inv_line->{part}->{sellprice};
+                if ($ord->{eca}->entity_class == EC_CUSTOMER()) {
+                    $ord_line->{part}->{price} =
+                        delete $ord_line->{part}->{sellprice};
                 }
                 else {
-                    $inv_line->{part}->{price} =
-                        delete $inv_line->{part}->{lastcost};
+                    $ord_line->{part}->{price} =
+                        delete $ord_line->{part}->{lastcost};
                 }
 
-                $inv_line->{$_} //=
-                    $inv_line->{part}->{$_} for (qw( price description ));
-            }
-        }
-    }
-
-    if (exists $body->{payments}) {
-        $inv->{payments} = [];
-        foreach my $payment ($body->{payments}->@*) {
-            my $inv_payment = {};
-            push $inv->{payments}->@*, $inv_payment;
-
-            foreach my $field (qw( date source memo amount )) {
-                if (exists $payment->{$field}
-                    and defined $payment->{$field}
-                    and $payment->{$field} ne '') {
-                    $inv_payment->{$field} = $payment->{$field};
-                }
-            }
-
-            if ($payment->{account}->{accno} ne '') {
-                ###TODO: Payment account lookup
-                my $account = $c->configuration->coa_nodes
-                    ->get(by => (accno => $payment->{account}->{accno}));
-                $inv_payment->{account} = $account;
-                unless (blessed $account) {
-                    push @errors, {
-                        msg => 'Payment account not found',
-                        val => $payment->{account}->{accno},
-                    };
-                }
+                $ord_line->{$_} //=
+                    $ord_line->{part}->{$_} for (qw( price description ));
             }
         }
     }
 
     if (exists $body->{taxes}) {
         my %taxes;
-        $inv->{taxes} = \%taxes;
+        $ord->{taxes} = \%taxes;
         foreach my $tax (values $body->{taxes}->%*) {
             if (exists $taxes{$tax->{tax}->{category}}) {
                 push @errors, {
@@ -529,14 +431,14 @@ sub _post_invoices {
                 next;
             }
 
-            my $inv_tax = {};
-            $taxes{$tax->{tax}->{category}} = $inv_tax;
+            my $ord_tax = {};
+            $taxes{$tax->{tax}->{category}} = $ord_tax;
 
             foreach my $field (qw(base-amount amount source memo)) {
                 if (exists $tax->{$field}
                     and defined $tax->{$field}
                     and $tax->{$field} ne '') {
-                    $inv_tax->{$field} = $tax->{$field};
+                    $ord_tax->{$field} = $tax->{$field};
                 }
             }
 
@@ -555,18 +457,18 @@ sub _post_invoices {
                 |
                 )
                 or die $env->{'lsmb.db'}->errstr;
-            $sth->execute($tax->{tax}->{category}, $inv->{transdate})
+            $sth->execute($tax->{tax}->{category}, $ord->{transdate})
                 or die $sth->errstr;
-            $inv_tax->{tax} = $sth->fetchrow_hashref;
+            $ord_tax->{tax} = $sth->fetchrow_hashref;
             die $sth->errstr
                 if $sth->err;
 
-            unless ($inv_tax->{tax}) {
+            unless ($ord_tax->{tax}) {
                 push @errors, {
                     msg => q|Tax category not found for given transaction date|,
                     val => {
                         tax       => $tax->{tax},
-                        transdate => $inv->{transdate},
+                        transdate => $ord->{transdate},
                     },
                 };
                 next;
@@ -613,8 +515,8 @@ sub _post_invoices {
         map { my $id = $_;
               $id => (sum0 grep { not $_->{price_fixated}
                                   and $_->{part}->{id} eq $id }
-                      $inv->{lines}->@*) }
-        uniq map { $_->{part}->{id} } $inv->{lines}->@*
+                      $ord->{lines}->@*) }
+        uniq map { $_->{part}->{id} } $ord->{lines}->@*
         );
 
 
@@ -622,7 +524,7 @@ sub _post_invoices {
     if (keys %part_qty) {
         my $sth;
 
-        if ($inv->{eca}->entity_class == EC_CUSTOMER()) {
+        if ($ord->{eca}->entity_class == EC_CUSTOMER()) {
             $sth = $env->{'lsmb.db'}->prepare(
                 q|
                 SELECT * FROM pricematrix__for_customer(?, ?, ?, ?, ?)
@@ -639,15 +541,15 @@ sub _post_invoices {
                 or die $env->{'lsmb.db'}->errstr;
         }
         for my $part_id (keys %part_qty) {
-            if ($inv->{eca}->entity_class == EC_CUSTOMER()) {
-                $sth->execute($inv->{eca}->{id},
-                              $part_id, $inv->{transdate},
+            if ($ord->{eca}->entity_class == EC_CUSTOMER()) {
+                $sth->execute($ord->{eca}->{id},
+                              $part_id, $ord->{transdate},
                               $part_qty{$part_id},
-                              $inv->{currency})
+                              $ord->{currency})
                     or die $sth->errstr;
             }
             else {
-                $sth->execute($inv->{eca}->{id}, $part_id)
+                $sth->execute($ord->{eca}->{id}, $part_id)
                     or die $sth->errstr;
             }
 
@@ -664,7 +566,7 @@ sub _post_invoices {
 
                 for my $line (grep { not $_->{price_fixated}
                                      and $_->{part}->{id} eq $part_id }
-                              $inv->{lines}->@*) {
+                              $ord->{lines}->@*) {
 
                     ###TODO: Round price due to price matrix?
                     # Note: when we do, we need to round to the same number
@@ -680,7 +582,7 @@ sub _post_invoices {
     }
 
     # Step 4: Calculate the line totals
-    for my $line ($inv->{lines}->@*) {
+    for my $line ($ord->{lines}->@*) {
         ###TODO: Verify that 'sellprice' isn't actually ever occurring
         my $total = $line->{qty} * ($line->{price} // $line->{sellprice});
 
@@ -688,16 +590,15 @@ sub _post_invoices {
         if ($line->{discount_type}) {
             $total *= (1 - $line->{discount});
         }
-        # is a no-no due to its global state. We need access to the company
-        # settings from the $env somehow
         $line->{total} =
             LedgerSMB::PGNumber->new($total)->bfround(
                 -$env->{'lsmb.settings'}->{decimal_places}
             );
     }
-    $inv->{lines_total} = reduce { $a + $b->{total} } 0, $inv->{lines}->@*;
+    $ord->{lines_total} = reduce { $a + $b->{total} } 0, $ord->{lines}->@*;
 
-    if (not exists $inv->{taxes}) {
+    #    if (not exists $ord->{taxes}) {
+    {
         my $sth = $env->{'lsmb.db'}->prepare(
           q|
             WITH taxes AS (
@@ -716,12 +617,12 @@ sub _post_invoices {
                   AND (validto IS NULL OR $2 <= validto)
             |)
           or die $env->{'lsmb.db'}->errstr;
-        $sth->execute($inv->{eca}->{id}, $inv->{transdate})
+        $sth->execute($ord->{eca}->{id}, $ord->{transdate})
             or die $sth->errstr;
-        $inv->{taxes} = $sth->fetchall_hashref('accno');
+        $ord->{taxes} = $sth->fetchall_hashref('accno');
         die $sth->errstr
             if $sth->err;
-        if (keys $inv->{taxes}->%* and keys %part_qty) {
+        if (keys $ord->{taxes}->%* and keys %part_qty) {
             $sth = $env->{'lsmb.db'}->prepare(
                 q|
                   SELECT *
@@ -742,7 +643,7 @@ sub _post_invoices {
                             $_ => $taxes->{$_}
                         }
                         grep { exists $taxes->{$_} }
-                        keys $inv->{taxes}->%*
+                        keys $ord->{taxes}->%*
                     }
                 }
                 grep { $_->{taxes} }
@@ -761,13 +662,13 @@ sub _post_invoices {
                 keys %part_qty);
 
             # Apply the tax calculation
-            for my $line ($inv->{lines}->@*) {
+            for my $line ($ord->{lines}->@*) {
                 next unless exists $part_tax{$line->{part}->{id}};
 
                 my @taxes =
                     sort {
                         $a->{pass} <=> $b->{pass}
-                } values $inv->{taxes}->%*;
+                } values $ord->{taxes}->%*;
                 ###BUG: this creates built-in the "Tax::Simple" module;
                 # it also does not support tax extraction
                 # apparently, there was originally a reason to support more
@@ -779,6 +680,7 @@ sub _post_invoices {
                 my $pass = 0;
 
                 for my $tax (@taxes) {
+                    print STDERR "Part: $line->{part}->{id}, tax: $tax->{accno}\n\n";
                     next unless exists $part_tax{$line->{part}->{id}}->{$tax->{accno}};
                     if ($pass != $tax->{pass}) {
                         $base += $passtax;
@@ -792,29 +694,28 @@ sub _post_invoices {
                         rate   => $tax->{rate},
                         amount => $amount,
                     };
-                    $inv->{taxes}->{$tax->{accno}}->{base}   += $base;
-                    $inv->{taxes}->{$tax->{accno}}->{amount} += $amount;
+                    $ord->{taxes}->{$tax->{accno}}->{base}   += $base;
+                    $ord->{taxes}->{$tax->{accno}}->{amount} += $amount;
                 }
             }
         }
     }
     ###BUG: These amounts in don't have these names in the invoice resource!!!
-    $inv->{taxes_total} =
-        reduce { $a + $b->{amount} } LedgerSMB::PGNumber->new(0), values $inv->{taxes}->%*;
-    $inv->{netamount} = $inv->{lines_total};
-    $inv->{amount}    = $inv->{netamount} + $inv->{taxes_total};
+    $ord->{taxes_total} =
+        reduce { $a + $b->{amount} } LedgerSMB::PGNumber->new(0), values $ord->{taxes}->%*;
+    $ord->{netamount} = $ord->{lines_total};
+    $ord->{amount}    = $ord->{netamount} + $ord->{taxes_total};
     ###TODO: We need to apply the type-of-business-based discount here
     # (on the totals, that is) -- how to work that into the line-items??
 
 
     ###TODO: Add multi-currency support
-    $inv->{amount_tc}    = $inv->{amount};
-    $inv->{netamount_tc} = $inv->{netamount};
+    $ord->{amount_tc}    = $ord->{amount};
+    $ord->{netamount_tc} = $ord->{netamount};
 
     ###BUG: Assert that the invoice is posted in functional currency
 
-    if (not LedgerSMB::Setting->new(dbh => $env->{'lsmb.db'})->get('gapless_ar')
-        and not $inv->{invnumber}) {
+    if (not $ord->{ordnumber}) {
         # generate invoice number; if we have gapless, delay until posting
 
         ###BUG: This does not take "sequences" into account...
@@ -830,162 +731,136 @@ sub _post_invoices {
                                               '^(.*?)(\d+)(\D*)$') as p)
                        as parts)
                     as upd)
-             WHERE setting_key = 'sinumber'
-            RETURNING (SELECT "value" FROM defaults WHERE setting_key = 'sinumber');
+             WHERE setting_key = 'sonumber'
+            RETURNING (SELECT "value" FROM defaults WHERE setting_key = 'sonumber');
             /) or die $env->{'lsmb.db'}->errstr;
 
         $sth->execute()
             or die $sth->errstr;
 
-        my ($invnumber) = $sth->fetchrow_array();
-        die $sth->errstr if not $invnumber and $sth->err;
-        $inv->{invnumber} = $invnumber;
+        my ($ordnumber) = $sth->fetchrow_array();
+        die $sth->errstr if not $ordnumber and $sth->err;
+        $ord->{ordnumber} = $ordnumber;
     }
     my $sth = $env->{'lsmb.db'}->prepare(
-        # What to do with 'setting_sequence' (for 'ar')?
-        # and why does that not exist for 'ap'??
         q|
-        INSERT INTO ar (invoice, approved,
-            invnumber, ordnumber, quonumber, ponumber,
-            amount_bc, netamount_bc, curr, amount_tc, netamount_tc, taxincluded,
-            transdate, crdate, duedate,
-            description, notes, intnotes,
+        INSERT INTO oe ( oe_class_id,
+            ordnumber, quonumber, ponumber,
+            amount_tc, netamount_tc, curr,
+            taxincluded,
+            transdate, reqdate,
+            notes, intnotes,
             shippingpoint, shipvia,
             person_id, language_code,
             entity_credit_account
             )
-        VALUES ('t'::boolean, 'f'::boolean,
-                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES ( ?,
+                 ?, ?, ?,
+                 ?, ?, ?,
+                 ?,
+                 ?, ?,
+                 ?, ?,
+                 ?, ?,
+                 ?, ?,
+                 ?)
         RETURNING id
         |)
         or die $env->{'lsmb.db'}->errstr;
     $sth->execute(
-        $inv->@{
-          qw/ invnumber ordnumber quonumber ponumber
-              amount netamount curr amount_tc netamount_tc taxincluded
-              transdate crdate duedate
-              description notes intnotes
+        OEC_SALES_ORDER(),
+        $ord->@{
+          qw/ ordnumber quonumber ponumber
+              amount_tc netamount_tc curr
+              taxincluded
+              transdate reqdate
+              notes intnotes
               shippingpoint shipvia
               person_id language_code
           / },
-        $inv->{eca}->{id}
+        $ord->{eca}->{id}
         )
         or die $sth->errstr;
-    my ($inv_id) = $sth->fetchrow_array;
+    my ($ord_id) = $sth->fetchrow_array;
     die $sth->errstr
         if $sth->err;
 
     my $ctx = Workflow::Context->new;
-    $ctx->param( trans_id => $inv_id );
-    $ctx->param( transdate => $inv->{transdate} );
+    $ctx->param( trans_id => $ord_id );
+    $ctx->param( transdate => $ord->{transdate} );
     local $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
     my $wf  = $env->{wire}->get('workflows')
-        ->create_workflow( 'AR/AP', $ctx );
-    $env->{'lsmb.db'}->do(q{UPDATE transactions SET workflow_id = ? where id = ?},
-             {}, $wf->id, $inv_id)
+        ->create_workflow( 'Order/Quote', $ctx );
+    $env->{'lsmb.db'}->do(q{UPDATE oe SET workflow_id = ? where id = ?},
+             {}, $wf->id, $ord_id)
         or die $env->{'lsmb.db'}->errstr;
 
 
     $sth = $env->{'lsmb.db'}->prepare(
         q|
-        INSERT INTO invoice (trans_id, parts_id,
-              description, qty, sellprice, precision, fxsellprice,
-              discount, unit, deliverydate, serialnumber, vendor_sku, notes)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO orderitems (trans_id, parts_id,
+              description, qty, sellprice, precision,
+              discount, unit, reqdate, serialnumber, notes)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         RETURNING id
         |)
         or die $env->{'lsmb.db'}->errstr;
-    my $asth = $env->{'lsmb.db'}->prepare(
-        q|
-        INSERT INTO acc_trans (approved, trans_id, invoice_id, chart_id,
-              amount_bc, amount_tc, curr, transdate, source, memo )
-          VALUES ('f'::boolean, ?, ?, ?,
-                  ?, ?, ?, ?, ?, ?)
-        RETURNING entry_id
-        |)
-        or die $env->{'lsmb.db'}->errstr;
 
-    my $sign = ($inv->{eca}->entity_class == EC_CUSTOMER()) ? -1 : 1;
-    ###BUG: check signs!!!
-    $asth->execute($inv_id, undef, # no associated invoice line
-                   ($inv->{account}->{id} =~ s/^A-//r),
-                   $sign*$inv->{amount}, $sign*$inv->{amount},
-                   (map { $inv->{$_} } qw/currency transdate/),
-                   undef, undef,
-        )
-        or die $asth->errstr();
-    for my $line ($inv->{lines}->@*) {
-        ###TODO: This account determination only applies to services????
-        my $account_id =
-            (($inv->{eca}->entity_class == EC_CUSTOMER())
-             ? $line->{part}->{income_accno_id}
-             : $line->{part}->{expense_accno_id});
-
-        # generate line in 'invoice' table
+    for my $line ($ord->{lines}->@*) {
+        # generate line in 'orderitems' table
         ###TODO: extract the precision from the 'price'
         ###BUG: check signs!!!
         $sth->execute(
-            $inv_id, $line->{part}->{id}, $line->{description}, $line->{qty},
-            $line->{price}, 0, $line->{price}, ###TODO: single currency
+            $ord_id, $line->{part}->{id}, $line->{description}, $line->{qty},
+            $line->{price}, 0, ###TODO: single currency
             (defined $line->{discount} ? $line->{discount} : undef),
             (map { $line->{$_} }
-             qw/unit deliverydate serialnumber vendor_sku notes/)
+             qw/unit required-by serialnumber notes/)
             )
             or die $sth->errstr;
-        my ($invline_id) = $sth->fetchrow_array;
+        my ($ordline_id) = $sth->fetchrow_array;
         die $sth->errstr
             if $sth->err;
-
-        ###BUG: check signs!!!
-        $asth->execute($inv_id, $invline_id, $account_id,
-                       -$sign*$line->{total}, -$sign*$line->{total},
-                       $inv->{currency}, $inv->{transdate}, undef, undef,
-            )
-            or die $asth->errstr;
     }
 
     $sth = $env->{'lsmb.db'}->prepare(
         q|
-        INSERT INTO tax_extended (tax_basis, rate, entry_id)
-        VALUES (?, ?, ?)
+        INSERT INTO oe_tax (oe_id, tax_id,
+             basis, rate, amount)
+          VALUES (?, ?, ?, ?, ?)
         |)
         or die $env->{'lsmb.db'}->errstr;
-    for my $tax (values $inv->{taxes}->%*) {
-        $asth->execute($inv_id, undef, $tax->{tax}->{id},
-                       -$sign*$tax->{amount}, -$sign*$tax->{amount},
-                       $inv->{currency}, $inv->{transdate},
-                       $tax->{source}, $tax->{memo})
-            or die $asth->errstr;
+    for my $tax (values $ord->{taxes}->%*) {
+        next if not defined $tax->{base};
 
-        my ($entry_id) = $asth->fetchrow_array;
-        die $asth->errstr
-            if $asth->err;
-
-        $sth->execute($tax->{'base-amount'}, $tax->{tax}->{rate}, $entry_id)
+        $sth->execute($ord_id,
+                      $tax->{id},
+                      $tax->{base},
+                      $tax->{rate},
+                      $tax->{amount})
             or die $sth->errstr;
     }
-    $wf->execute_action( 'post' ); # move to SAVED state
+
+    $wf->execute_action( 'save' ); # move to SAVED state
 
     return [
         HTTP_CREATED,
-        [ 'Location' => "./$inv_id" ],  # We return this in a header?
+        [ 'Location' => "./$ord_id" ],  # We return this in a header?
         [  ] ];
 }
 
 
-get '/invoices' => \&_not_implemented;
-post api '/invoices' => \&_post_invoices;
+get '/orders' => \&_not_implemented;
+post api '/orders' => \&_post_orders;
 
-get api '/invoices/{id}' => \&_get_invoices_by_id;
-del '/invoices/{id}' => \&_not_implemented;
-patch '/invoices/{id}' => \&_not_implemented;
+get api '/orders/{id}' => \&_get_orders_by_id;
+del '/orders/{id}' => \&_not_implemented;
+patch '/orders/{id}' => \&_not_implemented;
 
 
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2021 The LedgerSMB Core Team
+Copyright (C) 2023 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
@@ -999,17 +874,17 @@ your software.
 __DATA__
 openapi: 3.0.0
 info:
-  title: Management of Invoices
+  title: Management of Orders
   version: 0.0.1
 paths:
-  /invoices:
-    description: Management of Invoices
+  /orders:
+    description: Management of Orders
     get:
       tags:
-        - Invoices
+        - Orders
         - Experimental
-      summary: Lists invoices
-      operationId: getInvoices
+      summary: Lists orders
+      operationId: getOrders
       responses:
         200:
           description: ...
@@ -1018,9 +893,9 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Invoice'
+                  $ref: '#/components/schemas/Order'
                 example:
-                  $ref: '#/components/examples/validInvoice'
+                  $ref: '#/components/examples/validOrder'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -1037,17 +912,17 @@ paths:
                 $ref: '#/components/schemas/error'
     post:
       tags:
-        - Invoices
+        - Orders
         - Experimental
-      summary: Add an invoice
-      operationId: postInvoices
+      summary: Add an order
+      operationId: postOrders
       requestBody:
         description: ...
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/newInvoice'
+              $ref: '#/components/schemas/newOrder'
       responses:
         201:
           description: Created
@@ -1061,7 +936,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Invoice'
+                $ref: '#/components/schemas/Order'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -1070,7 +945,7 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
-  /invoices/{id}:
+  /orders/{id}:
     parameters:
       - name: id
         in: path
@@ -1080,10 +955,10 @@ paths:
           minLength: 1
     get:
       tags:
-        - Invoices
+        - Orders
         - Experimental
-      summary: Get a single invoice
-      operationId: getInvoicesById
+      summary: Get a single order
+      operationId: getOrdersById
       responses:
         200:
           description: ...
@@ -1093,10 +968,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Invoice'
+                $ref: '#/components/schemas/Order'
               examples:
-                validInvoice:
-                  $ref: '#/components/examples/validInvoice'
+                validOrder:
+                  $ref: '#/components/examples/validOrder'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -1107,17 +982,17 @@ paths:
           $ref: '#/components/responses/404'
     put:
       tags:
-        - Invoices
+        - Orders
         - Experimental
-      summary: Update a single invoice
-      operationId: putInvoiceById
+      summary: Update a single order
+      operationId: putOrderById
       parameters:
         - $ref: '#/components/parameters/if-match'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/newInvoice'
+              $ref: '#/components/schemas/newOrder'
       responses:
         200:
           description: ...
@@ -1127,7 +1002,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Invoice'
+                $ref: '#/components/schemas/Order'
         304:
           description: ...
         400:
@@ -1162,11 +1037,10 @@ components:
   schemas:
     error:
       type: object
-    newInvoice:
+    newOrder:
       type: object
       required:
         - eca
-        - account
         - currency
         - dates
         - lines
@@ -1194,27 +1068,16 @@ components:
                   enum:
                     - customer
                     - vendor
-        account:
-          type: object
-          properties:
-            accno:
-              type: string
-              minLength: 1
         currency:
           type: string
           minLength: 3
           maxLength: 3
-        description:
-          type: string
-          nullable: true
         notes:
           type: string
           nullable: true
         internal-notes:
           type: string
           nullable: true
-        invoice-number:
-          type: string
         order-number:
           type: string
         po-number:
@@ -1230,15 +1093,12 @@ components:
         dates:
           type: object
           required:
-            - book
+            - order
           properties:
-            due:
+            order:
               type: string
               format: date
-            book:
-              type: string
-              format: date
-            created:
+            required-by:
               type: string
               format: date
         lines:
@@ -1250,6 +1110,9 @@ components:
             properties:
               description:
                 type: string
+              notes:
+                type: string
+                nullable: true
               price:
                 type: number
               price_fixated:
@@ -1277,7 +1140,7 @@ components:
                 type: string
                 enum:
                   - '%'
-              delivery_date:
+              required-by:
                 type: string
                 format: date
                 nullable: true
@@ -1289,58 +1152,12 @@ components:
                   number:
                     type: string
                     minLength: 1
-        taxes:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              tax:
-                type: object
-                required:
-                  - category
-                properties:
-                  category:
-                    type: string
-              base-amount:
-                type: number
-              amount:
-                type: number
-              source:
-                type: string
-              memo:
-                type: string
-        payments:
-          type: array
-          items:
-            type: object
-            required:
-              - account
-              - amount
-              - date
-            properties:
-              date:
-                type: string
-                format: date
-              source:
-                type: string
-              memo:
-                type: string
-              amount:
-                type: number
-              account:
-                type: object
-                required:
-                  - accno
-                properties:
-                  accno:
-                    type: string
-                    minLength: 1
-    Invoice:
+    Order:
       description: ...
       allOf:
         # TODO: Fix inheritance. The definitions below replace the ones
-        # TODO: defined in newInvoice, not complement them
-        #- $ref: '#/components/schemas/newInvoice'
+        # TODO: defined in newOrder, not complement them
+        #- $ref: '#/components/schemas/newOrder'
         - type: object
           properties:
             eca:
@@ -1378,15 +1195,6 @@ components:
                   enum:
                     - customer
                     - vendor
-            account:
-              type: object
-              properties:
-                accno:
-                  type: string
-                  minLength: 1
-                description:
-                  type: string
-                  minLength: 2
             description:
               type: string
               nullable: true
@@ -1395,7 +1203,7 @@ components:
               items:
                 type: object
                 properties:
-                  delivery_date:
+                  required-by:
                     type: string
                     format: date
                     nullable: true
@@ -1452,16 +1260,6 @@ components:
                         type: string
                   total:
                     type: number
-            payments:
-              type: array
-              items:
-                type: object
-                properties:
-                  account:
-                    type: object
-                    properties:
-                      description:
-                        type: string
             taxes:
               type: object
               additionalProperties:
@@ -1478,15 +1276,11 @@ components:
                         type: string
                       name:
                         type: string
-                  base-amount:
-                    type: number
-                  amount:
-                    type: number
-                  calculated-amount:
-                    type: number
-                  source:
+                  basis:
                     type: string
-                  memo:
+                  amount:
+                    type: string
+                  source:
                     type: string
             workflow:
               type: object
@@ -1495,21 +1289,16 @@ components:
                   type: array
                 state:
                   type: string
-                  enum: [INITIAL, SAVED, POSTED, ONHOLD, VOIDED, REVERSED, DELETED]
+                  enum: [SAVED, DELETED]
   examples:
-    validInvoice:
-      summary: Example Invoice
-      description: Invoice entry
+    validOrder:
+      summary: Example Order
+      description: Order entry
       value:
-        account:
-          accno: "1200"
-          description: AR
         currency: "USD"
         dates:
-          created: "2022-09-01"
-          due: "2022-10-01"
-          book: "2022-10-05"
-        description:
+          order: "2022-09-01"
+          required-by: "2022-10-01"
         eca:
           number: "Customer 1"
           type: "customer"
@@ -1525,9 +1314,8 @@ components:
           pay_to_name:
         id: "1"
         "internal-notes": "Internal notes"
-        "invoice-number": "2389434"
         lines:
-          - delivery_date: "2022-10-27"
+          - required-by: "2022-10-27"
             description: "A description"
             discount: 12
             discount_type: "%"
@@ -1544,20 +1332,11 @@ components:
             price_fixated: false
             qty: 1
             serialnumber: "1234567890"
-            total: 49.97
+            total: 49.9664
             unit: "lbs"
-        lines_total: 49.97
+        lines_total: 49.9664
         notes: "Notes"
         "order-number": "order 345"
-        #TODO: Add payments here
-        #payments:
-        #  - account:
-        #      accno: "5010"
-        #    date: "2022-11-05"
-        #    description: Payment 1
-        #    amount: 20
-        #    memo: "depot"
-        #    source: "visa"
         "po-number": "po 456"
         "quote-number": ""
         #TODO: Add/debug ship-to
@@ -1566,28 +1345,27 @@ components:
         "shipping-point": "shipping from here"
         taxes:
           "2150":
-            amount: 6.78
-            "base-amount": 50
-            "calculated-amount": 2.5
-            source: "Part 1"
-            memo: "tax memo"
+            amount: "2.50"
+            basis: "49.97"
             tax:
               category: "2150"
               name: Sales Tax
               rate: "0.05"
-        taxes_total: 6.78
-        total: 56.75
+        taxes_total: 2.50
+        total: 52.4664
         type: customer
         workflow:
           actions:
-            - approve
-            - copy_to_new
-            - del
-            - edit_and_save
-            - new_screen
-            - sales_order
-            - save_info
-            - schedule
+            - delete
+            - e_mail
+            - print
+            - print_and_save
+            - print_and_save_as_new
+            - purchase_order
+            - quotation
+            - sales_invoice
+            - save
+            - save_as_new
             - ship_to
             - update
           state: SAVED

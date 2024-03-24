@@ -253,6 +253,9 @@ sub lookup {
     my %values;
     @values{keys %{$m->[MAP_NAMES]}} =
         @segments[values %{$m->[MAP_NAMES]}] if $m->[MAP_NAMES];
+    for my $named_value (values %values) {
+        return undef unless length $named_value > 0;
+    }
 
     if (wantarray) {
         return ($m->[MAP_HANDLER], \%values, \@wild, $m->[MAP_PATHDEF]);
@@ -496,10 +499,10 @@ sub api {
                 my ($err) = @$errors;
                 if ($err->context and
                     $err->context->[0]->message =~ m/content with content-type/) {
-                    return error($req, HTTP_UNSUPPORTED_MEDIA_TYPE, [], @$errors);
+                    return _error($req, HTTP_UNSUPPORTED_MEDIA_TYPE, [], @$errors);
                 }
 
-                return error($req, HTTP_BAD_REQUEST, [], @$errors);
+                return _error($req, HTTP_BAD_REQUEST, [], @$errors);
             }
 
             my $company = LedgerSMB::Company->new(dbh => $env->{'lsmb.app'});
@@ -528,7 +531,7 @@ sub api {
                         query => $req->query_parameters->as_hashref_mixed,
                         body => [ $has_body, $content_type, $triplet->[2] ]
                     });
-            return error($req, HTTP_INTERNAL_SERVER_ERROR, [], @$errors)
+            return _error($req, HTTP_INTERNAL_SERVER_ERROR, [], @$errors)
                 if scalar(@$errors) > 0;
 
             $triplet->[2] = [ json()->encode($triplet->[2]) ]
@@ -591,16 +594,24 @@ $body
 |;
     }
     else {
-        $text = json()->encode({ error => 1,
-                                 msg => 'LedgerSMB API errors',
-                                 errors => \@errors });
+        $text = { error => 1,
+                  msg => 'LedgerSMB API errors',
+                  errors => \@errors };
     }
     return [
         $code,
         [ 'Content-Type' => ($result_type eq 'html'
                              ? 'text/html' : 'application/json') ],
-        [ $text ]
+        $text
         ];
+}
+
+sub _error {
+    my $triplet = error(@_);
+    $triplet->[2] = [ json()->encode($triplet->[2]) ]
+        if (Plack::Util::header_get($triplet->[1], 'Content-Type') // '') =~ m|^application/json|;
+
+    return $triplet;
 }
 
 sub hook {
