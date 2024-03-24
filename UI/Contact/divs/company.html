@@ -29,12 +29,18 @@
                 value = entity_id
         } %]
         [% PROCESS input element_data = {
+                  id = 'company-entity-class'
+                type = "hidden"
+                name = "entity_class"
+                value = entity_class
+        } %]
+        [% PROCESS input element_data = {
                   id = 'company-company-id'
                 type = "hidden"
                 name = "id"
                 value = company.id
         } %]
-[% PROCESS input element_data = {
+        [% PROCESS input element_data = {
                   id = 'company-form-id'
                 type = "hidden"
                 name = "form_id"

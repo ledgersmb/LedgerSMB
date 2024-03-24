@@ -20,7 +20,13 @@ PROCESS dynatable
 <table>
 <tr>
 <form data-dojo-type="lsmb/Form" action="[% request.script %]" method="post" name="wage">
-<td>[% PROCESS select element_data = {
+<td>[%
+  PROCESS input element_data = {
+  type = 'hidden'
+  id = 'wage-entity-class'
+  name = 'entity_class'
+  value = entity_class } ;
+  PROCESS select element_data = {
                 options = wage_types
              value_attr = 'id'
               text_attr = 'label'

@@ -147,8 +147,9 @@ sub _main_screen {
        unshift @DIVS, 'company' if $company->{entity_id};
        unshift @DIVS, 'person' if $person->{entity_id};
        if ($person->{entity_id} && $person->{entity_class}
-                && $person->{entity_class} == EC_EMPLOYEE ){
-          shift @DIVS;
+                && $request->{entity_class} == EC_EMPLOYEE ){
+           shift @DIVS; # Person/Company
+           shift @DIVS; # Credit Accounts
           if ($request->setting->get('enable_wage_screen')) {
               unshift @DIVS, 'wage';
           }
@@ -220,7 +221,6 @@ sub _main_screen {
     }
 
     my $entity_class = $credit_act->{entity_class};
-    $entity_class ||= $company->{entity_class};
     $entity_class ||= $request->{entity_class};
     $entity_class ||= $request->{account_class};
     my @locations = LedgerSMB::Entity::Location->get_active(

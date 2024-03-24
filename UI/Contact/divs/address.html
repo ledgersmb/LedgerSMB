@@ -14,6 +14,11 @@
         } %]
 [% PROCESS input element_data = {
                 type = "hidden"
+                name = "entity_class"
+                value = entity_class
+        } %]
+[% PROCESS input element_data = {
+                type = "hidden"
                 name = "old_location_class"
                 value = request.location_class
         } %]

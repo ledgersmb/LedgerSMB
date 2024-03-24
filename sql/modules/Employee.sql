@@ -137,44 +137,120 @@ COMMENT ON FUNCTION employee__get (in_entity_id integer) IS
 $$ Returns an employee_result tuple with information specified by the entity_id.
 $$;
 
+
+DROP TYPE IF EXISTS  employee_search_result CASCADE;
+
+CREATE TYPE employee_search_result AS (
+        entity_id int,
+        entity_control_code text,
+        name text,
+        startdate date,
+        enddate date,
+        role varchar(20),
+        sales boolean,
+        employeenumber varchar(32),
+        dob date
+);
+
+DROP FUNCTION IF EXISTS employee__search
+(in_employeenumber text, in_startdate_from date, in_startdate_to date,
+in_first_name text, in_middle_name text, in_last_name text,
+in_notes text, in_is_user bool);
+
 CREATE OR REPLACE FUNCTION employee__search
-(in_employeenumber text, in_startdate_from date, in_startdate_to date,
-in_first_name text, in_middle_name text, in_last_name text,
-in_notes text, in_is_user bool)
-RETURNS SETOF employee_result as
+(in_entity_class int, in_contact text, in_contact_info text[],
+        in_address text, in_city text, in_state text,
+        in_mail_code text, in_country text, in_active_date_from date,
+        in_active_date_to date, in_name_part text, in_control_code text,
+        in_notes text, in_users bool)
+RETURNS SETOF employee_search_result AS
 $$
-SELECT p.entity_id, e.control_code, p.id, s.salutation, s.id,
-          p.first_name, p.middle_name, p.last_name, ee.is_manager,
-          ee.startdate, ee.enddate, ee.role, ee.ssn, ee.sales, ee.manager_id,
-          mp.first_name, mp.last_name, ee.employeenumber, ee.dob, e.country_id
-     FROM person p
-     JOIN entity e ON p.entity_id = e.id
-     JOIN entity_employee ee on (ee.entity_id = p.entity_id)
-LEFT JOIN salutation s on (p.salutation_id = s.id)
-LEFT JOIN person mp ON ee.manager_id = p.entity_id
-    WHERE ($7 is null or p.entity_id in (select ref_key from entity_note
-                                          WHERE note ilike '%' || $7 || '%'))
-          and ($1 is null or $1 = ee.employeenumber)
-          and ($2 is null or $2 <= ee.startdate)
-          and ($3 is null or $3 >= ee.startdate)
-          and ($4 is null or p.first_name ilike '%' || $4 || '%')
-          and ($5 is null or p.middle_name ilike '%' || $5 || '%')
-          and ($6 is null or p.last_name ilike '%' || $6 || '%')
-          and ($8 is null
-               or $8 = (exists (select 1 from users where entity_id = e.id)));
-$$ language sql;
+BEGIN
+RETURN QUERY EXECUTE $sql$
 
-COMMENT ON FUNCTION employee__search
-(in_employeenumber text, in_startdate_from date, in_startdate_to date,
-in_first_name text, in_middle_name text, in_last_name text,
-in_notes text, in_users bool) IS
-$$ Returns a list of employee_result records matching the search criteria.
+   WITH entities_matching_name AS (
+                      SELECT legal_name, sic_code, entity_id
+                        FROM company
+                       WHERE $11 IS NULL
+             OR legal_name @@ plainto_tsquery($11)
+             OR legal_name ilike $11 || '%'
+                      UNION ALL
+                     SELECT coalesce(first_name, '') || ' '
+             || coalesce(middle_name, '')
+             || ' ' || coalesce(last_name, ''), null, entity_id
+                       FROM person
+       WHERE $11 IS NULL
+             OR coalesce(first_name, '') || ' ' || coalesce(middle_name, '')
+                || ' ' || coalesce(last_name, '')
+                             @@ plainto_tsquery($11)
+   ),
+   matching_entity_contacts AS (
+       SELECT entity_id
+                                           FROM entity_to_contact
+        WHERE ($3 IS NULL
+               OR contact = ANY($3))
+              AND ($2 IS NULL
+                   OR description @@ plainto_tsquery($2))
+   ),
+   matching_locations AS (
+       SELECT id
+         FROM location
+        WHERE ($4 IS NULL
+               OR line_one @@ plainto_tsquery($4)
+               OR line_two @@ plainto_tsquery($4)
+               OR line_three @@ plainto_tsquery($4))
+              AND ($5 IS NULL
+                   OR city ILIKE '%' || $5 || '%')
+              AND ($6 IS NULL
+                   OR state ILIKE '%' || $6 || '%')
+              AND ($7 IS NULL
+                   OR mail_code ILIKE $7 || '%')
+              AND ($8 IS NULL
+                   OR EXISTS (select 1 from country
+                               where name ilike '%' || $8 || '%'
+                                  or short_name ilike '%' || $8 || '%'))
+                       )
+   SELECT e.id, e.control_code, c.legal_name,
+          startdate, enddate, "role", sales,
+          employeenumber, dob
+     FROM entity e
+     JOIN entity_employee ee on (ee.entity_id = e.id)
+     JOIN entities_matching_name c ON c.entity_id = e.id
+    WHERE  ($12 IS NULL
+               OR e.control_code like $12 || '%')
+          AND (($3 IS NULL AND $2 IS NULL)
+                OR EXISTS (select 1
+                             from matching_entity_contacts mec
+                            where mec.entity_id = e.id))
+           AND (($4 IS NULL AND $5 IS NULL
+                 AND $6 IS NULL AND $7 IS NULL
+                 AND $8 IS NULL)
+                OR EXISTS (select 1
+                             from matching_locations m
+                             join entity_to_location etl
+                                  ON m.id = etl.location_id
+                            where etl.entity_id = e.id))
+           AND ($10 IS NULL
+                OR ee.startdate <= $10)
+           AND ($9 IS NULL
+                OR $9 >= ee.enddate)
+           AND ($13 IS NULL
+                OR EXISTS (select 1 from entity_note n
+                            where e.id = n.entity_id
+                                  and note @@ plainto_tsquery($13)))
+           AND ($14 IS NULL OR NOT $14
+                OR EXISTS (select 1 from users where entity_id = e.id))
+               ORDER BY legal_name
+$sql$
+USING in_entity_class, in_contact, in_contact_info,
+ in_address, in_city, in_state, in_mail_code,
+ in_country, in_active_date_from, in_active_date_to,
+ in_name_part, in_control_code, in_notes, in_users;
+END
+$$ LANGUAGE PLPGSQL;
 
-employeenumber is an exact match.
-stardate_from and startdate_to specify the start dates for employee searches
-All others are partial matches.
 
-NULLs match all values.$$;
+
 
 CREATE OR REPLACE FUNCTION employee__list_managers
 (in_id integer)

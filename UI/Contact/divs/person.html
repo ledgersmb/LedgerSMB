@@ -24,6 +24,12 @@
         [% PROCESS input element_data = {
                   id = 'person-entity-id'
                 type = "hidden"
+                name = "entity_class"
+                value = entity_class
+        } %]
+        [% PROCESS input element_data = {
+                  id = 'person-entity-id'
+                type = "hidden"
                 name = "entity_id"
                 value = entity_id
         } %]
@@ -160,8 +166,6 @@
                         name="__action"
                         value="save_person"
                 } %]
-</div>
-</div>
 </form>
 [% FOREACH n = notes %]
 <div class="note">

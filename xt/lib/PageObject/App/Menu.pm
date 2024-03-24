@@ -74,7 +74,7 @@ my %menu_path_pageobject_map = (
 
     "Budgets > Add Budget" => 'PageObject::App::Budget',
     "Budgets > Search" => 'PageObject::App::Search::Budget',
-    "HR > Employees > Search" => 'PageObject::App::Search::Contact',
+    "HR > Employees > Search" => 'PageObject::App::Search::Employee',
 
     "Order Entry > Sales Order" => "PageObject::App::Orders::Sales",
     "Order Entry > Purchase Order" => "PageObject::App::Orders::Purchase",

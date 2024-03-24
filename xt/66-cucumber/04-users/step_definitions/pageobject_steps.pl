@@ -7,7 +7,7 @@ use warnings;
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
-use PageObject::App::Contacts::EditContact;
+use PageObject::App::Contacts::EditEmployee;
 
 When qr/^I click Control Code "(.*)"$/, sub {
     my $page = S->{ext_wsl}->page->body->maindiv->content;

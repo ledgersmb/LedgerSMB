@@ -192,7 +192,7 @@ Scenario Outline: Navigate to menu "<path>" and open screen "<screen>"
     | HR > Employees > Add Employee              |                          |
   Examples:
     | path                                       | screen                   |
-    | HR > Employees > Search                    | Employee search          |
+    | HR > Employees > Search                    | Employee Search          |
 
   @wip
   Examples:
