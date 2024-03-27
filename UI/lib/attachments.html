@@ -12,7 +12,7 @@
   </tr>
 [% FOREACH file IN attachments.files %]
   <tr>
-    <td><a href="file.pl?action=get&amp;file_class=1&amp;ref_key=[%
+    <td><a href="file.pl?action=get&amp;file_class=[% attachments.file_class %]&amp;ref_key=[%
                  attachments.ref_key
                  %]&amp;id=[% file.id %]" target="_download"
             >[% file.file_name %]</a></td>
