@@ -81,6 +81,7 @@ export function initialize(company, file) {
             `--host=${pg_host}`,
             "-d", company,
             "-c", "set search_path='xyz','public'",
+            "-v", "ON_ERROR_STOP=on",
             "-f", file
         ],
         {
