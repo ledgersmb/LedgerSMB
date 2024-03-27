@@ -44,7 +44,7 @@ BEGIN
 RETURN QUERY EXECUTE $sql$
               SELECT ec.id, coalesce(ec.pay_to_name, e.name ||
                      coalesce(':' || ec.description,'')) as name,
-                     e.entity_class, ec.discount_account_id, ec.meta_number
+                     ec.entity_class, ec.discount_account_id, ec.meta_number
                 FROM entity_credit_account ec
                 JOIN entity e ON (ec.entity_id = e.id)
                 WHERE ec.entity_class = $1
@@ -84,7 +84,7 @@ DECLARE
 BEGIN
 EXECUTE $sql$
  SELECT ec.id, coalesce(ec.pay_to_name, cp.name  || coalesce(':' || ec.description, ''), '') as name,
-        e.entity_class, ec.discount_account_id, ec.meta_number
+        ec.entity_class, ec.discount_account_id, ec.meta_number
  FROM entity_credit_account ec
  JOIN entity e ON (ec.entity_id = e.id)
  JOIN (
@@ -181,7 +181,7 @@ RETURN QUERY EXECUTE $sql$
                         e.name, ec.entity_class
                 FROM entity e
                 JOIN entity_credit_account ec ON (ec.entity_id = e.id)
-                                WHERE e.entity_class = $1
+                                WHERE ec.entity_class = $1
 $sql$
 USING in_account_class;
 END
@@ -1530,7 +1530,7 @@ CREATE OR REPLACE FUNCTION payment_get_open_overpayment_entities(in_account_clas
 $$
 BEGIN
 RETURN QUERY EXECUTE $sql$
-                SELECT DISTINCT entity_credit_id, legal_name, e.entity_class, null::int, o.meta_number
+                SELECT DISTINCT entity_credit_id, legal_name, ec.entity_class, null::int, o.meta_number
                 FROM overpayments o
                 JOIN entity e ON (e.id=o.entity_id)
                 WHERE available <> 0 AND $1 = payment_class
