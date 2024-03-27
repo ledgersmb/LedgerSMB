@@ -119,8 +119,8 @@ BEGIN;
                 (-6, -8, 5),
                 (-9, -10, 7);
 
-    INSERT INTO entity (id, name, country_id, entity_class)
-    VALUES (-1000, 'Test act', 232, 1);
+    INSERT INTO entity (id, name, country_id)
+    VALUES (-1000, 'Test act', 232);
 
     INSERT INTO entity_credit_account
             (id, entity_class, meta_number, entity_id, curr, ar_ap_account_id)

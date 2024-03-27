@@ -53,6 +53,9 @@ PROCESS dynatable
                  ec=account_class;
                  IF !ec;
                     ec=entity_class;
+                    IF !ec;
+                       ec=2;
+                    END;
                  END;
               END;
         %]
@@ -70,8 +73,19 @@ PROCESS dynatable
            value_attr = 'id'
                 label = text('Class')
         } %]</td>
-
-
+        <td>
+          [%
+          INCLUDE button element_data = {
+          text = text('Update')
+          class="submit"
+          type="submit"
+          name="__action"
+          value="update_credit"
+          };
+          %]
+        </td>
+        </tr>
+        <tr>
         <td>
         [% PROCESS input element_data = {
                 title = text("Number"),

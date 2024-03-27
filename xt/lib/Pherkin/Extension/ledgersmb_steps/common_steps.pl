@@ -202,7 +202,7 @@ Given qr/an unpaid AP transaction with these values:$/, sub {
             entity_credit_account.entity_id = entity.id
         )
         WHERE entity.name = ?
-        AND entity.entity_class = 1
+        AND entity_credit_account.entity_class = 1
         LIMIT 1
         RETURNING ap.id
     ");

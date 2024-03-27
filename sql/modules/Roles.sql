@@ -2030,11 +2030,6 @@ END IF;
 END;
 $$ LANGUAGE PLPGSQL;
 
-DROP TRIGGER IF EXISTS eclass_perms_check ON entity;
-CREATE TRIGGER eclass_perms_check
-BEFORE INSERT OR UPDATE OR DELETE ON entity
-FOR EACH ROW EXECUTE PROCEDURE tg_enforce_perms_eclass();
-
 DROP TRIGGER IF EXISTS eclass_perms_check ON entity_credit_account;
 CREATE TRIGGER eclass_perms_check
 BEFORE INSERT OR UPDATE OR DELETE ON entity_credit_account

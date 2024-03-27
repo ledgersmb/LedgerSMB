@@ -27,15 +27,14 @@ CREATE TYPE robot_entity AS (
     country_name text,
     first_name text,
     middle_name text,
-    last_name text,
-    entity_class int
+    last_name text
 );
 
 CREATE FUNCTION robot__get(in_entity_id int)
 RETURNS robot_entity AS
 $$
 SELECT e.id, e.control_code, e.name, e.country_id, c.name,
-       p.first_name, p.middle_name, p.last_name, e.entity_class
+       p.first_name, p.middle_name, p.last_name
   FROM entity e
   JOIN country c ON c.id = e.country_id
   JOIN robot p ON p.entity_id = e.id
@@ -46,7 +45,7 @@ CREATE FUNCTION robot__get_by_cc(in_control_code text)
 RETURNS robot_entity AS
 $$
 SELECT e.id, e.control_code, e.name, e.country_id, c.name,
-       p.first_name, p.middle_name, p.last_name, e.entity_class
+       p.first_name, p.middle_name, p.last_name
   FROM entity e
   JOIN country c ON c.id = e.country_id
   JOIN robot p ON p.entity_id = e.id
@@ -69,7 +68,7 @@ RETURNS INT AS $$
         p_id int;
     BEGIN
 
-    select * into e from entity where id = in_entity_id and entity_class = 3;
+    select * into e from entity where id = in_entity_id;
     e_id := in_entity_id;
 
     IF FOUND THEN
@@ -78,8 +77,8 @@ RETURNS INT AS $$
                country_id = in_country_id
          WHERE id = in_entity_id;
     ELSE
-        INSERT INTO entity (name, entity_class, country_id)
-        values (in_first_name || ' ' || in_last_name, 3, in_country_id);
+        INSERT INTO entity (name, country_id)
+        values (in_first_name || ' ' || in_last_name, in_country_id);
         e_id := currval('entity_id_seq');
 
     END IF;

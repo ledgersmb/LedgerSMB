@@ -29,8 +29,8 @@ BEGIN;
 
     -- Set specific data
 
-    INSERT INTO entity (id, entity_class, name, country_id)
-    VALUES (-1000, 1, '__TEST', 243);
+    INSERT INTO entity (id, name, country_id)
+    VALUES (-1000, '__TEST', 243);
 
     INSERT INTO entity_credit_account (id, meta_number, entity_class, entity_id, ar_ap_account_id, curr)
     VALUES (-1000, '_testv', 1, -1000, -1000, 'XTS');

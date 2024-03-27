@@ -67,17 +67,7 @@ Name of country (optional)
 
 has 'country_name' => (is => 'rw', isa => 'Str', required => 0);
 
-=item entity_class
-
-Primary class of entity.  This is mostly for reporting purposes.  See entity_class
-table in database for list of valid values, but 1 is for vendors, 2 for customers,
-3 for employees, etc.
-
 =back
-
-=cut
-
-has 'entity_class' => (is => 'rw', isa => 'Int', required => 1);
 
 =head1 METHODS
 

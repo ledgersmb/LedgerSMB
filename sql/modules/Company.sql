@@ -14,7 +14,6 @@ DROP TYPE IF EXISTS company_entity CASCADE;
 
 CREATE TYPE company_entity AS(
   entity_id int,
-  entity_class int,
   legal_name text,
   tax_id text,
   sales_tax_id text,
@@ -25,6 +24,11 @@ CREATE TYPE company_entity AS(
 );
 
 DROP TYPE IF EXISTS eca__pricematrix CASCADE;
+
+COMMENT ON TYPE company_entity IS
+  $$ Return type to query companies, combining data from the 'entity'
+  and 'company' tables.
+  $$;
 
 CREATE TYPE eca__pricematrix AS (
   parts_id int,
@@ -363,7 +367,7 @@ RETURN QUERY EXECUTE $sql$
 LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
 LEFT JOIN business b ON (ec.business_id = b.id)
     WHERE ($1 is null
-           OR coalesce(ec.entity_class, e.entity_class) = $1)
+           OR ec.entity_class = $1)
           AND ($14 IS NULL
                OR e.control_code like $14 || '%')
           AND (($3 IS NULL AND $2 IS NULL)
@@ -614,7 +618,7 @@ entity class.$$;
 CREATE OR REPLACE FUNCTION company__get (in_entity_id int)
 RETURNS company_entity AS
 $$
-        SELECT c.entity_id, e.entity_class, c.legal_name, c.tax_id, c.sales_tax_id,
+        SELECT c.entity_id, c.legal_name, c.tax_id, c.sales_tax_id,
                c.license_number, c.sic_code, e.control_code, e.country_id
           FROM company c
           JOIN entity e ON e.id = c.entity_id
@@ -627,7 +631,7 @@ $$ Returns all attributes for the company attached to the entity.$$;
 CREATE OR REPLACE FUNCTION company__get_by_cc (in_control_code text)
 RETURNS company_entity AS
 $$
-        SELECT c.entity_id, e.entity_class, c.legal_name, c.tax_id, c.sales_tax_id,
+        SELECT c.entity_id, c.legal_name, c.tax_id, c.sales_tax_id,
                c.license_number, c.sic_code, e.control_code, e.country_id
           FROM company c
           JOIN entity e ON e.id = c.entity_id
@@ -727,8 +731,15 @@ DROP FUNCTION IF EXISTS company__save (
     in_sales_tax_id text, in_license_number text
 );
 
-CREATE OR REPLACE FUNCTION company__save (
+DROP FUNCTION IF EXISTS company__save (
     in_control_code text, in_entity_class int,
+    in_legal_name text, in_tax_id TEXT,
+    in_entity_id int, in_sic_code text,in_country_id int,
+    in_sales_tax_id text, in_license_number text
+);
+
+CREATE OR REPLACE FUNCTION company__save (
+    in_control_code text,
     in_legal_name text, in_tax_id TEXT,
     in_entity_id int, in_sic_code text,in_country_id int,
     in_sales_tax_id text, in_license_number text
@@ -746,7 +757,6 @@ BEGIN
 
         UPDATE entity
         SET name = in_legal_name,
-                entity_class = in_entity_class,
                 control_code = t_control_code,
                 country_id   = in_country_id
         WHERE id = in_entity_id;
@@ -754,8 +764,8 @@ BEGIN
         IF FOUND THEN
                 t_entity_id = in_entity_id;
         ELSE
-                INSERT INTO entity (name, entity_class, control_code,country_id)
-                VALUES (in_legal_name, in_entity_class, t_control_code,in_country_id);
+                INSERT INTO entity (name, control_code,country_id)
+                VALUES (in_legal_name, t_control_code,in_country_id);
                 t_entity_id := currval('entity_id_seq');
         END IF;
 
@@ -781,7 +791,7 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON  FUNCTION company__save (
-    in_control_code text, in_entity_class int,
+    in_control_code text,
     in_legal_name text, in_tax_id TEXT,
     in_entity_id int, in_sic_code text,in_country_id int,
     in_sales_tax_id text, in_license_number text

@@ -7,11 +7,11 @@ CREATE TEMPORARY TABLE test_result (
 INSERT INTO currency (curr, description)
 VALUES ('XTS', 'Code reserved for testing purposes');
 
-INSERT INTO entity (id, name, entity_class, control_code, country_id)
-VALUES (-100, 'Testing.....', 3, '_TESTING.....', 242);
+INSERT INTO entity (id, name, control_code, country_id)
+VALUES (-100, 'Testing.....', '_TESTING.....', 242);
 
-INSERT INTO entity (id, name, entity_class, control_code, country_id)
-VALUES (-101, 'Testing..... 2', 3, '_TEST2', 242);
+INSERT INTO entity (id, name, control_code, country_id)
+VALUES (-101, 'Testing..... 2', '_TEST2', 242);
 
 INSERT INTO person(id, entity_id, first_name, last_name)
 values (-100, -100, 'Test', 'User');
@@ -23,8 +23,8 @@ SELECT -100, CURRENT_USER;
 
 INSERT INTO entity_employee(entity_id) values (-100);
 
-INSERT INTO entity(name, id, entity_class, control_code, country_id)
-values ('test user 1', -200, 3, 'Test User 1', 242);
+INSERT INTO entity(name, id, control_code, country_id)
+values ('test user 1', -200, 'Test User 1', 242);
 
 select account_heading_save(NULL, '000000000000000000000', 'TEST', NULL);
 
