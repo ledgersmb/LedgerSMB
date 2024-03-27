@@ -25,6 +25,11 @@ CREATE TYPE company_entity AS(
 
 DROP TYPE IF EXISTS eca__pricematrix CASCADE;
 
+COMMENT ON TYPE company_entity IS
+  $$ Return type to query companies, combining data from the 'entity'
+  and 'company' tables.
+  $$;
+
 CREATE TYPE eca__pricematrix AS (
   parts_id int,
   int_partnumber text,
