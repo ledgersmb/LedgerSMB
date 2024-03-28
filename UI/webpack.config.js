@@ -496,22 +496,26 @@ if (TARGET !== "readme") {
             hot: true,
             host: "0.0.0.0",
             port: 9000,
-            proxy: {
-                "/*.pl": {
+            proxy: [
+                {
+                    pathFilter: "/*.pl",
                     target: "http://proxy"
                 },
-                "/erp/api": {
+                {
+                    pathFilter: "/erp/api",
                     target: "http://proxy"
                 },
-                "/app/*.pl": {
+                {
+                    pathFilter: "/app/*.pl",
                     target: "http://proxy",
                     pathRewrite: { "^/app": "" }
                 },
-                "/app/erp/api": {
+                {
+                    pathFilter: "/app/erp/api",
                     target: "http://proxy",
                     pathRewrite: { "^/app": "" }
                 }
-            },
+            ],
             static: [
                 {
                     directory: __dirname,
