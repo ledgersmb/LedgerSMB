@@ -529,9 +529,9 @@ if (TARGET !== "readme") {
             ],
             watchFiles: [
                 "webpack.config.js",
-                "**/*",
-                "!js/*",
-                "node_modules/**/*"
+                "**/*.{html,css,gif,jpg,png,svg,json}",
+                "js-src/**/*.js",
+                "src/**/*.{js,vue}"
             ]
         },
 
