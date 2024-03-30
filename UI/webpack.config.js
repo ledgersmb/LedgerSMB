@@ -216,7 +216,7 @@ if (TARGET !== "readme") {
     const UnusedWebpackPluginOptions = {
         // Source directories
         directories: [
-            path.join(__dirname, "js-src/lsmb"), 
+            path.join(__dirname, "js-src/lsmb"),
             path.join(__dirname, "src")
         ],
         // Exclude patterns
@@ -495,23 +495,28 @@ if (TARGET !== "readme") {
             },
             hot: true,
             host: "0.0.0.0",
+            liveReload: true,
             port: 9000,
-            proxy: {
-                "/*.pl": {
+            proxy: [
+                {
+                    context: ["/*.pl"],
                     target: "http://proxy"
                 },
-                "/erp/api": {
+                {
+                    context: ["/erp/api"],
                     target: "http://proxy"
                 },
-                "/app/*.pl": {
+                {
+                    context: ["/app/*.pl"],
                     target: "http://proxy",
                     pathRewrite: { "^/app": "" }
                 },
-                "/app/erp/api": {
+                {
+                    context: ["/app/erp/api"],
                     target: "http://proxy",
                     pathRewrite: { "^/app": "" }
                 }
-            },
+            ],
             static: [
                 {
                     directory: __dirname,
