@@ -35,18 +35,6 @@ as documented in the [specific `README` file](66-cucumber/README.md).
 90 - 99: Packaging checks
 ```
 
-Special notes on specific test cases:
-
-## `43-dbtest.t`
-
-This runs defined test cases from `sql/modules/test/`.  If new
-scripts are added, they must be listed in this script as well.
-
-## `62-api.t`
-
-Runs on the database non-destructively, by rolling back commits.
-Uses request hashes defined in `xt/data/62-request-data`.
-
 # ENVIRONMENT VARIABLES
 
 Environment variables are used to provide inputs for tests >= 40.
