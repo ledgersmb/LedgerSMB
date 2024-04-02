@@ -79,7 +79,7 @@ Implements the super class's append
 sub append {
     my ($self, $template, %args) = @_;
 
-    my $wf  = $self->wire->create_workflow('Email');
+    my $wf  = $self->wire->get('workflows')->create_workflow('Email');
     my $ctx = $wf->context;
     $ctx->param( 'from'     => $self->from );
     $ctx->param( 'to'       => join(', ', $args{to}->@*) );
