@@ -45,8 +45,6 @@ See the documentation of these implementations for more information.
 use warnings;
 use strict;
 
-use HTTP::Status qw(HTTP_NOT_IMPLEMENTED);
-
 use Moose;
 use namespace::autoclean;
 
