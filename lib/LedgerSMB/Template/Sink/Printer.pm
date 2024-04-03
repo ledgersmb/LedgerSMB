@@ -73,7 +73,7 @@ sub append {
     my $cmd = $self->command;
     unless (defined $cmd) {
         push $self->_results->@*, {
-            msg    => 'No printer configured for ' . $self->printer,
+            msg    => 'No printer command specified',
             status => 'fail',
         };
         return;

@@ -41,9 +41,6 @@ statusses.
 use warnings;
 use strict;
 
-use HTTP::Status qw(HTTP_OK HTTP_SEE_OTHER);
-
-
 use Moose;
 use namespace::autoclean;
 extends 'LedgerSMB::Template::Sink';
@@ -82,9 +79,9 @@ sub append {
     my $wf  = $self->wire->get('workflows')->create_workflow('Email');
     my $ctx = $wf->context;
     $ctx->param( 'from'     => $self->from );
-    $ctx->param( 'to'       => join(', ', $args{to}->@*) );
-    $ctx->param( 'cc'       => join(', ', $args{cc}->@*) || $self->cc );
-    $ctx->param( 'bcc'      => join(', ', $args{bcc}->@*) || $self->bcc );
+    $ctx->param( 'to'       => join(', ', ($args{to} // [])->@*) );
+    $ctx->param( 'cc'       => join(', ', ($args{cc} // [])->@*) || $self->cc );
+    $ctx->param( 'bcc'      => join(', ', ($args{bcc} // [])->@*) || $self->bcc );
     $ctx->param( 'body'     => $args{body} );
     $ctx->param( 'subject'  => $args{subject} );
     $ctx->param( 'callback' => $args{callback} );
