@@ -125,7 +125,7 @@
     "stylelint-webpack-plugin": "5.0.0",
     "tmp": "0.2.3",
     "typescript": "5.4.3",
-    "undici": "5.28.3",
+    "undici": "5.28.4",
     "unix-timestamp": "1.0.4",
     "unused-webpack-plugin": "2.4.0",
     "vue-i18n-extract-translations": "0.1.3",
