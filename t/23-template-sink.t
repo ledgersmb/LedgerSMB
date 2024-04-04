@@ -115,7 +115,8 @@ use LedgerSMB::Template::Sink::Printer;
 
 ok lives {
     $sink = LedgerSMB::Template::Sink::Printer->new(
-        command => '/bin/true'
+        command => '/bin/true',
+        printer => 'the-printer'
         );
 }, 'Printer: instantiation';
 
@@ -126,7 +127,9 @@ ok lives {
 }, 'Printer: appending a template output';
 
 ok lives {
-    $sink = LedgerSMB::Template::Sink::Printer->new();
+    $sink = LedgerSMB::Template::Sink::Printer->new(
+        printer => 'the-printer'
+        );
     $sink->append(
         { output => 'the printable output' }
         );

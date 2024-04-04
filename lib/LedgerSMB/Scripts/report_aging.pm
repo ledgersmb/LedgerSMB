@@ -369,6 +369,7 @@ sub generate_statement {
         $sink = LedgerSMB::Template::Sink::Printer->new(
             wire    => $request->{_wire},
             command => $cmd,
+            printer => $request->{media}
             );
     }
 
