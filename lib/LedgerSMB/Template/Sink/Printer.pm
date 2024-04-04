@@ -50,6 +50,14 @@ Command to execute and send the output to.
 
 has command => (is => 'ro');
 
+=head2 printer
+
+Name of the printer, for use in error messages.
+
+=cut
+
+has printer => (is => 'ro', required => 1);
+
 =head2 _results
 
 (Internal) Collects the submission results.
@@ -73,7 +81,8 @@ sub append {
     my $cmd = $self->command;
     unless (defined $cmd) {
         push $self->_results->@*, {
-            msg    => 'No printer command specified',
+            msg    => ('No command specified for printer "' .
+                       $self->printer . '"'),
             status => 'fail',
         };
         return;
