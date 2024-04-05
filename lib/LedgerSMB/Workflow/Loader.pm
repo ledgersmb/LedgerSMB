@@ -37,6 +37,8 @@ use warnings;
 
 our $VERSION = '0.0.1';
 
+use Log::Any qw($log);
+
 use File::Find::Rule;
 use File::Spec;
 use Workflow::Factory;
@@ -85,7 +87,19 @@ sub load {
 
     my $config = sub {
         my $type = shift;
-        my $prefix = defined $type ? ($type ? "/$type." : '/') : '.';
+        my $prefix;
+        if (defined $type) {
+            if ($type) {
+                $prefix = sprintf( '%s.', _type_to_fn($type) );
+            }
+            else {
+                $prefix = '/';
+            }
+        }
+        else {
+            $prefix = '.';
+        }
+        $log->debug( "workflow files finder called for $type (prefix: $prefix)" );
         my $cfg = {
             action    => [ grep { m|\Q${prefix}actions.xml\E$| } @files ],
             condition => [ grep { m|\Q${prefix}conditions.xml\E$| } @files ],
