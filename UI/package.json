@@ -65,7 +65,7 @@
     "copy-webpack-plugin": "12.0.2",
     "core-js": "3.36.1",
     "coveralls-next": "4.2.1",
-    "css-loader": "6.11.0",
+    "css-loader": "7.0.0",
     "css-minimizer-webpack-plugin": "6.0.0",
     "cssnano": "6.1.2",
     "dojo-util": "1.17.3",
