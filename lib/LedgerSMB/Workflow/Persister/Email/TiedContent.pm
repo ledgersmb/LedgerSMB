@@ -72,6 +72,7 @@ sub FETCH {
     $sth->finish;
 
     $self->{dirty} = '';
+    $self->{has_value} = 1;
     return $self->{value};
 }
 
