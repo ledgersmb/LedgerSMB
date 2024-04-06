@@ -96,19 +96,10 @@ sub execute {
 
     $log->info('Action name: ', $self->action);
     if ($self->action eq 'send') {
-        $self->save($wf);
         $self->send($wf);
     }
     elsif ($self->action eq 'attach') {
-        $self->save($wf);
         $self->attach($wf);
-    }
-    elsif ($self->action eq 'save'
-           or $self->action eq 'queue') {
-        $self->save($wf);
-    }
-    elsif ($self->action eq 'initial-save') {
-        $self->initial_save($wf);
     }
     elsif ($self->action eq 'expand') {
         $self->expand($wf);
@@ -140,11 +131,10 @@ keys:
 
 sub attach {
     my ($self, $wf) = @_;
-    my $persister   = $wf->_factory->get_persister( $wf->type );
-    my $att         = $wf->context->delete_param( 'attachment' );
+    my $ctx  = $wf->context;
+    my $atts = $ctx->param( '_attachments' );
 
-    $persister->attach( $wf, $att );
-    $persister->fetch_extra_workflow_data( $wf );
+    push $atts->@*, $ctx->delete_param( 'attachment' );
     return;
 }
 
@@ -163,10 +153,9 @@ sub expand {
     my $expansions = $wf->context->param( 'expansions' );
 
     if ( $body and $expansions ) {
-        $body =~ s/<%(.+?)%>/$expansions->{$1}/g;
+        $body =~ s/<%\s*(.+?)\s*%>/$expansions->{$1}/g;
 
         $wf->context->param( 'body', $body );
-        $self->save($wf)
     }
 
     return;
@@ -186,14 +175,6 @@ Uses e-mail transfer configuration from the context.
 
 sub send {
     my ($self, $wf) = @_;
-
-    my $dbh = $self->_factory->
-        get_persister_for_workflow_type($wf->type)->handle;
-    $dbh->do(q{UPDATE email SET sent_date = NOW() WHERE workflow_id = ?},
-             {}, $wf->id)
-        or $log->error($dbh->errstr);
-
-
     my $ctx  = $wf->context;
     my $mail = Email::Stuffer
         ->from(      $ctx->param( 'from' ) )
@@ -211,7 +192,7 @@ sub send {
     }
 
     for my $att ( ($ctx->param( '_attachments' ) // [])->@* ) {
-        $mail->attach($wf->attachment_content($att->{id}, disable_cache => 1),
+        $mail->attach($att->{content},
                       content_type => $att->{mime_type},
                       disposition  => 'attachment',
                       filename     => $att->{file_name});
@@ -238,47 +219,8 @@ sub send {
     };
     die "Could not send email: $@.  Please check your configuration." if $@;
 
+    $ctx->param( 'sent', 1 );
     return;
-}
-
-=head2 save($wf)
-
-Stores the e-mail data from the workflow context, except C<attachments>.
-To create attachments, use the C<attach> workflow item.
-
-All fields in the e-mail are optional for this step.
-
-=cut
-
-sub save {
-    my ($self, $wf) = @_;
-    # Saving is built into the persister and happens automatically
-    # after each successful action; no additional code required
-}
-
-
-=head2 initial_save($wf)
-
-Stores the e-mail data from the workflow context, including C<attachments>.
-
-This step should be used to store e-mail data passed into the workflow on
-workflow creation.
-
-=cut
-
-sub initial_save {
-    my ($self, $wf) = @_;
-
-    my $persister   = $wf->_factory->get_persister( $wf->type );
-    my $atts        = $wf->context->delete_param( '_attachments' );
-
-    for my $att ( $atts->@* ) {
-        $persister->attach( $wf, $att );
-    }
-    $persister->fetch_extra_workflow_data( $wf );
-
-    # Saving is built into the persister and happens automatically
-    # after each successful action; no additional code required
 }
 
 
@@ -286,7 +228,7 @@ sub initial_save {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2020-2022 The LedgerSMB Core Team
+Copyright (C) 2020-2024 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

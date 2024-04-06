@@ -1,25 +1,24 @@
 <workflow>
   <type>Email</type>
-  <class>LedgerSMB::Workflow::Email</class>
   <persister>Email</persister>
- <description>Handles lifecycle of e-mail</description>
- <state name="INITIAL" autorun="yes">
-   <action name="initial-save" resulting_state="INITIALIZED" />
- </state>
- <state name="INITIALIZED" autorun="yes">
-   <action name="send"    resulting_state="EXPANDED">
-     <condition name="sendImmediately" />
-   </action>
-   <!-- Save data as provided at workflow creation time -->
-   <action name="update" resulting_state="CREATED">
-     <condition name="!sendImmediately"/>
-   </action>
- </state>
- <state name="CREATED">
-   <action name="attach" resulting_state="NOCHANGE"/>
-   <action name="update" resulting_state="NOCHANGE" />
-   <action name="send"   resulting_state="EXPANDED" />
-   <action name="cancel" resulting_state="CANCELLED"/>
+  <description>Handles lifecycle of e-mail</description>
+  <state name="INITIAL" autorun="yes">
+    <action name="save" resulting_state="INITIALIZED" />
+  </state>
+  <state name="INITIALIZED" autorun="yes">
+    <action name="send"    resulting_state="EXPANDED">
+      <condition name="sendImmediately" />
+    </action>
+    <!-- Save data as provided at workflow creation time -->
+    <action name="update" resulting_state="CREATED">
+      <condition name="!sendImmediately"/>
+    </action>
+  </state>
+  <state name="CREATED">
+    <action name="attach" resulting_state="NOCHANGE"/>
+    <action name="update" resulting_state="NOCHANGE" />
+    <action name="send"   resulting_state="EXPANDED" />
+    <action name="cancel" resulting_state="CANCELLED"/>
 
  <!--
       Commented out in anticipation of functionality to manage the queue
@@ -28,7 +27,7 @@
      <condition name="Complete" />
   </action>
  -->
- </state>
+  </state>
  <!--
  <state name="QUEUED">
    <action name="send"   resulting_state="SENT">
@@ -38,9 +37,9 @@
  </state>
  -->
 
- <state name="EXPANDED" autorun="yes">
-   <action name="do-send" resulting_state="SUCCESS" />
- </state>
- <state name="SUCCESS" />
- <state name="CANCELLED" />
+  <state name="EXPANDED" autorun="yes">
+    <action name="do-send" resulting_state="SUCCESS" />
+  </state>
+  <state name="SUCCESS" />
+  <state name="CANCELLED" />
 </workflow>

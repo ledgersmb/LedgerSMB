@@ -1,16 +1,13 @@
 <actions type="Email">
   <description>Actions for Email workflow</description>
-  <action name="initial-save"
-          class="LedgerSMB::Workflow::Action::Email"
-          action="initial-save" />
   <action name="update"
           text="Update"
-          class="LedgerSMB::Workflow::Action::Email"
-          action="save" order="1" />
+          class="LedgerSMB::Workflow::Action::Null"
+          order="1" />
   <action name="cancel"
           text="Cancel"
           class="LedgerSMB::Workflow::Action::Null"
-          action="cancel" order="2" />
+          order="2" />
   <action name="queue"
           text="Queue"
           class="LedgerSMB::Workflow::Action::Email"

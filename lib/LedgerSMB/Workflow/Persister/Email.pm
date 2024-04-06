@@ -11,6 +11,51 @@ This module provides e-mail attachment metadata to e-mail workflow.
 The class inherits from LedgerSMB::Workflow::Persister::ExtraData; users are
 expected to declare the email table and fields as "ExtraData" configuration.
 
+This persister maps the following fields from the C< email > table to the
+workflow context:
+
+=over 8
+
+=item * from
+
+=item * to
+
+=item * cc
+
+=item * bcc
+
+=item * notify
+
+=item * subject
+
+=item * body
+
+=item * expansions
+
+=back
+
+Additionally, it exposes an array of attachments in the C< _attachments >
+context field.  Each array item is a hash with the following keys:
+
+=over 8
+
+=item * id (optional)
+
+=item * description
+
+=item * file_name
+
+=item * mime_type (optional)
+
+=item * content
+
+=back
+
+New attachments can be created by pushing hashes onto the C< _attachments > array.
+When the workflow is saved, the C< id > and C< mime_type > values will be back-filled.
+
+The C< content > field will be loaded from the database when it's being accessed.
+
 =head1 METHODS
 
 =cut
@@ -26,6 +71,7 @@ use List::Util qw(any);
 
 use LedgerSMB::File::Email;
 use LedgerSMB::Magic qw(FC_EMAIL);
+use LedgerSMB::Workflow::Persister::Email::TiedContent;
 
 
 my $json = JSON::MaybeXS->new(
@@ -46,6 +92,20 @@ sub _save_email_data {
           qw(from to cc bcc notify subject body) )
     };
 
+    if ($ctx->param( 'sent' )) {
+        # Mark the e-mail as having been sent by
+        # setting the send date/time
+        $dbh->do(<<~'SQL', {}, $wf->id)
+               UPDATE email
+                  SET sent_date = NOW()
+                WHERE workflow_id = ?
+                      AND sent_date is null
+               SQL
+            or $log->error($dbh->errstr);
+
+        $ctx->delete_param( 'sent' );
+    }
+
     # Don't save data if the in-memory data hasn't been updated...
     if ( not defined $old_data
          or ( any { ($old_data->{$_} // '') ne ($data->{$_} // '') }
@@ -62,6 +122,31 @@ sub _save_email_data {
             }, {},
             $wf->id, $data->@{qw(from to cc bcc notify subject body expansions)})
             or $log->error($dbh->errstr);
+    }
+    for my $att ($ctx->param( '_attachments' )->@*) {
+        if (my $c = tied $att->{content}) {
+            $c->persist;
+            next;
+        }
+
+        my $file = LedgerSMB::File::Email->new(
+            dbh            => $dbh,
+            file_class     => FC_EMAIL,
+            ref_key        => $wf->id,
+            mime_type_text => $att->{mime_type},
+            $att->%{qw( content description file_name )}
+            );
+
+        $file->get_mime_type;
+        $file->attach;
+
+        $att->{id}        = $file->id;
+        $att->{mime_type} = $file->mime_type_text;
+        tie $att->{content},
+            'LedgerSMB::Workflow::Persister::Email::TiedContent',
+            id    => $att->{id},
+            dbh   => $dbh,
+            wf_id => $wf->id;
     }
 }
 
@@ -83,6 +168,13 @@ sub _fetch_attachments {
     my $rows = $sth->fetchall_arrayref( {} );
     $sth->finish;
 
+    for my $row ($rows->@*) {
+        tie $row->{content},
+            'LedgerSMB::Workflow::Persister::Email::TiedContent',
+            id    => $row->{id},
+            dbh   => $dbh,
+            wf_id => $wf->id;
+    }
     $wf->context->param( '_attachments' => $rows);
 }
 
@@ -184,49 +276,11 @@ sub fetch_extra_workflow_data {
 }
 
 
-=head2 attach($wf, $atts)
-
-Attaches a file to the e-mail. C<$atts> is a hashref with
-the following keys in the hash:
-
-=over
-
-=item * content
-
-=item * description
-
-=item * file_name
-
-=item * mime_type
-
-=back
-
-=cut
-
-sub attach {
-    my ($self, $wf, $data) = @_;
-    my $file               = LedgerSMB::File::Email->new(
-        dbh            => $self->handle,
-        file_class     => FC_EMAIL,
-        ref_key        => $wf->id,
-        mime_type_text => $data->{mime_type},
-        $data->%{qw( content description file_name )}
-        );
-
-    $file->get_mime_type;
-    $file->attach;
-
-    return;
-}
-
-
-
-
 1;
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2020 The LedgerSMB Core Team
+Copyright (C) 2020-2024 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
