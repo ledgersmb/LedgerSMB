@@ -153,7 +153,7 @@ sub expand {
     my $expansions = $wf->context->param( 'expansions' );
 
     if ( $body and $expansions ) {
-        $body =~ s/<%(.+?)%>/$expansions->{$1}/g;
+        $body =~ s/<%\s*(.+?)\s*%>/$expansions->{$1}/g;
 
         $wf->context->param( 'body', $body );
     }
