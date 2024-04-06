@@ -97,6 +97,7 @@ sub load {
             }
         }
         else {
+            $type = '<undef>';
             $prefix = '.';
         }
         $log->debug( "workflow files finder called for $type (prefix: $prefix)" );
