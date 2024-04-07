@@ -167,6 +167,8 @@ C<UI/reports/display_report> template will be used.
 
 =cut
 
+use v5.36;
+use warnings;
 
 use List::Util qw{ any pairgrep };
 use LedgerSMB::PGNumber;
@@ -446,7 +448,6 @@ sub format_money_columns {
         if ($col->{money}) {
             $col->{class} = 'money';
             for my $row(@{$self->rows}){
-                local $@ = undef;
                 if ( blessed $row->{$col->{col_id}}
                      and $row->{$col->{col_id}}->can('to_output') ){
                     $row->{$col->{col_id}} =
@@ -555,7 +556,7 @@ sub _render {
             for my $k (keys %$r){
                 next if $exclude->{$k};
 
-                if (blessed $r->{$k} and $r->{$k}->isa('LedgerSMB::PGNumber') ){
+                if ($r->{$k} isa 'LedgerSMB::PGNumber' ){
                     $total_row->{$k} //= LedgerSMB::PGNumber->bzero;
                     $total_row->{$k}->badd($r->{$k});
                     if ($subtotal) {

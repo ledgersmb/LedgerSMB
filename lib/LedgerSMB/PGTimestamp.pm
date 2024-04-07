@@ -14,7 +14,7 @@ The type behaves internally as a Datetime module.
 
 =cut
 
-use strict;
+use v5.36;
 use warnings;
 use base qw(PGObject::Type::DateTime);
 
@@ -154,9 +154,7 @@ sub from_input{
     my $self = shift;
     my $input = shift;
 
-    local $@ = undef;
-    return $input if eval {$input->isa(__PACKAGE__)} && $input->is_date;
-
+    return $input if $input isa __PACKAGE__ && $input->is_date;
     return __PACKAGE__->new()
         if ! $input; # matches undefined as well as ''
 

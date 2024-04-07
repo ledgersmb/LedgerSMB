@@ -26,6 +26,7 @@ runs:
         install-modules: |
           Devel::Cover
           Devel::Cover::Report::Coveralls
+          Syntax::Keyword::Try::Deparse
         # Features and Devel modules
         install-modules-args: >
           --notest

@@ -193,7 +193,7 @@ commands:
               --feature=edi
             cpm install --local-lib-contained=$HOME/perl5 --no-test \
               --resolver=metacpan \
-                JSON::PP~4.03 Gazelle
+                JSON::PP~4.03 Gazelle Syntax::Keyword::Try::Deparse
             if [ "x$COVERAGE" == "x1" ]
             then
               cpm install --local-lib-contained=$HOME/perl5 --no-test \
@@ -329,14 +329,14 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: '5.34'
+      perl: '5.38'
       postgres: '12'
       browser: chrome
       selenium: selenium/node-chrome:3.141.59-20210607
 #      coverage: 1
     steps:
       - prep_env:
-          perl: '5.34'
+          perl: '5.38'
       - start_starman
       - start_proxy
       - prove
@@ -350,13 +350,13 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: '5.32'
+      perl: '5.36'
       postgres: '11'
       browser: firefox
       selenium: selenium/node-firefox:3
     steps:
       - prep_env:
-          perl: '5.32'
+          perl: '5.36'
       - start_starman
       - start_proxy
       - prove
@@ -367,13 +367,13 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: '5.32'
+      perl: '5.36'
       postgres: '11'
       browser: operablink
       selenium: selenium/node-opera:3
     steps:
       - prep_env:
-          perl: '5.32'
+          perl: '5.36'
       - start_starman
       - start_proxy
       - prove

@@ -15,7 +15,7 @@ Math::BigFloat and can be used in this way.
 
 =cut
 
-use strict;
+use v5.36;
 use warnings;
 use base qw(PGObject::Type::BigFloat);
 
@@ -178,10 +178,7 @@ sub from_input {
     my $self = shift;
     my $string = shift;
 
-    local $@ = undef;
-    return $string if eval { $string->isa(__PACKAGE__) };
-
-    #tshvr4 avoid 'Use of uninitialized value $string in string eq'
+    return $string if $string isa __PACKAGE__;
     if (!defined $string || $string eq '') {
         return undef;
     }

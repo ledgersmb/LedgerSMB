@@ -15,7 +15,7 @@ This module is the UI controller for the customer, vendor, etc functions; it
 
 =cut
 
-use strict;
+use v5.36;
 use warnings;
 
 use Feature::Compat::Try;
@@ -84,10 +84,9 @@ sub get_by_cc {
     $entity ||=  LedgerSMB::Entity::Person->get_by_cc($request->{control_code});
     my ($company, $person) = (undef, undef);
 
-    local $@ = undef;
-    if (eval {$entity->isa('LedgerSMB::Entity::Company')}){
+    if ($entity isa 'LedgerSMB::Entity::Company'){
         $company = $entity;
-    } elsif (eval {$entity->isa('LedgerSMB::Entity::Person')}){
+    } elsif ($entity isa 'LedgerSMB::Entity::Person'){
         $person = $entity;
     }
 
@@ -118,9 +117,9 @@ sub get {
     my ($company, $person) = (undef, undef);
 
     local $@ = undef;
-    if (eval {$entity->isa('LedgerSMB::Entity::Company')}){
+    if ($entity isa 'LedgerSMB::Entity::Company') {
         $company = $entity;
-    } elsif (eval {$entity->isa('LedgerSMB::Entity::Person')}){
+    } elsif ($entity isa 'LedgerSMB::Entity::Person') {
         $person = $entity;
     }
 
