@@ -56,7 +56,7 @@ Deprecated
 
 package Form;
 
-use strict;
+use v5.36;
 use charnames qw(:full);
 use open ':utf8';
 use utf8;
@@ -734,11 +734,9 @@ Calls $form->error if the value is NaN.
 =cut
 
 sub parse_amount {
-
     my ( $self, $myconfig, $amount ) = @_;
-    local $@;
-    return $amount if eval {$amount->isa('LedgerSMB::PGNumber') };
 
+    return $amount if $amount isa 'LedgerSMB::PGNumber';
     if ( ( ! defined $amount ) or ( $amount eq '' ) ) {
         $amount = '0';
     }
@@ -759,9 +757,8 @@ is returned.
 
 sub parse_date {
     my ( $self, $myconfig, $date ) = @_;
-    local $@;
-    return $date if eval { $date->isa('LedgerSMB::PGDate') };
 
+    return $date if $date isa 'LedgerSMB::PGDate';
     if ( ( ! defined $date ) or ( $date eq '' ) ) {
         $date = '';
     }

@@ -52,7 +52,7 @@ and [the 1.10 'old stable' version](https://github.com/ledgersmb/LedgerSMB/tree/
 
 ## Server
 
-* `Perl 5.32+`
+* `Perl 5.36+`
 * `PostgreSQL 13+`
 * Web server (e.g. `nginx`, `Apache`, `lighttpd`, `Varnish`)
 
