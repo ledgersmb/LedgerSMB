@@ -149,6 +149,10 @@ Dependency updates
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.34
+* Fix e-mailing of AR aging statements (#8111)
+
+
 Changelog for 1.10.33
 * Enable scroll bars on setup(upgrade) data fix screens (#8071)
 * Fix 'not set up for hierarchy reporting' on Entity Account screen (#8056)
