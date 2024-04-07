@@ -525,7 +525,6 @@ jobs:
           name: logs-and-screens ${{ matrix.perl }} ${{ matrix.BROWSER }}
           path: |
             logs/**
-            /tmp/nginx*.log
         if: always()
 
   close-parallel-coverage:
