@@ -514,7 +514,6 @@ sub redirect {
     my ( $self, $msg ) = @_;
 
     if ( $self->{callback} || !$msg ) {
-        $logger->trace("Full redirect \$self->{callback}=$self->{callback} \$msg=$msg");
         $self->_redirect();
         $self->finalize_request();
     }
@@ -527,9 +526,8 @@ sub redirect {
 
 sub _redirect {
     # referenced directly from am.pl, because of the need of our return value
-    use List::Util qw(first);
     my ($self) = @_;
-    my ( $script, $argv ) = split( /\?/, $self->{callback}, 2 );
+    my ( $script, $argv ) = split( /\?/, $self->{callback} // '', 2 );
 
     if ( !$script ) {    # http redirect to login.pl if called w/no args
         print "Location: login.pl\n";
