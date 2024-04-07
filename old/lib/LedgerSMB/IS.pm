@@ -927,38 +927,22 @@ sub post_invoice {
                     ); # unless $form->{shipped};
             }
             # save detail record in invoice table
-            $query = qq|
-                INSERT INTO invoice (description)
-                     VALUES ('$uid')|;
-
-            $dbh->do($query) || $form->dberror($query);
-
-            $query = qq|
-                SELECT id FROM invoice
-                WHERE description = '$uid'|;
-            ($invoice_id) = $dbh->selectrow_array($query);
-
             unless ( $form->{"deliverydate_$i"} ) {
                 undef $form->{"deliverydate_$i"};
             }
             $query = qq|
-                UPDATE invoice
-                   SET trans_id = ?,
-                       parts_id = ?,
-                       description = ?,
-                       qty = ?,
-                       sellprice = ?,
-                                       precision = ?,
-                       fxsellprice = ?,
-                       discount = ?,
-                       allocated = ?,
-                       unit = ?,
-                       deliverydate = ?,
-                       serialnumber = ?,
-                       notes = ?
-                      WHERE id = ?|;
+                INSERT INTO invoice (
+                         trans_id, parts_id, description, qty, sellprice,
+                         precision, fxsellprice, discount, allocated, unit,
+                         deliverydate, serialnumber, notes)
+                       VALUES (
+                         ?, ?, ?, ?, ?,
+                         ?, ?, ?, ?, ?,
+                         ?, ?, ?)
+                RETURNING id
+                |;
 
-            $sth = $dbh->prepare($query);
+            $sth = $dbh->prepare($query) or $form->dberror($query);
             $sth->execute(
                 $form->{id},               $form->{"id_$i"},
                 $form->{"description_$i"}, $form->{"qty_$i"},
@@ -967,8 +951,8 @@ sub post_invoice {
                 $allocated,                $form->{"unit_$i"},
                 $form->{"deliverydate_$i"},
                 $form->{"serialnumber_$i"}, $form->{"notes_$i"},
-                $invoice_id
-            ) || $form->dberror($query);
+                ) || $form->dberror($query);
+            ($invoice_id) = $sth->fetchrow_array();
 
             if ($form->{batch_id}){
                 $sth = $dbh->prepare(

@@ -272,32 +272,16 @@ sub post_invoice {
 
             # save detail record in invoice table
             $query = qq|
-                INSERT INTO invoice (description)
-                     VALUES ('$uid')|;
-            $dbh->do($query) || $form->dberror($query);
-
-            $query = qq|
-                SELECT id FROM invoice
-                 WHERE description = '$uid'|;
-            ($invoice_id) = $dbh->selectrow_array($query);
-
-            $query = qq|
-                UPDATE invoice
-                   SET trans_id = ?,
-                       parts_id = ?,
-                       description = ?,
-                       qty = ?,
-                       sellprice = ?,
-                       fxsellprice = ?,
-                       discount = ?,
-                       allocated = ?,
-                       unit = ?,
-                       deliverydate = ?,
-                       serialnumber = ?,
-                                       precision = ?,
-                       notes = ?,
-                                       vendor_sku = ?
-                 WHERE id = ?|;
+                INSERT INTO invoice (
+                         trans_id, parts_id, description, qty, sellprice,
+                         fxsellprice, discount, allocated, unit,
+                         deliverydate, serialnumber, precision, notes, vendor_sku)
+                       VALUES (
+                         ?, ?, ?, ?, ?,
+                         ?, ?, ?, ?,
+                         ?, ?, ?, ?, ?)
+                RETURNING id
+                |;
             $sth = $dbh->prepare($query);
             $sth->execute(
                 $form->{id},               $form->{"id_$i"},
@@ -308,8 +292,8 @@ sub post_invoice {
                 $form->{"serialnumber_$i"},
                 $form->{"precision_$i"},   $form->{"notes_$i"},
                 $form->{"partnumber_$i"},
-                $invoice_id
             ) || $form->dberror($query);
+            ($invoice_id) = $sth->fetchrow_array();
 
             for my $cls(@{$form->{bu_class}}){
                 if ($form->{"b_unit_$cls->{id}_$i"}){
