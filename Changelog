@@ -3,6 +3,11 @@
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.12
+* Fix download of attachments to reconciliations (#8088)
+* Fix e-mailing of AR aging statements (#8111)
+
+
 Changelog for 1.11.11
 * Fix 'not set up for hierarchy reporting' on Entity Account screen (#8065)
 * Fix date format presentation misalignment with placeholder (#7983)
