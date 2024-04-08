@@ -39,7 +39,7 @@ TODO! Check workflow when 'separate duties' is false!
           doing="Posting..."
           done="Posted"
           history-text="Posted"
-          class="LedgerSMB::Workflow::Action::Null" />
+          class="LedgerSMB::Workflow::Action::TransactionApprove" />
   <action name="batch-approve"
           group="main"
           ui="none"
@@ -158,7 +158,7 @@ TODO! Check workflow when 'separate duties' is false!
           order="21"
           text="Delete"
           short-help="Remove draft transaction"
-          class="LedgerSMB::Workflow::Action::Null" />
+          class="LedgerSMB::Workflow::Action::TransactionDelete" />
 
   <!-- these actions do not have a matching button in is.pl or ir.pl or aa.pl -->
   <action name="print_and_save"

@@ -2,11 +2,11 @@
 
 # Use these themes:
 
-#  lsmb         -- includes all themes we want to use 
+#  lsmb         -- includes all themes we want to use
 #  lsmb_new     -- themes enforced on 'new' code
 #  lsmb_old     -- themes enforced on 'old' code; subset of lsmb_new
 #  lsmb_tests   -- themes enforced on tests
-#  lsmb_wip     -- themes we are trying to use on 'new' code 
+#  lsmb_wip     -- themes we are trying to use on 'new' code
 #  lsmb_old_wip -- themes we are trying to use on 'old' code, subset of lsmb_wip
 
 #  lsmb_reject   -- explicitly rejected themes
@@ -77,7 +77,8 @@ pager = less
 [Subroutines::ProhibitReturnSort]
     set_themes = lsmb lsmb_new lsmb_tests
 [Subroutines::ProhibitSubroutinePrototypes]
-    set_themes = lsmb lsmb_new lsmb_tests
+    # Unfortunately, subroutine prototypes are confused with signatures
+    set_themes = lsmb_reject
 [TestingAndDebugging::ProhibitProlongedStrictureOverride]
     set_themes = lsmb lsmb_new lsmb_tests
 [TestingAndDebugging::RequireUseStrict]
@@ -156,7 +157,7 @@ pager = less
     set_themes = lsmb lsmb_wip lsmb_old_wip
 [InputOutput::RequireCheckedSyscalls]
     set_themes = lsmb lsmb_new lsmb_old_wip lsmb_tests
-    functions = open close 
+    functions = open close
 
 [RegularExpressions::ProhibitCaptureWithoutTest]
     set_themes = lsmb lsmb_wip lsmb_old_wip
@@ -178,7 +179,7 @@ pager = less
 
 # Rejected policies
 
-# It is easier to lookup $^D than remember 
+# It is easier to lookup $^D than remember
 # if $DEBUGGING is an application var.
 #[Variables::ProhibitPunctuationVars]
 

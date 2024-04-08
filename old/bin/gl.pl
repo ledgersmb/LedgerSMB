@@ -112,14 +112,14 @@ sub save_info {
 }
 
 sub approve {
-    $form->call_procedure(funcname=>'draft_approve', args => [ $form->{id} ]);
-    if ($form->{workflow_id}) {
-        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
-            'GL', $form->{workflow_id}
-            );
-        $wf->context->param( transdate => $form->{transdate} );
-        $wf->execute_action( $form->{__action} );
-    }
+    my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+        'GL', $form->{workflow_id}
+        );
+    die q|No workflow found to approve| unless $wf;
+
+    $wf->context->param( transdate => $form->{transdate} );
+    $wf->execute_action( $form->{__action} );
+
     if ($form->{callback}){
         print "Location: $form->{callback}\n";
         print "Status: 302 Found\n\n";
@@ -745,16 +745,13 @@ sub post {
 }
 
 sub del {
-    $form->error($locale->text('Cannot delete posted transaction'))
-       if ($form->{approved});
-    if ($form->{workflow_id}) {
-        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
-            'GL', $form->{workflow_id}
-            );
-        $wf->context->param( transdate => $form->{transdate} );
-        $wf->execute_action( $form->{__action} );
-    }
-    $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
+    my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+        'GL', $form->{workflow_id}
+        );
+    die 'No workflow to mark deleted' unless $wf;
+    $wf->context->param( transdate => $form->{transdate} );
+    $wf->execute_action( $form->{__action} );
+
     delete $form->{id};
     delete $form->{reference};
     new();

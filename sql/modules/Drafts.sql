@@ -84,9 +84,13 @@ begin
         SELECT table_name into t_table FROM transactions where id = in_id;
 
         IF (t_table = 'ar') THEN
-                PERFORM cogs__add_for_ar_line(id) FROM invoice
-                  WHERE trans_id = in_id;
-                UPDATE ar set approved = true where id = in_id;
+          PERFORM cogs__add_for_ar_line(id)
+             FROM invoice
+            WHERE trans_id = in_id;
+          UPDATE ar
+             set invnumber = setting_increment('sinumber')
+           WHERE id = in_id AND invnumber is null;
+          UPDATE ar set approved = true WHERE id = in_id;
         ELSIF (t_table = 'ap') THEN
                 PERFORM cogs__add_for_ap_line(id) FROM invoice
                   WHERE trans_id = in_id;

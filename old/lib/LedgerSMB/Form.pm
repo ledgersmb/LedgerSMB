@@ -3003,24 +3003,6 @@ sub should_update_defaults {
     return 0;
 }
 
-=item $form->update_invnumber
-
-If invnumber is not set, updates it.  Used when gapless numbering is in effect
-
-=cut
-
-sub update_invnumber {
-    my $self = shift;
-    my $query =
-        q|update ar
-             set invnumber = setting_increment('sinumber')
-           where id = ? and invnumber is null|;
-    $self->{dbh}->do($query,
-                     {},
-                     $self->{id})
-        or $self->dberror($query);
-}
-
 =item $form->db_prepare_vars(var1, var2, ..., varI<n>)
 
 Undefines $form->{varI<m>}, 1 <= I<m> <= I<n>, iff $form-<{varI<m> is both
