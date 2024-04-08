@@ -2,6 +2,11 @@
 
 use Test2::V0;
 
+BEGIN {
+    use Log::Log4perl qw(:easy);
+    Log::Log4perl->easy_init($OFF);
+}
+
 use File::Find;
 use Workflow::Config;
 
