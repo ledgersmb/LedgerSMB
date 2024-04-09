@@ -53,7 +53,6 @@ use parent qw( Workflow::Condition );
 use LedgerSMB::Setting;
 
 use Log::Any qw($log);
-use Workflow::Exception qw( condition_error );
 
 my @PROPS = qw( offset workflow_parameter );
 __PACKAGE__->mk_accessors(@PROPS);
@@ -97,8 +96,7 @@ sub evaluate {
         die $dbh->errstr if $dbh->err;
     }
 
-    condition_error 'Period open' if $opened;
-    return 1;
+    return not $opened;
 }
 
 
