@@ -30,7 +30,6 @@ use parent qw( Workflow::Condition );
 use LedgerSMB::Setting;
 
 use Log::Any qw($log);
-use Workflow::Exception qw( condition_error );
 
 
 =head2 evaluate( $wf )
@@ -47,10 +46,8 @@ sub evaluate {
 
     my $separate_duties = LedgerSMB::Setting->new(dbh => $dbh)->get('separate_duties');
     $log->info("separate duties: $separate_duties");
-    condition_error 'Separation of Duties disabled'
-        if not $separate_duties;
 
-    return 1;
+    return $separate_duties;
 }
 
 

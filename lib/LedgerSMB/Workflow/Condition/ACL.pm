@@ -32,7 +32,7 @@ use parent qw( Workflow::Condition );
 use LedgerSMB::Setting;
 
 use Log::Any qw($log);
-use Workflow::Exception qw( configuration_error condition_error );
+use Workflow::Exception qw( configuration_error );
 
 
 =head2 init
