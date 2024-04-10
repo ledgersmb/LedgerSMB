@@ -42,6 +42,9 @@ use Log::Any qw($log);
 use File::Find::Rule;
 use File::Spec;
 use Workflow::Factory;
+use Workflow::Condition;
+
+$Workflow::Condition::STRICT_BOOLEANS = 0;
 
 =head1 CLASS METHODS
 
