@@ -1,15 +1,14 @@
 /** @format */
 
-const MarkdownInclude = require("markdown-include");
-
-const browserslist = require("browserslist");
-const lite = require("caniuse-lite");
-const packageJson = require("../package.json");
-const timestamp = require("unix-timestamp");
+const MarkdownInclude = require("markdown-include"),
+    browserslist = require("browserslist"),
+    lite = require("caniuse-lite"),
+    packageJson = require("../package.json"),
+    timestamp = require("unix-timestamp");
 
 function _isNextVersion(v1, v2) {
-    let p1 = v1.match(/(\d+)(\.(\d+))?/);
-    let p2 = v2.match(/(\d+)(\.(\d+))?/);
+    let p1 = v1.match(/(\d+)(\.(\d+))?/),
+        p2 = v2.match(/(\d+)(\.(\d+))?/);
     return (
         v2 &&
         ((+p1[1] === +p2[1] + 1 && !p1[3] && !p2[3]) ||
@@ -27,6 +26,7 @@ MarkdownInclude.registerPlugin({
             .sort()
             .forEach(function (b) {
                 let [browser, version] = b.split(/\s+/);
+                // eslint-disable-next-line one-var
                 let category = browser.match(
                     /^(\w+_\w+|android|baidu|bb|kaios|samsung)$/
                 )
@@ -45,6 +45,7 @@ MarkdownInclude.registerPlugin({
                         lite.agents[browser].browser;
                     earliest[category][browser].versions = [];
                 }
+                // eslint-disable-next-line one-var
                 let time = lite.agents[browser].release_date[version];
 
                 if (time !== null) {
@@ -56,17 +57,16 @@ MarkdownInclude.registerPlugin({
                         earliest[category][browser].version = version;
 
                         if (time) {
-                            let ts = timestamp.toDate(time);
-                            let month = "00" + (ts.getMonth() + 1);
-                            let year =
-                                1900 +
-                                ts.getYear() +
-                                "-" +
-                                month.substr(month.length - 2);
+                            let ts = timestamp.toDate(time),
+                                month = "00" + (ts.getMonth() + 1),
+                                year =
+                                    1900 +
+                                    ts.getYear() +
+                                    "-" +
+                                    month.substr(month.length - 2);
                             earliest[category][browser].year = year;
                             earliest[category][browser].time = time;
-                        }
-                        else {
+                        } else {
                             earliest[category][browser].year = "<missing>";
                         }
                     }
@@ -93,15 +93,18 @@ MarkdownInclude.registerPlugin({
                 ":|:" +
                 "---".padEnd(43, "-") +
                 " |\n";
+            // eslint-disable-next-line one-var
             for (var browser in earliest[c]) {
+                // eslint-disable-next-line one-var
                 var entry = earliest[c][browser];
-                let versions = [];
-                let v1 = "";
-                let v2 = "";
-                // Pack versions
-                let vs = entry.versions.sort((a, b) =>
-                    a.localeCompare(b, undefined, { numeric: true })
-                );
+                let versions = [],
+                    v1 = "",
+                    v2 = "",
+                    // Pack versions
+                    vs = entry.versions.sort((a, b) =>
+                        a.localeCompare(b, undefined, { numeric: true })
+                    );
+                // eslint-disable-next-line one-var
                 var v;
                 /* eslint no-cond-assign:0 */
                 while ((v = vs.shift()) || v1) {
@@ -137,13 +140,14 @@ MarkdownInclude.registerPlugin({
                     v1 = "";
                     v2 = "";
                 }
-                var l = "";
-                let line =
-                    "| " +
-                    entry.name.padEnd(19, " ") +
-                    " | " +
-                    entry.year.padEnd(8, " ") +
-                    " | ";
+                // eslint-disable-next-line one-var
+                var l = "",
+                    line =
+                        "| " +
+                        entry.name.padEnd(19, " ") +
+                        " | " +
+                        entry.year.padEnd(8, " ") +
+                        " | ";
                 while (versions.length) {
                     while (
                         versions.length &&
@@ -177,21 +181,26 @@ MarkdownInclude.registerPlugin({
 });
 
 // do something with compiled files
-var tmp = require('tmp');
-var fs = require('fs');
+var tmp = require("tmp"),
+    fs = require("fs");
 
 tmp.file(
     {
-        prefix: 'markdown-',
-        postfix: '.json',
+        prefix: "markdown-",
+        postfix: ".json",
         keep: false
     },
     function (err, path) {
-        if (err) {throw err;}
-        fs.writeFileSync(path, `{
-            "build" : "../README.md",
-            "files" : ["../doc/sources/_README.md"]
-        }`);
+        if (err) {
+            throw err;
+        }
+        fs.writeFileSync(
+            path,
+            `{
+                "build" : "../README.md",
+                "files" : ["../doc/sources/_README.md"]
+            }`
+        );
         MarkdownInclude.compileFiles(path);
     }
 );
