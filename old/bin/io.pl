@@ -132,12 +132,11 @@ sub _calc_taxes {
 }
 
 sub approve {
-    $form->update_invnumber;
-    $form->call_procedure(funcname=>'draft_approve', args => [ $form->{id} ]);
-
     my $wf = $form->{_wire}->get('workflows')
         ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
-    $wf->execute_action( 'approve' ) if $wf;
+    die 'No workflow found to approve' unless $wf;
+
+    $wf->execute_action( 'approve' );
     edit();
 }
 

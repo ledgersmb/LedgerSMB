@@ -149,7 +149,6 @@ sub del {
         ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
     $wf->execute_action( 'del' );
 
-    $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
     $form->info($locale->text('Draft deleted'));
 }
 

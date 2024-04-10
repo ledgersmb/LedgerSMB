@@ -16,11 +16,9 @@ expected to declare the email table and fields as "ExtraData" configuration.
 =cut
 
 
+use v5.36;
 use warnings;
-use strict;
-use base qw( LedgerSMB::Workflow::Persister::ExtraData );
-
-use Carp qw(croak);
+use parent qw( LedgerSMB::Workflow::Persister::ExtraData );
 
 =head2 create_workflow
 
@@ -32,11 +30,55 @@ associated.
 
 =cut
 
-sub create_workflow {
-    my ($self, $wf) = @_;
+sub create_workflow($self, $wf) {
+    my $id  = $self->SUPER::create_workflow( $wf );
+    my $ctx = $wf->context;
+    $ctx->param( "_old_$_", $ctx->param( $_ ) )
+        for (qw( approved deleted ));
 
-    return $self->SUPER::create_workflow( $wf );
+    return $id;
+}
 
+=head2 update_workflow
+
+Saves the workflow and synchronizes the workflow state to the
+C< transactions > table using the context parameter C< id >.
+
+=cut
+
+sub update_workflow($self, $wf) {
+    my $ctx = $wf->context;
+
+    if ($ctx->param( 'approved' )
+        and not $ctx->param( '_old_approved' )) {
+        my $dbh = $self->handle;
+        my $sth = $dbh->prepare(<<~'SQL')
+              select draft_approve(id)
+                from transactions
+               where id = ? and not approved
+              SQL
+            or die $dbh->errstr;
+        $sth->execute($wf->context->param('id'))
+            or die $sth->errstr;
+        $sth->finish;
+    }
+    elsif ($ctx->param( 'deleted' )) {
+        my $dbh = $self->handle;
+        my $sth = $dbh->prepare(<<~'SQL')
+              select draft_delete(id)
+                from transactions
+               where id = ?
+              SQL
+            or die $dbh->errstr;
+        $sth->execute($wf->context->param('id'))
+            or die $sth->errstr;
+        $sth->finish;
+    }
+
+    $self->SUPER::update_workflow( $wf );
+    $ctx->param( "_old_$_", $ctx->param( $_ ) )
+        for (qw( approved deleted ));
+    return;
 }
 
 
@@ -44,7 +86,7 @@ sub create_workflow {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2020 The LedgerSMB Core Team
+Copyright (C) 2020-2024 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

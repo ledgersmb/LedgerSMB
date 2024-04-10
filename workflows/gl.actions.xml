@@ -39,7 +39,7 @@ TODO! Check workflow when 'separate duties' is false!
           doing="Posting..."
           done="Posted"
           history-text="Posted"
-          class="LedgerSMB::Workflow::Action::Null" />
+          class="LedgerSMB::Workflow::Action::TransactionApprove" />
   <!--action name="batch-approve"
           group="main"
           ui="none"
@@ -115,7 +115,7 @@ TODO! Check workflow when 'separate duties' is false!
           doing="Deleting..."
           done="Deleted"
           short-help="Remove draft transaction"
-          class="LedgerSMB::Workflow::Action::Null" />
+          class="LedgerSMB::Workflow::Action::TransactionDelete" />
 
   <action name="save_as_new"
           group="main"
