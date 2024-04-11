@@ -15,7 +15,7 @@ define([
             let base = window.location.pathname.replace(/[^/]*$/, "");
             let r = await fetch(base + domattr.get(f, "action"), {
                 method: "POST",
-                body: domform.toQuery(f),
+                body: domform.toQuery(f)
             });
 
             if (r.ok) {

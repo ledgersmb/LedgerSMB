@@ -1,7 +1,5 @@
 /** @format */
 
-/* eslint no-template-curly-in-string:0 */
-
 define([
     "dijit/form/TextBox",
     "dijit/_HasDropDown",
@@ -30,6 +28,7 @@ define([
             channel: null,
             height: null,
             store: partRestStore,
+            // eslint-disable-next-line no-template-curly-in-string
             queryExpr: "*${0}*",
             autoComplete: false,
             highlightMatch: "all",
