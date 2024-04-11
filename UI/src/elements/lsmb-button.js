@@ -1,4 +1,5 @@
 /** @format */
+// eslint-disable class-methods-use-this
 
 import { LsmbDijit } from "@/elements/lsmb-dijit";
 

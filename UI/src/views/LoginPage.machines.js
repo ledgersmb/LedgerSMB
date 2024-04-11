@@ -20,7 +20,9 @@ import {
 } from "@/machine-helpers";
 
 function submitLogin(ctx) {
-    return fetch("login.pl?action=authenticate&company=" + encodeURI(ctx.company.value), {
+    return fetch(
+        "login.pl?action=authenticate&company=" + encodeURI(ctx.company.value),
+        {
         method: "POST",
         body: JSON.stringify({
             company: ctx.company.value,
@@ -31,73 +33,90 @@ function submitLogin(ctx) {
             "X-Requested-With": "XMLHttpRequest",
             "Content-Type": "application/json"
         })
-    });
+        }
+    );
 }
 
 function createLoginMachine(initialContext) {
     return interpret(
-        createMachine({
-            invalid: state(
-                transitionFormValid("input", "ready"),
-            ),
+        createMachine(
+            {
+                invalid: state(transitionFormValid("input", "ready")),
             ready: state(
                 transitionFormInvalid("input", "invalid"),
-                transition('submit', 'submitting'),
+                    transition("submit", "submitting")
             ),
             submitting: invoke(
                 submitLogin,
                 transition(
-                    'error', 'ready',
-                    action((ctx, e) => { alert(e.error); })
+                        "error",
+                        "ready",
+                        action((ctx, e) => {
+                            // eslint-disable-next-line no-alert
+                            alert(e.error);
+                        })
                 ),
                 transition(
-                    'done', 'submitted',
-                    reduce((ctx, e) => ({ ...ctx, response: e.data})),
-                ),
+                        "done",
+                        "submitted",
+                        reduce((ctx, e) => ({ ...ctx, response: e.data }))
+                    )
             ),
             submitted: state(
                 immediate(
-                    'failed',
+                        "failed",
                     guard(testResponseStatusFn(401)),
                     action((ctx) => {
-                        ctx.errorText.value = ctx.t("Access denied: Bad username or password");
-                    }),
+                            ctx.errorText.value = ctx.t(
+                                "Access denied: Bad username or password"
+                            );
+                        })
                 ),
                 immediate(
-                    'failed',
+                        "failed",
                     guard(testResponseStatusFn(521)),
                     action((ctx) => {
-                        ctx.errorText.value = ctx.t("Database version mismatch");
-                    }),
+                            ctx.errorText.value = ctx.t(
+                                "Database version mismatch"
+                            );
+                        })
                 ),
                 immediate(
-                    'ready',
+                    "ready",
                     guard(testNot(testResponseOkFn())),
                     action((ctx) => {
-                        alert(ctx.t("Unknown error preventing login"));
-                    }),
+                        alert(ctx.t("Unknown error preventing login")); // eslint-disable-line no-alert
+                    })
                 ),
-                immediate('parsing'),
+                    immediate("parsing")
             ),
             parsing: invoke(
-                ctx => ctx.response.json(),
+                    (ctx) => ctx.response.json(),
                 transition(
-                    'done', 'final',
-                    action((ctx, e) => { window.location.assign(e.data.target); }),
+                        "done",
+                        "final",
+                        action((ctx, e) => {
+                            window.location.assign(e.data.target);
+                        })
                 ),
                 transition(
-                    'error', 'error',
-                    reduce((ctx, e) => ({ ...ctx, error: e.data }))),
+                        "error",
+                        "error",
+                        reduce((ctx, e) => ({ ...ctx, error: e.data }))
+                    )
             ),
             failed: state(
                 transitionFormValid("input", "ready"),
-                transitionFormInvalid("input", "invalid"),
+                    transitionFormInvalid("input", "invalid")
             ),
             final: state(),
-            error: state(),
-        }, initialCtx => initialCtx),
+                error: state()
+            },
+            (initialCtx) => initialCtx
+        ),
         () => {},
-        initialContext);
+        initialContext
+    );
 }
 
 export { createLoginMachine };

@@ -18,6 +18,7 @@ let appName;
 let lsmbDirective = {
     beforeMount(el, binding /* , vnode */) {
         let handler = (event) => {
+            // eslint-disable no-param-reassign
             binding.instance[binding.arg] = event.target.value;
         };
         el.addEventListener("input", handler);

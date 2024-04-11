@@ -1,6 +1,5 @@
 /** @format */
 
-
 import { h, inject, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -52,7 +51,8 @@ export default {
                     .removeAttribute("data-lsmb-done");
                 // chop off the leading '/' to use relative paths
                 let base = window.location.pathname.replace(/[^/]*$/, "");
-                let relTgt = (tgt.substring(0, 1) === '/') ? tgt.substring(1) : tgt;
+                let relTgt =
+                    tgt.substring(0, 1) === "/" ? tgt.substring(1) : tgt;
                 let r = await fetch(base + relTgt, {
                     method: options.method,
                     body: options.data,
@@ -77,12 +77,16 @@ export default {
                         let maindiv = document.getElementById("maindiv");
                         parser.parse(maindiv).then(
                             () => {
-                                registry.findWidgets(maindiv).forEach((child) => {
+                                registry
+                                    .findWidgets(maindiv)
+                                    .forEach((child) => {
                                     this._recursively_resize(child);
                                 });
                                 maindiv
                                     .querySelectorAll("a")
-                                    .forEach((node) => this._interceptClick(node));
+                                    .forEach((node) =>
+                                        this._interceptClick(node)
+                                    );
                                 if (dismiss) {
                                     dismiss();
                                 }
@@ -92,7 +96,8 @@ export default {
                             },
                             (e) => {
                                 this._report_error(e);
-                            });
+                            }
+                        );
                     });
                 } else {
                     this._report_error(r);
@@ -106,10 +111,9 @@ export default {
             }
         },
         _setFormFocus() {
-            [ ...document.forms ].forEach(
-                (form) => {
-                    if (form.hasAttribute('data-lsmb-focus')) {
-                        let focus = form.getAttribute('data-lsmb-focus');
+            [...document.forms].forEach((form) => {
+                if (form.hasAttribute("data-lsmb-focus")) {
+                    let focus = form.getAttribute("data-lsmb-focus");
                         let elm = document.getElementById(focus);
                         if (elm) {
                             elm.select();
@@ -146,7 +150,7 @@ export default {
             d.show();
         },
         _interceptClick(dnode) {
-            let href = dnode.getAttribute('href');
+            let href = dnode.getAttribute("href");
             if (dnode.target || !href) {
                 return;
             }
@@ -160,7 +164,7 @@ export default {
             });
 
             let anode = dnode;
-            anode.href = '#' + href;
+            anode.href = "#" + href;
         },
         _cleanWidgets() {
             try {
@@ -176,6 +180,7 @@ export default {
                 // the widgets. (it may take a bit for the new content to overwrite the old
                 // content...)
                 query("*", document.getElementById("maindiv")).forEach(
+                    // eslint-disable no-param-reassign
                     (n) => delete n._cssState
                 );
             } catch (e) {
@@ -191,10 +196,9 @@ export default {
             .getElementById("maindiv")
             .setAttribute("data-lsmb-done", "true");
         this.$nextTick(() => this.updateContent(this.uiURL));
-        window.__lsmbSubmitForm =
-            (req) => this.updateContent(req.url, req.options);
-        window.__lsmbReportError =
-            (err) => this._report_error(err);
+        window.__lsmbSubmitForm = (req) =>
+            this.updateContent(req.url, req.options);
+        window.__lsmbReportError = (err) => this._report_error(err);
     },
     render() {
         let body = this.content.match(/<body[^>]*>([\s\S]*)(<\/body>)?/i);

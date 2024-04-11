@@ -1,4 +1,5 @@
 /** @format */
+// eslint-disable class-methods-use-this, max-classes-per-file
 
 import { LsmbBaseInput } from "@/elements/lsmb-base-input";
 

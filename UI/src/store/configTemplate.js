@@ -66,7 +66,7 @@ export const configStoreTemplate = {
         },
         async get(id) {
             let index = this.items.findIndex((w) => w[this.id] === id);
-            if ( index === -1 ) {
+            if (index === -1) {
                 index = this.items.length;
             }
             const warehouse = this.items[index];
@@ -117,7 +117,7 @@ export const configStoreTemplate = {
                 newData._meta = {
                     ETag: response.headers.get("ETag")
                 };
-            this.items[index] = newData;
+                this.items[index] = newData;
             } else {
                 throw new Error(`HTTP Error: ${response.status}`);
             }
