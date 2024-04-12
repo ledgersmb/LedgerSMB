@@ -1344,26 +1344,26 @@
   resolved "https://registry.yarnpkg.com/@inquirer/type/-/type-1.2.0.tgz#a569613628a881c2104289ca868a7def54e5c49d"
   integrity sha512-/vvkUkYhrjbm+RolU7V1aUFDydZVKNKqKHR5TsE+j5DXgXFwrsOPcoGUJ02K0O7q7O53CU2DOTMYCHeGZ25WHA==
 
-"@intlify/core-base@9.11.1":
-  version "9.11.1"
-  resolved "https://registry.yarnpkg.com/@intlify/core-base/-/core-base-9.11.1.tgz#0cef49b87bc493eba8e024c4ae688aa5503fdb97"
-  integrity sha512-qWXBBlEA+DC0CsHkfJiQK9ELm11c9I6lDpodY4FoOf99eMas1R6JR4woPhrfAcrtxFHp1UmXWdrQNKDegSW9IA==
+"@intlify/core-base@9.12.0":
+  version "9.12.0"
+  resolved "https://registry.yarnpkg.com/@intlify/core-base/-/core-base-9.12.0.tgz#79f43faa8eb1f3b2bfe569a9fbae9bc50908d311"
+  integrity sha512-6EnWQXHnCh2bMiXT5N/IWwkcYQXjmF8nnEZ3YhTm23h1ZfOylz83D7pJYhcU8CsTiEdgbGiNdqyZPKwrHw03Ng==
   dependencies:
-    "@intlify/message-compiler" "9.11.1"
-    "@intlify/shared" "9.11.1"
+    "@intlify/message-compiler" "9.12.0"
+    "@intlify/shared" "9.12.0"
 
-"@intlify/message-compiler@9.11.1":
-  version "9.11.1"
-  resolved "https://registry.yarnpkg.com/@intlify/message-compiler/-/message-compiler-9.11.1.tgz#6da0ab700c994903ddcac0ccf2d38e7ad4edf912"
-  integrity sha512-y/aWx7DkaTKK2qWUw0hVbJpon8+urWXngeqh15DuIXZh6n/V/oPQiO/Ho1hUKbwap6MVMuz0OcnAJvqh3p9YPg==
+"@intlify/message-compiler@9.12.0":
+  version "9.12.0"
+  resolved "https://registry.yarnpkg.com/@intlify/message-compiler/-/message-compiler-9.12.0.tgz#5e152344853c29369911bd5e541e061b09218333"
+  integrity sha512-2c6VwhvVJ1nur+2cN2NjdrmrV6vXjvyxYVvtUYMXKsWSUwoNURHGds0xJVJmWxbF8qV9oGepcVV6xl9bvadEIg==
   dependencies:
-    "@intlify/shared" "9.11.1"
+    "@intlify/shared" "9.12.0"
     source-map-js "^1.0.2"
 
-"@intlify/shared@9.11.1":
-  version "9.11.1"
-  resolved "https://registry.yarnpkg.com/@intlify/shared/-/shared-9.11.1.tgz#03e9ae5a90d62df4800f307d9f1dfc34b6fd8cbc"
-  integrity sha512-yuDG82vjgId2oasNRgZ0PKJrF65zlL33MNyITP5itbLcP4AYOR/NcIuD+/DiI+GHXdxASMKJU0ZiITLc6RC+qw==
+"@intlify/shared@9.12.0":
+  version "9.12.0"
+  resolved "https://registry.yarnpkg.com/@intlify/shared/-/shared-9.12.0.tgz#993383b6a98c8e37a1fa184a677eb39635a14a1c"
+  integrity sha512-uBcH55x5CfZynnerWHQxrXbT6yD6j6T7Nt+R2+dHAOAneoMd6BoGvfEzfYscE94rgmjoDqdr+PdGDBLk5I5EjA==
 
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
@@ -3196,10 +3196,10 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@1.0.30001608:
-  version "1.0.30001608"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001608.tgz#7ae6e92ffb300e4b4ec2f795e0abab456ec06cc0"
-  integrity sha512-cjUJTQkk9fQlJR2s4HMuPMvTiRggl0rAVMtthQuyOlDWuqHXqN8azLq+pi8B2TjwKJ32diHjUqRIKeFX4z1FoA==
+caniuse-lite@1.0.30001609:
+  version "1.0.30001609"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001609.tgz#fc34fad75c0c6d6d6303bdbceec2da8f203dabd6"
+  integrity sha512-JFPQs34lHKx1B5t1EpQpWH4c+29zIyn/haGsbpfq3suuV9v56enjFt23zqijxGTMwy1p/4H2tjnQMY+p1WoAyA==
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001487, caniuse-lite@^1.0.30001524, caniuse-lite@^1.0.30001587:
   version "1.0.30001588"
@@ -10592,13 +10592,13 @@ vue-i18n-extract@^1.0.3:
     is-valid-glob "^1.0.0"
     js-yaml "^3.14.0"
 
-vue-i18n@9.11.1:
-  version "9.11.1"
-  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-9.11.1.tgz#87d8fceaf8862240d64091227ecf66a1465d6096"
-  integrity sha512-S7Xi8DkLQG4xnnbxkxzipJK6CdfLdZkmApn95st89HFGp8LTmTH0Tv+Zw6puhOCZJCFrH73PHo3Ylwd2+Bmdxg==
+vue-i18n@9.12.0:
+  version "9.12.0"
+  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-9.12.0.tgz#8d073b3d7b92e822dcc3268946af4ecf14b778b3"
+  integrity sha512-rUxCKTws8NH3XP98W71GA7btAQdAuO7j6BC5y5s1bTNQYo/CIgZQf+p7d1Zo5bo/3v8TIq9aSUMDjpfgKsC3Uw==
   dependencies:
-    "@intlify/core-base" "9.11.1"
-    "@intlify/shared" "9.11.1"
+    "@intlify/core-base" "9.12.0"
+    "@intlify/shared" "9.12.0"
     "@vue/devtools-api" "^6.5.0"
 
 vue-loader@17.4.2:
