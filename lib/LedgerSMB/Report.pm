@@ -556,7 +556,7 @@ sub _render {
             for my $k (keys %$r){
                 next if $exclude->{$k};
 
-                if ($r->{$k} isa 'LedgerSMB::PGNumber' ){
+                if (blessed $r->{$k} and $r->{$k}->isa( 'LedgerSMB::PGNumber' )) {
                     $total_row->{$k} //= LedgerSMB::PGNumber->bzero;
                     $total_row->{$k}->badd($r->{$k});
                     if ($subtotal) {

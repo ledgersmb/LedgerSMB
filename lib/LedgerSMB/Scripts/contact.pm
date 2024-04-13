@@ -1,5 +1,4 @@
 
-
 package LedgerSMB::Scripts::contact;
 
 =head1 NAME
@@ -17,6 +16,7 @@ This module is the UI controller for the customer, vendor, etc functions; it
 
 use v5.36;
 use warnings;
+use Scalar::Util qw( blessed );
 
 use Feature::Compat::Try;
 
@@ -84,9 +84,9 @@ sub get_by_cc {
     $entity ||=  LedgerSMB::Entity::Person->get_by_cc($request->{control_code});
     my ($company, $person) = (undef, undef);
 
-    if ($entity isa 'LedgerSMB::Entity::Company'){
+    if (blessed $entity and $entity->isa('LedgerSMB::Entity::Company')) {
         $company = $entity;
-    } elsif ($entity isa 'LedgerSMB::Entity::Person'){
+    } elsif (blessed $entity and $entity->isa('LedgerSMB::Entity::Person')) {
         $person = $entity;
     }
 
@@ -116,10 +116,9 @@ sub get {
     $entity ||= LedgerSMB::Entity::Person->get($request->{entity_id});
     my ($company, $person) = (undef, undef);
 
-    local $@ = undef;
-    if ($entity isa 'LedgerSMB::Entity::Company') {
+    if (blessed $entity and $entity->isa( 'LedgerSMB::Entity::Company')) {
         $company = $entity;
-    } elsif ($entity isa 'LedgerSMB::Entity::Person') {
+    } elsif (blessed $entity and $entity->isa('LedgerSMB::Entity::Person')) {
         $person = $entity;
     }
 
