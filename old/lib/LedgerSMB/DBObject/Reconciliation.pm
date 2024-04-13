@@ -84,20 +84,6 @@ sub _pre_save {
     return $self->{line_ids} =~ s/,?$/}/;
 }
 
-=item submit
-
-Submits the reconciliation set for approval.
-
-=cut
-
-sub submit {
-    my $self = shift @_;
-    $self->save;
-    return $self->call_dbmethod(funcname=>'reconciliation__submit_set');
-}
-
-
-
 =item save
 
 Saves the reconciliation set for later work
@@ -137,96 +123,6 @@ sub unapproved_checks {
     return $self->{check}
             = { map { $_->{setting_key} => $_->{value} }
                     $self->call_dbmethod(funcname=>'reconciliation__check') };
-}
-
-=item approve
-
-Approves the reconciliation report specified by the object's C<report_id>
-property and marks associated transactions as cleared.
-
-=cut
-
-sub approve {
-    my $self = shift;
-
-    $self->call_dbmethod(
-        funcname => 'reconciliation__report_approve'
-    );
-
-    return;
-}
-
-=item new_report
-
-Creates a new reconciliation report. Returns the id of the inserted report
-record.
-
-Expects the following object parameters:
-
-  * chart_id  (mandatory)
-  * total     (mandatory
-  * end_date  (defaults to now)
-  * recon_fx  (defaults to false)
-
-=cut
-
-sub new_report {
-    my $self = shift @_;
-
-    my $report = $self->call_dbmethod(funcname=>'reconciliation__new_report_id');
-    $self->{report_id} = $report->{reconciliation__new_report_id};
-
-    $self->call_dbmethod(funcname=>'reconciliation__pending_transactions');
-    return $self->{report_id};
-}
-
-
-=item delete ($self, $report_id)
-
-Requires report_id
-
-This will allow the deletion of a report if the report is not approved and
-the user either owns the unsubmitted report, or the user has the right to
-approve reports.
-
-Returns 0 if successful, or a true result if not.
-
-=cut
-
-sub delete {
-
-    my $self = shift @_;
-
-    my ($report_id) = @_;
-    my $retval;
-    my $found;
-
-    ($found) = $self->call_procedure(
-        funcname => 'reconciliation__delete_unapproved',
-        args => [$report_id]);
-
-    if ($found){
-        $retval = '0';
-    } else {
-        $retval = '1';
-    }
-    return $retval;
-}
-
-=item reject
-
-This rejects a submitted but not approved report, by marking it as
-not submitted.
-
-Requires that the following object properties are set:
-
-  * report_id
-
-=cut
-
-sub reject {
-    my ($self) = @_;
-    return $self->call_dbmethod(funcname => 'reconciliation__reject_set');
 }
 
 =item add_entries(\@entries)

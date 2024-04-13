@@ -24,7 +24,11 @@ Summarizing what's happening below:
     These journal lines are the real test cases, as they are the
     "pending transactions" inputs.
 
-*/
+ */
+
+INSERT INTO workflow (workflow_id, state, type)
+VALUES (nextval('workflow_seq'), 'SAVED', 'whatever');
+
 
 INSERT INTO account(id, accno, description, category, heading, contra)
 values (-200, '-11111', 'Test Act 1', 'A',
@@ -167,9 +171,10 @@ values (-203, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10,'1');
 
 
 -- Don't include cleared or unapproved transactions
-select reconciliation__new_report_id(test_get_account_id('-11112'), 10, '1000-01-04', false);
-  insert into cr_report_line (report_id, scn, their_balance, our_balance, "user", trans_type, cleared)
-  values (currval('cr_report_id_seq'), 'test', 10, 10, (select entity_id from users limit 1), '', true);
+select reconciliation__new_report(test_get_account_id('-11112'), 10, '1000-01-04', false,
+                                  (select currval('workflow_seq')));
+insert into cr_report_line (report_id, scn, their_balance, our_balance, "user", trans_type, cleared)
+values (currval('cr_report_id_seq'), 'test', 10, 10, (select entity_id from users limit 1), '', true);
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source, cleared, approved)
 values (-200, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10, '1', true, false);
 insert into cr_report_line_links (report_line_id, entry_id, cleared)

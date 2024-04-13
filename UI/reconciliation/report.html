@@ -394,6 +394,11 @@ IF have_outstanding ;
     type = "hidden",
     value = report_id,
 } %]
+[% INCLUDE input element_data = {
+    name = "workflow_id",
+    type = "hidden",
+    value = workflow_id,
+} %]
 [% IF NOT submitted %]
 [% INCLUDE select element_data = {
     name = "line_order",

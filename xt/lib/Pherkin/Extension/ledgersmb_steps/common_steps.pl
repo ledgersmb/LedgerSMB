@@ -428,23 +428,24 @@ Given qr/^(a reconciliation report|reconciliation reports) with these properties
             args => [$report_spec->{'Account Number'}],
         ) or die 'Failed to find account number ' . $report_spec->{'Account Number'};
 
-        my $recon_data = {
-            dbh => S->{ext_lsmb}->admin_dbh,
-            chart_id => $account->{id},
-            total => $report_spec->{'Statement Balance'},
-            end_date => $report_spec->{'Statement Date'},
+        local $LedgerSMB::App_State::DBH = S->{ext_lsmb}->admin_dbh;
+        local $LedgerSMB::App_State::User = {
+            numberformat => '1000.00'
         };
-
-        my $recon = LedgerSMB::DBObject::Reconciliation->new(%$recon_data);
-
-        my $recon_id = $recon->new_report();
+        my $wf = S->{ext_lsmb}->wire->get('workflows')->create_workflow(
+            'reconciliation',
+            Workflow::Context->new(
+                account_id => $account->{id},
+                ending_balance => $report_spec->{'Statement Balance'},
+                end_date => $report_spec->{'Statement Date'},
+            ));
 
         if ($report_spec->{'Submitted'} eq 'yes') {
-            $recon->submit;
+            $wf->execute_action( 'submit' );
         }
 
         if ($report_spec->{'Approved'} eq 'yes') {
-            $recon->approve;
+            $wf->execute_action( 'approve' );
         }
     }
 };
