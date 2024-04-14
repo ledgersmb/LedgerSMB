@@ -25,7 +25,7 @@ Small and Medium business accounting and ERP
  6. [License](#license)
 
 
-# DESCRIPTION
+# Description
 
 LedgerSMB is a free web-based double-entry accounting system, featuring
 quotation, ordering, invoicing, projects, timecards, inventory management,
@@ -54,7 +54,7 @@ and [the 1.10 'old stable' version](https://github.com/ledgersmb/LedgerSMB/tree/
 
 * `Perl 5.36+`
 * `PostgreSQL 13+`
-* Web server (e.g. `nginx`, `Apache`, `lighttpd`, `Varnish`)
+* Web server (e.g. `nginx`, `Apache HTTPd`, `lighttpd`, `Varnish`)
 
 The web server is only required for production installs;
 for evaluation purposes a simpler setup can be used, as detailed
@@ -62,7 +62,7 @@ below.
 
 ## Client
 
-The tables below show the browsers currently supported, their earliest date
+The tables below show the browsers currently supported, their earliest dates
 and a range of versions.
 
 
@@ -70,25 +70,25 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome              | 2018-03  | 65-81, 83-120                               |
-| Edge                | 2020-01  | 79-81, 83-119                               |
-| Firefox             | 2018-05  | 60-121                                      |
-| Opera               | 2018-03  | 52-58, 60, 62-104                           |
+| Chrome              | 2018-03  | 65-81, 83-123                               |
+| Edge                | 2020-01  | 79-81, 83-121                               |
+| Firefox             | 2018-05  | 60-124                                      |
+| Opera               | 2018-03  | 52-58, 60, 62-106                           |
 | Safari              | 2018-09  | 12, 12.1, 13, 13.1, 14, 14.1, 15, 15.1,     |
-|                     |          | 15.2-15.6, 16.0-16.6, 17.0-17.2             |
+|                     |          | 15.2-15.6, 16.0-16.6, 17.0-17.4             |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome for Android  | <missing> | 119                                         |
-| Firefox for Android | 2023-10  | 119                                         |
-| Android Browser     | <missing> | 119                                         |
-| Baidu Browser       | 2022-09  | 13.18                                       |
+| Chrome for Android  | <missing> | 121                                         |
+| Firefox for Android | <missing> | 122                                         |
+| Android Browser     | <missing> | 121                                         |
+| Baidu Browser       | <missing> | 13.18                                       |
 | Safari on iOS       | 2018-09  | 12.0-12.5, 13.0-13.7, 14.0-14.8,            |
-|                     |          | 15.0-15.7, 16.0-16.7, 17.0-17.2             |
+|                     |          | 15.0-15.8, 16.0-16.7, 17.0-17.3             |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
-| Opera Mobile        | 2023-01  | 73                                          |
+| Opera Mobile        | <missing> | 73                                          |
 | Samsung Internet    | 2019-04  | 9.2, 10.1, 11.1-11.2, 12.0, 13.0, 14.0,     |
 |                     |          | 15.0, 16.0, 17.0, 18.0, 19.0, 20-23         |
 
@@ -189,7 +189,7 @@ as well as in the `Transifex` project Timeline.
 # Copyright
 
 ```plain
-Copyright (c) 2006 - 2023 The LedgerSMB Project contributors
+Copyright (c) 2006 - 2024 The LedgerSMB Project contributors
 Copyright (c) 1999 - 2006 DWS Systems Inc (under the name SQL Ledger)
 ```
 

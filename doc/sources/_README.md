@@ -25,7 +25,7 @@ Small and Medium business accounting and ERP
  6. [License](#license)
 
 
-# DESCRIPTION
+# Description
 
 LedgerSMB is a free web-based double-entry accounting system, featuring
 quotation, ordering, invoicing, projects, timecards, inventory management,
@@ -54,7 +54,7 @@ and [the 1.10 'old stable' version](https://github.com/ledgersmb/LedgerSMB/tree/
 
 * `Perl 5.36+`
 * `PostgreSQL 13+`
-* Web server (e.g. `nginx`, `Apache`, `lighttpd`, `Varnish`)
+* Web server (e.g. `nginx`, `Apache HTTPd`, `lighttpd`, `Varnish`)
 
 The web server is only required for production installs;
 for evaluation purposes a simpler setup can be used, as detailed
@@ -62,7 +62,7 @@ below.
 
 ## Client
 
-The tables below show the browsers currently supported, their earliest date
+The tables below show the browsers currently supported, their earliest dates
 and a range of versions.
 
 <<browsers_list>>
@@ -163,7 +163,7 @@ as well as in the `Transifex` project Timeline.
 # Copyright
 
 ```plain
-Copyright (c) 2006 - 2023 The LedgerSMB Project contributors
+Copyright (c) 2006 - 2024 The LedgerSMB Project contributors
 Copyright (c) 1999 - 2006 DWS Systems Inc (under the name SQL Ledger)
 ```
 
