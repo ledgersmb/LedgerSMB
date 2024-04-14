@@ -11,8 +11,6 @@ Small and Medium business accounting and ERP
 [![Coverage Status](https://coveralls.io/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=1.11)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=1.11)
 [![Docker](https://img.shields.io/docker/pulls/ledgersmb/ledgersmb.svg)](https://hub.docker.com/r/ledgersmb/ledgersmb/)
 [![Mentioned in Awesome <awesome-selfhosted>](https://awesome.re/mentioned-badge.svg)](https://github.com/Kickball/awesome-selfhosted#enterprise-resource-planning)
-[![pull requests](https://www.oselvar.com/api/badge?label=pull+requests&csvUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fledgersmb%2Fledgersmb-oselvar%2Fmain%2Fdata%2Fledgersmb%2FLedgerSMB%2FpullRequests.csv)](https://www.oselvar.com/github/ledgersmb/ledgersmb-oselvar/main/ledgersmb/LedgerSMB "3rd quartile cycle time")
-[![issues](https://www.oselvar.com/api/badge?label=issues&csvUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fledgersmb%2Fledgersmb-oselvar%2Fmain%2Fdata%2Fledgersmb%2FLedgerSMB%2Fissues.csv)](https://www.oselvar.com/github/ledgersmb/ledgersmb-oselvar/main/ledgersmb/LedgerSMB "3rd quartile cycle time")
 
 
 
@@ -56,29 +54,30 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome              | 2018-03  | 65-81, 83-117                               |
-| Edge                | 2020-01  | 79-81, 83-117                               |
-| Firefox             | 2018-05  | 60-117                                      |
-| Opera               | 2018-03  | 52-58, 60, 62-102                           |
+| Chrome              | 2018-03  | 65-81, 83-123                               |
+| Edge                | 2020-01  | 79-81, 83-121                               |
+| Firefox             | 2018-05  | 60-124                                      |
+| Opera               | 2018-03  | 52-58, 60, 62-106                           |
 | Safari              | 2018-03  | 11.1, 12, 12.1, 13, 13.1, 14, 14.1, 15,     |
-|                     |          | 15.1, 15.2-15.6, 16.0-16.6, 17.0            |
+|                     |          | 15.1, 15.2-15.6, 16.0-16.6, 17.0-17.4       |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | ------------------- |:--------:|:------------------------------------------- |
-| Chrome for Android  | 2023-09  | 117                                         |
-| Firefox for Android | 2023-08  | 117                                         |
-| QQ Browser          | 2022-09  | 13.1                                        |
-| UC Browser for Android | 2023-06  | 15.5                                        |
-| Android Browser     | 2023-09  | 117                                         |
-| Baidu Browser       | 2022-09  | 13.18                                       |
+| Chrome for Android  | <missing> | 121                                         |
+| Firefox for Android | <missing> | 122                                         |
+| QQ Browser          | <missing> | 13.1                                        |
+| UC Browser for Android | 2024-03  | 15.5                                        |
+| Android Browser     | <missing> | 121                                         |
+| Baidu Browser       | <missing> | 13.18                                       |
 | Safari on iOS       | 2018-03  | 11.3-11.4, 12.0-12.5, 13.0-13.7,            |
-|                     |          | 14.0-14.8, 15.0-15.7, 16.0-16.6, 17.0       |
+|                     |          | 14.0-14.8, 15.0-15.8, 16.0-16.7,            |
+|                     |          | 17.0-17.3                                   |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
-| Opera Mobile        | 2023-01  | 73                                          |
+| Opera Mobile        | <missing> | 73                                          |
 | Samsung Internet    | 2019-04  | 9.2, 10.1, 11.1-11.2, 12.0, 13.0, 14.0,     |
-|                     |          | 15.0, 16.0, 17.0, 18.0, 19.0, 20-22         |
+|                     |          | 15.0, 16.0, 17.0, 18.0, 19.0, 20-23         |
 
 
 **Note**: Safari is very sensitive to using LedgerSMB over HTTPS; using it with
