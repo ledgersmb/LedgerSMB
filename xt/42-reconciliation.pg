@@ -37,7 +37,7 @@ BEGIN;
     SELECT has_function('reconciliation__delete_unapproved',array['integer']);
     SELECT has_function('reconciliation__get_cleared_balance',array['integer', 'date']);
     SELECT has_function('reconciliation__get_current_balance',array['integer', 'date']);
-    SELECT has_function('reconciliation__new_report_id',array['integer', 'numeric', 'date', 'boolean']);
+    SELECT has_function('reconciliation__new_report',array['integer', 'numeric', 'date', 'boolean', 'bigint']);
     SELECT has_function('reconciliation__pending_transactions',array['integer', 'numeric']);
     SELECT has_function('reconciliation__previous_report_date',ARRAY['integer','date']);
     SELECT has_function('reconciliation__reject_set',array['integer']);
@@ -68,8 +68,9 @@ BEGIN;
     SELECT results_eq('test', ARRAY[]::cr_report[], 'No previous report');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11111'), 100, '1001-01-01', false);
-    SELECT results_eq('test', $$ SELECT id+1 FROM test_parameters $$, 'Create Recon Report');
+    PREPARE test AS SELECT reconciliation__new_report(test_get_account_id('-11111'), 100, '1001-01-01', false,
+        currval('workflow_seq'));
+    SELECT results_eq('test', $$ SELECT id::bigint+1 FROM test_parameters $$, 'Create Recon Report');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__delete_my_report(currval('cr_report_id_seq')::int);
@@ -80,8 +81,9 @@ BEGIN;
     SELECT results_eq('test', ARRAY[]::cr_report[], 'Deleted previous report doesn''t show up');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11111'), 100, '1001-01-01', false);
-    SELECT results_eq('test', $$ SELECT id+2 FROM test_parameters $$, 'Create Recon Report');
+    PREPARE test AS SELECT reconciliation__new_report(test_get_account_id('-11111'), 100, '1001-01-01', false,
+        currval('workflow_seq'));
+    SELECT results_eq('test', $$ SELECT id::bigint+2 FROM test_parameters $$, 'Create Recon Report');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__pending_transactions(currval('cr_report_id_seq')::int, 110) > 0;
@@ -142,7 +144,8 @@ BEGIN;
     -- all items on account -11112 are part of the same payment AR payment,
     --   except a few GL items, some of which have the same source and transdate == payment_date
     --   and a few others which have the same source but transdate != payment_date
-    PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11112'), 100, now()::date, false) > 0;
+    PREPARE test AS SELECT reconciliation__new_report(test_get_account_id('-11112'), 100, now()::date, false,
+        currval('workflow_seq')) > 0;
     SELECT results_eq('test',ARRAY[true],'1 Create Recon Report');
     DEALLOCATE test;
 
@@ -215,8 +218,9 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'1 Cleared balance post-approval is 10');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11112'), 100, now()::date, false);
-    SELECT results_eq('test',$$ SELECT id+4 FROM test_parameters $$,'1 Create Recon Report');
+    PREPARE test AS SELECT reconciliation__new_report(test_get_account_id('-11112'), 100, now()::date, false,
+        currval('workflow_seq'));
+    SELECT results_eq('test',$$ SELECT id::bigint+4 FROM test_parameters $$,'1 Create Recon Report');
     DEALLOCATE test;
 
     PREPARE test AS SELECT reconciliation__pending_transactions(currval('cr_report_id_seq')::int, 110);
@@ -284,7 +288,8 @@ BEGIN;
     --   all have the same 'source' value, which means that the GL entry will be considered a correction
     --   to *both* payments. Because that's ambiguous, the GL item should be presented as a separate recon
     --   line instead.
-    PREPARE test AS SELECT reconciliation__new_report_id(test_get_account_id('-11113'), 100, now()::date, false) > 0;
+    PREPARE test AS SELECT reconciliation__new_report(test_get_account_id('-11113'), 100, now()::date, false,
+        currval('workflow_seq')) > 0;
     SELECT results_eq('test',ARRAY[true],'3 Create Recon Report');
     DEALLOCATE test;
 

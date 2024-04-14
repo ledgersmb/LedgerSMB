@@ -18,6 +18,8 @@ use strict;
 use warnings;
 
 use HTTP::Status qw( HTTP_BAD_REQUEST );
+use Log::Any qw($log);
+use Workflow::Context;
 
 use LedgerSMB::DBObject::Reconciliation;
 use LedgerSMB::File;
@@ -102,13 +104,9 @@ must be set:
 sub reject {
     my ($request) = @_;
 
-    my $recon_data = {
-        dbh => $request->{dbh},
-        report_id => $request->{report_id}
-    };
-
-    my $recon = LedgerSMB::DBObject::Reconciliation->new(%$recon_data);
-    $recon->reject;
+    my $wf = $request->{_wire}->get('workflows')
+        ->fetch_workflow( 'reconciliation', $request->{workflow_id} );
+    $wf->execute_action( 'reject' );
 
     return search($request);
 }
@@ -121,8 +119,11 @@ Submits the recon set to be approved.
 
 sub submit_recon_set {
     my ($request) = shift;
+    my $wf = $request->{_wire}->get('workflows')
+        ->fetch_workflow( 'reconciliation', $request->{workflow_id} );
+    $wf->execute_action( 'submit' );
+
     my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
-    $recon->submit();
     my $can_approve = $request->is_allowed_role(
         {allowed_roles => ['reconciliation_approve']}
     );
@@ -200,6 +201,7 @@ sub search {
     $recon->set_dbh($request->{dbh});
     $recon->get_accounts();
 
+    $log->info('render');
     my $template = $request->{_wire}->get('ui');
     return $template->render(
         $request,
@@ -353,17 +355,21 @@ sub start_report {
     }
 
     my $recon_data = {
-        dbh => $request->{dbh},
-        chart_id => $request->{chart_id},
-        end_date => $request->{end_date},
-        total => $request->{total},
-        recon_fx => $request->{recon_fx},
+        account_id     => $request->{chart_id},
+        end_date       => $request->{end_date},
+        ending_balance => $request->{total},
+        recon_fx       => $request->{recon_fx},
     };
+    my $ctx = Workflow::Context->new(%$recon_data);
+    my $wf = $request->{_wire}->get( 'workflows' )->
+        create_workflow( 'reconciliation', $ctx );
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new(%$recon_data);
-
-    # Insert new report into database
-    $recon->new_report;
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(
+        dbh => $request->{dbh},
+        report_id => $wf->context->param( 'id' ),
+        workflow_id => $wf->id,
+        );
+    $recon->refresh_pending_transactions;
 
     # Format ending balance as a PGNumber - required for display
     $recon->{their_total} = $request->parse_amount($request->{total});
@@ -386,11 +392,10 @@ delete any non-approved reports.
 sub delete_report {
     my ($request) = @_;
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
+    my $wf = $request->{_wire}->get('workflows')
+        ->fetch_workflow( 'reconciliation', $request->{workflow_id} );
+    $wf->execute_action( 'delete' );
 
-    $recon->delete($request->{report_id});
-
-    delete($request->{report_id});
     return search($request);
 }
 
@@ -417,11 +422,12 @@ sub approve {
              [ q{'report_id' parameter missing} ]
         ] if ! $request->{report_id};
 
-    my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
+    my $wf = $request->{_wire}->get('workflows')
+        ->fetch_workflow( 'reconciliation', $request->{workflow_id} );
+    $wf->execute_action( 'approve' );
 
-    my $code = $recon->approve;
-    my $template = $code == 0 ? 'reconciliation/approved'
-        : 'reconciliation/report';
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
+    my $template = 'reconciliation/approved';
     return $request->{_wire}->get('ui')
         ->render($request, $template, $recon);
 }

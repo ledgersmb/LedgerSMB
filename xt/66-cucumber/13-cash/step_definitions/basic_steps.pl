@@ -84,10 +84,14 @@ Given qr/a cleared journal line on (\d{4}-\d\d-\d\d)/, sub {
     _uncleared_journal_line($posting_date);
     my $recon_account = S->{recon_account};
     my $dbh           = S->{ext_lsmb}->admin_dbh;
+    $dbh->do(<<~'STMT');
+        INSERT INTO workflow (type, state, workflow_id)
+        VALUES ('reconciliation', 'SAVED', nextval('workflow_seq'))
+        STMT
     my $recon         = $dbh->selectrow_hashref(
         <<~'STMT',
-        INSERT INTO cr_report (chart_id, their_total, end_date)
-               values (?, ?, ?)
+        INSERT INTO cr_report (chart_id, their_total, end_date, workflow_id)
+               values (?, ?, ?, currval('workflow_seq'))
         RETURNING *
         STMT
         {},
@@ -131,8 +135,12 @@ sub _create_recon {
     my $end_date      = shift;
     my $dbh           = S->{ext_lsmb}->admin_dbh;
     my $recon_account = S->{recon_account};
+    $dbh->do(<<~'STMT');
+        INSERT INTO workflow (type, state, workflow_id)
+        VALUES ('reconciliation', 'SAVED', nextval('workflow_seq'))
+        STMT
     my ($id) = $dbh->selectrow_array(
-        'select reconciliation__new_report_id(?, ?, ?, false)',
+        q|select reconciliation__new_report(?, ?, ?, false, currval('workflow_seq'))|,
         {},
         ($recon_account->id =~ s/A-//r),
         5,

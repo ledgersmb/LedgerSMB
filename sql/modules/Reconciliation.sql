@@ -47,7 +47,7 @@ follows:
 |------------+-----------+--------------------------------------|
 | From state | To state  | Function name                        |
 |------------+-----------+--------------------------------------|
-| <start>    | Initial   | reconciliation__new_repord_id        |
+| <start>    | Initial   | reconciliation__new_report_id        |
 | Initial    | Saved     | reconciliation__save_set             |
 | Saved      | Submitted | reconciliation__submit_set           |
 | Submitted  | Approved  | reconciliation__report_approve       |
@@ -349,23 +349,28 @@ COMMENT ON  FUNCTION reconciliation__report_approve (in_report_id INT) IS
 $$Marks the report approved and marks all cleared transactions in it cleared.$$;
 
 
--- XXX Badly named, rename for 1.4.  --CT
-CREATE OR REPLACE FUNCTION reconciliation__new_report_id(
+DROP FUNCTION IF EXISTS reconciliation__new_report(
     in_chart_id int,
     in_total numeric,
     in_end_date date,
     in_recon_fx bool
-) returns INT as $$
+);
 
-    INSERT INTO cr_report(chart_id, their_total, end_date, recon_fx)
-    values (in_chart_id, in_total, in_end_date, in_recon_fx);
-    SELECT currval('cr_report_id_seq')::int;
-
+CREATE OR REPLACE FUNCTION reconciliation__new_report(
+    in_chart_id int,
+    in_total numeric,
+    in_end_date date,
+    in_recon_fx bool,
+    in_workflow_id bigint
+) returns bigint as $$
+    INSERT INTO cr_report(chart_id, their_total, end_date, recon_fx, workflow_id)
+    values (in_chart_id, in_total, in_end_date, in_recon_fx, in_workflow_id)
+    returning id;
 $$ language 'sql';
 
-COMMENT ON FUNCTION reconciliation__new_report_id
-(in_chart_id int, in_total numeric, in_end_date date, in_recon_fx bool)  IS
-$$ Inserts creates a new report and returns the id.$$;
+COMMENT ON FUNCTION reconciliation__new_report
+(in_chart_id int, in_total numeric, in_end_date date, in_recon_fx bool, in_workflow_id bigint)  IS
+$$ Creates a new report and returns the id.$$;
 
 CREATE OR REPLACE FUNCTION reconciliation__add_entry(
     in_report_id INT,

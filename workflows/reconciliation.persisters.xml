@@ -1,0 +1,5 @@
+<persisters>
+  <persister name="reconciliation"
+             class="LedgerSMB::Workflow::Persister::Reconciliation"
+             driver="Pg" />
+</persisters>

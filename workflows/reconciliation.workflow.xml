@@ -1,0 +1,27 @@
+<workflow>
+  <type>reconciliation</type>
+  <persister>reconciliation</persister>
+  <description></description>
+
+  <state name="INITIAL" autorun="yes">
+    <action name="save" resulting_state="SAVED" />
+  </state>
+
+  <state name="SAVED">
+    <action name="add_pending_items" resulting_state="SAVED" />
+    <action name="delete" resulting_state="DELETED" />
+    <action name="save" resulting_state="SAVED" />
+    <action name="submit" resulting_state="SUBMITTED" />
+    <action name="upload_statement" resulting_state="STMT_ITEMS_ADDED" />
+  </state>
+
+  <state name="SUBMITTED">
+    <action name="approve" resulting_state="APPROVED" />
+    <action name="delete" resulting_state="DELETED" />
+    <action name="reject" resulting_state="SAVED" />
+  </state>
+
+  <state name="APPROVED" />
+
+  <state name="DELETED" />
+</workflow>
