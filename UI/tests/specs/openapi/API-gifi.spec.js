@@ -4,14 +4,14 @@
 import jestOpenAPI from "jest-openapi";
 import { StatusCodes } from "http-status-codes";
 import { create_database, drop_database } from "./database";
-import { server } from '../../common/mocks/server.js'
+import { server } from "../../common/mocks/server.js";
 
 // Load an OpenAPI file (YAML or JSON) into this plugin
-const openapi = process.env.PWD.replace("/UI","");
-jestOpenAPI( openapi + "/openapi/API.yaml");
+const openapi = process.env.PWD.replace("/UI", "");
+jestOpenAPI(openapi + "/openapi/API.yaml");
 
 // Load the API definition
-const API_yaml = require (openapi + "/openapi/API.yaml");
+const API_yaml = require(openapi + "/openapi/API.yaml");
 
 // Set API version to use
 const api = "erp/api/v0";
@@ -34,7 +34,7 @@ beforeAll(() => {
 
     // Establish API mocking before all tests.
     server.listen({
-        onUnhandledRequest: 'bypass'
+        onUnhandledRequest: "bypass"
     });
 });
 
@@ -42,7 +42,7 @@ afterAll(() => {
     drop_database(company);
 });
 
-const emulateAxiosResponse = async(res) => {
+const emulateAxiosResponse = async (res) => {
     return {
         data: await res.json(),
         status: res.status,
@@ -50,7 +50,7 @@ const emulateAxiosResponse = async(res) => {
         headers: res.headers,
         request: {
             path: res.url,
-            method: 'GET'
+            method: "GET"
         }
     };
 };
@@ -58,7 +58,9 @@ const emulateAxiosResponse = async(res) => {
 // Log in before each test
 beforeEach(async () => {
     let r = await fetch(
-        serverUrl + "/login.pl?action=authenticate&company=" + encodeURI(company),
+        serverUrl +
+            "/login.pl?action=authenticate&company=" +
+            encodeURI(company),
         {
             method: "POST",
             body: JSON.stringify({
@@ -107,7 +109,7 @@ describe("Retrieving all gifis", () => {
 describe("Retrieving all gifis with old syntax should fail", () => {
     it("GET /gifi/ should fail", async () => {
         let res = await fetch(serverUrl + "/" + api + "/gl/gifi/", {
-                headers: headers
+            headers: headers
         });
         expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     });
@@ -164,18 +166,17 @@ describe("Modifying the new GIFI 99999", () => {
         expect(res.status).toEqual(StatusCodes.OK);
         const etag = res.headers.get("etag");
         expect(etag).toBeDefined();
-        res = await fetch(
-            serverUrl + "/" + api + "/gl/gifi/99999",{
-                method: "PUT",
-                body: JSON.stringify({
-                    accno: "99999",
-                    description: "Test GIFI"
-                }),
-                headers: {
-                    ...headers,
-                    "Content-Type": "application/json",
-                    "If-Match": etag
-                }
+        res = await fetch(serverUrl + "/" + api + "/gl/gifi/99999", {
+            method: "PUT",
+            body: JSON.stringify({
+                accno: "99999",
+                description: "Test GIFI"
+            }),
+            headers: {
+                ...headers,
+                "Content-Type": "application/json",
+                "If-Match": etag
+            }
         });
         expect(res.status).toEqual(StatusCodes.OK);
 
@@ -235,10 +236,9 @@ describe("Not Removing the new GIFI 99999", () => {
         expect(etag).toBeDefined();
 
         res = await fetch(serverUrl + "/" + api + "/gl/gifi/99999", {
-                method: "DELETE",
-                headers: { ...headers, "If-Match": etag }
-            }
-        );
+            method: "DELETE",
+            headers: { ...headers, "If-Match": etag }
+        });
         expect(res.status).toEqual(StatusCodes.FORBIDDEN);
     });
 });

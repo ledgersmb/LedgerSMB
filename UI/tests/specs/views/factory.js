@@ -1,3 +1,5 @@
+/** @format */
+
 import { mount } from "@vue/test-utils";
 import { createPinia } from "pinia";
 
@@ -24,6 +26,6 @@ function factory(view) {
         }
     });
     return wrapper;
-};
+}
 
 export { factory };

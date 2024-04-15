@@ -69,7 +69,7 @@ afterEach(() => {
 });
 
 // Helper function to wait for DOM updates
-/* eslint no-unused-expressions: ["error", { "allowTernary": true }] */
+// eslint no-unused-expressions: ["error", { "allowTernary": true }]
 export const retry = (assertion, { interval = 20, timeout = 1000 } = {}) => {
   return new Promise((resolve, reject) => {
     const startTime = Date.now();

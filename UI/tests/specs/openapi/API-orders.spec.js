@@ -3,15 +3,20 @@
 // Import test packages
 import jestOpenAPI from "jest-openapi";
 import { StatusCodes } from "http-status-codes";
-import { create_database, drop_database, load_coa, initialize } from "./database";
-import { server } from '../../common/mocks/server.js';
+import {
+    create_database,
+    drop_database,
+    load_coa,
+    initialize
+} from "./database";
+import { server } from "../../common/mocks/server.js";
 
 // Load an OpenAPI file (YAML or JSON) into this plugin
-const openapi = process.env.PWD.replace("/UI","");
-jestOpenAPI( openapi + "/openapi/API.yaml");
+const openapi = process.env.PWD.replace("/UI", "");
+jestOpenAPI(openapi + "/openapi/API.yaml");
 
 // Load the API definition
-const API_yaml = require (openapi + "/openapi/API.yaml");
+const API_yaml = require(openapi + "/openapi/API.yaml");
 
 // Set API version to use
 const api = "erp/api/v0";
@@ -30,11 +35,11 @@ let headers = {};
 beforeAll(() => {
     create_database(username, password, company);
     load_coa(username, password, company, "locale/coa/us/General.xml");
-    initialize(company,"UI/tests/specs/data/Orders.sql");
+    initialize(company, "UI/tests/specs/data/Orders.sql");
 
     // Establish API mocking before all tests.
     server.listen({
-        onUnhandledRequest: 'bypass'
+        onUnhandledRequest: "bypass"
     });
 });
 
@@ -42,7 +47,7 @@ afterAll(() => {
     drop_database(company);
 });
 
-const emulateAxiosResponse = async(res) => {
+const emulateAxiosResponse = async (res) => {
     return {
         data: await res.json(),
         status: res.status,
@@ -50,7 +55,7 @@ const emulateAxiosResponse = async(res) => {
         headers: res.headers,
         request: {
             path: res.url,
-            method: 'GET'
+            method: "GET"
         }
     };
 };
@@ -58,7 +63,9 @@ const emulateAxiosResponse = async(res) => {
 // Log in before each test
 beforeEach(async () => {
     let r = await fetch(
-        serverUrl + "/login.pl?action=authenticate&company=" + encodeURI(company),
+        serverUrl +
+            "/login.pl?action=authenticate&company=" +
+            encodeURI(company),
         {
             method: "POST",
             body: JSON.stringify({
@@ -75,7 +82,7 @@ beforeEach(async () => {
     if (r.status === StatusCodes.OK) {
         await r.json();
         headers = {
-            cookie: r.headers.get("set-cookie"),
+            cookie: r.headers.get("set-cookie")
         };
     }
 });
@@ -101,65 +108,62 @@ describe("Adding the new Order", () => {
     it("POST /orders should allow adding a new order", async () => {
         let res;
         try {
-            res = await fetch(
-                serverUrl + "/" + api + "/orders",
-                {
-                    method: "POST",
-                    body: JSON.stringify({
-                        eca: {
-                            number: "Customer 1",
-                            type: "customer" // Watch for exact case or watch serverUrl stack dump
-                        },
-                        currency: "USD",
-                        dates: {
-                            order: "2022-09-01",
-                            "required-by": "2022-10-01"
-                        },
-                        "internal-notes": "Internal notes",
-                        lines: [
-                            {
-                                part: {
-                                    number: "p1"
-                                },
-                                price: 56.78,
-                                price_fixated: false,
-                                unit: "lbs",
-                                qty: 1,
-                                taxform: true,
-                                serialnumber: "1234567890",
-                                discount: 12,
-                                discount_type: "%",
-                                "required-by": "2022-10-27",
-                                description: "A description"
-                            }
-                        ],
-                        notes: "Notes",
-                        "order-number": "order 345",
-                        "po-number": "po 456",
-                        "shipping-point": "shipping from here",
-                        // TODO: Debug ship-to
-                        // "ship-to": "ship to there",
-                        "ship-via": "ship via",
-                        taxes: {
-                            "2150": {
-                                tax: {
-                                    category: "2150"
-                                },
-                                "base-amount": 50,
-                                amount: 6.78,
-                                source: "Part 1",
-                                memo: "tax memo" // Could that be optional?
+            res = await fetch(serverUrl + "/" + api + "/orders", {
+                method: "POST",
+                body: JSON.stringify({
+                    eca: {
+                        number: "Customer 1",
+                        type: "customer" // Watch for exact case or watch serverUrl stack dump
+                    },
+                    currency: "USD",
+                    dates: {
+                        order: "2022-09-01",
+                        "required-by": "2022-10-01"
+                    },
+                    "internal-notes": "Internal notes",
+                    lines: [
+                        {
+                            part: {
+                                number: "p1"
                             },
-                        },
-                    }),
-                    headers: { ...headers, "Content-Type": "application/json" },
-                }
-            );
-        } catch(e) {
+                            price: 56.78,
+                            price_fixated: false,
+                            unit: "lbs",
+                            qty: 1,
+                            taxform: true,
+                            serialnumber: "1234567890",
+                            discount: 12,
+                            discount_type: "%",
+                            "required-by": "2022-10-27",
+                            description: "A description"
+                        }
+                    ],
+                    notes: "Notes",
+                    "order-number": "order 345",
+                    "po-number": "po 456",
+                    "shipping-point": "shipping from here",
+                    // TODO: Debug ship-to
+                    // "ship-to": "ship to there",
+                    "ship-via": "ship via",
+                    taxes: {
+                        2150: {
+                            tax: {
+                                category: "2150"
+                            },
+                            "base-amount": 50,
+                            amount: 6.78,
+                            source: "Part 1",
+                            memo: "tax memo" // Could that be optional?
+                        }
+                    }
+                }),
+                headers: { ...headers, "Content-Type": "application/json" }
+            });
+        } catch (e) {
             console.log(e.response.data);
         }
         expect(res.status).toEqual(StatusCodes.CREATED);
-        expect(res.headers.get('location')).toMatch('./1');
+        expect(res.headers.get("location")).toMatch("./1");
     });
 });
 

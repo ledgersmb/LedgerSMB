@@ -55,9 +55,11 @@ describe("LoginPage", () => {
 
         await wrapper.get("#login").trigger("click");
 
-        await retry(() => expect(wrapper.get("#errorText").text()).toBe(
-            "Access denied: Bad username or password"
-        ));
+        await retry(() =>
+            expect(wrapper.get("#errorText").text()).toBe(
+                "Access denied: Bad username or password"
+            )
+        );
         window.alert = jsdomAlert; // restore the jsdom alert
     });
 
@@ -73,9 +75,11 @@ describe("LoginPage", () => {
 
         await wrapper.get("#login").trigger("click");
 
-        await retry (() => expect(wrapper.get("#errorText").text()).toBe(
-            "Database version mismatch"
-        ));
+        await retry(() =>
+            expect(wrapper.get("#errorText").text()).toBe(
+                "Database version mismatch"
+            )
+        );
         window.alert = jsdomAlert; // restore the jsdom alert
     });
 
@@ -93,7 +97,7 @@ describe("LoginPage", () => {
 
         await retry(() => expect(window.alert).toHaveBeenCalledTimes(1));
         expect(window.alert).toHaveBeenCalledWith(
-          "Unknown error preventing login",
+            "Unknown error preventing login"
         );
         window.alert = jsdomAlert; // restore the jsdom alert
     });
@@ -107,12 +111,15 @@ describe("LoginPage", () => {
 
         await wrapper.get("#login").trigger("click");
 
-        expect(wrapper.get(".v-enter-active").text())
-            .toBe("Logging in... Please wait.");
+        expect(wrapper.get(".v-enter-active").text()).toBe(
+            "Logging in... Please wait."
+        );
 
-        await retry(() => expect(window.location.assign).toHaveBeenCalledTimes(1));
+        await retry(() =>
+            expect(window.location.assign).toHaveBeenCalledTimes(1)
+        );
         expect(window.location.assign).toHaveBeenCalledWith(
-          'http://lsmb/erp.pl?action=root',
+            "http://lsmb/erp.pl?action=root"
         );
     });
 });
