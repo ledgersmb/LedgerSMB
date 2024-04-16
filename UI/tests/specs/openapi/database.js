@@ -88,7 +88,7 @@ export function initialize(company, file) {
             env: {
                 ...process.env,
                 PG_PASSWORD: pg_pwd,
-                PERL5OPT: ''
+                PERL5OPT: ""
             }
         }
         );
@@ -110,7 +110,7 @@ export function drop_database(company) {
         {
             env: {
                 ...process.env,
-                PERL5OPT: ''
+            PERL5OPT: ""
             }
         }
     );

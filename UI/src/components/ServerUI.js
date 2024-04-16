@@ -80,8 +80,8 @@ export default {
                                 registry
                                     .findWidgets(maindiv)
                                     .forEach((child) => {
-                                    this._recursively_resize(child);
-                                });
+                                        this._recursively_resize(child);
+                                    });
                                 maindiv
                                     .querySelectorAll("a")
                                     .forEach((node) =>
@@ -114,12 +114,12 @@ export default {
             [...document.forms].forEach((form) => {
                 if (form.hasAttribute("data-lsmb-focus")) {
                     let focus = form.getAttribute("data-lsmb-focus");
-                        let elm = document.getElementById(focus);
-                        if (elm) {
-                            elm.select();
-                        }
+                    let elm = document.getElementById(focus);
+                    if (elm) {
+                        elm.select();
                     }
-                });
+                }
+            });
         },
         _recursively_resize(widget) {
             widget.getChildren().forEach((child) => {
@@ -180,7 +180,6 @@ export default {
                 // the widgets. (it may take a bit for the new content to overwrite the old
                 // content...)
                 query("*", document.getElementById("maindiv")).forEach(
-                    // eslint-disable no-param-reassign
                     (n) => delete n._cssState
                 );
             } catch (e) {

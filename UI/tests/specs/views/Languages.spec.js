@@ -1,8 +1,5 @@
-/**
- * global retry
- *
- * @format
- */
+/* @format */
+/* global retry */
 
 import Languages from "@/views/Languages.vue";
 import { useSessionUserStore } from "@/store/sessionUser";

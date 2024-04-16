@@ -2,26 +2,26 @@
 
 import globals from "globals";
 import babelParser from "@babel/eslint-parser";
-// import compatPlugin from "eslint-plugin-compat";
+import compatPlugin from "eslint-plugin-compat";
 import eslintConfigESLint from "eslint-config-eslint";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
-// import importPlugin from "eslint-plugin-import";
+import eslintImportX from "eslint-plugin-import-x";
 import js from "@eslint/js";
 import jest from "eslint-plugin-jest";
 import packageJson from "eslint-plugin-package-json/configs/recommended";
 import pluginVue from "eslint-plugin-vue";
 
 export default [
-    js.configs.recommended,
-    eslintPluginPrettierRecommended,
-    ...pluginVue.configs["flat/recommended"], // Why global?
-    // compatPlugin.configs["flat/recommended"],
-    // importPlugin.configs["flat/recommended"],
-
     // Global config
     {
-        ignores: ["{js,node_modules,__mocks__}/**/*.js"]
+        ignores: ["{js,node_modules,__mocks__}/**/*"]
     },
+
+    js.configs.recommended,
+    eslintPluginPrettierRecommended,
+    ...pluginVue.configs["flat/recommended"],
+    compatPlugin.configs["flat/recommended"],
+
     // Config files
     {
         ...eslintConfigESLint,
@@ -43,6 +43,11 @@ export default [
             parser: babelParser,
             parserOptions: {
                 requireConfigFile: false,
+                babelOptions: {
+                    babelrc: false,
+                    configFile: false,
+                    presets: ["@babel/preset-env"]
+                },
                 templateSettings: {
                     evaluate: ["[%", "%]"],
                     interpolate: ["[%", "%]"],
@@ -51,13 +56,19 @@ export default [
             }
         },
         plugins: {
-            // "compat", // Not yet compatible with eslint 9
-            // "import", // Not yet compatible with eslint 9
+            "import-x": eslintImportX
+        },
+        settings: {
+            "import-x/resolver": "webpack",
+            "import-x/parsers": {
+                "@babel/eslint-parser": [".js", ".jsx"],
+                "@typescript-eslint/parser": [".ts", ".tsx"]
+            }
         },
         rules: {
             ...js.configs.recommended.rules,
             camelcase: "off",
-            // "compat/compat": "warn", // Not yet compatible with eslint 9
+            "compat/compat": "warn",
             "consistent-return": "error",
             curly: ["error", "all"],
             "dot-notation": "error",
@@ -65,11 +76,22 @@ export default [
             "func-names": 0,
             "global-require": "error",
             "guard-for-in": "error",
+            "import-x/export": "error",
+            "import-x/no-unresolved": "error",
+            "import-x/named": "error",
+            "import-x/namespace": "error",
+            "import-x/default": "error",
+            "import-x/no-absolute-path": "error",
+            "import-x/no-dynamic-require": "error",
+            "import-x/no-named-as-default": "warn",
+            "import-x/no-named-as-default-member": "warn",
+            "import-x/no-duplicates": "warn",
             "new-cap": 0,
             "no-alert": "error",
-            "no-console": "error",
+            "no-console": "off",
             "no-continue": 0,
             "no-else-return": "error",
+            "no-eval": "error",
             "no-lonely-if": "error",
             "no-multi-assign": "error",
             "no-multi-spaces": "off",
@@ -103,7 +125,7 @@ export default [
                     }
                 }
             ],
-            "vars-on-top": 0,
+            "vars-on-top": "off",
             yoda: "error",
             "no-restricted-syntax": ["error", "SequenceExpression"]
         }
@@ -209,10 +231,29 @@ export default [
                 }
             ],
             "vue/first-attribute-linebreak": "off",
+            "vue/html-closing-bracket-newline": "off",
             "vue/html-indent": ["error", 4],
+            "vue/max-attributes-per-line": [
+                "error",
+                {
+                    singleline: 3,
+                    multiline: 3
+                }
+            ],
             "vue/multi-word-component-names": "off",
+            "vue/multiline-html-element-content-newline": "off",
             "vue/no-setup-props-reactivity-loss": "off",
-            "vue/require-prop-types": "off"
+            "vue/require-prop-types": "off",
+            "vue/singleline-html-element-content-newline": [
+                "error",
+                {
+                    ignoreWhenNoAttributes: true,
+                    ignoreWhenEmpty: true,
+                    ignores: ["pre", "textarea", "template"],
+                    externalIgnores: []
+                }
+            ],
+            "vue/v-on-event-hyphenation": "off"
         }
     }
 ];

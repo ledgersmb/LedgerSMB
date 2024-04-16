@@ -1,5 +1,6 @@
-<script setup>
+<!-- @format -->
 
+<script setup>
 import { createToastMachine } from "@/components/Toaster.machines";
 import { computed } from "vue";
 
@@ -19,28 +20,40 @@ const { send, state } = createToastMachine(
     },
     {
         cb: {
-            removed: () => { emit("remove", { item: props.data }) }
+            removed: () => {
+                emit("remove", { item: props.data });
+            }
         }
-});
+    }
+);
 
 if (props.data.dismissReceiver) {
-    props.data.dismissReceiver( () => send('dismiss') );
-    window.setTimeout(() => { send('show') }, 250);
+    props.data.dismissReceiver(() => send("dismiss"));
+    window.setTimeout(() => {
+        send("show");
+    }, 250);
 } else {
-    send('show');
-    window.setTimeout(() => { send('dismiss') }, duration * 1000);
+    send("show");
+    window.setTimeout(() => {
+        send("dismiss");
+    }, duration * 1000);
 }
-
 </script>
 
 <template>
-    <div v-show="state !== 'pending'"
-         class="toast dijitContentPane dijitBorderContainer-child edgePanel"
-         :class="type"
-         @click="send('dismiss-immediate')"
-         @mouseenter="send('hold')"
-         @mouseleave="send('release')">
-        <div class="title" >{{ title }}</div>
-        <div v-if="text" style="margin-top:1em">{{ text }}</div>
+    <div
+        v-show="state !== 'pending'"
+        class="toast dijitContentPane dijitBorderContainer-child edgePanel"
+        :class="type"
+        @click="send('dismiss-immediate')"
+        @mouseenter="send('hold')"
+        @mouseleave="send('release')"
+    >
+        <div class="title">
+            {{ title }}
+        </div>
+        <div v-if="text" style="margin-top: 1em">
+            {{ text }}
+        </div>
     </div>
 </template>

@@ -1,8 +1,5 @@
-/**
- * global retry
- *
- * @format
- */
+/* @format */
+/* global retry */
 
 import Countries from "@/views/Countries.vue";
 import { useSessionUserStore } from "@/store/sessionUser";

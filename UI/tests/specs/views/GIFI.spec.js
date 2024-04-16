@@ -1,8 +1,5 @@
-/**
- * global retry
- *
- * @format
- */
+/* @format */
+/* global retry */
 
 import GIFI from "@/views/GIFI.vue";
 import { useSessionUserStore } from "@/store/sessionUser";

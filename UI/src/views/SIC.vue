@@ -1,5 +1,7 @@
-<script setup>
+<!-- @format -->
+<!-- eslint-disable prettier/prettier -->
 
+<script setup>
 import { useSICsStore } from "@/store/sics";
 import { useI18n } from "vue-i18n";
 import ConfigTable from "@/components/ConfigTable.vue";
@@ -23,7 +25,8 @@ const store = useSICsStore();
         :store="store"
         storeId="code"
         editRole="sic_edit"
-        createRole="sic_create" />
+        createRole="sic_create"
+    />
     <div class="import-section">
         <h2 class="listheading">{{ t("Import") }}</h2>
         <ImportCsvSic @upload-success="store.initialize()" />
@@ -31,7 +34,6 @@ const store = useSICsStore();
 </template>
 
 <style scoped>
-
 .import-section {
     margin-top: 3em;
 }
@@ -39,5 +41,4 @@ const store = useSICsStore();
 .import-section h2 {
     text-align: left;
 }
-
 </style>

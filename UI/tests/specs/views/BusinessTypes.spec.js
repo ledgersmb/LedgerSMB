@@ -1,8 +1,5 @@
-/**
- * global retry
- *
- * @format
- */
+/* @format */
+/* global retry */
 
 import BusinessTypes from "@/views/BusinessTypes.vue";
 import { useSessionUserStore } from "@/store/sessionUser";

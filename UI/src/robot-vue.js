@@ -69,20 +69,20 @@ function interpret(machine, onChange, initialContext, event) {
 }
 
 function contextRef(service, key) {
-    let ref;
+    let _ref;
     if (
         typeof service.context[key] === typeof [] ||
         typeof service.context[key] === typeof {}
     ) {
         const s = service;
-        ref = reactive(service.context[key]);
-        s.context[key] = ref;
+        _ref = reactive(service.context[key]);
+        s.context[key] = _ref;
     } else {
-        ref = allocRef(service.context[key]);
+        _ref = allocRef(service.context[key]);
     }
     const ctxRef = {
         key: key,
-        ref: ref
+        ref: _ref
     };
     service._contextRefs.push(ctxRef);
     return ctxRef.ref;

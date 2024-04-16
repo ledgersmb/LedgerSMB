@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <script>
 import { ref, inject } from "vue";
 import { useI18n } from "vue-i18n";
@@ -14,11 +16,11 @@ export default {
         heading: {
             default: true
         },
-        "transactionFields": {
+        transactionFields: {
             default: true
         }
     },
-    emits: [ "upload-success", "upload-error" ],
+    emits: ["upload-success", "upload-error"],
     setup(props, { emit }) {
         const { t } = useI18n();
         let notify = inject("notify");
@@ -26,98 +28,120 @@ export default {
         let { service, state } = createImportMachine({
             form,
             notifications: {
-                "submitting": (ctx, { dismissReceiver }) => {
+                submitting: (ctx, { dismissReceiver }) => {
                     notify({
                         title: t("Uploading CSV..."),
                         type: "info",
                         dismissReceiver
                     });
                 },
-                "success": () => {
+                success: () => {
                     notify({ title: t("Uploaded") });
                     emit("upload-success");
                 },
-                "submitError": (ctx, { event }) => {
+                submitError: (ctx, { event }) => {
                     notify({
                         title: t("Failure sending CSV"),
                         text: event.error,
                         type: "error"
                     });
                 },
-                "processingError": (ctx, { event }) => {
+                processingError: (ctx, { event }) => {
                     notify({
                         title: t("Failure processing CSV"),
                         text: event.data.error,
                         type: "error"
                     });
                 },
-                "responseError": (ctx, { event }) => {
+                responseError: (ctx, { event }) => {
                     notify({
                         title: t("Failed to process server response"),
                         text: event.error,
                         type: "error"
                     });
                 }
-            },
+            }
         });
         return {
-            form, notify, state,
+            form,
+            notify,
+            state,
             machine: service,
-            message: "",
+            message: ""
         };
-    },
+    }
 };
 </script>
 
 <template>
+    <!-- eslint-disable prettier/prettier -->
     <div :id="type">
         <template v-if="heading">
-            <div class="listtop"><slot name="title" /></div>
-            <div class="info"><slot name="info" /></div>
+            <div class="listtop">
+                <slot name="title" />
+            </div>
+            <div class="info">
+                <slot name="info" />
+            </div>
         </template>
         <form ref="form" name="csvupload">
             <input type="hidden" name="type" :value="type">
-            <div v-if="multi"
-                 class="listheading">Batch Information</div>
-            <div :class="transactionFields ? 'two-column-grid' : 'non-grid'"
-                 style="width:fit-content">
-                <template v-if="transactionFields">
-                    <lsmb-text class="reference"
-                               name="reference"
-                               label="Reference"
-                               value=""
-                               size="15"
-                               @input="machine.send('input')" />
-                    <lsmb-text class="description"
-                               name="description"
-                               label="Description"
-                               value=""
-                               required
-                               @input="machine.send('input')" />
-                    <lsmb-date label="Transaction Date"
-                               name="transdate"
-                               size="12"
-                               required
-                               @input="machine.send('input')"
-                               @change="machine.send('input')" />
-                </template>
-                <lsmb-file name="import_file"
-                           label="From File"
-                           accept=".csv"
-                           required
-                           @input="machine.send('input')"
-                           @change="machine.send('input')" />
+            <div v-if="multi" class="listheading">
+                {{ $t("Batch Information") }}
             </div>
-            <div id="buttonrow"
-                 class="inputrow"
-                 :class="transactionFields ? '' : 'non-grid'" >
-                <input type="hidden" name="trans_type" />
+            <div
+                :class="transactionFields ? 'two-column-grid' : 'non-grid'"
+                style="width: fit-content"
+            >
+                <template v-if="transactionFields">
+                    <lsmb-text
+                        class="reference"
+                        name="reference"
+                        label="Reference"
+                        value=""
+                        size="15"
+                        @input="machine.send('input')"
+                    />
+                    <lsmb-text
+                        class="description"
+                        name="description"
+                        label="Description"
+                        value=""
+                        required
+                        @input="machine.send('input')"
+                    />
+                    <lsmb-date
+                        label="Transaction Date"
+                        name="transdate"
+                        size="12"
+                        required
+                        @input="machine.send('input')"
+                        @change="machine.send('input')"
+                    />
+                </template>
+                <lsmb-file
+                    name="import_file"
+                    label="From File"
+                    accept=".csv"
+                    required
+                    @input="machine.send('input')"
+                    @change="machine.send('input')"
+                />
+            </div>
+            <div
+                id="buttonrow"
+                class="inputrow"
+                :class="transactionFields ? '' : 'non-grid'"
+            >
+                <input type="hidden" name="trans_type">
                 <lsmb-button
                     class="submit"
                     name="action"
                     :disabled="state !== 'ready'"
                     @click="machine.send('submit')"
-                >{{ "Save" }}</lsmb-button>
+                >
+                    {{ $t("Save") }}
+                </lsmb-button>
             </div>
             <div class="details">
                 <slot />
@@ -126,19 +150,17 @@ export default {
     </div>
 </template>
 
-
 <style scoped>
-
 .failure {
-   background-color: red;
-   color: white;
-   font-weight: bold;
-   text-align: center;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    text-align: center;
 }
 
 .success {
-   background-color: dark-green;
-   text-align: center;
+    background-color: dark-green;
+    text-align: center;
 }
 
 .non-grid {
@@ -152,5 +174,4 @@ export default {
 .details {
     margin-top: 1.5em;
 }
-
 </style>

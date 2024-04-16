@@ -17,6 +17,7 @@ function _mapLocale(locale) {
 var _messages = {};
 SUPPORT_LOCALES.forEach(function (it) {
     const locale = _mapLocale(it);
+    // eslint-disable-next-line global-require
     _messages[locale] = require("@/locales/" + locale + ".json");
 });
 
