@@ -39,6 +39,7 @@ use LedgerSMB::User;
 use LedgerSMB::GL;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::PGDate;
+use Workflow::Context;
 
 # end of main
 
@@ -641,9 +642,14 @@ sub process_transactions {
                         $form->{paidaccounts} = -1;
                     }
 
-                    for (qw(id recurring intnotes printed emailed)) {
+                    for (qw(id workflow_id recurring intnotes printed emailed)) {
                         delete $form->{$_};
                     }
+                    my $wf = $form->{_wire}->get('workflows')
+                        ->create_workflow( 'AR/AP', Workflow::Context->new(
+                                               transdate => $form->{transdate}
+                                           ));
+                    $form->{workflow_id} = $wf->id;
 
                     ( $form->{ $form->{ARAP} } ) = split /--/,
                       $form->{ $form->{ARAP} };
@@ -655,11 +661,6 @@ sub process_transactions {
                     for (qw(invnumber reference)) {
                         $form->{$_} = $form->unquote( $form->{$_} );
                     }
-                    # Make sure the transaction isn't posted as a draft
-                    $form->{approved} = 1;
-                    # Make sure the posting procedure doesn't override
-                    # the 'approved' status
-                    $form->{separate_duties} = 0;
 
                     if ( $pt->{invoice} ) {
                         if ( $pt->{arid} ) {
@@ -707,6 +708,12 @@ sub process_transactions {
 
                     }
                     $form->info( " ..... " . $locale->text('done') );
+
+                    # Make sure the transaction isn't posted as a draft
+                    $wf->execute_action( 'post' )
+                        if $wf->state eq 'INITIAL';
+                    $wf->execute_action( 'approve' )
+                        unless $wf->state eq 'POSTED';
 
                     # print form
                     if ( $ok ) {
@@ -830,7 +837,13 @@ sub process_transactions {
 
                 $form->{rowcount} = $j;
 
-                for (qw(id recurring)) { delete $form->{$_} }
+                for (qw(id workflow_id recurring)) { delete $form->{$_} }
+
+                my $wf = $form->{_wire}->get('workflows')
+                    ->create_workflow( 'GL', Workflow::Context->new(
+                                           transdate => $form->{transdate}
+                                       ));
+                $form->{workflow_id} = $wf->id;
                 $form->info(
                     "\n"
                       . $locale->text(
@@ -839,8 +852,12 @@ sub process_transactions {
                       )
                 );
                 $ok = GL->post_transaction( \%myconfig, \%$form, $locale );
+                # Make sure the transaction isn't posted as a draft
+                $wf->execute_action( 'post' )
+                    if $wf->state eq 'INITIAL';
+                $wf->execute_action( 'approve' )
+                    unless $wf->state eq 'POSTED';
                 $form->info( " ..... " . $locale->text('done') );
-
             }
 
             AM->update_recurring( \%myconfig, \%$pt, $id ) if $ok;
