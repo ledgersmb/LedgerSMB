@@ -30,7 +30,8 @@ define([
                             "&database=" +
                             company +
                             "&csrf_token=" +
-                            token);
+                            token
+                    );
                 },
                 function (err) {
                     var status = err.response.status;

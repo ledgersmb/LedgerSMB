@@ -72,7 +72,7 @@ MarkdownInclude.registerPlugin({
                 }
             });
         let markdown = "";
-        // eslint guard-for-in:0
+        /* eslint guard-for-in:0 */
         for (const c of ["Desktop", "Mobile"]) {
             markdown += "\n### " + c + "\n\n";
             markdown +=
@@ -92,7 +92,6 @@ MarkdownInclude.registerPlugin({
                 "---".padEnd(43, "-") +
                 " |\n";
 
-            // eslint-disable-next-line guard-for-in
             for (var browser in earliest[c]) {
                 var entry = earliest[c][browser];
                 let versions = [];
@@ -104,7 +103,7 @@ MarkdownInclude.registerPlugin({
                 );
 
                 var v;
-                // eslint no-cond-assign:0
+                /* eslint no-cond-assign:0 */
                 while ((v = vs.shift()) || v1) {
                     if (v && v.includes("-")) {
                         let [v01, v02] = v.split("-");
@@ -138,7 +137,7 @@ MarkdownInclude.registerPlugin({
                     v1 = "";
                     v2 = "";
                 }
-                // eslint-disable-next-line one-var
+                /* eslint-disable-next-line one-var */
                 var l = "",
                     line =
                         "| " +

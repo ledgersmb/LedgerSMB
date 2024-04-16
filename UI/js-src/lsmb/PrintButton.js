@@ -86,10 +86,9 @@ define([
                         }
                     } else {
                         window.__lsmbReportError(r);
-                    };
+                    }
                 });
-            }
-            else {
+            } else {
                 this.inherited(arguments);
             }
         }

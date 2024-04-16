@@ -13,7 +13,8 @@ define([
         clickedAction: null,
         onSubmit: function (evt) {
             event.stop(evt);
-            this.clickedAction = evt.submitter; /* ought to be the same as this.domNode.__action */
+            this.clickedAction =
+                evt.submitter; /* ought to be the same as this.domNode.__action */
             this.submit();
         },
         submit: function () {
@@ -25,7 +26,8 @@ define([
             const options = { handleAs: "text" };
             const method =
                 typeof this.method === "undefined" ? "GET" : this.method;
-            let url = this.action; /* relative; this.domNode.action is absolute */
+            let url =
+                this.action; /* relative; this.domNode.action is absolute */
 
             options.doing = widget["data-lsmb-doing"];
             options.done = widget["data-lsmb-done"];
