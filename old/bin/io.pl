@@ -1504,12 +1504,6 @@ sub print_form {
 
             $trans_wf = $form->{_wire}->get('workflows')
                 ->fetch_workflow( 'AR/AP', $wf_id );
-            if (grep { $_ eq 'save' } $trans_wf->get_current_actions) {
-                $trans_wf->execute_action( 'save' );
-            }
-            if (grep { $_ eq 'post' } $trans_wf->get_current_actions) {
-                $trans_wf->execute_action( 'post' );
-            }
         }
 
         $trans_wf->context->param( '_email_data' => $email_data );
