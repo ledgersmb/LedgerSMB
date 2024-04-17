@@ -7,8 +7,10 @@ create function pg_temp.new_workflow(approved boolean, submitted boolean,
                                      deleted boolean)
   returns int
   as $$
-  insert into workflow (type, state, last_update)
-  values ('reconciliation',
+
+  insert into workflow (workflow_id, type, state, last_update)
+  values (nextval('workflow_seq'),
+          'reconciliation',
           case
           when deleted then 'DELETED'
           when approved then 'APPROVED'
@@ -24,9 +26,10 @@ update cr_report
 
 insert into
  workflow_history (
-   workflow_id, action, description, state,
+   workflow_hist_id, workflow_id, action, description, state,
    workflow_user, history_date)
-select workflow_id, 'migrate', 'Workflow created by migration', state,
+select nextval('workflow_history_seq'), workflow_id, 'migrate',
+       'Workflow created by migration', state,
        CURRENT_USER, NOW()
   from cr_report
          join workflow using (workflow_id);
