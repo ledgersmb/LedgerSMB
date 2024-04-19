@@ -711,8 +711,8 @@ sub report_renderer_doc {
     my $renderer =
         $request->{_wire}->get( 'output_formatter' )->report_doc_renderer(
             $request->{_dbh},
-            $request->formatter_options,
             uc($request->{format}) || 'HTML',
+            $request->formatter_options,
             {
                 SETTINGS => {
                      # default paper size when not configured
