@@ -1324,7 +1324,6 @@ sub edit_and_save {
 }
 
 sub approve {
-    $form->update_invnumber;
     $form->call_procedure(funcname=>'draft_approve', args => [ $form->{id} ]);
 
     my $wf = $form->{_wire}->get('workflows')
