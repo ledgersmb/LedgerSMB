@@ -3,7 +3,7 @@
 %]
 <body class="lsmb [% dojo_theme %]">
 
-<form data-dojo-type="lsmb/Form" method="post" action="taxform.pl">
+<form data-dojo-type="lsmb/Form" method="GET" action="taxform.pl">
 [% PROCESS input element_data = {
     type = "hidden"
     name = "sort"
