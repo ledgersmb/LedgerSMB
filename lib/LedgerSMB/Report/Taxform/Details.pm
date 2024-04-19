@@ -137,11 +137,12 @@ sub buttons {
     my ($self) = @_;
     return [{name => '__action',
              type => 'submit',
+             'data-dojo-type' => 'lsmb/PrintButton',
+             'data-dojo-props' => 'minimalGET: false',
              text => $self->Text('Print'),
             value => 'print'}];
 }
 
-=head1 METHODS
 =head1 METHODS
 
 =head2 run_report
