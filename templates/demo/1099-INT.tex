@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.1
-   Date:     2022-07-22
+   Version:  1.2
+   Date:     2024-04-19
    File:     1099-INT.tex
    Set:      demo
 
@@ -9,6 +9,7 @@ Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
 Version   Changes
+1.2       Fix syntax error
 1.1       Merged xelatex targetting templates with those targetting pdflatex
 
 -?>
@@ -61,15 +62,15 @@ Tel: <?lsmb company_telephone ?>
 
 \begin{document}
 <?lsmb FOR tf in results ?>
-<?lsmb INCLUDE taxform 
+<?lsmb INCLUDE taxform
 pay_to_name = tf.legal_name
 pay_to_line_one = tf.line_one
 pay_to_line_two = tf.line_two
 pay_to_line_three = tf.line_three
 my_tax_code = business_number
 taxnumber = tf.taxnumber
-total_sum = tf.total_sum
-<?lsmb END # FOR tf  ?>
+total_sum = tf.total_sum ;
+END # FOR tf  ?>
 \end{document}
 
 <?lsmb END # FILTER latex -?>
