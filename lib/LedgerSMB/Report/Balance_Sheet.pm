@@ -168,8 +168,8 @@ sub run_report {
 
     my $col_id = $self->cheads->map_path($self->column_path_prefix);
     $self->cheads->id_props($col_id,
-                            { description => $self->date_to->to_output,
-                              to_date     => $self->date_to->to_output,
+                            { description => $self->date_to->to_output($self->{formatter_options}),
+                              to_date     => $self->date_to->to_output($self->{formatter_options}),
                             });
 
     for my $line (@lines) {

@@ -85,7 +85,9 @@ sub generate_income_statement {
 
         for my $cmp_dates (@{$rpt->comparisons}) {
             my $cmp = LedgerSMB::Report::PNL::Income_Statement->new(
-                %$request, %$cmp_dates);
+                %$request,
+                formatter_options => $request->formatter_options,
+                %$cmp_dates);
             $cmp->run_report($request);
             $rpt->add_comparison($cmp);
         }

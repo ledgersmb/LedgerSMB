@@ -153,14 +153,16 @@ sub run_report {
 
 
     my $col_id = $self->cheads->map_path($self->column_path_prefix);
+    my $_from_date = $self->from_date->to_output($self->{formatter_options});
+    my $_to_date = $self->to_date->to_output($self->{formatter_options});
     $self->cheads->id_props($col_id,
                             { description =>
                                   $self->Text(
                                       "[_1]\n[_2]",
-                                      $self->from_date->to_output,
-                                      $self->to_date->to_output),
-                              from_date => $self->from_date->to_output,
-                              to_date => $self->to_date->to_output,
+                                      $_from_date,
+                                      $_to_date),
+                              from_date => $_from_date,
+                              to_date => $_to_date
                             });
 
     for my $line (@lines) {

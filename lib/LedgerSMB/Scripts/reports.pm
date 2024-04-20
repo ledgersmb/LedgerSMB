@@ -213,7 +213,9 @@ sub generate_balance_sheet {
 
     for my $cmp_dates (@{$rpt->comparisons}) {
         my $cmp = LedgerSMB::Report::Balance_Sheet->new(
-            %$request, %$cmp_dates);
+            %$request,
+            formatter_options => $request->formatter_options,
+            %$cmp_dates);
         $cmp->run_report($request);
         $rpt->add_comparison($cmp);
     }
