@@ -34,7 +34,7 @@ use strict;
 use warnings;
 use LedgerSMB::Setting;
 
-my @company_settings = qw(templates businessnumber weightunit curr
+my @company_settings = qw(templates weightunit curr
                           default_email_from default_email_to
                           default_email_bcc  default_email_cc
                           default_language default_country papersize

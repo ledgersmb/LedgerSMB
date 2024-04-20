@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.2
-   Date:     2024-04-19
+   Version:  1.3
+   Date:     2024-04-21
    File:     1099-INT.tex
    Set:      demo
 
@@ -9,8 +9,50 @@ Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
 Version   Changes
+1.3       Document available variables; replace deprecated ones
 1.2       Fix syntax error
 1.1       Merged xelatex targetting templates with those targetting pdflatex
+
+
+This template has the following variables available:
+
+SETTINGS:
+  company_name
+  company_address
+  company_phone
+  company_fax
+  company_email
+  businessnumber
+company_name      (1)
+company_address   (1)
+company_telephone (1)
+my_tax_code       (1)
+results:
+  - id
+    legal_name
+    entity_id
+    entity_class
+    control_code
+    meta_number
+    tax_id
+    sales_tax_id
+    acc_sum
+    invoice_sum
+    total_sum
+    invnumber  (2)
+    duedate    (2)
+    invoice_id (2)
+    street1    (3)
+    street2    (3)
+    street3    (3)
+    city       (3)
+    state      (3)
+    mail_code  (3)
+
+(1): Deprecated
+(2): These fields are only available when the report being printed
+     is a detailed report (as opposed to a summary report).
+(3): Required, but not provided
 
 -?>
 <?lsmb FILTER latex { format="$FORMAT($PROCESSOR)" } ?>
@@ -25,12 +67,12 @@ Version   Changes
 <?lsmb BLOCK taxformpart ?>
 \begin{textblock}{4}[0,1](1, 1.5)
 <?lsmb SETTINGS.company_name ?>\\
-<?lsmb company_address ?>\\
-Tel: <?lsmb company_telephone ?>
+<?lsmb SETTINGS.company_address ?>\\
+Tel: <?lsmb SETTINGS.company_phone ?>
 \end{textblock}
 
 \begin{textblock}{2}[0,1](1, 3.5)
-<?lsmb my_tax_code ?>
+<?lsmb SETTINGS.businessnumber ?>
 \end{textblock}
 
 \begin{textblock}{2}[0,1](3, 3.5)
@@ -67,7 +109,6 @@ pay_to_name = tf.legal_name
 pay_to_line_one = tf.line_one
 pay_to_line_two = tf.line_two
 pay_to_line_three = tf.line_three
-my_tax_code = business_number
 taxnumber = tf.taxnumber
 total_sum = tf.total_sum ;
 END # FOR tf  ?>

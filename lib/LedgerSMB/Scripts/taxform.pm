@@ -239,7 +239,7 @@ sub print {
         format_plugin   =>
            $request->{_wire}->get( 'output_formatter' )->get( $request->{format}),
     );
-    $template->render($request);
+    $template->render({ %$request, SETTINGS => $cc });
 
     my $body = $template->{output};
     utf8::encode($body) if utf8::is_utf8($body);  ## no critic
