@@ -1,6 +1,6 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.3
+   Version:  1.4
    Date:     2024-04-21
    File:     1099-INT.tex
    Set:      demo
@@ -9,6 +9,7 @@ Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
 Version   Changes
+1.4       Correct values passed into 'taxformpart' block
 1.3       Document available variables; replace deprecated ones
 1.2       Fix syntax error
 1.1       Merged xelatex targetting templates with those targetting pdflatex
@@ -42,17 +43,16 @@ results:
     invnumber  (2)
     duedate    (2)
     invoice_id (2)
-    street1    (3)
-    street2    (3)
-    street3    (3)
-    city       (3)
-    state      (3)
-    mail_code  (3)
+    line_one
+    line_two
+    line_three
+    city
+    state
+    mail_code
 
 (1): Deprecated
 (2): These fields are only available when the report being printed
      is a detailed report (as opposed to a summary report).
-(3): Required, but not provided
 
 -?>
 <?lsmb FILTER latex { format="$FORMAT($PROCESSOR)" } ?>
@@ -81,9 +81,9 @@ Tel: <?lsmb SETTINGS.company_phone ?>
 
 \begin{textblock}{4}[0,1](1, 4)
 <?lsmb legal_name ?>\\
-<?lsmb IF street1 ?><?lsmb street1 ?>\\ <?lsmb END ?>
-<?lsmb IF street2 ?><?lsmb street2 ?>\\ <?lsmb END ?>
-<?lsmb IF street3 ?><?lsmb street3 ?>\\ <?lsmb END ?>
+<?lsmb IF line_one ?><?lsmb line_one ?>\\ <?lsmb END ?>
+<?lsmb IF line_two ?><?lsmb line_two ?>\\ <?lsmb END ?>
+<?lsmb IF line_three ?><?lsmb line_three ?>\\ <?lsmb END ?>
 <?lsmb city ?>, <?lsmb state ?> <?lsmb mail_code ?>
 \end{textblock}
 
@@ -105,10 +105,13 @@ Tel: <?lsmb SETTINGS.company_phone ?>
 \begin{document}
 <?lsmb FOR tf in results ?>
 <?lsmb INCLUDE taxform
-pay_to_name = tf.legal_name
-pay_to_line_one = tf.line_one
-pay_to_line_two = tf.line_two
-pay_to_line_three = tf.line_three
+legal_name = tf.legal_name
+line_one = tf.line_one
+line_two = tf.line_two
+line_three = tf.line_three
+city = tf.city
+state = tf.state
+mail_code = tf.mail_code
 taxnumber = tf.taxnumber
 total_sum = tf.total_sum ;
 END # FOR tf  ?>
