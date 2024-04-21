@@ -202,8 +202,6 @@ sub generate_balance_sheet {
     my $rpt = LedgerSMB::Report::Balance_Sheet->new(
         %$request,
         formatter_options => $request->formatter_options,
-        from_date  => $request->parse_date( $request->{from_date} ),
-        to_date  => $request->parse_date( $request->{to_date} ),
         column_path_prefix => [ 0 ]);
     $rpt->run_report($request);
 

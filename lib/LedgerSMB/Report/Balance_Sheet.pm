@@ -36,6 +36,13 @@ Boolean, true if it is a gifi report.
 
 has gifi => (is => 'rw', isa => 'Bool');
 
+=item from_date
+=item to_date
+
+Dates come from LedgerSMB::Report::Dates
+
+=cut
+
 =item legacy_hierarchy
 
 Boolean, true if the regular hierarchies need to be ignored,
