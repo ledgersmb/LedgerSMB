@@ -8,16 +8,33 @@
   </state>
 
   <state name="SAVED">
-    <action name="add_pending_items" resulting_state="SAVED" />
+    <action name="add_pending_items" resulting_state="OUR_ITEMS_ADDED" />
     <action name="delete" resulting_state="DELETED" />
     <action name="save" resulting_state="SAVED" />
-    <action name="submit" resulting_state="SUBMITTED" />
+    <action name="submit" resulting_state="SUBMITTED" >
+<!--
+      <condition name="reconciliation_gl_ok" />
+      <condition name="reconciliation_stmt_ok" />
+-->
+    </action>
     <action name="upload_statement" resulting_state="STMT_ITEMS_ADDED" />
   </state>
 
+  <state name="OUR_ITEMS_ADDED" autorun="yes">
+    <action name="reconcile" resulting_state="SAVED" />
+  </state>
+
+  <state name="STMT_ITEMS_ADDED" autorun="yes">
+    <action name="reconcile" resulting_state="SAVED" />
+  </state>
+
   <state name="SUBMITTED">
-    <action name="approve" resulting_state="APPROVED" />
-    <action name="delete" resulting_state="DELETED" />
+    <action name="approve" resulting_state="APPROVED">
+      <condition name="acl-approve" />
+    </action>
+    <action name="delete" resulting_state="DELETED">
+      <condition name="acl-approve" />
+    </action>
     <action name="reject" resulting_state="SAVED" />
   </state>
 
