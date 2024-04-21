@@ -138,9 +138,9 @@ sub _save_email_data {
             );
 
         $file->get_mime_type;
-        $file->attach;
+        my $stored = $file->attach;
 
-        $att->{id}        = $file->id;
+        $att->{id}        = $stored->{id};
         $att->{mime_type} = $file->mime_type_text;
         tie $att->{content},
             'LedgerSMB::Workflow::Persister::Email::TiedContent',
