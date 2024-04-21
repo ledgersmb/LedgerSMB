@@ -25,10 +25,6 @@ SETTINGS:
   company_fax
   company_email
   businessnumber
-company_name      (1)
-company_address   (1)
-company_telephone (1)
-my_tax_code       (1)
 results:
   - id
     legal_name
@@ -41,9 +37,9 @@ results:
     acc_sum
     invoice_sum
     total_sum
-    invnumber  (2)
-    duedate    (2)
-    invoice_id (2)
+    invnumber  (1)
+    duedate    (1)
+    invoice_id (1)
     line_one
     line_two
     line_three
@@ -51,8 +47,7 @@ results:
     state
     mail_code
 
-(1): Deprecated
-(2): These fields are only available when the report being printed
+(1): These fields are only available when the report being printed
      is a detailed report (as opposed to a summary report).
 
 -?>

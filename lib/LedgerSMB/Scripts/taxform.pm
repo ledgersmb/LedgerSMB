@@ -226,10 +226,6 @@ sub print {
     #
     my $cc = $request->{_company_config};
     $request->{SETTINGS}          = $cc;
-    $request->{company_name}      = $cc->{company_name};
-    $request->{company_address}   = $cc->{company_address};
-    $request->{company_telephone} = $cc->{company_phone};
-    $request->{my_tax_code}       = $cc->{businessnumber};
 
     my $template = LedgerSMB::Template->new( # printed document
         user     => $request->{_user},
