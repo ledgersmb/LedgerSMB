@@ -62,7 +62,7 @@ sub FETCH {
     my $sth = $dbh->prepare(
         q{select content from file_email where ref_key = ? and id = ?})
         or die $dbh->errstr;
-    $sth->execute( $self->{wf_if}, $self->{id} )
+    $sth->execute( $self->{wf_id}, $self->{id} )
         or die $sth->errstr;
 
     ($self->{value}) = $sth->fetchrow_array;
