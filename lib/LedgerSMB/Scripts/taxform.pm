@@ -225,6 +225,7 @@ sub print {
     # Business settings for 1099
     #
     my $cc = $request->{_company_config};
+    $request->{SETTINGS}          = $cc;
     $request->{company_name}      = $cc->{company_name};
     $request->{company_address}   = $cc->{company_address};
     $request->{company_telephone} = $cc->{company_phone};

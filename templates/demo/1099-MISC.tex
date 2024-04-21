@@ -1,6 +1,6 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.3
+   Version:  1.4
    Date:     2024-04-21
    File:     1099-MISC.tex
    Set:      demo
@@ -9,6 +9,7 @@ Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
 Version   Changes
+1.4       Fix 'latexpdf' errors with missing data
 1.3       Correct values passed into 'taxformpart' block
 1.2       Document available variables; replace deprecated ones
 1.1       Merged xelatex targetting templates with those targetting pdflatex
@@ -67,8 +68,8 @@ results:
  # Defines a repeatable block of TeX commands
 ?>
 \begin{textblock}{4}[0,1](1, 1.5)
-<?lsmb SETTINGS.company_name ?>\\
-<?lsmb SETTINGS.company_address ?>\\
+<?lsmb SETTINGS.company_name || 'No Company Name set in System Defaults' ?>\\
+<?lsmb SETTINGS.company_address || 'No Company Address set in System Defaults' ?>\\
 Tel: <?lsmb SETTINGS.company_phone ?>
 \end{textblock}
 
@@ -82,9 +83,13 @@ Tel: <?lsmb SETTINGS.company_phone ?>
 
 \begin{textblock}{4}[0,1](1, 4)
 <?lsmb legal_name ?>\\
-<?lsmb IF street1 ?><?lsmb street1 ?>\\ <?lsmb END ?>
+<?lsmb IF street1 ?>
+<?lsmb street1 ?>\\
 <?lsmb IF street2 ?><?lsmb street2 ?>\\ <?lsmb END ?>
 <?lsmb IF street3 ?><?lsmb street3 ?>\\ <?lsmb END ?>
+<?lsmb ELSE -?>
+No billing or physical address set \\
+<?lsmb END # street1 ?>
 <?lsmb city ?>, <?lsmb state ?> <?lsmb mail_code ?>
 \end{textblock}
 
