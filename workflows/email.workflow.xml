@@ -10,13 +10,13 @@
       <condition name="sendImmediately" />
     </action>
     <!-- Save data as provided at workflow creation time -->
-    <action name="update" resulting_state="CREATED">
+    <action name="save" resulting_state="CREATED">
       <condition name="!sendImmediately"/>
     </action>
   </state>
   <state name="CREATED">
     <action name="attach" resulting_state="NOCHANGE"/>
-    <action name="update" resulting_state="NOCHANGE" />
+    <action name="save"   resulting_state="NOCHANGE" />
     <action name="send"   resulting_state="EXPANDED" />
     <action name="cancel" resulting_state="CANCELLED"/>
 

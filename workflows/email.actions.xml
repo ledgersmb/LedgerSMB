@@ -1,7 +1,7 @@
 <actions type="Email">
   <description>Actions for Email workflow</description>
-  <action name="update"
-          text="Update"
+  <action name="save"
+          text="Save"
           class="LedgerSMB::Workflow::Action::Null"
           order="1" />
   <action name="cancel"
