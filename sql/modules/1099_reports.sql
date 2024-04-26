@@ -136,7 +136,7 @@ RETURNS SETOF tax_form_report_item AS $BODY$
     SELECT * FROM (
       select * from (
         -- entity_credit_account.id ensures a 1-1 join with the left side
-        select entity_credit_account.id, l.*
+        select entity_credit_account.id as eca_id, l.*
           from eca_to_location eca2l
                  join location_class lc on lc.id = eca2l.location_class
                  join location l on l.id = eca2l.location_id
@@ -159,7 +159,7 @@ RETURNS SETOF tax_form_report_item AS $BODY$
       ) z
     ) x
     LIMIT 1
-  ) addr ON addr.entity_id = entity.id
+  ) addr ON addr.eca_id = entity_credit_account.id
   WHERE country_tax_form.id = in_tax_form_id
   GROUP BY legal_name, meta_number, company.tax_id, company.sales_tax_id, company.entity_id,
            entity_credit_account.entity_class, entity.control_code, entity_credit_account.id,
