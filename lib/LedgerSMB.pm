@@ -259,7 +259,7 @@ use LedgerSMB::Setting;
 use LedgerSMB::Template;
 use LedgerSMB::Template::UI;
 
-our $VERSION = '1.10.35';
+our $VERSION = '1.10.36-dev';
 
 my $logger = Log::Any->get_logger(category => 'LedgerSMB');
 my $expiration_parser = DateTime::Format::Duration::ISO8601->new;
