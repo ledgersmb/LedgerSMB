@@ -1325,7 +1325,7 @@ SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
                     'menu_node', 'menu_acl',
                     'gifi', 'country', 'taxmodule',
                     'parts', 'partsgroup', 'country_tax_form', 'translation',
-                    'business',
+                    'business', 'template',
                     --###TODO: Add table for advisory rates
                     --'exchangerate',
                     'new_shipto', 'tax',
