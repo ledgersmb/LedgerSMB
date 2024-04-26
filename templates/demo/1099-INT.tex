@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.2
-   Date:     2024-04-19
+   Version:  1.5
+   Date:     2024-04-21
    File:     1099-INT.tex
    Set:      demo
 
@@ -9,8 +9,46 @@ Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
 Version   Changes
+1.5       Fix 'latexpdf' errors with missing data
+1.4       Correct values passed into 'taxformpart' block
+1.3       Document available variables; replace deprecated ones
 1.2       Fix syntax error
 1.1       Merged xelatex targetting templates with those targetting pdflatex
+
+
+This template has the following variables available:
+
+SETTINGS:
+  company_name
+  company_address
+  company_phone
+  company_fax
+  company_email
+  businessnumber
+results:
+  - id
+    legal_name
+    entity_id
+    entity_class
+    control_code
+    meta_number
+    tax_id
+    sales_tax_id
+    acc_sum
+    invoice_sum
+    total_sum
+    invnumber  (1)
+    duedate    (1)
+    invoice_id (1)
+    line_one
+    line_two
+    line_three
+    city
+    state
+    mail_code
+
+(1): These fields are only available when the report being printed
+     is a detailed report (as opposed to a summary report).
 
 -?>
 <?lsmb FILTER latex { format="$FORMAT($PROCESSOR)" } ?>
@@ -24,13 +62,13 @@ Version   Changes
 
 <?lsmb BLOCK taxformpart ?>
 \begin{textblock}{4}[0,1](1, 1.5)
-<?lsmb SETTINGS.company_name ?>\\
-<?lsmb company_address ?>\\
-Tel: <?lsmb company_telephone ?>
+<?lsmb SETTINGS.company_name || 'No Company Name set in System Defaults' ?>\\
+<?lsmb SETTINGS.company_address || 'No Company Address set in System Defaults' ?>\\
+Tel: <?lsmb SETTINGS.company_phone ?>
 \end{textblock}
 
 \begin{textblock}{2}[0,1](1, 3.5)
-<?lsmb my_tax_code ?>
+<?lsmb SETTINGS.businessnumber ?>
 \end{textblock}
 
 \begin{textblock}{2}[0,1](3, 3.5)
@@ -39,9 +77,13 @@ Tel: <?lsmb company_telephone ?>
 
 \begin{textblock}{4}[0,1](1, 4)
 <?lsmb legal_name ?>\\
-<?lsmb IF street1 ?><?lsmb street1 ?>\\ <?lsmb END ?>
-<?lsmb IF street2 ?><?lsmb street2 ?>\\ <?lsmb END ?>
-<?lsmb IF street3 ?><?lsmb street3 ?>\\ <?lsmb END ?>
+<?lsmb IF line_one ?>
+<?lsmb line_one ?>\\
+<?lsmb IF line_two ?><?lsmb line_two ?>\\ <?lsmb END ?>
+<?lsmb IF line_three ?><?lsmb line_three ?>\\ <?lsmb END ?>
+<?lsmb ELSE -?>
+No billing or physical address set \\
+<?lsmb END # line_one ?>
 <?lsmb city ?>, <?lsmb state ?> <?lsmb mail_code ?>
 \end{textblock}
 
@@ -63,11 +105,13 @@ Tel: <?lsmb company_telephone ?>
 \begin{document}
 <?lsmb FOR tf in results ?>
 <?lsmb INCLUDE taxform
-pay_to_name = tf.legal_name
-pay_to_line_one = tf.line_one
-pay_to_line_two = tf.line_two
-pay_to_line_three = tf.line_three
-my_tax_code = business_number
+legal_name = tf.legal_name
+line_one = tf.line_one
+line_two = tf.line_two
+line_three = tf.line_three
+city = tf.city
+state = tf.state
+mail_code = tf.mail_code
 taxnumber = tf.taxnumber
 total_sum = tf.total_sum ;
 END # FOR tf  ?>

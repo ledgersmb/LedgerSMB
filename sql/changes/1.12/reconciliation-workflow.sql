@@ -21,8 +21,12 @@ create function pg_temp.new_workflow(approved boolean, submitted boolean,
    returning workflow_id;
 $$ language sql;
 
+
+SET session_replication_role = replica; -- disable triggers
 update cr_report
    set workflow_id = pg_temp.new_workflow(approved, submitted, deleted);
+SET session_replication_role = DEFAULT; -- re-enable triggers
+
 
 insert into
  workflow_history (

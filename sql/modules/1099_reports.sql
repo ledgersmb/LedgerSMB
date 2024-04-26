@@ -24,6 +24,13 @@ CREATE TYPE tax_form_report_item AS (
     meta_number character varying(32),
     tax_id text,
     sales_tax_id text,
+    line_one text,
+    line_two text,
+    line_three text,
+    city text,
+    state text,
+    mail_code text,
+    country_id integer,
     acc_sum numeric,
     invoice_sum numeric,
     total_sum numeric);
@@ -38,6 +45,13 @@ CREATE TYPE tax_form_report_detail_item AS (
     meta_number character varying(32),
     tax_id text,
     sales_tax_id text,
+    line_one text,
+    line_two text,
+    line_three text,
+    city text,
+    state text,
+    mail_code text,
+    country_id integer,
     acc_sum numeric,
     invoice_sum numeric,
     total_sum numeric,
@@ -53,6 +67,8 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                      entity_credit_account.entity_class, entity.control_code,
                      entity_credit_account.meta_number,
                      company.tax_id, company.sales_tax_id,
+                     addr.line_one, addr.line_two, addr.line_three,
+                     addr.city, addr.state, addr.mail_code, addr.country_id,
                      sum(CASE WHEN gl.amount_bc = 0 THEN 0
                               WHEN relation = 'acc_trans'
                           THEN ac.reportable_amount_bc * pmt.amount_bc
@@ -116,8 +132,40 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                 JOIN entity ON (entity.id = entity_credit_account.entity_id)
                 JOIN company ON (entity.id = company.entity_id)
                 JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
-               WHERE country_tax_form.id = in_tax_form_id
-             GROUP BY legal_name, meta_number, company.tax_id, company.sales_tax_id, company.entity_id, entity_credit_account.entity_class, entity.control_code, entity_credit_account.id
+  LEFT JOIN LATERAL (
+    SELECT * FROM (
+      select * from (
+        -- entity_credit_account.id ensures a 1-1 join with the left side
+        select entity_credit_account.id as eca_id, l.*
+          from eca_to_location eca2l
+                 join location_class lc on lc.id = eca2l.location_class
+                 join location l on l.id = eca2l.location_id
+         where eca2l.credit_id = entity_credit_account.id -- this is the LATERAL!
+           and lc.authoritative
+         order by lc.id, l.created
+      ) y
+       union all
+      select * from (
+        -- entity_credit_account.id ensures a 1-1 join with the left side
+        -- and due to the join on the left side,
+        -- entity_credit_account.entity_id = entity.id
+        select entity_credit_account.id, l.*
+          from entity_to_location e2l
+                 join location_class lc on lc.id = e2l.location_class
+                 join location l on l.id = e2l.location_id
+         where e2l.entity_id = entity.id -- this is the LATERAL!
+           and lc.authoritative
+         order by lc.id, l.created
+      ) z
+    ) x
+    LIMIT 1
+  ) addr ON addr.eca_id = entity_credit_account.id
+  WHERE country_tax_form.id = in_tax_form_id
+  GROUP BY legal_name, meta_number, company.tax_id, company.sales_tax_id, company.entity_id,
+           entity_credit_account.entity_class, entity.control_code, entity_credit_account.id,
+           addr.line_one, addr.line_two, addr.line_three, addr.city, addr.state,
+           addr.mail_code, addr.country_id;
+
 $BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_summary_report
@@ -133,6 +181,8 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                      entity_credit_account.entity_class, entity.control_code,
                      entity_credit_account.meta_number,
                      company.tax_id, company.sales_tax_id,
+                     addr.line_one, addr.line_two, addr.line_three,
+                     addr.city, addr.state, addr.mail_code, addr.country_id,
                      sum(CASE WHEN gl.amount_bc = 0 then 0
                               when relation = 'acc_trans'
                           THEN ac.reportable_amount_bc * pmt.amount_bc
@@ -195,8 +245,36 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                           AND transdate BETWEEN in_from_date AND in_to_date
                      group by ac.trans_id
                      ) pmt ON  (pmt.trans_id = gl.id)
+  LEFT JOIN LATERAL (
+    SELECT * FROM (
+      select * from (
+      select entity_credit_account.entity_id, l.*
+        from eca_to_location eca2l
+               join location_class lc on lc.id = eca2l.location_class
+               join location l on l.id = eca2l.location_id
+       where eca2l.credit_id = entity_credit_account.id -- this is the LATERAL!
+         and lc.authoritative
+       order by lc.id, l.created
+      ) y
+       union all
+      select * from (
+      select entity.id, l.*
+        from entity_to_location e2l
+               join location_class lc on lc.id = e2l.location_class
+               join location l on l.id = e2l.location_id
+       where e2l.entity_id = entity.id -- this is the LATERAL!
+         and lc.authoritative
+       order by lc.id, l.created
+      ) z
+    ) x
+    LIMIT 1
+  ) addr ON addr.entity_id = entity.id
                 WHERE country_tax_form.id = in_tax_form_id AND meta_number = in_meta_number
-                GROUP BY legal_name, meta_number, company.entity_id, company.tax_id, company.sales_tax_id, entity_credit_account.entity_class, entity.control_code, gl.invnumber, gl.duedate, gl.id, entity_credit_account.id
+  GROUP BY legal_name, meta_number, company.tax_id, company.sales_tax_id, company.entity_id,
+           entity_credit_account.entity_class, entity.control_code, entity_credit_account.id,
+           addr.line_one, addr.line_two, addr.line_three, addr.city, addr.state,
+           addr.mail_code, addr.country_id,
+           gl.invnumber, gl.duedate, gl.id
 $BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_details_report
@@ -214,6 +292,8 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                      entity_credit_account.entity_class, entity.control_code,
                      entity_credit_account.meta_number,
                      company.tax_id, company.sales_tax_id,
+                     addr.line_one, addr.line_two, addr.line_three,
+                     addr.city, addr.state, addr.mail_code, addr.country_id,
                      sum(CASE WHEN gl.amount_bc = 0 THEN 0
                               WHEN relation = 'acc_trans'
                           THEN ac.reportable_amount_bc
@@ -265,8 +345,32 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                 JOIN entity ON (entity.id = entity_credit_account.entity_id)
                 JOIN company ON (entity.id = company.entity_id)
                 JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
-               WHERE country_tax_form.id = in_tax_form_id
-             GROUP BY legal_name, meta_number, company.entity_id, company.tax_id, company.sales_tax_id, entity_credit_account.entity_class, entity.control_code, entity_credit_account.id
+  LEFT JOIN LATERAL (
+    SELECT * FROM (
+      select * from (
+      select entity_credit_account.entity_id, l.* from eca_to_location eca2l
+                        join location_class lc on lc.id = eca2l.location_class
+                        join location l on l.id = eca2l.location_id
+       where eca2l.credit_id = entity_credit_account.id and lc.authoritative
+       order by lc.id, l.created
+      ) y
+       union all
+      select * from (
+      select entity.id, l.* from entity_to_location e2l
+                        join location_class lc on lc.id = e2l.location_class
+                        join location l on l.id = e2l.location_id
+       where e2l.entity_id = entity.id and lc.authoritative
+       order by lc.id, l.created
+      ) z
+    ) x
+    LIMIT 1
+  ) addr ON addr.entity_id = entity.id
+  WHERE country_tax_form.id = in_tax_form_id
+  GROUP BY legal_name, meta_number, company.tax_id, company.sales_tax_id, company.entity_id,
+           entity_credit_account.entity_class, entity.control_code, entity_credit_account.id,
+           addr.line_one, addr.line_two, addr.line_three, addr.city, addr.state,
+           addr.mail_code, addr.country_id;
+
 $BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_summary_report_accrual
@@ -283,6 +387,8 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                      entity_credit_account.entity_class, entity.control_code,
                      entity_credit_account.meta_number,
                      company.tax_id, company.sales_tax_id,
+                     addr.line_one, addr.line_two, addr.line_three,
+                     addr.city, addr.state, addr.mail_code, addr.country_id,
                      sum(CASE WHEN gl.amount_bc = 0 then 0
                               when relation = 'acc_trans'
                           THEN ac.reportable_amount_bc
@@ -334,8 +440,32 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                 JOIN entity ON (entity.id = entity_credit_account.entity_id)
                 JOIN company ON (entity.id = company.entity_id)
                 JOIN country_tax_form ON (entity_credit_account.taxform_id = country_tax_form.id)
-                WHERE country_tax_form.id = in_tax_form_id AND meta_number = in_meta_number
-                GROUP BY legal_name, meta_number, company.entity_id, company.tax_id, company.sales_tax_id, entity_credit_account.entity_class, entity.control_code, gl.invnumber, gl.duedate, gl.id, entity_credit_account.id
+  LEFT JOIN LATERAL (
+    SELECT * FROM (
+      select * from (
+      select entity_credit_account.entity_id, l.* from eca_to_location eca2l
+                        join location_class lc on lc.id = eca2l.location_class
+                        join location l on l.id = eca2l.location_id
+       where eca2l.credit_id = entity_credit_account.id and lc.authoritative
+       order by lc.id, l.created
+      ) y
+       union all
+      select * from (
+      select entity.id, l.* from entity_to_location e2l
+                        join location_class lc on lc.id = e2l.location_class
+                        join location l on l.id = e2l.location_id
+       where e2l.entity_id = entity.id and lc.authoritative
+       order by lc.id, l.created
+      ) z
+    ) x
+    LIMIT 1
+  ) addr ON addr.entity_id = entity.id
+  WHERE country_tax_form.id = in_tax_form_id AND meta_number = in_meta_number
+  GROUP BY legal_name, meta_number, company.tax_id, company.sales_tax_id, company.entity_id,
+           entity_credit_account.entity_class, entity.control_code, entity_credit_account.id,
+           addr.line_one, addr.line_two, addr.line_three, addr.city, addr.state,
+           addr.mail_code, addr.country_id,
+           gl.invnumber, gl.duedate, gl.id
 $BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form_details_report_accrual

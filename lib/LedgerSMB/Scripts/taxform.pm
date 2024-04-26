@@ -129,24 +129,41 @@ sub generate_report {
         $request->call_procedure(
             funcname => 'tax_form__get', args => [$request->{tax_form_id}]);
 
+    my $params = {
+        from_date   => $request->parse_date( $request->{from_date} ),
+        to_date     => $request->parse_date( $request->{to_date} ),
+        tax_form_id => $request->{tax_form_id},
+        is_accrual  => $tf->{is_accrual},
+        media       => 'screen',
+    };
+    my @options = (
+        {
+            name     => 'form_name',
+            required => 1,
+            options  => [
+                {},
+                { text => '1099-INT',  value => '1099-INT' },
+                { text => '1099-MISC', value => '1099-MISC' },
+                ]
+        }
+    );
     my $report;
     if ($request->{meta_number}){
         $report = LedgerSMB::Report::Taxform::Details->new(
             %$request,
-            from_date  => $request->parse_date( $request->{from_date} ),
-            to_date  => $request->parse_date( $request->{to_date} ),
+            %$params,
+            options => \@options,
             formatter_options => $request->formatter_options,
-            taxform    => $tf->{form_name},
-            is_accrual => $tf->{is_accrual});
+            );
     } else {
         $report = LedgerSMB::Report::Taxform::Summary->new(
             %$request,
-            from_date  => $request->parse_date( $request->{from_date} ),
-            to_date  => $request->parse_date( $request->{to_date} ),
+            %$params,
+            options => \@options,
             formatter_options => $request->formatter_options,
-            taxform    => $tf->{form_name},
-            is_accrual => $tf->{is_accrual});
+            );
     }
+    $request->{hiddens} = $params;
     return $request->render_report($report);
 }
 
@@ -203,24 +220,23 @@ sub print {
        }
        $report->rows(\@rows);
     }
+    $request->{results} = $report->rows;
 
     # Business settings for 1099
     #
     my $cc = $request->{_company_config};
-    $request->{company_name}      = $cc->{company_name};
-    $request->{company_address}   = $cc->{company_address};
-    $request->{company_telephone} = $cc->{company_phone};
-    $request->{my_tax_code}       = $cc->{businessnumber};
+    $request->{SETTINGS}          = $cc;
 
     my $template = LedgerSMB::Template->new( # printed document
         user     => $request->{_user},
         locale   => $request->{_locale},
         path     => 'DB',
-        template => $request->{taxform_name},
+        template => $request->{form_name},
+        formatter_options => $request->formatter_options,
         format_plugin   =>
            $request->{_wire}->get( 'output_formatter' )->get( $request->{format}),
     );
-    $template->render($request);
+    $template->render({ %$request, SETTINGS => $cc });
 
     my $body = $template->{output};
     utf8::encode($body) if utf8::is_utf8($body);  ## no critic
