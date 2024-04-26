@@ -48,6 +48,12 @@ Updated dependencies
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.13
+* Compatibility with Workflow 2.0 [to be released] (#8138)
+* Fix recurring items re-using state of the original item (#8157)
+* Fix download links at the bottom of the tax form report (#8164)
+
+
 Changelog for 1.11.12
 * Fix download of attachments to reconciliations (#8088)
 * Fix e-mailing of AR aging statements (#8111)
