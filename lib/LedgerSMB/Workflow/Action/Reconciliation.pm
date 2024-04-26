@@ -38,11 +38,11 @@ Available values:
 
 =item * delete
 
-=item * submit
-
 =item * reconcile
 
 =item * reject
+
+=item * submit
 
 =back
 
@@ -94,7 +94,7 @@ sub execute($self, $wf) {
 
 #####################################
 #
-# aadd_pending_items
+# add_pending_items
 #
 #####################################
 
@@ -130,23 +130,26 @@ sub _add_pending_payments($recon_fx, $pending) {
     return ($payments{__NOPAYMENT__}, \@new_recon);
 }
 
-sub _adjust_todo_lines($pending, $book_todo) {
+sub _adjust_todo_lines($recon_fx, $pending, $book_todo) {
     # add adjustment lines to existing payment lines
     my %existing_sources;
     for my $line ($book_todo->@*) {
         $existing_sources{$line->{source}} //= [];
         push $existing_sources{$line->{source}}->@*, $line;
     }
+
     for my ($index, $line) (indexed $pending->@*) {
         next unless exists $existing_sources{$line->{source}};
         my $existing = $existing_sources{$line->{source}};
         my @same_date = grep {
-            $_->{post_date} eq $line->{post_date}
+            $_->{post_date} eq $line->{transdate}
         } $existing->@*;
         next if scalar(@same_date) != 1;
 
         splice $pending->@*, $index, 1;
         push $same_date[0]->{links}->@*, $line;
+        $same_date[0]->{amount} +=
+            $recon_fx ? $line->{amount_tc} : $line->{amount_bc};
     }
 
     return;
@@ -176,7 +179,7 @@ sub _add_remaining_lines($recon_fx, $pending, $book_todo) {
             else {
                 for my $line ($lines->@*) {
                     my $amount =
-                        $recon_fx ? $_->{amount_tc} : $_->{amount_bc};
+                        $recon_fx ? $line->{amount_tc} : $line->{amount_bc};
                     push $book_todo->@*, {
                         amount    => $amount,
                         post_date => $date,
@@ -198,7 +201,10 @@ sub _add_pending_items($self, $wf) {
     push $book_todo->@*, $new_recon->@*;
 
     # modifies $pending->@* and $book_todo->@*
-    _adjust_todo_lines( $pending, $book_todo );
+    _adjust_todo_lines(
+        $wf->context->param( 'recon_fx' ),
+        $pending,
+        $book_todo );
 
     # add the remaining lines grouped by source, if they have one
     # modifies $book_todo->@*
