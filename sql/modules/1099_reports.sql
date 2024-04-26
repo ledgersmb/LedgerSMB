@@ -135,23 +135,27 @@ RETURNS SETOF tax_form_report_item AS $BODY$
   LEFT JOIN LATERAL (
     SELECT * FROM (
       select * from (
-      select entity_credit_account.entity_id, l.*
-        from eca_to_location eca2l
-               join location_class lc on lc.id = eca2l.location_class
-               join location l on l.id = eca2l.location_id
-       where eca2l.credit_id = entity_credit_account.id -- this is the LATERAL!
-         and lc.authoritative
-       order by lc.id, l.created
+        -- entity_credit_account.id ensures a 1-1 join with the left side
+        select entity_credit_account.id, l.*
+          from eca_to_location eca2l
+                 join location_class lc on lc.id = eca2l.location_class
+                 join location l on l.id = eca2l.location_id
+         where eca2l.credit_id = entity_credit_account.id -- this is the LATERAL!
+           and lc.authoritative
+         order by lc.id, l.created
       ) y
        union all
       select * from (
-      select entity.id, l.*
-        from entity_to_location e2l
-               join location_class lc on lc.id = e2l.location_class
-               join location l on l.id = e2l.location_id
-       where e2l.entity_id = entity.id -- this is the LATERAL!
-         and lc.authoritative
-       order by lc.id, l.created
+        -- entity_credit_account.id ensures a 1-1 join with the left side
+        -- and due to the join on the left side,
+        -- entity_credit_account.entity_id = entity.id
+        select entity_credit_account.id, l.*
+          from entity_to_location e2l
+                 join location_class lc on lc.id = e2l.location_class
+                 join location l on l.id = e2l.location_id
+         where e2l.entity_id = entity.id -- this is the LATERAL!
+           and lc.authoritative
+         order by lc.id, l.created
       ) z
     ) x
     LIMIT 1
