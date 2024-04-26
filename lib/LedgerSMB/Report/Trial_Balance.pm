@@ -231,14 +231,16 @@ sub run_report {
     my $total_credits;
     my @rows = ();
     for my $ref(@rawrows){
-        next if ! $self->all_accounts
-                && (($ref->{starting_balance} == 0)
-                    and ($ref->{credits} == 0) and ($ref->{debits} == 0));
+        next if (! $self->all_accounts
+                 && (($ref->{starting_balance} == 0)
+                     and ($ref->{credits} == 0) and ($ref->{debits} == 0)));
         my $href_suffix = '&accno=' . $ref->{account_number};
         $href_suffix .= '&from_date=' . $self->from_date->to_db
-              if defined $self->from_date;
+            if defined $self->from_date;
         $href_suffix .= '&to_date=' . $self->to_date->to_db
-              if defined $self->to_date;
+            if defined $self->to_date;
+        $href_suffix .= '&is_approved=' . $self->is_approved
+            if defined $self->is_approved;
 
         $total_debits += $ref->{debits};
         $total_credits += $ref->{credits};
