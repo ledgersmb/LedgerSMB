@@ -239,8 +239,10 @@ sub _delete($self, $wf) {
 #
 #####################################
 
-sub _reconcile_source_id( $stmt, $source_id, $book_todo, $book_done ) {
+sub _reconcile_source_id( $stmt_todo, $idx, $source_id, $book_todo, $recon_done ) {
+    my $stmt = $stmt_todo->[$idx];
     my $lc_source_id = lc($source_id);
+    print STDERR "source_id: $lc_source_id\n";
     my $candidates = [
         grep {
             lc($book_todo->[$_]->{source}) eq $lc_source_id
@@ -249,12 +251,13 @@ sub _reconcile_source_id( $stmt, $source_id, $book_todo, $book_done ) {
         ];
 
     return unless $candidates->@*;
+    print STDERR "Have candidates\n";
 
     if (scalar($candidates->@*) == 1) {
-        my $found = splice $book_todo->@*, $candidates->[0], 1;
-        $found->{recon_group} = $stmt->{id};
-        $stmt->{recon_group} = $stmt->{id};
-        push $book_done->@*, $found;
+        push $recon_done->@*, {
+            book => [ splice $book_todo->@*, $candidates->[0], 1 ],
+            stmt => [ splice $stmt_todo->@*, $idx, 1 ],
+        };
         return;
     }
 
@@ -268,55 +271,62 @@ sub _reconcile_source_id( $stmt, $source_id, $book_todo, $book_done ) {
 
     return unless $candidates->@*;
 
-    my $found = splice $book_todo->@*, $candidates->[0], 1;
-    $found->{recon_group} = $stmt->{id};
-    $stmt->{recon_group} = $stmt->{id};
-    push $book_done->@*, $found;
+    push $recon_done->@*, {
+        book => [ splice $book_todo->@*, $candidates->[0], 1 ],
+        stmt => [ splice $stmt_todo->@*, $idx, 1 ],
+    };
     return;
 }
 
-sub _reconcile_no_nource_id($stmt, $prefix, $book_todo, $book_done) {
+sub _reconcile_no_source_id($stmt_todo, $idx, $prefix,
+                            $book_todo, $recon_done) {
+    my $stmt = $stmt_todo->[$idx];
     my $candidates = [
         grep {
             $book_todo->[$_]->{amount} == $stmt->{amount}
             and $book_todo->[$_]->{post_date} eq $stmt->{post_date}
-            and $book_todo->[$_]->{source} !~ m/^\Q$prefix\E/
+            and (not $book_todo->[$_]->{source}
+                 or $book_todo->[$_]->{source} !~ m/^\Q$prefix\E/)
         } 0..$book_todo->$#*
         ];
 
     return unless $candidates->@*;
 
-    my $found = splice $book_todo->@*, $candidates->[0], 1;
-    $found->{recon_group} = $stmt->{id};
-    $stmt->{recon_group} = $stmt->{id};
-    push $book_done->@*, $found;
-    return;
+    push $recon_done->@*, {
+        stmt => [ splice $book_todo->@*, $candidates->[0], 1 ],
+        book => [ splice $stmt_todo->@*, $idx, 1 ],
+    };
+    return 1;
 }
 
 sub _reconcile($self, $wf) {
     my $stmt_todo    = $wf->context->param( '_stmt_todo' );
     my $book_todo    = $wf->context->param( '_book_todo' );
-    my $book_done    = $wf->context->param( '_book_done' );
+    my $recon_done   = $wf->context->param( '_recon_done' );
     my $prefix       = $wf->context->param( '_prefix' );
 
-    for my $stmt ($stmt_todo->@*) {
+    for my ($idx, $stmt) (indexed $stmt_todo->@*) {
         my $source_id;
-        if (defined $stmt->{source_id}) {
-            if ($stmt->{source_id} =~ m/^[0-9]+$/) {
-                $source_id = $prefix . $stmt->{source_id};
+        if (defined $stmt->{source}) {
+            if ($stmt->{source} =~ m/^[0-9]+$/) {
+                $source_id = "$prefix $stmt->{source}";
             }
-            elsif ($stmt->{source_id} ne '') {
-                $source_id = $stmt->{source_id};
+            elsif ($stmt->{source} ne '') {
+                $source_id = $stmt->{source};
             }
         }
 
         if (defined $source_id) {
-            _reconcile_source_id( $stmt, $source_id, $book_todo, $book_done );
+            _reconcile_source_id(
+                $stmt_todo, $idx, $source_id, $book_todo, $recon_done );
             return;
         }
 
-        _reconcle_no_source_id( $stmt, $prefix, $book_todo, $book_done );
+        _reconcile_no_source_id(
+            $stmt_todo, $idx, $prefix, $book_todo, $recon_done );
     }
+
+    return;
 }
 
 #####################################
