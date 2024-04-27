@@ -56,6 +56,35 @@ sub create_workflow($self, $wf) {
     return $wf_id;
 }
 
+=head2 fetch_workflow
+
+=cut
+
+sub fetch_workflow($self, $wf_id) {
+    my $wf_info = $self->SUPER::fetch_workflow($wf_id);
+    return unless $wf_info;
+
+    my $dbh     = $self->handle;
+    $wf_info->{context} //= {};
+
+    # Retrieve pending book items (acc_trans lines)
+    $wf_info->{context}->{_pending_items} = [];
+
+    # Retrieve todo book lines
+    $wf_info->{context}->{_book_todo} = [];
+
+    # Retrieve todo statement lines
+    $wf_info->{context}->{_stmt_todo} = [];
+
+    # Retrieve reconciled book+statement items
+    $wf_info->{context}->{_book_done} = [];
+
+    # Retrieve draft transaction lines before report closing date
+    $wf_info->{preceeding_draft_count} = 0;
+
+    return $wf_info;
+}
+
 =head2 update_workflow
 
 Stores updates to existing workflows.

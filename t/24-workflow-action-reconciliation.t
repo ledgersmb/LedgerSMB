@@ -5,6 +5,8 @@ use v5.32;
 use Test2::V0;
 use Test2::Mock;
 
+my $todo;
+
 BEGIN {
     use Log::Log4perl qw(:easy);
     Log::Log4perl->easy_init($OFF);
@@ -47,7 +49,7 @@ ok lives {
     $wf->{context} = $c;
     $c->param( 'recon_fx'   => 0 );
     $c->param( '_book_todo' => []);
-    $c->param( '_book_done' => []);
+    $c->param( '_recon_done' => []);
     $c->param( '_stmt_todo' => []);
     $c->param(
         '_pending_items'    => [
@@ -80,7 +82,7 @@ ok lives {
     $wf->{context} = $c;
     $c->param( 'recon_fx'   => 0 );
     $c->param( '_book_todo' => []);
-    $c->param( '_book_done' => []);
+    $c->param( '_recon_done' => []);
     $c->param( '_stmt_todo' => []);
     $c->param(
         '_pending_items'    => [
@@ -117,7 +119,7 @@ ok lives {
     $wf->{context} = $c;
     $c->param( 'recon_fx'   => 0 );
     $c->param( '_book_todo' => []);
-    $c->param( '_book_done' => []);
+    $c->param( '_recon_done' => []);
     $c->param( '_stmt_todo' => []);
     $c->param(
         '_pending_items'    => [
@@ -155,7 +157,7 @@ ok lives {
     $wf->{context} = $c;
     $c->param( 'recon_fx'   => 0 );
     $c->param( '_book_todo' => []);
-    $c->param( '_book_done' => []);
+    $c->param( '_recon_done' => []);
     $c->param( '_stmt_todo' => []);
     $c->param(
         '_pending_items', [
@@ -197,7 +199,7 @@ ok lives {
     $wf->{context} = $c;
     $c->param( 'recon_fx'   => 0 );
     $c->param( '_book_todo' => []);
-    $c->param( '_book_done' => []);
+    $c->param( '_recon_done' => []);
     $c->param( '_stmt_todo' => []);
     $c->param(
         '_pending_items', [
@@ -249,7 +251,7 @@ ok lives {
                        links      => [ { entry_id => 1 } ]
                    }
                ]);
-    $c->param( '_book_done' => []);
+    $c->param( '_recon_done' => []);
     $c->param( '_stmt_todo' => []);
     $c->param(
         '_pending_items', [
@@ -301,9 +303,432 @@ ok lives {
         $wf,
         { entrypoint => 'reconcile' }
         );
-    $wf->{context} = Workflow::Context->new();
 
-#    $action->execute( $wf );
+    ####################################
+    #
+    # Tests:
+    #  1. Statement lines without source identifier
+    #     a. Same amount, different dates
+    #     b. Same amount, same date
+    #  2. Statement lines with numeric-only source identifier
+    #     a. same source, different dates
+    #     b. same source, same date, mismatching amounts
+    #     c. different source, same date, same amounts
+    #     d. same source, same date, matching amounts
+    #     e. same source (no prefix), same date, matching amounts
+    #  3. Statement lines with alphanumeric source identifier
+    #     a. same source, different dates
+    #     b. same source, same date, mismatching amounts
+    #     c. different source, same date, same amounts
+    #     d. same source, same date, matching amounts
+    #
+    ####################################
+
+
+    ####################################
+    #
+    # 1a. Statement and book line without source identifier, same amount different dates
+    # --> don't get matched!
+    #
+    ####################################
+
+    my $c = Workflow::Context->new();
+    $wf->{context} = $c;
+    $c->param( 'recon_fx'   => 0 );
+    $c->param( 'prefix'     => 'check' );
+    $c->param( '_pending_items' => []);
+    $c->param( '_book_todo' => [
+                   {
+                       amount => 6,
+                       payment_id => 1,
+                       post_date  => '2022-12-17',
+                       links      => [ { entry_id => 1 } ]
+                   }
+               ]);
+    $c->param( '_recon_done' => []);
+    $c->param( '_stmt_todo' => [
+                   {
+                       amount => 6,
+                       post_date => '2022-12-15',
+                   }
+               ]);
+
+    $action->execute( $wf );
+    my $rd = $c->param( '_recon_done' );
+    is( scalar($c->param( '_stmt_todo' )->@*), 1, 'Statement items remain to be matched' );
+    is( scalar($c->param( '_book_todo' )->@*), 1, 'Book items remain to be matched' );
+    is( scalar($rd->@*), 0, 'No items matched' );
+
+
+    ####################################
+    #
+    # 1b. Statement and book line without source identifier, same amount, same date
+    # --> *do* get matched!
+    #
+    ####################################
+
+    $c = Workflow::Context->new();
+    $wf->{context} = $c;
+    $c->param( 'recon_fx'   => 0 );
+    $c->param( '_prefix'     => 'check' );
+    $c->param( '_pending_items' => []);
+    $c->param( '_recon_done'    => []);
+    $c->param( '_book_todo'     => [
+                   {
+                       amount => 6,
+                       payment_id => 1,
+                       post_date  => '2022-12-17',
+                       links      => [ { entry_id => 1 } ]
+                   }
+               ]);
+    $c->param( '_stmt_todo' => [
+                   {
+                       amount => 6,
+                       post_date => '2022-12-17',
+                   }
+               ]);
+
+    $action->execute( $wf );
+    $rd = $c->param( '_recon_done' );
+    is( scalar($c->param( '_stmt_todo' )->@*), 0, 'Statement item is matched' );
+    is( scalar($c->param( '_book_todo' )->@*), 0, 'Book item is matched' );
+    is( scalar($rd->@*), 1, 'Matched items added to "done" list' );
+
+
+    ####################################
+    #
+    # 2a. Statement and book line with source identifier, same amount different dates
+    # --> don't get matched!
+    #
+    ####################################
+
+    $c = Workflow::Context->new();
+    $wf->{context} = $c;
+    $c->param( 'recon_fx'   => 0 );
+    $c->param( '_prefix'     => 'check' );
+    $c->param( '_pending_items' => []);
+    $c->param( '_book_todo' => [
+                   {
+                       amount => 6,
+                       source => 'check 123',
+                       payment_id => 1,
+                       post_date  => '2022-12-17',
+                       links      => [ { entry_id => 1 } ]
+                   }
+               ]);
+    $c->param( '_recon_done' => []);
+    $c->param( '_stmt_todo' => [
+                   {
+                       source => '123',
+                       amount => 6,
+                       post_date => '2022-12-15',
+                   }
+               ]);
+
+    $action->execute( $wf );
+    $rd = $c->param( '_recon_done' );
+    is( scalar($c->param( '_stmt_todo' )->@*), 1, 'Statement items remain to be matched' );
+    is( scalar($c->param( '_book_todo' )->@*), 1, 'Book items remain to be matched' );
+    is( scalar($rd->@*), 0, 'No items matched' );
+
+    ####################################
+    #
+    # 2b. Statement and book line with source identifier, different amounts same date
+    # --> don't get matched!
+    #
+    ####################################
+
+    $c = Workflow::Context->new();
+    $wf->{context} = $c;
+    $c->param( 'recon_fx'   => 0 );
+    $c->param( '_prefix'     => 'check' );
+    $c->param( '_pending_items' => []);
+    $c->param( '_book_todo' => [
+                   {
+                       amount => 1,
+                       source => 'check 123',
+                       payment_id => 1,
+                       post_date  => '2022-12-15',
+                       links      => [ { entry_id => 1 } ]
+                   }
+               ]);
+    $c->param( '_recon_done' => []);
+    $c->param( '_stmt_todo' => [
+                   {
+                       source => '123',
+                       amount => 6,
+                       post_date => '2022-12-15',
+                   }
+               ]);
+
+    $action->execute( $wf );
+    $rd = $c->param( '_recon_done' );
+
+    ###BUG!!!
+    ###But it's a one-to-one copy of the SQL code... / probably a bug there too
+    $todo = todo('fails to see amounts do not match');
+    is( scalar($c->param( '_stmt_todo' )->@*), 1, 'Statement items remain to be matched' );
+    is( scalar($c->param( '_book_todo' )->@*), 1, 'Book items remain to be matched' );
+    is( scalar($rd->@*), 0, 'No items matched' );
+    $todo = undef;
+
+    ####################################
+    #
+    # 2c. Statement and book line with difference source, same amounts same date
+    # --> don't get matched!
+    #
+    ####################################
+
+    $c = Workflow::Context->new();
+    $wf->{context} = $c;
+    $c->param( 'recon_fx'   => 0 );
+    $c->param( '_prefix'     => 'check' );
+    $c->param( '_pending_items' => []);
+    $c->param( '_book_todo' => [
+                   {
+                       amount => 6,
+                       source => 'check 123',
+                       payment_id => 1,
+                       post_date  => '2022-12-15',
+                       links      => [ { entry_id => 1 } ]
+                   }
+               ]);
+    $c->param( '_recon_done' => []);
+    $c->param( '_stmt_todo' => [
+                   {
+                       source => '124',
+                       amount => 6,
+                       post_date => '2022-12-15',
+                   }
+               ]);
+
+    $action->execute( $wf );
+    $rd = $c->param( '_recon_done' );
+    is( scalar($c->param( '_stmt_todo' )->@*), 1, 'Statement items remain to be matched' );
+    is( scalar($c->param( '_book_todo' )->@*), 1, 'Book items remain to be matched' );
+    is( scalar($rd->@*), 0, 'No items matched' );
+
+    ####################################
+    #
+    # 2d. Statement and book line with same source, same amounts, same date
+    # --> *do* get matched!
+    #
+    ####################################
+
+    $c = Workflow::Context->new();
+    $wf->{context} = $c;
+    $c->param( 'recon_fx'   => 0 );
+    $c->param( '_prefix'     => 'check' );
+    $c->param( '_pending_items' => []);
+    $c->param( '_book_todo' => [
+                   {
+                       amount => 6,
+                       source => 'check 123',
+                       payment_id => 1,
+                       post_date  => '2022-12-15',
+                       links      => [ { entry_id => 1 } ]
+                   }
+               ]);
+    $c->param( '_recon_done' => []);
+    $c->param( '_stmt_todo' => [
+                   {
+                       source => '123',
+                       amount => 6,
+                       post_date => '2022-12-15',
+                   }
+               ]);
+
+    $action->execute( $wf );
+    $rd = $c->param( '_recon_done' );
+    is( scalar($c->param( '_stmt_todo' )->@*), 0, 'Statement items are matched' );
+    is( scalar($c->param( '_book_todo' )->@*), 0, 'Book items are matched' );
+    is( scalar($rd->@*), 1, 'Items matched' );
+
+    ####################################
+    #
+    # 2e. Statement and book line with same source (no prefix), same amounts, same date
+    # --> don't get matched!
+    #
+    ####################################
+
+    $c = Workflow::Context->new();
+    $wf->{context} = $c;
+    $c->param( 'recon_fx'   => 0 );
+    $c->param( '_prefix'     => 'check' );
+    $c->param( '_pending_items' => []);
+    $c->param( '_book_todo' => [
+                   {
+                       amount => 6,
+                       source => '123',
+                       payment_id => 1,
+                       post_date  => '2022-12-15',
+                       links      => [ { entry_id => 1 } ]
+                   }
+               ]);
+    $c->param( '_recon_done' => []);
+    $c->param( '_stmt_todo' => [
+                   {
+                       source => '123',
+                       amount => 6,
+                       post_date => '2022-12-15',
+                   }
+               ]);
+
+    $action->execute( $wf );
+    $rd = $c->param( '_recon_done' );
+    is( scalar($c->param( '_stmt_todo' )->@*), 1, 'Statement items are not matched' );
+    is( scalar($c->param( '_book_todo' )->@*), 1, 'Book items are not matched' );
+    is( scalar($rd->@*), 0, 'Items are not matched' );
+
+    ####################################
+    #
+    # 3a. Statement and book line with source identifier, same amount different dates
+    # --> don't get matched!
+    #
+    ####################################
+
+    $c = Workflow::Context->new();
+    $wf->{context} = $c;
+    $c->param( 'recon_fx'   => 0 );
+    $c->param( '_prefix'     => 'check' );
+    $c->param( '_pending_items' => []);
+    $c->param( '_book_todo' => [
+                   {
+                       amount => 6,
+                       source => 'source123',
+                       payment_id => 1,
+                       post_date  => '2022-12-17',
+                       links      => [ { entry_id => 1 } ]
+                   }
+               ]);
+    $c->param( '_recon_done' => []);
+    $c->param( '_stmt_todo' => [
+                   {
+                       source => 'source123',
+                       amount => 6,
+                       post_date => '2022-12-15',
+                   }
+               ]);
+
+    $action->execute( $wf );
+    $rd = $c->param( '_recon_done' );
+    is( scalar($c->param( '_stmt_todo' )->@*), 1, 'Statement items remain to be matched' );
+    is( scalar($c->param( '_book_todo' )->@*), 1, 'Book items remain to be matched' );
+    is( scalar($rd->@*), 0, 'No items matched' );
+
+    ####################################
+    #
+    # 3b. Statement and book line with source identifier, different amounts same date
+    # --> don't get matched!
+    #
+    ####################################
+
+    $c = Workflow::Context->new();
+    $wf->{context} = $c;
+    $c->param( 'recon_fx'   => 0 );
+    $c->param( '_prefix'     => 'check' );
+    $c->param( '_pending_items' => []);
+    $c->param( '_book_todo' => [
+                   {
+                       amount => 1,
+                       source => 'source123',
+                       payment_id => 1,
+                       post_date  => '2022-12-15',
+                       links      => [ { entry_id => 1 } ]
+                   }
+               ]);
+    $c->param( '_recon_done' => []);
+    $c->param( '_stmt_todo' => [
+                   {
+                       source => 'source123',
+                       amount => 6,
+                       post_date => '2022-12-15',
+                   }
+               ]);
+
+    $action->execute( $wf );
+    $rd = $c->param( '_recon_done' );
+
+    ###BUG!!!
+    ###But it's a one-to-one copy of the SQL code... / probably a bug there too
+    $todo = todo('fails to see amounts do not match');
+    is( scalar($c->param( '_stmt_todo' )->@*), 1, 'Statement items remain to be matched' );
+    is( scalar($c->param( '_book_todo' )->@*), 1, 'Book items remain to be matched' );
+    is( scalar($rd->@*), 0, 'No items matched' );
+    $todo = undef;
+
+    ####################################
+    #
+    # 3c. Statement and book line with difference source, same amounts same date
+    # --> don't get matched!
+    #
+    ####################################
+
+    $c = Workflow::Context->new();
+    $wf->{context} = $c;
+    $c->param( 'recon_fx'   => 0 );
+    $c->param( '_prefix'     => 'check' );
+    $c->param( '_pending_items' => []);
+    $c->param( '_book_todo' => [
+                   {
+                       amount => 6,
+                       source => 'source123',
+                       payment_id => 1,
+                       post_date  => '2022-12-15',
+                       links      => [ { entry_id => 1 } ]
+                   }
+               ]);
+    $c->param( '_recon_done' => []);
+    $c->param( '_stmt_todo' => [
+                   {
+                       source => 'source124',
+                       amount => 6,
+                       post_date => '2022-12-15',
+                   }
+               ]);
+
+    $action->execute( $wf );
+    $rd = $c->param( '_recon_done' );
+    is( scalar($c->param( '_stmt_todo' )->@*), 1, 'Statement items remain to be matched' );
+    is( scalar($c->param( '_book_todo' )->@*), 1, 'Book items remain to be matched' );
+    is( scalar($rd->@*), 0, 'No items matched' );
+
+    ####################################
+    #
+    # 3d. Statement and book line with same source, same amounts, same date
+    # --> *do* get matched!
+    #
+    ####################################
+
+    $c = Workflow::Context->new();
+    $wf->{context} = $c;
+    $c->param( 'recon_fx'   => 0 );
+    $c->param( '_prefix'     => 'check' );
+    $c->param( '_pending_items' => []);
+    $c->param( '_book_todo' => [
+                   {
+                       amount => 6,
+                       source => 'source123',
+                       payment_id => 1,
+                       post_date  => '2022-12-15',
+                       links      => [ { entry_id => 1 } ]
+                   }
+               ]);
+    $c->param( '_recon_done' => []);
+    $c->param( '_stmt_todo' => [
+                   {
+                       source => 'source123',
+                       amount => 6,
+                       post_date => '2022-12-15',
+                   }
+               ]);
+
+    $action->execute( $wf );
+    $rd = $c->param( '_recon_done' );
+    is( scalar($c->param( '_stmt_todo' )->@*), 0, 'Statement items are matched' );
+    is( scalar($c->param( '_book_todo' )->@*), 0, 'Book items are matched' );
+    is( scalar($rd->@*), 1, 'Items matched' );
+
 }, '"reconcile" action', $@;
 
 ok lives {
