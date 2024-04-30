@@ -78,6 +78,7 @@
 [%
 
 FOR action IN actions ;
+NEXT IF action.value == 'attach';
 PROCESS button element_data = {
 name = 'wf_action'
 text = maketext(action.text)
@@ -106,14 +107,26 @@ END ; # FOR
 '</table>';
 END ; # IF
 
-IF actions.grep('^Attach$').size > 0 ;
+
+have_attach = 0;
+FOR action IN actions ;
+  have_attach = have_attach OR action.value == 'attach';
+END ;
+
+IF have_attach ;
 %]
 
-<div style="margin-top:2em">
+<div style="margin-top:1em">
   <input type="file"
          name="attachment_content"
-         id="attachment-content"
-         >
+         id="attachment-content">
+  <button
+    id="wf-action-attach"
+    name="wf-action"
+    value="attach"
+    data-dojo-type="dijit/form/Button">
+    [% text('Attach') %]
+  </button>
 </div>
 
 [%
