@@ -6143,10 +6143,10 @@ hyperdyperid@^1.2.0:
   resolved "https://registry.yarnpkg.com/hyperdyperid/-/hyperdyperid-1.2.0.tgz#59668d323ada92228d2a869d3e474d5a33b69e6b"
   integrity sha512-Y93lCzHYgGWdrJ66yIktxiaGULYc6oGiABxhcO5AufBeOyoIdZF7bIfLaOrbM0iGIOXQQgxxRrFEnb+Y6w1n4A==
 
-i18next-conv@14.1.0:
-  version "14.1.0"
-  resolved "https://registry.yarnpkg.com/i18next-conv/-/i18next-conv-14.1.0.tgz#158baeb82e385fdf5071408b4574020821815e84"
-  integrity sha512-KyLYIclCE4rx4g3NDUyh83Nmr/4mfIjHEespa088gwERcP0Dp31PLfxmNyezjbU9wdZOngI2yPvtGufUypqA+A==
+i18next-conv@15.0.0:
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/i18next-conv/-/i18next-conv-15.0.0.tgz#b9eca2bcb142da594fa97b5afd237094e65f8257"
+  integrity sha512-Er3WRTMt/5H4sWNPhkvdMko+T+k91deSukLm7Wkt9L+Fo06ORMQsQLIsqkE901mrU9xRsNmn7HuJLO7kKwEi6Q==
   dependencies:
     c8 "^9.1.0"
     colorette "^2.0.20"
@@ -6154,7 +6154,7 @@ i18next-conv@14.1.0:
     gettext-converter "^1.3.0"
     gettext-parser "^8.0.0"
     node-gettext "^3.0.0"
-    p-from-callback "^1.0.1"
+    p-from-callback "^2.0.0"
 
 iconv-lite@0.4.24:
   version "0.4.24"
@@ -8289,10 +8289,10 @@ outvariant@^1.4.2:
   resolved "https://registry.yarnpkg.com/outvariant/-/outvariant-1.4.2.tgz#f54f19240eeb7f15b28263d5147405752d8e2066"
   integrity sha512-Ou3dJ6bA/UJ5GVHxah4LnqDwZRwAmWxrG3wtrHrbGnP4RnLCtA64A4F+ae7Y8ww660JaddSoArUR5HjipWSHAQ==
 
-p-from-callback@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/p-from-callback/-/p-from-callback-1.0.1.tgz#c437884511098ea8db0ef08540f11eb39b79930e"
-  integrity sha512-5N3Xj5tWR7giRLxF1qz1+bOAHNZFuiszG4H0f0dhbGCWxX72OQuJSuwnMv+ZT0qWcUKdkh7X0tu8Z2FALiM8pw==
+p-from-callback@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/p-from-callback/-/p-from-callback-2.0.0.tgz#045e8ffbcdb0acdf73ff8a079e164449bb7ead85"
+  integrity sha512-0gjkaVoLeg71VE4L7lccq8VPGEpZrVpDsS0s+sk6k3lQUVh9QYQPSog7a/Km407vzQt8zS9MoUMG4EgML//k2Q==
 
 p-limit@^2.2.0:
   version "2.3.0"
