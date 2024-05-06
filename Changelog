@@ -48,6 +48,12 @@ Updated dependencies
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.14
+* Fix drill-down on trial balance to pass report selections (#8177)
+* Fix read access on 'templates' table for printed documents (#8180)
+* Fix error when clicking 'Attach' button on e-mail screen (#8193)
+
+
 Changelog for 1.11.13
 * Compatibility with Workflow 2.0 [to be released] (#8138)
 * Fix recurring items re-using state of the original item (#8157)
