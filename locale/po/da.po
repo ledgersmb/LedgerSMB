@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.11.14-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-04-26 12:47+0000\n"
+"POT-Creation-Date: 2024-05-06 20:42+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2023\n"
 "Language-Team: Danish (https://app.transifex.com/ledgersmb/teams/58325/da/)\n"
 "Language: da\n"
@@ -917,7 +917,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:102 old/bin/aa.pl:1227
 #: old/bin/ic.pl:913 old/bin/ir.pl:1048 old/bin/is.pl:1122 old/bin/oe.pl:971
-#: UI/lib/attachments.html:56
+#: UI/email.html:128 UI/lib/attachments.html:56
 msgid "Attach"
 msgstr ""
 
@@ -3120,7 +3120,7 @@ msgstr ""
 msgid "Exchange rate missing!"
 msgstr "Vekselkurs mangler!"
 
-#: UI/email.html:130
+#: UI/email.html:143
 msgid "Expansion"
 msgstr ""
 
@@ -7431,7 +7431,7 @@ msgstr ""
 msgid "The amount of"
 msgstr ""
 
-#: UI/email.html:126
+#: UI/email.html:139
 msgid ""
 "The e-mail body may contain variables to be expanded - e.g. <%invnumber%> - "
 "the table below specifies the available variables and their expansions for "
@@ -8176,7 +8176,7 @@ msgstr "Gyldig til"
 msgid "Valuation"
 msgstr ""
 
-#: UI/email.html:129
+#: UI/email.html:142
 msgid "Variable"
 msgstr ""
 
@@ -8631,7 +8631,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/views/Home.vue:42 UI/src/views/Home.vue:57
+#: UI/src/views/Home.vue:57 UI/src/views/Home.vue:42
 msgid "mailing lists"
 msgstr ""
 
