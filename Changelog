@@ -200,6 +200,11 @@ Dependency updates
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.36
+* Fix drill-down on trial balance to pass report selections (#8177)
+* Fix read access on 'templates' table for printed documents (#8180)
+
+
 Changelog for 1.10.35
 * Fix download links at the bottom of the tax form report (#8164)
 
