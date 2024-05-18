@@ -82,7 +82,6 @@
     "eslint-plugin-jest": "28.5.0",
     "eslint-plugin-jsdoc": "48.2.5",
     "eslint-plugin-json": "3.1.0",
-    "eslint-plugin-markdown": "3.0.1",
     "eslint-plugin-n": "17.7.0",
     "eslint-plugin-package-json": "0.13.1",
     "eslint-plugin-prettier": "5.1.3",
@@ -214,7 +213,6 @@
       "compat",
       "import",
       "jest",
-      "markdown",
       "package-json",
       "sort-dojo-dependency",
       "vue",
@@ -251,7 +249,6 @@
       "eslint:recommended",
       "plugin:import/errors",
       "plugin:import/warnings",
-      "plugin:markdown/recommended",
       "plugin:vue/vue3-recommended",
       "prettier"
     ],
