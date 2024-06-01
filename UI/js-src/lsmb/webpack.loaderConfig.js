@@ -17,8 +17,7 @@
  */
 const path = require("path");
 
-// eslint-disable-next-line no-unused-vars
-function getConfig(env) {
+function getConfig( /* env */ ) {
     // env is set by the 'buildEnvironment' and/or 'environment' plugin options
     // (see webpack.config.js),
     // or by the code at the end of this file if using without webpack

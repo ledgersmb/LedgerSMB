@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 // Borrowed from dijit/registry to avoid pulling in all Dojo/Dijit
 
 const registry = Object.create(null);

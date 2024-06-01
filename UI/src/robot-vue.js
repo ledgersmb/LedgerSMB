@@ -75,11 +75,9 @@ function contextRef(service, key) {
         typeof service.context[key] === typeof {}
     ) {
         const s = service;
-        // eslint-disable-next-line vue/no-ref-as-operand
         ref = reactive(service.context[key]);
         s.context[key] = ref;
     } else {
-        // eslint-disable-next-line vue/no-ref-as-operand
         ref = allocRef(service.context[key]);
     }
     const ctxRef = {

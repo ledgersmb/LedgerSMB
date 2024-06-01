@@ -1,7 +1,4 @@
 /** @format */
-/* eslint-disable vue/component-definition-name-casing */
-/* eslint-disable vue/require-prop-types, vue/one-component-per-file */
-/* eslint-disable global-require */
 
 import { config } from "@vue/test-utils";
 import { defineComponent } from "vue";

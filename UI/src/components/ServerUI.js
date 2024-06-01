@@ -176,7 +176,6 @@ export default {
                 // the widgets. (it may take a bit for the new content to overwrite the old
                 // content...)
                 query("*", document.getElementById("maindiv")).forEach(
-                    /* eslint-disable no-param-reassign */
                     (n) => delete n._cssState
                 );
             } catch (e) {

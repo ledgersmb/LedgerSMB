@@ -1,5 +1,4 @@
 /** @format */
-/* eslint-disable no-console, import/no-unresolved, vue/multi-word-component-names */
 
 import { createApp } from "vue";
 import router from "@/router";
@@ -19,7 +18,6 @@ let appName;
 let lsmbDirective = {
     beforeMount(el, binding /* , vnode */) {
         let handler = (event) => {
-            /* eslint-disable no-param-reassign */
             binding.instance[binding.arg] = event.target.value;
         };
         el.addEventListener("input", handler);
@@ -37,8 +35,7 @@ if (document.getElementById("main")) {
         mounted() {
             window.__lsmbLoadLink = (url) =>
                 this.$router.push(
-                    // eslint-disable-next-line no-useless-escape
-                    url.replace(/^https?:\/\/(?:[^@\/]+)/, "")
+                    url.replace(/^https?:\/\/(?:[^@/]+)/, "")
                 );
 
             let m = document.getElementById("main");

@@ -23,7 +23,6 @@ if (TARGET !== "readme") {
     const UnusedWebpackPlugin = require("unused-webpack-plugin");
     const VirtualModulesPlugin = require("webpack-virtual-modules");
     const { VueLoaderPlugin } = require("vue-loader");
-    // eslint-disable-next-line
     const { WebpackDeduplicationPlugin } = require("webpack-deduplication-plugin");
 
     const argv = require("yargs").argv;
@@ -39,7 +38,6 @@ if (TARGET !== "readme") {
     /* FUNCTIONS */
     var includedRequires = [];
 
-    /* eslint-disable-next-line no-inner-declarations */
     function findDataDojoTypes(fileName) {
         var content = "" + fs.readFileSync(fileName);
         // Return unique data-dojo-type refereces
@@ -50,7 +48,6 @@ if (TARGET !== "readme") {
         ).filter((x, i, a) => a.indexOf(x) === i);
     }
 
-    /* eslint-disable-next-line no-inner-declarations */
     function getPOFilenames(_path, extension) {
         return fs
             .readdirSync(_path)
@@ -64,7 +61,6 @@ if (TARGET !== "readme") {
             .sort();
     }
 
-    /* eslint-disable-next-line no-inner-declarations */
     function globCssEntries(globPath) {
         const files = glob.sync(globPath);
         let entries = {};
@@ -199,13 +195,11 @@ if (TARGET !== "readme") {
     // dojo/domReady (only works if the DOM is ready when invoked)
     const NormalModuleReplacementPluginOptionsDomReady = function (data) {
         const match = /^dojo\/domReady!(.*)$/.exec(data.request);
-        /* eslint-disable-next-line no-param-reassign */
         data.request = "dojo/loaderProxy?loader=dojo/domReady!" + match[1];
     };
 
     const NormalModuleReplacementPluginOptionsSVG = function (data) {
         var match = /^svg!(.*)$/.exec(data.request);
-        /* eslint-disable-next-line no-param-reassign */
         data.request =
             "dojo/loaderProxy?loader=svg&deps=dojo/text%21" +
             match[1] +
@@ -249,7 +243,6 @@ if (TARGET !== "readme") {
     // Compile bootstrap module as a virtual one
     const VirtualModulesPluginOptions = {
         "./bootstrap.js":
-            `/* eslint-disable */\n` +
             `define(["dojo/parser","dojo/ready","` +
             includedRequires.join('","') +
             `"], function(parser, ready) {\n` +
@@ -278,7 +271,6 @@ if (TARGET !== "readme") {
         new webpack.NormalModuleReplacementPlugin(/^dojo\/text!/, function (
             data
         ) {
-            /* eslint-disable-next-line no-param-reassign */
             data.request = data.request.replace(
                 /^dojo\/text!/,
                 "!!raw-loader!"

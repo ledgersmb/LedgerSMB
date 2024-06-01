@@ -1,6 +1,4 @@
 /** @format */
-/* eslint-disable global-require */
-/* eslint-disable camelcase, prettier/prettier */
 
 const rtlDetect = require("rtl-detect");
 
@@ -14,7 +12,6 @@ function _mapLocale(locale) {
     return locale;
 }
 
-// eslint-disable-next-line import/no-unresolved
 import messages from '@/locales/en.json';
 import { nextTick } from "vue";
 

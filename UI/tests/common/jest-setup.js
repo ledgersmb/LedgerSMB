@@ -1,11 +1,10 @@
-/* eslint-disable no-console */
 
 import { jest, beforeAll, afterAll, beforeEach, afterEach } from "@jest/globals";
 import 'core-js';
 import { setGlobalOrigin } from 'undici';
 
 import "./mocks/lsmb_elements";
-import { server } from './mocks/server.js'
+import { server } from './mocks/server.js';
 
 Object.defineProperty(window, "lsmbConfig", {
     writable: true,
@@ -40,7 +39,7 @@ beforeAll(() => {
   // Establish API mocking before all tests.
   server.listen({
     onUnhandledRequest(req) {
-      console.error( // eslint-disable-line no-console
+      console.error(
         'Found an unhandled %s request to %s',
         req.method,
         req.url.href

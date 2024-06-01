@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars, no-console */
 import { http, HttpResponse } from 'msw';
 
 export const businessTypesHandlers = [
