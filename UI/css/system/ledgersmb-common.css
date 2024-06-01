@@ -257,10 +257,7 @@ body.menu,
     color: var(--listtop-clr);
     font-size: var(--listtop-font-size);
     font-weight: bold;
-    padding-bottom: 0.1em;
-    padding-left: 1ex;
-    padding-right: 1ex;
-    padding-top: 0.1em;
+    padding: 0.1em 1ex;
 }
 
 .listheading,
@@ -269,10 +266,7 @@ thead th {
     color: var(--listheading-clr);
     font-size: var(--listheading-font-size);
     font-weight: bold;
-    padding-bottom: 0.1em;
-    padding-left: 1ex;
-    padding-right: 1ex;
-    padding-top: 0.1em;
+    padding: 0.1em 1ex;
 }
 
 thead a:link {
