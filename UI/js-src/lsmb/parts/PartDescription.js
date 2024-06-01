@@ -40,18 +40,16 @@ define([
             dropDownClass: _ComboBoxMenu,
             autoSizing: true,
             startup: function () {
-                var self = this;
                 this.inherited(arguments);
                 if (this.channel) {
                     this.own(
-                        topic.subscribe(this.channel, function (selected) {
-                            self.set("value", selected[self.searchAttr]);
+                        topic.subscribe(this.channel, (selected) => {
+                            this.set("value", selected[this.searchAttr]);
                         })
                     );
-                    // eslint-disable-next-line no-unused-vars
-                    this.on("change", function (newValue) {
-                        if (self.item) {
-                            topic.publish(self.channel, self.item);
+                    this.on("change", () => {
+                        if (this.item) {
+                            topic.publish(this.channel, this.item);
                         }
                     });
                 }

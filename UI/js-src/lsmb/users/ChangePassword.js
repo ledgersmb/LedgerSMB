@@ -128,17 +128,16 @@ define([
                 domAttr.set("pw-strength", "innerHTML", score);
             },
             submitForm: function () {
-                var I = this;
                 var r = request;
-                var oldPassword = I.oldpw.get("value");
-                var newPassword = I.newpw.get("value");
-                var confirmedPassword = I.verified.get("value");
+                var oldPassword = this.oldpw.get("value");
+                var newPassword = this.newpw.get("value");
+                var confirmedPassword = this.verified.get("value");
                 if (oldPassword === "" || newPassword === "") {
-                    I.setFeedback(false, I.text("Password Required"));
+                    this.setFeedback(false, this.text("Password Required"));
                     return;
                 }
                 if (newPassword !== confirmedPassword) {
-                    I.setFeedback(false, I.text("Confirmation did not match"));
+                    this.setFeedback(false, this.text("Confirmation did not match"));
                     return;
                 }
                 r("user.pl", {
@@ -150,21 +149,20 @@ define([
                     },
                     method: "POST"
                 })
-                    // eslint-disable-next-line no-unused-vars
-                    .then(function (response) {
-                        I.setFeedback(true, I.text("Password Changed"));
+                    .then(() => {
+                        this.setFeedback(true, this.text("Password Changed"));
                     })
-                    .otherwise(function (err) {
+                    .otherwise((err) => {
                         if (err.response.status !== 200) {
                             if (err.response.status !== 500) {
-                                I.setFeedback(
+                                this.setFeedback(
                                     false,
-                                    I.text("Bad username/Password")
+                                    this.text("Bad username/Password")
                                 );
                             } else {
-                                I.setFeedback(
+                                this.setFeedback(
                                     false,
-                                    I.text("Error changing password.")
+                                    this.text("Error changing password.")
                                 );
                             }
                         }

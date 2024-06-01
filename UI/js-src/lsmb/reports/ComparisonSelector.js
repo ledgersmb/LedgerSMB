@@ -26,33 +26,29 @@ define([
             channel: "",
             mode: "by-dates",
             postCreate: function () {
-                var self = this;
                 this.inherited(arguments);
                 this.own(
-                    topic.subscribe(this.channel, function (action, value) {
+                    topic.subscribe(this.channel, (action, value) => {
                         var display = "";
 
                         if (action === "changed-period-type") {
-                            self.mode = value;
+                            this.mode = value;
 
                             if (value === "by-dates") {
-                                display = self._comparison_periods.get("value");
+                                display = this._comparison_periods.get("value");
                             }
                         }
-                        self._update_display(display);
+                        this._update_display(display);
                     })
                 );
             },
             startup: function () {
-                var self = this;
-
                 this.inherited(arguments);
                 this._comparison_periods = registry.byId("comparison-periods");
                 this.own(
-                    // eslint-disable-next-line no-unused-vars
-                    on(this._comparison_periods, "change", function (newvalue) {
-                        self._update_display(
-                            self._comparison_periods.get("value")
+                    on(this._comparison_periods, "change", () => {
+                        this._update_display(
+                            this._comparison_periods.get("value")
                         );
                     })
                 );
