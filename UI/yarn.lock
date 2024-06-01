@@ -1292,10 +1292,10 @@
     esquery "^1.5.0"
     jsdoc-type-pratt-parser "~4.0.0"
 
-"@es-joy/jsdoccomment@~0.43.0":
-  version "0.43.0"
-  resolved "https://registry.yarnpkg.com/@es-joy/jsdoccomment/-/jsdoccomment-0.43.0.tgz#35c295cadd0a939d1a3a6cd1548f66ec76d38870"
-  integrity sha512-Q1CnsQrytI3TlCB1IVWXWeqUIPGVEKGaE7IbVdt13Nq/3i0JESAkQQERrfiQkmlpijl+++qyqPgaS31Bvc1jRQ==
+"@es-joy/jsdoccomment@~0.43.1":
+  version "0.43.1"
+  resolved "https://registry.yarnpkg.com/@es-joy/jsdoccomment/-/jsdoccomment-0.43.1.tgz#4b1979b7b4ff8b596fb19a3aa696a438e44608d7"
+  integrity sha512-I238eDtOolvCuvtxrnqtlBaw0BwdQuYqK7eA6XIonicMdOOOb75mqdIzkGDUbS04+1Di007rgm9snFRNeVrOog==
   dependencies:
     "@types/eslint" "^8.56.5"
     "@types/estree" "^1.0.5"
@@ -1835,12 +1835,12 @@
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-"@redocly/cli@1.13.0":
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/@redocly/cli/-/cli-1.13.0.tgz#ebc30173d74fff5cfb39c1d917cbae1a9a3c0117"
-  integrity sha512-2oC8SN+hGtfrFBX2LadFOAzA1ika+2IDmAg9pRl8+yualfmEdxiOuP8rltKeDZ1Uj3NGXyR42g7+CvMj55pKkw==
+"@redocly/cli@1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@redocly/cli/-/cli-1.14.0.tgz#17bfe1499715b957cec5b16e06c463a86e49f0b4"
+  integrity sha512-GCvJeuZL/JbEOvuCbAav8m1YezzzrJ/rLJWk2WzPYw2YAAdZMjSEQGpiZeVfZTZLV8ntwkUfNFzsET3I2x6TPg==
   dependencies:
-    "@redocly/openapi-core" "1.13.0"
+    "@redocly/openapi-core" "1.14.0"
     abort-controller "^3.0.0"
     chokidar "^3.5.1"
     colorette "^1.2.0"
@@ -1864,10 +1864,10 @@
   resolved "https://registry.yarnpkg.com/@redocly/config/-/config-0.5.0.tgz#3ba2585f10d7039b85d7604d0e17f4d091d424c2"
   integrity sha512-oA1ezWPT2tSV9CLk0FtZlViaFKtp+id3iAVeKBme1DdP4xUCdxEdP8umB21iLKdc6leRd5uGa+T5Ox4nHBAXWg==
 
-"@redocly/openapi-core@1.13.0":
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-1.13.0.tgz#017125f70f7e030fad782f4073972f158c848967"
-  integrity sha512-lPvVE4+QjWMXCEIui994pYBZGqvEsodaCJPCJLkx6RK3OL/6Ss8wN17YTDmF49tzw3xgA8t4+x7TqelUSRcZUQ==
+"@redocly/openapi-core@1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-1.14.0.tgz#74f9daf95f835563d458ce02644f0ad0cd519211"
+  integrity sha512-sraF4PGVcc6t6CaYw5raO/GWeOaa6UjcEvH/+Qm7zp+q/fbWAMwbj+1QzaNvpMspCwF+xW6TddDcnXrCDmqYVA==
   dependencies:
     "@redocly/ajv" "^8.11.0"
     "@redocly/config" "^0.5.0"
@@ -3129,6 +3129,13 @@ braces@^3.0.2, braces@~3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
+braces@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/braces/-/braces-3.0.3.tgz#490332f40919452272d55a8480adc0c441358789"
+  integrity sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==
+  dependencies:
+    fill-range "^7.1.1"
+
 browserslist@4.23.0, browserslist@^4.0.0, browserslist@^4.21.10, browserslist@^4.21.5, browserslist@^4.22.2, browserslist@^4.22.3, browserslist@^4.23.0:
   version "4.23.0"
   resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.23.0.tgz#8f3acc2bbe73af7213399430890f86c63a5674ab"
@@ -3259,10 +3266,10 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@1.0.30001623:
-  version "1.0.30001623"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001623.tgz#e982099dcb229bb6ab35f5aebe2f8d79ccf6e8a8"
-  integrity sha512-X/XhAVKlpIxWPpgRTnlgZssJrF0m6YtRA0QDWgsBNT12uZM6LPRydR7ip405Y3t1LamD8cP2TZFEDZFBf5ApcA==
+caniuse-lite@1.0.30001625:
+  version "1.0.30001625"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001625.tgz#ead1b155ea691d6a87938754d3cb119c24465b03"
+  integrity sha512-4KE9N2gcRH+HQhpeiRZXd+1niLB/XNLAhSy4z7fI8EzcbcPoAqjNInxVHTiTwWfTIV4w096XG8OtCOCQQKPv3w==
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001487, caniuse-lite@^1.0.30001524, caniuse-lite@^1.0.30001587:
   version "1.0.30001588"
@@ -4656,18 +4663,18 @@ eslint-plugin-jest@28.5.0:
   dependencies:
     "@typescript-eslint/utils" "^6.0.0 || ^7.0.0"
 
-eslint-plugin-jsdoc@48.2.6:
-  version "48.2.6"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-48.2.6.tgz#3c78c11112025c65b68cd87fab7e459754c301f6"
-  integrity sha512-GNk9jtpYmoEVeD/U6yYYmd6T8vSOoPs7CL8ZeX85iD8P3qifDdLQGze6+cw9boobDthmYnnxvIoHrhuSffj09g==
+eslint-plugin-jsdoc@48.2.7:
+  version "48.2.7"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-48.2.7.tgz#2610b6fa1a9ba45c8296c2f335e0360bbd238772"
+  integrity sha512-fYj3roTnkFL9OFFTB129rico8lerC5G8Vp2ZW9SjO9RNWG0exVvI+i/Y8Bpm1ufjR0uvT38xtoab/U0Hp8Ybog==
   dependencies:
-    "@es-joy/jsdoccomment" "~0.43.0"
+    "@es-joy/jsdoccomment" "~0.43.1"
     are-docs-informative "^0.0.2"
     comment-parser "1.4.1"
     debug "^4.3.4"
     escape-string-regexp "^4.0.0"
     esquery "^1.5.0"
-    semver "^7.6.1"
+    semver "^7.6.2"
     spdx-expression-parse "^4.0.0"
 
 eslint-plugin-jsdoc@^48.2.3:
@@ -4721,10 +4728,10 @@ eslint-plugin-n@^17.2.0:
     minimatch "^9.0.0"
     semver "^7.5.3"
 
-eslint-plugin-package-json@0.13.1:
-  version "0.13.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-package-json/-/eslint-plugin-package-json-0.13.1.tgz#76cf01913bc25b198dfcbec5ce44dbc73a1b6f93"
-  integrity sha512-aZkSvyJZRW4JKFhdoBhuPgc8sM/UAQN993uh956Yb8dSFCAV0Vkwrw09cuPL5onZ6ygF5pCqSs57wZRqGIwDQQ==
+eslint-plugin-package-json@0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-package-json/-/eslint-plugin-package-json-0.14.0.tgz#2199e30a3dc9547399ef9f015ae35b8ad1abf4d2"
+  integrity sha512-/Ls/KMVAEy4n5fXSEyj3GpfzLm9R1ErI9PrIBJwvuLRNbW3+1m7JWvkjgsBy2tmNfhtMhCGodhRDK2CN7Y4ADw==
   dependencies:
     detect-indent "6.1.0"
     detect-newline "3.1.0"
@@ -5095,17 +5102,24 @@ file-entry-cache@^6.0.1:
   dependencies:
     flat-cache "^3.0.4"
 
-file-entry-cache@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/file-entry-cache/-/file-entry-cache-8.0.0.tgz#7787bddcf1131bffb92636c69457bbc0edd6d81f"
-  integrity sha512-XXTUwCvisa5oacNGRP9SfNtYBNAMi+RPwBFmblZEF7N7swHYQS6/Zfk7SRwx4D5j3CH211YNRco1DEMNVfZCnQ==
+file-entry-cache@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/file-entry-cache/-/file-entry-cache-9.0.0.tgz#4478e7ceaa5191fa9676a2daa7030211c31b1e7e"
+  integrity sha512-6MgEugi8p2tiUhqO7GnPsmbCCzj0YRCwwaTbpGRyKZesjRSzkqkAE9fPp7V2yMs5hwfgbQLgdvSSkGNg1s5Uvw==
   dependencies:
-    flat-cache "^4.0.0"
+    flat-cache "^5.0.0"
 
 fill-range@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/fill-range/-/fill-range-7.0.1.tgz#1919a6a7c75fe38b2c7c77e5198535da9acdda40"
   integrity sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==
+  dependencies:
+    to-regex-range "^5.0.1"
+
+fill-range@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/fill-range/-/fill-range-7.1.1.tgz#44265d3cac07e3ea7dc247516380643754a05292"
+  integrity sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==
   dependencies:
     to-regex-range "^5.0.1"
 
@@ -5173,14 +5187,13 @@ flat-cache@^3.0.4:
     keyv "^4.5.3"
     rimraf "^3.0.2"
 
-flat-cache@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-4.0.0.tgz#d12437636f83bb8a12b8f300c36fd1614e1c7224"
-  integrity sha512-EryKbCE/wxpxKniQlyas6PY1I9vwtF3uCBweX+N8KYTCn3Y12RTGtQAJ/bd5pl7kxUAc8v/R3Ake/N17OZiFqA==
+flat-cache@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-5.0.0.tgz#26c4da7b0f288b408bb2b506b2cb66c240ddf062"
+  integrity sha512-JrqFmyUl2PnPi1OvLyTVHnQvwQ0S+e6lGSwu8OkAZlSaNIZciTY2H/cOOROxsBA1m/LZNHDsqAgDZt6akWcjsQ==
   dependencies:
-    flatted "^3.2.9"
+    flatted "^3.3.1"
     keyv "^4.5.4"
-    rimraf "^5.0.5"
 
 flat@^5.0.2:
   version "5.0.2"
@@ -5191,6 +5204,11 @@ flatted@^3.2.9:
   version "3.2.9"
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.9.tgz#7eb4c67ca1ba34232ca9d2d93e9886e611ad7daf"
   integrity sha512-36yxDn5H7OFZQla0/jFJmbIKTdZAQHngCedGxiMmpNfEZM0sdEeT+WczLQrjK6D7o2aiyLYDnkw0R3JK0Qv1RQ==
+
+flatted@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.3.1.tgz#21db470729a6734d4997002f439cb308987f567a"
+  integrity sha512-X8cqMLLie7KsNUDSdzeN8FYK9rEt4Dt67OsG/DNGnYTSDBG4uFAJFBnUeiV+zCVAvwFy56IjM9sH51jVaEhNxw==
 
 flush-promises@1.0.2:
   version "1.0.2"
@@ -7264,6 +7282,14 @@ micromatch@^4.0.2, micromatch@^4.0.4, micromatch@^4.0.5:
     braces "^3.0.2"
     picomatch "^2.3.1"
 
+micromatch@^4.0.7:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-4.0.7.tgz#33e8190d9fe474a9895525f5618eee136d46c2e5"
+  integrity sha512-LPP/3KorzCwBxfeUuZmaR6bG2kdeHSbe0P2tY3FLRU4vYrjYz5hI4QZwV0njUx3jeuKe67YukQ1LSPZBKDqO/Q==
+  dependencies:
+    braces "^3.0.3"
+    picomatch "^2.3.1"
+
 mime-db@1.52.0, "mime-db@>= 1.43.0 < 2":
   version "1.52.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.52.0.tgz#bbabcdc02859f4987301c856e3387ce5ec43bf70"
@@ -9095,7 +9121,7 @@ semver@^7.0.0, semver@^7.3.5, semver@^7.3.6, semver@^7.5.2, semver@^7.5.3, semve
   dependencies:
     lru-cache "^6.0.0"
 
-semver@^7.6.1:
+semver@^7.6.2:
   version "7.6.2"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.6.2.tgz#1e3b34759f896e8f14d6134732ce798aeb0c6e13"
   integrity sha512-FNAIBWCx9qcRhoHcgcJ0gvU7SN1lYU2ZXuSfl04bSC5OpvDHFyJCjdNHomPXxjQlCBU67YW64PzY7/VIEH7F2w==
@@ -9706,10 +9732,10 @@ stylelint-webpack-plugin@5.0.1:
     normalize-path "^3.0.0"
     schema-utils "^4.2.0"
 
-stylelint@16.6.0:
-  version "16.6.0"
-  resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-16.6.0.tgz#14d0006aa04b2636a6cda505b6a06d8d3910824c"
-  integrity sha512-vjWYlDEgOS3Z/IcXagQwi8PFJyPro1DxBYOnTML1PAqnrYUHs8owleGStv20sgt0OhW8r9zZm6MK7IT2+l2B6A==
+stylelint@16.6.1:
+  version "16.6.1"
+  resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-16.6.1.tgz#84735aca2bb5cde535572b7a9b878d2ec983a570"
+  integrity sha512-yNgz2PqWLkhH2hw6X9AweV9YvoafbAD5ZsFdKN9BvSDVwGvPh+AUIrn7lYwy1S7IHmtFin75LLfX1m0D2tHu8Q==
   dependencies:
     "@csstools/css-parser-algorithms" "^2.6.3"
     "@csstools/css-tokenizer" "^2.3.1"
@@ -9724,7 +9750,7 @@ stylelint@16.6.0:
     debug "^4.3.4"
     fast-glob "^3.3.2"
     fastest-levenshtein "^1.0.16"
-    file-entry-cache "^8.0.0"
+    file-entry-cache "^9.0.0"
     global-modules "^2.0.0"
     globby "^11.1.0"
     globjoin "^0.1.4"
@@ -9735,7 +9761,7 @@ stylelint@16.6.0:
     known-css-properties "^0.31.0"
     mathml-tag-names "^2.1.3"
     meow "^13.2.0"
-    micromatch "^4.0.5"
+    micromatch "^4.0.7"
     normalize-path "^3.0.0"
     picocolors "^1.0.1"
     postcss "^8.4.38"
