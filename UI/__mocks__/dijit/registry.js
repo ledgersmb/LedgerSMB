@@ -5,12 +5,12 @@ const registry = Object.create(null);
 function findWidgets(root, skipNode) {
     var outAry = [];
 
-    function getChildrenHelper(root){
-        for(var node = root.firstChild; node; node = node.nextSibling){
-            if(node.getAttribute && node.getAttribute("widgetid")){
-                outAry.push(node);
-            }else if(node !== skipNode){
-                getChildrenHelper(node);
+    function getChildrenHelper (node) {
+        for(var el = root.firstChild; el; el = node.nextSibling){
+            if(el.getAttribute && el.getAttribute("widgetid")){
+                outAry.push(el);
+            }else if(el !== skipNode){
+                getChildrenHelper(el);
             }
         }
     }
