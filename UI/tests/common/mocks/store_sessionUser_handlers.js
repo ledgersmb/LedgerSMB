@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars, no-console */
-import { http, HttpResponse } from 'msw'
+import { http, HttpResponse } from 'msw';
 
 export const sessionUserHandlers = [
 
-  http.get('/erp/api/v0/session', ({ request }) => {
+  http.get('/erp/api/v0/session', () => {
 
     return HttpResponse.json(
       {
@@ -23,7 +22,7 @@ export const sessionUserHandlers = [
         }
       },
       { status: 200 }
-    )
+    );
   })
 
-]
+];

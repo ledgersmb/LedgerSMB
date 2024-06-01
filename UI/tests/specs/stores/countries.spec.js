@@ -1,5 +1,4 @@
 /** @format */
-/* eslint-disable no-console */
 
 import { createTestingPinia } from "@pinia/testing";
 

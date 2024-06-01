@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 // Import test packages
 import { spawnSync } from "child_process";
 

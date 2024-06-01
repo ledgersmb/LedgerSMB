@@ -1,6 +1,4 @@
 /** @format */
-/* eslint-disable global-require */
-/* eslint-disable camelcase, prettier/prettier */
 
 const rtlDetect = require("rtl-detect");
 
@@ -14,7 +12,6 @@ function _mapLocale(locale) {
     return locale;
 }
 
-// eslint-disable-next-line import/no-unresolved
 import messages from '@/locales/en.json';
 import { nextTick } from "vue";
 
@@ -38,14 +35,14 @@ export async function setI18nLanguage(lang) {
             const _messages = await import(/* webpackChunkName: "lang-[request]" */ `@/locales/${locale}.json`);
             i18n.global.setLocaleMessage(locale, _messages.default);
         }
-        catch (e) {
+        catch {
             const strippedLocale = locale.replace(/_[a-z]+/i, '');
             try {
                 const _messages = await import(/* webpackChunkName: "lang-[request]" */ `@/locales/${strippedLocale}.json`);
                 i18n.global.setLocaleMessage(strippedLocale, _messages.default);
                 locale = strippedLocale;
             }
-            catch (f) {
+            catch {
                 locale = "en";
             }
         }

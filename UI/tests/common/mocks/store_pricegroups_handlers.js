@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars, no-console */
-import { http, HttpResponse } from 'msw'
+import { http, HttpResponse } from 'msw';
 
 export const pricegroupHandlers = [
 

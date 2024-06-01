@@ -61,7 +61,6 @@ define([
                 complete = true;
             }
         },
-        // eslint-disable-next-line no-unused-vars
         getRoot: function (onItem, onError) {
             onItem({ id: 0 });
         }

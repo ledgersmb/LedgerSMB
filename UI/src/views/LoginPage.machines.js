@@ -48,7 +48,7 @@ function createLoginMachine(initialContext) {
                 submitLogin,
                 transition(
                     'error', 'ready',
-                    action((ctx, e) => { alert(e.error); }) // eslint-disable-line no-alert
+                    action((ctx, e) => { alert(e.error); })
                 ),
                 transition(
                     'done', 'submitted',
@@ -74,7 +74,7 @@ function createLoginMachine(initialContext) {
                     'ready',
                     guard(testNot(testResponseOkFn())),
                     action((ctx) => {
-                        alert(ctx.t("Unknown error preventing login")); // eslint-disable-line no-alert
+                        alert(ctx.t("Unknown error preventing login"));
                     }),
                 ),
                 immediate('parsing'),

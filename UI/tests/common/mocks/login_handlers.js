@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { http, HttpResponse } from 'msw';
 
 export const loginHandlers = [
