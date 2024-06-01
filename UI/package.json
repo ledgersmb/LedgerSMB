@@ -49,7 +49,7 @@
     "tapable": "2.2.1",
     "vue": "3.4.27",
     "vue-i18n": "9.13.1",
-    "vue-router": "4.3.2"
+    "vue-router": "^4.3.2"
   },
   "devDependencies": {
     "@babel/core": "7.24.6",
@@ -295,7 +295,10 @@
       "no-use-before-define": "error",
       "no-useless-escape": "error",
       "no-useless-return": "error",
-      "one-var": ["error" , "never"],
+      "one-var": [
+        "error",
+        "never"
+      ],
       "radix": "error",
       "spaced-comment": [
         "error",

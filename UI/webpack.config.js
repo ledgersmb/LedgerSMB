@@ -442,6 +442,7 @@ if (TARGET !== "readme") {
         resolve: {
             alias: {
                 vue$: "vue/dist/vue.cjs.js",
+                "vue-router": "vue-router/dist/vue-router.cjs.js",
                 pinia$: "pinia/dist/pinia.cjs",
                 "vue-i18n": "vue-i18n/dist/vue-i18n.cjs",
                 "@pinia": path.join(__dirname, "node_modules/@pinia"), // Fix eslint importer
