@@ -1,5 +1,5 @@
 /** @format */
-/* eslint global-require:0, no-param-reassign:0, no-unused-vars:0 */
+/* eslint global-require:0, no-param-reassign:0, no-unused-vars:0, no-inner-declarations:0 */
 /* global getConfig */
 
 const TARGET = process.env.npm_lifecycle_event;
