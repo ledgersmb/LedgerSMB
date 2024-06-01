@@ -6,7 +6,7 @@ function findWidgets(root, skipNode) {
     var outAry = [];
 
     function getChildrenHelper (node) {
-        for(var el = root.firstChild; el; el = node.nextSibling){
+        for(var el = node.firstChild; el; el = el.nextSibling){
             if(el.getAttribute && el.getAttribute("widgetid")){
                 outAry.push(el);
             }else if(el !== skipNode){
