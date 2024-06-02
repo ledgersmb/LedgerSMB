@@ -49,7 +49,7 @@ jobs:
 
     steps:
       # Dump environment variables & event
-      - uses: hmarr/debug-action@v2
+      - uses: hmarr/debug-action@v3
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
