@@ -92,7 +92,7 @@ export default [
             "no-multi-assign": "error",
             "no-multi-spaces": "off",
             "no-new-object": "error",
-            //"no-param-reassign": "error",
+            "no-param-reassign": "error",
             "no-plusplus": 0,
             "no-restricted-globals": "error",
             "no-shadow": "error",
@@ -211,7 +211,7 @@ export default [
     },
     // Vue files
     {
-        files: ["**/*.vue"],
+        files: ["src/**/*.vue"],
         rules: {
             "vue/attribute-hyphenation": "off",
             "vue/block-order": [

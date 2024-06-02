@@ -137,14 +137,13 @@ MarkdownInclude.registerPlugin({
                     v1 = "";
                     v2 = "";
                 }
-                /* eslint-disable-next-line one-var */
-                var l = "",
-                    line =
-                        "| " +
-                        entry.name.padEnd(19, " ") +
-                        " | " +
-                        entry.year.padEnd(8, " ") +
-                        " | ";
+                var l = "";
+                var line =
+                    "| " +
+                    entry.name.padEnd(19, " ") +
+                    " | " +
+                    entry.year.padEnd(8, " ") +
+                    " | ";
                 while (versions.length) {
                     while (
                         versions.length &&
