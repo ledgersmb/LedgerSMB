@@ -80,7 +80,7 @@ export default {
                                 registry
                                     .findWidgets(maindiv)
                                     .forEach((child) => {
-                                        this._recursively_resize(child);
+                                        this.recursivelyResize(child);
                                     });
                                 maindiv
                                     .querySelectorAll("a")
@@ -95,15 +95,15 @@ export default {
                                 this._setFormFocus();
                             },
                             (e) => {
-                                this._report_error(e);
+                                this.reportError(e);
                             }
                         );
                     });
                 } else {
-                    this._report_error(r);
+                    this.reportError(r);
                 }
             } catch (e) {
-                this._report_error(e);
+                this.reportError(e);
             } finally {
                 if (dismiss) {
                     dismiss();
@@ -121,15 +121,15 @@ export default {
                 }
             });
         },
-        _recursively_resize(widget) {
+        recursivelyResize(widget) {
             widget.getChildren().forEach((child) => {
-                this._recursively_resize(child);
+                this.recursivelyResize(child);
             });
             if (widget.resize) {
                 widget.resize();
             }
         },
-        async _report_error(errOrReq) {
+        async reportError(errOrReq) {
             let errstr;
             if (errOrReq instanceof Error) {
                 errstr = this.$t("JavaScript error: ") + errOrReq.toString();
@@ -183,7 +183,7 @@ export default {
                     (n) => delete n._cssState
                 );
             } catch (e) {
-                this._report_error(e);
+                this.reportError(e);
             }
         }
     },
@@ -197,7 +197,7 @@ export default {
         this.$nextTick(() => this.updateContent(this.uiURL));
         window.__lsmbSubmitForm = (req) =>
             this.updateContent(req.url, req.options);
-        window.__lsmbReportError = (err) => this._report_error(err);
+        window.__lsmbReportError = (err) => this.reportError(err);
     },
     render() {
         let body = this.content.match(/<body[^>]*>([\s\S]*)(<\/body>)?/i);

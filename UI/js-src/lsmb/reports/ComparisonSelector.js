@@ -35,26 +35,26 @@ define([
                             this.mode = value;
 
                             if (value === "by-dates") {
-                                display = this._comparison_periods.get("value");
+                                display = this.comparisonPeriods.get("value");
                             }
                         }
-                        this._update_display(display);
+                        this._updateDisplay(display);
                     })
                 );
             },
             startup: function () {
                 this.inherited(arguments);
-                this._comparison_periods = registry.byId("comparison-periods");
+                this.comparisonPeriods = registry.byId("comparison-periods");
                 this.own(
-                    on(this._comparison_periods, "change", () => {
-                        this._update_display(
-                            this._comparison_periods.get("value")
+                    on(this.comparisonPeriods, "change", () => {
+                        this._updateDisplay(
+                            this.comparisonPeriods.get("value")
                         );
                     })
                 );
-                this._update_display("");
+                this._updateDisplay("");
             },
-            _update_display: function (count) {
+            _updateDisplay: function (count) {
                 if (count === "" || this.mode === "by-periods") {
                     domStyle.set(
                         dom.byId("comparison_dates"),

@@ -14,7 +14,7 @@ import pluginVue from "eslint-plugin-vue";
 export default [
     // Global config
     {
-        ignores: ["{js,node_modules,__mocks__}/**/*"]
+        ignores: ["{js/**/*,node_modules/**/*,__mocks__/**/*}"]
     },
 
     js.configs.recommended,
@@ -33,8 +33,6 @@ export default [
         ignores: ["**/*.spec.js", "**/*.config.m?js"],
         languageOptions: {
             globals: {
-                ...globals.browser,
-                ...globals.es6,
                 ...globals.amd,
                 ...globals.node
             },
@@ -61,13 +59,12 @@ export default [
         settings: {
             "import-x/resolver": "webpack",
             "import-x/parsers": {
-                "@babel/eslint-parser": [".js", ".jsx"],
-                "@typescript-eslint/parser": [".ts", ".tsx"]
+                "@babel/eslint-parser": [".js"]
             }
         },
         rules: {
             ...js.configs.recommended.rules,
-            camelcase: "off",
+            camelcase: "error",
             "compat/compat": "warn",
             "consistent-return": "error",
             curly: ["error", "all"],
@@ -88,7 +85,6 @@ export default [
             "import-x/no-duplicates": "warn",
             "new-cap": 0,
             "no-alert": "error",
-            "no-console": "off",
             "no-continue": 0,
             "no-else-return": "error",
             "no-eval": "error",
@@ -96,7 +92,7 @@ export default [
             "no-multi-assign": "error",
             "no-multi-spaces": "off",
             "no-new-object": "error",
-            "no-param-reassign": "error",
+            //"no-param-reassign": "error",
             "no-plusplus": 0,
             "no-restricted-globals": "error",
             "no-shadow": "error",

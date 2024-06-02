@@ -1,4 +1,5 @@
 /** @format */
+/* eslint-disable camelcase */
 
 define([
     "dojo/_base/declare",
