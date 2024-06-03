@@ -1,21 +1,29 @@
 /** @format */
 /* eslint-disable vue/component-definition-name-casing */
 /* eslint-disable vue/require-prop-types, vue/one-component-per-file */
-/* eslint-disable global-require */
 
 import { config } from "@vue/test-utils";
 import { defineComponent } from "vue";
 
 const lsmbText = defineComponent({
-  name: "lsmb-text",
-  props: [
-    "autocomplete", "id", "label", "name", "required",
-    "size", "tabindex", "type", "value"
-  ],
-  computed: {
-    widgetid() { return 'widgetid_' + this.id }
-  },
-  template: `
+    name: "lsmb-text",
+    props: [
+        "autocomplete",
+        "id",
+        "label",
+        "name",
+        "required",
+        "size",
+        "tabindex",
+        "type",
+        "value"
+    ],
+    computed: {
+        widgetid() {
+            return "widgetid_" + this.id;
+        }
+    },
+    template: `
     <div>
       <label :for=id>{{ id }}</label>
       <input :type=type :id=id :widgetid=widgetid :name=name :size=size
@@ -26,15 +34,24 @@ const lsmbText = defineComponent({
 });
 
 const lsmbPassword = defineComponent({
-  name: "lsmb-password",
-  props: [
-    "autocomplete", "id", "label", "name", "required",
-    "size", "tabindex", "type", "value"
-  ],
-  computed: {
-    widgetid() { return 'widgetid_' + this.id }
-  },
-  template: `
+    name: "lsmb-password",
+    props: [
+        "autocomplete",
+        "id",
+        "label",
+        "name",
+        "required",
+        "size",
+        "tabindex",
+        "type",
+        "value"
+    ],
+    computed: {
+        widgetid() {
+            return "widgetid_" + this.id;
+        }
+    },
+    template: `
     <div>
       <label :for=id>{{ id }}</label>
       <input :type=type :id=id :widgetid=widgetid :name=name :size=size
@@ -45,9 +62,9 @@ const lsmbPassword = defineComponent({
 });
 
 const lsmbButton = defineComponent({
-  name: "lsmb-button",
-  props: ["id", "value", "disabled", "type", "name"],
-  template: `
+    name: "lsmb-button",
+    props: ["id", "value", "disabled", "type", "name"],
+    template: `
     <button :id=id :value=value :name=name :type=type
             :disabled=disabled>
       <slot />
@@ -56,9 +73,9 @@ const lsmbButton = defineComponent({
 });
 
 const lsmbDate = defineComponent({
-  name: "lsmb-date",
-  props: ["id", "title", "name", "size", "required"],
-  template: `
+    name: "lsmb-date",
+    props: ["id", "title", "name", "size", "required"],
+    template: `
     <div>
       <label>{{ title }}</label>
       <span :id=id :name=name :size=size :required=required</span>
@@ -67,9 +84,9 @@ const lsmbDate = defineComponent({
 });
 
 const lsmbFile = defineComponent({
-  name: "lsmb-file",
-  props: ["id", "label", "accept", "disabled", "name", "required"],
-  template: `
+    name: "lsmb-file",
+    props: ["id", "label", "accept", "disabled", "name", "required"],
+    template: `
     <div>
       <label>{{ label }}</label>
       <span>
@@ -81,9 +98,9 @@ const lsmbFile = defineComponent({
 });
 
 config.global.stubs = {
-  lsmbButton,
-  lsmbPassword,
-  lsmbText,
-  lsmbDate,
-  lsmbFile
+    lsmbButton,
+    lsmbPassword,
+    lsmbText,
+    lsmbDate,
+    lsmbFile
 };

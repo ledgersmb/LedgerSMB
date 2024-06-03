@@ -1,4 +1,5 @@
 /** @format */
+/* global process, require */
 
 // Import test packages
 import jestOpenAPI from "jest-openapi";

@@ -1,16 +1,17 @@
+/* @format */
 /* global globalThis */
 
-const { TextEncoder, TextDecoder } = require('node:util')
-const { performance } = require('node:perf_hooks')
+const { TextEncoder, TextDecoder } = require("node:util");
+const { performance } = require("node:perf_hooks");
 
 Object.defineProperties(globalThis, {
     TextDecoder: { value: TextDecoder },
     TextEncoder: { value: TextEncoder },
     performance: { value: performance }
-})
+});
 
-const { Blob } = require('node:buffer')
-const { fetch, Headers, FormData, Request, Response } = require('undici')
+const { Blob } = require("node:buffer");
+const { fetch, Headers, FormData, Request, Response } = require("undici");
 
 Object.defineProperties(globalThis, {
     fetch: { value: fetch, writable: true },
@@ -18,5 +19,5 @@ Object.defineProperties(globalThis, {
     Headers: { value: Headers },
     FormData: { value: FormData },
     Request: { value: Request },
-    Response: { value: Response },
-})
+    Response: { value: Response }
+});
