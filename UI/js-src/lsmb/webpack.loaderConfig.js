@@ -84,5 +84,5 @@ if (typeof module !== "undefined") {
     module.exports = getConfig;
 } else {
     // No webpack.  This script was loaded by page via script tag, so load Dojo from CDN
-    getConfig({ dojoRoot: "//ajax.googleapis.com/ajax/libs/dojo/1.16.0" });
+    getConfig(/* { dojoRoot: "//ajax.googleapis.com/ajax/libs/dojo/1.16.0" } */);
 }
