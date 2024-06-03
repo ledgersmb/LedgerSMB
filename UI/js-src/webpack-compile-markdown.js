@@ -75,22 +75,12 @@ MarkdownInclude.registerPlugin({
         /* eslint guard-for-in:0 */
         for (const c of ["Desktop", "Mobile"]) {
             markdown += "\n### " + c + "\n\n";
-            markdown +=
-                "| " +
-                "Browser Name".padEnd(20, " ") +
-                "| " +
-                "Earliest".padEnd(9, " ") +
-                "| " +
-                "Versions".padEnd(44, " ") +
-                "|\n";
-            markdown +=
-                "| " +
-                "---".padEnd(19, "-") +
-                " |:" +
-                "---".padEnd(8, "-") +
-                ":|:" +
-                "---".padEnd(43, "-") +
-                " |\n";
+            markdown += "| " + "Browser Name".padEnd(20, " ");
+            markdown += "| " + "Earliest".padEnd(9, " ");
+            markdown += "| " + "Versions".padEnd(44, " ") + "|\n";
+            markdown += "| " + "---".padEnd(19, "-");
+            markdown += "| " + "---".padEnd(8, "-");
+            markdown += "| " + "---".padEnd(43, "-") + "|\n";
 
             for (var browser in earliest[c]) {
                 var entry = earliest[c][browser];
@@ -155,12 +145,8 @@ MarkdownInclude.registerPlugin({
                         }
                     }
                     markdown += line + l.padEnd(43, " ") + " |\n";
-                    line =
-                        "| " +
-                        "".padEnd(20, " ") +
-                        "| " +
-                        "".padEnd(9, " ") +
-                        "| ";
+                    line = "| " + "".padEnd(20, " ");
+                    line += "| " + "".padEnd(9, " ") + "| ";
                     l = "";
                 }
             }
