@@ -1,4 +1,5 @@
 /** @format */
+/* eslint-disable camelcase */
 
 define([
     "dojo/_base/declare",
@@ -105,6 +106,7 @@ define([
                     nonWords: /\W/.test(pass)
                 };
                 var variationCount = 0;
+                // eslint-disable-next-line guard-for-in
                 for (var check in variations) {
                     variationCount += variations[check] === true ? 1 : 0;
                 }
@@ -135,7 +137,10 @@ define([
                     return;
                 }
                 if (newPassword !== confirmedPassword) {
-                    this.setFeedback(false, this.text("Confirmation did not match"));
+                    this.setFeedback(
+                        false,
+                        this.text("Confirmation did not match")
+                    );
                     return;
                 }
                 r("user.pl", {

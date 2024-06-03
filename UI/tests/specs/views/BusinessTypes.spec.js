@@ -1,3 +1,4 @@
+/* @format */
 /* global retry */
 
 import BusinessTypes from "@/views/BusinessTypes.vue";
@@ -8,7 +9,6 @@ let wrapper;
 let sessionUser;
 
 describe("BusinessTypes - register as a component", () => {
-
     beforeEach(() => {
         wrapper = factory(BusinessTypes);
         sessionUser = useSessionUserStore();
@@ -18,28 +18,29 @@ describe("BusinessTypes - register as a component", () => {
     });
 
     it("should show dialog", async () => {
-
         expect(wrapper.exists()).toBeTruthy();
 
         // Check loading
         expect(wrapper.get(".dynatableLoading").text()).toBe("Loading...");
 
         // Wait until loading done
-        await retry(() => expect(wrapper.find(".dynatableData").isVisible()).toBe(true));
+        await retry(() =>
+            expect(wrapper.find(".dynatableData").isVisible()).toBe(true)
+        );
 
         // Validate against snapshot
         expect(wrapper.element).toMatchSnapshot();
 
-        const businessType_items = wrapper.findAll('.data-row');
+        const businessType_items = wrapper.findAll(".data-row");
         expect(businessType_items).toHaveLength(2);
 
         // Validate data displayed
         let data = businessType_items.map((rows) => {
-            return rows.findAll('.input-box').map(row => row.element.value)
+            return rows.findAll(".input-box").map((row) => row.element.value);
         });
         expect(data).toEqual([
-          [ "Big customer", "0.05"],
-          [ "Bigger customer", "0.15"]
+            ["Big customer", "0.05"],
+            ["Bigger customer", "0.15"]
         ]);
 
         // TODO: Test links
@@ -47,10 +48,9 @@ describe("BusinessTypes - register as a component", () => {
         // what was returned by the API
     });
 
-  it("should show dialog with editable data", async () => {
-
+    it("should show dialog with editable data", async () => {
         // Give user edition capability
-        sessionUser.$patch({roles: ["business_type_edit"]});
+        sessionUser.$patch({ roles: ["business_type_edit"] });
 
         expect(wrapper.exists()).toBeTruthy();
 
@@ -58,30 +58,32 @@ describe("BusinessTypes - register as a component", () => {
         expect(wrapper.get(".dynatableLoading").text()).toBe("Loading...");
 
         // Wait until loading done
-        await retry(() => expect(wrapper.find(".dynatableData").isVisible()).toBe(true));
+        await retry(() =>
+            expect(wrapper.find(".dynatableData").isVisible()).toBe(true)
+        );
 
         // Validate against snapshot
         expect(wrapper.element).toMatchSnapshot();
 
-        const businessType_items = wrapper.findAll('.data-row');
+        const businessType_items = wrapper.findAll(".data-row");
         expect(businessType_items).toHaveLength(2);
 
         // Validate data displayed
         let data = businessType_items.map((rows) => {
-            return rows.findAll('.input-box').map(row => row.element.value)
+            return rows.findAll(".input-box").map((row) => row.element.value);
         });
         expect(data).toEqual([
-          [ "Big customer", "0.05"],
-          [ "Bigger customer", "0.15"]
+            ["Big customer", "0.05"],
+            ["Bigger customer", "0.15"]
         ]);
 
         // Validate the buttons
         const buttons = businessType_items.map((rows) => {
-            return rows.findAll('button').map(row => row.element.name)
+            return rows.findAll("button").map((row) => row.element.name);
         });
         expect(buttons).toEqual([
-          [ 'modify', 'save', 'cancel' ],
-          [ 'modify', 'save', 'cancel' ]
+            ["modify", "save", "cancel"],
+            ["modify", "save", "cancel"]
         ]);
     });
 });

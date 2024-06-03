@@ -11,10 +11,7 @@ import {
     state,
     transition
 } from "@/robot-vue";
-import {
-    progressNotify,
-    notify
-} from "@/machine-helpers.js";
+import { progressNotify, notify } from "@/machine-helpers.js";
 
 function handleError(ctx, error) {
     return { ...ctx, error };

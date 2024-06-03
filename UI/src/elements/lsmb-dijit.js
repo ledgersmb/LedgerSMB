@@ -1,4 +1,5 @@
 /** @format */
+// eslint-disable class-methods-use-this
 
 export class LsmbDijit extends HTMLElement {
     dojoWidget = null;
@@ -21,7 +22,7 @@ export class LsmbDijit extends HTMLElement {
 
     _collectProps() {
         let extra = this.hasAttribute("dojo-props")
-            ? eval("({" + this.getAttribute("dojo-props") + "})")
+            ? eval("({" + this.getAttribute("dojo-props") + "})") // eslint-disable-line no-eval
             : {};
         let props = { ...extra, ...this._stdProps() };
         this._valueAttrs().forEach((prop) => {

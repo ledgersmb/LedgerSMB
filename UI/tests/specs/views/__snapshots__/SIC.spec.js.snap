@@ -34,6 +34,8 @@ exports[`SIC - register as a component should show dialog 1`] = `
         class="dynatableData"
       >
         
+        
+        <!-- eslint-disable prettier/prettier -->
         <tr
           class="data-row"
         >
@@ -65,6 +67,9 @@ exports[`SIC - register as a component should show dialog 1`] = `
             <!--v-if-->
           </td>
         </tr>
+        
+        
+        <!-- eslint-disable prettier/prettier -->
         <tr
           class="data-row"
         >
@@ -96,6 +101,7 @@ exports[`SIC - register as a component should show dialog 1`] = `
             <!--v-if-->
           </td>
         </tr>
+        
         
       </tbody>
       <!--v-if-->
@@ -129,6 +135,8 @@ exports[`SIC - register as a component should show dialog 1`] = `
     <div
       id="import-sic"
     >
+      
+      <!-- eslint-disable prettier/prettier -->
       <div
         id="sic"
       >
@@ -201,6 +209,7 @@ exports[`SIC - register as a component should show dialog 1`] = `
           </div>
         </form>
       </div>
+      
     </div>
   </div>
   
@@ -241,62 +250,8 @@ exports[`SIC - register as a component should show dialog with editable data 1`]
         class="dynatableData"
       >
         
-        <tr
-          class="data-row"
-        >
-          <!--v-if-->
-          
-          <td
-            class="data-entry"
-          >
-            <input
-              class="neutral input-box"
-              name="code"
-              readonly=""
-              type="text"
-            />
-          </td>
-          <td
-            class="data-entry"
-          >
-            <input
-              class="neutral input-box"
-              name="description"
-              readonly=""
-              type="text"
-            />
-          </td>
-          
-          <td>
-            
-            <button
-              name="modify"
-            >
-              
-              Modify
-              
-            </button>
-            <button
-              disabled=""
-              name="save"
-            >
-              
-              Save
-              
-            </button>
-            <button
-              disabled=""
-              name="cancel"
-            >
-              
-              Cancel
-              
-            </button>
-            <!--v-if-->
-            
-            <!--v-if-->
-          </td>
-        </tr>
+        
+        <!-- eslint-disable prettier/prettier -->
         <tr
           class="data-row"
         >
@@ -354,6 +309,66 @@ exports[`SIC - register as a component should show dialog with editable data 1`]
           </td>
         </tr>
         
+        
+        <!-- eslint-disable prettier/prettier -->
+        <tr
+          class="data-row"
+        >
+          <!--v-if-->
+          
+          <td
+            class="data-entry"
+          >
+            <input
+              class="neutral input-box"
+              name="code"
+              readonly=""
+              type="text"
+            />
+          </td>
+          <td
+            class="data-entry"
+          >
+            <input
+              class="neutral input-box"
+              name="description"
+              readonly=""
+              type="text"
+            />
+          </td>
+          
+          <td>
+            
+            <button
+              name="modify"
+            >
+              
+              Modify
+              
+            </button>
+            <button
+              disabled=""
+              name="save"
+            >
+              
+              Save
+              
+            </button>
+            <button
+              disabled=""
+              name="cancel"
+            >
+              
+              Cancel
+              
+            </button>
+            <!--v-if-->
+            
+            <!--v-if-->
+          </td>
+        </tr>
+        
+        
       </tbody>
       <!--v-if-->
       
@@ -386,6 +401,8 @@ exports[`SIC - register as a component should show dialog with editable data 1`]
     <div
       id="import-sic"
     >
+      
+      <!-- eslint-disable prettier/prettier -->
       <div
         id="sic"
       >
@@ -458,6 +475,7 @@ exports[`SIC - register as a component should show dialog with editable data 1`]
           </div>
         </form>
       </div>
+      
     </div>
   </div>
   

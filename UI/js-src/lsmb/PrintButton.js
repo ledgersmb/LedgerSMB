@@ -31,8 +31,10 @@ define([
                         __action: this.get("value"),
                         type: f.type.value,
                         id: f.id.value,
+                        // eslint-disable-next-line camelcase
                         workflow_id: f.workflow_id ? f.workflow_id.value : "",
                         formname: f.formname.value,
+                        // eslint-disable-next-line camelcase
                         language_code: f.language_code.value,
                         media: "screen",
                         format: f.format.value
@@ -86,10 +88,9 @@ define([
                         }
                     } else {
                         window.__lsmbReportError(r);
-                    };
+                    }
                 });
-            }
-            else {
+            } else {
                 this.inherited(arguments);
             }
         }

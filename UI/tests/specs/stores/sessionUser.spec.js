@@ -23,11 +23,11 @@ describe("Session Store", () => {
             "gl_all"
         ]);
         expect(session.preferences).toStrictEqual({
-            "numberformat" : "1000.00",
-            "printer" : null,
-            "stylesheet" : "ledgersmb.css",
-            "dateformat" : "yyyy-mm-dd",
-            "language" : null
+            numberformat: "1000.00",
+            printer: null,
+            stylesheet: "ledgersmb.css",
+            dateformat: "yyyy-mm-dd",
+            language: null
         });
         expect(session.hasRole("cash_all")).toBe(true);
         expect(session.hasRole("invalid role")).toBe(false);

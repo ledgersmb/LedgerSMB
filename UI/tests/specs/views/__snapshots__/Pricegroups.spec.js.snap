@@ -31,6 +31,8 @@ exports[`Pricegroups - register as a component should show dialog 1`] = `
         class="dynatableData"
       >
         
+        
+        <!-- eslint-disable prettier/prettier -->
         <tr
           class="data-row"
         >
@@ -52,6 +54,9 @@ exports[`Pricegroups - register as a component should show dialog 1`] = `
             <!--v-if-->
           </td>
         </tr>
+        
+        
+        <!-- eslint-disable prettier/prettier -->
         <tr
           class="data-row"
         >
@@ -73,6 +78,7 @@ exports[`Pricegroups - register as a component should show dialog 1`] = `
             <!--v-if-->
           </td>
         </tr>
+        
         
       </tbody>
       <!--v-if-->
@@ -130,6 +136,8 @@ exports[`Pricegroups - register as a component should show dialog with editable 
         class="dynatableData"
       >
         
+        
+        <!-- eslint-disable prettier/prettier -->
         <tr
           class="data-row"
         >
@@ -176,6 +184,9 @@ exports[`Pricegroups - register as a component should show dialog with editable 
             <!--v-if-->
           </td>
         </tr>
+        
+        
+        <!-- eslint-disable prettier/prettier -->
         <tr
           class="data-row"
         >
@@ -222,6 +233,7 @@ exports[`Pricegroups - register as a component should show dialog with editable 
             <!--v-if-->
           </td>
         </tr>
+        
         
       </tbody>
       <!--v-if-->

@@ -9,7 +9,7 @@ export const useCountriesStore = defineStore("countries", {
     ...configStoreTemplate,
     getters: {
         ...configGetters,
-        default: (state) => state.items.find((elm) => elm.default),
+        default: (state) => state.items.find((elm) => elm.default)
     },
     actions: {
         ...configActions,
@@ -28,7 +28,7 @@ export const useCountriesStore = defineStore("countries", {
     },
     state: () => {
         return {
-            fields: [ "_meta", "code", "default", "name"],
+            fields: ["_meta", "code", "default", "name"],
             id: "code",
             items: [],
             _links: [],

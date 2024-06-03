@@ -25,12 +25,12 @@ define([
             var self = this;
 
             this.inherited(arguments);
-            this._by_dates = registry.byId("comparison_by_dates");
-            this._by_periods = registry.byId("comparison_by_periods");
+            this.byDates = registry.byId("comparison_by_dates");
+            this.byPeriods = registry.byId("comparison_by_periods");
             this.own(
-                on(this._by_dates, "change", function (newvalue) {
+                on(this.byDates, "change", function (newvalue) {
                     if (newvalue) {
-                        self._update_display();
+                        self._updateDisplay();
                         topic.publish(
                             self.channel,
                             "changed-period-type",
@@ -40,9 +40,9 @@ define([
                 })
             );
             this.own(
-                on(this._by_periods, "change", function (newvalue) {
+                on(this.byPeriods, "change", function (newvalue) {
                     if (newvalue) {
-                        self._update_display();
+                        self._updateDisplay();
                         topic.publish(
                             self.channel,
                             "changed-period-type",
@@ -51,18 +51,18 @@ define([
                     }
                 })
             );
-            this._update_display();
+            this._updateDisplay();
         },
-        _update_display: function () {
+        _updateDisplay: function () {
             domStyle.set(
                 dom.byId("date_dates_id"),
                 "display",
-                this._by_dates.get("checked") ? "" : "none"
+                this.byDates.get("checked") ? "" : "none"
             );
             domStyle.set(
                 dom.byId("date_period_id"),
                 "display",
-                this._by_periods.get("checked") ? "" : "none"
+                this.byPeriods.get("checked") ? "" : "none"
             );
         }
     });

@@ -1,7 +1,6 @@
 /** @format */
 
 const MarkdownInclude = require("markdown-include");
-
 const browserslist = require("browserslist");
 const lite = require("caniuse-lite");
 const packageJson = require("../package.json");
@@ -65,8 +64,7 @@ MarkdownInclude.registerPlugin({
                                 month.substr(month.length - 2);
                             earliest[category][browser].year = year;
                             earliest[category][browser].time = time;
-                        }
-                        else {
+                        } else {
                             earliest[category][browser].year = "<missing>";
                         }
                     }
@@ -77,22 +75,13 @@ MarkdownInclude.registerPlugin({
         /* eslint guard-for-in:0 */
         for (const c of ["Desktop", "Mobile"]) {
             markdown += "\n### " + c + "\n\n";
-            markdown +=
-                "| " +
-                "Browser Name".padEnd(20, " ") +
-                "| " +
-                "Earliest".padEnd(9, " ") +
-                "| " +
-                "Versions".padEnd(44, " ") +
-                "|\n";
-            markdown +=
-                "| " +
-                "---".padEnd(19, "-") +
-                " |:" +
-                "---".padEnd(8, "-") +
-                ":|:" +
-                "---".padEnd(43, "-") +
-                " |\n";
+            markdown += "| " + "Browser Name".padEnd(20, " ");
+            markdown += "| " + "Earliest".padEnd(9, " ");
+            markdown += "| " + "Versions".padEnd(44, " ") + "|\n";
+            markdown += "| " + "---".padEnd(19, "-");
+            markdown += "| " + "---".padEnd(8, "-");
+            markdown += "| " + "---".padEnd(43, "-") + "|\n";
+
             for (var browser in earliest[c]) {
                 var entry = earliest[c][browser];
                 let versions = [];
@@ -102,6 +91,7 @@ MarkdownInclude.registerPlugin({
                 let vs = entry.versions.sort((a, b) =>
                     a.localeCompare(b, undefined, { numeric: true })
                 );
+
                 var v;
                 /* eslint no-cond-assign:0 */
                 while ((v = vs.shift()) || v1) {
@@ -138,7 +128,7 @@ MarkdownInclude.registerPlugin({
                     v2 = "";
                 }
                 var l = "";
-                let line =
+                var line =
                     "| " +
                     entry.name.padEnd(19, " ") +
                     " | " +
@@ -155,12 +145,8 @@ MarkdownInclude.registerPlugin({
                         }
                     }
                     markdown += line + l.padEnd(43, " ") + " |\n";
-                    line =
-                        "| " +
-                        "".padEnd(20, " ") +
-                        "| " +
-                        "".padEnd(9, " ") +
-                        "| ";
+                    line = "| " + "".padEnd(20, " ");
+                    line += "| " + "".padEnd(9, " ") + "| ";
                     l = "";
                 }
             }
@@ -177,21 +163,26 @@ MarkdownInclude.registerPlugin({
 });
 
 // do something with compiled files
-var tmp = require('tmp');
-var fs = require('fs');
+var tmp = require("tmp");
+var fs = require("fs");
 
 tmp.file(
     {
-        prefix: 'markdown-',
-        postfix: '.json',
+        prefix: "markdown-",
+        postfix: ".json",
         keep: false
     },
     function (err, path) {
-        if (err) {throw err;}
-        fs.writeFileSync(path, `{
-            "build" : "../README.md",
-            "files" : ["../doc/sources/_README.md"]
-        }`);
+        if (err) {
+            throw err;
+        }
+        fs.writeFileSync(
+            path,
+            `{
+                "build" : "../README.md",
+                "files" : ["../doc/sources/_README.md"]
+            }`
+        );
         MarkdownInclude.compileFiles(path);
     }
 );

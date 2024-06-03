@@ -22,7 +22,6 @@ define([
                 this._formattedValue = "";
             }
 
-            /* eslint no-param-reassign:0 */
             /* Provide default 'old code' doesn't include in its templates */
             if (!params.constraints) {
                 params.constraints = {};

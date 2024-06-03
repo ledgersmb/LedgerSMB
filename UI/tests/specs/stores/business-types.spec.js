@@ -15,16 +15,32 @@ beforeEach(() => {
 describe("Business Types Store", () => {
     it("initialize", async () => {
         await businessTypes.initialize();
-        expect(businessTypes.fields).toStrictEqual(["id", "description", "discount"]);
-        expect(businessTypes.items).toStrictEqual([
-            { id: "1", description: "Big customer", discount: 0.05, _meta: { ETag: "1234567890" }},
-            { id: "2", description: "Bigger customer", discount: 0.15, _meta: { ETag: "1234567890" }}
+        expect(businessTypes.fields).toStrictEqual([
+            "id",
+            "description",
+            "discount"
         ]);
-        expect(businessTypes._links).toStrictEqual([{
-            title : "HTML",
-            rel : "download",
-            href : "?format=HTML"
-        }]);
+        expect(businessTypes.items).toStrictEqual([
+            {
+                id: "1",
+                description: "Big customer",
+                discount: 0.05,
+                _meta: { ETag: "1234567890" }
+            },
+            {
+                id: "2",
+                description: "Bigger customer",
+                discount: 0.15,
+                _meta: { ETag: "1234567890" }
+            }
+        ]);
+        expect(businessTypes._links).toStrictEqual([
+            {
+                title: "HTML",
+                rel: "download",
+                href: "?format=HTML"
+            }
+        ]);
     });
 
     it("get Business Type #2", async () => {
@@ -41,22 +57,43 @@ describe("Business Types Store", () => {
     it("update Business Type #2", async () => {
         await businessTypes.initialize();
         await businessTypes.get("2");
-        await businessTypes.save("2", { description: "Bigger customer", discount: 0.25 });
+        await businessTypes.save("2", {
+            description: "Bigger customer",
+            discount: 0.25
+        });
         expect(businessTypes.items).toStrictEqual([
-            { id: "1", description: "Big customer", discount: 0.05, _meta: { ETag: "1234567890" }},
-            { id: "2", description: "Bigger customer", discount: 0.25, _meta: { ETag: "1234567891" }}
+            {
+                id: "1",
+                description: "Big customer",
+                discount: 0.05,
+                _meta: { ETag: "1234567890" }
+            },
+            {
+                id: "2",
+                description: "Bigger customer",
+                discount: 0.25,
+                _meta: { ETag: "1234567891" }
+            }
         ]);
     });
 
     it("get Invalid Business Type #3", async () => {
         await businessTypes.initialize();
-        await expect(async () => {await businessTypes.get("3")}).rejects.toThrow("HTTP Error: 404");
+        await expect(async () => {
+            await businessTypes.get("3");
+        }).rejects.toThrow("HTTP Error: 404");
     });
 
     it("add Business Type #3", async () => {
         await businessTypes.initialize();
-        await businessTypes.add({ id: "3", description: "Great customer", discount: 0.22 });
-        expect(businessTypes.items[businessTypes.items.length-1]).toStrictEqual({
+        await businessTypes.add({
+            id: "3",
+            description: "Great customer",
+            discount: 0.22
+        });
+        expect(
+            businessTypes.items[businessTypes.items.length - 1]
+        ).toStrictEqual({
             _meta: { ETag: "1234567891" },
             id: "3",
             description: "Great customer",

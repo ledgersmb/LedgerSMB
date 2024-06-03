@@ -13,8 +13,7 @@ import { createPinia } from "pinia";
 
 const dojoParser = require("dojo/parser");
 
-let app;
-let appName;
+let app, appName;
 let lsmbDirective = {
     beforeMount(el, binding /* , vnode */) {
         let handler = (event) => {
@@ -34,10 +33,7 @@ if (document.getElementById("main")) {
         },
         mounted() {
             window.__lsmbLoadLink = (url) =>
-                this.$router.push(
-                    url.replace(/^https?:\/\/(?:[^@/]+)/, "")
-                );
-
+                this.$router.push(url.replace(/^https?:\/\/(?:[^@/]+)/, ""));
             let m = document.getElementById("main");
             dojoParser.parse(m).then(() => {
                 document.body.setAttribute("data-lsmb-done", "true");
@@ -54,6 +50,7 @@ if (document.getElementById("main")) {
         .use(createPinia());
 
     useSessionUserStore().initialize();
+    // eslint-disable-next-line vue/multi-word-component-names
     app.component("Toaster", Toaster);
     const toasterMachine = createToasterMachine({ items: [] }, {});
     app.provide("toaster-machine", toasterMachine);

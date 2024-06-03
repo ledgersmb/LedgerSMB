@@ -1,5 +1,5 @@
 /** @format */
-
+/* eslint-disable no-unused-vars */
 const rtlDetect = require("rtl-detect");
 
 import { createI18n } from "vue-i18n";
@@ -12,7 +12,7 @@ function _mapLocale(locale) {
     return locale;
 }
 
-import messages from '@/locales/en.json';
+import messages from "@/locales/en.json";
 import { nextTick } from "vue";
 
 const i18n = createI18n({
@@ -32,22 +32,24 @@ export async function setI18nLanguage(lang) {
     // If the language hasn't been loaded yet
     if (!i18n.global.availableLocales.includes(locale)) {
         try {
-            const _messages = await import(/* webpackChunkName: "lang-[request]" */ `@/locales/${locale}.json`);
+            const _messages = await import(
+                /* webpackChunkName: "lang-[request]" */ `@/locales/${locale}.json`
+            );
             i18n.global.setLocaleMessage(locale, _messages.default);
-        }
-        catch {
-            const strippedLocale = locale.replace(/_[a-z]+/i, '');
+        } catch (e) {
+            const strippedLocale = locale.replace(/_[a-z]+/i, "");
             try {
-                const _messages = await import(/* webpackChunkName: "lang-[request]" */ `@/locales/${strippedLocale}.json`);
+                const _messages = await import(
+                    /* webpackChunkName: "lang-[request]" */ `@/locales/${strippedLocale}.json`
+                );
                 i18n.global.setLocaleMessage(strippedLocale, _messages.default);
                 locale = strippedLocale;
-            }
-            catch {
+            } catch (f) {
                 locale = "en";
             }
         }
     }
-    if ( i18n.global.locale.value !== locale ){
+    if (i18n.global.locale.value !== locale) {
         i18n.global.locale.value = locale;
     }
     document.querySelector("html").setAttribute("lang", locale);
@@ -59,6 +61,6 @@ export async function setI18nLanguage(lang) {
     return nextTick();
 }
 
-await setI18nLanguage({value: window.lsmbConfig.language});
+await setI18nLanguage({ value: window.lsmbConfig.language });
 
 export default i18n;

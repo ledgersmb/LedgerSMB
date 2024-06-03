@@ -1,7 +1,9 @@
+/** @format */
+
 // MSW Handlers
 
 // Stores
-import { businessTypesHandlers} from "./store_business-types_handlers";
+import { businessTypesHandlers } from "./store_business-types_handlers";
 import { gifiHandlers } from "./store_gifi_handlers";
 import { countriesHandlers } from "./store_countries_handlers";
 import { languageHandlers } from "./store_language_handlers";
@@ -14,16 +16,15 @@ import { warehousesHandlers } from "./store_warehouses_handlers";
 import { loginHandlers } from "./login_handlers";
 
 export const handlers = [
-  // Stores
-  ...businessTypesHandlers,
-  ...countriesHandlers,
-  ...gifiHandlers,
-  ...languageHandlers,
-  ...pricegroupHandlers,
-  ...sessionUserHandlers,
-  ...sicsHandlers,
-  ...warehousesHandlers,
-  // Views
-  ...loginHandlers
+    // Stores
+    ...businessTypesHandlers,
+    ...countriesHandlers,
+    ...gifiHandlers,
+    ...languageHandlers,
+    ...pricegroupHandlers,
+    ...sessionUserHandlers,
+    ...sicsHandlers,
+    ...warehousesHandlers,
+    // Views
+    ...loginHandlers
 ];
-

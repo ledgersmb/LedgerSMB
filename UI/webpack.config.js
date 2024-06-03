@@ -1,5 +1,5 @@
 /** @format */
-/* eslint global-require:0, no-param-reassign:0, no-unused-vars:0, no-inner-declarations:0 */
+/* eslint global-require:0, no-unused-vars:0 */
 /* global getConfig */
 
 const TARGET = process.env.npm_lifecycle_event;
@@ -9,7 +9,6 @@ if (TARGET !== "readme") {
     const glob = require("glob");
     const path = require("path");
     const webpack = require("webpack");
-
     const BundleAnalyzerPlugin =
         require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
     const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via npm
@@ -23,17 +22,17 @@ if (TARGET !== "readme") {
     const UnusedWebpackPlugin = require("unused-webpack-plugin");
     const VirtualModulesPlugin = require("webpack-virtual-modules");
     const { VueLoaderPlugin } = require("vue-loader");
+    // eslint-disable-next-line
     const { WebpackDeduplicationPlugin } = require("webpack-deduplication-plugin");
-
     const argv = require("yargs").argv;
     const prodMode =
         process.env.NODE_ENV === "production" ||
         argv.p ||
         argv.mode === "production";
+    const parallelJobs = process.env.CI ? 2 : true;
 
     // Make sure all modules follow desired mode
     process.env.NODE_ENV = prodMode ? "production" : "development";
-    const parallelJobs = process.env.CI ? 2 : true;
 
     /* FUNCTIONS */
     var includedRequires = [];
@@ -67,8 +66,10 @@ if (TARGET !== "readme") {
 
         for (var i = 0; i < files.length; i++) {
             const entry = files[i];
-            const dirName = path.dirname(entry).replace(/\.\/css\/?/,"");
-            const keyName = (dirName ? dirName + "/" : "" ) + path.basename(entry, path.extname(entry));
+            const dirName = path.dirname(entry).replace(/\.\/css\/?/, "");
+            const keyName =
+                (dirName ? dirName + "/" : "") +
+                path.basename(entry, path.extname(entry));
             entries[keyName] = path.join(__dirname, entry);
         }
         return entries;
@@ -76,7 +77,7 @@ if (TARGET !== "readme") {
 
     // Compute used data-dojo-type
     glob.sync("**/*.html", {
-        ignore: ["lib/ui-header.html", "js/**", "node_modules/**"],
+        ignore: ["lib/ui-header.html", "js/**", "node_modules/**"]
         // cwd: "."
     }).map(function (filename) {
         const requires = findDataDojoTypes(filename);
@@ -121,7 +122,6 @@ if (TARGET !== "readme") {
             return /node_modules/.test(file) || /_scripts/.test(file);
         }
     };
-
     const vue = {
         test: /\.vue$/,
         loader: "vue-loader",
@@ -131,18 +131,14 @@ if (TARGET !== "readme") {
             }
         }
     };
-
-
     const css = {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, "css-loader"]
     };
-
     const images = {
         test: /\.(png|jpe?g|gif)$/i,
         type: "asset"
     };
-
     const html = {
         test: /\.html$/,
         use: [
@@ -154,36 +150,35 @@ if (TARGET !== "readme") {
             }
         ]
     };
-
     const svg = {
         test: /\.svg$/,
         type: "asset/resource"
     };
-
     /* PLUGINS */
 
     const CleanWebpackPluginOptions = {
         dry: false,
         verbose: false
     }; // delete all files in the js directory without deleting this folder
-
     const StylelintPluginOptions = {
         files: "**/*.css"
     };
-
     // Copy non-packed resources needed by the app to the release directory
     const CopyWebpackPluginOptions = {
         patterns: [
             { context: "node_modules", from: "dijit/icons/**/*", to: "." },
             { context: "node_modules", from: "dijit/nls/**/*", to: "." },
             { context: "node_modules", from: "dojo/nls/**/*", to: "." },
-            { context: "node_modules", from: "dojo/resources/**/*", to: "." }
+            {
+                context: "node_modules",
+                from: "dojo/resources/**/*",
+                to: "."
+            }
         ],
         options: {
             concurrency: 100
         }
     };
-
     const DojoWebpackPluginOptions = {
         loaderConfig: require("./js-src/lsmb/webpack.loaderConfig.js"),
         environment: { dojoRoot: "js" }, // used at run time for non-packed resources (e.g. blank.gif)
@@ -191,22 +186,21 @@ if (TARGET !== "readme") {
         locales: getPOFilenames("src/locales", ".json"),
         noConsole: true
     };
-
     // dojo/domReady (only works if the DOM is ready when invoked)
     const NormalModuleReplacementPluginOptionsDomReady = function (data) {
         const match = /^dojo\/domReady!(.*)$/.exec(data.request);
+
         data.request = "dojo/loaderProxy?loader=dojo/domReady!" + match[1];
     };
-
     const NormalModuleReplacementPluginOptionsSVG = function (data) {
         var match = /^svg!(.*)$/.exec(data.request);
+
         data.request =
             "dojo/loaderProxy?loader=svg&deps=dojo/text%21" +
             match[1] +
             "!" +
             match[1];
     };
-
     const UnusedWebpackPluginOptions = {
         // Source directories
         directories: [
@@ -218,14 +212,12 @@ if (TARGET !== "readme") {
         // Root directory (optional)
         root: __dirname
     };
-
     // Generate entries from file pattern
     const mapFilenamesToEntries = (pattern) =>
         glob.sync(pattern).reduce((entries, filename) => {
             const [, name] = filename.match(/([^/]+)\.css$/);
             return { ...entries, [name]: filename };
         }, {});
-
     const _dijitThemes = "+(claro|nihilo|soria|tundra)";
     const lsmbCSS = {
         ...mapFilenamesToEntries(path.resolve("css/*.css")),
@@ -239,10 +231,10 @@ if (TARGET !== "readme") {
             )
         )
     };
-
     // Compile bootstrap module as a virtual one
     const VirtualModulesPluginOptions = {
         "./bootstrap.js":
+            `/* eslint-disable */\n` +
             `define(["dojo/parser","dojo/ready","` +
             includedRequires.join('","') +
             `"], function(parser, ready) {\n` +
@@ -296,11 +288,14 @@ if (TARGET !== "readme") {
 
         // Handle HTML
         new HtmlWebpackPlugin({
-            inject: 'body', // Tags are injected manually in the content below
+            inject: "body", // Tags are injected manually in the content below
             minify: false, // Adjust t/16-schema-upgrade-html.t if prodMode is used,
             filename: "ui-header.html",
             mode: prodMode ? "production" : "development",
-            excludeChunks: [...Object.keys(lsmbCSS),...Object.keys(globCssEntries("./css/**/*.css"))],
+            excludeChunks: [
+                ...Object.keys(lsmbCSS),
+                ...Object.keys(globCssEntries("./css/**/*.css"))
+            ],
             template: "lib/ui-header.html"
         }),
 
@@ -337,7 +332,6 @@ if (TARGET !== "readme") {
             __VUE_PROD_DEVTOOLS__: true
         })
     ];
-
     var pluginsProd = [
         ...pluginsCommon,
 
@@ -346,8 +340,6 @@ if (TARGET !== "readme") {
             __VUE_PROD_DEVTOOLS__: true
         })
     ];
-
-
     var pluginsDev = [
         ...pluginsCommon,
 
@@ -361,7 +353,6 @@ if (TARGET !== "readme") {
             __VUE_PROD_DEVTOOLS__: true
         })
     ];
-
     var pluginsList = prodMode
         ? [
               // Clean js before building (must be first)
@@ -386,7 +377,7 @@ if (TARGET !== "readme") {
         runtimeChunk: "multiple",
         splitChunks: {
             cacheGroups: {
-                node_modules: {
+                nodeModules: {
                     test(module) {
                         // `module.resource` contains the absolute path of the file on disk.
                         // Note the usage of `path.sep` instead of / or \, for cross-platform compatibility.
@@ -409,7 +400,6 @@ if (TARGET !== "readme") {
             }
         }
     };
-
     /* WEBPACK CONFIG */
 
     const webpackConfigs = {
@@ -513,11 +503,11 @@ if (TARGET !== "readme") {
             static: [
                 {
                     directory: __dirname,
-                    publicPath: '/'
+                    publicPath: "/"
                 },
                 {
                     directory: __dirname,
-                    publicPath: '/app'
+                    publicPath: "/app"
                 }
             ],
             watchFiles: [

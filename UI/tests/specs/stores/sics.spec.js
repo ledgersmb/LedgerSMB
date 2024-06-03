@@ -17,14 +17,24 @@ describe("Sic Store", () => {
         await sics.initialize();
         expect(sics.fields).toStrictEqual(["code", "sictype", "description"]);
         expect(sics.items).toStrictEqual([
-            { code: "541330", description: "Engineering service", _meta: { ETag: "1234567890" } },
-            { code: "611430", description: "Professional and management development training", _meta: { ETag: "1234567889" } }
+            {
+                code: "541330",
+                description: "Engineering service",
+                _meta: { ETag: "1234567890" }
+            },
+            {
+                code: "611430",
+                description: "Professional and management development training",
+                _meta: { ETag: "1234567889" }
+            }
         ]);
-        expect(sics._links).toStrictEqual([{
-            title : "HTML",
-            rel : "download",
-            href : "?format=HTML"
-        }]);
+        expect(sics._links).toStrictEqual([
+            {
+                title: "HTML",
+                rel: "download",
+                href: "?format=HTML"
+            }
+        ]);
     });
 
     it("get Computer systems integrators sics 541330", async () => {
@@ -40,22 +50,38 @@ describe("Sic Store", () => {
     it("save Computer Systems Design and Related Services sic 541330", async () => {
         await sics.initialize();
         await sics.get("541330");
-        await sics.save("541330", { code: "541330", description: "Engineering services" });
+        await sics.save("541330", {
+            code: "541330",
+            description: "Engineering services"
+        });
         expect(sics.items).toStrictEqual([
-            { code: "541330", description: "Engineering services", _meta: { ETag: "1234567891" } },
-            { code: "611430", description: "Professional and management development training", _meta: { ETag: "1234567889" } }
+            {
+                code: "541330",
+                description: "Engineering services",
+                _meta: { ETag: "1234567891" }
+            },
+            {
+                code: "611430",
+                description: "Professional and management development training",
+                _meta: { ETag: "1234567889" }
+            }
         ]);
     });
 
     it("get Invalid sic 541510", async () => {
         await sics.initialize();
-        await expect(async () => {await sics.get("541510")}).rejects.toThrow("HTTP Error: 404");
+        await expect(async () => {
+            await sics.get("541510");
+        }).rejects.toThrow("HTTP Error: 404");
     });
 
     it("add Design of computer systems sic 541510", async () => {
         await sics.initialize();
-        await sics.add({ code: "541510", description: "Design of computer systems" });
-        expect(sics.items[sics.items.length-1]).toStrictEqual({
+        await sics.add({
+            code: "541510",
+            description: "Design of computer systems"
+        });
+        expect(sics.items[sics.items.length - 1]).toStrictEqual({
             _meta: { ETag: "1234567891" },
             code: "541510",
             description: "Design of computer systems"

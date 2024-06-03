@@ -9,7 +9,7 @@ export const useLanguagesStore = defineStore("languages", {
     ...configStoreTemplate,
     getters: {
         ...configGetters,
-        default: (state) => state.items.find((elm) => elm.default),
+        default: (state) => state.items.find((elm) => elm.default)
     },
     actions: {
         ...configActions,

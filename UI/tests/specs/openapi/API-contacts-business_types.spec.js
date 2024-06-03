@@ -1,17 +1,18 @@
 /** @format */
+/* global process, require */
 
 // Import test packages
 import jestOpenAPI from "jest-openapi";
 import { StatusCodes } from "http-status-codes";
 import { create_database, drop_database } from "./database";
-import { server } from '../../common/mocks/server.js'
+import { server } from "../../common/mocks/server.js";
 
 // Load an OpenAPI file (YAML or JSON) into this plugin
-const openapi = process.env.PWD.replace("/UI","");
-jestOpenAPI( openapi + "/openapi/API.yaml");
+const openapi = process.env.PWD.replace("/UI", "");
+jestOpenAPI(openapi + "/openapi/API.yaml");
 
 // Load the API definition
-const API_yaml = require (openapi + "/openapi/API.yaml");
+const API_yaml = require(openapi + "/openapi/API.yaml");
 
 // Set API version to use
 const api = "erp/api/v0";
@@ -32,7 +33,7 @@ beforeAll(() => {
 
     // Establish API mocking before all tests.
     server.listen({
-        onUnhandledRequest: 'bypass'
+        onUnhandledRequest: "bypass"
     });
 });
 
@@ -40,7 +41,7 @@ afterAll(() => {
     drop_database(company);
 });
 
-const emulateAxiosResponse = async(res) => {
+const emulateAxiosResponse = async (res) => {
     return {
         data: await res.json(),
         status: res.status,
@@ -48,7 +49,7 @@ const emulateAxiosResponse = async(res) => {
         headers: res.headers,
         request: {
             path: res.url,
-            method: 'GET'
+            method: "GET"
         }
     };
 };
@@ -56,7 +57,9 @@ const emulateAxiosResponse = async(res) => {
 // Log in before each test
 beforeEach(async () => {
     let r = await fetch(
-        serverUrl + "/login.pl?action=authenticate&company=" + encodeURI(company),
+        serverUrl +
+            "/login.pl?action=authenticate&company=" +
+            encodeURI(company),
         {
             method: "POST",
             body: JSON.stringify({
@@ -108,18 +111,24 @@ describe("Retrieving all Business Types", () => {
 
 describe("Retrieving all Business Types with old syntax should fail", () => {
     it("GET /contacts/business-types/ should fail", async () => {
-        const res = await fetch(serverUrl + "/" + api + "/contacts/business-types/", {
-            headers: headers
-        });
+        const res = await fetch(
+            serverUrl + "/" + api + "/contacts/business-types/",
+            {
+                headers: headers
+            }
+        );
         expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     });
 });
 
 describe("Retrieve non-existant Business Type", () => {
     it("GET /contacts/business-types/1 should not retrieve our Business Types", async () => {
-        const res = await fetch(serverUrl + "/" + api + "/contacts/business-types/1", {
-            headers: headers
-        });
+        const res = await fetch(
+            serverUrl + "/" + api + "/contacts/business-types/1",
+            {
+                headers: headers
+            }
+        );
         expect(res.status).toEqual(StatusCodes.NOT_FOUND);
     });
 });
@@ -147,13 +156,17 @@ describe("Adding the IT Business Types", () => {
 
 describe("Validate against the default Business Type", () => {
     it("GET /contacts/business-types/1 should validate the new Business Type", async () => {
-        let res = await fetch(serverUrl + "/" + api + "/contacts/business-types/1", {
-            headers: headers
-        });
+        let res = await fetch(
+            serverUrl + "/" + api + "/contacts/business-types/1",
+            {
+                headers: headers
+            }
+        );
         expect(res.status).toEqual(StatusCodes.OK);
 
         // Pick the example
-        const businessTypeExample = API_yaml.components.examples.validBusinessType.value;
+        const businessTypeExample =
+            API_yaml.components.examples.validBusinessType.value;
 
         // Assert that the response matches the example in the spec
         res = await emulateAxiosResponse(res);
@@ -249,7 +262,8 @@ describe("Not removing the new IT Business Types", () => {
         const etag = res.headers.get("etag");
         expect(etag).toBeDefined();
         res = await fetch(
-            serverUrl + "/" + api + "/contacts/business-types/1", {
+            serverUrl + "/" + api + "/contacts/business-types/1",
+            {
                 method: "DELETE",
                 headers: { ...headers, "If-Match": etag }
             }

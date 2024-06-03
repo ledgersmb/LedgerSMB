@@ -1,5 +1,7 @@
-<script setup>
+<!-- @format -->
+<!-- eslint-disable prettier/prettier -->
 
+<script setup>
 import { useLanguagesStore } from "@/store/languages";
 import { useI18n } from "vue-i18n";
 import ConfigTable from "@/components/ConfigTable.vue";
@@ -22,5 +24,6 @@ const store = useLanguagesStore();
         storeId="code"
         defaultSelectable="true"
         editRole="language_edit"
-        createRole="language_create" />
+        createRole="language_create"
+    />
 </template>

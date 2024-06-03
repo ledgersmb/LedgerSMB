@@ -1,3 +1,6 @@
+/** @format */
+/* eslint-disable camelcase */
+
 // Import test packages
 import { spawnSync } from "child_process";
 
@@ -60,7 +63,7 @@ export function load_coa(username, password, company, coa) {
         {
             cwd: process.env.PWD + "/.."
         }
-        );
+    );
     if (cmd.status !== 0) {
         throw new Error(cmd.stderr.toString());
     }
@@ -78,20 +81,24 @@ export function initialize(company, file) {
         [
             `--username=${pg_user}`,
             `--host=${pg_host}`,
-            "-d", company,
-            "-c", "set search_path='xyz','public'",
-            "-v", "ON_ERROR_STOP=on",
-            "-f", file
+            "-d",
+            company,
+            "-c",
+            "set search_path='xyz','public'",
+            "-v",
+            "ON_ERROR_STOP=on",
+            "-f",
+            file
         ],
         {
             cwd: process.env.PWD + "/..",
             env: {
                 ...process.env,
                 PG_PASSWORD: pg_pwd,
-                PERL5OPT: ''
+                PERL5OPT: ""
             }
         }
-        );
+    );
     if (cmd.status !== 0) {
         throw new Error(cmd.stderr.toString());
     }
@@ -104,16 +111,12 @@ export function initialize(company, file) {
 }
 
 export function drop_database(company) {
-    let cmd = spawnSync(
-        "dropdb",
-        [company],
-        {
-            env: {
-                ...process.env,
-                PERL5OPT: ''
-            }
+    let cmd = spawnSync("dropdb", [company], {
+        env: {
+            ...process.env,
+            PERL5OPT: ""
         }
-    );
+    });
     if (cmd.status !== 0) {
         throw new Error(cmd.stderr.toString());
     }

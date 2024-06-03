@@ -1,16 +1,14 @@
-<script setup>
+<!-- @format -->
 
+<script setup>
 import { useWarehousesStore } from "@/store/warehouses";
 import { useI18n } from "vue-i18n";
 import ConfigTable from "@/components/ConfigTable.vue";
 
 const { t } = useI18n();
-const COLUMNS = [
-    { key: "description", type: "text",     head: t("Description") },
-];
+const COLUMNS = [{ key: "description", type: "text", head: t("Description") }];
 
 const warehousesStore = useWarehousesStore();
-
 </script>
 
 <template>
@@ -20,5 +18,6 @@ const warehousesStore = useWarehousesStore();
         :store="warehousesStore"
         storeId="id"
         editRole="warehouse_edit"
-        createRole="warehouse_create" />
+        createRole="warehouse_create"
+    />
 </template>

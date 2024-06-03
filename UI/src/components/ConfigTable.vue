@@ -1,5 +1,6 @@
-<script setup>
+<!-- @format -->
 
+<script setup>
 import { computed, inject } from "vue";
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
@@ -41,7 +42,6 @@ const absURL = new URL(apiURL.value, window.location);
 function u(relURL) {
     return new URL(relURL, absURL);
 }
-
 </script>
 
 <template>
@@ -52,27 +52,28 @@ function u(relURL) {
                     <th v-if="props.defaultSelectable">
                         {{ $t("Default") }}
                     </th>
-                    <th v-for="column in props.columns"
-                        :key="column.key">{{ column.head }}</th>
-                    <th></th>
+                    <th v-for="column in props.columns" :key="column.key">
+                        {{ column.head }}
+                    </th>
+                    <th />
                 </tr>
             </thead>
             <tbody v-if="state == 'loading'" class="dynatableLoading">
                 <tr>
                     <th :colspan="props.columns.length + 1">
-                        {{ $t("Loading...")}}
+                        {{ $t("Loading...") }}
                     </th>
                 </tr>
             </tbody>
             <tbody v-else-if="state == 'error'" class="dynatableError">
                 <tr>
                     <th :colspan="props.columns.length + 1">
-                        {{ $t("Error loading data...")}}
+                        {{ $t("Error loading data...") }}
                     </th>
                 </tr>
             </tbody>
             <template v-else>
-                <tbody class="dynatableData" >
+                <tbody class="dynatableData">
                     <ConfigTableRow
                         v-for="item in items"
                         :id="item[props.storeId]"
@@ -84,7 +85,9 @@ function u(relURL) {
                         :editingId="editingId"
                         :store="props.store"
                         :type="hasEdit ? 'existing' : 'uneditable'"
-                        @modifying="send({ type: 'modify', rowId: item[props.storeId] })"
+                        @modifying="
+                            send({ type: 'modify', rowId: item[props.storeId] })
+                        "
                         @savingAsDefault="send('saveDefault')"
                         @idle="send('complete')"
                     />
@@ -111,4 +114,3 @@ function u(relURL) {
         </span>
     </div>
 </template>
-
