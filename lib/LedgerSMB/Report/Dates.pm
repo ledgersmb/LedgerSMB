@@ -125,7 +125,6 @@ These are the first and last date in acc_trans.
 
 =cut
 
-
 sub get_bracket_dates {
     my ($self) = @_;
     my $return_hashref = {};
@@ -241,9 +240,6 @@ sub _set_lazy_dates {
               $self->date_to;
               return;
 }
-
-
-
 
 before 'render' => sub {
               my ($self) = @_;

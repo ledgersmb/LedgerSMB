@@ -74,8 +74,9 @@ sub generate_income_statement {
         $rpt = LedgerSMB::Report::PNL::Income_Statement->new(
             %$request,
             formatter_options => $request->formatter_options,
+            from_date  => $request->{from_date} ? $request->parse_date( $request->{from_date} ) : undef,
+            to_date  => $request->{to_date} ? $request->parse_date( $request->{to_date} ) : undef,
             column_path_prefix => [ 0 ]);
-        #die np $rpt;
         $rpt->run_report($request);
 
         for my $key (qw(from_month from_year from_date to_date interval)) {

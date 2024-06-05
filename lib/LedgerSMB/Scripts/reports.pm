@@ -193,20 +193,18 @@ Generates a balance sheet
 
 =cut
 
-use Log::Any;
-my $logger = Log::Any->get_logger(category => 'LedgerSMB::Scripts::reports');
-
 sub generate_balance_sheet {
     my ($request) = @_;
-    $logger->debug("Stub LedgerSMB::Scripts::reports->generate_balance_sheet\n");
     my $rpt = LedgerSMB::Report::Balance_Sheet->new(
         %$request,
         formatter_options => $request->formatter_options,
+        from_date  => $request->{from_date} ? $request->parse_date( $request->{from_date} ) : undef,
+        to_date  => $request->{to_date} ? $request->parse_date( $request->{to_date} ) : undef,
         column_path_prefix => [ 0 ]);
     $rpt->run_report($request);
 
-    for my $key (qw(from_month from_year from_date to_date internal)) {
-        delete $request->{$_} for (grep { /^$key/ } keys %$request);
+    for my $key (qw(from_date to_date date_from date_to)) {
+        delete $rpt->{$_} for (grep { /^$key/ } keys %$rpt);
     }
 
     for my $cmp_dates (@{$rpt->comparisons}) {
