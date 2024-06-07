@@ -4543,10 +4543,10 @@ eslint-compat-utils@^0.1.2:
   resolved "https://registry.yarnpkg.com/eslint-compat-utils/-/eslint-compat-utils-0.1.2.tgz#f45e3b5ced4c746c127cf724fb074cd4e730d653"
   integrity sha512-Jia4JDldWnFNIru1Ehx1H5s9/yxiRHY/TimCuUc0jNexew3cF1gI6CYZil1ociakfWO3rRqFjl1mskBblB3RYg==
 
-eslint-config-eslint@10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-eslint/-/eslint-config-eslint-10.0.0.tgz#253fc138ef2ee172c6134046b2084d61ae93b89f"
-  integrity sha512-ejGeXkQLyAEqUBr6UE246sZBRqscQVuJOTuYLYIt+GaCrfRodLsoJ6/oXRHZumcLDbZYnZoXRpgYy8+NJ/UOOw==
+eslint-config-eslint@11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-eslint/-/eslint-config-eslint-11.0.0.tgz#5bb535544d462750879fdfaac70473838d763975"
+  integrity sha512-AWmzAfDUUaHYZzGQguHXzh/PkKHfrwttXIglqE0xWSkJDRhionaJVT1+niI1qKYRPn/FE5CHQIZ24L1u5rYSaw==
   dependencies:
     "@eslint-community/eslint-plugin-eslint-comments" "^4.3.0"
     "@eslint/js" "^9.0.0"
