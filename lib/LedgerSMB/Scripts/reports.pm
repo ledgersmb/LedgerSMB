@@ -203,10 +203,6 @@ sub generate_balance_sheet {
         column_path_prefix => [ 0 ]);
     $rpt->run_report($request);
 
-    for my $key (qw(from_date to_date date_from date_to)) {
-        delete $rpt->{$_} for (grep { /^$key/ } keys %$rpt);
-    }
-
     for my $cmp_dates (@{$rpt->comparisons}) {
         my $cmp = LedgerSMB::Report::Balance_Sheet->new(
             %$request,
