@@ -125,7 +125,6 @@ These are the first and last date in acc_trans.
 
 =cut
 
-
 sub get_bracket_dates {
     my ($self) = @_;
     my $return_hashref = {};
@@ -150,9 +149,9 @@ sub _collect_dates_comparisons {
 
     foreach my $i (1 .. $args{comparison_periods}) {
         push @dates, {
-            from_date => LedgerSMB::PGDate->from_input($args{"from_date_$i"}),
-            to_date => LedgerSMB::PGDate->from_input($args{"to_date_$i"}),
-            column_path_prefix => [ $i ]
+            from_date => LedgerSMB::PGDate->from_input($args{"from_date_$i"},$args{formatter_options}),
+            to_date => LedgerSMB::PGDate->from_input($args{"to_date_$i"},$args{formatter_options}),
+            column_path_prefix => [ sprintf('%02u', $i) ]
         };
     }
 
@@ -241,9 +240,6 @@ sub _set_lazy_dates {
               $self->date_to;
               return;
 }
-
-
-
 
 before 'render' => sub {
               my ($self) = @_;

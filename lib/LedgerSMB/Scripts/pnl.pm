@@ -74,8 +74,8 @@ sub generate_income_statement {
         $rpt = LedgerSMB::Report::PNL::Income_Statement->new(
             %$request,
             formatter_options => $request->formatter_options,
-            from_date  => $request->parse_date( $request->{from_date} ),
-            to_date  => $request->parse_date( $request->{to_date} ),
+            from_date  => $request->{from_date} ? $request->parse_date( $request->{from_date} ) : undef,
+            to_date  => $request->{to_date} ? $request->parse_date( $request->{to_date} ) : undef,
             column_path_prefix => [ 0 ]);
         $rpt->run_report($request);
 
@@ -85,7 +85,9 @@ sub generate_income_statement {
 
         for my $cmp_dates (@{$rpt->comparisons}) {
             my $cmp = LedgerSMB::Report::PNL::Income_Statement->new(
-                %$request, %$cmp_dates);
+                %$request,
+                formatter_options => $request->formatter_options,
+                %$cmp_dates);
             $cmp->run_report($request);
             $rpt->add_comparison($cmp);
         }
