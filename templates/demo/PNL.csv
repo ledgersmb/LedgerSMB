@@ -9,7 +9,7 @@ Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
 -?>
-account,description,is_heading,heading_account<?lsmb
+account,description,is_heading<?lsmb
  FOREACH col IN report.sorted_col_ids -?>
 ,"<?lsmb report.cheads.ids.$col.props.description ?>"<?lsmb END; ?>
 <?lsmb FOREACH row IN report.sorted_row_ids ; -?>
