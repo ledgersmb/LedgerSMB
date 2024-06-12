@@ -152,7 +152,7 @@ sub _collect_dates_comparisons {
         push @dates, {
             from_date => LedgerSMB::PGDate->from_input($args{"from_date_$i"}),
             to_date => LedgerSMB::PGDate->from_input($args{"to_date_$i"}),
-            column_path_prefix => [ $i ]
+            column_path_prefix => [ sprintf('%02u', $i) ]
         };
     }
 
