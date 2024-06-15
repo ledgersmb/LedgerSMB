@@ -46,6 +46,7 @@ exports[`Warehouses - register as a component should show dialog 1`] = `
               name="description"
               readonly=""
               type="text"
+              value="Modern warehouse"
             />
           </td>
           
@@ -70,6 +71,7 @@ exports[`Warehouses - register as a component should show dialog 1`] = `
               name="description"
               readonly=""
               type="text"
+              value="Huge warehouse"
             />
           </td>
           
@@ -94,6 +96,7 @@ exports[`Warehouses - register as a component should show dialog 1`] = `
               name="description"
               readonly=""
               type="text"
+              value="Moon warehouse"
             />
           </td>
           
@@ -175,6 +178,7 @@ exports[`Warehouses - register as a component should show dialog with editable d
               name="description"
               readonly=""
               type="text"
+              value="Modern warehouse"
             />
           </td>
           
@@ -224,6 +228,7 @@ exports[`Warehouses - register as a component should show dialog with editable d
               name="description"
               readonly=""
               type="text"
+              value="Huge warehouse"
             />
           </td>
           
@@ -273,6 +278,7 @@ exports[`Warehouses - register as a component should show dialog with editable d
               name="description"
               readonly=""
               type="text"
+              value="Moon warehouse"
             />
           </td>
           

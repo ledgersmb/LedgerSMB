@@ -49,6 +49,7 @@ exports[`GIFI - register as a component should show dialog 1`] = `
               name="accno"
               readonly=""
               type="text"
+              value="0000"
             />
           </td>
           <td
@@ -59,6 +60,7 @@ exports[`GIFI - register as a component should show dialog 1`] = `
               name="description"
               readonly=""
               type="text"
+              value="Dummy account"
             />
           </td>
           
@@ -83,6 +85,7 @@ exports[`GIFI - register as a component should show dialog 1`] = `
               name="accno"
               readonly=""
               type="text"
+              value="0001"
             />
           </td>
           <td
@@ -93,6 +96,7 @@ exports[`GIFI - register as a component should show dialog 1`] = `
               name="description"
               readonly=""
               type="text"
+              value="Dummy account 1"
             />
           </td>
           
@@ -261,6 +265,7 @@ exports[`GIFI - register as a component should show dialog with editable data 1`
               name="accno"
               readonly=""
               type="text"
+              value="0000"
             />
           </td>
           <td
@@ -271,6 +276,7 @@ exports[`GIFI - register as a component should show dialog with editable data 1`
               name="description"
               readonly=""
               type="text"
+              value="Dummy account"
             />
           </td>
           
@@ -320,6 +326,7 @@ exports[`GIFI - register as a component should show dialog with editable data 1`
               name="accno"
               readonly=""
               type="text"
+              value="0001"
             />
           </td>
           <td
@@ -330,6 +337,7 @@ exports[`GIFI - register as a component should show dialog with editable data 1`
               name="description"
               readonly=""
               type="text"
+              value="Dummy account 1"
             />
           </td>
           

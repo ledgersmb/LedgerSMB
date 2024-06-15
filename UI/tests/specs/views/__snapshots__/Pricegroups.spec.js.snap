@@ -46,6 +46,7 @@ exports[`Pricegroups - register as a component should show dialog 1`] = `
               name="description"
               readonly=""
               type="text"
+              value="Price group 1"
             />
           </td>
           
@@ -70,6 +71,7 @@ exports[`Pricegroups - register as a component should show dialog 1`] = `
               name="description"
               readonly=""
               type="text"
+              value="Price group 2"
             />
           </td>
           
@@ -151,6 +153,7 @@ exports[`Pricegroups - register as a component should show dialog with editable 
               name="description"
               readonly=""
               type="text"
+              value="Price group 1"
             />
           </td>
           
@@ -200,6 +203,7 @@ exports[`Pricegroups - register as a component should show dialog with editable 
               name="description"
               readonly=""
               type="text"
+              value="Price group 2"
             />
           </td>
           
