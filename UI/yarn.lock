@@ -1872,10 +1872,10 @@
   resolved "https://registry.yarnpkg.com/@mdn/browser-compat-data/-/browser-compat-data-5.3.9.tgz#cfdb769398a34be56b34f345e71a09658f011d51"
   integrity sha512-J7lLtHMEizYbI5T0Xlqpg1JXCz9JegZBeb7y3v/Nm8ScRw8TL9v3n+I3g1TFm+bLrRtwA33FKwX5znDwz+WzAQ==
 
-"@mdn/browser-compat-data@^5.3.13":
-  version "5.3.14"
-  resolved "https://registry.yarnpkg.com/@mdn/browser-compat-data/-/browser-compat-data-5.3.14.tgz#ab35599e6fe350005c04c9c5fb7fd4ab70a892b9"
-  integrity sha512-Y9XQrphVcE6u9xMm+gIqN86opbU/5s2W1pdPyKRyFV5B7+2jWM2gLI5JpfhZncaoDKvhy6FYwK04aCz5UM/bTQ==
+"@mdn/browser-compat-data@^5.5.19":
+  version "5.5.33"
+  resolved "https://registry.yarnpkg.com/@mdn/browser-compat-data/-/browser-compat-data-5.5.33.tgz#c1177469bc4d39fa24c2cd3df317039e2b465b4c"
+  integrity sha512-uO4uIBFn9D4UNyUmaueIWnE/IJhBlSJ7W1rANvDdaawhTX8CSgqUX8tj9/6a+1WjpL9Bgirf67d//S2VwDsfig==
 
 "@mswjs/cookies@^1.1.0":
   version "1.1.0"
@@ -3503,11 +3503,6 @@ caniuse-lite@^1.0.30001517:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001538.tgz#9dbc6b9af1ff06b5eb12350c2012b3af56744f3f"
   integrity sha512-HWJnhnID+0YMtGlzcp3T9drmBJUVDchPJ08tpUGFLs9CYlwWPH2uLgpHn8fND5pCgXVtnGS3H4QR9XLMHVNkHw==
 
-caniuse-lite@^1.0.30001524:
-  version "1.0.30001525"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001525.tgz#d2e8fdec6116ffa36284ca2c33ef6d53612fe1c8"
-  integrity sha512-/3z+wB4icFt3r0USMwxujAqRvaD/B7rvGTsKhbhSQErVrJvkZCLhgNLJxU8MevahQVH6hCU9FsHdNUFbiwmE7Q==
-
 caniuse-lite@^1.0.30001541:
   version "1.0.30001541"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001541.tgz#b1aef0fadd87fb72db4dcb55d220eae17b81cdb1"
@@ -3522,6 +3517,11 @@ caniuse-lite@^1.0.30001587:
   version "1.0.30001587"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001587.tgz#a0bce920155fa56a1885a69c74e1163fc34b4881"
   integrity sha512-HMFNotUmLXn71BQxg8cijvqxnIAofforZOwGsxyXJ0qugTdspUF4sPSJ2vhgprHCB996tIDzEq1ubumPDV8ULA==
+
+caniuse-lite@^1.0.30001605:
+  version "1.0.30001634"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001634.tgz#aa563c8e7aeaf552f7ead60371bc8d803425deaa"
+  integrity sha512-fbBYXQ9q3+yp1q1gBk86tOFs4pyn/yxFm5ZNP18OXJDfA3txImOY9PhfxVggZ4vRHDqoU8NrKU81eN0OtzOgRA==
 
 chalk@^2.1.0, chalk@^2.4.2:
   version "2.4.2"
@@ -4949,18 +4949,19 @@ eslint-plugin-amd@1.1.0:
   dependencies:
     requireindex "~1.1.0"
 
-eslint-plugin-compat@4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-compat/-/eslint-plugin-compat-4.2.0.tgz#eeaf80daa1afe495c88a47e9281295acae45c0aa"
-  integrity sha512-RDKSYD0maWy5r7zb5cWQS+uSPc26mgOzdORJ8hxILmWM7S/Ncwky7BcAtXVY5iRbKjBdHsWU8Yg7hfoZjtkv7w==
+eslint-plugin-compat@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-compat/-/eslint-plugin-compat-5.0.0.tgz#d09dff02397d81c9f5b1ac740ef45b39538aa21d"
+  integrity sha512-29KNWyFkUbNVf6TIKVe9SVCGCtHjML3HnUg9C8LG2GsXf7miAeBOgdMc1n2B5n0sHUzg1/A4IFly7Jyf1gSbgQ==
   dependencies:
-    "@mdn/browser-compat-data" "^5.3.13"
+    "@mdn/browser-compat-data" "^5.5.19"
     ast-metadata-inferer "^0.8.0"
-    browserslist "^4.21.10"
-    caniuse-lite "^1.0.30001524"
+    browserslist "^4.23.0"
+    caniuse-lite "^1.0.30001605"
     find-up "^5.0.0"
+    globals "^13.24.0"
     lodash.memoize "^4.1.2"
-    semver "^7.5.4"
+    semver "^7.6.0"
 
 eslint-plugin-es-x@^7.5.0:
   version "7.6.0"
