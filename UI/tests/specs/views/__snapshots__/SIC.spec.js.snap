@@ -49,6 +49,7 @@ exports[`SIC - register as a component should show dialog 1`] = `
               name="code"
               readonly=""
               type="text"
+              value="541330"
             />
           </td>
           <td
@@ -59,6 +60,7 @@ exports[`SIC - register as a component should show dialog 1`] = `
               name="description"
               readonly=""
               type="text"
+              value="Engineering service"
             />
           </td>
           
@@ -83,6 +85,7 @@ exports[`SIC - register as a component should show dialog 1`] = `
               name="code"
               readonly=""
               type="text"
+              value="611430"
             />
           </td>
           <td
@@ -93,6 +96,7 @@ exports[`SIC - register as a component should show dialog 1`] = `
               name="description"
               readonly=""
               type="text"
+              value="Professional and management development training"
             />
           </td>
           
@@ -265,6 +269,7 @@ exports[`SIC - register as a component should show dialog with editable data 1`]
               name="code"
               readonly=""
               type="text"
+              value="541330"
             />
           </td>
           <td
@@ -275,6 +280,7 @@ exports[`SIC - register as a component should show dialog with editable data 1`]
               name="description"
               readonly=""
               type="text"
+              value="Engineering service"
             />
           </td>
           
@@ -324,6 +330,7 @@ exports[`SIC - register as a component should show dialog with editable data 1`]
               name="code"
               readonly=""
               type="text"
+              value="611430"
             />
           </td>
           <td
@@ -334,6 +341,7 @@ exports[`SIC - register as a component should show dialog with editable data 1`]
               name="description"
               readonly=""
               type="text"
+              value="Professional and management development training"
             />
           </td>
           

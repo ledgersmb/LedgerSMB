@@ -49,6 +49,7 @@ exports[`BusinessTypes - register as a component should show dialog 1`] = `
               name="description"
               readonly=""
               type="text"
+              value="Big customer"
             />
           </td>
           <td
@@ -59,6 +60,7 @@ exports[`BusinessTypes - register as a component should show dialog 1`] = `
               name="discount"
               readonly=""
               type="text"
+              value="0.05"
             />
           </td>
           
@@ -83,6 +85,7 @@ exports[`BusinessTypes - register as a component should show dialog 1`] = `
               name="description"
               readonly=""
               type="text"
+              value="Bigger customer"
             />
           </td>
           <td
@@ -93,6 +96,7 @@ exports[`BusinessTypes - register as a component should show dialog 1`] = `
               name="discount"
               readonly=""
               type="text"
+              value="0.15"
             />
           </td>
           
@@ -177,6 +181,7 @@ exports[`BusinessTypes - register as a component should show dialog with editabl
               name="description"
               readonly=""
               type="text"
+              value="Big customer"
             />
           </td>
           <td
@@ -187,6 +192,7 @@ exports[`BusinessTypes - register as a component should show dialog with editabl
               name="discount"
               readonly=""
               type="text"
+              value="0.05"
             />
           </td>
           
@@ -236,6 +242,7 @@ exports[`BusinessTypes - register as a component should show dialog with editabl
               name="description"
               readonly=""
               type="text"
+              value="Bigger customer"
             />
           </td>
           <td
@@ -246,6 +253,7 @@ exports[`BusinessTypes - register as a component should show dialog with editabl
               name="discount"
               readonly=""
               type="text"
+              value="0.15"
             />
           </td>
           
