@@ -45,6 +45,7 @@ exports[`Languages should show dialog 1`] = `
               name="code"
               readonly=""
               type="text"
+              value="en"
             />
           </td>
           <td
@@ -55,6 +56,7 @@ exports[`Languages should show dialog 1`] = `
               name="description"
               readonly=""
               type="text"
+              value="English"
             />
           </td>
           
@@ -75,6 +77,7 @@ exports[`Languages should show dialog 1`] = `
               name="code"
               readonly=""
               type="text"
+              value="fr"
             />
           </td>
           <td
@@ -85,6 +88,7 @@ exports[`Languages should show dialog 1`] = `
               name="description"
               readonly=""
               type="text"
+              value="Français"
             />
           </td>
           
@@ -164,6 +168,7 @@ exports[`Languages should show dialog with editable data 1`] = `
               name="code"
               readonly=""
               type="text"
+              value="en"
             />
           </td>
           <td
@@ -174,6 +179,7 @@ exports[`Languages should show dialog with editable data 1`] = `
               name="description"
               readonly=""
               type="text"
+              value="English"
             />
           </td>
           
@@ -219,6 +225,7 @@ exports[`Languages should show dialog with editable data 1`] = `
               name="code"
               readonly=""
               type="text"
+              value="fr"
             />
           </td>
           <td
@@ -229,6 +236,7 @@ exports[`Languages should show dialog with editable data 1`] = `
               name="description"
               readonly=""
               type="text"
+              value="Français"
             />
           </td>
           
