@@ -1996,10 +1996,10 @@
   resolved "https://registry.yarnpkg.com/@mdn/browser-compat-data/-/browser-compat-data-5.3.9.tgz#cfdb769398a34be56b34f345e71a09658f011d51"
   integrity sha512-J7lLtHMEizYbI5T0Xlqpg1JXCz9JegZBeb7y3v/Nm8ScRw8TL9v3n+I3g1TFm+bLrRtwA33FKwX5znDwz+WzAQ==
 
-"@mdn/browser-compat-data@^5.5.19":
-  version "5.5.33"
-  resolved "https://registry.yarnpkg.com/@mdn/browser-compat-data/-/browser-compat-data-5.5.33.tgz#c1177469bc4d39fa24c2cd3df317039e2b465b4c"
-  integrity sha512-uO4uIBFn9D4UNyUmaueIWnE/IJhBlSJ7W1rANvDdaawhTX8CSgqUX8tj9/6a+1WjpL9Bgirf67d//S2VwDsfig==
+"@mdn/browser-compat-data@^5.5.35":
+  version "5.5.40"
+  resolved "https://registry.yarnpkg.com/@mdn/browser-compat-data/-/browser-compat-data-5.5.40.tgz#1c2e39d0a14f92c74960fee609345c9ab4b3a433"
+  integrity sha512-5hByR+TGX/iKG7Uv3Zk8f+aUftkBcHqWE3Ym229jxm+cRjeJSBZzUKPm6H+p46vaeooql72kydrqpz0B3UrErw==
 
 "@mswjs/cookies@^1.1.0":
   version "1.1.0"
@@ -3630,7 +3630,7 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@1.0.30001642:
+caniuse-lite@1.0.30001642, caniuse-lite@^1.0.30001639:
   version "1.0.30001642"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001642.tgz#6aa6610eb24067c246d30c57f055a9d0a7f8d05f"
   integrity sha512-3XQ0DoRgLijXJErLSl+bLnJ+Et4KqV1PY6JJBGAFlsNsz31zeAIncyeZfLCabHK/jtSh+671RM9YMldxjUPZtA==
@@ -3660,7 +3660,7 @@ caniuse-lite@^1.0.30001587:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001587.tgz#a0bce920155fa56a1885a69c74e1163fc34b4881"
   integrity sha512-HMFNotUmLXn71BQxg8cijvqxnIAofforZOwGsxyXJ0qugTdspUF4sPSJ2vhgprHCB996tIDzEq1ubumPDV8ULA==
 
-caniuse-lite@^1.0.30001605, caniuse-lite@^1.0.30001629:
+caniuse-lite@^1.0.30001629:
   version "1.0.30001634"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001634.tgz#aa563c8e7aeaf552f7ead60371bc8d803425deaa"
   integrity sha512-fbBYXQ9q3+yp1q1gBk86tOFs4pyn/yxFm5ZNP18OXJDfA3txImOY9PhfxVggZ4vRHDqoU8NrKU81eN0OtzOgRA==
@@ -5173,19 +5173,19 @@ eslint-plugin-amd@1.1.0:
   dependencies:
     requireindex "~1.1.0"
 
-eslint-plugin-compat@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-compat/-/eslint-plugin-compat-5.0.0.tgz#d09dff02397d81c9f5b1ac740ef45b39538aa21d"
-  integrity sha512-29KNWyFkUbNVf6TIKVe9SVCGCtHjML3HnUg9C8LG2GsXf7miAeBOgdMc1n2B5n0sHUzg1/A4IFly7Jyf1gSbgQ==
+eslint-plugin-compat@6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-compat/-/eslint-plugin-compat-6.0.0.tgz#196a2e19949e34f645e6294fa174704e6a5e0133"
+  integrity sha512-oIynkQYqGnW9ibHl1cGLER8XkUlKaOI8bS80Qz7CjKROvbQm4oN8fWb5l2cG9GJJ4h5eFIHPqkB9ZJuMzwpPFQ==
   dependencies:
-    "@mdn/browser-compat-data" "^5.5.19"
+    "@mdn/browser-compat-data" "^5.5.35"
     ast-metadata-inferer "^0.8.0"
-    browserslist "^4.23.0"
-    caniuse-lite "^1.0.30001605"
+    browserslist "^4.23.1"
+    caniuse-lite "^1.0.30001639"
     find-up "^5.0.0"
-    globals "^13.24.0"
+    globals "^15.7.0"
     lodash.memoize "^4.1.2"
-    semver "^7.6.0"
+    semver "^7.6.2"
 
 eslint-plugin-es-x@^7.5.0:
   version "7.6.0"
@@ -6077,6 +6077,11 @@ globals@^15.0.0:
   version "15.0.0"
   resolved "https://registry.yarnpkg.com/globals/-/globals-15.0.0.tgz#9c6cd4e54327ceaab563b4c17ee5e9d181c03fd2"
   integrity sha512-m/C/yR4mjO6pXDTm9/R/SpYTAIyaUB4EOzcaaMEl7mds7Mshct9GfejiJNQGjHHbdMPey13Kpu4TMbYi9ex1pw==
+
+globals@^15.7.0:
+  version "15.8.0"
+  resolved "https://registry.yarnpkg.com/globals/-/globals-15.8.0.tgz#e64bb47b619dd8cbf32b3c1a0a61714e33cbbb41"
+  integrity sha512-VZAJ4cewHTExBWDHR6yptdIBlx9YSSZuwojj9Nt5mBRXQzrKakDsVKQ1J63sklLvzAJm0X5+RpO4i3Y2hcOnFw==
 
 globalthis@^1.0.3:
   version "1.0.4"
@@ -10003,7 +10008,7 @@ semver@^7.6.0:
   dependencies:
     lru-cache "^6.0.0"
 
-semver@^7.6.3:
+semver@^7.6.2, semver@^7.6.3:
   version "7.6.3"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.6.3.tgz#980f7b5550bc175fb4dc09403085627f9eb33143"
   integrity sha512-oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A==
