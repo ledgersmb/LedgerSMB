@@ -31,6 +31,7 @@ Bugs fixed
 * Accounts marked for reconciliation can't be deleted (#7805)
 * Transactions and invoices with attachments can't be saved (#6018)
 * Aging statement shows functional instead of foreign currency amounts (#2162)
+* Incorrect starting balance of fx-based reconciliations (#8295)
 
 Cleanup & architecture improvements
 * Reference data factored out of database schema (#7648)

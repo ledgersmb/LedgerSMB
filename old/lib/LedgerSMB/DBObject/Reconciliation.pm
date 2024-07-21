@@ -558,7 +558,8 @@ sub previous_cleared_balance {
     my $r = $self->call_dbmethod(
         funcname => 'reconciliation__get_cleared_balance',
         args => {
-            report_date => $previous->{end_date}
+            report_date => $previous->{end_date},
+            fx_balance => $self->{recon_fx}
         }
     );
 

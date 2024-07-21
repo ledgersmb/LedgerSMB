@@ -35,7 +35,7 @@ BEGIN;
     SELECT has_function('reconciliation__check',array['date', 'integer']);
     SELECT has_function('reconciliation__delete_my_report',array['integer']);
     SELECT has_function('reconciliation__delete_unapproved',array['integer']);
-    SELECT has_function('reconciliation__get_cleared_balance',array['integer', 'date']);
+    SELECT has_function('reconciliation__get_cleared_balance',array['integer', 'date', 'boolean']);
     SELECT has_function('reconciliation__get_current_balance',array['integer', 'date']);
     SELECT has_function('reconciliation__new_report',array['integer', 'numeric', 'date', 'boolean', 'bigint']);
     SELECT has_function('reconciliation__pending_transactions',array['integer', 'numeric']);
