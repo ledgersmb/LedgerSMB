@@ -284,11 +284,17 @@ reports that have already been approved.  To purge old reconciliations you must
 disable the block_change_when_approved trigger on cr_report.$$;
 
 DROP FUNCTION IF EXISTS reconciliation__get_cleared_balance(int);
-CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int,
-   in_report_date date DEFAULT date_trunc('second', now()))
+DROP FUNCTION IF EXISTS reconciliation__get_cleared_balance(int,date);
+CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(
+  in_chart_id int,
+  in_report_date date DEFAULT date_trunc('second', now()),
+  in_fx_balance boolean DEFAULT false
+)
 RETURNS numeric AS
 $$
-  SELECT sum(ac.amount_bc) * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
+  SELECT CASE WHEN in_fx_balance THEN sum(ac.amount_tc)
+         ELSE sum(ac.amount_bc)
+         END * CASE WHEN c.category in('A', 'E') THEN -1 ELSE 1 END
     FROM account c
            JOIN acc_trans ac ON ac.chart_id = c.id
            JOIN transactions g ON g.id = ac.trans_id
@@ -308,9 +314,12 @@ $$
     GROUP BY c.id, c.category;
 $$ LANGUAGE sql;
 
-COMMENT ON FUNCTION reconciliation__get_cleared_balance(in_chart_id int,in_report_date date) IS
+COMMENT ON FUNCTION reconciliation__get_cleared_balance(in_chart_id int,
+                                                        in_report_date date,
+                                                        in_fx_balance boolean) IS
 $$ Gets the cleared balance of the account specified by chart_id, as cleared by reports
-on and before in_report_date.
+on and before in_report_date. Returns the foreign currency balance when 'in_fx_balance'
+is true.
 
 Please note that the cleared balance amount as at a sperific date may differ from the value
 returned by this function, if transactions prior to in_report_date are cleared using reports
