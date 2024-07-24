@@ -495,8 +495,13 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
        AND (in_ship_via IS NULL
           OR a.shipvia @@ plainto_tsquery(in_ship_via))
        AND (in_on_hold IS NULL OR in_on_hold = a.on_hold)
-       AND (in_from_date IS NULL OR a.transdate >= in_from_date)
-       AND (in_to_date IS NULL OR a.transdate <= in_to_date)
+       -- DO NOT filter by transaction date: it's possible
+       --   to pay transactions before their creation date.
+       --   Those payments *will* end up in the balance sheet
+       --   but with the filters below, *won't* appear in the
+       --   outstanding report, making it fail to reconcile...
+       -- AND (in_from_date IS NULL OR a.transdate >= in_from_date)
+       -- AND (in_to_date IS NULL OR a.transdate <= in_to_date)
        AND p.due::numeric(100,2) <> 0
        AND a.force_closed IS NOT TRUE
        AND (in_partnumber IS NULL
