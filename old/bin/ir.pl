@@ -78,22 +78,6 @@ sub edit_and_save {
     edit();
 }
 
-sub approve {
-    $form->call_procedure(funcname=>'draft_approve', args => [ $form->{id} ]);
-
-    if ($form->{callback}){
-        print "Location: $form->{callback}\n";
-        print "Status: 302 Found\n\n";
-        print qq|<html><body class="lsmb">|;
-        my $url = $form->{callback};
-        print qq|If you are not redirected automatically, click <a href="$url">|
-                . qq|here</a>.</body></html>|;
-
-    } else {
-        $form->info($locale->text('Draft Posted'));
-    }
-}
-
 sub new_screen {
     my @reqprops = qw(ARAP vc dbh stylesheet batch_id script type _locale _wire);
     $oldform = $form;
