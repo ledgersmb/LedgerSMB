@@ -11,15 +11,16 @@ on:
 
 jobs:
   noResponse:
+    if: github.repository_owner == 'ledgersmb'
     runs-on: ubuntu-latest
     steps:
-      - uses: lee-dohm/no-response@v0.5.0
+      - uses: actions/stale
         with:
-          token: ${{ github.token }}
+          days-before-issue-stale: 0
+          days-before-pr-stale: 0
+          stale-issue-label: waiting-for-user
           # Number of days of inactivity before an Issue is closed for lack of response
-          daysUntilClose: 90
+          days-before-close: 90
           # Label requiring a response
-          responseRequiredLabel: waiting-for-user
-          # Comment to post when closing an Issue for lack of response. Set to `false` to disable
-          closeComment: >
+          close-issue-message: >
             Closing: more than 90 days without user response. Feel free to reopen with your comments.
