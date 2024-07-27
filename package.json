@@ -91,7 +91,7 @@
     "eslint-plugin-n": "17.10.1",
     "eslint-plugin-package-json": "0.15.2",
     "eslint-plugin-prettier": "5.2.1",
-    "eslint-plugin-promise": "6.6.0",
+    "eslint-plugin-promise": "7.0.0",
     "eslint-plugin-snakecasejs": "2.2.0",
     "eslint-plugin-sort-dojo-dependency": "0.0.1",
     "eslint-plugin-vue": "9.27.0",
