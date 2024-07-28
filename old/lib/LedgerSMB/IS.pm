@@ -1241,11 +1241,14 @@ sub retrieve_invoice {
                       a.reverse, a.entity_credit_account as customer_id,
                       a.language_code, a.ponumber, a.crdate,
                       a.on_hold, a.description, a.setting_sequence,
+                      a.shipto as locationid, l.line_one, l.line_two,
+                      l.line_three, l.city, l.state, l.country_id, l.mail_code,
                       tran.workflow_id
                  FROM ar a
                  JOIN transactions tran USING (id)
             LEFT JOIN entity_employee em ON (em.entity_id = a.person_id)
             LEFT JOIN entity e ON e.id = em.entity_id
+            LEFT JOIN location l on a.shipto = l.id
                 WHERE a.id = ?|;
 
         $sth = $dbh->prepare($query);
@@ -1275,18 +1278,6 @@ sub retrieve_invoice {
               $form->{"mt_memo_$taccno"}  = $taxref->{memo};
               $form->{"mt_ref_$taccno"}  = $taxref->{source};
         }
-
-
-        # get shipto
-        $query = qq|SELECT ns.*, l.* FROM new_shipto ns JOIN location l ON ns.location_id = l.id WHERE ns.trans_id = ?|;
-        $sth   = $dbh->prepare($query);
-        $sth->execute( $form->{id} ) || $form->dberror($query);
-
-        $ref = $sth->fetchrow_hashref(NAME_lc);
-        $ref->{locationid} = $ref->{id};
-        delete $ref->{id};
-        for ( keys %$ref ) { $form->{$_} = $ref->{$_} unless $_ eq 'id' };
-        $sth->finish;
 
         # retrieve individual items
         $query = qq|
