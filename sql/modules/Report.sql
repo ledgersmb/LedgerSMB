@@ -228,7 +228,9 @@ RETURN QUERY EXECUTE $sql$
 SELECT entity_id, account_number, name, contact_name, "language",
        null::text, null::date,
        null::text, null::text, null::text,
-       sum(c0), sum(c30), sum(c60), sum(c90), null::date, null::int, curr,
+       sum(c0), sum(c30), sum(c60), sum(c90),
+       sum(c0_tc), sum(c30_tc), sum(c60_tc), sum(c90_tc),
+       null::date, null::int, curr,
        null::numeric, null::text[], null::int
   FROM report__invoice_aging_detail($1, $2, $3, $4, $5, $6, $7, $8)
  GROUP BY entity_id, account_number, name, contact_name, "language", curr
