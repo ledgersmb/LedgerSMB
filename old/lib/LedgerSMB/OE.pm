@@ -183,11 +183,6 @@ sub save {
             $query = qq|DELETE FROM oe_tax WHERE oe_id = ?|;
             $sth   = $dbh->prepare($query);
             $sth->execute( $form->{id} ) || $form->dberror($query);
-
-            $query = qq|DELETE FROM new_shipto WHERE oe_id = ?|;
-            $sth   = $dbh->prepare($query);
-            $sth->execute( $form->{id} ) || $form->dberror($query);
-
         }
         else {    # id is not in the database
             delete $form->{id};
@@ -556,11 +551,6 @@ sub delete {
     $query = qq|DELETE FROM orderitems WHERE trans_id = ?|;
     $sth->finish;
 
-    $query = qq|DELETE FROM new_shipto WHERE oe_id = ?|;
-    $sth   = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-    $sth->finish;
-
     $query = qq|DELETE FROM oe_tax WHERE oe_id = ?|;
     $sth   = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
@@ -610,12 +600,11 @@ sub retrieve {
                 o.amount_tc AS invtotal, o.closed, o.reqdate,
                 o.quonumber, o.language_code,
                 o.ponumber, cr.entity_class,
-                ns.location_id as locationid
+                shipto as locationid
             FROM oe o
             JOIN entity_credit_account cr ON (cr.id = o.entity_credit_account)
             JOIN entity vc ON (cr.entity_id = vc.id)
             LEFT JOIN person pe ON (o.person_id = pe.entity_id)
-                        LEFT JOIN new_shipto ns ON ns.oe_id = o.id
             WHERE o.id = ?|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
@@ -630,14 +619,6 @@ sub retrieve {
         $form->{"$form->{vc}_id"} = $ref->{entity_credit_account};
         $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
-        $sth->finish;
-
-        $query = qq|SELECT * FROM new_shipto WHERE oe_id = ?|;
-        $sth   = $dbh->prepare($query);
-        $sth->execute( $form->{id} ) || $form->dberror($query);
-
-        $ref = $sth->fetchrow_hashref('NAME_lc');
-        for ( keys %$ref ) { $form->{$_} = $ref->{$_} unless ( $_ eq "id") }
         $sth->finish;
 
         # get printed, emailed

@@ -724,7 +724,7 @@ SELECT lsmb__create_role('ar_invoice_create',
 SELECT lsmb__grant_role('ar_invoice_create', 'ar_transaction_create');
 -- ### old code needs UPDATE
 SELECT lsmb__grant_perms('ar_invoice_create', tname, ptype)
-  FROM unnest('{invoice,new_shipto,business_unit_inv}'::text[]) tname
+  FROM unnest('{invoice,business_unit_inv}'::text[]) tname
  CROSS JOIN unnest('{SELECT,INSERT,UPDATE}'::text[]) ptype;
 
 SELECT lsmb__grant_menu('ar_invoice_create', 3, 'allow');
@@ -793,7 +793,6 @@ SELECT lsmb__grant_perms('sales_order_create', 'orderitems', 'INSERT');
 SELECT lsmb__grant_perms('sales_order_create', 'orderitems', 'UPDATE');
 SELECT lsmb__grant_perms('sales_order_create', 'business_unit_oitem', 'INSERT');
 SELECT lsmb__grant_perms('sales_order_create', 'business_unit_oitem', 'UPDATE');
-SELECT lsmb__grant_perms('sales_order_create', 'new_shipto_id_seq', 'ALL');
 SELECT lsmb__grant_menu('sales_order_create', '51', 'allow');
 
 SELECT lsmb__create_role('sales_order_edit',
@@ -803,8 +802,6 @@ SELECT lsmb__create_role('sales_order_edit',
 );
 SELECT lsmb__grant_perms('sales_order_edit', 'orderitems', 'DELETE');
 SELECT lsmb__grant_perms('sales_order_edit', 'business_unit_oitem', 'DELETE');
-SELECT lsmb__grant_perms('sales_order_edit', 'new_shipto', 'DELETE');
-SELECT lsmb__grant_perms('sales_order_edit', 'new_shipto_id_seq', 'ALL');
 
 SELECT lsmb__create_role('sales_order_delete',
                          $DOC$
@@ -827,8 +824,7 @@ SELECT lsmb__create_role('rfq_delete',
                          $DOC$
 );
 SELECT lsmb__grant_perms(dt || '_delete', obj, 'DELETE')
-  FROM unnest(ARRAY['oe'::TEXT, 'orderitems', 'business_unit_oitem',
-                    'new_shipto']) obj
+  FROM unnest(ARRAY['oe'::TEXT, 'orderitems', 'business_unit_oitem']) obj
  CROSS
   JOIN unnest(array['sales_order'::text, 'sales_quotation', 'purchase_order',
               'rfq']) dt;
@@ -846,7 +842,6 @@ SELECT lsmb__grant_perms('sales_quotation_create', obj, 'ALL')
 SELECT lsmb__grant_perms('sales_quotation_create', obj, ptype)
   FROM unnest(array['orderitems'::text, 'business_unit_oitem']) obj,
        unnest(array['INSERT'::text, 'UPDATE']) ptype;
-SELECT lsmb__grant_perms('sales_quotation_create', 'new_shipto_id_seq', 'ALL');
 
 SELECT lsmb__grant_menu('sales_quotation_create', 68, 'allow');
 
@@ -1004,7 +999,6 @@ SELECT lsmb__grant_perms('purchase_order_create', obj, ptype)
 SELECT lsmb__grant_perms('purchase_order_create', obj, 'ALL')
   FROM unnest(array['oe_id_seq'::text, 'orderitems_id_seq', 'warehouse_inventory',
                     'warehouse_inventory_entry_id_seq']) obj;
-SELECT lsmb__grant_perms('purchase_order_create', 'new_shipto_id_seq', 'ALL');
 SELECT lsmb__grant_menu('purchase_order_create', 52, 'allow');
 
 SELECT lsmb__create_role('purchase_order_edit',
@@ -1013,9 +1007,7 @@ SELECT lsmb__create_role('purchase_order_edit',
                          $DOC$
 );
 SELECT lsmb__grant_perms('purchase_order_edit', obj, 'DELETE')
-  FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem',
-                    'new_shipto']) obj;
-SELECT lsmb__grant_perms('purchase_order_edit', 'new_shipto_id_seq', 'ALL');
+  FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem']) obj;
 
 SELECT lsmb__create_role('rfq_create',
                          $DOC$
@@ -1030,7 +1022,6 @@ SELECT lsmb__grant_perms('rfq_create', 'orderitems_id_seq', 'ALL');
 SELECT lsmb__grant_perms('rfq_create', obj, ptype)
   FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem']) obj,
        unnest(array['INSERT'::text, 'UPDATE']) ptype;
-SELECT lsmb__grant_perms('rfq_create', 'new_shipto_id_seq', 'ALL');
 
 SELECT lsmb__create_role('purchase_order_list',
                          $DOC$
@@ -1971,10 +1962,8 @@ SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
                     'business', 'template',
                     --###TODO: Add table for advisory rates
                     --'exchangerate',
-                    'new_shipto', 'tax',
+                    'tax',
                     'entity_employee', 'jcitems', 'salutation', 'assembly']) obj;
-
-SELECT lsmb__grant_perms('base_user', 'new_shipto', 'UPDATE');
 
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['partstax'::text, 'partscustomer',

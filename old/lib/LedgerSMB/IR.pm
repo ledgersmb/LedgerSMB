@@ -633,26 +633,18 @@ sub retrieve_invoice {
                    a.notes, a.intnotes, a.curr AS currency,
                    a.entity_credit_account as vendor_id, a.language_code,
                    a.ponumber, a.crdate, a.on_hold, a.reverse, a.description,
+                   a.shipto as locationid, l.line_one, l.line_two,
+                   l.line_three, l.city, l.state, l.country_id, l.mail_code,
                    tran.workflow_id
               FROM ap a
               JOIN transactions tran USING (id)
-             WHERE id = ?|;
+            LEFT JOIN location l on a.shipto = l.id
+             WHERE a.id = ?|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
         $ref = $sth->fetchrow_hashref(NAME_lc);
         $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
-        for ( keys %$ref ) {
-            $form->{$_} = $ref->{$_};
-        }
-        $sth->finish;
-
-        # get shipto
-        $query = qq|SELECT ns.*, l.* FROM new_shipto ns JOIN location l ON ns.location_id = l.id WHERE ns.trans_id = ?|;
-        $sth   = $dbh->prepare($query);
-        $sth->execute( $form->{id} ) || $form->dberror($query);
-
-        $ref = $sth->fetchrow_hashref(NAME_lc);
         for ( keys %$ref ) {
             $form->{$_} = $ref->{$_};
         }

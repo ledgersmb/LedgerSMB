@@ -1326,32 +1326,27 @@ sub add_shipto {
         return;
     }
 
-    my $query = qq|
-            INSERT INTO new_shipto
-            (trans_id, oe_id,location_id)
-            VALUES ( ?, ?, ?)
-            |;
-
-        my $sth = $self->{dbh}->prepare($query) || $self->dberror($query);
-        my $trans_id;
-        my $oe_id;
-
     if ($is_oe) {
-           $trans_id = undef;
-           $oe_id = $id;
+        $self->{dbh}->do('update oe set shipto = ? where id = ?',
+                         {},
+                         $self->{shiptolocationid},
+                         $id)
+            or die $self->{dbh}->errstr;
+    }
+    elsif ($self->{vc} eq 'customer') {
+        $self->{dbh}->do('update ar set shipto = ? where id = ?',
+                         {},
+                         $self->{shiptolocationid},
+                         $id)
+            or die $self->{dbh}->errstr;
     }
     else {
-           $trans_id = $id;
-           $oe_id = undef;
-        }
-
-        $sth->execute(
-                        $trans_id,
-            $oe_id,
-            $self->{shiptolocationid}
-              ) || $self->dberror($query);
-
-    $sth->finish;
+        $self->{dbh}->do('update ap set shipto = ? where id = ?',
+                         {},
+                         $self->{shiptolocationid},
+                         $id)
+            or die $self->{dbh}->errstr;
+    }
 }
 
 =item $form->get_shipto ($location_id)
@@ -2002,7 +1997,7 @@ sub create_links {
                 c.language_code, a.ponumber, a.reverse,
                 a.approved, ctf.default_reportable,
                 a.description, a.on_hold, a.crdate,
-                ns.location_id as locationid, a.is_return, $seq,
+                a.shipto as locationid, a.is_return, $seq,
                 t.workflow_id, t.reversing, t.reversing_reference,
                 t.reversed_by, t.reversed_by_reference
             FROM $arap a
@@ -2013,9 +2008,8 @@ sub create_links {
             LEFT JOIN entity_employee er
                                    ON (er.entity_id = a.person_id)
             LEFT JOIN entity e ON (er.entity_id = e.id)
-                        LEFT JOIN country_tax_form ctf
+            LEFT JOIN country_tax_form ctf
                                   ON (ctf.id = c.taxform_id)
-                        LEFT JOIN new_shipto ns on a.id = ns.trans_id
             WHERE a.id = ? AND c.entity_class =
                 (select id FROM entity_class
                 WHERE class ilike ?)|;
