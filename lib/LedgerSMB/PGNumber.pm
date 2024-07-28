@@ -27,7 +27,6 @@ use Memoize;
 use Number::Format;
 use PGObject::Type::BigFloat;
 
-use LedgerSMB::Company_Config;
 use LedgerSMB::Setting;
 use LedgerSMB::Magic qw( DEFAULT_NUM_PREC );
 
