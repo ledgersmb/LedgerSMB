@@ -24,7 +24,6 @@ use warnings;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
-use LedgerSMB::Company_Config;
 use LedgerSMB::oldHandler;
 use LedgerSMB::Magic qw( SCRIPT_NEWSCRIPTS );
 use LedgerSMB::PSGI::Util;
@@ -339,8 +338,7 @@ sub setup_url_space {
             $router->hooks(
                 'before' => sub {
                     my ($env) = @_;
-                    $env->{'lsmb.settings'} =
-                        LedgerSMB::Company_Config::initialize($env->{'lsmb.db'});
+
                     $env->{wire} = $wire;
                     return;
                 });

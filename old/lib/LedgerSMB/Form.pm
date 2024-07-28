@@ -63,7 +63,6 @@ use utf8;
 use Scalar::Util qw( blessed );
 
 use LedgerSMB;
-use LedgerSMB::Company_Config;
 use LedgerSMB::Magic qw( SCRIPT_OLDSCRIPTS );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Setting::Sequence;
@@ -1231,8 +1230,6 @@ sub db_init {
 
     $self->{dbh} = $dbh;
     _set_datestyle($dbh);
-
-    LedgerSMB::Company_Config::initialize($self->{dbh});
 }
 
 sub _set_datestyle {

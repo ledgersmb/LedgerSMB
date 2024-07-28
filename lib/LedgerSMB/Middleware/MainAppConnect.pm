@@ -54,6 +54,37 @@ Implements C<Plack::Middleware->call()>.
 
 =cut
 
+sub _get_settings {
+    my ($self, $dbh) = @_;
+    my $sth = $dbh->prepare(
+        q{SELECT n.setting_key, s.value
+        FROM unnest(?::text[]) n(setting_key), setting_get(setting_key) s})
+        or die $dbh->errstr;
+    $sth->execute(
+        [ qw(templates weightunit curr
+             default_email_from default_email_to
+             default_email_bcc  default_email_cc
+             default_language default_country papersize
+             separate_duties company_name company_email
+             company_phone company_fax businessnumber vclimit
+             company_address dojo_theme decimal_places min_empty)
+        ])
+        or die $sth->errstr;
+
+    my $results = $sth->fetchall_arrayref({})
+        or die $sth->errstr;
+
+    my $settings = {
+        map { $_->{setting_key} => $_->{value} }
+        @$results
+    };
+    $settings->{curr} = [ split (/:/, $settings->{curr}) ];
+    $settings->{default_currency} = $settings->{curr}->[0];
+    $settings->{format}           = $settings->{papersize};
+
+    return $settings;
+}
+
 sub _connect {
     my $self = shift;
     my $env  = shift;
@@ -110,6 +141,7 @@ sub _connect {
     }
 
     $env->{'lsmb.app'} = $dbh;
+    $env->{'lsmb.settings'} = $self->_get_settings( $dbh );
     return ($dbh, undef);
 }
 

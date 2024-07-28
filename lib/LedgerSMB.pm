@@ -266,7 +266,6 @@ use Plack;
 use URI;
 use URI::Escape;
 
-use LedgerSMB::Company_Config;
 use LedgerSMB::Locale;
 use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
@@ -299,6 +298,7 @@ sub new {
     $self->{script} = $request->env->{'lsmb.script'};
     $self->{dbh} = $request->env->{'lsmb.app'};
     $self->{company} = $request->env->{'lsmb.session'}->{company};
+    $self->{_company_config} = $request->env->{'lsmb.settings'};
     $self->{_session_id} = $request->env->{'lsmb.session_id'};
     $self->{_create_session} = $request->env->{'lsmb.create_session_cb'};
     $self->{_logout} = $request->env->{'lsmb.invalidate_session_cb'};
@@ -368,9 +368,6 @@ sub initialize_with_db {
         my ($pw_expires) = $sth->fetchrow_array;
         $self->{pw_expires} = $expiration_parser->parse_duration($pw_expires);
     }
-
-    $self->{_company_config} =
-        LedgerSMB::Company_Config::initialize($self->{dbh});
 
     $self->get_user_info;
 
@@ -773,7 +770,7 @@ sub format_amount {
 
     return $amount->to_output(
         format => $config->{numberformat},
-        money_places => $LedgerSMB::Company_Config::settings->{decimal_places},
+        money_places => $request->{_company_config}->{decimal_places},
         %args
         );
 }
@@ -784,7 +781,7 @@ sub formatter_options {
 
     return {
         $config->%{ qw( numberformat dateformat ) },
-        money_places => $LedgerSMB::Company_Config::settings->{decimal_places},
+        money_places => $request->{_company_config}->{decimal_places},
     };
 }
 
