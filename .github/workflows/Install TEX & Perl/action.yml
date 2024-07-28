@@ -23,10 +23,12 @@ runs:
       with:
         perl-version: ${{ inputs.perl-version }}
         install-modules-with: cpm
+        # Test2 warns when not using Data::UUID::MT
         install-modules: |
           Devel::Cover
           Devel::Cover::Report::Coveralls
           Syntax::Keyword::Try::Deparse
+          Data::UUID::MT
         # Features and Devel modules
         install-modules-args: >
           --notest
