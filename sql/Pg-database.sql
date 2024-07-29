@@ -78,6 +78,32 @@ $$ Only affects equity accounts.  If set, close at end of year. $$;
 COMMENT ON TABLE  account IS
 $$ This table stores the main account info.$$;
 
+create function trigger_duplicate_account_accno()
+  returns trigger language plpgsql as $$
+BEGIN
+  RETURN NEW;
+END;
+  $$;
+
+create function trigger_duplicate_account_heading_accno()
+  returns trigger language plpgsql as $$
+BEGIN
+  RETURN NEW;
+END;
+  $$;
+
+create trigger trigger_duplicate_account_accno
+  before insert or update of accno
+  on account
+  for each row
+  execute function trigger_duplicate_account_accno();
+
+create trigger trigger_duplicate_account_heading_accno
+  before insert or update of accno
+  on account_heading
+  for each row
+  execute function trigger_duplicate_account_heading_accno();
+
 CREATE TABLE account_checkpoint (
   end_date date not null,
   account_id int not null references account(id),

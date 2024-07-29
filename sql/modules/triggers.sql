@@ -118,6 +118,44 @@ BEGIN
 END;
 $$ language plpgsql;
 
+CREATE OR REPLACE FUNCTION trigger_duplicate_account_accno()
+  RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  PERFORM * FROM account_heading
+    WHERE accno = NEW.accno;
+
+  IF FOUND THEN
+    RAISE EXCEPTION '"accno" % in use as account heading', NEW.accno;
+  END IF;
+
+  RETURN NEW;
+END;
+$$;
+
+COMMENT ON FUNCTION trigger_duplicate_account_accno() IS
+  $$Checks that the 'accno' being set on an account is not already
+  in use for an account heading.
+  $$;
+
+CREATE OR REPLACE FUNCTION trigger_duplicate_account_heading_accno()
+  RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  PERFORM * FROM account
+    WHERE accno = NEW.accno;
+
+  IF FOUND THEN
+    RAISE EXCEPTION '"accno" % in use as account', NEW.accno;
+  END IF;
+
+  RETURN NEW;
+END;
+$$;
+
+COMMENT ON FUNCTION trigger_duplicate_account_heading_accno() IS
+  $$Checks that the 'accno' being set on an account heading is not already
+  in use for an account.
+  $$;
+
 CREATE OR REPLACE FUNCTION trigger_workflow_user() RETURNS TRIGGER
 AS $$
 BEGIN

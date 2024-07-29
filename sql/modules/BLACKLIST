@@ -470,6 +470,8 @@ track_global_sequence
 trial_balance__generate
 trial_balance__heading_accounts
 trial_balance__list_headings
+trigger_duplicate_account_accno
+trigger_duplicate_account_heading_accno
 trigger_parts_short
 trigger_workflow_user
 unlock
