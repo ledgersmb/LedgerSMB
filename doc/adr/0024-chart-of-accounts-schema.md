@@ -55,7 +55,7 @@ By changing the above, where the commonality will be stored in the `coa_node`
 table directly, adding additional fields to an `account` table which links
 back to the `coa_node` for the common fields, like:
 
-``sql
+```sql
 CREATE TABLE coa_node (
     id serial NOT NULL UNIQUE,
     parent int,
