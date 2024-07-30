@@ -78,7 +78,7 @@ the account hierarchy tree in this schema.
 
 ## Decision
 
-The downsides of current schema outweigh those of the proposed schema, so
+The downsides of the proposed schema outweigh those of the current schema, so
 there will be no change to the current schema setup with the `account` and
 `account_heading` tables.
 
