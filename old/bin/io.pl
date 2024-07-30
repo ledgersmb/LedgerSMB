@@ -137,6 +137,16 @@ sub approve {
     die 'No workflow found to approve' unless $wf;
 
     $wf->execute_action( 'approve' );
+    my $query =
+        ($form->{vc} eq 'customer')
+        ? 'select invnumber from ar where id = ?'
+        : 'select invnumber from ap where id = ?';
+    my $sth = $form->{dbh}->prepare($query)
+        or $form->dberror($query);
+    $sth->execute( $form->{id} )
+        or $form->dberror($query);
+    ($form->{invnumber}) = $sth->fetchrow_array;
+    $form->dberror($query) if $sth->err;
     edit();
 }
 
