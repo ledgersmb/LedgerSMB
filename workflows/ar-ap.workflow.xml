@@ -75,26 +75,36 @@
 
   <state name="POSTED">
     <action name="save_info" resulting_state="NOCHANGE" />
-    <action name="copy_to_new" resulting_state="NOCHANGE" />
+    <action name="copy_to_new" resulting_state="NOCHANGE">
+      <condition name="!reversing" />
+    </action>
     <action name="new_screen" resulting_state="NOCHANGE" />
     <action name="void" resulting_state="VOIDED">
       <condition name="is_sales_invoice" />
+      <condition name="!reversing" />
     </action>
     <action name="reverse" resulting_state="REVERSED">
       <condition name="!is_sales_invoice" />
+      <condition name="!reversing" />
     </action>
-    <action name="hold" resulting_state="ONHOLD" />
-    <action name="schedule" resulting_state="NOCHANGE" />
+    <action name="hold" resulting_state="ONHOLD">
+      <condition name="!reversing" />
+    </action>
+    <action name="schedule" resulting_state="NOCHANGE">
+      <condition name="!reversing" />
+    </action>
     <action name="print" resulting_state="NOCHANGE" />
     <action name="e_mail" resulting_state="NOCHANGE">
       <!-- condition name="configuredEmailFrom" / -->
       <condition name="is_invoice" />
     </action>
     <action name="sales_order" resulting_state="NOCHANGE">
+      <condition name="!reversing" />
       <condition name="is_sales" />
       <condition name="is_invoice" />
     </action>
     <action name="purchase_order" resulting_state="NOCHANGE">
+      <condition name="!reversing" />
       <condition name="!is_sales" />
       <condition name="is_invoice" />
     </action>
