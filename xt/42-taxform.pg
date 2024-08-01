@@ -66,7 +66,7 @@ BEGIN;
 
     -- Basic setup
 
-    INSERT INTO account_heading(id, accno ) VALUES (-255, '-billion');
+    INSERT INTO account_heading(id, accno ) VALUES (-255, '-billion-heading');
     INSERT INTO account (id, accno, category, heading ) VALUES (-255, '-billion', 'L', -255);
     INSERT INTO account (id, accno, category, heading ) VALUES (-256, '-billiontest', 'L', -255);
 
