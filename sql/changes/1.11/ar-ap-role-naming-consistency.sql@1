@@ -10,19 +10,11 @@ CREATE FUNCTION pg_temp.lsmb__role(global_role text) RETURNS text
   DO $$
     DECLARE
     t_rolename text;
-    t_new_rolename text;
 BEGIN
   select pg_temp.lsmb__role('ap_all_vouchers') into t_rolename;
-  select pg_temp.lsmb__role('ap_voucher_all') into t_new_rolename;
-
   perform * from pg_roles where rolname = t_rolename;
   if found then
-    perform * from pg_roles where rolname = t_new_rolename;
-    if found then
-      execute 'drop role if exists' || quote_ident(t_rolename);
-    else
-      execute 'alter role ' || quote_ident(t_rolename) || ' rename to ' || quote_ident(t_new_rolename);
-    end if;
+    execute 'alter role ' || quote_ident(t_rolename) || ' rename to ' || quote_ident(pg_temp.lsmb__role('ap_voucher_all'));
   end if;
 
   -- drop a role which doesn't have an AR equivalent and from its naming
