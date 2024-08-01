@@ -1,0 +1,94 @@
+#!/usr/bin/env perl
+
+use v5.36;
+use XML::LibXML qw(:libxml);
+
+my $ctx    = XML::LibXML::XPathContext->new;
+$ctx->registerNs('x', 'http://ledgersmb.org/xml-schemas/configuration');
+
+
+sub render_header {
+    print <<~'HEAD';
+    <html>
+      <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <style>
+          body {
+            font-weight: 100;
+            font-family: sans-serif;
+            font-size: 90%;
+            margin: 4em 2em;
+          }
+          caption {
+            text-align: left;
+            padding-left: 10em;
+            margin-bottom: 0.75em;
+            font-size: 110%;
+          }
+          table {
+            border: 1px solid black;
+          }
+          td {
+            width: 3em;
+            white-space: nowrap;
+            padding: 0.1em 1em;
+          }
+          .account-heading {
+            color: #666;
+            font-style: italic;
+            font-size: 90%;
+            font-weight: 600;
+          }
+        </style>
+      </head>
+      <body>
+        <table>
+          <caption>Chart of Accounts</caption>
+          <tbody>
+    HEAD
+}
+
+sub render_footer {
+    say <<~'FOOT';
+          </tbody>
+        </table>
+      </body>
+    </html>
+    FOOT
+}
+
+sub render_node( $node, $level ) {
+    my $name = $node->nodeName;
+    say ' ' x 8, qq|<tr class="$name">|, '<td></td>' x $level,
+        sprintf('<td colspan="80">%s - %s</td>',
+                $node->getAttribute('code'),
+                $node->getAttribute('description')), '</tr>';
+}
+
+sub render_children( $parent, $level ) {
+    my $child = $parent->firstChild;
+    do {
+        if ($child->nodeType == XML_ELEMENT_NODE) {
+            render_node( $child, $level );
+            if ($child->nodeName eq 'account-heading') {
+                render_children( $child, $level + 1 );
+            }
+        }
+    } while ($child = $child->nextSibling);
+}
+
+
+
+my $parser = XML::LibXML->new();
+my $dom    = $parser->load_xml(
+    IO => \*STDIN
+    );
+
+my ($coa)  = $ctx->findnodes( '//x:coa', $dom )
+    or die "Unable to find 'coa' node";
+
+render_header;
+render_children($coa, 0);
+render_footer;
+
+say STDERR "Done.";
