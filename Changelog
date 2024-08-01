@@ -218,6 +218,10 @@ Dependency updates
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.37
+* Fix reconciliation between B/S and AR Aging report (#8300)
+
+
 Changelog for 1.10.36
 * Fix drill-down on trial balance to pass report selections (#8177)
 * Fix read access on 'templates' table for printed documents (#8180)
