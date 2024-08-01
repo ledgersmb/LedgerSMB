@@ -44,11 +44,12 @@
           <td>
               [% INCLUDE input element_data = {
                         name = "transdate"
-         id = "transdate"
+                        id = "transdate"
                         value = form.transdate
                         size = "11"
                         type = 'text'
                         class = 'date'
+              "data-dojo-props" = "defaultIsToday:true"
               } %]
           </td>
         </tr>
