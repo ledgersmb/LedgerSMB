@@ -3,6 +3,17 @@
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.15
+* Fix order of comparisons with over 9 columns (#8246)
+* Remove spurious column from PNL and B/S CSV template (#8247)
+* Fix values in wrong columns in balance sheet CSV output (#8247)
+* Fix reconciliation between B/S and AR Aging report (#8300)
+* Show auto-generated invoice number after posting (#8322)
+* Prevent some actions on voided invoices and reversed transactions (#8324)
+* Fix migration failure when renamed role already exists (#8325)
+* Fix Save and Post buttons not appearing on Update of GL entry (#8327)
+
+
 Changelog for 1.11.14
 * Fix drill-down on trial balance to pass report selections (#8177)
 * Fix read access on 'templates' table for printed documents (#8180)
