@@ -1,13 +1,13 @@
 #
 # Translators:
-# O Kan <teravitk@gmail.com>, 2022
+# O Kan <teravitk@gmail.com>, 2024
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.10.37-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-05-06 20:36+0000\n"
-"Last-Translator: O Kan <teravitk@gmail.com>, 2022\n"
+"POT-Creation-Date: 2024-08-01 20:13+0000\n"
+"Last-Translator: O Kan <teravitk@gmail.com>, 2024\n"
 "Language-Team: Thai (https://app.transifex.com/ledgersmb/teams/58325/th/)\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr "# ใบกำกับสินค้า"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:115
 msgid "% Dep."
-msgstr ""
+msgstr "%ค่าเสื่อม"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:99
 msgid "(+) Salvage Value"
@@ -37,11 +37,11 @@ msgstr "(=) ราคาตามบัญชีสุทธิ"
 
 #: UI/templates/widget.html:93
 msgid "--FORMAT--"
-msgstr ""
+msgstr "--รูปแบบ--"
 
 #: UI/templates/widget.html:27
 msgid "--TEMPLATE--"
-msgstr ""
+msgstr "--แม่แบบ--"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:373 lib/LedgerSMB/Upgrade_Tests.pm:394
 #: lib/LedgerSMB/Upgrade_Tests.pm:595 lib/LedgerSMB/Upgrade_Tests.pm:616
@@ -4308,8 +4308,8 @@ msgstr ""
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:27
-#: UI/src/components/ServerUI.js:41
+#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:41
+#: UI/src/components/ServerUI.js:27
 msgid "Loading..."
 msgstr ""
 
@@ -8621,7 +8621,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/views/Home.vue:51 UI/src/views/Home.vue:36
+#: UI/src/views/Home.vue:36 UI/src/views/Home.vue:51
 msgid "mailing lists"
 msgstr ""
 
