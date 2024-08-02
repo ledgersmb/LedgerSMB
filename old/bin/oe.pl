@@ -671,7 +671,7 @@ sub form_header {
 |;
 
     $form->hide_form(
-        qw(shiptoname shiptoaddress1 shiptoaddress2 shiptocity shiptostate shiptozipcode shiptocountry shiptocontact shiptophone shiptofax shiptoemail message email subject cc bcc taxaccounts)
+        qw(shiptoname shiptoaddress1 shiptoaddress2 shiptocity shiptostate shiptozipcode shiptocountry shiptocontact shiptophone shiptofax shiptoemail message email subject cc bcc taxaccounts shiptolocationid)
     );
 
     for ( split / /, $form->{taxaccounts} ) {
