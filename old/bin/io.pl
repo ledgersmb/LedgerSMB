@@ -1777,9 +1777,9 @@ sub ship_to {
                  delete $form->{shiptoradiocontact};
                delete $form->{shiptoradio};
 
-               for (qq| address1_new address2_new address3_new city_new state_new zipcode_new country_new type_new contact_new description_new|)
+               for (qw| address1_ address2_ address3_ city_ state_ zipcode_ country_ type_ contact_ description_|)
                {
-                delete $form->{"shipto$_"};
+                delete $form->{"shipto${_}new"};
                }
 
 
