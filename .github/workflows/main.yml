@@ -439,7 +439,7 @@ jobs:
       # This will start a hub and JOB_COUNT matrix.
       - name: Starting hub with ${{ matrix.BROWSER }}
         run: |
-          docker-compose --log-level CRITICAL \
+          docker compose \
               --file=utils/selenium/docker-compose.yml \
               --file=utils/selenium/docker-compose-${{ matrix.BROWSER }}.yml \
               up \
