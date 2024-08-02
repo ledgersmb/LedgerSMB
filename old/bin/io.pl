@@ -2019,7 +2019,7 @@ sub list_locations_contacts
 
     my $sth = $dbh->prepare($query);
 
-    $sth->execute( $form->{customer_id} ) || $form->dberror($query);
+    $sth->execute( $form->{customer_id} // $form->{vendor_id} ) || $form->dberror($query);
 
     my $i=0;
 
