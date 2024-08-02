@@ -466,7 +466,8 @@ VALUES (?, (select id from account where accno = ?), ?, ?, ?)
                 person_id = ?,
                 language_code = ?,
                 ponumber = ?,
-                terms = ?
+                terms = ?,
+                shipto = ?
             WHERE id = ?|;
 
         if ( !$form->{reqdate} ) {
@@ -483,7 +484,8 @@ VALUES (?, (select id from account where accno = ?), ?, ?, ?)
             $form->{closed},        $quotation,
             $form->{employee_id},
             $form->{language_code}, $form->{ponumber},
-            $form->{terms},         $form->{id}
+            $form->{terms},         $form->{shiptolocationid},
+            $form->{id}
         );
     }
     $sth = $dbh->prepare($query) || $form->dberror($query);

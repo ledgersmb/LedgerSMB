@@ -1175,10 +1175,11 @@ sub post_invoice {
                language_code = ?,
                ponumber = ?,
                        approved = ?,
-               crdate = ?,
-                       reverse = ?,
+                       crdate = ?,
+                              reverse = ?,
                        is_return = ?,
-                       setting_sequence = ?
+                       setting_sequence = ?,
+                       shipto = ?
          WHERE id = ?
              |;
     $sth = $dbh->prepare($query);
@@ -1198,6 +1199,7 @@ sub post_invoice {
         $form->{language_code}, $form->{ponumber}, $approved,
         $form->{crdate} || 'today', $form->{reverse},
         $form->{is_return},     $form->{setting_sequence},
+         $form->{shiptolocationid},
         $form->{id}
     ) || $form->dberror($query);
 

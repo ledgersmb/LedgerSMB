@@ -539,7 +539,8 @@ sub post_invoice {
                ponumber = ?,
                        approved = ?,
                        reverse = ?,
-               crdate = ?
+               crdate = ?,
+               shipto = ?
          WHERE id = ?|;
 
     $sth = $dbh->prepare($query);
@@ -553,6 +554,7 @@ sub post_invoice {
         $form->{currency},
         $form->{language_code}, $form->{ponumber},
         $approved,              $form->{reverse},       $form->{crdate},
+        $form->{shiptolocationid},
         $form->{id}
     ) || $form->dberror($query);
 
