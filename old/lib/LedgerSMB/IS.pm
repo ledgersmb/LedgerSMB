@@ -1241,7 +1241,7 @@ sub retrieve_invoice {
                       a.reverse, a.entity_credit_account as customer_id,
                       a.language_code, a.ponumber, a.crdate,
                       a.on_hold, a.description, a.setting_sequence,
-                      a.shipto as locationid, l.line_one, l.line_two,
+                      a.shipto as shiptolocationid, l.line_one, l.line_two,
                       l.line_three, l.city, l.state, l.country_id, l.mail_code,
                       tran.workflow_id
                  FROM ar a
