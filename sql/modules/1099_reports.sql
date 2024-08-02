@@ -142,7 +142,7 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                  join location l on l.id = eca2l.location_id
          where eca2l.credit_id = entity_credit_account.id -- this is the LATERAL!
            and lc.authoritative
-         order by lc.id, l.created
+         order by lc.id, eca2l.created
       ) y
        union all
       select * from (
@@ -155,7 +155,7 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                  join location l on l.id = e2l.location_id
          where e2l.entity_id = entity.id -- this is the LATERAL!
            and lc.authoritative
-         order by lc.id, l.created
+         order by lc.id, e2l.created
       ) z
     ) x
     LIMIT 1
@@ -254,7 +254,7 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                join location l on l.id = eca2l.location_id
        where eca2l.credit_id = entity_credit_account.id -- this is the LATERAL!
          and lc.authoritative
-       order by lc.id, l.created
+       order by lc.id, eca2l.created
       ) y
        union all
       select * from (
@@ -264,7 +264,7 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                join location l on l.id = e2l.location_id
        where e2l.entity_id = entity.id -- this is the LATERAL!
          and lc.authoritative
-       order by lc.id, l.created
+       order by lc.id, e2l.created
       ) z
     ) x
     LIMIT 1
@@ -352,7 +352,7 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                         join location_class lc on lc.id = eca2l.location_class
                         join location l on l.id = eca2l.location_id
        where eca2l.credit_id = entity_credit_account.id and lc.authoritative
-       order by lc.id, l.created
+       order by lc.id, eca2l.created
       ) y
        union all
       select * from (
@@ -360,7 +360,7 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                         join location_class lc on lc.id = e2l.location_class
                         join location l on l.id = e2l.location_id
        where e2l.entity_id = entity.id and lc.authoritative
-       order by lc.id, l.created
+       order by lc.id, e2l.created
       ) z
     ) x
     LIMIT 1
@@ -447,7 +447,7 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                         join location_class lc on lc.id = eca2l.location_class
                         join location l on l.id = eca2l.location_id
        where eca2l.credit_id = entity_credit_account.id and lc.authoritative
-       order by lc.id, l.created
+       order by lc.id, eca2l.created
       ) y
        union all
       select * from (
@@ -455,7 +455,7 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                         join location_class lc on lc.id = e2l.location_class
                         join location l on l.id = e2l.location_id
        where e2l.entity_id = entity.id and lc.authoritative
-       order by lc.id, l.created
+       order by lc.id, e2l.created
       ) z
     ) x
     LIMIT 1
