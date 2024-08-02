@@ -1767,9 +1767,9 @@ sub ship_to {
 
               for(my $k=1;$k<$deletecontacts;$k++)
             {
-                for (qq| type_$k contact_$k description_$k |)
+                for (qw| type_ contact_ description_ |)
                 {
-                delete $form->{"shipto$_"};
+                delete $form->{"shipto$_$k"};
                 }
 
                }
@@ -1786,9 +1786,9 @@ sub ship_to {
 
               for(my $k=1;$k<$deletelocations;$k++)
               {
-                    for (qq| locationid_$k address1_$k address2_$k address3_$k city_$k state_$k zipcode_$k country_$k|)
+                    for (qw| locationid_ address1_ address2_ address3_ city_ state_ zipcode_ country_|)
                     {
-                    delete $form->{"shipto$_"};
+                    delete $form->{"shipto$_$k"};
                     }
 
               }
