@@ -603,6 +603,7 @@ sub form_header {
    lock_description)
     );
 
+    $form->get_shipto( $form->{shiptolocationid} );
     print qq|
 <table width=100%>
   <tr class=listtop>
@@ -628,7 +629,19 @@ sub form_header {
           <tr class="shippingpoint-row">
         <th align=right>| . $locale->text('Shipping Point') . qq|</th>
         <td colspan=3><input data-dojo-type="dijit/form/TextBox" id=shippingpoint name=shippingpoint size=35 value="$form->{shippingpoint}"></td>
-          </tr>
+          </tr>|;
+    print qq|
+          <tr>
+            <th align=right nowrap>| . $locale->text('Shipping Address') . qq|</th>
+            <td>$form->{shiptoaddress1} <br/>
+                $form->{shiptoaddress2} <br/>
+                $form->{shiptocity}, $form->{shiptostate} <br/>
+                $form->{shiptozipcode} <br/>
+                $form->{shiptocountry}
+                </td>
+          </tr>|
+        if $form->{vc} eq 'customer';
+    print qq|
           <tr class="shipvia-row">
         <th align=right>| . $locale->text('Ship via') . qq|</th>
         <td colspan=3><textarea data-dojo-type="dijit/form/Textarea" id="shipvia" name="shipvia" cols="35"

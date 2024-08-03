@@ -487,6 +487,7 @@ sub form_header {
     $business //= '';
     $department //= '';
     $exchangerate //= '';
+    $form->get_shipto( $form->{shiptolocationid} );
     print qq|
             $business
           </table>
