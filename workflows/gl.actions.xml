@@ -76,10 +76,10 @@ TODO! Check workflow when 'separate duties' is false!
           done="Saved"
           history-text="Saved"
           class="LedgerSMB::Workflow::Action::Null" />
-  <action name="save_temp"
+  <action name="save_as_template"
           group="main"
           order="09"
-          text="Save Template"
+          text="Save as Template"
           doing="Saving..."
           done="Saved"
           history-text="Saved"
