@@ -51,10 +51,9 @@
                 "1.11",
                 "1.10"
             ],
-            "automerge": false,
             "enabled": false,
             "matchPackageNames": [
-                "!/^eslint/"
+                "/^eslint/"
             ]
         },
         {
