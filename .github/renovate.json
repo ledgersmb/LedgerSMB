@@ -1,0 +1,77 @@
+{
+    "extends": [
+        "config:recommended"
+    ],
+    "baseBranches": [
+        "master",
+        "1.11",
+        "1.10"
+    ],
+    "cpanfile": {
+        "enabled": false
+    },
+    "packageRules": [
+        {
+            "matchUpdateTypes": [
+                "minor",
+                "patch"
+            ],
+            "groupName": "all non-major dependencies",
+            "groupSlug": "all-minor-patch",
+            "automerge": true,
+            "matchPackageNames": [
+                "*"
+            ]
+        },
+        {
+            "allowedVersions": "<4",
+            "matchPackageNames": [
+                "/^selenium//"
+            ]
+        },
+        {
+            "allowedVersions": "<0.8",
+            "matchPackageNames": [
+                "/^@intlify/unplugin-vue-i18n/"
+            ]
+        },
+        {
+            "matchUpdateTypes": [
+                "major"
+            ],
+            "automerge": false,
+            "groupName": "all stylelint related dependencies",
+            "groupSlug": "stylelint-major",
+            "matchPackageNames": [
+                "/stylelint/"
+            ]
+        },
+        {
+            "matchBaseBranches": [
+                "1.11",
+                "1.10"
+            ],
+            "automerge": false,
+            "matchPackageNames": [
+                "!/^eslint/"
+            ]
+        },
+        {
+            "matchUpdateTypes": [
+                "major"
+            ],
+            "automerge": false,
+            "matchPackageNames": [
+                "*"
+            ]
+        }
+    ],
+    "timezone": "Etc/Greenwich",
+    "schedule": [
+        "after 11pm on friday",
+        "before 7am on saturday"
+    ],
+    "vulnerabilityAlerts": {
+        "schedule": null
+    }
+}
