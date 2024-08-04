@@ -439,7 +439,7 @@ sub display_form
 }
 
 
-sub save_temp {
+sub save_as_template {
     my ($department_name, $department_id) = split/--/, $form->{department};
 
     if ($form->{workflow_id}) {
