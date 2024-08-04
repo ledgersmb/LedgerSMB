@@ -26,13 +26,13 @@
         {
             "allowedVersions": "<4",
             "matchPackageNames": [
-                "/^selenium//"
+                "/^selenium\//"
             ]
         },
         {
             "allowedVersions": "<0.8",
             "matchPackageNames": [
-                "/^@intlify/unplugin-vue-i18n/"
+                "/^@intlify\/unplugin-vue-i18n/"
             ]
         },
         {
@@ -52,6 +52,7 @@
                 "1.10"
             ],
             "automerge": false,
+            "enabled": false,
             "matchPackageNames": [
                 "!/^eslint/"
             ]
