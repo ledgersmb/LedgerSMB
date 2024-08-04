@@ -39,6 +39,11 @@
             "groupSlug": "stylelint-major"
         },
         {
+            "matchBaseBranches": [ "1.11", "1.10" ],
+            "excludePackagePatterns": [ "^eslint" ],
+            "enabled": true
+        },
+        {
             "matchPackagePatterns": [
                 "*"
             ],
