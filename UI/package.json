@@ -57,7 +57,7 @@
   "devDependencies": {
     "@babel/core": "7.25.2",
     "@babel/eslint-parser": "7.25.1",
-    "@babel/plugin-proposal-object-rest-spread": "7.20.7",
+    "@babel/plugin-transform-object-rest-spread": "^7.24.7",
     "@babel/preset-env": "7.25.3",
     "@eslint/js": "9.8.0",
     "@pinia/testing": "0.1.4",
