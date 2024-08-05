@@ -41,8 +41,8 @@
         },
         {
             "matchBaseBranches": [ "1.11", "1.10" ],
-            "excludePackagePatterns": [ "^eslint" ],
-            "enabled": true
+            "matchPackagePatterns": [ "^eslint" ],
+            "enabled": false
         },
         {
             "matchPackagePatterns": [
