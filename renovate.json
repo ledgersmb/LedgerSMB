@@ -1,70 +1,59 @@
+
 {
     "extends": [
-        "config:recommended"
+      "config:base"
     ],
-    "baseBranches": [
-        "master",
-        "1.11",
-        "1.10"
-    ],
+    "baseBranches": [ "master", "1.11", "1.10" ],
     "cpanfile": {
         "enabled": false
     },
     "packageRules": [
         {
+            "matchPackagePatterns": [
+                "*"
+            ],
             "matchUpdateTypes": [
                 "minor",
                 "patch"
             ],
             "groupName": "all non-major dependencies",
             "groupSlug": "all-minor-patch",
-            "automerge": true,
-            "matchPackageNames": [
-                "*"
-            ]
+            "automerge": true
         },
         {
-            "allowedVersions": "<4",
-            "matchPackageNames": [
-                "/^selenium//"
-            ]
+            "matchPackagePatterns": ["^selenium/"],
+            "allowedVersions": "<4"
         },
         {
-            "allowedVersions": "<0.8",
-            "matchPackageNames": [
-                "/^@intlify/unplugin-vue-i18n/"
-            ]
+            "matchPackagePatterns": ["^@intlify/unplugin-vue-i18n"],
+            "allowedVersions": "<0.8"
         },
         {
+            "matchPackagePatterns": [
+                "stylelint"
+            ],
             "matchUpdateTypes": [
                 "major"
             ],
             "automerge": false,
             "groupName": "all stylelint related dependencies",
-            "groupSlug": "stylelint-major",
-            "matchPackageNames": [
-                "/stylelint/"
-            ]
+            "groupSlug": "stylelint-major"
         },
         {
-            "matchBaseBranches": [
-                "1.11",
-                "1.10"
+            "matchBaseBranches": [ "1.11", "1.10" ],
+            "excludePackagePatterns": [ "^eslint" ],
+            "enabled": true
+        },
+        {
+            "matchPackagePatterns": [
+                "*"
             ],
-            "enabled": false,
-            "matchPackageNames": [
-                "/^eslint/"
-            ]
-        },
-        {
             "matchUpdateTypes": [
                 "major"
             ],
-            "automerge": false,
-            "matchPackageNames": [
-                "*"
-            ]
+            "automerge": false
         }
+
     ],
     "timezone": "Etc/Greenwich",
     "schedule": [
