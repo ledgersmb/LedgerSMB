@@ -126,11 +126,11 @@ sub order_links {
 
 
     # create links
-    $form->create_links( module => "OE", # effectively 'none'
-             myconfig => \%myconfig,
-             vc => $form->{vc},
-             billing => 0,
-             job => 1 );
+    # $form->create_links( module => "OE", # effectively 'none'
+    #          myconfig => \%myconfig,
+    #          vc => $form->{vc},
+    #          billing => 0,
+    #          job => 1 );
 
     # retrieve order/quotation
     OE->retrieve( \%myconfig, \%$form );
