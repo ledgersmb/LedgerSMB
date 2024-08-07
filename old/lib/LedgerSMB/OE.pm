@@ -466,7 +466,8 @@ VALUES (?, (select id from account where accno = ?), ?, ?, ?)
                 person_id = ?,
                 language_code = ?,
                 ponumber = ?,
-                terms = ?
+                terms = ?,
+                shipto = ?
             WHERE id = ?|;
 
         if ( !$form->{reqdate} ) {
@@ -483,7 +484,8 @@ VALUES (?, (select id from account where accno = ?), ?, ?, ?)
             $form->{closed},        $quotation,
             $form->{employee_id},
             $form->{language_code}, $form->{ponumber},
-            $form->{terms},         $form->{id}
+            $form->{terms},         $form->{shiptolocationid},
+            $form->{id}
         );
     }
     $sth = $dbh->prepare($query) || $form->dberror($query);
@@ -600,7 +602,7 @@ sub retrieve {
                 o.amount_tc AS invtotal, o.closed, o.reqdate,
                 o.quonumber, o.language_code,
                 o.ponumber, cr.entity_class,
-                shipto as locationid
+                shipto as shiptolocationid
             FROM oe o
             JOIN entity_credit_account cr ON (cr.id = o.entity_credit_account)
             JOIN entity vc ON (cr.entity_id = vc.id)

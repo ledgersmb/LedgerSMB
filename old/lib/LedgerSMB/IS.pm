@@ -1175,10 +1175,11 @@ sub post_invoice {
                language_code = ?,
                ponumber = ?,
                        approved = ?,
-               crdate = ?,
-                       reverse = ?,
+                       crdate = ?,
+                              reverse = ?,
                        is_return = ?,
-                       setting_sequence = ?
+                       setting_sequence = ?,
+                       shipto = ?
          WHERE id = ?
              |;
     $sth = $dbh->prepare($query);
@@ -1198,6 +1199,7 @@ sub post_invoice {
         $form->{language_code}, $form->{ponumber}, $approved,
         $form->{crdate} || 'today', $form->{reverse},
         $form->{is_return},     $form->{setting_sequence},
+         $form->{shiptolocationid},
         $form->{id}
     ) || $form->dberror($query);
 
@@ -1241,7 +1243,7 @@ sub retrieve_invoice {
                       a.reverse, a.entity_credit_account as customer_id,
                       a.language_code, a.ponumber, a.crdate,
                       a.on_hold, a.description, a.setting_sequence,
-                      a.shipto as locationid, l.line_one, l.line_two,
+                      a.shipto as shiptolocationid, l.line_one, l.line_two,
                       l.line_three, l.city, l.state, l.country_id, l.mail_code,
                       tran.workflow_id
                  FROM ar a

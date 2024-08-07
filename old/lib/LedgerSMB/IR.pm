@@ -539,7 +539,8 @@ sub post_invoice {
                ponumber = ?,
                        approved = ?,
                        reverse = ?,
-               crdate = ?
+               crdate = ?,
+               shipto = ?
          WHERE id = ?|;
 
     $sth = $dbh->prepare($query);
@@ -553,6 +554,7 @@ sub post_invoice {
         $form->{currency},
         $form->{language_code}, $form->{ponumber},
         $approved,              $form->{reverse},       $form->{crdate},
+        $form->{shiptolocationid},
         $form->{id}
     ) || $form->dberror($query);
 
@@ -633,7 +635,7 @@ sub retrieve_invoice {
                    a.notes, a.intnotes, a.curr AS currency,
                    a.entity_credit_account as vendor_id, a.language_code,
                    a.ponumber, a.crdate, a.on_hold, a.reverse, a.description,
-                   a.shipto as locationid, l.line_one, l.line_two,
+                   a.shipto as shiptolocationid, l.line_one, l.line_two,
                    l.line_three, l.city, l.state, l.country_id, l.mail_code,
                    tran.workflow_id
               FROM ap a

@@ -1307,7 +1307,7 @@ sub update_balance {
 =item $form->add_shipto($id, $is_oe);
 
 Inserts a new location_id reference into the table new_shipto, using the
-Form->{locationid} property.
+Form->{shiptolocationid} property.
 
 $is_oe determines whether the locaation is linked with a transaction or an oe.
 
@@ -1994,7 +1994,7 @@ sub create_links {
                 c.language_code, a.ponumber, a.reverse,
                 a.approved, ctf.default_reportable,
                 a.description, a.on_hold, a.crdate,
-                a.shipto as locationid, a.is_return, $seq,
+                a.shipto as shiptolocationid, a.is_return, $seq,
                 t.workflow_id, t.reversing, t.reversing_reference,
                 t.reversed_by, t.reversed_by_reference
             FROM $arap a
