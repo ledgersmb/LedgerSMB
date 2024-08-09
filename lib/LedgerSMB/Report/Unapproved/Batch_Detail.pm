@@ -257,7 +257,6 @@ sub run_report{
         '1' => 'ap',
         '2' => 'ar',
         '3' => 'ap',
-        '5' => 'gl',
         '6' => 'ar',
         '8' => 'is',
         '9' => 'ir',
@@ -273,6 +272,7 @@ sub run_report{
         # This is different with batch class 8 and 9
         $script = 'ir' if ($ref->{invoice} and $ref->{batch_class_id} == 3);
         $script = 'is' if ($ref->{invoice} and $ref->{batch_class_id} == 6);
+        $script //= 'gl';
 
         $ref->{reference_href_suffix} = "$script.pl?__action=edit&id=$ref->{transaction_id}"
             if $script;
