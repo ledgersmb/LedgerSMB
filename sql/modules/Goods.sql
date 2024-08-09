@@ -53,24 +53,31 @@ BEGIN
 
     INSERT INTO invoice (trans_id, parts_id, qty, allocated, sellprice)
     SELECT currval('id')::int, t_mfg_lot.parts_id, t_mfg_lot.qty * -1, 0,
-           sum(amount_bc) / t_mfg_lot.qty
+           -1*sum(amount_bc) / t_mfg_lot.qty
       FROM acc_trans
      WHERE amount_bc < 0 and trans_id = currval('id')::int;
 
     PERFORM cogs__add_for_ap_line(currval('invoice_id_seq')::int);
 
-    -- move from reverse COGS.
+    -- move from COGS back into inventory
     INSERT INTO acc_trans(trans_id, chart_id, transdate,
-                          amount_bc, curr, amount_tc)
-    SELECT trans_id, chart_id, transdate, amount_bc * -1, curr, amount_tc * -1
+                          amount_bc, curr, amount_tc,
+                          invoice_id, memo)
+    SELECT trans_id, chart_id, transdate,
+           amount_bc * -1, curr, amount_tc * -1,
+           currval('invoice_id_seq')::int, 'Collect assembly parts costs from COGS'
       FROM acc_trans
      WHERE amount_bc < 0 and trans_id = currval('id')::int;
 
     -- difference goes into inventory
-    INSERT INTO acc_trans(trans_id, transdate, amount_bc, curr, amount_tc,
-                          chart_id)
-    SELECT trans_id, now(), sum(amount_bc) * -1, curr, sum(amount_tc) * -1,
-           (select inventory_accno_id from parts where id = t_mfg_lot.parts_id)
+    INSERT INTO acc_trans(trans_id, transdate, chart_id,
+                          amount_bc, curr, amount_tc,
+                          invoice_id, memo)
+    SELECT trans_id, now(), (select inventory_accno_id
+                               from parts
+                              where id = t_mfg_lot.parts_id),
+           sum(amount_bc) * -1, curr, sum(amount_tc) * -1,
+           currval('invoice_id_seq')::int, 'Post assembly parts cost in inventory'
       FROM acc_trans
      WHERE trans_id = currval('id')::int
   GROUP BY trans_id, curr;

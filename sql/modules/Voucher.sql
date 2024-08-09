@@ -134,7 +134,7 @@ $$
                 WHERE a.amount_bc > 0
                         AND v.batch_id = in_batch_id
                         AND v.batch_class IN (select id from batch_class
-                                        where class = 'gl')
+                                        where class in ('gl', 'upgrade'))
                 GROUP BY v.id, g.reference, g.description, v.batch_id,
                         v.trans_id, g.transdate
                 ORDER BY 7, 1
@@ -189,14 +189,15 @@ $$
                 SELECT b.id, c.class, b.control_code, b.description, u.username,
                         b.created_on, b.default_date,
                         sum(
-                                CASE WHEN vc.id = 5 AND al.amount_bc < 0 -- GL
-                                     THEN al.amount_bc
-                                     WHEN vc.id  = 1
-                                     THEN ap.amount_bc
-                                     WHEN vc.id = 2
-                 THEN ar.amount_bc
-                                     ELSE 0
-                                END) AS transaction_total,
+                          CASE
+                          WHEN vc.id  = 1
+                            THEN ap.amount_bc
+                          WHEN vc.id = 2
+                            THEN ar.amount_bc
+                          WHEN al.amount_bc < 0 -- GL
+                            THEN al.amount_bc
+                          ELSE 0
+                          END) AS transaction_total,
                         sum(
                                 CASE WHEN alc.description = 'AR' AND vc.id IN (6, 7)
                                      THEN al.amount_bc
@@ -214,7 +215,7 @@ $$
                 LEFT JOIN ar ON (vc.id = 2 AND v.trans_id = ar.id)
                 LEFT JOIN ap ON (vc.id = 1 AND v.trans_id = ap.id)
                 LEFT JOIN acc_trans al ON
-                        ((vc.id = 5 AND v.trans_id = al.trans_id) OR
+                        ((vc.id NOT IN (3, 4, 6, 7) AND v.trans_id = al.trans_id) OR
                                 (vc.id IN (3, 4, 6, 7)
                                         AND al.voucher_id = v.id))
                 LEFT JOIN account_link alc ON (al.chart_id = alc.account_id)
