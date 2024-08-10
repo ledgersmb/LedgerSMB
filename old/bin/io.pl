@@ -624,11 +624,7 @@ sub new_item {
 
 <h4 class=error>| . $locale->text('Item not on file!') . qq|</h4>|;
 
-    if ( $myconfig{acs} !~
-        /(Goods \& Services--Add Part|Goods \& Services--Add Service)/ )
-    {
-
-        print qq|
+    print qq|
 <h4>| . $locale->text('What type of item is this?') . qq|</h4>
 
 <form method="post" data-dojo-type="lsmb/Form" action="ic.pl">
@@ -647,16 +643,15 @@ sub new_item {
 <input type=hidden name=action value=add>
 |;
 
-        $form->hide_form(qw(previousform rowcount path login sessionid));
+    $form->hide_form(qw(previousform rowcount path login sessionid));
 
-        print qq|
+    print qq|
 <p>
 <button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="__action" value="continue">|
           . $locale->text('Continue')
           . qq|</button>
 </form>
 |;
-    }
 
     print qq|
 </body>

@@ -102,8 +102,6 @@ sub link_part {
 
     # readonly
     if ( $form->{item} eq 'part' or $form->{item} eq 'assembly') {
-        $form->{readonly} = 1
-            if $myconfig{acs} and $myconfig{acs} =~ /Goods \& Services--Add Part/;
         $form->error(
             $locale->text(
                 'Cannot create Part; Inventory account does not exist!')
@@ -117,8 +115,6 @@ sub link_part {
     }
 
     if ( $form->{item} eq 'service' ) {
-        $form->{readonly} = 1
-          if $myconfig{acs} =~ /Goods \& Services--Add Service/;
         $form->error(
             $locale->text(
                 'Cannot create Service; Income account does not exist!')
@@ -130,8 +126,6 @@ sub link_part {
     }
 
     if ( $form->{item} eq 'labor' ) {
-        $form->{readonly} = 1
-          if $myconfig{acs} =~ /Goods \& Services--Add Labor\/Overhead/;
         $form->error(
             $locale->text(
                 'Cannot create Labor; Inventory account does not exist!')
