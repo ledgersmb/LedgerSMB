@@ -24,7 +24,7 @@
   </state>
 
   <state name="SAVED">
-    <action name="save_temp" resulting_state="NOCHANGE" />
+    <action name="save_as_template" resulting_state="NOCHANGE" />
     <!-- action name="save_info" resulting_state="NOCHANGE" / -->
     <action name="edit_and_save" resulting_state="NOCHANGE">
       <condition name="acl-draft-modify" />
