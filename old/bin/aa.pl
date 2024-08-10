@@ -457,11 +457,6 @@ sub create_links {
     $form->{rowcount}++ if ( $form->{id} || !$form->{rowcount} );
     $form->{rowcount} = 1 unless $form->{"$form->{ARAP}_amount_1"};
 
-    # readonly
-    if ( !$form->{readonly} ) {
-        $form->{readonly} = 1
-          if $myconfig{acs} && $myconfig{acs} =~ /$form->{ARAP}--Add Transaction/;
-    }
     delete $form->{selectcurrency};
     #$form->generate_selects(\%myconfig);
     $form->{$form->{ARAP}} = $form->{"$form->{ARAP}_1"} unless $form->{$form->{ARAP}} and $form->{__action} eq 'update';

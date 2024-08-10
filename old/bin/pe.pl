@@ -143,19 +143,17 @@ sub partsgroup_footer {
 
     $form->hide_form(qw(callback path login sessionid));
 
-    if ( $myconfig{acs} !~ /Goods \& Services--Add Group/ ) {
-        print qq|
+    print qq|
 <button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="__action" value="save">|
           . $locale->text('Save')
           . qq|</button>
 |;
 
-        if ( $form->{id} && $form->{orphaned} ) {
-            print qq|
+    if ( $form->{id} && $form->{orphaned} ) {
+        print qq|
 <button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="__action" value="delete">|
               . $locale->text('Delete')
               . qq|</button>|;
-        }
     }
 
     print qq|

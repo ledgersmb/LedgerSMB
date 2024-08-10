@@ -573,12 +573,6 @@ sub edit {
 
     $form->all_business_units($form->{transdate}, undef, 'GL');
 
-    # readonly
-    if ( !$form->{readonly} ) {
-        $form->{readonly} = 1
-            if ($myconfig{acs}
-                and $myconfig{acs} =~ /General Ledger--Add Transaction/);
-    }
     $form->{title} = "Edit";
     if ($form->{department_id}) {
          $form->{department}=$form->{departmentdesc}."--".$form->{department_id};

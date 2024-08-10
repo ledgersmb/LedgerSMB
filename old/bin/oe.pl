@@ -235,29 +235,16 @@ sub prepare_order {
     $form->{oldtransdate} = $form->{transdate};
 
     if ( $form->{type} eq 'sales_quotation' ) {
-        if ( !$form->{readonly} ) {
-            $form->{readonly} = 1 if $myconfig{acs} =~ /Quotations--Quotation/;
-        }
-
         $form->{selectformname} =
           qq|<option value="sales_quotation">| . $locale->text('Quotation');
     }
 
     if ( $form->{type} eq 'request_quotation' ) {
-        if ( !$form->{readonly} ) {
-            $form->{readonly} = 1 if $myconfig{acs} =~ /Quotations--RFQ/;
-        }
-
         $form->{selectformname} =
           qq|<option value="request_quotation">| . $locale->text('RFQ');
     }
 
     if ( $form->{type} eq 'sales_order' ) {
-        if ( !$form->{readonly} ) {
-            $form->{readonly} = 1
-              if $myconfig{acs} =~ /Order Entry--Sales Order/;
-        }
-
         $form->{selectformname} =
           qq|<option value="sales_order">|
           . $locale->text('Sales Order') . qq|
@@ -267,11 +254,6 @@ sub prepare_order {
     }
 
     if ( $form->{type} eq 'purchase_order' ) {
-        if ( !$form->{readonly} ) {
-            $form->{readonly} = 1
-              if $myconfig{acs} =~ /Order Entry--Purchase Order/;
-        }
-
         $form->{selectformname} =
           qq|<option value="purchase_order">|
           . $locale->text('Purchase Order') . qq|
