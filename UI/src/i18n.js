@@ -23,6 +23,7 @@ const i18n = createI18n({
     missingWarn: false, // warning off
     locale: _mapLocale(window.lsmbConfig.language),
     fallbackLocale: "en",
+    formatFallbackMessages: true,
     messages
 });
 

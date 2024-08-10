@@ -2,11 +2,11 @@
 
 import { createApp } from "vue";
 import router from "@/router";
-import i18n, { setI18nLanguage } from "@/i18n";
 import { useI18n } from "vue-i18n";
+import i18n from "@/i18n";
 import LoginPage from "@/views/LoginPage";
-import Toaster from "@/components/Toaster";
-import { createToasterMachine } from "@/components/Toaster.machines";
+import Main from "@/views/Main";
+
 import { useSessionUserStore } from "@/store/sessionUser";
 
 import { createPinia } from "pinia";
@@ -25,40 +25,11 @@ let lsmbDirective = {
 };
 
 if (document.getElementById("main")) {
-    app = createApp({
-        setup() {
-            const { t, locale } = useI18n({ useScope: "global" });
-            setI18nLanguage(locale);
-            return { t };
-        },
-        mounted() {
-            window.__lsmbLoadLink = (url) =>
-                this.$router.push(url.replace(/^https?:\/\/(?:[^@/]+)/, ""));
-            let m = document.getElementById("main");
-            dojoParser.parse(m).then(() => {
-                document.body.setAttribute("data-lsmb-done", "true");
-            });
-        },
-        beforeUpdate() {
-            document.body.removeAttribute("data-lsmb-done");
-        },
-        updated() {
-            document.body.setAttribute("data-lsmb-done", "true");
-        }
-    })
+    app = createApp(Main)
         .use(router)
         .use(createPinia());
 
     useSessionUserStore().initialize();
-    // eslint-disable-next-line vue/multi-word-component-names
-    app.component("Toaster", Toaster);
-    const toasterMachine = createToasterMachine({ items: [] }, {});
-    app.provide("toaster-machine", toasterMachine);
-    const { send } = toasterMachine;
-    app.provide("notify", (notification) => {
-        send({ type: "add", item: notification });
-    });
-
     appName = "#main";
 } else if (document.getElementById("login")) {
     app = createApp(LoginPage);

@@ -39,7 +39,7 @@ if (TARGET !== "readme") {
 
     function findDataDojoTypes(fileName) {
         var content = "" + fs.readFileSync(fileName);
-        // Return unique data-dojo-type refereces
+        // Return unique data-dojo-type references
         return (
             content.match(
                 /(?<=['"]?data-dojo-type['"]?\s*=\s*")([^"]+)(?=")/gi
@@ -76,7 +76,7 @@ if (TARGET !== "readme") {
     }
 
     // Compute used data-dojo-type
-    glob.sync("**/*.html", {
+    glob.sync("{**/*.html,src/**/*.vue}", {
         ignore: ["lib/ui-header.html", "js/**", "node_modules/**"]
         // cwd: "."
     }).map(function (filename) {

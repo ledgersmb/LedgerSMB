@@ -1,52 +1,6 @@
 [% WRAPPER "ui-header.html" %]
 <body id="app-main"
       class="lsmb [% dojo_theme %]">
-  <div id="main" style="width:100%;height:100%">
-  <div id="console-container"
-       data-dojo-type="dijit/layout/BorderContainer"
-       data-dojo-props="persist: true"
-       style="width: 100%; height: 100%">
-    <div data-dojo-type="dijit/layout/ContentPane"
-         data-dojo-props="region:'center'"
-         id="maindiv">
-      <router-view></router-view>
-    </div>
-    <div id="menudiv" class="edgePanel"
-         style="width:30ex"
-         data-dojo-type="dijit/layout/ContentPane"
-         data-dojo-props="region: 'left', splitter: true, minSize: 200">
-      <div style="text-align: center"><a target="_blank" rel="noopener noreferrer"
-                                         href="http://ledgersmb.org/">
-          <img class="cornerlogo" src="images/ledgersmb_small-trans.png"
-               width="100" height="50" style="border:1px" alt="LedgerSMB" />
-        </a>
-      </div>
-      <div id="version_info">[% text("LedgerSMB [_1]", version) %]</div>
-      <table id="header_info" class="header_table">
-        <tr>
-          <td id="login_info_header" class="header_left">
-            [% text("User") %]
-          </td>
-          <td id="company_info_header"
-              class="header_right">
-            [% text("Company") %]
-          </td>
-        </tr>
-        <tr>
-          <td id="login_info" class="header_left">[% login %]</td>
-          <td id="company_info" class="header_right">[% company %]</td>
-        </tr>
-      </table>
-      <hr>
-
-      <div id="top_menu" data-dojo-type="lsmb/menus/Tree">
-      </div>
-    </div>
-    <div id="errorDialog" title="An error occurred!"
-         style="display:none;min-width:40ex"
-         data-dojo-type="dijit/Dialog"></div>
-  </div>
-      <Toaster />
-  </div>
+  <div id="main" style="width:100%;height:100%"></div>
 </body>
 [% END %]
