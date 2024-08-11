@@ -13,7 +13,7 @@ let locale;
 // strings may contain more than just the showable text (e.g. a
 // translation context)
 let fbLocales = [ "en" ];
-const parts = lsmbConfig.language.match(/([a-z]{2})-([a-z]{2})/i)
+const parts = lsmbConfig.language.match(/([a-z]{2})-([a-z]{2})/i);
 if (parts) {
     locale = parts[1].toLowerCase() + "_" + parts[2].toUpperCase();
     fbLocales.unshift(parts[1].toLowerCase());
