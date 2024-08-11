@@ -165,19 +165,19 @@
     ]
   },
   "prettier": {
-          "bracketSpacing": true,
-          "printWidth": 80,
-          "quote-props": [
-            "error",
-            "consistent"
-          ],
-          "semi": true,
-          "singleQuote": false,
-          "tabWidth": 4,
-          "trailingComma": "none",
-          "useTabs": false,
-          "insertPragma": true,
-          "proseWrap": "preserve"
+    "bracketSpacing": true,
+    "printWidth": 80,
+    "quote-props": [
+      "error",
+      "consistent"
+    ],
+    "semi": true,
+    "singleQuote": false,
+    "tabWidth": 4,
+    "trailingComma": "none",
+    "useTabs": false,
+    "insertPragma": true,
+    "proseWrap": "preserve"
   },
   "stylelint": {
     "defaultSeverity": "warning",
