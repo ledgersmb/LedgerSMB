@@ -1,6 +1,5 @@
 <script>
 import { provide, ref } from "vue";
-import i18n, { setI18nLanguage } from "@/i18n";
 import { useI18n } from "vue-i18n";
 import Toaster from "@/components/Toaster";
 import { createToasterMachine } from "@/components/Toaster.machines";
@@ -16,14 +15,11 @@ export default {
         return {
             modelValue: 50,
             version: window.lsmbConfig.version,
-            login: 'my user',
-            company: 'the-company'
         }
     },
     setup() {
-        const { t, locale } = useI18n({ scope: 'global' });
-        console.log(`setting language ${locale.value}`);
-        setI18nLanguage(locale);
+        const i18n = useI18n({ useScope: 'global' });
+        const { t, locale } = i18n;
 
         const toasterMachine = createToasterMachine({ items: [] }, {});
         provide( "toaster-machine", toasterMachine );
@@ -76,16 +72,16 @@ export default {
                      alt="LedgerSMB" />
             </a>
             </div>
-            <div id="version_info">{{ $t('LedgerSMB {0}',
-                                   [ version ]) }}</div>
+            <div id="version_info">{{ t('LedgerSMB {version}',
+                                        { version: version }) }}</div>
             <table id="header_info" class="header_table">
                 <tr>
                     <td id="login_info_header" class="header_left">
-                        {{ $t("User") }}
+                        {{ t("User") }}
                     </td>
                     <td id="company_info_header"
                         class="header_right">
-                        {{ $t("Company") }}
+                        {{ t("Company") }}
                     </td>
                 </tr>
                 <tr>
