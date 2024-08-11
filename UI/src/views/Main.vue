@@ -12,9 +12,12 @@ export default {
         Toaster
     },
     data() {
+        const cfg = window.lsmbConfig;
         return {
             modelValue: 50,
-            version: window.lsmbConfig.version,
+            company: cfg.company,
+            login: cfg.login,
+            version: cfg.version,
         }
     },
     setup() {
