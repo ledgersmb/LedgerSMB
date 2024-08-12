@@ -1603,7 +1603,8 @@ sub _rebuild_modules {
 
     $request->{resubmit_action} //= $entrypoint;
     my $HTML = html_formatter_context {
-        return ! $database->apply_changes( checks => 1 );
+        return ! $database->apply_changes( checks => 1,
+                                           run_id => $request->{run_id} );
     } $request;
 
     return [ HTTP_OK,

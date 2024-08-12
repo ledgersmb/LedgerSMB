@@ -104,6 +104,15 @@ has default_connect_options => (is => 'rw',
 
 has schema => (is => 'ro', default => 'public');
 
+=head2 upgrade_run_id
+
+Contains the C<run_id> of the upgrade after invoking C<apply_changes>.
+
+=cut
+
+has upgrade_run_id => (is => 'rw');
+
+
 =head1 METHODS
 
 =head2 loader_log_filename
@@ -662,10 +671,13 @@ sub upgrade_modules {
     return 1;
 }
 
-=head2 apply_changes( [upto_tag => $tag], [checks => $boolean] )
+=head2 apply_changes( [upto_tag => $tag], [checks => $boolean], $run_id => $uuid_str )
 
 Runs fixes if they have not been applied, optionally up to
-a specific tagged point in the LOADORDER file.
+a specific tagged point in the LOADORDER file; supply C<$run_id> if
+this is a continued invocation of a prior, failed upgrade run. In case
+no C<run_id> is provided, a new UUID will be generated and assigned to
+C<upgrade_run_id>.
 
 Runs schema upgrade checks when the value of C<checks> is true.
 
@@ -683,9 +695,14 @@ sub apply_changes {
     my $loadorder =
         LedgerSMB::Database::Loadorder->new(
             "$self->{source_dir}/changes/LOADORDER",
-            upto_tag => $args{upto_tag});
-    $loadorder->init_if_needed($dbh);
+            upto_tag => $args{upto_tag},
+            run_id => $args{run_id});
+    if ($loadorder->init_if_needed($dbh)) {
+        $dbh->commit;
+    }
+    $self->logger->debug('Applying database schema upgrades');
     my $rv = $loadorder->apply_all($dbh, checks => $args{checks});
+    $self->upgrade_run_id( $loadorder->run_id );
     $dbh->disconnect;
 
     return $rv;

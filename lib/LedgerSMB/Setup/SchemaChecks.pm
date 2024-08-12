@@ -69,6 +69,9 @@ sub _wrap_html {
             database => $request->{database},
             resubmit_action => $request->{resubmit_action},
             action_url => $request->{_uri}->as_string,
+            # note: the line below works because the upgrade
+            # has completed when this wrapper is being run
+            run_id => $request->{database}->upgrade_run_id,
         });
 
     $template = $request->{_wire}->get('ui');
