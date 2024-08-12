@@ -5,7 +5,7 @@ import router from "@/router";
 import { createI18n } from "vue-i18n";
 import { createPinia } from "pinia";
 import LoginPage from "@/views/LoginPage";
-import Main from "@/views/Main";
+import LsmbMain from "@/views/LsmbMain";
 import { useSessionUserStore } from "@/store/sessionUser";
 
 const dojoParser = require("dojo/parser");
@@ -56,7 +56,7 @@ let lsmbDirective = {
 };
 
 if (document.getElementById("main")) {
-    app = createApp(Main).use(router).use(createPinia());
+    app = createApp(LsmbMain).use(router).use(createPinia());
 
     useSessionUserStore().initialize();
     appName = "#main";

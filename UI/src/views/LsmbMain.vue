@@ -10,7 +10,7 @@ import { createToasterMachine } from "@/components/Toaster.machines";
 const dojoParser = require("dojo/parser");
 
 export default {
-    name: "Main",
+    name: "LsmbMain",
     components: {
         Toaster
     },
