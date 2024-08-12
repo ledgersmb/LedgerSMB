@@ -62,18 +62,22 @@ sub _wrap_html {
 
     my $template = $request->{_wire}->get('ui');
     return [
-        $template->render_string($request,
-                                 'setup/upgrade/wrapper',
-                                 {
-                                     check_id => _check_hashid( $failing_check ),
-                                     database => $request->{database},
-                                     resubmit_action => $request->{resubmit_action},
-                                     action_url => $request->{_uri}->as_string,
-                                     title => $failing_check->{title}
-                                 },
-                                 {
-                                     validation_html => join("\n", @HTML)
-                                 })
+        $template->render_string(
+            $request,
+            'setup/upgrade/wrapper',
+            {
+                action_url      => $request->{_uri}->as_string,
+                check_id        => _check_hashid( $failing_check ),
+                database        => $request->{database},
+                resubmit_action => $request->{resubmit_action},
+                # note: the line below works because the upgrade
+                # has completed when this wrapper is being run
+                run_id          => $request->{database}->upgrade_run_id,
+                title           => $failing_check->{title}
+            },
+            {
+                validation_html => join("\n", @HTML)
+            })
         ];
 }
 

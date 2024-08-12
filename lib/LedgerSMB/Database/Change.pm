@@ -50,6 +50,7 @@ use Cwd;
 use Digest::SHA;
 use File::Basename;
 use File::Find;
+use Log::Any qw($log);
 
 =head1 SYNOPSIS
 
@@ -62,11 +63,14 @@ my $content_wrapped = $dbchange->content_wrap($before, $after);
 
 =head1 METHODS
 
-=head2 new($path, $properties)
+=head2 new($path, $properties, $run_id)
 
 Constructor.
 
-$properties is optional and a hashref with any of the following keys set:
+C<$run_id> is an optional UUID and may contain an identifier for the upgrade
+run this change is invoked from.
+
+C<$properties> is optional and a hashref with any of the following keys set:
 
 =over
 
@@ -87,10 +91,11 @@ If this one has changed, then reload further modules
 =cut
 
 sub new {
-    my ($package, $path, $init_properties) = @_;
+    my ($package, $path, $init_properties, $run_id) = @_;
     my $self = bless { _path => $path }, $package;
     my @prop_names = qw(no_transactions reload_subsequent);
     $self->{properties} = { map { $_ => $init_properties->{$_} } @prop_names };
+    $self->{run_id} = $run_id;
     return $self;
 }
 
@@ -280,9 +285,9 @@ sub apply {
     # a transaction started with 'begin_work()'
 
     $last_stmt_rc = $dbh->do(q{
-           INSERT INTO db_patches (sha, path, last_updated)
-           VALUES (?, ?, now());
-        }, undef, $self->sha, $self->path);
+           INSERT INTO db_patches (run_id, sha, path, last_updated)
+           VALUES (?, ?, ?, now());
+        }, undef, $self->{run_id}, $self->sha, $self->path);
 
     # When there is no auto commit, simulated it by committing after each
     # query
@@ -300,9 +305,11 @@ sub apply {
     }
 
     $dbh->do(q{
-            INSERT INTO db_patch_log(when_applied, path, sha, sqlstate, error)
-            VALUES(now(), ?, ?, ?, ?)
-    }, undef, $self->path, $self->sha, $state // 0, $errstr // '');
+            INSERT INTO db_patch_log(
+                run_id, when_applied, path, sha, sqlstate, error)
+            VALUES(?, now(), ?, ?, ?, ?)
+    }, undef, $self->{run_id}, $self->path,
+              $self->sha, $state // 0, $errstr // '');
     $dbh->commit if (! $dbh->{AutoCommit});
 
     if ($errstr) {
@@ -416,40 +423,32 @@ Initializes the tracking system
 
 sub init {
     my ($dbh) = @_;
-    return 0 unless needs_init($dbh);
+    $dbh->{private_LedgerSMB} //= {};
+    $log->debug('Initializing database schema patch tracking');
+    return 0 if $dbh->{private_LedgerSMB}->{db_change_initialized};
+    $log->debug('Proceeding to create or update the patch tracking schema');
     my $success = $dbh->prepare('
-    CREATE TABLE db_patch_log (
+    CREATE TABLE IF NOT EXISTS db_patch_log (
        when_applied timestamp primary key,
        path text NOT NULL,
        sha text NOT NULL,
        sqlstate text not null,
        error text
     );
-    CREATE TABLE db_patches (
+    CREATE TABLE IF NOT EXISTS db_patches (
        sha text primary key,
        path text not null,
        last_updated timestamp not null
     );
+    ALTER TABLE db_patch_log
+        add column if not exists run_id uuid;
+    ALTER TABLE db_patches
+        add column if not exists run_id uuid;
     ')->execute();
     die "$DBI::state: $DBI::errstr" unless $success;
 
+    $dbh->{private_LedgerSMB}->{db_change_initialized} = 1;
     return 1;
-}
-
-=head2 needs_init($dbh)
-
-Returns true if the tracking system needs to be initialized
-
-=cut
-
-sub needs_init {
-    my ($dbh) = @_;
-    my $count = $dbh->prepare(q{
-        select relname from pg_class
-         where relname = 'db_patches'
-               and pg_table_is_visible(oid)
-    })->execute();
-    return !int($count);
 }
 
 =head1 TODO

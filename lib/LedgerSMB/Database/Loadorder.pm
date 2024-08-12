@@ -42,6 +42,7 @@ use strict;
 use warnings;
 
 use Cwd;
+use Data::UUID;
 use List::Util qw| any |;
 use Log::Any qw($log);
 
@@ -81,9 +82,12 @@ processes all 5 lines
 
 =cut
 
+my $uuid_gen = Data::UUID->new;
+
 sub new {
     my ($package, $path, %options) = @_;
     return bless { _path => $path,
+                   run_id => $options{run_id} // lc $uuid_gen->create_str,
                    tag => $options{upto_tag} }, $package;
 }
 
@@ -127,6 +131,7 @@ sub _process_script {
         {
             no_transactions => $no_transactions
         },
+        $self->{run_id},
     );
 }
 
@@ -160,7 +165,7 @@ Returns 1 if applied.  Returns 0 if not.
 
 sub init_if_needed {
     my ($self, $dbh) = @_;
-    return 0 unless _needs_init($dbh);
+    $log->debug('leaving to change to initialize...');
     return LedgerSMB::Database::Change::init($dbh);
 }
 
@@ -175,6 +180,17 @@ sub path {
     my $path = $self->{_path};
     $path =~ s/LOADORDER$/$furtherpart/;
     return $path;
+}
+
+=head2 run_id
+
+Contains the stringified UUID of the upgrade run.
+
+=cut
+
+sub run_id {
+    my ($self) = @_;
+    return $self->{run_id};
 }
 
 =head2 run_all($dbh)
@@ -242,17 +258,6 @@ sub _unlock {
                'db_patches'::regclass::oid::int, 1) });
     return;
 }
-
-sub _needs_init {
-    my $dbh = pop @_;
-    my $count = $dbh->prepare(q{
-        select relname from pg_class
-         where relname = 'db_patches'
-               and pg_table_is_visible(oid)
-    })->execute();
-    return !int($count);
-}
-
 
 =head1 LICENSE AND COPYRIGHT
 
