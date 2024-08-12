@@ -102,9 +102,9 @@ lint:
 
 jslint:
 ifneq ($(origin FIX),undefined)
-	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn run lint:js:fix'
+	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn run lint:js:fix && yarn run lint:vue:fix'
 else
-	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn run lint:js'
+	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn run lint:js && yarn run lint:vue'
 endif
 
 readme: js_deps_install
