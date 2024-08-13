@@ -713,7 +713,7 @@ sub display_form {
 
     &{$subroutine}($numrows) if $numrows;
 
-    $form->hide_form(qw|locationid|);
+    $form->hide_form(qw|shiptolocationid|);
 
     &form_footer;
     $form->finalize_request unless $want_return;
@@ -1350,7 +1350,7 @@ sub print_form {
 
     $shipto = 0;
     # if there is no shipto fill it in from billto
-    $form->get_shipto($form->{locationid}) if $form->{locationid};
+    $form->get_shipto($form->{shiptolocationid}) if $form->{shiptolocationid};
     foreach my $item (@vars) {
         if ($form->{"shipto$item"} ) {
             $shipto = 1;
@@ -1680,9 +1680,9 @@ sub ship_to {
                            {
                                my $checked = '';
                                $checked = 'CHECKED="CHECKED"'
-                                   if ($form->{locationid}
-                                       and ($form->{locationid} == $form->{"shiptolocationid_$i"}
-                                            or $form->{locationid} == $form->{"locationid_$i"}));
+                                   if ($form->{shiptolocationid}
+                                       and ($form->{shiptolocationid} == $form->{"shiptolocationid_$i"}
+                                            or $form->{shiptolocationid} == $form->{"locationid_$i"}));
 
                                 print qq|
                            <tr>
@@ -1762,9 +1762,9 @@ sub ship_to {
 
               for(my $k=1;$k<$deletecontacts;$k++)
             {
-                for (qq| type_$k contact_$k description_$k |)
+                for (qw| type_ contact_ description_ |)
                 {
-                delete $form->{"shipto$_"};
+                delete $form->{"shipto$_$k"};
                 }
 
                }
@@ -1772,18 +1772,18 @@ sub ship_to {
                  delete $form->{shiptoradiocontact};
                delete $form->{shiptoradio};
 
-               for (qq| address1_new address2_new address3_new city_new state_new zipcode_new country_new type_new contact_new description_new|)
+               for (qw| address1_ address2_ address3_ city_ state_ zipcode_ country_ type_ contact_ description_|)
                {
-                delete $form->{"shipto$_"};
+                delete $form->{"shipto${_}new"};
                }
 
 
 
               for(my $k=1;$k<$deletelocations;$k++)
               {
-                    for (qq| locationid_$k address1_$k address2_$k address3_$k city_$k state_$k zipcode_$k country_$k|)
+                    for (qw| locationid_ address1_ address2_ address3_ city_ state_ zipcode_ country_|)
                     {
-                    delete $form->{"shipto$_"};
+                    delete $form->{"shipto$_$k"};
                     }
 
               }
@@ -1857,7 +1857,7 @@ $locale->text('Cancel')
 
 Author...Sadashiva
 
-The list of functions would create the new location / uses existing locations , and sets the $form->{locationid}.
+The list of functions would create the new location / uses existing locations , and sets the $form->{shiptolocationid}.
 
 list_locations_contacts() would extracts all locations and sets into form parameter...
 
@@ -1867,7 +1867,7 @@ construct_countrys_types return the drop down list of the country/contact_class 
 
 createlocations called by update action... calling eca__location_save and eca__save_contact
 
-setlocation_id called by continue action... just setting $form->{locationid} this is the final location id which is returned by shipto service
+setlocation_id called by continue action... just setting $form->{shiptolocationid} this is the final location id which is returned by shipto service
 
 
 
@@ -1905,7 +1905,7 @@ sub createlocations
 
     my $loc_id_index=$form->{"shiptoradio"};
 
-    my $index="locationid_".$loc_id_index;
+    my $index="shiptolocationid_".$loc_id_index;
 
     my $loc_id=$form->{$index};
 
@@ -1917,7 +1917,7 @@ sub createlocations
 
          &validatelocation;
 
-         $form->{locationid} = IIAA->createlocation($form);
+         $form->{shiptolocationid} = IIAA->createlocation($form);
 
 
     }
@@ -2014,7 +2014,7 @@ sub list_locations_contacts
 
     my $sth = $dbh->prepare($query);
 
-    $sth->execute( $form->{customer_id} ) || $form->dberror($query);
+    $sth->execute( $form->{customer_id} // $form->{vendor_id} ) || $form->dberror($query);
 
     my $i=0;
 
