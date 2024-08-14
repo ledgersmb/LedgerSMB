@@ -1618,6 +1618,12 @@ sub ship_to {
     $form->header;
 
 
+    for (qw| address1_ address2_ address3_ city_ state_ zipcode_ country_ type_ contact_ description_|) {
+        delete $form->{"shipto${_}new"};
+    }
+    my $country=&construct_countrys_types("country");
+    my $contacttype=&construct_countrys_types("type");
+
     print qq|
                <body class="lsmb">
 
@@ -1644,39 +1650,40 @@ sub ship_to {
                   <td valign="top">
                              <table width=70% >
 
-                             <tr class=listheading> |
-                                         . qq|<th class=listheading width=1% >
-                                  |
-                                        .    $locale->text(' ')
-                                         . qq|</th>
-                                   <th class=listheading width=5%>|
-                                  .     $locale->text('Add line1')
+                             <tr class=listheading>
+                                <th class=listheading width=1% rowspan=2>&nbsp;</th>
+                                <th class=listheading colspan=3 nowrap>|
+                                . $locale->text('Address')
+                                . qq|</th>
+                                   <th class=listheading rowspan=2 width=5% nowrap>|
+                                  .     $locale->text('City')
                                   . qq|</th>
-                                   <th class=listheading width=5%>|
-                                  .    $locale->text('Add line2')
-                                  . qq|</th>
-                                   <th class=listheading width=1% >
-                                  |
-                                  .     $locale->text('Add line3 ')
-                                        . qq|</th>
-                                   <th class=listheading width=5%>|
-                                  .     $locale->text('city')
-                                  . qq|</th>
-                                   <th class=listheading width=5%>|
+                                   <th class=listheading rowspan=2 width=5% nowrap>|
                                   .    $locale->text('State')
                                   . qq|</th>
-                                   <th class=listheading width=5%>|
-                                  .     $locale->text('Zip Code')
+                                   <th class=listheading rowspan=2 width=5% nowrap>|
+                                  .     $locale->text('Zipcode')
                                   . qq|</th>
-                                   <th class=listheading width=5%>|
+                                   <th class=listheading rowspan=2 width=5% nowrap>|
                                   .     $locale->text('Country')
                                   . qq|
+                             </tr>
+                             <tr class=listheading>
+                                   <th class=listheading width=5% nowrap>|
+                                  .     $locale->text('Line 1')
+                                  . qq|</th>
+                                   <th class=listheading width=5% nowrap>|
+                                  .    $locale->text('Line 2')
+                                  . qq|</th>
+                                   <th class=listheading width=1% nowrap>
+                                  |
+                                  .     $locale->text('Line 3')
+                                        . qq|</th>
                            </tr>
                         |;
 
-                           my $i;
 
-                           for($i=1;$i<=$form->{totallocations};$i++)
+                           for ($i=1;$i<=$form->{totallocations};$i++)
                            {
                                my $checked = '';
                                $checked = 'CHECKED="CHECKED"'
@@ -1689,13 +1696,13 @@ sub ship_to {
 
                               <td><input type=radio data-dojo-type="dijit/form/RadioButton" name="shiptoradio" id="shiptoradio_$i" value="$i"  $checked >
                               <input name="shiptolocationid_$i" id="shiptolocationid_$i" type="hidden" value="$form->{"shiptolocationid_$i"}" readonly></td>
-                              <td>$form->{"shiptoaddress1_$i"}</td>
-                              <td>$form->{"shiptoaddress2_$i"}</td>
-                              <td>$form->{"shiptoaddress3_$i"}</td>
-                              <td>$form->{"shiptocity_$i"}</td>
-                              <td>$form->{"shiptostate_$i"}</td>
-                              <td>$form->{"shiptozipcode_$i"}</td>
-                              <td>$form->{"shiptocountry_$i"}</td>
+                              <td nowrap>$form->{"shiptoaddress1_$i"}</td>
+                              <td nowrap>$form->{"shiptoaddress2_$i"}</td>
+                              <td nowrap>$form->{"shiptoaddress3_$i"}</td>
+                              <td nowrap>$form->{"shiptocity_$i"}</td>
+                              <td nowrap>$form->{"shiptostate_$i"}</td>
+                              <td nowrap>$form->{"shiptozipcode_$i"}</td>
+                              <td nowrap>$form->{"shiptocountry_$i"}</td>
                              <tr>
                                 |;
 
@@ -1712,6 +1719,18 @@ sub ship_to {
 
 
                                     print qq|
+                </tr>
+                <tr>
+                      <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio id="shiptoradio-new" value="new"></td>
+                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress1_new size=12 maxlength=64 value="$form->{shiptoaddress1_new}" ></td>
+                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress2_new size=12 maxlength=64 value="$form->{shiptoaddress2_new}" ></td>
+                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress3_new size=12 maxlength=64 value="$form->{shiptoaddress3_new}" ></td>
+                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptocity_new size=8 maxlength=32 value="$form->{shiptocity_new}" ></td>
+                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptostate_new size=10 maxlength=32 value="$form->{shiptostate_new}" ></td>
+                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptozipcode_new size=8 maxlength=10 value="$form->{shiptozipcode_new}" ></td>
+                      <td><select data-dojo-type="dijit/form/Select" id="shiptocountry-new" name="shiptocountry_new">$country</select></td>
+
+                 </tr>
 
                     </table>
 
@@ -1724,11 +1743,11 @@ sub ship_to {
                                  <th class=listheading width="20%">|
                                     . $locale->text('Type')
                                 . qq|</th>
-                                   <th class=listheading width="35%">|
-                                . $locale->text('Contact')
-                                . qq|</th>
                                   <th class="listheading" width="35%">|
                                 . $locale->text('Description')
+                                . qq|</th>
+                                   <th class=listheading width="35%">|
+                                . $locale->text('Contact')
                                 . qq|</th>
                             </tr>
                            <tr></tr>
@@ -1736,29 +1755,35 @@ sub ship_to {
 
                            for($i=1;$i<=$form->{totalcontacts};$i++)
                            {
+                               my $checked = '';
+                               # $checked = 'CHECKED="CHECKED"'
+                               #     if ($form->{shiptocontactid}
+                               #         and ($form->{shiptocontactid} == $form->{"shiptolocationid_$i"}
+                               #              or $form->{shiptolocationid} == $form->{"locationid_$i"}));
                         print qq|
                               <tr>
-                                  <td>&nbsp</td>
-                                  <td>$form->{"shiptotype_$i"}</td>
-                                  <td>$form->{"shiptocontact_$i"}</td>
-                                  <td>$form->{"shiptodescription_$i"}</td>
+                                  <td><input type="radio" data-dojo-type="dijit/form/RadioButton" name="shiptoradiocontact" id="shiptoradiocontact_$i" value="$i" $checked></td>
+                                  <td nowrap>$form->{"shiptotype_$i"}</td>
+                                  <td nowrap>$form->{"shiptodescription_$i"}</td>
+                                  <td nowrap>$form->{"shiptocontact_$i"}</td>
                              </tr>    |;
 
                               }
                                  my $deletecontacts=$i;
 
                              print qq|
+                   <tr>
+                      <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradiocontact id="shiptoradiocontact-new" value="new"></td>
+                      <td><select data-dojo-type="dijit/form/Select" id="shiptotype-new" name="shiptotype_new">$contacttype</select></td>
+                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptocontact_new size=10 maxlength=100 value="$form->{shiptocontact_new}" ></td>
+                       <td><input data-dojo-type="dijit/form/TextBox" name=shiptodescription_new size=10 maxlength=100 value="$form->{shiptodescription_new}" ></td>
+                       </tr>
                       </table>
                  </td>
                </tr>
 
                 </table>
                 |;
-
-                 my $country=&construct_countrys_types("country");
-
-             my $contacttype=&construct_countrys_types("type");
-
 
               for(my $k=1;$k<$deletecontacts;$k++)
             {
@@ -1772,12 +1797,6 @@ sub ship_to {
                  delete $form->{shiptoradiocontact};
                delete $form->{shiptoradio};
 
-               for (qw| address1_ address2_ address3_ city_ state_ zipcode_ country_ type_ contact_ description_|)
-               {
-                delete $form->{"shipto${_}new"};
-               }
-
-
 
               for(my $k=1;$k<$deletelocations;$k++)
               {
@@ -1790,31 +1809,6 @@ sub ship_to {
 
               $form->hide_form;
               print qq|
-
-              <hr valign="type" size=1 noshade >
-
-              <table valign="top">
-                <tr>
-                     Others
-                  </tr>
-                </tr>
-                      <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio id="shiptoradio-new" value="new"></td>
-                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress1_new size=12 maxlength=64 value="$form->{shiptoaddress1_new}" ></td>
-                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress2_new size=12 maxlength=64 value="$form->{shiptoaddress2_new}" ></td>
-                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress3_new size=12 maxlength=64 value="$form->{shiptoaddress3_new}" ></td>
-                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptocity_new size=8 maxlength=32 value="$form->{shiptocity_new}" ></td>
-                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptostate_new size=10 maxlength=32 value="$form->{shiptostate_new}" ></td>
-                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptozipcode_new size=8 maxlength=10 value="$form->{shiptozipcode_new}" ></td>
-                      <td><select data-dojo-type="dijit/form/Select" id="shiptocountry-new" name="shiptocountry_new">$country</select></td>
-
-                      <td>&nbsp;</td>
-                      <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradiocontact value="1"></td>
-                      <td><select data-dojo-type="dijit/form/Select" id="shiptotype-new" name="shiptotype_new">$contacttype</select></td>
-                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptocontact_new size=10 maxlength=100 value="$form->{shiptocontact_new}" ></td>
-                       <td><input data-dojo-type="dijit/form/TextBox" name=shiptodescription_new size=10 maxlength=100 value="$form->{shiptodescription_new}" ></td>
-
-                 </tr>
-
 
               </table>
           </td>
@@ -1922,7 +1916,7 @@ sub createlocations
 
     }
 
-    if($form->{shiptoradiocontact}==1)
+    if($form->{shiptoradiocontact} eq 'new')
     {
          &validatecontact;
          IIAA->createcontact($form);
@@ -2038,10 +2032,13 @@ sub list_locations_contacts
 
 
     $query = qq|
-            select c.class as shiptotype,ec.contact as shiptocontact,ec.description as shiptodescription
-            from eca_to_contact ec
-            join contact_class c on(c.id=ec.contact_class_id)
-            where ec.credit_id=?;
+select c.class as shiptotype,
+       ec.contact as shiptocontact,
+       ec.description as shiptodescription
+  from eca_to_contact ec
+  join contact_class c
+       on (c.id=ec.contact_class_id)
+ where ec.credit_id = ?;
           |;
 
 
