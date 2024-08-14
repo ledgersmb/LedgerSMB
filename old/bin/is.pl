@@ -511,6 +511,10 @@ sub form_header {
         <td colspan=3><input data-dojo-type="dijit/form/TextBox" id="shippingpoint" name="shippingpoint" size="35" value="$form->{shippingpoint}" $readonly></td>
           </tr>
           <tr>
+            <th align=right nowrap>| . $locale->text('Shipping Attn') . qq|</th>
+            <td><input name=shiptoattn id=shiptoattn data-dojo-type="dijit/form/TextBox" value="$form->{shiptoattn}"></td>
+          </tr>
+          <tr>
             <th align=right valign=top nowrap>| . $locale->text('Shipping Address') . qq|</th>
             <td>$form->{shiptoaddress1} <br/>
                 $form->{shiptoaddress2} <br/>
