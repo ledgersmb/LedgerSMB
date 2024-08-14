@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration xmlns="http://ledgersmb.org/xml-schemas/configuration">
+  <documentation>
+    This configuration creates a general purpose chart of accounts with
+    accounts for e.g. outstanding invoices (AR/AP), sales income and tax,
+    various types of expenses, bank accounts and credit cards.
+
+    This example shows the ability to set up a hierarchy of accounts
+    which allows for more flexibility in the income statement and balance
+    sheet reports than the traditional Income/Expense and
+    Assets/Liabilities/Equity reporting (which is also supported).
+
+    Generally used in retail, warehouse, manufacturing, distribution,
+    consulting, and accounting businesses.
+  </documentation>
   <coa>
     <account-heading id="h-1" code="1000" description="ALL ASSETS">
       <account-heading id="h-1a" code="1050" description="CURRENT ASSETS">
