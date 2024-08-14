@@ -1648,7 +1648,8 @@ sub ship_to {
             <table  cellspacing="0" cellpadding="0" border="0">
                   <tr>
                   <td valign="top">
-                             <table width=70% >
+                             <table style="margin-top:1em">
+                             <caption><b>| . $locale->text('Shipping Address') . qq|</b></caption>
 
                              <tr class=listheading>
                                 <th class=listheading width=1% rowspan=2>&nbsp;</th>
@@ -1722,12 +1723,12 @@ sub ship_to {
                 </tr>
                 <tr>
                       <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio id="shiptoradio-new" value="new"></td>
-                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress1_new size=12 maxlength=64 value="$form->{shiptoaddress1_new}" ></td>
-                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress2_new size=12 maxlength=64 value="$form->{shiptoaddress2_new}" ></td>
-                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress3_new size=12 maxlength=64 value="$form->{shiptoaddress3_new}" ></td>
-                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptocity_new size=8 maxlength=32 value="$form->{shiptocity_new}" ></td>
-                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptostate_new size=10 maxlength=32 value="$form->{shiptostate_new}" ></td>
-                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptozipcode_new size=8 maxlength=10 value="$form->{shiptozipcode_new}" ></td>
+                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress1_new size=12 maxlength=64 value="$form->{shiptoaddress1_new}"></td>
+                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress2_new size=12 maxlength=64 value="$form->{shiptoaddress2_new}"></td>
+                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress3_new size=12 maxlength=64 value="$form->{shiptoaddress3_new}"></td>
+                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptocity_new size=8 maxlength=32 value="$form->{shiptocity_new}"></td>
+                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptostate_new size=10 maxlength=32 value="$form->{shiptostate_new}"></td>
+                      <td><input data-dojo-type="dijit/form/TextBox" name=shiptozipcode_new size=8 maxlength=10 value="$form->{shiptozipcode_new}"></td>
                       <td><select data-dojo-type="dijit/form/Select" id="shiptocountry-new" name="shiptocountry_new">$country</select></td>
 
                  </tr>
@@ -1735,9 +1736,11 @@ sub ship_to {
                     </table>
 
                 </td>
-                <td>&nbsp;</td>
+                </tr>
+                <tr>
                 <td valign="top" >
-                      <table width=30%>
+                      <table style="margin-top:1em">
+                        <caption><b>| . $locale->text('Shipping Attn') . qq|</b></caption>
                              <tr class=listheading>
                                  <th>&nbsp</th>
                                  <th class=listheading width="20%">|
