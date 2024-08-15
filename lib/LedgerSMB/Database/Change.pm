@@ -5,13 +5,27 @@ package LedgerSMB::Database::Change;
 
 LedgerSMB::Database::Change - Database change scripts for LedgerSMB
 
+=head1 SYNOPSIS
+
+my $dbchange = LedgerSMB::Database::Change->new(path => $path,
+                                      properties => $properties);
+
+my $content = $dbchange->content()
+my $sha = $dbchange->sha();
+my $content_wrapped = $dbchange->content_wrap($before, $after);
+
 =head1 DESCRIPTION
 
 Implements infrastructure to apply "schema-deltas" (schema-changes)
 exactly once. Meaning that if a change has been applied succesfully,
 it won't be applied again.
 
-Please note that the criterion 'has been applied' is determined by
+Note that this functionality isn't specific to LedgerSMB and mostly
+mirrors PGObject::Util::DBChange and originates from that code.
+
+=head2 Determination of 'has been applied before'
+
+The criterion 'has been applied before' is determined by
 the SHA512 of the content of the schema change file.  This leaves no
 room for fixing the content of the schema change file as changing
 the content means the schema change will be applied in all upgrades,
@@ -37,9 +51,93 @@ On upgrade, this module will detect that older versions of the file
 exist and have been succesfully applied.  If that's the case, the
 schema change file will be considered to be applied.
 
+=head2 Receiving values from the driver in SQL
 
-Note that this functionality isn't specific to LedgerSMB and mostly
-mirrors PGObject::Util::DBChange and originates from that code.
+The SQL code can query properties of the LedgerSMB execution environment
+using the C< current_setting() > function insofar as they are not available
+in the C< defaults > table.  Setting names are prefixed
+with C< lsmb_upgrade. >.
+
+Currently, this module doesn't export any properties of the execution
+environment.
+
+=head2 Communication from SQL to driver
+
+The driver (this module) listens on a channel named
+C<< upgrade.<current database name> >> to receive messages from
+the SQL script issued using the C< NOTIFY > statement or
+C< pg_notify() > function.  The notify payload is a JSON structure
+defining a message.  Each message has a C< type > field; types contain
+additional fields as specified below.
+
+Please do note that notify payloads are limited to 8000 characters.
+
+=head3 feedback
+
+This message type allows the upgrade script to indicate feedback to
+be sent to the admin running the upgrade. It supports the following
+fields:
+
+=over
+
+=item * content (string)
+
+Contains the text of the feedback to the user. Contents of messages
+with subsequent C<seq> values, will be appended before interpreting
+this field.
+
+The resulting string consists of a header followed by two newlines
+and the actual content.  Contents without a header immediately starts
+with two newline characters.
+
+The header uses the same structure as MIME. A C< Content-Type > header
+may be used to indicate the formatting of the content.  When no
+content type is specified, it defaults to C< text/plain >.
+
+=item * seq (integer)
+
+Sequence number of the feedback message, in case content is split
+across multiple messages (in order to stay below the 8,000 character
+payload limit).
+
+=item * id (string)
+
+Required field in case the C<seq> field is used to marshall a set
+of message parts.  All parts share the same C<id> value, with
+different values across unrelated messages.
+
+This value may be empty if C<seq> is null.
+
+=item * roles (string[])
+
+The list of roles (without their company prefix, i.e. as listed in
+C< sql/modules/Roles.sql >) used to determine for which users this
+feedback is applicable; users being assigned at least one of the
+roles will be in the list of those notified. If this field is C<null>,
+the feedback will not be shown in the application, instead being
+restricted to admins through C< setup.pl > and C< ledgersmb-admin >.
+
+=back
+
+=head3 cleanup
+
+B<NOTE> This message type is envisioned but not implemented yet.
+
+This message type allows the upgrade script to indicate that - once
+the upgrade has been tested and approved by the admin - a cleanup
+step is required.
+
+=over
+
+=item * script (string)
+
+The SQL command(s) to be executed to clean up after the upgrade.
+
+=item * feedback_id (string)
+
+The C< id > of the feedback describing the cleanup action to the user.
+
+=back
 
 =cut
 
@@ -50,16 +148,10 @@ use Cwd;
 use Digest::SHA;
 use File::Basename;
 use File::Find;
+use JSON::PP;
 use Log::Any qw($log);
 
-=head1 SYNOPSIS
-
-my $dbchange = LedgerSMB::Database::Change->new(path => $path,
-                                      properties => $properties);
-
-my $content = $dbchange->content()
-my $sha = $dbchange->sha();
-my $content_wrapped = $dbchange->content_wrap($before, $after);
+my $json = JSON::PP->new;
 
 =head1 METHODS
 
@@ -235,10 +327,49 @@ Throws an error in case of failure.
 
 =cut
 
+sub _collect_script_messages {
+    my ($self, $dbh) = @_;
+    my @msgs;
+
+    while (my $notification = $dbh->pg_notifies) {
+        my ($chan, $pid, $payload) = @$notification;
+        my $msg = $json->decode( $payload );
+        push @msgs, $msg;
+    }
+    return undef unless (@msgs);
+
+    my @feedback = grep { $_->{type} eq 'feedback' } @msgs;
+    my @sorted = (
+        (# sort is stable, so this sorts seq within id.
+         sort { $a->{id} cmp $b->{id} }
+         sort { $a->{seq} <=> $b->{seq} }
+         grep { defined $_->{seq} } @feedback),
+        );
+
+    my @merged = grep { not defined $_->{seq} } @feedback;
+    if (@sorted) {
+        my $wip = pop @sorted;
+        do {
+            my $next = pop @sorted;
+            if (not $next
+                or $next->{id} ne $wip->{id}) {
+                push @merged, $wip;
+                $wip = $next;
+            }
+            elsif ($next
+                   and $next->{id} eq $wip->{id}) {
+                $wip->{content} .= $next->{content};
+            }
+        } while (@sorted);
+    }
+    return @merged ? \@merged : undef;
+}
+
 sub apply {
     my ($self, $dbh) = @_;
     return if $self->is_applied($dbh);
 
+    my $channel = $dbh->quote_identifier( 'upgrade.' . $dbh->{pg_db} );
     my @after_params =  ( $self->sha );
     my $no_transactions = $self->{properties}->{no_transactions};
 
@@ -246,7 +377,10 @@ sub apply {
     my $last_stmt_rc;
     my ($state, $errstr);
 
-    $dbh->do(q{set client_min_messages = 'warning';});
+    $dbh->do(<<~SQL);
+       set client_min_messages = 'warning';
+       listen $channel;
+       SQL
     $dbh->commit if ! $dbh->{AutoCommit};
 
     # If we're in auto-commit mode, but we want 1 lengthy transaction,
@@ -264,11 +398,12 @@ sub apply {
         # returned in a single block, which means 'single transaction' in
         # all modes.
         if (not $dbh->{AutoCommit} and $no_transactions) {
-            if (!$last_stmt_rc) {
-                $dbh->rollback;
+            if ($last_stmt_rc) {
+                $dbh->commit;
             }
             else {
-                $dbh->commit;
+                $dbh->rollback;
+                $last_stmt_rc = '0E0';
             }
         }
         elsif (not $no_transactions and not $last_stmt_rc) {
@@ -278,42 +413,44 @@ sub apply {
         }
     }
 
-    # For transactionless processing, due to the commit and rollback
-    # above, this starts in a clean transaction.
-    # For with-transaction processing, this transaction runs in the
-    # same transaction because above no commit was executed and higher up
-    # a transaction started with 'begin_work()'
-
-    $last_stmt_rc = $dbh->do(q{
-           INSERT INTO db_patches (run_id, sha, path, last_updated)
-           VALUES (?, ?, ?, now());
-        }, undef, $self->{run_id}, $self->sha, $self->path);
-
     # When there is no auto commit, simulated it by committing after each
     # query
     # When there *is* auto commit, but a single transaction was requested,
     # we called 'begin_work()' above; close that by calling 'commit()' or
     # 'rollback()' here.
-    if ((not $dbh->{AutoCommit})
-        or (not $no_transactions and $dbh->{AutoCommit})) {
-        if (!$last_stmt_rc) {
-            $dbh->rollback;
-        }
-        else {
+    my $rolled_back;
+    if (not $no_transactions) {
+        if ($last_stmt_rc) { # success
             $dbh->commit;
         }
+        else {
+            $dbh->rollback;
+            $rolled_back = 1;
+        }
+    }
+    my $msgs = $self->_collect_script_messages($dbh);
+    unless ($rolled_back) {
+        $dbh->do(q{
+           INSERT INTO db_patches (run_id, sha, path, last_updated, messages)
+           VALUES (?, ?, ?, now(), ?);
+        }, undef, $self->{run_id}, $self->sha, $self->path,
+                 $msgs ? $json->encode($msgs) : undef)
+            or die 'Failed to update database schema patch log: ' . $dbh->errstr;
     }
 
-    $dbh->do(q{
+    $dbh->do(qq{
+            unlisten $channel;
             INSERT INTO db_patch_log(
                 run_id, when_applied, path, sha, sqlstate, error)
             VALUES(?, now(), ?, ?, ?, ?)
     }, undef, $self->{run_id}, $self->path,
-              $self->sha, $state // 0, $errstr // '');
+             $self->sha, $state // 0, $errstr // '')
+        or die 'Failed to update database schema detailed patch log: ' . $dbh->errstr;
     $dbh->commit if (! $dbh->{AutoCommit});
 
     if ($errstr) {
-        die 'Error applying upgrade script ' . $self->path . ': ' . $errstr;
+        $last_stmt_rc //= ''; # suppress interpolation warning
+        die "Error ($no_transactions:$last_stmt_rc) applying upgrade script " . $self->path . ': ' . $errstr;
     }
 
     return;
@@ -443,7 +580,8 @@ sub init {
     ALTER TABLE db_patch_log
         add column if not exists run_id uuid;
     ALTER TABLE db_patches
-        add column if not exists run_id uuid;
+        add column if not exists run_id uuid,
+        add column if not exists messages jsonb;
     ')->execute();
     die "$DBI::state: $DBI::errstr" unless $success;
 
