@@ -3,24 +3,22 @@
 <script>
 import { defineComponent, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { setI18nLanguage } from "@/i18n";
 import { createLoginMachine } from "./LoginPage.machines.js";
 
 export default defineComponent({
     name: "LoginPage",
     setup() {
-        const { t, locale } = useI18n({ useScope: "global" });
-        setI18nLanguage(locale);
+        const { t } = useI18n({ useScope: "global" });
         let searchParams = new URL(document.location).searchParams;
         let username = searchParams.get("login") || "";
         let company = searchParams.get("company") || "";
         let data = {
-            t: t,
             password: ref(""),
             username: ref(username),
             company: ref(company),
             form: ref(null),
-            errorText: ref("")
+            errorText: ref(""),
+            t
         };
         let { service, state } = createLoginMachine(data);
 
@@ -63,7 +61,7 @@ export default defineComponent({
                                     id="username"
                                     name="username"
                                     size="20"
-                                    :label="$t('User Name')"
+                                    :label="t('User Name')"
                                     :value="username"
                                     tabindex="1"
                                     autocomplete="off"
@@ -75,7 +73,7 @@ export default defineComponent({
                                     id="password"
                                     name="password"
                                     size="20"
-                                    :label="$t('Password')"
+                                    :label="t('Password')"
                                     :value="password"
                                     tabindex="2"
                                     autocomplete="off"
@@ -87,7 +85,7 @@ export default defineComponent({
                                     id="company"
                                     name="company"
                                     size="20"
-                                    :label="$t('Company')"
+                                    :label="t('Company')"
                                     tabindex="3"
                                     :value="company"
                                     @keyup.enter="machine.send('submit')"
@@ -101,7 +99,7 @@ export default defineComponent({
                                 :disabled="state !== 'ready'"
                                 @click="machine.send('submit')"
                             >
-                                {{ $t("Login") }}
+                                {{ t("Login") }}
                             </lsmb-button>
                             <div v-else id="errorText">
                                 {{ errorText }}
@@ -111,7 +109,7 @@ export default defineComponent({
                 </div>
                 <transition>
                     <div v-if="state === 'submitting'">
-                        {{ $t("Logging in... Please wait.") }}
+                        {{ t("Logging in... Please wait.") }}
                     </div>
                 </transition>
             </div>

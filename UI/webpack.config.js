@@ -39,7 +39,7 @@ if (TARGET !== "readme") {
 
     function findDataDojoTypes(fileName) {
         var content = "" + fs.readFileSync(fileName);
-        // Return unique data-dojo-type refereces
+        // Return unique data-dojo-type references
         return (
             content.match(
                 /(?<=['"]?data-dojo-type['"]?\s*=\s*")([^"]+)(?=")/gi
@@ -76,7 +76,7 @@ if (TARGET !== "readme") {
     }
 
     // Compute used data-dojo-type
-    glob.sync("**/*.html", {
+    glob.sync("{**/*.html,src/**/*.vue}", {
         ignore: ["lib/ui-header.html", "js/**", "node_modules/**"]
         // cwd: "."
     }).map(function (filename) {
@@ -329,7 +329,13 @@ if (TARGET !== "readme") {
                     return "'" + po + "'";
                 }
             ),
-            __VUE_PROD_DEVTOOLS__: true
+            __VUE_PROD_DEVTOOLS__: JSON.stringify(false),
+            __VUE_OPTIONS_API__: JSON.stringify(true),
+            __VUE_I18N_FULL_INSTALL__: JSON.stringify(true),
+            __VUE_I18N_LEGACY_API__: JSON.stringify(false),
+            __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: (
+                process.env.NODE_ENV !== "production" ? "true" : "false"),
+            __INTLIFY_PROD_DEVTOOLS__: JSON.stringify(false),
         })
     ];
     var pluginsProd = [
@@ -337,7 +343,6 @@ if (TARGET !== "readme") {
 
         // Statics from build.
         new webpack.DefinePlugin({
-            __VUE_PROD_DEVTOOLS__: true
         })
     ];
     var pluginsDev = [
@@ -346,11 +351,6 @@ if (TARGET !== "readme") {
         new UnusedWebpackPlugin(UnusedWebpackPluginOptions),
 
         new webpack.DefinePlugin({
-            __VUE_I18N_FULL_INSTALL__: JSON.stringify(true),
-            __INTLIFY_PROD_DEVTOOLS__: JSON.stringify(false),
-            __VUE_I18N_LEGACY_API__: JSON.stringify(false),
-            __VUE_OPTIONS_API__: true,
-            __VUE_PROD_DEVTOOLS__: true
         })
     ];
     var pluginsList = prodMode
@@ -434,7 +434,7 @@ if (TARGET !== "readme") {
                 vue$: "vue/dist/vue.cjs.js",
                 "vue-router": "vue-router/dist/vue-router.cjs.js",
                 pinia$: "pinia/dist/pinia.cjs",
-                "vue-i18n": "vue-i18n/dist/vue-i18n.cjs",
+                "vue-i18n": "vue-i18n/dist/vue-i18n.esm-bundler.js",
                 "@pinia": path.join(__dirname, "node_modules/@pinia"), // Fix eslint importer
                 "@": path.join(__dirname, "src/")
             },

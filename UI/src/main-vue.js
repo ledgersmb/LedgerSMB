@@ -2,16 +2,47 @@
 
 import { createApp } from "vue";
 import router from "@/router";
-import i18n, { setI18nLanguage } from "@/i18n";
-import { useI18n } from "vue-i18n";
+import { createI18n } from "vue-i18n";
+import { createPinia } from "pinia";
 import LoginPage from "@/views/LoginPage";
-import Toaster from "@/components/Toaster";
-import { createToasterMachine } from "@/components/Toaster.machines";
+import LsmbMain from "@/views/LsmbMain";
 import { useSessionUserStore } from "@/store/sessionUser";
 
-import { createPinia } from "pinia";
-
 const dojoParser = require("dojo/parser");
+
+let locale;
+// the 'en' locale is currently empty, but included so any inline
+// strings may contain more than just the showable text (e.g. a
+// translation context)
+let fbLocales = ["en"];
+const parts = window.lsmbConfig.language.match(/([a-z]{2})-([a-z]{2})/i);
+if (parts) {
+    locale = parts[1].toLowerCase() + "_" + parts[2].toUpperCase();
+    fbLocales.unshift(parts[1].toLowerCase());
+} else {
+    locale = window.lsmbConfig.language;
+}
+let messages = {};
+for (let l of [locale, ...fbLocales]) {
+    try {
+        messages[l] = await import(
+            /* webpackChunkName: "lang-[request]" */ `@/locales/${l}.json`
+        );
+    } catch {
+        // do nothing, the file doesn't need to exist
+    }
+}
+const i18n = createI18n({
+    globalInjection: true,
+    useScope: "global",
+    legacy: false,
+    missingWarn: false, // warning off
+    locale: locale,
+    fallbackLocale: fbLocales,
+    fallbackFormat: true,
+    fallbackWarn: false,
+    messages: messages
+});
 
 let app, appName;
 let lsmbDirective = {
@@ -25,40 +56,9 @@ let lsmbDirective = {
 };
 
 if (document.getElementById("main")) {
-    app = createApp({
-        setup() {
-            const { t, locale } = useI18n({ useScope: "global" });
-            setI18nLanguage(locale);
-            return { t };
-        },
-        mounted() {
-            window.__lsmbLoadLink = (url) =>
-                this.$router.push(url.replace(/^https?:\/\/(?:[^@/]+)/, ""));
-            let m = document.getElementById("main");
-            dojoParser.parse(m).then(() => {
-                document.body.setAttribute("data-lsmb-done", "true");
-            });
-        },
-        beforeUpdate() {
-            document.body.removeAttribute("data-lsmb-done");
-        },
-        updated() {
-            document.body.setAttribute("data-lsmb-done", "true");
-        }
-    })
-        .use(router)
-        .use(createPinia());
+    app = createApp(LsmbMain).use(router).use(createPinia());
 
     useSessionUserStore().initialize();
-    // eslint-disable-next-line vue/multi-word-component-names
-    app.component("Toaster", Toaster);
-    const toasterMachine = createToasterMachine({ items: [] }, {});
-    app.provide("toaster-machine", toasterMachine);
-    const { send } = toasterMachine;
-    app.provide("notify", (notification) => {
-        send({ type: "add", item: notification });
-    });
-
     appName = "#main";
 } else if (document.getElementById("login")) {
     app = createApp(LoginPage);

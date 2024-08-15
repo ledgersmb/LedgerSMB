@@ -63,7 +63,9 @@
             mode: "<%= htmlWebpackPlugin.options.mode %>"
         };
         var lsmbConfig = {
+            company: "[% company %]",
             language: "[% USER.language %]",
+            login: "[% login %]",
             [% IF USER.dateformat %]
             "dateformat": '[% USER.dateformat %]',
             [% END %]
