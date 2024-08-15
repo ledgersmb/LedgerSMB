@@ -115,9 +115,6 @@ define([
             });
         },
         onClick: function (item, node, _event) {
-            console.log("menu onClick");
-            console.log(item);
-            console.log(node);
             // regular handling of non-leafs
             if (item.menu) {
                 return;
@@ -157,7 +154,6 @@ define([
             }
         },
         __onClick: function (e) {
-            console.log("menu __onClick");
             // simulate "click opening in background tab"
             // (Ctrl+LeftMouse or MiddleMouse)
             if (mouse.isLeft(e) && !(e.ctrlKey || e.metaKey)) {
