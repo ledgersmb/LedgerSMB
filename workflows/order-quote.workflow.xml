@@ -13,7 +13,9 @@
     <action name="print_and_save_as_new" resulting_state="NOCHANGE" />
     <action name="save" resulting_state="NOCHANGE" />
     <action name="save_as_new" resulting_state="NOCHANGE" />
-    <action name="ship_to" resulting_state="NOCHANGE" />
+    <action name="ship_to" resulting_state="NOCHANGE">
+      <condition name="is_sales" />
+    </action>
     <action name="sales_invoice" resulting_state="NOCHANGE">
       <condition name="is_order" />
       <condition name="is_sales" />

@@ -216,7 +216,7 @@ sub save {
         $query = qq|
             INSERT INTO oe
                 (id, ordnumber, quonumber, transdate,
-                reqdate, shippingpoint, shipvia,
+                reqdate, shippingpoint, shipvia, shipto_attn,
                 notes, intnotes, curr, closed,
                 person_id, language_code, ponumber, terms,
                 quotation, oe_class_id, entity_credit_account, workflow_id)
@@ -231,6 +231,7 @@ sub save {
             $form->{ordnumber},     $form->{quonumber},
             $form->{transdate},     $form->{reqdate},
             $form->{shippingpoint}, $form->{shipvia},
+            $form->{shiptoattn},
             $form->{notes},         $form->{intnotes},
             $form->{currency},      $form->{closed},
             $form->{person_id},
@@ -602,7 +603,7 @@ sub retrieve {
                 o.amount_tc AS invtotal, o.closed, o.reqdate,
                 o.quonumber, o.language_code,
                 o.ponumber, cr.entity_class,
-                shipto as shiptolocationid
+                shipto as shiptolocationid, shipto_attn as shiptoattn
             FROM oe o
             JOIN entity_credit_account cr ON (cr.id = o.entity_credit_account)
             JOIN entity vc ON (cr.entity_id = vc.id)

@@ -42,6 +42,7 @@
     <action name="update" resulting_state="NOCHANGE" />
     <action name="ship_to" resulting_state="NOCHANGE">
       <condition name="is_invoice" />
+      <condition name="is_sales" />
     </action>
     <action name="schedule" resulting_state="NOCHANGE">
       <condition name="!is-batch-member" />

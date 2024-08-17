@@ -1,12 +1,16 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.0
-   Date:     2021-01-04
+   Version:  1.1
+   Date:     2024-08-14
    File:     invoice.html
    Set:      demo
 
 Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
+
+Version   Changes
+1.1       Extended with 'shiptoattn' (at the attention of)
+
 
 -?>
 <!DOCTYPE html>
@@ -53,6 +57,7 @@ releases. No explicit versioning was applied before 2021-01-04.
             <?lsmb text('Fax: [_1]', customerfax) ?> <?lsmb END ?> <?lsmb IF email ?><br>
             <?lsmb email ?> <?lsmb END ?></td>
             <td><?lsmb shiptoname ?><br>
+            <?lsmb IF shiptoattn ?><?lsmb shiptoattn ?><br><?lsmb END ?>
             <?lsmb shiptoaddress1 ?> <?lsmb IF shiptoaddress2 ?><br>
             <?lsmb shiptoaddress2 ?> <?lsmb END ?><br>
             <?lsmb shiptocity ?> <?lsmb IF shiptostate ?> , <?lsmb shiptostate ?> <?lsmb END ?>

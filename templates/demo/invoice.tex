@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.2
-   Date:     2022-07-22
+   Version:  1.3
+   Date:     2024-08-14
    File:     invoice.tex
    Set:      demo
 
@@ -11,7 +11,7 @@ releases. No explicit versioning was applied before 2021-01-04.
 Version   Changes
 1.1       Fix spelling mistake (acrue -> accrue)
 1.2       Merged xelatex targetting templates with those targetting pdflatex
-
+1.3       Extended with 'shiptoattn' (at the attention of)
 
 
 The "$FORMAT($PROCESSOR)" below evaluates to e.g. "pdf(pdflatex)".
@@ -100,6 +100,10 @@ Fax: <?lsmb customerfax ?>
 
 <?lsmb shiptoname ?>
 
+<?lsmb IF shiptoattn -?>
+<?lsmb shiptoattn ?>
+
+<?lsmb END -?>
 <?lsmb shiptoaddress1 ?>
 
 <?lsmb shiptoaddress2 ?>

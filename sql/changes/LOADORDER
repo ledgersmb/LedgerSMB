@@ -189,3 +189,4 @@ mc/delete-migration-validation-data.sql
 1.12/reconciliation-workflow.sql
 1.12/rm-new_shipto.sql
 1.12/mv-location-temporality.sql
+1.12/shipto_attn.sql

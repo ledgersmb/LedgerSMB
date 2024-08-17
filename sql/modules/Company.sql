@@ -1206,25 +1206,31 @@ create or replace function _entity_location_save(
 ) returns int AS $$
 
     DECLARE
-        l_row location;
         l_id INT;
-        t_company_id int;
     BEGIN
-        SELECT id INTO t_company_id
-        FROM company WHERE entity_id = in_entity_id;
-
-        DELETE FROM entity_to_location
-        WHERE entity_id = in_entity_id
-                AND location_class = in_location_class
-                AND location_id = in_location_id;
-
-        SELECT location_save(NULL, in_line_one, in_line_two, in_line_three, in_city,
-                in_state, in_mail_code, in_country_id)
+      SELECT location_save(
+        NULL,
+        in_line_one,
+        in_line_two,
+        in_line_three,
+        in_city,
+        in_state,
+        in_mail_code,
+        in_country_id
+      )
         INTO l_id;
 
-        INSERT INTO entity_to_location
-                (entity_id, location_class, location_id)
-        VALUES  (in_entity_id, in_location_class, l_id);
+      UPDATE entity_to_location
+         SET location_class = in_location_class,
+             location_id = l_id
+       WHERE entity_id = in_entity_id
+         AND location_class = in_location_class
+         AND location_id = in_location_id;
+
+      IF NOT FOUND THEN
+        INSERT INTO entity_to_location (entity_id, location_class, location_id)
+        VALUES (in_entity_id, in_location_class, l_id);
+      END IF;
 
         RETURN l_id;
     END;
@@ -1249,41 +1255,28 @@ create or replace function eca__location_save(
 ) returns int AS $$
 
     DECLARE
-        l_row location;
         l_id INT;
-        l_orig_id INT;
     BEGIN
+        SELECT location_save(
+          NULL,
+          in_line_one,
+          in_line_two,
+          in_line_three,
+          in_city,
+          in_state,
+          in_mail_code,
+          in_country_id
+        )
+          INTO l_id;
 
         UPDATE eca_to_location
-           SET location_class = in_location_class
+           SET location_class = in_location_class,
+               location_id = l_id
          WHERE credit_id = in_credit_id
            AND location_class = in_old_location_class
            AND location_id = in_id;
 
-         IF FOUND THEN
-            SELECT location_save(
-                in_id,
-                in_line_one,
-                in_line_two,
-                in_line_three,
-                in_city,
-                in_state,
-                in_mail_code,
-                in_country_id
-            )
-                INTO l_id;
-        ELSE
-            SELECT location_save(
-                NULL,
-                in_line_one,
-                in_line_two,
-                in_line_three,
-                in_city,
-                in_state,
-                in_mail_code,
-                in_country_id
-            )
-                INTO l_id;
+         IF NOT FOUND THEN
             INSERT INTO eca_to_location
                         (credit_id, location_class, location_id)
                 VALUES  (in_credit_id, in_location_class, l_id);

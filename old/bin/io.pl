@@ -1346,7 +1346,7 @@ sub print_form {
         }
     }
     my @vars =
-      qw(name address1 address2 city state zipcode country contact phone fax email);
+      qw(name attn address1 address2 city state zipcode country contact phone fax email);
 
     $shipto = 0;
     # if there is no shipto fill it in from billto
@@ -1453,7 +1453,7 @@ sub print_form {
 
     paid subtotal total
 
-    shipto shiptoname shiptoaddress1 shiptoaddress2 shiptocity shiptostate
+    shipto shiptoname shiptoattn shiptoaddress1 shiptoaddress2 shiptocity shiptostate
     shiptozipcode shiptocountry shiptocontact shiptophone shiptoemail
                        ))};
         my $body = $template->{output};
@@ -1753,19 +1753,18 @@ sub ship_to {
                                 . $locale->text('Contact')
                                 . qq|</th>
                             </tr>
-                           <tr></tr>
-                              |;
+                              <tr>
+                                  <td><input type="radio" data-dojo-type="dijit/form/RadioButton" name="shiptoradiocontact" id="shiptoradiocontact_current" value="" CHECKED="CHECKED"></td>
+                                  <td colspan=2 nowrap>| . $locale->text('Current Attn') . qq|</td>
+                                  <td nowrap>$form->{shiptoattn}</td>
+                             </tr>    |;
 
                            for($i=1;$i<=$form->{totalcontacts};$i++)
                            {
                                my $checked = '';
-                               # $checked = 'CHECKED="CHECKED"'
-                               #     if ($form->{shiptocontactid}
-                               #         and ($form->{shiptocontactid} == $form->{"shiptolocationid_$i"}
-                               #              or $form->{shiptolocationid} == $form->{"locationid_$i"}));
                         print qq|
                               <tr>
-                                  <td><input type="radio" data-dojo-type="dijit/form/RadioButton" name="shiptoradiocontact" id="shiptoradiocontact_$i" value="$i" $checked></td>
+                                  <td><input type="radio" data-dojo-type="dijit/form/RadioButton" name="shiptoradiocontact" id="shiptoradiocontact_$i" value="$form->{"shiptocontact_$i"}"></td>
                                   <td nowrap>$form->{"shiptotype_$i"}</td>
                                   <td nowrap>$form->{"shiptodescription_$i"}</td>
                                   <td nowrap>$form->{"shiptocontact_$i"}</td>
@@ -1978,6 +1977,10 @@ sub setlocation_id
        my $index="shiptolocationid_".$loc_id_index;
 
        $form->{"shiptolocationid"}=$form->{$index};
+
+
+       $form->{"shiptoattn"} = $form->{shiptoradiocontact} if $form->{shiptoradiocontact};
+
 }
 
 
@@ -1992,19 +1995,26 @@ sub list_locations_contacts
 
     # get rest for the customer
     my $query = qq|
-                    WITH eca AS (select * from entity_credit_account
-                                  where id = ?
-                    )
-            select  id as shiptolocationid,line_one as shiptoaddress1,line_two as shiptoaddress2,line_three as shiptoaddress3,city as shiptocity,
-                state as shiptostate,mail_code as shiptozipcode,country as shiptocountry
-            from (
-                            select (eca__list_locations(id)).*
-                              FROM eca
-                             UNION
-                            SELECT (entity__list_locations(entity_id)).*
-                              FROM eca
-                        ) l
-                         WHERE location_class = 3;
+WITH eca AS (
+  select * from entity_credit_account
+   where id = ?
+)
+select id as shiptolocationid,
+       line_one as shiptoaddress1,
+       line_two as shiptoaddress2,
+       line_three as shiptoaddress3,
+       city as shiptocity,
+       state as shiptostate,
+       mail_code as shiptozipcode,
+       country as shiptocountry
+  from (
+    select (eca__list_locations(id)).*
+      FROM eca
+     UNION
+    SELECT (entity__list_locations(entity_id)).*
+      FROM eca
+  ) l
+ WHERE location_class = 3;
           |;
 
 
