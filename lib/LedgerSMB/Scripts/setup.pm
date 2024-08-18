@@ -1590,13 +1590,6 @@ between versions on a stable branch (typically upgrading)
 sub _rebuild_modules {
     my ($request, $entrypoint, $database) = @_;
 
-    if (not defined $database) {
-        my ($reauth, $db) = _init_db($request);
-        return $reauth if $reauth;
-
-        $database = $db;
-    }
-
     # The order is important here:
     #  New modules should be able to depend on the latest changes
     #  e.g. table definitions, etc.
@@ -1616,6 +1609,7 @@ sub _rebuild_modules {
     $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
         or die 'Upgrade failed.';
 
+    $logger->info('Completed database upgrade run ' . $database->upgrade_run_id);
     return;
 }
 
@@ -1625,10 +1619,14 @@ sub rebuild_modules {
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
     }
-    if (my $rv = _rebuild_modules($request, 'rebuild_modules')) {
+
+    my ($reauth, $db) = _init_db($request);
+    return $reauth if $reauth;
+
+    if (my $rv = _rebuild_modules($request, 'rebuild_modules', $db)) {
         return $rv;
     }
-    return complete($request);
+    return _complete($request, $db);
 }
 
 =item complete
@@ -1638,20 +1636,40 @@ Gets the statistics info and shows the complete screen.
 =cut
 
 sub _complete {
-    my ($request) = @_;
-    if (my $csrf = $request->verify_csrf) {
-        return $csrf;
-    }
-    my ($reauth, $database) = _init_db($request);
-    return $reauth if $reauth;
+    my ($request, $database) = @_;
 
-    my $temp = $database->loader_log_filename();
-    $request->{lsmb_info} = $database->stats();
+    # the workflow state machine dispatches here (without database)
+    if (not defined $database) {
+        my ($reauth, $db) = _init_db($request);
+        return $reauth if $reauth;
+
+        $database = $db;
+    }
+
+    if ($database->upgrade_run_id) {
+        $logger->debug('Collecting run information for upgrade run '
+                       . $database->upgrade_run_id);
+        $request->{run_id}   = $database->upgrade_run_id;
+        $request->{run_info} =
+            $database->list_changes( run_id => $database->upgrade_run_id );
+        $logger->debug('Collected ' . scalar($request->{run_info})
+                       . ' upgrade run items');
+    }
+    else {
+        $request->{lsmb_info} = $database->stats();
+    }
     my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'setup/complete', $request);
 }
 
-sub complete { return _complete(@_) };
+sub complete {
+    my ($request) = @_;
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
+
+    return _complete($request);
+};
 
 =item system_info
 
