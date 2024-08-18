@@ -40,6 +40,7 @@ use DBD::Pg;
 use DBI;
 use File::Spec;
 use File::Temp;
+use JSON::PP;
 use PGObject::Util::DBAdmin 'v1.6.1';
 use Scope::Guard;
 use XML::LibXML;
@@ -815,6 +816,58 @@ sub apply_changes {
     $dbh->disconnect;
 
     return $rv;
+}
+
+=head2 list_changes( [run_id => $uuid] );
+
+List all applied database schema patches as triggered by C<apply_changes>.
+
+Returns an arrayref of hashes with the following keys:
+
+=over
+
+=item * run_id
+
+=item * sha
+
+=item * path
+
+=item * last_updated
+
+=item * messages
+
+=back
+
+=cut
+
+my $json = JSON::PP->new;
+
+sub list_changes {
+    my ($self, %args) = @_;
+    my $run_id = $args{run_id};
+
+    my $dbh = $self->connect({
+        PrintError => 0,
+        AutoCommit => 0,
+        pg_server_prepare => 0});
+    my $changes;
+    if ($run_id) {
+        $changes = $dbh->selectall_arrayref(
+            q{select * from db_patches where run_id = ? order by last_updated},
+            { Slice => {} },
+            $run_id);
+    }
+    else {
+        $changes = $dbh->selectall_arrayref(
+            q{select * from db_patches order by last_updated},
+            { Slice => {} });
+    }
+    $self->logger->info($dbh->errstr) if $dbh->err;
+    return undef if $dbh->err;
+
+    $_->{messages} = $json->decode( $_->{messages} )
+        for (grep { $_->{messages} } ($changes // [])->@*);
+    return $changes;
 }
 
 =head2 stats
