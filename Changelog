@@ -15,10 +15,14 @@ Added functionalities
 * Enhancements for migrations from 1.3 (#7793)
 * Experimental Orders API (#8084)
 * Persistence of calculated taxes on orders and quotes (#8038)
+* Database upgrade log inspection in setup.pl (#8363)
+* Ship To 'At the attention of' (Ship To Attn) (#8360)
 
 Changed functionalities
 * Default cookie names no longer include LedgerSMB version number (#7639)
 * Reconciliation state managed through workflows (#8154, #8158)
+* Ship To addresses now immutable (#8365)
+* Move '(in)active' from location itself to entity/credit account link (#8333)
 
 Removed functionalities
 * 'Class' removed from Company and Person entry and search (#8086, #8087)
