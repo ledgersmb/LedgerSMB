@@ -152,6 +152,45 @@ like $chg_db->errstr, qr/relation "test2b" does not exist/,
 
 $chg_db->disconnect;
 
+=head2 Script talk-back through LISTEN/NOTIFY.
+
+=cut
+
+$chg_db = $chg_db->clone( { AutoCommit => 1 } );
+$change->{properties}->{no_transactions} = 0;
+$change->{_path} = 'test3';
+$change->{_sha} = 'nosha-test3';
+
+# Test a transaction: second statement will fail
+# DDL statements in PSQL are transactional, so the first statement
+#  will have no effect
+$change->{_content} = qq{
+  CREATE TABLE test3 (
+     id serial
+  );
+  select pg_notify('upgrade.' || current_database(),
+                   '{"type":"feedback","content":"test"}');
+};
+eval { $change->apply($chg_db); };
+$chg_db->do(q{SELECT count(*) FROM test3;});
+is $chg_db->err, undef, 'Expect no error after querying table test3';
+is $chg_db->rows, -1, 'Correctly created table test3';
+
+my @row = $chg_db->selectrow_array(
+    q{SELECT messages FROM db_patches WHERE sha = ? AND messages IS NOT NULL},
+    undef, 'nosha-test3');
+is $chg_db->err, undef, 'Expect no error after querying table db_patches';
+ok defined($row[0]), 'db_patches contains our test case';
+
+use Data::Dumper;
+use JSON::PP;
+my $json = JSON::PP->new;
+my $msgs = $json->decode($row[0]);
+is scalar($msgs->@*), 1, 'Exactly one element in the messages array';
+diag Dumper($msgs);
+
+
+$chg_db->disconnect;
 
 
 =head1 POSTAMBLE

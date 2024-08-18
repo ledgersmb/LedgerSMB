@@ -40,6 +40,7 @@ use DBD::Pg;
 use DBI;
 use File::Spec;
 use File::Temp;
+use JSON::PP;
 use PGObject::Util::DBAdmin 'v1.6.1';
 use Scope::Guard;
 use XML::LibXML;
@@ -116,6 +117,15 @@ has default_connect_options => (is => 'rw',
 =cut
 
 has schema => (is => 'ro', default => 'public');
+
+=head2 upgrade_run_id
+
+Contains the C<run_id> of the upgrade after invoking C<apply_changes>.
+
+=cut
+
+has upgrade_run_id => (is => 'rw');
+
 
 =head1 METHODS
 
@@ -771,10 +781,13 @@ sub upgrade_modules {
     return 1;
 }
 
-=head2 apply_changes( [upto_tag => $tag], [checks => $boolean] )
+=head2 apply_changes( [upto_tag => $tag], [checks => $boolean], $run_id => $uuid_str )
 
 Runs fixes if they have not been applied, optionally up to
-a specific tagged point in the LOADORDER file.
+a specific tagged point in the LOADORDER file; supply C<$run_id> if
+this is a continued invocation of a prior, failed upgrade run. In case
+no C<run_id> is provided, a new UUID will be generated and assigned to
+C<upgrade_run_id>.
 
 Runs schema upgrade checks when the value of C<checks> is true.
 
@@ -792,12 +805,69 @@ sub apply_changes {
     my $loadorder =
         LedgerSMB::Database::Loadorder->new(
             "$self->{source_dir}/changes/LOADORDER",
-            upto_tag => $args{upto_tag});
-    $loadorder->init_if_needed($dbh);
+            upto_tag => $args{upto_tag},
+            run_id => $args{run_id});
+    if ($loadorder->init_if_needed($dbh)) {
+        $dbh->commit;
+    }
+    $self->logger->debug('Applying database schema upgrades');
     my $rv = $loadorder->apply_all($dbh, checks => $args{checks});
+    $self->upgrade_run_id( $loadorder->run_id );
     $dbh->disconnect;
 
     return $rv;
+}
+
+=head2 list_changes( [run_id => $uuid] );
+
+List all applied database schema patches as triggered by C<apply_changes>.
+
+Returns an arrayref of hashes with the following keys:
+
+=over
+
+=item * run_id
+
+=item * sha
+
+=item * path
+
+=item * last_updated
+
+=item * messages
+
+=back
+
+=cut
+
+my $json = JSON::PP->new;
+
+sub list_changes {
+    my ($self, %args) = @_;
+    my $run_id = $args{run_id};
+
+    my $dbh = $self->connect({
+        PrintError => 0,
+        AutoCommit => 0,
+        pg_server_prepare => 0});
+    my $changes;
+    if ($run_id) {
+        $changes = $dbh->selectall_arrayref(
+            q{select * from db_patches where run_id = ? order by last_updated},
+            { Slice => {} },
+            $run_id);
+    }
+    else {
+        $changes = $dbh->selectall_arrayref(
+            q{select * from db_patches order by last_updated},
+            { Slice => {} });
+    }
+    $self->logger->info($dbh->errstr) if $dbh->err;
+    return undef if $dbh->err;
+
+    $_->{messages} = $json->decode( $_->{messages} )
+        for (grep { $_->{messages} } ($changes // [])->@*);
+    return $changes;
 }
 
 =head2 stats

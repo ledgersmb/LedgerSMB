@@ -11,6 +11,42 @@
 <p>[% text('This database operation has completed successfully.  LedgerSMB may now be used.'); %]</p>
 <p><a href="setup.pl?__action=login&amp;s_user=[% login %]&amp;database=">[% text('Return to setup') %]</a></p>
 <p><a href="login.pl?login=username&amp;company=[% UNESCAPE(database) | uri %]">[% text('Start using LedgerSMB') %]</a></p><!-- Setting login=username is a kludge to prevent the dbadmin user from being pre-entered. A better solution needs to be found. -->
+<!-- [% run_id %] -->
+[% IF run_id %]
+<table class="run_info">
+  <caption>[% text('Upgrade run log') %]</caption>
+  <thead>
+    <tr>
+      <th>[% text('Time') %]</th>
+      <th>[% text('Script path') %]</th>
+      <th>[% text('Attention or Action required') %]</th>
+    </tr>
+  </thead>
+  <tbody>
+    [% UNLESS run_info %]
+    <tr>
+      <td colspan="4" align="center">[% text('No schema upgrade scripts run') %]</td>
+    </tr>
+    [% END %]
+    [% FOREACH run_item IN run_info %]
+    <tr>
+      <td>[% run_item.last_updated %]</td>
+      <td>[% run_item.path %]</td>
+      <td>
+        [%
+        IF run_item.messages;
+        FOREACH msg IN run_item.messages ;
+        NEXT IF msg.type != 'feedback';
+        msg.content.replace('\n\n', '<br/>');
+        '<br/>';
+        END ;
+        END %]
+      </td>
+    </tr>
+    [% END %]
+  </tbody>
+</table>
+[% END %]
 [% IF lsmb_info %]
 <table class='lsmb_info'>
   <thead>
