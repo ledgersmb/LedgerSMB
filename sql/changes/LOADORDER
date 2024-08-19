@@ -140,6 +140,7 @@ mc/delete-migration-validation-data.sql
 1.8/reconciliation-links-cascade.sql
 1.8/initialize-payments-from-invoices.sql
 1.8/add-payment-links-indices.sql
+1.8/notify-import-financial-report-templates.sql
 # 1.9 changes
 1.9/templates-last-modified-no-tz.sql
 1.9/drop-view-tx_report.sql
