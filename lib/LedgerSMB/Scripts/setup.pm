@@ -1705,6 +1705,30 @@ sub system_info {
         ->render($request, 'setup/system_info', $request);
 }
 
+=item db_patches_log
+
+Lists all database schema patches that have been applied.
+
+=cut
+
+sub db_patches_log {
+    my ($request) = @_;
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
+
+    my ($reauth, $db) = _init_db($request);
+    return $reauth if $reauth;
+
+    $logger->debug('Collecting run information for all db patches');
+    $request->{run_info} = $db->list_changes;
+    $logger->debug('Collected ' . scalar($request->{run_info})
+                   . ' upgrade run items');
+
+    my $template = $request->{_wire}->get('ui');
+    return $template->render($request, 'setup/db-patches-log', $request);
+};
+
 
 =back
 

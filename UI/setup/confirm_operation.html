@@ -114,6 +114,13 @@ INCLUDE input element_data = {
    class = 'submit'
     text = text('Check consistency') #'
 } %]
+[% INCLUDE button element_data = {
+    name = '__action'
+   value = 'db_patches_log'
+    type = 'submit'
+   class = 'submit'
+    text = text('View schema patch log') #'
+} %]
 </div>
 [% END %]
 </form>
