@@ -499,7 +499,7 @@ sub _render {
             %{ preprocess($vars, sub { $self->{format_plugin}->escape(@_) } ) },
             %{$self->{additional_vars} // {}},
             %$cvars,
-            escape => $escape,
+            escape => sub { $self->{format_plugin}->escape(@_) },
             text => sub {
                 return $self->{format_plugin}->escape($self->_maketext(@_));
             },
