@@ -63,7 +63,7 @@ FOREACH COL IN columns;
         UNLESS loop.first();
            ' & ';
         END;
-        COL.name;
+        escape(COL.name);
     END;
 END;
 -?>\tabularnewline
