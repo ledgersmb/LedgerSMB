@@ -1,19 +1,127 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.0
-   Date:     2021-01-04
+   Version:  1.1
+   Date:     2024-08-21
    File:     display_report.html
    Set:      demo
 
 Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
+Version   Changes
+1.1       Merged 'dynatable.html' into this template
+
+
 -?>
-<?lsmb
+<?lsmb-
 
-PROCESS "dynatable.html";
+# Simplified block from UI/lib/dynatable.html; see that file for docs
+BLOCK dynatable -?>
+<table id="<?lsmb attributes.id ?>"
+       class="dynatable <?lsmb attributes.class ?>"
+       width="<?lsmb attributes.width ?>">
+<?lsmb- IF !hide_header -?>
+<thead>
+   <tr>
+   <?lsmb- FOREACH COL IN columns;
+   IF COL.type != 'hidden'; -?>
+   <th class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type | html ?>"><?lsmb COL.name | html ?>
+   </th>
+   <?lsmb- END; END; -?>
+   </tr>
+</thead>
+<?lsmb- END -?>
+<tbody>
+   <?lsmb-
+   PFX = attributes.input_prefix;
+   FOREACH ROW IN tbody.rows; -?>
+   <tr class="<?lsmb ROW.html_class _ ' ' _ ROW.row_id ?>">
+      <?lsmb- FOREACH COL IN columns;
+            ROWSPANNED = COL.col_id _ "_ROWSPANNED";
+            IF ROW.$ROWSPANNED;
+               NEXT;
+            END;
+            ROWSPAN = COL.col_id _ "_ROWSPAN";
+            IF ROW.$ROWSPAN;
+               ROWSPAN=" rowspan=\"" _ ROW.$ROWSPAN _ "\"";
+            ELSE;
+               ROWSPAN="";
+            END;
 
-?>
+            TYPE = COL.type;
+            NOHREF = COL.col_id _ "_NOHREF";
+            IF (ROW.NOINPUT AND TYPE != 'href' AND TYPE != 'hidden')
+               OR (ROW.$NOHREF AND TYPE == 'href');
+              TYPE = 'text';
+            END;
+
+            NEXT IF TYPE == 'hidden'; -?>
+      <td class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type | html ?>"<?lsmb ROWSPAN ?>>
+          <?lsmb- IF TYPE == 'boolean_checkmark' OR TYPE == 'checkbox' OR TYPE == 'radio';
+                   IF ROW.${COL.col_id};
+                      '✓';
+                   END;
+
+                  ELSIF TYPE == 'select';
+                  # ROW is passed as an argument if COL.options is a callback
+                  # function, which allows dropdown options to be dynamically
+                  # customised to each row. The ROW argument is harmlessly
+                  # ignored by Template Toolkit if COL.options is a static
+                  # arrayref common to every row.
+                  OPTION_LIST = COL.options(ROW);
+
+                  FOREACH option IN OPTION_LIST;
+                    IF (option.value | html) == ROW.${COL.col_id};
+                       option.text | html;
+                    END;
+                  END;
+                 ELSE -?>
+            <?lsmb ROW.${COL.col_id} ?>
+         <?lsmb- END -?>
+      </td>
+      <?lsmb- END; END -?>
+   </tr>
+   <?lsmb- END ?>
+</tbody>
+<?lsmb- IF tfoot -?>
+<tfoot>
+   <?lsmb- FOREACH ROW IN tfoot.rows;
+    SPACECOUNT = 0 -?>
+   <tr>
+     <?lsmb- FOREACH COL IN columns;
+             COL_ID = COL.col_id;
+             IF tfoot.coltypes.$COL_ID;
+                TYPE = tfoot.coltypes.$COL_ID;
+             ELSE;
+                TYPE = COL.type;
+             END;
+
+             DOJO = tfoot.dojo_type.$COL_ID;
+             DOJO_PROPS = tfoot.dojo_props.$COL_ID;
+             IF tfoot.coltypes.${COL.col_id} == 'spacer';
+                SPACECOUNT = SPACECOUNT + 1;
+             ELSE;
+             IF SPACECOUNT > 0 ?>
+                <td colspan="<?lsmb SPACECOUNT ?>">&nbsp;</td>
+             <?lsmb END;
+       NEXT IF TYPE == 'hidden';
+       -?>
+       <td class="<?lsmb COL.col_id | html ?>">
+          <?lsmb- IF TYPE == 'boolean_checkmark' OR TYPE == 'checkbox' OR TYPE == 'radio';
+                   IF ROW.${COL.col_id};
+                       '✓';
+                   END;
+                 ELSE -?>
+            <?lsmb ROW.${COL.col_id} ?>
+         <?lsmb- END -?>
+     </td>
+     <?lsmb- END -?>
+   </tr>
+   <?lsmb- END -?>
+</tfoot>
+<?lsmb- END -?>
+</table>
+<?lsmb- END; -?>
 <!DOCTYPE html>
 <html>
 <head>

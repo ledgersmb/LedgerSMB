@@ -1,27 +1,77 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.0
-   Date:     2021-01-04
+   Version:  1.1
+   Date:     2024-08-21
    File:     display_report.odst
    Set:      demo
 
 Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
--?>
-<?lsmb PROCESS "dynatable.odst" 
+Version   Changes
+1.1       Merged 'dynatable.odst' into this template
 
-HEADS 2;
+-?>
+<?lsmb-
+
+BLOCK dynatable;
+    ROWCOUNT = 1;
+    IF tbody.rows.size;
+      ROWCOUNT = ROWCOUNT + tbody.rows.size;
+    END;
+    IF tfoot.rows.size;
+      ROWCOUNT = ROWCOUNT + tbody.rows.size;
+    END;
+
+    -?>
+<worksheet name="<?lsmb attributes.id | html ?>" rows="<?lsmb ROWCOUNT ?>" columns="<?lsmb columns.size + 1 ?>">
+<format bottom="5" bg_color="lime" bottom_color="magenta">
+<?lsmb IF !hide_header -?>
+   <row>
+   <?lsmb FOREACH COL IN columns;
+   IF COL.type != 'hidden'; -?>
+   <cell text="<?lsmb COL.name | html ?>" />
+   <?lsmb END; END; ?>
+   </row>
+<?lsmb END -?>
+</format>
+<format align="right">
+<?lsmb FOREACH ROW IN tbody.rows -?>
+   <row>
+      <?lsmb FOREACH COL IN columns -?>
+         <?lsmb IF COL.type != 'hidden'; -?>
+            <cell text="<?lsmb ROW.${COL.col_id} | html ?>" />
+         <?lsmb END;
+      END -?>
+   </row>
+<?lsmb END -?>
+<?lsmb- IF tfoot -?>
+   <?lsmb- FOREACH ROW IN tfoot.rows; ?>
+        <row>
+        <?lsmb FOREACH COL IN columns ?>
+        <?lsmb IF COL.type != 'hidden'; -?>
+                <cell text="<?lsmb ROW.${COL.col_id} | html ?>" />
+        <?lsmb END; END ?>
+        </row>
+   <?lsmb END;
+END ?>
+</format>
+</worksheet>
+<?lsmb
+
+END; # BLOCK dynatable
+
+
+# MAIN template
+HEADS = 2;
 
 IF hlines.size;
-
   HEADS = HEADS + hlines.size;
-
 END;
 
-?>
+-?>
 <workbook>
-<worksheet name="<?lsmb text('Title Page') | html ?>" rows="<?lsmb HEADS ?>" 
+<worksheet name="<?lsmb text('Title Page') | html ?>" rows="<?lsmb HEADS ?>"
            columns="2">
 <row><cell text="<?lsmb text('Report Name') | html ?>:" />
      <cell text="<?lsmb name | html ?>" />
