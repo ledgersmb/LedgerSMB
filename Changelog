@@ -58,6 +58,12 @@ Updated dependencies
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.16
+* Restore 'Save Template' on GL transations, regressed from 1.10 (#8340)
+* Fix saved orders and quotes showing as read-only (#8348)
+* Fix AR/AP Outstanding Summary report generation (#8378)
+
+
 Changelog for 1.11.15
 * Fix order of comparisons with over 9 columns (#8246)
 * Remove spurious column from PNL and B/S CSV template (#8247)
