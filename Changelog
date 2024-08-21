@@ -19,6 +19,7 @@ Added functionalities
 * Ship To 'At the attention of' (Ship To Attn) (#8360)
 
 Changed functionalities
+* Sub-templates 'dynatable' merged into 'display_report' templates (#8380)
 * Default cookie names no longer include LedgerSMB version number (#7639)
 * Reconciliation state managed through workflows (#8154, #8158)
 * Ship To addresses now immutable (#8365)
