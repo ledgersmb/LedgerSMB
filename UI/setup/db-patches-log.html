@@ -31,8 +31,8 @@
           [% END %]
           [% FOREACH run_item IN run_info.reverse %]
           <tr>
-            <td>[% run_item.last_updated %]</td>
-            <td>[% run_item.run_id %]</td>
+            <td style="white-space:nowrap;vertical-align:top">[% run_item.last_updated %]</td>
+            <td style="white-space:nowrap;vertical-align:top">[% run_item.run_id %]</td>
             <td>[% run_item.path %]</td>
             <td>
               [%
