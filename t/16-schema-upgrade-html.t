@@ -1,6 +1,7 @@
 # Database schema upgrade pre-checks                         -*- mode: perl; -*-
 
 use Test2::V0;
+use Test2::Mock;
 use Text::Diff;
 
 use Beam::Wire;
@@ -17,12 +18,19 @@ Log::Log4perl->easy_init($OFF);
 
 use LedgerSMB;
 use LedgerSMB::Locale;
+use LedgerSMB::Database;
 use LedgerSMB::Database::ChangeChecks qw( run_checks load_checks );
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
 
 my $wire = Beam::Wire->new(file => 't/ledgersmb.yaml');
 LedgerSMB::Locale->initialize($wire);
 
+
+my $db_mock = Test2::Mock->new(
+    class => 'LedgerSMB::Database',
+    override => [
+        upgrade_run_id => sub { 'a3730c7e-58f1-11ef-995a-3ffe22c8da96' }
+    ]);
 
 sub test_request {
     my $plack_req = Plack::Request->new({});
@@ -60,7 +68,7 @@ sub test_request {
     $req->{script}          = 'script.pl';
     $req->{query_string}    = 'action=rebuild';
     $req->{resubmit_action} = 'rebuild_modules';
-
+    $req->{database}        = bless {}, 'LedgerSMB::Database';
     return $req;
 }
 
