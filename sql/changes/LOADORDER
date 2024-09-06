@@ -171,6 +171,7 @@ mc/delete-migration-validation-data.sql
 1.10/missing-fkeys.sql
 1.10/file-tranaction-cascade-delete.sql
 1.10/fix-arap-approval-state.sql
+1.10/migration-batch-class.sql
 # 1.11 changes
 1.11/menu-system-users.sql
 1.11/country-config.sql
@@ -183,6 +184,7 @@ mc/delete-migration-validation-data.sql
 1.11/rename-action-parameter.sql
 1.11/gl-workflows.sql
 1.11/workflow-for-aa-transactions.sql
+1.11/fix-assembly-cogs.sql
 # 1.12 changes
 1.12/migrate_to_identity.sql
 1.12/add-stored-order-quote-taxes.sql
