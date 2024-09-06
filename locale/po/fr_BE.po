@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.11.17-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-08-21 16:00+0000\n"
+"POT-Creation-Date: 2024-09-06 13:30+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2023\n"
 "Language-Team: French (Belgium) (https://app.transifex.com/ledgersmb/"
 "teams/58325/fr_BE/)\n"
@@ -87,7 +87,7 @@ msgstr "AIM"
 
 #: old/bin/am.pl:322 UI/Contact/divs/credit.html:198
 #: UI/Contact/divs/credit.html:199 UI/Reports/filters/unapproved.html:5
-#: UI/setup/complete.html:21 UI/setup/confirm_operation.html:127
+#: UI/setup/complete.html:57 UI/setup/confirm_operation.html:127
 #: sql/Pg-database.sql:2619
 msgid "AP"
 msgstr "Dépenses"
@@ -133,7 +133,7 @@ msgid "AP transaction"
 msgstr "Écriture dépenses"
 
 #: old/bin/am.pl:321 UI/Reports/filters/unapproved.html:6
-#: UI/setup/complete.html:22 UI/setup/confirm_operation.html:128
+#: UI/setup/complete.html:58 UI/setup/confirm_operation.html:128
 #: sql/Pg-database.sql:2618
 msgid "AR"
 msgstr "Recettes"
@@ -983,6 +983,10 @@ msgstr "Joint par"
 #: old/bin/printer.pl:116
 msgid "Attachment"
 msgstr "Pièce jointe"
+
+#: UI/setup/complete.html:22
+msgid "Attention or Action required"
+msgstr ""
 
 #: templates/demo/bin_list.html:50 templates/demo/bin_list.html:61
 #: templates/demo/packing_list.html:51 templates/demo/pick_list.html:51
@@ -2049,7 +2053,7 @@ msgstr "Client hors entreprise"
 msgid "Customer not on file!"
 msgstr "Client absent du fichier!"
 
-#: UI/setup/complete.html:23 UI/setup/confirm_operation.html:132
+#: UI/setup/complete.html:59 UI/setup/confirm_operation.html:132
 msgid "Customer/Vendor Accounts"
 msgstr "Comptes Clients/Fournisseurs"
 
@@ -3462,7 +3466,7 @@ msgid "GIFI accounts not in \"gifi\" table"
 msgstr "Les comptes IGRF ne figurent pas dans la table \"gifi\""
 
 #: old/bin/am.pl:323 UI/Reports/filters/unapproved.html:7
-#: UI/setup/complete.html:24 UI/setup/confirm_operation.html:129
+#: UI/setup/complete.html:60 UI/setup/confirm_operation.html:129
 msgid "GL"
 msgstr "Grand-livre"
 
@@ -3938,7 +3942,7 @@ msgstr "Date de facturation"
 msgid "Invoice Date missing!"
 msgstr "Date de facture manquante!"
 
-#: UI/setup/complete.html:25
+#: UI/setup/complete.html:61
 msgid "Invoice Lines"
 msgstr "Lignes de facture"
 
@@ -4069,7 +4073,7 @@ msgstr "Emploi/Projet #"
 msgid "Journal Entry"
 msgstr "Entrée de journal"
 
-#: UI/setup/complete.html:26 UI/setup/confirm_operation.html:130
+#: UI/setup/complete.html:62 UI/setup/confirm_operation.html:130
 msgid "Journal Lines"
 msgstr "Lignes de journal"
 
@@ -4211,7 +4215,7 @@ msgstr "Banque de données LedgerSMB 1.8 trouvée"
 msgid "LedgerSMB 1.9 db found."
 msgstr "Banque de données LedgerSMB 1.9 trouvée"
 
-#: UI/setup/complete.html:17 UI/setup/confirm_operation.html:123
+#: UI/setup/complete.html:53 UI/setup/confirm_operation.html:123
 msgid "LedgerSMB Database Statistics"
 msgstr "Statistiques de la base de données LedgerSMB"
 
@@ -4379,8 +4383,8 @@ msgstr "Charger des modèles"
 msgid "Loaded"
 msgstr "Chargé"
 
-#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:27
-#: UI/src/components/ServerUI.js:41
+#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:41
+#: UI/src/components/ServerUI.js:27
 msgid "Loading..."
 msgstr "Chargement..."
 
@@ -4787,6 +4791,10 @@ msgstr ""
 msgid "No report specified"
 msgstr "Aucun rapport spécifié"
 
+#: UI/setup/complete.html:28
+msgid "No schema upgrade scripts run"
+msgstr ""
+
 #: lib/LedgerSMB/Scripts/taxform.pm:125
 msgid "No tax form selected"
 msgstr "Aucun formulaire de taxes sélectionné"
@@ -5082,7 +5090,7 @@ msgstr "Date de commande manquante!"
 msgid "Order Entry"
 msgstr "Commandes"
 
-#: UI/setup/complete.html:28
+#: UI/setup/complete.html:64
 msgid "Order Lines"
 msgstr "Lignes de commande"
 
@@ -5115,7 +5123,7 @@ msgstr "Commande/Facture"
 msgid "Ordering"
 msgstr "Priorité"
 
-#: UI/Reports/filters/purchase_history.html:180 UI/setup/complete.html:27
+#: UI/Reports/filters/purchase_history.html:180 UI/setup/complete.html:63
 #: UI/setup/confirm_operation.html:131
 msgid "Orders"
 msgstr "Commandes"
@@ -5299,7 +5307,7 @@ msgstr "Rapport de cession partielle [_1] en date du [_2]"
 msgid "Partnumber"
 msgstr "Numéro de marchandise"
 
-#: UI/Reports/filters/search_goods.html:18 UI/setup/complete.html:29
+#: UI/Reports/filters/search_goods.html:18 UI/setup/complete.html:65
 msgid "Parts"
 msgstr "Pièces"
 
@@ -6329,7 +6337,7 @@ msgstr ""
 msgid "Rounded"
 msgstr "Arrondi"
 
-#: UI/setup/complete.html:18 UI/setup/confirm_operation.html:124
+#: UI/setup/complete.html:54 UI/setup/confirm_operation.html:124
 msgid "Row counts"
 msgstr "Nombre de lignes"
 
@@ -6594,6 +6602,10 @@ msgstr "Planifié"
 #: old/bin/printer.pl:129 UI/lib/utilities.html:44
 msgid "Screen"
 msgstr "Écran"
+
+#: UI/setup/complete.html:21
+msgid "Script path"
+msgstr ""
 
 #: UI/asset/search_asset.html:188 UI/asset/search_class.html:55
 #: UI/business_units/filter.html:41 UI/Reports/filters/batches.html:58
@@ -7679,7 +7691,7 @@ msgstr "Jusqu'à la date"
 msgid "Thu"
 msgstr "Jeu."
 
-#: old/lib/LedgerSMB/IIAA.pm:333
+#: old/lib/LedgerSMB/IIAA.pm:333 UI/setup/complete.html:20
 msgid "Time"
 msgstr "Temps"
 
@@ -8174,6 +8186,10 @@ msgstr "Mise à jour"
 msgid "Upgrade Info"
 msgstr "Information de mise à jour"
 
+#: UI/setup/complete.html:17
+msgid "Upgrade run log"
+msgstr ""
+
 #: UI/Configuration/rate.html:85 UI/file/attachment_screen.html:45
 #: UI/file/internal-file-list.html:76 UI/templates/widget.html:134
 msgid "Upload"
@@ -8269,7 +8285,7 @@ msgstr "Création d'utilisateur"
 msgid "Username"
 msgstr "Nom d'utilisateur"
 
-#: lib/LedgerSMB/Report/Listings/User.pm:81 UI/setup/complete.html:30
+#: lib/LedgerSMB/Report/Listings/User.pm:81 UI/setup/complete.html:66
 #: UI/setup/confirm_operation.html:51 UI/setup/confirm_operation.html:134
 msgid "Users"
 msgstr "Utilisateurs"
