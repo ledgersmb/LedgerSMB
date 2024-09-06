@@ -58,6 +58,12 @@ Updated dependencies
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.17
+* Fix negative COGS for assemblies [*only* assemblies affected] (#8351)
+    for more info see https://ledgersmb.org/content/cogs-assembly-fix
+* Fix saved orders and quotes showing as read-only [Part 2] (#8348)
+
+
 Changelog for 1.11.16
 * Restore 'Save Template' on GL transations, regressed from 1.10 (#8340)
 * Fix saved orders and quotes showing as read-only (#8348)
