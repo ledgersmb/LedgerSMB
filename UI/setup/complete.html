@@ -30,8 +30,8 @@
     [% END %]
     [% FOREACH run_item IN run_info %]
     <tr>
-      <td>[% run_item.last_updated %]</td>
-      <td>[% run_item.path %]</td>
+      <td style="white-space:nowrap;vertical-align:top">[% run_item.last_updated %]</td>
+      <td style="white-space:nowrap;vertical-align:top">[% run_item.path %]</td>
       <td>
         [%
         IF run_item.messages;
