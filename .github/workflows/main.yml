@@ -554,7 +554,7 @@ jobs:
           exit 1
 
   build-dev:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master' && github.repository == 'ledgersmb/LedgerSMB'
 
     runs-on: ubuntu-latest
 
