@@ -186,8 +186,8 @@ use Data::Dumper;
 use JSON::PP;
 my $json = JSON::PP->new;
 my $msgs = $json->decode($row[0]);
-is scalar($msgs->@*), 1, 'Exactly one element in the messages array';
-diag Dumper($msgs);
+is(scalar($msgs->@*), 1, 'Exactly one element in the messages array')
+    or diag Dumper($msgs);
 
 
 $chg_db->disconnect;
