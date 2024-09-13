@@ -93,20 +93,22 @@ export default {
                 {{ t("LedgerSMB {version}", { version: version }) }}
             </div>
             <table id="header_info" class="header_table">
-                <tr>
-                    <td id="login_info_header" class="header_left">
-                        {{ t("User") }}
-                    </td>
-                    <td id="company_info_header" class="header_right">
-                        {{ t("Company") }}
-                    </td>
-                </tr>
-                <tr>
-                    <td id="login_info" class="header_left">{{ login }}</td>
-                    <td id="company_info" class="header_right">
-                        {{ company }}
-                    </td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td id="login_info_header" class="header_left">
+                            {{ t("User") }}
+                        </td>
+                        <td id="company_info_header" class="header_right">
+                            {{ t("Company") }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="login_info" class="header_left">{{ login }}</td>
+                        <td id="company_info" class="header_right">
+                            {{ company }}
+                        </td>
+                    </tr>
+                </tbody>
             </table>
             <hr />
 
