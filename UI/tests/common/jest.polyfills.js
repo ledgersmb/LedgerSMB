@@ -17,6 +17,6 @@ Object.defineProperties(globalThis, {
     Blob: { value: Blob },
     Headers: { value: Headers },
     FormData: { value: FormData },
-    Request: { value: Request },
-    Response: { value: Response },
-})
+    Request: { value: Request, configurable: true },
+    Response: { value: Response, configurable: true }
+});
