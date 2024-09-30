@@ -70,7 +70,7 @@ sub connect_data_from_arg {
     $arg =~ m!^
         (postgresql://)?
         (((?<user>[^@]+)@)?
-         (?<host>\[[:0-9a-zA-Z]+\]|[\w.]+)
+         (?<host>\[[:0-9a-zA-Z]+\]|[\w.-]+)
          (:(?<port>\d+))?/)?
         ((?<dbname>[a-z0-9A-Z_% -]+)
          (\#(?<schema>[a-z0-9A-Z_% -]+))?
