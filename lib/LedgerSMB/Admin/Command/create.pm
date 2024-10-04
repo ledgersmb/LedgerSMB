@@ -17,10 +17,26 @@ use Moose;
 extends 'LedgerSMB::Admin::Command';
 use namespace::autoclean;
 
+use Getopt::Long qw(GetOptionsFromArray);
 use Feature::Compat::Try;
 
+has options => (is => 'ro', default => sub { {} });
+
+sub _option_spec {
+    my ($self, $command) = @_;
+    return (
+        'prepare-only' => \$self->options->{'prepare-only'},
+    );
+}
+
 sub run {
-    my ($self, $dbname) = @_;
+    my ($self, @args) = @_;
+    my $options = {};
+
+    Getopt::Long::Configure(qw(bundling require_order));
+    GetOptionsFromArray(\@args, $self->options, $self->_option_spec());
+
+    my $dbname = shift @args;
 
     return $self->help('create')
         if !$dbname || $dbname eq 'help';
@@ -41,11 +57,16 @@ sub run {
     my $log = LedgerSMB::Database::loader_log_filename;
     my $errlog = LedgerSMB::Database::loader_log_filename;
     try {
-        $self->db->create_and_load(
-            {
-                log    => $log,
-                errlog => $errlog,
-            });
+        unless ($self->options->{'prepare-only'}) {
+            $self->db->create();
+            $logger->warn('Database successfully created');
+        } else {
+            $logger->warn('Preparing existing database');
+        }
+        $self->db->load_base_schema();
+        $self->db->apply_changes();
+        $self->db->load_modules('LOADORDER');
+        $logger->warn('Database successfully created and prepared');
     }
     catch ($e) {
         ###TODO remove database after failed creation
@@ -68,7 +89,7 @@ __END__
 
 =head1 SYNOPSIS
 
-   ledgersmb-admin create <db-uri>
+   ledgersmb-admin create [options] <db-uri>
 
 =head1 DESCRIPTION
 
@@ -77,6 +98,16 @@ C<db-uri>.
 
 The resulting database does not have any setup, settings or users. See the
 C<setup>, C<setting> and C<user> commands.
+
+=head1 OPTIONS
+
+=over
+
+=item B<--prepare-only>
+
+Prepares an existing database without attempting to create it. This is useful when the database has been pre-created and you only need to prepare it for use with LedgerSMB.
+
+=back
 
 =head1 SUBCOMMANDS
 
