@@ -58,6 +58,13 @@ Updated dependencies
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.18
+* Fix specifying an alternative database server port number (#8400)
+* Fix hostname with hyphen breaks ledgersmb-admin database URI (#8415)
+* Allow ledgersmb-admin to use pre-created databases, e.g. DigitalOcean (#8422)
+* Fix PNL and B/S CSV output missing 'heading_account' column (#8428)
+
+
 Changelog for 1.11.17
 * Fix negative COGS for assemblies [*only* assemblies affected] (#8351)
     for more info see https://ledgersmb.org/content/cogs-assembly-fix
