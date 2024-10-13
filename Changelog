@@ -3,6 +3,12 @@
 Changelog for 1.10 Series
 Released 2022-10-08
 
+Changelog for 1.10.38
+* Fix PDF generation error for the outstanding AR/AP summary report (#8377)
+* Fix hostname with hyphen breaks ledgersmb-admin database URI (#8415)
+* Allow ledgersmb-admin to use pre-created databases, e.g. DigitalOcean (#8422)
+
+
 Changelog for 1.10.37
 * Fix reconciliation between B/S and AR Aging report (#8300)
 
