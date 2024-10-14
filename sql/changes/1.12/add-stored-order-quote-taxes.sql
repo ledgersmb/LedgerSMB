@@ -1,7 +1,7 @@
 
 
 create table oe_tax (
-  oe_id int not null references oe (id),
+  oe_id int not null references oe (id) on delete cascade,
   tax_id int not null references account (id),
   basis numeric not null,
   exempt smallint not null default 0,
