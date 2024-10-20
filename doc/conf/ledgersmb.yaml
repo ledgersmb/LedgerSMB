@@ -169,6 +169,13 @@ output_formatter:
     - $class: LedgerSMB::Template::Plugin::CSV
     - $class: LedgerSMB::Template::Plugin::TXT
     - $class: LedgerSMB::Template::Plugin::HTML
+    # Custom external tool
+    - $class: LedgerSMB::Template::Plugin::External
+      command: /bin/true %d %f %o
+      format: bin
+      formats:
+      - bin
+      - binx
 
 # !book: paths
 #

@@ -101,9 +101,9 @@ like( dies {$template->render({'login' => 'foo'})},
       qr/not found/,
       'Template, render: File not found caught');
 
-#####################
-## Rendering tests ##
-#####################
+##############################
+## Rendering tests -- LaTeX ##
+##############################
 
 SKIP: {
     eval {require Template::Plugin::Latex} ||
@@ -156,6 +156,10 @@ SKIP: {
     is($template->{mimetype}, 'application/postscript', 'Template, render (PS): correct mimetype');
 }
 
+
+###############################
+## Rendering tests -- XLS(X) ##
+###############################
 
 SKIP: {
     eval {require Excel::Writer::XLSX} ||
@@ -219,6 +223,10 @@ SKIP: {
     );
 }
 
+############################
+## Rendering tests -- ODS ##
+############################
+
 SKIP: {
     eval {require XML::Twig } ||
         skip 'XML::Twig not installed', 5;
@@ -252,6 +260,11 @@ SKIP: {
     );
 }
 
+
+############################
+## Rendering tests -- TXT ##
+############################
+
 $template = undef;
 ok(require LedgerSMB::Template::Plugin::TXT);
 $plugin = LedgerSMB::Template::Plugin::TXT->new;
@@ -268,6 +281,11 @@ $template->render({'login' => 'foo&bar'});
 is($template->{output}, "I am a template.\nLook at me foo&bar.",
         'Template, render (TXT): Simple TXT template, correct output');
 is($template->{mimetype}, 'text/plain', 'Template, new (HTML): correct mimetype');
+
+
+############################
+## Rendering tests -- CSV ##
+############################
 
 $template = undef;
 ok(require LedgerSMB::Template::Plugin::CSV);
@@ -286,6 +304,11 @@ is($template->{output}, "account,amount,description,project",
         'Template, render (CSV): Simple TXT template, correct output');
 is($template->{mimetype}, 'text/csv', 'Template, new (CSV): correct mimetype');
 
+
+#############################
+## Rendering tests -- HTML ##
+#############################
+
 $template = undef;
 $plugin = LedgerSMB::Template::Plugin::HTML->new;
 $template = LedgerSMB::Template->new(
@@ -301,6 +324,33 @@ $template->render({'login' => 'foo&bar'});
 is($template->{output}, "I am a template.\nLook at me foo&amp;bar.",
         'Template, render (HTML): Simple HTML template, correct output');
 is($template->{mimetype}, 'text/html', 'Template, new (HTML): correct mimetype');
+
+
+#################################
+## Rendering tests -- External ##
+#################################
+
+ok(require LedgerSMB::Template::Plugin::External);
+
+$template = undef;
+$plugin   = LedgerSMB::Template::Plugin::External->new(
+    command   => 'utils/test/template-renderer %d %f %o',
+    mime_type => 'application/binary',
+    format    => 'bin',
+    formats   => [ 'bin', 'null' ],
+    input_extension => 'html'
+);
+$template = LedgerSMB::Template->new(
+    'path'          => 't/data',
+    'template'      => '04-template',
+    'format_plugin' => $plugin
+);
+ok(defined $template);
+isa_ok($template, ['LedgerSMB::Template']);
+$template->render({'login' => 'foo&bar'});
+is($template->{output}, "I am a template.\nLook at me foo&bar.\n");
+is($template->{mimetype}, 'application/binary');
+
 
 #########################################
 ## LedgerSMB::Template private methods ##
