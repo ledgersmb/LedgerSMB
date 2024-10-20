@@ -1,9 +1,9 @@
 
+package LedgerSMB::Template::Plugin::External;
+
 use v5.36;
 use warnings;
 use Feature::Compat::Try;
-
-package LedgerSMB::Template::Plugin::External;
 
 =head1 NAME
 
@@ -19,7 +19,8 @@ input into the rendered output (eg., PDF, SVG, PNG, etc.)
 
 =cut
 
-use File::Temp;
+use File::Spec;
+use File::Temp ();
 use IPC::Open3;
 use Log::Any;
 use POSIX;
@@ -185,11 +186,11 @@ sub postprocess {
     my $script = File::Temp->new( DIR => $dir );
     my $script_name = $script->filename;
     print $script $cmd;
-    close $script;
-
+    close $script
+        or warn "Unable to close generated rendering script";
 
     my $pid = open3( my $chld_in, $out, $err, '/bin/sh ' . $script_name )
-        or die "Error rendering ";
+        or die "Error rendering: $!";
     close $chld_in
         or warn "Unable to close template renderer stdin: $!";
 
@@ -197,7 +198,7 @@ sub postprocess {
 
     open my $res, '<', File::Spec->catfile( $dir, $self->rendered_output_name )
         or die "Unable to read template processor output: $!";
-    $config->{_output}->$* = do { local $/; binmode $res, ':raw'; <$res> };
+    $config->{_output}->$* = do { local $/ = undef; binmode $res, ':raw'; <$res> };
 
     return undef;
 }
