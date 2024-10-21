@@ -32,7 +32,7 @@ use Moo;
 my $binmode = ':raw';
 my $extension = 'tex';
 
-my $logger = Log::Any->get_logger(category => 'LedgerSMB::Template::LaTeX');
+my $logger = Log::Any->get_logger(category => __PACKAGE__);
 
 
 =head1 ATTRIBUTES

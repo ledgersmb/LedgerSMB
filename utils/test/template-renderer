@@ -1,0 +1,14 @@
+#!/bin/bash
+
+(
+echo $0 "$@"
+dir=$1
+input=$2
+output=$3
+
+echo "---"
+cat $2
+echo "---"
+
+cat $input > $output
+) | tee template.log
