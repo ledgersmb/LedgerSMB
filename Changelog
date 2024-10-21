@@ -485,7 +485,7 @@ Changelog for 1.10.1
 * Fix HTML-encoding values on (PDF) printed documents (#6861)
 
 
-Changelog for 1.10.0
+Changelog for 1.10.0 (End of Life)
 
 Added functionalities
 * Example hierarchical chart of accounts, US General
