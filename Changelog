@@ -17,6 +17,7 @@ Added functionalities
 * Persistence of calculated taxes on orders and quotes (#8038)
 * Database upgrade log inspection in setup.pl (#8363)
 * Ship To 'At the attention of' (Ship To Attn) (#8360)
+* Support for external template rendering engines like weasyprint (#8440)
 
 Changed functionalities
 * Sub-templates 'dynatable' merged into 'display_report' templates (#8380)
