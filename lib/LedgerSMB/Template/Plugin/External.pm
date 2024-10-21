@@ -195,6 +195,9 @@ sub postprocess {
         or warn "Unable to close template renderer stdin: $!";
 
     waitpid $pid, 0;
+    my $exitcode = ($? >> 8);
+    die "External template renderer ($cmd) failed; exit code: $exitcode"
+        unless $exitcode == 0;
 
     open my $res, '<', File::Spec->catfile( $dir, $self->rendered_output_name )
         or die "Unable to read template processor output: $!";

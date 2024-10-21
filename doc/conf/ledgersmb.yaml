@@ -176,6 +176,8 @@ output_formatter:
       formats:
       - bin
       - binx
+      input_extension: bin
+      mime_type: application/binary
 
 # !book: paths
 #
