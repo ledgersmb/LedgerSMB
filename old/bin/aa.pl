@@ -1460,6 +1460,7 @@ sub update {
 
 sub post_and_approve {
     post();
+    $form->call_procedure(funcname=>'draft_approve', args => [ $form->{id} ]);
 }
 
 sub post {
