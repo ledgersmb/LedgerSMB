@@ -187,7 +187,7 @@ sub postprocess {
     my $script_name = $script->filename;
     print $script $cmd;
     close $script
-        or warn "Unable to close generated rendering script";
+        or warn "Unable to close generated rendering script: $!";
 
     my $pid = open3( my $chld_in, $out, $err, '/bin/sh ' . $script_name )
         or die "Error rendering: $!";
