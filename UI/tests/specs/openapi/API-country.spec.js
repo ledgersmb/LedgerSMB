@@ -1,4 +1,7 @@
-/** @format */
+/**
+ * @format
+ * @jest-environment node
+ */
 /* global process, require */
 
 // Import test packages
