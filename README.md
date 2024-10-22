@@ -43,10 +43,9 @@ fast customization. Supported output formats are PDF, CSV, HTML, ODF and more.
 
 # System requirements
 
-Note that these are the system requirements for LedgerSMB 1.12.0-dev, the current
+Note that these are the system requirements for LedgerSMB 1.13.0-dev, the current
 development version. Please check the system requirements for [the 1.11 stable
-version](https://github.com/ledgersmb/LedgerSMB/tree/1.11#system-requirements)
-and [the 1.10 'old stable' version](https://github.com/ledgersmb/LedgerSMB/tree/1.10#system-requirements).
+version](https://github.com/ledgersmb/LedgerSMB/tree/1.11#system-requirements).
 
 ## Server
 
@@ -69,9 +68,9 @@ and a range of versions.
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
 | Chrome              | 2018-03  | 65-81, 83-129                               |
-| Edge                | 2020-01  | 79-81, 83-127                               |
+| Edge                | 2020-01  | 79-81, 83-129                               |
 | Firefox             | 2018-05  | 60-130                                      |
-| Opera               | 2018-03  | 52-58, 60, 62-111                           |
+| Opera               | 2018-03  | 52-58, 60, 62-114                           |
 | Safari              | 2018-09  | 12, 12.1, 13, 13.1, 14, 14.1, 15, 15.1,     |
 |                     |          | 15.2-15.6, 16.0-16.6, 17.0-17.6, 18.0       |
 
@@ -79,9 +78,9 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome for Android  | <missing> | 127                                         |
-| Firefox for Android | 2024-06  | 127                                         |
-| Android Browser     | <missing> | 127                                         |
+| Chrome for Android  | 2024-09  | 129                                         |
+| Firefox for Android | 2024-09  | 130                                         |
+| Android Browser     | 2024-09  | 129                                         |
 | Baidu Browser       | 2024-03  | 13.52                                       |
 | Safari on iOS       | 2018-09  | 12.0-12.5, 13.0-13.7, 14.0-14.8,            |
 |                     |          | 15.0-15.8, 16.0-16.7, 17.0-17.6, 18.0       |
@@ -111,7 +110,7 @@ This instruction assumes you have [Docker](https://docs.docker.com/get-docker/)
 installed as well as [docker-compose](https://github.com/docker/compose#where-to-get-docker-compose).
 
 ```bash
- $ wget https://raw.githubusercontent.com/ledgersmb/ledgersmb-docker/1.11/docker-compose.yml
+ $ wget https://raw.githubusercontent.com/ledgersmb/ledgersmb-docker/1.12/docker-compose.yml
  $ docker-compose up -d
 ```
 

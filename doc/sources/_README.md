@@ -43,10 +43,9 @@ fast customization. Supported output formats are PDF, CSV, HTML, ODF and more.
 
 # System requirements
 
-Note that these are the system requirements for LedgerSMB 1.12.0-dev, the current
+Note that these are the system requirements for LedgerSMB 1.13.0-dev, the current
 development version. Please check the system requirements for [the 1.11 stable
-version](https://github.com/ledgersmb/LedgerSMB/tree/1.11#system-requirements)
-and [the 1.10 'old stable' version](https://github.com/ledgersmb/LedgerSMB/tree/1.10#system-requirements).
+version](https://github.com/ledgersmb/LedgerSMB/tree/1.11#system-requirements).
 
 ## Server
 
@@ -85,7 +84,7 @@ This instruction assumes you have [Docker](https://docs.docker.com/get-docker/)
 installed as well as [docker-compose](https://github.com/docker/compose#where-to-get-docker-compose).
 
 ```bash
- $ wget https://raw.githubusercontent.com/ledgersmb/ledgersmb-docker/1.11/docker-compose.yml
+ $ wget https://raw.githubusercontent.com/ledgersmb/ledgersmb-docker/1.12/docker-compose.yml
  $ docker-compose up -d
 ```
 
