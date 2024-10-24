@@ -9,6 +9,9 @@
     },
     "packageRules": [
         {
+            "matchManagers": [ "github-actions" ]
+        },
+        {
             "matchPackagePatterns": [
                 "*"
             ],
