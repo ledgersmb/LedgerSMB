@@ -1,4 +1,7 @@
-/** @format */
+/**
+ * @format
+ * @jest-environment node
+ */
 
 /**
  * OpenAPI tests
@@ -17,7 +20,9 @@ const openapi = process.env.PWD.replace("/UI","");
 jestOpenAPI( openapi + "/openapi/API.yaml");
 
 // Load the API definition
-const API_yaml = require (openapi + "/openapi/API.yaml");
+const fs = require("node:fs");
+const yaml = require('js-yaml');
+const API_yaml = yaml.load(fs.readFileSync(openapi + "/openapi/API.yaml", 'utf8'));
 
 // Set API version to use
 const api = "erp/api/v0";
