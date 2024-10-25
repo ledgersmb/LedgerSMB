@@ -160,7 +160,7 @@ module.exports = {
             testEnvironmentOptions: {
                 customExportConditions: ["node", "node-addons"]
             },
-            testPathIgnorePatterns: [ "<rootDir>/tests/specs/openapi/.*\.spec\.js" ],
+            testPathIgnorePatterns: [ "<rootDir>/tests/specs/openapi/.*\\.spec\\.js" ],
             transform: {
                 "^.+\\.yaml$": "yaml-jest-transform",
                 "^.+\\.js$": "babel-jest",
