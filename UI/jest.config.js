@@ -116,10 +116,6 @@ module.exports = {
     ],
 
     // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-    moduleNameMapper: {
-        "^@/i18n": "<rootDir>/tests/common/i18n", // Jest doesn't support esm or top level await well
-        "^@/(.*)$": "<rootDir>/src/$1"
-    },
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
     modulePathIgnorePatterns: [],
@@ -149,7 +145,43 @@ module.exports = {
     // Run tests from one or more projects, found in the specified paths; also takes path globs.
     // This option is the CLI equivalent of the projects configuration option.
     // Note that if configuration files are found in the specified paths, all projects specified within those configuration files will be run.
-    projects: [],
+    projects: [
+        {
+            displayName: "browser",
+            moduleFileExtensions: ["js", "json", "vue"],
+            moduleNameMapper: {
+              "^@/i18n": "<rootDir>/tests/common/i18n", // Jest doesn't support esm or top level await well
+              "^@/(.*)$": "<rootDir>/src/$1"
+            },
+            testMatch: [ "<rootDir>/tests/specs/**/*.spec.js" ],
+            setupFiles: ["<rootDir>/tests/common/jest.polyfills.js"],
+            setupFilesAfterEnv: [ "<rootDir>/tests/common/jest-setup.js" ],
+            testEnvironment: "jsdom",
+            testEnvironmentOptions: {
+                customExportConditions: ["node", "node-addons"]
+            },
+            testPathIgnorePatterns: [ "<rootDir>/tests/specs/openapi/.*\.spec\.js" ],
+            transform: {
+                "^.+\\.yaml$": "yaml-jest-transform",
+                "^.+\\.js$": "babel-jest",
+                "^.+\\.vue$": "@vue/vue3-jest",
+                "^@": "babel-jest",
+
+            },
+        },
+        {
+            displayName: "API",
+            moduleFileExtensions: ["js", "json", "vue"],
+            testMatch: [ "<rootDir>/tests/specs/openapi/**/*.spec.js" ],
+            testEnvironment: "node",
+            transform: {
+                "^.+\\.yaml$": "yaml-jest-transform",
+                "^.+\\.js$": "babel-jest",
+                "^.+\\.vue$": "@vue/vue3-jest",
+                "^@": "babel-jest",
+            },
+        }
+    ],
 
     // Use this configuration option to add custom reporters to Jest
     // reporters: [],
@@ -186,10 +218,10 @@ module.exports = {
     sandboxInjectedGlobals: [],
 
     // The paths to modules that run some code to configure or set up the testing environment before each test
-    setupFiles: ["<rootDir>/tests/common/jest.polyfills.js"],
+    //setupFiles: ["<rootDir>/tests/common/jest.polyfills.js"],
 
     // A list of paths to modules that run some code to configure or set up the testing framework before each test
-    setupFilesAfterEnv: ["<rootDir>/tests/common/jest-setup.js"],
+    setupFilesAfterEnv: [],
 
     skipFilter: false,
 
@@ -232,6 +264,7 @@ module.exports = {
     transform: {
         "^.+\\.yaml$": "yaml-jest-transform",
         "^.+\\.js$": "babel-jest",
+        "^@": "babel-jest",
         "^.+\\.vue$": "@vue/vue3-jest"
     },
 
