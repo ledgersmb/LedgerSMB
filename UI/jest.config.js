@@ -153,7 +153,7 @@ module.exports = {
             testEnvironmentOptions: {
                 customExportConditions: ["node", "node-addons"]
             },
-            testPathIgnorePatterns: [ "<rootDir>/tests/specs/openapi/.*\.spec\.js" ],
+            testPathIgnorePatterns: [ "<rootDir>/tests/specs/openapi/.*\\.spec\\.js" ],
             transform: {
                 "^.+\\.yaml$": "yaml-jest-transform",
                 "^.+\\.js$": "babel-jest",
@@ -211,7 +211,7 @@ module.exports = {
     sandboxInjectedGlobals: [],
 
     // The paths to modules that run some code to configure or set up the testing environment before each test
-    //setupFiles: ["<rootDir>/tests/common/jest.polyfills.js"],
+    // setupFiles: ["<rootDir>/tests/common/jest.polyfills.js"],
 
     // A list of paths to modules that run some code to configure or set up the testing framework before each test
     setupFilesAfterEnv: [],
