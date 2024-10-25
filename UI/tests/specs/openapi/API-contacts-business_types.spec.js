@@ -16,8 +16,8 @@ jestOpenAPI(openapi + "/openapi/API.yaml");
 
 // Load the API definition
 const fs = require("node:fs");
-const yaml = require('js-yaml');
-const API_yaml = yaml.load(fs.readFileSync(openapi + "/openapi/API.yaml", 'utf8'));
+const yaml = require("js-yaml");
+const API_yaml = yaml.load(fs.readFileSync(openapi + "/openapi/API.yaml"));
 
 // Set API version to use
 const api = "erp/api/v0";
