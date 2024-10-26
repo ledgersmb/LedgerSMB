@@ -5,10 +5,10 @@ Small and Medium business accounting and ERP
 
 
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/795/badge)](https://bestpractices.coreinfrastructure.org/projects/795)
-[![CI](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml/badge.svg)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml)
-[![CodeQL](https://github.com/ledgersmb/LedgerSMB/actions/workflows/codeql.yml/badge.svg?branch=master)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/codeql.yml)
+[![CI](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml/badge.svg?branch=1.12)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml)
+[![CodeQL](https://github.com/ledgersmb/LedgerSMB/actions/workflows/codeql.yml/badge.svg?branch=1.12)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/codeql.yml)
 [![GPLv2 Licence](https://badges.frapsoft.com/os/gpl/gpl.png?v=103)](https://opensource.org/licenses/GPL-2.0/)
-[![Coverage Status](https://coveralls.io/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=master)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=1.12)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=1.12)
 [![Docker](https://img.shields.io/docker/pulls/ledgersmb/ledgersmb.svg)](https://hub.docker.com/r/ledgersmb/ledgersmb/)
 [![Mentioned in Awesome <awesome-selfhosted>](https://awesome.re/mentioned-badge.svg)](https://github.com/Kickball/awesome-selfhosted#enterprise-resource-planning)
 
@@ -68,10 +68,10 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome              | 2018-03  | 65-81, 83-129                               |
-| Edge                | 2020-01  | 79-81, 83-127                               |
-| Firefox             | 2018-05  | 60-130                                      |
-| Opera               | 2018-03  | 52-58, 60, 62-111                           |
+| Chrome              | 2018-03  | 65-81, 83-130                               |
+| Edge                | 2020-01  | 79-81, 83-129                               |
+| Firefox             | 2018-05  | 60-131                                      |
+| Opera               | 2018-03  | 52-58, 60, 62-114                           |
 | Safari              | 2018-09  | 12, 12.1, 13, 13.1, 14, 14.1, 15, 15.1,     |
 |                     |          | 15.2-15.6, 16.0-16.6, 17.0-17.6, 18.0       |
 
@@ -79,9 +79,9 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome for Android  | <missing> | 127                                         |
-| Firefox for Android | 2024-06  | 127                                         |
-| Android Browser     | <missing> | 127                                         |
+| Chrome for Android  | 2024-09  | 129                                         |
+| Firefox for Android | 2024-09  | 130                                         |
+| Android Browser     | 2024-09  | 129                                         |
 | Baidu Browser       | 2024-03  | 13.52                                       |
 | Safari on iOS       | 2018-09  | 12.0-12.5, 13.0-13.7, 14.0-14.8,            |
 |                     |          | 15.0-15.8, 16.0-16.7, 17.0-17.6, 18.0       |
