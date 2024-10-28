@@ -167,7 +167,7 @@ C<UI/reports/display_report> template will be used.
 
 =cut
 
-use v5.36;
+use v5.36.1;
 use warnings;
 
 use List::Util qw{ any pairgrep };

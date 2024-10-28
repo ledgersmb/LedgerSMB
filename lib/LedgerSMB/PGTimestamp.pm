@@ -14,7 +14,7 @@ The type behaves internally as a Datetime module.
 
 =cut
 
-use v5.36;
+use v5.36.1;
 use warnings;
 use base qw(PGObject::Type::DateTime);
 

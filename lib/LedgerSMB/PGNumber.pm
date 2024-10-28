@@ -15,7 +15,7 @@ Math::BigFloat and can be used in this way.
 
 =cut
 
-use v5.36;
+use v5.36.1;
 use warnings;
 use base qw(PGObject::Type::BigFloat);
 

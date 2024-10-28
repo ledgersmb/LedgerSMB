@@ -15,7 +15,7 @@ This module is the UI controller for the customer, vendor, etc functions; it
 
 =cut
 
-use v5.36;
+use v5.36.1;
 use warnings;
 
 use Feature::Compat::Try;

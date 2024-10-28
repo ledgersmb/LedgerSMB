@@ -56,7 +56,7 @@ Deprecated
 
 package Form;
 
-use v5.36;
+use v5.36.1;
 use charnames qw(:full);
 use open ':utf8';
 use utf8;
