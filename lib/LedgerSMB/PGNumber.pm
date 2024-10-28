@@ -18,7 +18,6 @@ Math::BigFloat and can be used in this way.
 use v5.36;
 use warnings;
 use base qw(PGObject::Type::BigFloat);
-use Scalar::Util qw(blessed);
 
 # try using the GMP library for Math::BigFloat for speed
 use Carp;
@@ -178,7 +177,7 @@ sub from_input {
     my $self = shift;
     my $string = shift;
 
-    return $string if blessed $string and $string->isa( __PACKAGE__ );
+    return $string if $string isa __PACKAGE__;
     if (!defined $string || $string eq '') {
         return undef;
     }

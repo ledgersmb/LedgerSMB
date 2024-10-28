@@ -17,7 +17,6 @@ The type behaves internally as a Datetime module.
 use v5.36;
 use warnings;
 use base qw(PGObject::Type::DateTime);
-use Scalar::Util qw(blessed);
 
 use Carp;
 use DateTime::Format::Strptime qw(strptime);
@@ -155,7 +154,7 @@ sub from_input{
     my $self = shift;
     my $input = shift;
 
-    return $input if blessed $input and $input->isa( __PACKAGE__ ) and $input->is_date;
+    return $input if $input isa __PACKAGE__ && $input->is_date;
     return __PACKAGE__->new()
         if ! $input; # matches undefined as well as ''
 
