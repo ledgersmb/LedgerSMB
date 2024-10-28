@@ -11,9 +11,8 @@ Budget workflow scripts.
 
 =cut
 
-use v5.36;
+use v5.36.1;
 use warnings;
-use Scalar::Util qw(blessed);
 
 use LedgerSMB::Budget;
 use LedgerSMB::Business_Unit;
@@ -76,7 +75,7 @@ sub _render_screen {
         $budget->lines($lines);
     }
     $budget->error('Invalid object')
-         unless blessed $budget and $budget->isa('LedgerSMB::Budget');
+         unless $budget isa 'LedgerSMB::Budget';
     # The button logic is kinda complicated here.  The basic idea is that there
     # are three stages in the handling of the budget:  Initial entry, review and
     # approval, and review with the possibility of obsolescence.

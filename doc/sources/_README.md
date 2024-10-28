@@ -49,7 +49,7 @@ version](https://github.com/ledgersmb/LedgerSMB/tree/1.11#system-requirements).
 
 ## Server
 
-* `Perl 5.36+`
+* `Perl 5.36.1+`
 * `PostgreSQL 13+`
 * Web server (e.g. `nginx`, `Apache HTTPd`, `lighttpd`, `Varnish`)
 

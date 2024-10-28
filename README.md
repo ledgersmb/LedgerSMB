@@ -49,7 +49,7 @@ version](https://github.com/ledgersmb/LedgerSMB/tree/1.11#system-requirements).
 
 ## Server
 
-* `Perl 5.36+`
+* `Perl 5.36.1+`
 * `PostgreSQL 13+`
 * Web server (e.g. `nginx`, `Apache HTTPd`, `lighttpd`, `Varnish`)
 
@@ -67,9 +67,9 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome              | 2018-03  | 65-81, 83-129                               |
-| Edge                | 2020-01  | 79-81, 83-129                               |
-| Firefox             | 2018-05  | 60-130                                      |
+| Chrome              | 2018-03  | 65-81, 83-130                               |
+| Edge                | 2020-01  | 79-81, 83-130                               |
+| Firefox             | 2018-05  | 60-131                                      |
 | Opera               | 2018-03  | 52-58, 60, 62-114                           |
 | Safari              | 2018-09  | 12, 12.1, 13, 13.1, 14, 14.1, 15, 15.1,     |
 |                     |          | 15.2-15.6, 16.0-16.6, 17.0-17.6, 18.0       |

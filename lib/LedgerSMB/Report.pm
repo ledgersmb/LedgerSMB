@@ -167,7 +167,7 @@ C<UI/reports/display_report> template will be used.
 
 =cut
 
-use v5.36;
+use v5.36.1;
 use warnings;
 
 use List::Util qw{ any pairgrep };
@@ -556,7 +556,7 @@ sub _render {
             for my $k (keys %$r){
                 next if $exclude->{$k};
 
-                if (blessed $r->{$k} and $r->{$k}->isa( 'LedgerSMB::PGNumber' )) {
+                if ($r->{$k} isa 'LedgerSMB::PGNumber' ){
                     $total_row->{$k} //= LedgerSMB::PGNumber->bzero;
                     $total_row->{$k}->badd($r->{$k});
                     if ($subtotal) {
