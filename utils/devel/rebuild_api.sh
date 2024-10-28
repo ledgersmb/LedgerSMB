@@ -22,15 +22,15 @@ find . -name '[A-Z]*.yml' -exec echo -n ",{\"inputFile\": \"{}\"}" \; >> openapi
 echo '],"output": "API.yaml"}'  >> openapi-merge.json
 
 # Merge them into openapi.yaml 
-npx openapi-merge-cli --config openapi-merge.json
+npx --yes openapi-merge-cli --config openapi-merge.json
 
 # Validate the resulting OpenAPI spec
 cp $gitDirName/openapi/.redocly.yaml .
-npx @redocly/cli lint API.yaml || exit
+npx --yes @redocly/cli lint API.yaml || exit
 
 # Build the documentation
 cp $gitDirName/openapi/LedgerSMB-api.html $gitDirName/doc/openapi/
-npx @redocly/cli bundle API.yaml -o $gitDirName/doc/openapi/openapi.json
+npx --yes @redocly/cli bundle API.yaml -o $gitDirName/doc/openapi/openapi.json
 
 mv API.yaml $gitDirName/openapi/
 
