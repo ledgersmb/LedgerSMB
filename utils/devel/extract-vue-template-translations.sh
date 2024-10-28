@@ -10,9 +10,9 @@ set -x
 # Extract Vue strings and make a pot file
 pushd UI/ >/dev/null
 cp src/locales/en.json /tmp/en.json
-npx vue-i18n-extract-translations -v "./src/**/*.?(js|vue)" -l "/tmp/" --def-locale "en" \
+npx --yes vue-i18n-extract-translations -v "./src/**/*.?(js|vue)" -l "/tmp/" --def-locale "en" \
     --key "i18n" --keep-unused > /dev/null
-npx i18next-conv --quiet --pot --project LedgerSMB --language "en" -b /tmp/en.json -s /tmp/en.json --target /tmp/en.po
+npx --yes i18next-conv --quiet --pot --project LedgerSMB --language "en" -b /tmp/en.json -s /tmp/en.json --target /tmp/en.po
 popd >/dev/null
 ./utils/devel/extract-vue-template-translations-references.pl < /tmp/en.po
 
