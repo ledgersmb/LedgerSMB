@@ -341,7 +341,7 @@ jobs:
             COA_TESTING: 1
             JOB_COUNT: 7
 
-          - perl: "5.32"
+          - perl: "5.40"
             postgres: "13"
             BROWSER: "operablink"
             DB_TESTING: 1
