@@ -96,7 +96,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        perl: [ "5.34", "5.32" ]
+        perl: [ "5.40", "5.34", "5.32" ]
 
     steps:
       - name: Checkout
@@ -118,6 +118,9 @@ jobs:
             COVERAGE: 1
 
           - perl: "5.32"
+            JOB_COUNT: 5
+
+          - perl: "5.40"
             JOB_COUNT: 5
 
     env:
