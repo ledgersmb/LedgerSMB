@@ -40,7 +40,7 @@ use DBI;
 use File::Spec;
 use File::Temp;
 use JSON::PP;
-use PGObject::Util::DBAdmin 'v1.6.1';
+use PGObject::Util::DBAdmin v1.6.2;
 
 use Moose;
 use namespace::autoclean;
