@@ -152,7 +152,6 @@ jobs:
           LSMB_TEST_DB: 1
           DB_TESTING: 1
           JOB_COUNT: ${{ matrix.JOB_COUNT }}
-          PERL5OPT: -MSyntax::Keyword::Try::Deparse
 
         # Upload coverage data if needed
       - name: Upload coverage data
@@ -484,7 +483,6 @@ jobs:
           COA_TESTING: ${{ matrix.COA_TESTING }}
           COVERAGE: ${{ matrix.COVERAGE }}
           DB_TESTING: ${{ matrix.DB_TESTING }}
-          PERL5OPT: -MSyntax::Keyword::Try::Deparse
 
       - name: Stop 'starman'
         run: |
