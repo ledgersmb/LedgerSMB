@@ -141,7 +141,7 @@ jobs:
         with:
           perl-version: ${{ matrix.perl }}
           DEVEL_COVER_OPTIONS: ${{ env.DEVEL_COVER_OPTIONS }}
-          coverage: ${{ matrix.coverage }}
+          coverage: ${{ matrix.COVERAGE }}
 
       # Do perl tests
       - name: Run Pure Perl tests
@@ -152,7 +152,6 @@ jobs:
           LSMB_TEST_DB: 1
           DB_TESTING: 1
           JOB_COUNT: ${{ matrix.JOB_COUNT }}
-          PERL5OPT: -MSyntax::Keyword::Try::Deparse
 
         # Upload coverage data if needed
       - name: Upload coverage data
@@ -275,7 +274,7 @@ jobs:
         with:
           perl-version: ${{ matrix.perl }}
           DEVEL_COVER_OPTIONS: ${{ env.DEVEL_COVER_OPTIONS }}
-          coverage: ${{ matrix.coverage }}
+          coverage: ${{ matrix.COVERAGE }}
 
       - name: Run API tests
         run: |
@@ -468,7 +467,7 @@ jobs:
         with:
           perl-version: ${{ matrix.perl }}
           DEVEL_COVER_OPTIONS: ${{ env.DEVEL_COVER_OPTIONS }}
-          coverage: ${{ matrix.coverage }}
+          coverage: ${{ matrix.COVERAGE }}
 
       # Fix the condition to debug
       - name: Setup upterm session
@@ -484,7 +483,6 @@ jobs:
           COA_TESTING: ${{ matrix.COA_TESTING }}
           COVERAGE: ${{ matrix.COVERAGE }}
           DB_TESTING: ${{ matrix.DB_TESTING }}
-          PERL5OPT: -MSyntax::Keyword::Try::Deparse
 
       - name: Stop 'starman'
         run: |
