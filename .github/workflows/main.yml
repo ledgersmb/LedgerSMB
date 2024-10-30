@@ -96,7 +96,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        perl: [ "5.34", "5.32" ]
+        perl: [ "5.40", "5.34", "5.32" ]
 
     steps:
       - name: Checkout
@@ -118,6 +118,9 @@ jobs:
             COVERAGE: 1
 
           - perl: "5.32"
+            JOB_COUNT: 5
+
+          - perl: "5.40"
             JOB_COUNT: 5
 
     env:
@@ -143,7 +146,6 @@ jobs:
           LSMB_TEST_DB: 1
           DB_TESTING: 1
           JOB_COUNT: ${{ matrix.JOB_COUNT }}
-          PERL5OPT: -MSyntax::Keyword::Try::Deparse
 
         # Upload coverage data if needed
       - name: Upload coverage data
@@ -338,7 +340,7 @@ jobs:
             COA_TESTING: 1
             JOB_COUNT: 7
 
-          - perl: "5.32"
+          - perl: "5.40"
             postgres: "13"
             BROWSER: "operablink"
             DB_TESTING: 1
@@ -467,7 +469,6 @@ jobs:
           COA_TESTING: ${{ matrix.COA_TESTING }}
           COVERAGE: ${{ matrix.COVERAGE }}
           DB_TESTING: ${{ matrix.DB_TESTING }}
-          PERL5OPT: -MSyntax::Keyword::Try::Deparse
 
       - name: Stop 'starman'
         run: |
