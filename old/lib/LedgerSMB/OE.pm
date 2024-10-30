@@ -221,9 +221,9 @@ sub save {
                 person_id, language_code, ponumber, terms,
                 quotation, oe_class_id, entity_credit_account, workflow_id)
             VALUES
-                (?, ?, ?,
-                 ?, ?, ?,
-                 ?, ?, ?, ?, ?,
+                (?, ?, ?, ?,
+                 ?, ?, ?, ?,
+                 ?, ?, ?, ?,
                  ?, ?, ?, ?,
                  ?, ?, ?, ?)|;
         @queryargs = (
@@ -236,7 +236,8 @@ sub save {
             $form->{currency},      $form->{closed},
             $form->{person_id},
             $form->{language_code}, $form->{ponumber},
-            $form->{terms},         $quotation, $class_id, $form->{"$form->{vc}_id"},
+            $form->{terms},         $quotation,
+            $class_id,              $form->{"$form->{vc}_id"},
             $form->{workflow_id}
         );
         $sth = $dbh->prepare($query);
