@@ -13,10 +13,9 @@ use DBI;
 use URI;
 
 use LedgerSMB::Batch;
-use LedgerSMB::Report::Unapproved::Batch_Overview
+use LedgerSMB::Report::Unapproved::Batch_Overview;
 
 # Create test run conditions
-my $data;
 my $report;
 my $rows;
 my $row;
