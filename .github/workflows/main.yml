@@ -141,7 +141,7 @@ jobs:
         with:
           perl-version: ${{ matrix.perl }}
           DEVEL_COVER_OPTIONS: ${{ env.DEVEL_COVER_OPTIONS }}
-          coverage: ${{ matrix.coverage }}
+          coverage: ${{ matrix.COVERAGE }}
 
       # Do perl tests
       - name: Run Pure Perl tests
@@ -275,7 +275,7 @@ jobs:
         with:
           perl-version: ${{ matrix.perl }}
           DEVEL_COVER_OPTIONS: ${{ env.DEVEL_COVER_OPTIONS }}
-          coverage: ${{ matrix.coverage }}
+          coverage: ${{ matrix.COVERAGE }}
 
       - name: Run API tests
         run: |
@@ -468,7 +468,7 @@ jobs:
         with:
           perl-version: ${{ matrix.perl }}
           DEVEL_COVER_OPTIONS: ${{ env.DEVEL_COVER_OPTIONS }}
-          coverage: ${{ matrix.coverage }}
+          coverage: ${{ matrix.COVERAGE }}
 
       # Fix the condition to debug
       - name: Setup upterm session
