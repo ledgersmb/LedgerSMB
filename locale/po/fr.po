@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.11.19-dev\n"
+"Project-Id-Version: LedgerSMB 1.11.18-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-10-13 21:13+0000\n"
+"POT-Creation-Date: 2024-11-02 18:52+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2023\n"
 "Language-Team: French (https://app.transifex.com/ledgersmb/teams/58325/fr/)\n"
 "Language: fr\n"
@@ -1383,15 +1383,15 @@ msgstr "Impossible de supprimer une transaction enregistrée"
 msgid "Cannot delete quotation!"
 msgstr "Impossible de supprimer le devis!"
 
-#: old/bin/ir.pl:1291 old/bin/is.pl:1372
+#: old/bin/ir.pl:1292 old/bin/is.pl:1373
 msgid "Cannot post invoice for a closed period!"
 msgstr "Impossible d'enregistrer la facture sur un exercice clos!"
 
-#: old/bin/aa.pl:1508 old/bin/ir.pl:1306 old/bin/is.pl:1387
+#: old/bin/aa.pl:1509 old/bin/ir.pl:1307 old/bin/is.pl:1388
 msgid "Cannot post payment for a closed period!"
 msgstr "Impossible d'enregistrer le paiement sur un exercice clos!"
 
-#: old/bin/aa.pl:1494 old/bin/aa.pl:210 old/bin/gl.pl:226 old/bin/gl.pl:731
+#: old/bin/aa.pl:1495 old/bin/aa.pl:210 old/bin/gl.pl:226 old/bin/gl.pl:731
 msgid "Cannot post transaction for a closed period!"
 msgstr "Impossible d'enregistrer l'écriture sur un exercice clos!"
 
@@ -1402,7 +1402,7 @@ msgstr ""
 "Impossible d'enregistrer l'écriture avec un débit et un crédit sur le même "
 "compte!"
 
-#: old/bin/aa.pl:1562
+#: old/bin/aa.pl:1563
 msgid "Cannot post transaction!"
 msgstr "Impossible d'enregistrer l'écriture!"
 
@@ -1814,7 +1814,7 @@ msgstr "Impossible de charger le modèle à partir de la base de données"
 msgid "Could not connect to server"
 msgstr "Impossibe de se connecter au serveur"
 
-#: old/bin/ir.pl:1270 old/bin/is.pl:1352 old/bin/oe.pl:1299
+#: old/bin/ir.pl:1271 old/bin/is.pl:1353 old/bin/oe.pl:1299
 msgid "Could not save the data.  Please try again"
 msgstr "Impossible d'enregistrer les données. Veuillez réessayer"
 
@@ -2040,7 +2040,7 @@ msgstr "Numéro de client"
 msgid "Customer Search"
 msgstr "Recherche client"
 
-#: old/bin/aa.pl:1477 old/bin/is.pl:1361 old/bin/oe.pl:1234 old/bin/pe.pl:1153
+#: old/bin/aa.pl:1478 old/bin/is.pl:1362 old/bin/oe.pl:1234 old/bin/pe.pl:1153
 msgid "Customer missing!"
 msgstr "Client manquant!"
 
@@ -2080,7 +2080,7 @@ msgstr "Données du relevé bancaire"
 msgid "Data from your ledger"
 msgstr "Données aux livres"
 
-#: lib/LedgerSMB/Scripts/payment.pm:412 old/bin/aa.pl:1467
+#: lib/LedgerSMB/Scripts/payment.pm:412 old/bin/aa.pl:1468
 msgid "Data not saved.  Please try again."
 msgstr "Données non enregistrées. Veuillez réessayer."
 
@@ -2665,7 +2665,7 @@ msgstr "Télécharger:"
 msgid "Dr."
 msgstr "Dr."
 
-#: old/bin/aa.pl:1612 old/bin/ir.pl:95
+#: old/bin/aa.pl:1613 old/bin/ir.pl:95
 msgid "Draft Posted"
 msgstr ""
 
@@ -2714,7 +2714,7 @@ msgstr "Exigible"
 msgid "Due Date"
 msgstr "Échéance"
 
-#: old/bin/aa.pl:1482
+#: old/bin/aa.pl:1483
 msgid "Due Date missing!"
 msgstr "Date d'échéance manquante!"
 
@@ -3130,7 +3130,7 @@ msgstr "Change"
 msgid "Exchange Rate"
 msgstr "Taux de change"
 
-#: old/bin/aa.pl:1515 old/bin/ir.pl:1314 old/bin/is.pl:1395
+#: old/bin/aa.pl:1516 old/bin/ir.pl:1315 old/bin/is.pl:1396
 msgid "Exchange rate for payment missing!"
 msgstr "Taux de change manquant pour le paiement!"
 
@@ -3138,7 +3138,7 @@ msgstr "Taux de change manquant pour le paiement!"
 msgid "Exchange rate hasn't been defined!"
 msgstr "Le taux de change n'a pas été défini!"
 
-#: old/bin/aa.pl:1497 old/bin/ir.pl:1294 old/bin/is.pl:1375 old/bin/oe.pl:1238
+#: old/bin/aa.pl:1498 old/bin/ir.pl:1295 old/bin/is.pl:1376 old/bin/oe.pl:1238
 msgid "Exchange rate missing!"
 msgstr "Taux de change manquant!"
 
@@ -3904,7 +3904,7 @@ msgstr "Inventaire transféré!"
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:176
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:268
 #: lib/LedgerSMB/Scripts/payment.pm:932 old/bin/am.pl:977 old/bin/io.pl:1163
-#: old/bin/is.pl:1399 old/bin/is.pl:273 old/bin/printer.pl:48
+#: old/bin/is.pl:1400 old/bin/is.pl:273 old/bin/printer.pl:48
 #: templates/demo/invoice.html:16 templates/demo/invoice.tex:138
 #: templates/demo/printPayment.html:44 UI/templates/widget.html:51
 #: sql/Pg-database.sql:1037 sql/Pg-database.sql:2616 sql/Pg-database.sql:2715
@@ -3926,7 +3926,7 @@ msgstr "Facture #"
 msgid "Invoice Created"
 msgstr "Facture créée"
 
-#: old/bin/aa.pl:1483
+#: old/bin/aa.pl:1484
 msgid "Invoice Created Date missing!"
 msgstr "Date de création de facture manquante!"
 
@@ -3937,7 +3937,7 @@ msgstr "Date de création de facture manquante!"
 msgid "Invoice Date"
 msgstr "Date de facturation"
 
-#: old/bin/aa.pl:1481 old/bin/io.pl:1276 old/bin/ir.pl:1279 old/bin/is.pl:1360
+#: old/bin/aa.pl:1482 old/bin/io.pl:1276 old/bin/ir.pl:1280 old/bin/is.pl:1361
 msgid "Invoice Date missing!"
 msgstr "Date de facture manquante!"
 
@@ -4382,8 +4382,8 @@ msgstr "Charger des modèles"
 msgid "Loaded"
 msgstr "Chargé"
 
-#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:41
-#: UI/src/components/ServerUI.js:27
+#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:27
+#: UI/src/components/ServerUI.js:41
 msgid "Loading..."
 msgstr "Chargement..."
 
@@ -5391,7 +5391,7 @@ msgstr "Type de paiements"
 msgid "Payment batch"
 msgstr "Lot de paiements"
 
-#: old/bin/aa.pl:1505 old/bin/ir.pl:1303 old/bin/is.pl:1384
+#: old/bin/aa.pl:1506 old/bin/ir.pl:1304 old/bin/is.pl:1385
 msgid "Payment date missing!"
 msgstr "Date de paiement manquante!"
 
@@ -6743,7 +6743,7 @@ msgstr "Sélectionnez les modèles à charger"
 msgid "Select Vendor"
 msgstr "Sélectionner vendeur"
 
-#: old/bin/arapprn.pl:310 old/bin/is.pl:1440 old/bin/oe.pl:1341
+#: old/bin/arapprn.pl:310 old/bin/is.pl:1441 old/bin/oe.pl:1341
 msgid "Select a Printer!"
 msgstr "Sélectionner une imprimante!"
 
@@ -6771,7 +6771,7 @@ msgstr "Sélectionnez les factures"
 msgid "Select or Enter User"
 msgstr "Sélectionnez ou entrez l'utilisateur"
 
-#: old/bin/arapprn.pl:308 old/bin/arapprn.pl:86 old/bin/is.pl:1438
+#: old/bin/arapprn.pl:308 old/bin/arapprn.pl:86 old/bin/is.pl:1439
 #: old/bin/oe.pl:1339
 msgid "Select postscript or PDF!"
 msgstr "Sélectionner Postscript ou PDF!"
@@ -8389,7 +8389,7 @@ msgstr "Numéro de référence du fournisseur"
 msgid "Vendor Search"
 msgstr "Recherche de fournisseur"
 
-#: old/bin/aa.pl:1478 old/bin/ir.pl:1280 old/bin/oe.pl:1235
+#: old/bin/aa.pl:1479 old/bin/ir.pl:1281 old/bin/oe.pl:1235
 msgid "Vendor missing!"
 msgstr "Fournisseur manquant!"
 

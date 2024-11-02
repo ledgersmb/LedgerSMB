@@ -1,16 +1,16 @@
 #
 # Translators:
-# Arne Hanssen <arne.senja@gmail.com>, 2023
 # Stig Berg <stig@tmb.no>, 2023
 # Håvard Sørli <havard@sorli.no>, 2023
 # Erik Huelsmann <ehuels@gmail.com>, 2023
+# Arne Hanssen <arne.senja@gmail.com>, 2024
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.11.19-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-10-13 21:13+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2023\n"
+"POT-Creation-Date: 2024-11-02 18:52+0000\n"
+"Last-Translator: Arne Hanssen <arne.senja@gmail.com>, 2024\n"
 "Language-Team: Norwegian Bokmål (https://app.transifex.com/ledgersmb/"
 "teams/58325/nb/)\n"
 "Language: nb\n"
@@ -194,7 +194,7 @@ msgstr "Nektet Adgang"
 
 #: UI/src/views/LoginPage.machines.js:63
 msgid "Access denied: Bad username or password"
-msgstr ""
+msgstr "Tilgang nektet: Feil brukernavn eller passord"
 
 #: lib/LedgerSMB/Report/Aging.pm:106
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:226
@@ -563,7 +563,7 @@ msgstr "Legg til/Oppdatér"
 
 #: UI/src/components/ConfigTableRow.vue:40
 msgid "Added"
-msgstr ""
+msgstr "Lagt til"
 
 #: lib/LedgerSMB/Scripts/business_unit.pm:177
 msgid "Added id [_1]"
@@ -571,7 +571,7 @@ msgstr "Lagt til nr [_1]"
 
 #: UI/src/components/ConfigTableRow.vue:35
 msgid "Adding"
-msgstr ""
+msgstr "Legger til"
 
 #: old/bin/aa.pl:743 old/bin/arap.pl:169 old/bin/ic.pl:1665 old/bin/ir.pl:441
 #: old/bin/is.pl:479 old/bin/oe.pl:454 old/bin/pe.pl:578
@@ -815,7 +815,7 @@ msgstr "Godkjent signatur"
 
 #: UI/reconciliation/report.html:442
 msgid "Approving..."
-msgstr ""
+msgstr "Godkjenner..."
 
 #: old/bin/aa.pl:87 old/bin/gl.pl:77 old/bin/io.pl:79
 msgid "Apr"
@@ -1383,15 +1383,15 @@ msgstr "Kan ikke slette bokførte Posteringer"
 msgid "Cannot delete quotation!"
 msgstr "Kan ikke slette tilbud!"
 
-#: old/bin/ir.pl:1291 old/bin/is.pl:1372
+#: old/bin/ir.pl:1292 old/bin/is.pl:1373
 msgid "Cannot post invoice for a closed period!"
 msgstr "Kan ikke bokføre faktura for en avsluttet periode!"
 
-#: old/bin/aa.pl:1508 old/bin/ir.pl:1306 old/bin/is.pl:1387
+#: old/bin/aa.pl:1509 old/bin/ir.pl:1307 old/bin/is.pl:1388
 msgid "Cannot post payment for a closed period!"
 msgstr "Kan ikke bokføre betaling for en avsluttet periode!"
 
-#: old/bin/aa.pl:1494 old/bin/aa.pl:210 old/bin/gl.pl:226 old/bin/gl.pl:731
+#: old/bin/aa.pl:1495 old/bin/aa.pl:210 old/bin/gl.pl:226 old/bin/gl.pl:731
 msgid "Cannot post transaction for a closed period!"
 msgstr "Kan ikke bokføre Postering for en avsluttet periode!"
 
@@ -1400,7 +1400,7 @@ msgid ""
 "Cannot post transaction with a debit and credit entry for the same account!"
 msgstr "Kan ikke bokføre Postering med debet og kredit på samme konto!"
 
-#: old/bin/aa.pl:1562
+#: old/bin/aa.pl:1563
 msgid "Cannot post transaction!"
 msgstr "Kan ikke bokføre Postering!"
 
@@ -1657,15 +1657,15 @@ msgstr ""
 
 #: UI/src/views/Countries.vue:20
 msgid "Configure countries"
-msgstr ""
+msgstr "Konfigurer land"
 
 #: UI/src/views/Languages.vue:18
 msgid "Configure languages"
-msgstr ""
+msgstr "Konfigurer språk"
 
 #: UI/src/views/Pricegroups.vue:17
 msgid "Configure pricegroups"
-msgstr ""
+msgstr "Konfigurer prisgrupper"
 
 #: UI/src/views/Warehouses.vue:17
 msgid "Configure warehouses"
@@ -1805,9 +1805,9 @@ msgstr "Kunne ikke laste Mal fra DB"
 
 #: UI/src/components/ServerUI.js:134
 msgid "Could not connect to server"
-msgstr ""
+msgstr "Kunne ikke koble til server"
 
-#: old/bin/ir.pl:1270 old/bin/is.pl:1352 old/bin/oe.pl:1299
+#: old/bin/ir.pl:1271 old/bin/is.pl:1353 old/bin/oe.pl:1299
 msgid "Could not save the data.  Please try again"
 msgstr "Kunne ikke lagre data. Prøv igjen."
 
@@ -2033,7 +2033,7 @@ msgstr "Kundenummer"
 msgid "Customer Search"
 msgstr "Kunde søk"
 
-#: old/bin/aa.pl:1477 old/bin/is.pl:1361 old/bin/oe.pl:1234 old/bin/pe.pl:1153
+#: old/bin/aa.pl:1478 old/bin/is.pl:1362 old/bin/oe.pl:1234 old/bin/pe.pl:1153
 msgid "Customer missing!"
 msgstr "Kunde mangler!"
 
@@ -2073,7 +2073,7 @@ msgstr "Data fra kontoutskriften"
 msgid "Data from your ledger"
 msgstr "Data fra hovedbok"
 
-#: lib/LedgerSMB/Scripts/payment.pm:412 old/bin/aa.pl:1467
+#: lib/LedgerSMB/Scripts/payment.pm:412 old/bin/aa.pl:1468
 msgid "Data not saved.  Please try again."
 msgstr "Data ikke lagret. Prøv igjen."
 
@@ -2333,7 +2333,7 @@ msgstr "Standardspråk"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:70
 msgid "Default Paper Size"
-msgstr ""
+msgstr "Standard papirstørrelse"
 
 #: lib/LedgerSMB/Report/Taxform/List.pm:59
 msgid "Default Reportable"
@@ -2382,7 +2382,7 @@ msgstr "Slette Fordelinger"
 
 #: UI/Contact/divs/user.html:41
 msgid "Delete User"
-msgstr ""
+msgstr "Slett bruker"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:210
 msgid "Delete Vouchers"
@@ -2392,16 +2392,16 @@ msgstr "Slette Kuponger"
 #: UI/file/internal-file-list.html:33 UI/reconciliation/report.html:462
 #: UI/src/components/ConfigTableRow.vue:48
 msgid "Deleted"
-msgstr ""
+msgstr "Slettet"
 
 #: UI/src/components/ConfigTableRow.vue:43
 msgid "Deleting"
-msgstr ""
+msgstr "Sletter"
 
 #: UI/accounts/edit.html:105 UI/accounts/edit.html:581
 #: UI/file/internal-file-list.html:32 UI/reconciliation/report.html:461
 msgid "Deleting..."
-msgstr ""
+msgstr "Sletter..."
 
 #: templates/demo/invoice.tex:163 templates/demo/request_quotation.html:110
 msgid "Delivery"
@@ -2652,13 +2652,13 @@ msgstr "Doble leverandørnummer"
 
 #: UI/src/components/ConfigTable.vue:100
 msgid "Download: "
-msgstr ""
+msgstr "Last ned:"
 
 #: sql/Pg-database.sql:705
 msgid "Dr."
 msgstr "Dr."
 
-#: old/bin/aa.pl:1612 old/bin/ir.pl:95
+#: old/bin/aa.pl:1613 old/bin/ir.pl:95
 msgid "Draft Posted"
 msgstr "Kladd Sendt"
 
@@ -2672,7 +2672,7 @@ msgstr "Kladd type"
 
 #: old/bin/aa.pl:153 old/bin/ir.pl:141 old/bin/is.pl:134
 msgid "Draft deleted"
-msgstr ""
+msgstr "Utkast slettet"
 
 #: sql/Pg-database.sql:2640
 msgid "Drafts"
@@ -2707,7 +2707,7 @@ msgstr "Forfall"
 msgid "Due Date"
 msgstr "Forfallsdato"
 
-#: old/bin/aa.pl:1482
+#: old/bin/aa.pl:1483
 msgid "Due Date missing!"
 msgstr "Forfallsdato mangler!"
 
@@ -3049,7 +3049,7 @@ msgstr "Navn på enhet"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:128
 msgid "Entity number"
-msgstr ""
+msgstr "Enhetsnummer"
 
 #: lib/LedgerSMB/Report/GL.pm:122
 msgid "Entry ID"
@@ -3094,7 +3094,7 @@ msgstr "Feil fra Funksjon "
 
 #: UI/src/components/ConfigTable.vue:66
 msgid "Error loading data..."
-msgstr ""
+msgstr "Feil ved lastng av data..."
 
 #: lib/LedgerSMB/Scripts/account.pm:162
 msgid "Error: Cannot include summary account in other dropdown menus"
@@ -3121,7 +3121,7 @@ msgstr "Val"
 msgid "Exchange Rate"
 msgstr "Vekslingskurs"
 
-#: old/bin/aa.pl:1515 old/bin/ir.pl:1314 old/bin/is.pl:1395
+#: old/bin/aa.pl:1516 old/bin/ir.pl:1315 old/bin/is.pl:1396
 msgid "Exchange rate for payment missing!"
 msgstr "Vekslingskurs for betaling mangler!"
 
@@ -3129,13 +3129,13 @@ msgstr "Vekslingskurs for betaling mangler!"
 msgid "Exchange rate hasn't been defined!"
 msgstr "Vekslingskurs er ikke definert!"
 
-#: old/bin/aa.pl:1497 old/bin/ir.pl:1294 old/bin/is.pl:1375 old/bin/oe.pl:1238
+#: old/bin/aa.pl:1498 old/bin/ir.pl:1295 old/bin/is.pl:1376 old/bin/oe.pl:1238
 msgid "Exchange rate missing!"
 msgstr "Vekslingskurs mangler!"
 
 #: UI/email.html:143
 msgid "Expansion"
-msgstr ""
+msgstr "Utvidelse"
 
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:104
 msgid "Expected"
@@ -3172,7 +3172,7 @@ msgstr "Ekstra Brukt"
 
 #: UI/src/views/Home.vue:35
 msgid "FAQ"
-msgstr ""
+msgstr "OSS"
 
 #: UI/budgetting/budget_entry.html:59 UI/journal/journal_entry.html:110
 #: UI/journal/journal_entry.html:155
@@ -3197,11 +3197,11 @@ msgstr ""
 
 #: UI/src/components/ConfigTableRow.vue:57 UI/src/components/ConfigTable.vue:31
 msgid "Failed"
-msgstr ""
+msgstr "Mislykket"
 
 #: UI/src/components/ImportCSV-Base.vue:56
 msgid "Failed to process server response"
-msgstr ""
+msgstr "Mislyktes i å behandle server respons"
 
 #: old/bin/pe.pl:1220
 msgid "Failed to save order!"
@@ -3209,11 +3209,11 @@ msgstr "Kunne ikke lagre Ordre!"
 
 #: UI/src/components/ImportCSV-Base.vue:49
 msgid "Failure processing CSV"
-msgstr ""
+msgstr "Feil ved behandling av CSV"
 
 #: UI/src/components/ImportCSV-Base.vue:42
 msgid "Failure sending CSV"
-msgstr ""
+msgstr "Feil ved sending av CSV"
 
 #: sql/Pg-database.sql:785
 msgid "Fax"
@@ -3466,7 +3466,7 @@ msgstr "Hovedbok Referansenummer"
 
 #: UI/templates/widget.html:29
 msgid "GL transaction"
-msgstr ""
+msgstr "Hovedbokspostering"
 
 #: UI/accounts/edit.html:535
 msgid "Gain"
@@ -3535,7 +3535,7 @@ msgstr "Generisk Jabber"
 
 #: UI/src/components/ConfigTableRow.vue:28
 msgid "Getting latest data"
-msgstr ""
+msgstr "Henter nyeste data"
 
 #: UI/Contact/divs/person.html:84
 msgid "Given Name"
@@ -3589,7 +3589,7 @@ msgstr "Personal"
 
 #: UI/Reports/balance_sheet.html:113 UI/Reports/PNL.html:113
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #: sql/Pg-database.sql:2644
 msgid "HTML Templates"
@@ -3888,7 +3888,7 @@ msgstr "Varebeholdning overført"
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:176
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:268
 #: lib/LedgerSMB/Scripts/payment.pm:932 old/bin/am.pl:977 old/bin/io.pl:1163
-#: old/bin/is.pl:1399 old/bin/is.pl:273 old/bin/printer.pl:48
+#: old/bin/is.pl:1400 old/bin/is.pl:273 old/bin/printer.pl:48
 #: templates/demo/invoice.html:16 templates/demo/invoice.tex:138
 #: templates/demo/printPayment.html:44 UI/templates/widget.html:51
 #: sql/Pg-database.sql:1037 sql/Pg-database.sql:2616 sql/Pg-database.sql:2715
@@ -3910,7 +3910,7 @@ msgstr "Faktura nummer"
 msgid "Invoice Created"
 msgstr "Created"
 
-#: old/bin/aa.pl:1483
+#: old/bin/aa.pl:1484
 msgid "Invoice Created Date missing!"
 msgstr "Faktura Opprettet. Dato mangler!"
 
@@ -3921,13 +3921,13 @@ msgstr "Faktura Opprettet. Dato mangler!"
 msgid "Invoice Date"
 msgstr "Fakturadato"
 
-#: old/bin/aa.pl:1481 old/bin/io.pl:1276 old/bin/ir.pl:1279 old/bin/is.pl:1360
+#: old/bin/aa.pl:1482 old/bin/io.pl:1276 old/bin/ir.pl:1280 old/bin/is.pl:1361
 msgid "Invoice Date missing!"
 msgstr "Fakturadato mangler!"
 
 #: UI/setup/complete.html:61
 msgid "Invoice Lines"
-msgstr ""
+msgstr "Fakturalinjer"
 
 #: templates/demo/receipt.tex:79
 msgid "Invoice No."
@@ -4035,7 +4035,7 @@ msgstr "januar"
 
 #: UI/src/components/ServerUI.js:131
 msgid "JavaScript error: "
-msgstr ""
+msgstr "JavaScript feil:"
 
 #: UI/Contact/divs/employee.html:65
 msgid "Job Title"
@@ -4157,11 +4157,11 @@ msgstr "Hovedbok sum"
 
 #: lib/LedgerSMB/Scripts/setup.pm:231
 msgid "LedgerSMB 1.10 db found."
-msgstr ""
+msgstr "LedgerSMB 1.10 database funnet."
 
 #: lib/LedgerSMB/Scripts/setup.pm:236
 msgid "LedgerSMB 1.11 db found."
-msgstr ""
+msgstr "LedgerSMB 1.11 database funnet."
 
 #: lib/LedgerSMB/Scripts/setup.pm:190
 msgid "LedgerSMB 1.2 db found."
@@ -4205,7 +4205,7 @@ msgstr "LedgerSMB [_1]"
 
 #: UI/setup/consistency_results.html:13
 msgid "LedgerSMB consistency check results"
-msgstr ""
+msgstr "LedgerSMB konsistens-sjekk resultater"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:892
 msgid ""
@@ -4345,12 +4345,12 @@ msgstr "Hente Maler"
 
 #: UI/src/components/ServerUI.js:67
 msgid "Loaded"
-msgstr ""
+msgstr "Lastet"
 
-#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:41
-#: UI/src/components/ServerUI.js:27
+#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:27
+#: UI/src/components/ServerUI.js:41
 msgid "Loading..."
-msgstr ""
+msgstr "Laster..."
 
 #: UI/asset/edit_asset.html:137 UI/asset/search_asset.html:124
 #: UI/payments/payment2.html:36 UI/payments/use_overpayment2.html:32
@@ -4375,7 +4375,7 @@ msgstr "Logget ut på grunn av ikke aktivitet"
 
 #: UI/src/views/LoginPage.vue:96
 msgid "Logging in... Please wait."
-msgstr ""
+msgstr "Logger inn... Vennligst vent."
 
 #: UI/setup/credentials.html:79 UI/src/views/LoginPage.vue:89
 msgid "Login"
@@ -4562,7 +4562,7 @@ msgstr "Modell"
 
 #: UI/src/components/ConfigTableRow.vue:103
 msgid "Modify"
-msgstr ""
+msgstr "Endre"
 
 #: lib/LedgerSMB/Report/Timecards.pm:114
 msgid "Mon"
@@ -4832,7 +4832,7 @@ msgstr ""
 
 #: UI/setup/consistency_results.html:10
 msgid "Note: "
-msgstr ""
+msgstr "Merknad:"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:111
 #: lib/LedgerSMB/Report/Inventory/Search.pm:295
@@ -5048,7 +5048,7 @@ msgstr "Ordrer"
 
 #: UI/setup/complete.html:64
 msgid "Order Lines"
-msgstr ""
+msgstr "Ordrelinjer"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:71 old/bin/aa.pl:780
 #: old/bin/ir.pl:476 old/bin/is.pl:533 old/bin/oe.pl:1883 old/bin/oe.pl:400
@@ -5348,7 +5348,7 @@ msgstr "Betalingstype"
 msgid "Payment batch"
 msgstr "Betalings bunt"
 
-#: old/bin/aa.pl:1505 old/bin/ir.pl:1303 old/bin/is.pl:1384
+#: old/bin/aa.pl:1506 old/bin/ir.pl:1304 old/bin/is.pl:1385
 msgid "Payment date missing!"
 msgstr "Betalingsdato mangler!"
 
@@ -6089,11 +6089,11 @@ msgstr "Avvist"
 
 #: UI/reconciliation/report.html:451
 msgid "Rejected"
-msgstr ""
+msgstr "Avvist"
 
 #: UI/reconciliation/report.html:450
 msgid "Rejecting..."
-msgstr ""
+msgstr "Avviser..."
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:91
 msgid "Rem. Life"
@@ -6105,7 +6105,7 @@ msgstr "Resterende"
 
 #: old/bin/aa.pl:954 old/bin/ir.pl:804 old/bin/is.pl:880
 msgid "Remaining balance"
-msgstr ""
+msgstr "Gjenstående saldo"
 
 #: t/data/04-complex_template.html:559 UI/Contact/divs/bank_act.html:24
 #: UI/Contact/divs/bank_act.html:64
@@ -6235,7 +6235,7 @@ msgstr "Gjenopprette"
 
 #: UI/email.html:6
 msgid "Return"
-msgstr ""
+msgstr "Returner"
 
 #: UI/setup/complete.html:12 UI/setup/complete_migration_revert.html:11
 msgid "Return to setup"
@@ -6283,7 +6283,7 @@ msgstr "Omgjøre Kvitteringer"
 
 #: UI/Reports/filters/gl.html:148
 msgid "Reversed"
-msgstr ""
+msgstr "Reversert"
 
 #: sql/Pg-database.sql:2397
 msgid "Rounded"
@@ -6501,11 +6501,11 @@ msgstr "Lagre de gitte endringene og forsøk å fortsette overføringen."
 #: UI/taxform/add_taxform.html:89 UI/timecards/timecard.html:170
 #: UI/timecards/timecard-week.html:131 UI/src/components/ConfigTableRow.vue:52
 msgid "Saved"
-msgstr ""
+msgstr "Lagret"
 
 #: UI/accounts/edit.html:648
 msgid "Saved Translations"
-msgstr ""
+msgstr "Lagret oversettelser"
 
 #: lib/LedgerSMB/Scripts/business_unit.pm:191
 msgid "Saved id [_1]"
@@ -6513,11 +6513,11 @@ msgstr "Lageret nr [_1]"
 
 #: UI/src/components/ConfigTableRow.vue:50
 msgid "Saving"
-msgstr ""
+msgstr "Lagrer"
 
 #: UI/accounts/edit.html:647
 msgid "Saving Translations..."
-msgstr ""
+msgstr "Lagrer oversettelser..."
 
 #: old/bin/am.pl:787
 msgid "Saving [_1] [_2]"
@@ -6538,7 +6538,7 @@ msgstr "Lagre over et eksisterende dokument. Fortsett?"
 #: UI/taxform/add_taxform.html:88 UI/timecards/timecard.html:169
 #: UI/timecards/timecard-week.html:130
 msgid "Saving..."
-msgstr ""
+msgstr "Lagrer..."
 
 #: old/bin/aa.pl:1100 old/bin/ir.pl:939 old/bin/is.pl:1008 old/bin/oe.pl:698
 #: old/bin/oe.pl:898
@@ -6695,17 +6695,17 @@ msgstr "Velg Maler for å vise"
 msgid "Select Vendor"
 msgstr "Velg leverandør"
 
-#: old/bin/arapprn.pl:310 old/bin/is.pl:1440 old/bin/oe.pl:1341
+#: old/bin/arapprn.pl:310 old/bin/is.pl:1441 old/bin/oe.pl:1341
 msgid "Select a Printer!"
 msgstr "Velg en skriver!"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:730
 msgid "Select and assign the missing AP accounts"
-msgstr ""
+msgstr "Velg og tilordne manglende utgiftskonto"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:711
 msgid "Select and assign the missing AR accounts"
-msgstr ""
+msgstr "Velg og tilordne manglende inntektskonti"
 
 #: UI/taxform/add_taxform.html:58
 msgid "Select by Default:"
@@ -6723,7 +6723,7 @@ msgstr "Velg Fakturaer"
 msgid "Select or Enter User"
 msgstr "Velg eller skriv inn bruker"
 
-#: old/bin/arapprn.pl:308 old/bin/arapprn.pl:86 old/bin/is.pl:1438
+#: old/bin/arapprn.pl:308 old/bin/arapprn.pl:86 old/bin/is.pl:1439
 #: old/bin/oe.pl:1339
 msgid "Select postscript or PDF!"
 msgstr "Velg postscript eller PDF!"
@@ -6839,7 +6839,7 @@ msgstr "Serienummer"
 
 #: UI/src/components/ServerUI.js:136
 msgid "Server returned insecure response"
-msgstr ""
+msgstr "Server returnerte usikret respons"
 
 #: old/bin/io.pl:642
 msgid "Service"
@@ -6985,7 +6985,7 @@ msgstr "Kort"
 
 #: lib/LedgerSMB/Report/Listings/Country.pm:46
 msgid "Short name"
-msgstr ""
+msgstr "Kort navn"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:135
 msgid "Show Credit Limit"
@@ -7166,7 +7166,7 @@ msgstr "Status"
 
 #: UI/journal/journal_entry.html:139
 msgid "Status:"
-msgstr ""
+msgstr "Status:"
 
 #: old/bin/ic.pl:607
 msgid "Stock"
@@ -7797,7 +7797,7 @@ msgstr "Totalt Betalt"
 
 #: old/bin/aa.pl:953 old/bin/ir.pl:798 old/bin/is.pl:874
 msgid "Total paid"
-msgstr ""
+msgstr "Totalt betalt"
 
 #: UI/accounts/edit.html:433
 msgid "Tracking Items"
@@ -7837,7 +7837,7 @@ msgstr "Posterings type"
 
 #: UI/Reports/filters/gl.html:114
 msgid "Transaction status"
-msgstr ""
+msgstr "Transaksjons-status"
 
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:105
 #: UI/setup/confirm_operation.html:133
@@ -8026,7 +8026,7 @@ msgstr "Ukjent"
 
 #: UI/src/components/ServerUI.js:141
 msgid "Unknown (JavaScript) error"
-msgstr ""
+msgstr "Ukjent (JavaScript) feil"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1133
 msgid ""
@@ -8046,7 +8046,7 @@ msgstr "Ukjent database funnet"
 
 #: UI/src/views/LoginPage.machines.js:77
 msgid "Unknown error preventing login"
-msgstr ""
+msgstr "Ukjent feil hindrer innlogging"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:251
 msgid "Unlock"
@@ -8141,7 +8141,7 @@ msgstr ""
 #: UI/Configuration/rate.html:87 UI/file/attachment_screen.html:47
 #: UI/file/internal-file-list.html:78 UI/src/components/ImportCSV-Base.vue:37
 msgid "Uploaded"
-msgstr ""
+msgstr "Lastet opp"
 
 #: lib/LedgerSMB/Report/File/Incoming.pm:59
 #: lib/LedgerSMB/Report/File/Internal.pm:57
@@ -8159,12 +8159,12 @@ msgstr "Opplastede priser"
 
 #: UI/src/components/ImportCSV-Base.vue:31
 msgid "Uploading CSV..."
-msgstr ""
+msgstr "Laster opp CSV..."
 
 #: UI/Configuration/rate.html:86 UI/file/attachment_screen.html:46
 #: UI/file/internal-file-list.html:77
 msgid "Uploading..."
-msgstr ""
+msgstr "Laster opp..."
 
 #: UI/file/attachment_screen.html:23 UI/file/internal-file-list.html:54
 msgid "Url"
@@ -8329,7 +8329,7 @@ msgstr "Leverandørens Referansenummer"
 msgid "Vendor Search"
 msgstr "Leverandør søk"
 
-#: old/bin/aa.pl:1478 old/bin/ir.pl:1280 old/bin/oe.pl:1235
+#: old/bin/aa.pl:1479 old/bin/ir.pl:1281 old/bin/oe.pl:1235
 msgid "Vendor missing!"
 msgstr "Leverandør mangler!"
 
@@ -8437,11 +8437,11 @@ msgstr "Vektenhet"
 
 #: UI/src/views/Home.vue:10
 msgid "Welcome to LedgerSMB"
-msgstr ""
+msgstr "Velkommen til LedgerSMB"
 
 #: UI/src/views/Home.vue:12
 msgid "What is LedgerSMB"
-msgstr ""
+msgstr "Hva er LedgerSMB"
 
 #: old/bin/io.pl:633
 msgid "What type of item is this?"
@@ -8607,7 +8607,7 @@ msgstr ""
 
 #: UI/src/views/Home.vue:60
 msgid "bug"
-msgstr ""
+msgstr "feil"
 
 #: old/bin/io.pl:1664
 msgid "city"
@@ -8683,7 +8683,7 @@ msgstr "i år"
 
 #: UI/src/views/Home.vue:16
 msgid "invoicing"
-msgstr ""
+msgstr "fakturerer"
 
 #: lib/LedgerSMB/Scripts/payment.pm:2022
 msgid "is bigger than the amount available"
@@ -8711,11 +8711,11 @@ msgstr "Etikett"
 
 #: UI/src/views/Home.vue:57 UI/src/views/Home.vue:42
 msgid "mailing lists"
-msgstr ""
+msgstr "e-post lister"
 
 #: UI/src/views/Home.vue:18
 msgid "ordering"
-msgstr ""
+msgstr "bestiller"
 
 #: sql/Pg-database.sql:3549
 msgid "partial disposal"
