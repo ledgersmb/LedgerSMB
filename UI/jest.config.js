@@ -149,7 +149,7 @@ module.exports = {
             testMatch: [ "<rootDir>/tests/specs/**/*.spec.js" ],
             setupFiles: ["<rootDir>/tests/common/jest.polyfills.js"],
             setupFilesAfterEnv: [ "<rootDir>/tests/common/jest-setup.js" ],
-            testEnvironment: "jsdom",
+            testEnvironment: "jest-fixed-jsdom",
             testEnvironmentOptions: {
                 customExportConditions: ["node", "node-addons"]
             },
@@ -225,7 +225,7 @@ module.exports = {
     snapshotSerializers: ["jest-serializer-vue"],
 
     // The test environment that will be used for testing
-    testEnvironment: "jsdom",
+    testEnvironment: "jest-fixed-jsdom",
 
     // Options that will be passed to the testEnvironment
     testEnvironmentOptions: {
