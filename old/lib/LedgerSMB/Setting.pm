@@ -1,6 +1,6 @@
 package LedgerSMB::Setting;
 
-use base qw(LedgerSMB::PGOld Exporter);
+use parent qw(LedgerSMB::PGOld Exporter);
 use strict;
 use warnings;
 

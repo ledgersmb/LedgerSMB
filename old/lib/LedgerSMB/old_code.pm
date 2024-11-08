@@ -34,7 +34,7 @@ use POSIX 'SEEK_SET';
 use Symbol;
 use Feature::Compat::Try;
 
-use base qw(Exporter);
+use parent qw(Exporter);
 our @EXPORT_OK = qw(dispatch);
 
 # make sure the package exists after 'use'-ing this module:

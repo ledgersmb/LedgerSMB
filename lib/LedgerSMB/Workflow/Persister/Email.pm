@@ -63,7 +63,7 @@ The C< content > field will be loaded from the database when it's being accessed
 
 use warnings;
 use strict;
-use base qw( LedgerSMB::Workflow::Persister::ExtraData );
+use parent qw( LedgerSMB::Workflow::Persister::ExtraData );
 
 use JSON::MaybeXS;
 use Log::Any qw($log);

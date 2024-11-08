@@ -31,7 +31,7 @@ C<LedgerSMB::App_State::DBH>.
 
 use warnings;
 use strict;
-use base qw( Workflow::Persister::DBI::ExtraData );
+use parent qw( Workflow::Persister::DBI::ExtraData );
 
 use JSON::MaybeXS;
 use Workflow::Context;

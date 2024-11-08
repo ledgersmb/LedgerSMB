@@ -19,7 +19,7 @@ see the included COPYRIGHT and LICENSE files for more information.
 =cut
 
 package LedgerSMB::DBObject::Payment;
-use base qw(LedgerSMB::PGOld);
+use parent qw(LedgerSMB::PGOld);
 use strict;
 use warnings;
 use LedgerSMB::PGNumber;

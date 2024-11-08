@@ -49,7 +49,7 @@ package LedgerSMB::DBObject::Reconciliation;
 use strict;
 use warnings;
 
-use base qw(LedgerSMB::PGOld);
+use parent qw(LedgerSMB::PGOld);
 use List::Util qw(sum);
 use LedgerSMB::PGNumber;
 

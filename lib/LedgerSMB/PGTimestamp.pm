@@ -16,7 +16,7 @@ The type behaves internally as a Datetime module.
 
 use v5.36.1;
 use warnings;
-use base qw(PGObject::Type::DateTime);
+use parent qw(PGObject::Type::DateTime);
 
 use Carp;
 use DateTime::Format::Strptime qw(strptime);
