@@ -186,13 +186,7 @@ on 'develop' => sub {
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP', '3.33';
     requires 'Test::BDD::Cucumber', '0.86';
-    if ($ENV{CI}) {
-        # Required to suppress a variable re-definition
-        requires 'Test::Dependencies', '0.30';
-    }
-    else {
-        requires 'Test::Dependencies', '0.25';
-    }
+    requires 'Test::Dependencies', '0.34';
     requires 'Test::Pod', '1.00';
     requires 'Test::Pod::Coverage';
     requires 'Test2::Harness';
