@@ -157,7 +157,7 @@ sub list_drafts {
     $request->open_form;
     return $request->render_report(
         LedgerSMB::Report::Unapproved::Drafts->new(
-            $request->%{ qw( reference type ) },
+            $request->%{ qw( reference type language _locale ) },
             formatter_options => $request->formatter_options,
             from_date => $request->parse_date( $request->{from_date} ),
             to_date => $request->parse_date( $request->{to_date} ),
