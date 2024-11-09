@@ -709,6 +709,15 @@ sub process_transactions {
                     }
                     $form->info( " ..... " . $locale->text('done') );
 
+                    # posting the transaction above changed the workflow
+                    # as stored on disk; update the workflow stored in
+                    # memory. Also, we can't use the "post_and_approve"
+                    # action because that's only available when
+                    # "separate_duties" *isn't* enabled, so execute 2 actions
+                    # which are guaranteed to exist, separately
+                    $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+                        'AR/AP',
+                        $form->{workflow_id} );
                     # Make sure the transaction isn't posted as a draft
                     $wf->execute_action( 'post' )
                         if $wf->state eq 'INITIAL';
@@ -852,6 +861,16 @@ sub process_transactions {
                       )
                 );
                 $ok = GL->post_transaction( \%myconfig, \%$form, $locale );
+
+                # posting the transaction above changed the workflow
+                # as stored on disk; update the workflow stored in
+                # memory. Also, we can't use the "post_and_approve"
+                # action because that's only available when
+                # "separate_duties" *isn't* enabled, so execute 2 actions
+                # which are guaranteed to exist, separately
+                $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+                    'GL',
+                    $form->{workflow_id} );
                 # Make sure the transaction isn't posted as a draft
                 $wf->execute_action( 'post' )
                     if $wf->state eq 'INITIAL';
