@@ -86,9 +86,10 @@ sub authenticate {
         return $r;
     }
 
+    my $token = $request->{_req}->env->{'lsmb.session'}->{token};
     return [ HTTP_OK,
              [ 'Content-Type' => 'application/json' ],
-             [ '{ "target":  "erp.pl?__action=root" }' ]];
+             [ qq|{ "target":  "$token/erp.pl?__action=root" }| ]];
 }
 
 

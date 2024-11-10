@@ -43,7 +43,7 @@ use LedgerSMB::Routes::ERP::API::Templates;
 use LedgerSMB::Setting;
 
 use CGI::Emulate::PSGI;
-use HTTP::Status qw( HTTP_FOUND );
+use HTTP::Status qw( HTTP_FOUND HTTP_NOT_FOUND );
 use List::Util qw{  none };
 use Log::Any;
 use Log::Log4perl;
@@ -55,9 +55,9 @@ use Feature::Compat::Try;
 use Plack;
 use Plack::Builder;
 use Plack::Request::WithEncoding;
-use Plack::App::File;
 use Plack::Middleware::ConditionalGET;
 use Plack::Middleware::ReverseProxy;
+use Plack::Middleware::Static;
 use Plack::Builder::Conditionals;
 use Plack::Util;
 
@@ -154,7 +154,7 @@ sub psgi_app {
     return sub {
         my $env = shift;
         my $psgi_req = Plack::Request::WithEncoding->new($env);
-        my $request = LedgerSMB->new($psgi_req, $wire);
+        my $request  = LedgerSMB->new($psgi_req, $wire);
 
         $request->{__action} = $env->{'lsmb.action_name'};
         my $res;
@@ -224,14 +224,127 @@ sub _hook_psgi_logger {
     return;
 }
 
+sub _oldscript_mount {
+    my ($script, $cookie, $secret, $wire) = @_;
+    builder {
+        enable '+LedgerSMB::Middleware::RequestID';
+        enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
+        enable '+LedgerSMB::Middleware::SessionStorage',
+            domain          => 'main',
+            cookie          => $cookie,
+            duration        => 60*60*24*90,
+            secret          => $secret,
+            # can marshall state in, but not back out (due to forking)
+            # so have the inner scope handle serialization itself
+            inner_serialize => 1;
+        enable '+LedgerSMB::Middleware::Log4perl',
+            script          => $script;
+        enable '+LedgerSMB::Middleware::Authenticate::Company',
+            provide_connection => 'closed',
+            factory            => $wire->get( 'db' );
+        enable '+LedgerSMB::Middleware::MainAppConnect',
+            provide_connection => 'closed',
+            require_version    => $LedgerSMB::VERSION;
+        old_app($script, $wire)
+    }
+}
+
+sub _psgiscript_mount {
+    my ($script, $cookie, $secret, $wire, $app, $open_connection) = @_;
+
+    builder {
+        enable '+LedgerSMB::Middleware::RequestID';
+        enable 'AccessLog',
+            format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
+        enable '+LedgerSMB::Middleware::SessionStorage',
+            domain   => 'main',
+            cookie   => $cookie,
+            secret   => $secret,
+            duration => 60*60*24*90;
+        enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
+            max_post_size => $wire->get( 'miscellaneous/max_upload_size' ),
+            script   => $script;
+        enable '+LedgerSMB::Middleware::Log4perl',
+            script   => $script;
+        enable '+LedgerSMB::Middleware::Authenticate::Company',
+            provide_connection => $open_connection ? 'open' : 'none',
+            factory         => $wire->get( 'db' );
+        enable '+LedgerSMB::Middleware::MainAppConnect',
+            provide_connection => $open_connection ? 'open' : 'none',
+            require_version => $LedgerSMB::VERSION;
+        enable '+LedgerSMB::Middleware::DisableBackButton';
+        $app;
+    }
+}
+
+sub _api_mount {
+    my ($cookie, $secret, $wire) = @_;
+    builder {
+        enable '+LedgerSMB::Middleware::RequestID';
+        enable 'AccessLog',
+            format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
+        enable '+LedgerSMB::Middleware::SessionStorage',
+            domain      => 'main',
+            cookie      => $cookie,
+            cookie_path => '/',
+            secret      => $secret,
+            duration    => 60*60*24*90;
+        enable '+LedgerSMB::Middleware::Authenticate::Company',
+            provide_connection => 'open',
+            factory         => $wire->get( 'db' );
+        enable '+LedgerSMB::Middleware::MainAppConnect',
+            provide_connection => 'open',
+            require_version => $LedgerSMB::VERSION;
+
+        my $router = router 'erp/api';
+        $router->hooks('before' => \&_hook_psgi_logger);
+        $router->hooks(
+            'before' => sub {
+                my ($env) = @_;
+
+                $env->{wire} = $wire;
+                return;
+            });
+        sub { return $router->dispatch(@_); };
+    }
+}
+
+sub _session_url_space {
+    my ($wire, $cookie, $secret) = @_;
+    my $psgi_app    = psgi_app($wire);
+
+    builder {
+        enable 'Plack::Middleware::Static',
+            root => $wire->get( 'paths/UI' ),
+            path => sub { 1 },
+            pass_through => 'yes';
+
+        mount "/$_.pl" => _oldscript_mount($_, $cookie, $secret, $wire)
+            for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
+
+        mount "/$_" => _psgiscript_mount($_, $cookie, $secret,
+                                         $wire, $psgi_app, 1)
+            for  (grep { $_ !~ m/^(log(in|out)|setup)[.]pl$/ }
+                  (SCRIPT_NEWSCRIPTS)->@*);
+
+        mount '/logout.pl' => _psgiscript_mount('logout.pl', $cookie, $secret,
+                                                $wire, $psgi_app, 0);
+
+        # not using LedgerSMB::Magic::SCRIPT_OLDSCRIPTS:
+        #   it has more than only entry-points
+        mount '/erp/api/v0' => _api_mount($cookie, $secret, $wire);
+    }
+}
+
 sub setup_url_space {
     my %args        = @_;
     my $wire        = $args{wire};
-    my $psgi_app    = psgi_app($wire);
 
     my $cookie      = $wire->get( 'cookie' )->{name} // 'LedgerSMB';
     my $secret      = $wire->get( 'cookie' )->{secret} //
         String::Random->new->randpattern('.' x 50);
+    my $psgi_app    = psgi_app($wire);
+    my $sess_app    = _session_url_space($wire, $cookie, $secret);
 
     return builder {
         if (my $proxy_ip = eval { $wire->get( 'miscellaneous/proxy_ip' ); }) {
@@ -239,59 +352,12 @@ sub setup_url_space {
         }
         enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
             'ConditionalGET';
+        enable 'Plack::Middleware::Static',
+            root => $wire->get( 'paths/UI' ),
+            path => sub { 1 },
+            pass_through => 'yes';
 
-        # not using LedgerSMB::Magic::SCRIPT_OLDSCRIPTS:
-        #   it has more than only entry-points
-        mount "/$_.pl" => builder {
-            my $script = $_;
-            enable '+LedgerSMB::Middleware::RequestID';
-            enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
-            enable '+LedgerSMB::Middleware::SessionStorage',
-                domain          => 'main',
-                cookie          => $cookie,
-                duration        => 60*60*24*90,
-                secret          => $secret,
-                # can marshall state in, but not back out (due to forking)
-                # so have the inner scope handle serialization itself
-                inner_serialize => 1;
-            enable '+LedgerSMB::Middleware::Log4perl',
-                script          => $script;
-            enable '+LedgerSMB::Middleware::Authenticate::Company',
-                provide_connection => 'closed',
-                factory            => $wire->get( 'db' );
-            enable '+LedgerSMB::Middleware::MainAppConnect',
-                provide_connection => 'closed',
-                require_version    => $LedgerSMB::VERSION;
-            old_app($script, $wire)
-        }
-        for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
-
-        mount "/$_" => builder {
-            my $script = $_;
-            enable '+LedgerSMB::Middleware::RequestID';
-            enable 'AccessLog',
-                format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
-            enable '+LedgerSMB::Middleware::SessionStorage',
-                domain   => 'main',
-                cookie   => $cookie,
-                secret   => $secret,
-                duration => 60*60*24*90;
-            enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
-                max_post_size => $wire->get( 'miscellaneous/max_upload_size' ),
-                script   => $script;
-            enable '+LedgerSMB::Middleware::Log4perl',
-                script   => $script;
-            enable '+LedgerSMB::Middleware::Authenticate::Company',
-                provide_connection => 'open',
-                factory         => $wire->get( 'db' );
-            enable '+LedgerSMB::Middleware::MainAppConnect',
-                provide_connection => 'open',
-                require_version => $LedgerSMB::VERSION;
-            enable '+LedgerSMB::Middleware::DisableBackButton';
-            $psgi_app;
-        }
-        for  (grep { $_ !~ m/^(log(in|out)|setup)[.]pl$/ }
-              (SCRIPT_NEWSCRIPTS)->@*);
+        mount '/erp/api/v0' => _api_mount($cookie, $secret, $wire);
 
         mount '/login.pl' => builder {
             enable '+LedgerSMB::Middleware::RequestID';
@@ -318,59 +384,6 @@ sub setup_url_space {
             $psgi_app;
         };
 
-        mount '/logout.pl' => builder {
-            enable '+LedgerSMB::Middleware::RequestID';
-            enable 'AccessLog',
-                format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
-            enable '+LedgerSMB::Middleware::SessionStorage',
-                domain   => 'main',
-                cookie   => $cookie,
-                secret   => $secret,
-                duration => 60*60*24*90;
-            enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
-                max_post_size => $wire->get( 'miscellaneous/max_upload_size' ),
-                script   => 'logout.pl';
-            enable '+LedgerSMB::Middleware::Log4perl',
-                script   => 'login.pl';
-            enable '+LedgerSMB::Middleware::Authenticate::Company',
-                provide_connection => 'none',
-                factory         => $wire->get( 'db' );
-            enable '+LedgerSMB::Middleware::MainAppConnect',
-                provide_connection => 'none',
-                require_version => $LedgerSMB::VERSION;
-            enable '+LedgerSMB::Middleware::DisableBackButton';
-            $psgi_app;
-        };
-
-        mount '/erp/api/v0' => builder {
-            enable '+LedgerSMB::Middleware::RequestID';
-            enable 'AccessLog',
-                format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
-            enable '+LedgerSMB::Middleware::SessionStorage',
-                domain      => 'main',
-                cookie      => $cookie,
-                cookie_path => '/',
-                secret      => $secret,
-                duration    => 60*60*24*90;
-            enable '+LedgerSMB::Middleware::Authenticate::Company',
-                provide_connection => 'open',
-                factory         => $wire->get( 'db' );
-            enable '+LedgerSMB::Middleware::MainAppConnect',
-                provide_connection => 'open',
-                require_version => $LedgerSMB::VERSION;
-
-            my $router = router 'erp/api';
-            $router->hooks('before' => \&_hook_psgi_logger);
-            $router->hooks(
-                'before' => sub {
-                    my ($env) = @_;
-
-                    $env->{wire} = $wire;
-                    return;
-                });
-            sub { return $router->dispatch(@_); };
-        };
-
         mount '/setup.pl' => builder {
             enable '+LedgerSMB::Middleware::RequestID';
             enable 'AccessLog',
@@ -391,24 +404,24 @@ sub setup_url_space {
             $psgi_app;
         };
 
-        enable sub {
-            my $app = shift;
+        mount '/' => sub {
+            my $env = shift;
 
-            return sub {
-                my $env = shift;
+            return [ HTTP_FOUND,
+                     [ Location => 'login.pl' ],
+                     [ '' ] ]
+                if $env->{PATH_INFO} eq '/';
 
-                return [ HTTP_FOUND,
-                         [ Location => 'login.pl' ],
-                         [ '' ] ]
-                             if $env->{PATH_INFO} eq '/';
+            return [ HTTP_NOT_FOUND,
+                     [ 'Content-Type' => 'text/plain' ],
+                     [ 'not found' ] ]
+                unless $env->{PATH_INFO} =~ m|^(/[0-9a-zA-Z]+)/|;
 
-                return $app->($env);
-            }
+            $env->{SCRIPT_NAME} .= $1;
+            $env->{PATH_INFO} = substr($env->{PATH_INFO}, length($1));
+            return $sess_app->($env);
         };
-
-        mount '/' => Plack::App::File->new( root => $wire->get('paths/UI') )->to_app;
     };
-
 }
 
 

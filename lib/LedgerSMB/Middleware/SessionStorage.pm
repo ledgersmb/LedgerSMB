@@ -68,15 +68,17 @@ sub call {
     $session->{csrf_token} //= String::Random->new->randpattern('.' x 23);
 
     my $secure = defined($env->{HTTPS}) && $env->{HTTPS} eq 'ON';
-    my $path =
-        $self->cookie_path //
-        LedgerSMB::PSGI::Util::cookie_path($env->{SCRIPT_NAME});
     $env->{'lsmb.session'} = $session;
     return Plack::Util::response_cb(
         $self->app->($env), sub {
             my $res = shift;
 
             if (! $self->inner_serialize) {
+                my $token = $env->{'lsmb.session'}->{token}  ?
+                    $env->{'lsmb.session'}->{token} . '/' : '';
+                my $path  = $self->cookie_path
+                    ? ($self->cookie_path . $token)
+                    : LedgerSMB::PSGI::Util::cookie_path($env->{SCRIPT_NAME});
                 my $_cookie_attributes = {
                     value    => $self->store->encode(
                         $env->{'lsmb.session'},
