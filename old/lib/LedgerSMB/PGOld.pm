@@ -20,7 +20,7 @@ package LedgerSMB::PGOld;
 use strict;
 use warnings;
 
-use base 'PGObject::Simple';
+use parent 'PGObject::Simple';
 
 =head1 METHODS
 

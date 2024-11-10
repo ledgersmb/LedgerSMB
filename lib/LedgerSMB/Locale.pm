@@ -97,7 +97,7 @@ $myconfig->{dateformat}.
 use strict;
 use warnings;
 
-use base qw( Locale::Maketext Exporter );
+use parent qw( Locale::Maketext Exporter );
 our @EXPORT_OK = qw(marktext);
 
 use Locale::Maketext::Lexicon;

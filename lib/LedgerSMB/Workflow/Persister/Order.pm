@@ -26,7 +26,7 @@ the same configuration semantics.
 
 use warnings;
 use strict;
-use base qw( LedgerSMB::Workflow::Persister );
+use parent qw( LedgerSMB::Workflow::Persister );
 
 use Workflow::Exception qw( persist_error );
 use English;

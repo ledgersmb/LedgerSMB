@@ -17,7 +17,7 @@ Math::BigFloat and can be used in this way.
 
 use v5.36.1;
 use warnings;
-use base qw(PGObject::Type::BigFloat);
+use parent qw(PGObject::Type::BigFloat);
 
 # try using the GMP library for Math::BigFloat for speed
 use Carp;

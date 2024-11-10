@@ -26,7 +26,7 @@ the same configuration semantics.
 
 use warnings;
 use strict;
-use base qw( Workflow::Persister::DBI );
+use parent qw( Workflow::Persister::DBI );
 
 use JSON::MaybeXS;
 use Workflow::Context;

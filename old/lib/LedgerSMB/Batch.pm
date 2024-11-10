@@ -46,7 +46,7 @@ use strict;
 use warnings;
 
 use LedgerSMB::Setting;
-use base qw(LedgerSMB::PGOld);
+use parent qw(LedgerSMB::PGOld);
 
 use Log::Any qw($log);
 
