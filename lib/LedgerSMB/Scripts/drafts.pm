@@ -21,6 +21,7 @@ which have not been approved yet.
 use strict;
 use warnings;
 
+use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Unapproved::Drafts;
 
 our $VERSION = '0.1';
@@ -41,8 +42,6 @@ amount_ge: total greater than or equal to
 =cut
 
 sub search {
-    use LedgerSMB::Scripts::reports;
-
     my $request = shift @_;
     $request->{search_type} = 'drafts';
     $request->{report_name} = 'unapproved';
