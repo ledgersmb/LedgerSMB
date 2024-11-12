@@ -322,6 +322,7 @@ executors:
       UIPASSWORD: Tester
       UITESTS: '*'
       YATH_DEVEL_COVER_OPTIONS: ''
+      TEST2_UUID_NO_WARN: 'yes'
 
 # Define jobs
 jobs:
