@@ -19,6 +19,7 @@ use strict;
 use warnings;
 
 use HTTP::Status qw( HTTP_OK );
+use Digest::MD5 qw( md5_hex );
 use JSON::MaybeXS;
 
 use LedgerSMB::PSGI::Util;
@@ -86,10 +87,12 @@ sub authenticate {
         return $r;
     }
 
-    my $token = $request->{_req}->env->{'lsmb.session'}->{token};
+    $request->{_req}->env->{'lsmb.session'}->{company_path} =
+        md5_hex( $r->{company} );
+    my $token = $request->{_req}->env->{'lsmb.session'}->{company_path};
     return [ HTTP_OK,
              [ 'Content-Type' => 'application/json' ],
-             [ qq|{ "target":  "$token/erp.pl?__action=root" }| ]];
+             [ qq|{ "target":  "$token/erp.pl" }| ]];
 }
 
 

@@ -74,8 +74,8 @@ sub call {
             my $res = shift;
 
             if (! $self->inner_serialize) {
-                my $token = $env->{'lsmb.session'}->{token}  ?
-                    $env->{'lsmb.session'}->{token} . '/' : '';
+                my $token = $env->{'lsmb.session'}->{company_path}  ?
+                    $env->{'lsmb.session'}->{company_path} . '/' : '';
                 my $path  = $self->cookie_path
                     ? ($self->cookie_path . $token)
                     : LedgerSMB::PSGI::Util::cookie_path($env->{SCRIPT_NAME});

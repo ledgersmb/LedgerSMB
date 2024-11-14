@@ -19,13 +19,13 @@ use strict;
 use warnings;
 
 
-=item root
+=item __default
 
 Displays the root document.
 
 =cut
 
-sub root {
+sub __default {
     my ($request) = @_;
 
     $request->{title} = "LedgerSMB $request->{version} -- ".
