@@ -300,7 +300,8 @@ sub setup_url_space {
                 domain   => 'main',
                 cookie   => $cookie,
                 secret   => $secret,
-                duration => 60*60*24*90;
+                duration => 60*60*24*90,
+                force_create => 'yes';
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
                 max_post_size => $wire->get( 'miscellaneous/max_upload_size' ),
                 script   => 'login.pl';
