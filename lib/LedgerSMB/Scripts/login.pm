@@ -3,11 +3,11 @@ package LedgerSMB::Scripts::login;
 
 =head1 NAME
 
-LedgerSMB:Scripts::login - web entry points for session creation/termination
+LedgerSMB:Scripts::login - web entry points for session creation
 
 =head1 DESCRIPTION
 
-This script contains the request handlers for logging in and out of LedgerSMB.
+This script contains the request handlers for logging in of LedgerSMB.
 
 =head1 METHODS
 
@@ -89,23 +89,6 @@ sub authenticate {
     return [ HTTP_OK,
              [ 'Content-Type' => 'application/json' ],
              [ '{ "target":  "erp.pl?__action=root" }' ]];
-}
-
-=item logout
-
-Logs the user out.  Handling of HTTP browser credentials is browser-specific.
-
-Firefox, Opera, and Internet Explorer are all supported.  Not sure about Chrome
-
-=cut
-
-sub logout {
-    my ($request) = @_;
-    $request->{callback}   = '';
-
-    $request->{_logout}->();
-    my $template = $request->{_wire}->get('ui');
-    return $template->render($request, 'logout', $request);
 }
 
 

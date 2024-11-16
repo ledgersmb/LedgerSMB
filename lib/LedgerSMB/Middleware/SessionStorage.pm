@@ -31,7 +31,7 @@ use Cookie::Baker;
 use Plack::Request;
 use Plack::Util;
 use Plack::Util::Accessor
-    qw( cookie cookie_path domain duration inner_serialize secret store );
+    qw( cookie cookie_path domain duration inner_serialize secret store force_create );
 use Session::Storage::Secure;
 use String::Random;
 
@@ -64,7 +64,7 @@ sub call {
     my $req = Plack::Request->new($env);
 
     my $cookie             = $req->cookies->{$self->cookie};
-    my $session            = $self->store->decode($cookie);
+    my $session            = (not $self->force_create) ? $self->store->decode($cookie) : undef;
     $session->{csrf_token} //= String::Random->new->randpattern('.' x 23);
 
     my $secure = defined($env->{HTTPS}) && $env->{HTTPS} eq 'ON';
