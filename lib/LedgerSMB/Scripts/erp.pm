@@ -35,23 +35,6 @@ sub root {
     return $template->render($request, 'main', $request);
 }
 
-=item logout
-
-Logs the user out.  Handling of HTTP browser credentials is browser-specific.
-
-Firefox, Opera, and Internet Explorer are all supported.  Not sure about Chrome
-
-=cut
-
-sub logout {
-    my ($request) = @_;
-    $request->{callback}   = '';
-
-    $request->{_logout}->();
-    my $template = $request->{_wire}->get('ui');
-    return $template->render($request, 'logout', $request);
-}
-
 =back
 
 =head1 LICENSE AND COPYRIGHT

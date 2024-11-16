@@ -3,11 +3,11 @@ package LedgerSMB::Scripts::login;
 
 =head1 NAME
 
-LedgerSMB:Scripts::login - web entry points for session creation/termination
+LedgerSMB:Scripts::login - web entry points for session creation
 
 =head1 DESCRIPTION
 
-This script contains the request handlers for logging in and out of LedgerSMB.
+This script contains the request handlers for logging in of LedgerSMB.
 
 =head1 METHODS
 

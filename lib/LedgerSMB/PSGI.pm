@@ -290,7 +290,8 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::DisableBackButton';
             $psgi_app;
         }
-        for  (grep { $_ !~ m/^(login|setup)[.]pl$/ } (SCRIPT_NEWSCRIPTS)->@*);
+        for  (grep { $_ !~ m/^(log(in|out)|setup)[.]pl$/ }
+              (SCRIPT_NEWSCRIPTS)->@*);
 
         mount '/login.pl' => builder {
             enable '+LedgerSMB::Middleware::RequestID';
@@ -305,6 +306,30 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
                 max_post_size => $wire->get( 'miscellaneous/max_upload_size' ),
                 script   => 'login.pl';
+            enable '+LedgerSMB::Middleware::Log4perl',
+                script   => 'login.pl';
+            enable '+LedgerSMB::Middleware::Authenticate::Company',
+                provide_connection => 'none',
+                factory         => $wire->get( 'db' );
+            enable '+LedgerSMB::Middleware::MainAppConnect',
+                provide_connection => 'none',
+                require_version => $LedgerSMB::VERSION;
+            enable '+LedgerSMB::Middleware::DisableBackButton';
+            $psgi_app;
+        };
+
+        mount '/logout.pl' => builder {
+            enable '+LedgerSMB::Middleware::RequestID';
+            enable 'AccessLog',
+                format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
+            enable '+LedgerSMB::Middleware::SessionStorage',
+                domain   => 'main',
+                cookie   => $cookie,
+                secret   => $secret,
+                duration => 60*60*24*90;
+            enable '+LedgerSMB::Middleware::DynamicLoadWorkflow',
+                max_post_size => $wire->get( 'miscellaneous/max_upload_size' ),
+                script   => 'logout.pl';
             enable '+LedgerSMB::Middleware::Log4perl',
                 script   => 'login.pl';
             enable '+LedgerSMB::Middleware::Authenticate::Company',
