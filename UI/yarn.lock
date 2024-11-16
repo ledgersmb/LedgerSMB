@@ -8566,10 +8566,10 @@ rimraf@^2.6.3:
   dependencies:
     glob "^7.1.3"
 
-robot3@0.4.1:
-  version "0.4.1"
-  resolved "https://registry.npmjs.org/robot3/-/robot3-0.4.1.tgz"
-  integrity sha512-hzjy826lrxzx8eRgv80idkf8ua1JAepRc9Efdtj03N3KNJuznQCPlyCJ7gnUmDFwZCLQjxy567mQVKmdv2BsXQ==
+robot3@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/robot3/-/robot3-1.0.0.tgz#609a57eb1400cdb9f8d19f1e9e7dee57638d584d"
+  integrity sha512-5PZ3Ywc9wmUX+G9MJfsWA3aYcL768FZMB5XOqho4gPXTGV5g7u3lqangJEia3uPR2aflyybknXKKjVRXJoI1rA==
 
 rrweb-cssom@^0.7.1:
   version "0.7.1"
