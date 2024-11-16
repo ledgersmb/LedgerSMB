@@ -18,9 +18,10 @@ This script contains the request handlers for logging in of LedgerSMB.
 use strict;
 use warnings;
 
-use HTTP::Status qw( HTTP_OK );
 use Digest::MD5 qw( md5_hex );
+use HTTP::Status qw( HTTP_OK );
 use JSON::MaybeXS;
+use URI::Escape;
 
 use LedgerSMB::PSGI::Util;
 
@@ -90,9 +91,10 @@ sub authenticate {
     $request->{_req}->env->{'lsmb.session'}->{company_path} =
         md5_hex( $r->{company} );
     my $token = $request->{_req}->env->{'lsmb.session'}->{company_path};
+    my $user  = uri_escape( $r->{login} );
     return [ HTTP_OK,
              [ 'Content-Type' => 'application/json' ],
-             [ qq|{ "target":  "$token/erp.pl" }| ]];
+             [ qq|{ "target":  "$token/erp.pl?user=$user" }| ]];
 }
 
 
