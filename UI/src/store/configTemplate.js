@@ -90,7 +90,7 @@ export const configStoreTemplate = {
             return this.items[index];
         },
         getById(id) {
-            if (id === "") {
+            if (typeof id === "undefined") {
                 const rv = {};
                 this.fields.forEach((f) => {
                     rv[f] = undefined;
