@@ -43,10 +43,6 @@ use LedgerSMB::PSGI::Util;
 
 Implements C<Plack::Component->prepare_app()>.
 
-=head2 $self->call($env)
-
-Implements C<Plack::Middleware->call()>.
-
 =cut
 
 sub prepare_app {
@@ -56,6 +52,29 @@ sub prepare_app {
         default_duration => 24*60*60*90, # 90 days
         );
     $self->store( $store );
+}
+
+=head2 $self->call($env)
+
+Implements C<Plack::Middleware->call()>.
+
+=cut
+
+sub _prefix_path {
+    my ($self, $env) = @_;
+    my $token = $env->{'lsmb.session'}->{company_path}  ?
+        $env->{'lsmb.session'}->{company_path} . '/' : '';
+
+    if ($self->cookie_path) {
+        return $self->cookie_path . $token;
+    }
+    else {
+        my $path  = ($env->{SCRIPT_NAME} =~ s|[^/]*$||r);
+        $path .= $token
+            if $path !~ m/$token/;
+
+        return $path;
+    }
 }
 
 sub call {
@@ -74,11 +93,7 @@ sub call {
             my $res = shift;
 
             if (! $self->inner_serialize) {
-                my $token = $env->{'lsmb.session'}->{company_path}  ?
-                    $env->{'lsmb.session'}->{company_path} . '/' : '';
-                my $path  = $self->cookie_path
-                    ? ($self->cookie_path . $token)
-                    : LedgerSMB::PSGI::Util::cookie_path($env->{SCRIPT_NAME});
+                my $path = $self->_prefix_path( $env );
                 my $_cookie_attributes = {
                     value    => $self->store->encode(
                         $env->{'lsmb.session'},

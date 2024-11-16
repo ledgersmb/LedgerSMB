@@ -31,7 +31,7 @@ use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED HTTP_INTERNAL_SERVER_ERROR
 use parent 'Exporter';
 our @EXPORT_OK = qw(
     internal_server_error unauthorized session_timed_out
-    incompatible_database cookie_path template_response
+    incompatible_database template_response
     );
 
 =head1 METHODS
@@ -112,20 +112,6 @@ sub incompatible_database {
           [ 'Database is not the expected version.  ' .
             "Was $actual, expected $expected.  " .
             'Please re-run <a href="setup.pl">setup.pl</a> to correct.' ] ];
-}
-
-
-=head2 cookie_path($script)
-
-Returns the C<path=> parameter to be used with the C<Set-Cookie>
-(authorization) header.
-
-=cut
-
-sub cookie_path {
-    my $script = shift;
-
-    return ($script =~ s|[^/]*$||r);
 }
 
 
