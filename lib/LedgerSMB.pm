@@ -264,7 +264,6 @@ use Log::Any;
 use PGObject;
 use Plack;
 use URI;
-use URI::Escape;
 
 use LedgerSMB::Locale;
 use LedgerSMB::PGDate;
