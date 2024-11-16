@@ -11,7 +11,7 @@ export const useSessionUserStore = defineStore("sessionUser", {
     },
     actions: {
         async initialize() {
-            const response = await fetch("/erp/api/v0/session", {
+            const response = await fetch("./erp/api/v0/session", {
                 method: "GET"
             });
 

@@ -15,7 +15,7 @@ export const configStoreTemplate = {
     },
     actions: {
         async initialize() {
-            const response = await fetch(`/erp/api/v0/${this.url}`, {
+            const response = await fetch(`./erp/api/v0/${this.url}`, {
                 method: "GET"
             });
 
@@ -28,7 +28,7 @@ export const configStoreTemplate = {
             }
         },
         async add(adding) {
-            const response = await fetch(`/erp/api/v0/${this.url}`, {
+            const response = await fetch(`./erp/api/v0/${this.url}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -48,7 +48,7 @@ export const configStoreTemplate = {
         },
         async del(id) {
             const warehouse = this.getById(id);
-            const response = await fetch(`/erp/api/v0/${this.url}/${id}`, {
+            const response = await fetch(`./erp/api/v0/${this.url}/${id}`, {
                 method: "DELETE",
                 headers: {
                     "If-Match": warehouse._meta.ETag
@@ -71,7 +71,7 @@ export const configStoreTemplate = {
             }
             const warehouse = this.items[index];
             if (!warehouse || !warehouse._meta || warehouse._meta.invalidated) {
-                const response = await fetch(`/erp/api/v0/${this.url}/${id}`, {
+                const response = await fetch(`./erp/api/v0/${this.url}/${id}`, {
                     method: "GET"
                 });
 
@@ -101,7 +101,7 @@ export const configStoreTemplate = {
         },
         async save(id, data) {
             const warehouse = this.getById(id);
-            const response = await fetch(`/erp/api/v0/${this.url}/${id}`, {
+            const response = await fetch(`./erp/api/v0/${this.url}/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

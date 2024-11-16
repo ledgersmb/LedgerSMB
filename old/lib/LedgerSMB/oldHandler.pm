@@ -128,7 +128,6 @@ sub handle {
 
         $form->{session_id} = $psgi_env->{'lsmb.session'}->{session_id};
         $form->db_init( $psgi_env->{'lsmb.app'},  \%myconfig );
-        my $path = LedgerSMB::PSGI::Util::cookie_path($ENV{SCRIPT_NAME});
 
         # we get rid of myconfig and use User as a real object
         %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
