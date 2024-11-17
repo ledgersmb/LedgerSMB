@@ -94,7 +94,6 @@ function u(relURL) {
                 </tbody>
                 <tfoot v-if="hasCreate">
                     <ConfigTableRow
-                        id=""
                         :defaultSelectable="props.defaultSelectable"
                         :columns="props.columns"
                         :editingId="editingId"
