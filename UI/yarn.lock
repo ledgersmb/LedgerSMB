@@ -8789,10 +8789,10 @@ rimraf@^3.0.2:
   dependencies:
     glob "^7.1.3"
 
-robot3@0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/robot3/-/robot3-0.4.1.tgz#b179edee27a1d7b6a99d03c494906c609fe28fca"
-  integrity sha512-hzjy826lrxzx8eRgv80idkf8ua1JAepRc9Efdtj03N3KNJuznQCPlyCJ7gnUmDFwZCLQjxy567mQVKmdv2BsXQ==
+robot3@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/robot3/-/robot3-1.0.1.tgz#36920e388ea572e89ef07995e1c2a3b5659c4254"
+  integrity sha512-jSuklmODv4cd8wR3M+Tnt+3ER7Z0BFbh2L06B3PgeVEwFu96PJoFU7KVYwOugAymG4N3Jzst/ZJUn9lkDZ1aIQ==
 
 rrweb-cssom@^0.7.1:
   version "0.7.1"
