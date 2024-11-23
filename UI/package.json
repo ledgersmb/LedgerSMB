@@ -43,7 +43,7 @@
     "content-disposition": "0.5.4",
     "dijit": "1.17.3",
     "dojo": "1.17.3",
-    "robot3": "0.4.1",
+    "robot3": "1.0.1",
     "vue-i18n": "10.0.4"
   },
   "devDependencies": {
