@@ -1,12 +1,6 @@
 /* @format */
 /* global globalThis */
 
-const { performance } = require("node:perf_hooks");
-
-Object.defineProperties(globalThis, {
-    performance: { value: performance }
-});
-
 const { Blob } = require("node:buffer");
 const { fetch, Headers, FormData, Request, Response } = require("undici");
 
