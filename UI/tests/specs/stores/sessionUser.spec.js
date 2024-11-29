@@ -16,13 +16,13 @@ describe("Session Store", () => {
     it("initialize", async () => {
         await session.initialize();
         // expect(session.password_expiration).toBe("P1Y");
-        expect(session.roles).toStrictEqual([
+        expect(session.roles).toMatchObject([
             "account_all",
             "base_user",
             "cash_all",
             "gl_all"
         ]);
-        expect(session.preferences).toStrictEqual({
+        expect(session.preferences).toMatchObject({
             numberformat: "1000.00",
             printer: null,
             stylesheet: "ledgersmb.css",

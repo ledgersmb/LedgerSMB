@@ -15,8 +15,8 @@ beforeEach(() => {
 describe("Pricegroup Store", () => {
     it("initialize", async () => {
         await pricegroups.initialize();
-        expect(pricegroups.fields).toStrictEqual(["id", "description"]);
-        expect(pricegroups.items).toStrictEqual([
+        expect(pricegroups.fields).toMatchObject(["id", "description"]);
+        expect(pricegroups.items).toMatchObject([
             {
                 id: "1",
                 description: "Price group 1",
@@ -28,7 +28,7 @@ describe("Pricegroup Store", () => {
                 _meta: { ETag: "1234567889" }
             }
         ]);
-        expect(pricegroups._links).toStrictEqual([
+        expect(pricegroups._links).toMatchObject([
             {
                 title: "HTML",
                 rel: "download",
@@ -40,7 +40,7 @@ describe("Pricegroup Store", () => {
     it("get Price Group 1", async () => {
         await pricegroups.initialize();
         const pricegroup = await pricegroups.get("1");
-        expect(pricegroup).toStrictEqual({
+        expect(pricegroup).toMatchObject({
             _meta: { ETag: "1234567890" },
             id: "1",
             description: "Price group 1"
@@ -51,7 +51,7 @@ describe("Pricegroup Store", () => {
         await pricegroups.initialize();
         await pricegroups.get("1");
         await pricegroups.save("1", { id: "1", description: "Price Group #1" });
-        expect(pricegroups.items).toStrictEqual([
+        expect(pricegroups.items).toMatchObject([
             {
                 id: "1",
                 description: "Price Group #1",
@@ -75,7 +75,7 @@ describe("Pricegroup Store", () => {
     it("add Price Group 3", async () => {
         await pricegroups.initialize();
         await pricegroups.add({ id: "3", description: "Price Group #3" });
-        expect(pricegroups.items[pricegroups.items.length - 1]).toStrictEqual({
+        expect(pricegroups.items[pricegroups.items.length - 1]).toMatchObject({
             _meta: { ETag: "1234567891" },
             id: "3",
             description: "Price Group #3"

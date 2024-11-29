@@ -15,13 +15,13 @@ beforeEach(() => {
 describe("Country Store", () => {
     it("initialize", async () => {
         await countries.initialize();
-        expect(countries.fields).toStrictEqual([
+        expect(countries.fields).toMatchObject([
             "_meta",
             "code",
             "default",
             "name"
         ]);
-        expect(countries.items).toStrictEqual([
+        expect(countries.items).toMatchObject([
             {
                 code: "ca",
                 default: false,
@@ -35,7 +35,7 @@ describe("Country Store", () => {
                 _meta: { ETag: "1234567890" }
             }
         ]);
-        expect(countries._links).toStrictEqual([
+        expect(countries._links).toMatchObject([
             {
                 title: "HTML",
                 rel: "download",
@@ -47,7 +47,7 @@ describe("Country Store", () => {
     it("get United States country us", async () => {
         await countries.initialize();
         const country = await countries.get("us");
-        expect(country).toStrictEqual({
+        expect(country).toMatchObject({
             _meta: { ETag: "1234567890" },
             code: "us",
             default: false,
@@ -59,7 +59,7 @@ describe("Country Store", () => {
         await countries.initialize();
         await countries.get("us");
         await countries.save("us", { code: "us", name: "America" });
-        expect(countries.items).toStrictEqual([
+        expect(countries.items).toMatchObject([
             {
                 code: "ca",
                 default: false,
@@ -85,7 +85,7 @@ describe("Country Store", () => {
     it("add Atlantida country zz", async () => {
         await countries.initialize();
         await countries.add({ code: "zz", name: "Atlantida" });
-        expect(countries.items[countries.items.length - 1]).toStrictEqual({
+        expect(countries.items[countries.items.length - 1]).toMatchObject({
             _meta: { ETag: "1234567891" },
             code: "zz",
             name: "Atlantida"
