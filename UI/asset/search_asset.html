@@ -1,7 +1,7 @@
 [% PROCESS 'elements.html' %]
 <body class="lsmb [% dojo_theme %]">
 <div id="asset-search">
-<div class="listtop">[% asset.title %]</div>
+<div class="listtop">[% text('Search Asset') %]</div>
 <form data-dojo-type="lsmb/Form" action="[% request.script %]" method="get">
 <!-- These are for Javascript automation of defaults -CT -->
 [% PROCESS input element_data = {
