@@ -25,13 +25,13 @@ describe("Business Types Store", () => {
                 id: "1",
                 description: "Big customer",
                 discount: 0.05,
-                _meta: { "ETag": "1234567890" }
+                _meta: { ETag: "1234567890" }
             },
             {
                 id: "2",
                 description: "Bigger customer",
                 discount: 0.15,
-                _meta: { "ETag": "1234567890" }
+                _meta: { ETag: "1234567890" }
             }
         ]);
         expect(businessTypes._links).toMatchObject([
@@ -66,13 +66,13 @@ describe("Business Types Store", () => {
                 id: "1",
                 description: "Big customer",
                 discount: 0.05,
-                _meta: { "ETag": "1234567890" }
+                _meta: { ETag: "1234567890" }
             },
             {
                 id: "2",
                 description: "Bigger customer",
                 discount: 0.25,
-                _meta: { "ETag": "1234567891" }
+                _meta: { ETag: "1234567891" }
             }
         ]);
     });
@@ -94,7 +94,7 @@ describe("Business Types Store", () => {
         expect(
             businessTypes.items[businessTypes.items.length - 1]
         ).toMatchObject({
-            _meta: { "ETag": "1234567891" },
+            _meta: { ETag: "1234567891" },
             id: "3",
             description: "Great customer",
             discount: 0.22

@@ -1,3 +1,1 @@
 /* @format */
-/* global globalThis */
-
