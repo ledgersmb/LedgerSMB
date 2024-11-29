@@ -4,7 +4,7 @@
 <div id="budgets">
 <form data-dojo-type="lsmb/Form" method="post" action="[% request.script %]">
 <div id="budget-header">
-<div class="listtop">[% title %]</div>
+<div class="listtop">[% IF id ; text('Edit budget'); ELSE ; text('Add budget') ; END %]</div>
 <div class="input_row" id = "reference_row">
 <div class="input_group">
        [% INCLUDE input element_data = {
