@@ -1,12 +1,9 @@
 /* @format */
 /* global globalThis */
 
-const { ReadableStream, TransformStream } = require("node:stream/web");
 const { performance } = require("node:perf_hooks");
 
 Object.defineProperties(globalThis, {
-    ReadableStream: { value: ReadableStream },
-    TransformStream: { value: TransformStream },
     performance: { value: performance }
 });
 
