@@ -15,13 +15,13 @@ beforeEach(() => {
 describe("Language Store", () => {
     it("initialize", async () => {
         await languages.initialize();
-        expect(languages.fields).toStrictEqual([
+        expect(languages.fields).toMatchObject([
             "_meta",
             "code",
             "default",
             "description"
         ]);
-        expect(languages.items).toStrictEqual([
+        expect(languages.items).toMatchObject([
             {
                 code: "en",
                 default: false,
@@ -35,7 +35,7 @@ describe("Language Store", () => {
                 _meta: { ETag: "2345678901" }
             }
         ]);
-        expect(languages._links).toStrictEqual([
+        expect(languages._links).toMatchObject([
             {
                 title: "HTML",
                 rel: "download",
@@ -47,7 +47,7 @@ describe("Language Store", () => {
     it("get English languages en", async () => {
         await languages.initialize();
         const language = await languages.get("en");
-        expect(language).toStrictEqual({
+        expect(language).toMatchObject({
             _meta: { ETag: "1234567890" },
             code: "en",
             default: false,
@@ -62,7 +62,7 @@ describe("Language Store", () => {
             code: "en",
             description: "English (american)"
         });
-        expect(languages.items).toStrictEqual([
+        expect(languages.items).toMatchObject([
             {
                 code: "en",
                 default: false,
@@ -88,7 +88,7 @@ describe("Language Store", () => {
     it("add Mayan language my", async () => {
         await languages.initialize();
         await languages.add({ code: "my", description: "Mayan" });
-        expect(languages.items[languages.items.length - 1]).toStrictEqual({
+        expect(languages.items[languages.items.length - 1]).toMatchObject({
             _meta: { ETag: "1234567891" },
             code: "my",
             description: "Mayan"

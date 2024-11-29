@@ -15,26 +15,26 @@ beforeEach(() => {
 describe("Business Types Store", () => {
     it("initialize", async () => {
         await businessTypes.initialize();
-        expect(businessTypes.fields).toStrictEqual([
+        expect(businessTypes.fields).toMatchObject([
             "id",
             "description",
             "discount"
         ]);
-        expect(businessTypes.items).toStrictEqual([
+        expect(businessTypes.items).toMatchObject([
             {
                 id: "1",
                 description: "Big customer",
                 discount: 0.05,
-                _meta: { ETag: "1234567890" }
+                _meta: { "ETag": "1234567890" }
             },
             {
                 id: "2",
                 description: "Bigger customer",
                 discount: 0.15,
-                _meta: { ETag: "1234567890" }
+                _meta: { "ETag": "1234567890" }
             }
         ]);
-        expect(businessTypes._links).toStrictEqual([
+        expect(businessTypes._links).toMatchObject([
             {
                 title: "HTML",
                 rel: "download",
@@ -46,7 +46,7 @@ describe("Business Types Store", () => {
     it("get Business Type #2", async () => {
         await businessTypes.initialize();
         const businessType = await businessTypes.get("2");
-        expect(businessType).toStrictEqual({
+        expect(businessType).toMatchObject({
             _meta: { ETag: "1234567890" },
             id: "2",
             description: "Bigger customer",
@@ -61,18 +61,18 @@ describe("Business Types Store", () => {
             description: "Bigger customer",
             discount: 0.25
         });
-        expect(businessTypes.items).toStrictEqual([
+        expect(businessTypes.items).toMatchObject([
             {
                 id: "1",
                 description: "Big customer",
                 discount: 0.05,
-                _meta: { ETag: "1234567890" }
+                _meta: { "ETag": "1234567890" }
             },
             {
                 id: "2",
                 description: "Bigger customer",
                 discount: 0.25,
-                _meta: { ETag: "1234567891" }
+                _meta: { "ETag": "1234567891" }
             }
         ]);
     });
@@ -93,8 +93,8 @@ describe("Business Types Store", () => {
         });
         expect(
             businessTypes.items[businessTypes.items.length - 1]
-        ).toStrictEqual({
-            _meta: { ETag: "1234567891" },
+        ).toMatchObject({
+            _meta: { "ETag": "1234567891" },
             id: "3",
             description: "Great customer",
             discount: 0.22

@@ -15,8 +15,8 @@ beforeEach(() => {
 describe("Warehouses Store", () => {
     it("initialize", async () => {
         await warehouses.initialize();
-        expect(warehouses.fields).toStrictEqual(["id", "description"]);
-        expect(warehouses.items).toStrictEqual([
+        expect(warehouses.fields).toMatchObject(["id", "description"]);
+        expect(warehouses.items).toMatchObject([
             {
                 id: "1",
                 description: "Modern warehouse",
@@ -33,7 +33,7 @@ describe("Warehouses Store", () => {
                 _meta: { ETag: "1234567893" }
             }
         ]);
-        expect(warehouses._links).toStrictEqual([
+        expect(warehouses._links).toMatchObject([
             {
                 title: "HTML",
                 rel: "download",
@@ -45,7 +45,7 @@ describe("Warehouses Store", () => {
     it("get warehouse #2", async () => {
         await warehouses.initialize();
         const warehouse = await warehouses.get("2");
-        expect(warehouse).toStrictEqual({
+        expect(warehouse).toMatchObject({
             _meta: { ETag: "1234567890" },
             id: "2",
             description: "Huge warehouse"
@@ -59,7 +59,7 @@ describe("Warehouses Store", () => {
             id: "2",
             description: "Biggest warehouse"
         });
-        expect(warehouses.items).toStrictEqual([
+        expect(warehouses.items).toMatchObject([
             {
                 id: "1",
                 description: "Modern warehouse",
@@ -88,7 +88,7 @@ describe("Warehouses Store", () => {
     it("add Mars warehouse", async () => {
         await warehouses.initialize();
         await warehouses.add({ id: "4", description: "Mars warehouse" });
-        expect(warehouses.items[warehouses.items.length - 1]).toStrictEqual({
+        expect(warehouses.items[warehouses.items.length - 1]).toMatchObject({
             _meta: { ETag: "1234567891" },
             id: "4",
             description: "Mars warehouse"

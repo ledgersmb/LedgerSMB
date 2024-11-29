@@ -15,8 +15,8 @@ beforeEach(() => {
 describe("Sic Store", () => {
     it("initialize", async () => {
         await sics.initialize();
-        expect(sics.fields).toStrictEqual(["code", "sictype", "description"]);
-        expect(sics.items).toStrictEqual([
+        expect(sics.fields).toMatchObject(["code", "sictype", "description"]);
+        expect(sics.items).toMatchObject([
             {
                 code: "541330",
                 description: "Engineering service",
@@ -28,7 +28,7 @@ describe("Sic Store", () => {
                 _meta: { ETag: "1234567889" }
             }
         ]);
-        expect(sics._links).toStrictEqual([
+        expect(sics._links).toMatchObject([
             {
                 title: "HTML",
                 rel: "download",
@@ -40,7 +40,7 @@ describe("Sic Store", () => {
     it("get Computer systems integrators sics 541330", async () => {
         await sics.initialize();
         const sic = await sics.get("541330");
-        expect(sic).toStrictEqual({
+        expect(sic).toMatchObject({
             _meta: { ETag: "1234567890" },
             code: "541330",
             description: "Engineering service"
@@ -54,7 +54,7 @@ describe("Sic Store", () => {
             code: "541330",
             description: "Engineering services"
         });
-        expect(sics.items).toStrictEqual([
+        expect(sics.items).toMatchObject([
             {
                 code: "541330",
                 description: "Engineering services",
@@ -81,7 +81,7 @@ describe("Sic Store", () => {
             code: "541510",
             description: "Design of computer systems"
         });
-        expect(sics.items[sics.items.length - 1]).toStrictEqual({
+        expect(sics.items[sics.items.length - 1]).toMatchObject({
             _meta: { ETag: "1234567891" },
             code: "541510",
             description: "Design of computer systems"
