@@ -1,14 +1,11 @@
 /* @format */
 /* global globalThis */
 
-const { TextEncoder, TextDecoder } = require("node:util");
 const { ReadableStream, TransformStream } = require("node:stream/web");
 const { performance } = require("node:perf_hooks");
 
 Object.defineProperties(globalThis, {
     ReadableStream: { value: ReadableStream },
-    TextDecoder: { value: TextDecoder },
-    TextEncoder: { value: TextEncoder },
     TransformStream: { value: TransformStream },
     performance: { value: performance }
 });
