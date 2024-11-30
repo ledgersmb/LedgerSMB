@@ -4359,10 +4359,10 @@ eslint-plugin-n@^17.2.0:
     minimatch "^9.0.5"
     semver "^7.5.3"
 
-eslint-plugin-package-json@0.15.6:
-  version "0.15.6"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-package-json/-/eslint-plugin-package-json-0.15.6.tgz#3f96cabd1a78684dd75112ec52ee9dbc3e36e8ba"
-  integrity sha512-neg32Ew8yP9cFMQGGFI01wLsgAs/0qFbHdgpDoRFDe6UfqzFA06RQToKh4M63miiL35wmA824i/DPNU80RGyPA==
+eslint-plugin-package-json@0.16.0:
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-package-json/-/eslint-plugin-package-json-0.16.0.tgz#d83c96d0ba88671e05029e66048f55da29beb46a"
+  integrity sha512-AIyPKUpbxPToZ7g8rjpQhmUbjYLSSypKfS+5LU0kwEYqM0vKxQ8cgROce1qPZj+iGbd+RcTrEPWpVJa1JgJCxQ==
   dependencies:
     "@altano/repository-tools" "^0.1.1"
     detect-indent "6.1.0"
