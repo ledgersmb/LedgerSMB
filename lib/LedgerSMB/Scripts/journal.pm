@@ -110,7 +110,7 @@ sub search {
     #tshvr4 trying to mix in period from_month from_year interval
     return $request->render_report(
         LedgerSMB::Report::GL->new(
-            $request->%{qw( reference accno category source memo
+            $request->%{(qw( reference accno category source memo
                             business_units
                             is_voided
                             is_approved
@@ -118,7 +118,8 @@ sub search {
                             from_month from_year
                             comparison_periods comparison_type
                             comparisons
-                            ) },
+                         ),
+                         grep { m/^(bc_|col_)/ } keys $request->%*)},
             formatter_options => $request->formatter_options,
             from_amount => $request->parse_amount( $request->{from_amount} ),
             to_amount => $request->parse_amount( $request->{to_amount} ),
