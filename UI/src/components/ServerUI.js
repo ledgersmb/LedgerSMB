@@ -3,8 +3,9 @@
 import { h, inject, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
+import { createServerUIMachine } from "./ServerUI.machines.js";
+
 const registry = require("dijit/registry");
-const parser = require("dojo/parser");
 const query = require("dojo/query");
 const topic = require("dojo/topic");
 
@@ -33,82 +34,8 @@ export default {
         }
     },
     methods: {
-        async updateContent(tgt, options = {}) {
-            let dismiss;
-            try {
-                this.notify({
-                    title: options.doing || this.$t("Loading..."),
-                    type: "info",
-                    dismissReceiver: (cb) => {
-                        dismiss = cb;
-                    }
-                });
-                let headers = new Headers(options.headers);
-                headers.set("X-Requested-With", "XMLHttpRequest");
-
-                document
-                    .getElementById("maindiv")
-                    .removeAttribute("data-lsmb-done");
-                // chop off the leading '/' to use relative paths
-                let base = window.location.pathname.replace(/[^/]*$/, "");
-                let relTgt =
-                    tgt.substring(0, 1) === "/" ? tgt.substring(1) : tgt;
-                let r = await fetch(base + relTgt, {
-                    method: options.method,
-                    body: options.data,
-                    headers: headers
-                    // additional parameters to consider:
-                    // mode(cors?), credentials, referrerPolicy?
-                });
-
-                if (r.ok && !domReject(r)) {
-                    let newContent = await r.text();
-                    this.notify({
-                        title: options.done || this.$t("Loaded")
-                    });
-                    if (newContent === this.content) {
-                        // when there is no difference in returned content,
-                        // Vue won't re-render... so don't rerun the parser!
-                        return;
-                    }
-                    this._cleanWidgets();
-                    this.content = newContent;
-                    this.$nextTick(() => {
-                        let maindiv = document.getElementById("maindiv");
-                        parser.parse(maindiv).then(
-                            () => {
-                                registry
-                                    .findWidgets(maindiv)
-                                    .forEach((child) => {
-                                        this.recursivelyResize(child);
-                                    });
-                                maindiv
-                                    .querySelectorAll("a")
-                                    .forEach((node) =>
-                                        this._interceptClick(node)
-                                    );
-                                if (dismiss) {
-                                    dismiss();
-                                }
-                                topic.publish("lsmb/page-fresh-content");
-                                maindiv.setAttribute("data-lsmb-done", "true");
-                                this._setFormFocus();
-                            },
-                            (e) => {
-                                this.reportError(e);
-                            }
-                        );
-                    });
-                } else {
-                    this.reportError(r);
-                }
-            } catch (e) {
-                this.reportError(e);
-            } finally {
-                if (dismiss) {
-                    dismiss();
-                }
-            }
+        updateContent(tgt, options = {}) {
+            this.machine.send({ type: "loadContent", value: { tgt, options } });
         },
         _setFormFocus() {
             [...document.forms].forEach((form) => {
@@ -188,7 +115,26 @@ export default {
         }
     },
     beforeRouteLeave() {
-        this._cleanWidgets();
+        this.machine.send("unloadContent");
+        return (
+            this.machine.current !== "parsing" &&
+            this.machine.current !== "updating"
+        );
+    },
+    created() {
+        let maindiv = document.getElementById("maindiv");
+        this.machine = createServerUIMachine(
+            {
+                notify: this.notify,
+                view: this
+            },
+            ({ machine }) => {
+                if (machine.current === "idle") {
+                    topic.publish("lsmb/page-fresh-content");
+                    maindiv.setAttribute("data-lsmb-done", "true");
+                }
+            }
+        );
     },
     mounted() {
         document
