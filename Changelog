@@ -16,6 +16,7 @@ Removed functionalities
 Bugs fixed
 
 Cleanup & architecture improvements
+* Loading of main section more predictable through state machine use (#8530)
 
 Updated dependencies
 
