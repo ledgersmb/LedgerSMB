@@ -320,7 +320,7 @@ sub form_header {
     }
     else {
         $vendor = qq|<input data-dojo-type="dijit/form/TextBox" name=vendor id=vendor value="$form->{vendor}" size=35 $roadonly>
-                 <a href="erp.pl?__action=root#contact.pl?__action=add&entity_class=1"
+                 <a href="#contact.pl?__action=add&entity_class=1"
                   id="new-contact" target="_blank">[|
                  .  $locale->text('New') . qq|]</a>|;
     }
@@ -409,7 +409,7 @@ sub form_header {
             <tr>
         <th align="right" nowrap>| .
             $locale->text('Entity Code') . qq|</th>
-        <td colspan="2" nowrap><a href="erp.pl?__action=root#contact.pl?__action=get_by_cc&control_code=$form->{entity_control_code}" target="_blank"><b>$form->{entity_control_code}</b></a></td>
+        <td colspan="2" nowrap><a href="#contact.pl?__action=get_by_cc&control_code=$form->{entity_control_code}" target="_blank"><b>$form->{entity_control_code}</b></a></td>
         <th align="right" nowrap>| .
             $locale->text('Account') . qq|</th>
         <td colspan=3>$form->{meta_number}</td>
