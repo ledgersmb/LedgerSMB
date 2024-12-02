@@ -596,7 +596,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
       ( $form->{"select$form->{vc}"} )
       ? qq|<select data-dojo-type="lsmb/FilteringSelect" id="$form->{vc}" name="$form->{vc}" $readonly><option></option>$form->{"select$form->{vc}"}</select>|
       : qq|<input data-dojo-type="dijit/form/TextBox" id="$form->{vc}" name="$form->{vc}" value="$form->{$form->{vc}}" size=35 $readonly>
-                 <a href="erp.pl?__action=root#contact.pl?__action=add&entity_class=$eclass"
+                 <a href="#contact.pl?__action=add&entity_class=$eclass"
                     id="new-contact" target="_blank">[|
                  .  $locale->text('New') . qq|]</a>|;
 
@@ -722,7 +722,7 @@ $form->open_status_div($status_div_id) . qq|
             <tr>
         <th align="right" nowrap>| .
             $locale->text('Entity Control Code') . qq|</th>
-        <td colspan=3><a href="erp.pl?__action=root#contact.pl?__action=get_by_cc&control_code=$form->{entity_control_code}" target="_blank"><b>$form->{entity_control_code}</b></a></td>
+        <td colspan=3><a href="#contact.pl?__action=get_by_cc&control_code=$form->{entity_control_code}" target="_blank"><b>$form->{entity_control_code}</b></a></td>
           </tr>
             <tr>
         <th align="right" nowrap>| .
