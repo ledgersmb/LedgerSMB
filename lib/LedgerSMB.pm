@@ -216,6 +216,10 @@ Parses the $date given the session user's date formatting settings.
 
 formats the $amount given the session user's number formatting settings.
 
+=item format_date($date, %args)
+
+formats the $date given the session user's date formatting settings.
+
 =item formatter_options()
 
 Returns a hashref containing the session user's number and date formatting
@@ -771,6 +775,16 @@ sub format_amount {
     return $amount->to_output(
         format => $config->{numberformat},
         money_places => $request->{_company_config}->{decimal_places},
+        %args
+        );
+}
+
+sub format_date {
+    my ($request, $date, %args) = @_;
+    my $config = $request->{_user};
+
+    return $date->to_output(
+        format => $config->{dateformat},
         %args
         );
 }

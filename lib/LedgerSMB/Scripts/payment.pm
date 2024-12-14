@@ -1017,7 +1017,7 @@ sub payment2 {
     my @topay_state;
     my @open_invoices  = $Payment->get_open_invoices();
     for my $invoice (@open_invoices) {
-        $invoice->{invoice_date} = $request->format_amount( $invoice->{invoice_date} );
+        $invoice->{invoice_date} = $request->format_date( $invoice->{invoice_date} );
 
         if ($args{update}
             && ! $request->{"checkbox_$invoice->{invoice_id}"}) {
