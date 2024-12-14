@@ -116,10 +116,7 @@ export default {
     },
     beforeRouteLeave() {
         this.machine.send("unloadContent");
-        return (
-            this.machine.current !== "parsing" &&
-            this.machine.current !== "updating"
-        );
+        return this.machine.current === "unloaded";
     },
     created() {
         let maindiv = document.getElementById("maindiv");
