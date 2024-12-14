@@ -1,6 +1,21 @@
 {
+    "30": "30",
+    "60": "60",
+    "90": "90",
+    "# Invoices": "# Fakturor",
+    "% Dep.": "% Avsk.",
+    "(+) Salvage Value": "(+) Restvärde",
+    "(-) Accum. Dep.": "(-) Ackum. Avskr.",
+    "(=) NBV": "(=) Bokfört nettovärde",
+    "--FORMAT--": "--FORMAT--",
+    "--TEMPLATE--": "--MALL--",
+    "1099-INT": "1099-INT",
+    "1099-MISC": "1099-MISC",
+    "A return authorization must be obtained from [_1] before goods are returned. Returns must be shipped prepaid and properly insured. [_1] will not be responsible for damages during transit.": "Innan varor returneras måste returen godkännas av [_1]. Avsändaren måste betala för returfrakten och ansvarar för lämplig försäkring. [_1] ansvarar inte för eventuella skador som uppstår under frakten.",
     "AP": "Utgifter",
     "AP Aging": "Förfallna lev.fakturor",
+    "AP Invoice": "Leverantörsfaktura",
+    "AP Invoices": "Leverantörsfakturor",
     "AP Outstanding": "Leverantörsskulder",
     "AP Transaction": "Betald kostnad",
     "AP Transactions": "Leverantörsfakturor",
@@ -463,5 +478,5 @@
     "done": "Färdigt",
     "failed": "misslyckats",
     "time(s)": "gång(er)",
-    "unexpected error!": "oförberett fel!"
+    "unexpected error!": "oväntat fel!"
 }
