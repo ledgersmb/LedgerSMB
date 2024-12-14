@@ -72,7 +72,7 @@ devices running old browsers is negligible.
 
 # Quick start
 
-For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-111
+For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-112
 
 ## Installation
 
@@ -80,7 +80,7 @@ This instruction assumes you have [Docker](https://docs.docker.com/get-docker/)
 installed as well as [docker-compose](https://github.com/docker/compose#where-to-get-docker-compose).
 
 ```bash
- $ wget https://raw.githubusercontent.com/ledgersmb/ledgersmb-docker/1.11/docker-compose.yml
+ $ wget https://raw.githubusercontent.com/ledgersmb/ledgersmb-docker/1.12/docker-compose.yml
  $ docker-compose up -d
 ```
 
@@ -98,7 +98,7 @@ The system is installed and should be available for evaluation through
   Normal login for the application
 
 The system is ready for [preparation for first
-use](https://ledgersmb.org/content/preparing-ledgersmb-111-first-use).
+use](https://ledgersmb.org/content/preparing-ledgersmb-112-first-use).
 
 
 **NOTE:** This setup does not use a webserver like nginx or Apache. Setups which
