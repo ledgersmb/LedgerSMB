@@ -106,7 +106,7 @@ sub fetch_workflow {
 =head2 create_workflow( $wf )
 
 Implements Workflow::Persister protocol; in addition to initializing
-the workflow state (as pertheparent persister Workflow::Persister::DBI),
+the workflow state (as per the parent persister Workflow::Persister::DBI),
 also persists the workflow context.
 
 =cut
