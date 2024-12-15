@@ -44,14 +44,14 @@ about: Tracking the progress on preparing a new release branch
 * [ ] Update [list of supported Perl versions](https://ledgersmb.org/faq/which-versions-perl-does-ledgersmb-support)
 * [ ] Update [list of supported PostgreSQL versions](https://ledgersmb.org/faq/installation/what-versions-postgresql-does-ledgersmb-support)
 * [ ] Add a taxonomy term to the `Release` taxonomy for the current and upcoming releases
-* [ ] Copy/Update documentation
+* [ ] Copy/Update documentation; add 'Draft' topic!!
   * [ ] [Preparing LedgerSMB XXX for first use](https://ledgersmb.org/content/preparing-ledgersmb-17-first-use)
   * [ ] Create [installation documentation](https://ledgersmb.org/content/installing-ledgersmb-17) on ledgersmb.org
   * [ ] Create [upgrade documentation](https://ledgersmb.org/content/upgrade-ledgersmb-17-16-or-15) on ledgersmb.org
   * [ ] https://ledgersmb.org/content/documentation
   * [ ] https://ledgersmb.org/content/using-docker-develop-ledgersmb
 * [ ] Update https://ledgersmb.org/system-requirements to include the new release - check requirements table.
-* [ ] Create [release notes](https://ledgersmb.org/content/16-release-notes) on ledgersmb.org
+* [ ] Create [release notes](https://ledgersmb.org/content/16-release-notes) on ledgersmb.org (mark 'Draft'!)
 * [ ] Review installation instructions on ledgersmb.org
   * [ ] Including https://ledgersmb.org/content/installing-ledgersmb
 * [ ] Review README.md
@@ -74,17 +74,18 @@ about: Tracking the progress on preparing a new release branch
       "Keeping up with the latest developments" sections.
 * [ ] Remove the 'draft' topic from:
   * [ ] [Preparing LedgerSMB XXX for first use](https://ledgersmb.org/content/preparing-ledgersmb-17-first-use)
-  * [ ] Create [installation documentation](https://ledgersmb.org/content/installing-ledgersmb-17) on ledgersmb.org
-  * [ ] Create [upgrade documentation](https://ledgersmb.org/content/upgrade-ledgersmb-17-16-or-15) on ledgersmb.org
+  * [ ] [installation documentation](https://ledgersmb.org/content/installing-ledgersmb-17) on ledgersmb.org
+  * [ ] [upgrade documentation](https://ledgersmb.org/content/upgrade-ledgersmb-17-16-or-15) on ledgersmb.org
   * [ ] https://ledgersmb.org/content/documentation
   * [ ] https://ledgersmb.org/content/using-docker-develop-ledgersmb
   * [ ] the release notes
 * [ ] Update the roadmap on ledgersmb.org
 * [ ] Update listing of available tags on Docker Hub (edit the image description directly on the docker hub repository page)
-* [ ] Update the supported items page: https://ledgersmb.org/faq/which-versions-do-you-support
 * [ ] Update the version number of the 'master' branch:
   * [ ] Update README.md reference to 'prepare for first use'
+* [ ] Update ledgersmb/.github repository README.md docker compose file branch reference
 * [ ] Update the wikipedia page to include the new release (and remove the old!)
 * [ ] Update the screenshots
   * [ ] ledgersmb.org
+  * [ ] [Preparing LedgerSMB XXX for first use](https://ledgersmb.org/content/preparing-ledgersmb-17-first-use)
 

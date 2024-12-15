@@ -26,8 +26,15 @@ Small and Medium business accounting and ERP
 # Description
 
 LedgerSMB is a free web-based double-entry accounting system, featuring
-quotation, ordering, invoicing, projects, timecards, inventory management,
-shipping and more ...
+
+* Quotations
+* Ordering
+* Invoicing
+* Projects
+* Timecards
+* Inventory management
+* Shipping
+* and more ...
 
 Directly send orders and invoices from the built-in e-mail function to your
 customers or RFQs (request for quotation) to your vendors with PDF attachments,
@@ -44,8 +51,8 @@ fast customization. Supported output formats are PDF, CSV, HTML, ODF and more.
 # System requirements
 
 Note that these are the system requirements for LedgerSMB 1.13.0-dev, the current
-development version. Please check the system requirements for [the 1.11 stable
-version](https://github.com/ledgersmb/LedgerSMB/tree/1.11#system-requirements).
+development version. Please check the system requirements for [the 1.12 stable
+version](https://github.com/ledgersmb/LedgerSMB/tree/1.12#system-requirements).
 
 ## Server
 
@@ -76,7 +83,7 @@ devices running old browsers is negligible.
 
 # Quick start
 
-For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-111
+For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-112
 
 ## Installation
 
@@ -150,10 +157,10 @@ Code coverage: [Coveralls](https://coveralls.io/github/ledgersmb/LedgerSMB?branc
 
 ## Project contributors
 
-Source code contributors can be found in the project's `Git` commit history
+Source code contributors can be found in the project's `git` commit history
 as well as in the CONTRIBUTORS file in the repository root.
 
-Translation contributions can be found in the project's `Git` commit history
+Translation contributions can be found in the project's `git` commit history
 as well as in the `Transifex` project Timeline.
 
 

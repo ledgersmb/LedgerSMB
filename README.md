@@ -26,8 +26,15 @@ Small and Medium business accounting and ERP
 # Description
 
 LedgerSMB is a free web-based double-entry accounting system, featuring
-quotation, ordering, invoicing, projects, timecards, inventory management,
-shipping and more ...
+
+* Quotations
+* Ordering
+* Invoicing
+* Projects
+* Timecards
+* Inventory management
+* Shipping
+* and more ...
 
 Directly send orders and invoices from the built-in e-mail function to your
 customers or RFQs (request for quotation) to your vendors with PDF attachments,
@@ -44,8 +51,8 @@ fast customization. Supported output formats are PDF, CSV, HTML, ODF and more.
 # System requirements
 
 Note that these are the system requirements for LedgerSMB 1.13.0-dev, the current
-development version. Please check the system requirements for [the 1.11 stable
-version](https://github.com/ledgersmb/LedgerSMB/tree/1.11#system-requirements).
+development version. Please check the system requirements for [the 1.12 stable
+version](https://github.com/ledgersmb/LedgerSMB/tree/1.12#system-requirements).
 
 ## Server
 
@@ -67,27 +74,29 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome              | 2018-03  | 65-81, 83-130                               |
-| Edge                | 2020-01  | 79-81, 83-130                               |
-| Firefox             | 2018-05  | 60-131                                      |
+| Chrome              | 2018-03  | 65-81, 83-131                               |
+| Edge                | 2020-01  | 79-81, 83-131                               |
+| Firefox             | 2018-05  | 60-133                                      |
 | Opera               | 2018-03  | 52-58, 60, 62-114                           |
 | Safari              | 2018-09  | 12, 12.1, 13, 13.1, 14, 14.1, 15, 15.1,     |
-|                     |          | 15.2-15.6, 16.0-16.6, 17.0-17.6, 18.0       |
+|                     |          | 15.2-15.6, 16.0-16.6, 17.0-17.6,            |
+|                     |          | 18.0-18.2                                   |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome for Android  | 2024-09  | 129                                         |
-| Firefox for Android | 2024-09  | 130                                         |
-| Android Browser     | 2024-09  | 129                                         |
+| Chrome for Android  | 2024-11  | 131                                         |
+| Firefox for Android | 2024-10  | 132                                         |
+| Android Browser     | 2024-11  | 131                                         |
 | Baidu Browser       | 2024-03  | 13.52                                       |
 | Safari on iOS       | 2018-09  | 12.0-12.5, 13.0-13.7, 14.0-14.8,            |
-|                     |          | 15.0-15.8, 16.0-16.7, 17.0-17.6, 18.0       |
+|                     |          | 15.0-15.8, 16.0-16.7, 17.0-17.7,            |
+|                     |          | 18.0-18.2                                   |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
 | Opera Mobile        | 2024-03  | 80                                          |
 | Samsung Internet    | 2019-04  | 9.2, 10.1, 11.1-11.2, 12.0, 13.0, 14.0,     |
-|                     |          | 15.0, 16.0, 17.0, 18.0, 19.0, 20-25         |
+|                     |          | 15.0, 16.0, 17.0, 18.0, 19.0, 20-27         |
 
 
 **Note**: Safari is very sensitive to using LedgerSMB over HTTPS; using it with
@@ -102,7 +111,7 @@ devices running old browsers is negligible.
 
 # Quick start
 
-For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-111
+For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-112
 
 ## Installation
 
@@ -176,10 +185,10 @@ Code coverage: [Coveralls](https://coveralls.io/github/ledgersmb/LedgerSMB?branc
 
 ## Project contributors
 
-Source code contributors can be found in the project's `Git` commit history
+Source code contributors can be found in the project's `git` commit history
 as well as in the CONTRIBUTORS file in the repository root.
 
-Translation contributions can be found in the project's `Git` commit history
+Translation contributions can be found in the project's `git` commit history
 as well as in the `Transifex` project Timeline.
 
 
