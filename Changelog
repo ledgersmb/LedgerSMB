@@ -6,10 +6,10 @@ Unreleased
 Changelog for 1.13.0
 
 Added functionalities
-* Support for logging in on multiple companies on a single browser (#8496)
+* Concurrent logins into multiple companies on a single browser (#8496)
 
 Changed functionalities
-* Concurrent logins into one company on a single browser cause an error (#8496)
+* Concurrent logins with different users on one browser throw an error (#8496)
 
 Removed functionalities
 
