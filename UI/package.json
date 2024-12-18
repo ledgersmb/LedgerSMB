@@ -121,7 +121,7 @@
     "stylelint-webpack-plugin": "5.0.1",
     "stylelint-z-index-value-constraint": "1.4.0",
     "tmp": "0.2.3",
-    "undici": "6.21.0",
+    "undici": "7.2.0",
     "unix-timestamp": "1.1.0",
     "unused-webpack-plugin": "2.4.0",
     "vue": "3.5.13",
