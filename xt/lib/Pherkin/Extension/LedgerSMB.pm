@@ -237,7 +237,7 @@ sub create_user {
         username => $username,
         _dbh => $dbh,
         );
-    $user->create($args{password} // 'password');
+    $user->create($args{password} // 'password', { language => 'en' });
     my $ident_username=$dbh->quote_identifier($username);
     $dbh->do(qq(ALTER USER $ident_username VALID UNTIL 'infinity'));
 
@@ -311,7 +311,7 @@ INSERT INTO business_unit (class_id, control_code, description)
 
     my $emp = $self->create_employee(dbh => $dbh);
     my $user = $self->create_user(dbh => $dbh,
-        entity_id => $emp->entity_id,
+                                  entity_id => $emp->entity_id,
                                   username => $admin);
 
     my $roles;
