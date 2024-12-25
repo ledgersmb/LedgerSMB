@@ -121,14 +121,14 @@ sub reset_password {
    return;
 }
 
-=item create
+=item create( $password, [ \%prefs ] )
 
 Creates the new user.
 
 =cut
 
 sub create {
-    my ($self, $password) = @_;
+    my ($self, $password, $prefs) = @_;
     my ($ref) = $self->call_dbmethod(
         funcname => 'admin__save_user',
         args => { password => $password });
@@ -137,6 +137,16 @@ sub create {
         $self->call_procedure(
             funcname => 'admin__add_user_to_role',
             args => [ $self->username, $role ]);
+    }
+    $prefs //= {};
+    my $query = q|insert into user_preference (user_id, name, value)
+ values ($1, $2, $3)
+ on conflict (user_id, name) do update set value = $3|;
+    my $sth = $self->dbh->prepare($query)
+        or die $self->dbh->errstr;
+    for my $pref (keys $prefs->%*) {
+        $sth->execute($self->id, $pref, $prefs->{$pref})
+            or die $sth->errstr;
     }
     return;
 }
