@@ -12,10 +12,10 @@ LedgerSMB::Report::Budget::Variance - Variance Report per Budget
 
 =head1 DESCRIPTION
 
-This is a basic variance report for budgets.  A variance report shows budgetted
+This is a basic variance report for budgets.  A variance report shows budgeted
 debits and credits along with those actually accrued during the stated period.
 It thus provides a way of measuring both current and historical expenditures
-against what was budgetted.
+against what was budgeted.
 
 =cut
 
@@ -41,7 +41,7 @@ Description of he budget line item
 
 =item accno
 
-Account number budgetted
+Account number budgeted
 
 =item account_label
 
@@ -49,7 +49,7 @@ Account name
 
 =item budget_amount
 
-Amount (normalized left or right) budgetted
+Amount (normalized left or right) budgeted
 
 =item used_amount
 
@@ -57,7 +57,7 @@ Amount (normalized left or right) used
 
 =item variance
 
-Difference between budgetted and used.
+Difference between budgeted and used.
 
 =back
 
@@ -81,7 +81,7 @@ sub columns {
       {col_id => 'budget_amount',
          type => 'text',
          money => 1,
-         name => $self->Text('Amount Budgetted')},
+         name => $self->Text('Amount Budgeted')},
 
       {col_id => 'used_amount',
          type => 'text',

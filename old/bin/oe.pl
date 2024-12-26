@@ -1322,12 +1322,12 @@ sub delete {
     # $form->header;
 
     if ( $form->{type} =~ /_order$/ ) {
-        $msg = $locale->text('Are you sure you want to delete Order Number');
+        $msg = $locale->text('Are you sure you want to delete Order Number?');
         $ordnumber = 'ordnumber';
     }
     else {
         $msg =
-          $locale->text('Are you sure you want to delete Quotation Number');
+          $locale->text('Are you sure you want to delete Quotation Number?');
         $ordnumber = 'quonumber';
     }
 
