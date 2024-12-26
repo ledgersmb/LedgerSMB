@@ -139,9 +139,11 @@ sub create {
             args => [ $self->username, $role ]);
     }
     $prefs //= {};
-    my $query = q|insert into user_preference (user_id, name, value)
- values ($1, $2, $3)
- on conflict (user_id, name) do update set value = $3|;
+    my $query = <<~'SQL';
+       insert into
+           user_preference (user_id, name, value)
+           values ($1, $2, $3)
+       SQL
     my $sth = $self->dbh->prepare($query)
         or die $self->dbh->errstr;
     for my $pref (keys $prefs->%*) {
