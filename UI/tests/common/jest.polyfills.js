@@ -3,9 +3,12 @@
 
 const { TextEncoder, TextDecoder } = require("node:util");
 const { ReadableStream, TransformStream } = require("node:stream/web");
+const { MessageChannel, MessagePort } = require("node:worker_threads");
 const { performance } = require("node:perf_hooks");
 
 Object.defineProperties(globalThis, {
+    MessageChannel: { value: MessageChannel },
+    MessagePort: { value: MessagePort },
     ReadableStream: { value: ReadableStream },
     TextDecoder: { value: TextDecoder },
     TextEncoder: { value: TextEncoder },
