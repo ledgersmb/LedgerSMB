@@ -8,10 +8,10 @@ import {
     afterEach
 } from "@jest/globals";
 import "core-js";
+import { server } from "./mocks/server.js";
 import { setGlobalOrigin } from "undici";
 
 import "./mocks/lsmb_elements";
-import { server } from "./mocks/server.js";
 
 Object.defineProperty(window, "lsmbConfig", {
     writable: true,
