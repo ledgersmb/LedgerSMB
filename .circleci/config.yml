@@ -56,7 +56,6 @@ commands:
       - run:
           command: |
             source $BASH_ENV
-            export PERL5OPT="$PERL5OPT -MSyntax::Keyword::Try::Deparse"
             if [ "x$COVERAGE" == "x1" ]
             then
               make devtest TESTS="--no-progress --job-count $JOB_COUNT \"--cover=$DEVEL_COVER_OPTIONS\" t/ xt/"
@@ -329,14 +328,14 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: '5.34'
+      perl: '5.36'
       postgres: '12'
       browser: chrome
       selenium: selenium/node-chrome:3.141.59-20210607
 #      coverage: 1
     steps:
       - prep_env:
-          perl: '5.34'
+          perl: '5.36'
       - start_starman
       - start_proxy
       - prove
