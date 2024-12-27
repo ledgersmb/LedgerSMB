@@ -317,6 +317,7 @@ executors:
       RELEASE_TESTING: 1
       REMOTE_SERVER_ADDR: selenium-hub
       STARMAN_DEVEL_COVER_OPTIONS: ''
+      TEST2_UUID_NO_WARN: 'Yes'
       UIUSER: Jest
       UIPASSWORD: Tester
       UITESTS: '*'
