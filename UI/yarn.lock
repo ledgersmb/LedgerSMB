@@ -9058,10 +9058,10 @@ rimraf@^2.6.3:
   dependencies:
     glob "^7.1.3"
 
-robot3@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/robot3/-/robot3-1.0.1.tgz#36920e388ea572e89ef07995e1c2a3b5659c4254"
-  integrity sha512-jSuklmODv4cd8wR3M+Tnt+3ER7Z0BFbh2L06B3PgeVEwFu96PJoFU7KVYwOugAymG4N3Jzst/ZJUn9lkDZ1aIQ==
+robot3@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/robot3/-/robot3-1.0.2.tgz#e05a929debb767cd4942e359eb97ff0337aac9b6"
+  integrity sha512-N90A4ALCWahtbu4pcURphoRDSrDxn/SDhNh29wCUfYm9gnV68BWYOMlbwcVuCgKyPdk/FpdT13x625fp9C5uBQ==
 
 rrweb-cssom@^0.7.1:
   version "0.7.1"
