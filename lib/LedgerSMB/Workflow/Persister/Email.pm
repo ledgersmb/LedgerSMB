@@ -123,7 +123,7 @@ sub _save_email_data {
             $wf->id, $data->@{qw(from to cc bcc notify subject body expansions)})
             or $log->error($dbh->errstr);
     }
-    for my $att ($ctx->param( '_attachments' )->@*) {
+    for my $att ( ($ctx->param( '_attachments' ) // [])->@* ) {
         if (my $c = tied $att->{content}) {
             $c->persist;
             next;
