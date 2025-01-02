@@ -1,0 +1,11 @@
+#!/bin/bash
+
+TESTDB=$1
+TESTCONFIG=$2
+
+set -x
+
+bin/ledgersmb-admin create postgres@${POSTGRES_HOST}/${TESTDB}#xyz
+bin/ledgersmb-admin setup load postgres@${POSTGRES_HOST}/${TESTDB}#xyz $TESTCONFIG
+bin/ledgersmb-admin user create postgres@${POSTGRES_HOST}/${TESTDB}#xyz --username ${TESTUSER:-test} --password abc --ssn 1 --country US --first-name T --last-name E --employeenumber 1 --permission "Full Permissions"
+
