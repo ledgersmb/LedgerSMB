@@ -480,7 +480,8 @@ sub api {
             my $schema = $settings->api_validator;
             my $req = Plack::Request::WithEncoding->new($env);
             my $has_body = ($req->headers->content_length() // 0) > 0;
-            my $body = ($req->headers->content_type eq 'application/json') ?
+            my $content_type = $has_body ? $req->headers->content_type : '';
+            my $body = ($has_body and $content_type eq 'application/json') ?
                 json()->decode($req->content) : '';
             # bug: multipart/form-data wants to be validated and
             # so does application/x-www-form-urlencoded
@@ -493,7 +494,7 @@ sub api {
                         path => $params,
                         header => { $req->headers->psgi_flatten->@* },
                         query => $req->query_parameters->as_hashref_mixed,
-                        body => [ $has_body, $req->headers->content_type, $body ]
+                        body => [ $has_body, $content_type, $body ]
                     });
             if (scalar(@$errors) > 0) {
                 my ($err) = @$errors;
