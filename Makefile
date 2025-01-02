@@ -56,6 +56,9 @@ Help on using this Makefile
     - serve        : Runs the 'webpack serve' command
     - devtest      : Runs all tests including development tests (TESTS='t/ xt/')
     - jstest       : Runs all UI tests (TESTS='UI/tests')
+    - testdb       : Creates test database (TESTDB='test')
+                     with user (TESTUSER='test')
+                     and config (TESTCONF='locale/coa/us/General.xml')
     - pherkin      : Runs all BDD tests with 'pherkin' (instead of 'prove')
 
     - blacklist    : Builds sql blacklist (required after adding functions)
@@ -154,6 +157,12 @@ pot:
 test: TESTS ?= t/
 test:
 	$(DOCKER_CMD) yath test --no-color $(TEST_OPTS) $(TESTS)
+
+testdb: TESTDB ?= test
+testdb: TESTUSER ?= test
+testdb: TESTCONF ?= locale/coa/us/General.xml
+testdb:
+	$(DOCKER_CMD) bash -c "TESTUSER='$(TESTUSER)' utils/devel/create-test-db '${TESTDB}' '${TESTCONF}'"
 
 devtest: TESTS ?= t/ xt/
 devtest: PGTAP_OPTS ?= --pgtap-dbname=lsmb_test --pgtap-username=postgres \
