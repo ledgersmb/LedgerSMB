@@ -1,3 +1,7 @@
+
+use v5.36;
+use warnings;
+
 package LedgerSMB::Workflow::Condition::PeriodClosed;
 
 =head1 NAME
@@ -46,8 +50,6 @@ for being in a closed period. Defaults to C<transdate>.
 =cut
 
 
-use strict;
-use warnings;
 use parent qw( Workflow::Condition );
 
 use LedgerSMB::Setting;
@@ -62,8 +64,7 @@ __PACKAGE__->mk_accessors(@PROPS);
 
 =cut
 
-sub init {
-    my ($self, $params) = @_;
+sub init($self, $params) {
     $self->SUPER::init( $params );
     $self->offset( $params->{offset} // '0 days' );
     $self->workflow_parameter( $params->{workflow_parameter} // 'transdate' );
@@ -77,11 +78,8 @@ in a closed period.
 
 =cut
 
-sub evaluate {
-    my ($self, $wf) = @_;
-    my $dbh = $wf->_factory->
-        get_persister_for_workflow_type( $wf->type )->handle;
-
+sub evaluate($self, $wf) {
+    my $dbh = $wf->handle;
     my $date = $wf->context->param( $self->workflow_parameter );
     my $opened;
     if ($date) {

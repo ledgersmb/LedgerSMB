@@ -1,3 +1,7 @@
+
+use v5.36;
+use warnings;
+
 package LedgerSMB::Workflow::Condition::ACL;
 
 =head1 NAME
@@ -24,9 +28,6 @@ named role.
 
 =cut
 
-
-use strict;
-use warnings;
 use parent qw( Workflow::Condition );
 
 use LedgerSMB::Setting;
@@ -35,14 +36,13 @@ use Log::Any qw($log);
 use Workflow::Exception qw( configuration_error );
 
 
-=head2 init
+=head2 init( $params )
 
 Implements the C<Workflow::Condition> protocol for condition initialization.
 
 =cut
 
-sub init {
-    my ($self, $params) = @_;
+sub init($self, $params) {
     $self->SUPER::init($params);
 
     my $role = $params->{role};
@@ -59,15 +59,12 @@ error in case separation of duties is I<not> enabled.
 
 =cut
 
-sub evaluate {
-    my ($self, $wf) = @_;
-    my $dbh = $wf->_factory->
-        get_persister_for_workflow_type( $wf->type )->handle;
-    my $sth = $dbh->prepare('SELECT lsmb__is_allowed_role(?)');
-    $sth->execute( [$self->param('role')] )
-        or die $sth->errstr;
+sub evaluate($self, $wf) {
+    my $dbh = $wf->handle;
+    my ($access) =
+        $dbh->selectrow_array('SELECT lsmb__is_allowed_role(?)', {}, [$self->param('role')]);
+    die $dbh->errstr if $dbh->err;
 
-    my ($access) = $sth->fetchrow_array;
     return $access;
 }
 
