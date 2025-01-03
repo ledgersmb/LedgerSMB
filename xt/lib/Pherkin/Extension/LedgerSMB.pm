@@ -24,11 +24,17 @@ use LedgerSMB::Entity::User;
 use Beam::Wire;
 use List::Util qw(any);
 use Log::Log4perl qw(:easy);
+use YAML::PP;
+
 use Test::BDD::Cucumber::Extension;
 
-use LedgerSMB::Sysconfig;
+my $yp = YAML::PP->new( header => 0 );
+open my $fh, '<', 'ledgersmb.yaml'
+    or die "Unable to open 'ledgersmb.yaml': $!";
+my $config = $yp->load_string( do { local $/ = undef; <$fh> } );
+close $fh or warn "Unable to close config file: $!";
 
-my $wire = Beam::Wire->new( config => LedgerSMB::Sysconfig->ini2wire );
+my $wire = Beam::Wire->new( config => $config );
 
 use Moose;
 use namespace::autoclean;
