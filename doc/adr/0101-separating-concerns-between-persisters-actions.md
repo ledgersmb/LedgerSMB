@@ -62,7 +62,9 @@ logic.
 1. The `Workflow` class needs to be extended to become a `LedgerSMB::Workflow`
    which provides actions and conditions access to the database, e.g. through
    a `dbh` or `handle` accessor
-2. The existing implementation which follows pattern (2) -- ie.
+2. All workflows need to be declared of type `LedgerSMB::Workflow`, overriding
+   the default `Workflow`
+3. The existing implementation which follows pattern (2) -- ie.
    the TransactionApprove & TransactionDelete actions and the
    JournalEntry persister -- must be refactored to pattern (1) as per this
    decision
