@@ -1,3 +1,7 @@
+
+use v5.36;
+use warnings;
+
 package LedgerSMB::Workflow::Action::TransactionApprove;
 
 =head1 NAME
@@ -22,9 +26,6 @@ workflow state to the C< transactions > table.
 
 =cut
 
-
-use v5.36;
-use warnings;
 use parent qw( LedgerSMB::Workflow::Action::Null );
 
 =head2 execute($wf)
@@ -33,12 +34,19 @@ Implements the C<Workflow::Action> protocol.
 
 =cut
 
-sub execute( $self, $wf ) {
-    # When the persister finds a true-ish 'approved' value,
-    # it syncs that state between the context and the 'transactions' table
-    $wf->context->param( 'approved', 1 );
+my $query = <<~'SQL';
+  select draft_approve(id)
+    from transactions
+   where id = ? and not approved
+  SQL
 
+sub execute( $self, $wf ) {
     $self->SUPER::execute($wf);
+
+    my $dbh = $wf->handle;
+    $dbh->do($query, {}, $wf->context->param('id'))
+        or die $dbh->errstr;
+
     return;
 }
 

@@ -1,3 +1,7 @@
+
+use v5.36;
+use warnings;
+
 package LedgerSMB::Workflow::Action::TransactionDelete;
 
 =head1 NAME
@@ -22,9 +26,6 @@ the C< transactions > table.
 
 =cut
 
-
-use v5.36;
-use warnings;
 use parent qw( LedgerSMB::Workflow::Action::Null );
 
 =head2 execute($wf)
@@ -33,12 +34,19 @@ Implements the C<Workflow::Action> protocol.
 
 =cut
 
-sub execute( $self, $wf ) {
-    # When the persister finds a true-ish 'deleted' value,
-    # it syncs that state between the context and the 'transactions' table
-    $wf->context->param( 'deleted', 1 );
+my $query = <<~'SQL';
+  select draft_delete(id)
+    from transactions
+   where id = ?
+  SQL
 
+sub execute( $self, $wf ) {
     $self->SUPER::execute($wf);
+
+    my $dbh = $wf->handle;
+    $dbh->do($query, {}, $wf->context->param('id'))
+        or die $dbh->errstr;
+
     return;
 }
 

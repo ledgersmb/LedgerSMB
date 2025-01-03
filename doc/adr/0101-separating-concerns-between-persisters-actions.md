@@ -45,11 +45,6 @@ The downside of (2) is that it results in tight coupling between actions
 and persisters: any new actions which require invocation of stored
 procedures will need changes in the persister as well.
 
-
-NOTE FOR DISCUSSION: Add explanation of why this is *not* the same problem
-as the one resolved by the `extra_data` table in the `::ExtraData` persister.
-
-
 ## Decision
 
 The persister needs to store the workflow state. This could be simply in the
@@ -58,16 +53,19 @@ long as the function of the persister is restricted to transformation of
 existing values, which excludes invoking stored procedures.
 
 Actions will be responsible for invocation of stored procedures and modification
-of other tables' contents except for modification of workflow state tables.
-
-NOTE FOR DISCUSSION: do actions need to directly access the database, or do we
-use a Perl-internal APIs such as `LedgerSMB::Company`?
+of other tables' contents except for modification of workflow state tables. The
+key differentiation is that actions are responsible for execution of business
+logic.
 
 ## Consequences
 
 1. The `Workflow` class needs to be extended to become a `LedgerSMB::Workflow`
    which provides actions and conditions access to the database, e.g. through
    a `dbh` or `handle` accessor
+2. The existing implementation which follows pattern (2) -- ie.
+   the TransactionApprove & TransactionDelete actions and the
+   JournalEntry persister -- must be refactored to pattern (1) as per this
+   decision
 
 ## Annotations
 
