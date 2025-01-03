@@ -3,6 +3,12 @@
       name="common"
       class="LedgerSMB::Workflow::Persister"
       date_format="%Y-%m-%d %H:%M:%S"
+      driver="Pg" />
+  <persister
+      name="JournalEntry"
+      class="LedgerSMB::Workflow::Persister::ExtraData"
+      date_format="%Y-%m-%d %H:%M:%S"
       driver="Pg"
-      />
+      extra_table="transactions"
+      extra_data_field="id,table_name,transdate" />
 </persisters>

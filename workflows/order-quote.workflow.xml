@@ -1,4 +1,4 @@
-<workflow>
+<workflow class="LedgerSMB::Workflow">
   <type>Order/Quote</type>
   <initial_state>SAVED</initial_state>
   <persister>Order</persister>
