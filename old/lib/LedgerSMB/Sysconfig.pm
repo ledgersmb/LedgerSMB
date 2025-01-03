@@ -27,6 +27,21 @@ use List::Util qw(pairmap);
 sub ini2wire {
     my ($module, $cfg_file) = @_;
 
+    unless ($ENV{LSMB_FORCE_LEDGERSMB_CONF}) {
+        die <<~'ERR';
+           The 'ledgersmb.conf' configuration file has been deprecated
+           over the new 'ledgersmb.yaml' system. To convert your existing
+           configuration to the YAML system, run the command:
+
+              $ utils/migration/convert-ini-to-di ledgersmb.conf > ledgersmb.yaml
+
+           To force the use of 'ledgersmb.conf', please set the environment
+           variable LSMB_FORCE_LEDGERSMB_CONF=Y -- this is guaranteed to work for 1.13
+           but will be dropped in 1.14. After that, only the YAML configuration will
+           be supported.
+           ERR
+    }
+
     my $cfg;
     if ($cfg_file and -r $cfg_file) {
         $cfg = Config::IniFiles->new( -file => $cfg_file )
