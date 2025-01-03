@@ -4,9 +4,69 @@ Date: 2025-01-02
 
 ## Status
 
-Draft
+Accepted
 
 ## Context
+
+The `Workflow` library provides a state machine engine which is used in
+LedgerSMB to manage [resource
+state](./0017-state-machines-for-resource-state-management.md). Other systems
+use state machine engines for execution of processes; this is not the primary
+purpose of `Workflow` in LedgerSMB, although it may - to some extent - be a
+valid consequence.
+
+The components in `Workflow` have specific roles. Since LedgerSMB's storage
+medium (the PostgreSQL database) isn't just passive storage, but includes
+stored procedures to become "active" as well, the allocation of
+responsibilities becomes blurred: should the persister be the sole component
+interacting with the database or should actions do so as well? Where to draw
+the lines?
+
+### Summary of the `Workflow` library
+
+States are grouped into workflow types. These workflow types serve as templates
+or classes which can be instantiated into actual workflows. These workflow
+instances are what the workflow engine operates on; they are serialized for
+storage and deserialized to be loaded back into the running application. In
+LedgerSMB, the storage layer is the PostgreSQL database.
+
+#### Components making up `Workflow`
+
+The library consists of the following components:
+
+* States  
+  Define associated actions, their associated conditions and their transition
+  target states
+* Conditions  
+  Define conditions (Perl code) for availability of actions
+* Actions  
+  Define which Perl code is run when the action is triggered -- this may include
+  running stored procedures in the PostgreSQL database
+* Validators  
+  Define checks to establish input validity in the workflow state before
+  executing the code associated with an action
+* Persisters  
+  Store and load workflow state; in case of LedgerSMB, the state is stored in
+  a PostgreSQL database in a.o. the `workflow` and `workflow_context` tables
+* Observers  
+  Define Perl code to be triggered on events in a workflow
+
+#### Execution flow of `Workflow`
+
+1. Start database transaction
+2. Load workflow state from database
+3. Conditions are checked to select available actions from the list of all
+   actions defined in the current state
+4. An action is picked to be triggered
+5. Validators are run to check input validity for the selected action
+6. The selected action is run
+7. The workflow state is serialized to the database
+8. The database transaction is committed
+
+At various points in this flow observers are sent events from processing the
+action and optional state changes.
+
+### The problem with an active storage layer
 
 The `Workflow` state management library divides the concerns "performing actions"
 and "storing resulting workflow state" between the `Workflow::Action` and the
