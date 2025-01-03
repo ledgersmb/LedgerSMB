@@ -1,3 +1,7 @@
+
+use v5.36;
+use experimental 'try';
+
 package LedgerSMB::PSGI;
 
 =head1 NAME
@@ -49,7 +53,6 @@ use Log::Any;
 use Log::Log4perl;
 use Scalar::Util qw{ reftype };
 use String::Random;
-use Feature::Compat::Try;
 
 # To build the URL space
 use Plack;

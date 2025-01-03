@@ -1,14 +1,15 @@
-package PageObject::App::Main;
 
-use strict;
+use v5.36;
+use experimental 'try';
 use warnings;
+
+package PageObject::App::Main;
 
 use PageObject;
 
 use Moose;
 use namespace::autoclean;
 extends 'PageObject';
-use Feature::Compat::Try;
 
 
 __PACKAGE__->self_register(

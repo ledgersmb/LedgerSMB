@@ -1,4 +1,8 @@
 
+use v5.36;
+use experimental 'try';
+use warnings;
+
 package LedgerSMB::Admin::Command::create;
 
 =head1 NAME
@@ -6,9 +10,6 @@ package LedgerSMB::Admin::Command::create;
 LedgerSMB::Admin::Command::create - ledgersmb-admin 'create' command
 
 =cut
-
-use strict;
-use warnings;
 
 use LedgerSMB::Admin::Command;
 use LedgerSMB::Database;
@@ -18,7 +19,6 @@ extends 'LedgerSMB::Admin::Command';
 use namespace::autoclean;
 
 use Getopt::Long qw(GetOptionsFromArray);
-use Feature::Compat::Try;
 
 has options => (is => 'ro', default => sub { {} });
 

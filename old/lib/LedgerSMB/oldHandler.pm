@@ -44,6 +44,8 @@
 #
 #######################################################################
 
+use experimental 'try';
+
 package lsmb_legacy;
 
 use LedgerSMB::User;
@@ -56,7 +58,6 @@ use LedgerSMB::PSGI::Util;
 
 use HTML::Escape;
 use Log::Any;
-use Feature::Compat::Try;
 
 our $logger;
 

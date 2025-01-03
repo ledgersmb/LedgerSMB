@@ -1,3 +1,8 @@
+
+use v5.36;
+use experimental 'try';
+use warnings;
+
 package LedgerSMB::Admin::Command::restore;
 
 =head1 NAME
@@ -6,8 +11,6 @@ LedgerSMB::Admin::Command::restore - ledgersmb-admin 'restore' command
 
 =cut
 
-use strict;
-use warnings;
 use version;
 
 use File::Temp;
@@ -18,8 +21,6 @@ use LedgerSMB::Database;
 use Moose;
 extends 'LedgerSMB::Admin::Command';
 use namespace::autoclean;
-
-use Feature::Compat::Try;
 
 my $schema = 'public';
 

@@ -1,4 +1,8 @@
 
+use v5.36;
+use experimental 'try';
+use warnings;
+
 package LedgerSMB::Admin::Command::upgrade;
 
 =head1 NAME
@@ -7,9 +11,6 @@ LedgerSMB::Admin::Command::upgrade - ledgersmb-admin 'upgrade' command
 
 =cut
 
-use strict;
-use warnings;
-
 use Getopt::Long qw(GetOptionsFromArray);
 use LedgerSMB::Admin::Command;
 use LedgerSMB::Database;
@@ -17,8 +18,6 @@ use LedgerSMB::Database;
 use Moose;
 extends 'LedgerSMB::Admin::Command';
 use namespace::autoclean;
-
-use Feature::Compat::Try;
 
 has modules_only => (is => 'ro');
 
