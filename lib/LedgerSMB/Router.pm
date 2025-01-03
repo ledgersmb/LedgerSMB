@@ -516,9 +516,9 @@ sub api {
                     [ 'Not found' ] ];
             }
 
-            $has_body = reftype $triplet->[2] ne 'ARRAY'
+            my $has_return_body = reftype $triplet->[2] ne 'ARRAY'
                 or Plack::Util::content_length($triplet->[2]);
-            my $content_type =
+            my $return_content_type =
                 ((Plack::Util::header_get($triplet->[1], 'Content-Type') // '')
                  =~ s/;(.*)$//r);
             ($result, $errors, $warnings) =
@@ -530,7 +530,7 @@ sub api {
                         header => { $triplet->[1]->@* },
                         path => $params,
                         query => $req->query_parameters->as_hashref_mixed,
-                        body => [ $has_body, $content_type, $triplet->[2] ]
+                        body => [ $has_return_body, $return_content_type, $triplet->[2] ]
                     });
             return _error($req, HTTP_INTERNAL_SERVER_ERROR, [], @$errors)
                 if scalar(@$errors) > 0;
