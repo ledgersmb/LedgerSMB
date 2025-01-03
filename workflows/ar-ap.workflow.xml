@@ -1,4 +1,4 @@
-<workflow>
+<workflow class="LedgerSMB::Workflow">
   <type>AR/AP</type>
   <persister>JournalEntry</persister>
   <description>Manage the life cycle of an AR/AP document</description>

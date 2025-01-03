@@ -1,3 +1,7 @@
+
+use v5.36;
+use warnings;
+
 package LedgerSMB::Workflow::Condition::SeparateDuties;
 
 =head1 NAME
@@ -23,8 +27,6 @@ separation of duties.
 =cut
 
 
-use strict;
-use warnings;
 use parent qw( Workflow::Condition );
 
 use LedgerSMB::Setting;
@@ -39,11 +41,8 @@ error in case separation of duties is I<not> enabled.
 
 =cut
 
-sub evaluate {
-    my ($self, $wf) = @_;
-    my $dbh = $wf->_factory->
-        get_persister_for_workflow_type( $wf->type )->handle;
-
+sub evaluate($self, $wf) {
+    my $dbh = $wf->handle;
     my $separate_duties = LedgerSMB::Setting->new(dbh => $dbh)->get('separate_duties');
     $log->info("separate duties: $separate_duties");
 
