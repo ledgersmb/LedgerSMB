@@ -1,9 +1,9 @@
 
-package LedgerSMB::Template::Plugin::External;
-
 use v5.36;
+use experimental 'try';
 use warnings;
-use Feature::Compat::Try;
+
+package LedgerSMB::Template::Plugin::External;
 
 =head1 NAME
 

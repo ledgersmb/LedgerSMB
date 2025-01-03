@@ -20,7 +20,6 @@ requires 'Email::MessageID';
 requires 'Email::Sender::Simple';
 requires 'Email::Sender', '2.601'; # 2.601 adds 'sasl_authenticator'
 requires 'Email::Stuffer';
-requires 'Feature::Compat::Try';
 requires 'File::Find::Rule';
 requires 'Hash::Merge';
 requires 'HTML::Entities';

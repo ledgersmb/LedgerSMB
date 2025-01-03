@@ -1,4 +1,8 @@
 
+use v5.36;
+use experimental 'try';
+use warnings;
+
 package LedgerSMB::Admin::Command::destroy;
 
 =head1 NAME
@@ -7,17 +11,12 @@ LedgerSMB::Admin::Command::destroy - ledgersmb-admin 'destroy' command
 
 =cut
 
-use strict;
-use warnings;
-
 use LedgerSMB::Admin::Command;
 use LedgerSMB::Database;
 
 use Moose;
 extends 'LedgerSMB::Admin::Command';
 use namespace::autoclean;
-
-use Feature::Compat::Try;
 
 my $logger;
 
