@@ -156,18 +156,8 @@ commands:
           command: |
             mkdir -p logs/screens
             # these commands are in start.sh of the Perl container too:
-            cp doc/conf/ledgersmb.conf.default ledgersmb.conf
-            sed -i \
-                -e "s/\(cache_templates = \).*\$/cache_templates = 1/g" \
-                -e "s/\(host = \).*\$/\1$POSTGRES_HOST/g" \
-                -e "s/\(port = \).*\$/\1$POSTGRES_PORT/g" \
-                -e "s/\(default_db = \).*\$/\1$DEFAULT_DB/g" \
-                -e "s%\(sendmail   = \).*%#\1/usr/sbin/ssmtp%g" \
-                -e "s/# \(smtphost = \).*\$/\1mailhog:1025/g" \
-                -e "s/# \(backup_email_from = \).*\$/\1lsmb-backups@example.com/g" \
-                -e "s/#dojo_built = 1/dojo_built = 0/" \
-                -e "s/db_namespace = public/db_namespace = xyz/" \
-              ledgersmb.conf
+            cp doc/conf/ledgersmb.yaml ledgersmb.yaml
+            sed -i -e "s/# schema: public/schema: xyz/" ledgersmb.yaml
 
       # Freshen up CPAN
       - restore_cache:

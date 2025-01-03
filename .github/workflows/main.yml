@@ -253,8 +253,8 @@ jobs:
           hostname -i | awk '{printf("%s lsmb\n",$1)}' | sudo tee -a /etc/hosts
 
           # Set the correct LedgerSMB Server configuration
-          cp doc/conf/ledgersmb.conf.default ledgersmb.conf
-          sed -i -e 's/db_namespace = public/db_namespace = xyz/ ; s/#suppress_tooltips/suppress_tooltips/' ledgersmb.conf
+          cp doc/conf/ledgersmb.yaml ledgersmb.yaml
+          sed -i -e 's/# schema: public/schema: xyz/ ; s/#stylesheet: ledgersmb.css/stylesheet: ledgersmb-test.css/' ledgersmb.yaml
 
           # Start 'nginx' reverse proxy
           mkdir logs
@@ -422,8 +422,8 @@ jobs:
           mkdir -p logs/screens
 
           # Set the correct LedgerSMB Server configuration
-          cp doc/conf/ledgersmb.conf.default ledgersmb.conf
-          sed -i -e 's/db_namespace = public/db_namespace = xyz/' ledgersmb.conf
+          cp doc/conf/ledgersmb.yaml ledgersmb.yaml
+          sed -i -e 's/# schema: public/schema: xyz/' ledgersmb.yaml
 
           # Start 'nginx' reverse proxy
           nginx -c $GITHUB_WORKSPACE/doc/conf/webserver/nginx-github.conf \
