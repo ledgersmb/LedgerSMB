@@ -21,18 +21,18 @@ LedgerSMB::old_code - dispatching from new code to old code
 
 =cut
 
+use v5.36;
+use experimental 'try';
+use warnings;
+
 package LedgerSMB::old_code;
 
-
-use strict;
-use warnings;
 use CGI::Parse::PSGI qw(parse_cgi_output);
 use IO::File;
 use LedgerSMB::Form;
 use Log::Any;
 use POSIX 'SEEK_SET';
 use Symbol;
-use Feature::Compat::Try;
 
 use parent qw(Exporter);
 our @EXPORT_OK = qw(dispatch);

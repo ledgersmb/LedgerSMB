@@ -1,3 +1,8 @@
+
+use v5.36;
+use experimental 'try';
+use warnings;
+
 package LedgerSMB::Admin::Command::user;
 
 =head1 NAME
@@ -5,9 +10,6 @@ package LedgerSMB::Admin::Command::user;
 LedgerSMB::Admin::Command::user - ledgersmb-admin 'user' command
 
 =cut
-
-use strict;
-use warnings;
 
 use Getopt::Long qw(GetOptionsFromArray);
 use LedgerSMB::Admin::Command;
@@ -24,8 +26,6 @@ use Array::PrintCols;
 use Moose;
 extends 'LedgerSMB::Admin::Command';
 use namespace::autoclean;
-
-use Feature::Compat::Try;
 
 has options => (is => 'ro', default => sub { {} });
 
