@@ -1,3 +1,8 @@
+
+use v5.36;
+use warnings;
+use experimental 'try';
+
 package LedgerSMB::Admin::Command::user;
 
 =head1 NAME
@@ -5,9 +10,6 @@ package LedgerSMB::Admin::Command::user;
 LedgerSMB::Admin::Command::user - ledgersmb-admin 'user' command
 
 =cut
-
-use strict;
-use warnings;
 
 use Getopt::Long qw(GetOptionsFromArray);
 use LedgerSMB::Admin::Command;
@@ -22,10 +24,9 @@ use LedgerSMB::User;
 use Array::PrintCols;
 
 use Moose;
+use experimental 'try'; # Work around Moose re-enabling experimenal warnings
 extends 'LedgerSMB::Admin::Command';
 use namespace::autoclean;
-
-use Feature::Compat::Try;
 
 has options => (is => 'ro', default => sub { {} });
 

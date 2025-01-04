@@ -1,8 +1,10 @@
+
+use v5.36;
+use warnings;
+use experimental 'try';
+
 package LedgerSMB::FileFormats::OFX::BankStatement;
 
-use warnings;
-use strict;
-use Feature::Compat::Try;
 use XML::LibXML;
 
 =head1 NAME

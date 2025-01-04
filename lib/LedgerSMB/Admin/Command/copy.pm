@@ -1,4 +1,8 @@
 
+use v5.36;
+use warnings;
+use experimental 'try';
+
 package LedgerSMB::Admin::Command::copy;
 
 =head1 NAME
@@ -7,17 +11,13 @@ LedgerSMB::Admin::Command::copy - ledgersmb-admin 'copy' command
 
 =cut
 
-use strict;
-use warnings;
-
 use LedgerSMB::Admin::Command;
 use LedgerSMB::Database;
 
 use Moose;
+use experimental 'try'; # Work around Moose re-enabling experimenal warnings
 extends 'LedgerSMB::Admin::Command';
 use namespace::autoclean;
-
-use Feature::Compat::Try;
 
 sub run {
     my ($self, $dbname, $newname) = @_;

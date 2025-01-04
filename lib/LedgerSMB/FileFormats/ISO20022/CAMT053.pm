@@ -1,10 +1,12 @@
-package LedgerSMB::FileFormats::ISO20022::CAMT053;
-use strict;
+
+use v5.36;
 use warnings;
+use experimental 'try';
+
+package LedgerSMB::FileFormats::ISO20022::CAMT053;
 
 use XML::LibXML;
 use XML::LibXML::XPathContext;
-use Feature::Compat::Try;
 
 =head1 NAME
 

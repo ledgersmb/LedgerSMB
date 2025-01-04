@@ -1,4 +1,7 @@
 
+use v5.36;
+use warnings;
+use experimental 'try';
 
 package LedgerSMB::Scripts::contact;
 
@@ -14,11 +17,6 @@ This module is the UI controller for the customer, vendor, etc functions; it
 =head1 METHODS
 
 =cut
-
-use v5.36.1;
-use warnings;
-
-use Feature::Compat::Try;
 
 use LedgerSMB;
 use LedgerSMB::Entity::Company;

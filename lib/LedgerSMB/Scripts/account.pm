@@ -1,4 +1,8 @@
 
+use v5.36;
+use warnings;
+use experimental 'try';
+
 package LedgerSMB::Scripts::account;
 
 =head1 NAME
@@ -19,11 +23,7 @@ maintainable.
 
 =cut
 
-use strict;
-use warnings;
-
 use Log::Any;
-use Feature::Compat::Try;
 
 use LedgerSMB;
 

@@ -1,4 +1,8 @@
 
+use v5.36;
+use warnings;
+use experimental 'try';
+
 package LedgerSMB::Admin::Command::create;
 
 =head1 NAME
@@ -7,18 +11,15 @@ LedgerSMB::Admin::Command::create - ledgersmb-admin 'create' command
 
 =cut
 
-use strict;
-use warnings;
-
 use LedgerSMB::Admin::Command;
 use LedgerSMB::Database;
 
 use Moose;
+use experimental 'try'; # Work around Moose re-enabling experimenal warnings
 extends 'LedgerSMB::Admin::Command';
 use namespace::autoclean;
 
 use Getopt::Long qw(GetOptionsFromArray);
-use Feature::Compat::Try;
 
 has options => (is => 'ro', default => sub { {} });
 

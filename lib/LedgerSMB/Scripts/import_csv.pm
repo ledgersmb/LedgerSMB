@@ -1,4 +1,8 @@
 
+use v5.36;
+use warnings;
+use experimental 'try';
+
 package LedgerSMB::Scripts::import_csv;
 
 =head1 NAME
@@ -16,11 +20,7 @@ This module doesn't specify any methods.
 
 =cut
 
-use strict;
-use warnings;
-
 use JSON::PP;
-use Feature::Compat::Try;
 
 use LedgerSMB::AA;
 use LedgerSMB::Batch;

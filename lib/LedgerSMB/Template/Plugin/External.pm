@@ -1,9 +1,9 @@
 
-package LedgerSMB::Template::Plugin::External;
-
 use v5.36;
 use warnings;
-use Feature::Compat::Try;
+use experimental 'try';
+
+package LedgerSMB::Template::Plugin::External;
 
 =head1 NAME
 
@@ -26,6 +26,7 @@ use Log::Any;
 use POSIX;
 
 use Moo;
+use experimental 'try'; # Work around Moo re-enabling experimenal warnings
 
 my $logger = Log::Any->get_logger(category => __PACKAGE__);
 

@@ -1,3 +1,8 @@
+
+use v5.36;
+use warnings;
+use experimental 'try';
+
 package LedgerSMB::PSGI;
 
 =head1 NAME
@@ -18,9 +23,6 @@ Maps the URL name space to the various entry points.
 This module doesn't specify any (public) methods.
 
 =cut
-
-use strict;
-use warnings;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
@@ -49,7 +51,6 @@ use Log::Any;
 use Log::Log4perl;
 use Scalar::Util qw{ reftype };
 use String::Random;
-use Feature::Compat::Try;
 
 # To build the URL space
 use Plack;

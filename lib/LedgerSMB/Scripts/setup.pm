@@ -1,4 +1,8 @@
 
+use v5.36;
+use warnings;
+use experimental 'try';
+
 package LedgerSMB::Scripts::setup;
 
 =head1 NAME
@@ -22,8 +26,6 @@ management tasks.
 # these are maintained inside the LedgerSMB::Database package.
 #
 
-use strict;
-use warnings;
 use version;
 
 use Carp;
@@ -35,7 +37,6 @@ use HTTP::Status qw( HTTP_OK HTTP_INTERNAL_SERVER_ERROR HTTP_UNAUTHORIZED );
 use Log::Any;
 use MIME::Base64;
 use Scope::Guard;
-use Feature::Compat::Try;
 
 use LedgerSMB;
 use LedgerSMB::App_State;
