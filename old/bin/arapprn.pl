@@ -42,6 +42,7 @@
 package lsmb_legacy;
 
 use LedgerSMB::Legacy_Util;
+use LedgerSMB::Setting;
 use LedgerSMB::Template;
 
 require 'old/bin/aa.pl'; # for arapprn::reprint() and arapprn::print[_transaction]()

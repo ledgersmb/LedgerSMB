@@ -31,7 +31,6 @@ LedgerSMB::Report::Unapproved::Batch_Overview instead.
 =cut
 
 use LedgerSMB::I18N;
-use LedgerSMB::Setting;
 
 use Moose;
 use namespace::autoclean;

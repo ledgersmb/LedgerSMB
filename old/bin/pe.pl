@@ -21,6 +21,7 @@ package lsmb_legacy;
 use LedgerSMB::PE;
 use LedgerSMB::AA;
 use LedgerSMB::OE;
+use LedgerSMB::Setting;
 
 # end of main
 

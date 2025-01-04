@@ -47,7 +47,6 @@ use LedgerSMB::Entity::Credit_Account;
 use LedgerSMB::Magic qw( EC_CUSTOMER EC_VENDOR OEC_SALES_ORDER OEC_PURCHASE_ORDER );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Part;
-use LedgerSMB::Setting;
 
 use LedgerSMB::Router appname => 'erp/api';
 

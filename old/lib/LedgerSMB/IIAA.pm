@@ -41,7 +41,7 @@ use diagnostics;
 use strict;
 
 use LedgerSMB::PGDate;
-
+use LedgerSMB::Setting;
 
 sub process_form_barcode {
     my ($self, $myconfig, $form, $row, $barcode) = @_;

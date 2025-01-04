@@ -42,7 +42,6 @@ use LedgerSMB::Routes::ERP::API::Orders;
 use LedgerSMB::Routes::ERP::API::Products;
 use LedgerSMB::Routes::ERP::API::Session;
 use LedgerSMB::Routes::ERP::API::Templates;
-use LedgerSMB::Setting;
 
 use CGI::Emulate::PSGI;
 use HTTP::Status qw( HTTP_FOUND HTTP_NOT_FOUND );

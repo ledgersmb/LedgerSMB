@@ -27,7 +27,6 @@ use LedgerSMB::Report::Listings::Language;
 use LedgerSMB::Report::Listings::SIC;
 use LedgerSMB::Report::Listings::Overpayments;
 use LedgerSMB::Report::Listings::Warehouse;
-use LedgerSMB::Setting;
 
 our $VERSION = '1.0';
 

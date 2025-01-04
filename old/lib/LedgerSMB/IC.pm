@@ -41,7 +41,6 @@ package IC;
 
 use Log::Any;
 use LedgerSMB::File;
-use LedgerSMB::Setting;
 
 my $logger = Log::Any->get_logger(category => 'IC');
 
