@@ -1,4 +1,7 @@
 
+use v5.36;
+use warnings;
+
 package LedgerSMB::Template::Plugin::XLSX;
 
 =head1 NAME
@@ -11,10 +14,6 @@ Implements C<LedgerSMB::Template>'s FORMATTER protocol for XLSX output.
 
 =cut
 
-use strict;
-use warnings;
-
-use IO::Scalar;
 use Excel::Writer::XLSX;
 use Spreadsheet::WriteExcel;
 use XML::Twig;
@@ -202,7 +201,12 @@ sub postprocess {
     # Excel::Writer::XLSX wants a filehandle or filename, so
     # convert the variable reference into a filehandle
     my $output = $config->{_output};
-    $output = IO::Scalar->new($output) if ref $output;
+
+    if (ref $output) {
+        open(my $fh, '>', $output)
+            or die "Unable to create a filehandle to \$output: $!";
+        $output = $fh;
+    }
 
     if (lc $self->format eq 'xlsx') {
         $workbook  = Excel::Writer::XLSX->new($output);
