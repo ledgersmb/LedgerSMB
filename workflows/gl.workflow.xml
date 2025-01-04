@@ -1,4 +1,4 @@
-<workflow>
+<workflow class="LedgerSMB::Workflow">
   <type>GL</type>
   <persister>JournalEntry</persister>
   <description>Manage the life cycle of a GL document (excluding year-end, inventory adjustment and fixed assets transactions)</description>

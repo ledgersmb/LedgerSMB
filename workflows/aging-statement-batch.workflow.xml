@@ -1,4 +1,4 @@
-<workflow>
+<workflow class="LedgerSMB::Workflow">
   <type>Aging statement batch</type>
   <persister>common</persister>
   <description>Handles the lifecycle of a batch of aging reminders</description>

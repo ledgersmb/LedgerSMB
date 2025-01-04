@@ -115,6 +115,7 @@ requires 'Text::CSV';
 requires 'Text::Markdown';
 requires 'URI';
 requires 'URI::Escape';
+requires 'Workflow', '1.59';
 requires 'Workflow::Action', '1.59';
 requires 'Workflow::Condition', '1.59';
 requires 'Workflow::Context', '1.59';
