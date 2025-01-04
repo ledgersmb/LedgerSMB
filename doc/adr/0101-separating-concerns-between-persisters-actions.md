@@ -70,7 +70,7 @@ action and optional state changes.
 
 The `Workflow` state management library divides the concerns "performing actions"
 and "storing resulting workflow state" between the `Workflow::Action` and the
-`Workflow::Persister` respectively. Is the context of a passive storage backend
+`Workflow::Persister` respectively. In the context of a passive storage backend
 (such as a filesystem), the consequences are straight forward: the persister
 serializes the context and stores it on disk. The rest happens in actions.
 
