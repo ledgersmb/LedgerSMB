@@ -36,20 +36,26 @@ The library consists of the following components:
 
 * States  
   Define associated actions, their associated conditions and their transition
-  target states
+  target states.
 * Conditions  
-  Define conditions (Perl code) for availability of actions
+  Define conditions (Perl code) for availability of actions.
 * Actions  
-  Define which Perl code is run when the action is triggered -- this may include
-  running stored procedures in the PostgreSQL database
+  Define which Perl code is run when the action is triggered -- this may
+  include running stored procedures in the PostgreSQL database. Successful
+  execution of an action results in a state transition (optionally back to
+  the same state the workflow was already in).
 * Validators  
   Define checks to establish input validity in the workflow state before
-  executing the code associated with an action
+  executing the code associated with an action. Validators block execution
+  of an action if the input data is incorrect, in contrast to conditions,
+  which prevent actions from appearing as 'available'.
 * Persisters  
   Store and load workflow state; in case of LedgerSMB, the state is stored in
-  a PostgreSQL database in a.o. the `workflow` and `workflow_context` tables
+  a PostgreSQL database in a.o. the `workflow` and `workflow_context` tables.
 * Observers  
-  Define Perl code to be triggered on events in a workflow
+  Define Perl code to be triggered on events in a workflow. Observers get
+  notified of state transitions, in contrast to actions which are the cause
+  or trigger of state transitions.
 
 #### Execution flow of `Workflow`
 
