@@ -29,7 +29,6 @@ requires 'HTTP::AcceptLanguage';
 requires 'HTTP::Headers::Fast', '0.21'; # for content_is_text() method
 requires 'HTTP::Negotiate', '6.01';
 requires 'HTTP::Status';
-requires 'IO::Scalar';
 requires 'JSON::MaybeXS';
 requires 'JSONSchema::Validator', '0.010';
 recommends 'Cpanel::JSON::XS', '3.0206'; # 3.0206 adds 'allow_bignum' option
