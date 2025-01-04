@@ -102,7 +102,7 @@
     "jsdom": "25.0.1",
     "jsonc-eslint-parser": "2.4.0",
     "markdown-include": "0.4.3",
-    "markdownlint": "0.37.2",
+    "markdownlint": "0.37.3",
     "markdownlint-cli": "0.43.0",
     "mini-css-extract-plugin": "2.9.2",
     "msw": "2.7.0",
