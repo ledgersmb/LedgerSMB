@@ -22,8 +22,8 @@ LedgerSMB::old_code - dispatching from new code to old code
 =cut
 
 use v5.36;
-use experimental 'try';
 use warnings;
+use experimental 'try';
 
 package LedgerSMB::old_code;
 

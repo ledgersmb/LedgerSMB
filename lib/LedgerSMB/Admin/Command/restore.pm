@@ -1,7 +1,7 @@
 
 use v5.36;
-use experimental 'try';
 use warnings;
+use experimental 'try';
 
 package LedgerSMB::Admin::Command::restore;
 
