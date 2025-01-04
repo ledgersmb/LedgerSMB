@@ -42,7 +42,6 @@
 package lsmb_legacy;
 
 use LedgerSMB::Legacy_Util;
-use LedgerSMB::Setting;
 use LedgerSMB::Template;
 
 require 'old/bin/aa.pl'; # for arapprn::reprint() and arapprn::print[_transaction]()
@@ -203,7 +202,7 @@ sub print_transaction {
     $form->{integer_amount} = $form->format_amount( \%myconfig, $whole );
 
     foreach my $field (qw(invtotal subtotal paid total)) {
-        $form->{$field} = $form->format_amount( \%myconfig, $form->{$field}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
+        $form->{$field} = $form->format_amount( \%myconfig, $form->{$field}, $form->get_setting('decimal_places') );
     }
 
     ( $form->{employee} ) = split /--/, $form->{employee};

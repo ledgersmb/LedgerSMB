@@ -22,7 +22,6 @@ This module provides the workflow scripts for managing currencies and fx rates.
 use LedgerSMB::Currency;
 use LedgerSMB::Exchangerate;
 use LedgerSMB::Exchangerate_Type;
-use LedgerSMB::Setting;
 
 use Log::Any;
 use Text::CSV;
@@ -39,8 +38,7 @@ Displays a list of configured currencies.  No inputs required or used.
 sub list_currencies {
     my ($request) = @_;
     my @currencies = LedgerSMB::Currency->list(1); # check if currency is used
-    my $default_curr =
-        LedgerSMB::Setting->new(%$request)->get('curr');
+    my $default_curr = $request->setting->get('curr');
     my $columns = [
         {
             col_id => 'curr',

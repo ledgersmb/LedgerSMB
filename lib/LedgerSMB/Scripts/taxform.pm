@@ -28,7 +28,6 @@ use LedgerSMB::Form;
 use LedgerSMB::Report::Taxform::Summary;
 use LedgerSMB::Report::Taxform::Details;
 use LedgerSMB::Report::Taxform::List;
-use LedgerSMB::Setting;
 use LedgerSMB::Template;
 
 our $VERSION = '1.0';
@@ -68,7 +67,7 @@ sub _taxform_screen
     my ($request) = @_;
     $request->{countries} = $request->enabled_countries;
     $request->{default_country} =
-        LedgerSMB::Setting->new(%$request)->get('default_country');
+        $request->setting->get('default_country');
 
     my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'taxform/add_taxform', $request);

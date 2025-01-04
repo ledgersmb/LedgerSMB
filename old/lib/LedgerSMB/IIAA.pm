@@ -41,7 +41,6 @@ use diagnostics;
 use strict;
 
 use LedgerSMB::PGDate;
-use LedgerSMB::Setting;
 
 sub process_form_barcode {
     my ($self, $myconfig, $form, $row, $barcode) = @_;
@@ -295,7 +294,7 @@ sub prepare_invoice {
             $form->{"discount_$i"} =
               $form->format_amount( $myconfig, $form->{"discount_$i"} * 100 );
 
-            my $moneyplaces = LedgerSMB::Setting->new(%$form)->get('decimal_places');
+            my $moneyplaces = $form->get_setting('decimal_places');
             my ($dec) = ($form->{"sellprice_$i"} =~/\.(\d*)/);
             $dec = length $dec;
             my $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;

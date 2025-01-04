@@ -910,7 +910,7 @@ sub project_jcitems_list {
         }
         for (qw(amount sellprice)) {
             $form->{"${_}_$i"} =
-              $form->format_amount( \%myconfig, $form->{"${_}_$i"}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
+              $form->format_amount( \%myconfig, $form->{"${_}_$i"}, $form->get_setting('decimal_places') );
         }
     }
 
