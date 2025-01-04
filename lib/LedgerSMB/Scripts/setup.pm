@@ -28,6 +28,9 @@ use version;
 
 use Carp;
 use Digest::MD5 qw(md5_hex);
+use Email::MessageID;
+use Email::Sender::Simple;
+use Email::Stuffer;
 use Encode;
 use File::Spec;
 use HTML::Escape;
@@ -47,7 +50,6 @@ use LedgerSMB::Entity::User;
 use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::I18N;
 use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
-use LedgerSMB::Mailer;
 use LedgerSMB::PGDate;
 use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setting;
@@ -482,20 +484,26 @@ sub run_backup {
 
     if ($request->{backup_type} eq 'email') {
 
-        my $mail = LedgerSMB::Mailer->new(
-            transport => $request->{_wire}->get( 'mail' )->{transport},
-            from      => $request->{_wire}->get( 'miscellaneous/backup_email_from' ),
-
-            to        => $request->{email},
-            subject   => 'Email of Backup',
-            message   => 'The Backup is Attached',
-        );
-        $mail->attach(
-            mimetype => $mimetype,
+        my $mail = Email::Stuffer
+            ->from( $request->{_wire}->get( 'miscellaneous/backup_email_from' ) )
+            ->to( $request->{email} )
+            ->subject( 'Email of Backup' )
+            ->text_body( 'The Backup is Attached',
+                         content_type => 'text/plain',
+                         charset => 'utf-8' )
+            ->header( Email::MessageID->new->in_brackets );
+        $mail->attach_file(
+            $backupfile,
+            content_type => 'application/octet-stream',
+            disposition => 'attachment',
             filename => "ledgersmb-$backuptype-" . time . '.sqlc',
-            file     => $backupfile,
-        );
-        $mail->send;
+            );
+        Email::Sender::Simple->send(
+            $mail->email,
+            {
+                transport => $request->{_wire}->get( 'mail' )->{transport},
+            });
+
         unlink $backupfile;
         my $template = $request->{_wire}->get('ui');
         return $template->render($request, 'setup/complete', $request);
