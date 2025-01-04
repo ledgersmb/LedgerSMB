@@ -1,5 +1,6 @@
 
 use v5.36;
+use warnings;
 use experimental 'try';
 
 package LedgerSMB::PSGI;
@@ -22,9 +23,6 @@ Maps the URL name space to the various entry points.
 This module doesn't specify any (public) methods.
 
 =cut
-
-use strict;
-use warnings;
 
 use LedgerSMB;
 use LedgerSMB::App_State;

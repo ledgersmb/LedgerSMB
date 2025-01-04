@@ -8,6 +8,7 @@ package PageObject::App::Main;
 use PageObject;
 
 use Moose;
+use experimental 'try'; # Work around Moose re-enabling experimenal warnings
 use namespace::autoclean;
 extends 'PageObject';
 

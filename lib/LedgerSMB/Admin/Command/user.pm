@@ -24,6 +24,7 @@ use LedgerSMB::User;
 use Array::PrintCols;
 
 use Moose;
+use experimental 'try'; # Work around Moose re-enabling experimenal warnings
 extends 'LedgerSMB::Admin::Command';
 use namespace::autoclean;
 

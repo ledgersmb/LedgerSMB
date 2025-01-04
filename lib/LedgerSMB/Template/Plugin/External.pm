@@ -26,6 +26,7 @@ use Log::Any;
 use POSIX;
 
 use Moo;
+use experimental 'try'; # Work around Moo re-enabling experimenal warnings
 
 my $logger = Log::Any->get_logger(category => __PACKAGE__);
 
