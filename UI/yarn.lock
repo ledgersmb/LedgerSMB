@@ -1617,12 +1617,12 @@
     require-from-string "^2.0.2"
     uri-js-replace "^1.0.1"
 
-"@redocly/cli@1.26.1":
-  version "1.26.1"
-  resolved "https://registry.yarnpkg.com/@redocly/cli/-/cli-1.26.1.tgz#c79e81ae08c539de7091cb8103fcbd716ea653ba"
-  integrity sha512-ZNutKq1W+iiwpR7GtuGCfU1hU62KsP0AELDvcCvkWzcCWhRiaOGEQSSwPfRdjehgzqecApUvG0nG0nCQmwqcoQ==
+"@redocly/cli@1.27.0":
+  version "1.27.0"
+  resolved "https://registry.yarnpkg.com/@redocly/cli/-/cli-1.27.0.tgz#8eef406c293b1242da6ddc43d49fb91613e72951"
+  integrity sha512-Ifk7ocvKKCKkNBugX2EQZq6HPMrpEzy6OCB7kejmrrGt3wLpLGIy4SwJk9G4YNn6cmCYiOdTkw661VLHTYhe1Q==
   dependencies:
-    "@redocly/openapi-core" "1.26.1"
+    "@redocly/openapi-core" "1.27.0"
     abort-controller "^3.0.0"
     chokidar "^3.5.1"
     colorette "^1.2.0"
@@ -1652,10 +1652,10 @@
   resolved "https://registry.yarnpkg.com/@redocly/config/-/config-0.17.1.tgz#2def04cecf440dd78c0f102f53f3444fac050768"
   integrity sha512-CEmvaJuG7pm2ylQg53emPmtgm4nW2nxBgwXzbVEHpGas/lGnMyN8Zlkgiz6rPw0unASg6VW3wlz27SOL5XFHYQ==
 
-"@redocly/openapi-core@1.26.1":
-  version "1.26.1"
-  resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-1.26.1.tgz#d84299f09a3b4f8ca59bafcada7b4d4a040cf26b"
-  integrity sha512-xRuVZqMVRFzqjbUCpOTra4tbnmQMWsya996omZMV3WgD084Z6OWB3FXflhAp93E/yAmbWlWZpddw758AyoaLSw==
+"@redocly/openapi-core@1.27.0":
+  version "1.27.0"
+  resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-1.27.0.tgz#b05b444b9d18c44dc907f33519107f6a2680ebf2"
+  integrity sha512-C3EU9NYbo7bCc9SduHrk6/liUuuBqVfJHOhfbscNCR1443Rdpz3s+bB2Xhso9mdQJT0JjklRn2WTANjavl2Zng==
   dependencies:
     "@redocly/ajv" "^8.11.2"
     "@redocly/config" "^0.17.0"
@@ -4542,10 +4542,10 @@ eslint-plugin-n@^17.2.0:
     minimatch "^9.0.5"
     semver "^7.5.3"
 
-eslint-plugin-package-json@0.18.0:
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-package-json/-/eslint-plugin-package-json-0.18.0.tgz#88042072392577d977cdd7519c7453f26f5421b7"
-  integrity sha512-ZyDaHm3c+vDMNoOVyO+KcJxlBnNNFeRML8Ui/WATrQ+F/dyAIR6aIyu50691gll3dCBT26llL2DXMre30x23ug==
+eslint-plugin-package-json@0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-package-json/-/eslint-plugin-package-json-0.19.0.tgz#5bbf41b2940fe81899447436381c2192d1f5977e"
+  integrity sha512-L1RCeuEcZHrOC2KJqRctgHrndLufICo4VSHNZEnGEF7PkZXWZrxUBc17I5Cdolarlk+5kIW9IJ+zettXUuELHg==
   dependencies:
     "@altano/repository-tools" "^0.1.1"
     detect-indent "6.1.0"
@@ -7080,13 +7080,14 @@ markdownlint-micromark@0.1.12:
   resolved "https://registry.npmjs.org/markdownlint-micromark/-/markdownlint-micromark-0.1.12.tgz"
   integrity sha512-RlB6EwMGgc0sxcIhOQ2+aq7Zw1V2fBnzbXKGgYK/mVWdT7cz34fteKSwfYeo4rL6+L/q2tyC9QtD/PgZbkdyJQ==
 
-markdownlint@0.37.2:
-  version "0.37.2"
-  resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.37.2.tgz#72461a7abfef2e01ae7f3b596cdc083a25856571"
-  integrity sha512-m8QhYnRA1ptbhIjhVVBUkKQcUelVxuyO/yXyLewnc1+xs4eXhST/+hIy29goO+EYVLmWtknH4SmYQ4s0caoKqw==
+markdownlint@0.37.3:
+  version "0.37.3"
+  resolved "https://registry.yarnpkg.com/markdownlint/-/markdownlint-0.37.3.tgz#061ac5462e97fedc7a96aaac5c132885e4161bfd"
+  integrity sha512-eoQqH0291YCCjd+Pe1PUQ9AmWthlVmS0XWgcionkZ8q34ceZyRI+pYvsWksXJJL8OBkWCPwp1h/pnXxrPFC4oA==
   dependencies:
     markdown-it "14.1.0"
     micromark "4.0.1"
+    micromark-core-commonmark "2.0.2"
     micromark-extension-directive "3.0.2"
     micromark-extension-gfm-autolink-literal "2.1.0"
     micromark-extension-gfm-footnote "2.1.0"
@@ -7187,7 +7188,7 @@ methods@~1.1.2:
   resolved "https://registry.npmjs.org/methods/-/methods-1.1.2.tgz"
   integrity sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w==
 
-micromark-core-commonmark@^2.0.0:
+micromark-core-commonmark@2.0.2, micromark-core-commonmark@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/micromark-core-commonmark/-/micromark-core-commonmark-2.0.2.tgz#6a45bbb139e126b3f8b361a10711ccc7c6e15e93"
   integrity sha512-FKjQKbxd1cibWMM1P9N+H8TwlgGgSkWZMmfuVucLCHaYqeSvJ0hFeHsIa65pA2nYbes0f8LDHPMrd9X7Ujxg9w==
