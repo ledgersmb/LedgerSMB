@@ -11,7 +11,6 @@ use LedgerSMB::Database::ChangeChecks qw( :DEFAULT run_with_formatters
 use Data::Dumper;
 use DBI;
 use File::Temp qw( :seekable );
-use IO::Scalar;
 use MIME::Base64;
 
 
@@ -53,7 +52,7 @@ package PreCheckTests;
 HEREDOC
 
 
-my $fh = IO::Scalar->new(\$tests);
+open my $fh, '>', ew(\$tests;
 ok( lives { is scalar &load_checks($fh), 0; } ,
           'Loading empty checks from file-handle');
 
@@ -86,7 +85,7 @@ check 'title',
 1;
 HEREDOC
 
-$fh = IO::Scalar->new(\$tests);
+open $fh, '>', \$tests;
 ok( lives { is scalar &load_checks($fh), 1; },
           'Loading a single check from file-handle');
 
@@ -114,7 +113,7 @@ check 'title2',
 1;
 HEREDOC
 
-$fh = IO::Scalar->new(\$tests);
+open $fh, '>', \$tests;
 ok( lives { is scalar &load_checks($fh), 2; },
           'Loading two checks from file-handle');
 
@@ -142,7 +141,7 @@ check 'title',
 1;
 HEREDOC
 
-$fh = IO::Scalar->new(\$tests);
+open $fh, '>', \$tests;
 like( dies { &load_checks($fh); },
           qr/^Multiple checks with the same name not supported/,
           'Loading two equally named checks from file-handle');
@@ -170,7 +169,7 @@ check 'title',
 1;
 HEREDOC
 
-$fh = IO::Scalar->new(\$tests);
+open $fh, '>', \$tests;
 like( dies { &load_checks($fh); }, qr/doesn't define a description/,
     '"check" keyword bails without a description');
 
@@ -188,7 +187,7 @@ check 'title',
 1;
 HEREDOC
 
-$fh = IO::Scalar->new(\$tests);
+open $fh, '>', \$tests;
 like( dies { &load_checks($fh); }, qr/doesn't define a query/,
     '"check" keyword bails without a query');
 
@@ -207,7 +206,7 @@ check 'title',
 1;
 HEREDOC
 
-$fh = IO::Scalar->new(\$tests);
+open $fh, '>', \$tests;
 like( dies { &load_checks($fh); }, qr/doesn't define 'on_submit'/,
     '"check" keyword bails without an "on_submit"');
 
@@ -226,7 +225,7 @@ check 'title',
 1;
 HEREDOC
 
-$fh = IO::Scalar->new(\$tests);
+open $fh, '>', \$tests;
 like( dies { &load_checks($fh); }, qr/doesn't define 'on_failure'/,
     '"check" keyword bails without an "on_failure"');
 
