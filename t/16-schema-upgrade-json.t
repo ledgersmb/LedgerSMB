@@ -8,7 +8,6 @@ use Data::Dumper;
 use DBI;
 use Digest::MD5 qw( md5_hex );
 use File::Temp qw( :seekable );
-use IO::Scalar;
 use MIME::Base64;
 use Plack::Request;
 
@@ -90,7 +89,8 @@ check 'first title',
 1;
 HEREDOC
 
-$fh = IO::Scalar->new(\$tests);
+open $fh, '<', \$tests
+    or die $!;
 ok(lives { @checks = load_checks($fh); is scalar @checks, 1 },
           'Loading a single check from file-handle');
 
@@ -143,7 +143,8 @@ check 'second title',
 1;
 HEREDOC
 
-$fh = IO::Scalar->new(\$tests);
+open $fh, '<', \$tests
+    or die $!;
 ok( lives { @checks = load_checks($fh); is scalar @checks, 1 },
           'Loading a single check from file-handle');
 
@@ -198,7 +199,8 @@ check 'third title',
 1;
 HEREDOC
 
-$fh = IO::Scalar->new(\$tests);
+open $fh, '<', \$tests
+    or die $!;
 ok( lives { @checks = load_checks($fh); is scalar @checks, 1 },
           'Loading a single check from file-handle');
 
@@ -310,7 +312,8 @@ check 'fifth title',
 1;
 HEREDOC
 
-$fh = IO::Scalar->new(\$tests);
+open $fh, '<', \$tests
+    or die $!;
 ok( lives { @checks = load_checks($fh); is scalar @checks, 1 },
           'Loading a single check from file-handle');
 

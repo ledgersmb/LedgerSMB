@@ -24,12 +24,12 @@ use LedgerSMB::Database;
 use LedgerSMB::Database::ChangeChecks qw/load_checks run_checks run_with_formatters/;
 
 use DBI;
-use IO::Scalar;
 use Carp::Always;
 
 use Log::Log4perl qw(:easy);
 Log::Log4perl->easy_init($OFF);
 
+my $fh;
 
 
 ####### Create test run conditions
@@ -87,7 +87,9 @@ check 'test_success',
 1;
 |;
 
-my @checks = load_checks(IO::Scalar->new(\$check_def));
+open $fh, '<', \$check_def
+    or die $!;
+my @checks = load_checks($fh);
 
 ok(run_checks($dbh, checks => \@checks),
    'Checks successfully completed');
@@ -122,7 +124,9 @@ check 'test_failure',
 1;
 |;
 
-@checks = load_checks(IO::Scalar->new(\$check_def));
+open $fh, '<', \$check_def
+    or die $!;
+@checks = load_checks($fh);
 
 run_with_formatters {
     ok(! run_checks($dbh, checks => \@checks),
@@ -174,7 +178,9 @@ check 'test_success_2',
 1;
 |;
 
-@checks = load_checks(IO::Scalar->new(\$check_def));
+open $fh, '<', \$check_def
+    or die $!;
+@checks = load_checks($fh);
 
 run_with_formatters {
     ok(run_checks($dbh, checks => \@checks),
@@ -216,7 +222,9 @@ check 'test_failure',
 1;
 |;
 
-@checks = load_checks(IO::Scalar->new(\$check_def));
+open $fh, '<', \$check_def
+    or die $!;
+@checks = load_checks($fh);
 
 my $grid_rows;
 run_with_formatters {

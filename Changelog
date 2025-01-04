@@ -19,6 +19,8 @@ Cleanup & architecture improvements
 * Loading of main section more predictable through state machine use (#8530)
 
 Updated dependencies
+* Feature::Compat::Try (removed)
+* IO::Scalar (removed)
 
 
 Changelog for 1.12 Series
