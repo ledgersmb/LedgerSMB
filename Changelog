@@ -16,7 +16,9 @@ Removed functionalities
 Bugs fixed
 
 Cleanup & architecture improvements
+* Deprecated 'ledgersmb.conf' configuration in favor of 'ledgersmb.yaml' (#8570)
 * Loading of main section more predictable through state machine use (#8530)
+* Removed deps in favor of (experimental) built-in functionality (#8571, #8572)
 
 Updated dependencies
 * Feature::Compat::Try (removed)
