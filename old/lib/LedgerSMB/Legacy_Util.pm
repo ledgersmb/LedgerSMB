@@ -41,7 +41,7 @@ sub render_psgi {
     print join('', @{$psgi->[2]});
 }
 
-=head2 output_template($template, $form, %args)
+=head2 output_template($template, $form, [method => $method])
 
 supported keys in C<%args>:
 
@@ -52,10 +52,6 @@ supported keys in C<%args>:
 Determines where to send the output. Allowed values:
 
 print|screen|<printer name>
-
-=item printmode + OUT
-
-=item filename
 
 =back
 
@@ -73,15 +69,7 @@ sub output_template {
 
     my $method = $args{method} // '';
 
-    if (defined $args{OUT} and $args{printmode} eq '>'){ # To file
-        open my $fh, '>', $args{OUT}
-           or die "Can't write to file $args{OUT}";
-        binmode $fh, ':raw';
-        print $fh $template->{output}
-           or die "Can't write to file $args{OUT}";
-        close $fh
-            or warn "Can't close handle of $args{OUT}";
-    } elsif ('print' eq lc $method) {
+    if ('print' eq lc $method) {
         _output_template_lpr($form->{_wire}, $template);
     } elsif (lc $method eq 'screen') {
         _output_template_http($template);
