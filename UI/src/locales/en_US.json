@@ -1,6 +1,5 @@
 {
     "A return authorization must be obtained from [_1] before goods are returned. Returns must be shipped prepaid and properly insured. [_1] will not be responsible for damages during transit.": "A return authorisation must be obtained from [_1] before goods are returned. Returns must be shipped prepaid and properly insured. [_1] will not be responsible for damages during transit.",
-    "AP": "Purchases",
     "AP Aging": "Creditor Aging",
     "AP Transaction": "Purchase Transaction",
     "AR": "Sales",
@@ -29,7 +28,7 @@
     "Edit Vendor": "Edit Creditor",
     "Edit Vendor Invoice": "Edit Creditor Invoice",
     "Labor/Overhead": "Labour/Overhead",
-    "Less Outstanding Checks:": "Less Outstanding Cheques:",
+    "Less Outstanding Checks:": "Less Outstanding Checks:",
     "Max Invoices per Check Stub": "Max Invoices per Cheque Stub",
     "SSN": "SIN",
     "Vendor": "Creditor",

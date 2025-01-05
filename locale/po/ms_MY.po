@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.12.1-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-12-14 23:06+0000\n"
+"POT-Creation-Date: 2025-01-05 14:40+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2024\n"
 "Language-Team: Malay (Malaysia) (https://app.transifex.com/ledgersmb/"
 "teams/58325/ms_MY/)\n"
@@ -4281,8 +4281,8 @@ msgstr ""
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:40
-#: UI/src/components/ServerUI.js:26
+#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:26
+#: UI/src/components/ServerUI.js:40
 msgid "Loading..."
 msgstr ""
 
@@ -8641,18 +8641,3 @@ msgstr "Kesilapan yang tidak dijangka"
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr "guna lebihan bayaran"
-
-#~ msgid "Add line1"
-#~ msgstr "Tambah barisan1"
-
-#~ msgid "Add line2"
-#~ msgstr "Tambah barisan2"
-
-#~ msgid "Add line3 "
-#~ msgstr "Tambah barisan3"
-
-#~ msgid "Zip Code"
-#~ msgstr "Kod Pos"
-
-#~ msgid "city"
-#~ msgstr "Bandar"

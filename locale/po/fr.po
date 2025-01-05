@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.12.1-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-12-14 23:06+0000\n"
+"POT-Creation-Date: 2025-01-05 14:40+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2024\n"
 "Language-Team: French (https://app.transifex.com/ledgersmb/teams/58325/fr/)\n"
 "Language: fr\n"
@@ -4329,8 +4329,8 @@ msgstr "Charger des modèles"
 msgid "Loaded"
 msgstr "Chargé"
 
-#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:40
-#: UI/src/components/ServerUI.js:26
+#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:26
+#: UI/src/components/ServerUI.js:40
 msgid "Loading..."
 msgstr "Chargement..."
 
@@ -8735,21 +8735,3 @@ msgstr "Erreur inattendue!"
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr "utilisation d'un trop-perçu"
-
-#~ msgid "Add line1"
-#~ msgstr "Ajouter la ligne1"
-
-#~ msgid "Add line2"
-#~ msgstr "Ajouter la ligne2"
-
-#~ msgid "Add line3 "
-#~ msgstr "Ajouter la ligne3"
-
-#~ msgid "User Name"
-#~ msgstr "Nmo d'utilisateur"
-
-#~ msgid "Zip Code"
-#~ msgstr "Code Postal"
-
-#~ msgid "city"
-#~ msgstr "ville"

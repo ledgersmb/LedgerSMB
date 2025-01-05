@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.12.1-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-12-14 23:06+0000\n"
+"POT-Creation-Date: 2025-01-05 14:40+0000\n"
 "Last-Translator: Arne Hanssen <arne.senja@gmail.com>, 2024\n"
 "Language-Team: Norwegian Bokmål (https://app.transifex.com/ledgersmb/"
 "teams/58325/nb/)\n"
@@ -4297,8 +4297,8 @@ msgstr "Hente Maler"
 msgid "Loaded"
 msgstr "Lastet"
 
-#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:40
-#: UI/src/components/ServerUI.js:26
+#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:26
+#: UI/src/components/ServerUI.js:40
 msgid "Loading..."
 msgstr "Laster..."
 
@@ -8677,21 +8677,3 @@ msgstr "uventet feil!"
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr "bruk en overbetaling"
-
-#~ msgid "Add line1"
-#~ msgstr "Legg til linje1"
-
-#~ msgid "Add line2"
-#~ msgstr "Legg til linje2"
-
-#~ msgid "Add line3 "
-#~ msgstr "Legg til linje3"
-
-#~ msgid "User Name"
-#~ msgstr "Bruker Navn"
-
-#~ msgid "Zip Code"
-#~ msgstr "Postnummer"
-
-#~ msgid "city"
-#~ msgstr "by"
