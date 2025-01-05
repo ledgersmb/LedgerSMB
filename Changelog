@@ -3,6 +3,13 @@
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.1
+* Ignore Content-Type header on GET requests (#8562)
+* Fix persisting of E-mail workflows without attachments (#8564)
+* Fix printing of GL and cash transfer transactions (#8580)
+* Fix error of Cash > Use [AR] Overpayment menus (#8582)
+
+
 Changelog for 1.12.0
 
 Added functionalities
