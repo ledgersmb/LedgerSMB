@@ -856,6 +856,7 @@ sub print {
         path => 'DB',
         locale => $locale,
         output_options => \%output_options,
+        formatter_options => $form->formatter_options,
         format_plugin => $form->{_wire}->get( 'output_formatter' )->get( 'HTML' ),
     );
     $template->render(
