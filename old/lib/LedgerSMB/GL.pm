@@ -40,7 +40,6 @@ LedgerSMB:GL - General Ledger backend code
 package GL;
 
 use LedgerSMB::File;
-use LedgerSMB::Setting;
 
 =over
 
@@ -278,7 +277,7 @@ sub transaction {
     if ( $form->{id} ) {
 
         @{$form->{currencies}} =
-            (LedgerSMB::Setting->new(%$form))->get_currencies;
+            $form->setting->get_currencies;
 
         $query = qq|SELECT g.*, t.workflow_id, t.reversing, t.reversing_reference, t.reversed_by, t.reversed_by_reference
                  FROM gl g JOIN transactions_reversal t on g.id = t.id
@@ -321,8 +320,7 @@ sub transaction {
 
     }
     else {
-        @{$form->{currencies}} =
-            (LedgerSMB::Setting->new(%$form))->get_currencies;
+        @{$form->{currencies}} = $form->setting->get_currencies;
     }
 
     # get chart of accounts

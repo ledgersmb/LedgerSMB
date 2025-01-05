@@ -39,7 +39,6 @@ LedgerSMB::IS - Inventory Invoicing
 package IS;
 use LedgerSMB::Tax;
 use LedgerSMB::PriceMatrix;
-use LedgerSMB::Setting;
 use LedgerSMB::Num2text;
 use LedgerSMB::IIAA;
 use Log::Any;
@@ -279,7 +278,7 @@ sub invoice_details {
 
             my ($dec) = ( $sellprice =~ /\.(\d+)/ );
             $dec = length $dec;
-            my $dp = LedgerSMB::Setting->new(%$form)->get('decimal_places');
+            my $dp = $form->setting->get('decimal_places');
             my $decimalplaces = ( $dec > $dp ) ? $dec : $dp;
 
             my $discount = $form->round_amount(
@@ -722,7 +721,7 @@ sub post_invoice {
     ( $null, $form->{department_id} ) = split( /--/, $form->{department} );
     $form->{department_id} *= 1;
 
-    my $setting = LedgerSMB::Setting->new( %$form );
+    my $setting = $form->setting;
     my $fxgain_accno_id = $setting->get('fxgain_accno_id');
     my $fxloss_accno_id = $setting->get('fxloss_accno_id');
 
@@ -831,7 +830,7 @@ sub post_invoice {
             my $fxsellprice =
               $form->parse_amount( $myconfig, $form->{"sellprice_$i"} );
 
-            my $moneyplaces = LedgerSMB::Setting->new(%$form)->get('decimal_places');
+            my $moneyplaces = $form->setting->get('decimal_places');
             my $decimalplaces = ($form->{"precision_$i"} > $moneyplaces)
                              ? $form->{"precision_$i"}
                              : $moneyplaces;
@@ -1226,8 +1225,7 @@ sub retrieve_invoice {
 
     my $query;
 
-    @{$form->{currencies}} =
-        (LedgerSMB::Setting->new(%$form))->get_currencies;
+    @{$form->{currencies}} = $form->setting->get_currencies;
 
     if ( $form->{id} ) {
 

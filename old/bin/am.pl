@@ -131,7 +131,7 @@ sub display_taxes {
 
     my @rows;
     my $sametax = '';
-    $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
+    $form->{_setting_decimal_places} //= $form->setting->get('decimal_places');
     for ( split( / /, $form->{taxaccounts} ) ) {
 
         ( $null, $i ) = split /_/, $_;
@@ -330,7 +330,7 @@ sub recurring_transactions {
     my @transactions;
     my $j;
     my $k;
-    $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
+    $form->{_setting_decimal_places} //= $form->setting->get('decimal_places');
     foreach my $transaction ( sort keys %{ $form->{transactions} } ) {
         my $transaction_count = scalar( @{ $form->{transactions}{$transaction} } );
         push @transactions, {type => $transaction,
@@ -524,7 +524,7 @@ sub process_transactions {
     $myconfig{vclimit} = 0;
     %f = &formnames;
 
-    $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
+    $form->{_setting_decimal_places} //= $form->setting->get('decimal_places');
     for ( my $i = 1 ; $i <= $pt->{lastndx} ; $i++ ) {
         if ( $pt->{"ndx_$i"} ) {
             $id = $pt->{"ndx_$i"};

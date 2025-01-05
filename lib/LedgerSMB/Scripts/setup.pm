@@ -51,7 +51,6 @@ use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
 use LedgerSMB::Mailer;
 use LedgerSMB::PGDate;
 use LedgerSMB::PSGI::Util;
-use LedgerSMB::Setting;
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
 use LedgerSMB::Template::DB;
 use LedgerSMB::Database::Upgrade;
@@ -882,8 +881,7 @@ sub _load_templates {
     #### Suppress selecting templates!
     ### Suppress next steps in load templates!
 
-    $request->{template_dir} //=
-        LedgerSMB::Setting->new(dbh => $dbh)->get('templates');
+    $request->{template_dir} //= $request->setting->get('templates');
     return (_save_templates($request, '_load_templates')
             or _dispatch_upgrade_workflow($request, '_load_templates'));
 }
@@ -1305,7 +1303,7 @@ sub _render_new_user {
     $request->{dbh}->{AutoCommit} = 0;
 
     if ( $request->{coa_lc} ) {
-        LedgerSMB::Setting->new(%$request)->set('default_country',$request->{coa_lc});
+        $request->setting->set('default_country',$request->{coa_lc});
     }
     return _render_user($request, $entrypoint);
 }

@@ -49,7 +49,6 @@ use LedgerSMB::Form;
 use LedgerSMB::IIAA;
 use LedgerSMB::IR;
 use LedgerSMB::IS;
-use LedgerSMB::Setting;
 use LedgerSMB::Tax;
 # use LedgerSMB::DBObject::TransTemplate;
 
@@ -679,7 +678,7 @@ $form->open_status_div($status_div_id) . qq|
         <td colspan=3>
           <table width=100%>
             <tr> |;
-    if (LedgerSMB::Setting->new(%$form)->get('show_creditlimit')){
+    if ($form->setting->get('show_creditlimit')){
        print qq|
               <th align=left nowrap>| . $locale->text('Credit Limit') . qq|</th>
               <td>$form->{creditlimit}</td>
@@ -828,7 +827,7 @@ $form->open_status_div($status_div_id) . qq|
 
     # Display rows
 
-    $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
+    $form->{_setting_decimal_places} //= $form->setting->get('decimal_places');
     foreach my $i ( 1 .. $form->{rowcount} + $min_lines) {
         next if $readonly and not $form->{"$form->{ARAP}_amount_$i"};
 
