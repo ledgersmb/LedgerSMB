@@ -278,7 +278,7 @@ sub invoice_details {
 
             my ($dec) = ( $sellprice =~ /\.(\d+)/ );
             $dec = length $dec;
-            my $dp = $form->setting->get('decimal_places');
+            my $dp = $form->get_setting('decimal_places');
             my $decimalplaces = ( $dec > $dp ) ? $dec : $dp;
 
             my $discount = $form->round_amount(
@@ -721,9 +721,8 @@ sub post_invoice {
     ( $null, $form->{department_id} ) = split( /--/, $form->{department} );
     $form->{department_id} *= 1;
 
-    my $setting = $form->setting;
-    my $fxgain_accno_id = $setting->get('fxgain_accno_id');
-    my $fxloss_accno_id = $setting->get('fxloss_accno_id');
+    my $fxgain_accno_id = $form->get_setting('fxgain_accno_id');
+    my $fxloss_accno_id = $form->get_setting('fxloss_accno_id');
 
     $query = qq|
         SELECT p.assembly, p.inventory_accno_id,
@@ -830,7 +829,7 @@ sub post_invoice {
             my $fxsellprice =
               $form->parse_amount( $myconfig, $form->{"sellprice_$i"} );
 
-            my $moneyplaces = $form->setting->get('decimal_places');
+            my $moneyplaces = $form->get_setting('decimal_places');
             my $decimalplaces = ($form->{"precision_$i"} > $moneyplaces)
                              ? $form->{"precision_$i"}
                              : $moneyplaces;
@@ -1225,7 +1224,7 @@ sub retrieve_invoice {
 
     my $query;
 
-    @{$form->{currencies}} = $form->setting->get_currencies;
+    @{$form->{currencies}} = $form->currencies;
 
     if ( $form->{id} ) {
 

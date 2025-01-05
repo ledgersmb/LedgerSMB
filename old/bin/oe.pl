@@ -441,7 +441,7 @@ sub form_header {
 
         $n = ( $form->{creditremaining} < 0 ) ? "0" : "1";
 
-        if ($form->setting->get('show_creditlimit')){
+        if ($form->get_setting('show_creditlimit')){
         $creditremaining = qq|
           <tr>
         <td></td>
@@ -740,7 +740,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
 |;
     }
 
-    $form->{_setting_decimal_places} = $form->setting->get('decimal_places');
+    $form->{_setting_decimal_places} = $form->get_setting('decimal_places');
     if ( !$form->{taxincluded} ) {
         foreach my $item (keys %{$form->{taxes}}) {
             my $taccno = $item;
@@ -2343,7 +2343,7 @@ sub generate_purchase_orders {
 
     # flatten array
     $i = 0;
-    $form->{_setting_decimal_places} = $form->setting->get('decimal_places');
+    $form->{_setting_decimal_places} = $form->get_setting('decimal_places');
     foreach my $parts_id (
         sort {
             $form->{orderitems}{$a}{partnumber}

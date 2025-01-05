@@ -377,7 +377,7 @@ sub display_form
 
     #Form footer  Begins------------------------------------------
 
-    $form->{_setting_decimal_places} //= $form->setting->get('decimal_places');
+    $form->{_setting_decimal_places} //= $form->get_setting('decimal_places');
     for (qw(totaldebit totalcredit)) {
         $form->{$_} =
             $form->format_amount( \%myconfig, $form->{$_}, $form->{_setting_decimal_places}, "0" );
@@ -507,7 +507,7 @@ sub display_row {
   $form->{totaldebit}  = 0;
   $form->{totalcredit} = 0;
 
-    $form->{_setting_decimal_places} //= $form->setting->get('decimal_places');
+    $form->{_setting_decimal_places} //= $form->get_setting('decimal_places');
     for my $i ( 0 .. $form->{rowcount} ) {
 
         my $temphash1;
@@ -810,7 +810,7 @@ sub print {
 
         $form->{exchange_rate} = $form->parse_amount( \%myconfig,$amount) / $form->parse_amount( \%myconfig,$amount_fx);
         $form->{exchange_rate} = $form->format_amount( \%myconfig, $form->{exchange_rate},
-                                                       $form->setting->get('decimal_places') );
+                                                       $form->get_setting('decimal_places') );
 
         $form->{curr} = $form->{"curr_0"};;
 
