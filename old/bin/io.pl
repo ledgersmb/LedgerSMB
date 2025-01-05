@@ -44,7 +44,6 @@ use LedgerSMB::IIAA;
 use LedgerSMB::OE;
 use LedgerSMB::Tax;
 use LedgerSMB::Template;
-use LedgerSMB::Setting;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::File;
 use List::Util qw(max reduce);
@@ -291,7 +290,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
 
     $spc = substr( $myconfig{numberformat}, -3, 1 );
     my $moneyplaces =
-        $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
+        $form->{_setting_decimal_places} //= $form->get_setting('decimal_places');
     foreach my $i ( 1 .. max($numrows, $min_lines)) {
         next if $readonly and not $form->{"partnumber_$i"};
 

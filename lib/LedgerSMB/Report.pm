@@ -172,7 +172,6 @@ use warnings;
 
 use List::Util qw{ any pairgrep };
 use LedgerSMB::PGNumber;
-use LedgerSMB::Setting;
 use Scalar::Util qw{ blessed };
 
 use Moose;

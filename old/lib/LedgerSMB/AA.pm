@@ -30,7 +30,6 @@ package AA;
 use Log::Any;
 use LedgerSMB::File;
 use LedgerSMB::PGNumber;
-use LedgerSMB::Setting;
 
 my $logger = Log::Any->get_logger(category => "AA");
 
@@ -264,8 +263,7 @@ sub post_transaction {
       ? $invamount
       : $form->round_amount( $paid * $form->{exchangerate}, 2 );
 
-    my $setting = LedgerSMB::Setting->new(%$form);
-    $form->{$_} = $setting->get($_)
+    $form->{$_} = $form->get_setting($_)
         for (qw/ fxgain_accno_id fxloss_accno_id /);
 
     #tshvr4 trunk svn-revison 6589,$form->login seems to contain id instead of name or '',so person_id not found,thus reports with join on person_id not working,quick fix,use employee_name
@@ -743,7 +741,7 @@ sub get_name {
     my $arap = ( $form->{vc} eq 'customer' ) ? 'ar' : 'ap';
     my $ARAP = uc $arap;
 
-    if (LedgerSMB::Setting->new(%$form)->get('show_creditlimit')){
+    if ($form->get_setting('show_creditlimit')){
         $form->{creditlimit} = $form->parse_amount( $myconfig, '0') unless
           $form->{creditlimit} > 0;
         $form->{creditremaining} = $form->{creditlimit};

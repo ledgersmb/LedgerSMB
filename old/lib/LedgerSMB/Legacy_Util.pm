@@ -15,8 +15,6 @@ specified output method.
 use strict;
 use warnings;
 
-use LedgerSMB::Setting;
-
 use Log::Any;
 
 

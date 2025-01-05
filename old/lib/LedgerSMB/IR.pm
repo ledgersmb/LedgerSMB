@@ -208,7 +208,7 @@ sub post_invoice {
 
             my ($dec) = ( $fxsellprice =~ /\.(\d+)/ );
             # deduct discount
-            my $moneyplaces = LedgerSMB::Setting->new(%$form)->get('decimal_places');
+            my $moneyplaces = $form->get_setting('decimal_places');
             $decimalplaces = ($form->{"precision_$i"} && $form->{"precision_$i"} > $moneyplaces)
                              ? $form->{"precision_$i"}
                              : $moneyplaces;
@@ -620,12 +620,10 @@ sub retrieve_invoice {
         }
     }
 
-    my $setting = LedgerSMB::Setting->new(%$form);
-    $form->{$_} = $setting->get($_)
+    $form->{$_} = $form->get_setting($_)
         for (qw/ inventory_accno_id income_accno_id
                  fxgain_accno_id fxloss_accno_id /);
-    @{$form->{currencies}} =
-        (LedgerSMB::Setting->new(%$form))->get_currencies;
+    $form->{currencies} = $form->currencies;
 
     if ( $form->{id} ) {
 
@@ -821,7 +819,7 @@ sub retrieve_item {
         $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
         my ($dec) = ( $ref->{sellprice} =~ /\.(\d+)/ );
-        my $moneyplaces = LedgerSMB::Setting->new(%$form)->get('decimal_places');
+        my $moneyplaces = $form->get_setting('decimal_places');
         $dec = length $dec;
         my $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
 

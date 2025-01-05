@@ -377,10 +377,11 @@ sub display_form
 
     #Form footer  Begins------------------------------------------
 
-    $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
+    $form->{_setting_decimal_places} //= $form->get_setting('decimal_places');
     for (qw(totaldebit totalcredit)) {
         $form->{$_} =
-            $form->format_amount( \%myconfig, $form->{$_}, $form->{_setting_decimal_places}, "0" );
+            $form->format_amount( \%myconfig, $form->{$_},
+                                  $form->{_setting_decimal_places}, "0" );
     }
 
   $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
@@ -507,7 +508,7 @@ sub display_row {
   $form->{totaldebit}  = 0;
   $form->{totalcredit} = 0;
 
-    $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
+    $form->{_setting_decimal_places} //= $form->get_setting('decimal_places');
     for my $i ( 0 .. $form->{rowcount} ) {
 
         my $temphash1;
@@ -809,7 +810,8 @@ sub print {
         my $amount_fx = $form->{"debit_fx_0"} eq "" ? $form->{"credit_fx_0"} : $form->{"debit_fx_0"};
 
         $form->{exchange_rate} = $form->parse_amount( \%myconfig,$amount) / $form->parse_amount( \%myconfig,$amount_fx);
-        $form->{exchange_rate} = $form->format_amount( \%myconfig, $form->{exchange_rate}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
+        $form->{exchange_rate} = $form->format_amount( \%myconfig, $form->{exchange_rate},
+                                                       $form->get_setting('decimal_places') );
 
         $form->{curr} = $form->{"curr_0"};;
 

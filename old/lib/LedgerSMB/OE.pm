@@ -42,7 +42,6 @@ package OE;
 
 use LedgerSMB::Magic qw(OEC_QUOTATION OEC_RFQ);
 use LedgerSMB::Num2text;
-use LedgerSMB::Setting;
 use LedgerSMB::Tax;
 
 use Log::Any;
@@ -585,8 +584,7 @@ sub retrieve {
     my $var;
     my $ref;
 
-    @{$form->{currencies}} =
-        (LedgerSMB::Setting->new(%$form))->get_currencies;
+    $form->{currencies} = $form->currencies;
     $form->{defaultcurrency} = $form->{currencies}->[0];
     $form->{lock_description} = $form->get_setting( 'lock_description' );
 

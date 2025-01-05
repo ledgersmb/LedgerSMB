@@ -1005,7 +1005,7 @@ sub vendor_row {
     </tr>
 |;
 
-    $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
+    $form->{_setting_decimal_places} //= $form->get_setting('decimal_places');
     foreach my $i ( 1 .. $numrows ) {
 
         if ( $form->{selectcurrency} ) {
@@ -1105,7 +1105,7 @@ sub customer_row {
     </tr>
 |;
 
-    $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
+    $form->{_setting_decimal_places} //= $form->get_setting('decimal_places');
     foreach my $i ( 1 .. $numrows ) {
 
         if ( $form->{selectcurrency} ) {
@@ -1276,7 +1276,7 @@ sub assembly_row {
 
     $numrows-- if $form->{project_id};
 
-    $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
+    $form->{_setting_decimal_places} //= $form->get_setting('decimal_places');
     foreach my $i ( 1 .. $numrows ) {
         for (qw(partnumber description)) {
             $form->{"${_}_$i"} = $form->quote( $form->{"${_}_$i"} );

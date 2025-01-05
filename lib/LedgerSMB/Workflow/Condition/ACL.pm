@@ -30,8 +30,6 @@ named role.
 
 use parent qw( Workflow::Condition );
 
-use LedgerSMB::Setting;
-
 use Log::Any qw($log);
 use Workflow::Exception qw( configuration_error );
 

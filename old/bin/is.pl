@@ -53,7 +53,6 @@ use LedgerSMB::IIAA;
 use LedgerSMB::IS;
 use LedgerSMB::PE;
 use LedgerSMB::Tax;
-use LedgerSMB::Setting;
 
 
 require "old/bin/arap.pl";
@@ -442,7 +441,7 @@ sub form_header {
         <td colspan=3>
           <table>
             <tr> |;
-      if (LedgerSMB::Setting->new(%$form)->get('show_creditlimit')){
+      if ($form->get_setting('show_creditlimit')){
           print qq|
               <th align=right nowrap>| . $locale->text('Credit Limit') . qq|</th>
               <td>|
@@ -705,7 +704,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
 |;
     }
 
-    $form->{_setting_decimal_places} //= LedgerSMB::Setting->new(%$form)->get('decimal_places');
+    $form->{_setting_decimal_places} //= $form->get_setting('decimal_places');
     if ( !$form->{taxincluded} ) {
         if ($form->{manual_tax}){
              $tax .= qq|<tr class="listtop">

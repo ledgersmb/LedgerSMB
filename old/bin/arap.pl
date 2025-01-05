@@ -751,11 +751,13 @@ sub reprint {
             $form->{rowcount}--;
             for ( 1 .. $form->{rowcount} ) {
                 $form->{"amount_$_"} =
-                  $form->format_amount( \%myconfig, $form->{"amount_$_"}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
+                    $form->format_amount( \%myconfig, $form->{"amount_$_"},
+                                          $form->get_setting('decimal_places') );
             }
             for ( split / /, $form->{taxaccounts} ) {
                 $form->{"tax_$_"} =
-                  $form->format_amount( \%myconfig, $form->{"tax_$_"}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
+                    $form->format_amount( \%myconfig, $form->{"tax_$_"},
+                                          $form->get_setting('decimal_places') );
             }
             $pf = "print_transaction";
         }
@@ -775,7 +777,8 @@ sub reprint {
 
     for ( 1 .. $form->{paidaccounts} ) {
         $form->{"paid_$_"} =
-          $form->format_amount( \%myconfig, $form->{"paid_$_"}, LedgerSMB::Setting->new(%$form)->get('decimal_places') );
+            $form->format_amount( \%myconfig, $form->{"paid_$_"},
+                                  $form->get_setting('decimal_places') );
     }
 
     $form->{copies} = 1;

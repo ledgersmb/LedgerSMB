@@ -52,8 +52,6 @@ for being in a closed period. Defaults to C<transdate>.
 
 use parent qw( Workflow::Condition );
 
-use LedgerSMB::Setting;
-
 use Log::Any qw($log);
 
 my @PROPS = qw( offset workflow_parameter );
