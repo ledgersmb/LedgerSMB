@@ -1530,10 +1530,11 @@ CREATE OR REPLACE FUNCTION payment_get_open_overpayment_entities(in_account_clas
 $$
 BEGIN
 RETURN QUERY EXECUTE $sql$
-                SELECT DISTINCT entity_credit_id, legal_name, ec.entity_class, null::int, o.meta_number
-                FROM overpayments o
-                JOIN entity e ON (e.id=o.entity_id)
-                WHERE available <> 0 AND $1 = payment_class
+  SELECT DISTINCT entity_credit_id, legal_name, ec.entity_class, null::int, o.meta_number
+    FROM overpayments o
+    JOIN entity e ON e.id = o.entity_id
+    JOIN entity_credit_account ec ON o.entity_credit_id = ec.id
+   WHERE available <> 0 AND $1 = payment_class
 $sql$
 USING in_account_class;
 END
