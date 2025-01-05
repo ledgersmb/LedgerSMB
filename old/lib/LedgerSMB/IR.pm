@@ -623,7 +623,7 @@ sub retrieve_invoice {
     $form->{$_} = $form->get_setting($_)
         for (qw/ inventory_accno_id income_accno_id
                  fxgain_accno_id fxloss_accno_id /);
-    @{$form->{currencies}} = $form->currencies;
+    $form->{currencies} = $form->currencies;
 
     if ( $form->{id} ) {
 

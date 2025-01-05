@@ -584,7 +584,7 @@ sub retrieve {
     my $var;
     my $ref;
 
-    @{$form->{currencies}} = $form->currencies;
+    $form->{currencies} = $form->currencies;
     $form->{defaultcurrency} = $form->{currencies}->[0];
     $form->{lock_description} = $form->get_setting( 'lock_description' );
 

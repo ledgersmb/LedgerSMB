@@ -380,7 +380,8 @@ sub display_form
     $form->{_setting_decimal_places} //= $form->get_setting('decimal_places');
     for (qw(totaldebit totalcredit)) {
         $form->{$_} =
-            $form->format_amount( \%myconfig, $form->{$_}, $form->{_setting_decimal_places}, "0" );
+            $form->format_amount( \%myconfig, $form->{$_},
+                                  $form->{_setting_decimal_places}, "0" );
     }
 
   $transdate = $form->datetonum( \%myconfig, $form->{transdate} );

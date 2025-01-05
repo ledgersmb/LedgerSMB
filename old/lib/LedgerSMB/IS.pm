@@ -1224,7 +1224,7 @@ sub retrieve_invoice {
 
     my $query;
 
-    @{$form->{currencies}} = $form->currencies;
+    $form->{currencies} = $form->currencies;
 
     if ( $form->{id} ) {
 
