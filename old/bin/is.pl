@@ -590,36 +590,34 @@ sub form_header {
 |;
 
 
-    if ( !$form->{readonly} ) {
-        print "<tr><td>";
+    print "<tr><td>";
 
-        %button_types = (
-            print => 'lsmb/PrintButton'
-            );
-        %button = ();
-        for my $action_name ( $wf->get_current_actions( 'main') ) {
-            my $action = $wf->get_action( $action_name );
+    %button_types = (
+        print => 'lsmb/PrintButton'
+        );
+    %button = ();
+    for my $action_name ( $wf->get_current_actions( 'main') ) {
+        my $action = $wf->get_action( $action_name );
 
-            next if ($action->ui // '') eq 'none';
-            $button{$action_name} = {
-                ndx   => $action->order,
-                value => $locale->maketext($action->text),
-                doing => ($action->doing ? $locale->maketext($action->doing) : ''),
-                done  => ($action->done ? $locale->maketext($action->done) : ''),
-                type  => $button_types{$action->ui},
-                tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
-            };
-        }
-
-        for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
-              keys %button ) {
-            $form->print_button( \%button, $_ );
-        }
-
-        $form->hide_form(qw(defaultcurrency workflow_id));
-
-        print "</td></tr>";
+        next if ($action->ui // '') eq 'none';
+        $button{$action_name} = {
+            ndx   => $action->order,
+            value => $locale->maketext($action->text),
+            doing => ($action->doing ? $locale->maketext($action->doing) : ''),
+            done  => ($action->done ? $locale->maketext($action->done) : ''),
+            type  => $button_types{$action->ui},
+            tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
+        };
     }
+
+    for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
+          keys %button ) {
+        $form->print_button( \%button, $_ );
+    }
+
+    $form->hide_form(qw(defaultcurrency workflow_id));
+
+    print "</td></tr>";
 }
 
 sub void {
@@ -1032,11 +1030,8 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
     # type=submit $locale->text('Delete')
     # type=submit $locale->text('Sales Order')
 
-    if ( !$form->{readonly} ) {
-        for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
-        {
-            $form->print_button( \%button, $_ );
-        }
+    for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
+        $form->print_button( \%button, $_ );
     }
 
     my $wf = $form->{_wire}->get( 'workflows' )->fetch_workflow( 'AR/AP', $form->{workflow_id} );

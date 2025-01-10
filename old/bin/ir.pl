@@ -250,10 +250,6 @@ sub invoice_links {
     $form->{AP} = $form->{AP_1} unless $form->{id};
     $form->{AP} //= $form->{AP_links}->{AP}->[0]->{accno} unless $form->{id};
 
-    if ( !$form->{readonly} ) {
-        $form->{readonly} = 1 if $myconfig{acs} && $myconfig{acs} =~ /AP--Vendor Invoice/;
-    }
-
      $form->generate_selects(\%myconfig);
 
 }
@@ -487,32 +483,29 @@ sub form_header {
   </tr>
 |;
 
-    if ( !$form->{readonly} ) {
-        print "<tr><td>";
+    print "<tr><td>";
 
-        %button_types = (
-            print => 'lsmb/PrintButton'
-            );
-        %button = ();
-        for my $action_name ( $wf->get_current_actions( 'main') ) {
-            my $action = $wf->get_action( $action_name );
+    %button_types = (
+        print => 'lsmb/PrintButton'
+        );
+    %button = ();
+    for my $action_name ( $wf->get_current_actions( 'main') ) {
+        my $action = $wf->get_action( $action_name );
 
-            next if ($action->ui // '') eq 'none';
-            $button{$action_name} = {
-                ndx   => $action->order,
-                value => $locale->maketext($action->text),
-                doing => ($action->doing ? $locale->maketext($action->doing) : ''),
-                done  => ($action->done ? $locale->maketext($action->done) : ''),
-                type  => $button_types{$action->ui},
-                tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
-            };
-        }
+        next if ($action->ui // '') eq 'none';
+        $button{$action_name} = {
+            ndx   => $action->order,
+            value => $locale->maketext($action->text),
+            doing => ($action->doing ? $locale->maketext($action->doing) : ''),
+            done  => ($action->done ? $locale->maketext($action->done) : ''),
+            type  => $button_types{$action->ui},
+            tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
+        };
+    }
 
-        for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
-              keys %button ) {
-            $form->print_button( \%button, $_ );
-        }
-
+    for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
+          keys %button ) {
+        $form->print_button( \%button, $_ );
     }
 
     $form->hide_form(qw(defaultcurrency taxaccounts workflow_id));
@@ -929,12 +922,8 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
     # type=submit $locale->text('Purchase Order')
     # type=submit $locale->text('Delete')
 
-    if ( !$form->{readonly} ) {
-        for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
-        {
-            $form->print_button( \%button, $_ );
-        }
-
+    for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button ) {
+        $form->print_button( \%button, $_ );
     }
 
     my $wf = $form->{_wire}->get( 'workflows' )->fetch_workflow( 'AR/AP', $form->{workflow_id} );
