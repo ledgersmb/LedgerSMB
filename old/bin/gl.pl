@@ -386,41 +386,38 @@ sub display_form
 
   $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
   my @buttons;
-  if ( !$form->{readonly} ) {
-      %button_types = (
-          print => 'lsmb/PrintButton'
-          );
-      for my $action_name ( $wf->get_current_actions ) {
-          my $action = $wf->get_action( $action_name );
+    %button_types = (
+        print => 'lsmb/PrintButton'
+        );
+    for my $action_name ( $wf->get_current_actions ) {
+        my $action = $wf->get_action( $action_name );
 
-          next if ($action->ui // '') eq 'none';
-          push @buttons, {
-              ndx   => $action->order,
-              name  => $action->name,
-              text => $locale->maketext($action->text),
-              doing => ($action->doing ? $locale->maketext($action->doing) : ''),
-              done  => ($action->done ? $locale->maketext($action->done) : ''),
-              type  => $button_types{$action->ui},
-              tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
-          };
-      }
+        next if ($action->ui // '') eq 'none';
+        push @buttons, {
+            ndx   => $action->order,
+            name  => $action->name,
+            text => $locale->maketext($action->text),
+            doing => ($action->doing ? $locale->maketext($action->doing) : ''),
+            done  => ($action->done ? $locale->maketext($action->done) : ''),
+            type  => $button_types{$action->ui},
+            tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
+        };
+    }
 
-      @buttons = map {
-          {
-              name => '__action',
-              value => $_->{name},
-              text => $_->{text},
-              type => 'submit',
-              class => $_->{class} // 'submit',
-              order => $_->{ndx},
-              'data-lsmb-doing' => $_->{doing},
-              'data-lsmb-done' => $_->{done},
-              'data-dojo-type' => $_->{type} // 'dijit/form/Button',
-              'data-dojo-props' => $_->{type} ? 'minimalGET: false' : '',
-          }
-      }
-      sort { $a->{ndx} <=> $b->{ndx} } @buttons;
-  }
+    @buttons = map {
+        {
+            name => '__action',
+            value => $_->{name},
+            text => $_->{text},
+            type => 'submit',
+            class => $_->{class} // 'submit',
+            order => $_->{ndx},
+            'data-lsmb-doing' => $_->{doing},
+            'data-lsmb-done' => $_->{done},
+            'data-dojo-type' => $_->{type} // 'dijit/form/Button',
+            'data-dojo-props' => $_->{type} ? 'minimalGET: false' : '',
+        }
+    } sort { $a->{ndx} <=> $b->{ndx} } @buttons;
 
   $form->{recurringset}=0;
   if ( $form->{recurring} ) {

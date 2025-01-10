@@ -391,7 +391,7 @@ sub recurring_transactions {
 
             $column_data{id} = {
                 text => $ref->{id},
-                href => qq|$module?__action=edit&id=$ref->{id}&vc=$ref->{vc}&type=$type&readonly=1|,
+                href => qq|$module?__action=edit&id=$ref->{id}&vc=$ref->{vc}&type=$type|,
                 };
 
             $column_data{repeat} = $repeat;

@@ -812,37 +812,34 @@ sub form_footer {
     # type=submit $locale->text('Save as new')
     # type=submit $locale->text('Delete')
 
-    if ( !$form->{readonly} ) {
-
-        %button = (
-            'update' =>
-              { ndx => 1, key => 'U', value => $locale->text('Update') },
-            'save' => { ndx => 3, key => 'S', value => $locale->text('Save') },
+    %button = (
+        'update' =>
+        { ndx => 1, key => 'U', value => $locale->text('Update') },
+        'save' => { ndx => 3, key => 'S', value => $locale->text('Save') },
         );
 
-        if ( $form->{id} ) {
+    if ( $form->{id} ) {
 
-            if ( !$form->{isassemblyitem} ) {
-                $button{'save_as_new'} = {
-                    ndx   => 7,
-                    key   => 'N',
-                    value => $locale->text('Save as new')
-                };
-            }
-
-            if ( $form->{orphaned} ) {
-                $button{'delete'} =
-                  { ndx => 16, key => 'D', value => $locale->text('Delete') };
-            }
-        }
-        %button = () if $form->{isassemblyitem} && $form->{item} eq 'assembly';
-
-        for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
-        {
-            $form->print_button( \%button, $_ );
+        if ( !$form->{isassemblyitem} ) {
+            $button{'save_as_new'} = {
+                ndx   => 7,
+                key   => 'N',
+                value => $locale->text('Save as new')
+            };
         }
 
+        if ( $form->{orphaned} ) {
+            $button{'delete'} =
+            { ndx => 16, key => 'D', value => $locale->text('Delete') };
+        }
     }
+    %button = () if $form->{isassemblyitem} && $form->{item} eq 'assembly';
+
+    for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
+    {
+        $form->print_button( \%button, $_ );
+    }
+
     if ($form->{callback} and $form->{id}){
         print qq|<div class='returnlink'><a href='$form->{callback}'>|
               . $locale->text('Continue Previous Workflow')

@@ -678,35 +678,33 @@ sub form_header {
 <input type=hidden name="${_}_description" value="$form->{"${_}_description"}">
 |;
     }
-    if ( !$form->{readonly} ) {
-        print "<tr><td>";
+    print "<tr><td>";
 
-        %button_types = (
-            print => 'lsmb/PrintButton'
-            );
-        %button = ();
-        for my $action_name ( $wf->get_current_actions( 'main') ) {
-            my $action = $wf->get_action( $action_name );
+    %button_types = (
+        print => 'lsmb/PrintButton'
+        );
+    %button = ();
+    for my $action_name ( $wf->get_current_actions( 'main') ) {
+        my $action = $wf->get_action( $action_name );
 
-            next if ($action->ui // '') eq 'none';
-            $button{$action_name} = {
-                ndx   => $action->order,
-                value => $locale->maketext($action->text),
-                doing => ($action->doing ? $locale->maketext($action->doing) : ''),
-                done  => ($action->done ? $locale->maketext($action->done) : ''),
-                type  => $button_types{$action->ui},
-                tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
-            };
-        }
-
-        for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
-              keys %button ) {
-            $form->print_button( \%button, $_ );
-        }
-
-        $form->hide_form(qw(defaultcurrency workflow_id));
-        print "</td></tr>";
+        next if ($action->ui // '') eq 'none';
+        $button{$action_name} = {
+            ndx   => $action->order,
+            value => $locale->maketext($action->text),
+            doing => ($action->doing ? $locale->maketext($action->doing) : ''),
+            done  => ($action->done ? $locale->maketext($action->done) : ''),
+            type  => $button_types{$action->ui},
+            tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
+        };
     }
+
+    for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
+          keys %button ) {
+        $form->print_button( \%button, $_ );
+    }
+
+    $form->hide_form(qw(defaultcurrency workflow_id));
+    print "</td></tr>";
 }
 
 sub form_footer {

@@ -1105,18 +1105,43 @@ sub form_footer {
     # type=submit $locale->text('Post as new')
     # type=submit $locale->text('Delete')
 
-    if ( !$form->{readonly} ) {
-        my $printops = &print_options;
-        my $formname = { name => 'formname',
+    my $printops = &print_options;
+    my $formname = { name => 'formname',
                      options => [
-                                  {text=> $locale->text('Transaction'), value => 'transaction'},
-                                ]
-                   };
-        $wf->context->param( transdate => $transdate );
-        %button_types = (
-            print => 'lsmb/PrintButton'
-            );
-        for my $action_name ( $wf->get_current_actions( 'main') ) {
+                         {text=> $locale->text('Transaction'), value => 'transaction'},
+                         ]
+    };
+    $wf->context->param( transdate => $transdate );
+    %button_types = (
+        print => 'lsmb/PrintButton'
+        );
+    for my $action_name ( $wf->get_current_actions( 'main') ) {
+        my $action = $wf->get_action( $action_name );
+
+        next if ($action->ui // '') eq 'none';
+        $button{$action_name} = {
+            ndx   => $action->order,
+            value => $locale->maketext($action->text),
+            doing => ($action->doing ? $locale->maketext($action->doing) : ''),
+            done  => ($action->done ? $locale->maketext($action->done) : ''),
+            type  => $button_types{$action->ui},
+            tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
+        };
+    }
+    ###TODO: Move "reversing" state to the workflow!
+    if ($form->{reversing}) {
+        delete $button{$_} for (qw(schedule update save_temp edit_and_save));
+    }
+
+
+    for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
+          keys %button ) {
+        $form->print_button( \%button, $_ );
+    }
+
+    if ($wf and grep { $_ eq 'print' } $wf->get_current_actions( 'output' ) ) {
+        %button = ();
+        for my $action_name ( $wf->get_current_actions( 'output') ) {
             my $action = $wf->get_action( $action_name );
 
             next if ($action->ui // '') eq 'none';
@@ -1129,44 +1154,17 @@ sub form_footer {
                 tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
             };
         }
-        ###TODO: Move "reversing" state to the workflow!
-        if ($form->{reversing}) {
-            delete $button{$_} for (qw(schedule update save_temp edit_and_save));
-        }
 
+        # Don't show the print selectors, if there's no "Print" button
+        print "<br><br>";
+        print_select($form, $formname);
+        print_select($form, $printops->{lang});
+        print_select($form, $printops->{format});
+        print_select($form, $printops->{media});
 
         for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
               keys %button ) {
             $form->print_button( \%button, $_ );
-        }
-
-        if ($wf and grep { $_ eq 'print' } $wf->get_current_actions( 'output' ) ) {
-            %button = ();
-            for my $action_name ( $wf->get_current_actions( 'output') ) {
-                my $action = $wf->get_action( $action_name );
-
-                next if ($action->ui // '') eq 'none';
-                $button{$action_name} = {
-                    ndx   => $action->order,
-                    value => $locale->maketext($action->text),
-                    doing => ($action->doing ? $locale->maketext($action->doing) : ''),
-                    done  => ($action->done ? $locale->maketext($action->done) : ''),
-                    type  => $button_types{$action->ui},
-                    tooltip => ($action->short_help ? $locale->maketext($action->short_help) : '')
-                };
-            }
-
-            # Don't show the print selectors, if there's no "Print" button
-            print "<br><br>";
-            print_select($form, $formname);
-            print_select($form, $printops->{lang});
-            print_select($form, $printops->{format});
-            print_select($form, $printops->{media});
-
-            for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} }
-                  keys %button ) {
-                $form->print_button( \%button, $_ );
-            }
         }
     }
     if ($form->{id}){
