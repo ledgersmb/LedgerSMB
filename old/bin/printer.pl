@@ -156,16 +156,6 @@ sub print_options {
 
     $options{copies} = $form->{copies};
 
-    # $locale->text('Printed')
-    # $locale->text('E-mailed')
-    # $locale->text('Scheduled')
-
-    $options{status} = {
-        printed   => 'Printed',
-        emailed   => 'E-mailed',
-        recurring => 'Scheduled'
-    };
-
     $options{groupby} = {};
     $options{groupby}{groupprojectnumber} = "checked" if $form->{groupprojectnumber};
     $options{groupby}{grouppartsgroup} = "checked" if $form->{grouppartsgroup};

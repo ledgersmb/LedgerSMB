@@ -598,7 +598,7 @@ sub form_header {
     }
     $form->hide_form(qw(entity_control_code meta_number tax_id address city zipcode state country));
     $form->hide_form(
-        qw(id type printed emailed vc title discount creditlimit creditremaining tradediscount business recurring form_id nextsub
+        qw(id type vc title discount creditlimit creditremaining tradediscount business recurring form_id nextsub
    lock_description)
     );
 
@@ -1459,7 +1459,7 @@ sub invoice {
     }
     my $lib = uc($script);
 
-    for (qw(id subject message printed emailed)) { delete $form->{$_} }
+    for (qw(id subject message)) { delete $form->{$_} }
     $form->{ $form->{vc} } =~ s/--.*//g;
     $form->{type} = "invoice";
 
@@ -1502,7 +1502,7 @@ sub invoice {
     $form->{duedate} = $form->current_date( \%myconfig, $form->{transdate},
                                             $form->{terms} * 1 );
 
-    for (qw(id subject message printed emailed audittrail)) {
+    for (qw(id subject message audittrail)) {
         delete $form->{$_};
     }
 
@@ -1651,7 +1651,7 @@ sub create_backorder {
     }
 
     # clear flags
-    for (qw(id subject message cc bcc printed emailed audittrail)) {
+    for (qw(id subject message cc bcc audittrail)) {
         delete $form->{$_};
     }
 
@@ -1685,7 +1685,7 @@ sub save_as_new {
     # orders don't have a quonumber
     # quotes don't have an ordnumber
     $form->{old_workflow_id} = $form->{workflow_id};
-    for (qw(closed id printed emailed ordnumber quonumber workflow_id)) {
+    for (qw(closed id ordnumber quonumber workflow_id)) {
         delete $form->{$_}
     }
     &_save;
@@ -1696,7 +1696,7 @@ sub print_and_save_as_new {
     # orders don't have a quonumber
     # quotes don't have an ordnumber
     $form->{old_workflow_id} = $form->{workflow_id};
-    for (qw(closed id printed emailed ordnumber quonumber workflow_id)) {
+    for (qw(closed id ordnumber quonumber workflow_id)) {
         delete $form->{$_}
     }
     &_print_and_save;
@@ -1795,7 +1795,7 @@ sub display_ship_receive {
 <input type=hidden name=display_form value=display_ship_receive>
 |;
 
-    $form->hide_form(qw(id type media format printed emailed vc));
+    $form->hide_form(qw(id type media format vc));
 
     print qq|
 <input type=hidden name="old$form->{vc}" value="$form->{"old$form->{vc}"}">

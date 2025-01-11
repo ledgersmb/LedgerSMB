@@ -1876,7 +1876,7 @@ If $form->{id} is set,
 populate the invnumber, transdate, ${vc}_id, datepaid, duedate, ordnumber,
 taxincluded, currency, notes, intnotes, ${vc}, department_id, department,
 oldinvtotal, employee_id, employee, language_code, ponumber,
-reverse, printed, emailed, recurring, exchangerate, and acc_trans
+reverse, recurring, exchangerate, and acc_trans
 attributes of $form with details about the transaction $form->{id}.  All of
 these attributes, save for acc_trans, are scalar; $form->{acc_trans} refers to
 a hash keyed by link elements whose values are lists of references to hashes
@@ -2025,24 +2025,6 @@ sub create_links {
         }
 
         $sth->finish;
-
-        # get printed, emailed
-        $query = qq|
-            SELECT s.printed, s.emailed, s.formname
-            FROM status s WHERE s.trans_id = ?|;
-        $sth = $dbh->prepare($query);
-        $sth->execute( $self->{id} ) || $self->dberror($query);
-        while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
-            $self->{printed} .= "$ref->{formname} "
-              if $ref->{printed};
-            $self->{emailed} .= "$ref->{formname} "
-              if $ref->{emailed};
-        }
-        $sth->finish;
-
-        for (qw(printed emailed)) {
-            $self->{$_} =~ s/ +$//g if $self->{$_}
-        }
 
     # get customer e-mail accounts
     $query = qq|SELECT * FROM eca__list_contacts(?)
@@ -2427,120 +2409,6 @@ sub get_partsgroup {
     }
 
     $sth->finish;
-}
-
-=item $form->update_status();
-
-DELETEs all status rows which have a formname of $form->{formname} and a
-trans_id of $form->{id}.  INSERTs a new row into status where trans_id is
-$form->{id}, formname is $form->{formname}, printed and emailed are true if
-their respective $form attributes match /$form->{formname}/.
-
-=cut
-
-sub update_status {
-
-    my ($self) = @_;
-
-    # no id return
-    return unless $self->{id};
-
-    my $dbh = $self->{dbh};
-
-    my $query = qq|DELETE FROM status
-                    WHERE formname = ?
-                      AND trans_id = ?|;
-
-    my $sth = $dbh->prepare($query);
-    $sth->execute(
-        $self->{formname},
-        $self->{id}
-    ) || $self->dberror($query);
-
-    $sth->finish;
-
-    return unless $self->{printed} || $self->{emailed};
-
-    my $printed = ( $self->{printed} =~ /$self->{formname}/ ) ? "1" : "0";
-    my $emailed = ( $self->{emailed} =~ /$self->{formname}/ ) ? "1" : "0";
-
-    $query = qq|
-        INSERT INTO status
-            (trans_id, printed, emailed, formname)
-        VALUES (?, ?, ?, ?)|;
-
-    $sth = $dbh->prepare($query);
-    $sth->execute(
-        $self->{id},
-        $printed,
-        $emailed,
-        $self->{formname}
-    ) || $self->dberror($query);
-
-    $sth->finish;
-}
-
-=item $form->save_status();
-
-Clears out any old status entries for $form->{id} and saves new status entries.
-Printed and emailed form
-names are extracted from $form->{printed} and $form->{emailed}.  The
-printed, and emailed fields are space separated lists.
-
-=cut
-
-sub save_status {
-
-    my ($self) = @_;
-    my $dbh = $self->{dbh};
-
-    my $formnames  = $self->{printed};
-    my $emailforms = $self->{emailed};
-
-    my $query = qq|DELETE FROM status
-                    WHERE trans_id = ?|;
-
-    my $sth = $dbh->prepare($query);
-    $sth->execute(
-        $self->{id}
-    ) || $self->dberror($query);
-    $sth->finish;
-
-    my $formname;
-    my $printed;
-    my $emailed;
-
-    # save printed, emailed info
-    $formnames  =~ s/^ +//g;
-    $emailforms =~ s/^ +//g;
-
-    my %status = ();
-    for (split / +/, $formnames) {
-        $status{$_}{printed} = 1
-    }
-
-    for (split / +/, $emailforms) {
-        $status{$_}{emailed} = 1
-    }
-
-    foreach my $formname ( keys %status ) {
-        $printed = ( $formnames  =~ /$self->{formname}/ ) ? "1" : "0";
-        $emailed = ( $emailforms =~ /$self->{formname}/ ) ? "1" : "0";
-
-        $query = qq|
-            INSERT INTO status (trans_id, printed, emailed,
-                formname)
-            VALUES (?, ?, ?, ?)|;
-
-        $sth = $dbh->prepare($query);
-        $sth->execute(
-            $self->{id},
-            $printed,
-            $emailed,
-            $formname
-        );
-        $sth->finish;
-    }
 }
 
 =item $form->get_recurring();

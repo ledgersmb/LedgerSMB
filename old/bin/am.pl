@@ -642,7 +642,7 @@ sub process_transactions {
                         $form->{paidaccounts} = -1;
                     }
 
-                    for (qw(id workflow_id recurring intnotes printed emailed)) {
+                    for (qw(id workflow_id recurring intnotes)) {
                         delete $form->{$_};
                     }
                     my $wf = $form->{_wire}->get('workflows')
@@ -775,7 +775,7 @@ sub process_transactions {
                 #         $pt->{req}, "days" )
                 #       if $form->{reqdate};
 
-                #     for (qw(id recurring intnotes printed emailed)) {
+                #     for (qw(id recurring intnotes)) {
                 #         delete $form->{$_};
                 #     }
                 #     for ( 1 .. $form->{rowcount} ) {

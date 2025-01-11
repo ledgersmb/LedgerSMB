@@ -500,9 +500,6 @@ VALUES (?, (select id from account where accno = ?), ?, ?, ?)
 
     $form->add_shipto($form->{id}, 1);
 
-    # save printed, emailed
-    $form->save_status($dbh);
-
     if ( $form->{type} =~ /_order$/ ) {
 
         # adjust onhand
@@ -542,12 +539,6 @@ sub delete {
               if ( $inv || $assembly );
         }
     }
-    $sth->finish;
-
-    # delete status entries
-    $query = qq|DELETE FROM status WHERE trans_id = ?|;
-    $sth   = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
     $sth->finish;
 
     # delete individual entries
@@ -622,23 +613,6 @@ sub retrieve {
         $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
         $sth->finish;
-
-        # get printed, emailed
-        $query = qq|
-            SELECT s.printed, s.emailed, s.formname
-            FROM status s
-            WHERE s.trans_id = ?|;
-        $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id} ) || $form->dberror($query);
-
-        while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-            $form->{printed} .= "$ref->{formname} "
-              if $ref->{printed};
-            $form->{emailed} .= "$ref->{formname} "
-              if $ref->{emailed};
-        }
-        $sth->finish;
-        for (qw(printed emailed)) { $form->{$_} =~ s/ +$//g }
 
         # retrieve individual items
         $query = qq|

@@ -523,8 +523,6 @@ sub post_transaction {
 
     IIAA->process_form_payments($myconfig, $form);
 
-    # save printed
-    $form->save_status($dbh);
     return 1 unless $dbh->errstr;
 }
 

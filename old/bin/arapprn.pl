@@ -233,16 +233,6 @@ sub print_transaction {
     } elsif ( $form->{media} !~ /(zip|screen)/ ) {
         $form->{OUT} = $form->{_wire}->get( 'printers' )->get( $form->{media} );
         $form->{printmode} = '|-';
-
-        if ( $form->{printed} !~ /$form->{formname}/ ) {
-
-            $form->{printed} .= " $form->{formname}";
-            $form->{printed} =~ s/^ //;
-
-            $form->update_status;
-        }
-
-        $old_form->{printed} = $form->{printed} if %$old_form;
     }
 
     $form->{fileid} = $form->{invnumber};
