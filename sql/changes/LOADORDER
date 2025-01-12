@@ -195,3 +195,4 @@ mc/delete-migration-validation-data.sql
 1.12/shipto_attn.sql
 # 1.13 changes
 1.13/change-logout.sql
+1.13/rm-status.sql

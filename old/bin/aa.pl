@@ -636,7 +636,7 @@ $form->open_status_div($status_div_id) . qq|
 
 |;
     $form->hide_form(
-        qw(batch_id approved id printed emailed sort
+        qw(batch_id approved id sort
            oldtransdate audittrail recurring checktax reverse subtype
            entity_control_code tax_id meta_number default_reportable
            address city zipcode state country workflow_id reversing)
@@ -1544,7 +1544,6 @@ sub post {
         my $wf = $form->{_wire}->get('workflows')->fetch_workflow( 'AR/AP', $id );
         $wf->execute_action( $form->{__action} );
 
-        $form->update_status;
        if ( $form->{printandpost} ) {
            &{"print_$form->{formname}"}( $old_form, 1 );
         }

@@ -321,7 +321,7 @@ sub post_as_new {
     my %args = @_;
 
     $form->{old_workflow_id} = $form->{workflow_id};
-    for (qw(id printed emailed workflow_id invnumber)) { delete $form->{$_} }
+    for (qw(id workflow_id invnumber)) { delete $form->{$_} }
     $form->{invnumber} = $args{invnumber} // '';
 
     my $wf = $form->{_wire}->get('workflows')
@@ -335,7 +335,7 @@ sub post_as_new {
 sub print_and_post_as_new {
 
     $form->{old_workflow_id} = $form->{workflow_id};
-    for (qw(id printed emailed workflow_id)) { delete $form->{$_} }
+    for (qw(id workflow_id)) { delete $form->{$_} }
 
     my $wf = $form->{_wire}->get('workflows')
         ->create_workflow( 'AR/AP' );

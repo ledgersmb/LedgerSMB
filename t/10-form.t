@@ -44,8 +44,6 @@
 ##sub like {
 ##sub redo_rows {
 ##sub get_partsgroup {
-##sub update_status {
-##sub save_status {
 ##sub get_recurring {
 ##sub save_recurring {
 ##sub save_intnotes {

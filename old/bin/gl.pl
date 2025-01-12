@@ -776,7 +776,7 @@ sub check_balanced {
 }
 
 sub save_as_new {
-    for (qw(id printed emailed)) { delete $form->{$_} }
+    for (qw(id)) { delete $form->{$_} }
     if ($form->{workflow_id}) {
         my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
             'GL', $form->{workflow_id}

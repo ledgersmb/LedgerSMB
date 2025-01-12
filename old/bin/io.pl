@@ -1039,7 +1039,7 @@ sub quotation {
 
 sub create_form {
 
-    for (qw(id printed emailed workflow_id)) { delete $form->{$_} }
+    for (qw(id workflow_id)) { delete $form->{$_} }
 
     $form->{script} = 'oe.pl';
 
@@ -1403,17 +1403,6 @@ sub print_form {
         $form->{OUT} =~ s/<%(fax)%>/<%$form->{vc}$1%>/;
         $form->{OUT} =~ s/<%(.*?)%>/$form->{$1}/g;
         $form->{printmode} = '|-';
-
-        if ( $form->{printed} !~ /$form->{formname}/ ) {
-
-            $form->{printed} .= " $form->{formname}";
-            $form->{printed} =~ s/^ //;
-
-            $form->update_status;
-        }
-
-        $old_form->{printed} = $form->{printed} if %$old_form;
-
     } elsif ( $form->{media} eq 'email' ) {
         $form->{plainpaper} = 1;
         $output_options{filename} = $form->{formname} . '-'. $form->{"${inv}number"};
