@@ -13,6 +13,7 @@ use warnings;
 use Archive::Zip qw( :ERROR_CODES :CONSTANTS );
 use DateTime::Format::Strptime;
 use File::Spec;
+use IO::Handle;
 
 use LedgerSMB::Admin::Command;
 use LedgerSMB::App_State;
@@ -65,7 +66,7 @@ Template name          Format Language  Last modified
 sub dump {
     my ($self, $dbh, $options, @args) = @_;
     my ($db, $name, $format, $language) = @args;
-    $language = undef if $language eq 'all';
+    $language = undef if $language and $language eq 'all';
     my $template = $dbh->selectall_arrayref(
         q{SELECT template FROM template
            WHERE ($1 is null OR template_name = $1)
@@ -74,9 +75,11 @@ sub dump {
         { Slice => {} },
         $name, $format, $language)
         or die $dbh->errstr;
-
-    print $template->[0]->{template};
     $dbh->disconnect;
+
+    STDOUT->flush();
+    binmode STDOUT, ':encoding(UTF-8)';
+    print $template->[0]->{template};
     return 0;
 }
 
@@ -133,6 +136,7 @@ sub load {
     my $content;
     {
         local $/ = undef;
+        binmode STDIN, ':encoding(UTF-8)';
         $content = <STDIN>;
     }
     $dbh->do(q{DELETE FROM template
