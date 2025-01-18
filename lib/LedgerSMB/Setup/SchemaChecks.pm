@@ -72,7 +72,7 @@ sub _wrap_html {
                 resubmit_action => $request->{resubmit_action},
                 # note: the line below works because the upgrade
                 # has completed when this wrapper is being run
-                run_id          => $request->{database}->upgrade_run_id,
+                run_id          => $request->{run_id},
                 title           => $failing_check->{title}
             },
             {
