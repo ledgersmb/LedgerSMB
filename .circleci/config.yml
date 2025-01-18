@@ -135,9 +135,9 @@ commands:
           keys:
             # Find a cache corresponding to this specific package-lock.json checksum
             # when this file is changed, this key will fail
-            - v2-yarn-deps-{{ checksum "UI/yarn.lock" }}
+            - v3-yarn-deps-{{ checksum "UI/yarn.lock" }}
             # Find the most recently generated cache used from any branch
-            - v2-yarn-deps-
+            - v3-yarn-deps-
 
       - run:
           name: Make JS + README
@@ -147,7 +147,7 @@ commands:
             make readme
 
       - save_cache:
-          key: v2-yarn-deps-{{ checksum "UI/yarn.lock" }}
+          key: v3-yarn-deps-{{ checksum "UI/yarn.lock" }}
           paths:
             - UI/node_modules
 
