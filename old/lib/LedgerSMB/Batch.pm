@@ -44,9 +44,10 @@ package LedgerSMB::Batch;
 
 use strict;
 use warnings;
-
-use LedgerSMB::Setting;
 use base qw(LedgerSMB::PGOld);
+
+use LedgerSMB::Magic qw( BC_PAYMENT BC_PAYMENT_REVERSAL BC_RECEIPT BC_RECEIPT_REVERSAL );
+use LedgerSMB::Setting;
 
 use Log::Any qw($log);
 
@@ -255,11 +256,12 @@ Returns the batch C<approved_on> date (being the current database date).
 sub post {
     my ($self) = @_;
 
-    if (not (defined $self->{batch_class}
-             and ($self->{batch_class} eq 'payment'
-                  or $self->{batch_class} eq 'payment_reversal'
-                  or $self->{batch_class} eq 'receipt'
-                  or $self->{batch_class} eq 'receipt_reversal'))) {
+    $log->info("Deleting batch $self->{id} of class $self->{batch_class_id}");
+    if (not (defined $self->{batch_class_id}
+             and ($self->{batch_class_id} == BC_PAYMENT
+                  or $self->{batch_class_id} == BC_PAYMENT_REVERSAL
+                  or $self->{batch_class_id} == BC_RECEIPT
+                  or $self->{batch_class_id} == BC_RECEIPT_REVERSAL))) {
         # payments and receipts (and reversals) are part of a transaction
         # which may already have been approved, meaning that 'batch-approve'
         # isn't available...
