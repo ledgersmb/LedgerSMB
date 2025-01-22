@@ -24,19 +24,6 @@ use LedgerSMB::OE;
 
 # end of main
 
-sub add {
-
-    # construct callback
-    $form->{callback} = "$form->{script}?__action=add&type=$form->{type}"
-      unless $form->{callback};
-
-    &{"prepare_$form->{type}"};
-
-    $form->{orphaned} = 1;
-    &display_form;
-
-}
-
 sub edit {
 
     &{"prepare_$form->{type}"};
@@ -695,10 +682,6 @@ sub display_form {
 }
 
 sub continue { &{ $form->{nextsub} } }
-
-sub add_group      { &add }
-sub add_project    { &add }
-sub add_job        { &add }
 
 sub project_sales_order {
 

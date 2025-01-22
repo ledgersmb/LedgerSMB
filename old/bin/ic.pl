@@ -1471,8 +1471,9 @@ sub update {
                 $form->{rowcount} = $i;
                 $form->{assembly_rows}++;
 
-                &new_item;
-
+                $form->error(
+                    $locale->text('Part [_1] not on file!', $form->{"partnumber_$i"})
+                    );
             }
         }
 
