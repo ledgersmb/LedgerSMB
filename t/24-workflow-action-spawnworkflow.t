@@ -11,6 +11,7 @@ BEGIN {
 }
 
 use Workflow;
+use Workflow::History;
 use Workflow::Persister;
 use LedgerSMB::Workflow::Action::SpawnWorkflow;
 
@@ -18,8 +19,12 @@ package TestFactory {};
 
 my $c  = Workflow::Context->new();
 my $f  = bless {}, 'TestFactory';
-my $wf = Workflow->new( 'id', 'INITIAL', { type => 'test' }, [], $f );
-my $wf2 = Workflow->new( 'id2', 'INITIAL', { type => 'test' }, [], $f );
+my $wf = Workflow->new(
+    'id', 'INITIAL', { type => 'test',
+                       history_class => 'Workflow::History' }, [], $f );
+my $wf2 = Workflow->new(
+    'id2', 'INITIAL', { type => 'test',
+                        history_class => 'Workflow::History' }, [], $f );
 
 $wf->context( $c );
 

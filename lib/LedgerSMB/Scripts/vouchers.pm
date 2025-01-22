@@ -375,6 +375,7 @@ sub batch_approve {
     for my $count (1 .. $batch->{rowcount_}){
         next unless $batch->{'select_' . $count};
         $batch->{batch_id} = $batch->{"row_$count"};
+        $batch->get;
         $batch->post;
     }
     $request->{report_name} = 'batches';

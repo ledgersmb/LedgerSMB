@@ -271,7 +271,8 @@ sub _get_orders_by_id {
 
     $ord{workflow} = {
         state => $wf->state,
-        actions => [ sort $wf->get_current_actions ]
+        actions => [ grep { ($wf->get_action( $_ )->ui // '') ne 'none' }
+                     sort $wf->get_current_actions ]
     };
 
     return [ HTTP_OK,
