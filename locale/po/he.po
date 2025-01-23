@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.11.20-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2024-11-02 18:52+0000\n"
+"POT-Creation-Date: 2025-01-23 21:25+0000\n"
 "Last-Translator: Amir Inbar <amir@srvit.co.il>, 2023\n"
 "Language-Team: Hebrew (https://app.transifex.com/ledgersmb/teams/58325/he/)\n"
 "Language: he\n"
@@ -1211,7 +1211,7 @@ msgstr "ביליון"
 msgid "Bin"
 msgstr ""
 
-#: old/bin/am.pl:985 old/bin/io.pl:1223 old/bin/oe.pl:277 old/bin/oe.pl:289
+#: old/bin/am.pl:1004 old/bin/io.pl:1223 old/bin/oe.pl:277 old/bin/oe.pl:289
 #: old/bin/printer.pl:85 old/bin/printer.pl:99 templates/demo/bin_list.html:16
 #: templates/demo/bin_list.html:32 templates/demo/bin_list.tex:89
 #: sql/Pg-database.sql:2723 sql/Pg-database.sql:2736
@@ -1903,7 +1903,7 @@ msgstr "מספר חשבון זכות"
 msgid "Credit Accounts"
 msgstr "חשבונות זכות"
 
-#: old/bin/am.pl:978 templates/demo/invoice.html:32
+#: old/bin/am.pl:997 templates/demo/invoice.html:32
 #: templates/demo/invoice.tex:136 sql/Pg-database.sql:2674
 msgid "Credit Invoice"
 msgstr "חשבונית זיכוי"
@@ -2239,7 +2239,7 @@ msgstr "ימים"
 msgid "Debit"
 msgstr "חוב"
 
-#: old/bin/am.pl:979 sql/Pg-database.sql:2670
+#: old/bin/am.pl:998 sql/Pg-database.sql:2670
 msgid "Debit Invoice"
 msgstr "חשבונית חוב"
 
@@ -2712,7 +2712,7 @@ msgstr ""
 msgid "E-mail"
 msgstr ""
 
-#: old/bin/am.pl:950
+#: old/bin/am.pl:969
 msgid "E-mail address missing!"
 msgstr ""
 
@@ -3869,7 +3869,7 @@ msgstr "מלאי הועבר!"
 #: lib/LedgerSMB/Report/Inventory/Search.pm:303
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:176
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:268
-#: lib/LedgerSMB/Scripts/payment.pm:932 old/bin/am.pl:977 old/bin/io.pl:1163
+#: lib/LedgerSMB/Scripts/payment.pm:932 old/bin/am.pl:996 old/bin/io.pl:1163
 #: old/bin/is.pl:1400 old/bin/is.pl:273 old/bin/printer.pl:48
 #: templates/demo/invoice.html:16 templates/demo/invoice.tex:138
 #: templates/demo/printPayment.html:44 UI/templates/widget.html:51
@@ -5144,7 +5144,7 @@ msgstr ""
 msgid "POST AND PRINT"
 msgstr ""
 
-#: old/bin/am.pl:980 old/bin/io.pl:1182 old/bin/is.pl:1029 old/bin/is.pl:275
+#: old/bin/am.pl:999 old/bin/io.pl:1182 old/bin/is.pl:1029 old/bin/is.pl:275
 #: old/bin/oe.pl:265 old/bin/oe.pl:284 old/bin/printer.pl:76
 #: old/bin/printer.pl:94 templates/demo/packing_list.html:16
 #: templates/demo/packing_list.html:33 templates/demo/packing_list.tex:96
@@ -5389,7 +5389,7 @@ msgstr "טלפון"
 msgid "Physical"
 msgstr "פיזי"
 
-#: old/bin/am.pl:981 old/bin/io.pl:1205 old/bin/is.pl:274 old/bin/oe.pl:264
+#: old/bin/am.pl:1000 old/bin/io.pl:1205 old/bin/is.pl:274 old/bin/oe.pl:264
 #: old/bin/oe.pl:283 old/bin/printer.pl:72 old/bin/printer.pl:90
 #: templates/demo/pick_list.html:16 templates/demo/pick_list.html:32
 #: templates/demo/pick_list.tex:89 sql/Pg-database.sql:2719
@@ -5537,7 +5537,7 @@ msgstr ""
 msgid "Posting Date"
 msgstr ""
 
-#: old/bin/am.pl:850
+#: old/bin/am.pl:859
 msgid "Posting GL Transaction [_1]"
 msgstr ""
 
@@ -5646,43 +5646,43 @@ msgstr "הודפס"
 msgid "Printer"
 msgstr "מדפסת"
 
-#: old/bin/am.pl:889
+#: old/bin/am.pl:908
 msgid "Printing Bin List [_1]"
 msgstr ""
 
-#: old/bin/am.pl:882
+#: old/bin/am.pl:901
 msgid "Printing Credit Invoice [_1]"
 msgstr ""
 
-#: old/bin/am.pl:883
+#: old/bin/am.pl:902
 msgid "Printing Debit Invoice [_1]"
 msgstr ""
 
-#: old/bin/am.pl:881
+#: old/bin/am.pl:900
 msgid "Printing Invoice [_1]"
 msgstr "מדפיס חשבונית [_1]"
 
-#: old/bin/am.pl:884
+#: old/bin/am.pl:903
 msgid "Printing Packing List [_1]"
 msgstr "מדפיס רשימת אריזה [_1]"
 
-#: old/bin/am.pl:885
+#: old/bin/am.pl:904
 msgid "Printing Pick List [_1]"
 msgstr "מדפיס רשימת איסוף [_1]"
 
-#: old/bin/am.pl:888
+#: old/bin/am.pl:907
 msgid "Printing Purchase Order [_1]"
 msgstr "מדפיס הזמנת רכש [_1]"
 
-#: old/bin/am.pl:886
+#: old/bin/am.pl:905
 msgid "Printing Sales Order [_1]"
 msgstr "מדפיס הזמנת מכירה [_1]"
 
-#: old/bin/am.pl:880
+#: old/bin/am.pl:899
 msgid "Printing Transaction [_1]"
 msgstr ""
 
-#: old/bin/am.pl:887
+#: old/bin/am.pl:906
 msgid "Printing Work Order [_1]"
 msgstr ""
 
@@ -5759,7 +5759,7 @@ msgstr "תאריך רכישה:"
 msgid "Purchase History"
 msgstr "היסטוריית רכישה"
 
-#: old/bin/am.pl:749 old/bin/am.pl:984 old/bin/io.pl:1216 old/bin/ir.pl:940
+#: old/bin/am.pl:1003 old/bin/am.pl:758 old/bin/io.pl:1216 old/bin/ir.pl:940
 #: old/bin/oe.pl:1260 old/bin/oe.pl:276 old/bin/oe.pl:693 old/bin/oe.pl:911
 #: old/bin/printer.pl:81 t/data/04-complex_template.html:343
 #: templates/demo/purchase_order.html:16 templates/demo/purchase_order.html:32
@@ -6306,7 +6306,7 @@ msgstr "חשבונית מכירה"
 msgid "Sales Invoice/AR Transaction Number"
 msgstr ""
 
-#: old/bin/am.pl:743 old/bin/am.pl:982 old/bin/io.pl:1168 old/bin/is.pl:1013
+#: old/bin/am.pl:1001 old/bin/am.pl:752 old/bin/io.pl:1168 old/bin/is.pl:1013
 #: old/bin/oe.pl:1254 old/bin/oe.pl:262 old/bin/oe.pl:682 old/bin/oe.pl:910
 #: old/bin/printer.pl:64 templates/demo/sales_order.html:16
 #: templates/demo/sales_order.html:33 templates/demo/sales_order.tex:115
@@ -6473,7 +6473,7 @@ msgstr ""
 msgid "Saving Translations..."
 msgstr ""
 
-#: old/bin/am.pl:787
+#: old/bin/am.pl:796
 msgid "Saving [_1] [_2]"
 msgstr ""
 
@@ -6709,43 +6709,43 @@ msgstr "מכירה"
 msgid "Sell Price"
 msgstr "מחיר מכירה"
 
-#: old/bin/am.pl:937
+#: old/bin/am.pl:956
 msgid "Sending Bin List [_1]"
 msgstr ""
 
-#: old/bin/am.pl:930
+#: old/bin/am.pl:949
 msgid "Sending Credit Invoice [_1]"
 msgstr ""
 
-#: old/bin/am.pl:931
+#: old/bin/am.pl:950
 msgid "Sending Debit Invoice [_1]"
 msgstr ""
 
-#: old/bin/am.pl:929
+#: old/bin/am.pl:948
 msgid "Sending Invoice [_1]"
 msgstr ""
 
-#: old/bin/am.pl:932
+#: old/bin/am.pl:951
 msgid "Sending Packing List [_1]"
 msgstr ""
 
-#: old/bin/am.pl:933
+#: old/bin/am.pl:952
 msgid "Sending Pick List [_1]"
 msgstr ""
 
-#: old/bin/am.pl:936
+#: old/bin/am.pl:955
 msgid "Sending Purchase Order [_1]"
 msgstr ""
 
-#: old/bin/am.pl:934
+#: old/bin/am.pl:953
 msgid "Sending Sales Order [_1]"
 msgstr ""
 
-#: old/bin/am.pl:928
+#: old/bin/am.pl:947
 msgid "Sending Transaction [_1]"
 msgstr ""
 
-#: old/bin/am.pl:935
+#: old/bin/am.pl:954
 msgid "Sending Work Order [_1]"
 msgstr ""
 
@@ -7747,7 +7747,7 @@ msgstr ""
 msgid "Trade Discount"
 msgstr ""
 
-#: old/bin/aa.pl:1109 old/bin/am.pl:976
+#: old/bin/aa.pl:1109 old/bin/am.pl:995
 msgid "Transaction"
 msgstr "עסקה"
 
@@ -8394,7 +8394,7 @@ msgstr "כל החודש קו ישר"
 msgid "Widgit Themes"
 msgstr ""
 
-#: old/bin/am.pl:983 old/bin/io.pl:1175 old/bin/oe.pl:263 old/bin/printer.pl:68
+#: old/bin/am.pl:1002 old/bin/io.pl:1175 old/bin/oe.pl:263 old/bin/printer.pl:68
 #: templates/demo/work_order.html:16 templates/demo/work_order.html:32
 #: templates/demo/work_order.tex:124 sql/Pg-database.sql:2721
 #: sql/Pg-database.sql:2734
@@ -8577,8 +8577,8 @@ msgstr ""
 msgid "disposal"
 msgstr ""
 
-#: old/bin/am.pl:710 old/bin/am.pl:792 old/bin/am.pl:860 old/bin/am.pl:908
-#: old/bin/am.pl:960
+#: old/bin/am.pl:710 old/bin/am.pl:801 old/bin/am.pl:879 old/bin/am.pl:927
+#: old/bin/am.pl:979
 msgid "done"
 msgstr "בוצע"
 
@@ -8586,7 +8586,7 @@ msgstr "בוצע"
 msgid "e"
 msgstr ""
 
-#: old/bin/am.pl:795 old/bin/am.pl:911 old/bin/am.pl:963
+#: old/bin/am.pl:804 old/bin/am.pl:930 old/bin/am.pl:982
 msgid "failed"
 msgstr "נכשל"
 
@@ -8642,7 +8642,7 @@ msgstr ""
 msgid "label"
 msgstr "תווית"
 
-#: UI/src/views/Home.vue:57 UI/src/views/Home.vue:42
+#: UI/src/views/Home.vue:42 UI/src/views/Home.vue:57
 msgid "mailing lists"
 msgstr ""
 
