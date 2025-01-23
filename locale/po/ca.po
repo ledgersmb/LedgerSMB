@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.11.21-dev\n"
+"Project-Id-Version: LedgerSMB 1.11.20-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-01-23 21:25+0000\n"
+"POT-Creation-Date: 2025-01-23 23:01+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2023\n"
 "Language-Team: Catalan (https://app.transifex.com/ledgersmb/teams/58325/ca/)\n"
 "Language: ca\n"
