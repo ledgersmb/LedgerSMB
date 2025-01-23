@@ -73,6 +73,10 @@ Updated dependencies
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.21
+* Exclude buggy Workflow version 2.02 dependency (#8610)
+
+
 Changelog for 1.11.20
 * Fix warnings in 'ledgersmb-admin template' command (#8595)
 * Fix pre-upgrade schema check feedback, regressed in 1.11.17 (#8606)
