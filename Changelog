@@ -3,6 +3,11 @@
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.20
+* Fix warnings in 'ledgersmb-admin template' command (#8595)
+* Fix pre-upgrade schema check feedback, regressed in 1.11.17 (#8606)
+
+
 Changelog for 1.11.19
 * Fix post-and-approve action failing to approve transactions (#8442)
 * Fix failure to load modules using Perl 5.40 (#8468)
