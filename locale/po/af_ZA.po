@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.12.2-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-01-05 14:40+0000\n"
+"POT-Creation-Date: 2025-01-23 22:11+0000\n"
 "Language-Team: Afrikaans (South Africa) (https://app.transifex.com/ledgersmb/"
 "teams/58325/af_ZA/)\n"
 "Language: af_ZA\n"
@@ -729,7 +729,7 @@ msgstr ""
 msgid "Annual Straight Line Monthly"
 msgstr ""
 
-#: old/lib/LedgerSMB/Batch.pm:165
+#: old/lib/LedgerSMB/Batch.pm:166
 msgid "Any"
 msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.12.2-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-01-05 14:40+0000\n"
+"POT-Creation-Date: 2025-01-23 22:11+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2024\n"
 "Language-Team: Swedish (https://app.transifex.com/ledgersmb/teams/58325/sv/)\n"
 "Language: sv\n"
@@ -736,7 +736,7 @@ msgstr ""
 msgid "Annual Straight Line Monthly"
 msgstr ""
 
-#: old/lib/LedgerSMB/Batch.pm:165
+#: old/lib/LedgerSMB/Batch.pm:166
 msgid "Any"
 msgstr ""
 
