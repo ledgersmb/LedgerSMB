@@ -1,6 +1,6 @@
 {
   "name": "ledgersmb-js",
-  "version": "1.11.20-dev",
+  "version": "1.11.20",
   "lockfileVersion": 2,
   "description": "LedgerSMB JS files",
   "keywords": [
