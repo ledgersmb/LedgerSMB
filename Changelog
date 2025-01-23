@@ -3,6 +3,13 @@
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.2
+* Fix warnings in 'ledgersmb-admin template' command (#8595)
+* Fix pre-upgrade schema check feedback (#8606)
+* Fix failure to post payment/receipt batches (#8610)
+* Exclude buggy Workflow version 2.02 dependency (#8610)
+
+
 Changelog for 1.12.1
 * Ignore Content-Type header on GET requests (#8562)
 * Fix persisting of E-mail workflows without attachments (#8564)
