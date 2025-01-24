@@ -196,3 +196,4 @@ mc/delete-migration-validation-data.sql
 # 1.13 changes
 1.13/change-logout.sql
 1.13/rm-status.sql
+1.13/fk-actions-for-is_used-functions.sql

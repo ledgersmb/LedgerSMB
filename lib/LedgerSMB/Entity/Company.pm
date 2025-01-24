@@ -81,11 +81,20 @@ has 'sic_code' => (is => 'rw', isa => 'Maybe[Str]', required => 0);
 
 Date when the company was entered into LedgerSMB
 
+=cut
+
+has 'created' => (is => 'rw', isa => 'LedgerSMB::PGDate');
+
+=item is_used
+
+Boolean (Readonly). True if the company entity is used in the database
+(and hence can't be deleted).
+
 =back
 
 =cut
 
-has 'created' => (is => 'rw', isa => 'LedgerSMB::PGDate');
+has 'is_used' => (is => 'ro');
 
 =head1 METHODS
 
