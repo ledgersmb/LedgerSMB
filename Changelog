@@ -20,6 +20,8 @@ Cleanup & architecture improvements
 * Loading of main section more predictable through state machine use (#8530)
 * Removed deps in favor of (experimental) built-in functionality (#8571, #8572)
 * Allow workflows to determine buttons on read-only screens (#8583)
+* Removal of custom SMTP handling class; replaced with Email::Sender (#8576)
+* Dead code removal (#8579, #8591, #8613)
 
 Updated dependencies
 * Feature::Compat::Try (removed)
