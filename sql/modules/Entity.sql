@@ -11,6 +11,30 @@ set client_min_messages = 'warning';
 
 BEGIN;
 
+
+CREATE OR REPLACE FUNCTION entity__is_used(in_id int)
+  RETURNS boolean AS
+  $$
+BEGIN
+  BEGIN
+    delete from entity where id = in_id;
+    raise sqlstate 'P0004';
+  EXCEPTION
+    WHEN foreign_key_violation THEN
+      return true;
+    WHEN assert_failure THEN
+      return false;
+  END;
+END;
+$$ language plpgsql;
+
+COMMENT ON FUNCTION entity__is_used(in_id int) IS
+  $$Checks whether the entity is used or not.
+
+In case the entity isn't used, it should be possible to delete it.
+$$; --'
+
+
 CREATE OR REPLACE FUNCTION entity_save(
     in_entity_id int, in_name text, in_entity_class INT
 ) RETURNS INT AS $$

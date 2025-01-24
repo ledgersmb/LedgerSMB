@@ -228,6 +228,50 @@ COMMENT ON FUNCTION account__get_from_accno(in_accno text) IS
 $$ Returns the account where the accno field matches (excatly) the
 in_accno provided.$$;
 
+CREATE OR REPLACE FUNCTION account__is_used(in_id int)
+RETURNS BOOL AS
+$$
+BEGIN
+  BEGIN
+    delete from account where id = in_id;
+    raise sqlstate 'P0004';
+  EXCEPTION
+    WHEN foreign_key_violation THEN
+      return true;
+    WHEN assert_failure THEN
+      return false;
+  END;
+END;
+$$ language plpgsql;
+
+COMMENT ON FUNCTION account__is_used(in_id int) IS
+  $$Checks whether the general ledger account is used or not.
+
+In case it isn't used, it should be possible to delete it.
+$$; --'
+
+CREATE OR REPLACE FUNCTION account_heading__is_used(in_id int)
+RETURNS BOOL AS
+$$
+BEGIN
+  BEGIN
+    delete from account_heading where id = in_id;
+    raise sqlstate 'P0004';
+  EXCEPTION
+    WHEN foreign_key_violation THEN
+      return true;
+    WHEN assert_failure THEN
+      return false;
+  END;
+END;
+$$ language plpgsql;
+
+COMMENT ON FUNCTION account_heading__is_used(in_id int) IS
+  $$Checks whether the general ledger account heading is used or not.
+
+In case it isn't used, it should be possible to delete it.
+$$; --'
+
 CREATE OR REPLACE FUNCTION account__is_recon(in_accno text) RETURNS BOOL AS
 $$ SELECT count(*) > 0
      FROM cr_coa_to_account c2a
@@ -747,21 +791,14 @@ ta(account_id) AS (
   SELECT a.id, false, a.accno, a.description, a.category,
          a.contra,
          (EXISTS (select 1 from cr_coa_to_account cca where chart_id = a.id)),
-         a.tax, a.obsolete, a.gifi_accno,
-       (EXISTS (select 1 from ac where a.id = ac.chart_id)
-        OR EXISTS (select 1 from eca where a.id = eca.account_id)
-        OR EXISTS (select 1 from p where a.id = p.account_id)
-        OR EXISTS (select 1 from ta where a.id = ta.account_id)
-        ),
+         a.tax, a.obsolete, a.gifi_accno, account__is_used(a.id),
        link
   FROM account a
        LEFT JOIN l ON a.id = l.account_id
   UNION
   SELECT id, true, accno, description, null::char(1),
          null::boolean, null::boolean, null::boolean, null::boolean, null::text,
-         (EXISTS (select 1 from ha where h.id = ha.heading)
-           OR EXISTS (select 1 from hh where h.id = hh.parent_id)),
-         null::text
+         account_heading__is_used(h.id), null::text
    FROM account_heading h
 
   ) x ORDER BY accno;

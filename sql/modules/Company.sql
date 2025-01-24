@@ -20,7 +20,8 @@ CREATE TYPE company_entity AS(
   license_number text,
   sic_code varchar,
   control_code text,
-  country_id int
+  country_id int,
+  is_used bool
 );
 
 DROP TYPE IF EXISTS eca__pricematrix CASCADE;
@@ -415,7 +416,27 @@ USING in_entity_class, in_contact, in_contact_info, in_meta_number,
 END
 $$ LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION eca__is_used(in_id int)
+  RETURNS boolean AS
+$$
+  BEGIN
+    BEGIN
+      delete from entity_credit_account where id = in_id;
+      raise sqlstate 'P0004';
+    EXCEPTION
+      WHEN foreign_key_violation THEN
+        return true;
+      WHEN assert_failure THEN
+        return false;
+    END;
+  END;
+$$ language plpgsql;
 
+COMMENT ON FUNCTION eca__is_used(in_id int) IS
+  $$Checks whether the credit account is used or not.
+
+In case it isn't used, it should be possible to delete it.
+$$; --'
 
 DROP FUNCTION IF EXISTS eca__get_taxes(in_credit_id int);
 
@@ -618,11 +639,12 @@ entity class.$$;
 CREATE OR REPLACE FUNCTION company__get (in_entity_id int)
 RETURNS company_entity AS
 $$
-        SELECT c.entity_id, c.legal_name, c.tax_id, c.sales_tax_id,
-               c.license_number, c.sic_code, e.control_code, e.country_id
-          FROM company c
-          JOIN entity e ON e.id = c.entity_id
-         WHERE entity_id = $1;
+  SELECT c.entity_id, c.legal_name, c.tax_id, c.sales_tax_id,
+         c.license_number, c.sic_code, e.control_code, e.country_id,
+         entity__is_used(in_entity_id)
+    FROM company c
+    JOIN entity e ON e.id = c.entity_id
+   WHERE entity_id = $1;
 $$ language sql;
 
 COMMENT ON FUNCTION company__get (in_entity_id int) IS
@@ -632,7 +654,8 @@ CREATE OR REPLACE FUNCTION company__get_by_cc (in_control_code text)
 RETURNS company_entity AS
 $$
         SELECT c.entity_id, c.legal_name, c.tax_id, c.sales_tax_id,
-               c.license_number, c.sic_code, e.control_code, e.country_id
+               c.license_number, c.sic_code, e.control_code, e.country_id,
+               entity__is_used(e.id)
           FROM company c
           JOIN entity e ON e.id = c.entity_id
          WHERE e.control_code = $1;
