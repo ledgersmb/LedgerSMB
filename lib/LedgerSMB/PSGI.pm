@@ -350,7 +350,7 @@ sub setup_url_space {
         if (my $proxy_ip = eval { $wire->get( 'miscellaneous/proxy_ip' ); }) {
             enable match_if addr([ split / /, $proxy_ip ]), 'ReverseProxy';
         }
-        enable match_if path(qr!.+\.(css|js|png|ico|jp(e)?g|gif)$!),
+        enable match_if path(qr!.+\.(css|js|map|png|ico|jp(e)?g|gif)$!),
             'ConditionalGET';
         enable 'Plack::Middleware::Static',
             root => $wire->get( 'paths/UI' ),
