@@ -37,14 +37,14 @@ Implements the C<Workflow::Action> protocol.
 my $query = <<~'SQL';
   select draft_approve(id)
     from transactions
-   where id = ? and not approved
+   where workflow_id = ? and not approved
   SQL
 
 sub execute( $self, $wf ) {
     $self->SUPER::execute($wf);
 
     my $dbh = $wf->handle;
-    $dbh->do($query, {}, $wf->context->param('id'))
+    $dbh->do($query, {}, $wf->id)
         or die $dbh->errstr;
 
     return;
