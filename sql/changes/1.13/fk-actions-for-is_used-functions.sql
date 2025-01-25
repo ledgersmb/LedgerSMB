@@ -13,6 +13,11 @@
   deletion of the cr_coa_to_account row deletion fails due to further foreign
   keys being checked (and failing).
 
+  Consensus is that notes and files constitute important data that should block
+  deletion of the records they're attached to. This removes file_eca and
+  file_entity from the list of tables which need a CASCADE-ing foreign key. The
+  same applies to entity_note and eca_note.
+
  */
 
 
@@ -43,18 +48,6 @@ ALTER TABLE entity_to_location
 ALTER TABLE entity_bank_account
   DROP CONSTRAINT entity_bank_account_entity_id_fkey,
   ADD FOREIGN KEY (entity_id) REFERENCES entity (id) ON DELETE CASCADE;
-
-ALTER TABLE entity_note
-  DROP CONSTRAINT entity_note_entity_id_fkey,
-  ADD FOREIGN KEY (entity_id) REFERENCES entity (id) ON DELETE CASCADE;
-
-ALTER TABLE entity_note
-  DROP CONSTRAINT entity_note_ref_key_fkey,
-  ADD FOREIGN KEY (ref_key) REFERENCES entity (id) ON DELETE CASCADE;
-
-ALTER TABLE file_entity
-  DROP CONSTRAINT file_entity_ref_key_fkey,
-  ADD FOREIGN KEY (ref_key) REFERENCES entity (id) ON DELETE CASCADE;
 
 -- entity type specialization
 ALTER TABLE company
@@ -94,17 +87,9 @@ ALTER TABLE eca_to_location
   DROP CONSTRAINT eca_to_location_credit_id_fkey,
   ADD FOREIGN KEY (credit_id) REFERENCES entity_credit_account (id) ON DELETE CASCADE;
 
-ALTER TABLE eca_note
-  DROP CONSTRAINT eca_note_ref_key_fkey,
-  ADD FOREIGN KEY (ref_key) REFERENCES entity_credit_account (id) ON DELETE CASCADE;
-
 ALTER TABLE eca_tax
   DROP CONSTRAINT eca_tax_eca_id_fkey,
   ADD FOREIGN KEY (eca_id) REFERENCES entity_credit_account (id) ON DELETE CASCADE;
-
-ALTER TABLE file_eca
-  DROP CONSTRAINT file_eca_ref_key_fkey,
-  ADD FOREIGN KEY (ref_key) REFERENCES entity_credit_account (id) ON DELETE CASCADE;
 
 -- (price matrix data as customer)
 ALTER TABLE partscustomer
