@@ -133,16 +133,7 @@
                value = 'get_by_cc'
                class = 'submit'
         } %]
-        [% INCLUDE button element_data = {
-               text = text('Save')
-                 id = 'company-action-save'
-               class="submit"
-                type="submit"
-                name="__action"
-               value="save_company"
-        } %]
-        [%
-        IF entity_id.defined AND NOT company.is_used ;
+        IF may_delete AND entity_id.defined AND NOT company.is_used ;
         INCLUDE button element_data = {
                text = text('Delete')
                  id = 'company-action-delete'
