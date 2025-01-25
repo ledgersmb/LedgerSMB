@@ -19,6 +19,7 @@ use warnings;
 use Scalar::Util qw( blessed );
 
 use Feature::Compat::Try;
+use HTTP::Status qw( HTTP_FOUND );
 
 use LedgerSMB;
 use LedgerSMB::Entity::Company;
@@ -63,6 +64,23 @@ for (@pluginmods){
 =head1 METHODS
 
 =over
+
+=item delete_entity
+
+=cut
+
+sub delete_entity {
+    my ($request) = @_;
+    my $entity =
+           LedgerSMB::Entity::Company->get_by_cc($request->{control_code});
+    $entity ||=  LedgerSMB::Entity::Person->get_by_cc($request->{control_code});
+
+    $entity->del;
+    return [ HTTP_FOUND,
+             [ 'Location' => 'reports.pl?__action=start_report&report_name=contact_search' ],
+             [ '' ]
+        ];
+}
 
 =item get_by_cc
 
@@ -169,6 +187,7 @@ sub _main_screen {
     $request->{target_div} ||= 'person_div' if defined $person;
     $request->{target_div} ||= 'company_div';
 
+    my $may_delete = $request->is_allowed_role({ allowed_roles => [ 'contact_delete' ] });
     my @all_managers =
         map { $_->{label} = "$_->{first_name} $_->{last_name}"; $_ }
     ($request->call_procedure( funcname => 'employee__all_managers' ),);
@@ -367,7 +386,8 @@ sub _main_screen {
              all_managers => \@all_managers,
           default_country => $default_country,
          default_language => $default_language,
-                  earn_id => $earn_id
+                  earn_id => $earn_id,
+               may_delete => $may_delete,
     });
 }
 

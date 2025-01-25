@@ -87,6 +87,25 @@ COMMENT ON FUNCTION entity__get (
 $$ Returns a set of (only one) entity record with the entity id.$$;
 
 
+CREATE OR REPLACE FUNCTION entity__delete(in_id int)
+  RETURNS boolean
+  security definer
+AS $$
+BEGIN
+  delete from entity where id = in_id;
+  return found;
+END;
+$$ language plpgsql;
+
+REVOKE EXECUTE ON FUNCTION entity__delete(in_id int) FROM public;
+
+
+COMMENT ON FUNCTION entity__delete(in_id int) IS
+  $$Removes an entity and its master data.
+
+  Removal will fail if the function 'entity__is_used()' returns 'true'.
+  $$;
+
 CREATE OR REPLACE FUNCTION eca__get_entity (
     in_credit_id int
 ) RETURNS setof entity AS $$

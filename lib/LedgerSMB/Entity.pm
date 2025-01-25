@@ -95,6 +95,18 @@ sub get{
     return __PACKAGE__->new(%$result);
 }
 
+=item del()
+
+=cut
+
+sub del {
+    my ($self) = @_;
+    my ($result) = __PACKAGE__->call_procedure(funcname => 'entity__delete',
+                                               args => [ $self->id ]);
+
+    return $result;
+}
+
 =back
 
 =head1 LICENSE AND COPYRIGHT

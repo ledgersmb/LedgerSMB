@@ -202,6 +202,7 @@ employee__list_managers
 employee__save
 employee__search
 employee_search
+entity__delete
 entity__delete_bank_account
 entity__delete_contact
 entity__delete_location
