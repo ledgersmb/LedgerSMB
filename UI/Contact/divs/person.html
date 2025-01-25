@@ -149,7 +149,7 @@
                 value="save_person"
                 } %]
         [%
-        IF entity_id.defined AND NOT company.is_used ;
+        IF may_delete AND entity_id.defined AND NOT company.is_used ;
         INCLUDE button element_data = {
                text = text('Delete')
                  id = 'person-action-delete'
