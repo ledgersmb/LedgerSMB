@@ -60,3 +60,7 @@ all of its 'moving parts' (actions, conditions, state serialization, etc.).
    machines (further: workflows).
 
 ## Annotations
+
+See
+
+* [0104 Business logic in Perl (revised)](./0104-business-logic-in-perl.md)
