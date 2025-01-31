@@ -621,6 +621,23 @@ sub save_person {
     return _main_screen($request, undef, $person);
 }
 
+=item delete_credit($request)
+
+Deletes the credit account indicated by C<< $request->{credit_id} >>, if the user
+has sufficient access rights.
+
+=cut
+
+sub delete_credit {
+    my ($request) = @_;
+
+    my $credit = LedgerSMB::Entity::Credit_Account->get_by_id( $request->{credit_id} );
+    if ($credit) {
+        $credit->del;
+    }
+    return get($request);
+}
+
 =item save_credit($request)
 
 This inserts or updates a credit account of the sort listed here.
