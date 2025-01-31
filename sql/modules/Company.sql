@@ -1411,24 +1411,6 @@ COMMENT ON FUNCTION eca__save_contact
 in_old_contact text, in_old_contact_class int) IS
 $$ Saves the contact record at the entity credit account level.  Returns 1.$$;
 
-CREATE OR REPLACE FUNCTION company__get_all_accounts (
-    in_entity_id int,
-    in_entity_class int
-) RETURNS SETOF entity_credit_account AS $body$
-
-    SELECT *
-      FROM entity_credit_account
-     WHERE entity_id = $1
-       AND entity_class = $2;
-
-$body$ language SQL;
-
-COMMENT ON FUNCTION company__get_all_accounts (
-    in_entity_id int,
-    in_entity_class int
-) IS
-$$ Returns a list of all entity credit accounts attached to that entity.$$;
-
 -- pricematrix
 
 CREATE OR REPLACE FUNCTION eca__get_pricematrix_by_pricegroup(in_credit_id int)

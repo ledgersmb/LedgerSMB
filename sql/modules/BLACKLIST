@@ -137,7 +137,6 @@ cogs__add_for_ar_line
 cogs__reverse_ap
 cogs__reverse_ar
 company__get
-company__get_all_accounts
 company__get_by_cc
 company__next_id
 company__save
