@@ -597,6 +597,7 @@ SELECT lsmb__create_role('contact_delete',
                          $DOC$
 );
 SELECT lsmb__grant_exec('contact_delete', 'entity__delete(in_id int)');
+SELECT lsmb__grant_exec('contact_delete', 'eca__delete(in_id int)');
 SELECT lsmb__grant_perms('contact_delete', obj, 'DELETE')
   FROM unnest(ARRAY['entity'::text, 'company', 'person', 'location',
                     'entity_credit_account', 'eca_tax', 'entity_note',

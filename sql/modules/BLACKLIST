@@ -175,6 +175,7 @@ draft__delete_lines
 draft__search
 draft_approve
 draft_delete
+eca__delete
 eca__delete_contact
 eca__delete_location
 eca__delete_pricematrix
