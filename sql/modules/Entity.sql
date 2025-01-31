@@ -191,6 +191,25 @@ COMMENT ON FUNCTION entity__delete(in_id int) IS
   Removal will fail if the function 'entity__is_used()' returns 'true'.
   $$;
 
+CREATE OR REPLACE FUNCTION eca__delete(in_id int)
+  RETURNS boolean
+  security definer
+AS $$
+BEGIN
+  delete from entity_credit_account where id = in_id;
+  return found;
+END;
+$$ language plpgsql;
+
+REVOKE EXECUTE ON FUNCTION eca__delete(in_id int) FROM PUBLIC;
+
+COMMENT ON FUNCTION eca__delete(in_id int) IS
+  $$Removes an entity credit account and its master data.
+
+  Removal will fail if the function 'eca__is_used()' returns 'true'.
+  $$;
+
+
 CREATE OR REPLACE FUNCTION eca__get_entity (
     in_credit_id int
 ) RETURNS setof entity AS $$
