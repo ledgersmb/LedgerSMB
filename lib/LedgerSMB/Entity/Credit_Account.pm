@@ -270,6 +270,15 @@ This is the tax reporting form associated with the account.
 
 has 'taxform_id' => (is => 'rw', isa => 'Maybe[Int]', required => 0);
 
+=item is_used
+
+Boolean indicating whether the credit account is used (and therefor not
+deletable).
+
+=cut
+
+has 'is_used' => (is => 'ro', isa => 'Bool', required => 0);
+
 =back
 
 =head1 METHODS
@@ -362,6 +371,18 @@ sub get_current_debt {
     my ($ref) = $self->call_dbmethod(funcname => 'eca__get_current_debt');
     $self->current_debt($ref->{eca__get_current_debt});
     return $self->current_debt;
+}
+
+=item del()
+
+Removes the entity credit account.
+
+=cut
+
+sub del {
+    my ($self) = @_;
+
+    $self->call_dbmethod(funcname => 'eca__delete');
 }
 
 =item save()
