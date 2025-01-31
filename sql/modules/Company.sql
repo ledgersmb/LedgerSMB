@@ -537,35 +537,6 @@ CREATE TYPE entity_credit_search_return AS (
         threshold numeric
 );
 
-DROP TYPE IF EXISTS entity_credit_retrieve CASCADE;
-
-CREATE TYPE entity_credit_retrieve AS (
-        id int,
-        entity_id int,
-        entity_class int,
-        discount numeric,
-        discount_terms int,
-        taxincluded bool,
-        creditlimit numeric,
-        terms int2,
-        meta_number text,
-        description text,
-        business_id int,
-        language_code text,
-        pricegroup_id int,
-        curr text,
-        startdate date,
-        enddate date,
-        ar_ap_account_id int,
-        cash_account_id int,
-        discount_account_id int,
-        threshold numeric,
-        control_code text,
-        credit_id int,
-        pay_to_name text,
-        taxform_id int
-);
-
 COMMENT ON TYPE entity_credit_search_return IS
 $$ This may change in 1.4 and should not be relied upon too much $$;
 
@@ -584,36 +555,6 @@ COMMENT ON FUNCTION entity_credit_get_id
 $$ Returns an entity credit id, based on entity_id, entity_class,
 and meta_number.  This is the preferred way to locate an account if all three of
 these are known$$;
-
-CREATE OR REPLACE FUNCTION entity__list_credit
-(in_entity_id int, in_entity_class int)
-RETURNS SETOF entity_credit_retrieve AS
-$$
-BEGIN
-RETURN QUERY EXECUTE $sql$
-                SELECT  ec.id, e.id, ec.entity_class, ec.discount,
-                        ec.discount_terms,
-                        ec.taxincluded, ec.creditlimit, ec.terms,
-                        ec.meta_number::text, ec.description, ec.business_id,
-                        ec.language_code::text,
-                        ec.pricegroup_id, ec.curr::text, ec.startdate,
-                        ec.enddate, ec.ar_ap_account_id, ec.cash_account_id,
-                        ec.discount_account_id,
-                        ec.threshold, e.control_code, ec.id, ec.pay_to_name,
-                        ec.taxform_id
-                FROM entity e
-                JOIN entity_credit_account ec ON (e.id = ec.entity_id)
-                WHERE e.id = $1
-                       AND (ec.entity_class = $2
-                            or $2 is null)
-$sql$
-USING in_entity_id, in_entity_class;
-END
-$$ LANGUAGE PLPGSQL;
-
-COMMENT ON FUNCTION entity__list_credit (in_entity_id int, in_entity_class int)
-IS $$ Returns a list of entity credit account entries for the entity and of the
-entity class.$$;
 
 CREATE OR REPLACE FUNCTION company__get (in_entity_id int)
 RETURNS company_entity AS
