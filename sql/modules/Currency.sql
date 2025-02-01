@@ -48,22 +48,18 @@ $$ language sql;
 COMMENT ON FUNCTION currency__get(text) IS
 $$Retrieves a currency and its description using the currency indicator.$$;
 
-CREATE OR REPLACE FUNCTION currency__is_used
-(in_curr text)
+CREATE OR REPLACE FUNCTION currency__is_used(in_curr text)
 RETURNS BOOLEAN AS $$
 BEGIN
-   RETURN EXISTS (SELECT 1 FROM acc_trans WHERE curr = in_curr)
-       OR EXISTS (SELECT 1 FROM account_checkpoint WHERE curr = in_curr)
-       OR EXISTS (SELECT 1 FROM ap WHERE curr = in_curr)
-       OR EXISTS (SELECT 1 FROM ar WHERE curr = in_curr)
-       OR EXISTS (SELECT 1 FROM budget_line WHERE curr = in_curr)
-       OR EXISTS (SELECT 1 FROM entity_credit_account WHERE curr = in_curr)
-       OR EXISTS (SELECT 1 FROM exchangerate_default WHERE curr = in_curr)
-       OR EXISTS (SELECT 1 FROM jcitems WHERE curr = in_curr)
-       OR EXISTS (SELECT 1 FROM journal_line WHERE curr = in_curr)
-       OR EXISTS (SELECT 1 FROM oe WHERE curr = in_curr)
-       OR EXISTS (SELECT 1 FROM partscustomer WHERE curr = in_curr)
-       OR EXISTS (SELECT 1 FROM partsvendor WHERE curr = in_curr);
+  BEGIN
+    delete from currency where curr = in_curr;
+    raise sqlstate 'P0004'; -- cause rollback
+  EXCEPTION
+    WHEN foreign_key_violation THEN
+      return true;
+    WHEN assert_failure THEN
+      return false;
+  END;
 END;$$ language plpgsql security definer;
 
 COMMENT ON FUNCTION currency__is_used(text) IS

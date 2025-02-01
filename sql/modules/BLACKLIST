@@ -6,6 +6,7 @@ account__get_by_link_desc
 account__get_from_accno
 account__get_taxes
 account__is_recon
+account__is_used
 account__list_by_heading
 account__list_translations
 account__obtain_balance
@@ -18,6 +19,7 @@ account_has_transactions
 account_heading__check_tree
 account_heading__delete
 account_heading__delete_translation
+account_heading__is_used
 account_heading__list
 account_heading__list_translations
 account_heading__save_translation
@@ -137,7 +139,6 @@ cogs__add_for_ar_line
 cogs__reverse_ap
 cogs__reverse_ar
 company__get
-company__get_all_accounts
 company__get_by_cc
 company__next_id
 company__save
@@ -174,6 +175,7 @@ draft__delete_lines
 draft__search
 draft_approve
 draft_delete
+eca__delete
 eca__delete_contact
 eca__delete_location
 eca__delete_pricematrix
@@ -184,6 +186,7 @@ eca__get_pricematrix_by_pricegroup
 eca__get_taxes
 eca__history
 eca__history_summary
+eca__is_used
 eca__list_contacts
 eca__list_locations
 eca__list_notes
@@ -202,11 +205,13 @@ employee__list_managers
 employee__save
 employee__search
 employee_search
+entity__delete
 entity__delete_bank_account
 entity__delete_contact
 entity__delete_location
 entity__get
 entity__get_bank_account
+entity__is_used
 entity__list_bank_account
 entity__list_classes
 entity__list_contacts

@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(58);
+    SELECT plan(57);
 
     -- Add data
 
@@ -19,7 +19,6 @@ BEGIN;
     -- Validate required functions
 
     SELECT has_function('account__all_headings','{}'::text[]);
-    SELECT has_function('company__get_all_accounts',ARRAY['integer','integer']);
     SELECT has_function('company_get_billing_info',ARRAY['integer']);
     SELECT has_function('company__get_by_cc',ARRAY['text']);
     SELECT has_function('company__get',ARRAY['integer']);
