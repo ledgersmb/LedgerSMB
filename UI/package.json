@@ -44,7 +44,7 @@
     "dijit": "1.17.3",
     "dojo": "1.17.3",
     "robot3": "1.1.0",
-    "vue-i18n": "11.0.1"
+    "vue-i18n": "11.1.0"
   },
   "devDependencies": {
     "@babel/core": "7.26.7",
@@ -59,7 +59,7 @@
     "babel-loader": "9.2.1",
     "browserslist": "4.24.4",
     "buffer": "6.0.3",
-    "caniuse-lite": "1.0.30001695",
+    "caniuse-lite": "1.0.30001696",
     "clean-webpack-plugin": "4.0.0",
     "compression-webpack-plugin": "11.1.0",
     "copy-webpack-plugin": "12.0.2",
@@ -112,11 +112,11 @@
     "pinia": "2.3.1",
     "prettier": "3.4.2",
     "rtl-detect": "1.1.2",
-    "stylelint": "16.13.2",
+    "stylelint": "16.14.1",
     "stylelint-config-standard": "37.0.0",
     "stylelint-declaration-block-no-ignored-properties": "2.8.0",
     "stylelint-no-nested-media": "0.1.0",
-    "stylelint-no-unsupported-browser-features": "8.0.2",
+    "stylelint-no-unsupported-browser-features": "8.0.4",
     "stylelint-order": "6.0.4",
     "stylelint-webpack-plugin": "5.0.1",
     "stylelint-z-index-value-constraint": "1.4.0",
