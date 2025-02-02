@@ -4,9 +4,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
-"Language-Team: Chinese Simplified (http://www.transifex.com/ledgersmb/"
+"Language-Team: Chinese Simplified (http://app.transifex.com/ledgersmb/"
 "ledgersmb/language/zh-Hans/)\n"
 "Language: zh-Hans\n"
 "MIME-Version: 1.0\n"
@@ -8323,6 +8323,10 @@ msgstr "完成"
 msgid "failed"
 msgstr "失败"
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8391,6 +8395,10 @@ msgstr ""
 msgid "time(s)"
 msgstr "次"
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr "沒有預期的錯誤！"
@@ -8398,42 +8406,3 @@ msgstr "沒有預期的錯誤！"
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "您是否确定要删除订单编号"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "您是否确定要删除报价单编号"
-
-#~ msgid "E-mailed"
-#~ msgstr "已電郵"
-
-#~ msgid "Fax"
-#~ msgstr "傳真"
-
-#~ msgid "Home Phone"
-#~ msgstr "住宅電話"
-
-#~ msgid "Item not on file!"
-#~ msgstr "查无此项目"
-
-#~ msgid "Print and Save"
-#~ msgstr "列印並儲存"
-
-#~ msgid "Print and Save as new"
-#~ msgstr "列印並儲存作為新的"
-
-#~ msgid "Printed"
-#~ msgstr "巳列印"
-
-#~ msgid "Service"
-#~ msgstr "服務"
-
-#~ msgid "Till"
-#~ msgstr "直到"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "此项目的型态?"
-
-#~ msgid "ea"
-#~ msgstr "個"

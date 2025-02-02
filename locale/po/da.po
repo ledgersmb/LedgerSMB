@@ -5,10 +5,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
 "Last-Translator: Mikkel Høgh <mikkel@hoegh.org>, 2016\n"
-"Language-Team: Danish (http://www.transifex.com/ledgersmb/ledgersmb/language/"
+"Language-Team: Danish (http://app.transifex.com/ledgersmb/ledgersmb/language/"
 "da/)\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
@@ -8329,6 +8329,10 @@ msgstr "færdig"
 msgid "failed"
 msgstr "fejlede"
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8397,6 +8401,10 @@ msgstr ""
 msgid "time(s)"
 msgstr "gang(e)"
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr "uventet fejl!"
@@ -8404,54 +8412,3 @@ msgstr "uventet fejl!"
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Er du sikker på at du vil fjerne ordrenummer"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Er du sikker på at du vil slette tilbudsnummer"
-
-#~ msgid "Billing BCC"
-#~ msgstr "Fakturerings-BCC"
-
-#~ msgid "Billing CC"
-#~ msgstr "Fakturerings-CC"
-
-#~ msgid "Billing Email"
-#~ msgstr "Fakturerings-e-mail"
-
-#~ msgid "Books closed on"
-#~ msgstr "Bogføring lukket"
-
-#~ msgid "E-mailed"
-#~ msgstr "Sendt som e-post"
-
-#~ msgid "Fax"
-#~ msgstr "Fax"
-
-#~ msgid "Home Phone"
-#~ msgstr "Telefon privat"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Varenummer er ikke i databasen!"
-
-#~ msgid "Print and Save"
-#~ msgstr "Udskriv og gem"
-
-#~ msgid "Print and Save as new"
-#~ msgstr "Udskriv og gem som ny"
-
-#~ msgid "Printed"
-#~ msgstr "Udskrevet"
-
-#~ msgid "Service"
-#~ msgstr "Serviceydelse"
-
-#~ msgid "Till"
-#~ msgstr "Indtil"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Hvilken type varenummer er dette?"
-
-#~ msgid "ea"
-#~ msgstr "stk"

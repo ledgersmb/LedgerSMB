@@ -4,9 +4,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
-"Language-Team: Latvian (http://www.transifex.com/ledgersmb/ledgersmb/language/"
+"Language-Team: Latvian (http://app.transifex.com/ledgersmb/ledgersmb/language/"
 "lv/)\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
@@ -8324,6 +8324,10 @@ msgstr "izdarīts"
 msgid "failed"
 msgstr ""
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8392,6 +8396,10 @@ msgstr ""
 msgid "time(s)"
 msgstr ""
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr ""
@@ -8399,36 +8407,3 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Vai jūs patiešām vēlaties dzēst ordera numuru"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Vai jūs patiešām vēlaties dzēst tāmes numuru"
-
-#~ msgid "E-mailed"
-#~ msgstr "Nosūtīts pa e-pastu"
-
-#~ msgid "Fax"
-#~ msgstr "Fakss"
-
-#~ msgid "Home Phone"
-#~ msgstr "Mājas telefons"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Nav tādas vienības!"
-
-#~ msgid "Printed"
-#~ msgstr "Izdrukāts"
-
-#~ msgid "Service"
-#~ msgstr "Pakalpojums"
-
-#~ msgid "Till"
-#~ msgstr "līdz"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Kāda veida vienība tā ir?"
-
-#~ msgid "ea"
-#~ msgstr "gb"

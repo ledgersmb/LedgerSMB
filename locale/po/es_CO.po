@@ -4,9 +4,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
-"Language-Team: Spanish (Colombia) (http://www.transifex.com/ledgersmb/"
+"Language-Team: Spanish (Colombia) (http://app.transifex.com/ledgersmb/"
 "ledgersmb/language/es_CO/)\n"
 "Language: es_CO\n"
 "MIME-Version: 1.0\n"
@@ -8333,6 +8333,10 @@ msgstr "hecho"
 msgid "failed"
 msgstr "falló"
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8401,6 +8405,10 @@ msgstr ""
 msgid "time(s)"
 msgstr "vez/veces"
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr "¡Error inesperado!"
@@ -8408,60 +8416,3 @@ msgstr "¡Error inesperado!"
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr "uso de un sobrepago"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "¿Esta seguro de que desea borrar la orden número?"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Seguro que quiere borrar la cotización número"
-
-#~ msgid "Copy to New"
-#~ msgstr "Copiar como Nuevo"
-
-#~ msgid "E-mailed"
-#~ msgstr "Enviado por mail"
-
-#~ msgid "Fax"
-#~ msgstr "Fax"
-
-#~ msgid "Home Phone"
-#~ msgstr "Teléfono residencia"
-
-#~ msgid "Item not on file!"
-#~ msgstr "El concepto no se encuentra en ningún archivo"
-
-#~ msgid "Print and Save"
-#~ msgstr "Imprimir y Registrar"
-
-#~ msgid "Print and Save as new"
-#~ msgstr "Imprimir y Guardar como Nuevo"
-
-#~ msgid "Printed"
-#~ msgstr "Impreso"
-
-#~ msgid "Save Info"
-#~ msgstr "Guardar Informacion"
-
-#~ msgid "Save Template"
-#~ msgstr "Guardar Plantilla"
-
-#~ msgid "Service"
-#~ msgstr "Servicio"
-
-#~ msgid "Till"
-#~ msgstr "Caja"
-
-#~ msgid "User Name"
-#~ msgstr "Nombre de usuario"
-
-#~ msgid "Void"
-#~ msgstr "Vacio"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "¿De qué tipo es este concepto?"
-
-#~ msgid "action not defined!"
-#~ msgstr "¡Acción no definida!"
-
-#~ msgid "ea"
-#~ msgstr "unid."

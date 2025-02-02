@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2022-01-09T21:20:15.970Z\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
@@ -8322,6 +8322,10 @@ msgstr ""
 msgid "failed"
 msgstr ""
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8388,6 +8392,10 @@ msgstr ""
 
 #: old/bin/arap.pl:556
 msgid "time(s)"
+msgstr ""
+
+#: UI/lib/report_base.html:219
+msgid "to_date"
 msgstr ""
 
 #: old/bin/ic.pl:1413

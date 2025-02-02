@@ -5,10 +5,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
 "Last-Translator: paul bolger <pbolger@gmail.com>, 2015-2016\n"
-"Language-Team: English (New Zealand) (http://www.transifex.com/ledgersmb/"
+"Language-Team: English (New Zealand) (http://app.transifex.com/ledgersmb/"
 "ledgersmb/language/en_NZ/)\n"
 "Language: en_NZ\n"
 "MIME-Version: 1.0\n"
@@ -4047,7 +4047,7 @@ msgstr ""
 
 #: UI/reconciliation/report.html:67
 msgid "Less Outstanding Checks:"
-msgstr "Less Outstanding Cheques:"
+msgstr "Less Outstanding Checks:"
 
 #: UI/templates/widget.html:53 sql/Pg-database.sql:2420 sql/Pg-database.sql:2435
 msgid "Letterhead"
@@ -8328,6 +8328,10 @@ msgstr ""
 msgid "failed"
 msgstr ""
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8396,6 +8400,10 @@ msgstr ""
 msgid "time(s)"
 msgstr ""
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr ""
@@ -8403,15 +8411,3 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "Amount Budgetted"
-#~ msgstr "Amount Budgeted"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Are you sure you want to delete Order Number?"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Are you sure you want to delete Quotation Number?"
-
-#~ msgid "E-mailed"
-#~ msgstr "Emailed"

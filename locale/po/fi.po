@@ -6,10 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
 "Last-Translator: Juha Eerola <juhaeerola@outlook.com>, 2017\n"
-"Language-Team: Finnish (http://www.transifex.com/ledgersmb/ledgersmb/language/"
+"Language-Team: Finnish (http://app.transifex.com/ledgersmb/ledgersmb/language/"
 "fi/)\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -7346,7 +7346,7 @@ msgstr ""
 #: old/lib/LedgerSMB/IIAA.pm:332 UI/setup/complete.html:41
 #: UI/setup/db-patches-log.html:18
 msgid "Time"
-msgstr ""
+msgstr "Aika"
 
 #: templates/demo/timecard.html:16 templates/demo/timecard.html:30
 #: templates/demo/timecard.tex:33
@@ -8326,6 +8326,10 @@ msgstr "valmis"
 msgid "failed"
 msgstr "epäonnistui"
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8394,6 +8398,10 @@ msgstr ""
 msgid "time(s)"
 msgstr "kertaa"
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr "odottamaton virhe"
@@ -8401,48 +8409,3 @@ msgstr "odottamaton virhe"
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Haluatko poistaa tilauksen numero"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Haluatko poistaa tarjouksen numero"
-
-#~ msgid "Cell Phone"
-#~ msgstr "Matkapuhelin"
-
-#~ msgid "Copy to New"
-#~ msgstr "Kopioi uudeksi"
-
-#~ msgid "E-mailed"
-#~ msgstr "Sähköpostitettu"
-
-#~ msgid "Fax"
-#~ msgstr "Faksi"
-
-#~ msgid "Home Phone"
-#~ msgstr "Kotipuhelin"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Nimikettä ei ole järjestelmässä!"
-
-#~ msgid "Print and Save"
-#~ msgstr "Tulosta ja tallenna"
-
-#~ msgid "Print and Save as new"
-#~ msgstr "Tulosta ja tallenna uutena"
-
-#~ msgid "Printed"
-#~ msgstr "Tulostettu"
-
-#~ msgid "Service"
-#~ msgstr "Palvelu"
-
-#~ msgid "Till"
-#~ msgstr "Kassa"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Minkä tyyppinen nimike tämä on?"
-
-#~ msgid "ea"
-#~ msgstr "kpl"

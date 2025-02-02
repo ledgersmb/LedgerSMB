@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
 "Language-Team: Japanese (http://www.transifex.com/ledgersmb/ledgersmb/"
 "language/ja/)\n"
@@ -8323,6 +8323,10 @@ msgstr ""
 msgid "failed"
 msgstr ""
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8389,6 +8393,10 @@ msgstr ""
 
 #: old/bin/arap.pl:556
 msgid "time(s)"
+msgstr ""
+
+#: UI/lib/report_base.html:219
+msgid "to_date"
 msgstr ""
 
 #: old/bin/ic.pl:1413

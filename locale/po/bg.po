@@ -4,9 +4,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
-"Language-Team: Bulgarian (http://www.transifex.com/ledgersmb/ledgersmb/"
+"Language-Team: Bulgarian (http://app.transifex.com/ledgersmb/ledgersmb/"
 "language/bg/)\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
@@ -8326,6 +8326,10 @@ msgstr "Готов"
 msgid "failed"
 msgstr "грешка"
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8394,6 +8398,10 @@ msgstr ""
 msgid "time(s)"
 msgstr "път(и)"
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr "Необяснима грешка!"
@@ -8401,42 +8409,3 @@ msgstr "Необяснима грешка!"
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Сигурен ли сте, че ще изтриете номера на поръчката"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Сигурен ли сте, че ще изтриете номера на заданието"
-
-#~ msgid "E-mailed"
-#~ msgstr "Изпратено ел.съобщение"
-
-#~ msgid "Fax"
-#~ msgstr "Факс"
-
-#~ msgid "Home Phone"
-#~ msgstr "Домашен телефон"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Стоката липсва в базата!"
-
-#~ msgid "Print and Save"
-#~ msgstr "Разпечатай и запази"
-
-#~ msgid "Print and Save as new"
-#~ msgstr "Разпечатай и запази като нов"
-
-#~ msgid "Printed"
-#~ msgstr "Разпечатано"
-
-#~ msgid "Service"
-#~ msgstr "Услуга"
-
-#~ msgid "Till"
-#~ msgstr "до"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Какъв тип е тази номенклатура на стоките?"
-
-#~ msgid "ea"
-#~ msgstr "бр."

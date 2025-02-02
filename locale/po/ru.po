@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
 "Last-Translator: Ann Madz <annamadzigon@gmail.com>, 2020\n"
-"Language-Team: Russian (http://www.transifex.com/ledgersmb/ledgersmb/language/"
+"Language-Team: Russian (http://app.transifex.com/ledgersmb/ledgersmb/language/"
 "ru/)\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -8336,6 +8336,10 @@ msgstr "выполнено"
 msgid "failed"
 msgstr "ошибка"
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8404,6 +8408,10 @@ msgstr ""
 msgid "time(s)"
 msgstr "раз"
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr "неожиданная ошибка"
@@ -8411,66 +8419,3 @@ msgstr "неожиданная ошибка"
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "."
-#~ msgstr "."
-
-#~ msgid "AIM"
-#~ msgstr "Альтернативный Инвестиционный рынок"
-
-#~ msgid "Account Number End"
-#~ msgstr "Конечные цифры счета"
-
-#~ msgid "Account Number Start"
-#~ msgstr "Начальные цифры счета"
-
-#~ msgid "Add line1"
-#~ msgstr "Добавить строку1"
-
-#~ msgid "Add line2"
-#~ msgstr "Добавить строку2"
-
-#~ msgid "Add line3 "
-#~ msgstr "Добавить строку3"
-
-#~ msgid "Amount Budgetted"
-#~ msgstr "Сумма в бюджете"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Вы уверены, что хотите удалить данный заказ?"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Вы уверены, что хотите удалить резерв?"
-
-#~ msgid "E-mailed"
-#~ msgstr "Отправлено по e-mail"
-
-#~ msgid "Fax"
-#~ msgstr "Факс"
-
-#~ msgid "Home Phone"
-#~ msgstr "Домашний телефон"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Нет номенклатуры в справочнике!"
-
-#~ msgid "Print and Save"
-#~ msgstr "Напечатать и сохранить"
-
-#~ msgid "Print and Save as new"
-#~ msgstr "Напечатать и сохранить как новый"
-
-#~ msgid "Printed"
-#~ msgstr "Напечатано"
-
-#~ msgid "Service"
-#~ msgstr "Услуга"
-
-#~ msgid "Till"
-#~ msgstr "до"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Какой это тип номеклатуры?"
-
-#~ msgid "ea"
-#~ msgstr "шт."

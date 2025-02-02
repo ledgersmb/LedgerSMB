@@ -5,17 +5,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
 "Last-Translator: Amir Inbar <amir@srvit.co.il>, 2022\n"
-"Language-Team: Hebrew (http://www.transifex.com/ledgersmb/ledgersmb/language/"
+"Language-Team: Hebrew (http://app.transifex.com/ledgersmb/ledgersmb/language/"
 "he/)\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % "
-"1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % "
+"1 == 0) ? 1: 2;\n"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:180
 msgid "# Invoices"
@@ -8326,6 +8326,10 @@ msgstr "בוצע"
 msgid "failed"
 msgstr "נכשל"
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr "html"
@@ -8394,6 +8398,10 @@ msgstr "זמן"
 msgid "time(s)"
 msgstr ""
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr ""
@@ -8401,150 +8409,3 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "."
-#~ msgstr "."
-
-#~ msgid "Account Number End"
-#~ msgstr "תחילת מספר חשבון"
-
-#~ msgid "Account Number Start"
-#~ msgstr "תחילת מספר חשבון"
-
-#~ msgid "Add line1"
-#~ msgstr "הוספת שורה1"
-
-#~ msgid "Add line2"
-#~ msgstr "הוספת שורה2"
-
-#~ msgid "Add line3 "
-#~ msgstr "הוספת שורה3"
-
-#~ msgid "Amount Budgetted"
-#~ msgstr "סכום מתוקצב"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "בטוח למחוק מספר הזמנה"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "בטוח שברצונך למחוק מספר הצעה"
-
-#~ msgid "BCC"
-#~ msgstr "BCC"
-
-#~ msgid "Billing Email"
-#~ msgstr "כתובת מייל לבילינג"
-
-#~ msgid "Books closed on"
-#~ msgstr "ספרים נסגרו ב"
-
-#~ msgid "CC"
-#~ msgstr "CC"
-
-#~ msgid "Cell Phone"
-#~ msgstr "סלולרי"
-
-#~ msgid "Close Year"
-#~ msgstr "סגור שנה"
-
-#~ msgid "Close books"
-#~ msgstr "סגור ספר"
-
-#~ msgid "Closing data"
-#~ msgstr "מיגע סגירה"
-
-#~ msgid "Copy to New"
-#~ msgstr "העתק לחדש"
-
-#~ msgid "Default Language"
-#~ msgstr "שפת ברירת מחדל"
-
-#~ msgid "Document"
-#~ msgstr "מסמך"
-
-#~ msgid "Dr."
-#~ msgstr "דר."
-
-#~ msgid "Fax"
-#~ msgstr "פקס"
-
-#~ msgid "Home Phone"
-#~ msgstr "טלפון בבית"
-
-#~ msgid "Invoice not found"
-#~ msgstr "חשבונית לא נמצאה"
-
-#~ msgid "Item not on file!"
-#~ msgstr "פריט לא בקובץ!"
-
-#~ msgid "Mr."
-#~ msgstr "מר."
-
-#~ msgid "Mrs."
-#~ msgstr "גב."
-
-#~ msgid "Ms."
-#~ msgstr "גב."
-
-#~ msgid "New password"
-#~ msgstr "סיסמא חדשה"
-
-#~ msgid "No Old Password"
-#~ msgstr "אין סיסמא ישנה"
-
-#~ msgid "Old Password"
-#~ msgstr "סיסמא ישנה"
-
-#~ msgid "Primary Phone"
-#~ msgstr "טלפון ראשי"
-
-#~ msgid "Print and Save"
-#~ msgstr "הדפס ושמור"
-
-#~ msgid "Print and Save as new"
-#~ msgstr "הדפס ושמור כחדש"
-
-#~ msgid "Printed"
-#~ msgstr "הודפס"
-
-#~ msgid "Save Draft"
-#~ msgstr "שמור טיויטא"
-
-#~ msgid "Save Info"
-#~ msgstr "שמור מידע"
-
-#~ msgid "Save Template"
-#~ msgstr "שמור תבנית"
-
-#~ msgid "Save as New"
-#~ msgstr "שמור כחדש"
-
-#~ msgid "Secondary Phone"
-#~ msgstr "טלפון משני"
-
-#~ msgid "Service"
-#~ msgstr "שרות"
-
-#~ msgid "Strength"
-#~ msgstr "חוזק"
-
-#~ msgid "Till"
-#~ msgstr "עד"
-
-#~ msgid "User Name"
-#~ msgstr "שם משתמש"
-
-#~ msgid "Verify"
-#~ msgstr "בדיקה"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "אזיה סוג פריט זה?"
-
-#~ msgid "Yahoo"
-#~ msgstr "Yahoo"
-
-#~ msgid "Zip Code"
-#~ msgstr "מיקוד"
-
-#~ msgid "city"
-#~ msgstr "עיר"

@@ -5,10 +5,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2015\n"
-"Language-Team: Estonian (http://www.transifex.com/ledgersmb/ledgersmb/"
+"Language-Team: Estonian (http://app.transifex.com/ledgersmb/ledgersmb/"
 "language/et/)\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
@@ -8329,6 +8329,10 @@ msgstr "tehtud"
 msgid "failed"
 msgstr "nurjus"
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8397,6 +8401,10 @@ msgstr "aeg"
 msgid "time(s)"
 msgstr "Kord(a)"
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr "ootamatu viga!"
@@ -8404,168 +8412,3 @@ msgstr "ootamatu viga!"
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "AIM"
-#~ msgstr "AIM"
-
-#~ msgid "Account Number End"
-#~ msgstr "Konto number lõppeb"
-
-#~ msgid "Account Number Start"
-#~ msgstr "Konto number algab"
-
-#~ msgid "Add line1"
-#~ msgstr "Lisa rida 1"
-
-#~ msgid "Add line2"
-#~ msgstr "Lisa rida 2"
-
-#~ msgid "Add line3 "
-#~ msgstr "Lisa rida 3"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Kas oled kindel, et soovid kustutada Tellimuse Number"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Kas oled kindel, et soovid Koteeringu Number"
-
-#~ msgid "BCC"
-#~ msgstr "Pimekoopia"
-
-#~ msgid "Billing BCC"
-#~ msgstr "Maksja BCC"
-
-#~ msgid "Billing CC"
-#~ msgstr "Maksja CC"
-
-#~ msgid "Billing Email"
-#~ msgstr "Maksja e-posti"
-
-#~ msgid "CC"
-#~ msgstr "Koopia"
-
-#~ msgid "Can't void a voided invoice!"
-#~ msgstr "Tühistatud arvet ei saa tühistada!"
-
-#~ msgid "Cannot delete posted transaction"
-#~ msgstr "Kannet ei saa kustutada!"
-
-#~ msgid "Cell Phone"
-#~ msgstr "Mobiil"
-
-#~ msgid "Close Period"
-#~ msgstr "Sulge periood"
-
-#~ msgid "Close Year"
-#~ msgstr "Sulge aasta"
-
-#~ msgid "Closing data"
-#~ msgstr "Sulge andmed"
-
-#~ msgid "Copy to New"
-#~ msgstr "Kopeeri uueks"
-
-#~ msgid "Default Language"
-#~ msgstr "Vaikimisi keel"
-
-#~ msgid "Document"
-#~ msgstr "Dokument"
-
-#~ msgid "Dr."
-#~ msgstr "Doktor"
-
-#~ msgid "E-mailed"
-#~ msgstr "E-postiga saadetud"
-
-#~ msgid "EDI ID"
-#~ msgstr "EDI ID"
-
-#~ msgid "Fax"
-#~ msgstr "Faks"
-
-#~ msgid "Gtalk"
-#~ msgstr "Gtalk"
-
-#~ msgid "Home Phone"
-#~ msgstr "Kodune Telefon"
-
-#~ msgid "IRC"
-#~ msgstr "IRC"
-
-#~ msgid "Invoice not found"
-#~ msgstr "Arvet ei leitud"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Kaubaartikkel pole failis !"
-
-#~ msgid "LedgerSMB [_1]"
-#~ msgstr "LedgerSMB [_1]"
-
-#~ msgid "MSN"
-#~ msgstr "MSN"
-
-#~ msgid "Mr."
-#~ msgstr "Härra"
-
-#~ msgid "Mrs."
-#~ msgstr "Proua"
-
-#~ msgid "Ms."
-#~ msgstr "Preili"
-
-#~ msgid "New password"
-#~ msgstr "Uus parool"
-
-#~ msgid "No Account id for [_1]"
-#~ msgstr "Kontol puudub id [_1]"
-
-#~ msgid "Old Password"
-#~ msgstr "Kehtiv salasõna"
-
-#~ msgid "Primary Phone"
-#~ msgstr "Peamine telefon"
-
-#~ msgid "Print and Save"
-#~ msgstr "Trüki ja Salvesta"
-
-#~ msgid "Print and Save as new"
-#~ msgstr "Trüki ja Salvesta uuena"
-
-#~ msgid "Printed"
-#~ msgstr "Trükitud"
-
-#~ msgid "Save Draft"
-#~ msgstr "Salvesta mustand"
-
-#~ msgid "Save Info"
-#~ msgstr "Salvesta info"
-
-#~ msgid "Save Template"
-#~ msgstr "Salvesta mall"
-
-#~ msgid "Save as New"
-#~ msgstr "Salvesta uuena"
-
-#~ msgid "Service"
-#~ msgstr "Teenus"
-
-#~ msgid "Till"
-#~ msgstr "Rahalaegas"
-
-#~ msgid "User Name"
-#~ msgstr "Kasutajanimi"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Mis tüüpi kaubaartikliga on tegemist?"
-
-#~ msgid "Yahoo"
-#~ msgstr "Yahoo"
-
-#~ msgid "Zip Code"
-#~ msgstr "Postiindeks"
-
-#~ msgid "city"
-#~ msgstr "linn"
-
-#~ msgid "ea"
-#~ msgstr "tk"

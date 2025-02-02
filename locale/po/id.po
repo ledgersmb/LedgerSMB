@@ -4,9 +4,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
-"Language-Team: Indonesian (http://www.transifex.com/ledgersmb/ledgersmb/"
+"Language-Team: Indonesian (http://app.transifex.com/ledgersmb/ledgersmb/"
 "language/id/)\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
@@ -8326,6 +8326,10 @@ msgstr "selesai"
 msgid "failed"
 msgstr "gagal"
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8394,6 +8398,10 @@ msgstr ""
 msgid "time(s)"
 msgstr ""
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr ""
@@ -8401,74 +8409,3 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "Account Number End"
-#~ msgstr "No. Akun Awal"
-
-#~ msgid "Account Number Start"
-#~ msgstr "No.Akun Awal"
-
-#~ msgid ""
-#~ "An account can either be a summary account (which have a# link of \"AR\", "
-#~ "\"AP\" or \"IC\" value) or be linked to dropdowns (having any# number of "
-#~ "\"AR_*\", \"AP_*\" and/or \"IC_*\" links concatenated by colons (:)."
-#~ msgstr ""
-#~ "Akun dapat berupa akun ringkasan (yang memiliki # tautan nilai \"AR\", "
-#~ "\"AP\" atau \"IC\") atau ditautkan ke dropdowns (memiliki # nomor \"AR_ "
-#~ "*\", \"AP_ *\" dan / atau tautan \"IC_ *\" yang digabungkan dengan titik "
-#~ "dua (:)."
-
-#~ msgid ""
-#~ "An account can either be a summary account (which have alink of \"AR\", "
-#~ "\"AP\" or \"IC\" value) or be linked to dropdowns (having anynumber of "
-#~ "\"AR_*\", \"AP_*\" and/or \"IC_*\" links concatenated by colons (:)."
-#~ msgstr ""
-#~ "Akun dapat berupa akun ringkasan (yang memiliki # tautan nilai \"AR\", "
-#~ "\"AP\" atau \"IC\") atau ditautkan ke dropdowns (memiliki # nomor \"AR_ "
-#~ "*\", \"AP_ *\" dan / atau tautan \"IC_ *\" yang digabungkan menggunakan "
-#~ "titik dua (:)."
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Apakah anda yakin akan menghapus Nomor Order"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Apakah anda yakin akan menghapus Nomor Quotasi"
-
-#~ msgid "Cell Phone"
-#~ msgstr "Telefon"
-
-#~ msgid "Document"
-#~ msgstr "Dokumen"
-
-#~ msgid "Home Phone"
-#~ msgstr "Telephone Rumah"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Item ini tidak ditemukan!"
-
-#~ msgid "Mr."
-#~ msgstr "Tn."
-
-#~ msgid "Mrs."
-#~ msgstr "Ny."
-
-#~ msgid "Ms."
-#~ msgstr "Nn."
-
-#~ msgid "Print and Save"
-#~ msgstr "Cetak dan Simpan"
-
-#~ msgid "Printed"
-#~ msgstr "Sudah dicetak"
-
-#~ msgid "Service"
-#~ msgstr "Jasa"
-
-#~ msgid "User Name"
-#~ msgstr "Nama Pengguna"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Jenis item ini ?"
-
-#~ msgid "Yahoo"
-#~ msgstr "Yahoo"

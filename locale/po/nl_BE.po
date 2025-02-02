@@ -4,9 +4,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
-"Language-Team: Dutch (Belgium) (http://www.transifex.com/ledgersmb/ledgersmb/"
+"Language-Team: Dutch (Belgium) (http://app.transifex.com/ledgersmb/ledgersmb/"
 "language/nl_BE/)\n"
 "Language: nl_BE\n"
 "MIME-Version: 1.0\n"
@@ -8364,6 +8364,10 @@ msgstr "gebeurd"
 msgid "failed"
 msgstr "mislukt"
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8432,6 +8436,10 @@ msgstr "tijd"
 msgid "time(s)"
 msgstr "keer"
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr "onverwachte fout!"
@@ -8439,240 +8447,3 @@ msgstr "onverwachte fout!"
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr "Gebruik van een vooruitbetaling"
-
-#~ msgid "AIM"
-#~ msgstr "AIM"
-
-#~ msgid "Account Number End"
-#~ msgstr "Rekeningnummer Einde"
-
-#~ msgid "Account Number Start"
-#~ msgstr "Rekeningnummer Begin"
-
-#~ msgid "Add line1"
-#~ msgstr "Regel 1 Toevoegen"
-
-#~ msgid "Add line2"
-#~ msgstr "Regel 2 Toevoegen"
-
-#~ msgid "Add line3 "
-#~ msgstr "Regel 3 Toevoegen"
-
-#~ msgid "Amount Budgetted"
-#~ msgstr "Gebudgetteerd Bedrag"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Weet u zeker dat u dit ordernummer wilt verwijderen?"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Weet u zeker dat u dit offertenummer wilt verwijderen?"
-
-#~ msgid "BCC"
-#~ msgstr "BCC"
-
-#~ msgid "Billing BCC"
-#~ msgstr "Facturatie BCC"
-
-#~ msgid "Billing CC"
-#~ msgstr "Facturatie CC"
-
-#~ msgid "Billing Email"
-#~ msgstr "Facturatie e-mail"
-
-#~ msgid "Books closed on"
-#~ msgstr "Boeken gesloten op"
-
-#~ msgid "Books closed up to"
-#~ msgstr "Boeken afgesloten tot"
-
-#~ msgid "CC"
-#~ msgstr "CC"
-
-#~ msgid "Can't void a voided invoice!"
-#~ msgstr "Teruggedraaide factuur niet terugdraaibaar!"
-
-#~ msgid "Cannot delete posted transaction"
-#~ msgstr "Geboekte transactie niet verwijderbaar"
-
-#~ msgid "Cell Phone"
-#~ msgstr "Mobiele telefoon"
-
-#~ msgid "Close As-Of"
-#~ msgstr "Afsluiten vanaf"
-
-#~ msgid "Close Period"
-#~ msgstr "Periode afsluiten"
-
-#~ msgid "Close Year"
-#~ msgstr "Jaar afsluiten"
-
-#~ msgid "Close books"
-#~ msgstr "Boeken afsluiten"
-
-#~ msgid "Closing data"
-#~ msgstr "Jaarafsluitinggegevens"
-
-#~ msgid "Copy to New"
-#~ msgstr "Kopieër naar Nieuw"
-
-#~ msgid "Default Language"
-#~ msgstr "Standaard Taal "
-
-#~ msgid "Document"
-#~ msgstr "Document"
-
-#~ msgid "Dr."
-#~ msgstr "Dr."
-
-#~ msgid "E-mailed"
-#~ msgstr "Gemaild"
-
-#~ msgid "EDI ID"
-#~ msgstr "EDI ID"
-
-#~ msgid "EDI Interchange ID"
-#~ msgstr "EDI Interchange ID"
-
-#~ msgid "Fax"
-#~ msgstr "Fax"
-
-#~ msgid "Generic Jabber"
-#~ msgstr "Jabber"
-
-#~ msgid "Gtalk"
-#~ msgstr "Gtalk"
-
-#~ msgid "Home Phone"
-#~ msgstr "Thuistelefoon"
-
-#~ msgid "IRC"
-#~ msgstr "IRC"
-
-#~ msgid "Invoice not found"
-#~ msgstr "Factuur niet gevonden"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Dit onderdeel is niet in de database gevonden!"
-
-#~ msgid "LedgerSMB [_1]"
-#~ msgstr "LedgerSMB [_1]"
-
-#~ msgid "Lifetime Measured In"
-#~ msgstr "Levensduur gemeten in"
-
-#~ msgid "MSN"
-#~ msgstr "MSN"
-
-#~ msgid "Miss."
-#~ msgstr "Mejuffrouw"
-
-#~ msgid "Mr."
-#~ msgstr "de Heer"
-
-#~ msgid "Mrs."
-#~ msgstr "Mevrouw"
-
-#~ msgid "Ms."
-#~ msgstr "Mejuffrouw"
-
-#~ msgid "New password"
-#~ msgstr "Nieuw wachtwoord"
-
-#~ msgid "No Account id for [_1]"
-#~ msgstr "Geen rekening-id voor [_1]"
-
-#~ msgid "No ID Set"
-#~ msgstr "Geen ID ingegeven"
-
-#~ msgid "No Old Password"
-#~ msgstr "Geen huidig wachtwoord"
-
-#~ msgid "Non-existing vendor pricegroups in partsvendor"
-#~ msgstr "Niet-bestaande inkoopprijsgroep in tabel partsvendor"
-
-#~ msgid "Old Password"
-#~ msgstr "Oud wachtwoord"
-
-#~ msgid "Please correct the empty AP accounts"
-#~ msgstr "Corrigeer a.u.b. the lege crediteurenrekeningen"
-
-#~ msgid "Please correct the empty AR accounts"
-#~ msgstr "Corrigeer a.u.b. the lege debiteurenrekeningen"
-
-#~ msgid "Primary Phone"
-#~ msgstr "Eerste telefoonnummer"
-
-#~ msgid "Print and Save"
-#~ msgstr "Afdrukken en Opslaan"
-
-#~ msgid "Print and Save as new"
-#~ msgstr "Afdrukken en Sla op als nieuw"
-
-#~ msgid "Printed"
-#~ msgstr "Afgedrukt"
-
-#~ msgid "Re-Open As Of"
-#~ msgstr "Heropenen per"
-
-#~ msgid "Re-open Books"
-#~ msgstr "Heropen boeken"
-
-#~ msgid "Re-open Period"
-#~ msgstr "Heropen periode"
-
-#~ msgid "Save Draft"
-#~ msgstr "Opslaan"
-
-#~ msgid "Save Info"
-#~ msgstr "Opslaan info"
-
-#~ msgid "Save Template"
-#~ msgstr "Opslaan sjabloon"
-
-#~ msgid "Save as New"
-#~ msgstr "Opslaan als nieuw"
-
-#~ msgid "Secondary Phone"
-#~ msgstr "Secundair telefoonnummer"
-
-#~ msgid "Service"
-#~ msgstr "Dienst"
-
-#~ msgid "Sir."
-#~ msgstr "de Heer"
-
-#~ msgid "Strength"
-#~ msgstr "Sterkte"
-
-#~ msgid "Till"
-#~ msgstr "Kassa"
-
-#~ msgid "Total Outstanding"
-#~ msgstr "Totaal openstaand"
-
-#~ msgid "User Name"
-#~ msgstr "Gebruikersnaam"
-
-#~ msgid "Verify"
-#~ msgstr "Controleer"
-
-#~ msgid "Void"
-#~ msgstr "Maak ongeldig"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Wat voor soort artikel is dit?"
-
-#~ msgid "Yahoo"
-#~ msgstr "Yahoo"
-
-#~ msgid "Zip Code"
-#~ msgstr "Postcode"
-
-#~ msgid "action not defined!"
-#~ msgstr "aktie niet gedefinieerd!"
-
-#~ msgid "city"
-#~ msgstr "(Woon)plaats"
-
-#~ msgid "ea"
-#~ msgstr "voor"

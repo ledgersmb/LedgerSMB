@@ -4,9 +4,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
-"Language-Team: Swedish (http://www.transifex.com/ledgersmb/ledgersmb/language/"
+"Language-Team: Swedish (http://app.transifex.com/ledgersmb/ledgersmb/language/"
 "sv/)\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
@@ -16,51 +16,51 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:180
 msgid "# Invoices"
-msgstr ""
+msgstr "# Fakturor"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:115
 msgid "% Dep."
-msgstr ""
+msgstr "% Avsk."
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:99
 msgid "(+) Salvage Value"
-msgstr ""
+msgstr "(+) Restvärde"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:107
 msgid "(-) Accum. Dep."
-msgstr ""
+msgstr "(-) Ackum. Avsk."
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:111
 msgid "(=) NBV"
-msgstr ""
+msgstr "(=) Bokfört nettovärde"
 
 #: UI/templates/widget.html:97
 msgid "--FORMAT--"
-msgstr ""
+msgstr "--FORMAT--"
 
 #: UI/templates/widget.html:27
 msgid "--TEMPLATE--"
-msgstr ""
+msgstr "--MALL--"
 
 #: UI/templates/widget.html:85
 msgid "1099-INT"
-msgstr ""
+msgstr "1099-INT"
 
 #: UI/templates/widget.html:83
 msgid "1099-MISC"
-msgstr ""
+msgstr "1099-MISC"
 
 #: templates/demo/statement.html:68
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: templates/demo/statement.html:69
 msgid "60"
-msgstr ""
+msgstr "60"
 
 #: templates/demo/statement.html:70
 msgid "90"
-msgstr ""
+msgstr "90"
 
 #: templates/demo/invoice.tex:54 templates/demo/packing_list.tex:37
 msgid ""
@@ -68,6 +68,9 @@ msgid ""
 "Returns must be shipped prepaid and properly insured. [_1] will not be "
 "responsible for damages during transit."
 msgstr ""
+"Innan varor returneras måste returen godkännas av [_1]. Avsändaren måste "
+"betala för returfrakten och ansvarar för lämplig försäkring. [_1] ansvarar "
+"inte för eventuella skador som uppstår under frakten."
 
 #: old/bin/am.pl:322 UI/Contact/divs/credit.html:212
 #: UI/Contact/divs/credit.html:213 UI/Reports/filters/unapproved.html:5
@@ -82,11 +85,11 @@ msgstr "Förfallna lev.fakturor"
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:113
 msgid "AP Invoice"
-msgstr ""
+msgstr "Kundfaktura"
 
 #: UI/Reports/filters/search_goods.html:156
 msgid "AP Invoices"
-msgstr ""
+msgstr "Leverantörsfakturor"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:303
 #: UI/Reports/filters/invoice_outstanding.html:4
@@ -8326,6 +8329,10 @@ msgstr "Färdigt"
 msgid "failed"
 msgstr "misslyckats"
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8394,6 +8401,10 @@ msgstr ""
 msgid "time(s)"
 msgstr "gång(er)"
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr "oförberett fel!"
@@ -8401,42 +8412,3 @@ msgstr "oförberett fel!"
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Är du säker på att du vill radera Order Nummer"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Är du säker på att du vill radera Offert Nummer"
-
-#~ msgid "E-mailed"
-#~ msgstr "Skickad med e-post"
-
-#~ msgid "Fax"
-#~ msgstr "Fax"
-
-#~ msgid "Home Phone"
-#~ msgstr "Hem telefon"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Varan finns inte i databasen"
-
-#~ msgid "Print and Save"
-#~ msgstr "Skriv och spara"
-
-#~ msgid "Print and Save as new"
-#~ msgstr "Skriv ut och spara som ny"
-
-#~ msgid "Printed"
-#~ msgstr "Utskriven"
-
-#~ msgid "Service"
-#~ msgstr "Tjänster"
-
-#~ msgid "Till"
-#~ msgstr "Till"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Vilken typ av artikel är detta?"
-
-#~ msgid "ea"
-#~ msgstr "st"

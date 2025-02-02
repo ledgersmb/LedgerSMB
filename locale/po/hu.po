@@ -4,9 +4,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
-"Language-Team: Hungarian (http://www.transifex.com/ledgersmb/ledgersmb/"
+"Language-Team: Hungarian (http://app.transifex.com/ledgersmb/ledgersmb/"
 "language/hu/)\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -8332,6 +8332,10 @@ msgstr "elvégezve"
 msgid "failed"
 msgstr "nem sikerült"
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8400,6 +8404,10 @@ msgstr ""
 msgid "time(s)"
 msgstr "-szor"
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr "váratlan hiba!"
@@ -8407,135 +8415,3 @@ msgstr "váratlan hiba!"
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr "felhasznál egy túlfizetést"
-
-#~ msgid "Account Number End"
-#~ msgstr "Számlaszám vége"
-
-#~ msgid "Account Number Start"
-#~ msgstr "Számlaszám kezdete"
-
-#~ msgid "Add line1"
-#~ msgstr "Címsor 1"
-
-#~ msgid "Add line2"
-#~ msgstr "Címsor 2"
-
-#~ msgid "Add line3 "
-#~ msgstr "Címsor 3 "
-
-#~ msgid "Amount Budgetted"
-#~ msgstr "Költségvetés összege"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Biztosan törölni akarja a megrendelést"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Biztosan törölni akarja az ajánlatot"
-
-#~ msgid "Books closed on"
-#~ msgstr "Könyvelés lezárva"
-
-#~ msgid "Can't void a voided invoice!"
-#~ msgstr "Érvénytelenített számlát nem lehet még egyszer érvényteleníteni!"
-
-#~ msgid "Copy to New"
-#~ msgstr "Újba másol"
-
-#~ msgid "Document"
-#~ msgstr "Dokumentum"
-
-#~ msgid "Dr."
-#~ msgstr "Dr."
-
-#~ msgid "E-mailed"
-#~ msgstr "E-mail elküldve"
-
-#~ msgid "Fax"
-#~ msgstr "Fax"
-
-#~ msgid "Home Phone"
-#~ msgstr "Otthoni telefon"
-
-#~ msgid "Invoice not found"
-#~ msgstr "A számla nem található"
-
-#~ msgid "Item not on file!"
-#~ msgstr "A tétel nincs az adatbázisban!"
-
-#~ msgid "Lifetime Measured In"
-#~ msgstr "Élettartam mértékegysége"
-
-#~ msgid "Miss."
-#~ msgstr "Kisasszony"
-
-#~ msgid "Mr."
-#~ msgstr "Úr"
-
-#~ msgid "Mrs."
-#~ msgstr "Hölgy"
-
-#~ msgid "Ms."
-#~ msgstr "Hölgy"
-
-#~ msgid "No ID Set"
-#~ msgstr "Nincs beállítva ID"
-
-#~ msgid "Old Password"
-#~ msgstr "Régi jelszó"
-
-#~ msgid "Print and Save"
-#~ msgstr "Nyomtat és ment"
-
-#~ msgid "Print and Save as new"
-#~ msgstr "Újként nyomtat és ment"
-
-#~ msgid "Printed"
-#~ msgstr "Kinyomtatva"
-
-#~ msgid "Re-Open As Of"
-#~ msgstr "Újranyitás mint"
-
-#~ msgid "Re-open Books"
-#~ msgstr "Könyvelés újranyitása"
-
-#~ msgid "Save Info"
-#~ msgstr "Infó mentése"
-
-#~ msgid "Save Template"
-#~ msgstr "Sablon mentése"
-
-#~ msgid "Save as New"
-#~ msgstr "Mentés újként"
-
-#~ msgid "Service"
-#~ msgstr "Szolgáltatás"
-
-#~ msgid "Sir."
-#~ msgstr "Úr"
-
-#~ msgid "Strength"
-#~ msgstr "Erősség"
-
-#~ msgid "Till"
-#~ msgstr "Kassza"
-
-#~ msgid "Total Outstanding"
-#~ msgstr "Összes kintlévőség"
-
-#~ msgid "Void"
-#~ msgstr "Érvénytelenít"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Ez milyen típusú tétel?"
-
-#~ msgid "Zip Code"
-#~ msgstr "Ir. szám."
-
-#~ msgid "action not defined!"
-#~ msgstr "művelet nincs meghatározva!"
-
-#~ msgid "city"
-#~ msgstr "város"
-
-#~ msgid "ea"
-#~ msgstr "db"

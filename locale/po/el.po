@@ -4,9 +4,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
-"Language-Team: Greek (http://www.transifex.com/ledgersmb/ledgersmb/language/"
+"Language-Team: Greek (http://app.transifex.com/ledgersmb/ledgersmb/language/"
 "el/)\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
@@ -8323,6 +8323,10 @@ msgstr ""
 msgid "failed"
 msgstr ""
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8391,6 +8395,10 @@ msgstr ""
 msgid "time(s)"
 msgstr ""
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr ""
@@ -8398,24 +8406,3 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Είσαι σίγουρος πως θέλεις να διαγράψεις τον αριθμό παραγγελίας"
-
-#~ msgid "Fax"
-#~ msgstr "Φαξ"
-
-#~ msgid "Home Phone"
-#~ msgstr "Τηλ. Σπιτιού"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Τεμάχιο δεν είναι σε αρχείο"
-
-#~ msgid "Print and Save"
-#~ msgstr "Εκτύπωση και αποθήκευση"
-
-#~ msgid "Printed"
-#~ msgstr "Εκτυπώθηκε"
-
-#~ msgid "Service"
-#~ msgstr "Υπηρεσία"

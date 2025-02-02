@@ -4,9 +4,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
-"Language-Team: Malay (Malaysia) (http://www.transifex.com/ledgersmb/ledgersmb/"
+"Language-Team: Malay (Malaysia) (http://app.transifex.com/ledgersmb/ledgersmb/"
 "language/ms_MY/)\n"
 "Language: ms_MY\n"
 "MIME-Version: 1.0\n"
@@ -8328,6 +8328,10 @@ msgstr "selesai"
 msgid "failed"
 msgstr "gagal"
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8396,6 +8400,10 @@ msgstr ""
 msgid "time(s)"
 msgstr "masa(s)"
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr "Kesilapan yang tidak dijangka"
@@ -8403,102 +8411,3 @@ msgstr "Kesilapan yang tidak dijangka"
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr "guna lebihan bayaran"
-
-#~ msgid "Account Number End"
-#~ msgstr "Pengakhiran Akaun Nombor"
-
-#~ msgid "Account Number Start"
-#~ msgstr "Permulaan Akaun Nombor"
-
-#~ msgid "Add line1"
-#~ msgstr "Tambah barisan1"
-
-#~ msgid "Add line2"
-#~ msgstr "Tambah barisan2"
-
-#~ msgid "Add line3 "
-#~ msgstr "Tambah barisan3"
-
-#~ msgid "Amount Budgetted"
-#~ msgstr "Jumlah yang Dibajetkan"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Adakah anda pasti mahu memadam nombor pesanan"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Adakah anda pasti ingin memadam Nombor Sebut Harga"
-
-#~ msgid "Can't void a voided invoice!"
-#~ msgstr "Tidak boleh membatalkan invois yang telah dibatalkan"
-
-#~ msgid "Copy to New"
-#~ msgstr "Salin Ke Baru"
-
-#~ msgid "Default Language"
-#~ msgstr "Bahasa"
-
-#~ msgid "Document"
-#~ msgstr "Dokumen"
-
-#~ msgid "Dr."
-#~ msgstr "Dr."
-
-#~ msgid "Invoice not found"
-#~ msgstr "Invois tidak dijumpai"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Item tiada di dalam fail!"
-
-#~ msgid "Miss."
-#~ msgstr "Cik"
-
-#~ msgid "Mr."
-#~ msgstr "Encik"
-
-#~ msgid "Mrs."
-#~ msgstr "Puan"
-
-#~ msgid "Ms."
-#~ msgstr "Cik"
-
-#~ msgid "No ID Set"
-#~ msgstr "Tiada Set ID"
-
-#~ msgid "Print and Save"
-#~ msgstr "Cetak dan Simpan"
-
-#~ msgid "Print and Save as new"
-#~ msgstr "Cetak dan Simpan sebagai yang baru"
-
-#~ msgid "Printed"
-#~ msgstr "Sudah Dicetak"
-
-#~ msgid "Save Info"
-#~ msgstr "Simpan Maklumat"
-
-#~ msgid "Save Template"
-#~ msgstr "Simpan Templat"
-
-#~ msgid "Save as New"
-#~ msgstr "Simpan sebagai baru"
-
-#~ msgid "Service"
-#~ msgstr "Servis"
-
-#~ msgid "Sir."
-#~ msgstr "Tuan"
-
-#~ msgid "Till"
-#~ msgstr "Till"
-
-#~ msgid "Void"
-#~ msgstr "Batal"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Apakah jenis item ini?"
-
-#~ msgid "Zip Code"
-#~ msgstr "Kod Pos"
-
-#~ msgid "city"
-#~ msgstr "Bandar"

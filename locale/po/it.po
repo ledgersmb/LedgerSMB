@@ -1,14 +1,14 @@
 #
 # Translators:
-# Ferruccio Zamuner <nonsolosoft@diff.org>, 2016
+# Ferruccio Zamuner <nonsolosoft@diff.org>, 2016,2023
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-02-02 10:36+0000\n"
+"POT-Creation-Date: 2025-02-02 10:43+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
-"Last-Translator: Ferruccio Zamuner <nonsolosoft@diff.org>, 2016\n"
-"Language-Team: Italian (http://www.transifex.com/ledgersmb/ledgersmb/language/"
+"Last-Translator: Ferruccio Zamuner <nonsolosoft@diff.org>, 2016,2023\n"
+"Language-Team: Italian (http://app.transifex.com/ledgersmb/ledgersmb/language/"
 "it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "% Amm."
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:99
 msgid "(+) Salvage Value"
-msgstr ""
+msgstr "Valore residuo"
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:107
 msgid "(-) Accum. Dep."
@@ -8331,6 +8331,10 @@ msgstr "fatto"
 msgid "failed"
 msgstr "fallito"
 
+#: UI/lib/report_base.html:208
+msgid "from_date"
+msgstr ""
+
 #: UI/templates/widget.html:99
 msgid "html"
 msgstr ""
@@ -8399,6 +8403,10 @@ msgstr "ora"
 msgid "time(s)"
 msgstr "volta(e)"
 
+#: UI/lib/report_base.html:219
+msgid "to_date"
+msgstr ""
+
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
 msgstr "errore inaspettato!"
@@ -8406,111 +8414,3 @@ msgstr "errore inaspettato!"
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "AIM"
-#~ msgstr "AIM"
-
-#~ msgid "Account Number End"
-#~ msgstr "Numero conto finale"
-
-#~ msgid "Account Number Start"
-#~ msgstr "Numero conto iniziale"
-
-#~ msgid "Add line1"
-#~ msgstr "Aggiungi linea1"
-
-#~ msgid "Add line2"
-#~ msgstr "Nuova linea2"
-
-#~ msgid "Add line3 "
-#~ msgstr "Nuova linea3"
-
-#~ msgid "Amount Budgetted"
-#~ msgstr "Totale preventivato"
-
-#~ msgid "Are you sure you want to delete Order Number"
-#~ msgstr "Sei sicuro di volre cancellare l'ordine numero"
-
-#~ msgid "Are you sure you want to delete Quotation Number"
-#~ msgstr "Vuoi cancellare l'offerta numero"
-
-#~ msgid "Books closed on"
-#~ msgstr "Registro chiuso il"
-
-#~ msgid "Close Period"
-#~ msgstr "Esercizio chiuso"
-
-#~ msgid "Close Year"
-#~ msgstr "Chiudi anno"
-
-#~ msgid "E-mailed"
-#~ msgstr "Inviata email"
-
-#~ msgid "Fax"
-#~ msgstr "Fax"
-
-#~ msgid "Home Phone"
-#~ msgstr "Telefono casa"
-
-#~ msgid "Invoice not found"
-#~ msgstr "Fattura non trovata"
-
-#~ msgid "Item not on file!"
-#~ msgstr "Articolo non in archivio!"
-
-#~ msgid "Miss."
-#~ msgstr "Sig.na"
-
-#~ msgid "Mr."
-#~ msgstr "Sig."
-
-#~ msgid "Mrs."
-#~ msgstr "Sig.ra"
-
-#~ msgid "Ms."
-#~ msgstr "Sig.ra"
-
-#~ msgid "Old Password"
-#~ msgstr "Password precedente"
-
-#~ msgid "Primary Phone"
-#~ msgstr "Telefono principale"
-
-#~ msgid "Printed"
-#~ msgstr "Stampato"
-
-#~ msgid "Save as New"
-#~ msgstr "Salva come nuovo"
-
-#~ msgid "Secondary Phone"
-#~ msgstr "Altro telefono"
-
-#~ msgid "Service"
-#~ msgstr "Servizio"
-
-#~ msgid "Sir."
-#~ msgstr "Signor"
-
-#~ msgid "User Name"
-#~ msgstr "Nome utente"
-
-#~ msgid "What type of item is this?"
-#~ msgstr "Che tipo di Articolo &egrave; questo?"
-
-#~ msgid "Zip Code"
-#~ msgstr "CAP"
-
-#~ msgid "action not defined!"
-#~ msgstr "azione non definita!"
-
-#~ msgid "city"
-#~ msgstr "città"
-
-#~ msgid "ea"
-#~ msgstr "ci"
-
-#~ msgid "from_date"
-#~ msgstr "da_data"
-
-#~ msgid "to_date"
-#~ msgstr "per_data"
