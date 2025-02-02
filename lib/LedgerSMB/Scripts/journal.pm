@@ -107,25 +107,37 @@ sub search {
          push @{$request->{business_units}}, $request->{"business_unit_$count"}
                if $request->{"business_unit_$count"};
     }
-    #tshvr4 trying to mix in period from_month from_year interval
+
+    my @report_keys = ( 'business_units',  # created above
+                        '_uri',            # to allow sorting
+                        qw( reference accno source memo
+                            description notes
+                            from_month from_year
+                            interval
+                            is_approved
+                            is_voided
+                            category
+                            order_by
+                            old_order_by
+                            order_dir ),
+                        grep { m/^(bc_|col_)/ } keys $request->%* );
+
+    my %parsed_dates = ();
+    if ($request->{from_date}) {
+        $parsed_dates{from_date} = $request->parse_date( $request->{from_date} );
+    }
+    if ($request->{to_date}) {
+        $parsed_dates{to_date} = $request->parse_date( $request->{to_date} );
+    }
+
     return $request->render_report(
         LedgerSMB::Report::GL->new(
-            $request->%{(qw( reference accno category source memo
-                            business_units
-                            is_voided
-                            is_approved
-                            interval
-                            from_month from_year
-                            comparison_periods comparison_type
-                            comparisons
-                         ),
-                         grep { m/^(bc_|col_)/ } keys $request->%*)},
+            $request->%{@report_keys},
             formatter_options => $request->formatter_options,
             from_amount => $request->parse_amount( $request->{from_amount} ),
             to_amount => $request->parse_amount( $request->{to_amount} ),
-            from_date => $request->parse_date( $request->{from_date} ),
-            to_date => $request->parse_date( $request->{to_date} ),
             locale => $request->{_locale},
+            %parsed_dates
         ));
 }
 
