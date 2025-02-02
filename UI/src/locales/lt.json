@@ -29,7 +29,6 @@
     "Amount Due": "Suma iki",
     "Apr": "Bal",
     "April": "Balandis",
-    "Are you sure you want to delete Order Number": "Ar Jus tikrai norite ištrinti uzsakimas numeris:",
     "Assemblies restocked!": "Rinkiniai persandeliuoti!",
     "Asset": "Turtas",
     "Attachment": "Prisegta",
@@ -124,7 +123,6 @@
     "Invoice Number": "Sąskaitos-faktūros numeris",
     "Invoice Number missing!": "Sąskaitos-faktūra numerio nėra!",
     "Item deleted!": "Vienetas ištrintas!",
-    "Item not on file!": "Vieneto nėra įrašuose!",
     "Jan": "Sau",
     "January": "Sausis",
     "Jul": "Lie",
@@ -212,7 +210,6 @@
     "Sell Price": "Pardavimo kaina",
     "Sep": "Rgs",
     "September": "Rūgsėjis",
-    "Service": "Paslauga",
     "Ship": "Pristatymas",
     "Ship to": "Pristatyti į",
     "Ship via": "Pristatyti per",
@@ -243,7 +240,6 @@
     "Vendor not on file!": "Tokio tiekėjo nėra!",
     "Weight": "Svoris",
     "Weight Unit": "Svorio vienetas.",
-    "What type of item is this?": "Koks šio dalyko tipas?",
     "Yes": "Taip",
     "days": "dienos"
 }

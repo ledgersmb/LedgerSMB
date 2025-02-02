@@ -30,7 +30,6 @@
     "Amount Due": "Eindagi",
     "Apr": "apr",
     "April": "apríl",
-    "Are you sure you want to delete Order Number": "Ert þú viss um að þú viljir eyða pöntun númer",
     "Assemblies restocked!": "Samsetningar endurunnar",
     "Asset": "Eignir",
     "Attachment": "Hjálagt",
@@ -126,7 +125,6 @@
     "Invoice Number": "Sölureikningur Númer",
     "Invoice Number missing!": "Sölureikningsnúmer vantar!",
     "Item deleted!": "Hlut eytt!",
-    "Item not on file!": "Hlutur ekki á skrá!",
     "Jan": "jan",
     "January": "janúar",
     "Jul": "júl",
@@ -213,7 +211,6 @@
     "Sell Price": "Söluverð",
     "Sep": "sep",
     "September": "september",
-    "Service": "Þjónusta",
     "Ship": "Senda",
     "Ship to": "Senda til",
     "Ship via": "Senda með",
@@ -245,7 +242,6 @@
     "Vendor not on file!": "Byrgir ekki til í gagnagrunni!",
     "Weight": "Vigt",
     "Weight Unit": "Vigtareining",
-    "What type of item is this?": "Hvernig hlutur er þetta?",
     "Yes": "Já",
     "days": "dagar"
 }
