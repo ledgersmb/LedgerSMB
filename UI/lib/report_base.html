@@ -205,7 +205,7 @@ END # BLOCK -%]
 [%- BLOCK date_from_date_div %]
     [%
         IF !label.defined();    label    = text('From');      END;
-        IF !name.defined();     name     = text('from_date'); END;
+        IF !name.defined();     name     = 'from_date'; END;
         IF !required.defined(); required = 'false';           END;
     %]
     <div class="input_group">
@@ -216,7 +216,7 @@ END # BLOCK -%]
 [% BLOCK date_to_date_div %]
     [%
         IF !label.defined();    label    = text('To');      END;
-        IF !name.defined();     name     = text('to_date'); END;
+        IF !name.defined();     name     = 'to_date'; END;
         IF !required.defined(); required = 'false';         END;
     %]
     <div class="input_group">
