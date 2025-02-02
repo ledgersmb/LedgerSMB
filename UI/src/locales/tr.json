@@ -22,7 +22,6 @@
     "Amount": "Miktar",
     "Apr": "Nis",
     "April": "Nisan",
-    "Are you sure you want to delete Order Number": "Sipariş Numarasını silmek istediğinizden emin misiniz? Fiş: ",
     "Asset": "Aktif",
     "Aug": "Ağu",
     "August": "Ağustos",
@@ -78,7 +77,6 @@
     "Invoice Date missing!": "Fatura Tarihi yok!",
     "Invoice Number": "Fatura No",
     "Invoice Number missing!": "Fatura Numarası yok!",
-    "Item not on file!": "Bu kalem dosyada yok!",
     "Jan": "Oca",
     "January": "Ocak",
     "Jul": "Tem",
@@ -137,7 +135,6 @@
     "Sell Price": "Satış Fiyatı",
     "Sep": "Eyl",
     "September": "Eylül",
-    "Service": "servis",
     "Short": "Kısa",
     "Signature": "İmza",
     "Source": "Kaynak",
@@ -157,7 +154,6 @@
     "Vendor": "Satıcı",
     "Weight": "Ağırlık",
     "Weight Unit": "Ağırlık Birimi",
-    "What type of item is this?": "Bu ne çeşit bir kalemdir?",
     "Yes": "Evet",
     "days": "gün. "
 }

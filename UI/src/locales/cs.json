@@ -24,7 +24,6 @@
     "Amount": "Částka",
     "Apr": "Dub",
     "April": "Duben",
-    "Are you sure you want to delete Order Number": "Opravdu chcete vymazat objednávku číslo",
     "Asset": "Aktiva",
     "Attachment": "Přílohy",
     "Aug": "Srp",
@@ -89,7 +88,6 @@
     "Invoice Date missing!": "Chybí datum vystavení!",
     "Invoice Number": "Číslo faktury",
     "Invoice Number missing!": "Chybí číslo faktury!",
-    "Item not on file!": "Tato položka není v databázi!",
     "Jan": "Led",
     "January": "Leden",
     "Jul": "Čec",
@@ -157,7 +155,6 @@
     "Sell Price": "Prodejní cena",
     "Sep": "Zář",
     "September": "Září",
-    "Service": "Služba",
     "Short": "Krátký výpis",
     "Signature": "Podpis",
     "Source": "Zdroj",
@@ -179,7 +176,6 @@
     "Vendor": "Dodavatel",
     "Weight": "Váha",
     "Weight Unit": "Jednotka váhy",
-    "What type of item is this?": "O jaký typ položky se jedná?",
     "Yes": "Ano",
     "days": "dní"
 }
