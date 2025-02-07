@@ -3,6 +3,10 @@
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.3
+* Fix GL search and sort not correctly applying search parameters (#8630)
+
+
 Changelog for 1.12.2
 * Fix warnings in 'ledgersmb-admin template' command (#8595)
 * Fix pre-upgrade schema check feedback (#8606)
