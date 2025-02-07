@@ -1,7 +1,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.12.3\n"
+"Project-Id-Version: LedgerSMB 1.12.4-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
 "POT-Creation-Date: 2025-02-07 16:52+0000\n"
 "PO-Revision-Date: 2022-01-09T21:20:15.970Z\n"
