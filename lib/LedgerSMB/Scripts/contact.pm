@@ -18,6 +18,8 @@ This module is the UI controller for the customer, vendor, etc functions; it
 
 =cut
 
+use HTTP::Status qw( HTTP_FOUND );
+
 use LedgerSMB;
 use LedgerSMB::Entity::Company;
 use LedgerSMB::Entity::Person;
@@ -60,6 +62,23 @@ for (@pluginmods){
 =head1 METHODS
 
 =over
+
+=item delete_entity
+
+=cut
+
+sub delete_entity {
+    my ($request) = @_;
+    my $entity =
+           LedgerSMB::Entity::Company->get_by_cc($request->{control_code});
+    $entity ||=  LedgerSMB::Entity::Person->get_by_cc($request->{control_code});
+
+    $entity->del;
+    return [ HTTP_FOUND,
+             [ 'Location' => 'reports.pl?__action=start_report&report_name=contact_search' ],
+             [ '' ]
+        ];
+}
 
 =item get_by_cc
 
@@ -167,6 +186,7 @@ sub _main_screen {
     $request->{target_div} ||= 'person_div' if defined $person;
     $request->{target_div} ||= 'company_div';
 
+    my $may_delete = $request->is_allowed_role({ allowed_roles => [ 'contact_delete' ] });
     my @all_managers =
         map { $_->{label} = "$_->{first_name} $_->{last_name}"; $_ }
     ($request->call_procedure( funcname => 'employee__all_managers' ),);
@@ -365,7 +385,8 @@ sub _main_screen {
              all_managers => \@all_managers,
           default_country => $default_country,
          default_language => $default_language,
-                  earn_id => $earn_id
+                  earn_id => $earn_id,
+               may_delete => $may_delete,
     });
 }
 
@@ -598,6 +619,23 @@ sub save_person {
     $request->{target_div} = 'credit_div';
     $person->save;
     return _main_screen($request, undef, $person);
+}
+
+=item delete_credit($request)
+
+Deletes the credit account indicated by C<< $request->{credit_id} >>, if the user
+has sufficient access rights.
+
+=cut
+
+sub delete_credit {
+    my ($request) = @_;
+
+    my $credit = LedgerSMB::Entity::Credit_Account->get_by_id( $request->{credit_id} );
+    if ($credit) {
+        $credit->del;
+    }
+    return get($request);
 }
 
 =item save_credit($request)

@@ -15,8 +15,12 @@ FOREACH cl IN credit_list;
         cl.account_class_label = text('Customer');
    END;
    cl.meta_number_href_suffix = 'account_class=' _ cl.entity_class _
-      '&amp;entity_id=' _ cl.entity_id _ '&amp;meta_number=' _ cl.meta_number _
-      '&amp;target_div=credit_div';
+      '&amp;entity_id=' _ cl.entity_id _ '&amp;meta_number=' _ cl.meta_number;
+   IF NOT cl.is_used ;
+      cl.delete_href_suffix = 'entity_id=' _ cl.entity_id _
+          '&amp;credit_id=' _ cl.id;
+      cl.delete = '[ ' _ text('Delete') _ ' ]';
+   END;
 END;
 
 PROCESS dynatable
@@ -24,16 +28,18 @@ PROCESS dynatable
       columns = [
         { col_id = 'account_class_label', type = 'text', name = text('Type') }
         { col_id = 'meta_number', type = 'href', name = text("Number"),
-          href_base = "$request.script?__action=get&amp;" }
+          href_base = "$request.script?__action=get&amp;target_div=credit_div&amp;" }
         { col_id = 'description', type = 'text', name = text("Description") }
         { col_id = 'creditlimit', type = 'text', name = text('Credit Limit') }
         { col_id = 'startdate', type = 'text', name = text('Start Date') }
         { col_id = 'enddate', type = 'text', name = text('End Date') }
+        { col_id = 'delete', type = 'href',
+          href_base = "$request.script?__action=delete_credit&amp;target_div=credit_div&amp;" }
     ], #'
     tbody = {rows = credit_list}; %]
     <form data-dojo-type="lsmb/Form" id="credit_form" name="credit_form" method="post"
         action="[% request.script %]">
-[% PROCESS input element_data = {
+      [% PROCESS input element_data = {
                 type = "hidden"
                 name = "form_id"
                 value = form_id

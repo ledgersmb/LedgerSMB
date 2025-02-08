@@ -81,11 +81,11 @@ has 'sic_code' => (is => 'rw', isa => 'Maybe[Str]', required => 0);
 
 Date when the company was entered into LedgerSMB
 
-=back
-
 =cut
 
 has 'created' => (is => 'rw', isa => 'LedgerSMB::PGDate');
+
+=back
 
 =head1 METHODS
 
