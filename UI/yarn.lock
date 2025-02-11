@@ -1705,12 +1705,10 @@
   resolved "https://registry.npmjs.org/@open-draft/until/-/until-2.1.0.tgz"
   integrity sha512-U69T3ItWHvLwGg5eJ0n3I62nWuE6ilHlmz7zM0npLBRvPRd7e6NYmg54vvRtP5mZG7kZqZCFVdsTWo7BPtBujg==
 
-"@pinia/testing@0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@pinia/testing/-/testing-0.1.7.tgz#6feddf23788555bfe562b0503331e780bfb2a6f9"
-  integrity sha512-xcDq6Ry/kNhZ5bsUMl7DeoFXwdume1NYzDggCiDUDKoPQ6Mo0eH9VU7bJvBtlurqe6byAntWoX5IhVFqWzRz/Q==
-  dependencies:
-    vue-demi "^0.14.10"
+"@pinia/testing@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@pinia/testing/-/testing-1.0.0.tgz#dfd3fdb00220e56f2589d23aa414bf9b24fa5703"
+  integrity sha512-a0QquMJqIdgOsb64f8u6YznRbZD4aJxjpyiWXJbs6e2mn7qn6xx/y1hSdTzqK8jfjX0rGPYniHHvF6zpP73ilg==
 
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
