@@ -73,7 +73,7 @@ body {
 
 .financial-statement.flat-hierarchy .income_statement .heading2 {
     border-top: 1px solid black;
-    font-size: bigger;
+    font-size: larger;
     font-style: italic;
     height: 2em;
     vertical-align: top;
@@ -146,7 +146,7 @@ body {
     font-weight: bold;
 
     /* vertical-align: center; */
-    height: 100%,;
+    height: 100%;
     margin-right: 0.5em;
     width: 12em;
 }
@@ -289,7 +289,7 @@ body {
 
 #reports legend label#comparison-periods-label,
 #balance-sheet-parameters legend label#comparison-periods-label {
-    vertical-align: center;
+    vertical-align: middle;
     width: auto;
 }
 
