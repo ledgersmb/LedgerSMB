@@ -67,6 +67,15 @@ Name of country (optional)
 
 has 'country_name' => (is => 'rw', isa => 'Str', required => 0);
 
+=item is_used
+
+Boolean (Readonly). True if the company entity is used in the database
+(and hence can't be deleted).
+
+=cut
+
+has 'is_used' => (is => 'ro');
+
 =back
 
 =head1 METHODS
@@ -84,6 +93,18 @@ sub get{
     my ($result) =  __PACKAGE__->call_procedure(funcname => 'entity__get',
                                                    args => [$id]);
     return __PACKAGE__->new(%$result);
+}
+
+=item del()
+
+=cut
+
+sub del {
+    my ($self) = @_;
+    my ($result) = __PACKAGE__->call_procedure(funcname => 'entity__delete',
+                                               args => [ $self->id ]);
+
+    return $result;
 }
 
 =back

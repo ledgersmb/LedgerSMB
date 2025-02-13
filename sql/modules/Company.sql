@@ -20,7 +20,8 @@ CREATE TYPE company_entity AS(
   license_number text,
   sic_code varchar,
   control_code text,
-  country_id int
+  country_id int,
+  is_used bool
 );
 
 DROP TYPE IF EXISTS eca__pricematrix CASCADE;
@@ -415,7 +416,27 @@ USING in_entity_class, in_contact, in_contact_info, in_meta_number,
 END
 $$ LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION eca__is_used(in_id int)
+  RETURNS boolean AS
+$$
+  BEGIN
+    BEGIN
+      delete from entity_credit_account where id = in_id;
+      raise sqlstate 'P0004';
+    EXCEPTION
+      WHEN foreign_key_violation THEN
+        return true;
+      WHEN assert_failure THEN
+        return false;
+    END;
+  END;
+$$ language plpgsql;
 
+COMMENT ON FUNCTION eca__is_used(in_id int) IS
+  $$Checks whether the credit account is used or not.
+
+In case it isn't used, it should be possible to delete it.
+$$; --'
 
 DROP FUNCTION IF EXISTS eca__get_taxes(in_credit_id int);
 
@@ -537,35 +558,6 @@ CREATE TYPE entity_credit_search_return AS (
         threshold numeric
 );
 
-DROP TYPE IF EXISTS entity_credit_retrieve CASCADE;
-
-CREATE TYPE entity_credit_retrieve AS (
-        id int,
-        entity_id int,
-        entity_class int,
-        discount numeric,
-        discount_terms int,
-        taxincluded bool,
-        creditlimit numeric,
-        terms int2,
-        meta_number text,
-        description text,
-        business_id int,
-        language_code text,
-        pricegroup_id int,
-        curr text,
-        startdate date,
-        enddate date,
-        ar_ap_account_id int,
-        cash_account_id int,
-        discount_account_id int,
-        threshold numeric,
-        control_code text,
-        credit_id int,
-        pay_to_name text,
-        taxform_id int
-);
-
 COMMENT ON TYPE entity_credit_search_return IS
 $$ This may change in 1.4 and should not be relied upon too much $$;
 
@@ -585,44 +577,15 @@ $$ Returns an entity credit id, based on entity_id, entity_class,
 and meta_number.  This is the preferred way to locate an account if all three of
 these are known$$;
 
-CREATE OR REPLACE FUNCTION entity__list_credit
-(in_entity_id int, in_entity_class int)
-RETURNS SETOF entity_credit_retrieve AS
-$$
-BEGIN
-RETURN QUERY EXECUTE $sql$
-                SELECT  ec.id, e.id, ec.entity_class, ec.discount,
-                        ec.discount_terms,
-                        ec.taxincluded, ec.creditlimit, ec.terms,
-                        ec.meta_number::text, ec.description, ec.business_id,
-                        ec.language_code::text,
-                        ec.pricegroup_id, ec.curr::text, ec.startdate,
-                        ec.enddate, ec.ar_ap_account_id, ec.cash_account_id,
-                        ec.discount_account_id,
-                        ec.threshold, e.control_code, ec.id, ec.pay_to_name,
-                        ec.taxform_id
-                FROM entity e
-                JOIN entity_credit_account ec ON (e.id = ec.entity_id)
-                WHERE e.id = $1
-                       AND (ec.entity_class = $2
-                            or $2 is null)
-$sql$
-USING in_entity_id, in_entity_class;
-END
-$$ LANGUAGE PLPGSQL;
-
-COMMENT ON FUNCTION entity__list_credit (in_entity_id int, in_entity_class int)
-IS $$ Returns a list of entity credit account entries for the entity and of the
-entity class.$$;
-
 CREATE OR REPLACE FUNCTION company__get (in_entity_id int)
 RETURNS company_entity AS
 $$
-        SELECT c.entity_id, c.legal_name, c.tax_id, c.sales_tax_id,
-               c.license_number, c.sic_code, e.control_code, e.country_id
-          FROM company c
-          JOIN entity e ON e.id = c.entity_id
-         WHERE entity_id = $1;
+  SELECT c.entity_id, c.legal_name, c.tax_id, c.sales_tax_id,
+         c.license_number, c.sic_code, e.control_code, e.country_id,
+         entity__is_used(in_entity_id)
+    FROM company c
+    JOIN entity e ON e.id = c.entity_id
+   WHERE entity_id = $1;
 $$ language sql;
 
 COMMENT ON FUNCTION company__get (in_entity_id int) IS
@@ -632,7 +595,8 @@ CREATE OR REPLACE FUNCTION company__get_by_cc (in_control_code text)
 RETURNS company_entity AS
 $$
         SELECT c.entity_id, c.legal_name, c.tax_id, c.sales_tax_id,
-               c.license_number, c.sic_code, e.control_code, e.country_id
+               c.license_number, c.sic_code, e.control_code, e.country_id,
+               entity__is_used(e.id)
           FROM company c
           JOIN entity e ON e.id = c.entity_id
          WHERE e.control_code = $1;
@@ -1410,24 +1374,6 @@ COMMENT ON FUNCTION eca__save_contact
 (in_credit_id int, in_contact_class int, in_description text, in_contact text,
 in_old_contact text, in_old_contact_class int) IS
 $$ Saves the contact record at the entity credit account level.  Returns 1.$$;
-
-CREATE OR REPLACE FUNCTION company__get_all_accounts (
-    in_entity_id int,
-    in_entity_class int
-) RETURNS SETOF entity_credit_account AS $body$
-
-    SELECT *
-      FROM entity_credit_account
-     WHERE entity_id = $1
-       AND entity_class = $2;
-
-$body$ language SQL;
-
-COMMENT ON FUNCTION company__get_all_accounts (
-    in_entity_id int,
-    in_entity_class int
-) IS
-$$ Returns a list of all entity credit accounts attached to that entity.$$;
 
 -- pricematrix
 
