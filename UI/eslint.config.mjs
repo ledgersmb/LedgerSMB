@@ -74,7 +74,6 @@ export default [
             "global-require": "error",
             "guard-for-in": "error",
             "import-x/export": "error",
-            "import-x/no-unresolved": "error",
             "import-x/named": "error",
             "import-x/namespace": "error",
             "import-x/default": "error",
