@@ -256,12 +256,14 @@ Returns the batch C<approved_on> date (being the current database date).
 sub post {
     my ($self) = @_;
 
-    $log->info("Deleting batch $self->{id} of class $self->{batch_class_id}");
-    if (not (defined $self->{batch_class_id}
-             and ($self->{batch_class_id} == BC_PAYMENT
-                  or $self->{batch_class_id} == BC_PAYMENT_REVERSAL
-                  or $self->{batch_class_id} == BC_RECEIPT
-                  or $self->{batch_class_id} == BC_RECEIPT_REVERSAL))) {
+    my $id = $self->{id} // '';
+    my $batch_class_id = $self->{batch_class_id} // '';
+    $log->info("Deleting batch $id of class $batch_class_id");
+    if (not ($batch_class_id ne ''
+             and ($batch_class_id == BC_PAYMENT
+                  or $batch_class_id == BC_PAYMENT_REVERSAL
+                  or $batch_class_id == BC_RECEIPT
+                  or $batch_class_id == BC_RECEIPT_REVERSAL))) {
         # payments and receipts (and reversals) are part of a transaction
         # which may already have been approved, meaning that 'batch-approve'
         # isn't available...
