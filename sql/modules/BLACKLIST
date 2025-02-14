@@ -137,7 +137,6 @@ cogs__add_for_ar_line
 cogs__reverse_ap
 cogs__reverse_ar
 company__get
-company__get_all_accounts
 company__get_by_cc
 company__next_id
 company__save
@@ -174,6 +173,7 @@ draft__delete_lines
 draft__search
 draft_approve
 draft_delete
+eca__delete
 eca__delete_contact
 eca__delete_location
 eca__delete_pricematrix
@@ -202,6 +202,7 @@ employee__list_managers
 employee__save
 employee__search
 employee_search
+entity__delete
 entity__delete_bank_account
 entity__delete_contact
 entity__delete_location
