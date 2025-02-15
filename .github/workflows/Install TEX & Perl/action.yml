@@ -61,6 +61,7 @@ runs:
       shell: bash
       run: |
         mkdir -p logs
-        starman --preload-app --pid starman.pid --workers $JOB_COUNT \
+        echo "PSGI_BASE_URL=http://lsmb:5762" >> $GITHUB_ENV
+        starman --preload-app -E test --pid starman.pid --workers $JOB_COUNT \
                 --max-requests 50000 --error-log logs/starman-error.log \
                 -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &

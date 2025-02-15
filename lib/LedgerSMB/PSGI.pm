@@ -44,7 +44,8 @@ use LedgerSMB::Routes::ERP::API::Session;
 use LedgerSMB::Routes::ERP::API::Templates;
 
 use CGI::Emulate::PSGI;
-use HTTP::Status qw( HTTP_FOUND HTTP_NOT_FOUND );
+use HTTP::Status qw( HTTP_OK HTTP_FOUND HTTP_NOT_FOUND );
+use JSON::PP;
 use List::Util qw{  none };
 use Log::Any;
 use Log::Log4perl;
@@ -403,6 +404,18 @@ sub setup_url_space {
             enable '+LedgerSMB::Middleware::DisableBackButton';
             $psgi_app;
         };
+
+        if ($ENV{PLACK_ENV}
+            and $ENV{PLACK_ENV} ne 'deployment') {
+            my $json = JSON::PP->new->utf8;
+            mount '/status' => sub {
+                return [
+                    HTTP_OK,
+                    [ 'Content-Type' => 'application/json; charset=UTF-8' ],
+                    [ $json->encode({ schema => $wire->get('db')->schema }) ]
+                    ];
+            };
+        }
 
         mount '/' => sub {
             my $env = shift;

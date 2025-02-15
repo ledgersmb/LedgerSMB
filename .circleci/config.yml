@@ -226,7 +226,7 @@ commands:
               JOB_COUNT=2
             fi
             PERL5OPT="$PERL5OPT -MDevel::Cover=$DEVEL_COVER_OPTIONS" \
-            starman --preload-app --pid starman.pid --workers $JOB_COUNT \
+            starman --preload-app -E test --pid starman.pid --workers $JOB_COUNT \
                   --max-requests 5000 --error-log logs/starman-error.log \
                   -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi
             echo "starman done!"

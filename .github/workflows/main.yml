@@ -31,6 +31,7 @@ env:
   PGUSER: postgres
   JOB_COUNT: 5
   TEST2_UUID_NO_WARN: 1
+  TEST_NO_VERIFY_SCHEMA: 1
   DEVEL_COVER_OPTIONS: -silent,1,+ignore,^/home/,+ignore,^x?t,+ignore,UI/tests,+ignore,^utils,+ignore,local/,+ignore,^/usr/,+ignore,^/opt/,+ignore,\\.lttc,+ignore,starman\\b,-summary,1
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
