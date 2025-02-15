@@ -6,6 +6,31 @@ Date: 2025-01-25
 
 Draft
 
+## Definition
+
+This ADR considers "core data entities" to be in the classes
+[Master data](https://en.wikipedia.org/wiki/Master_data) and
+[Reference data](https://en.wikipedia.org/wiki/Reference_data). Examples
+are - as named in the referenced Wikipedia articles: customers, vendors,
+GL accounts, currencies, etc.
+
+A master or reference data concept may encompass multiple tables; e.g.,
+a customer definition includes addresses and contact data stored in
+separate tables from the table where the primary data (e.g. its name) can
+be found.
+
+The concept of this data "being used" revolves around REFERENCES table
+relations. These come in two types:
+
+1. From tables that add properties or attributes to the reference or
+   master data itself (such as addresses being added to customers)
+2. From tables where the data element is used to classify the
+   referencing data
+
+If a master or reference data table has reference relations of the second
+type, then records are considered to be "in use" when these records are
+referenced through these table relationships.
+
 ## Context
 
 At some point in the history of the project, it was decided that supporting
