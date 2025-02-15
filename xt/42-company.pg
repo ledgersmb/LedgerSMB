@@ -132,7 +132,7 @@ BEGIN;
     PREPARE test AS SELECT
        CASE WHEN subject = 'Test note subject' THEN 't'::bool ELSE 'f'::bool END
        FROM entity_note
-       WHERE id = currval('note_id_seq');
+       WHERE id = currval('entity_note_id_seq');
     SELECT results_eq('test',ARRAY[true],'entity__save_note subject record');
     DEALLOCATE test;
 
@@ -144,7 +144,7 @@ BEGIN;
     PREPARE test AS SELECT
            CASE WHEN subject = 'ECA test note subject' THEN 't'::bool ELSE 'f'::bool END
            FROM eca_note
-           WHERE id = currval('note_id_seq');
+           WHERE id = currval('eca_note_id_seq');
     SELECT results_eq('test',ARRAY[true],'eca__save_notes subject record');
     DEALLOCATE test;
 

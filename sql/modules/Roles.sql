@@ -515,7 +515,8 @@ SELECT lsmb__grant_perms('contact_create', 'person', 'INSERT');
 SELECT lsmb__grant_perms('contact_create', 'person_id_seq', 'ALL');
 SELECT lsmb__grant_perms('contact_create', 'entity_credit_account', 'INSERT');
 SELECT lsmb__grant_perms('contact_create', 'entity_credit_account_id_seq', 'ALL');
-SELECT lsmb__grant_perms('contact_create', 'note_id_seq', 'ALL');
+SELECT lsmb__grant_perms('contact_create', 'entity_note_id_seq', 'ALL');
+SELECT lsmb__grant_perms('contact_create', 'eca_note_id_seq', 'ALL');
 SELECT lsmb__grant_perms('contact_create', 'entity_bank_account', 'INSERT');
 SELECT lsmb__grant_perms('contact_create', 'entity_bank_account_id_seq', 'ALL');
 SELECT lsmb__grant_perms('contact_create', 'entity_to_location', 'INSERT');
@@ -1960,7 +1961,7 @@ SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['user_listable'::text, 'language',
                     'menu_node', 'menu_acl',
                     'gifi', 'country', 'taxmodule',
-                    'parts', 'partsgroup', 'country_tax_form', 'translation',
+                    'parts', 'partsgroup', 'country_tax_form',
                     'business', 'template',
                     --###TODO: Add table for advisory rates
                     --'exchangerate',
