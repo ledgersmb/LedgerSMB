@@ -877,8 +877,8 @@ CREATE OR REPLACE FUNCTION asset_item__add_note(in_id int, in_subject text, in_n
 RETURNS asset_note AS
 $$
 INSERT INTO asset_note (ref_key, subject, note)
-                values (in_id, in_subject, in_note);
-SELECT * FROM asset_note WHERE id = currval('note_id_seq');
+  values (in_id, in_subject, in_note)
+RETURNING *;
 $$ language sql;
 
 COMMENT ON FUNCTION asset_item__add_note(in_id int, in_subject text,

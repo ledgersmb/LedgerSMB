@@ -1098,7 +1098,7 @@ COMMENT ON FUNCTION entity__list_notes(in_entity_id int) IS
 $$ Returns a set of notes (including content) attached to the entity.$$;
 
 CREATE OR REPLACE FUNCTION eca__list_notes(in_credit_id int)
-RETURNS SETOF note AS
+RETURNS SETOF eca_note AS
 $$
 DECLARE out_row record;
         t_entity_id int;
