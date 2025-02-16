@@ -38,7 +38,7 @@
        } %]</td>
 </tr>
 <tr id="name-row">
-  <th>[% NAME %]</th>
+  <th><label for="entity-name">[% NAME %]</label></th>
   <td>[% PROCESS input element_data = {
            name = "entity_name"
           value = entity_name
@@ -86,7 +86,7 @@
        } %]</td>
 </tr>
 <tr id="invnumber-row">
-  <th>[% text('Invoice Number') %]</th>
+  <th><label for="invnumber">[% text('Invoice Number') %]</label></th>
   <td>[% PROCESS input element_data = {
            name = "invnumber"
           value = invnumber
