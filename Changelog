@@ -7,13 +7,16 @@ Changelog for 1.13.0
 
 Added functionalities
 * Concurrent logins into multiple companies on a single browser (#8496)
+* Ability to remove unused customers, credit accounts (#8616)
 
 Changed functionalities
 * Concurrent logins with different users on one browser throw an error (#8496)
+* Confusing menu name 'Add Contact' changed to 'Add entity' (#8003)
 
 Removed functionalities
 
 Bugs fixed
+* Better referential integrity with more relational constraints (#8661)
 
 Cleanup & architecture improvements
 * Deprecated 'ledgersmb.conf' configuration in favor of 'ledgersmb.yaml' (#8570)
@@ -21,6 +24,7 @@ Cleanup & architecture improvements
 * Removed deps in favor of (experimental) built-in functionality (#8571, #8572)
 * Allow workflows to determine buttons on read-only screens (#8583)
 * Removal of custom SMTP handling class; replaced with Email::Sender (#8576)
+* Dropped unnecessary table inheritance (#8046)
 * Dead code removal (#8579, #8591, #8613)
 
 Updated dependencies
