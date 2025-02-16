@@ -2,13 +2,10 @@
   "name": "ledgersmb-js",
   "version": "1.13.0-dev",
   "lockfileVersion": 2,
-  "description": "LedgerSMB JS files",
+  "description": "LedgerSMB UI",
   "keywords": [
-    "JavaScript",
-    "Dojo",
-    "Toolkit",
-    "Dijit",
-    "lsmb"
+    "accounting",
+    "bookkeeping"
   ],
   "license": "GPL-2.0-or-later",
   "maintainers": [
@@ -16,7 +13,7 @@
       "name": "Erik Huelsmann"
     },
     {
-      "name": "Chris Travers"
+      "name": "Yves Lavoie"
     }
   ],
   "contributors": [
@@ -27,7 +24,7 @@
       "name": "David Godfrey"
     },
     {
-      "name": "Yves Lavoie"
+      "name": "Chris Travers"
     }
   ],
   "_browserslist-comment": [
