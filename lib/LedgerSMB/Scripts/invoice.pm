@@ -90,7 +90,7 @@ LedgerSMB::Report::Invoices::Transactions for expected properties.
 
 =cut
 
-sub invoice_search{
+sub invoice_search {
 
     my ($request) = @_;
     $request->{is_approved} //= 'Y'; # backwards-compatibility to 1.4
