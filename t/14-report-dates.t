@@ -66,6 +66,7 @@ use LedgerSMB::Report::Balance_Sheet;
         basis => 'accrual',
         ignore_yearend => 'all',
         from_date => LedgerSMB::PGDate->from_input( '2016-01-05', format => 'YYYY-MM-DD' ),
+        to_date => LedgerSMB::PGDate->from_input( '2017-01-04', format => 'YYYY-MM-DD' ),
         interval => 'year', # just a random valid value
         comparison_periods => '1',
         comparison_type => 'by_periods',
