@@ -134,6 +134,7 @@ END # BLOCK -%]
    <th align="right">[% text('Period') %]</th>
 
     <td colspan="5">
+        <label for="from_month[% SUFFIX %]" hidden>From Month</label>
         [%
         PROCESS select element_data = {
                name = "from_month" _ SUFFIX
@@ -141,7 +142,9 @@ END # BLOCK -%]
                options = all_months
                default_blank = 1
         };
-
+        %]
+        <label for="from_year[% SUFFIX %]" hidden>From Year</label>
+        [%
         PROCESS select element_data = {
                name="from_year" _ SUFFIX
                id="from_year" _ SUFFIX
@@ -150,43 +153,50 @@ END # BLOCK -%]
                value_attr = "date_get_all_years"
                default_blank = 1
         };
+        label_pos=1;
         PROCESS input element_data = {
                name="interval" _ SUFFIX
                id="interval" _ SUFFIX _ "current"
+               label=text('Current')
                class="radio"
                type="radio"
                value="none"
-               checked="checked" } %]&nbsp;[% text('Current');
+               checked="checked" } %]&nbsp;[%
         PROCESS input element_data = {
                name="interval"  _ SUFFIX
                id="interval" _ SUFFIX _ "day"
+               label=text('Day')
                class="radio"
                type="radio"
-               value="month" } %]&nbsp;[% text('Day');
+               value="month" } %]&nbsp;[%
         PROCESS input element_data = {
                name="interval"  _ SUFFIX
                id="interval" _ SUFFIX _ "week"
+               label=text('Week')
                class="radio"
                type="radio"
-               value="month" } %]&nbsp;[% text('Week');
+               value="month" } %]&nbsp;[%
         PROCESS input element_data = {
                name="interval"  _ SUFFIX
                id="interval" _ SUFFIX _ "month"
+               label=text('Month')
                class="radio"
                type="radio"
-               value="month" } %]&nbsp;[% text('Month');
+               value="month" } %]&nbsp;[%
         PROCESS input element_data = {
                name="interval" _ SUFFIX
                id="interval" _ SUFFIX _ "quarter"
+               label=text('Quarter')
                class="radio"
                type="radio"
-               value="quarter" } %]&nbsp;[% text('Quarter');
+               value="quarter" } %]&nbsp;[%
         PROCESS input element_data = {
                name="interval" _ SUFFIX
                id="interval" _ SUFFIX _ "year"
+               label=text('Year')
                class="radio"
                type="radio"
-               value="year" } %]&nbsp;[% text('Year') %]
+               value="year" } %]&nbsp;
 
         </td>
 [% END # BLOCK %]

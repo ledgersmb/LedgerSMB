@@ -184,14 +184,13 @@ Given qr/a (\w+) batch with these properties:$/, sub {
 };
 
 
-Given qr/an unpaid AP transaction with these values:$/, sub {
+Given qr/(an )?unpaid AP transactions? with these values:$/, sub {
     # Expects data in the following form:
     # | Vendor   | Date       | Invoice Number | Amount |
     # | Vendor C | 2017-03-01 | INV103         | 250.00 |
-    my $data = shift @{C->data};
     my $dbh = S->{ext_lsmb}->admin_dbh;
 
-    my $q = $dbh->prepare("
+    my $ap_query = $dbh->prepare("
         INSERT INTO ap (invnumber, transdate, amount_bc, netamount_bc,
                         duedate, curr, approved, entity_credit_account,
                         amount_tc, netamount_tc)
@@ -206,39 +205,42 @@ Given qr/an unpaid AP transaction with these values:$/, sub {
         LIMIT 1
         RETURNING ap.id
     ");
-    $q->execute(
-        $data->{'Invoice Number'},
-        $data->{'Date'},
-        $data->{'Amount'},
-        $data->{'Amount'},
-        $data->{'Date'},
-        $data->{'Amount'},
-        $data->{'Amount'},
-        $data->{'Vendor'},
-    );
-    my $ap_id = $q->fetchrow_hashref->{id};
 
-    $q = $dbh->prepare("
+    my $acc_trans_query = $dbh->prepare("
         INSERT INTO acc_trans (trans_id, chart_id, amount_bc,
                                curr, amount_tc, transdate)
         VALUES (?, ?, ?, 'USD', ?, ?)
     ");
 
-    $q->execute(
-        $ap_id,
-        28, # 5700--Office Supplies
-        $data->{'Amount'} * -1,
-        $data->{'Amount'} * -1,
-        $data->{'Date'},
-    );
+    foreach my $data (@{C->data}) {
+        $ap_query->execute(
+            $data->{'Invoice Number'},
+            $data->{'Date'},
+            $data->{'Amount'},
+            $data->{'Amount'},
+            $data->{'Date'},
+            $data->{'Amount'},
+            $data->{'Amount'},
+            $data->{'Vendor'},
+        );
+        my $ap_id = $ap_query->fetchrow_hashref->{id};
 
-    $q->execute(
-        $ap_id,
-        10, # 2100--Accounts Payable account
-        $data->{'Amount'},
-        $data->{'Amount'},
-        $data->{'Date'},
-    );
+        $acc_trans_query->execute(
+            $ap_id,
+            28, # 5700--Office Supplies
+            $data->{'Amount'} * -1,
+            $data->{'Amount'} * -1,
+            $data->{'Date'},
+        );
+
+        $acc_trans_query->execute(
+            $ap_id,
+            10, # 2100--Accounts Payable account
+            $data->{'Amount'},
+            $data->{'Amount'},
+            $data->{'Date'},
+        );
+    }
 };
 
 

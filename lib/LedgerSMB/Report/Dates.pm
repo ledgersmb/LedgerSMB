@@ -47,7 +47,7 @@ Either 'none', 'month', 'quarter', or 'year'
 
 =cut
 
-has interval => (is => 'ro', isa => 'Str', required => 0, default => 'None');
+has interval => (is => 'ro', isa => 'Str', required => 0, default => 'none');
 
 =item from_month int
 
@@ -177,6 +177,20 @@ around BUILDARGS => sub {
         }
     }
 
+    # There are two *mutually exclusive* ways to specify a time range
+    if ($args{from_year} && $args{from_month} && $args{interval}) {
+        # Prioritise a date range specified as a starting year, month and
+        # time interval. The corresponding from_date and to_date values will
+        # be calculated and used to populate object properties.
+        delete $args{from_date};
+        delete $args{to_date};
+    }
+    else {
+        # Use explicit from_date and to_date parameters
+        delete $args{from_year};
+        delete $args{from_month};
+    }
+
     return $class->$orig(%args);
 };
 
@@ -256,7 +270,7 @@ before 'run_report' => sub {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team
+Copyright (C) 2012-2025 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
