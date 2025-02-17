@@ -105,9 +105,6 @@ sub invoice_search {
             formatter_options => $request->formatter_options,
             from_date => $request->parse_date( $request->{from_date} ),
             to_date => $request->parse_date( $request->{to_date} ),
-            interval => $request->{interval},
-            from_month => $request->{from_month},
-            from_year => $request->{from_year},
         )
     );
 }
