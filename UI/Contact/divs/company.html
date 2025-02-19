@@ -6,9 +6,9 @@
      >
   <div class="listtop"><strong>[%
       IF entity_id.defined ;
-      text("Edit");
+      text("Edit Company");
       ELSE ;
-      text("Add");
+      text("Add Company");
       END;
     %]</strong></div>
 <form data-dojo-type="lsmb/Form" id="company" method="post" action="[% request.script %]">
