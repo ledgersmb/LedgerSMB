@@ -18,7 +18,7 @@ Tests have been grouped by function:
 
 # Running the tests
 
-The tests are integrated with the `make test` test framework. However,
+The tests are integrated with the `make devtest` test framework. However,
 they can be run separately as well, using the `pherkin` test runner
 which comes with `Test:BDD::Cucumber`:
 
@@ -26,14 +26,14 @@ which comes with `Test:BDD::Cucumber`:
  $ PGUSER=postgres PGPASSWORD=password \
      LSMB_BASE_URL="http://localhost:5000" \
      PSGI_BASE_URL="http://localhost:5000" \
-     pherkin t/66-cucumber/*/
+     pherkin xt/66-cucumber/*/
 ```
 
 or when running just a single feature file:
 
 ```sh
  $ PGUSER=postgres PGPASSWORD=password LSMB_BASE_URL="http://localhost:5000" \
-     pherkin t/66-cucumber/01-basic/closing.feature
+     pherkin xt/66-cucumber/01-basic/closing.feature
 ```
 
 In separate terminals, you need to run the following commands from the
@@ -49,7 +49,7 @@ root of the development tree for the above to work:
 The code consists of the following components:
 
 * Feature files (`*.feature`), grouped by function into the directories
-  numbered as defined above (e.g. `t/66-cucumber/01-basic/`)
+  numbered as defined above (e.g. `xt/66-cucumber/01-basic/`)
 * Step files, which implement function specific steps, in a
   `step_definitions` subdirectory of each numbered directory
    (e.g. `01-basic/step_definitions/`)
