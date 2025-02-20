@@ -1101,19 +1101,13 @@ CREATE OR REPLACE FUNCTION eca__list_notes(in_credit_id int)
 RETURNS SETOF eca_note AS
 $$
 DECLARE out_row record;
-        t_entity_id int;
 BEGIN
         -- ALERT: security definer function.  Be extra careful about EXECUTE
         -- in here. --CT
-        SELECT entity_id INTO t_entity_id
-        FROM entity_credit_account
-        WHERE id = in_credit_id;
-
         FOR out_row IN
                 SELECT *
-                FROM note
-                WHERE (note_class = 3 and ref_key = in_credit_id) or
-                        (note_class = 1 and ref_key = t_entity_id)
+                FROM eca_note
+                WHERE ref_key = in_credit_id
                 ORDER BY created
         LOOP
                 RETURN NEXT out_row;
