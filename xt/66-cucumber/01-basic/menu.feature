@@ -118,9 +118,11 @@ Scenario Outline: Navigate to menu "<path>" and open screen "<screen>"
     | Cash > Vouchers > Reverse Overpay          |                          |
     | Cash > Vouchers > Reverse Payment          |                          |
     | Cash > Vouchers > Reverse Receipts         |                          |
+
   Examples:
     | path                                       | screen                   |
     | Contacts > Search                          | Contact Search           |
+    | Contacts > Add Entity                      | Edit Contact             |
 
   Examples:
     | path                                        | screen                   |
