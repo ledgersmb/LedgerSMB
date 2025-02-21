@@ -112,11 +112,7 @@ sub ini2wire {
 
         if ($value = $cfg->val( 'mail', 'smtpuser' )) {
             push @options,
-                # the SMTP transport checks that 'sasl_password' be
-                # defined; however, its implementation (Net::SMTP) allows
-                # the 'sasl_username' to be an Authen::SASL instance which
-                # means the password is already embedded in sasl_username.
-                sasl_username => {
+                sasl_authenticator => {
                     '$class' => 'Authen::SASL',
                     mechanism => scalar $cfg->val( 'mail', 'smtpauthmech' ),
                     callback => {
