@@ -44,6 +44,11 @@ change-data-capture tracking.  This was at the time an untrusted extension
 delivered with PostreSQL out-of-the-box.  Regardless it didn't take long
 for upgrade problems to be reported after the 1.10.0 release.
 
+See also
+
+* [0104 Business logic in Perl (revised)](./0104-business-logic-in-perl.md)
+
+
 ## Extensions approved for LedgerSMB use
 
 This list may be extended after the initial approval of this ADR after
