@@ -37,6 +37,7 @@ Released 2024-12-14
 
 Changelog for 1.12.4
 * Fix AR/AP Invoice search by date period
+* Fix SASL authentication for SMTP when using ledgersmb.conf (#8669)
 
 
 Changelog for 1.12.3
