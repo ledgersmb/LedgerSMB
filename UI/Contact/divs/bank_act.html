@@ -61,16 +61,22 @@ PROCESS dynatable
     <lsmb-text title="[% text('BIC/SWIFT Code') %]"
                name="bic"
                value="[% request.bic %]"
-               size="20" ></lsmb-text>
+               size="20"
+               label="[% text('BIC/SWIFT Code') %]"
+    />
     <lsmb-text title="[% text('Bank Account') %]"
                name="iban"
                value="[% request.iban %]"
                size="20"
-               required ></lsmb-text>
+               label="[% text('Account Number') %]"
+               required
+    />
     <lsmb-text title="[% text('Remark') %]"
                name="remark"
                value="[% request.remark %]"
-               size="30" ></lsmb-text>
+               size="30"
+               label="[% text('Remark') %]"
+    />
   </div>
   <div>
     [% PROCESS button element_data = {
