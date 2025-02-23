@@ -8,6 +8,7 @@ use PageObject;
 use Moose;
 use namespace::autoclean;
 extends 'PageObject';
+with 'PageObject::App::Roles::Dynatable';
 
 __PACKAGE__->self_register(
     'edit_contact',
@@ -21,6 +22,15 @@ __PACKAGE__->self_register(
 sub _verify {
     my ($self) = @_;
     return $self;
+}
+
+
+sub active_pane {
+    my $self = shift;
+    my $element = $self->find(
+        './/div[@role="tabpanel" and contains(@class,"dijitVisible")]'
+    );
+    return $element;
 }
 
 
@@ -46,6 +56,9 @@ sub tab_is_selected {
 
     return $selected;
 }
+
+
+
 
 
 __PACKAGE__->meta->make_immutable;

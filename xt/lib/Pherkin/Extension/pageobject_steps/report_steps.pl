@@ -62,7 +62,7 @@ Then qr/I expect the report to contain (\d+) rows?$/, sub {
 };
 
 
-Then qr/I expect the '(.*)' report column to contain '(.*)' for (.*) '(.*)'/, sub {
+Then qr/I expect the '(.*)'\s+(?:report )?column to contain '(.*)'\s+for (.*) '(.*)'/, sub {
     my @rows = S->{ext_wsl}->page->body->maindiv->content->rows;
     my $column = $1;
     my $value = $2;

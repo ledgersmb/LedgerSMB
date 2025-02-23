@@ -9,6 +9,31 @@ use PageObject;
 use Moose::Role;
 use namespace::autoclean;
 
+has table => (
+    is => 'rw',
+    isa => 'Weasel::Element',
+    builder => 'find_table',
+    lazy => 1,
+);
+
+
+sub find_table {
+    my $self = shift;
+
+    my @visible_tables = grep { $_->is_displayed } (
+        $self->find_all('.//table[contains(@class, "dynatable")]')
+    );
+
+    if (scalar @visible_tables == 0) {
+        warn "No visible dynatable found";
+    }
+    elsif (scalar @visible_tables > 1) {
+        warn "Using the first of multiple visible dynatables found";
+    }
+
+    return shift @visible_tables;
+}
+
 
 # title ()
 #
@@ -39,9 +64,10 @@ sub find_heading {
 
 sub _extract_column_headings {
     my $self = shift;
-
-    my @heading_nodes = $self->find_all('.//table/thead/tr/th
-                                         | .//table/thead/tr/td');
+    my @heading_nodes = $self->table->find_all(
+        './/thead/tr/th | '.
+        './/thead/tr/td'
+    );
     return map { $_->get_text } @heading_nodes;;
 }
 
@@ -56,7 +82,7 @@ sub rows {
     my $self = shift;
 
     my @headings = $self->_extract_column_headings;
-    my @rows = $self->find_all('.//table[contains(@class, "dynatable")]/tbody/tr');
+    my @rows = $self->table->find_all('.//tbody/tr');
 
     return map {
         my @cells = $_->find_all('./td | ./th');
@@ -66,6 +92,7 @@ sub rows {
         \%row_values;
     } @rows;
 }
+
 
 
 1;
