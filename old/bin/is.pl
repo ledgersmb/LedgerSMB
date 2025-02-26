@@ -919,10 +919,10 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id="intnotes" name="intnotes" 
 |;
 
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
-        @column_index = qw(status datepaid source memo paid AP_paid);
+        @column_index = qw(status datepaid source memo paid AR_paid);
     }
     else {
-        @column_index = qw(status datepaid source memo paid exchangerate paidfx AP_paid);
+        @column_index = qw(status datepaid source memo paid exchangerate paidfx AR_paid);
     }
 
     $column_data{status}       = "<th></th>";
