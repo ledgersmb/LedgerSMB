@@ -123,12 +123,17 @@ sub _save_email_data {
             $wf->id, $data->@{qw(from to cc bcc notify subject body expansions)})
             or $log->error($dbh->errstr);
     }
-    for my $att ( ($ctx->param( '_attachments' ) // [])->@* ) {
+
+    my $atts = $ctx->param( '_attachments' );
+    return unless $atts;
+
+    for my $att ( $atts->@* ) {
         if (my $c = tied $att->{content}) {
             $c->persist;
             next;
         }
 
+        $log->info( "Adding new attachment: $att->{file_name}" );
         my $file = LedgerSMB::File::Email->new(
             dbh            => $dbh,
             file_class     => FC_EMAIL,
@@ -165,7 +170,8 @@ sub _fetch_attachments {
     $sth->execute( $wf->id )
         or die $sth->errstr;
 
-    my $rows = $sth->fetchall_arrayref( {} );
+    my $rows = $sth->fetchall_arrayref( {} )
+        or die $sth->errorstr;
     $sth->finish;
 
     for my $row ($rows->@*) {
@@ -202,8 +208,8 @@ sub create_workflow {
         for my $attachment ($attachments->@*) {
             $self->attach( $wf, $attachment );
         }
-        $self->_fetch_attachments( $wf );
     }
+    $self->_fetch_attachments( $wf );
 
     return $wf_id;
 }
