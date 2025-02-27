@@ -17,21 +17,18 @@ has table => (
 );
 
 
+# find_table()
+#
+# Builder for `table` property
+# Returns first visible dynatable element on the page
+
 sub find_table {
     my $self = shift;
 
-    my @visible_tables = grep { $_->is_displayed } (
-        $self->find_all('.//table[contains(@class, "dynatable")]')
+    return $self->find(
+        './/table[contains(@class, "dynatable") '.
+        'and not(ancestor::*[contains(@class, "dijitHidden")])]'
     );
-
-    if (scalar @visible_tables == 0) {
-        warn "No visible dynatable found";
-    }
-    elsif (scalar @visible_tables > 1) {
-        warn "Using the first of multiple visible dynatables found";
-    }
-
-    return shift @visible_tables;
 }
 
 
