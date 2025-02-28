@@ -94,7 +94,7 @@
     "eslint-plugin-vue": "9.32.0",
     "eslint-webpack-plugin": "5.0.0",
     "flush-promises": "1.0.2",
-    "globals": "15.15.0",
+    "globals": "16.0.0",
     "html-webpack-plugin": "5.6.3",
     "http-status-codes": "2.3.0",
     "i18next-conv": "15.1.1",
