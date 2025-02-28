@@ -66,3 +66,7 @@ formats).
    customization, such as document generators and bank statement importers.
 
 ## Annotations
+
+See
+
+* [0104 Business logic in Perl (revised)](./0104-business-logic-in-perl.md)

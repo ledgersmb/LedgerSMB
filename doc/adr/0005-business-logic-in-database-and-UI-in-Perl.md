@@ -54,3 +54,9 @@ sheet and income statement reports.
 - The database holds significant portions of business logic.
 - Non-Perl languages may be used to connect to the database; an important aspect
   given the waning popularity at the time of this decision.
+
+## Annotations
+
+See
+
+* [0104 Business logic in Perl (revised)](./0104-business-logic-in-perl.md)
