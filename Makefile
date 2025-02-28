@@ -162,6 +162,7 @@ testdb: TESTDB ?= test
 testdb: TESTUSER ?= test
 testdb: TESTCONF ?= locale/coa/us/General.xml
 testdb:
+	-$(DOCKER_CMD) dropdb --if-exists '$(TESTDB)'
 	$(DOCKER_CMD) bash -c "TESTUSER='$(TESTUSER)' utils/devel/create-test-db '${TESTDB}' '${TESTCONF}'"
 
 devtest: TESTS ?= t/ xt/
