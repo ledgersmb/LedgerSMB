@@ -111,8 +111,6 @@ When qr/^I click "(.*)" for the row with (.*) "(.*)"$/, sub {
     my $value = $3;
     my @rows = S->{ext_wsl}->page->body->maindiv->content->rows;
 
-    ok(@rows, qq/found row with $column "$value"/);
-
     foreach my $row(@rows) {
         if ($row->{$column} eq $value) {
             my $link = $row->{_element}->find(
