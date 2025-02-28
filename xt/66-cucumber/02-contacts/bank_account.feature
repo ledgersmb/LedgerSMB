@@ -23,3 +23,5 @@ Scenario: Create a company and add a bank account to it
   Then I expect the Bank Accounts table to contain 1 row
    And I expect the 'BIC/SWIFT Code' column to contain 'DEUTDEFF500' for Account Number 'DE89370400440532013000'
    And I expect the 'Remark'         column to contain 'A remark'    for Account Number 'DE89370400440532013000'
+  When I click "[Delete]" for the row with Account Number "DE89370400440532013000"
+  Then I expect the Bank Accounts table to contain 0 rows
