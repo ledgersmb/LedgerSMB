@@ -8,11 +8,14 @@
 href_base = request.script _ '?&amp;entity_id=' _ entity_id _ '&amp;target_div=bank_act_div' _
             '&amp;form_id=' _ form_id _ '&amp;credit_id=' _ credit_id _ '&amp;id=';
 FOREACH ba IN bank_account;
-  # Note that the href will be URL encoded when inserted in the template
-    ba.iban_href_suffix = '&amp;bic=' _ ba.bic _ '&amp;iban='
-         _ ba.iban _ '&amp;__action=edit' _ '&amp;id=' _ ba.id;
-    ba.delete_href_suffix=ba.id _ '&amp;__action=delete_bank_account';
+    # Note that the href will be URL encoded when inserted in the template
+    ba.iban_href_suffix = ba.id _ '&amp;__action=edit';
+    ba.delete_href_suffix = ba.id _ '&amp;__action=delete_bank_account';
     ba.delete = '[' _ text('Delete') _ ']';
+
+    IF ba.id == request.id && request.action == 'edit';
+        DISPLAY = ba;
+    END;
 END;
 PROCESS dynatable
    attributes = { id = 'bank_account_list', width = '100%' }
@@ -60,21 +63,21 @@ PROCESS dynatable
   <div class="two-column-grid" style="width: fit-content">
     <lsmb-text title="[% text('BIC/SWIFT Code') %]"
                name="bic"
-               value="[% request.bic %]"
+               value="[% DISPLAY.bic %]"
                size="20"
                label="[% text('BIC/SWIFT Code') %]"
                required
     ></lsmb-text>
     <lsmb-text title="[% text('Bank Account') %]"
                name="iban"
-               value="[% request.iban %]"
+               value="[% DISPLAY.iban %]"
                size="20"
                label="[% text('Account Number') %]"
                required
     ></lsmb-text>
     <lsmb-text title="[% text('Remark') %]"
                name="remark"
-               value="[% request.remark %]"
+               value="[% DISPLAY.remark %]"
                size="30"
                label="[% text('Remark') %]"
     ></lsmb-text>
