@@ -3,6 +3,12 @@
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.22
+* Remove double html-encoding of label text (#8663)
+* Fix setup.pl login with French as language preference (#8663)
+* Fix incorrect css values (#8645)
+
+
 Changelog for 1.11.21
 * Exclude buggy Workflow version 2.02 dependency (#8610)
 
