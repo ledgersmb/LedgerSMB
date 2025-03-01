@@ -115,13 +115,13 @@ sub save {
     return $self = $self->new(%$ref);
 }
 
-=item delete
+=item delete($id, $entity_id)
 
 Deletes the bank account object from the database.
 
 =cut
 
-dbmethod delete => (funcname => 'delete_bank_account');
+dbmethod delete => (funcname => 'delete_bank_account', arg_list => ['id', 'entity_id']);
 
 =back
 

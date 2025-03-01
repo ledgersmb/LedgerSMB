@@ -7,7 +7,7 @@ Background:
   Given a standard test company
     And a logged in admin user
 
-Scenario: Create a company and add a bank account to it
+Scenario: Create a company and add a bank account to it, edit the account, then delete it.
   When I navigate the menu and select the item at "Contacts > Add Entity"
   Then I should see the Edit Contact screen
    And I expect the "Company" tab to be selected
@@ -23,3 +23,9 @@ Scenario: Create a company and add a bank account to it
   Then I expect the Bank Accounts table to contain 1 row
    And I expect the 'BIC/SWIFT Code' column to contain 'DEUTDEFF500' for Account Number 'DE89370400440532013000'
    And I expect the 'Remark'         column to contain 'A remark'    for Account Number 'DE89370400440532013000'
+  When I click "DE89370400440532013000" for the row with Account Number "DE89370400440532013000"
+  Then I expect the "BIC/SWIFT Code" field to contain "DEUTDEFF500"
+   And I expect the "Account Number" field to contain "DE89370400440532013000"
+   And I expect the "Remark" field to contain "A remark"
+  When I click "[Delete]" for the row with Account Number "DE89370400440532013000"
+  Then I expect the Bank Accounts table to contain 0 rows
