@@ -3,6 +3,13 @@
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.5
+* Fix missing aging statement attachment on e-mail statement output (#8672)
+* Fix missing payment bank account dropdown on invoice screen (#8678)
+* Remove double html-encoding of label text (#8663)
+* Fix setup.pl login with French as language preference (#8663)
+
+
 Changelog for 1.12.4
 * Fix AR/AP Invoice search by date period
 * Fix SASL authentication for SMTP when using ledgersmb.conf (#8669)
