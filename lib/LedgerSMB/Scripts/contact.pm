@@ -815,7 +815,10 @@ Required request variables:
 
 sub delete_bank_account{
     my ($request) = @_;
-    LedgerSMB::Entity::Bank->get($request->{id})->delete;
+    LedgerSMB::Entity::Bank->delete(
+        $request->{id},
+        $request->{entity_id}
+    );
     $request->{target_div} = 'bank_act_div';
     return get($request);
 }

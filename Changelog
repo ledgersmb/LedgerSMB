@@ -3,6 +3,11 @@
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.6
+* Fix missing field labels on bank account screen
+* Fix delete bank account
+
+
 Changelog for 1.12.5
 * Fix missing aging statement attachment on e-mail statement output (#8672)
 * Fix missing payment bank account dropdown on invoice screen (#8678)
@@ -88,6 +93,11 @@ Updated dependencies
 
 Changelog for 1.11 Series
 Released 2023-10-03
+
+Changelog for 1.11.23
+* Fix missing field labels on bank account screen
+* Fix delete bank account
+
 
 Changelog for 1.11.22
 * Remove double html-encoding of label text (#8663)
