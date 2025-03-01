@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.11.22\n"
+"Project-Id-Version: LedgerSMB 1.11.23-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
 "POT-Creation-Date: 2025-03-01 09:22+0000\n"
 "Last-Translator: Amir Inbar <amir@srvit.co.il>, 2023\n"
