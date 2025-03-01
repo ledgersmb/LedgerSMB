@@ -1020,7 +1020,7 @@ timeout|90 minutes
 sinumber|1
 sonumber|1
 businessnumber|1
-version|1.12.5
+version|1.12.6-dev
 ponumber|1
 sqnumber|1
 rfqnumber|1
