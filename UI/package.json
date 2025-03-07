@@ -44,7 +44,7 @@
     "dijit": "1.17.3",
     "dojo": "1.17.3",
     "robot3": "1.1.1",
-    "vue-i18n": "11.1.1"
+    "vue-i18n": "11.1.2"
   },
   "devDependencies": {
     "@babel/core": "7.26.9",
