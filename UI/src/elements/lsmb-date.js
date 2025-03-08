@@ -24,6 +24,14 @@ export class LsmbDate extends LsmbBaseInput {
     _widgetClass() {
         return dojoDateBox;
     }
+
+    disconnectedCallback() {
+        if (this.widgetWrapper) {
+            this.widgetWrapper.remove();
+            this.widgetWrapper = null;
+        }
+        super.disconnectedCallback();
+    }
 }
 
 customElements.define("lsmb-date", LsmbDate);
