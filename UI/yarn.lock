@@ -1944,18 +1944,18 @@
     uri-js-replace "^1.0.1"
 
 "@redocly/cli@^1.0.2":
-  version "1.31.3"
-  resolved "https://registry.yarnpkg.com/@redocly/cli/-/cli-1.31.3.tgz#06693e59f41c26191ae34c9747d934515bf017b2"
-  integrity sha512-M5iVisAAHZpwSEqBC6dCAhR0VTAXEKlPDel8mT95hHFm+Hxe0YXkgZJ2FGWz5UhqkCTq2AIhlLsA7mT5OdZFMg==
+  version "1.33.0"
+  resolved "https://registry.yarnpkg.com/@redocly/cli/-/cli-1.33.0.tgz#18f369a4114a18d40a15ccf0955a8e2112266a77"
+  integrity sha512-UxdxEfoTKr8pF/ijVI5cPfUdmbuUxDYA0VsvAFGJFg0SXmUtExRExQkp+tW8mLcCnSuhuU6Btt2Lb9vkcALRUg==
   dependencies:
     "@opentelemetry/api" "1.9.0"
     "@opentelemetry/exporter-trace-otlp-http" "0.53.0"
     "@opentelemetry/resources" "1.26.0"
     "@opentelemetry/sdk-trace-node" "1.26.0"
     "@opentelemetry/semantic-conventions" "1.27.0"
-    "@redocly/config" "^0.21.0"
-    "@redocly/openapi-core" "1.31.3"
-    "@redocly/respect-core" "1.31.3"
+    "@redocly/config" "^0.22.0"
+    "@redocly/openapi-core" "1.33.0"
+    "@redocly/respect-core" "1.33.0"
     abort-controller "^3.0.0"
     chokidar "^3.5.1"
     colorette "^1.2.0"
@@ -1975,18 +1975,18 @@
     styled-components "^6.0.7"
     yargs "17.0.1"
 
-"@redocly/config@^0.21.0":
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/@redocly/config/-/config-0.21.0.tgz#beb6a82f30e0ea2c164283138dd93aa82fc4ba7f"
-  integrity sha512-JBtrrjBIURTnzb7KUIWOF46vSgpfC3rO6Mm8LjtRjtTNCLTyB+mOuU7HrTkVcvUCEBuSuzkivlTHMWT4JETz9A==
+"@redocly/config@^0.22.0":
+  version "0.22.1"
+  resolved "https://registry.yarnpkg.com/@redocly/config/-/config-0.22.1.tgz#e14461c009ac53b74f82c9788f9c43fc2c718f24"
+  integrity sha512-1CqQfiG456v9ZgYBG9xRQHnpXjt8WoSnDwdkX6gxktuK69v2037hTAR1eh0DGIqpZ1p4k82cGH8yTNwt7/pI9g==
 
-"@redocly/openapi-core@1.31.3", "@redocly/openapi-core@^1.4.0":
-  version "1.31.3"
-  resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-1.31.3.tgz#2be38b0598d56631ec44d146b6df6f5dba00afee"
-  integrity sha512-SyE/1TwM33tgldc3k367sg2i1kqnILOJZo6J96Y/Tt1PHhJp+na637CzCuTgdyY86GTPvNw42834Ks0Lkfk3Hg==
+"@redocly/openapi-core@1.33.0", "@redocly/openapi-core@^1.4.0":
+  version "1.33.0"
+  resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-1.33.0.tgz#f9b0668055d31894f04c79a734f85cd2c41e870c"
+  integrity sha512-MUB1jPxYX2NmgiobICcvyrkSbPSaGAb/P/MsxSW+UT9hxpQvDCX81bstGg68BcKIdeFvVRKcoyG4xiTgDOEBfQ==
   dependencies:
     "@redocly/ajv" "^8.11.2"
-    "@redocly/config" "^0.21.0"
+    "@redocly/config" "^0.22.0"
     colorette "^1.2.0"
     https-proxy-agent "^7.0.5"
     js-levenshtein "^1.1.6"
@@ -1995,14 +1995,14 @@
     pluralize "^8.0.0"
     yaml-ast-parser "0.0.43"
 
-"@redocly/respect-core@1.31.3":
-  version "1.31.3"
-  resolved "https://registry.yarnpkg.com/@redocly/respect-core/-/respect-core-1.31.3.tgz#7ecbcb0016ec9dc773492874f703d0952fe55a40"
-  integrity sha512-Z3vQcaQ14t7RkdE8NgGvNCgH7KdpVxxtbbGP5GR/v9Ws/W2J/iUjUfLHaCnY0lH4c+fPP+WO3DUILYVbyYX6fg==
+"@redocly/respect-core@1.33.0":
+  version "1.33.0"
+  resolved "https://registry.yarnpkg.com/@redocly/respect-core/-/respect-core-1.33.0.tgz#aa8f6d3c4e48355d705fed55e9a0fc9e11337863"
+  integrity sha512-FRvcdSUZ7MotG/YBcEu3xf1aK1X8tlPqEev+lDiUFf/yluXiSoRtj95qS63oIDMaAt5FR2idyTmjrRg0kR7n+g==
   dependencies:
     "@faker-js/faker" "^7.6.0"
     "@redocly/ajv" "8.11.2"
-    "@redocly/openapi-core" "1.31.3"
+    "@redocly/openapi-core" "1.33.0"
     better-ajv-errors "^1.2.0"
     colorette "^2.0.20"
     concat-stream "^2.0.0"
@@ -2313,9 +2313,9 @@
     undici-types "~6.19.8"
 
 "@types/node@>=13.7.0":
-  version "22.13.7"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.13.7.tgz#63ae4418a4d2607cf4ccb1ff5f000fa40d73712a"
-  integrity sha512-oU2q+BsQldB9lYxHNp/5aZO+/Bs0Usa74Abo9mAKulz4ahQyXRHK6UVKYIN8KSC8HXwhWSi7b49JnX+txuac0w==
+  version "22.13.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.13.10.tgz#df9ea358c5ed991266becc3109dc2dc9125d77e4"
+  integrity sha512-I6LPUvlRH+O6VRUqYOcMudhaIdUVWfsjnZavnsraHvpBwaEyMN29ry+0UVJhImYL16xsscu0aske3yA+uPOWfw==
   dependencies:
     undici-types "~6.20.0"
 
@@ -3448,10 +3448,10 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@1.0.30001701:
-  version "1.0.30001701"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001701.tgz#ad9c90301f7153cf6b3314d16cc30757285bf9e7"
-  integrity sha512-faRs/AW3jA9nTwmJBSO1PQ6L/EOgsB5HMQQq4iCu5zhPgVVgO/pZRHlmatwijZKetFw8/Pr4q6dEN8sJuq8qTw==
+caniuse-lite@1.0.30001702:
+  version "1.0.30001702"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001702.tgz#cde16fa8adaa066c04aec2967b6cde46354644c4"
+  integrity sha512-LoPe/D7zioC0REI5W73PeR1e1MLCipRGq/VkovJnd6Df+QVqT+vT33OXCp8QUd7kA7RZrHWxb1B36OQKI/0gOA==
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001639, caniuse-lite@^1.0.30001669:
   version "1.0.30001676"
@@ -3857,10 +3857,10 @@ core-js-compat@^3.40.0:
   dependencies:
     browserslist "^4.24.3"
 
-core-js@3.40.0, core-js@^3.32.1:
-  version "3.40.0"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.40.0.tgz#2773f6b06877d8eda102fc42f828176437062476"
-  integrity sha512-7vsMc/Lty6AGnn7uFpYT56QesI5D2Y/UkgKounk87OP9Z2H9Z8kj6jzcSGAxFmUtDOS0ntK6lbQz+Nsa0Jj6mQ==
+core-js@3.41.0, core-js@^3.32.1:
+  version "3.41.0"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.41.0.tgz#57714dafb8c751a6095d028a7428f1fb5834a776"
+  integrity sha512-SJ4/EHwS36QMJd6h/Rg+GyR4A5xE0FSI3eZ+iBVpfqf1x0eTSg1smWLHrA+2jQThZSh97fmSgFSU8B61nxosxA==
 
 core-util-is@~1.0.0:
   version "1.0.3"
@@ -3948,15 +3948,15 @@ css-loader@7.1.2:
     postcss-value-parser "^4.2.0"
     semver "^7.5.4"
 
-css-minimizer-webpack-plugin@7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/css-minimizer-webpack-plugin/-/css-minimizer-webpack-plugin-7.0.0.tgz#b77a3d2f7c0fd02d3ac250dcc2f79065363f3cd3"
-  integrity sha512-niy66jxsQHqO+EYbhPuIhqRQ1mNcNVUHrMnkzzir9kFOERJUaQDDRhh7dKDz33kBpkWMF9M8Vx0QlDbc5AHOsw==
+css-minimizer-webpack-plugin@7.0.2:
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/css-minimizer-webpack-plugin/-/css-minimizer-webpack-plugin-7.0.2.tgz#aa1b01c6033f5b2f86ddb60c1f5bddd012b50cac"
+  integrity sha512-nBRWZtI77PBZQgcXMNqiIXVshiQOVLGSf2qX/WZfG8IQfMbeHUMXaBWQmiiSTmPJUflQxHjZjzAmuyO7tpL2Jg==
   dependencies:
     "@jridgewell/trace-mapping" "^0.3.25"
-    cssnano "^7.0.1"
+    cssnano "^7.0.4"
     jest-worker "^29.7.0"
-    postcss "^8.4.38"
+    postcss "^8.4.40"
     schema-utils "^4.2.0"
     serialize-javascript "^6.0.2"
 
@@ -4074,7 +4074,7 @@ cssnano-utils@^5.0.0:
   resolved "https://registry.yarnpkg.com/cssnano-utils/-/cssnano-utils-5.0.0.tgz#b53a0343dd5d21012911882db6ae7d2eae0e3687"
   integrity sha512-Uij0Xdxc24L6SirFr25MlwC2rCFX6scyUmuKpzI+JQ7cyqDEwD42fJ0xfB3yLfOnRDU5LKGgjQ9FA6LYh76GWQ==
 
-cssnano@7.0.6, cssnano@^7.0.1:
+cssnano@7.0.6, cssnano@^7.0.4:
   version "7.0.6"
   resolved "https://registry.yarnpkg.com/cssnano/-/cssnano-7.0.6.tgz#63d54fd42bc017f6aaed69e47d9aaef85b7850ec"
   integrity sha512-54woqx8SCbp8HwvNZYn68ZFAepuouZW4lTwiMVnBErM3VkO7/Sd4oTOt3Zz3bPx3kxQ36aISppyXj2Md4lg8bw==
@@ -8218,7 +8218,12 @@ mute-stream@^2.0.0:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-2.0.0.tgz#a5446fc0c512b71c83c44d908d5c7b7b4c493b2b"
   integrity sha512-WWdIxpyjEn+FhQJQQv9aQAYlHoNVdzIzUySNV1gHUPDSdZJ3yZn7pAAbQcV7B56Mvu881q9FZV+0Vx2xC44VWA==
 
-nanoid@^3.3.7, nanoid@^3.3.8:
+nanoid@^3.3.7:
+  version "3.3.9"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.9.tgz#e0097d8e026b3343ff053e9ccd407360a03f503a"
+  integrity sha512-SppoicMGpZvbF1l3z4x7No3OlIjP7QJvC9XR7AhZr1kL133KHnKPztkKDc+Ir4aJ/1VhTySrtKhrsycmrMQfvg==
+
+nanoid@^3.3.8:
   version "3.3.8"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.8.tgz#b1be3030bee36aaff18bacb375e5cce521684baf"
   integrity sha512-WNLf5Sd8oZxOm+TzppcYk8gVOgP+l58xNy58D0nbUnOxOWRWvlcCV4kUF7ltmI6PsrLl/BgKEyS4mqsGChFN0w==
@@ -9197,7 +9202,7 @@ postcss@8.4.49, postcss@^8.4.48:
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
-postcss@^8.4.32, postcss@^8.4.33, postcss@^8.4.38, postcss@^8.4.47:
+postcss@^8.4.32, postcss@^8.4.33, postcss@^8.4.47:
   version "8.4.47"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.47.tgz#5bf6c9a010f3e724c503bf03ef7947dcb0fea365"
   integrity sha512-56rxCq7G/XfB4EkXq9Egn5GCqugWvDFjafDOThIdMBsI15iqPqR5r15TfSr1YPYeEI19YeaXMCbY6u88Y76GLQ==
@@ -9206,7 +9211,7 @@ postcss@^8.4.32, postcss@^8.4.33, postcss@^8.4.38, postcss@^8.4.47:
     picocolors "^1.1.0"
     source-map-js "^1.2.1"
 
-postcss@^8.5.3:
+postcss@^8.4.40, postcss@^8.5.3:
   version "8.5.3"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.3.tgz#1463b6f1c7fb16fe258736cba29a2de35237eafb"
   integrity sha512-dle9A3yYxlBSrt8Fu+IpjGT8SY8hN0mlaA6GY8t0P5PjIOZemULz/E2Bnm/2dcUOena75OTNkHI76uZBNUUq3A==
@@ -9227,10 +9232,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@3.5.2:
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.5.2.tgz#d066c6053200da0234bf8fa1ef45168abed8b914"
-  integrity sha512-lc6npv5PH7hVqozBR7lkBNOGXV9vMwROAPlumdBkX0wTbbzPu/U1hk5yL8p2pt4Xoc+2mkT8t/sow2YrV/M5qg==
+prettier@3.5.3:
+  version "3.5.3"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.5.3.tgz#4fc2ce0d657e7a02e602549f053b239cb7dfe1b5"
+  integrity sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw==
 
 pretty-error@^4.0.0:
   version "4.0.0"
