@@ -705,14 +705,17 @@ h2 {
     margin: 4px 0;
 }
 
+.two-column-grid lsmb-checkbox,
 .two-column-grid lsmb-text,
 .two-column-grid lsmb-password,
 .two-column-grid lsmb-date,
 .two-column-grid lsmb-file,
+.four-column-grid lsmb-checkbox,
 .four-column-grid lsmb-text,
 .four-column-grid lsmb-password,
 .four-column-grid lsmb-date,
 .four-column-grid lsmb-file,
+.six-column-grid lsmb-checkbox,
 .six-column-grid lsmb-text,
 .six-column-grid lsmb-password,
 .six-column-grid lsmb-date,

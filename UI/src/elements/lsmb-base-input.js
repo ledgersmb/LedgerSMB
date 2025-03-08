@@ -87,26 +87,28 @@ export class LsmbBaseInput extends LsmbDijit {
             this.dojoLabel = document.createElement("label");
             this.dojoLabel.innerHTML = this.getAttribute("label");
             this.dojoLabel.classList.add("label");
+            this.dojoLabel.setAttribute("for", this.dojoWidget.id);
 
             // without this handler, we bubble 2 events "to the outside"
             this.dojoLabel.addEventListener("click", (e) =>
                 e.stopPropagation()
             );
         }
+
         const labelBefore =
             !this.hasAttribute("label-pos") ||
             this.getAttribute("label-pos") !== "after";
+
         if (labelBefore && this.dojoLabel) {
             this._labelRoot().appendChild(this.dojoLabel);
         }
 
         this.dojoWidget.placeAt(this._widgetRoot());
+
         if (!labelBefore && this.dojoLabel) {
             this._labelRoot().appendChild(this.dojoLabel);
         }
-        if (this.dojoLabel) {
-            this.dojoLabel.setAttribute("for", this.dojoWidget.id);
-        }
+
         this.dojoWidget.on("input", (e) => {
             let evt = new InputEvent("input", {
                 data: e.charOrCode
