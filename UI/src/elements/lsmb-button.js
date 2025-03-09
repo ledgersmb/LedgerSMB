@@ -13,7 +13,7 @@ export class LsmbButton extends LsmbDijit {
     }
 
     _valueAttrs() {
-        return ["type"];
+        return ["type", "name", "value"];
     }
 
     connectedCallback() {
@@ -23,7 +23,7 @@ export class LsmbButton extends LsmbDijit {
         props.label = this.label;
 
         this.dojoWidget = new Button(props);
-        this.appendChild(this.dojoWidget.domNode);
+        this.dojoWidget.placeAt(this);
         this.addEventListener("focus", () => {
             this.dojoWidget.focus();
         });
@@ -31,7 +31,10 @@ export class LsmbButton extends LsmbDijit {
 
     disconnectedCallback() {
         if (this.dojoWidget) {
+            this.innerHTML = this.label;
             registry.remove(this.dojoWidget.id);
+            this.dojoWidget.destroy(false);
+            this.dojoWidget = null;
         }
     }
 }
