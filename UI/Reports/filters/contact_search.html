@@ -3,166 +3,101 @@
 %]
 <body class="lsmb [% dojo_theme %]">
 [%
-DIV_ID = 'search-contact';
 IF !entity_class;
-   title = text('Contact Search'); #'
-ELSIF entity_class == 1;
-   title = text('Vendor Search'); #'
-ELSIF entity_class == 2;
-   title = text('Customer Search'); #'
+   DIV_ID = 'search-contact';
+   search_action = "search";
+   title = text('Contact Search');
 ELSIF entity_class == 3;
    DIV_ID = 'search-employee';
-   title = text('Employee Search'); #'
-ELSE;
-   title = text('Unsupported.  Expect errors'); #'
-END -%]
-<form data-dojo-type="lsmb/Form"
-      method="get"
-      action="contact_reports.pl"
-      id="[% DIV_ID %]">
-[% IF entity_class.defined %]
-<input type="hidden" name="entity_class" value="[% entity_class %]">
-[% END %]
-<table width="100%">
-  <tr><th class="listtop">[% title %]</th></tr>
-
-  <tr><td></td></tr>
-  <tr valign="top">
-    <td>
-      <table>
-        <tr valign="top">
-          <td>
-            <table>
-              [%
-              IF NOT entity_class == 3;
-              PROCESS entity_class;
-              END;
-              %]
-              <tr>
-                <th align="right">[% text('Name') %]</th>
-                <td>[% INCLUDE input element_data={
-                          size = '32', name = 'name_part'
-                     } %]</td>
-              </tr>
-             <tr>
-                <th align="right">[% text('Control Code') %]</th>
-                <td>[% PROCESS input element_data = {
-                        size = 32
-                        name = "control_code"
-                        type = "text"
-                        value = control_code
-                        } %]</td>
-             </tr>
-              <tr>
-                <th align="right">[% text('E-mail') %]</th>
-                <td>[% INCLUDE input element_data={size = '32', name = 'email'} %]</td>
-              </tr>
-              <tr>
-                <th align="right">[% text('Phone') %]</th>
-                <td>[% INCLUDE input element_data={size = '20', name = 'phone'} %]</td>
-              </tr>
-              <tr>
-                <th align="right">[% text('Contact') %]</th>
-                <td>[% INCLUDE input element_data={size = '20', name = 'contact'} %]</td>
-              </tr>
-              <tr>
-[% IF entity_type == 'Customer' -%]
-                <th align="right">[% text('Salesperson') %]</th>
-                <td>[% INCLUDE input element_data={size = '32', name = 'employee'} %]</td>
-[% ELSIF entity_type == 'Vendor' -%]
-                <th align="right">[% text('Employee') %]</th>
-                <td>[% INCLUDE input element_data={size = '32', name = 'employee'} %]</td>
-[% END -%]
-              </tr>
-              <tr>
-                <th align="right">[% text('Only Users') %]</th>
-                <td>[% PROCESS input element_data = {
-                        type = 'checkbox', name = 'users', value = '1'
-                } %] ([% text('Only for Employees') %])</td>
-              </tr>
-              <tr>
-                <th align="right">[% text('Notes') %]</th>
-                <td>[% INCLUDE textarea element_data={
-                           rows = '3', cols = '32', name = 'notes'} %]</td>
-              </tr>
-            </table>
-          </td>
-          <td>
-            <table>
-              [%
-              IF NOT entity_class == 3;
-              %]
-              <tr>
-                <th align="right">[% text("Account Number") %]</th>
-                <td>[% INCLUDE input element_data={
-                           size = '32', name = "meta_number"} %]</td>
-              </tr>
-              [% END %]
-              <tr>
-                <th align="right">[% text('Address') %]</th>
-                <td>[% INCLUDE input element_data={
-                           size = '32', name = 'address'} %]</td>
-              </tr>
-              <tr>
-                <th align="right">[% text('City') %]</th>
-                <td>[% INCLUDE input element_data={
-                           size = '32', name = 'city'} %]</td>
-              </tr>
-              <tr>
-                <th align="right">[% text('State/Province') %]</th>
-                <td>[% INCLUDE input element_data={
-                           size = '32', name = 'state'} %]</td>
-              </tr>
-              <tr>
-                <th align="right">[% text('Zip/Postal Code') %]</th>
-                <td>[% INCLUDE input element_data={
-                           size = '10', name = 'mail_code'} %]</td>
-              </tr>
-              <tr>
-                <th align="right">[% text('Country') %]</th>
-                <td>[% INCLUDE input element_data={
-                           size = '32', name = 'country'} %]</td>
-              </tr>
-              <tr>
-                <th align="right">[% text('Active') %]</th>
-                <td>
-                  [% text('From'); ' '; INCLUDE input element_data={
-                         size = '11',
-                         name = 'active_date_from',
-                         class = 'date',
-                         title = user.dateformat
-                         };
-                         text('Date to'); ' '; INCLUDE input element_data={
-                         size = '11',
-                         name = 'active_date_to',
-                         class = 'date',
-                         title = user.dateformat} %]
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size="3" noshade="noshade" /></td>
-  </tr>
-</table>
-[%
-IF entity_class == 3;
    search_action = "employee_search";
+   title = text('Employee Search');
 ELSE;
-   search_action = "search";
-END;
-
-INCLUDE button element_data = {
-        text = text('Search')
-        name = "__action"
-        value = search_action
-        class = "submit"
-        type = "submit"
-} %]
+   title = text('Unsupported.  Expect errors');
+END
+-%]
+  <form data-dojo-type="lsmb/Form"
+        method="get"
+        action="contact_reports.pl"
+        id="[% DIV_ID %]">
+  [% IF entity_class.defined %]
+    <input type="hidden" name="entity_class" value="[% entity_class %]">
+  [% END %]
+    <div class="listtop">[% title %]</div>
+    <div class="two-column-grid" style="width: fit-content">
+      <lsmb-text
+        name="name_part"
+        size="32"
+        label="[% text('Name') %]"
+      ></lsmb-text>
+      <lsmb-text
+        name="control_code"
+        size="32"
+        label="[% text('Control Code') %]"
+      ></lsmb-text>
+      <lsmb-text
+        name="email"
+        size="32"
+        label="[% text('E-mail') %]"
+      ></lsmb-text>
+      <lsmb-text
+        name="address"
+        size="32"
+        label="[% text('Address') %]"
+      ></lsmb-text>
+      <lsmb-text
+        name="city"
+        size="32"
+        label="[% text('City') %]"
+      ></lsmb-text>
+      <lsmb-text
+        name="state"
+        size="32"
+        label="[% text('State/Province') %]"
+      ></lsmb-text>
+      <lsmb-text
+        name="mail_code"
+        size="10"
+        label="[% text('Zip/Postal Code') %]"
+      ></lsmb-text>
+      <lsmb-text
+        name="country"
+        size="32"
+        label="[% text('Country') %]"
+      ></lsmb-text>
+      <lsmb-text
+        name="phone"
+        size="20"
+        label="[% text('Phone') %]"
+      ></lsmb-text>
+      <lsmb-text
+        name="contact"
+        size="20"
+        label="[% text('Contact') %]"
+      ></lsmb-text>
+      <lsmb-checkbox
+        name="users"
+        value="1"
+        label="[% text('Only Users') %]"
+      ></lsmb-checkbox>
+      <lsmb-text
+        name="notes"
+        size="32"
+        label="[% text('Notes') %]"
+      ></lsmb-text>
+      <lsmb-date
+        name="active_date_from"
+        label="[% text('Active after') %]"
+      ></lsmb-date>
+      <lsmb-date
+        name="active_date_to"
+        label="[% text('Active until') %]"
+      ></lsmb-date>
+    </div>
+    <hr size="3" noshade="noshade" />
+    <lsmb-button
+        name="__action"
+        value="[% search_action %]"
+        type="submit"
+    >[% text('Search') %]</lsmb-button>
   </form>
-
 </body>
