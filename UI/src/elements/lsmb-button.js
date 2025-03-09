@@ -13,7 +13,7 @@ export class LsmbButton extends LsmbDijit {
     }
 
     _valueAttrs() {
-        return ["type"];
+        return ["type", "name", "value"];
     }
 
     connectedCallback() {
