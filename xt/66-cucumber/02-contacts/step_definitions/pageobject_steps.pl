@@ -7,6 +7,7 @@ use warnings;
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
+
 Then qr/^I expect the "(.+)" tab to be selected$/, sub {
     my $tab_label = $1;
     my $page = S->{ext_wsl}->page->body->maindiv->content;
@@ -47,8 +48,10 @@ Then qr/^I expect the (.+) table to contain (\d+) rows?$/, sub {
 When qr/^I press "(.+)"$/, sub {
     my $button_text = $1;
     my $page = S->{ext_wsl}->page->body->maindiv->content;
-    $page->active_pane->find(
-        ".//*[\@role='button']/*[text()='$button_text']"
+    $page->find(
+        ".//*[\@role='button' ".
+        "and not(ancestor::*[contains(\@class, 'dijitHidden')])]".
+        "/*[text()='$button_text']"
     )->click;
 };
 
@@ -58,14 +61,16 @@ When qr/^I enter "(.+)" into the "(.+)" field$/, sub {
     my $field_name = $2;
     my $page = S->{ext_wsl}->page->body->maindiv->content;
 
-    my $label = $page->active_pane->find(
-        ".//label[text()='$field_name']"
+    my $label = $page->find(
+        ".//label[text()='$field_name' ".
+        "and not(ancestor::*[contains(\@class, 'dijitHidden')])]"
     );
     my $field_id = $label->get_attribute('for');
-    my $field = $page->active_pane->find(
+    my $field = $page->find(
         ".//input[\@id='$field_id']"
     );
     $field->send_keys($text);
 };
+
 
 1;
