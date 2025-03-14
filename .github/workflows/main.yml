@@ -60,7 +60,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           # Keep aligned with what's in the dev image...
-          node-version: '20'
+          node-version: '22'
 
       - name: Cache Dojo
         id: cache-dojo
