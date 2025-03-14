@@ -6,7 +6,7 @@ use warnings;
 
 use Test::More;
 use Test::BDD::Cucumber::StepFile;
-
+use PageObject::App::Contacts::EditContact;
 
 Then qr/^I expect the "(.+)" tab to be selected$/, sub {
     my $tab_label = $1;
@@ -22,6 +22,7 @@ Then qr/^I expect the (.+) table to contain (\d+) rows?$/, sub {
     my %table_ids =(
         'Accounts' => 'credit_accounts_list',
         'Bank Accounts' => 'bank_account_list',
+        'Contact Information' => 'contact-list',
     );
 
     my $table_id = $table_ids{$table_name}
@@ -56,6 +57,30 @@ When qr/^I press "(.+)"$/, sub {
 };
 
 
+# Overriding this action to cope with multiple fields having the same label
+# being loaded on the page, but hidden in an invisible tab pane. We want to
+# use the field that is visible and ignore those that are hidden.
+Then qr/^I expect the "(.*)" field to contain "(.*)"$/, sub {
+    my $field_name = $1;
+    my $value = $2;
+    my $page = S->{ext_wsl}->page->body->maindiv->content;
+
+    my $label = $page->find(
+        ".//label[text()='$field_name' ".
+        "and not(ancestor::*[contains(\@class, 'dijitHidden')])]"
+    );
+    ok($label, "found label element with label '$field_name'");
+
+    my $field_id = $label->get_attribute('for');
+    my $field = $page->find(
+        ".//input[\@id='$field_id']"
+    );
+
+    ok($field, "found input element with label '$field_name'");
+    is($field->value, $value, "element with label '$field_name' contains '$value'");
+};
+
+
 When qr/^I enter "(.+)" into the "(.+)" field$/, sub {
     my $text = $1;
     my $field_name = $2;
@@ -65,10 +90,14 @@ When qr/^I enter "(.+)" into the "(.+)" field$/, sub {
         ".//label[text()='$field_name' ".
         "and not(ancestor::*[contains(\@class, 'dijitHidden')])]"
     );
+    ok($label, "found label element with label '$label'");
+
     my $field_id = $label->get_attribute('for');
     my $field = $page->find(
         ".//input[\@id='$field_id']"
     );
+
+    $field->clear;
     $field->send_keys($text);
 };
 
