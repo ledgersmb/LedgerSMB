@@ -132,6 +132,7 @@ requires 'YAML::PP';
 requires 'namespace::autoclean';
 
 recommends 'Math::BigInt::GMP';
+recommends 'Class::C3::XS';
 
 feature 'starman', 'Standalone Server w/Starman' =>
     sub {
