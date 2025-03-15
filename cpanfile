@@ -127,6 +127,7 @@ requires 'XML::LibXML::XPathContext';
 requires 'YAML::PP';
 requires 'namespace::autoclean';
 
+# Recommendations for performance:
 recommends 'Math::BigInt::GMP';
 recommends 'Class::C3::XS';
 
