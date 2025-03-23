@@ -6,6 +6,9 @@ Released 2024-12-14
 Changelog for 1.12.6
 * Fix missing field labels on bank account screen
 * Fix delete bank account
+* Fix Contact > Bank accounts screen (#8695)
+* Fix partial customer name matches on order search (#8728)
+* Fix removal of LedgerSMB::Moose::* types in US/Washington tax module (#8727)
 
 
 Changelog for 1.12.5
