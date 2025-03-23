@@ -35,6 +35,12 @@ Updated dependencies
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.6
+* Fix Contact > Bank accounts screen (#8695)
+* Fix partial customer name matches on order search (#8728)
+* Fix removal of LedgerSMB::Moose::* types in US/Washington tax module (#8727)
+
+
 Changelog for 1.12.5
 * Fix missing aging statement attachment on e-mail statement output (#8672)
 * Fix missing payment bank account dropdown on invoice screen (#8678)
