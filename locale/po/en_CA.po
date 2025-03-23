@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.12.6-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-03-01 11:26+0000\n"
+"POT-Creation-Date: 2025-03-23 15:59+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2024\n"
 "Language-Team: English (Canada) (https://app.transifex.com/ledgersmb/"
 "teams/58325/en_CA/)\n"
@@ -237,9 +237,9 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/payment.pm:180 old/bin/ic.pl:1000 old/bin/ic.pl:1656
 #: t/data/04-complex_template.html:558 UI/accounts/edit.html:39
 #: UI/accounts/edit.html:128 UI/Contact/divs/bank_act.html:23
-#: UI/payments/use_overpayment2.html:121 UI/Reports/co/filter_bm.html:77
-#: UI/Reports/co/filter_cd.html:61 UI/Reports/filters/contact_search.html:96
-#: UI/Reports/filters/taxforms.html:82
+#: UI/Contact/divs/bank_act.html:72 UI/payments/use_overpayment2.html:121
+#: UI/Reports/co/filter_bm.html:77 UI/Reports/co/filter_cd.html:61
+#: UI/Reports/filters/contact_search.html:96 UI/Reports/filters/taxforms.html:82
 msgid "Account Number"
 msgstr ""
 
@@ -1021,7 +1021,7 @@ msgid "Avg. Cost"
 msgstr ""
 
 #: t/data/04-complex_template.html:557 UI/Contact/divs/bank_act.html:21
-#: UI/Contact/divs/bank_act.html:61
+#: UI/Contact/divs/bank_act.html:61 UI/Contact/divs/bank_act.html:65
 msgid "BIC/SWIFT Code"
 msgstr ""
 
@@ -1068,7 +1068,7 @@ msgstr ""
 msgid "Bank"
 msgstr ""
 
-#: UI/Contact/divs/bank_act.html:65
+#: UI/Contact/divs/bank_act.html:68
 msgid "Bank Account"
 msgstr ""
 
@@ -4284,8 +4284,8 @@ msgstr ""
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:26
-#: UI/src/components/ServerUI.js:40
+#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:40
+#: UI/src/components/ServerUI.js:26
 msgid "Loading..."
 msgstr ""
 
@@ -5996,7 +5996,7 @@ msgid "Remaining balance"
 msgstr ""
 
 #: t/data/04-complex_template.html:559 UI/Contact/divs/bank_act.html:24
-#: UI/Contact/divs/bank_act.html:70
+#: UI/Contact/divs/bank_act.html:75 UI/Contact/divs/bank_act.html:79
 msgid "Remark"
 msgstr ""
 
@@ -6318,7 +6318,7 @@ msgstr ""
 #: UI/asset/import_asset.html:26 UI/business_units/edit.html:93
 #: UI/business_units/edit.html:105 UI/business_units/list_classes.html:84
 #: UI/Configuration/sequence.html:7 UI/Configuration/sequence.html:117
-#: UI/Configuration/settings.html:107 UI/Contact/divs/bank_act.html:80
+#: UI/Configuration/settings.html:107 UI/Contact/divs/bank_act.html:87
 #: UI/Contact/divs/company.html:137 UI/Contact/divs/employee.html:155
 #: UI/Contact/divs/notes.html:59 UI/Contact/divs/person.html:145
 #: UI/Contact/pricelist.html:96 UI/inventory/adjustment_entry.html:89
