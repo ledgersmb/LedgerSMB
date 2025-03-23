@@ -8,7 +8,7 @@ import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
 import eslintImportX from "eslint-plugin-import-x";
 import js from "@eslint/js";
 import jest from "eslint-plugin-jest";
-import packageJson from "eslint-plugin-package-json/configs/recommended";
+import packageJson from "eslint-plugin-package-json";
 import pluginVue from "eslint-plugin-vue";
 
 export default [
@@ -128,9 +128,8 @@ export default [
     // Package.json
     {
         files: ["package.json"],
-        ...packageJson,
+        ...packageJson.configs.recommended,
         rules: {
-            ...packageJson.rules,
             "package-json/order-properties": [
                 "error",
                 {
