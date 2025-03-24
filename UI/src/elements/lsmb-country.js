@@ -37,8 +37,8 @@ export class LsmbCountry extends LsmbBaseInput {
             this.store = store;
         }
 
-        const options = this.store.items.map(element => {
-            return { label: element.name, value: element.code }
+        const options = this.store.items.map((element) => {
+            return { label: element.name, value: element.code };
         });
 
         if ("default_blank" in props) {
@@ -67,7 +67,6 @@ export class LsmbCountry extends LsmbBaseInput {
 
         super.disconnectedCallback();
     }
-
 }
 
 customElements.define("lsmb-country", LsmbCountry);
