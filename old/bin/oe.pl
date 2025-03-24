@@ -131,6 +131,12 @@ sub order_links {
     #          vc => $form->{vc},
     #          billing => 0,
     #          job => 1 );
+    $form->get_regular_metadata(
+        \%myconfig,
+        $form->{vc},
+        $form->{transdate},
+        1,
+    );
 
     # retrieve order/quotation
     OE->retrieve( \%myconfig, \%$form );
