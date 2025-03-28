@@ -311,24 +311,24 @@ BEGIN
 RETURN QUERY EXECUTE $sql$
 
     WITH entities_matching_name AS (
-        SELECT legal_name, sic_code, entity_id
+        SELECT
+            legal_name,
+            sic_code,
+            entity_id
         FROM company
         WHERE $13 IS NULL
         OR legal_name @@ plainto_tsquery($13)
         OR legal_name ilike $13 || '%'
+
         UNION ALL
+
         SELECT
-            coalesce(first_name, '') ||
-            ' ' ||
-            coalesce(middle_name, '') ||
-            ' ' ||
-            coalesce(last_name, ''),
-            null, entity_id
+            CONCAT_WS(' ', first_name, middle_name, last_name),
+            NULL,
+            entity_id
         FROM person
         WHERE $13 IS NULL
-        OR coalesce(first_name, '') || ' ' || coalesce(middle_name, '')
-                || ' ' || coalesce(last_name, '')
-                             @@ plainto_tsquery($13)
+        OR CONCAT_WS(' ', first_name, middle_name, last_name) @@ plainto_tsquery($13)
    ),
    matching_eca_contacts AS (
        SELECT credit_id
