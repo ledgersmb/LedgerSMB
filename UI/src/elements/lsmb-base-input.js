@@ -78,7 +78,9 @@ export class LsmbBaseInput extends LsmbDijit {
         }
         this.connected = true;
 
-        this.dojoWidget = new (this._widgetClass())(this._collectProps());
+        if (!this.dojoWidget) {
+            this.dojoWidget = new (this._widgetClass())(this._collectProps());
+        }
 
         if (
             this.hasAttribute("label") &&
