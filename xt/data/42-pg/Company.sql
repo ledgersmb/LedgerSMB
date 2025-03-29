@@ -16,6 +16,15 @@ VALUES (-101, 'Testing..... 2', '_TEST2', 242);
 INSERT INTO person(id, entity_id, first_name, last_name)
 values (-100, -100, 'Test', 'User');
 
+INSERT INTO company (id, entity_id, legal_name)
+VALUES (-111, -101, 'Test Company');
+
+INSERT INTO location(id, line_one, city, state, mail_code, country_id)
+VALUES (-111, '101 Main Street', 'Cityville', 'Statington','AB1234', 242);
+
+INSERT INTO entity_to_location (location_id, location_class, entity_id)
+VALUES (-111, 1, -101);
+
 DELETE FROM users WHERE username = CURRENT_USER;
 
 INSERT INTO users (entity_id, username)

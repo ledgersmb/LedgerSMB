@@ -8,7 +8,7 @@ BEGIN;
     SELECT plan(64);
 
     -- Add data
-    \i xt/data/42-pg/Base.sql
+    \i xt/data/42-pg/Company.sql
 
     -- Validate required tables
 
