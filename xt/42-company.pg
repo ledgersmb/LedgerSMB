@@ -5,7 +5,7 @@ BEGIN;
     SET client_min_messages TO warning;
 
     -- Plan the tests.
-    SELECT plan(60);
+    SELECT plan(64);
 
     -- Add data
     \i xt/data/42-pg/Base.sql
@@ -214,6 +214,98 @@ BEGIN;
         NULL::text
     );
     SELECT results_eq('test', 'expected_result', 'contact__search find company by city');
+    DEALLOCATE test;
+    DEALLOCATE expected_result;
+
+    --- Search for company by state
+    PREPARE test AS SELECT * FROM contact__search(
+        NULL, NULL, NULL, NULL,
+        NULL, NULL, 'Statington', NULL,
+        NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL
+    );
+    PREPARE expected_result AS VALUES(
+        -101,
+        '_TEST2',
+        NULL::integer,
+        NULL::text,
+        NULL::text,
+        NULL::integer,
+        'Test Company',
+        NULL::text,
+        NULL::text,
+        NULL::text
+    );
+    SELECT results_eq('test', 'expected_result', 'contact__search find company by state');
+    DEALLOCATE test;
+    DEALLOCATE expected_result;
+
+    --- Search for company by mail code (zip code/postcode)
+    PREPARE test AS SELECT * FROM contact__search(
+        NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, 'AB1234',
+        NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL
+    );
+    PREPARE expected_result AS VALUES(
+        -101,
+        '_TEST2',
+        NULL::integer,
+        NULL::text,
+        NULL::text,
+        NULL::integer,
+        'Test Company',
+        NULL::text,
+        NULL::text,
+        NULL::text
+    );
+    SELECT results_eq('test', 'expected_result', 'contact__search find company by mail code');
+    DEALLOCATE test;
+    DEALLOCATE expected_result;
+
+    --- Search for company by control code
+    PREPARE test AS SELECT * FROM contact__search(
+        NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL,
+        NULL, '_TEST2', NULL, NULL
+    );
+    PREPARE expected_result AS VALUES(
+        -101,
+        '_TEST2',
+        NULL::integer,
+        NULL::text,
+        NULL::text,
+        NULL::integer,
+        'Test Company',
+        NULL::text,
+        NULL::text,
+        NULL::text
+    );
+    SELECT results_eq('test', 'expected_result', 'contact__search find company by mail code');
+    DEALLOCATE test;
+    DEALLOCATE expected_result;
+
+    --- Search for company by address
+    PREPARE test AS SELECT * FROM contact__search(
+        NULL, NULL, NULL, NULL,
+        '101 Main', NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL
+    );
+    PREPARE expected_result AS VALUES(
+        -101,
+        '_TEST2',
+        NULL::integer,
+        NULL::text,
+        NULL::text,
+        NULL::integer,
+        'Test Company',
+        NULL::text,
+        NULL::text,
+        NULL::text
+    );
+    SELECT results_eq('test', 'expected_result', 'contact__search find company by address');
     DEALLOCATE test;
     DEALLOCATE expected_result;
 

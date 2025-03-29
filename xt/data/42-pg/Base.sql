@@ -19,8 +19,8 @@ values (-100, -100, 'Test', 'User');
 INSERT INTO company (id, entity_id, legal_name)
 VALUES (-101, -101, 'Test Company');
 
-INSERT INTO location(id, line_one, city, country_id)
-VALUES (-101, '101 Main Street', 'Cityville', 242);
+INSERT INTO location(id, line_one, city, state, mail_code, country_id)
+VALUES (-101, '101 Main Street', 'Cityville', 'Statington', 'AB1234', 242);
 
 INSERT INTO entity_to_location (location_id, location_class, entity_id)
 VALUES (-101, 1, -101);
