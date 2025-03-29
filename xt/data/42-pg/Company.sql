@@ -11,7 +11,7 @@ INSERT INTO entity (id, name, control_code, country_id)
 VALUES (-100, 'Testing.....', '_TESTING.....', 242);
 
 INSERT INTO entity (id, name, control_code, country_id)
-VALUES (-101, 'Testing..... 2', '_TEST2', 242);
+VALUES (-101, 'Testing..... 2', '_TEST2', 38);
 
 INSERT INTO person(id, entity_id, first_name, last_name)
 values (-100, -100, 'Test', 'User');
