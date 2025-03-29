@@ -5,8 +5,7 @@ BEGIN;
     SET client_min_messages TO warning;
 
     -- Plan the tests.
-
-    SELECT plan(58);
+    SELECT plan(59);
 
     -- Add data
     \i xt/data/42-pg/Base.sql
@@ -149,7 +148,7 @@ BEGIN;
     DEALLOCATE test;
 
     -- Contact/Entity Search Tests
-    --- Search for company by name
+    --- Search for person by name
     PREPARE test AS SELECT * FROM contact__search(
         NULL, NULL, NULL, NULL,
         NULL, NULL, NULL, NULL,
@@ -169,6 +168,29 @@ BEGIN;
         NULL::text
     );
     SELECT results_eq('test', 'expected_result', 'contact__search find person by name');
+    DEALLOCATE test;
+    DEALLOCATE expected_result;
+
+    --- Search for company by name
+    PREPARE test AS SELECT * FROM contact__search(
+        NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL,
+        'Test Company', NULL, NULL, NULL
+    );
+    PREPARE expected_result AS VALUES(
+        -101,
+        '_TEST2',
+        NULL::integer,
+        NULL::text,
+        NULL::text,
+        NULL::integer,
+        'Test Company',
+        NULL::text,
+        NULL::text,
+        NULL::text
+    );
+    SELECT results_eq('test', 'expected_result', 'contact__search find company by name');
     DEALLOCATE test;
     DEALLOCATE expected_result;
 

@@ -16,6 +16,9 @@ VALUES (-101, 'Testing..... 2', '_TEST2', 242);
 INSERT INTO person(id, entity_id, first_name, last_name)
 values (-100, -100, 'Test', 'User');
 
+INSERT INTO company (id, entity_id, legal_name)
+VALUES (-101, -101, 'Test Company');
+
 DELETE FROM users WHERE username = CURRENT_USER;
 
 INSERT INTO users (entity_id, username)
