@@ -3,7 +3,7 @@ set client_min_messages = 'warning';
 
 
 
--- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General
+-- Copyright (C) 2011-2025 LedgerSMB Core Team.  Licensed under the GNU General
 -- Public License v 2 or at your option any later version.
 
 -- Docstrings already added to this file.
@@ -310,104 +310,119 @@ $$
 BEGIN
 RETURN QUERY EXECUTE $sql$
 
-   WITH entities_matching_name AS (
-                      SELECT legal_name, sic_code, entity_id
-                        FROM company
-                       WHERE $13 IS NULL
-             OR legal_name @@ plainto_tsquery($13)
-             OR legal_name ilike $13 || '%'
-                      UNION ALL
-                     SELECT coalesce(first_name, '') || ' '
-             || coalesce(middle_name, '')
-             || ' ' || coalesce(last_name, ''), null, entity_id
-                       FROM person
-       WHERE $13 IS NULL
-             OR coalesce(first_name, '') || ' ' || coalesce(middle_name, '')
-                || ' ' || coalesce(last_name, '')
-                             @@ plainto_tsquery($13)
-   ),
-   matching_eca_contacts AS (
-       SELECT credit_id
-         FROM eca_to_contact
-        WHERE ($3 IS NULL
-               OR contact = ANY($3))
-                        AND ($2 IS NULL
-                   OR description @@ plainto_tsquery($2))
-   ),
-   matching_entity_contacts AS (
-       SELECT entity_id
-                                           FROM entity_to_contact
-        WHERE ($3 IS NULL
-               OR contact = ANY($3))
-              AND ($2 IS NULL
-                   OR description @@ plainto_tsquery($2))
-   ),
-   matching_locations AS (
-       SELECT id
-         FROM location
-        WHERE ($5 IS NULL
-               OR line_one @@ plainto_tsquery($5)
-               OR line_two @@ plainto_tsquery($5)
-               OR line_three @@ plainto_tsquery($5))
-              AND ($6 IS NULL
-                   OR city ILIKE '%' || $6 || '%')
-              AND ($7 IS NULL
-                   OR state ILIKE '%' || $7 || '%')
-              AND ($8 IS NULL
-                   OR mail_code ILIKE $8 || '%')
-              AND ($9 IS NULL
-                   OR EXISTS (select 1 from country
-                               where name ilike '%' || $9 || '%'
-                                  or short_name ilike '%' || $9 || '%'))
-                       )
-   SELECT e.id, e.control_code, ec.id, ec.meta_number::text,
+    WITH entities_matching_name AS (
+        SELECT
+            legal_name,
+            sic_code,
+            entity_id
+        FROM company
+        WHERE $13 IS NULL
+        OR legal_name @@ plainto_tsquery($13)
+        OR legal_name ilike $13 || '%'
+
+        UNION ALL
+
+        SELECT
+            CONCAT_WS(' ', first_name, middle_name, last_name),
+            NULL,
+            entity_id
+        FROM person
+        WHERE $13 IS NULL
+        OR CONCAT_WS(' ', first_name, middle_name, last_name) @@ plainto_tsquery($13)
+    ),
+    matching_eca_contacts AS (
+        SELECT credit_id
+        FROM eca_to_contact
+        WHERE ($3 IS NULL OR contact = ANY($3))
+        AND ($2 IS NULL OR description @@ plainto_tsquery($2))
+    ),
+    matching_entity_contacts AS (
+        SELECT entity_id
+        FROM entity_to_contact
+        WHERE ($3 IS NULL OR contact = ANY($3))
+        AND ($2 IS NULL OR description @@ plainto_tsquery($2))
+    ),
+    matching_locations AS (
+        SELECT id
+        FROM location
+        WHERE (
+            $5 IS NULL
+            OR line_one @@ plainto_tsquery($5)
+            OR line_two @@ plainto_tsquery($5)
+            OR line_three @@ plainto_tsquery($5)
+        )
+        AND ($6 IS NULL OR city  ILIKE '%' || $6 || '%')
+        AND ($7 IS NULL OR state ILIKE '%' || $7 || '%')
+        AND ($8 IS NULL OR mail_code ILIKE $8 || '%')
+        AND (
+            $9 IS NULL OR EXISTS (
+                SELECT 1 from country
+                WHERE name ilike '%' || $9 || '%'
+                OR short_name ilike '%' || $9 || '%'
+            )
+        )
+    )
+
+    SELECT e.id, e.control_code, ec.id, ec.meta_number::text,
           ec.description, ec.entity_class,
           c.legal_name, c.sic_code::text, b.description , ec.curr::text
-     FROM entity e
-     JOIN entities_matching_name c ON c.entity_id = e.id
-LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
-LEFT JOIN business b ON (ec.business_id = b.id)
-    WHERE ($1 is null
-           OR ec.entity_class = $1)
-          AND ($14 IS NULL
-               OR e.control_code like $14 || '%')
-          AND (($3 IS NULL AND $2 IS NULL)
-                OR EXISTS (select 1
-                             from matching_eca_contacts mec
-                            where mec.credit_id = ec.id)
-                OR EXISTS (select 1
-                             from matching_entity_contacts mec
-                            where mec.entity_id = e.id))
-           AND (($5 IS NULL AND $6 IS NULL
-                 AND $7 IS NULL AND $8 IS NULL
-                 AND $9 IS NULL)
-                OR EXISTS (select 1
-                             from matching_locations m
-                             join eca_to_location etl ON m.id = etl.location_id
-                            where etl.credit_id = ec.id)
-                OR EXISTS (select 1
-                             from matching_locations m
-                             join entity_to_location etl
-                                  ON m.id = etl.location_id
-                            where etl.entity_id = e.id))
-           AND ($12 IS NULL
-                OR ec.business_id = $12)
-           AND ($11 IS NULL
-                OR ec.startdate <= $11)
-           AND ($10 IS NULL
-                OR ec.enddate >= ec.enddate)
-           AND ($4 IS NULL
-                OR ec.meta_number like $4 || '%')
-           AND ($15 IS NULL
-                OR EXISTS (select 1 from entity_note n
-                            where e.id = n.entity_id
-                                  and note @@ plainto_tsquery($15))
-                OR EXISTS (select 1 from eca_note n
-                            where ec.id = n.ref_key
-                                  and note @@ plainto_tsquery($15)))
-           AND ($16 IS NULL OR NOT $16
-                OR EXISTS (select 1 from users where entity_id = e.id))
-               ORDER BY legal_name
+    FROM entity e
+    JOIN entities_matching_name c ON c.entity_id = e.id
+    LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
+    LEFT JOIN business b ON (ec.business_id = b.id)
+    WHERE ($1 is null OR ec.entity_class = $1)
+    AND ($14 IS NULL OR e.control_code like $14 || '%')
+    AND (
+        ($3 IS NULL AND $2 IS NULL)
+        OR EXISTS (
+            select 1
+            from matching_eca_contacts mec
+            where mec.credit_id = ec.id
+        )
+        OR EXISTS (
+            select 1
+            from matching_entity_contacts mec
+            where mec.entity_id = e.id
+        )
+    )
+    AND (
+        COALESCE($5, $6, $7, $8, $9) IS NULL
+        OR EXISTS (
+            select 1
+            from matching_locations m
+            join eca_to_location etl ON m.id = etl.location_id
+            where etl.credit_id = ec.id
+        )
+        OR EXISTS (
+            select 1
+            from matching_locations m
+            join entity_to_location etl ON (m.id = etl.location_id)
+            where etl.entity_id = e.id
+        )
+    )
+    AND ($12 IS NULL OR ec.business_id = $12)
+    AND ($11 IS NULL OR ec.startdate <= $11)
+    AND ($10 IS NULL OR ec.enddate >= ec.enddate)
+    AND ($4  IS NULL OR ec.meta_number like $4 || '%')
+    AND (
+        $15 IS NULL
+        OR EXISTS (
+            select 1 from entity_note n
+            where e.id = n.entity_id
+            and note @@ plainto_tsquery($15)
+        )
+        OR EXISTS (
+            select 1 from eca_note n
+            where ec.id = n.ref_key
+            and note @@ plainto_tsquery($15)
+        )
+    )
+    AND (
+        $16 IS NULL
+        OR NOT $16
+        OR EXISTS (select 1 from users where entity_id = e.id)
+    )
+    ORDER BY legal_name
 $sql$
 USING in_entity_class, in_contact, in_contact_info, in_meta_number,
  in_address, in_city, in_state, in_mail_code,
