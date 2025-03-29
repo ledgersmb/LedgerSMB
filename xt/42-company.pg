@@ -1,3 +1,4 @@
+
 BEGIN;
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
@@ -5,10 +6,9 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(57);
+    SELECT plan(58);
 
     -- Add data
-
     \i xt/data/42-pg/Base.sql
 
     -- Validate required tables
@@ -147,6 +147,30 @@ BEGIN;
            WHERE id = currval('eca_note_id_seq');
     SELECT results_eq('test',ARRAY[true],'eca__save_notes subject record');
     DEALLOCATE test;
+
+    -- Contact/Entity Search Tests
+    --- Search for company by name
+    PREPARE test AS SELECT * FROM contact__search(
+        NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL,
+        NULL, NULL, NULL, NULL,
+        'User', NULL, NULL, NULL
+    );
+    PREPARE expected_result AS VALUES(
+        -100,
+        '_TESTING.....',
+        NULL::integer,
+        NULL::text,
+        NULL::text,
+        NULL::integer,
+        'Test User',
+        NULL::text,
+        NULL::text,
+        NULL::text
+    );
+    SELECT results_eq('test', 'expected_result', 'contact__search find person by name');
+    DEALLOCATE test;
+    DEALLOCATE expected_result;
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
