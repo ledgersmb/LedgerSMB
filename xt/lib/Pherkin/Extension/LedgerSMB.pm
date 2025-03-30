@@ -481,20 +481,40 @@ sub create_part {
     return $props->{partnumber};
 }
 
+
+sub country_id_from_name {
+    my ($self, $country_name) = @_;
+    my $sql = $self->admin_dbh->prepare(
+        'SELECT id FROM country WHERE name = ?'
+    );
+    $sql->execute($country_name)
+        or die "failed to query country";
+    my $country = $sql->fetchrow_hashref;
+
+    unless ($country && $country->{id}) {
+        die "failed to find country id for '$country_name'";
+    }
+
+    return $country->{id};
+}
+
+
 my $vc_counter = 0;
 
 sub create_vc {
-    my ($self, $vc, $vc_name) = @_;
+    my ($self, $vc, $vc_name, $country) = @_;
+    $country ||= 'United States';
     my $control_code = uc(substr($vc,0,1)) . '-' . ($vc_counter++);
     my $admin_dbh = $self->admin_dbh;
+    my $country_id = $self->country_id_from_name($country);
     my $company = LedgerSMB::Entity::Company->new(
-        country_id   => 1,
+        country_id   => $country_id,
         control_code => $control_code,
         legal_name   => $vc_name,
         name         => $vc_name,
         entity_class => ($vc eq 'vendor' ? 1 : 2),
         _dbh         => $admin_dbh,
-        );
+    );
     $company = $company->save;
 
     local $LedgerSMB::App_State::DBH = $admin_dbh;
@@ -511,12 +531,11 @@ sub create_vc {
         ar_ap_account_id => $accno_ids{($vc eq 'vendor' ? '2100' : '1200')},
         meta_number      => $vc_name,
         curr             => 'USD',
-        )->save;
+    )->save;
 
     my $vc_key = ($vc eq 'vendor') ? 'the vendor' : 'the customer';
     return {
         $vc_key       => $vc_name,
-#        'the company' => $control_code,
     };
 }
 
