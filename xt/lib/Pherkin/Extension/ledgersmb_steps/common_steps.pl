@@ -157,7 +157,7 @@ Given qr/a logged in user with these rights:/, sub {
 };
 
 
-Given qr/a (vendor|customer) "(.*)"(?: from (.+))$/, sub {
+Given qr/a (vendor|customer) "(.*)"(?: from (.+))?$/, sub {
     my $vc = $1;
     my $vc_name = $2;
     my $country = $3;
