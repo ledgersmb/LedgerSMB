@@ -3,6 +3,10 @@
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.24
+* Fix entity search by country
+
+
 Changelog for 1.11.23
 * Fix missing field labels on bank account screen
 * Fix delete bank account
