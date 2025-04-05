@@ -3,6 +3,10 @@
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.7
+* Fix entity search by country
+
+
 Changelog for 1.12.6
 * Fix missing field labels on bank account screen
 * Fix delete bank account
