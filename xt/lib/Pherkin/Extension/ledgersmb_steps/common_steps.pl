@@ -157,11 +157,11 @@ Given qr/a logged in user with these rights:/, sub {
 };
 
 
-Given qr/a (vendor|customer) "(.*)"$/, sub {
+Given qr/a (vendor|customer) "(.*)"(?: from (.+))?$/, sub {
     my $vc = $1;
     my $vc_name = $2;
-
-    my $vc_data = S->{ext_lsmb}->create_vc($vc, $vc_name);
+    my $country = $3;
+    my $vc_data = S->{ext_lsmb}->create_vc($vc, $vc_name, $country);
     S->{$_} = $vc_data->{$_} for %$vc_data;
 };
 

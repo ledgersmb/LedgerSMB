@@ -354,20 +354,14 @@ RETURN QUERY EXECUTE $sql$
         AND ($6 IS NULL OR city  ILIKE '%' || $6 || '%')
         AND ($7 IS NULL OR state ILIKE '%' || $7 || '%')
         AND ($8 IS NULL OR mail_code ILIKE $8 || '%')
-        AND (
-            $9 IS NULL OR EXISTS (
-                SELECT 1 from country
-                WHERE name ilike '%' || $9 || '%'
-                OR short_name ilike '%' || $9 || '%'
-            )
-        )
     )
 
     SELECT e.id, e.control_code, ec.id, ec.meta_number::text,
           ec.description, ec.entity_class,
           c.legal_name, c.sic_code::text, b.description , ec.curr::text
     FROM entity e
-    JOIN entities_matching_name c ON c.entity_id = e.id
+    JOIN entities_matching_name c ON (c.entity_id = e.id)
+    JOIN country AS entity_country ON (entity_country.id = e.country_id)
     LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
     LEFT JOIN business b ON (ec.business_id = b.id)
     WHERE ($1 is null OR ec.entity_class = $1)
@@ -386,7 +380,7 @@ RETURN QUERY EXECUTE $sql$
         )
     )
     AND (
-        COALESCE($5, $6, $7, $8, $9) IS NULL
+        COALESCE($5, $6, $7, $8) IS NULL
         OR EXISTS (
             select 1
             from matching_locations m
@@ -400,6 +394,7 @@ RETURN QUERY EXECUTE $sql$
             where etl.entity_id = e.id
         )
     )
+    AND ($9 IS NULL OR entity_country.short_name ILIKE $9)
     AND ($12 IS NULL OR ec.business_id = $12)
     AND ($11 IS NULL OR ec.startdate <= $11)
     AND ($10 IS NULL OR ec.enddate >= ec.enddate)
