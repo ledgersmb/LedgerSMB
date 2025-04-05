@@ -37,6 +37,7 @@ Released 2024-12-14
 
 Changelog for 1.12.7
 * Fix entity search by country
+* Fix sales person drop-down on new quotes and orders (#8734)
 
 
 Changelog for 1.12.6
