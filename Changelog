@@ -35,6 +35,10 @@ Updated dependencies
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.7
+* Fix entity search by country
+
+
 Changelog for 1.12.6
 * Fix Contact > Bank accounts screen (#8695)
 * Fix partial customer name matches on order search (#8728)
