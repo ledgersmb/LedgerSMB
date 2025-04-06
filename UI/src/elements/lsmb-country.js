@@ -38,8 +38,10 @@ export class LsmbCountry extends LsmbBaseInput {
         }
 
         const options = this.store.items.map((element) => {
-            return { label: element.name, value: element.code };
-        });
+            return { label: element.localizedName, value: element.code };
+        }).sort(
+            (a, b) => a.label.localeCompare(b.label)
+        );
 
         if ("default_blank" in props) {
             options.unshift({ label: "", value: "" });
