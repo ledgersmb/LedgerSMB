@@ -23,6 +23,7 @@ use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_NO_CONTENT HTTP_CREATED HTTP_CONFLICT HTTP_FORBIDDEN );
 use JSON::MaybeXS;
+use Locale::CLDR;
 
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Report::Listings::Country;
@@ -102,7 +103,7 @@ sub _get_country {
 }
 
 sub _get_countries {
-    my ($c, $formatter) = @_;
+    my ($env, $c, $formatter) = @_;
     my $sth = $c->dbh->prepare(
         q|SELECT *,
              md5(last_updated::text) as etag,
@@ -113,7 +114,11 @@ sub _get_countries {
         ) or die $c->dbh->errstr;
 
     $sth->execute() or die $sth->errstr;
+
+    my $locale = locale($env);
+    my $regions = Locale::CLDR->new($locale->language_tag)->all_regions;
     my @results;
+
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
         push @results, {
             _meta => {
@@ -122,6 +127,7 @@ sub _get_countries {
             code => $row->{short_name},
             default => $row->{default} ? JSON::MaybeXS->true : JSON::MaybeXS->false,
             name => $row->{name},
+            localizedName => $regions->{$row->{short_name}} // $row->{name},
         };
     }
     die $sth->errstr if $sth->err;
@@ -207,7 +213,7 @@ get api '/countries' => sub {
                                   disposition => 'attach');
     }
 
-    my $response = _get_countries( $c, $formatter );
+    my $response = _get_countries($env, $c, $formatter);
     return [ 200,
              [ 'Content-Type' => 'application/json; charset=UTF-8' ],
              $response  ];
@@ -502,6 +508,8 @@ components:
         default:
           type: boolean
         name:
+          type: string
+        localizedName:
           type: string
   examples:
     validCountry:
