@@ -13,7 +13,7 @@ aliases:
 
 # UI Coverage orbs
 orbs:
-  coveralls: coveralls/coveralls@2.2.1
+  coveralls: coveralls/coveralls@2.2.5
 
 # Reuseable commands
 commands:
