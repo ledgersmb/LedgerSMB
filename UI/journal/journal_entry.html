@@ -9,7 +9,7 @@
 <form data-dojo-type="lsmb/Form" method="post" action="[% form.script %]">
 <table width="100%">
 <tr>
-    <th class="listtop" >[% form.title %]</th>
+    <th class="listtop" >[% title %]</th>
 </tr>
 
 <tr>
@@ -20,7 +20,7 @@
           <td>
                [% INCLUDE input element_data = {
                         name = "reference",
-                        value = form.reference,
+                        value = gl.reference,
                         type = "text",
                         size = "20",
                         class = 'reference'
@@ -29,7 +29,7 @@
              IF form.sequences;
                  PROCESS select element_data = {
                     name = 'setting_sequence'
-          default_values = [form.setting_sequence]
+          default_values = [request.setting_sequence]
                  options = form.sequences
                text_attr = 'label'
               value_attr = 'label'
@@ -42,7 +42,7 @@
               [% INCLUDE input element_data = {
                         name = "transdate"
          id = "transdate"
-                        value = form.transdate
+                        value = gl.transdate
                         size = "11"
                         type = 'text'
                         class = 'date'

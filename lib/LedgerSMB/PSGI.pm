@@ -263,7 +263,7 @@ sub setup_url_space {
                 require_version    => $LedgerSMB::VERSION;
             old_app($script, $wire)
         }
-        for ('aa', 'am', 'ap', 'ar', 'gl', 'ic', 'ir', 'is', 'oe', 'pe');
+        for ('aa', 'am', 'ap', 'ar', 'ic', 'ir', 'is', 'oe', 'pe');
 
         mount "/$_" => builder {
             my $script = $_;

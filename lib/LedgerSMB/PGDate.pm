@@ -304,5 +304,20 @@ your software.
 
 =cut
 
+# Strings for localization
+# Long months are in LedgerSMB.pm
+# this is for our short month
+# $locale->text('Jan')
+# $locale->text('Feb')
+# $locale->text('Mar')
+# $locale->text('Apr')
+# $locale->text('May')
+# $locale->text('Jun')
+# $locale->text('Jul')
+# $locale->text('Aug')
+# $locale->text('Sep')
+# $locale->text('Oct')
+# $locale->text('Nov')
+# $locale->text('Dec')
 
 1;

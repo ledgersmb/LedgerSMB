@@ -89,6 +89,7 @@ requires 'PGObject', '2.3.2';
 # PGObject::Simple 3.0.1 breaks our file uploads
 requires 'PGObject::Simple', '3.1.0';
 requires 'PGObject::Simple::Role', '2.1.1';
+requires 'PGObject::Composite';
 requires 'PGObject::Type::Registry';
 requires 'PGObject::Type::BigFloat', '2.0.1';
 requires 'PGObject::Type::DateTime', '2.0.2';

@@ -577,6 +577,24 @@ REVOKE ALL ON FUNCTION voucher__delete(int) FROM public;
 COMMENT ON FUNCTION voucher__delete(in_voucher_id int) IS
 $$ Deletes the specified voucher from the batch.$$;
 
+CREATE OR REPLACE FUNCTION voucher__save
+(in_trans_id int, in_batch_id int, in_batch_class int)
+LANGUAGE SQL RETURNS voucher AS
+$$
+    insert into voucher (trans_id, batch_id, batch_class)
+     values (in_trans_id, in_batch_id, in_batch_class)
+    RETURNING *;
+$$;
+
+-- once payments are rewritten, we should get rid of the in_batch_class
+-- argument.  In fact we could probably get rid of the field in voucher.
+CREATE OR REPLACE FUNCTION voucher__get_by_trans_id(in_trans_id, in_batch_class)
+RETURNS SETOF voucher LANGUAGE SQL AS -- SETOF so we don't have a row of nulls
+$$
+SELECT * FROM voucher 
+ WHERE trans_id = in_trans_id AND batch_class = in_batch_class;
+$$;
+
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
 COMMIT;

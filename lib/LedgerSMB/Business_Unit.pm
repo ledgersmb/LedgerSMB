@@ -144,7 +144,7 @@ sub save {
     return $self;
 }
 
-=item list ($date, $class_id, $credit_id, $strict, $active_on)
+=item list ($class_id, $credit_id, $strict, $active_on)
 
 Lists all business reporting units active on $date, for $credit_id (or for all
 credit_ids), and of $class.  Undef on date and credit_id match all rows.

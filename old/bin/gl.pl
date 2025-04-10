@@ -58,35 +58,6 @@ require "old/bin/arap.pl";
 
 # end of main
 
-# this is for our long dates
-# $locale->text('January')
-# $locale->text('February')
-# $locale->text('March')
-# $locale->text('April')
-# $locale->text('May')
-# $locale->text('June')
-# $locale->text('July')
-# $locale->text('August')
-# $locale->text('September')
-# $locale->text('October')
-# $locale->text('November')
-# $locale->text('December')
-
-# this is for our short month
-# $locale->text('Jan')
-# $locale->text('Feb')
-# $locale->text('Mar')
-# $locale->text('Apr')
-# $locale->text('May')
-# $locale->text('Jun')
-# $locale->text('Jul')
-# $locale->text('Aug')
-# $locale->text('Sep')
-# $locale->text('Oct')
-# $locale->text('Nov')
-# $locale->text('Dec')
-
-
 sub edit_and_save {
     check_balanced($form);
     my $draft = LedgerSMB::DBObject::Draft->new(%$form);

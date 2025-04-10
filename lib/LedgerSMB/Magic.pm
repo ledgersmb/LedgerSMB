@@ -305,7 +305,7 @@ Whitelist for e.g. redirect destination
 use constant SCRIPT_NEWSCRIPTS => [ qw(
    account.pl admin.pl asset.pl budget_reports.pl budgets.pl business_unit.pl
    configuration.pl contact.pl contact_reports.pl currency.pl drafts.pl erp.pl
-   file.pl goods.pl import_csv.pl inventory.pl invoice.pl inv_reports.pl
+   file.pl goods.pl import_csv.pl inventory.pl invoice.pl inv_reports.pl gl.pl
    journal.pl login.pl lreports_co.pl order.pl payment.pl email.pl
    payroll.pl pnl.pl recon.pl report_aging.pl reports.pl setup.pl taxform.pl
    template.pl timecard.pl transtemplate.pl trial_balance.pl user.pl vouchers.pl
@@ -313,7 +313,7 @@ use constant SCRIPT_NEWSCRIPTS => [ qw(
 
 use constant SCRIPT_OLDSCRIPTS => [
     'aa.pl', 'am.pl',    'ap.pl',
-    'ar.pl', 'arap.pl',  'arapprn.pl', 'gl.pl',
+    'ar.pl', 'arap.pl',  'arapprn.pl', 
     'ic.pl', 'ir.pl',
     'is.pl', 'oe.pl',    'pe.pl',
     ];
