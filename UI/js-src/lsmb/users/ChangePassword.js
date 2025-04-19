@@ -30,7 +30,7 @@ define([
             _lstrings: {
                 title: "Change Password",
                 "old password": "Old Password",
-                "new password": "New password",
+                "new password": "New Password",
                 verify: "Verify",
                 change: "Change Password",
                 "no-oldpw": "No Old Password",
