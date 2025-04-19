@@ -120,7 +120,7 @@
     "stylelint-declaration-block-no-ignored-properties": "2.8.0",
     "stylelint-no-nested-media": "0.1.0",
     "stylelint-no-unsupported-browser-features": "8.0.4",
-    "stylelint-order": "6.0.4",
+    "stylelint-order": "7.0.0",
     "stylelint-webpack-plugin": "5.0.1",
     "tmp": "0.2.3",
     "typescript": "5.8.3",
