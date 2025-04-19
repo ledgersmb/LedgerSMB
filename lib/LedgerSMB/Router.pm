@@ -35,14 +35,14 @@ keywords to help define
    get '/route/to/endpoint' => sub {
      my ($env) = @_;
 
-     # return a PSGI tripple
+     # return a PSGI triple
      return [ 200, [], [ 'body']];
    };
 
    post '/route/to/{parameterized}/{endpoint}' => sub {
      my ($env, %params) = @_;
 
-     # return a PSGI tripple
+     # return a PSGI triple
      return [ 200, [], [ 'body' ]];
    }
 
