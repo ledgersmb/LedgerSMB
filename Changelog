@@ -35,6 +35,11 @@ Updated dependencies
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.7
+* Fix entity search by country
+* Fix sales person drop-down on new quotes and orders (#8734)
+
+
 Changelog for 1.12.6
 * Fix Contact > Bank accounts screen (#8695)
 * Fix partial customer name matches on order search (#8728)
@@ -126,6 +131,10 @@ Updated dependencies
 
 Changelog for 1.11 Series
 Released 2023-10-03
+
+Changelog for 1.11.24
+* Fix entity search by country
+
 
 Changelog for 1.11.23
 * Fix Contact > Bank accounts screen (#8695)
