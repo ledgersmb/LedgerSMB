@@ -33,7 +33,6 @@ define([
                 "new password": "New Password",
                 verify: "Verify",
                 change: "Change Password",
-                "no-oldpw": "No Old Password",
                 strength: "Strength"
             },
             lstrings: {},

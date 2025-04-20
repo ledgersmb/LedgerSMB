@@ -13,15 +13,14 @@
     };
 
     password_strings = "title:'" _ text("Change Password") _
-                      "', old password:'" _ text("Old Password") _
-                      "', new password:'" _ text("New Password") _
+                      "', 'old password':'" _ text("Old Password") _
+                      "', 'new password':'" _ text("New Password") _
                       "', verify:'" _ text("Verify") _
                       "', change:'" _ text("Change Password") _
-                      "', no-oldpw:'" _ text("No Old Password") _
-                      "', strength:'" _    text("Strength");
+                      "', strength:'" _    text("Strength") _ "'";
     %]
     <div data-dojo-type="dijit/layout/TabContainer" style="width: 100%; height: 500px;">
-      <div data-dojo-type="dijit/layout/ContentPane" title="Preferences"
+      <div data-dojo-type="dijit/layout/ContentPane" title="[% text("Preferences") %]"
            data-dojo-props="selected:false">
         <form data-dojo-type="lsmb/Form" method="post" id="prefs" name="prefs" action="user.pl">
           <script type="dojo/on" data-dojo-event="submit">
@@ -149,9 +148,9 @@
             text = text('Save') } %]
         </form>
       </div>
-      <div data-dojo-type="dijit/layout/ContentPane" title="Password" data-dojo-props="selected:true">
+      <div data-dojo-type="dijit/layout/ContentPane" title="[% text("Password") %]" data-dojo-props="selected:true">
         <div data-dojo-type="lsmb/users/ChangePassword"
-             data-dojo-properties="lstrings:{[% password_strings | html %]}"></div>
+             data-dojo-props="lstrings:{[% password_strings | html %]}"></div>
       </div>
     </div>
   </div>
