@@ -1,4 +1,6 @@
 #!/usr/bin/perl
+use warnings;
+use strict;
 
 my %dict;
 
@@ -33,27 +35,27 @@ while (<>) {
         if ( $cont ) {
             $line =~ s/'\s*_\s*'//g;
         }
-        if ($line =~ m/(?<!make)text\s*\(\s*"((\\.|[^"])*)"/) {
-            my $match = $1;
+        if (my @matches = $line =~ m/(?<!make)text\s*\(\s*"((?:\\.|[^"])*)"/g) {
+            foreach my $match (@matches) {
+                if ($match !~ m/(?<!\\)\$/g) {
+                    &ensure_entry($match);
+                    push @{$dict{$match}}, "#: $file:$line_no";
+                }
+                else {
+                    warn "$file:$line_no: Direct variable interpolation not supported; use bracketed ([_1]) syntax! ($match)";
+                }
+            }
+        }
+        elsif (@matches = $line =~ m/(?<!make)text\s*\(\s*'((?:''|[^'])*)'/g) {
+            foreach my $match (@matches) {
+                # recode 'match' to double quoting
+                $match =~ s/''/'/g;
+                $match =~ s/\\/\\\\/g;
+                $match =~ s/"/\\"/g;
 
-            if ($match !~ m/(?<!\\)\$/g) {
                 &ensure_entry($match);
                 push @{$dict{$match}}, "#: $file:$line_no";
             }
-            else {
-                warn "$file:$line_no: Direct variable interpolation not supported; use bracketed ([_1]) syntax! ($match)";
-            }
-        }
-        elsif ($line =~ m/(?<!make)text\s*\(\s*'((''|[^'])*)'/) {
-            my $match = $1;
-
-            # recode 'match' to double quoting
-            $match =~ s/''/'/g;
-            $match =~ s/\\/\\\\/g;
-            $match =~ s/"/\\"/g;
-
-            &ensure_entry($match);
-            push @{$dict{$match}}, "#: $file:$line_no";
         }
         $line = ''; $line_no += $cont; $cont = 0;
     }
