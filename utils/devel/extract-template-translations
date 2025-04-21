@@ -60,7 +60,7 @@ while (<>) {
     close SOURCE;
 }
 
-foreach my $string (keys %dict) {
+foreach my $string (sort keys %dict) {
     foreach my $location (@{$dict{$string}}) {
         print "$location\n";
     }
