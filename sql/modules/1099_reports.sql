@@ -72,18 +72,23 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                       * CASE WHEN ac.relation = 'invoice' then -1 else 1 end)
 
                 FROM (select id, transdate, entity_credit_account, invoice,
-                             amount_bc, 'ar' as class FROM ar
+                             amount_bc, 'ar' as class
+                        FROM ar
+                       WHERE approved
                        UNION
                       select id, transdate, entity_credit_account, invoice,
-                              amount_bc, 'ap' as class from ap
+                             amount_bc, 'ap' as class
+                        FROM ap
+                       WHERE approved
                      ) gl
                JOIN (select trans_id, 'acc_trans' as relation,
                              sum(amount_bc) as amount_bc,
                              sum(case when atf.reportable then amount_bc else 0
                                  end) as reportable_amount_bc
-                        FROM  acc_trans
+                       FROM  acc_trans
                     LEFT JOIN ac_tax_form atf
                           ON (acc_trans.entry_id = atf.entry_id)
+                      WHERE acc_trans.approved
                        GROUP BY trans_id
                        UNION
                       select trans_id, 'invoice' as relation,
@@ -105,10 +110,11 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                              array_agg(chart_id) as chart_ids,
                              count(*) as num
                         FROM acc_trans ac
-                       where chart_id in (select account_id
+                       WHERE approved
+                         AND chart_id in (select account_id
                                             from account_link
                                            where description like '%paid')
-                          AND transdate BETWEEN in_from_date AND in_to_date
+                         AND transdate BETWEEN in_from_date AND in_to_date
                      group by ac.trans_id
                      ) pmt ON  (pmt.trans_id = gl.id)
                 JOIN entity_credit_account
@@ -155,10 +161,12 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                 FROM (select id, entity_credit_account, invnumber, duedate,
                              amount_bc, transdate, 'ar' as class
                         FROM ar
+                       WHERE approved
                        UNION
                       select id, entity_credit_account, invnumber, duedate,
                              amount_bc, transdate, 'ap' as class
                         FROM ap
+                       WHERE approved
                      ) gl
                 JOIN (select trans_id, 'acc_trans' as relation,
                              sum(amount_bc) as amount_bc,
@@ -167,6 +175,7 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                         FROM  acc_trans
                    LEFT JOIN ac_tax_form atf
                           ON (acc_trans.entry_id = atf.entry_id)
+                       WHERE acc_trans.approved
                        GROUP BY trans_id
                        UNION
                       select trans_id, 'invoice' as relation,
@@ -189,7 +198,8 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                              array_agg(chart_id) as chart_ids,
                              count(*) as num
                         FROM acc_trans ac
-                       where chart_id in (select account_id
+                       WHERE approved
+                         AND chart_id in (select account_id
                                             from account_link
                                            where description like '%paid')
                           AND transdate BETWEEN in_from_date AND in_to_date
@@ -230,20 +240,25 @@ RETURNS SETOF tax_form_report_item AS $BODY$
                       * CASE WHEN ac.relation = 'invoice' then -1 else 1 end)
 
                 FROM (select id, transdate, entity_credit_account, invoice,
-                             amount_bc, 'ar' as class FROM ar
-                       WHERE transdate BETWEEN in_from_date AND in_to_date
+                             amount_bc, 'ar' as class
+                        FROM ar
+                       WHERE approved
+                         AND transdate BETWEEN in_from_date AND in_to_date
                        UNION
                       select id, transdate, entity_credit_account, invoice,
-                              amount_bc, 'ap' as class from ap
-                       WHERE transdate BETWEEN in_from_date AND in_to_date
+                             amount_bc, 'ap' as class
+                        FROM ap
+                       WHERE approved
+                         AND transdate BETWEEN in_from_date AND in_to_date
                      ) gl
                JOIN (select trans_id, 'acc_trans' as relation,
                              sum(amount_bc) as amount_bc,
                              sum(case when atf.reportable then amount_bc else 0
                                  end) as reportable_amount_bc
-                        FROM  acc_trans
+                       FROM  acc_trans
                     LEFT JOIN ac_tax_form atf
                           ON (acc_trans.entry_id = atf.entry_id)
+                      WHERE acc_trans.approved
                        GROUP BY trans_id
                        UNION
                       select trans_id, 'invoice' as relation,
@@ -303,20 +318,23 @@ RETURNS SETOF tax_form_report_detail_item AS $BODY$
                 FROM (select id, entity_credit_account, invnumber, duedate,
                              amount_bc, transdate, 'ar' as class
                         FROM ar
-                       WHERE transdate BETWEEN in_from_date AND in_to_date
+                       WHERE approved
+                         AND transdate BETWEEN in_from_date AND in_to_date
                        UNION
                       select id, entity_credit_account, invnumber, duedate,
                              amount_bc, transdate, 'ap' as class
                         FROM ap
-                       WHERE transdate BETWEEN in_from_date AND in_to_date
+                       WHERE approved
+                         AND transdate BETWEEN in_from_date AND in_to_date
                      ) gl
                 JOIN (select trans_id, 'acc_trans' as relation,
                              sum(amount_bc) as amount_bc,
                              sum(case when atf.reportable then amount_bc else 0
                                  end) as reportable_amount_bc
                         FROM  acc_trans
-                   LEFT JOIN ac_tax_form atf
+                             LEFT JOIN ac_tax_form atf
                           ON (acc_trans.entry_id = atf.entry_id)
+                       WHERE acc_trans.approved
                        GROUP BY trans_id
                        UNION
                       select trans_id, 'invoice' as relation,
