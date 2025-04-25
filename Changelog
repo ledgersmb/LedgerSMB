@@ -3,6 +3,11 @@
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.8
+* Fix non-posted transactions being included in Tax Forms (#8774)
+* Fix visual hint for non-posted payments on invoices and transactions (#8544)
+
+
 Changelog for 1.12.7
 * Fix entity search by country
 * Fix sales person drop-down on new quotes and orders (#8734)
