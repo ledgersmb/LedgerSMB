@@ -1013,7 +1013,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
         $form->hide_form("cleared_$i");
 
         my ($title, $approval_status, $icon) =
-            $form->{"paid_${i}_approved"} ? ('', 'approved', '')
+            ($form->{approved} and $form->{"paid_${i}_approved"}) ? ('', 'approved', '')
             : $form->{"datepaid_$i"} ? ($locale->text('Pending approval'), 'unapproved', '&#x23F2;')
             : ('', '', '');
         $title = qq|title="$title"| if $title;
