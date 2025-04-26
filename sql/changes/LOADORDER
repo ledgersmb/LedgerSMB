@@ -200,3 +200,4 @@ mc/delete-migration-validation-data.sql
 1.13/drop-inheritance-notes-translations.sql
 1.13/rename-add-contact-menu.sql
 1.13/missing-fkeys.sql
+1.13/add-user-login.sql

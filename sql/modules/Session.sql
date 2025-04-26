@@ -107,22 +107,32 @@ RETURNS session AS
 $$
 DECLARE out_row session%ROWTYPE;
 BEGIN
-        DELETE FROM session
-         WHERE last_used < now() - coalesce((SELECT value FROM defaults
-                                              WHERE setting_key = 'session_timeout')::interval,
-                                            '90 minutes'::interval);
-        UPDATE session
-           SET last_used = now()
-         WHERE session_id = in_session_id
-               AND token = in_token
-               AND users_id = (select id from users
-                        where username = SESSION_USER)
-        RETURNING * INTO out_row;
+  WITH expired AS (
+    DELETE FROM session
+     WHERE last_used < now() - coalesce((SELECT value FROM defaults
+                                          WHERE setting_key = 'session_timeout')::interval,
+                                          '90 minutes'::interval)
+    RETURNING *
+  )
+  UPDATE session_history
+     SET termination_reason = 'expired',
+         last_used = expired.last_used,
+         ended = current_timestamp
+    FROM expired
+   WHERE session_history.session_id = expired.session_id;
 
-        -- if there is no matching row, return NULL values
-        -- note: there is also a failing match when the token doesn't
-        -- match; which might mean a replay attack!
-        RETURN out_row;
+  UPDATE session
+     SET last_used = now()
+   WHERE session_id = in_session_id
+     AND token = in_token
+     AND users_id = (select id from users
+                      where username = SESSION_USER)
+         RETURNING * INTO out_row;
+
+  -- if there is no matching row, return NULL values
+  -- note: there is also a failing match when the token doesn't
+  -- match; which might mean a replay attack!
+  RETURN out_row;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -145,7 +155,10 @@ BEGIN
 
     INSERT INTO session (users_id, token, last_used)
     VALUES (users_id, md5(random()::text), now())
-    RETURNING * INTO out_row;
+           RETURNING * INTO out_row;
+
+    INSERT INTO session_history (session_id, users_id, created)
+    VALUES (out_row.session_id, users_id, now());
 
     RETURN out_row;
 END;
@@ -161,10 +174,18 @@ CREATE OR REPLACE FUNCTION session_delete(in_session_id int)
 RETURNS BOOL AS
 $$
 BEGIN
-   DELETE FROM session
-     WHERE session_id = in_session_id
-       AND users_id = (select id from users
-                       where username = SESSION_USER);
+  UPDATE session_history
+     SET termination_reason = 'logout',
+         ended = current_timestamp,
+         last_used = (select last_used
+                        from session
+                       where session_id = in_session_id)
+   WHERE session_id = in_session_id;
+
+  DELETE FROM session
+   WHERE session_id = in_session_id
+     AND users_id = (select id from users
+                      where username = SESSION_USER);
 
    RETURN FOUND;
 END;

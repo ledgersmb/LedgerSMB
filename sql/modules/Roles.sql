@@ -1950,6 +1950,7 @@ SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
 
 SELECT lsmb__grant_perms('base_user', obj, 'ALL')
   FROM unnest(array['session'::text, 'session_session_id_seq',
+                    'session_history',
                     'user_preference_id_seq',
                     'user_preference', 'recurring',
                     'recurringemail', 'recurringprint', 'transactions',
