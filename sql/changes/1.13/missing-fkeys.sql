@@ -76,7 +76,8 @@ select distinct language_code, 'created by migration'
       from partsgroup_translation
   ) lc
          left join "language" l on lc.language_code = l.code
- where l.code is null;
+ where l.code is null
+ and lc.language_code is not null;
 
 alter table account_heading_translation
   add foreign key (language_code) references language (code);
