@@ -44,7 +44,7 @@ select setval('journal_note_id_seq',
               false);
 
 
-drop table note;
+drop table note cascade;
 
 alter table account_heading_translation no inherit "translation";
 alter table account_translation no inherit "translation";
