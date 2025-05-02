@@ -116,6 +116,7 @@ my %screens = (
     'Filtering Payments' => 'PageObject::App::Cash::Vouchers::Payments::Filter',
     'GL entry'  => 'PageObject::App::GL::JournalEntry',
     'GL search' => 'PageObject::App::Search::GL',
+    'GL report' => 'PageObject::App::Search::ReportDynatable',
     'New Reconciliation Report' => 'PageObject::App::Cash::Reconciliation::NewReport',
     'Search AP Report' => 'PageObject::App::Search::ReportDynatable',
     'Single Payment Vendor Selection' => 'PageObject::App::Cash::SelectVC',
