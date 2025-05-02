@@ -5,6 +5,7 @@ Released 2024-12-14
 
 Changelog for 1.12.9
 * Fix check for financial report templates when upgrading pre-1.8 databases
+* Fix report csv export template missing linebreaks
 
 
 Changelog for 1.12.8
