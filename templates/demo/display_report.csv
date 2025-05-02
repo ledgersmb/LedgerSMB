@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.1
-   Date:     2024-08-21
+   Version:  1.2
+   Date:     2025-05-02
    File:     display_report.csv
    Set:      demo
 
@@ -10,6 +10,7 @@ releases. No explicit versioning was applied before 2021-01-04.
 
 Version   Changes
 1.1       Merged 'dynatable.csv' into this template
+1.2       Fix missing newlines after each row
 
 
 -?>
@@ -40,6 +41,7 @@ BLOCK dynatable;
             INCLUDE do_quote VALUE = COL.name;
         END;
     END;
+    "\n";
 
     FOREACH ROW IN tbody.rows;
         FOREACH COL IN columns;
@@ -51,6 +53,7 @@ BLOCK dynatable;
                 INCLUDE do_quote VALUE = ROW.$COL_ID;
             END;
         END;
+        "\n";
     END;
 END;
 
