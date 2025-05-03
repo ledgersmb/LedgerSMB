@@ -199,5 +199,7 @@ mc/delete-migration-validation-data.sql
 1.13/fk-actions-for-is_used-functions.sql
 1.13/drop-inheritance-notes-translations.sql
 1.13/rename-add-contact-menu.sql
+1.13/clean-empty-language-codes.sql
+1.13/constrain-language-code.sql
 1.13/missing-fkeys.sql
 1.13/add-user-login.sql
