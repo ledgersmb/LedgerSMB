@@ -422,12 +422,12 @@ sub output_name {
 
     $name = $name . '_' . $self->from_date->to_output
             if $self->can('from_date')
-               and defined $self->from_date
-               and defined $self->from_date->to_output;
+               and $self->from_date
+               and $self->from_date->to_output;
     $name = $name . '-' . $self->to_date->to_output
             if $self->can('to_date')
-               and defined $self->to_date
-               and defined $self->to_date->to_output;
+               and $self->to_date
+               and $self->to_date->to_output;
 
     return $name;
 }
