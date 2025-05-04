@@ -47,14 +47,14 @@ Constructor. Returns (singleton) template UI renderer.
 sub new_UI {
     my $class = shift;
     my %args = @_;
-    my $cache = $args{cache} // 'lsmb_templates/';
-    my $root = $args{root} // './UI/';
+    my $cache = $args{cache} // 'lsmb_templates';
+    my $root = $args{root} // './UI';
 
     if (! defined $singleton) {
         if (!defined $engine) {
             $engine = Template->new(
                 INCLUDE_PATH => [
-                    map { $root . $_ } ('js', '', 'lib') ],
+                    map { File::Spec->catdir($root, $_) } ('js', '', 'lib') ],
                 ENCODING => 'utf8',
                 TRIM => 1,
                 START_TAG => quotemeta('[%'),

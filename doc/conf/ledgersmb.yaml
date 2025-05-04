@@ -185,15 +185,15 @@ output_formatter:
 paths:
   $class: Beam::Wire
   config:
-    locale: ./locale/po/
-    sql: ./sql/
-    sql_data: ./locale/
-    templates: ./templates/
-    UI: ./UI/
-    UI_cache: lsmb_templates/
+    locale: ./locale/po
+    sql: ./sql
+    sql_data: ./locale
+    templates: ./templates
+    UI: ./UI
+    UI_cache: lsmb_templates
     workflows:
-    - ./workflows/
-    - ./custom_workflows/
+    - ./workflows
+    - ./custom_workflows
 
 # !book: printers
 #

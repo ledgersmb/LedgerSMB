@@ -18,6 +18,7 @@ This module is the UI controller for the customer, vendor, etc functions; it
 
 =cut
 
+use File::Spec;
 use HTTP::Status qw( HTTP_FOUND );
 
 use LedgerSMB;
@@ -321,9 +322,10 @@ sub _main_screen {
     $request->close_form() if eval {$request->can('close_form')};
     $request->open_form() if eval {$request->can('close_form')};
 
-    my $ui_root = $request->{_wire}->get('ui')->{root} // './UI/';
-    opendir(my $dh2, "${ui_root}Contact/plugins") || die "can't opendir plugins directory: $!";
-    my @plugins = grep { /^[^.]/ && -f "${ui_root}Contact/plugins/$_" } readdir($dh2);
+    my $ui_root = $request->{_wire}->get('ui')->{root} // './UI';
+    my $plugins_dir = File::Spec->catdir($ui_root, 'Contact/plugins');
+    opendir(my $dh2, $plugins_dir) || die "can't opendir plugins directory: $!";
+    my @plugins = grep { /^[^.]/ && -f File::Spec->catfile($plugins_dir, $_) } readdir($dh2);
     closedir $dh2;
 
     my @country_list = $request->enabled_countries->@*;
