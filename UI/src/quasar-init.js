@@ -14,6 +14,7 @@ import {
     ClosePopup,
     Dialog,
     Notify,
+    LocalStorage,
     Ripple,
     QLayout,
     QHeader,
@@ -38,6 +39,7 @@ import {
     QCheckbox,
     QRadio,
     QDate,
+    QSplitter,
     QTime,
     QToggle,
     QDialog,
@@ -77,6 +79,7 @@ const quasarConfig = {
         QCheckbox,
         QRadio,
         QDate,
+        QSplitter,
         QTime,
         QToggle,
         QDialog,
@@ -95,7 +98,8 @@ const quasarConfig = {
     },
     plugins: {
         Dialog,
-        Notify
+        Notify,
+        LocalStorage
     },
     removeDefaultCss: true,
     config: {

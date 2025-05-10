@@ -29,7 +29,7 @@ export default {
     data() {
         const cfg = window.lsmbConfig;
         return {
-            modelValue: 50,
+            splitterPosition: this.getSavedPosition(),
             company: cfg.company,
             login: cfg.login,
             pwExpiration: window.pw_expiration,
@@ -37,11 +37,14 @@ export default {
             version: cfg.version
         };
     },
-    beforeUpdate() {
-        document.body.removeAttribute("data-lsmb-done");
-    },
-    updated() {
-        document.body.setAttribute("data-lsmb-done", "true");
+    watch: {
+        splitterPosition(newValue) {
+            try {
+                localStorage.setItem("splitterPosition", newValue);
+            } catch {
+                // ignore errors
+            }
+        }
     },
     mounted() {
         window.__lsmbLoadLink = (url) =>
@@ -50,72 +53,84 @@ export default {
         dojoParser.parse(m).then(() => {
             document.body.setAttribute("data-lsmb-done", "true");
         });
+    },
+    beforeUpdate() {
+        document.body.removeAttribute("data-lsmb-done");
+    },
+    updated() {
+        document.body.setAttribute("data-lsmb-done", "true");
+    },
+    methods: {
+        getSavedPosition() {
+            const saved = localStorage.getItem("splitterPosition");
+            return saved ? parseFloat(saved) : 350;
+        }
     }
 };
 </script>
 
 <template>
-    <div
-        id="console-container"
-        data-dojo-type="dijit/layout/BorderContainer"
-        data-dojo-props="persist: true"
-        style="width: 100%; height: 100%"
-    >
-        <div
-            id="maindiv"
-            data-dojo-type="dijit/layout/ContentPane"
-            data-dojo-props="region:'center'"
+    <div style="height: 100%; box-sizing: border-box">
+        <q-splitter
+            v-model="splitterPosition"
+            unit="px"
+            style="height: 100%; box-sizing: border-box"
         >
-            <router-view />
-        </div>
-        <div
-            id="menudiv"
-            class="edgePanel"
-            style="width: 30ex"
-            data-dojo-type="dijit/layout/ContentPane"
-            data-dojo-props="region: 'left', splitter: true, minSize: 200"
-        >
-            <div style="text-align: center">
-                <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="http://ledgersmb.org/"
-                >
-                    <img
-                        class="cornerlogo"
-                        src="images/ledgersmb_small-trans.png"
-                        width="100"
-                        height="50"
-                        style="border: 1px"
-                        alt="LedgerSMB"
-                    />
-                </a>
-            </div>
-            <div id="version_info">
-                {{ t("LedgerSMB {version}", { version: version }) }}
-            </div>
-            <table id="header_info" class="header_table">
-                <tbody>
-                    <tr>
-                        <td id="login_info_header" class="header_left">
-                            {{ t("User") }}
-                        </td>
-                        <td id="company_info_header" class="header_right">
-                            {{ t("Company") }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="login_info" class="header_left">{{ login }}</td>
-                        <td id="company_info" class="header_right">
-                            {{ company }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <hr />
+            <template #after>
+                <div id="maindiv" style="margin: 15px">
+                    <router-view />
+                </div>
+            </template>
+            <template #before>
+                <div style="box-sizing: border-box; padding: 5px; margin: 15px">
+                    <div style="text-align: center">
+                        <a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="http://ledgersmb.org/"
+                        >
+                            <img
+                                class="cornerlogo"
+                                src="images/ledgersmb_small-trans.png"
+                                width="100"
+                                height="50"
+                                style="border: 1px"
+                                alt="LedgerSMB"
+                            />
+                        </a>
+                    </div>
+                    <div id="version_info">
+                        {{ t("LedgerSMB {version}", { version: version }) }}
+                    </div>
+                    <table id="header_info" class="header_table">
+                        <tbody>
+                            <tr>
+                                <td id="login_info_header" class="header_left">
+                                    {{ t("User") }}
+                                </td>
+                                <td
+                                    id="company_info_header"
+                                    class="header_right"
+                                >
+                                    {{ t("Company") }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td id="login_info" class="header_left">
+                                    {{ login }}
+                                </td>
+                                <td id="company_info" class="header_right">
+                                    {{ company }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr />
 
-            <div id="top_menu" data-dojo-type="lsmb/menus/Tree" />
-        </div>
+                    <div id="top_menu" data-dojo-type="lsmb/menus/Tree" />
+                </div>
+            </template>
+        </q-splitter>
 
         <q-dialog v-model="showPasswordAlert">
             <q-card>
