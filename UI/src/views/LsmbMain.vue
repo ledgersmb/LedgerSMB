@@ -32,6 +32,8 @@ export default {
             modelValue: 50,
             company: cfg.company,
             login: cfg.login,
+            pwExpiration: window.pw_expiration,
+            showPasswordAlert: window.pw_expiration !== null,
             version: cfg.version
         };
     },
@@ -114,6 +116,51 @@ export default {
 
             <div id="top_menu" data-dojo-type="lsmb/menus/Tree" />
         </div>
+
+        <q-dialog v-model="showPasswordAlert">
+            <q-card>
+                <q-card-section>
+                    <div class="text-h6">
+                        <q-icon name="mdi-alert-outline"></q-icon>Alert
+                    </div>
+                </q-card-section>
+
+                <q-card-section v-if="pwExpiration.years" class="q-pt-none">
+                    Your password will expire in
+                    {{ pwExpiration.years }} years.
+                </q-card-section>
+                <q-card-section
+                    v-else-if="pwExpiration.months"
+                    class="q-pt-none"
+                >
+                    Your password will expire in
+                    {{ pwExpiration.months }} months.
+                </q-card-section>
+                <q-card-section
+                    v-else-if="pwExpiration.weeks"
+                    class="q-pt-none"
+                >
+                    Your password will expire in
+                    {{ pwExpiration.weeks }} weeks.
+                </q-card-section>
+                <q-card-section v-else-if="pwExpiration.days" class="q-pt-none">
+                    Your password will expire in
+                    {{ pwExpiration.days }} days!
+                </q-card-section>
+                <q-card-section v-else class="q-pt-none">
+                    Your password will expire today!
+                </q-card-section>
+
+                <q-card-actions align="right">
+                    <q-btn
+                        v-close-popup
+                        flat
+                        label="OK"
+                        color="primary"
+                    ></q-btn>
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
         <div
             id="errorDialog"
             title="An error occurred!"
