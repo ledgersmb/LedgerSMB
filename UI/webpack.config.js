@@ -24,6 +24,7 @@ if (TARGET !== "readme") {
     const { VueLoaderPlugin } = require("vue-loader");
     // eslint-disable-next-line
     const { WebpackDeduplicationPlugin } = require("webpack-deduplication-plugin");
+    // No Quasar plugin - we'll integrate directly
     const argv = require("yargs").argv;
     const prodMode =
         process.env.NODE_ENV === "production" ||
@@ -135,6 +136,20 @@ if (TARGET !== "readme") {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, "css-loader"]
     };
+    // Add Sass loader for Quasar
+    const sass = {
+        test: /\.s(c|a)ss$/,
+        use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            {
+                loader: 'sass-loader',
+                options: {
+                    additionalData: `@import "${path.resolve(__dirname, './src/quasar-variables.sass')}";`
+                }
+            }
+        ]
+    };
     const images = {
         test: /\.(png|jpe?g|gif)$/i,
         type: "asset"
@@ -154,6 +169,15 @@ if (TARGET !== "readme") {
         test: /\.svg$/,
         type: "asset/resource"
     };
+    // Add loader for Quasar fonts
+    const fonts = {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+        generator: {
+            filename: 'fonts/[name][ext]'
+        }
+    };
+
     /* PLUGINS */
 
     const CleanWebpackPluginOptions = {
@@ -173,6 +197,17 @@ if (TARGET !== "readme") {
                 context: "node_modules",
                 from: "dojo/resources/**/*",
                 to: "."
+            },
+            // Add Quasar assets
+            {
+                context: "node_modules",
+                from: "@quasar/extras/material-icons/**/*",
+                to: "quasar/material-icons/[name][ext]"
+            },
+            {
+                context: "node_modules",
+                from: "@quasar/extras/roboto-font/**/*",
+                to: "quasar/roboto-font/[name][ext]"
             }
         ],
         options: {
@@ -208,7 +243,7 @@ if (TARGET !== "readme") {
             path.join(__dirname, "src")
         ],
         // Exclude patterns
-        exclude: ["*.test.js", "webpack.loaderConfig.js"],
+        exclude: ["*.test.js", "webpack.loaderConfig.js", "quasar-variables.sass"],
         // Root directory (optional)
         root: __dirname
     };
@@ -231,6 +266,10 @@ if (TARGET !== "readme") {
             )
         )
     };
+    // Add Quasar CSS
+    const quasarCss = {
+        'quasar': path.resolve("node_modules/quasar/dist/quasar.css")
+    };
     // Compile bootstrap module as a virtual one
     const VirtualModulesPluginOptions = {
         "./bootstrap.js":
@@ -244,12 +283,16 @@ if (TARGET !== "readme") {
             `});`
     };
 
+    // Define Quasar components needed (we'll import these in app initialization)
+
     var pluginsCommon = [
         // Lint the sources
         new StylelintPlugin(StylelintPluginOptions),
 
         // Add Vue
         new VueLoaderPlugin(),
+
+        // No Quasar plugin needed
 
         // Add Dojo
         new DojoWebpackPlugin(DojoWebpackPluginOptions),
@@ -294,6 +337,7 @@ if (TARGET !== "readme") {
             mode: prodMode ? "production" : "development",
             excludeChunks: [
                 ...Object.keys(lsmbCSS),
+                ...Object.keys(quasarCss),
                 ...Object.keys(globCssEntries("./css/**/*.css"))
             ],
             template: "lib/ui-header.html"
@@ -412,6 +456,7 @@ if (TARGET !== "readme") {
         entry: {
             bootstrap: "./bootstrap.js", // Virtual file
             ...lsmbCSS,
+            ...quasarCss,
             ...globCssEntries("./css/**/*.css")
         },
 
@@ -424,7 +469,7 @@ if (TARGET !== "readme") {
         },
 
         module: {
-            rules: [vue, javascript, css, images, svg, html]
+            rules: [vue, javascript, css, sass, images, svg, html, fonts]
         },
 
         plugins: pluginsList,
@@ -434,9 +479,10 @@ if (TARGET !== "readme") {
                 vue$: "vue/dist/vue.cjs.js",
                 "vue-router": "vue-router/dist/vue-router.cjs.js",
                 "vue-i18n": "vue-i18n/dist/vue-i18n.esm-bundler.js",
-                "@": path.join(__dirname, "src/")
+                "@": path.join(__dirname, "src/"),
+                "quasar$": "quasar/dist/quasar.client.js"
             },
-            extensions: [".js", ".vue"],
+            extensions: [".js", ".vue", ".sass", ".scss"],
             fallback: {
                 path: require.resolve("path-browserify")
             }
@@ -480,7 +526,7 @@ if (TARGET !== "readme") {
             port: 9000,
             proxy: [
                 {
-                    context: ["/*.pl"],
+                    context: ["/*.pl", "/*/*.pl"],
                     target: "http://proxy"
                 },
                 {
