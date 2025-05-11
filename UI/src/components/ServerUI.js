@@ -19,6 +19,7 @@ function domReject(response) {
 }
 
 export default {
+    name: "ServerUI",
     setup() {
         const { t } = useI18n();
         const notify = inject("notify");

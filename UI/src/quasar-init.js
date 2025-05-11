@@ -4,104 +4,21 @@
 // import "quasar/dist/quasar.css";
 
 // Import icon libraries
-import "@quasar/extras/mdi-v7";
-import "@quasar/extras/material-icons/material-icons.css";
+// import "@quasar/extras/mdi-v7";
+import iconSet from "quasar/icon-set/mdi-v7";
+import "@quasar/extras/mdi-v7/mdi-v7.css";
 import "@quasar/extras/roboto-font/roboto-font.css";
 
 // Specify the components you need
-import {
-    Quasar,
-    ClosePopup,
-    Dialog,
-    Notify,
-    LocalStorage,
-    Ripple,
-    QLayout,
-    QHeader,
-    QDrawer,
-    QPageContainer,
-    QPage,
-    QToolbar,
-    QToolbarTitle,
-    QBtn,
-    QIcon,
-    QList,
-    QItem,
-    QItemSection,
-    QItemLabel,
-    QTable,
-    QTh,
-    QTr,
-    QTd,
-    QInput,
-    QForm,
-    QSelect,
-    QCheckbox,
-    QRadio,
-    QDate,
-    QSplitter,
-    QTime,
-    QToggle,
-    QDialog,
-    QCard,
-    QCardSection,
-    QCardActions,
-    QSeparator,
-    QBadge,
-    QChip,
-    QSpinner,
-    QPopupEdit
-} from "quasar";
+import { Quasar, Notify } from "quasar";
 
 // Configure Quasar with the components and plugins you need
 const quasarConfig = {
-    components: {
-        QLayout,
-        QHeader,
-        QDrawer,
-        QPageContainer,
-        QPage,
-        QToolbar,
-        QToolbarTitle,
-        QBtn,
-        QIcon,
-        QList,
-        QItem,
-        QItemSection,
-        QItemLabel,
-        QTable,
-        QTh,
-        QTr,
-        QTd,
-        QInput,
-        QForm,
-        QSelect,
-        QCheckbox,
-        QRadio,
-        QDate,
-        QSplitter,
-        QTime,
-        QToggle,
-        QDialog,
-        QCard,
-        QCardSection,
-        QCardActions,
-        QSeparator,
-        QBadge,
-        QChip,
-        QSpinner,
-        QPopupEdit
-    },
-    directives: {
-        ClosePopup,
-        Ripple
-    },
     plugins: {
-        Dialog,
-        Notify,
-        LocalStorage
+        Notify
     },
-    removeDefaultCss: true,
+    iconSet: iconSet,
+    extras: ["mdi-v7"],
     config: {
         // Optional Quasar configs
         notify: {
