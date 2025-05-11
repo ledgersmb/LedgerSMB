@@ -29,6 +29,7 @@ use warnings;
 use feature 'fc';
 
 use DateTime::Format::Duration::ISO8601;
+use File::Spec;
 use Locale::CLDR;
 
 use LedgerSMB::Locale;
@@ -68,8 +69,9 @@ my $numberformats = [
 sub _css_options {
     my ($wire) = shift;
 
-    my $ui_root = $wire->get('ui')->{root} // './UI/';
-    opendir CSS,  "${ui_root}css";
+    my $ui_root = $wire->get('ui')->{root} // './UI';
+    opendir CSS, File::Spec->catdir($ui_root, 'css')
+        or die "can't open css directory: $!";
     my @cssfiles =
         map { +{ file => $_ } }
         grep { /.*\.css$/ }
