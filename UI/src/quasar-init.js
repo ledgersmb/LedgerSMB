@@ -4,8 +4,9 @@
 // import "quasar/dist/quasar.css";
 
 // Import icon libraries
-import "@quasar/extras/mdi-v7";
-import "@quasar/extras/material-icons/material-icons.css";
+// import "@quasar/extras/mdi-v7";
+import iconSet from "quasar/icon-set/mdi-v7";
+import "@quasar/extras/mdi-v7/mdi-v7.css";
 import "@quasar/extras/roboto-font/roboto-font.css";
 
 // Specify the components you need
@@ -26,6 +27,7 @@ import {
     QBtn,
     QIcon,
     QList,
+    QTree,
     QItem,
     QItemSection,
     QItemLabel,
@@ -66,6 +68,7 @@ const quasarConfig = {
         QBtn,
         QIcon,
         QList,
+        QTree,
         QItem,
         QItemSection,
         QItemLabel,
@@ -101,7 +104,8 @@ const quasarConfig = {
         Notify,
         LocalStorage
     },
-    removeDefaultCss: true,
+    iconSet: iconSet,
+    extras: ["mdi-v7"],
     config: {
         // Optional Quasar configs
         notify: {
