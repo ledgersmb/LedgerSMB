@@ -116,7 +116,7 @@ export default {
     },
     beforeRouteLeave() {
         this.machine.send("unloadContent");
-        return this.machine.current === "unloaded";
+        return this.machine.state.value === "unloaded";
     },
     created() {
         let maindiv = document.getElementById("maindiv");
