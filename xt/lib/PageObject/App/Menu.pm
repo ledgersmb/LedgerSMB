@@ -151,9 +151,9 @@ sub click_menu {
             $self->session->wait_for(
                 sub {
                     my $parent = ''; # 'and ./ancestor::*[@role="tree" and ./ancestor::*[@id="menudiv"]]';
-                    $parent = "and ./ancestor::*[.//*[\@role='treeitem' and .//*[normalize-space(text())=normalize-space('$_')] $parent]]" for @steps;
+                    $parent = "and ./ancestor::*[.//*[\@role='treeitem' and .//*[normalize-space(string(.))=normalize-space('$_')] $parent]]" for @steps;
                     my $xpath =
-                        ".//*[\@role='treeitem' and .//*[normalize-space(text())=normalize-space('$path')] $parent]";
+                        ".//*[\@role='treeitem' and .//*[normalize-space(string(.))=normalize-space('$path')] $parent]";
 
                     # The XPath also finds hidden tags, which we don't want to consider
                     my @elms = grep { $_->is_displayed } $item->find_all($xpath);
