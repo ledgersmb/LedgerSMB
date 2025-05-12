@@ -1,0 +1,168 @@
+{
+    q|Remove invalid and unused language codes| => [
+        {
+            failure_data => [
+                [ 'code', 'description', 'last_updated'              ],
+                [ 'XXXX', 'My Language', '2025-05-05 16:10:53.04055' ],
+            ],
+            submit_session => [
+                {
+                    statement => join (' ',
+                        q|DELETE FROM language|,
+                        q|WHERE code = ?|,
+                    ),
+                    bound_params => [ 'XXXX' ],
+                    results => [],
+                },
+            ],
+            response => {
+                confirm => 'delete',
+            },
+        }
+    ],
+
+    q|Fix invalid language codes| => [
+        {
+            failure_data => [
+                [ 'code', 'description',  'last_updated'              ],
+                [ 'XXXX', 'My Language', '2025-05-05 16:10:53.04055' ],
+            ],
+            submit_session => [
+                {
+                    statement => join (' ',
+                        q|INSERT INTO language (code, description)|,
+                        q|VALUES (?,?)|,
+                        q|ON CONFLICT DO NOTHING|,
+                    ),
+                    bound_params => [ 'ml', 'My Language' ],
+                    results => [],
+                },
+                {
+                    statement => join (' ',
+                        q|UPDATE account_heading_translation|,
+                        q|SET language_code = ?|,
+                        q|WHERE language_code = ?|,
+                    ),
+                    bound_params => [ 'ml', 'XXXX' ],
+                    results => [],
+                },
+                {
+                    statement => join (' ',
+                        q|UPDATE account_translation|,
+                        q|SET language_code = ?|,
+                        q|WHERE language_code = ?|,
+                    ),
+                    bound_params => [ 'ml', 'XXXX' ],
+                    results => [],
+                },
+                {
+                    statement => join (' ',
+                        q|UPDATE ap|,
+                        q|SET language_code = ?|,
+                        q|WHERE language_code = ?|,
+                    ),
+                    bound_params => [ 'ml', 'XXXX' ],
+                    results => [],
+                },
+                {
+                    statement => join (' ',
+                        q|UPDATE ar|,
+                        q|SET language_code = ?|,
+                        q|WHERE language_code = ?|,
+                    ),
+                    bound_params => [ 'ml', 'XXXX' ],
+                    results => [],
+                },
+                {
+                    statement => join (' ',
+                        q|UPDATE business_unit_translation|,
+                        q|SET language_code = ?|,
+                        q|WHERE language_code = ?|,
+                    ),
+                    bound_params => [ 'ml', 'XXXX' ],
+                    results => [],
+                },
+                {
+                    statement => join (' ',
+                        q|UPDATE eca_invoice|,
+                        q|SET language_code = ?|,
+                        q|WHERE language_code = ?|,
+                    ),
+                    bound_params => [ 'ml', 'XXXX' ],
+                    results => [],
+                },
+                {
+                    statement => join (' ',
+                        q|UPDATE entity_credit_account|,
+                        q|SET language_code = ?|,
+                        q|WHERE language_code = ?|,
+                    ),
+                    bound_params => [ 'ml', 'XXXX' ],
+                    results => [],
+                },
+                {
+                    statement => join (' ',
+                        q|UPDATE oe|,
+                        q|SET language_code = ?|,
+                        q|WHERE language_code = ?|,
+                    ),
+                    bound_params => [ 'ml', 'XXXX' ],
+                    results => [],
+                },
+                {
+                    statement => join (' ',
+                        q|UPDATE parts_translation|,
+                        q|SET language_code = ?|,
+                        q|WHERE language_code = ?|,
+                    ),
+                    bound_params => [ 'ml', 'XXXX' ],
+                    results => [],
+                },
+                {
+                    statement => join (' ',
+                        q|UPDATE partsgroup_translation|,
+                        q|SET language_code = ?|,
+                        q|WHERE language_code = ?|,
+                    ),
+                    bound_params => [ 'ml', 'XXXX' ],
+                    results => [],
+                },
+                {
+                    statement => join (' ',
+                        q|UPDATE template|,
+                        q|SET language_code = ?|,
+                        q|WHERE language_code = ?|,
+                    ),
+                    bound_params => [ 'ml', 'XXXX' ],
+                    results => [],
+                },
+                {
+                    statement => join (' ',
+                        q|UPDATE user_preference|,
+                        q|SET value = ?|,
+                        q|WHERE value = ?|,
+                        q|AND name= 'language'|,
+                    ),
+                    bound_params => [ 'ml', 'XXXX' ],
+                    results => [],
+                },
+                {
+                    statement => join (' ',
+                        q|DELETE FROM language|,
+                        q|WHERE code = ?|,
+                    ),
+                    bound_params => [ 'XXXX' ],
+                    results => [],
+                },
+            ],
+            response => {
+                confirm => 'update',
+                invalid_language_codes => [
+                    { __pk => 'MQ==', code => 'ml' },
+                ],
+            },
+        }
+    ],
+
+}
+
