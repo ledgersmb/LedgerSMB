@@ -39,10 +39,10 @@ with an invalid `code`.
 
         if ($confirm eq 'delete') {
 
-            my $delete_language = $dbh->prepare('
-                DELETE FROM language
-                WHERE code = ?
-            ') or die 'ERROR preparing quuery to delete language: ' . $dbh->errstr;
+            my $delete_language = $dbh->prepare(join(' ',
+                q|DELETE FROM language|,
+                q|WHERE code = ?|,
+            )) or die 'ERROR preparing quuery to delete language: ' . $dbh->errstr;
 
             foreach my $row (@$rows) {
                 $delete_language->execute(
@@ -115,16 +115,16 @@ Click 'Update' to confirm these changes.
 
             my $provided_data = provided 'invalid_language_codes';
 
-            my $insert_language = $dbh->prepare('
-                INSERT INTO language (code, description)
-                VALUES (?,?)
-                ON CONFLICT DO NOTHING
-            ') or die 'ERROR preparing query to insert language: ' . $dbh->errstr;
+            my $insert_language = $dbh->prepare(join(' ',
+                q|INSERT INTO language (code, description)|,
+                q|VALUES (?,?)|,
+                q|ON CONFLICT DO NOTHING|,
+            )) or die 'ERROR preparing query to insert language: ' . $dbh->errstr;
 
-            my $delete_language = $dbh->prepare('
-                DELETE FROM language
-                WHERE code = ?
-            ') or die 'ERROR preparing quuery to delete language: ' . $dbh->errstr;
+            my $delete_language = $dbh->prepare(join(' ',
+                q|DELETE FROM language|,
+                q|WHERE code = ?|,
+            )) or die 'ERROR preparing quuery to delete language: ' . $dbh->errstr;
 
             my @ref_tables = qw(
                 account_heading_translation
@@ -141,19 +141,19 @@ Click 'Update' to confirm these changes.
             );
 
             my @update_refs = map {
-                $dbh->prepare("
-                    UPDATE $_
-                    SET language_code = ?
-                    WHERE language_code = ?
-                ") or die 'ERROR preparing query to update language refs: ' . $dbh->errstr;
+                $dbh->prepare(join(' ',
+                    qq|UPDATE $_|,
+                    q|SET language_code = ?|,
+                    q|WHERE language_code = ?|,
+                )) or die 'ERROR preparing query to update language refs: ' . $dbh->errstr;
             } @ref_tables;
 
-            my $update_user_preferences = $dbh->prepare(q|
-                UPDATE user_preference
-                SET value = ?
-                WHERE value = ?
-                AND name= 'language'
-            |) or die 'ERROR preparing query to update language preferences: ' . $dbh->errstr;
+            my $update_user_preferences = $dbh->prepare(join(' ',
+                q|UPDATE user_preference|,
+                q|SET value = ?|,
+                q|WHERE value = ?|,
+                q|AND name= 'language'|,
+            )) or die 'ERROR preparing query to update language preferences: ' . $dbh->errstr;
 
             push @update_refs, $update_user_preferences;
 
