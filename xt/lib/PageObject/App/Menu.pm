@@ -148,13 +148,14 @@ sub click_menu {
 
         my @steps;
         for my $path (@$paths) {
+            my $parent = ''; # 'and ./ancestor::*[@role="tree" and ./ancestor::*[@id="menudiv"]]';
+            $parent = "and ./ancestor::*[.//*[\@role='treeitem' and .//*[normalize-space(string(.))=normalize-space('$_')] $parent]]" for @steps;
+            my $xpath =
+                ".//*[\@role='treeitem' and .//*[normalize-space(string(.))=normalize-space('$path')] $parent]";
+            print STDERR "Looking up XPath: $xpath\n\n";
+
             $self->session->wait_for(
                 sub {
-                    my $parent = ''; # 'and ./ancestor::*[@role="tree" and ./ancestor::*[@id="menudiv"]]';
-                    $parent = "and ./ancestor::*[.//*[\@role='treeitem' and .//*[normalize-space(string(.))=normalize-space('$_')] $parent]]" for @steps;
-                    my $xpath =
-                        ".//*[\@role='treeitem' and .//*[normalize-space(string(.))=normalize-space('$path')] $parent]";
-
                     # The XPath also finds hidden tags, which we don't want to consider
                     my @elms = grep { $_->is_displayed } $item->find_all($xpath);
                     die "Too many elements found for $xpath"
