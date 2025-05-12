@@ -150,7 +150,7 @@ sub click_menu {
         for my $path (@$paths) {
             $self->session->wait_for(
                 sub {
-                    my $parent = 'and ./ancestor::*[@role="tree" and ./ancestor::*[@id="menudiv"]]';
+                    my $parent = ''; # 'and ./ancestor::*[@role="tree" and ./ancestor::*[@id="menudiv"]]';
                     $parent = "and ./ancestor::*[.//*[\@role='treeitem' and .//*[normalize-space(text())=normalize-space('$_')] $parent]]" for @steps;
                     my $xpath =
                         ".//*[\@role='treeitem' and .//*[normalize-space(text())=normalize-space('$path')] $parent]";
