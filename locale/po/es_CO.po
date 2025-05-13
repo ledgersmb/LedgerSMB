@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.12.9-dev\n"
+"Project-Id-Version: LedgerSMB 1.12.8-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-04-25 20:22+0000\n"
+"POT-Creation-Date: 2025-05-13 21:16+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2024\n"
 "Language-Team: Spanish (Colombia) (https://app.transifex.com/ledgersmb/"
 "teams/58325/es_CO/)\n"
@@ -300,7 +300,7 @@ msgstr ""
 msgid "Accrual Basis:"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:1004
+#: lib/LedgerSMB/Scripts/asset.pm:1006
 msgid "Accum. Depreciation"
 msgstr "Depre. Acumulada"
 
@@ -579,7 +579,7 @@ msgstr ""
 msgid "Adjusted"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:1010
+#: lib/LedgerSMB/Scripts/asset.pm:1012
 msgid "Adjusted Basis"
 msgstr "Ajustar Basicos"
 
@@ -757,8 +757,8 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Adj_Details.pm:125
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:228
-#: lib/LedgerSMB/Scripts/asset.pm:1037 lib/LedgerSMB/Scripts/asset.pm:715
-#: lib/LedgerSMB/Scripts/asset.pm:830 lib/LedgerSMB/Scripts/asset.pm:931
+#: lib/LedgerSMB/Scripts/asset.pm:1039 lib/LedgerSMB/Scripts/asset.pm:717
+#: lib/LedgerSMB/Scripts/asset.pm:832 lib/LedgerSMB/Scripts/asset.pm:933
 #: lib/LedgerSMB/Scripts/budgets.pm:113 UI/reconciliation/report.html:443
 msgid "Approve"
 msgstr "Aprobar"
@@ -776,7 +776,7 @@ msgstr "Aprobada"
 msgid "Approved By"
 msgstr "Aprobada por"
 
-#: lib/LedgerSMB/Scripts/asset.pm:672
+#: lib/LedgerSMB/Scripts/asset.pm:674
 msgid "Approved at"
 msgstr "Aprovado en"
 
@@ -796,12 +796,12 @@ msgstr "Abr"
 msgid "April"
 msgstr "Abril"
 
-#: lib/LedgerSMB/Scripts/asset.pm:765 lib/LedgerSMB/Scripts/asset.pm:879
-#: lib/LedgerSMB/Scripts/asset.pm:987
+#: lib/LedgerSMB/Scripts/asset.pm:767 lib/LedgerSMB/Scripts/asset.pm:881
+#: lib/LedgerSMB/Scripts/asset.pm:989
 msgid "Aquired Value"
 msgstr "Valor Adquirido"
 
-#: lib/LedgerSMB/Scripts/asset.pm:903
+#: lib/LedgerSMB/Scripts/asset.pm:905
 msgid "Aquired Value Remaining"
 msgstr "Valor Adquirido Remanente"
 
@@ -840,7 +840,7 @@ msgstr "Activo"
 msgid "Asset Account"
 msgstr "Cuenta de Activos"
 
-#: lib/LedgerSMB/Scripts/asset.pm:661 UI/asset/begin_approval.html:14
+#: lib/LedgerSMB/Scripts/asset.pm:663 UI/asset/begin_approval.html:14
 #: UI/asset/begin_report.html:13
 msgid "Asset Class"
 msgstr "Clase de Activo"
@@ -857,11 +857,11 @@ msgstr ""
 msgid "Asset Classes"
 msgstr "Clases de Activo"
 
-#: lib/LedgerSMB/Scripts/asset.pm:544
+#: lib/LedgerSMB/Scripts/asset.pm:546
 msgid "Asset Depreciation Report"
 msgstr "Reporte de Depreciacion de Activos"
 
-#: lib/LedgerSMB/Scripts/asset.pm:546
+#: lib/LedgerSMB/Scripts/asset.pm:548
 msgid "Asset Disposal Report"
 msgstr "Reporte de Disposicion"
 
@@ -869,11 +869,11 @@ msgstr "Reporte de Disposicion"
 msgid "Asset Listing"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:563
+#: lib/LedgerSMB/Scripts/asset.pm:565
 msgid "Asset Partial Disposal Report"
 msgstr "Reporte Parcial de Disposicion de Activo"
 
-#: lib/LedgerSMB/Scripts/asset.pm:508
+#: lib/LedgerSMB/Scripts/asset.pm:510
 msgid "Asset Tag"
 msgstr "Etiqueta de Activo"
 
@@ -2006,7 +2006,7 @@ msgstr "¡El cliente no existe!"
 msgid "Customer/Vendor Accounts"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:999
+#: lib/LedgerSMB/Scripts/asset.pm:1001
 msgid "D M"
 msgstr ""
 
@@ -2096,7 +2096,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:115
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:137
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:94
-#: lib/LedgerSMB/Scripts/asset.pm:650 lib/LedgerSMB/Scripts/payment.pm:190
+#: lib/LedgerSMB/Scripts/asset.pm:652 lib/LedgerSMB/Scripts/payment.pm:190
 #: lib/LedgerSMB/Scripts/payment.pm:942 old/bin/aa.pl:985 old/bin/ir.pl:820
 #: old/bin/is.pl:929 old/bin/oe.pl:1577 old/bin/pe.pl:935
 #: templates/demo/ap_transaction.html:60 templates/demo/ap_transaction.html:151
@@ -2371,16 +2371,16 @@ msgstr ""
 msgid "Delivery Date"
 msgstr "Fecha de entrega"
 
-#: lib/LedgerSMB/Scripts/asset.pm:782
+#: lib/LedgerSMB/Scripts/asset.pm:784
 msgid "Dep. Basis"
 msgstr "Depresiacion Basica"
 
-#: lib/LedgerSMB/Scripts/asset.pm:771
+#: lib/LedgerSMB/Scripts/asset.pm:773
 msgid "Dep. Method"
 msgstr "Metodo de Depresiacion"
 
-#: lib/LedgerSMB/Scripts/asset.pm:759 lib/LedgerSMB/Scripts/asset.pm:873
-#: lib/LedgerSMB/Scripts/asset.pm:981
+#: lib/LedgerSMB/Scripts/asset.pm:761 lib/LedgerSMB/Scripts/asset.pm:875
+#: lib/LedgerSMB/Scripts/asset.pm:983
 msgid "Dep. Starts"
 msgstr "Comienzo de Depreciacion"
 
@@ -2388,11 +2388,11 @@ msgstr "Comienzo de Depreciacion"
 msgid "Dep. Through"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:806
+#: lib/LedgerSMB/Scripts/asset.pm:808
 msgid "Dep. YTD"
 msgstr "Depre. de año hasta la fecha"
 
-#: lib/LedgerSMB/Scripts/asset.pm:800
+#: lib/LedgerSMB/Scripts/asset.pm:802
 msgid "Dep. this run"
 msgstr "Depre. esta corrida"
 
@@ -2414,7 +2414,7 @@ msgstr "Depreciar"
 msgid "Depreciate Through"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:698 UI/accounts/edit.html:517
+#: lib/LedgerSMB/Scripts/asset.pm:700 UI/accounts/edit.html:517
 #: sql/Pg-database.sql:2357
 msgid "Depreciation"
 msgstr "Depreciacion"
@@ -2464,8 +2464,8 @@ msgstr ""
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:148
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:191
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:110
-#: lib/LedgerSMB/Scripts/asset.pm:513 lib/LedgerSMB/Scripts/asset.pm:868
-#: lib/LedgerSMB/Scripts/asset.pm:976 lib/LedgerSMB/Scripts/currency.pm:142
+#: lib/LedgerSMB/Scripts/asset.pm:515 lib/LedgerSMB/Scripts/asset.pm:870
+#: lib/LedgerSMB/Scripts/asset.pm:978 lib/LedgerSMB/Scripts/currency.pm:142
 #: lib/LedgerSMB/Scripts/currency.pm:52 lib/LedgerSMB/Scripts/file.pm:137
 #: old/bin/aa.pl:756 old/bin/aa.pl:816 old/bin/am.pl:303 old/bin/ic.pl:1247
 #: old/bin/ic.pl:2003 old/bin/ic.pl:2070 old/bin/ic.pl:724 old/bin/io.pl:1750
@@ -2560,24 +2560,24 @@ msgstr ""
 msgid "Discount:"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:891
+#: lib/LedgerSMB/Scripts/asset.pm:893
 msgid "Disp. Aquired Value"
 msgstr "Valor de Dispo. Adquirida"
 
-#: lib/LedgerSMB/Scripts/asset.pm:699 sql/Pg-database.sql:2355
+#: lib/LedgerSMB/Scripts/asset.pm:701 sql/Pg-database.sql:2355
 #: sql/Pg-database.sql:2358
 msgid "Disposal"
 msgstr "Disposicion"
 
-#: lib/LedgerSMB/Scripts/asset.pm:993
+#: lib/LedgerSMB/Scripts/asset.pm:995
 msgid "Disposal Date"
 msgstr "Fecha de Disposicion"
 
-#: lib/LedgerSMB/Scripts/asset.pm:550
+#: lib/LedgerSMB/Scripts/asset.pm:552
 msgid "Disposal Method"
 msgstr "Metodo de Disposicion"
 
-#: lib/LedgerSMB/Scripts/asset.pm:1044
+#: lib/LedgerSMB/Scripts/asset.pm:1046
 msgid "Disposal Report [_1] on date [_2]"
 msgstr ""
 
@@ -2963,7 +2963,7 @@ msgstr ""
 msgid "Entered For"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:666
+#: lib/LedgerSMB/Scripts/asset.pm:668
 msgid "Entered at"
 msgstr "Ingresado en"
 
@@ -3050,7 +3050,7 @@ msgstr ""
 msgid "Error: Cannot include summary account in other dropdown menus"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:776
+#: lib/LedgerSMB/Scripts/asset.pm:778
 msgid "Est. Life"
 msgstr "Vida Estimada"
 
@@ -3212,7 +3212,7 @@ msgstr "cincuenta"
 msgid "File"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:1280
+#: lib/LedgerSMB/Scripts/asset.pm:1282
 msgid "File Imported"
 msgstr "Archivo Importado!"
 
@@ -3419,7 +3419,7 @@ msgstr ""
 msgid "Gain"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:1022
+#: lib/LedgerSMB/Scripts/asset.pm:1024
 msgid "Gain (Loss)"
 msgstr "Ganancia (Perdida)"
 
@@ -3427,7 +3427,7 @@ msgstr "Ganancia (Perdida)"
 msgid "Gain Account"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:910
+#: lib/LedgerSMB/Scripts/asset.pm:912
 msgid "Gain/Loss"
 msgstr ""
 
@@ -3581,7 +3581,7 @@ msgstr "ciento"
 #: lib/LedgerSMB/Report/Unapproved/Batch_Detail.pm:105
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:132
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:89
-#: lib/LedgerSMB/Scripts/asset.pm:644 lib/LedgerSMB/Scripts/report_aging.pm:138
+#: lib/LedgerSMB/Scripts/asset.pm:646 lib/LedgerSMB/Scripts/report_aging.pm:138
 #: old/bin/am.pl:302 templates/demo/timecard.html:44
 #: templates/demo/timecard.tex:39 UI/business_units/list_classes.html:8
 #: UI/Reports/filters/gl.html:220
@@ -5168,7 +5168,7 @@ msgstr ""
 msgid "Partial"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:915
+#: lib/LedgerSMB/Scripts/asset.pm:917
 msgid "Partial Disposal Report [_1] on date [_2]"
 msgstr ""
 
@@ -5296,15 +5296,15 @@ msgstr ""
 msgid "Pending approval"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:566
+#: lib/LedgerSMB/Scripts/asset.pm:568
 msgid "Percent"
 msgstr "Porcentaje"
 
-#: lib/LedgerSMB/Scripts/asset.pm:885
+#: lib/LedgerSMB/Scripts/asset.pm:887
 msgid "Percent Disposed"
 msgstr "Porcentaje Disposcionado"
 
-#: lib/LedgerSMB/Scripts/asset.pm:897
+#: lib/LedgerSMB/Scripts/asset.pm:899
 msgid "Percent Remaining"
 msgstr "Porcentaje Remanente"
 
@@ -5625,15 +5625,15 @@ msgstr ""
 msgid "Printing Work Order [_1]"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:794
+#: lib/LedgerSMB/Scripts/asset.pm:796
 msgid "Prior Dep."
 msgstr "Depre. Previa"
 
-#: lib/LedgerSMB/Scripts/asset.pm:788
+#: lib/LedgerSMB/Scripts/asset.pm:790
 msgid "Prior Through"
 msgstr "Atravez Previo"
 
-#: lib/LedgerSMB/Scripts/asset.pm:1016 lib/LedgerSMB/Scripts/asset.pm:556
+#: lib/LedgerSMB/Scripts/asset.pm:1018 lib/LedgerSMB/Scripts/asset.pm:558
 msgid "Proceeds"
 msgstr "Recaudacion"
 
@@ -5685,7 +5685,7 @@ msgid "Projects"
 msgstr "Proyectos"
 
 #: lib/LedgerSMB/Report/Listings/Asset.pm:128
-#: lib/LedgerSMB/Report/Listings/Asset.pm:95 lib/LedgerSMB/Scripts/asset.pm:518
+#: lib/LedgerSMB/Report/Listings/Asset.pm:95 lib/LedgerSMB/Scripts/asset.pm:520
 msgid "Purchase Date"
 msgstr "Fecha de Compra"
 
@@ -5718,7 +5718,7 @@ msgid "Purchase Orders"
 msgstr "Pedidos"
 
 #: lib/LedgerSMB/Report/Listings/Asset.pm:129
-#: lib/LedgerSMB/Report/Listings/Asset.pm:98 lib/LedgerSMB/Scripts/asset.pm:523
+#: lib/LedgerSMB/Report/Listings/Asset.pm:98 lib/LedgerSMB/Scripts/asset.pm:525
 msgid "Purchase Value"
 msgstr "Valor de Compra"
 
@@ -6024,7 +6024,7 @@ msgstr ""
 msgid "Report Name"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:728
+#: lib/LedgerSMB/Scripts/asset.pm:730
 msgid "Report Results"
 msgstr "Resultados de Reportes"
 
@@ -6036,7 +6036,7 @@ msgstr ""
 msgid "Report Type"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:819
+#: lib/LedgerSMB/Scripts/asset.pm:821
 msgid "Report [_1] on date [_2]"
 msgstr ""
 
@@ -6311,7 +6311,7 @@ msgstr ""
 msgid "Sat"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:536 lib/LedgerSMB/Scripts/budgets.pm:104
+#: lib/LedgerSMB/Scripts/asset.pm:538 lib/LedgerSMB/Scripts/budgets.pm:104
 #: old/bin/am.pl:65 old/bin/am.pl:73 old/bin/am.pl:84 old/bin/ic.pl:811
 #: old/bin/ic.pl:820 old/bin/pe.pl:148 old/bin/pe.pl:515
 #: t/data/04-complex_template.html:131 t/data/04-complex_template.html:310
@@ -6563,7 +6563,7 @@ msgstr ""
 msgid "Search and GL"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/asset.pm:601
+#: lib/LedgerSMB/Scripts/asset.pm:603
 msgid "Search reports"
 msgstr "Buscar Reportes"
 
@@ -7168,8 +7168,8 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Assets/Net_Book_Value.pm:75
 #: lib/LedgerSMB/Report/Listings/Asset.pm:126
-#: lib/LedgerSMB/Report/Listings/Asset.pm:88 lib/LedgerSMB/Scripts/asset.pm:754
-#: lib/LedgerSMB/Scripts/asset.pm:863 lib/LedgerSMB/Scripts/asset.pm:971
+#: lib/LedgerSMB/Report/Listings/Asset.pm:88 lib/LedgerSMB/Scripts/asset.pm:756
+#: lib/LedgerSMB/Scripts/asset.pm:865 lib/LedgerSMB/Scripts/asset.pm:973
 msgid "Tag"
 msgstr "Etiqueta"
 
@@ -7649,7 +7649,7 @@ msgstr "Nivel Raiz"
 #: lib/LedgerSMB/Report/Invoices/Transactions.pm:286
 #: lib/LedgerSMB/Report/Taxform/Details.pm:105
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:114
-#: lib/LedgerSMB/Scripts/asset.pm:678 lib/LedgerSMB/Scripts/payment.pm:943
+#: lib/LedgerSMB/Scripts/asset.pm:680 lib/LedgerSMB/Scripts/payment.pm:943
 #: old/bin/ir.pl:770 old/bin/is.pl:878 old/bin/oe.pl:809
 #: templates/demo/ap_transaction.html:104 templates/demo/ap_transaction.html:119
 #: templates/demo/ar_transaction.html:102 templates/demo/ar_transaction.html:117
@@ -7674,7 +7674,7 @@ msgstr "Nivel Raiz"
 msgid "Total"
 msgstr "Total"
 
-#: lib/LedgerSMB/Scripts/asset.pm:812
+#: lib/LedgerSMB/Scripts/asset.pm:814
 msgid "Total Accum. Dep."
 msgstr "Depre. Acumulada Total"
 
@@ -7831,7 +7831,7 @@ msgstr "dos"
 #: lib/LedgerSMB/Report/Inventory/History.pm:149
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:128
 #: lib/LedgerSMB/Report/Unapproved/Drafts.pm:85
-#: lib/LedgerSMB/Scripts/asset.pm:656 old/bin/io.pl:1747
+#: lib/LedgerSMB/Scripts/asset.pm:658 old/bin/io.pl:1747
 #: t/data/04-complex_template.html:384 UI/Contact/divs/address.html:84
 #: UI/Contact/divs/address.html:122 UI/Contact/divs/contact_info.html:29
 #: UI/Contact/divs/credit.html:25 UI/Contact/divs/wage.html:7
