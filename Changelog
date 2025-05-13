@@ -35,6 +35,12 @@ Updated dependencies
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.9
+* Fix check for financial report templates when upgrading pre-1.8 databases
+* Fix report csv export template missing linebreaks
+* Fix searching for fixed assets throws a translation error (#8803)
+
+
 Changelog for 1.12.8
 * Fix non-posted transactions being included in Tax Forms (#8774)
 * Fix visual hint for non-posted payments on invoices and transactions (#8544)
