@@ -249,6 +249,8 @@ sub asset_results {
         LedgerSMB::Report::Listings::Asset->new(
             $request->%{ qw( asset_class description
                              tag usable_life) },
+            _locale => $request->{_locale},
+            _uri => $request->{_uri},
             formatter_options => $request->formatter_options,
             purchase_date => $request->parse_date( $request->{purchase_date} ),
             purchase_value => $request->parse_amount( $request->{purchase_value} ),
