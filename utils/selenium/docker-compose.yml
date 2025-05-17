@@ -1,17 +1,19 @@
-version: '2.1'
-
 services:
 
   hub:
-    image: selenium/hub:3
+    image: selenium/hub
+    volumes:
+      - /dev/shm:/dev/shm
     container_name: hub
     hostname: hub
     privileged: true
+    # shm_size: 2gb
     ports:
       - 4444:4444
-    volumes:
-      - /dev/shm:/dev/shm
+      - 4443:4443
+      - 4442:4442
     environment:
       - GRID_MAX_SESSION=50
       - GRID_TIMEOUT=1800
       - GRID_DEBUG=true
+

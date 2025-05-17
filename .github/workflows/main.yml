@@ -355,7 +355,7 @@ jobs:
 
           - perl: "5.40"
             postgres: "13"
-            BROWSER: "operablink"
+            BROWSER: "chrome"
             DB_TESTING: 1
             JOB_COUNT: 5
 
