@@ -143,7 +143,7 @@ sub click_menu {
            "$tgt_class can be 'use'-d dynamically");
 
         my $item =
-            $self->find(q{//*[@role='tree']});
+            $self->find(q{//*[@id='menudiv']//*[@role='tree']});
         ok($item, "Menu tree loaded");
 
         my @steps;
