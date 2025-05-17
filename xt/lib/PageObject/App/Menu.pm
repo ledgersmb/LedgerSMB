@@ -152,7 +152,6 @@ sub click_menu {
             $parent = "and ./ancestor::*[.//*[\@role='treeitem' and normalize-space(string(.))=normalize-space('$_') $parent]]" for @steps;
             my $xpath =
                 ".//*[\@role='treeitem' and normalize-space(string(.))=normalize-space('$path') $parent]";
-            print STDERR "Looking up XPath: $xpath\n\n";
 
             $self->session->wait_for(
                 sub {

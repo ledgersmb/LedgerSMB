@@ -198,7 +198,7 @@ on 'develop' => sub {
     requires 'Test2::Plugin::pgTAP';
     requires 'Text::Diff';
     requires 'Weasel', '0.31';
-    requires 'Weasel::Driver::Selenium2', '0.12';
+    requires 'Weasel::Driver::Selenium2', '0.14';
     requires 'Weasel::Session', '0.30';
     requires 'Weasel::Widgets::Dojo', '0.07';
 

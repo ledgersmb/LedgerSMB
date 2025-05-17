@@ -6,6 +6,9 @@ use warnings;
 use Carp;
 use PageObject;
 
+# We end up on a dynatable report after 'Run Report'
+use PageObject::App::Search::ReportDynatable;
+
 use Moose;
 use namespace::autoclean;
 extends 'PageObject';
