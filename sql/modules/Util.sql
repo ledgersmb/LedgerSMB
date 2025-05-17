@@ -57,6 +57,36 @@ $$ SELECT coalesce((select description FROM language
                    WHERE setting_key = 'default_language')), 'english');
 $$ LANGUAGE sql;
 
+CREATE OR REPLACE FUNCTION language__is_used(in_code text)
+RETURNS BOOLEAN AS $$
+BEGIN
+  PERFORM 1 FROM user_preference
+  WHERE (name = 'language' AND value = in_code)
+  OR in_code = 'en'  -- entity_credit_account uses this as a default
+  LIMIT 1;
+
+  IF FOUND THEN RETURN TRUE; END IF;
+
+  BEGIN
+    DELETE FROM language WHERE code = in_code;
+    RAISE SQLSTATE 'P0004'; -- cause rollback
+  EXCEPTION
+    WHEN FOREIGN_KEY_VIOLATION THEN
+      RETURN TRUE;
+    WHEN ASSERT_FAILURE THEN
+      RETURN FALSE;
+  END;
+END;
+$$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION language__is_used(text) IS
+$$Returns true if language having code 'in_code' is used within the
+current commpany database. This includes related tables, user language
+preference settings and the 'en' language code used as a default in the
+entity_credit_account table.
+
+Returns false if the 'in_code' is not used.$$;
+
 CREATE OR REPLACE FUNCTION warehouse__list_all() RETURNS SETOF warehouse AS
 $$
 SELECT * FROM warehouse order by description;
