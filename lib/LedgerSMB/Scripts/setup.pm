@@ -1176,6 +1176,7 @@ sub select_coa {
         ->new( language =>  $lang )
         ->charts_of_accounts;
 
+    my $step;
     if ($request->{coa_lc}) {
         my $coa_lc = $request->{coa_lc};
         if (not exists $coa_data->{$coa_lc}) {
@@ -1226,13 +1227,15 @@ sub select_coa {
                       @{$coa_data->{$request->{coa_lc}}->{$select}} ];
             }
        }
+        $step = 'details';
     } else {
         $request->{coa_lcs} = [ sort { $a->{name} cmp $b->{name} }
                                 values %$coa_data ];
+        $step = 'country';
     }
 
     my $template = $request->{_wire}->get('ui');
-    return $template->render($request, 'setup/select_coa', $request);
+    return $template->render($request, "setup/select_coa_$step", $request);
 }
 
 
