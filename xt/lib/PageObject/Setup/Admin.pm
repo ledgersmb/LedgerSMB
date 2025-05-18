@@ -85,10 +85,14 @@ sub create_database {
         if scalar(@elements) != 3;
 
     # Confirm database creation
-    $page->find('*button', text => "Yes")->click;
+    my $btn = $page->find('*button', text => "Yes");
+    $btn->click;
     ok('Yes-button clicked on initial confirmation');
+    $self->session->page->wait_for_body(
+        replaces => $btn,
+        retry_timeout => 120000 # 2 minutes = 120secs * 1000msecs
+        );
 
-    $page->find('#setup-select-coa[data-lsmb-done]', scheme => 'css');
     $page->find('*labeled', text => "Country")
         ->find_option($param{"Country"})
         ->click;
@@ -111,7 +115,7 @@ sub create_database {
         ->find_option($param{"Templates"})
         ->click;
 
-    my $btn = $page->find('*button', text => "Load Templates");
+    $btn = $page->find('*button', text => "Load Templates");
     $btn->click;
     ok('Load Templates-button clicked after templates selection');
 
