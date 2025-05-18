@@ -5,6 +5,18 @@
 import { provide, computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import Toaster from "@/components/Toaster";
+import {
+    ClosePopup,
+    LocalStorage,
+    QTree,
+    QDialog,
+    QBtn,
+    QCard,
+    QCardSection,
+    QCardActions,
+    QIcon,
+    QSplitter
+} from "quasar";
 import { createToasterMachine } from "@/components/Toaster.machines";
 
 import { useMenuStore } from "@/store/menu";
@@ -14,7 +26,21 @@ const dojoParser = require("dojo/parser");
 export default {
     name: "LsmbMain",
     components: {
-        Toaster
+        Toaster,
+        QTree,
+        QDialog,
+        QBtn,
+        QCard,
+        QCardSection,
+        QCardActions,
+        QIcon,
+        QSplitter
+    },
+    directives: {
+        ClosePopup
+    },
+    plugins: {
+        LocalStorage
     },
     setup() {
         const { t } = useI18n({ useScope: "global" });

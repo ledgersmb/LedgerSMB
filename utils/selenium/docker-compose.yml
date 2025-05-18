@@ -2,10 +2,12 @@ services:
 
   hub:
     image: selenium/hub
+    volumes:
+      - /dev/shm:/dev/shm
     container_name: hub
     hostname: hub
     privileged: true
-    shm_size: 2gb
+    # shm_size: 2gb
     ports:
       - 4444:4444
       - 4443:4443
