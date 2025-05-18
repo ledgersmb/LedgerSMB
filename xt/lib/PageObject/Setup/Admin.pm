@@ -88,8 +88,12 @@ sub create_database {
     my $btn = $page->find('*button', text => "Yes");
     $btn->click;
     ok('Yes-button clicked on initial confirmation');
-    $self->session->page->wait_for_body(
-        replaces => $btn,
+    $self->session->wait_for(
+        sub {
+            my @nodes = $page->find_all('#setup-select-coa[data-lsmb-done]',
+                                        scheme => 'css');
+            return @nodes > 0;
+        },
         retry_timeout => 120000 # 2 minutes = 120secs * 1000msecs
         );
 
