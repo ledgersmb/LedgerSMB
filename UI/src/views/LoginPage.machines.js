@@ -110,7 +110,7 @@ function createLoginMachine(initialContext) {
                     transitionFormValid("input", "ready"),
                     transitionFormInvalid("input", "invalid")
                 ),
-                final: state(),
+                final: state(transition("input", "ready")),
                 error: state()
             },
             (initialCtx) => initialCtx
