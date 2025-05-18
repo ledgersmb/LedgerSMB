@@ -3,7 +3,7 @@ version: '2.1'
 services:
 
   operablink:
-    image: selenium/node-opera:3
+    image: selenium/node-opera
     shm_size: 2gb
     depends_on:
       - hub
