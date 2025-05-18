@@ -115,7 +115,10 @@ sub create_database {
     $btn->click;
     ok('Load Templates-button clicked after templates selection');
 
-    $self->session->page->wait_for_body(replaces => $btn);
+    $self->session->page->wait_for_body(
+        replaces => $btn,
+        retry_timeout => 120000 # 2 minutes = 120secs * 1000msecs
+        );
     return $self->session->page->body;
 }
 
