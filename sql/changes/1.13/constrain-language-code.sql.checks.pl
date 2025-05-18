@@ -124,7 +124,7 @@ Click 'Update' to confirm these changes.
             my $delete_language = $dbh->prepare(join(' ',
                 q|DELETE FROM language|,
                 q|WHERE code = ?|,
-            )) or die 'ERROR preparing quuery to delete language: ' . $dbh->errstr;
+            )) or die 'ERROR preparing query to delete language: ' . $dbh->errstr;
 
             my @ref_tables = qw(
                 account_heading_translation
