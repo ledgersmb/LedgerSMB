@@ -5,9 +5,20 @@ use LedgerSMB::Database::ChangeChecks;
 
 check q|Remove invalid and unused language codes|,
     query => q|
-        select * from language
-        where code !~ '^[a-z]{2}(_[A-Z]{2})?$'
-        and not language__is_used(code)
+        SELECT * FROM language
+        WHERE code !~ '^[a-z]{2}(_[A-Z]{2})?$'
+        AND NOT EXISTS (SELECT 1 FROM account_heading_translation WHERE language_code = code)
+        AND NOT EXISTS (SELECT 1 FROM account_translation WHERE language_code = code)
+        AND NOT EXISTS (SELECT 1 FROM ap WHERE language_code = code)
+        AND NOT EXISTS (SELECT 1 FROM ar WHERE language_code = code)
+        AND NOT EXISTS (SELECT 1 FROM business_unit_translation WHERE language_code = code)
+        AND NOT EXISTS (SELECT 1 FROM eca_invoice WHERE language_code = code)
+        AND NOT EXISTS (SELECT 1 FROM entity_credit_account WHERE language_code = code)
+        AND NOT EXISTS (SELECT 1 FROM oe WHERE language_code = code)
+        AND NOT EXISTS (SELECT 1 FROM parts_translation WHERE language_code = code)
+        AND NOT EXISTS (SELECT 1 FROM partsgroup_translation WHERE language_code = code)
+        AND NOT EXISTS (SELECT 1 FROM template WHERE language_code = code)
+        AND NOT EXISTS (SELECT 1 FROM user_preference WHERE name='language' AND value=code)
     |,
     description => q|
 Your `language` table has unused records which have an invalid `code`.
