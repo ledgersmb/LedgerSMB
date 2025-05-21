@@ -94,7 +94,7 @@ sub create_database {
                                         scheme => 'css');
             return @nodes > 0;
         },
-        retry_timeout => 120000 # 2 minutes = 120secs * 1000msecs
+        retry_timeout => 120 # 2 minutes = 120secs
         );
 
     $page->find('*labeled', text => "Country")
@@ -125,7 +125,7 @@ sub create_database {
 
     $self->session->page->wait_for_body(
         replaces => $btn,
-        retry_timeout => 120000 # 2 minutes = 120secs * 1000msecs
+        retry_timeout => 120 # 2 minutes = 120secs
         );
     return $self->session->page->body;
 }
