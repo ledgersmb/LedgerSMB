@@ -90,8 +90,8 @@ sub create_database {
     ok('Yes-button clicked on initial confirmation');
     $self->session->wait_for(
         sub {
-            my @nodes = $page->find_all('#setup-select-coa[data-lsmb-done]',
-                                        scheme => 'css');
+            my @nodes =
+                $page->find_all('.//*[@id="setup-select-coa" and @data-lsmb-done]');
             return @nodes > 0;
         },
         retry_timeout => 120 # 2 minutes = 120secs
@@ -103,7 +103,7 @@ sub create_database {
     $page->find('*button', text => "Next")->click;
     ok('Next-button clicked after country selection');
 
-    $page->find('#setup-select-coa[data-lsmb-done]', scheme => 'css');
+    $page->find('.//*[@id="setup-select-coa" and @data-lsmb-done]');
     $page->find('*labeled', text => "Chart of accounts")
         ->find_option($param{"Chart of accounts"})
         ->click;
@@ -111,7 +111,7 @@ sub create_database {
     ok('Next-button clicked after CoA selection');
 
     # assert we're on the "Load Templates" page now
-    $page->find('#setup-template-info[data-lsmb-done]', scheme => 'css');
+    $page->find('.//*[@id="setup-template-info" and @data-lsmb-done]');
     $page->find('*contains', text => "Select Templates to Load");
     $page->find('*button', text => $_) for ("Load Templates");
 
