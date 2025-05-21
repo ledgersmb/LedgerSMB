@@ -184,7 +184,7 @@ else
 	-mkdir -p logs/screens
 	perl -Ilib bin/ledgersmb-admin create \
             $${PGUSER:-postgres}@$${PGHOST:-localhost}/$${PGDATABASE:-lsmb_test}#xyz
-	PGOPTIONS="-c search_path=xyz" yath test --no-color --retry=2 \
+	PGOPTIONS="-c search_path=xyz" yath test --no-color --no-retry \
             $(PGTAP_OPTS) $(BDD_OPTS) $(TEST_OPTS) $(TESTS)
 endif
 
