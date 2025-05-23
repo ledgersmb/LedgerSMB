@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Carp;
+use Carp::Always;
 use PageObject;
 use Test::More;
 
@@ -88,22 +89,16 @@ sub create_database {
     my $btn = $page->find('*button', text => "Yes");
     $btn->click;
     ok('Yes-button clicked on initial confirmation');
-    $self->session->wait_for(
-        sub {
-            my @nodes =
-                $page->find_all('.//*[@id="setup-select-coa" and @data-lsmb-done]');
-            return @nodes > 0;
-        },
-        retry_timeout => 120 # 2 minutes = 120secs
-        );
 
+    $page->find('.//*[@id="setup-select-coa-country" and @data-lsmb-done]');
     $page->find('*labeled', text => "Country")
         ->find_option($param{"Country"})
         ->click;
-    $page->find('*button', text => "Next")->click;
+    $btn = $page->find('*button', text => "Next");
+    $btn->click;
     ok('Next-button clicked after country selection');
 
-    $page->find('.//*[@id="setup-select-coa" and @data-lsmb-done]');
+    $page->find('.//*[@id="setup-select-coa-details" and @data-lsmb-done]');
     $page->find('*labeled', text => "Chart of accounts")
         ->find_option($param{"Chart of accounts"})
         ->click;
@@ -111,8 +106,8 @@ sub create_database {
     ok('Next-button clicked after CoA selection');
 
     # assert we're on the "Load Templates" page now
-    $page->find('.//*[@id="setup-template-info" and @data-lsmb-done]');
     $page->find('*contains', text => "Select Templates to Load");
+    $page->find('.//*[@id="setup-template-info" and @data-lsmb-done]');
     $page->find('*button', text => $_) for ("Load Templates");
 
     $page->find('*labeled', text => 'Templates')
