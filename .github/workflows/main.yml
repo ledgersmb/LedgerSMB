@@ -345,19 +345,19 @@ jobs:
             postgres: "14"
             BROWSER: "chrome"
             COVERAGE: 1
-            JOB_COUNT: 3
+            JOB_COUNT: 2
 
           - perl: "5.36"
             postgres: "15"
             BROWSER: "firefox"
             COA_TESTING: 1
-            JOB_COUNT: 7
+            JOB_COUNT: 5
 
           - perl: "5.40"
             postgres: "13"
             BROWSER: "operablink"
             DB_TESTING: 1
-            JOB_COUNT: 7
+            JOB_COUNT: 5
 
     services:
       # Label used to access the service container

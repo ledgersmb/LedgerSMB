@@ -36,8 +36,17 @@ my $dbh = DBI->connect(
 # In a transaction, the timestamps will be identical.
 $dbh->do(q{set client_min_messages = 'warning'});
 $dbh->do("DROP DATABASE IF EXISTS $test_db");
-$dbh->do("CREATE DATABASE $test_db WITH TEMPLATE $ENV{LSMB_NEW_DB}")
-    or die "Failed to create new database $test_db for tests" . DBI->errstr;
+
+my $count = 0;
+while (not eval {
+           $dbh->do("CREATE DATABASE $test_db WITH TEMPLATE $ENV{LSMB_NEW_DB}");
+           1;
+       }
+       and $count < 3) {
+    sleep rand(10);
+}
+die "Failed to create new database $test_db for tests" . DBI->errstr
+    if $count > 2;
 
 # Connect to the new working copy
 $dbh = DBI->connect(
@@ -281,6 +290,7 @@ ok(!-e $directory_path, 'temporary directory deleted once out-of-scope');
 
 
 # Drop our working database
+$dbh->disconnect;
 $dbh = DBI->connect(
     "dbi:Pg:dbname=$ENV{LSMB_NEW_DB}",
     undef,
