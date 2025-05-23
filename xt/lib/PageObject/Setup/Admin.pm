@@ -90,7 +90,12 @@ sub create_database {
     $btn->click;
     ok('Yes-button clicked on initial confirmation');
 
-    $page->find('.//*[@id="setup-select-coa-country" and @data-lsmb-done]');
+    $page->session->wait_for(
+        sub {
+            my @nodes = $page->find_all('.//*[@id="setup-select-coa-country" and @data-lsmb-done]');
+            return @nodes > 0;
+        },
+        retry_timeout => 120);
     $page->find('*labeled', text => "Country")
         ->find_option($param{"Country"})
         ->click;
@@ -98,7 +103,12 @@ sub create_database {
     $btn->click;
     ok('Next-button clicked after country selection');
 
-    $page->find('.//*[@id="setup-select-coa-details" and @data-lsmb-done]');
+    $page->session->wait_for(
+        sub {
+            my @nodes = $page->find_all('.//*[@id="setup-select-coa-details" and @data-lsmb-done]');
+            return @nodes > 0;
+        },
+        retry_timeout => 120);
     $page->find('*labeled', text => "Chart of accounts")
         ->find_option($param{"Chart of accounts"})
         ->click;
@@ -106,8 +116,8 @@ sub create_database {
     ok('Next-button clicked after CoA selection');
 
     # assert we're on the "Load Templates" page now
-    $page->find('*contains', text => "Select Templates to Load");
     $page->find('.//*[@id="setup-template-info" and @data-lsmb-done]');
+    $page->find('*contains', text => "Select Templates to Load");
     $page->find('*button', text => $_) for ("Load Templates");
 
     $page->find('*labeled', text => 'Templates')
