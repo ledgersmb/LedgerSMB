@@ -85,6 +85,7 @@ sub create_database {
     croak "Not on the company creation confirmation page " . scalar(@elements)
         if scalar(@elements) != 3;
 
+    $page->find('.//*[@data-lsmb-done]');
     # Confirm database creation
     my $btn = $page->find('*button', text => "Yes");
     $btn->click;
