@@ -187,7 +187,7 @@ on 'develop' => sub {
     requires 'Pod::ProjectDocs';
     requires 'Selenium::Remote::Driver';
     requires 'TAP::Parser::SourceHandler::pgTAP', '3.33';
-    requires 'Test::BDD::Cucumber', '0.86';
+    requires 'Test::BDD::Cucumber', '0.87';
     requires 'Test::Dependencies', '0.34';
     requires 'Test::Pod', '1.00';
     requires 'Test::Pod::Coverage';
