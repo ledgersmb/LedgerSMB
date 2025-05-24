@@ -1,4 +1,4 @@
-@weasel
+@weasel @exclude-chrome
 Feature: setup.pl database creation and migration functionalities
   In order to create company databases or migrate company databases
   from earlier versions and SQL-Ledger, we want system admins to be

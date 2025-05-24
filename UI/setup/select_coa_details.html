@@ -1,0 +1,91 @@
+[% WRAPPER "ui-header.html"
+stylesheet="ledgersmb.css"
+include_stylesheet=["system/setup.css"] %]
+[% PROCESS elements.html %]
+<body id="setup-select-coa-details" class="lsmb [% dojo_theme %]">
+<div class="setupconsole">
+<h2>[% text('Database Management Console') %]</h2>
+<div><div class="listtop">[% title %]</div>
+<form data-dojo-type="lsmb/SimpleForm" action="setup.pl" method="POST" name="credentials">
+  <input type="hidden" name="csrf_token" value="[% csrf_token %]" />
+  <div id="sep" class="listheading">
+    Pre-defined Chart-of-Accounts selection
+  </div>
+
+  [%
+   INCLUDE input element_data = {
+        name = 'coa_lc'
+        type = 'hidden'
+       value = coa_lc
+         } ;
+         %]
+  <p>
+    The selected country ('[% coa_lc %]') has the following charts
+    predefined.
+  </p>
+<div class="inputrow">
+[%
+    INCLUDE select element_data = {
+         options = charts
+            name = 'chart'
+       text_attr = 'name'
+      value_attr = 'name'
+           label = text('Chart of accounts')
+    };
+    IF gifis.size > 0;
+-%]
+</div>
+<div class="inputrow">
+[%
+       INCLUDE select element_data = {
+         options = gifis
+            name = 'gifi'
+       text_attr = 'name'
+      value_attr = 'name'
+           label = text('GIFI')
+       };
+    END;
+    IF sics.size > 0;
+-%]
+</div>
+<div class="inputrow">
+[%
+       INCLUDE select element_data = {
+         options = sics
+            name = 'sic'
+       text_attr = 'name'
+      value_attr = 'name'
+           label = text('SIC')
+       };
+    END;
+ %]
+</div>
+<div class="inputrow">
+[% INCLUDE input element_data = {
+    name = 'database'
+   value = database
+    type = 'hidden'
+} %]
+</div>
+<div class="inputrow">
+[% INCLUDE button element_data = {
+    name = '__action'
+   value = 'select_coa'
+    type = 'submit'
+   class = 'submit'
+    text = text('Next')
+} %]
+</div>
+<div class="inputrow">
+[% INCLUDE button element_data = {
+    name = '__action'
+   value = 'skip_coa'
+    type = 'submit'
+   class = 'submit'
+    text = text('Skip')
+} %]
+</div>
+</form>
+</div></div>
+</body>
+[% END %]

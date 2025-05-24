@@ -8,6 +8,8 @@ import LoginPage from "@/views/LoginPage";
 import LsmbMain from "@/views/LsmbMain";
 import { useSessionUserStore } from "@/store/sessionUser";
 
+import { installQuasar } from "./quasar-init";
+
 const dojoParser = require("dojo/parser");
 
 let locale;
@@ -57,6 +59,7 @@ let lsmbDirective = {
 
 if (document.getElementById("main")) {
     app = createApp(LsmbMain).use(router).use(createPinia());
+    installQuasar(app);
 
     useSessionUserStore().initialize();
     appName = "#main";

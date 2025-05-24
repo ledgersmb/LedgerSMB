@@ -2,7 +2,7 @@
 stylesheet="ledgersmb.css"
 include_stylesheet=["system/setup.css"] %]
 [% PROCESS elements.html %]
-<body id="setup-select-coa" class="lsmb [% dojo_theme %]">
+<body id="setup-select-coa-country" class="lsmb [% dojo_theme %]">
 <div class="setupconsole">
 <h2>[% text('Database Management Console') %]</h2>
 <div><div class="listtop">[% title %]</div>
@@ -12,18 +12,6 @@ include_stylesheet=["system/setup.css"] %]
     Pre-defined Chart-of-Accounts selection
   </div>
 
-  [% IF coa_lc;
-   INCLUDE input element_data = {
-        name = 'coa_lc'
-        type = 'hidden'
-       value = coa_lc
-         } ;
-         %]
-  <p>
-    The selected country ('[% coa_lc %]') has the following charts
-    predefined.
-  </p>
-  [% ELSE %]
   <p>
     Please select a country from the list of countries with predefined
     charts of accounts, or select Skip and define or import accounts and
@@ -31,51 +19,15 @@ include_stylesheet=["system/setup.css"] %]
     for evaluation purposes as many functions depend on accounts of
     certain types being defined.
   </p>
-  [% END %]
 <div class="inputrow">
-[% IF coa_lc;
-    INCLUDE select element_data = {
-         options = charts
-            name = 'chart'
-       text_attr = 'name'
-      value_attr = 'name'
-           label = text('Chart of accounts')
-    };
-    IF gifis.size > 0;
--%]
-</div>
-<div class="inputrow">
-[%
-       INCLUDE select element_data = {
-         options = gifis
-            name = 'gifi'
-       text_attr = 'name'
-      value_attr = 'name'
-           label = text('GIFI')
-       };
-    END;
-    IF sics.size > 0;
--%]
-</div>
-<div class="inputrow">
-[%
-       INCLUDE select element_data = {
-         options = sics
-            name = 'sic'
-       text_attr = 'name'
-      value_attr = 'name'
-           label = text('SIC')
-       };
-    END;
-   ELSE;
-    INCLUDE select element_data = {
+[%    INCLUDE select element_data = {
          options = coa_lcs
             name = 'coa_lc'
        text_attr = 'name'
       value_attr = 'code'
            label = text('Country') #'
     };
-END %]
+ %]
 </div>
 <div class="inputrow">
 [% INCLUDE input element_data = {

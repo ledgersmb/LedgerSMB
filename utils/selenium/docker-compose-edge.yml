@@ -1,14 +1,10 @@
 services:
 
-  chrome:
-    image: selenium/node-chrome
-    volumes:
-      - /dev/shm:/dev/shm
+  edge:
+    image: selenium/node-edge
+    shm_size: 2gb
     depends_on:
       - hub
-    # the standard setup proposes:
-    #   shm_size: 2gb
-    # but we use the /dev/shm mapping above
     environment:
       - NODE_MAX_SESSION=5
       - NODE_MAX_INSTANCES=5
