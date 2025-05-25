@@ -137,7 +137,7 @@ sub display_taxes {
         ( $null, $i ) = split /_/, $_;
 
         $form->{"taxrate_$i"} =
-          $form->format_amount( \%myconfig, $form->{"taxrate_$i"}, $form->{_setting_decimal_places}, '0');
+          $form->format_amount( \%myconfig, $form->{"taxrate_$i"});
 
         $hiddens{"taxdescription_$i"} = $form->{"taxdescription_$i"};
         $hiddens{"old_validto_$i"} = $form->{"old_validto_$i"};
