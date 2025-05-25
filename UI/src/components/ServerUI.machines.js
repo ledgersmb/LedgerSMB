@@ -72,6 +72,10 @@ async function retrieveContent(ctx) {
     return await ctx.response.text();
 }
 
+function isOkResponse(ctx, { data }) {
+    return data.response.ok;
+}
+
 async function updateContent(ctx) {
     ctx.view.content = ctx.content;
     let p = new Promise((resolve) => {
@@ -95,8 +99,8 @@ async function parseContent(ctx) {
     });
 }
 
-function reportError(ctx) {
-    ctx.view.reportError(ctx.error);
+async function reportError(ctx) {
+    await ctx.view.reportError(ctx.error);
 }
 
 function setContentSrc(ctx, { value }) {
@@ -169,6 +173,7 @@ const machine = createMachine(
                 "done",
                 "retrieving",
                 guard(domAcceptable),
+                guard(isOkResponse),
                 reduce(setResponse)
             ),
             transition("done", "error", reduce(setErrorResponse)),
