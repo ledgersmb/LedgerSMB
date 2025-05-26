@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Carp;
+use Carp::Always;
 use PageObject;
 use Test::More;
 
@@ -84,18 +85,31 @@ sub create_database {
     croak "Not on the company creation confirmation page " . scalar(@elements)
         if scalar(@elements) != 3;
 
+    $page->find('.//*[@data-lsmb-done]');
     # Confirm database creation
-    $page->find('*button', text => "Yes")->click;
+    my $btn = $page->find('*button', text => "Yes");
+    $btn->click;
     ok('Yes-button clicked on initial confirmation');
 
-    $page->find('#setup-select-coa[data-lsmb-done]', scheme => 'css');
+    $page->session->wait_for(
+        sub {
+            my @nodes = $page->find_all('.//*[@id="setup-select-coa-country" and @data-lsmb-done]');
+            return @nodes > 0;
+        },
+        retry_timeout => 120);
     $page->find('*labeled', text => "Country")
         ->find_option($param{"Country"})
         ->click;
-    $page->find('*button', text => "Next")->click;
+    $btn = $page->find('*button', text => "Next");
+    $btn->click;
     ok('Next-button clicked after country selection');
 
-    $page->find('#setup-select-coa[data-lsmb-done]', scheme => 'css');
+    $page->session->wait_for(
+        sub {
+            my @nodes = $page->find_all('.//*[@id="setup-select-coa-details" and @data-lsmb-done]');
+            return @nodes > 0;
+        },
+        retry_timeout => 120);
     $page->find('*labeled', text => "Chart of accounts")
         ->find_option($param{"Chart of accounts"})
         ->click;
@@ -103,7 +117,7 @@ sub create_database {
     ok('Next-button clicked after CoA selection');
 
     # assert we're on the "Load Templates" page now
-    $page->find('#setup-template-info[data-lsmb-done]', scheme => 'css');
+    $page->find('.//*[@id="setup-template-info" and @data-lsmb-done]');
     $page->find('*contains', text => "Select Templates to Load");
     $page->find('*button', text => $_) for ("Load Templates");
 
@@ -111,11 +125,14 @@ sub create_database {
         ->find_option($param{"Templates"})
         ->click;
 
-    my $btn = $page->find('*button', text => "Load Templates");
+    $btn = $page->find('*button', text => "Load Templates");
     $btn->click;
     ok('Load Templates-button clicked after templates selection');
 
-    $self->session->page->wait_for_body(replaces => $btn);
+    $self->session->page->wait_for_body(
+        replaces => $btn,
+        retry_timeout => 120 # 2 minutes = 120secs
+        );
     return $self->session->page->body;
 }
 

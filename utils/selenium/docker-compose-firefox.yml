@@ -1,15 +1,14 @@
-version: '2.1'
-
 services:
 
   firefox:
-    image: selenium/node-firefox:3
-    volumes:
-      - /dev/shm:/dev/shm
+    image: selenium/node-firefox
     depends_on:
       - hub
+    shm_size: 2gb
     environment:
-      - HUB_HOST=hub
       - NODE_MAX_SESSION=5
       - NODE_MAX_INSTANCES=5
       - GRID_DEBUG=true
+      - SE_EVENT_BUS_HOST=hub
+      - SE_EVENT_BUS_PUBLISH=4442
+      - SE_EVENT_BUS_SUBSCRIBE=4443

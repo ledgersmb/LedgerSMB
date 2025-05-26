@@ -10,6 +10,8 @@ default:
          default_session: selenium
          screenshots_dir: logs/screens
          logging_dir: logs
+         dom_save_events:
+           failed-step: 1
          screenshot_events:
            pre-step: 0
            post-step: 1

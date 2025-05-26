@@ -343,7 +343,7 @@ jobs:
         include:
           - perl: "5.38"
             postgres: "14"
-            BROWSER: "chrome"
+            BROWSER: "firefox"
             COVERAGE: 1
             JOB_COUNT: 2
 
@@ -355,7 +355,7 @@ jobs:
 
           - perl: "5.40"
             postgres: "13"
-            BROWSER: "operablink"
+            BROWSER: "chrome"
             DB_TESTING: 1
             JOB_COUNT: 5
 
@@ -479,7 +479,7 @@ jobs:
       # Do perl tests
       - name: Run Perl + Database + Browser tests
         run: |
-          make devtest TESTS="--no-progress --job-count $JOB_COUNT $YATH_DEVEL_COVER_OPTIONS xt/4{[01],[3-9]}* xt/[5-9]*"
+          make devtest BDD_OPTS="--Feature-tags='not (@wip or @extended or @exclude-${{ matrix.BROWSER }})'" TESTS="--no-progress --job-count $JOB_COUNT $YATH_DEVEL_COVER_OPTIONS xt/4{[01],[3-9]}* xt/[5-9]*"
         env:
           LSMB_TEST_DB: 1
           COA_TESTING: ${{ matrix.COA_TESTING }}
