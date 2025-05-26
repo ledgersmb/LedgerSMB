@@ -26,35 +26,24 @@
     <%= htmlWebpackPlugin.tags.headTags %>
     <link href="js/dojo/resources/dojo.css" rel="stylesheet">
     <link href="js/css/[% dojo_theme %].css" rel="stylesheet">
+    <link href="js/css/quasar.css" rel="stylesheet">
     [%- IF stylesheet %]
     <link href="js/css/[% stylesheet %]" rel="stylesheet">
     [%- END %]
     [%- FOREACH s = include_stylesheet %]
     <link href="js/css/[% s %]" rel="stylesheet">
     [%- END %]
-    [%- IF warn_expire;
-       IF pw_expires.years ;
-          ALERT = text("Warning: Your password will expire in [_1] years", pw_expires.years);
-       ELSIF pw_expires.months ;
-          ALERT = text("Warning: Your password will expire in [_1] months", pw_expires.months);
-       ELSIF pw_expires.weeks ;
-          ALERT = text("Warning: Your password will expire in [_1] weeks", pw_expires.weeks);
-       ELSIF pw_expires.days ;
-          ALERT = text("Warning: Your password will expire in [_1] days", pw_expires.days);
-       ELSE ;
-          ALERT = text("Warning: Your password will expire today");
-       END;
-    %]
     <script>
-      let h;
-      h = () => {
-          window.removeEventListener('DOMContentLoaded', h);
-          window.alert("[% ALERT %]");
-      };
-      window.addEventListener('DOMContentLoaded', h);
-    </script>
+    [%- IF warn_expire %]
+        var pw_expiration = {
+            "years": [% pw_expires.years %],
+            "months": [% pw_expires.months %],
+            "weeks": [% pw_expires.weeks %],
+            "days": [% pw_expires.days %]
+        };
+    [% ELSE %]
+        var pw_expiration = null;
     [% END %]
-    <script>
         var dojoConfig = {
             async: 1,
             parseOnLoad: false,
@@ -72,6 +61,20 @@
             version: "[% version %]"
         };
     </script>
+    <style>
+/* Undo Quasar messing with elements they have no business messing with */
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, ul, ol, dl, figure, hr, fieldset, legend {
+  margin: revert;
+  font-weight: revert;
+  line-height: revert;
+}
+h1 { font-size: 2em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.17em; }
+h4 { font-size: 1em; }
+h5 { font-size: 0.83em; }
+h6 { font-size: 0.67em; }
+    </style>
     <meta name="robots" content="noindex,nofollow" />
 </head>
 [% content %]

@@ -143,39 +143,38 @@ sub click_menu {
            "$tgt_class can be 'use'-d dynamically");
 
         my $item =
-            $self->find("//*[\@id='top_menu']//*[\@role='tree']/parent::*");
+            $self->find(q{//*[@id='menudiv']//*[@role='tree']});
         ok($item, "Menu tree loaded");
 
-        my $role = 'tree';
+        my @steps;
         for my $path (@$paths) {
+            my $parent = ''; # 'and ./ancestor::*[@role="tree" and ./ancestor::*[@id="menudiv"]]';
+            $parent = "and ./ancestor::*[.//*[\@role='treeitem' and normalize-space(string(.))=normalize-space('$_') $parent]]" for @steps;
+            my $xpath =
+                ".//*[\@role='treeitem' and normalize-space(string(.))=normalize-space('$path') $parent]";
+
             $self->session->wait_for(
                 sub {
-                    my $xpath =
-                        "./*[\@class='dijitTreeNodeContainer']" .
-                        "/*[contains(\@class,'dijitTreeNode')" .
-                        "   and ./*[contains(\@class,'dijitTreeRow')" .
-                        "           and .//*[normalize-space(text())" .
-                        "                    =normalize-space('$path')]]]";
+                    # The XPath also finds hidden tags, which we don't want to consider
+                    my @elms = grep { $_->is_displayed } $item->find_all($xpath);
+                    die "Too many elements found for $xpath"
+                        unless scalar(@elms) < 2;
 
-                    my $item1 = $item->find($xpath);
+                    my $item1 = shift @elms;
                     my $valid = $item1 && ($item1->get_text ne '');
+
                     $item = $item1 if $valid;
                     return $valid;
                 });
 
-            my $label = $item->get_attribute('id') . '_label';
-            ok($label,"Found label $label");
+            # menu item found; held in $item
+            my $expanded = $item->get_attribute('aria-expanded');
+            $item->click unless ($expanded and $expanded eq 'true');
 
-            my $submenu = $item->find(".//*[\@id='$label']");
-            my $text = $submenu->get_text;
-
-            ok($submenu && $text,"Submenu found '" . $text . "'");
-            my $expanded = $item->find(
-                ".//*[contains(\@class,'dijitTreeContent')" .
-                "     and ./*[\@id='$label']]");
-            $expanded =  $expanded->get_attribute('class') =~ m/\bdijitTreeContentExpanded\b/;
-            $submenu->click unless $expanded;
-            $role = 'group';
+            # the node and its children are siblings in the DOM tree
+            # continue the search from one level up...
+            $item = $item->find('..');
+            push @steps, $path;
         }
     };
 
@@ -187,9 +186,16 @@ sub close_menus {
     my ($self) = @_;
 
     my @nodes = $self->find_all(
-        './/*[contains(@class,"dijitTreeContentExpanded")]' .
-        '/*[@role="treeitem"]');
+        './/*[@role="treeitem" and @aria-expanded="true"]');
     $_->click for reverse @nodes;
+
+    # wait for the transition to close, to complete
+    $self->session->wait_for(
+        sub {
+            my @open = $self->find_all(
+                './/*[@role="treeitem" and @aria-expanded="true"]');
+            return scalar(@open) == 0;
+        });
 }
 
 __PACKAGE__->meta->make_immutable;
