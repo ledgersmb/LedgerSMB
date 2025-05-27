@@ -1,0 +1,57 @@
+{
+    q|Ensure that 'ar' table doesn't contain empty language codes| => [
+        {
+            failure_data => [
+                [ 'id', 'language_code' ],
+                [  1, '' ],
+            ],
+            submit_session => [
+                  {
+                      statement => q|UPDATE ar SET language_code=NULL WHERE language_code=''|,
+                      results => [],
+                  },
+            ],
+            response => {
+                 confirm => 'proceed',
+            },
+        }
+    ],
+
+    q|Ensure that 'ap' table doesn't contain empty language codes| => [
+        {
+            failure_data => [
+                [ 'id', 'language_code' ],
+                [  1, '' ],
+            ],
+            submit_session => [
+                  {
+                      statement => q|UPDATE ap SET language_code=NULL WHERE language_code=''|,
+                      results => [],
+                  },
+            ],
+            response => {
+                 confirm => 'proceed',
+            },
+        }
+    ],
+
+    q|Ensure that 'oe' table doesn't contain empty language codes| => [
+        {
+            failure_data => [
+                [ 'id', 'language_code' ],
+                [  1, '' ],
+            ],
+            submit_session => [
+                  {
+                      statement => q|UPDATE oe SET language_code=NULL WHERE language_code=''|,
+                      results => [],
+                  },
+            ],
+            response => {
+                 confirm => 'proceed',
+            },
+        }
+    ],
+
+}
+

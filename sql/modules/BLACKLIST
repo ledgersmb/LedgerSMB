@@ -300,6 +300,7 @@ journal__save_recurring
 journal__save_recurring_print
 journal__search
 journal__validate_entry
+language__is_used
 lastcost
 leap_days
 list_taxforms
