@@ -8,6 +8,9 @@ Changelog for 1.13.0
 Added functionalities
 * Concurrent logins into multiple companies on a single browser (#8496)
 * Ability to remove unused customers, credit accounts (#8616)
+* Search box added to the menu (#8831)
+* Tracking of user logins and logout for audit purposes (#8784)
+* Localization of names in the country selection drop-down (#8749)
 
 Changed functionalities
 * Concurrent logins with different users on one browser throw an error (#8496)
@@ -16,7 +19,7 @@ Changed functionalities
 Removed functionalities
 
 Bugs fixed
-* Better referential integrity with more relational constraints (#8661)
+* Better referential integrity with more relational constraints (#8661, #8794)
 
 Cleanup & architecture improvements
 * Deprecated 'ledgersmb.conf' configuration in favor of 'ledgersmb.yaml' (#8570)
@@ -25,7 +28,9 @@ Cleanup & architecture improvements
 * Allow workflows to determine buttons on read-only screens (#8583)
 * Removal of custom SMTP handling class; replaced with Email::Sender (#8576)
 * Dropped unnecessary table inheritance (#8046)
-* Dead code removal (#8579, #8591, #8613)
+* Replacement of various Dojo layout components with Vue equivalents (#8811)
+* Dead code removal (#8579, #8591, #8613, #8826)
+* Move end-to-end UI tests from Selenium Hub v3 to v4 (#8829)
 
 Updated dependencies
 * Feature::Compat::Try (removed)
