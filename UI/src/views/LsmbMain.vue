@@ -55,10 +55,18 @@ export default {
             send({ type: "add", item: notification });
         });
 
+        const menuFilter = ref("");
         const menuLoading = computed(() => menuStore.nodes === null);
-        const menuNodes = computed(() => menuStore.toplevelNodes);
+        const menuNodes = computed(() => menuStore.tree);
         const selectedMenuNode = ref(null);
-        return { t, menuStore, menuLoading, menuNodes, selectedMenuNode };
+        return {
+            t,
+            menuStore,
+            menuFilter,
+            menuLoading,
+            menuNodes,
+            selectedMenuNode
+        };
     },
     data() {
         const cfg = window.lsmbConfig;
@@ -177,10 +185,6 @@ export default {
                     window.__lsmbLoadLink(url);
                 }
             }
-        },
-        onMenuLoad({ key, done }) {
-            const children = this.menuStore.children(key);
-            done(children);
         }
     }
 };
@@ -248,16 +252,31 @@ export default {
                     <hr />
 
                     <p v-if="menuLoading">Menu is loading</p>
-
-                    <q-tree
-                        v-else
-                        v-model:selected="selectedMenuNode"
-                        dense
-                        :nodes="menuNodes"
-                        node-key="id"
-                        @mousedown="onMouseDown"
-                        @lazy-load="onMenuLoad"
-                    ></q-tree>
+                    <div v-else>
+                        <div
+                            class="dijit dijitReset dijitInline dijitTextBox"
+                            style="width: 100%"
+                        >
+                            <div
+                                class="dijitReset dijitInputField dijitInputContainer"
+                            >
+                                <input
+                                    v-model="menuFilter"
+                                    class="dijitReset dijitInputInner"
+                                    :placeholder="$t('Search menu')"
+                                    style="width: 100%"
+                                />
+                            </div>
+                        </div>
+                        <q-tree
+                            v-model:selected="selectedMenuNode"
+                            dense
+                            :filter="menuFilter"
+                            :nodes="menuNodes"
+                            node-key="id"
+                            @mousedown="onMouseDown"
+                        ></q-tree>
+                    </div>
                 </div>
             </template>
         </q-splitter>
