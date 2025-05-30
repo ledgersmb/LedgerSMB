@@ -381,6 +381,7 @@ _filters: &_filters
       - /1\.4\..*/
       - /1\.5\..*/
       - /1\.6\..*/
+      - master
 
 workflows:
   workflow:
