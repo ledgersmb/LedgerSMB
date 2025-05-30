@@ -1,5 +1,6 @@
 /** @format */
 
+import { promisify } from "@/promisify";
 import { h, inject, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -75,7 +76,7 @@ export default {
 
             let d = registry.byId("errorDialog");
             d.set("content", errstr);
-            d.show();
+            await promisify(d.show());
         },
         _interceptClick(dnode) {
             let href = dnode.getAttribute("href");
