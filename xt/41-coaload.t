@@ -14,6 +14,10 @@ use LedgerSMB::Database;
 use Log::Log4perl qw(:easy);
 Log::Log4perl->easy_init($OFF);
 
+ # Subprocesses don't want these options; we don't want to test them.
+delete $ENV{PERL5LIB};
+delete $ENV{PERL5OPT};
+
 
 my @missing = grep { ! $ENV{$_} } (qw(LSMB_NEW_DB COA_TESTING LSMB_TEST_DB));
 skip_all((join ', ', @missing) . ' not set') if @missing;

@@ -260,10 +260,10 @@ executors:
         default: chrome
       hub:
         type: string
-        default: selenium/hub:3
+        default: selenium/hub
       selenium:
         type: string
-        default: selenium/node-chrome:3
+        default: selenium/node-firefox
       coverage:
         type: integer
         default: 0
@@ -275,16 +275,15 @@ executors:
       - image: << parameters.hub >>
         name: selenium-hub
         environment:
-          GRID_DEBUG: "true"
-          GRID_HUB_PORT: 4444
-          GRID_MAX_SESSION: 100
+          SE_EVENT_BUS_HOST: selenium-hub
+          SE_EVENT_BUS_PORT: 4444
       - image: << parameters.selenium >>
         environment:
           GRID_DEBUG: "true"
-          HUB_HOST: selenium-hub
-          HUB_PORT: 4444
-          NODE_MAX_SESSION: 5
-          NODE_MAX_INSTANCES: 5
+          SE_EVENT_BUS_HOST: selenium-hub
+          SE_EVENT_BUS_PORT: 4444
+          SE_NODE_MAX_SESSIONS: 5
+          SE_NODE_MAX_INSTANCES: 5
       - image: mailhog/mailhog:latest
 
     environment:
@@ -323,8 +322,8 @@ jobs:
       perl: '5.38'
       postgres: '12'
       browser: chrome
-      selenium: selenium/node-chrome:3.141.59-20210607
-#      coverage: 1
+      selenium: selenium/node-chrome
+      # coverage: 0
     steps:
       - prep_env:
           perl: '5.38'
@@ -342,9 +341,9 @@ jobs:
     executor:
       name: test
       perl: '5.36'
-      postgres: '11'
+      postgres: '13'
       browser: firefox
-      selenium: selenium/node-firefox:3
+      selenium: selenium/node-firefox
     steps:
       - prep_env:
           perl: '5.36'
@@ -353,23 +352,6 @@ jobs:
       - prove
     environment:
       COA_TESTING: 1
-
-  test_webpack_opera:
-    <<: *defaults
-    executor:
-      name: test
-      perl: '5.36'
-      postgres: '11'
-      browser: operablink
-      selenium: selenium/node-opera:3
-    steps:
-      - prep_env:
-          perl: '5.36'
-      - start_starman
-      - start_proxy
-      - prove
-    environment:
-      DB_TESTING: 1
 
 # Workflows
 # Tests multiple browsers, coverage and dojo
@@ -385,11 +367,11 @@ _filters: &_filters
 workflows:
   workflow:
     jobs:
-      - test_webpack_chrome:
-          filters: *_filters
-
-#      - test_webpack_firefox:
+#      - test_webpack_chrome:
 #          filters: *_filters
+
+      - test_webpack_firefox:
+          filters: *_filters
 
 #      - test_webpack_opera:
 #          filters: *_filters
