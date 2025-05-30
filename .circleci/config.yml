@@ -260,10 +260,10 @@ executors:
         default: chrome
       hub:
         type: string
-        default: selenium/hub:3
+        default: selenium/hub
       selenium:
         type: string
-        default: selenium/node-chrome:3
+        default: selenium/node-chrome
       coverage:
         type: integer
         default: 0
