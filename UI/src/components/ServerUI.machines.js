@@ -77,10 +77,13 @@ function isOkResponse(ctx, { data }) {
 }
 
 async function updateContent(ctx) {
-    ctx.view.content = ctx.content;
+    ctx.view.content = "";
     let p = new Promise((resolve) => {
         ctx.view.$nextTick(() => {
-            resolve();
+            ctx.view.content = ctx.content;
+            ctx.view.$nextTick(() => {
+                resolve();
+            });
         });
     });
     await p;
