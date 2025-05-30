@@ -260,10 +260,10 @@ executors:
         default: chrome
       hub:
         type: string
-        default: selenium/hub:3
+        default: selenium/hub
       selenium:
         type: string
-        default: selenium/node-chrome:3
+        default: selenium/node-chrome
       coverage:
         type: integer
         default: 0
@@ -323,7 +323,7 @@ jobs:
       perl: '5.38'
       postgres: '12'
       browser: chrome
-      selenium: selenium/node-chrome:3.141.59-20210607
+      selenium: selenium/node-chrome
 #      coverage: 1
     steps:
       - prep_env:
@@ -344,7 +344,7 @@ jobs:
       perl: '5.36'
       postgres: '11'
       browser: firefox
-      selenium: selenium/node-firefox:3
+      selenium: selenium/node-firefox
     steps:
       - prep_env:
           perl: '5.36'
@@ -353,23 +353,6 @@ jobs:
       - prove
     environment:
       COA_TESTING: 1
-
-  test_webpack_opera:
-    <<: *defaults
-    executor:
-      name: test
-      perl: '5.36'
-      postgres: '11'
-      browser: operablink
-      selenium: selenium/node-opera:3
-    steps:
-      - prep_env:
-          perl: '5.36'
-      - start_starman
-      - start_proxy
-      - prove
-    environment:
-      DB_TESTING: 1
 
 # Workflows
 # Tests multiple browsers, coverage and dojo
