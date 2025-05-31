@@ -68,7 +68,7 @@ The combination of Vue and Quasar provides a way forward to phasing out parts
 of the Dojo Toolkit, especially in the area of application layout.
 
 The UI will use Quasar as much as possible, but limited to those areas where
-the difference in technical implementation doesn't blead through into the UI.
+the difference in technical implementation doesn't bleed through into the UI.
 This means that the "Material Design" form widgets won't be used until the
 application can be converted entirely.
 
