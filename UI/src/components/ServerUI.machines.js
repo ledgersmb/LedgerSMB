@@ -1,5 +1,6 @@
 /** @format */
 
+import { promisify } from "@/promisify";
 import {
     action,
     createMachine,
@@ -90,13 +91,7 @@ async function updateContent(ctx) {
 }
 
 async function parseContent(ctx) {
-    let maindiv = document.getElementById("maindiv");
-    let p = new Promise((resolve) => {
-        parser.parse(maindiv).then(() => {
-            resolve();
-        });
-    });
-    await p;
+    await promisify(parser.parse(document.getElementById("maindiv")));
     ctx.view.notify({
         title: ctx.options.done || ctx.view.$t("Loaded")
     });

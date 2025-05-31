@@ -1,5 +1,6 @@
 /** @format */
 
+import { promisify } from "./promisify";
 import { createApp } from "vue";
 import router from "@/router";
 import { createI18n } from "vue-i18n";
@@ -68,13 +69,12 @@ if (document.getElementById("main")) {
     appName = "#login";
 } else {
     /* In case we're running a "setup.pl" page */
-    dojoParser.parse(document.body).then(() => {
-        const l = document.getElementById("loading");
-        if (l) {
-            l.style.display = "none";
-        }
-        document.body.setAttribute("data-lsmb-done", "true");
-    });
+    await promisify(dojoParser.parse(document.body));
+    const l = document.getElementById("loading");
+    if (l) {
+        l.style.display = "none";
+    }
+    document.body.setAttribute("data-lsmb-done", "true");
 }
 if (app) {
     app.config.compilerOptions.isCustomElement = (tag) =>

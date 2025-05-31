@@ -2,6 +2,7 @@
 
 <script>
 /* global require */
+import { promisify } from "../promisify";
 import { provide, computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import Toaster from "@/components/Toaster";
@@ -93,7 +94,7 @@ export default {
             this.onMenuSelectedUpdate(newValue);
         }
     },
-    mounted() {
+    async mounted() {
         window.__lsmbLoadLink = (url) => {
             let tgt = url.replace(/^https?:\/\/(?:[^@/]+)/, "");
             if (!tgt.startsWith("/")) {
@@ -101,11 +102,11 @@ export default {
             }
             this.$router.push(tgt);
         };
-        let m = document.getElementById("main");
-        dojoParser.parse(m).then(() => {
-            document.body.setAttribute("data-lsmb-done", "true");
-        });
-        this.menuStore.initialize();
+        await Promise.all([
+            this.menuStore.initialize(),
+            promisify(dojoParser.parse(document.getElementById("main")))
+        ]);
+        document.body.setAttribute("data-lsmb-done", "true");
     },
     beforeUpdate() {
         document.body.removeAttribute("data-lsmb-done");
