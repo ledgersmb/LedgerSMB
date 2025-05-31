@@ -9,7 +9,7 @@ Accepted
 ## Context
 
 [Custom Elements](https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements)
-(part of the Web Components standards) is a set of specificactions that allow
+(part of the Web Components standards) is a set of specific actions that allow
 web developers to create HTML elements with their own defined behaviours. One
 of the possible uses for custom elements is to transform the browser into a
 templating engine: by expanding custom elements the way a templating engine
