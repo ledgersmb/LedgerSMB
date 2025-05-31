@@ -907,6 +907,7 @@ sub upgrade {
 
     my $settings = $request->{_wire}->get( 'setup_settings' );
     my $auth_db = ($settings and $settings->{auth_db}) // 'postgres';
+    $database->{connect_data}->{options} = "-c search_path=$database->{schema},public";
     my $dbinfo = $database->get_info($auth_db);
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
     my $locale = $request->{_locale};
