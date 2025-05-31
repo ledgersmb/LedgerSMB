@@ -67,3 +67,5 @@ Additionally, a proof-of-concept implementation was done with Vue.
 3. Infrastructure needs to be developed to create webservices "quickly" and securely
 
 ## Annotations
+
+[ADR 0105 - Change UI from Dojo to Quasar](./0105-change-ui-from-dojo-to-quasar.md)
