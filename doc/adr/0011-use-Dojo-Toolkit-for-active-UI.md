@@ -4,7 +4,7 @@ Date: During 1.3.42 development
 
 ## Status
 
-Superseeded by [ADR 0105](./0105-change-ui-from-dojo-to-quasar.md)
+Superseded by [ADR 0105](./0105-change-ui-from-dojo-to-quasar.md)
 
 ## Context
 
