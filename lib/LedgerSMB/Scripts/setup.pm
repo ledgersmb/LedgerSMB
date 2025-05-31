@@ -274,6 +274,7 @@ sub login {
     my $template = $request->{_wire}->get('ui');
     my $settings = $request->{_wire}->get( 'setup_settings' );
     my $auth_db = ($settings and $settings->{auth_db}) // 'postgres';
+    # Schema search path set in upgrade() needs to match that set here
     $database->{connect_data}->{options} = "-c search_path=$database->{schema},public";
 
     my $version_info = $database->get_info($auth_db);
@@ -907,6 +908,8 @@ sub upgrade {
 
     my $settings = $request->{_wire}->get( 'setup_settings' );
     my $auth_db = ($settings and $settings->{auth_db}) // 'postgres';
+    # Schema search path needs to match that set in login()
+    $database->{connect_data}->{options} = "-c search_path=$database->{schema},public";
     my $dbinfo = $database->get_info($auth_db);
     my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
     my $locale = $request->{_locale};
