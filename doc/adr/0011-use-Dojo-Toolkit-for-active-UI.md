@@ -47,3 +47,7 @@ into Dojo widgets dynamically.
 - All code and templates must ensure unique html-'id' attribute values
   to be assigned in the resulting HTML page: Dojo deals badly with
   duplicate ID values -- even if it might have generated these itself.
+
+## Annotations
+
+[ADR 0027 - Templating with custom web elements](./0027-templating-with-custom-web-elements.md)
