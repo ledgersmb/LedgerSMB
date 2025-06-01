@@ -188,15 +188,9 @@
                                       'data-dojo-props' = 'required: false'
                               } %]
 
-                          [% ELSE %]
-
-                                      [% PROCESS label element_data = {
-                                        text = displayrow.accno
-                                        align = 'right'
-                                        id = "acc_$INDEX"
-                                      } %]
-
-
+                          [% ELSE;
+                                displayrow.accno;
+                             END %]
                         [% END %]
 
                  </td>
@@ -353,13 +347,9 @@
   };
 END;
 %]
-[% IF form.recurringset ==1 %]
-          [% PROCESS label element_data = {
-                text => text('Scheduled')
-                align => 'right'
-           } %]
-
-[% END %]
+[% IF form.recurringset == 1;
+     text('Scheduled');
+   END %]
 [% IF form.id;
 
   PROCESS attachments attachments = {

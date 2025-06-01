@@ -244,21 +244,6 @@
      END;
    END ;
 
-   # LABEL ELEMENT
-   BLOCK label ;
-     IF element_data.text;
-
-        PROCESS auto_id element_type = 'label';
-        PROCESS attributes
-            attribute_data        = element_data,
-            attribute_defaults    = {},
-            element_keys          = for_keys,
-            custom_attribute_data = element_data.attributes;
-
-        "<label $all_attributes >" _ element_data.text _ "</label>";
-     END;
-   END;
-
    # REGULAR ATTRIBUTE PROCESSING -- all explicitly allowed attributes are processed here.
    BLOCK attributes ;
      all_attributes = "";
