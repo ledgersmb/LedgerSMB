@@ -4,7 +4,7 @@ Date: During 1.3.42 development
 
 ## Status
 
-Accepted
+Superseded by [ADR 0105](./0105-change-ui-from-dojo-to-quasar.md)
 
 ## Context
 
@@ -50,4 +50,6 @@ into Dojo widgets dynamically.
 
 ## Annotations
 
+[ADR 0015 - JavaScript SPA client using Vue](./0015-js-spa-client-using-vue.md)
 [ADR 0027 - Templating with custom web elements](./0027-templating-with-custom-web-elements.md)
+[ADR 0105 - Change UI from Dojo to Quasar](./0105-change-ui-from-dojo-to-quasar.md)
