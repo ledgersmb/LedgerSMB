@@ -3,6 +3,12 @@
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.10
+* Fix typo on AR/AP Import Batch screen (#8843)
+* Fix csv export from AP/AR search (#8840)
+* Fix number formatting on AP/AR search screen
+
+
 Changelog for 1.12.9
 * Fix check for financial report templates when upgrading pre-1.8 databases
 * Fix report csv export template missing linebreaks
