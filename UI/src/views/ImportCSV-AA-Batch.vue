@@ -56,7 +56,7 @@ export default {
                     <dd />
                     <dt>ap</dt>
                     <dd />
-                    <dt>escription</dt>
+                    <dt>description</dt>
                     <dd />
                     <dt>invnumber</dt>
                     <dd />
