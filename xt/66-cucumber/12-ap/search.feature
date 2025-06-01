@@ -27,7 +27,7 @@ Scenario: Search by date, specifying start and end date
    And I expect the 'Date' report column to contain '2025-01-01' for Invoice 'INV101'
    And I expect the 'Vendor' report column to contain 'Vendor A' for Invoice 'INV101'
    And I expect the 'Total' report column to contain '100.01' for Invoice 'INV101'
-   And I expect the 'Paid' report column to contain '0' for Invoice 'INV101'
+   And I expect the 'Paid' report column to contain '0.00' for Invoice 'INV101'
    And I expect the 'Due' report column to contain '100.01' for Invoice 'INV101'
    And I expect the 'Date' report column to contain '2025-03-31' for Invoice 'INV102'
 
