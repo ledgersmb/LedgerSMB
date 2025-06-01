@@ -22,7 +22,7 @@
                   <label for='end-date'>[% text('Yearend') %]</label>
                 </td>
                 <td>[% PROCESS input element_data={
-                  class = 'date',
+                  type = 'date',
                   name = 'end_date',
                   size = 11,
                   title = user.dateformat,
@@ -86,7 +86,7 @@
       <tbody>
         <tr>
           <td>[% PROCESS input element_data={
-                  class = 'date',
+                  type = 'date',
                   name = 'period_close_date',
                   size = 11,
                   title = 'Close As-Of'

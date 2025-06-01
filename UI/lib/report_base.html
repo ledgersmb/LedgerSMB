@@ -98,9 +98,8 @@ END # BLOCK -%]
 [% END # BLOCK -%]
 [%- BLOCK _date_block %]
     [% INCLUDE input element_data = {
-           type = "text"
+           type = "date"
           label = label
-          class = "date"
            name = name _ SUFFIX
              id = name _ SUFFIX
            size = 11
