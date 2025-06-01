@@ -17,7 +17,7 @@
 <div class="inputrow" id="daterow"><div class="inputgroup" id="startdategrp">
 [% PROCESS input element_data = {
      name = "start_date"
-     class = "date"
+     type = "date"
      value = asset_report.start_date
      label = text("From")
 } %]
@@ -25,7 +25,7 @@
 <div class="inputgroup" id="todategroup">
 [% PROCESS input element_data = {
      name = "end_date"
-     class = "date"
+     type = "date"
      value = asset_report.end_date
      label = text("To")
 } %]

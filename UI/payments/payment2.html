@@ -98,7 +98,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
             <tr id="date_row">[% # here goes an input where the date can be written, we can also use a java calendar :). We can use an ajax script to call the Exchange rate of the input date which can be called with the onChange Method   %]
               <th align="right" nowrap id="date_label_column">
                 <label for="datepaid">[% text('Date') %]</label></th>
-              [%- datepaid.class = 'date' %]
+              [%- datepaid.type = 'date' %]
               <td colspan="2" id="date_column">
                 [% ddp="data-dojo-props"; datepaid.$ddp="defaultIsToday:true"  ; PROCESS input element_data=datepaid %]
                 [% datepaid.id='olddatepaid'; datepaid.name='olddatepaid'; datepaid.type='hidden'; PROCESS input element_data=datepaid %]

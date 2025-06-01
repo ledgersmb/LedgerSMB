@@ -129,9 +129,8 @@ PROCESS dynatable
                         title = text('Starting Date'),
                         label = text('Starting Date'),
                         name = "startdate",
-                        class = "date",
                         value = credit_act.startdate,
-                        type = "text",
+                        type = "date",
                         size = "12",
                         maxlength = "10"
                 } #' %]
@@ -141,9 +140,8 @@ PROCESS dynatable
                         title = text('End Date'),
                         label = text('End Date'),
                         name = "enddate",
-                        class = "date",
                         value = credit_act.enddate,
-                        type = "text",
+                        type = "date",
                         size = "12",
                         maxlength = "10"
                 } #' %]
@@ -450,7 +448,7 @@ PROCESS dynatable
               [% label_pos = -1; # apparently, there's something leaky
                      PROCESS input element_data = {
                      label=text('From')
-                     class="date"
+                     type="date"
                      name="from_date"
                      id="from_date"
                      size="11"
@@ -462,7 +460,7 @@ PROCESS dynatable
               [% label_pos = -1; # apparently, there's something leaky
                      PROCESS input element_data = {
                      label=text('To')
-                     class="date"
+                     type="date"
                      name="to_date"
                      id="to_date"
                      size="11"

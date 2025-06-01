@@ -129,24 +129,21 @@ default_values = [employee.manager_id]
         label = text('DOB')
         name = "dob"
         value = employee.dob
-        type = "text"
-        class = "date"
+        type = "date"
         size = 10
 }  %]
 [% PROCESS input element_data = {
         label = text('Start Date')
         name = "start_date"
         value = employee.start_date
-        type = "text"
-        class = "date"
+        type = "date"
         size = 10
 } # '  %]
 [% PROCESS input element_data = {
         label = text('End Date')
         name = "end_date"
         value = employee.end_date
-        class = "date"
-        type = "text"
+        type = "date"
         size = 10
 } # ' %]
 </div>

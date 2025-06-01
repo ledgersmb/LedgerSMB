@@ -73,10 +73,9 @@
             <label for="datefrom">[% text('Date from') %]</label> &gt;=</td>
                 <td id="datefrom-gt-column">
                         [%
-                             datefrom.type      = "text";
                              datefrom.size      = "10"  ;
                              datefrom.maxlenght = "10"  ;
-                             datefrom.class     = 'date';
+                             datefrom.type      = 'date';
                              datefrom.name      = "datefrom";
                              PROCESS input element_data=datefrom;
                          -%]
@@ -85,10 +84,9 @@
             <label for="dateto">[% text('Date to') %]</label> &lt;=</td>
                 <td id="dateto-column">
                         [%
-                             dateto.type        = "text";
                              dateto.size        = "10"  ;
                              dateto.maxlenght   = "10"  ;
-                             dateto.class       = 'date';
+                             dateto.type        = 'date';
                              dateto.name        = "dateto";
                              PROCESS input element_data=dateto;
                         -%]

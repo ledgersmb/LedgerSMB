@@ -108,8 +108,7 @@
          input_defaults  = element_defaults.${element_data.type} or {};
 
          IF 'text' == element_data.type and 'date' == element_data.class;
-             input_type_keys = input_keys.date;
-             input_defaults = element_defaults.date;
+             THROW invalidinput "Invalid input: element specified of type 'text' with class 'date'";
          END;
          IF 'date' == element_data.type;
              # we can't add 'type="date"' because HTML5 defines it,

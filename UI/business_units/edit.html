@@ -51,17 +51,15 @@ default_blank = 1
 <div class="inputrow" id="daterow">
 [% PROCESS input element_data = {
         name = "start_date"
-        class = "date"
-        label = text("Start Date") #"
-         type = "text"
+        type = "date"
+        label = text("Start Date")
         value = start_date
          size = 12
 } %]
 [% PROCESS input element_data = {
         name = "end_date"
-        class = "date"
-        label = text("End Date") #"
-         type = "text"
+        type = "date"
+        label = text("End Date")
         value = end_date
          size = 12
 } %]

@@ -123,7 +123,7 @@
               [% label_pos = -1; # apparently, there's something leaky
                      PROCESS input element_data = {
                      label=text('From')
-                     class="date"
+                     type="date"
                      name="from_date"
                      id="from_date"
                      size="11"
@@ -135,7 +135,7 @@
               [% label_pos = -1; # apparently, there's something leaky
                      PROCESS input element_data = {
                      label=text('To')
-                     class="date"
+                     type="date"
                      name="to_date"
                      id="to_date"
                      size="11"
@@ -168,7 +168,7 @@
             <div class="input_group">
               [% PROCESS input element_data = {
                      label=text('From')
-                     class="date"
+                     type="date"
                      name="from_date_" _ c
                      id="from_date_" _ c
                      size="11"
@@ -176,7 +176,7 @@
 
               [% PROCESS input element_data = {
                      label=text('To')
-                     class="date"
+                     type="date"
                      name="to_date_" _ c
                      id="to_date_" _ c
                      size="11"
