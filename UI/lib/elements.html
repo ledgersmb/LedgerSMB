@@ -8,13 +8,12 @@
           'required', 'tabindex']);
 
   input_keys.hidden       = default_keys.merge(['type', 'name', 'value']);
-  input_keys.file         = default_input_keys.merge(['accept']);
-  input_keys.image        = default_input_keys.merge(['alt', 'src']);
   input_keys.checkbox     = default_input_keys.merge(['checked']);
-  input_keys.toggle       = default_input_keys.merge(['checked']);
-  input_keys.radio        = default_input_keys.merge(['checked']);
-  input_keys.password     = default_input_keys;
   input_keys.date         = default_input_keys;
+  input_keys.file         = default_input_keys.merge(['accept']);
+  input_keys.toggle       = default_input_keys.merge(['checked']);
+  input_keys.password     = default_input_key;
+  input_keys.radio        = default_input_keys.merge(['checked']);
   input_keys.text         = default_input_keys.merge(['maxlength', 'readonly']);
 
 
@@ -244,22 +243,6 @@
         END;
      END;
    END ;
-
-   # TOGGLE ELEMENT
-   BLOCK toggle ;
-     IF element_data;
-
-        PROCESS auto_id element_type = 'toggle';
-        PROCESS attributes
-            attribute_data        = element_data,
-            attribute_defaults    = element_defaults.toggle,
-            element_keys          = toggle_keys,
-            custom_attribute_data = element_data.attributes;
-
-        PROCESS auto_label  # Process element label.
-        "<button$all_attributes >" _ element_data.text _ "</button>";
-     END;
-   END;
 
    # LABEL ELEMENT
    BLOCK label ;
