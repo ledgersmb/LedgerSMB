@@ -113,6 +113,10 @@ Updated dependencies
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.25
+* Fix typo on AR/AP Import Batch screen (#8843)
+
+
 Changelog for 1.11.24
 * Fix entity search by country
 
