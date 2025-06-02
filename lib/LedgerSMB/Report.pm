@@ -39,7 +39,7 @@ A minimal report might inherit and use this module as follows:
         my ($self) = @_;
         $self->rows([
             {row_id => 1, name => 'apple', food_type => 'fruit'},
-            {row_id => 1, name => 'carrot', food_type => 'vegetable'},
+            {row_id => 2, name => 'carrot', food_type => 'vegetable'},
         ]);
         return;
     }
@@ -88,20 +88,20 @@ Localized name of column for labelling purposes
 
 =item type
 
-Display type for column data.  May be one of:
+Display type for column data.  Must be one of:
 
     * text
     * input_text
     * hidden
     * href
-    * input_text
     * radio
+    * select
     * checkbox
     * boolean_checkmark
 
 =item href_base
 
-Base for href.  Only meaningful if type is href
+Base for href.  Only meaningful if type is href.
 
 =item money
 
@@ -241,7 +241,7 @@ has order_dir  => (is => 'rw', isa => 'Maybe[Str]');
 
 =head2 order_url
 
-Url for order redirection.  Internal only.
+URL for order redirection.  Internal only.
 
 =cut
 
@@ -396,7 +396,7 @@ This takes no arguments and simply renders the report as is.
 
 C<&renderer> is a function of 4 arguments. The difference between C<$vars> and
 C<$clean_vars> is that the latter are already HTML-safely encoded whereas
-the former are not (and therefor will be encoded before being inserted into
+the former are not (and therefore will be encoded before being inserted into
 the template).
 
 =cut
@@ -434,8 +434,8 @@ sub output_name {
 
 =head2 format_money_columns
 
-Formats the data in C<$self->rows> of columns marked as "money" type
-into correctly formatted strings. Invoked as part of C<render>.
+Formats the data in C<$self->rows> of columns marked with "money" flag
+set true into correctly formatted strings. Invoked as part of C<render>.
 
 =cut
 
@@ -597,7 +597,7 @@ sub _render {
     my @rows = map { +{ $_->%{@col_ids} } } $self->rows->@*;
     $self->rows([]);
 
-    # needed to get aroud escaping of header line names
+    # needed to get around escaping of header line names
     # i.e. ignore_yearends -> ignore\_yearends
     # in latex
     my $replace_hnames = sub {
