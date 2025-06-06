@@ -137,8 +137,8 @@ The single page app's DOM tree:
 * `Weasel::Session's` `page` attribute (`PageObject::Root`)
   * `body` attribute (`PageObject::App`)
     * `menu` attribute (`PageObject::App::Menu`)
-      * `maindiv` attribute (`PageObject::App::Main`)
-        * `content` attribute (`PageObject::App::*`)
+    * `maindiv` attribute (`PageObject::App::Main`)
+      * `content` attribute (`PageObject::App::*`)
 
 The BDD scripts refer to the `body` attribute's value above as
 "the page", while they refer to the `content` attribute's value as
