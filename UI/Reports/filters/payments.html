@@ -34,21 +34,15 @@
         } %]
 <div class="listtop" id="page_title">[% TITLE %]</div>
 
-  <div class="labelledinput">
-      <label for="meta-number">[% CONTACT %]</label>
-      <div class="value">
+  <div class="two-column-grid" style="width: fit-content">
         [% INCLUDE input element_data = {
                 name  = "meta_number"
                 value = meta_number
                 class = "text"
                 type  = "text"
                 size  = "20"
-        } %]
-       </div>
-  </div>
-  <div class="labelledinput">
-      <label for="cash-accno">[% text('Cash Account') %]</label>
-      <div class="value">
+                label = CONTACT
+} %]
         [%
              INCLUDE select element_data = {
                 name           = "cash_accno"
@@ -57,22 +51,18 @@
                 default_blank  = (not batch_id)
                 class          = "account"
                 value_attr     = "accno"
-        } %]
-      </div>
-  </div>
-  <div class="labelledinput">
-    <label for="source">[% text('Source') %]</label>
-    <div class="value" id="source_input_div">
+                label          = text('Cash Account')
+} %]
         [% INCLUDE input element_data = {
                 name  = "source"
                 value = source
                 class = "text"
                 type  = "text"
                 size  = "20"
-        } %]
-    </div>
-  </div>
-  [% PROCESS date_row_div %]
+                label = text('Source')
+} %]
+</div>
+[% PROCESS date_row_div %]
 
 [% IF batch_id %]
   <div class="listtop">

@@ -15,9 +15,7 @@
     name = "id"
    value = id
 }; %]
-<div class="labelledinput">
-    <br>
-    <div id = "taxform-countries" class="inputcountry">
+<div class="two-column-grid" style="width: fit-content">
 
     [% IF countries %]
         [% IF !country_id; country_id = default_country; END %]
@@ -31,11 +29,6 @@
                 } %]
     [% END %]
 
-    </div>
-</div>
-
-<div class="labelledinput">
-
      [% PROCESS input element_data = {
         name = "form_name"
         type = "text"
@@ -44,9 +37,6 @@
         size = '15'
                                          }
      %]
-</div>
-
-<div class="labelledinput">
 
      [% IF default_reportable; CHECKED = 'CHECKED';
             ELSE; CHECKED = '';
@@ -55,13 +45,10 @@
         name = "default_reportable"
         type = "checkbox"
         value = "1"
-        label = text("Select by Default:") #"
+        label = text("Select by Default:")
         checked = CHECKED
                                          }
      %]
-</div>
-
-<div class="labelledinput">
 
      [% IF is_accrual; CHECKED = 'CHECKED';
             ELSE; CHECKED = '';
@@ -70,7 +57,7 @@
         name = "is_accrual"
         type = "checkbox"
         value = "1"
-        label = text("Accrual Basis:") #"
+        label = text("Accrual Basis:")
         checked = CHECKED
                                          }
      %]
