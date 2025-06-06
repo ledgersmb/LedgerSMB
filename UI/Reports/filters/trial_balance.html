@@ -31,7 +31,13 @@ TRIAL_BALANCE_TYPES = [
             </td>
           </tr>
           <tr>
+          </tr>
+          <tr>
             <td>
+              <table>
+              <tr>
+              <td></td>
+                          <td>
               [% PROCESS input element_data = {
                        label = text('All accounts')
                        name  = 'all_accounts'
@@ -39,9 +45,10 @@ TRIAL_BALANCE_TYPES = [
                    }
               %]
             </td>
-          </tr>
-          <tr>
-            <td>[% PROCESS input element_data = {
+            </tr>
+              <tr>
+              <td></td>
+              <td>[% PROCESS input element_data = {
                         name = 'is_approved'
                         type = 'radio'
                        value = 'Y'
@@ -59,11 +66,8 @@ TRIAL_BALANCE_TYPES = [
                         type = 'radio'
                        value = 'All'
                        label = text('All')
-            }; %]</td>
-          </tr>
-          <tr>
-            <td>
-              <table>
+            }; %] </td>
+              </tr>
                 <tr><th>[% text('Balances as') %]</th>
                     <td>[% PROCESS select element_data = {
                                name = 'balance_sign'

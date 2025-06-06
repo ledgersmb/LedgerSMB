@@ -37,8 +37,7 @@
            class = "submit"
            } %]
 
-    <div class="inputline">
-      <div class="inputgroup">
+    <div class="two-column-grid" style="width: fit-content">
         [% INCLUDE input element_data = {
                label = text('Description')
                type = "text"
@@ -46,10 +45,7 @@
                name = "description"
                class = "description"
                } %]
-      </div>
-    </div>
-    <div class="inputline">
-      <div class="inputgroup">
+
         [% INCLUDE input element_data = {
                label = text('Url')
                type = "text"
@@ -57,18 +53,13 @@
                name = "url"
                class = "url"
                } %]
-      </div>
-    </div>
-    <div class="separator"></div>
-    [% text('Or') %]
-    <div class="inputline">
-      <div class="inputgroup">
-        [% INCLUDE input element_data = {
+    <span>[% text('Or') %]</span><span></span>
+
+    [% INCLUDE input element_data = {
                label = text("File")
                type = "file"
                name = "upload_data"
                } %]
-      </div>
     </div>
     <div class="inputline">
       <div class="inputgroup">

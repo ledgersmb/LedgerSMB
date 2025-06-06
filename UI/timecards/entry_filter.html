@@ -4,7 +4,6 @@
 <body class="lsmb [% dojo_theme %]">
 <form data-dojo-type="lsmb/Form" method="post" action="timecard.pl" title = "[% text('Timecard Criteria') %]">
 <div class="listtop">[% text('Timecard Criteria') %]</div>
-<div class="tabular col-1">
 <div>[% IF employees;
           # Setting this to a conditional so that employee list can be
           # populated by add-on workflows.  Our standard ones will be set up
@@ -12,11 +11,9 @@
           PROCESS employee element_name="person_id" label=text('Employee');
        END %]
 </div>
-<div>
+<div class="two-column-grid" style="width: fit-content">
 [% PROCESS business_unit_class label=text('Recording time for') _ ':' #'
        text_attr="label" value_attr="id" %]
-</div>
-<div >
 [% PROCESS select element_data = {
             name = 'num_days'
          options = [{text = text('Day'),  value = 1},
@@ -26,8 +23,6 @@
            class = 'timeframe'
        };
 %]
-</div>
-<div>
 [% PROCESS input element_data = {
        label = text('Starting Date') #'
         name = 'date_from'
@@ -35,7 +30,8 @@
         size = 12
     required = 'true'
 } %]
-</div></div>
+</div>
+<div>
 [% PROCESS button element_data = {
     text = text('Continue')
     name = '__action'
@@ -43,5 +39,6 @@
     type = 'submit'
    class = 'submit'
 } %]
+</div>
 </form>
 </body>

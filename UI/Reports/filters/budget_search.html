@@ -7,8 +7,7 @@
     <div class="listtop">
       [% text('Search Budgets') %]
     </div>
-    <div class="input_row" id = "reference_row">
-      <div class="input_group">
+    <div class="two-column-grid" style="width: fit-content">
         [% INCLUDE input element_data = {
                name = "reference",
                value = reference,
@@ -17,8 +16,6 @@
                class = 'reference',
                label = text('Reference')
                } %]
-      </div>
-      <div class="input_group">
         [% INCLUDE input element_data = {
                name = "description",
                value = description,
@@ -28,10 +25,6 @@
                label = text('Description')
                }
                %]
-      </div>
-    </div>
-    <div class="input_row" id = "date_row">
-      <div class="input_group">
         [% INCLUDE input element_data = {
                name = "start_date"
                value = start_date
@@ -39,8 +32,6 @@
                size = "11"
                label = text('Start Date') #'
                } %]
-      </div>
-      <div class="input_group">
         [% INCLUDE input element_data = {
                name = "end_date"
                value = end_date
@@ -48,10 +39,7 @@
                size = "11"
                label = text('End Date') #'
                } %]
-      </div>
-    </div>
     [% FOREACH BUC IN bu_classes %]
-    <div class="inputrow"><div class="inputgroup">
         [% PROCESS select element_data = {
                name = 'business_unit_' _ loop.count
                options = b_units.${BUC.id}
@@ -61,14 +49,13 @@
                class = 'business_unit'
                label = text(BUC.label)
                } %]
-      </div>
-    </div>
     [% max_class=loop.count; END; # FOREACH BUC
            PROCESS input element_data = {
            name = 'bclass_count'
            type = 'hidden'
            value = max_class
            } %]
+    </div>
     <div class="input_row" id = "button_row">
       [% PROCESS button element_data = {
              text = text('Search')
