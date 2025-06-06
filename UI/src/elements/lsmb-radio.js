@@ -2,9 +2,9 @@
 
 import { LsmbBaseInput } from "@/elements/lsmb-base-input";
 
-const dojoCheckBox = require("dijit/form/CheckBox");
+const dojoRadioButton = require("dijit/form/RadioButton");
 
-export class LsmbCheckBox extends LsmbBaseInput {
+export class LsmbRadioButton extends LsmbBaseInput {
     _valueAttrs() {
         return [...super._valueAttrs(), "checked"];
     }
@@ -14,8 +14,8 @@ export class LsmbCheckBox extends LsmbBaseInput {
     }
 
     _widgetClass() {
-        return dojoCheckBox;
+        return dojoRadioButton;
     }
 }
 
-customElements.define("lsmb-checkbox", LsmbCheckBox);
+customElements.define("lsmb-radio", LsmbRadioButton);
