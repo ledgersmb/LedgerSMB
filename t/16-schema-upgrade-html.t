@@ -447,15 +447,15 @@ $check = qq{<table id="grid"
   <tbody>
    <tr class=" 0">
       <td style="display:none">
-        <span><input id="grid-row-1" type="hidden" name="grid_row_1" value="0" /></span></td>
-      <td style="display:none"><span><input id="grid---pk-0" type="hidden" name="grid_--pk_0" value="Y29sMQ== Y29sMg==" /></span></td>
+        <input type="hidden" id="grid-row-1" name="grid_row_1" value="0" /></td>
+      <td style="display:none"><input type="hidden" id="grid---pk-0" name="grid_--pk_0" value="Y29sMQ== Y29sMg==" /></td>
       <td class="a  text">col1</td>
       <td class="b  text">col2</td>
-      <td class="c  input_text"><span><input id="grid_c-1" type="text" name="grid_c_0" size="60" value="col3" data-dojo-type="dijit/form/ValidationTextBox" maxlength="255" /></span></td>
+      <td class="c  input_text"><lsmb-text  id="grid_c-1" name="grid_c_0" value="col3" ></lsmb-text></td>
    </tr>
   </tbody>
  </table>
-<span><input id="rowcount-grid" type="hidden" name="rowcount_grid" value="1" /></span>
+<input type="hidden" id="rowcount-grid" name="rowcount_grid" value="1" />
 };
 
 $check =~ s|\n+\s*|\n|g;

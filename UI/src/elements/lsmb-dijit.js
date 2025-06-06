@@ -3,6 +3,7 @@
 
 export class LsmbDijit extends HTMLElement {
     dojoWidget = null;
+    collectedProps = null;
 
     constructor() {
         super();
@@ -16,11 +17,18 @@ export class LsmbDijit extends HTMLElement {
         return [];
     }
 
+    _rmAttrs() {
+        return [];
+    }
+
     _stdProps() {
         return {};
     }
 
     _collectProps() {
+        if (this._collectedProps) {
+            return this._collectedProps;
+        }
         let extra = this.hasAttribute("dojo-props")
             ? eval("({" + this.getAttribute("dojo-props") + "})") // eslint-disable-line no-eval
             : {};
@@ -36,6 +44,7 @@ export class LsmbDijit extends HTMLElement {
             }
         });
 
+        this._collectedProps = props;
         return props;
     }
 
@@ -71,5 +80,14 @@ export class LsmbDijit extends HTMLElement {
         } else {
             this.dojoWidget.set(name, newValue);
         }
+    }
+
+    connectedCallback() {
+        this._connectedCallback();
+        this._rmAttrs().forEach((prop) => {
+            if (this.hasAttribute(prop)) {
+                this.removeAttribute(prop);
+            }
+        });
     }
 }

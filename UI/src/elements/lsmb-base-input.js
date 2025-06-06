@@ -18,7 +18,19 @@ export class LsmbBaseInput extends LsmbDijit {
     }
 
     _valueAttrs() {
-        return ["label", "title", "name", "value", "tabindex"];
+        return [
+            "label",
+            "label-position",
+            "title",
+            "name",
+            "value",
+            "tabindex",
+            "size"
+        ];
+    }
+
+    _rmAttrs() {
+        return ["label", "title", "name", "value", "tabindex", "size"];
     }
 
     _labelRoot() {
@@ -72,22 +84,26 @@ export class LsmbBaseInput extends LsmbDijit {
         this.setAttribute("value", newValue);
     }
 
-    connectedCallback() {
+    _connectedCallback() {
         if (this.connected) {
             return;
         }
         this.connected = true;
 
+        let id = this.getAttribute("id");
+        this.removeAttribute("id");
+
+        let props = this._collectProps();
+        if (id) {
+            props.id = id;
+        }
         if (!this.dojoWidget) {
-            this.dojoWidget = new (this._widgetClass())(this._collectProps());
+            this.dojoWidget = new (this._widgetClass())(props);
         }
 
-        if (
-            this.hasAttribute("label") &&
-            this.getAttribute("label") !== "_none_"
-        ) {
+        if (Object.hasOwn(props, "label") && props.label !== "_none_") {
             this.dojoLabel = document.createElement("label");
-            this.dojoLabel.innerHTML = this.getAttribute("label");
+            this.dojoLabel.innerHTML = props.label;
             this.dojoLabel.classList.add("label");
             this.dojoLabel.setAttribute("for", this.dojoWidget.id);
 
@@ -98,13 +114,16 @@ export class LsmbBaseInput extends LsmbDijit {
         }
 
         const labelBefore =
-            !this.hasAttribute("label-pos") ||
-            this.getAttribute("label-pos") !== "after";
+            !Object.hasOwn(props, "label-position") ||
+            props["label-position"] !== "after";
 
         if (labelBefore && this.dojoLabel) {
             this._labelRoot().appendChild(this.dojoLabel);
         }
 
+        if (id) {
+            this.dojoWidget.focusNode.setAttribute("id", id);
+        }
         this.dojoWidget.placeAt(this._widgetRoot());
 
         if (!labelBefore && this.dojoLabel) {
