@@ -137,7 +137,7 @@
     "webpack-sources": "3.3.0",
     "webpack-virtual-modules": "0.6.2",
     "yaml-jest-transform": "^2.0.2",
-    "yargs": "17.7.2"
+    "yargs": "18.0.0"
   },
   "homepage": "http://ledgersmb.org/",
   "scripts": {
