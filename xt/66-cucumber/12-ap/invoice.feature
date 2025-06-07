@@ -23,8 +23,8 @@ Scenario: Creation of a new purchase invoice, no taxes
     Then I expect to see an invoice with 1 empty line
      And I expect to see these invoice header fields and values
        | name            | value    |
-       | Invoice Created |         |
-       | Invoice Date    | $$today |
+       | Invoice Created | $$today  |
+       | Invoice Date    | $$today  |
        | Due Date        |          |
        | Record in       | 2100--Accounts Payable |
        | Currency        | USD      |
