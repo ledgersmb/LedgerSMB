@@ -742,7 +742,7 @@ $form->open_status_div($status_div_id) . qq|
            }
 
      $form->{$_} //= '' for (qw(description invnumber ordnumber duedate ponumber));
-    $form->{$_} //= 'today' for (qw(crdate transdate));
+     $form->{$_} //= 'today' for (qw(crdate transdate));
      $myconfig{dateformat} //= '';
      $employee //= '';
      $form->{sequence_select} = $form->sequence_dropdown($invnumber, $readonly_headers)
@@ -1094,7 +1094,12 @@ sub form_footer {
 
     my $wf = $form->{_wire}->get('workflows')
         ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
-    $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
+    if ($form->{transdate} eq 'today') {
+        $transdate = '';
+    }
+    else {
+        $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
+    }
     $wf->context->param( transdate => $transdate );
 
     # type=submit $locale->text('Update')
