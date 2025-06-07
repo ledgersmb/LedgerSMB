@@ -26,10 +26,8 @@ sub find_heading {
 
     if($heading->{Heading} eq 'Ending Statement Balance') {
         $xpath = (
-            '//table[@id="report_headings"]/tbody'.
-            qq{/tr[th[normalize-space(.)="$heading->{Heading}:"]]}.
-            q{/td/span/div[@id="widget_their-total"]/div/}.
-            qq{/input[\@value="$heading->{Contents}"]}
+            '//table[@id="report_headings"]'.
+            qq{//input[\@id="their-total" and \@value="$heading->{Contents}"]}
         );
     }
     else {
