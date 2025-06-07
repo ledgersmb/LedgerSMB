@@ -3,10 +3,12 @@
 import { LsmbBaseInput } from "@/elements/lsmb-base-input";
 
 const dojoRadioButton = require("dijit/form/RadioButton");
+const on = require("dojo/on");
+const topic = require("dojo/topic");
 
 export class LsmbRadioButton extends LsmbBaseInput {
     _valueAttrs() {
-        return [...super._valueAttrs(), "checked"];
+        return [...super._valueAttrs(), "checked", "topic"];
     }
 
     _rmAttrs() {
@@ -15,6 +17,22 @@ export class LsmbRadioButton extends LsmbBaseInput {
 
     _widgetClass() {
         return dojoRadioButton;
+    }
+
+    _connectCallback() {
+        super._connectCallback();
+        if (this.dojoWidget) {
+            let props = this._collectProps();
+            if (props.topic) {
+                this.dojoWidget.own(
+                    on(this.dojoWidget.domNode, "change", () => {
+                        if (this.checked) {
+                            topic.publish(props.topic, props.value);
+                        }
+                    })
+                );
+            }
+        }
     }
 }
 
