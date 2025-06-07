@@ -12,22 +12,24 @@ export class LsmbCheckBox extends LsmbBaseInput {
     }
 
     _rmAttrs() {
-        return [...super._rmAttrs(), "checked", "topic"];
+        return [...super._rmAttrs(), "checked"];
     }
 
     _widgetClass() {
         return dojoCheckBox;
     }
 
-    _connectCallback() {
-        super._connectCallback();
+    _connectedCallback() {
+        super._connectedCallback();
         if (this.dojoWidget) {
             let props = this._collectProps();
             if (props.topic) {
                 this.dojoWidget.own(
                     on(this.dojoWidget.domNode, "change", () => {
-                        if (this.checked) {
+                        if (this.dojoWidget.checked) {
                             topic.publish(props.topic, props.value);
+                        } else {
+                            topic.publish(props.topic, null);
                         }
                     })
                 );

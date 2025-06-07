@@ -19,14 +19,14 @@ export class LsmbRadioButton extends LsmbBaseInput {
         return dojoRadioButton;
     }
 
-    _connectCallback() {
-        super._connectCallback();
+    _connectedCallback() {
+        super._connectedCallback();
         if (this.dojoWidget) {
             let props = this._collectProps();
             if (props.topic) {
                 this.dojoWidget.own(
                     on(this.dojoWidget.domNode, "change", () => {
-                        if (this.checked) {
+                        if (this.dojoWidget.checked) {
                             topic.publish(props.topic, props.value);
                         }
                     })
