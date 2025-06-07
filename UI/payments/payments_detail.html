@@ -209,17 +209,14 @@
             <thead>
                 <tr class="listheading">
                         <th class="account">
-                                <div class="selectall">
                                         [% INCLUDE input element_data = {
                                                 id    = 'checkbox-selectall'
                                                 name  = 'selectall'
                                                 class = 'selectall'
                                                 value = 0
                                                 type  = 'checkbox'
-                      "data-dojo-type" = "lsmb/PublishCheckBox"
-                      "data-dojo-props" = "topic:'ui/pay/bulk/all-accounts'"
+                                                topic = 'ui/pay/bulk/all-accounts'
                                         } %]
-                                </div>
                                 [% text('Account') %]
                         </th>
                         <th class="entity_name">[% text('Name') %]</th>
@@ -255,9 +252,8 @@
                                                 name    = "id_" _ r.contact_id
                                                 value   = r.contact_id
                                                 checked = (r.selected) ? "checked" : undef
-                  class   = 'contactcb'
-                      "data-dojo-type" = "lsmb/SubscribeCheckBox"
-                      "data-dojo-props" = "topic:'ui/pay/bulk/all-accounts'"
+                                                class   = 'contactcb'
+                                                "update-from" = 'ui/pay/bulk/all-accounts'
                                         } %]
                                         [% r.econtrol_code %] --
                                         [% r.account_number %] -- [% r.eca_description %]
@@ -283,10 +279,9 @@
                                                                 class   = "paid_some"
                                                                 id      = "paid-some-" _ r.contact_id
                                                                 label   = text('Some')
-                                                               type    = "radio"
-                                                               checked = (payment.${"paid_$r.contact_id"} == 'some') ? "checked" : ""
-                        "data-dojo-type" = "lsmb/PublishRadioButton"
-                        "data-dojo-props" = "topic:'ui/pay/bulk/invoice-data-table-" _ r.contact_id _ "'"
+                                                                type    = "radio"
+                                                                checked = (payment.${"paid_$r.contact_id"} == 'some') ? "checked" : ""
+                                                                topic   = 'ui/pay/bulk/invoice-data-table-' _ r.contact_id
                                                          }      %]
                                                 </div>
                                                 <div class="input">
@@ -297,9 +292,8 @@
                                                                 id      = "paid-all-" _ r.contact_id
                                                                 label   = text('All')
                                                                 type    = "radio"
-                                                               checked = (payment.${"paid_$r.contact_id"} != 'some') ? "checked" : ""
-                                                               "data-dojo-type" = "lsmb/PublishRadioButton"
-                        "data-dojo-props" = "topic:'ui/pay/bulk/invoice-data-table-" _ r.contact_id _ "'"
+                                                                checked = (payment.${"paid_$r.contact_id"} != 'some') ? "checked" : ""
+                                                                topic   = 'ui/pay/bulk/invoice-data-table-' _ r.contact_id
 
                                                  }      %]
                                                 </div>
