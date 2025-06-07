@@ -25,6 +25,14 @@ export class LsmbDate extends LsmbBaseInput {
         return dojoDateBox;
     }
 
+    _collectProps() {
+        let props = super._collectProps();
+        if (props.value === "today") {
+            props.value = new Date();
+        }
+        return props;
+    }
+
     disconnectedCallback() {
         if (this.widgetWrapper) {
             this.widgetWrapper.remove();

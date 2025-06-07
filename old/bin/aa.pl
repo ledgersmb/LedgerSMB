@@ -741,8 +741,8 @@ $form->open_status_div($status_div_id) . qq|
         |;
            }
 
-     $form->{$_} //= '' for (qw(description invnumber ordnumber crdate transdate duedate
-                             ponumber));
+     $form->{$_} //= '' for (qw(description invnumber ordnumber duedate ponumber));
+    $form->{$_} //= 'today' for (qw(crdate transdate));
      $myconfig{dateformat} //= '';
      $employee //= '';
      $form->{sequence_select} = $form->sequence_dropdown($invnumber, $readonly_headers)
@@ -777,11 +777,11 @@ $form->open_status_div($status_div_id) . qq|
           </tr>
               <tr>
                 <th align=right nowrap><label for="crdate">| . $locale->text('Invoice Created') . qq|</label></th>
-                <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=crdate id=crdate size=11 title="($myconfig{'dateformat'})" value="$form->{crdate}" data-dojo-props="defaultIsToday:true" $readonly_headers></td>
+                <td><lsmb-date name=crdate id=crdate size=11 title="($myconfig{'dateformat'})" value="$form->{crdate}" $readonly_headers></lsmb-date></td>
               </tr>
           <tr>
         <th align=right nowrap><label for="transdate">| . $locale->text('Invoice Date') . qq|</label></th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name=transdate id=transdate size=11 title="($myconfig{'dateformat'})" value="$form->{transdate}" data-dojo-props="defaultIsToday:true" $readonly_headers></td>
+        <td><lsmb-date name=transdate id=transdate size=11 title="($myconfig{'dateformat'})" value="$form->{transdate}" $readonly_headers></lsmb-date></td>
           </tr>
           <tr>
         <th align=right nowrap><label for="duedate">| . $locale->text('Due Date') . qq|</label></th>

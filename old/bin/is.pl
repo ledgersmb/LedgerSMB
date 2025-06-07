@@ -481,7 +481,8 @@ sub form_header {
        }
 
     $form->{$_} //= '' for (qw(description shippingpoint shipvia invnumber ordnumber
-                            quonumber ponumber crdate transdate duedate));
+                               quonumber ponumber duedate));
+    $form->{$_} //= 'today' for (qw(crdate transdate));
     $myconfig{dateformat} //= '';
     $business //= '';
     $department //= '';
@@ -548,11 +549,11 @@ sub form_header {
           </tr>
           <tr class="crdate-row">
         <th align=right><label for="crdate">| . $locale->text('Invoice Created') . qq|</label></th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" id="crdate" data-dojo-props="defaultIsToday:true" $readonly_headers ></td>
+        <td><lsmb-date name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" id="crdate" $readonly_headers></lsmb-date></td>
           </tr>
           <tr class="transdate-row">
         <th align=right><label for="transdate">| . $locale->text('Invoice Date') . qq|</label></th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox" name="transdate" id="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}" data-dojo-props="defaultIsToday:true" $readonly_headers ></td>
+        <td><lsmb-date name="transdate" id="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}" $readonly_headers></lsmb-date></td>
           </tr>
           <tr>
         <th align=right><label for="duedate">| . $locale->text('Due Date') . qq|</label></th>
