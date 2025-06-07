@@ -26,7 +26,9 @@ if (TARGET !== "readme") {
     // eslint-disable-next-line
     const { WebpackDeduplicationPlugin } = require("webpack-deduplication-plugin");
 
-    const argv = require("yargs").argv;
+    const yargs = require("yargs/yargs");
+    const { hideBin } = require("yargs/helpers");
+    const argv = yargs(hideBin(process.argv)).argv;
     const prodMode =
         process.env.NODE_ENV === "production" ||
         argv.p ||
