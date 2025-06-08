@@ -693,6 +693,8 @@ return @{$self->{open_overpayment_entities}};
 
 This is a simple wrapper around payment_get_unused_overpayments sql function.
 
+This is now used by AA.pm
+
 =cut
 
 sub get_unused_overpayments {
