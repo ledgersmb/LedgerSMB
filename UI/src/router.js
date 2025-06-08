@@ -2,101 +2,100 @@
 
 import { createRouter, createWebHashHistory } from "vue-router";
 
-import Home from "@/views/Home";
-import ServerUI from "@/components/ServerUI";
-import Countries from "@/views/Countries.vue";
-import ImportCsvAaBatch from "@/views/ImportCSV-AA-Batch";
-import ImportCsvCoA from "@/views/ImportCSV-CoA";
-import ImportCsvGl from "@/views/ImportCSV-GL";
-import ImportCsvGlBatch from "@/views/ImportCSV-GL-Batch";
-import ImportCsvGSO from "@/views/ImportCSV-GSO";
-import ImportCsvInventory from "@/views/ImportCSV-Inventory";
-import ImportCsvTimecard from "@/views/ImportCSV-Timecard";
-import Warehouses from "@/views/Warehouses.vue";
-import Pricegroups from "@/views/Pricegroups.vue";
-import Languages from "@/views/Languages.vue";
-import SIC from "@/views/SIC.vue";
-import BusinessTypes from "@/views/BusinessTypes.vue";
-import GIFI from "@/views/GIFI.vue";
-
 const routes = [
-    { name: "home", path: "/", component: Home },
-    { name: "warehouses", path: "/warehouses", component: Warehouses },
-    { name: "pricegroups", path: "/pricegroups", component: Pricegroups },
-    { name: "languages", path: "/languages", component: Languages },
-    { name: "countries", path: "/countries", component: Countries },
-    { name: "sics", path: "/sics", component: SIC },
-    { name: "gifis", path: "/gifis", component: GIFI },
+    { name: "home", path: "/", component: () => import("@/views/Home") },
+    {
+        name: "warehouses",
+        path: "/warehouses",
+        component: () => import("@/views/Warehouses")
+    },
+    {
+        name: "pricegroups",
+        path: "/pricegroups",
+        component: () => import("@/views/Pricegroups")
+    },
+    {
+        name: "languages",
+        path: "/languages",
+        component: () => import("@/views/Languages")
+    },
+    {
+        name: "countries",
+        path: "/countries",
+        component: () => import("@/views/Countries")
+    },
+    { name: "sics", path: "/sics", component: () => import("@/views/SIC") },
+    { name: "gifis", path: "/gifis", component: () => import("@/views/GIFI") },
     {
         name: "business-types",
         path: "/business-types",
-        component: BusinessTypes
+        component: () => import("@/views/BusinessTypes.vue")
     },
     {
         name: "importCSV-AR-Batch",
         path: "/import-csv/ar_multi",
-        component: ImportCsvAaBatch,
+        component: () => import("@/views/ImportCSV-AA-Batch"),
         props: { type: "ar_multi", multi: true }
     },
     {
         name: "importCSV-AP-Batch",
         path: "/import-csv/ap_multi",
-        component: ImportCsvAaBatch,
+        component: () => import("@/views/ImportCSV-AA-Batch"),
         props: { type: "ap_multi", multi: true }
     },
     {
         name: "importCSV-CoA",
         path: "/import-csv/chart",
-        component: ImportCsvCoA
+        component: () => import("@/views/ImportCSV-CoA")
     },
     {
         name: "importCSV-GL",
         path: "/import-csv/gl",
-        component: ImportCsvGl
+        component: () => import("@/views/ImportCSV-GL")
     },
     {
         name: "importCSV-GL-Batch",
         path: "/import-csv/gl_multi",
-        component: ImportCsvGlBatch
+        component: () => import("@/views/ImportCSV-GL-Batch")
     },
     {
         name: "importCSV-Inventory",
         path: "/import-csv/inventory",
-        component: ImportCsvInventory
+        component: () => import("@/views/ImportCSV-Inventory")
     },
     {
         name: "importCSV-Inventory-Batch",
         path: "/import-csv/inventory/multi",
-        component: ImportCsvInventory,
+        component: () => import("@/views/ImportCSV-Inventory"),
         props: { multi: true }
     },
     {
         name: "importCSV-Overhead",
         path: "/import-csv/overhead",
-        component: ImportCsvGSO,
+        component: () => import("@/views/ImportCSV-GSO"),
         props: { type: "overhead" }
     },
     {
         name: "importCSV-Parts",
         path: "/import-csv/parts",
-        component: ImportCsvGSO,
+        component: () => import("@/views/ImportCSV-GSO"),
         props: { type: "goods" }
     },
     {
         name: "importCSV-Services",
         path: "/import-csv/services",
-        component: ImportCsvGSO,
+        component: () => import("@/views/ImportCSV-GSO"),
         props: { type: "services" }
     },
     {
         name: "importCSV-Timecard",
         path: "/import-csv/timecard",
-        component: ImportCsvTimecard
+        component: () => import("@/views/ImportCSV-Timecard")
     },
     {
         name: "default",
         path: "/:pathMatch(.*)",
-        component: ServerUI,
+        component: () => import("@/components/ServerUI"),
         props: (route) => ({ uiURL: route.fullPath }),
         meta: {
             managesDone: true
