@@ -969,9 +969,25 @@ sub save_employee {
     $sth->execute($person_id, $form->{id});
 }
 
+=item get_overpayments
+
+This wraps LedgerSMB::DBObject::Payments->get_unused_overpayments to retrieve 
+overpayments for display on AR, AP, and invoice screens.
+
+=cut
+
+sub get_overpayments {
+    my ($mod, $form) = @_;
+    $form->{account_class} = ($form->{vc} == 'vendor') ? 1 : 2;
+    $form->{entity_credit_id} = $form->{"$form->{vc}_id"};
+
+    my $payments = LedgerSMB::DBObject::Payments->new($form);
+    $form->{overpayments} = [$payments->get_unused_overpayments()];
+}
+
 =back
 
-=head1 COPTYRIGHT
+=head1 COPYRIGHT
 
 # LedgerSMB
 # Small Medium Business Accounting software
