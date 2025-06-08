@@ -1695,21 +1695,24 @@ sub use_overpayment2 {
             next;
         }
 
-        if ($ovp_repeated_invoices{qq|$Payment->{"invoice_id_$count"}|}->{qq|$Payment->{"selected_accno_$count"}|}
+        # the "ovp_repeated_invoices" hash will store the conbination
+        # of invoice id and overpayment account, if this convination has
+        # already printed do not print it again
+        $ovp_repeated_invoices{$Payment->{"invoice_id_$count"}} //= {};
+
+        my $ovp_inv_payment =
+                $ovp_repeated_invoices{$Payment->{"invoice_id_$count"}};
+
+        if ($ovp_inv_payment->{$Payment->{"selected_accno_$count"}}
             != $Payment->{"selected_accno_$count"}) {
 
-            # the "ovp_repeated_invoices" hash will store the conbination
-            # of invoice id and overpayment account, if this convination has
-            # already printed do not print it again
-            $ovp_repeated_invoices{$Payment->{"invoice_id_$count"}}->{$Payment->{"selected_accno_$count"}} =
+            $ovp_inv_payment->{$Payment->{"selected_accno_$count"}} =
                 $Payment->{"selected_accno_$count"};
 
             # the "repeated invoice" flag will check if this invoice has
             # already been printed, if it does, do not print the apply
             # discount checkbox in the UI
 
-            my $ovp_inv_payment =
-                $ovp_repeated_invoices{$Payment->{"invoice_id_$count"}};
             if (! $ovp_inv_payment->{repeated_invoice}){
                 $ovp_inv_payment->{optional_discount} =
                     $Payment->{"optional_discount_$count"};
@@ -1746,7 +1749,7 @@ sub use_overpayment2 {
                 $warning .= $locale->text('The amount of the invoice number').qq| $Payment->{"invnumber_$count"} |.$locale->text('is lesser than 0').qq|\n|;
             }
             #lets make the href for the invoice
-            my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
+            my $uri = $Payment->script();
             $uri .= '.pl?__action=edit&id='
                 . $Payment->{"invoice_id_$count"} . '&login='
                 . $request->{login};
@@ -1769,7 +1772,8 @@ sub use_overpayment2 {
                 selected_accno    => {
                     id        => $ovp_chart_id,
                     ovp_accno => $ovp_selected_accno },
-                amount             => $Payment->{"amount_$count"}} unless ($seen_invoices{$Payment->{"invoice_id_$count"}}++);
+                amount             => $Payment->{"amount_$count"}
+            } unless ($seen_invoices{$Payment->{"invoice_id_$count"}}++);
         }
         $count++;
     }
@@ -1785,37 +1789,36 @@ sub use_overpayment2 {
         $Selected_entity =
             LedgerSMB::DBObject::Payment->new(%$Payment);
         $Selected_entity->{invnumber} = $request->{new_invoice} ;
-
+        my $id = $Payment->{new_entity_id};
         my ($id,$name,$vc_discount_accno) =
-            split(/--/, $Selected_entity->{new_entity_id});
+            split(/--/, $request->{new_entity_id});
         my ($ovp_chart_id, $ovp_selected_accno) =
-            split(/--/, $Selected_entity->{new_accno});
+            split(/--/, $request->{new_accno});
 
         $Selected_entity->{entity_credit_id} = $id;
 
         @avble_invoices = $Selected_entity->get_open_invoice();
-        for my $ref (0 .. $#avble_invoices) {
+        for my $ref (@avble_invoices) {
+            # Checking for repeated invoices
+            my $ovp_rep_invoice = $ovp_repeated_invoices{$ref->{invoice_id}};
 
-            # this hash will store the convination of invoice id and
-            # overpayment account, if this convination has already printed
-            # do not print it again
-            if ($ovp_repeated_invoices{$avble_invoices[$ref]->{invoice_id}}->{$Selected_entity->{new_accno}}
+            if ($ovp_rep_invoice->{$Selected_entity->{new_accno}}
                 != $Selected_entity->{new_accno}){
-                $ovp_repeated_invoices{$avble_invoices[$ref]->{invoice_id}}->{$Selected_entity->{new_accno}} =
+                $ovp_rep_invoice->{$Selected_entity->{new_accno}} =
                     $Selected_entity->{new_accno};
 
                 # the "repeated invoice" flag will check if this invoice has
                 # already been printed, if it does, do not print the apply
                 # discount checkbox in the UI
-                if (!$ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{repeated_invoice}){
-                    $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{repeated_invoice} = 'false';
+                if (!$ovp_rep_invoice->{repeated_invoice}){
+                    $ovp_rep_invoice->{repeated_invoice} = 'false';
                 } else{
-                    $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{repeated_invoice} = 'true';
+                    $ovp_rep_invoice->{repeated_invoice} = 'true';
                 }
 
 
-                if (!$ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{optional_discount}){
-                    $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{optional_discount} = 'true';
+                if (!$ovp_rep_invoice->{optional_discount}){
+                    $ovp_rep_invoice->{optional_discount} = 'true';
                 }
 
                 $invoice_id_amount_to_pay{qq|$avble_invoices[$ref]->{invoice_id}|} +=
@@ -1825,29 +1828,31 @@ sub use_overpayment2 {
                     $Selected_entity->{new_amount};
 
                 #lets make the href for the invoice
-                my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-                $uri .= '.pl?__action=edit&id='
-                    . $avble_invoices[$ref]->{invoice_id}
+                my $uri = $Payment->script();
+                $uri .= '.pl?__action=edit&id='. $ref->{invoice_id}
                 . '&login=' . $request->{login};
+
+                my $name = $ref->{legal_name};
 
                 push @ui_avble_invoices, {
                     invoice       => {
-                        number => $avble_invoices[$ref]->{invnumber},
-                        id     => $avble_invoices[$ref]->{invoice_id},
+                        number => $ref->{invnumber},
+                        id     => $ref->{invoice_id},
                         href   => $uri },
                     entity_name       => $name,
                     vc_discount_accno => $vc_discount_accno,
                     entity_id        => qq|$Selected_entity->{entity_credit_id}--$name|,
                     invoice_date        => $avble_invoices[$ref]->{invoice_date},
                     applied_due       => $Payment->{"due_$count"},
-                    repeated_invoice  => $ovp_repeated_invoices{$avble_invoices[$ref]->{invoice_id}}->{repeated_invoice},
-                    due            => $avble_invoices[$ref]->{due},
-                    discount          => $avble_invoices[$ref]->{discount},
+                    repeated_invoice  => $ovp_rep_invoice->{repeated_invoice},
+                    due            => $ref->{due},
+                    discount          => $ref->{discount},
                     selected_accno    => {
                         id       => $ovp_chart_id,
                         ovp_accno => $ovp_selected_accno },
-                    amount        => $Selected_entity->{new_amount}} unless ($seen_invoices{$avble_invoices[$ref]->{invoice_id}}++)
-            }
+                    amount        => $Selected_entity->{new_amount}
+                } unless ($seen_invoices{$ref}->{invoice_id}++);
+             }
         }
     }
 
