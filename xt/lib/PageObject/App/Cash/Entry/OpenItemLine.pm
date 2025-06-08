@@ -36,7 +36,7 @@ my %column_map = (
     'Memo'           => 'td.invoice-memo input',
     'Due'            => 'td.invoice-due',
     'To pay'         => '.topay_amount input[type="text"].dijitInputInner',
-    'X'              => 'div.remove input[type="checkbox"]',
+    'X'              => 'lsmb-checkbox.remove input[type="checkbox"]',
     );
 
 sub get {

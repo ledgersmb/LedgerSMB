@@ -423,6 +423,7 @@ sub form_header {
     }
 
     if ( $form->{type} !~ /_quotation$/ ) {
+        $form->{transdate} ||= 'today';
         $ordnumber = qq|
           <tr class="ordnumber-row">
         <th width=70% align=right nowrap>| . $locale->text('Order Number') . qq|</th>
@@ -432,7 +433,7 @@ sub form_header {
           </tr>
           <tr class="transdate-row">
         <th align=right nowrap>| . $locale->text('Order Date') . qq|</th>
-        <td><input class="date" data-dojo-type="lsmb/DateTextBox"name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate" data-dojo-props="defaultIsToday:true"></td>
+        <td><lsmb-date name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></lsmb-date></td>
           </tr>
           <tr class="reqdate-row">
         <th align=right nowrap=true>| . $locale->text('Required by') . qq|</th>

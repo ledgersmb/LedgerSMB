@@ -358,8 +358,7 @@ IF have_outstanding ;
             name = "cleared_$row.id"
             value = row.id
             checked = row.cleared
-            "data-dojo-type" = "lsmb/PublishCheckBox"
-                        "data-dojo-props" = "topic:'ui/reconciliation/report/cleared_" _ row.id _ "'"
+            topic = 'ui/reconciliation/report/cleared_' _ row.id
             };
                     END %]
                 </td>

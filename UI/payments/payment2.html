@@ -6,7 +6,6 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
     [% PROCESS elements.html  # Include form elements helper. %]
     [% accountclass.type = 'hidden';
         PROCESS input element_data=accountclass %]
-    [% login.type = 'hidden' ; PROCESS input element_data=login %]
     [% #WE NEED TO KNOW HOW MANY COLUMNS ARE WE USING, PLEASE DO NOT MOVE THE NEXT LINE -%]
     [% column_count = 0; FOREACH column IN column_headers; column_count = column_count + 1; END -%]
 
@@ -14,7 +13,6 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
       <tr id="top_bar" class="listtop">
         <th id="top_bar_header" class="listtop">
             [% header.text %]
-          [% type.type = 'hidden' ; PROCESS input element_data=type %]
         </th>
       </tr>
     </table>
@@ -100,7 +98,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                 <label for="datepaid">[% text('Date') %]</label></th>
               [%- datepaid.type = 'date' %]
               <td colspan="2" id="date_column">
-                [% ddp="data-dojo-props"; datepaid.$ddp="defaultIsToday:true"  ; PROCESS input element_data=datepaid %]
+                [% DEFAULT datepaid.value = 'today'  ; PROCESS input element_data=datepaid %]
                 [% datepaid.id='olddatepaid'; datepaid.name='olddatepaid'; datepaid.type='hidden'; PROCESS input element_data=datepaid %]
                 [% INCLUDE tooltip element_data = {
                        ref_id => "datepaid"

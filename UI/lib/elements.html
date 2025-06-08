@@ -8,13 +8,14 @@
           'required', 'tabindex']);
 
   input_keys.hidden       = default_keys.merge(['type', 'name', 'value']);
-  input_keys.file         = default_input_keys.merge(['accept']);
-  input_keys.image        = default_input_keys.merge(['alt', 'src']);
-  input_keys.checkbox     = default_input_keys.merge(['checked']);
-  input_keys.toggle       = default_input_keys.merge(['checked']);
-  input_keys.radio        = default_input_keys.merge(['checked']);
-  input_keys.password     = default_input_keys;
+  input_keys.checkbox     = default_input_keys.merge(['checked', 'topic', 'update-from']);
   input_keys.date         = default_input_keys;
+  input_keys.file         = default_input_keys.merge(['accept']);
+  spin = 'number-spinner'
+  input_keys.$spin        = default_input_keys.merge(['min','max','places'])
+  input_keys.toggle       = default_input_keys.merge(['checked']);
+  input_keys.password     = default_input_key;
+  input_keys.radio        = default_input_keys.merge(['checked', 'topic']);
   input_keys.text         = default_input_keys.merge(['maxlength', 'readonly']);
 
 
@@ -28,42 +29,6 @@
   for_keys                = default_keys.merge(['for']);
 
   # ELEMENT DEFAULTS
-
-  element_defaults.checkbox = {
-    value = '1',
-    'data-dojo-type' = 'dijit/form/CheckBox'
-  };
-
-  #radio
-  element_defaults.radio = {
-         'data-dojo-type' = 'dijit/form/RadioButton'
-  };
-
-  #file
-  element_defaults.file = {
-    size = '60'
-  };
-
-  #password
-  element_defaults.password = {
-    size = '60',
-    "data-dojo-type" = "dijit/form/ValidationTextBox"
-  };
-
-  # text
-  element_defaults.text = {
-    size = '60',
-    maxlength = '255',
-    "data-dojo-type" = "dijit/form/ValidationTextBox"
-  };
-
-  # date
-  USER.dojo_dateformat = USER.dateformat.lower().replace('mm','MM');
-  element_defaults.date = {
-    "data-dojo-type" = 'lsmb/DateTextBox',
-    'data-dojo-props' = "constraints: {datePattern: '$USER.dojo_dateformat'},placeholder: '$USER.dateformat'"
-    size = '8',
-  };
 
   # textarea
   element_defaults.textarea = {
@@ -105,32 +70,35 @@
              element_data.type = "text";
 
          input_type_keys = input_keys.${element_data.type} or default_input_keys;
-         input_defaults  = element_defaults.${element_data.type} or {};
 
          IF 'text' == element_data.type and 'date' == element_data.class;
              THROW invalidinput "Invalid input: element specified of type 'text' with class 'date'";
          END;
-         IF 'date' == element_data.type;
-             # we can't add 'type="date"' because HTML5 defines it,
-             # which conflicts with our use for Dojo
-             element_data.type = 'text';
-         END;
 
-         PROCESS auto_id  element_type = 'input';;
+         PROCESS auto_id element_type = 'input';
+
+         type = element_data.type;
+         element_data.delete('type');
          PROCESS attributes
             attribute_data        = element_data,
-            attribute_defaults    = input_defaults,
+            attribute_defaults    = {},
             element_keys          = input_type_keys,
             custom_attribute_data = element_data.attributes;
 
-         IF label_pos == -1;
-            PROCESS auto_label;
+         atts = '';
+         IF element_data.label.defined() AND element_data.label != '_none_';
+           atts = atts _ ' label="' _ element_data.label _ '"';
+           IF label_pos == -1;
+              atts = atts _ ' label-position="before"';
+           ELSIF label_pos == 1;
+              atts = atts _ ' label-position="after"';
+           END;
          END;
 
-         # wrap the input in a span so grids don't stretch it
-         "<span><input$all_attributes /></span>";
-         IF label_pos == 1;
-           PROCESS auto_label;
+         IF type == 'hidden';
+           "<input type=\"hidden\"$all_attributes />";
+         ELSE;
+           "<lsmb-$type $atts$all_attributes ></lsmb-$type>";
          END;
      END;
   END;
@@ -244,37 +212,6 @@
         END;
      END;
    END ;
-
-   # TOGGLE ELEMENT
-   BLOCK toggle ;
-     IF element_data;
-
-        PROCESS auto_id element_type = 'toggle';
-        PROCESS attributes
-            attribute_data        = element_data,
-            attribute_defaults    = element_defaults.toggle,
-            element_keys          = toggle_keys,
-            custom_attribute_data = element_data.attributes;
-
-        PROCESS auto_label  # Process element label.
-        "<button$all_attributes >" _ element_data.text _ "</button>";
-     END;
-   END;
-
-   # LABEL ELEMENT
-   BLOCK label ;
-     IF element_data.text;
-
-        PROCESS auto_id element_type = 'label';
-        PROCESS attributes
-            attribute_data        = element_data,
-            attribute_defaults    = {},
-            element_keys          = for_keys,
-            custom_attribute_data = element_data.attributes;
-
-        "<label $all_attributes >" _ element_data.text _ "</label>";
-     END;
-   END;
 
    # REGULAR ATTRIBUTE PROCESSING -- all explicitly allowed attributes are processed here.
    BLOCK attributes ;
