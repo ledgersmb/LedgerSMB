@@ -1784,7 +1784,7 @@ sub use_overpayment2 {
         # selected entity
         $Selected_entity =
             LedgerSMB::DBObject::Payment->new(%$Payment);
-        $Selected_entity->{invnumber} = $Selected_entity->{new_invoice} ;
+        $Selected_entity->{invnumber} = $request->{new_invoice} ;
 
         my ($id,$name,$vc_discount_accno) =
             split(/--/, $Selected_entity->{new_entity_id});
