@@ -408,6 +408,23 @@
         <acl role="gl_reports" access="allow"/>
       </acls>
     </menu-item>
+    <menu-item id="109" label="Reports">
+      <menu-item id="111" label="Trial Balance" url="reports.pl?report_name=trial_balance&amp;__action=start_report&amp;module_name=gl">
+        <acls>
+          <acl role="financial_reports" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="112" label="Income Statement" url="reports.pl?__action=start_report&amp;report_name=income_statement&amp;module_name=gl">
+        <acls>
+          <acl role="financial_reports" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="113" label="Balance Sheet" url="reports.pl?__action=start_report&amp;report_name=balance_sheet">
+        <acls>
+          <acl role="financial_reports" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
     <menu-item id="110" label="Chart of Accounts" url="journal.pl?__action=chart_of_accounts">
       <acls>
         <acl role="financial_reports" access="allow"/>
@@ -479,6 +496,12 @@
       </acls>
     </menu-item>
     <menu-item id="85" label="Reports">
+      <menu-item id="75" label="Inventory &amp; COGS" url="reports.pl?__action=start_report&amp;report_name=cogs_lines">
+        <acls>
+          <acl role="inventory_reports" access="allow"/>
+          <acl role="financial_reports" access="allow"/>
+        </acls>
+      </menu-item>
       <menu-item id="114" label="Inventory Activity" url="reports.pl?report_name=inventory_activity&amp;__action=start_report">
         <acls>
           <acl role="inventory_reports" access="allow"/>
@@ -557,29 +580,6 @@
           <acl role="translation_create" access="allow"/>
         </acls>
       </menu-item>
-    </menu-item>
-  </menu-item>
-  <menu-item id="109" label="Reports">
-    <menu-item id="111" label="Trial Balance" url="reports.pl?report_name=trial_balance&amp;__action=start_report&amp;module_name=gl">
-      <acls>
-        <acl role="financial_reports" access="allow"/>
-      </acls>
-    </menu-item>
-    <menu-item id="112" label="Income Statement" url="reports.pl?__action=start_report&amp;report_name=income_statement&amp;module_name=gl">
-      <acls>
-        <acl role="financial_reports" access="allow"/>
-      </acls>
-    </menu-item>
-    <menu-item id="113" label="Balance Sheet" url="reports.pl?__action=start_report&amp;report_name=balance_sheet">
-      <acls>
-        <acl role="financial_reports" access="allow"/>
-      </acls>
-    </menu-item>
-    <menu-item id="75" label="Inventory and COGS" url="reports.pl?__action=start_report&amp;report_name=cogs_lines">
-      <acls>
-        <acl role="inventory_reports" access="allow"/>
-        <acl role="financial_reports" access="allow"/>
-      </acls>
     </menu-item>
   </menu-item>
   <menu-item id="115" label="Recurring Transactions" url="am.pl?__action=recurring_transactions">

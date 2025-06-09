@@ -92,8 +92,7 @@ my %menu_path_pageobject_map = (
     "General Journal > Search" => 'PageObject::App::Search::GL',
     "General Journal > Chart of Accounts" => 'PageObject::App::Search::ReportDynatable',
     "General Journal > Year End" => 'PageObject::App::Closing',
-    # Time cards
-    "Reports > Balance Sheet" => 'PageObject::App::Report::Filters::BalanceSheet',
+    "General Journal > Reports > Balance Sheet" => 'PageObject::App::Report::Filters::BalanceSheet',
 
     "Goods & Services > Search" => 'PageObject::App::Search::GoodsServices',
     "Goods & Services > Add Part" => 'PageObject::App::Parts::Part',
@@ -104,6 +103,7 @@ my %menu_path_pageobject_map = (
 
     "Preferences" => 'PageObject::App::Preference',
 
+    # Time cards
     "Timecards > Generate > Sales Orders" => 'PageObject::App::Timecards::ToSalesOrders',
     "System > Currency > Edit currencies" => 'PageObject::App::System::Currency::EditCurrencies',
     "System > Currency > Edit rate types" => 'PageObject::App::System::Currency::EditRateTypes',

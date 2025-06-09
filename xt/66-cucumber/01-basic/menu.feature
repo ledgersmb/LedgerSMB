@@ -150,10 +150,21 @@ Scenario Outline: Navigate to menu "<path>" and open screen "<screen>"
     | path                                       | screen                   |
     | General Journal > Import                   |                          |
     | General Journal > Import Chart             |                          |
+
   Examples:
     | path                              | screen         |
     | General Journal > Journal Entry   | GL entry       |
     | General Journal > Search          | GL search      |
+    | General Journal > Reports > Balance Sheet                    | generate balance sheet   |
+
+  @wip
+  Examples:
+    | path                                       | screen                   |
+    | General Journal > Reports > Income Statement                 |                          |
+    | General Journal > Reports > Trial Balance                    |                          |
+
+  Examples:
+    | path                              | screen         |
     | Goods & Services > Add Assembly | assembly entry |
 
 
@@ -183,6 +194,7 @@ Scenario Outline: Navigate to menu "<path>" and open screen "<screen>"
     | Goods & Services > Import > Overhead     |                          |
     | Goods & Services > Import > Inventory    |                          |
     | Goods & Services > Reports               |                          |
+    | Goods & Services > Reports > Inventory & COGS |                   |
     | Goods & Services > Reports > Inventory Activity |                   |
     | Goods & Services > Search                | search for goods & services |
     | Goods & Services > Search Groups         |                          |
@@ -227,16 +239,10 @@ Scenario Outline: Navigate to menu "<path>" and open screen "<screen>"
     | path                                       | screen                   |
     | Quotations > RFQ                           |                          |
     | Recurring Transactions                     |                          |
-  Examples:
-    | path                                       | screen                   |
-    | Reports > Balance Sheet                    | generate balance sheet   |
 
   @wip
   Examples:
     | path                                       | screen                   |
-    | Reports > Income Statement                 |                          |
-    | Reports > Inventory and COGS               |                          |
-    | Reports > Trial Balance                    |                          |
     | Shipping > Receive                         |                          |
     | Shipping > Ship                            |                          |
     | Shipping > Transfer                        |                          |
