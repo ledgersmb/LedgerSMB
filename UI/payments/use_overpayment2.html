@@ -83,7 +83,7 @@
     <table id="curr_exrate_date_table">
      <tr id="date_row">[% # here goes an input where the date can be written, we can also use a java calendar :). We can use an ajax script to call the Exchange rate of the input date which can be called with the onChange Method          %]
       <th align="right" nowrap id="date_label_column">[% text('Date')%]:</th>
-      <td colspan="2" id="date_column"> [% INCLUDE input element_data=datepaid %] </td>
+      <td colspan="2" id="date_column"> [% datepaid.type = 'date'; INCLUDE input element_data=datepaid %] </td>
      </tr>
      <tr id="curr_row">
      [% #  here goes the selected currency in step 1 %]
