@@ -44,6 +44,14 @@ Updated dependencies
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.10
+* Fix 'Login' button sometimes inactive on login page (#8813)
+* Fix taxes inappropriately rounded to number precision (#8822)
+* Fix typo on AR/AP Import screen (#8853)
+* Fix CSV export for AR/AP search results (#8840)
+* Remove English-to-English translations for AR/AP/Customer/Vendor
+
+
 Changelog for 1.12.9
 * Fix check for financial report templates when upgrading pre-1.8 databases
 * Fix report csv export template missing linebreaks
