@@ -345,7 +345,7 @@ jobs:
             postgres: "14"
             BROWSER: "firefox"
             COVERAGE: 1
-            JOB_COUNT: 2
+            JOB_COUNT: 3
 
           - perl: "5.36"
             postgres: "15"
