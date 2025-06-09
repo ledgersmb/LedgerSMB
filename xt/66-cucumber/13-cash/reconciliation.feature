@@ -18,7 +18,7 @@ is no previous report from which to get an opening balance.
      | accno   |  debit_bc |  credit_bc  |
      | 1060    |  1000.00  |             |
      | 2620    |           |  1000.00    |
-  When I navigate the menu and select the item at "Cash > Reconciliation"
+  When I navigate the menu and select the item at "Cash & Banking > Reconciliation"
   Then I should see the New Reconciliation Report screen.
   When I select "1060 Checking Account" from the drop down "Account"
    And I enter "1000.00" into "Statement Balance"
@@ -72,7 +72,7 @@ Scenario: Search for reconciliation report and delete it,
  Given reconciliation reports with these properties:
        | Account Number | Statement Date | Statement Balance | Approved | Submitted |
        | 1060           | 2018-01-01     | 101.00            | no       | no        |
-  When I navigate the menu and select the item at "Cash > Reports > Reconciliation"
+  When I navigate the menu and select the item at "Cash & Banking > Reports > Reconciliation"
   Then I should see the Search Reconciliation Reports screen
   When I press "Search"
   Then I should see the Reconciliation Search Report screen

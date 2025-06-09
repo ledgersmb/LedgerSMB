@@ -19,7 +19,7 @@ use Test::More;
 use Test::BDD::Cucumber::StepFile;
 
 When qr/I open the sales invoice entry screen/, sub {
-    my @path = split /[\n\s\t]*>[\n\s\t]*/, 'AR > Sales Invoice';
+    my @path = split /[\n\s\t]*>[\n\s\t]*/, 'Accounts Receivable > Sales Invoice';
 
     my $content = S->{ext_wsl}->page->body->maindiv->content;
     S->{ext_wsl}->page->body->menu->click_menu(\@path);
@@ -27,7 +27,7 @@ When qr/I open the sales invoice entry screen/, sub {
 };
 
 When qr/I open the AR transaction entry screen/, sub {
-    my @path = split /[\n\s\t]*>[\n\s\t]*/, 'AR > Add Transaction';
+    my @path = split /[\n\s\t]*>[\n\s\t]*/, 'Accounts Receivable > Add Transaction';
 
     my $content = S->{ext_wsl}->page->body->maindiv->content;
     S->{ext_wsl}->page->body->menu->click_menu(\@path);
@@ -42,14 +42,14 @@ When qr/I select customer "(.*)"/, sub {
 };
 
 When qr/I open the purchase invoice entry screen/, sub {
-    my @path = split /[\n\s\t]*>[\n\s\t]*/, 'AP > Vendor Invoice';
+    my @path = split /[\n\s\t]*>[\n\s\t]*/, 'Accounts Payable > Vendor Invoice';
 
     S->{ext_wsl}->page->body->menu->click_menu(\@path);
     S->{ext_wsl}->page->body->verify;
 };
 
 When qr/I open the AP transaction entry screen/, sub {
-    my @path = split /[\n\s\t]*>[\n\s\t]*/, 'AP > Add Transaction';
+    my @path = split /[\n\s\t]*>[\n\s\t]*/, 'Accounts Payable > Add Transaction';
 
     S->{ext_wsl}->page->body->menu->click_menu(\@path);
     S->{ext_wsl}->page->body->verify;

@@ -31,93 +31,93 @@ Scenario Outline: Navigate to menu "<path>" and open screen "<screen>"
 
   Examples:
     | path                                       | screen                   |
-    | AP > Add Transaction                       | AP transaction entry     |
-    | AP > Debit Invoice                         | AP debit invoice entry   |
-    | AP > Debit Note                            | AP note entry            |
+    | Accounts Payable > Add Transaction                       | AP transaction entry     |
+    | Accounts Payable > Debit Invoice                         | AP debit invoice entry   |
+    | Accounts Payable > Debit Note                            | AP note entry            |
 
   @wip
   Examples:
     | path                                       | screen                   |
-    | AP > Import Batch                          | Batch import             |
-    | AP > Reports > AP Aging                    |                          |
-    | AP > Reports > Customer History            |                          |
-    | AP > Reports > Outstanding                 |                          |
-    | AP > Reports > Vendor History              |                          |
+    | Accounts Payable > Import Batch                          | Batch import             |
+    | Accounts Payable > Reports > AP Aging                    |                          |
+    | Accounts Payable > Reports > Customer History            |                          |
+    | Accounts Payable > Reports > Outstanding                 |                          |
+    | Accounts Payable > Reports > Vendor History              |                          |
 
   Examples:
     | path                                       | screen                   |
-    | AP > Search                                | AP search                |
-    | AP > Vendor Invoice                        | AP invoice entry         |
-
-  @wip
-  Examples:
-    | path                                       | screen                   |
-    | AP > Vouchers > AP Voucher                 |                          |
-    | AP > Vouchers > Import AP Batch            |                          |
-    | AP > Vouchers > Invoice Vouchers           |                          |
-    | AR > Add Return                            | AR returns               |
-
-  Examples:
-    | path                                       | screen                   |
-    | AR > Add Transaction                       | AR transaction entry     |
-    | AR > Credit Invoice                        | AR credit invoice entry  |
-    | AR > Credit Note                           | AR note entry            |
+    | Accounts Payable > Search                                | AP search                |
+    | Accounts Payable > Vendor Invoice                        | AP invoice entry         |
 
   @wip
   Examples:
     | path                                       | screen                   |
-    | AR > Import Batch                          | Batch import             |
-    | AR > Reports > AR Aging                    |                          |
+    | Accounts Payable > Vouchers > AP Voucher                 |                          |
+    | Accounts Payable > Vouchers > Import AP Batch            |                          |
+    | Accounts Payable > Vouchers > Invoice Vouchers           |                          |
+    | Accounts Receivable > Add Return                            | AR returns               |
+
   Examples:
     | path                                       | screen                   |
-    | AR > Reports > Customer History            | Purchase History Search  |
+    | Accounts Receivable > Add Transaction                       | AR transaction entry     |
+    | Accounts Receivable > Credit Invoice                        | AR credit invoice entry  |
+    | Accounts Receivable > Credit Note                           | AR note entry            |
 
   @wip
   Examples:
     | path                                       | screen                   |
-    | AR > Reports > Outstanding                 |                          |
+    | Accounts Receivable > Import Batch                          | Batch import             |
+    | Accounts Receivable > Reports > AR Aging                    |                          |
   Examples:
     | path                                       | screen                   |
-    | AR > Sales Invoice                         | AR invoice entry         |
-    | AR > Search                                | AR search                |
+    | Accounts Receivable > Reports > Customer History            | Purchase History Search  |
 
   @wip
   Examples:
     | path                                       | screen                   |
-    | AR > Vouchers > AR Voucher                 |                          |
-    | AR > Vouchers > Import AR Batch            |                          |
-    | AR > Vouchers > Invoice Vouchers           |                          |
+    | Accounts Receivable > Reports > Outstanding                 |                          |
+  Examples:
+    | path                                       | screen                   |
+    | Accounts Receivable > Sales Invoice                         | AR invoice entry         |
+    | Accounts Receivable > Search                                | AR search                |
+
+  @wip
+  Examples:
+    | path                                       | screen                   |
+    | Accounts Receivable > Vouchers > AR Voucher                 |                          |
+    | Accounts Receivable > Vouchers > Import AR Batch            |                          |
+    | Accounts Receivable > Vouchers > Invoice Vouchers           |                          |
   Examples:
     | path                                       | screen                   |
     | Budgets > Add Budget                       | Budget                   |
     | Budgets > Search                           | Budget search            |
-    | Cash > Payment                             | Single Payment Vendor Selection   |
-    | Cash > Receipt                             | Single Payment Customer Selection |
+    | Cash & Banking > Payment                             | Single Payment Vendor Selection   |
+    | Cash & Banking > Receipt                             | Single Payment Customer Selection |
 
   @wip
   Examples:
     | path                                       | screen                   |
-    | Cash > Reconciliation                      |                          |
-    | Cash > Reports                             |                          |
-    | Cash > Reports > Payments                  |                          |
-    | Cash > Reports > Receipts                  |                          |
+    | Cash & Banking > Reconciliation                      |                          |
+    | Cash & Banking > Reports                             |                          |
+    | Cash & Banking > Reports > Payments                  |                          |
+    | Cash & Banking > Reports > Receipts                  |                          |
   Examples:
     | path                                       | screen                   |
-    | Cash > Reports > Reconciliation            | Search Reconciliation Reports |
+    | Cash & Banking > Reports > Reconciliation            | Search Reconciliation Reports |
 
   @wip
   Examples:
     | path                                       | screen                   |
-    | Cash > Transfer                            |                          |
-    | Cash > Use AR Overpayment                  |                          |
-    | Cash > Use Overpayment                     |                          |
-    | Cash > Vouchers                            |                          |
-    | Cash > Vouchers > Payments                 |                          |
-    | Cash > Vouchers > Receipts                 |                          |
-    | Cash > Vouchers > Reverse AR Overpay       |                          |
-    | Cash > Vouchers > Reverse Overpay          |                          |
-    | Cash > Vouchers > Reverse Payment          |                          |
-    | Cash > Vouchers > Reverse Receipts         |                          |
+    | Cash & Banking > Transfer                            |                          |
+    | Cash & Banking > Use AR Overpayment                  |                          |
+    | Cash & Banking > Use Overpayment                     |                          |
+    | Cash & Banking > Vouchers                            |                          |
+    | Cash & Banking > Vouchers > Payments                 |                          |
+    | Cash & Banking > Vouchers > Receipts                 |                          |
+    | Cash & Banking > Vouchers > Reverse AR Overpay       |                          |
+    | Cash & Banking > Vouchers > Reverse Overpay          |                          |
+    | Cash & Banking > Vouchers > Reverse Payment          |                          |
+    | Cash & Banking > Vouchers > Reverse Receipts         |                          |
 
   Examples:
     | path                                       | screen                   |
@@ -154,43 +154,43 @@ Scenario Outline: Navigate to menu "<path>" and open screen "<screen>"
     | path                              | screen         |
     | General Journal > Journal Entry   | GL entry       |
     | General Journal > Search          | GL search      |
-    | Goods and Services > Add Assembly | assembly entry |
+    | Goods & Services > Add Assembly | assembly entry |
 
 
   @wip
   Examples:
     | path                                       | screen                   |
-    | Goods and Services > Add Group             |                          |
+    | Goods & Services > Add Group             |                          |
   Examples:
     | path                                       | screen                   |
-    | Goods and Services > Add Overhead          | overhead entry           |
-    | Goods and Services > Add Part              | part entry               |
+    | Goods & Services > Add Overhead          | overhead entry           |
+    | Goods & Services > Add Part              | part entry               |
 
   @wip
   Examples:
     | path                                       | screen                   |
-    | Goods and Services > Add Pricegroup        |                          |
+    | Goods & Services > Add Pricegroup        |                          |
   Examples:
     | path                                       | screen                   |
-    | Goods and Services > Add Service           | service entry            |
+    | Goods & Services > Add Service           | service entry            |
 
   @wip
   Examples:
     | path                                       | screen                   |
-    | Goods and Services > Enter Inventory       | Enter Inventory          |
-    | Goods and Services > Import > Goods        |                          |
-    | Goods and Services > Import > Services     |                          |
-    | Goods and Services > Import > Overhead     |                          |
-    | Goods and Services > Import > Inventory    |                          |
-    | Goods and Services > Reports               |                          |
-    | Goods and Services > Reports > Inventory Activity |                   |
-    | Goods and Services > Search                | search for goods & services |
-    | Goods and Services > Search Groups         |                          |
-    | Goods and Services > Search Pricegroups    |                          |
-    | Goods and Services > Stock Assembly        |                          |
-    | Goods and Services > Translations          |                          |
-    | Goods and Services > Translations > Description |                     |
-    | Goods and Services > Translations > Partsgroup |                      |
+    | Goods & Services > Enter Inventory       | Enter Inventory          |
+    | Goods & Services > Import > Goods        |                          |
+    | Goods & Services > Import > Services     |                          |
+    | Goods & Services > Import > Overhead     |                          |
+    | Goods & Services > Import > Inventory    |                          |
+    | Goods & Services > Reports               |                          |
+    | Goods & Services > Reports > Inventory Activity |                   |
+    | Goods & Services > Search                | search for goods & services |
+    | Goods & Services > Search Groups         |                          |
+    | Goods & Services > Search Pricegroups    |                          |
+    | Goods & Services > Stock Assembly        |                          |
+    | Goods & Services > Translations          |                          |
+    | Goods & Services > Translations > Description |                     |
+    | Goods & Services > Translations > Partsgroup |                      |
     | HR > Employees > Add Employee              |                          |
   Examples:
     | path                                       | screen                   |
