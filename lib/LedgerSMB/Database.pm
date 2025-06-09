@@ -652,7 +652,7 @@ sub load_base_schema {
 
 Loads or reloads sql modules from $loadorder
 
-Returns true when succesful, dies upon error.
+Returns true when successful, dies upon error.
 
 =cut
 
