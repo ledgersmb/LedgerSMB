@@ -34,16 +34,13 @@
     <link href="js/css/[% s %]" rel="stylesheet">
     [%- END %]
     <script>
-    [%- IF warn_expire %]
         var pw_expiration = {
-            "years": [% pw_expires.years %],
-            "months": [% pw_expires.months %],
-            "weeks": [% pw_expires.weeks %],
-            "days": [% pw_expires.days %]
+            "warn": [% warn_expire || 0 %],
+            "years": [% pw_expires.years || 0 %],
+            "months": [% pw_expires.months || 0 %],
+            "weeks": [% pw_expires.weeks || 0 %],
+            "days": [% pw_expires.days || 0 %]
         };
-    [% ELSE %]
-        var pw_expiration = null;
-    [% END %]
         var dojoConfig = {
             async: 1,
             parseOnLoad: false,
