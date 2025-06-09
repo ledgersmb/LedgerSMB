@@ -74,29 +74,23 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome              | 2018-03  | 65-81, 83-131                               |
-| Edge                | 2020-01  | 79-81, 83-131                               |
-| Firefox             | 2018-05  | 60-133                                      |
-| Opera               | 2018-03  | 52-58, 60, 62-114                           |
-| Safari              | 2018-09  | 12, 12.1, 13, 13.1, 14, 14.1, 15, 15.1,     |
-|                     |          | 15.2-15.6, 16.0-16.6, 17.0-17.6,            |
-|                     |          | 18.0-18.2                                   |
+| Chrome              | 2024-08  | 128-137                                     |
+| Edge                | 2024-07  | 127-136                                     |
+| Firefox             | 2024-09  | 130-139                                     |
+| Opera               | 2024-03  | 108-117                                     |
+| Safari              | 2024-01  | 17.3-17.6, 18.0-18.5                        |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome for Android  | 2024-11  | 131                                         |
-| Firefox for Android | 2024-10  | 132                                         |
-| Android Browser     | 2024-11  | 131                                         |
-| Baidu Browser       | 2024-03  | 13.52                                       |
-| Safari on iOS       | 2018-09  | 12.0-12.5, 13.0-13.7, 14.0-14.8,            |
-|                     |          | 15.0-15.8, 16.0-16.7, 17.0-17.7,            |
-|                     |          | 18.0-18.2                                   |
+| Chrome for Android  | <missing> | 136                                         |
+| Firefox for Android | <missing> | 137                                         |
+| Android Browser     | <missing> | 136                                         |
+| Safari on iOS       | 2024-01  | 17.3-17.7, 18.0-18.5                        |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
 | Opera Mobile        | 2024-03  | 80                                          |
-| Samsung Internet    | 2019-04  | 9.2, 10.1, 11.1-11.2, 12.0, 13.0, 14.0,     |
-|                     |          | 15.0, 16.0, 17.0, 18.0, 19.0, 20-27         |
+| Samsung Internet    | 2022-08  | 18.0, 19.0, 20-27                           |
 
 
 **Note**: Safari is very sensitive to using LedgerSMB over HTTPS; using it with

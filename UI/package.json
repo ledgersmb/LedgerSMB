@@ -27,12 +27,8 @@
       "name": "Chris Travers"
     }
   ],
-  "_browserslist-comment": [
-    "explicitly exclude Edge <= 18, because 'and supports input-event'",
-    "fails to exclude Edge 16-18"
-  ],
   "browserslist": [
-    "supports es6-module and supports async-functions and supports xhr2 and supports bloburls and supports css-variables and supports css3-boxsizing and supports border-radius and supports fetch and supports classlist and supports multicolumn and not edge <= 18 and supports css-display-contents and supports same-site-cookie-attribute"
+    "last 10 versions and not dead and supports es6-module and supports async-functions and supports xhr2 and supports bloburls and supports css-variables and supports css3-boxsizing and supports border-radius and supports fetch and supports classlist and supports multicolumn and supports css-display-contents and supports same-site-cookie-attribute"
   ],
   "bugs": "https://github.com/ledgersmb/LedgerSMB/issues",
   "repository": {
