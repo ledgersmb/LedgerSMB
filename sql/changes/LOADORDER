@@ -5,15 +5,12 @@
 # comments begin with # (but you knew that....)
 
 # 1.4 fixes from the old Fixes.sql
-1.4/menu-cleanup.sql
 !1.4/location-fixes.sql
 !1.4/batch-fixes.sql
 1.4/eca-update.sql
-!1.4/menu-update1.sql
 !1.4/person-fixes.sql
 !1.4/ar-constraint1.sql
 !1.4/ap-constraint1.sql
-!1.4/menu-update2.sql
 !1.4/invoice-fixes.sql
 !1.4/ar-fixes2.sql
 !1.4/ar-fixes3.sql
@@ -37,20 +34,11 @@
 1.5/cleanup_invoice_id.sql
 1.5/invoice_id_fkey.sql
 1.5/add_qty_to_pricematrix.sql
-1.5/remove_pos_template.sql
-# The scripts 1.5/template_menu and 1.5/template_menu3 used to
-# fail, but we didn't detect, causing them to be added to the log of
-# applied patches. By ignoring errors here, we simulate the same
-# even though we now correctly catch errors
-1.5/template_menu2.sql
 1.5/issue-2380-modify-tax_extended_entry_id-constraint.sql
 # these lines were added after 1.5.0
 1.5/issue-2278-modify-acc_trans-index.sql
-!1.5/template_menu3.sql
-1.5/template_menu4.sql
 1.5/fixed-assets-depreciation-sproc.sql
 1.5/fixed-assets-not-null-constraints.sql
-1.5/template_menu-v2.sql
 1.5/abstract_tables.sql
 #tag: migration-target-lsmb
 # Note: the schema as created up to here, is the one as required by
@@ -80,7 +68,6 @@
 #
 # mc changes
 mc/create-migration-validation-data.sql
-mc/new-menus.sql
 mc/new-tables.sql
 mc/new-columns.sql
 mc/changed-objects.sql
@@ -104,10 +91,8 @@ mc/delete-migration-validation-data.sql
 1.7/drop-custom-catalog.sql
 1.7/alter-menu-attributes.sql
 1.7/drop-duplicate-gifi-index.sql
-1.7/drop-menu-add-accounts.sql
 1.7/drop-max_ac_id.sql
 1.7/limit_summary_account_links.sql
-1.7/rename-menu-option-gl-search.sql
 1.7/to-location-pkeys-optimization.sql
 1.7/create-trans_id-index.sql
 1.7/fix-oe-person_id-fkey.sql
@@ -120,9 +105,6 @@ mc/delete-migration-validation-data.sql
 1.8/remove-custom-field-sprocs.sql
 1.8/remove-unused-sprocs.sql
 1.8/remove-unused-groups-admin.sql
-1.8/parts-imports.sql
-1.8/rm-templates-menus.sql
-1.8/add-system-files-menu.sql
 1.8/initialize-payments-from-vouchers.sql
 1.8/payments-reversing.sql
 1.8/drop-payment_map.sql
@@ -133,10 +115,7 @@ mc/delete-migration-validation-data.sql
 1.8/drop_poll_frequency_setting.sql
 1.8/constrain-transaction-tables.sql
 1.8/constrain-transactions-table-name.sql
-1.8/add-gl-batch-import-menu.sql
 1.8/fix-reporting-units-pks.sql
-1.8/fix-issue-1672.sql
-1.8/re-add-ap-aging-menu.sql
 1.8/reconciliation-links-cascade.sql
 1.8/initialize-payments-from-invoices.sql
 1.8/add-payment-links-indices.sql
@@ -156,7 +135,6 @@ mc/delete-migration-validation-data.sql
 1.9/fix-template-images-typo.sql
 # 1.10 changes
 1.10/old-defaults-cleanup.sql
-1.10/vue-import-csv-routes.sql
 1.10/workflow-context.sql
 1.10/aggregates-cleanup.sql
 1.10/change-data-capture.sql
@@ -173,7 +151,6 @@ mc/delete-migration-validation-data.sql
 1.10/fix-arap-approval-state.sql
 1.10/migration-batch-class.sql
 # 1.11 changes
-1.11/menu-system-users.sql
 1.11/country-config.sql
 1.11/workflow-user.sql
 1.11/enable-barcode-on-invoices.sql
@@ -181,7 +158,6 @@ mc/delete-migration-validation-data.sql
 1.11/negative-assets-liablilities-reclass.sql
 1.11/ar-ap-role-naming-consistency.sql
 1.11/aa-column-cleanup.sql
-1.11/rename-action-parameter.sql
 1.11/gl-workflows.sql
 1.11/workflow-for-aa-transactions.sql
 1.11/fix-assembly-cogs.sql
@@ -194,11 +170,9 @@ mc/delete-migration-validation-data.sql
 1.12/mv-location-temporality.sql
 1.12/shipto_attn.sql
 # 1.13 changes
-1.13/change-logout.sql
 1.13/rm-status.sql
 1.13/fk-actions-for-is_used-functions.sql
 1.13/drop-inheritance-notes-translations.sql
-1.13/rename-add-contact-menu.sql
 1.13/missing-fkeys.sql
 1.13/add-user-login.sql
 1.13/constrain-language-code.sql

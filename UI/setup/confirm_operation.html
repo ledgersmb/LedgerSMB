@@ -64,6 +64,16 @@ include_stylesheet=["system/setup.css"] %]
     text = text('List Users') #'
 }; %]
 </div>
+<div id="maintenance">
+<div>[% text('Maintenance') %]</div>
+[% INCLUDE button element_data = {
+    name = '__action'
+   value = 'reload_menu'
+    type = 'submit'
+   class = 'submit'
+    text = text('Reload menu') #'
+}; %]
+</div>
 <div id="templates">
 <div>[% text('Templates') %]</div>
 [% INCLUDE button element_data = {

@@ -1,0 +1,27 @@
+
+
+update menu_node
+   set menu = null,
+       url = 'sics',
+       parent = 19,
+       position = 5
+ where id = 153; -- SIC
+
+update menu_acl
+   set node_id = 153
+ where node_id in (154, 155); -- 248 creates duplicate sic_create on 150
+
+delete from menu_acl
+ where node_id = 248;
+
+delete from menu_node
+ where id in (154, 155, 248);
+
+alter table sic
+  add column last_updated timestamp without time zone not null default now();
+
+drop trigger if exists sic_update_last_updated on sic;
+create trigger sic_update_last_updated
+   before update on sic
+   for each row execute procedure cdc_update_last_updated();
+

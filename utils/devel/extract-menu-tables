@@ -1,0 +1,113 @@
+#!/usr/bin/perl
+
+use v5.32;
+use warnings;
+use experimental qw( signatures );
+
+use Carp::Always;
+use DBI;
+use XML::LibXML;
+
+my %tree;
+my %acls;
+my %xml_nodes;
+my $xml_doc = XML::LibXML->createDocument;
+
+my %map = ( id => 'id', label => 'label', url => 'url', standalone => 'opens-new-page' );
+my %boolean = ( standalone => 1 );
+
+sub addAttributes($node, $xml) {
+    for my $att (qw( id label url standalone )) {
+        next unless defined $node->{$att};
+        my $xml_att = $xml_doc->createAttribute(
+            $map{$att},
+            $boolean{$att} ? ($node->{$att} ? "yes" : "no" ) : $node->{$att} );
+        $xml->setAttributeNode( $xml_att );
+    }
+}
+
+sub addACLs($node, $xml) {
+    my $acls_node = $xml_doc->createElement('acls');
+    $xml->appendChild($acls_node);
+
+    for my $acl ($acls{$node->{id}}->@*) {
+        if (lc $acl->{role_name} eq 'public') {
+            $acls_node->setAttribute( 'unrestricted', 'yes' );
+            $acls_node->removeChildNodes;
+            return;
+        }
+        my $acl_node = $xml_doc->createElement('acl');
+        $acl_node->setAttribute('role', $acl->{role_name})
+            if defined $acl->{role_name};
+        $acl_node->setAttribute('access', $acl->{acl_type});
+        $acls_node->appendChild( $acl_node );
+    }
+}
+
+sub addNode($node) {
+    my $xml_node;
+    if (defined $node->{parent}) { # non-root node
+        my $parent = $xml_nodes{$node->{parent}};
+        $xml_node = $xml_doc->createElement('menu-item');
+        $parent->appendChild( $xml_node );
+    }
+    else {
+        $xml_node = $xml_doc->createElementNS('http://ledgersmb.org/xml-schemas/menu', 'menu');
+        $xml_doc->setDocumentElement( $xml_node );
+    }
+
+    $xml_nodes{$node->{id}} = $xml_node;
+    addAttributes( $node, $xml_node );
+    if (exists $acls{$node->{id}}) {
+        addACLs( $node, $xml_node );
+    }
+}
+
+sub subtree($node) {
+    if ($tree{$node->{id}}) {
+        for my $child ($tree{$node->{id}}->@*) {
+            addNode($child);
+            subtree($child);
+        }
+    }
+}
+
+
+
+my $dbh = DBI->connect;
+
+$dbh->do(q{SET search_path = xyz,public});
+
+my $query = <<~'QUERY';
+  SELECT *
+    FROM xyz.menu_node
+  ORDER BY parent NULLS FIRST, position
+  QUERY
+my @nodes = $dbh->selectall_array($query, { Slice => {} })
+    or die $dbh->errstr;
+
+for my $node (@nodes) {
+    next unless defined $node->{parent}; # top level node has no parent value
+    $tree{$node->{parent}} //= [];
+    push $tree{$node->{parent}}->@*, $node;
+}
+
+$query = <<~'QUERY';
+  SELECT lsmb__global_role(role_name) as role_name,
+         acl_type, node_id
+    FROM xyz.menu_acl
+  QUERY
+my @acls = $dbh->selectall_array($query, { Slice => {} })
+    or die $dbh->errstr;
+
+for my $acl (@acls) {
+    $acls{$acl->{node_id}} //= [];
+    push $acls{$acl->{node_id}}->@*, $acl;
+}
+
+# use Data::Dumper;
+# print Dumper \%tree;
+addNode($nodes[0]);
+subtree($nodes[0]);
+
+print $xml_doc->toString();

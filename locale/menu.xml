@@ -1,0 +1,750 @@
+<?xml version="1.0"?>
+<menu xmlns="http://ledgersmb.org/xml-schemas/menu" id="0" label="Top-level">
+  <menu-item id="19" label="Contacts">
+    <menu-item id="14" label="Search" url="reports.pl?__action=start_report&amp;module_name=gl&amp;report_name=contact_search">
+      <acls>
+        <acl role="contact_read" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="12" label="Add Entity" url="contact.pl?__action=add">
+      <acls>
+        <acl role="contact_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="147" label="Type of Business" url="business-types">
+      <acls>
+        <acl role="business_type_create" access="allow"/>
+        <acl role="business_type_edit" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="153" label="SIC" url="sics">
+      <acls>
+        <acl role="sic_create" access="allow"/>
+        <acl role="sic_edit" access="allow"/>
+      </acls>
+    </menu-item>
+  </menu-item>
+  <menu-item id="1" label="AR">
+    <menu-item id="2" label="Add Transaction" url="ar.pl?__action=add">
+      <acls>
+        <acl role="ar_transaction_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="244" label="Import Batch" url="/import-csv/ar_multi">
+      <acls>
+        <acl role="ar_transaction_create_voucher" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="3" label="Sales Invoice" url="is.pl?__action=add&amp;type=invoice">
+      <acls>
+        <acl role="ar_invoice_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="194" label="Credit Note" url="ar.pl?__action=add&amp;type=credit_note">
+      <acls>
+        <acl role="ar_transaction_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="195" label="Credit Invoice" url="is.pl?__action=add&amp;type=credit_invoice">
+      <acls>
+        <acl role="ar_invoice_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="129" label="Add Return" url="is.pl?__action=add&amp;type=customer_return">
+      <acls>
+        <acl role="ar_transaction_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="5" label="Search" url="invoice.pl?__action=start_report&amp;report_name=invoice_search&amp;entity_class=2">
+      <acls>
+        <acl role="ar_transaction_list" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="249" label="Vouchers">
+      <menu-item id="198" label="AR Voucher" url="vouchers.pl?__action=create_batch&amp;batch_type=ar">
+        <acls>
+          <acl role="ar_transaction_create_voucher" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="20" label="Invoice Vouchers" url="vouchers.pl?__action=create_batch&amp;batch_type=sales_invoice">
+        <acls>
+          <acl role="ar_transaction_create_voucher" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="11" label="Import AR Batch" url="/import-csv/ar_multi">
+        <acls>
+          <acl role="ar_transaction_create_voucher" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+    <menu-item id="4" label="Reports">
+      <menu-item id="9" label="Outstanding" url="invoice.pl?__action=start_report&amp;entity_class=2&amp;report_name=invoice_outstanding">
+        <acls>
+          <acl role="ar_transaction_list" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="7" label="AR Aging" url="reports.pl?__action=start_report&amp;report_name=aging&amp;module_name=gl&amp;entity_class=2">
+        <acls>
+          <acl role="ar_transaction_list" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="15" label="Customer History" url="reports.pl?__action=start_report&amp;report_name=purchase_history&amp;entity_class=2">
+        <acls>
+          <acl role="ar_transaction_list" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+  </menu-item>
+  <menu-item id="21" label="AP">
+    <menu-item id="22" label="Add Transaction" url="ap.pl?__action=add">
+      <acls>
+        <acl role="ap_transaction_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="243" label="Import Batch" url="/import-csv/ap_multi">
+      <acls>
+        <acl role="ap_transaction_create_voucher" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="23" label="Vendor Invoice" url="ir.pl?__action=add&amp;type=invoice">
+      <acls>
+        <acl role="ap_invoice_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="196" label="Debit Note" url="ap.pl?__action=add&amp;type=debit_note">
+      <acls>
+        <acl role="ap_transaction_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="197" label="Debit Invoice" url="ir.pl?__action=add&amp;type=debit_invoice">
+      <acls>
+        <acl role="ap_invoice_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="25" label="Search" url="invoice.pl?__action=start_report&amp;report_name=invoice_search&amp;entity_class=1">
+      <acls>
+        <acl role="ap_transaction_list" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="250" label="Vouchers">
+      <menu-item id="199" label="AP Voucher" url="vouchers.pl?__action=create_batch&amp;batch_type=ap">
+        <acls>
+          <acl role="ap_transaction_create_voucher" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="39" label="Invoice Vouchers" url="vouchers.pl?__action=create_batch&amp;batch_type=vendor_invoice">
+        <acls>
+          <acl role="ap_transaction_create_voucher" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="13" label="Import AP Batch" url="/import-csv/ap_multi">
+        <acls>
+          <acl role="ap_transaction_create" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+    <menu-item id="24" label="Reports">
+      <menu-item id="10" label="Outstanding" url="invoice.pl?__action=start_report&amp;entity_class=1&amp;report_name=invoice_outstanding">
+        <acls>
+          <acl role="ar_transaction_list" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="29" label="AP Aging" url="reports.pl?report_name=aging&amp;entity_class=1&amp;__action=start_report&amp;module_name=gl">
+        <acls>
+          <acl role="ap_transaction_list" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="34" label="Vendor History" url="reports.pl?__action=start_report&amp;report_name=purchase_history&amp;entity_class=1">
+        <acls>
+          <acl role="ap_transaction_list" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+  </menu-item>
+  <menu-item id="35" label="Cash">
+    <menu-item id="36" label="Receipt" url="payment.pl?__action=payment&amp;type=receipt&amp;account_class=2">
+      <acls>
+        <acl role="receipt_process" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="37" label="Use AR Overpayment" url="payment.pl?account_class=2&amp;__action=use_overpayment">
+      <acls>
+        <acl role="receipt_process" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="38" label="Payment" url="payment.pl?__action=payment&amp;type=check&amp;account_class=1">
+      <acls>
+        <acl role="payment_process" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="223" label="Use Overpayment" url="payment.pl?account_class=1&amp;__action=use_overpayment">
+      <acls>
+        <acl role="payment_process" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="200" label="Vouchers">
+      <menu-item id="201" label="Payments" url="vouchers.pl?__action=create_batch&amp;batch_type=payment">
+        <acls>
+          <acl role="payment_process" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="202" label="Reverse Payment" url="vouchers.pl?batch_type=payment_reversal&amp;__action=create_batch">
+        <acls>
+          <acl role="payment_process" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="18" label="Reverse Overpay" url="vouchers.pl?batch_type=payment_reversal&amp;__action=create_batch&amp;overpayment=1">
+        <acls>
+          <acl role="payment_process" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="203" label="Receipts" url="vouchers.pl?__action=create_batch&amp;batch_type=receipt">
+        <acls>
+          <acl role="receipt_process" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="204" label="Reverse Receipts" url="vouchers.pl?batch_type=receipt_reversal&amp;__action=create_batch">
+        <acls>
+          <acl role="receipt_process" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="26" label="Reverse AR Overpay" url="vouchers.pl?batch_type=receipt_reversal&amp;__action=create_batch&amp;overpayment=1">
+        <acls>
+          <acl role="receipt_process" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+    <menu-item id="40" label="Transfer" url="gl.pl?__action=add&amp;transfer=1">
+      <acls>
+        <acl role="gl_transaction_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="45" label="Reconciliation" url="recon.pl?__action=new_report">
+      <acls>
+        <acl role="reconciliation_enter" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="41" label="Reports">
+      <menu-item id="42" label="Receipts" url="payment.pl?__action=get_search_criteria&amp;account_class=2">
+        <acls>
+          <acl role="receipt_process" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="43" label="Payments" url="payment.pl?__action=get_search_criteria&amp;account_class=1">
+        <acls>
+          <acl role="payment_process" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="44" label="Reconciliation" url="recon.pl?report=1&amp;__action=search">
+        <acls>
+          <acl role="reconciliation_approve" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+  </menu-item>
+  <menu-item id="205" label="Transaction Approval">
+    <menu-item id="206" label="Batches" url="reports.pl?__action=start_report&amp;report_name=batches">
+      <acls>
+        <acl role="batch_post" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="210" label="Drafts" url="reports.pl?__action=start_report&amp;report_name=unapproved">
+      <acls>
+        <acl role="batch_post" access="allow"/>
+        <acl role="draft_post" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="211" label="Reconciliation" url="recon.pl?__action=search&amp;hide_status=1&amp;approved=0&amp;submitted=1">
+      <acls>
+        <acl role="reconciliation_approve" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="59" label="Inventory" url="reports.pl?__action=start_report&amp;report_name=inventory_adj">
+      <acls>
+        <acl role="inventory_approve" access="allow"/>
+      </acls>
+    </menu-item>
+  </menu-item>
+  <menu-item id="251" label="Budgets">
+    <menu-item id="252" label="Add Budget" url="budgets.pl?__action=new_budget">
+      <acls>
+        <acl role="budget_enter" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="253" label="Search" url="reports.pl?report_name=budget_search&amp;module_name=gl&amp;__action=start_report">
+      <acls>
+        <acl role="budget_view" access="allow"/>
+      </acls>
+    </menu-item>
+  </menu-item>
+  <menu-item id="46" label="HR">
+    <menu-item id="47" label="Employees">
+      <menu-item id="48" label="Add Employee" url="contact.pl?__action=add&amp;target_div=person_div&amp;entity_class=3">
+        <acls>
+          <acl role="employees_manage" access="allow"/>
+          <acl role="users_manage" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="49" label="Search" url="reports.pl?__action=start_report&amp;module_name=gl&amp;entity_class=3&amp;report_name=contact_search">
+        <acls>
+          <acl role="employees_manage" access="allow"/>
+          <acl role="users_manage" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+  </menu-item>
+  <menu-item id="50" label="Order Entry">
+    <menu-item id="51" label="Sales Order" url="oe.pl?__action=add&amp;type=sales_order">
+      <acls>
+        <acl role="sales_order_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="52" label="Purchase Order" url="oe.pl?__action=add&amp;type=purchase_order">
+      <acls>
+        <acl role="purchase_order_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="53" label="Reports">
+      <menu-item id="54" label="Sales Orders" url="order.pl?__action=get_criteria&amp;search_type=search&amp;oe_class_id=1">
+        <acls>
+          <acl role="sales_order_list" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="55" label="Purchase Orders" url="order.pl?__action=get_criteria&amp;search_type=search&amp;oe_class_id=2">
+        <acls>
+          <acl role="purchase_order_list" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+    <menu-item id="56" label="Generate">
+      <menu-item id="57" label="Sales Orders" url="order.pl?__action=get_criteria&amp;search_type=generate&amp;oe_class_id=2">
+        <acls>
+          <acl role="orders_sales_to_purchase" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="58" label="Purchase Orders" url="order.pl?__action=get_criteria&amp;search_type=generate&amp;oe_class_id=1">
+        <acls>
+          <acl role="orders_sales_to_purchase" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+    <menu-item id="60" label="Combine">
+      <menu-item id="61" label="Sales Orders" url="order.pl?__action=get_criteria&amp;search_type=combine&amp;oe_class_id=1">
+        <acls>
+          <acl role="orders_sales_consolidate" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="62" label="Purchase Orders" url="order.pl?__action=get_criteria&amp;search_type=combine&amp;oe_class_id=2">
+        <acls>
+          <acl role="orders_purchase_consolidate" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+  </menu-item>
+  <menu-item id="63" label="Shipping">
+    <menu-item id="64" label="Ship" url="order.pl?__action=get_criteria&amp;search_type=ship&amp;oe_class_id=1">
+      <acls>
+        <acl role="inventory_ship" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="65" label="Receive" url="order.pl?__action=get_criteria&amp;search_type=ship&amp;oe_class_id=2">
+      <acls>
+        <acl role="inventory_receive" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="66" label="Transfer" url="oe.pl?__action=search_transfer">
+      <acls>
+        <acl role="inventory_transfer" access="allow"/>
+      </acls>
+    </menu-item>
+  </menu-item>
+  <menu-item id="67" label="Quotations">
+    <menu-item id="68" label="Quotation" url="oe.pl?__action=add&amp;type=sales_quotation">
+      <acls>
+        <acl role="sales_quotation_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="69" label="RFQ" url="oe.pl?__action=add&amp;type=request_quotation">
+      <acls>
+        <acl role="rfq_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="70" label="Reports">
+      <menu-item id="71" label="Quotations" url="order.pl?__action=get_criteria&amp;search_type=search&amp;oe_class_id=3">
+        <acls>
+          <acl role="sales_quotation_list" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="72" label="RFQs" url="order.pl?__action=get_criteria&amp;search_type=search&amp;oe_class_id=4">
+        <acls>
+          <acl role="rfq_list" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+  </menu-item>
+  <menu-item id="73" label="General Journal">
+    <menu-item id="74" label="Journal Entry" url="gl.pl?__action=add">
+      <acls>
+        <acl role="gl_transaction_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="245" label="Import" url="/import-csv/gl">
+      <acls>
+        <acl role="gl_transaction_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="262" label="Import Batch" url="/import-csv/gl_multi">
+      <acls>
+        <acl role="gl_transaction_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="132" label="Year End" url="account.pl?__action=yearend_info">
+      <acls>
+        <acl role="yearend_run" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="76" label="Search" url="reports.pl?__action=start_report&amp;report_name=gl&amp;module_name=gl">
+      <acls>
+        <acl role="gl_reports" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="110" label="Chart of Accounts" url="journal.pl?__action=chart_of_accounts">
+      <acls>
+        <acl role="financial_reports" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="246" label="Import Chart" url="/import-csv/chart">
+      <acls>
+        <acl role="account_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="136" label="GIFI" url="gifis">
+      <acls>
+        <acl role="gifi_create" access="allow"/>
+        <acl role="gifi_edit" access="allow"/>
+      </acls>
+    </menu-item>
+  </menu-item>
+  <menu-item id="77" label="Goods and Services">
+    <menu-item id="86" label="Search" url="goods.pl?__action=search_screen">
+      <acls>
+        <acl role="part_edit" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="78" label="Add Part" url="ic.pl?__action=add&amp;item=part">
+      <acls>
+        <acl role="part_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="79" label="Add Service" url="ic.pl?__action=add&amp;item=service">
+      <acls>
+        <acl role="part_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="80" label="Add Assembly" url="ic.pl?__action=add&amp;item=assembly">
+      <acls>
+        <acl role="part_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="81" label="Add Overhead" url="ic.pl?__action=add&amp;item=labor">
+      <acls>
+        <acl role="part_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="91" label="Search Groups" url="reports.pl?__action=start_report&amp;report_name=search_partsgroups">
+      <acls>
+        <acl role="part_edit" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="82" label="Add Group" url="pe.pl?__action=add&amp;type=partsgroup">
+      <acls>
+        <acl role="part_create" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="83" label="Pricegroups" url="pricegroups">
+      <acls>
+        <acl role="pricegroup_create" access="allow"/>
+        <acl role="pricegroup_edit" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="141" label="Warehouses" url="warehouses">
+      <acls>
+        <acl role="warehouse_create" access="allow"/>
+        <acl role="warehouse_edit" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="84" label="Stock Assembly" url="ic.pl?__action=stock_assembly">
+      <acls>
+        <acl role="assembly_stock" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="85" label="Reports">
+      <menu-item id="114" label="Inventory Activity" url="reports.pl?report_name=inventory_activity&amp;__action=start_report">
+        <acls>
+          <acl role="inventory_reports" access="allow"/>
+          <acl role="gl_reports" access="allow"/>
+          <acl role="financial_reports" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+    <menu-item id="95" label="Translations">
+      <menu-item id="96" label="Description" url="pe.pl?__action=translation&amp;translation=description">
+        <acls>
+          <acl role="translation_create" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="97" label="Partsgroup" url="pe.pl?__action=translation&amp;translation=partsgroup">
+        <acls>
+          <acl role="translation_create" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+    <menu-item id="258" label="Import">
+      <menu-item id="259" label="Goods" url="/import-csv/parts">
+        <acls>
+          <acl role="part_create" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="260" label="Services" url="/import-csv/services">
+        <acls>
+          <acl role="part_create" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="261" label="Overhead" url="/import-csv/overhead">
+        <acls>
+          <acl role="part_create" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="6" label="Inventory" url="/import-csv/inventory">
+        <acls>
+          <acl role="inventory_adjust" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+    <menu-item id="16" label="Enter Inventory" url="inventory.pl?__action=begin_adjust">
+      <acls>
+        <acl role="inventory_adjust" access="allow"/>
+      </acls>
+    </menu-item>
+  </menu-item>
+  <menu-item id="98" label="Timecards">
+    <menu-item id="106" label="Search" url="reports.pl?__action=start_report&amp;module_name=timecards&amp;report_name=timecards">
+      <acls>
+        <acl role="timecard_add" access="allow"/>
+        <acl role="timecard_list" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="100" label="Add Timecard" url="timecard.pl?__action=new&amp;project=project&amp;type=timecard">
+      <acls>
+        <acl role="timecard_add" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="8" label="Import" url="/import-csv/timecard">
+      <acls>
+        <acl role="timecard_add" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="101" label="Generate">
+      <menu-item id="102" label="Sales Orders" url="pe.pl?__action=project_sales_order">
+        <acls>
+          <acl role="timecard_order_generate" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+    <menu-item id="107" label="Translations">
+      <menu-item id="108" label="Description" url="pe.pl?__action=translation&amp;translation=project">
+        <acls>
+          <acl role="translation_create" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+  </menu-item>
+  <menu-item id="109" label="Reports">
+    <menu-item id="111" label="Trial Balance" url="reports.pl?report_name=trial_balance&amp;__action=start_report&amp;module_name=gl">
+      <acls>
+        <acl role="financial_reports" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="112" label="Income Statement" url="reports.pl?__action=start_report&amp;report_name=income_statement&amp;module_name=gl">
+      <acls>
+        <acl role="financial_reports" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="113" label="Balance Sheet" url="reports.pl?__action=start_report&amp;report_name=balance_sheet">
+      <acls>
+        <acl role="financial_reports" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="75" label="Inventory and COGS" url="reports.pl?__action=start_report&amp;report_name=cogs_lines">
+      <acls>
+        <acl role="inventory_reports" access="allow"/>
+        <acl role="financial_reports" access="allow"/>
+      </acls>
+    </menu-item>
+  </menu-item>
+  <menu-item id="115" label="Recurring Transactions" url="am.pl?__action=recurring_transactions">
+    <acls>
+      <acl role="recurring" access="allow"/>
+    </acls>
+  </menu-item>
+  <menu-item id="28" label="Transaction Templates" url="transtemplate.pl?__action=list">
+    <acls>
+      <acl role="recurring" access="allow"/>
+    </acls>
+  </menu-item>
+  <menu-item id="217" label="Tax Forms">
+    <menu-item id="218" label="Add Tax Form" url="taxform.pl?__action=add_taxform">
+      <acls>
+        <acl role="tax_form_save" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="225" label="List Tax Forms" url="taxform.pl?__action=list_all">
+      <acls>
+        <acl role="tax_form_save" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="226" label="Reports" url="taxform.pl?__action=report">
+      <acls>
+        <acl role="tax_form_save" access="allow"/>
+      </acls>
+    </menu-item>
+  </menu-item>
+  <menu-item id="227" label="Fixed Assets">
+    <menu-item id="228" label="Asset Classes">
+      <menu-item id="230" label="Add Class" url="asset.pl?__action=asset_category_screen">
+        <acls>
+          <acl role="assets_enter" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="231" label="List Classes" url="asset.pl?__action=asset_category_search">
+        <acls>
+          <acl role="assets_enter" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+    <menu-item id="229" label="Assets">
+      <menu-item id="232" label="Add Assets" url="asset.pl?__action=asset_screen">
+        <acls>
+          <acl role="assets_enter" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="233" label="Search Assets" url="asset.pl?__action=asset_search">
+        <acls>
+          <acl role="assets_enter" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="235" label="Import" url="asset.pl?__action=begin_import">
+        <acls>
+          <acl role="assets_enter" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="234" label="Depreciate" url="asset.pl?__action=new_report&amp;depreciation=1">
+        <acls>
+          <acl role="assets_depreciate" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="238" label="Disposal" url="asset.pl?__action=new_report">
+        <acls>
+          <acl role="assets_depreciate" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="236" label="Reports">
+        <menu-item id="237" label="Net Book Value" url="asset.pl?__action=display_nbv">
+          <acls>
+            <acl role="assets_administer" access="allow"/>
+          </acls>
+        </menu-item>
+        <menu-item id="239" label="Depreciation" url="asset.pl?__action=search_reports&amp;depreciation=1">
+          <acls>
+            <acl role="assets_approve" access="allow"/>
+          </acls>
+        </menu-item>
+        <menu-item id="240" label="Disposal" url="asset.pl?__action=search_reports">
+          <acls>
+            <acl role="assets_approve" access="allow"/>
+          </acls>
+        </menu-item>
+      </menu-item>
+    </menu-item>
+  </menu-item>
+  <menu-item id="128" label="System">
+    <menu-item id="254" label="Currency">
+      <menu-item id="255" label="Edit currencies" url="currency.pl?__action=list_currencies">
+        <acls>
+          <acl role="exchangerate_edit" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="256" label="Edit rate types" url="currency.pl?__action=list_exchangerate_types">
+        <acls>
+          <acl role="exchangerate_edit" access="allow"/>
+        </acls>
+      </menu-item>
+      <menu-item id="257" label="Edit rates" url="currency.pl?__action=list_exchangerates">
+        <acls>
+          <acl role="exchangerate_edit" access="allow"/>
+        </acls>
+      </menu-item>
+    </menu-item>
+    <menu-item id="130" label="Taxes" url="am.pl?taxes=audit_control&amp;__action=taxes">
+      <acls>
+        <acl role="taxes_set" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="131" label="Defaults" url="configuration.pl?__action=defaults_screen">
+      <acls>
+        <acl role="system_settings_list" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="17" label="Sequences" url="configuration.pl?__action=sequence_screen">
+      <acls>
+        <acl role="system_settings_change" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="222" label="Sessions" url="admin.pl?__action=list_sessions">
+      <acls>
+        <acl role="users_manage" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="144" label="Reporting Units" url="business_unit.pl?__action=list_classes">
+      <acls>
+        <acl role="business_units_manage" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="264" label="Country" url="countries">
+      <acls>
+        <acl role="country_create" access="allow"/>
+        <acl role="country_edit" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="150" label="Language" url="languages">
+      <acls>
+        <acl role="language_create" access="allow"/>
+        <acl role="language_edit" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="156" label="Templates" url="template.pl?__action=display">
+      <acls>
+        <acl role="template_edit" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="27" label="Files" url="file.pl?__action=list_internal_files">
+      <acls>
+        <acl role="file_upload" access="allow"/>
+      </acls>
+    </menu-item>
+    <menu-item id="263" label="Users" url="admin.pl?__action=list_users">
+      <acls>
+        <acl role="users_manage" access="allow"/>
+      </acls>
+    </menu-item>
+  </menu-item>
+  <menu-item id="191" label="Preferences" url="user.pl?__action=preference_screen">
+    <acls unrestricted="yes"/>
+  </menu-item>
+  <menu-item id="192" label="New Window" opens-new-page="yes">
+    <acls unrestricted="yes"/>
+  </menu-item>
+  <menu-item id="193" label="Logout" url="logout.pl?__action=logout&amp;target=_top">
+    <acls unrestricted="yes"/>
+  </menu-item>
+</menu>
