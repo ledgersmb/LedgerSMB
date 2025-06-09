@@ -673,8 +673,8 @@ h2 {
     margin-top: 2em;
 }
 
-#logindiv #company_div lsmb-text,
-#logindiv #company_div lsmb-password {
+#logindiv lsmb-text,
+#logindiv lsmb-password {
     display: contents;
 }
 
