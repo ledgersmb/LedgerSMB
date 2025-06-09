@@ -176,3 +176,4 @@ mc/delete-migration-validation-data.sql
 1.13/missing-fkeys.sql
 1.13/add-user-login.sql
 1.13/constrain-language-code.sql
+1.13/drop-function-menu_insert.sql
