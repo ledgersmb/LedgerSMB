@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.12.10-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-05-13 21:16+0000\n"
+"POT-Creation-Date: 2025-06-09 21:54+0000\n"
 "Last-Translator: Amir Inbar <amir@srvit.co.il>, 2024\n"
 "Language-Team: Hebrew (https://app.transifex.com/ledgersmb/teams/58325/he/)\n"
 "Language: he\n"
@@ -2123,7 +2123,7 @@ msgstr "מתאריך"
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:103
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:264
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:128
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:295
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:300
 #: UI/Reports/filters/invoice_outstanding.html:219
 #: UI/Reports/filters/invoice_search.html:366
 msgid "Date Paid"
@@ -2638,7 +2638,7 @@ msgid "Dropdowns"
 msgstr ""
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:99
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:292
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:296
 #: templates/demo/ap_transaction.html:64 templates/demo/ap_transaction.tex:77
 #: templates/demo/ar_transaction.html:62 templates/demo/ar_transaction.tex:94
 #: templates/demo/invoice.html:85 templates/demo/invoice.tex:150
@@ -2649,7 +2649,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Aging.pm:135
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:107
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:268
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:298 old/bin/aa.pl:788
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:303 old/bin/aa.pl:788
 #: old/bin/ir.pl:472 old/bin/is.pl:559
 #: UI/Reports/filters/invoice_outstanding.html:234
 #: UI/Reports/filters/invoice_search.html:381
@@ -4279,8 +4279,8 @@ msgstr "טען תבנית"
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:26
-#: UI/src/components/ServerUI.js:40
+#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:40
+#: UI/src/components/ServerUI.js:26
 msgid "Loading..."
 msgstr ""
 
@@ -4370,7 +4370,7 @@ msgid "Manage Users"
 msgstr "ניהול משתמשים"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:280
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:307
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:312
 #: lib/LedgerSMB/Report/Orders.pm:258 UI/Contact/divs/employee.html:88
 #: UI/Contact/divs/employee.html:112
 #: UI/Reports/filters/invoice_outstanding.html:184
@@ -4748,7 +4748,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:111
 #: lib/LedgerSMB/Report/Inventory/Search.pm:295
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:272
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:301
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:306
 #: lib/LedgerSMB/Scripts/contact.pm:192 old/bin/aa.pl:955 old/bin/ic.pl:749
 #: old/bin/ir.pl:734 old/bin/is.pl:840 old/bin/oe.pl:795
 #: t/data/04-complex_template.html:33 t/data/04-complex_template.html:626
@@ -5105,7 +5105,7 @@ msgstr "רשימת אריזה"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:94
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:250
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:289
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:292
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:144
 #: lib/LedgerSMB/Scripts/payment.pm:944 templates/demo/invoice.html:148
 #: templates/demo/invoice.tex:201 UI/payments/payments_detail.html:339
@@ -6281,7 +6281,7 @@ msgstr "מכירות:"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:121
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:276
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:304 old/bin/aa.pl:610
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:309 old/bin/aa.pl:610
 #: old/bin/is.pl:373 old/bin/oe.pl:571 templates/demo/ar_transaction.html:74
 #: templates/demo/invoice.html:87 templates/demo/invoice.tex:151
 #: templates/demo/sales_order.html:80 templates/demo/sales_order.tex:123
@@ -6463,7 +6463,7 @@ msgstr ""
 msgid "Search"
 msgstr "חיפוש"
 
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:326
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:331
 msgid "Search AP"
 msgstr ""
 
@@ -6471,7 +6471,7 @@ msgstr ""
 msgid "Search AP Invoices"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:327
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:332
 msgid "Search AR"
 msgstr ""
 
@@ -6793,7 +6793,7 @@ msgstr "משלוח אל:"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:119
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:288
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:313
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:318
 #: lib/LedgerSMB/Report/Orders.pm:250 templates/demo/product_receipt.html:78
 #: templates/demo/purchase_order.html:79 templates/demo/sales_order.html:82
 #: templates/demo/sales_order.tex:125 templates/demo/work_order.html:81
@@ -6848,7 +6848,7 @@ msgstr "תווית משלוח"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:115
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:284
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:310
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:315
 #: lib/LedgerSMB/Report/Orders.pm:246 old/bin/is.pl:510 old/bin/oe.pl:1831
 #: old/bin/oe.pl:636 templates/demo/bin_list.html:79
 #: templates/demo/bin_list.tex:99 templates/demo/invoice.html:88
@@ -7171,7 +7171,7 @@ msgstr "תג:"
 
 #: lib/LedgerSMB/Report/COA.pm:114 lib/LedgerSMB/Report/Contact/Purchase.pm:89
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:240
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:283 old/bin/ic.pl:513
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:284 old/bin/ic.pl:513
 #: old/bin/ic.pl:642 UI/accounts/edit.html:292 UI/accounts/edit.html:357
 #: UI/accounts/edit.html:408 UI/accounts/edit.html:457 UI/accounts/edit.html:496
 #: UI/Reports/filters/invoice_outstanding.html:199
@@ -7635,7 +7635,7 @@ msgstr ""
 #: lib/LedgerSMB/Report/Inventory/Search.pm:324
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:122
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:245
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:286
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:288
 #: lib/LedgerSMB/Report/Taxform/Details.pm:105
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:114
 #: lib/LedgerSMB/Scripts/asset.pm:680 lib/LedgerSMB/Scripts/payment.pm:943

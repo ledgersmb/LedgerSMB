@@ -3,16 +3,16 @@
 # e t <contacts@ethnoco.ch>, 2024
 # d34703e27442b8aae408ee1a019d49fd_1d2c70b, 2024
 # Mikkel Høgh <mikkel@hoegh.org>, 2024
-# E, 2024
 # Mikael Arhelger <mikaelarhelger@gmail.com>, 2024
 # Erik Huelsmann <ehuels@gmail.com>, 2024
+# E, 2025
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.12.10-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-05-13 21:16+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2024\n"
+"POT-Creation-Date: 2025-06-09 21:54+0000\n"
+"Last-Translator: E, 2025\n"
 "Language-Team: German (https://app.transifex.com/ledgersmb/teams/58325/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -1094,7 +1094,7 @@ msgstr "Barcode"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:131
 msgid "Barcode entry on invoices"
-msgstr ""
+msgstr "Strichcode-Eingabe auf Rechnung"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:56
 msgid "Base Currency"
@@ -2146,7 +2146,7 @@ msgstr "Datum vom"
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:103
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:264
 #: lib/LedgerSMB/Report/Invoices/Payments.pm:128
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:295
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:300
 #: UI/Reports/filters/invoice_outstanding.html:219
 #: UI/Reports/filters/invoice_search.html:366
 msgid "Date Paid"
@@ -2644,7 +2644,7 @@ msgstr "Entwurfsart"
 
 #: old/bin/aa.pl:152 old/bin/ir.pl:122 old/bin/is.pl:131
 msgid "Draft deleted"
-msgstr ""
+msgstr "Entwurf gelöscht"
 
 #: sql/Pg-database.sql:2332
 msgid "Drafts"
@@ -2661,7 +2661,7 @@ msgid "Dropdowns"
 msgstr "AufklappmenÃ¼s"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:99
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:292
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:296
 #: templates/demo/ap_transaction.html:64 templates/demo/ap_transaction.tex:77
 #: templates/demo/ar_transaction.html:62 templates/demo/ar_transaction.tex:94
 #: templates/demo/invoice.html:85 templates/demo/invoice.tex:150
@@ -2672,7 +2672,7 @@ msgstr "Fällig"
 #: lib/LedgerSMB/Report/Aging.pm:135
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:107
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:268
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:298 old/bin/aa.pl:788
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:303 old/bin/aa.pl:788
 #: old/bin/ir.pl:472 old/bin/is.pl:559
 #: UI/Reports/filters/invoice_outstanding.html:234
 #: UI/Reports/filters/invoice_search.html:381
@@ -2931,7 +2931,7 @@ msgstr "Datum Ende:"
 
 #: lib/LedgerSMB/Report/Contact/EmployeeSearch.pm:78
 msgid "End date"
-msgstr ""
+msgstr "Enddatum"
 
 #: UI/Reports/filters/trial_balance.html:10
 msgid "Ending"
@@ -4121,11 +4121,11 @@ msgstr "LedgerSMB 1.10 db gefunden."
 
 #: lib/LedgerSMB/Scripts/setup.pm:236
 msgid "LedgerSMB 1.11 db found."
-msgstr ""
+msgstr "LedgerSMB 1.11 Datenbank gefunden."
 
 #: lib/LedgerSMB/Scripts/setup.pm:241
 msgid "LedgerSMB 1.12 db found."
-msgstr ""
+msgstr "LedgerSMB 1.12 Datenbank gefunden."
 
 #: lib/LedgerSMB/Scripts/setup.pm:190
 msgid "LedgerSMB 1.2 db found."
@@ -4238,15 +4238,15 @@ msgstr "Lizenznummer"
 
 #: old/bin/io.pl:1674
 msgid "Line 1"
-msgstr ""
+msgstr "Linie 1"
 
 #: old/bin/io.pl:1677
 msgid "Line 2"
-msgstr ""
+msgstr "Linie 2"
 
 #: old/bin/io.pl:1681
 msgid "Line 3"
-msgstr ""
+msgstr "Linie 3"
 
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:176
 msgid "Line Item COGS Report"
@@ -4321,8 +4321,8 @@ msgstr "Vorlagen laden"
 msgid "Loaded"
 msgstr "Geladen"
 
-#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:26
-#: UI/src/components/ServerUI.js:40
+#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:40
+#: UI/src/components/ServerUI.js:26
 msgid "Loading..."
 msgstr "Geladen..."
 
@@ -4414,7 +4414,7 @@ msgid "Manage Users"
 msgstr "Benutzer verwalten"
 
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:280
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:307
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:312
 #: lib/LedgerSMB/Report/Orders.pm:258 UI/Contact/divs/employee.html:88
 #: UI/Contact/divs/employee.html:112
 #: UI/Reports/filters/invoice_outstanding.html:184
@@ -4791,12 +4791,12 @@ msgstr ""
 
 #: UI/setup/consistency_results.html:10
 msgid "Note: "
-msgstr ""
+msgstr "Anmerkung:"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:111
 #: lib/LedgerSMB/Report/Inventory/Search.pm:295
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:272
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:301
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:306
 #: lib/LedgerSMB/Scripts/contact.pm:192 old/bin/aa.pl:955 old/bin/ic.pl:749
 #: old/bin/ir.pl:734 old/bin/is.pl:840 old/bin/oe.pl:795
 #: t/data/04-complex_template.html:33 t/data/04-complex_template.html:626
@@ -5078,7 +5078,7 @@ msgstr "Offen"
 
 #: UI/reconciliation/report.html:327
 msgid "Outstanding Transactions"
-msgstr ""
+msgstr "Ausstehende Transaktionen"
 
 #: UI/Reports/filters/aging.html:88
 msgid "Overdue"
@@ -5153,7 +5153,7 @@ msgstr "Packliste"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:94
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:250
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:289
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:292
 #: lib/LedgerSMB/Report/Listings/Overpayments.pm:144
 #: lib/LedgerSMB/Scripts/payment.pm:944 templates/demo/invoice.html:148
 #: templates/demo/invoice.tex:201 UI/payments/payments_detail.html:339
@@ -6331,7 +6331,7 @@ msgstr "Verkauf:"
 
 #: lib/LedgerSMB/Report/Contact/History.pm:121
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:276
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:304 old/bin/aa.pl:610
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:309 old/bin/aa.pl:610
 #: old/bin/is.pl:373 old/bin/oe.pl:571 templates/demo/ar_transaction.html:74
 #: templates/demo/invoice.html:87 templates/demo/invoice.tex:151
 #: templates/demo/sales_order.html:80 templates/demo/sales_order.tex:123
@@ -6513,7 +6513,7 @@ msgstr ""
 msgid "Search"
 msgstr "Suchen"
 
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:326
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:331
 msgid "Search AP"
 msgstr "Suche in Verbindlichkeiten"
 
@@ -6521,7 +6521,7 @@ msgstr "Suche in Verbindlichkeiten"
 msgid "Search AP Invoices"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:327
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:332
 msgid "Search AR"
 msgstr "Suche Forderungen"
 
@@ -6843,7 +6843,7 @@ msgstr "Lieferadresse:"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:119
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:288
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:313
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:318
 #: lib/LedgerSMB/Report/Orders.pm:250 templates/demo/product_receipt.html:78
 #: templates/demo/purchase_order.html:79 templates/demo/sales_order.html:82
 #: templates/demo/sales_order.tex:125 templates/demo/work_order.html:81
@@ -6898,7 +6898,7 @@ msgstr "Versandaufkleber"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:115
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:284
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:310
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:315
 #: lib/LedgerSMB/Report/Orders.pm:246 old/bin/is.pl:510 old/bin/oe.pl:1831
 #: old/bin/oe.pl:636 templates/demo/bin_list.html:79
 #: templates/demo/bin_list.tex:99 templates/demo/invoice.html:88
@@ -7221,7 +7221,7 @@ msgstr "Kennzeichen:"
 
 #: lib/LedgerSMB/Report/COA.pm:114 lib/LedgerSMB/Report/Contact/Purchase.pm:89
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:240
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:283 old/bin/ic.pl:513
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:284 old/bin/ic.pl:513
 #: old/bin/ic.pl:642 UI/accounts/edit.html:292 UI/accounts/edit.html:357
 #: UI/accounts/edit.html:408 UI/accounts/edit.html:457 UI/accounts/edit.html:496
 #: UI/Reports/filters/invoice_outstanding.html:199
@@ -7687,7 +7687,7 @@ msgstr "Höchststufe"
 #: lib/LedgerSMB/Report/Inventory/Search.pm:324
 #: lib/LedgerSMB/Report/Invoices/COGS.pm:122
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:245
-#: lib/LedgerSMB/Report/Invoices/Transactions.pm:286
+#: lib/LedgerSMB/Report/Invoices/Transactions.pm:288
 #: lib/LedgerSMB/Report/Taxform/Details.pm:105
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:114
 #: lib/LedgerSMB/Scripts/asset.pm:680 lib/LedgerSMB/Scripts/payment.pm:943
