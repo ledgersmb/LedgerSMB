@@ -3,16 +3,16 @@
 # e t <contacts@ethnoco.ch>, 2023
 # d34703e27442b8aae408ee1a019d49fd_1d2c70b, 2023
 # Mikkel Høgh <mikkel@hoegh.org>, 2023
-# E, 2023
 # Mikael Arhelger <mikaelarhelger@gmail.com>, 2023
 # Erik Huelsmann <ehuels@gmail.com>, 2023
+# E, 2025
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.11.25-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-04-05 21:47+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2023\n"
+"POT-Creation-Date: 2025-06-09 21:06+0000\n"
+"Last-Translator: E, 2025\n"
 "Language-Team: German (https://app.transifex.com/ledgersmb/teams/58325/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -1124,7 +1124,7 @@ msgstr "Barcode"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:137
 msgid "Barcode entry on invoices"
-msgstr ""
+msgstr "Strichcode-Eingabe auf Rechnung"
 
 #: lib/LedgerSMB/Scripts/configuration.pm:56
 msgid "Base Currency"
@@ -2687,7 +2687,7 @@ msgstr "Entwurfsart"
 
 #: old/bin/aa.pl:153 old/bin/ir.pl:141 old/bin/is.pl:134
 msgid "Draft deleted"
-msgstr ""
+msgstr "Entwurf gelöscht"
 
 #: sql/Pg-database.sql:2640
 msgid "Drafts"
@@ -4184,7 +4184,7 @@ msgstr "LedgerSMB 1.10 db gefunden."
 
 #: lib/LedgerSMB/Scripts/setup.pm:236
 msgid "LedgerSMB 1.11 db found."
-msgstr ""
+msgstr "LedgerSMB 1.11 Datenbank gefunden."
 
 #: lib/LedgerSMB/Scripts/setup.pm:190
 msgid "LedgerSMB 1.2 db found."
@@ -4863,7 +4863,7 @@ msgstr ""
 
 #: UI/setup/consistency_results.html:10
 msgid "Note: "
-msgstr ""
+msgstr "Anmerkung:"
 
 #: lib/LedgerSMB/Report/Contact/Purchase.pm:111
 #: lib/LedgerSMB/Report/Inventory/Search.pm:295
@@ -5149,7 +5149,7 @@ msgstr "Offen"
 
 #: UI/reconciliation/report.html:327
 msgid "Outstanding Transactions"
-msgstr ""
+msgstr "Ausstehende Transaktionen"
 
 #: UI/Reports/filters/aging.html:88
 msgid "Overdue"
@@ -8708,7 +8708,7 @@ msgstr "Lagerhaltung"
 msgid "label"
 msgstr "Label"
 
-#: UI/src/views/Home.vue:42 UI/src/views/Home.vue:57
+#: UI/src/views/Home.vue:57 UI/src/views/Home.vue:42
 msgid "mailing lists"
 msgstr "Mailinglisten"
 
