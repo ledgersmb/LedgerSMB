@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(2);
+    SELECT plan(1);
 
     -- Add data
 
@@ -18,7 +18,6 @@ BEGIN;
     -- Validate required functions
 
     SELECT has_function('menu_generate','{}'::text[]);
-    SELECT has_function('menu_insert',ARRAY['integer','integer','text']);
 
     -- Run tests
 

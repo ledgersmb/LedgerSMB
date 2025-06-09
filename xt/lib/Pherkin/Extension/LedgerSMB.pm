@@ -269,17 +269,24 @@ sub create_template {
         schema   => 'xyz');
 
     $db->create_and_load;
-    my $c = LedgerSMB::Company->new(
+    my $company = LedgerSMB::Company->new(
         dbh => $db->connect(),
-        )->configuration;
+        );
      my $fn = './locale/coa/us/General.xml';
-    open my $fh, '<:encoding(UTF-8)', $fn
+    open my $fh, '<:raw', $fn
         or die "Failed to open $fn: $!";
-    $c->from_xml($fh);
-    $c->dbh->commit;
-    $c->dbh->disconnect;
+    $company->configuration->from_xml($fh);
     close $fh
         or warn "Error closing $fn: $!";
+
+    open $fh, '<:raw', './locale/menu.xml'
+        or die "Failed to open menu definition: $!";
+    $company->menu->from_xml( $fh );
+    close $fh
+        or warn "Error closing menu.xml: $!";
+
+    $company->dbh->commit;
+    $company->dbh->disconnect;
 
     # NOTE: $db is connected with the template, *not* with the
     #  test database (which means we can't use $self->super_dbh!)

@@ -327,7 +327,6 @@ lsmb__role_prefix
 lsmb_module__get
 lsmb_module__list
 menu_generate
-menu_insert
 mfg_lot__commit
 months_passed
 next_leap_year_calc

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://ledgersmb.org/xml-schemas/menu"
+           xmlns:tns="http://ledgersmb.org/xml-schemas/menu"
+           elementFormDefault="qualified">
+
+  <!-- Root element definition -->
+  <xs:element name="menu" type="tns:MenuType"/>
+
+  <!-- Complex type for menu structure -->
+  <xs:complexType name="MenuType">
+    <xs:sequence>
+      <xs:element name="menu-item" type="tns:MenuItemType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="label" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <!-- Complex type for menu items -->
+  <xs:complexType name="MenuItemType">
+    <xs:sequence>
+      <xs:element name="acls" type="tns:AclsType" minOccurs="0"/>
+      <xs:element name="menu-item" type="tns:MenuItemType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="label" type="xs:string" use="required"/>
+    <xs:attribute name="url" type="xs:string" use="optional"/>
+    <xs:attribute name="opens-new-page" type="tns:YesNoType" use="optional"/>
+  </xs:complexType>
+
+  <!-- Enhanced Complex type for access control lists with constraint -->
+  <xs:complexType name="AclsType">
+    <xs:sequence>
+      <xs:element name="acl" type="tns:AclType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="unrestricted" type="tns:YesNoType" use="optional"/>
+    <!-- XSD 1.1 assertion to enforce constraint -->
+    <xs:assert test="if (@unrestricted = 'yes') then count(acl) = 0 else true()"/>
+  </xs:complexType>
+
+  <!-- Complex type for individual ACL entries -->
+  <xs:complexType name="AclType">
+    <xs:attribute name="role" type="xs:string" use="required"/>
+    <xs:attribute name="access" type="tns:AccessType" use="required"/>
+  </xs:complexType>
+
+  <!-- Simple type for access values -->
+  <xs:simpleType name="AccessType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="allow"/>
+      <xs:enumeration value="deny"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Simple type for yes/no values -->
+  <xs:simpleType name="YesNoType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="yes"/>
+      <xs:enumeration value="no"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

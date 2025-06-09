@@ -12,6 +12,7 @@ LedgerSMB::Admin::Command::create - ledgersmb-admin 'create' command
 =cut
 
 use LedgerSMB::Admin::Command;
+use LedgerSMB::Company;
 use LedgerSMB::Database;
 
 use Moose;
@@ -19,6 +20,7 @@ use experimental 'try'; # Work around Moose re-enabling experimenal warnings
 extends 'LedgerSMB::Admin::Command';
 use namespace::autoclean;
 
+use File::Spec;
 use Getopt::Long qw(GetOptionsFromArray);
 
 has options => (is => 'ro', default => sub { {} });
@@ -67,6 +69,17 @@ sub run {
         $self->db->load_base_schema();
         $self->db->apply_changes();
         $self->db->load_modules('LOADORDER');
+
+        open( my $fh, '<:raw',
+              File::Spec->catfile( $self->db->data_dir, 'menu.xml' ) )
+            or die "Unable to open 'menu.xml' menu definition file: $!";
+
+        my $dbh = $self->db->connect;
+        LedgerSMB::Company->new( dbh => $dbh )
+            ->menu
+            ->from_xml( $fh );
+        $dbh->commit;
+        $dbh->disconnect;
         $logger->warn('Database successfully created and prepared');
     }
     catch ($e) {

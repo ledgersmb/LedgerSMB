@@ -1,22 +1,4 @@
 
-
-update menu_node
-   set menu = null,
-       url = 'gifis',
-       parent = 73,
-       position = 9
- where id = 136; -- GIFI
-
-update menu_acl
-   set node_id = 136
- where node_id in (139, 140); -- 247 creates duplicate sic_create on 150
-
-delete from menu_acl
- where node_id = 247;
-
-delete from menu_node
- where id in (139, 140, 247);
-
 alter table gifi
   add column last_updated timestamp without time zone not null default now();
 

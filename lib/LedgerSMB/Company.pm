@@ -32,6 +32,7 @@ use namespace::autoclean;
 
 
 use LedgerSMB::Company::Configuration;
+use LedgerSMB::Company::Menu;
 
 =head1 DESCRIPTION
 
@@ -71,9 +72,30 @@ sub _build_configuration {
     return LedgerSMB::Company::Configuration->new( dbh => $self->dbh );
 }
 
+=head2 menu
+
+Holds a L<LedgerSMB::Company::Menu> instance, representing the
+menu of the connected company database (as visible to the connected user).
+
+This attribute cannot be set at object instantiation.
+
+=cut
+
+has menu => (
+    is => 'ro',
+    init_arg => undef,
+    lazy => 1,
+    builder => '_build_menu');
+
+sub _build_menu {
+    my $self = shift;
+    return LedgerSMB::Company::Menu->new( dbh => $self->dbh );
+}
+
+
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2020 The LedgerSMB Core Team
+Copyright (C) 2020-2025 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

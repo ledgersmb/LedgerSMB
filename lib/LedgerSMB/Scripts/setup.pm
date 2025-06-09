@@ -44,6 +44,7 @@ use Scope::Guard;
 use LedgerSMB;
 use LedgerSMB::App_State;
 use LedgerSMB::Company;
+use LedgerSMB::Company::Menu;
 use LedgerSMB::Database;
 use LedgerSMB::Database::Config;
 use LedgerSMB::Database::ConsistencyChecks;
@@ -1156,6 +1157,12 @@ sub create_db {
     my $rc = $database->create_and_load();
     $logger->info("create_and_load rc=$rc");
 
+    ($reauth) = _init_db($request);
+    return $reauth if $reauth;
+    if (my $rv = _reload_menu($request, $database)) {
+        return $rv;
+    }
+
     return _dispatch_upgrade_workflow($request, '_create_db');
 }
 
@@ -1207,7 +1214,7 @@ sub select_coa {
                 )->configuration;
             my $fn = File::Spec->catdir('.', 'locale', 'coa',
                                         $request->{coa_lc}, $request->{chart});
-            open my $fh, '<:encoding(UTF-8)', $fn
+            open my $fh, '<:raw', $fn
                 or die "Failed to open $fn: $!";
             $c->from_xml($fh);
             $c->dbh->commit;
@@ -1632,6 +1639,7 @@ sub _rebuild_modules {
     $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
         or die 'Upgrade failed.';
 
+
     $logger->info('Completed database upgrade run ' . $database->upgrade_run_id);
     return;
 }
@@ -1649,6 +1657,54 @@ sub rebuild_modules {
     if (my $rv = _rebuild_modules($request, 'rebuild_modules', $db)) {
         return $rv;
     }
+    if (my $rv = _reload_menu($request, $db)) {
+        return $rv;
+    }
+    return _complete($request, $db);
+}
+
+=item reload_menu
+
+Loads the menu definition (including ACLs) from 'menu.xml' in the database's C<data_dir>,
+which is also where the 'initial-data.xml' file is located.
+
+=cut
+
+sub _reload_menu {
+    my ($request, $database) = @_;
+
+    my $c = LedgerSMB::Company->new( dbh => $request->{dbh} );
+    my $m = $c->menu;
+    try {
+        open( my $fh, '<:raw', File::Spec->catfile( $database->data_dir, 'menu.xml' ) )
+            or die "Unable to open menu definition file 'menu.xml': $!";
+        $m->from_xml( $fh );
+        $request->{dbh}->commit;
+    }
+    catch ($e) {
+        return [ HTTP_INTERNAL_SERVER_ERROR,
+                 [ 'Content-Type' => 'text/plain' ],
+                 [ "$e" ] ];
+    }
+
+    return;
+}
+
+
+sub reload_menu {
+    my ($request) = @_;
+
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
+
+    my ($reauth, $db) = _init_db($request);
+    return $reauth if $reauth;
+
+    if (my $rv = _reload_menu($request, $db)) {
+        return $rv;
+    }
+
     return _complete($request, $db);
 }
 
