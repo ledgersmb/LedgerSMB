@@ -15,6 +15,8 @@ Added functionalities
 Changed functionalities
 * Concurrent logins with different users on one browser throw an error (#8496)
 * Confusing menu name 'Add Contact' changed to 'Add entity' (#8003)
+* Split toplevel Reports menu over General Journal and Goods & Services (#8850)
+* Menu reloaded from file (./locale/menu.xml) on each upgrade (#8876)
 
 Removed functionalities
 
@@ -22,6 +24,8 @@ Bugs fixed
 * Better referential integrity with more relational constraints (#8661, #8794)
 
 Cleanup & architecture improvements
+* Added several ADRs (architecture decision records) describing project direction
+* Encapsulation of Dojo widgets in custom (web) elements (#8874)
 * Deprecated 'ledgersmb.conf' configuration in favor of 'ledgersmb.yaml' (#8570)
 * Loading of main section more predictable through state machine use (#8530)
 * Removed deps in favor of (experimental) built-in functionality (#8571, #8572)
@@ -29,7 +33,7 @@ Cleanup & architecture improvements
 * Removal of custom SMTP handling class; replaced with Email::Sender (#8576)
 * Dropped unnecessary table inheritance (#8046)
 * Replacement of various Dojo layout components with Vue equivalents (#8811)
-* Dead code removal (#8579, #8591, #8613, #8826)
+* Dead code removal (#8579, #8591, #8613, #8826, #8874)
 * Move end-to-end UI tests from Selenium Hub v3 to v4 (#8829)
 
 Updated dependencies
