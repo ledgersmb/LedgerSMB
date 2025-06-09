@@ -77,7 +77,7 @@ export default {
             company: cfg.company,
             login: cfg.login,
             pwExpiration: window.pw_expiration,
-            showPasswordAlert: window.pw_expiration !== null,
+            showPasswordAlert: window.pw_expiration.warn ? true : false,
             version: cfg.version
         };
     },
@@ -282,7 +282,7 @@ export default {
             </template>
         </q-splitter>
 
-        <q-dialog v-model="showPasswordAlert">
+        <q-dialog v-model="showPasswordAlert" :persistent="true">
             <q-card>
                 <q-card-section>
                     <div class="text-h6">

@@ -364,13 +364,11 @@ sub initialize_with_db {
     $sth->execute or die $sth->errstr;
     ($self->{warn_expire}) = $sth->fetchrow_array;
 
-    if ($self->{warn_expire}){
-        $sth = $self->{dbh}->prepare('SELECT user__check_my_expiration()')
-            or die $self->{dbh}->errstr;
-        $sth->execute or die $sth->errstr;
-        my ($pw_expires) = $sth->fetchrow_array;
-        $self->{pw_expires} = $expiration_parser->parse_duration($pw_expires);
-    }
+    $sth = $self->{dbh}->prepare('SELECT user__check_my_expiration()')
+        or die $self->{dbh}->errstr;
+    $sth->execute or die $sth->errstr;
+    my ($pw_expires) = $sth->fetchrow_array;
+    $self->{pw_expires} = $expiration_parser->parse_duration($pw_expires);
 
     $self->get_user_info;
 
