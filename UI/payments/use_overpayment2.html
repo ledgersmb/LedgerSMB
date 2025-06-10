@@ -186,7 +186,7 @@
                           value=data.invoice_date  } %]
    </td>
    <td align="right"> [% data.applied_due -%]
-    [% PROCESS input element_data  {
+    [% PROCESS input element_data = {
                           type="hidden"
                           id="due_$i"
                           name="due_$i"
@@ -231,6 +231,11 @@
                           id="invoice_id_$i"
                           name="invoice_id_$i"
                           value=data.invoice.id } %]
+    [% PROCESS input element_data = {
+                          type="hidden"
+                          id="is_invoice_$i"
+                          name="invoice_id_$i"
+                          value=data.invoice.is_invoice } %]
    </td>
    <td align="center"> [% data.entity_name %]
     [% PROCESS input element_data = {
@@ -380,6 +385,11 @@
    </td>
   </tr>
  </table>
+     [% PROCESS input element_data = {
+                          type="hidden"
+                          id="count"
+                          name="count"
+                          value=i } %]
  [% FOREACH item IN hiddens -%]
    [% INCLUDE input element_data=item %]
  [% END -%]
