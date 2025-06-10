@@ -518,8 +518,9 @@ Returns the script to direct a transaction to (currently ar, ap, is, or ir)
 =cut
 
 sub script {
-    my ($self) = @_;
-    if ($self->{invoice}) {
+    my ($self, $invoice) = @_;
+    $invoice //= $self->{invoice};
+    if ($invoice) {
        return $self->{account_class} == 1 ? 'ir' : 'is';
     }
     else {
