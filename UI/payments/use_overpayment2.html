@@ -177,6 +177,11 @@
                           id="entity_id_$i"
                           name="entity_id_$i"
                           value=data.entity_id } %]
+    [% PROCESS input element_data = {
+                          type="hidden"
+                          id="entity_name_$i"
+                          name="entity_name_$i"
+                          value=data.entity_name } %]
    </td>
    <td align="center"> [% data.invoice_date %]
     [% PROCESS input element_data = {
@@ -216,72 +221,6 @@
                                                                           name="checkbox_$i" } %]</td>
   </tr>
   [% END -%]
-  [% FOREACH data IN avble_invoices; # Loop through selected entity invoices
-         IF not data.amount; data.amount = 0; END; -%]
-  [% i = i + 1; j = i % 2; alterning_style = "listrow$j" -%]
-  <tr class="[% alterning_style %]">
-   <td align="center"> <a href="[% data.invoice.href %]">[% data.invoice.number %]</a>
-    [% PROCESS input element_data = {
-                          type="hidden"
-                          id="invnumber_$i"
-                          name="invnumber_$i"
-                          value=data.invoice.number } %]
-    [% PROCESS input element_data = {
-                          type="hidden"
-                          id="invoice_id_$i"
-                          name="invoice_id_$i"
-                          value=data.invoice.id } %]
-    [% PROCESS input element_data = {
-                          type="hidden"
-                          id="is_invoice_$i"
-                          name="invoice_id_$i"
-                          value=data.invoice.is_invoice } %]
-   </td>
-   <td align="center"> [% data.entity_name %]
-    [% PROCESS input element_data = {
-                          type="hidden"
-                          id="entity_id_$i"
-                          name="entity_id_$i"
-                          value=data.entity_id  } %]
-   </td>
-   <td align="center"> [% data.invoice_date %]
-    [% PROCESS input element_data = {
-                          type="hidden"
-                          id="invoice_date_$i"
-                          name="invoice_date_$i"
-                          value=data.invoice_date } %]
-   </td >
-   <td align="right"> [% data.due %]
-    [% PROCESS input element_data = {
-                          type="hidden"
-                          id="due_$i"
-                          name="due_$i"
-                          value=data.due } %]
-   </td>
-   [% IF data.repeated_invoice == 'true' -%]
-    <td align="center"> &nbsp; </td>
-   [% END -%]
-   <td align="center"> [% data.selected_accno.ovp_accno %]
-    [% PROCESS input element_data = {
-                          type="hidden"
-                          id="selected_accno_$i"
-                          name="selected_accno_$i"
-                          value=data.selected_accno.id _ '--' _ data.selected_accno.ovp_accno
-                          } %]
-   </td>
-   <td align="center">
-    [% PROCESS input element_data = {
-                          name="amount_$i"
-                          id="amount_$i"
-                          value=data.amount } %]
-    [% subtotal_inv = subtotal_inv + data.amount -%]
-   </td>
-   <td align="center">
-          [% PROCESS input element_data = {
-                                type="checkbox"
-                                name="checkbox_$i" } %]</td>
-  </tr>
-  [% END -%]
   [% i = i + 1; j = i % 2; alterning_style = "listrow$j" -%]
   <tr class="[% alterning_style %]">
    <td align="center">[% PROCESS input element_data = {
@@ -301,8 +240,7 @@
                                 value_attr = 'value'
                                 text_attr = 'name'
                                 options = vc_list
-                                default_values = [ request.new_entity_id ]
-                                default_blank = 1
+                                default_values = []
            } %]
    </td>
    <td align="center">N/A</td>
