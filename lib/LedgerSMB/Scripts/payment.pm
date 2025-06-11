@@ -1609,6 +1609,7 @@ sub use_overpayment2 {
     my @hiddens;
     my $vc_entity_info;
     my $default_currency;
+    my $n_name;
     my %amount_to_be_used;
     my $count;
     my $warning = $Payment->{'warning'};
@@ -1678,6 +1679,7 @@ sub use_overpayment2 {
         push @vc_list, { value            => $vc_info[$ref]->{id},
                          name            => $name,
                          vc_discount_accno => $vc_info[$ref]->{discount}};
+        my $n_name = $name if $vc_info[$ref]->{id} = $Payment->{new_entity_id};
     }
 
 
@@ -1775,7 +1777,7 @@ sub use_overpayment2 {
                         id         => $ref->{invoice_id},
                         is_invoice => $ref->{invoice}
                         href       => $uri },
-                    entity_name       => $name,
+                    entity_name       => $n_name,
                     vc_discount_accno => $vc_discount_accno,
                     entity_id        => qq|$Selected_entity->{entity_credit_id}--$name|,
                     invoice_date        => $ref->{invoice_date},
