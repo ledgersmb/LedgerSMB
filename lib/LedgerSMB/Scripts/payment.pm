@@ -1673,7 +1673,7 @@ sub use_overpayment2 {
 
     #list all the vendor/customer
     @vc_info = $Payment->get_entity_credit_account();
-    push @vclist = {}; # inserting a blank at the start
+    push @vc_info, {}; # inserting a blank at the start
     for my $ref (0 .. $#vc_info) {
         my ($name) = split(/:/, $vc_info[$ref]->{name});
         push @vc_list, { value            => $vc_info[$ref]->{id},
@@ -1749,7 +1749,6 @@ sub use_overpayment2 {
         $Selected_entity =
             LedgerSMB::DBObject::Payment->new(%$Payment);
         $Selected_entity->{invnumber} = $request->{new_invoice} ;
-        my $id = $Payment->{new_entity_id};
         my ($id,$name,$vc_discount_accno) =
             split(/--/, $request->{new_entity_id});
         my ($ovp_chart_id, $ovp_selected_accno) =
@@ -1775,7 +1774,7 @@ sub use_overpayment2 {
                     invoice       => {
                         number     => $ref->{invnumber},
                         id         => $ref->{invoice_id},
-                        is_invoice => $ref->{invoice}
+                        is_invoice => $ref->{invoice},
                         href       => $uri },
                     entity_name       => $n_name,
                     vc_discount_accno => $vc_discount_accno,
