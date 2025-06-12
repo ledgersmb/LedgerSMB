@@ -1882,6 +1882,7 @@ sub post_overpayment {
             next;
         }
 
+        # complication -- this does not set $entity_name
         my ($entity_id, $entity_name) =
             split(/--/, $request->{"entity_id_$count"});
         my ($ovp_chart_id, $ovp_selected_accno) =
@@ -2031,7 +2032,7 @@ sub post_overpayment {
         my $list_key = $entity_list{$key};
         for my $field (qw(amount cash_account_id source memo transaction_id
                           ovp_payment_id)) {
-            $list_key->{$key} =
+            $list_key->{$field} =
                 $list_key->{"array_$field"};
         }
 
