@@ -1876,7 +1876,7 @@ sub post_overpayment {
     while ($request->{"entity_id_$count"})
     {
 
-        if ($request->{"checkbox_$count"})
+        if ($request->{"checkbox_$count"} or !$request->{"amount_$count"})
         {
             $count++;
             next;
