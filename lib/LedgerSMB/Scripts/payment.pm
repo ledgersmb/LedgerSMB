@@ -1868,6 +1868,7 @@ sub post_overpayment {
     # be used to pay the invoices
     my %entity_unused_ovp;
     my $unused_ovp_index;
+    $request->{exchangerate} = $request->{exrate} // 1;
 
     #let's store all unused invoice in entity_unused_ovp, it will be
 
