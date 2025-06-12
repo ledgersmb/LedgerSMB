@@ -2031,8 +2031,8 @@ sub post_overpayment {
     for my $key (keys %entity_list)
     {
         my $list_key = $entity_list{$key};
-        for my $field (qw(amount cash_account_id source memo transaction_id
-                          ovp_payment_id)) {
+        # CT:  This logic should be eliminated once fixes are in master and 1.12
+        for my $field (qw(amount cash_account_id source memo transaction_id)) {
             $list_key->{$field} =
                 $list_key->{"array_$field"};
         }
