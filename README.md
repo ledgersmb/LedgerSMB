@@ -63,25 +63,25 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome              | 2018-03  | 65-81, 83-131                               |
-| Edge                | 2020-01  | 79-81, 83-131                               |
-| Firefox             | 2018-05  | 60-133                                      |
-| Opera               | 2018-03  | 52-58, 60, 62-114                           |
+| Chrome              | 2018-03  | 65-81, 83-137                               |
+| Edge                | 2020-01  | 79-81, 83-136                               |
+| Firefox             | 2018-05  | 60-139                                      |
+| Opera               | 2018-03  | 52-58, 60, 62-117                           |
 | Safari              | 2018-09  | 12, 12.1, 13, 13.1, 14, 14.1, 15, 15.1,     |
 |                     |          | 15.2-15.6, 16.0-16.6, 17.0-17.6,            |
-|                     |          | 18.0-18.2                                   |
+|                     |          | 18.0-18.5                                   |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome for Android  | 2024-11  | 131                                         |
-| Firefox for Android | 2024-10  | 132                                         |
-| Android Browser     | 2024-11  | 131                                         |
+| Chrome for Android  | <missing> | 136                                         |
+| Firefox for Android | <missing> | 137                                         |
+| Android Browser     | <missing> | 136                                         |
 | Baidu Browser       | 2024-03  | 13.52                                       |
 | Safari on iOS       | 2018-09  | 12.0-12.5, 13.0-13.7, 14.0-14.8,            |
 |                     |          | 15.0-15.8, 16.0-16.7, 17.0-17.7,            |
-|                     |          | 18.0-18.2                                   |
+|                     |          | 18.0-18.5                                   |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
 | Opera Mobile        | 2024-03  | 80                                          |
 | Samsung Internet    | 2019-04  | 9.2, 10.1, 11.1-11.2, 12.0, 13.0, 14.0,     |
@@ -115,6 +115,9 @@ installed as well as [docker-compose](https://github.com/docker/compose#where-to
 This creates both the LedgerSMB image and a database image with a persistent
 database. Note that this setup is **not** sufficient for production purposes
 because it lacks secure connections to protect your users' passwords.
+
+❌ Do not use unofficial or AI-generated Docker Compose examples. 
+These are often incomplete, break silently, or skip required services.
 
 ## Next steps
 
