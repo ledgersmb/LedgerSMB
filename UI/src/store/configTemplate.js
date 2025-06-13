@@ -51,7 +51,7 @@ export const configStoreTemplate = {
             const response = await fetch(`/erp/api/v0/${this.url}/${id}`, {
                 method: "DELETE",
                 headers: {
-                    "If-Match": warehouse._meta.ETag
+                    "If-Match": `"${warehouse._meta.ETag}"`
                 }
             });
 
@@ -105,7 +105,7 @@ export const configStoreTemplate = {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    "If-Match": warehouse._meta.ETag
+                    "If-Match": `"${warehouse._meta.ETag}"`
                 },
                 body: JSON.stringify(data)
             });
