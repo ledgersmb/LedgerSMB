@@ -79,8 +79,8 @@ This creates both the LedgerSMB image and a database image with a persistent
 database. Note that this setup is **not** sufficient for production purposes
 because it lacks secure connections to protect your users' passwords.
 
-❌ Do **not** use unofficial or AI-generated Docker Compose examples. These are often incomplete, 
-break silently, or skip required services.
+❌ Do not use unofficial or AI-generated Docker Compose examples. 
+These are often incomplete, break silently, or skip required services.
 
 ## Next steps
 
