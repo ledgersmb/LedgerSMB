@@ -41,6 +41,8 @@ utils/devel/extract-sql < sql/Pg-database.sql >> locale/LedgerSMB.pot
 
 utils/devel/extract-vue-template-translations.sh >> locale/LedgerSMB.pot
 
+utils/devel/extract-menu-translations >> locale/LedgerSMB.pot
+
 msguniq --sort-output --width=80 --output-file=locale/LedgerSMB.pot locale/LedgerSMB.pot \
   || exit 1
 

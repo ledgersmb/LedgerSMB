@@ -1,0 +1,44 @@
+#!/usr/bin/perl
+
+use warnings;
+use v5.20;
+
+use XML::LibXML;
+use XML::LibXML::XPathContext;
+
+my %dict;
+
+sub ensure_entry {
+    my ($string) = @_;
+
+    $dict{$string} = []
+        unless exists $dict{$string};
+}
+
+
+open my $fh, '<:raw', 'locale/menu.xml'
+    or die "Unable to open menu.xml: $!";
+
+my $doc = XML::LibXML->load_xml( IO => $fh, line_numbers => 1 );
+
+my $xpc = XML::LibXML::XPathContext->new($doc);
+
+$xpc->registerNs( 'lsmb', 'http://ledgersmb.org/xml-schemas/menu' );
+my @menu_items = $xpc->findnodes('//lsmb:menu-item');
+
+
+for my $menu_item (@menu_items) {
+    my $label = $menu_item->getAttribute( 'label' );
+    my $line  = $menu_item->line_number;
+    ensure_entry($label);
+    push @{$dict{$label}}, "#: locale/menu.xml:$line";
+}
+
+
+foreach my $string (sort keys %dict) {
+    foreach my $location (@{$dict{$string}}) {
+        print "$location\n";
+    }
+    print "msgid \"$string\"\n";
+    print "msgstr \"\"\n\n";
+}
