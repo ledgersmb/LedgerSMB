@@ -99,6 +99,7 @@ for my $test (@tests) {
         Locale::Maketext::Simple->reload_loc;
     }
     elsif ( $test->{fail} ) {
+        $stderr =~ s/^Parsing: $testfile\n//;
         chomp $stderr;
         ok($test->{fail} eq $stderr,$stderr);
     }
