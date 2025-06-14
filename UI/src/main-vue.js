@@ -61,7 +61,13 @@ if (document.getElementById("main")) {
     useSessionUserStore().initialize();
     appName = "#main";
 } else if (document.getElementById("login")) {
-    app = createApp(LoginPage);
+    app = createApp(LoginPage, {
+        successFn: (data) => {
+            setTimeout(() => {
+                window.location.assign(data.target);
+            }, 200);
+        }
+    });
     appName = "#login";
 } else {
     /* In case we're running a "setup.pl" page */
