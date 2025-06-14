@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-06-14 12:30+0000\n"
+"POT-Creation-Date: 2025-06-14 12:49+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
 "Language-Team: Arabic (Egypt) (http://app.transifex.com/ledgersmb/ledgersmb/"
 "language/ar_EG/)\n"
@@ -73,7 +73,6 @@ msgstr ""
 #: old/bin/am.pl:322 UI/Contact/divs/credit.html:216
 #: UI/Contact/divs/credit.html:217 UI/Reports/filters/unapproved.html:5
 #: UI/setup/complete.html:80 UI/setup/confirm_operation.html:144
-#: locale/menu.xml:98
 msgid "AP"
 msgstr ""
 
@@ -119,7 +118,6 @@ msgstr ""
 #: old/bin/am.pl:321 UI/Contact/divs/credit.html:216
 #: UI/Contact/divs/credit.html:217 UI/Reports/filters/unapproved.html:6
 #: UI/setup/complete.html:82 UI/setup/confirm_operation.html:145
-#: locale/menu.xml:27
 msgid "AR"
 msgstr ""
 
@@ -270,6 +268,14 @@ msgstr "حسابات"
 msgid "Accounts From"
 msgstr "الحسابات من"
 
+#: locale/menu.xml:98
+msgid "Accounts Payable"
+msgstr "موردين"
+
+#: locale/menu.xml:27
+msgid "Accounts Receivable"
+msgstr "موردين"
+
 #: UI/Reports/co/filter_cd.html:28
 msgid "Accounts To"
 msgstr "الحسابات إلى"
@@ -343,7 +349,7 @@ msgstr ""
 msgid "Add AR Transaction"
 msgstr ""
 
-#: old/bin/ic.pl:56 locale/menu.xml:444
+#: old/bin/ic.pl:56 locale/menu.xml:461
 msgid "Add Assembly"
 msgstr "اضافة تجميع"
 
@@ -408,7 +414,7 @@ msgstr ""
 msgid "Add Exchange Rate"
 msgstr ""
 
-#: old/bin/pe.pl:87 locale/menu.xml:459
+#: old/bin/pe.pl:87 locale/menu.xml:476
 msgid "Add Group"
 msgstr "اضافة مجموعة"
 
@@ -420,11 +426,11 @@ msgstr ""
 msgid "Add Note"
 msgstr "إضافة ملاحظة"
 
-#: locale/menu.xml:449
+#: locale/menu.xml:466
 msgid "Add Overhead"
 msgstr ""
 
-#: old/bin/ic.pl:54 locale/menu.xml:434
+#: old/bin/ic.pl:54 locale/menu.xml:451
 msgid "Add Part"
 msgstr "اضافة جزء"
 
@@ -460,7 +466,7 @@ msgstr "اضافة فاتورة بيع"
 msgid "Add Sales Order"
 msgstr "اضافة طلب بيع"
 
-#: old/bin/ic.pl:55 locale/menu.xml:439
+#: old/bin/ic.pl:55 locale/menu.xml:456
 msgid "Add Service"
 msgstr "اضافة خدمة"
 
@@ -468,7 +474,7 @@ msgstr "اضافة خدمة"
 msgid "Add Tax Form"
 msgstr ""
 
-#: locale/menu.xml:537
+#: locale/menu.xml:560
 msgid "Add Timecard"
 msgstr ""
 
@@ -1027,7 +1033,7 @@ msgstr "رصيد"
 
 #: UI/Reports/balance_sheet.html:23 UI/Reports/filters/balance_sheet.html:7
 #: templates/demo/balance_sheet.html:301 templates/demo/balance_sheet.tex:44
-#: locale/menu.xml:573
+#: locale/menu.xml:422
 msgid "Balance Sheet"
 msgstr "الميزانية"
 
@@ -1348,9 +1354,13 @@ msgstr ""
 msgid "Card ID"
 msgstr "معرّف البطاقة"
 
-#: UI/Reports/filters/income_statement.html:40 locale/menu.xml:164
+#: UI/Reports/filters/income_statement.html:40
 msgid "Cash"
 msgstr "النقدية"
+
+#: locale/menu.xml:164
+msgid "Cash & Banking"
+msgstr ""
 
 #: UI/Reports/filters/payments.html:54 UI/asset/begin_approval.html:65
 #: UI/payments/payment2.html:344
@@ -1381,7 +1391,7 @@ msgstr ""
 msgid "Chart ID"
 msgstr ""
 
-#: lib/LedgerSMB/Report/COA.pm:149 locale/menu.xml:411
+#: lib/LedgerSMB/Report/COA.pm:149 locale/menu.xml:428
 msgid "Chart of Accounts"
 msgstr "قائمة الحسابات"
 
@@ -2410,7 +2420,7 @@ msgstr ""
 #: templates/demo/sales_quotation.tex:103 templates/demo/timecard.html:91
 #: templates/demo/timecard.html:99 templates/demo/timecard.tex:54
 #: templates/demo/timecard.tex:56 templates/demo/work_order.html:100
-#: templates/demo/work_order.tex:140 locale/menu.xml:491 locale/menu.xml:555
+#: templates/demo/work_order.tex:140 locale/menu.xml:514 locale/menu.xml:578
 msgid "Description"
 msgstr "وصف"
 
@@ -2859,7 +2869,7 @@ msgstr ""
 msgid "Ends"
 msgstr ""
 
-#: UI/inventory/adjustment_entry.html:7 locale/menu.xml:524
+#: UI/inventory/adjustment_entry.html:7 locale/menu.xml:547
 msgid "Enter Inventory"
 msgstr ""
 
@@ -3287,7 +3297,7 @@ msgstr ""
 #: UI/Reports/filters/income_statement.html:49
 #: UI/Reports/filters/income_statement.html:66 UI/accounts/edit.html:241
 #: UI/lib/report_base.html:78 UI/setup/select_coa_details.html:45
-#: locale/menu.xml:421
+#: locale/menu.xml:438
 msgid "GIFI"
 msgstr ""
 
@@ -3342,7 +3352,7 @@ msgid "General Ledger Reports"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/order.pm:129 UI/Reports/aging_report.html:83
-#: locale/menu.xml:319 locale/menu.xml:547
+#: locale/menu.xml:319 locale/menu.xml:570
 msgid "Generate"
 msgstr ""
 
@@ -3374,15 +3384,15 @@ msgstr ""
 msgid "Given Name"
 msgstr ""
 
-#: locale/menu.xml:503
+#: locale/menu.xml:526
 msgid "Goods"
 msgstr ""
 
-#: t/data/04-strings-for-translation.html:8
+#: t/data/04-strings-for-translation.html:8 locale/menu.xml:445
 msgid "Goods & Services"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Inventory/Search.pm:341 locale/menu.xml:428
+#: lib/LedgerSMB/Report/Inventory/Search.pm:341
 msgid "Goods and Services"
 msgstr ""
 
@@ -3498,8 +3508,8 @@ msgstr "صورة"
 msgid "Images in Templates"
 msgstr ""
 
-#: UI/setup/edit_user.html:64 locale/menu.xml:391 locale/menu.xml:502
-#: locale/menu.xml:542 locale/menu.xml:636
+#: UI/setup/edit_user.html:64 locale/menu.xml:391 locale/menu.xml:525
+#: locale/menu.xml:565 locale/menu.xml:636
 msgid "Import"
 msgstr ""
 
@@ -3515,7 +3525,7 @@ msgstr ""
 msgid "Import Batch"
 msgstr ""
 
-#: locale/menu.xml:416
+#: locale/menu.xml:433
 msgid "Import Chart"
 msgstr ""
 
@@ -3587,7 +3597,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:47
 #: UI/Reports/filters/income_statement.html:15 templates/demo/PNL.tex:44
-#: locale/menu.xml:568
+#: locale/menu.xml:417
 msgid "Income Statement"
 msgstr "قائمة الدخل"
 
@@ -3656,11 +3666,15 @@ msgid "Invalid statement balance.  Hint: Try entering a number"
 msgstr ""
 
 #: lib/LedgerSMB/Scripts/configuration.pm:93 old/bin/ic.pl:493
-#: UI/accounts/edit.html:217 locale/menu.xml:262 locale/menu.xml:518
+#: UI/accounts/edit.html:217 locale/menu.xml:262 locale/menu.xml:541
 msgid "Inventory"
 msgstr "مخزون"
 
-#: UI/Reports/filters/inventory_activity.html:5 locale/menu.xml:482
+#: locale/menu.xml:499
+msgid "Inventory & COGS"
+msgstr ""
+
+#: UI/Reports/filters/inventory_activity.html:5 locale/menu.xml:505
 msgid "Inventory Activity"
 msgstr ""
 
@@ -3674,10 +3688,6 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Search_Adj.pm:73
 msgid "Inventory Adjustments"
-msgstr ""
-
-#: locale/menu.xml:578
-msgid "Inventory and COGS"
 msgstr ""
 
 #: old/bin/ic.pl:1788
@@ -4894,7 +4904,7 @@ msgstr ""
 msgid "Overdue"
 msgstr ""
 
-#: UI/Reports/filters/search_goods.html:20 locale/menu.xml:513
+#: UI/Reports/filters/search_goods.html:20 locale/menu.xml:536
 msgid "Overhead"
 msgstr ""
 
@@ -5042,7 +5052,7 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Inventory/Partsgroups.pm:71
 #: lib/LedgerSMB/Report/Inventory/Search.pm:299
-#: UI/Reports/filters/search_partsgroups.html:11 locale/menu.xml:496
+#: UI/Reports/filters/search_partsgroups.html:11 locale/menu.xml:519
 msgid "Partsgroup"
 msgstr ""
 
@@ -5411,7 +5421,7 @@ msgstr ""
 msgid "Pricegroup"
 msgstr "مجموعة سعرية"
 
-#: locale/menu.xml:464
+#: locale/menu.xml:481
 msgid "Pricegroups"
 msgstr ""
 
@@ -5922,7 +5932,7 @@ msgstr ""
 
 #: UI/templates/widget.html:81 locale/menu.xml:80 locale/menu.xml:146
 #: locale/menu.xml:227 locale/menu.xml:307 locale/menu.xml:372
-#: locale/menu.xml:481 locale/menu.xml:562 locale/menu.xml:606
+#: locale/menu.xml:411 locale/menu.xml:498 locale/menu.xml:606
 #: locale/menu.xml:651
 msgid "Reports"
 msgstr "تقارير"
@@ -6121,7 +6131,7 @@ msgstr "رقم أمر البيع"
 #: lib/LedgerSMB/Report/Orders.pm:178 lib/LedgerSMB/Report/Orders.pm:271
 #: old/bin/am.pl:324 UI/Reports/filters/search_goods.html:142
 #: locale/menu.xml:308 locale/menu.xml:320 locale/menu.xml:332
-#: locale/menu.xml:548
+#: locale/menu.xml:571
 msgid "Sales Orders"
 msgstr "اوامر بيع"
 
@@ -6316,7 +6326,7 @@ msgstr ""
 #: UI/asset/search_asset.html:186 UI/asset/search_class.html:55
 #: UI/business_units/filter.html:40 locale/menu.xml:4 locale/menu.xml:58
 #: locale/menu.xml:124 locale/menu.xml:274 locale/menu.xml:288
-#: locale/menu.xml:406 locale/menu.xml:429 locale/menu.xml:531
+#: locale/menu.xml:406 locale/menu.xml:446 locale/menu.xml:554
 msgid "Search"
 msgstr "بحث"
 
@@ -6360,7 +6370,7 @@ msgstr ""
 msgid "Search Goods and Services"
 msgstr ""
 
-#: locale/menu.xml:454
+#: locale/menu.xml:471
 msgid "Search Groups"
 msgstr ""
 
@@ -6578,7 +6588,7 @@ msgstr ""
 msgid "Service Code"
 msgstr "كود الخدمة"
 
-#: UI/Reports/filters/search_goods.html:19 locale/menu.xml:508
+#: UI/Reports/filters/search_goods.html:19 locale/menu.xml:531
 msgid "Services"
 msgstr ""
 
@@ -6909,7 +6919,7 @@ msgstr ""
 msgid "Stock"
 msgstr "مخزون"
 
-#: old/bin/ic.pl:1977 old/bin/ic.pl:2084 locale/menu.xml:476
+#: old/bin/ic.pl:1977 old/bin/ic.pl:2084 locale/menu.xml:493
 msgid "Stock Assembly"
 msgstr "تجميع مخزون"
 
@@ -7393,7 +7403,7 @@ msgstr ""
 msgid "Timecard Criteria"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Timecards.pm:161 locale/menu.xml:530
+#: lib/LedgerSMB/Report/Timecards.pm:161 locale/menu.xml:553
 msgid "Timecards"
 msgstr ""
 
@@ -7590,7 +7600,7 @@ msgstr "ترجمة"
 msgid "Translation deleted!"
 msgstr "تم حذف الترجمة!"
 
-#: UI/accounts/edit.html:594 locale/menu.xml:490 locale/menu.xml:554
+#: UI/accounts/edit.html:594 locale/menu.xml:513 locale/menu.xml:577
 msgid "Translations"
 msgstr "ترجمات"
 
@@ -7598,7 +7608,7 @@ msgstr "ترجمات"
 msgid "Translations saved!"
 msgstr "تم حفظ الترجمات!"
 
-#: lib/LedgerSMB/Report/Trial_Balance.pm:133 locale/menu.xml:563
+#: lib/LedgerSMB/Report/Trial_Balance.pm:133 locale/menu.xml:412
 msgid "Trial Balance"
 msgstr "ميزان المراجعة"
 
@@ -8077,7 +8087,7 @@ msgstr ""
 msgid "Warehouse"
 msgstr ""
 
-#: lib/LedgerSMB/Report/Listings/Warehouse.pm:58 locale/menu.xml:470
+#: lib/LedgerSMB/Report/Listings/Warehouse.pm:58 locale/menu.xml:487
 msgid "Warehouses"
 msgstr "مخازن"
 
@@ -8412,9 +8422,3 @@ msgstr "خطأ غير متوقع!"
 #: lib/LedgerSMB/Scripts/payment.pm:2054 lib/LedgerSMB/Scripts/payment.pm:2073
 msgid "use of an overpayment"
 msgstr ""
-
-#~ msgid "Accounts Payable"
-#~ msgstr "موردين"
-
-#~ msgid "Accounts Receivable"
-#~ msgstr "موردين"

@@ -1,1 +1,8 @@
-{}
+{
+    "AP": "Borçlar",
+    "AP Aging": "Gecikmiş Borçlar",
+    "AR": "Alacaklar",
+    "AR Aging": "Gecikmiş Alacaklar",
+    "Add Transaction": "İşlem Ekle",
+    "Order Entry": "Sipariş Girişi"
+}
