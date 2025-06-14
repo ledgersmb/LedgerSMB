@@ -28,8 +28,18 @@ msgstr ""
 EOF
 
 # EXTRACT STRINGS AND CREATE POT
-find . -name '*.pl' -o -name '*.pm' | \
-  grep -v '\(b\|xt/\)lib/\|UI/pod/\|\./\.[a-z]*\+' | grep -v LaTeX | sort | \
+find . \
+     \( -path ./devel \
+        -o -path ./xt/lib \
+        -o -path ./xt/66-cucumber \
+        -o -path ./sql \
+        -o -path ./b \
+        -o -path ./UI/pod \
+        -o -path ./UI/node_modules \
+        -o -path ./utils/devel \
+        -o -path './.*' \) -prune \
+     -o \(  -name '*.pl' -o -name '*.pm' \) -not -name '*LaTeX*' -print | \
+  sort | \
   utils/devel/extract-perl >> locale/LedgerSMB.pot
 
 find UI/ templates/ t/data/ \
