@@ -14,7 +14,7 @@ Background:
        | 1065           | 2018-01-01     | 100.00            | no       | no        |
 
 Scenario: Default search with no filter
- When I navigate the menu and select the item at "Cash > Reports > Reconciliation"
+ When I navigate the menu and select the item at "Cash & Banking > Reports > Reconciliation"
   Then I should see the Search Reconciliation Reports screen
   When I press "Search"
   Then I should see the Reconciliation Search Report screen
@@ -33,7 +33,7 @@ Scenario: Default search with no filter
    And I expect the 'Submitted' report column to contain '' for Account '1065 Petty Cash'
 
 Scenario: Filter by "Statement Date From"
- When I navigate the menu and select the item at "Cash > Reports > Reconciliation"
+ When I navigate the menu and select the item at "Cash & Banking > Reports > Reconciliation"
   Then I should see the Search Reconciliation Reports screen
   When I enter "2018-02-01" into "Statement Date From"
    And I press "Search"
@@ -51,7 +51,7 @@ Scenario: Filter by "Statement Date From"
    And I expect the 'Account' report column to contain '1060 Checking Account' for Statement Date '2018-03-01'
 
 Scenario: Filter by "Statement Date To"
- When I navigate the menu and select the item at "Cash > Reports > Reconciliation"
+ When I navigate the menu and select the item at "Cash & Banking > Reports > Reconciliation"
   Then I should see the Search Reconciliation Reports screen
   When I enter "2018-02-01" into "Statement Date To"
    And I press "Search"
@@ -68,7 +68,7 @@ Scenario: Filter by "Statement Date To"
    And I expect the 'Account' report column to contain '1060 Checking Account' for Statement Date '2018-02-01'
 
 Scenario: Filter by "Amount From"
- When I navigate the menu and select the item at "Cash > Reports > Reconciliation"
+ When I navigate the menu and select the item at "Cash & Banking > Reports > Reconciliation"
   Then I should see the Search Reconciliation Reports screen
   When I enter "1000.01" into "Amount From"
    And I press "Search"
@@ -85,7 +85,7 @@ Scenario: Filter by "Amount From"
    And I expect the 'Account' report column to contain '1060 Checking Account' for Statement Date '2018-03-01'
 
 Scenario: Filter by "Amount To"
- When I navigate the menu and select the item at "Cash > Reports > Reconciliation"
+ When I navigate the menu and select the item at "Cash & Banking > Reports > Reconciliation"
   Then I should see the Search Reconciliation Reports screen
   When I enter "100.00" into "Amount To"
    And I press "Search"
@@ -101,7 +101,7 @@ Scenario: Filter by "Amount To"
    And I expect the 'Account' report column to contain '1065 Petty Cash' for Statement Date '2018-01-01'
 
 Scenario: Filter by "Account"
- When I navigate the menu and select the item at "Cash > Reports > Reconciliation"
+ When I navigate the menu and select the item at "Cash & Banking > Reports > Reconciliation"
   Then I should see the Search Reconciliation Reports screen
   When I select "1065 Petty Cash" from the drop down "Account"
    And I press "Search"
@@ -110,7 +110,7 @@ Scenario: Filter by "Account"
    And I expect the 'Account' report column to contain '1065 Petty Cash' for Statement Date '2018-01-01'
 
 Scenario: Filter by "Submission Status" is "Submitted"
- When I navigate the menu and select the item at "Cash > Reports > Reconciliation"
+ When I navigate the menu and select the item at "Cash & Banking > Reports > Reconciliation"
   Then I should see the Search Reconciliation Reports screen
   When I select "Submitted" from the drop down "Submission Status"
    And I press "Search"
@@ -120,7 +120,7 @@ Scenario: Filter by "Submission Status" is "Submitted"
    And I expect the 'Account' report column to contain '1060 Checking Account' for Statement Date '2018-03-01'
 
 Scenario: Filter by "Submission Status" is "Not Submitted"
- When I navigate the menu and select the item at "Cash > Reports > Reconciliation"
+ When I navigate the menu and select the item at "Cash & Banking > Reports > Reconciliation"
   Then I should see the Search Reconciliation Reports screen
   When I select "Not Submitted" from the drop down "Submission Status"
    And I press "Search"
@@ -130,7 +130,7 @@ Scenario: Filter by "Submission Status" is "Not Submitted"
    And I expect the 'Statement Date' report column to contain '2018-01-01' for Account '1065 Petty Cash'
 
 Scenario: Filter by "Approved Status" is "Approved"
- When I navigate the menu and select the item at "Cash > Reports > Reconciliation"
+ When I navigate the menu and select the item at "Cash & Banking > Reports > Reconciliation"
   Then I should see the Search Reconciliation Reports screen
   When I select "Approved" from the drop down "Approval Status"
    And I press "Search"
@@ -139,7 +139,7 @@ Scenario: Filter by "Approved Status" is "Approved"
    And I expect the 'Statement Date' report column to contain '2018-03-01' for Account '1060 Checking Account'
 
 Scenario: Filter by "Approved Status" is "Not Approved"
- When I navigate the menu and select the item at "Cash > Reports > Reconciliation"
+ When I navigate the menu and select the item at "Cash & Banking > Reports > Reconciliation"
   Then I should see the Search Reconciliation Reports screen
   When I select "Not Approved" from the drop down "Approval Status"
    And I press "Search"

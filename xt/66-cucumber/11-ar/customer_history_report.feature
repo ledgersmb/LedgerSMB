@@ -9,7 +9,7 @@ Background:
 
 Scenario: Run the Customer History report
  Given a vendor "Vendor A"
-  When I navigate the menu and select the item at "AR > Reports > Customer History"
+  When I navigate the menu and select the item at "Accounts Receivable > Reports > Customer History"
   Then I should see the Purchase History Search screen
   When I press "Continue"
   Then I should see the Purchase History Report screen

@@ -16,7 +16,7 @@ Background:
        | Vendor B | 2025-04-01 | INV103         | 100.03 |
 
 Scenario: Search by date, specifying start and end date
-  When I navigate the menu and select the item at "AP > Search"
+  When I navigate the menu and select the item at "Accounts Payable > Search"
   Then I should see the AP search screen
   When I enter "2025-01-01" into "From"
    And I enter "2025-03-31" into "To"
@@ -32,7 +32,7 @@ Scenario: Search by date, specifying start and end date
    And I expect the 'Date' report column to contain '2025-03-31' for Invoice 'INV102'
 
 Scenario: Search by date, specifying only start date
-  When I navigate the menu and select the item at "AP > Search"
+  When I navigate the menu and select the item at "Accounts Payable > Search"
   Then I should see the AP search screen
   When I enter "2025-03-31" into "From"
    And I press "Continue"
@@ -44,7 +44,7 @@ Scenario: Search by date, specifying only start date
    And I expect the 'Vendor' report column to contain 'Vendor B' for Invoice 'INV103'
 
 Scenario: Search by date, specifying only end date
-  When I navigate the menu and select the item at "AP > Search"
+  When I navigate the menu and select the item at "Accounts Payable > Search"
   Then I should see the AP search screen
   When I enter "2025-01-01" into "To"
    And I press "Continue"
@@ -54,7 +54,7 @@ Scenario: Search by date, specifying only end date
    And I expect the 'Date' report column to contain '2025-01-01' for Invoice 'INV101'
 
 Scenario: Search by date, specifying month period
-  When I navigate the menu and select the item at "AP > Search"
+  When I navigate the menu and select the item at "Accounts Payable > Search"
   Then I should see the AP search screen
   When I select "March" from the drop down "From Month"
    And I select "2025" from the drop down "From Year"
@@ -65,7 +65,7 @@ Scenario: Search by date, specifying month period
    And I expect the 'Date' report column to contain '2025-03-31' for Invoice 'INV102'
 
 Scenario: Search by date, specifying quarter period
-  When I navigate the menu and select the item at "AP > Search"
+  When I navigate the menu and select the item at "Accounts Payable > Search"
   Then I should see the AP search screen
   When I select "January" from the drop down "From Month"
    And I select "2025" from the drop down "From Year"
@@ -77,7 +77,7 @@ Scenario: Search by date, specifying quarter period
    And I expect the 'Date' report column to contain '2025-03-31' for Invoice 'INV102'
 
 Scenario: Search by date, specifying year period
-  When I navigate the menu and select the item at "AP > Search"
+  When I navigate the menu and select the item at "Accounts Payable > Search"
   Then I should see the AP search screen
   When I select "February" from the drop down "From Month"
    And I select "2024" from the drop down "From Year"
@@ -89,7 +89,7 @@ Scenario: Search by date, specifying year period
    And I expect the 'Date' report column to contain '2025-01-01' for Invoice 'INV101'
 
 Scenario: Search by date, specifying current period
-  When I navigate the menu and select the item at "AP > Search"
+  When I navigate the menu and select the item at "Accounts Payable > Search"
   Then I should see the AP search screen
   When I select "February" from the drop down "From Month"
    And I select "2025" from the drop down "From Year"
@@ -101,7 +101,7 @@ Scenario: Search by date, specifying current period
    And I expect the 'Date' report column to contain '2025-04-01' for Invoice 'INV103'
 
 Scenario: Search by invoice number
-  When I navigate the menu and select the item at "AP > Search"
+  When I navigate the menu and select the item at "Accounts Payable > Search"
   Then I should see the AP search screen
   When I enter "INV101" into "Invoice Number"
    And I press "Continue"
@@ -110,7 +110,7 @@ Scenario: Search by invoice number
    And I expect the 'Date' report column to contain '2025-01-01' for Invoice 'INV101'
 
 Scenario: Search by vendor
-  When I navigate the menu and select the item at "AP > Search"
+  When I navigate the menu and select the item at "Accounts Payable > Search"
   Then I should see the AP search screen
   When I enter "Vendor B" into "Vendor"
    And I press "Continue"
