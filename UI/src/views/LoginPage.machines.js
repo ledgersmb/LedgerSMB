@@ -97,7 +97,7 @@ function createLoginMachine(initialContext) {
                         "done",
                         "final",
                         action((ctx, e) => {
-                            window.location.assign(e.data.target);
+                            ctx.successFn(e.data);
                         })
                     ),
                     transition(
