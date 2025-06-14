@@ -46,7 +46,7 @@ export const usePartsgroupsStore = defineStore("partsgroups", {
             });
 
             if (response.ok) {
-                let index = this.items.findIndex((w) => w[this.id] === id);
+                let index = this.items.findIndex((w) => w.id === id);
                 if (index !== -1) {
                     this.items.splice(index, 1);
                 }
