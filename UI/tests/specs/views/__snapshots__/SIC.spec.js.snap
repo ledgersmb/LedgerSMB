@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`SIC - register as a component should show dialog 1`] = `
 <div
@@ -156,6 +156,7 @@ exports[`SIC - register as a component should show dialog 1`] = `
           <!--v-if-->
           <div
             class="non-grid"
+            style="width: fit-content;"
           >
             <!--v-if-->
             <div>
@@ -426,6 +427,7 @@ exports[`SIC - register as a component should show dialog with editable data 1`]
           <!--v-if-->
           <div
             class="non-grid"
+            style="width: fit-content;"
           >
             <!--v-if-->
             <div>

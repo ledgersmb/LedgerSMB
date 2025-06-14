@@ -7,7 +7,8 @@ import { createLoginMachine } from "./LoginPage.machines.js";
 
 export default defineComponent({
     name: "LoginPage",
-    setup() {
+    props: ["successFn"],
+    setup(props) {
         const { t } = useI18n({ useScope: "global" });
         let searchParams = new URL(document.location).searchParams;
         let username = searchParams.get("login") || "";
@@ -18,6 +19,9 @@ export default defineComponent({
             company: ref(company),
             form: ref(null),
             errorText: ref(""),
+            successFn: (data) => {
+                props.successFn(data);
+            },
             t
         };
         let { service, state } = createLoginMachine(data);
