@@ -52,7 +52,7 @@ sub columns {
     return [{col_id => 'pricegroup',
                type => 'href',
           href_base => 'pe.pl?__action=edit&type=pricegroup&id=',
-               name => $self->Text('Price Group') }];
+               name => $self->Text('Price group') }];
 }
 
 =head2 header_lines
@@ -68,7 +68,7 @@ sub columns {
 sub header_lines {
     my ($self) = @_;
     return [{value => $self->pricegroup,
-             text  => $self->Text('Price Group') }];
+             text  => $self->Text('Price group') }];
 }
 
 =head2 name

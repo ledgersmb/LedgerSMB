@@ -478,7 +478,7 @@
         <acl role="part_create" access="allow"/>
       </acls>
     </menu-item>
-    <menu-item id="83" label="Pricegroups" url="pricegroups">
+    <menu-item id="83" label="Price groups" url="pricegroups">
       <acls>
         <acl role="pricegroup_create" access="allow"/>
         <acl role="pricegroup_edit" access="allow"/>
