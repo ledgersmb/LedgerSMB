@@ -1675,20 +1675,19 @@ sub use_overpayment2 {
     @vc_info = $Payment->get_entity_credit_account();
     push @vc_info, {}; # inserting a blank at the start
     for my $ref (0 .. $#vc_info) {
-        my ($name) = split(/:/, $vc_info[$ref]->{name});
+        my ($vcname) = split(/:/, $vc_info[$ref]->{name});
         push @vc_list, { value            => $vc_info[$ref]->{id},
-                         name            => $name,
+                         name            => $vcname,
                          vc_discount_accno => $vc_info[$ref]->{discount}};
-        my $n_name = $name if $vc_info[$ref]->{id} = $Payment->{new_entity_id};
+        $n_name = $vcname if $vc_info[$ref]->{id} == $Payment->{new_entity_id};
     }
 
 
-    $count=1;
     #lets see which invoice do we have printed
-    while ($Payment->{"entity_id_$count"})
+    for my $count(1 .. $request->{count})
     {
         # we should rename the checkbox to remove_ or ignore_
-        if ($Payment->{"checkbox_$count"})
+        if ($Payment->{"checkbox_$count"} or not $Payment->{"entity_id_$count"})
         {
             $count++;
             next;
@@ -1724,7 +1723,7 @@ sub use_overpayment2 {
                     id         => $Payment->{"invoice_id_$count"},
                     is_invoice => $Payment->{"is_invoice_$count"},
                     href       => $uri },
-                entity_name        => $name,
+                entity_name        => $Payment->{"entity_name_$count"},
                 entity_id          => $Payment->{"entity_id_$count"},
                 vc_discount_accno     => $Payment->{"vc_discount_accno_$count"},
                 invoice_date       => $Payment->{"invoice_date_$count"},
@@ -1780,7 +1779,7 @@ sub use_overpayment2 {
                     vc_discount_accno => $vc_discount_accno,
                     entity_id        => qq|$Selected_entity->{entity_credit_id}--$name|,
                     invoice_date        => $ref->{invoice_date},
-                    applied_due       => $Payment->{"due_$count"},
+                    applied_due       => $ref->{due},
                     due            => $ref->{due},
                     discount          => $ref->{discount},
                     selected_accno    => {
