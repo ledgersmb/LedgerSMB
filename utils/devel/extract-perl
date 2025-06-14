@@ -55,6 +55,7 @@ while (<>) {
     chomp;
 
     my $file = $_;
+    say STDERR "Parsing: $file";
     my $source = slurp($file);
     $source .= "\n";    # Make sure the last line has a newline.
 
