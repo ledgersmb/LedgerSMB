@@ -93,6 +93,11 @@ const routes = [
         component: () => import("@/views/ImportCSV-Timecard")
     },
     {
+        name: "partsgroups",
+        path: "/partsgroups",
+        component: () => import("@/views/PartsGroups")
+    },
+    {
         name: "default",
         path: "/:pathMatch(.*)",
         component: () => import("@/components/ServerUI"),
