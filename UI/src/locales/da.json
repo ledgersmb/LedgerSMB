@@ -1,13 +1,11 @@
 {
     "# Invoices": "Fakturaer",
     "A return authorization must be obtained from [_1] before goods are returned. Returns must be shipped prepaid and properly insured. [_1] will not be responsible for damages during transit.": "En returnerings-tilladdelse må opnås fra [_1]\nfør varer returneres. Returneringer skal sendes forudbetalt og korrekt forsikret. [_1] vil ikke kunne holdes ansvarlig for skader opstået under forsendelse.",
-    "AP": "Kreditor",
     "AP Invoice": "Kreditorfaktura",
     "AP Invoices": "Kreditorfakturaer",
     "AP Outstanding": "Udestående (Kreditor)",
     "AP Transaction": "Kreditorpostering",
     "AP Transactions": "Kreditorposteringer",
-    "AR": "Debitor",
     "AR Invoice": "Debitorfaktura",
     "AR Invoices": "Debitorfakturaer",
     "AR Outstanding": "Udestående (Debitor)",
