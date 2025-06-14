@@ -2,7 +2,7 @@
 
 <script setup>
 import { ref } from "vue";
-import HierarchyNode from "@/components/HierarchyNode";
+import PartsGroupTreeNode from "@/components/PartsGroupTreeNode";
 import { usePartsgroupsStore } from "@/store/partsgroups";
 
 const newRootNode = ref({});
@@ -37,7 +37,7 @@ const addRootGroup = async (id, updates) => {
     <h1 class="listtop">{{ $t("Manage parts groups") }}</h1>
     <p v-if="!initialized">Loading...</p>
     <ul v-else class="root-hierarchy-node-list" role="tree">
-        <hierarchy-node
+        <parts-group-tree-node
             v-for="item in store.tree"
             :key="item.id"
             :node="item"
@@ -45,7 +45,7 @@ const addRootGroup = async (id, updates) => {
             @add-child="addChild"
             @delete-node="deleteNode"
         />
-        <hierarchy-node
+        <parts-group-tree-node
             is-new-node
             :canCancelSave="false"
             :node="newRootNode"
