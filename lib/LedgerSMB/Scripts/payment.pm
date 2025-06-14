@@ -1871,8 +1871,7 @@ sub post_overpayment {
     #let's store all unused invoice in entity_unused_ovp, it will be
 
     #lets see which invoice do we have, and reorganize them by vendor/customer
-    my $count=1;
-    while ($request->{"entity_id_$count"})
+    for my $count (1 .. $request->{count})
     {
 
         if ($request->{"checkbox_$count"} or !$request->{"amount_$count"})
@@ -1966,11 +1965,11 @@ sub post_overpayment {
 
         #Let's fill all our entity invoice info, if it has a discount, store it into the discount accno
         if ($list_key->{"optional_discount_$count"} && $list_key->{"amount_$count"} == $list_key->{"due_$count"}) {
-            push @{$list_key->{array_amount}}, $list_key->{"discount_$count"};
-            push @{$list_key->{array_cash_account_id}}, $list_key->{"vc_discount_accno_$count"};
-            push @{$list_key->{array_source}}, undef;
-            push @{$list_key->{array_transaction_id}}, $list_key->{"invoice_id_$count"};
-            push @{$list_key->{array_memo}}, $locale->text('Applied discount by an overpayment');
+            push @{$list_key->{amount}}, $list_key->{"discount_$count"};
+            push @{$list_key->{cash_account_id}}, $list_key->{"vc_discount_accno_$count"};
+            push @{$list_key->{source}}, undef;
+            push @{$list_key->{transaction_id}}, $list_key->{"invoice_id_$count"};
+            push @{$list_key->{memo}}, $locale->text('Applied discount by an overpayment');
             push @{$list_key->{ovp_payment_id}}, undef;
         }
 
@@ -1989,13 +1988,13 @@ sub post_overpayment {
             }
             if (@{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} >= $tmp_ovp_amount)
             {
-                push @{$list_key->{array_amount}}, $tmp_ovp_amount;
-                push @{$list_key->{array_cash_account_id}}, $ovp_chart_id;
-                push @{$list_key->{array_source}},
+                push @{$list_key->{amount}}, $tmp_ovp_amount;
+                push @{$list_key->{cash_account_id}}, $ovp_chart_id;
+                push @{$list_key->{source}},
                 $locale->text('use of an overpayment');
-                push @{$list_key->{array_transaction_id}},
+                push @{$list_key->{transaction_id}},
                 $list_key->{"invoice_id_$count"};
-                push @{$list_key->{array_memo}}, undef;
+                push @{$list_key->{memo}}, undef;
                 push @{$list_key->{ovp_payment_id}},
                 @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
 
@@ -2009,11 +2008,11 @@ sub post_overpayment {
             } else{
                 $tmp_ovp_amount -= @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
 
-                push @{$list_key->{array_amount}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
-                push @{$list_key->{array_cash_account_id}}, $ovp_chart_id;
-                push @{$list_key->{array_source}}, $locale->text('use of an overpayment');
-                push @{$list_key->{array_transaction_id}}, $list_key->{"invoice_id_$count"};
-                push @{$list_key->{array_memo}}, undef;
+                push @{$list_key->{amount}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
+                push @{$list_key->{cash_account_id}}, $ovp_chart_id;
+                push @{$list_key->{source}}, $locale->text('use of an overpayment');
+                push @{$list_key->{transaction_id}}, $list_key->{"invoice_id_$count"};
+                push @{$list_key->{memo}}, undef;
                 push @{$list_key->{ovp_payment_id}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
 
                 $unused_ovp_index = $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index}++;
@@ -2029,11 +2028,6 @@ sub post_overpayment {
     for my $key (keys %entity_list)
     {
         my $list_key = $entity_list{$key};
-        # CT:  This logic should be eliminated once fixes are in master and 1.12
-        for my $field (qw(amount cash_account_id source memo transaction_id)) {
-            $list_key->{$field} =
-                $list_key->{"array_$field"};
-        }
 
         $entity_list{$key}->post_payment();
     }
