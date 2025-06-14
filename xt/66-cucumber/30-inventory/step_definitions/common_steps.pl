@@ -11,7 +11,7 @@ use Test::BDD::Cucumber::StepFile;
 
 When qr/I search for part '(.*)'/, sub {
     my $partnumber = $1;
-    S->{ext_wsl}->page->body->menu->click_menu(['Goods and Services', 'Search']);
+    S->{ext_wsl}->page->body->menu->click_menu(['Goods & Services', 'Search']);
     S->{ext_wsl}->page->body->maindiv->content->search(
         'Part Number' => $partnumber
         );
@@ -22,7 +22,7 @@ When qr/I create an inventory adjustment dated (.{10,10}) with these counts:/, s
     my $date = $1;
 
     S->{ext_wsl}->page->body->menu->click_menu(
-        ['Goods and Services', 'Enter Inventory']
+        ['Goods & Services', 'Enter Inventory']
     );
     S->{ext_wsl}->page->body->maindiv->content->set_source('Adjustment Test 1');
     S->{ext_wsl}->page->body->maindiv->content->set_date($date);

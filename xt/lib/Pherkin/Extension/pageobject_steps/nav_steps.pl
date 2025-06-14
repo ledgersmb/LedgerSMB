@@ -190,7 +190,7 @@ When qr/I open the parts screen for '(.*)'/, sub {
     my $partnumber = $1;
 
     S->{ext_wsl}->page->body->menu->click_menu(
-        ['Goods and Services', 'Search']
+        ['Goods & Services', 'Search']
     );
     S->{ext_wsl}->page->body->maindiv->content->search(
         'Part Number' => $partnumber

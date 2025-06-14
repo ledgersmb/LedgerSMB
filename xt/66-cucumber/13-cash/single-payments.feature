@@ -13,7 +13,7 @@ Background:
        | Vendor A | 2017-01-01 | INV100         | 100.00 |
 
 Scenario: Full payment of a single invoice
-  When I navigate the menu and select the item at "Cash > Payment"
+  When I navigate the menu and select the item at "Cash & Banking > Payment"
   Then I should see the Single Payment Vendor Selection screen
   When I enter "Vendor A" into "Vendor Name"
    And I press "Continue"
@@ -28,12 +28,12 @@ Scenario: Full payment of a single invoice
       | To pay   |   100.00 |
   When I enter "2017-02-02" into "Date"
    And I press "Post"
-   And I navigate the menu and select the item at "Cash > Reports > Payments"
+   And I navigate the menu and select the item at "Cash & Banking > Reports > Payments"
    And I press "Search"
   Then I expect the 'Total Paid' report column to contain '100.00' for Vendor Number 'Vendor A'
 
 Scenario: Partial payment of a single invoice
-  When I navigate the menu and select the item at "Cash > Payment"
+  When I navigate the menu and select the item at "Cash & Banking > Payment"
   Then I should see the Single Payment Vendor Selection screen
   When I enter "Vendor A" into "Vendor Name"
    And I press "Continue"
@@ -51,10 +51,10 @@ Scenario: Partial payment of a single invoice
     | Column | Value |
     | To pay | 50.00 |
    And I press "Post"
-   And I navigate the menu and select the item at "Cash > Reports > Payments"
+   And I navigate the menu and select the item at "Cash & Banking > Reports > Payments"
    And I press "Search"
   Then I expect the 'Total Paid' report column to contain '50.00' for Vendor Number 'Vendor A'
-  When I navigate the menu and select the item at "Cash > Payment"
+  When I navigate the menu and select the item at "Cash & Banking > Payment"
   Then I should see the Single Payment Vendor Selection screen
   When I enter "Vendor A" into "Vendor Name"
    And I press "Continue"
@@ -80,7 +80,7 @@ Scenario: Payment within period of payment terms, posted afterwards
     'Apply Discount' checkmark is unchecked.
 
  Given that standard payment terms apply for "Vendor A"
-  When I navigate the menu and select the item at "Cash > Payment"
+  When I navigate the menu and select the item at "Cash & Banking > Payment"
   Then I should see the Single Payment Vendor Selection screen
   When I enter "Vendor A" into "Vendor Name"
    And I press "Continue"
@@ -122,7 +122,7 @@ Scenario: Exclusion of an invoice from the payment list
   Given an unpaid AP transaction with these values:
        | Vendor   | Date       | Invoice Number | Amount |
        | Vendor A | 2017-01-01 | INV101         | 100.00 |
-  When I navigate the menu and select the item at "Cash > Payment"
+  When I navigate the menu and select the item at "Cash & Banking > Payment"
   Then I should see the Single Payment Vendor Selection screen
   When I enter "Vendor A" into "Vendor Name"
    And I press "Continue"

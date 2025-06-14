@@ -1075,7 +1075,7 @@ sub customer_row {
 
     if ( $form->{selectpricegroup} ) {
         $pricegroup = qq|
-          <th class="listheading">| . $locale->text('Pricegroup') . qq|
+          <th class="listheading">| . $locale->text('Price group') . qq|
           </th>
 |;
     }

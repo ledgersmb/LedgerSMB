@@ -33,7 +33,7 @@ When qr/^I select the rows? where "(.*)" is "(.*)"$/, sub {
 Then qr/the Balance Sheet per (.{10}) looks like:/, sub {
     my $date = $1;
 
-    S->{ext_wsl}->page->body->menu->click_menu(['Reports', 'Balance Sheet']);
+    S->{ext_wsl}->page->body->menu->click_menu(['General Journal', 'Reports', 'Balance Sheet']);
     S->{ext_wsl}->page->body->maindiv->content->run(date => $date);
 
     my @step_data =
