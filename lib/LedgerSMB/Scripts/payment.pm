@@ -1646,8 +1646,8 @@ sub use_overpayment2 {
             $ui_exchangerate = {
                 id => 'exrate',
                 name => 'exrate',
-                value => "$exchangerate", 
-                text =>  "$exchangerate" 
+                value => "$exchangerate",
+                text =>  "$exchangerate"
             };
         } else {
             $ui_exchangerate = {
@@ -1874,7 +1874,7 @@ sub post_overpayment {
     for my $count (1 .. $request->{count})
     {
 
-        if ($request->{"checkbox_$count"} or !$request->{"amount_$count"})
+        if ($request->{"checkbox_$count"} or not $request->{"amount_$count"})
         {
             $count++;
             next;
