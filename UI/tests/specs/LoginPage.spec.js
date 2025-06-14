@@ -12,6 +12,7 @@ import { mount } from "@vue/test-utils";
 import LoginPage from "@/views/LoginPage.vue";
 
 let wrapper;
+const successFn = jest.fn();
 
 describe("LoginPage", () => {
     it("should show dialog", () => {
@@ -105,7 +106,11 @@ describe("LoginPage", () => {
     });
 
     it("should login when filled", async () => {
-        wrapper = mount(LoginPage);
+        wrapper = mount(LoginPage, {
+            propsData: {
+                successFn
+            }
+        });
 
         await wrapper.find("#username").setValue("MyUser");
         await wrapper.find("#password").setValue("MyPassword");
@@ -116,9 +121,9 @@ describe("LoginPage", () => {
         expect(wrapper.get(".v-enter-active").text())
             .toBe("Logging in... Please wait.");
 
-        await retry(() => expect(window.location.assign).toHaveBeenCalledTimes(1));
-        expect(window.location.assign).toHaveBeenCalledWith(
-          'http://lsmb/erp.pl?action=root',
-        );
+        await retry(() => expect(successFn).toHaveBeenCalledTimes(1));
+        expect(successFn).toHaveBeenCalledWith({
+            target: "erp.pl?action=root"
+        });
     });
 });
