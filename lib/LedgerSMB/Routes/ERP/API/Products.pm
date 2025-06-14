@@ -46,7 +46,7 @@ sub _add_partsgroup {
     my ($c, $w) = @_;
     my $sth = $c->dbh->prepare(
         q|INSERT INTO partsgroup (parent, partsgroup) VALUES (?, ?)
-          RETURNING id, partsgroup as description, md5(last_updated::text) as etag|
+          RETURNING id, parent, partsgroup as description, md5(last_updated::text) as etag|
         ) or die $c->dbh->errstr;
 
     $sth->execute( $w->{parent}, $w->{description} ) or die $sth->errstr;
@@ -56,6 +56,7 @@ sub _add_partsgroup {
     return (
         {
             id => $row->{id},
+            parent => $row->{parent},
             description => $row->{description}
         },
         {
@@ -141,7 +142,7 @@ sub _update_partsgroup {
 
     $sth->execute( $w->{description}, $w->{id}, $m->{ETag} ) or die $sth->errstr;
     if ($sth->rows == 0) {
-        my ($response, $meta) = _get_warehouse($c, $w->{id});
+        my ($response, $meta) = _get_partsgroup($c, $w->{id});
         return (undef, {}) unless $response;
 
         # Obviously, the hashes must have mismatched
@@ -220,6 +221,9 @@ get api '/products/partsgroups/{id}' => sub {
 put api '/products/partsgroups/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
+    $env->{'psgix.logger'}->({
+        message => "PUT /products/partsgroups/$params->{id}",
+        level => 'info' });
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*(?>W\/)?"(.*)"\s*$/);
     my ($response, $meta) = _update_partsgroup(
         $c, {
@@ -357,7 +361,7 @@ sub _update_pricegroup {
 
     $sth->execute( $w->{description}, $w->{id}, $m->{ETag} ) or die $sth->errstr;
     if ($sth->rows == 0) {
-        my ($response, $meta) = _get_warehouse($c, $w->{id});
+        my ($response, $meta) = _get_pricegroup($c, $w->{id});
         return (undef, {}) unless $response;
 
         # Obviously, the hashes must have mismatched
@@ -833,6 +837,8 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        409:
+          $ref: '#/components/responses/409'
         412:
           $ref: '#/components/responses/412'
         413:
@@ -857,6 +863,8 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        409:
+          $ref: '#/components/responses/409'
     patch:
       tags:
         - Parts groups
@@ -877,6 +885,8 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        409:
+          $ref: '#/components/responses/409'
   /products/pricegroups:
     description: Managing products and related configuration
     get:
@@ -1013,6 +1023,8 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        409:
+          $ref: '#/components/responses/409'
         412:
           $ref: '#/components/responses/412'
         413:
@@ -1037,6 +1049,8 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        409:
+          $ref: '#/components/responses/409'
     patch:
       tags:
         - Price groups
@@ -1057,6 +1071,8 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        409:
+          $ref: '#/components/responses/409'
   /products/warehouses:
     description: Manage warehouses
     get:
@@ -1194,6 +1210,8 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        409:
+          $ref: '#/components/responses/409'
         412:
           $ref: '#/components/responses/412'
         413:
@@ -1218,6 +1236,8 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        409:
+          $ref: '#/components/responses/409'
     patch:
       tags:
         - Warehouses
@@ -1238,6 +1258,8 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        409:
+          $ref: '#/components/responses/409'
 components:
   schemas:
     common-id:
