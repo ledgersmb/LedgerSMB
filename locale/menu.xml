@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+
 <menu xmlns="http://ledgersmb.org/xml-schemas/menu" id="0" label="Top-level">
   <menu-item id="19" label="Contacts">
     <menu-item id="14" label="Search" url="reports.pl?__action=start_report&amp;module_name=gl&amp;report_name=contact_search">
@@ -468,13 +469,9 @@
         <acl role="part_create" access="allow"/>
       </acls>
     </menu-item>
-    <menu-item id="91" label="Search Groups" url="reports.pl?__action=start_report&amp;report_name=search_partsgroups">
+    <menu-item id="91" label="Parts Groups" url="partsgroups">
       <acls>
         <acl role="part_edit" access="allow"/>
-      </acls>
-    </menu-item>
-    <menu-item id="82" label="Add Group" url="pe.pl?__action=add&amp;type=partsgroup">
-      <acls>
         <acl role="part_create" access="allow"/>
       </acls>
     </menu-item>
