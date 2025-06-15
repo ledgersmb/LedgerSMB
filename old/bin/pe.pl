@@ -30,7 +30,6 @@ sub save {
     if ( $form->{translation} ) {
         PE->save_translation( \%myconfig, \%$form );
         $form->redirect( $locale->text('Translations saved!') );
-        $form->finalize_request();
     }
 }
 
@@ -431,13 +430,10 @@ sub update {
 
         &translation_header;
         &translation_footer;
-
-        $form->finalize_request();
-
     }
-
-    &display_form;
-
+    else {
+        &display_form;
+    }
 }
 
 sub select_name {
@@ -986,23 +982,22 @@ sub customer_selected {
       )
     {
         &select_name( $form->{vc} );
-        $form->finalize_request();
-    }
-
-    if ( $rv == 1 ) {
-        $form->{"$form->{vc}"}    = $form->{name_list}[0]->{name};
-        $form->{"$form->{vc}_id"} = $form->{name_list}[0]->{id};
     }
     else {
-        $msg =
-          ( $form->{vc} eq 'customer' )
-          ? $locale->text('Customer not on file!')
-          : $locale->text('Vendor not on file!');
-        $form->error($msg);
+        if ( $rv == 1 ) {
+            $form->{"$form->{vc}"}    = $form->{name_list}[0]->{name};
+            $form->{"$form->{vc}_id"} = $form->{name_list}[0]->{id};
+        }
+        else {
+            $msg =
+                ( $form->{vc} eq 'customer' )
+                ? $locale->text('Customer not on file!')
+                : $locale->text('Vendor not on file!');
+            $form->error($msg);
+        }
+
+        &display_form;
     }
-
-    &display_form;
-
 }
 
 sub sales_order_header {
