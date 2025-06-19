@@ -49,7 +49,7 @@ Original copyright notice below.
 use strict;
 use warnings;
 
-use HTTP::Status qw( HTTP_OK );
+use HTTP::Status qw( HTTP_OK HTTP_TEMPORARY_REDIRECT );
 use List::Util qw/any sum/;
 
 use LedgerSMB::Batch;
@@ -2036,7 +2036,39 @@ sub post_overpayment {
 
 }
 
+=item apply_overpayment
+
+This is a handler for applying an overpayment from an invoice or transaction
+screen.  It requires a trans_id, a payment_id, an ammount, and a script.
+
+Scripts are whitelisted to ar, ap, is, and ir.  This will change as more
+
+logic gets moved to the newer frameworks.
+
+=cut
+
+sub apply_overpayment {
+    my ($request) = @_;
+
+    
+    my $payment = LedgerSMB::DBObject::Payment($request);
+    my $url = $Payment->script($request->{invoice});
+    $payment->{ovp_payment_id} = [$request->{overpayment_id}];
+    $payment->{memo} = ["Application of overpayment"];
+    $payment->{source} = [$request->{reference}];
+    $payment->{amount} = [$request->{amount}];
+    $payment->{transaction_id} = [$request->{trans_id}];
+    $payment->{account_class} = $request->{entity_class};
+    $payment->{entity_credit_id} = $request->{eca_id};
+    $payment->post();
+    return [HTTP_TEMPORARY_REDIRECT, 
+        [ "Location: $url" ],
+        [ "" ]
+    ];
+}
+
 =back
+
 
 =cut
 
