@@ -1076,6 +1076,39 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
 
     if ($form->{id}){
         IS->get_files($form, $locale);
+        if ($form->{approved}){
+            AA->get_overpayments($form);
+            my $action_text = $locale->text('Apply');
+            print qq|
+            <table width="100%">
+            <tr class="listtop">
+            <th colspan="4">| $locale->text('Available Prepayments') . qq|</th>
+            <tr class="listheading">
+            <th>| . $locale->text('Legal Name') . qq|</th>
+            <th>| . $locale->text('Reference') . qq|</th>
+            <th>| . $locale->text('Available Amount') . qq|</th>
+            <th>| . $locale->text('Apply') qq|</th>
+            </tr>|;
+            for my $ovp (@{$form->{overpayments}}){
+                my $amount = $ovp->{available};
+                if ($form->{invtotal} < $amount) {
+                    $amount = $form->{invtotal};
+                }
+                my $url = "payment.pl?action=apply_ovp&" .
+                          "overpayment_id=$ovp->{payment_id}&" .
+                          "entity_class=2&invoice=1&trans_id=$form->{id}&" . 
+                          "datepaid=today&reference=$ovp->{payment_reference}&".
+                          "eca_id=$form->{customer_id}";
+                print qq|<tr>
+                     <td>$ovp->{legal_name}</td>
+                     <td>$ovp->{payment_reference}</td>
+                     <td>$ovp->{available}</td>
+                     <td><a href="$url">[$action_text]</a></td>
+                     </tr>|;
+            }
+            print "</table>";
+            
+        }
         print qq|
 <a href="pnl.pl?__action=generate_income_statement&pnl_type=invoice&id=$form->{id}">[| . $locale->text('Profit/Loss') . qq|]</a><br />
 <table width="100%">
