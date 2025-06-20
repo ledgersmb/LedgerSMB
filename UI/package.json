@@ -134,7 +134,7 @@
     "webpack-deduplication-plugin": "0.0.8",
     "webpack-dev-server": "5.2.2",
     "webpack-merge": "6.0.1",
-    "webpack-sources": "3.3.2",
+    "webpack-sources": "3.3.3",
     "webpack-virtual-modules": "0.6.2",
     "yaml-jest-transform": "^2.0.2",
     "yargs": "18.0.0"
