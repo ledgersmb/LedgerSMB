@@ -1,7 +1,7 @@
 <!-- @format -->
 
 <script>
-/* global require */
+/* global require, lsmbConfig */
 import { promisify } from "../promisify";
 import { provide, computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
@@ -103,12 +103,16 @@ export default {
         }
     },
     async mounted() {
-        window.__lsmbLoadLink = (url) => {
+        window.__lsmbLoadLink = (url, options) => {
             let tgt = url.replace(/^https?:\/\/(?:[^@/]+)/, "");
             if (!tgt.startsWith("/")) {
                 tgt = "/" + tgt;
             }
-            this.$router.push(tgt);
+            this.$router.push(tgt).then(() => {
+                if (options && options.title) {
+                    document.title = `LedgerSMB (${lsmbConfig.company}) | ${options.title}`;
+                }
+            });
         };
         await Promise.all([
             this.menuStore.initialize(),
@@ -183,7 +187,14 @@ export default {
                     if (url.charAt(0) !== "/") {
                         url = "/" + url;
                     }
-                    window.__lsmbLoadLink(url);
+                    let label = n.label;
+                    let parentId = n.parent;
+                    while (parentId) {
+                        let parent = this.menuStore.nodeById(parentId);
+                        label = `${parent.label} > ${label}`;
+                        parentId = parent.parent;
+                    }
+                    window.__lsmbLoadLink(url, { title: label });
                 }
             }
         }
