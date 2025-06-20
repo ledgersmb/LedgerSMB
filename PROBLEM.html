@@ -1,0 +1,72 @@
+
+
+
+<pre>
+$ node --version
+v20.19.1
+$ cd UI
+$ yarn install --immutable
+$ yarn run build:dev
+$ yarn test tests/specs/components/PartsGroupTreeNode.spec.js
+<b>yarn run v1.22.22<span style="font-weight:normal;text-decoration:none;font-style:normal">
+$ jest tests/specs/components/PartsGroupTreeNode.spec.js<span style="font-weight:normal;text-decoration:none;font-style:normal">
+<b>Determining test suites to run...<span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="font-weight:normal;text-decoration:none;font-style:normal">
+</span></span></b></span></span></b><span style="color:#A50"><b> RUNS <span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:#FFF"></span></span></b></span> <span style="color:#AAA"> browser <span style="color:#FFF"></span></span> <b>...<span style="font-weight:normal;text-decoration:none;font-style:normal">
+?2026lAA</span></b><b><span style="color:#A00"> FAIL <span style="color:#FFF"><span style="font-weight:normal;text-decoration:none;font-style:normal"></span></span></span></b> <span style="color:#AAA"> browser <span style="color:#FFF"></span></span> tests/specs/components/<span style="font-weight:normal;text-decoration:none;font-style:normal"><b>PartsGroupTreeNode.spec.js<span style="font-weight:normal;text-decoration:none;font-style:normal">
+
+</span></b></span><span style="color:#A50"><b> RUNS <span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:#FFF"></span></span></b></span> <span style="color:#AAA"> browser <span style="color:#FFF"></span></span> <b>...<span style="font-weight:normal;text-decoration:none;font-style:normal">
+AA  <b>● <span style="font-weight:normal;text-decoration:none;font-style:normal">Test suite failed to run
+
+    <b><span style="color:#A00">Jest encountered an unexpected token<span style="color:#FFF"><span style="font-weight:normal;text-decoration:none;font-style:normal">
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see <u>https://jestjs.io/docs/ecmascript-modules</u> for how to enable it.
+     • If you are trying to use TypeScript, see <u>https://jestjs.io/docs/getting-started#using-typescript</u>
+     • To have some of your "node_modules" files transformed, you can specify a custom <b>"transformIgnorePatterns"<span style="font-weight:normal;text-decoration:none;font-style:normal"> in your config.
+     • If you need a custom transformation, specify a <b>"transform"<span style="font-weight:normal;text-decoration:none;font-style:normal"> option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the <b>"moduleNameMapper"<span style="font-weight:normal;text-decoration:none;font-style:normal"> config option.
+
+    You'll find more details and examples of these config options in the docs:
+    <span style="color:#0AA">https://jestjs.io/docs/configuration<span style="color:#FFF">
+    For information about custom transformations, see:
+    <span style="color:#0AA">https://jestjs.io/docs/code-transformation<span style="color:#FFF">
+
+    <b><span style="color:#A00">Details:<span style="color:#FFF"><span style="font-weight:normal;text-decoration:none;font-style:normal">
+
+    /srv/ledgersmb/UI/node_modules/lodash-es/lodash.js:10
+    export { default as add } from './add.js';
+    ^^^^^^
+
+    SyntaxError: Unexpected token 'export'
+
+    </span></span></span></b></span></span></span></span></span></b></span></b></span></b></span></span></span></b></span></b></span></b> <span style="color:#555"> 2 |<span style="color:#FFF">
+     <span style="color:#555"> 3 |<span style="color:#FFF"> <span style="color:#0AA">import<span style="color:#FFF"> { describe<span style="color:#A50">,<span style="color:#FFF"> expect<span style="color:#A50">,<span style="color:#FFF"> it } <span style="color:#0AA">from<span style="color:#FFF"> <span style="color:#0A0">"@jest/globals"<span style="color:#FFF"><span style="color:#A50">;<span style="color:#FFF">
+    <span style="color:#A00"><b>><span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:#FFF"><span style="color:#555"> 4 |<span style="color:#FFF"> <span style="color:#0AA">import<span style="color:#FFF"> { installQuasarPlugin<span style="color:#A50">,<span style="color:#FFF"> qLayoutInjections } <span style="color:#0AA">from<span style="color:#FFF"> <span style="color:#0A0">'@quasar/quasar-app-extension-testing-unit-jest'<span style="color:#FFF"><span style="color:#A50">;<span style="color:#FFF">
+     <span style="color:#555">   |<span style="color:#FFF"> <span style="color:#A00"><b>^<span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:#FFF">
+     <span style="color:#555"> 5 |<span style="color:#FFF"> <span style="color:#0AA">import<span style="color:#FFF"> { mount } <span style="color:#0AA">from<span style="color:#FFF"> <span style="color:#0A0">"@vue/test-utils"<span style="color:#FFF"><span style="color:#A50">;<span style="color:#FFF">
+     <span style="color:#555"> 6 |<span style="color:#FFF">
+     <span style="color:#555"> 7 |<span style="color:#FFF"> <span style="color:#0AA">import<span style="color:#FFF"> <span style="color:#A50">PartsGroupTreeNode<span style="color:#FFF"> <span style="color:#0AA">from<span style="color:#FFF"> <span style="color:#0A0">"@/components/PartsGroupTreeNode"<span style="color:#FFF"><span style="color:#A50">;<span style="color:#FFF"></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>
+
+      at Runtime.createScriptFromCode (<span style="font-weight:normal;text-decoration:none;font-style:normal">node_modules/jest-runtime/build/index.js:1320:40)<span style="font-weight:normal;text-decoration:none;font-style:normal">
+      at Object.<anonymous> (<span style="font-weight:normal;text-decoration:none;font-style:normal">node_modules/@quasar/quasar-app-extension-testing-unit-jest/src/helpers/install-quasar-plugin.ts:3:1)<span style="font-weight:normal;text-decoration:none;font-style:normal">
+      at Object.<anonymous> (<span style="font-weight:normal;text-decoration:none;font-style:normal">node_modules/@quasar/quasar-app-extension-testing-unit-jest/src/helpers/main.ts:1:1)<span style="font-weight:normal;text-decoration:none;font-style:normal">
+      at Object.require (<span style="font-weight:normal;text-decoration:none;font-style:normal"></span></span></span></span></span></span></span><span style="color:#0AA">tests/specs/components/PartsGroupTreeNode.spec.js<span style="color:#FFF"></span></span>:4:1)<span style="font-weight:normal;text-decoration:none;font-style:normal">
+
+
+</span><span style="color:#A50"><b> RUNS <span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:#FFF"></span></span></b></span> <span style="color:#AAA"> browser <span style="color:#FFF"></span></span> <b>...<span style="font-weight:normal;text-decoration:none;font-style:normal">
+<b>Test Suites: <span style="font-weight:normal;text-decoration:none;font-style:normal"><b><span style="color:#A00">1 failed<span style="color:#FFF"><span style="font-weight:normal;text-decoration:none;font-style:normal">, 1 total
+<b>Tests:       <span style="font-weight:normal;text-decoration:none;font-style:normal">0 total
+<b>Snapshots:   <span style="font-weight:normal;text-decoration:none;font-style:normal">0 total
+<b>Time:<span style="font-weight:normal;text-decoration:none;font-style:normal">        0.884 s
+Ran all test suites<span style="font-weight:normal;text-decoration:none;font-style:normal"> matching <span style="font-weight:normal;text-decoration:none;font-style:normal">tests/specs/components/PartsGroupTreeNode.spec.js.<span style="font-weight:normal;text-decoration:none;font-style:normal">
+<span style="color:#A00">error<span style="color:#FFF"> Command failed with exit code 1.
+<span style="color:#00A">info<span style="color:#FFF"> Visit <b>https://yarnpkg.com/en/docs/cli/run<span style="font-weight:normal;text-decoration:none;font-style:normal"> for documentation about this command.
+```
+</span></b></span></span></span></span></span></span></span></span></b></span></b></span></b></span></span></span></b></span></b></span></b>
+</pre>
