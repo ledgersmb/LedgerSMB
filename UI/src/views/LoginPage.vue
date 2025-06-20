@@ -6,7 +6,8 @@ import { createLoginMachine } from "./LoginPage.machines.js";
 
 export default defineComponent({
     name: "LoginPage",
-    setup() {
+    props: ["successFn"],
+    setup(props) {
         const { t, locale } = useI18n({ useScope: "global" });
         setI18nLanguage(locale);
         let data = {
@@ -16,6 +17,9 @@ export default defineComponent({
             company: ref(""),
             form: ref(null),
             errorText: ref(""),
+            successFn: (d) => {
+                props.successFn(d);
+            },
         };
         let { service, state } = createLoginMachine(data);
 

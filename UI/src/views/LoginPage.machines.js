@@ -83,7 +83,7 @@ function createLoginMachine(initialContext) {
                 ctx => ctx.response.json(),
                 transition(
                     'done', 'final',
-                    action((ctx, e) => { window.location.assign(e.data.target); }),
+                    action((ctx, e) => { ctx.successFn(e.data); }),
                 ),
                 transition(
                     'error', 'error',
