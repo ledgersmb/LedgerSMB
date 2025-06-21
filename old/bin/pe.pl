@@ -25,143 +25,20 @@ use LedgerSMB::OE;
 # end of main
 
 
-sub add {
-    # construct callback
-    $form->{callback} = "$form->{script}?__action=add&type=$form->{type}"
-      unless $form->{callback};
-
-    &{"prepare_$form->{type}"};
-
-    $form->{orphaned} = 1;
-    &display_form;
-}
-
-sub edit {
-
-    &{"prepare_$form->{type}"};
-    &display_form;
-
-}
-
-sub prepare_partsgroup {
-    PE->get_partsgroup(\%$form)
-      if $form->{id};
-}
 
 sub save {
-
     if ( $form->{translation} ) {
         PE->save_translation( \%myconfig, \%$form );
         $form->redirect( $locale->text('Translations saved!') );
-        $form->finalize_request();
     }
-
-    if ( $form->{type} eq 'partsgroup' ) {
-        $form->isblank( "partsgroup", $locale->text('Group missing!') );
-        PE->save_partsgroup( \%myconfig, \%$form );
-        $form->redirect( $locale->text('Group saved!') );
-    }
-
 }
 
 sub delete {
-
     if ( $form->{translation} ) {
         PE->delete_translation( \%myconfig, \%$form );
         $form->redirect( $locale->text('Translation deleted!') );
 
     }
-    else {
-
-        if ( $form->{type} eq 'partsgroup' ) {
-            PE->delete_partsgroup( \%myconfig, \%$form );
-            $form->redirect( $locale->text('Group deleted!') );
-        }
-    }
-
-}
-
-sub partsgroup_header {
-
-    $form->{__action} =~ s/_.*//;
-    # $locale->text('Add Group')
-    # $locale->text('Edit Group')
-    $form->{title} = $locale->maketext( ucfirst $form->{__action} . " Group" );
-
-
-    $form->{partsgroup} = $form->quote( $form->{partsgroup} );
-    PE->partsgroups(\%myconfig, $form);
-
-    $form->header;
-
-    print qq|
-<body class="lsmb">
-
-<form method="post" data-dojo-type="lsmb/Form" action="$form->{script}">
-
-<input type=hidden name=id value=$form->{id}>
-<input type=hidden name=type value=$form->{type}>
-
-<table width=100%>
-  <tr>
-    <th class=listtop>$form->{title}</th>
-  </tr>
-  <tr height="5"></tr>
-  <tr>
-    <td>
-      <table width=100%>
-    <tr>
-          <th align="right">| . $locale->text('Parent') . qq|</th>
-          <td><select data-dojo-type="dijit/form/Select"
-                      id='parent' name='parent'>
-              <option>&nbsp;</option>|;
-              for my $pg (@{$form->{item_list}}){
-                  my $selected = '';
-                  $selected = 'SELECTED="SELECTED"'
-                         if $form->{parent} == $pg->{id};
-                  print qq|<option value='$pg->{id}' $selected>
-                                  $pg->{partsgroup} </option>|;
-              }
-      print qq|</select>
-          <th align="right">| . $locale->text('Group') . qq|</th>
-
-          <td><input data-dojo-type="dijit/form/TextBox" name=partsgroup size=30 value="$form->{partsgroup}"></td>
-    </tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td colspan=2><hr size=3 noshade></td>
-  </tr>
-</table>
-|;
-
-}
-
-sub partsgroup_footer {
-
-    $form->hide_form(qw(callback path login sessionid));
-
-    print qq|
-<button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="__action" value="save">|
-          . $locale->text('Save')
-          . qq|</button>
-|;
-
-    if ( $form->{id} && $form->{orphaned} ) {
-        print qq|
-<button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="__action" value="delete">|
-              . $locale->text('Delete')
-              . qq|</button>|;
-    }
-
-    print qq|
-</form>
-
-</body>
-</html>
-|;
-
 }
 
 sub translation {
@@ -553,13 +430,10 @@ sub update {
 
         &translation_header;
         &translation_footer;
-
-        $form->finalize_request();
-
     }
-
-    &display_form;
-
+    else {
+        &display_form;
+    }
 }
 
 sub select_name {
@@ -1108,23 +982,22 @@ sub customer_selected {
       )
     {
         &select_name( $form->{vc} );
-        $form->finalize_request();
-    }
-
-    if ( $rv == 1 ) {
-        $form->{"$form->{vc}"}    = $form->{name_list}[0]->{name};
-        $form->{"$form->{vc}_id"} = $form->{name_list}[0]->{id};
     }
     else {
-        $msg =
-          ( $form->{vc} eq 'customer' )
-          ? $locale->text('Customer not on file!')
-          : $locale->text('Vendor not on file!');
-        $form->error($msg);
+        if ( $rv == 1 ) {
+            $form->{"$form->{vc}"}    = $form->{name_list}[0]->{name};
+            $form->{"$form->{vc}_id"} = $form->{name_list}[0]->{id};
+        }
+        else {
+            $msg =
+                ( $form->{vc} eq 'customer' )
+                ? $locale->text('Customer not on file!')
+                : $locale->text('Vendor not on file!');
+            $form->error($msg);
+        }
+
+        &display_form;
     }
-
-    &display_form;
-
 }
 
 sub sales_order_header {
