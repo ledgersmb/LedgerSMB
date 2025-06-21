@@ -65,3 +65,13 @@ runs:
         starman --preload-app -E test --pid starman.pid --workers $JOB_COUNT \
                 --max-requests 50000 --error-log logs/starman-error.log \
                 -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
+      if: ${{ ! inputs.coverage }}
+
+    - name: Starting 'plackup'
+      shell: bash
+      run: |
+        mkdir -p logs
+        echo "PSGI_BASE_URL=http://lsmb:5762" >> $GITHUB_ENV
+        plackup -E test -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
+        echo $! > starman.pid
+      if: ${{ inputs.coverage }}
