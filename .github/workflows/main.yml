@@ -166,6 +166,14 @@ jobs:
           COVERALLS_PARALLEL: true
         if: ${{ matrix.COVERAGE }}
 
+      - name: Archive coverage artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: pure-perl-coverage ${{ matrix.perl }} ${{ matrix.BROWSER }}
+          path: |
+            cover_db/**
+        if: ${{ matrix.COVERAGE }}
+
   test-database:
     runs-on: ubuntu-latest
     needs: build-perl-env
@@ -288,10 +296,9 @@ jobs:
           then
             echo "ERROR: Can't terminate Starman without PID file"
           else
-            pid=$(cat starman.pid)
-            kill -quit $pid
+            bash -x logs/kill-starman.sh
             echo "Waiting for Starman to terminate "
-            while kill -0 $pid >/dev/null 2>&1
+            while kill -0 $(cat starman.pid) >/dev/null 2>&1
             do
               echo -n "."
               sleep 1
@@ -328,6 +335,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COVERALLS_FLAG_NAME: webservices-perl
           COVERALLS_PARALLEL: true
+        if: ${{ matrix.COVERAGE }}
+
+      - name: Archive coverage artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: webservice-coverage ${{ matrix.perl }} ${{ matrix.BROWSER }}
+          path: |
+            cover_db/**
         if: ${{ matrix.COVERAGE }}
 
   test-remainder:
@@ -419,8 +434,8 @@ jobs:
             sendmail me@test
           curl lsmb:8025/api/v2/messages
 
-          # Create logging directories
-          mkdir -p logs/screens
+          # Create logging and coverage directories
+          mkdir -p logs/screens cover_db
 
           # Set the correct LedgerSMB Server configuration
           cp doc/conf/ledgersmb.yaml ledgersmb.yaml
@@ -492,10 +507,9 @@ jobs:
           then
             echo "ERROR: Can't terminate Starman without PID file"
           else
-            pid=$(cat starman.pid)
-            kill -quit $pid
+            bash -x logs/kill-starman.sh
             echo "Waiting for Starman to terminate "
-            while kill -0 $pid >/dev/null 2>&1
+            while kill -0 $(cat starman.pid) >/dev/null 2>&1
             do
               echo -n "."
               sleep 1
@@ -525,9 +539,10 @@ jobs:
       - name: Archive production artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: logs-and-screens ${{ matrix.perl }} ${{ matrix.BROWSER }}
+          name: logs-screens-coverage ${{ matrix.perl }} ${{ matrix.BROWSER }}
           path: |
             logs/**
+            cover_db/**
         if: always()
 
   close-parallel-coverage:
