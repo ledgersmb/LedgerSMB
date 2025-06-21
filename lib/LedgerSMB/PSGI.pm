@@ -415,6 +415,10 @@ sub setup_url_space {
                     [ $json->encode({ schema => $wire->get('db')->schema }) ]
                     ];
             };
+
+            mount '/kill' => sub {
+                exit 0;
+            };
         }
 
         mount '/' => sub {

@@ -65,6 +65,7 @@ runs:
         starman --preload-app -E test --pid starman.pid --workers $JOB_COUNT \
                 --max-requests 50000 --error-log logs/starman-error.log \
                 -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
+        echo "kill -term \$(cat starman.pid)" > logs/kill-starman.sh
       if: ${{ ! inputs.coverage }}
 
     - name: Starting 'plackup'
@@ -74,4 +75,6 @@ runs:
         echo "PSGI_BASE_URL=http://lsmb:5762" >> $GITHUB_ENV
         plackup -E test -Ilib -Iold/lib --port 5762 bin/ledgersmb-server.psgi &
         echo $! > starman.pid
+        # Dont use 'curl': there will not be a valid response
+        echo "exec 3<>/dev/tcp/lsmb/5762 ; echo -ne \"GET /kill HTTP/1.0\\r\\n\\r\\n\"  >&3 ; cat <&3" > logs/kill-starman.sh
       if: ${{ inputs.coverage }}
