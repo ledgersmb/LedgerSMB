@@ -1077,12 +1077,12 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
             print qq|
             <table width="100%">
             <tr class="listtop">
-            <th colspan="4">| $locale->text('Available Prepayments') . qq|</th>
+            <th colspan="4">| . $locale->text('Available Prepayments') . qq|</th>
             <tr class="listheading">
             <th>| . $locale->text('Legal Name') . qq|</th>
             <th>| . $locale->text('Reference') . qq|</th>
             <th>| . $locale->text('Available Amount') . qq|</th>
-            <th>| . $locale->text('Apply') qq|</th>
+            <th>| . $locale->text('Apply') . qq|</th>
             </tr>|;
             for my $ovp (@{$form->{overpayments}}){
                 my $amount = $ovp->{available};
