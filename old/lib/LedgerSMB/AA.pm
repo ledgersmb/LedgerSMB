@@ -31,6 +31,7 @@ use Log::Any;
 use LedgerSMB::File;
 use LedgerSMB::PGNumber;
 use LedgerSMB::Setting;
+LedgerSMB::DBObject::Payment;
 
 my $logger = Log::Any->get_logger(category => "AA");
 
@@ -971,7 +972,7 @@ sub save_employee {
 
 =item get_overpayments
 
-This wraps LedgerSMB::DBObject::Payments->get_unused_overpayments to retrieve 
+This wraps LedgerSMB::DBObject::Payment->get_unused_overpayments to retrieve 
 overpayments for display on AR, AP, and invoice screens.
 
 =cut
@@ -981,7 +982,8 @@ sub get_overpayments {
     $form->{account_class} = ($form->{vc} == 'vendor') ? 1 : 2;
     $form->{entity_credit_id} = $form->{"$form->{vc}_id"};
 
-    my $payments = LedgerSMB::DBObject::Payments->new($form);
+    my $payments = LedgerSMB::DBObject::Payment->new($form);
+    $payments->set_dbh($form->{dbh});
     $form->{overpayments} = [$payments->get_unused_overpayments()];
 }
 
