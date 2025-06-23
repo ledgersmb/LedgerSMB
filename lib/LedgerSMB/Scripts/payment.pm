@@ -2052,7 +2052,7 @@ sub apply_overpayment {
 
     
     my $payment = LedgerSMB::DBObject::Payment($request);
-    my $url = $Payment->script($request->{invoice});
+    my $url = $payment->script($request->{invoice});
     $payment->{ovp_payment_id} = [$request->{overpayment_id}];
     $payment->{memo} = ["Application of overpayment"];
     $payment->{source} = [$request->{reference}];
