@@ -507,6 +507,28 @@ sub get_payment_detail_data {
     return;
 }
 
+=over
+
+=item script()
+
+Returns the script to direct a transaction to (currently ar, ap, is, or ir)
+
+=back
+
+=cut
+
+sub script {
+    my ($self, $invoice) = @_;
+    $invoice //= $self->{invoice};
+    if ($invoice) {
+       return $self->{account_class} == 1 ? 'ir' : 'is';
+    }
+    else {
+       return $self->{account_class} == 1 ? 'ap' : 'ar';
+    }
+}
+
+
 =item post_bulk($data)
 
 This function posts the payments in bulk.
