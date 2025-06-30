@@ -979,10 +979,10 @@ overpayments for display on AR, AP, and invoice screens.
 
 sub get_overpayments {
     my ($mod, $form) = @_;
-    $form->{account_class} = ($form->{vc} == 'vendor') ? 1 : 2;
-    $form->{entity_credit_id} = $form->{"$form->{vc}_id"};
 
-    my $payments = LedgerSMB::DBObject::Payment->new($form);
+    my $payments = LedgerSMB::DBObject::Payment->new({});
+    $payments->{account_class} = $form->{vc_class};
+    $payments->{entity_credit_id} = $form->{"$form->{vc}_id"};
     $payments->set_dbh($form->{dbh});
     $form->{overpayments} = [$payments->get_unused_overpayments()];
 }

@@ -2051,19 +2051,24 @@ sub apply_overpayment {
     my ($request) = @_;
 
     
-    my $payment = LedgerSMB::DBObject::Payment($request);
-    my $url = $payment->script($request->{invoice});
+    my $payment = LedgerSMB::DBObject::Payment->new(%$request);
+    my $url = $payment->script($request->{invoice})
+      . ".pl?__action=edit&id=$request->{trans_id}";
     $payment->{ovp_payment_id} = [$request->{overpayment_id}];
     $payment->{memo} = ["Application of overpayment"];
     $payment->{source} = [$request->{reference}];
     $payment->{amount} = [$request->{amount}];
+    $payment->{cash_account_id} = [$request->{account_id}];
     $payment->{transaction_id} = [$request->{trans_id}];
     $payment->{account_class} = $request->{entity_class};
     $payment->{entity_credit_id} = $request->{eca_id};
-    $payment->post();
-    return [HTTP_TEMPORARY_REDIRECT, 
-        [ "Location: $url" ],
-        [ "" ]
+    $payment->{curr} = $request->{curr};
+    $payment->{exchangerate} = $request->{exchangerate};
+    $payment->post_payment();
+    return [302,
+        [ "Location", "$url",
+           "Content-Type", "text/html; charset=UTF-8"],
+        [ "Successfully Applied" ]
     ];
 }
 
