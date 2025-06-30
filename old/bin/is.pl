@@ -1091,14 +1091,25 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
             </tr>|;
             for my $ovp (@{$form->{overpayments}}){
                 my $amount = $ovp->{available};
-                if ($form->{invtotal} < $amount) {
-                    $amount = $form->{invtotal};
+                if ($remaining_balance < $amount) {
+                    $amount = $remaining_balance;
                 }
-                my $url = "payment.pl?action=apply_ovp&" .
+                $ovp_amt = $ovp->{available} if $due > $ovp->{available};
+                my $exchangerate;
+                $exchangerate = 1
+                     if $form->{currency} eq ${$form->{currencies}}[0];
+
+                my $url = "payment.pl?action=apply_overpayment&" .
                           "overpayment_id=$ovp->{payment_id}&" .
                           "entity_class=2&invoice=1&trans_id=$form->{id}&" . 
                           "datepaid=today&reference=$ovp->{payment_reference}&".
-                          "eca_id=$form->{customer_id}";
+                          "eca_id=$form->{customer_id}&amount=$amount&".
+                          "account_id=$ovp->{chart_id}&curr=$form->{currency}&".
+                          "exchangerate=$exchangerate";
+                my $label = "";
+                # initially supported for default currency only
+                $label = qq|<a href="$url">[$action_text]</a>| if $exchangerate;
+
                 print qq|<tr>
                      <td>$ovp->{legal_name}</td>
                      <td>$ovp->{payment_reference}</td>
@@ -1107,7 +1118,6 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
                      </tr>|;
             }
             print "</table>";
-            
         }
         print qq|
 <a href="pnl.pl?__action=generate_income_statement&pnl_type=invoice&id=$form->{id}">[| . $locale->text('Profit/Loss') . qq|]</a><br />
