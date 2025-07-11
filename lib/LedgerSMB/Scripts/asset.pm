@@ -182,7 +182,7 @@ sub _asset_get_next_tag {
 sub _asset_get {
     my ($request) = @_;
 
-    my ($ref) = $request->call_procedure( funcname => 'asset__get', args => [ $request->{id} ]);
+    my ($ref) = $request->call_procedure( funcname => 'asset__get', args => [ $request->{id}, $request->{tag} ]);
     return $ref;
 }
 
@@ -341,6 +341,7 @@ sub _asset_report_get_metadata {
     my ($request) = @_;
 
     return {
+        depreciation  => $request->{depreciation},
         asset_classes => [ $request->call_procedure( funcname => 'asset_class__list', args => [] ) ],
         disp_methods  => [ $request->call_procedure( funcname => 'asset_report__get_disposal_methods', args => [] ) ],
         cash_accounts => [
@@ -426,7 +427,8 @@ sub report_save{
         my ($ref) = $request->call_procedure(
             funcname => 'asset_report__save',
             args     => [
-                $request->@{qw( id report_date report_class asset_class )}
+                $request->@{qw( id report_date report_class asset_class )},
+                1
             ]);
 
         my $id = $ref->{id};
