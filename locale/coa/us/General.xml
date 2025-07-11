@@ -29,10 +29,18 @@
       </account>
     </account-heading>
     <account-heading id="h-3" code="1800" description="CAPITAL ASSETS">
-      <account code="1820" description="Office Furniture &amp; Equipment" category="Asset"/>
-      <account code="1825" description="Accum. Amort. -Furn. &amp; Equip." category="Asset" contra="true"/>
-      <account code="1840" description="Vehicle" category="Asset"/>
-      <account code="1845" description="Accum. Amort. -Vehicle" category="Asset" contra="true"/>
+      <account code="1820" description="Office Furniture &amp; Equipment" category="Asset">
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="1825" description="Accum. Amort. -Furn. &amp; Equip." category="Asset" contra="true">
+        <link code="Asset_Dep"/>
+      </account>
+      <account code="1840" description="Vehicle" category="Asset">
+        <link code="Fixed_Asset"/>
+      </account>
+      <account code="1845" description="Accum. Amort. -Vehicle" category="Asset" contra="true">
+        <link code="Asset_Dep"/>
+      </account>
     </account-heading>
     <account-heading id="h-4" code="2000" description="CURRENT LIABILITIES">
       <account code="2100" description="Accounts Payable" category="Liability">
@@ -125,7 +133,9 @@
         <link code="AP_amount"/>
       </account>
       <account code="5620" description="Bad Debts" category="Expense"/>
-      <account code="5660" description="Amortization Expense" category="Expense"/>
+      <account code="5660" description="Amortization Expense" category="Expense">
+        <link code="asset_expense"/>
+      </account>
       <account code="5685" description="Insurance" category="Expense">
         <link code="AP_amount"/>
       </account>
