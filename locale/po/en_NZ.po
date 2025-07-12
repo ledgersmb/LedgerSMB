@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.11.26-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-06-09 21:06+0000\n"
+"POT-Creation-Date: 2025-07-12 18:58+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2024\n"
 "Language-Team: English (New Zealand) (https://app.transifex.com/ledgersmb/"
 "teams/58325/en_NZ/)\n"
@@ -1590,7 +1590,7 @@ msgstr ""
 #: templates/demo/display_report.tex:37 UI/Contact/contact.html:12
 #: UI/Contact/divs/company.html:2 UI/main.html:32
 #: UI/Reports/aging_report.html:12 UI/Reports/display_report.html:19
-#: UI/Reports/filters/taxforms.html:62 UI/src/views/LoginPage.vue:78
+#: UI/Reports/filters/taxforms.html:62 UI/src/views/LoginPage.vue:82
 msgid "Company"
 msgstr ""
 
@@ -4327,8 +4327,8 @@ msgstr ""
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:27
-#: UI/src/components/ServerUI.js:41
+#: UI/src/components/ConfigTable.vue:59 UI/src/components/ServerUI.js:41
+#: UI/src/components/ServerUI.js:27
 msgid "Loading..."
 msgstr ""
 
@@ -4353,11 +4353,11 @@ msgstr ""
 msgid "Logged out due to inactivity"
 msgstr ""
 
-#: UI/src/views/LoginPage.vue:96
+#: UI/src/views/LoginPage.vue:100
 msgid "Logging in... Please wait."
 msgstr ""
 
-#: UI/setup/credentials.html:79 UI/src/views/LoginPage.vue:89
+#: UI/setup/credentials.html:79 UI/src/views/LoginPage.vue:93
 msgid "Login"
 msgstr ""
 
@@ -5257,7 +5257,7 @@ msgstr ""
 
 #: UI/Contact/divs/user.html:59 UI/setup/credentials.html:60
 #: UI/setup/edit_user.html:50 UI/setup/new_user.html:28
-#: UI/src/views/LoginPage.vue:68
+#: UI/src/views/LoginPage.vue:72
 msgid "Password"
 msgstr ""
 
@@ -8145,7 +8145,7 @@ msgstr ""
 msgid "User"
 msgstr ""
 
-#: UI/src/views/LoginPage.vue:57
+#: UI/src/views/LoginPage.vue:61
 msgid "User Name"
 msgstr ""
 
