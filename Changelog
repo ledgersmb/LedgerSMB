@@ -3,6 +3,11 @@
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.11
+* Fix regressions since 1.11 in fixed assets posting (#8919)
+* Fix ETag values without double-quote quoting in API calls (#8898)
+
+
 Changelog for 1.12.10
 * Fix typo on AR/AP Import Batch screen (#8843)
 * Fix csv export from AP/AR search (#8840)
