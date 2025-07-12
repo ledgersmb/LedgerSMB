@@ -160,6 +160,10 @@ Updated dependencies
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.26
+* Fix ETag values without double-quote quoting in API calls (#8898)
+
+
 Changelog for 1.11.25
 * Fix draft transactions appearing in Tax Form Reports (#8770)
 * Fix inactive 'Login' button on login page (#8814)
