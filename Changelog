@@ -44,6 +44,11 @@ Updated dependencies
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.11
+* Fix regressions since 1.11 in fixed assets posting (#8919)
+* Fix ETag values without double-quote quoting in API calls (#8898)
+
+
 Changelog for 1.12.10
 * Fix 'Login' button sometimes inactive on login page (#8813)
 * Fix taxes inappropriately rounded to number precision (#8822)
