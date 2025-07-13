@@ -11,6 +11,8 @@ Added functionalities
 * Search box added to the menu (#8831)
 * Tracking of user logins and logout for audit purposes (#8784)
 * Localization of names in the country selection drop-down (#8749)
+* Improved on-boarding experience with new installer supporting more platforms
+  to handle dependencies than previous methods; see https://get.ledgersmb.org
 
 Changed functionalities
 * Concurrent logins with different users on one browser throw an error (#8496)
