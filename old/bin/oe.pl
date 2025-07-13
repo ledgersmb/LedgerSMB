@@ -715,6 +715,26 @@ sub form_header {
 }
 
 sub form_footer {
+    my $checked0;
+    my $checked1;
+    if ($form->{manual_tax}){
+        $checked1=qq|checked="CHECKED"|;
+        $checked0="";
+    } else {
+        $checked0=qq|checked="CHECKED"|;
+        $checked1="";
+    }
+    my $manual_tax =
+        qq|<label for="manual-tax-0">|.
+        $locale->text("Automatic")
+        . qq|</label>
+             <input type="radio" data-dojo-type="dijit/form/RadioButton" name="manual_tax" value="0"
+                    id="manual-tax-0" $checked0 $readonly />
+             <label for="manual-tax-1">|.
+        $locale->text("Manual")
+        . qq|</label>
+             <input type="radio" data-dojo-type="dijit/form/RadioButton" name="manual_tax" value="1"
+                    id="manual-tax-1" $checked1 $readonly >|;
     _calc_taxes();
 
     $form->{invtotal} = $form->{invsubtotal};
@@ -747,9 +767,64 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
 
     $form->{_setting_decimal_places} = $form->get_setting('decimal_places');
     if ( !$form->{taxincluded} ) {
+        if ($form->{manual_tax}){
+             $tax .= qq|<tr class="listtop">
+                      <td>&nbsp</td>
+                      <th align="center">|.$locale->text('Amount').qq| ($form->{currency})</th>
+                      <th align="center">|.$locale->text('Rate').qq|</th>
+                      <th align="center">|.$locale->text('Basis').qq| ($form->{currency})</th>
+                      <th align="center">|.$locale->text('Tax Code').qq|</th>
+                      <!-- We dont have a database field to bind the memo to; comment it: <th align="center">|.$locale->text('Memo').qq|</th>-->
+                    </tr>|;
+        }
         foreach my $item (keys %{$form->{taxes}}) {
             my $taccno = $item;
-        $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);
+            if ($form->{manual_tax}){
+               # Setting defaults from tax calculations
+               # These are set in io.pl sub _calc_taxes --CT
+               if ($form->{"mt_rate_$item"} eq '' or
+                   !defined $form->{"mt_rate_$item"}){
+                   $form->{"mt_rate_$item"} = $form->{tax_obj}{$item}->rate;
+               }
+               if ($form->{"mt_basis_$item"} eq '' or
+                   !defined $form->{"mt_basis_$item"}){
+                   $form->{"mt_basis_$item"} = $form->{taxbasis}{$item};
+               }
+               if ($form->{"mt_amount_$item"} eq '' or
+                   !defined $form->{"mt_amount_$item"}){
+                   $form->{"mt_amount_$item"} =
+                           $form->{"mt_rate_$item"}
+                           * ($form->{"mt_basis_$item"} // 0);
+               }
+               $form->{invtotal} += $form->round_amount(
+                                         $form->parse_amount( \%myconfig,  $form->{"mt_amount_$item"}), 2);
+               # Setting this up as a table
+               # Note that the screens may be not wide enough to display
+               # this in the normal way so we have to change the layout of the
+               # notes fields. --CT
+               $tax .= qq|<tr class="invoice-manual-tax">
+                <th align=right>$form->{"${taccno}_description"}</th>
+                <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_amount_$item"
+                        id="mt-amount-$item" value="|
+                        .$form->format_amount(\%myconfig, $form->{"mt_amount_$item"}, $form->{_setting_decimal_places} )
+                        .qq|" size="10" $readonly /></td>
+                <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_rate_$item"
+                         id="mt-rate-$item" value="|
+                        .$form->format_amount(\%myconfig, $form->{"mt_rate_$item"})
+                        .qq|" size="4" $readonly /></td>
+                <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_basis_$item"
+                         id="mt-basis-$item" value="|
+                        .$form->format_amount(\%myconfig, $form->{"mt_basis_$item"}, $form->{_setting_decimal_places} )
+                        .qq|" size="10" $readonly /></td>
+                <td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_ref_$item"
+                         id="mt-ref-$item" value="|
+                        . $form->{"mt_ref_$item"} .qq|" size="10" $readonly /></td>
+                <!--<td><input data-dojo-type="dijit/form/TextBox" type="text" name="mt_memo_$item"
+                         id="mt-memo-$item" value="|
+                        .$form->{"mt_memo_$item"} .qq|" size="10" $readonly /></td>-->
+               </tr>|;
+            }  else {
+            $form->{invtotal} += $form->round_amount($form->{taxes}{$item}, 2);
             $form->{"${taccno}_total"} = $form->format_amount(
                 \%myconfig,
                 $form->round_amount( $form->{taxes}{$item}, 2 ),
@@ -757,10 +832,11 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
             );
             next if !$form->{"${taccno}_total"};
             $tax .= qq|
-        <tr>
-          <th align="right">$form->{"${taccno}_description"}</th>
-          <td align="right">$form->{"${taccno}_total"}</td>
-        </tr>|;
+                <tr>
+                  <th align="right">$form->{"${taccno}_description"}</th>
+                  <td align="right">$form->{"${taccno}_total"}</td>
+                </tr>|;
+            }
         }
 
         $form->{invsubtotal} =
@@ -802,6 +878,10 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
       <td align=right>
         <table>
           $subtotal
+          <tr>
+          <th>| . $locale->text('Calculate taxes') . qq|</th>
+          <td>$manual_tax</td>
+          </tr>
           $tax
           <tr>
         <th align=right>| . $locale->text('Total') . qq|</th>
