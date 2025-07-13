@@ -737,7 +737,13 @@ sub retrieve {
 
 
         # get manual taxes
-        $query = 'SELECT * FROM oe_tax JOIN account ON oe_tax.tax_id = account.id WHERE oe_id = ?';
+        $query = <<~'QUERY';
+           SELECT a.accno, o.amount, o.basis, o.rate, o.source
+             FROM oe_tax o
+                  JOIN account a
+                    ON o.tax_id = a.id
+            WHERE oe_id = ?';
+           QUERY
         $sth = $dbh->prepare( $query ) || $form->dberror( $query );
 
         $sth->execute( $form->{id} ) || $form->dberror( $sth->errstr );
