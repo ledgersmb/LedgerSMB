@@ -13,12 +13,14 @@ Added functionalities
 * Localization of names in the country selection drop-down (#8749)
 * Improved on-boarding experience with new installer supporting more platforms
   to handle dependencies than previous methods; see https://get.ledgersmb.org
+* Ability to manually enter taxes on orders and quotes
 
 Changed functionalities
 * Concurrent logins with different users on one browser throw an error (#8496)
 * Confusing menu name 'Add Contact' changed to 'Add entity' (#8003)
 * Split toplevel Reports menu over General Journal and Goods & Services (#8850)
 * Menu reloaded from file (./locale/menu.xml) on each upgrade (#8876)
+* Taxes on orders and quotes no longer recalculated; saved as manual
 
 Removed functionalities
 
