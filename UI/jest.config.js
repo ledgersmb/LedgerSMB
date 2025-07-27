@@ -144,6 +144,7 @@ module.exports = {
             moduleFileExtensions: ["js", "json", "vue"],
             moduleNameMapper: {
               "^@/i18n": "<rootDir>/tests/common/i18n", // Jest doesn't support esm or top level await well
+              "^quasar$": "<rootDir>/node_modules/quasar/dist/quasar.client.js",
               "^@/(.*)$": "<rootDir>/src/$1"
             },
             testMatch: [ "<rootDir>/tests/specs/**/*.spec.js" ],
@@ -154,6 +155,7 @@ module.exports = {
                 customExportConditions: ["node", "node-addons"]
             },
             testPathIgnorePatterns: [ "<rootDir>/tests/specs/openapi/.*\\.spec\\.js" ],
+            transformIgnorePatterns: [ '/node_modules/(?!(lodash-es|quasar)/)' ],
             transform: {
                 "^.+\\.yaml$": "yaml-jest-transform",
                 "^.+\\.js$": "babel-jest",
@@ -262,7 +264,7 @@ module.exports = {
     },
 
     // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-    // transformIgnorePatterns: [],
+    transformIgnorePatterns: [ '/node_modules/(?!(lodash-es|@quasar)/)' ],
 
     // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
     // unmockedModulePathPatterns: undefined,
