@@ -515,6 +515,7 @@ sub post_invoice {
     $form->{taxincluded} //= 0;
     $form->{taxincluded} *= 1;
 
+    delete $form->{language_code} unless $form->{language_code};
     # save AP record
     $query = qq|
         UPDATE ap
