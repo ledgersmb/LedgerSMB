@@ -115,7 +115,7 @@ use LedgerSMB::Template::Sink::Printer;
 
 ok lives {
     $sink = LedgerSMB::Template::Sink::Printer->new(
-        command => '/bin/true',
+        command => '/bin/cat >/dev/null',
         printer => 'the-printer'
         );
 }, 'Printer: instantiation';
