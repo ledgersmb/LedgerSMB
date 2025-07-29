@@ -4,7 +4,6 @@ const MarkdownInclude = require("markdown-include");
 const browserslist = require("browserslist");
 const lite = require("caniuse-lite");
 const packageJson = require("../package.json");
-const timestamp = require("unix-timestamp");
 
 function _isNextVersion(v1, v2) {
     let p1 = v1.match(/(\d+)(\.(\d+))?/);
@@ -55,7 +54,7 @@ MarkdownInclude.registerPlugin({
                         earliest[category][browser].version = version;
 
                         if (time) {
-                            let ts = timestamp.toDate(time);
+                            let ts = new Date(time * 1000);
                             let month = "00" + (ts.getMonth() + 1);
                             let year =
                                 1900 +
