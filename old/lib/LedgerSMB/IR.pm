@@ -70,15 +70,6 @@ sub get_files {
 
 }
 
-sub add_cogs {
-    my ($self, $form) = @_;
-    my $dbh = $form->{dbh};
-    my $query =
-     "select cogs__add_for_ap_line(id) FROM invoice WHERE trans_id = ?";
-    my $sth = $dbh->prepare($query) || $form->dberror($query);
-    $sth->execute($form->{id}) || $form->dberror($query);
-}
-
 sub post_invoice {
     my ( $self, $myconfig, $form ) = @_;
     $form->{crdate} ||= 'now';
@@ -571,10 +562,6 @@ sub post_invoice {
     $form->{name} =~ s/--$form->{vendor_id}//
         if $form->{vendor} && $form->{vendor_id};
     $form->add_shipto($form->{id});
-
-    if ($form->get_setting('separate_duties')){
-        $self->add_cogs($form);
-    }
 
     foreach my $item ( keys %updparts ) {
         $item  = $dbh->quote($item);
