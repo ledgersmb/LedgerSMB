@@ -2,7 +2,7 @@
     "extends": [
         "config:recommended"
     ],
-    "baseBranches": [
+    "baseBranchPatterns": [
         "master",
         "1.12",
         "1.11"
