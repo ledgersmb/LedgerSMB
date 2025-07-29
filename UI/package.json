@@ -58,7 +58,6 @@
     "@pinia/testing": "1.0.2",
     "@quasar/app-webpack": "^4.2.0",
     "@redocly/cli": "2.0.1",
-    "@quasar/quasar-app-extension-testing-unit-jest": "^3.0.3",
     "@vue/test-utils": "2.4.6",
     "@vue/vue3-jest": "29.2.6",
     "babel-jest": "30.0.5",
