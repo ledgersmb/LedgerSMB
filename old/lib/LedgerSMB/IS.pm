@@ -51,15 +51,6 @@ use Workflow::Context;
 my $logger = Log::Any->get_logger(category => 'LedgerSMB::IS');
 
 
-sub add_cogs {
-    my ($self, $form) = @_;
-    my $dbh = $form->{dbh};
-    my $query =
-     "select cogs__add_for_ar_line(id) FROM invoice WHERE trans_id = ?";
-    my $sth = $dbh->prepare($query) || $form->dberror($query);
-    $sth->execute($form->{id}) || $form->dberror($query);
-}
-
 =over
 
 =item get_files
@@ -1211,10 +1202,6 @@ sub post_invoice {
 
     # save printed, emailed
     $form->save_status($dbh);
-
-    if ($form->get_setting('separate_duties')){
-        $self->add_cogs($form);
-    }
 
     return 1;
 }
