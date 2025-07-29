@@ -5,12 +5,18 @@
  * @format
  */
 
-module.exports = {
+
+/* This is a workaround for the fact that Jest itself doesn't correctly merge base configuration
+   with per-project configuration: sometimes vue-jest and/or basel-jest don't see the merged
+   config correctly. Instead, make each project a complete configuration with the common part
+   configured through the 'common' object below.
+
+   https://github.com/jestjs/jest/blob/v30.0.0/packages/jest-types/src/Config.ts#L329-L394 was used
+   to manually split the keys between 'common' and the default export below.
+ */
+const common = {
     // All imported modules in your tests should be mocked automatically
     automock: false,
-
-    // Stop running tests after `n` failures
-    bail: 0,
 
     // The directory where Jest should store its cached dependency information
     cache: true,
@@ -18,9 +24,6 @@ module.exports = {
 
     // Automatically clear mock calls, instances, contexts and results before every test
     // clearMocks: true,
-
-    // Indicates whether the coverage information should be collected while executing the test
-    collectCoverage: false,
 
     // An array of glob patterns indicating a set of files for which coverage information should be collected
     collectCoverageFrom: ["{src,js-src}/**/*.{js,vue}", "!**/webpack*.js"],
@@ -31,14 +34,8 @@ module.exports = {
     // An array of regexp pattern strings used to skip coverage collection
     coveragePathIgnorePatterns: ["node_modules", "<rootDir>/tests/*.*"],
 
-    // Indicates which provider should be used to instrument code for coverage
-    coverageProvider: "v8",
-
     // A list of reporter names that Jest uses when writing coverage reports
     coverageReporters: ["text", "lcov"],
-
-    // An object that configures minimum threshold enforcement for coverage results
-    // coverageThreshold: undefined,
 
     // A path to a custom dependency extractor
     // dependencyExtractor: undefined,
@@ -49,17 +46,12 @@ module.exports = {
     // Make calling deprecated APIs throw helpful error messages
     errorOnDeprecated: true,
 
-    expand: true,
     extensionsToTreatAsEsm: [],
 
     // The default configuration for fake timers
     fakeTimers: {
         enableGlobally: false
     },
-
-    // Force Jest to exit after all tests have completed running.
-    // This is useful when resources set up by test code cannot be adequately cleaned up.
-    forceExit: true,
 
     // Force coverage collection from ignored files using an array of glob patterns
     forceCoverageMatch: [],
@@ -84,24 +76,6 @@ module.exports = {
     // If you set this to false, you should import from @jest/globals
     injectGlobals: true,
 
-    // Prints the test results in JSON. This mode will send all other test output and user messages to stderr.
-    json: false,
-
-    // Run all tests affected by file changes in the last commit made
-    lastCommit: false,
-
-    // Lists all test files that Jest will run given the arguments, and exits.
-    listTests: false,
-
-    // Logs the heap usage after every test. Useful to debug memory leaks.
-    logHeapUsage: false,
-
-    // Prevents Jest from executing more than the specified amount of tests at the same time. Only affects tests that use test.concurrent
-    maxConcurrency: 5,
-
-    // The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
-    maxWorkers: 1, // "50%",
-
     // An array of directory names to be searched recursively up from the requiring module's location
     moduleDirectories: ["node_modules"],
 
@@ -113,70 +87,10 @@ module.exports = {
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
     modulePathIgnorePatterns: [],
 
-    // Disables stack trace in test results output.
-    noStackTrace: false,
-
-    // Activates notifications for test results
-    notify: false,
-
-    // An enum that specifies notification mode. Requires { notify: true }
-    notifyMode: "failure-change",
-
-    // Attempts to identify which tests to run based on which files have changed in the current repository.
-    // Only works if you're running tests in a git/hg repository at the moment and requires a static dependency graph
-    onlyChanged: false,
-    onlyFailures: false,
-
-    // Allows the test suite to pass when no files are found
-    passWithNoTests: false,
-
     prettierPath: "prettier",
 
     // A preset that is used as a base for Jest's configuration
     // preset: 'ts-jest',
-
-    // Run tests from one or more projects, found in the specified paths; also takes path globs.
-    // This option is the CLI equivalent of the projects configuration option.
-    // Note that if configuration files are found in the specified paths, all projects specified within those configuration files will be run.
-    projects: [
-        {
-            displayName: "browser",
-            moduleFileExtensions: ["js", "json", "vue"],
-            moduleNameMapper: {
-              "^@/i18n": "<rootDir>/tests/common/i18n", // Jest doesn't support esm or top level await well
-              "^quasar$": "<rootDir>/node_modules/quasar/dist/quasar.client.js",
-              "^@/(.*)$": "<rootDir>/src/$1"
-            },
-            testMatch: [ "<rootDir>/tests/specs/**/*.spec.js" ],
-            setupFiles: ["<rootDir>/tests/common/jest.polyfills.js"],
-            setupFilesAfterEnv: [ "<rootDir>/tests/common/jest-setup.js" ],
-            testEnvironment: "jest-fixed-jsdom",
-            testEnvironmentOptions: {
-                customExportConditions: ["node", "node-addons"]
-            },
-            testPathIgnorePatterns: [ "<rootDir>/tests/specs/openapi/.*\\.spec\\.js" ],
-            transformIgnorePatterns: [ '/node_modules/(?!(lodash-es|quasar)/)' ],
-            transform: {
-                "^.+\\.yaml$": "yaml-jest-transform",
-                "^.+\\.js$": "babel-jest",
-                "^.+\\.vue$": "@vue/vue3-jest",
-                "^@": "babel-jest",
-
-            },
-        },
-        {
-            displayName: "API",
-            moduleFileExtensions: ["js", "json", "vue"],
-            testMatch: [ "<rootDir>/tests/specs/openapi/**/*.spec.js" ],
-            testEnvironment: "node",
-            transform: {
-                "^.+\\.yaml$": "yaml-jest-transform",
-                "^.+\\.js$": "babel-jest",
-                "^.+\\.vue$": "@vue/vue3-jest",
-                "^@": "babel-jest",
-            },
-        }
-    ],
 
     // Use this configuration option to add custom reporters to Jest
     // reporters: [],
@@ -203,12 +117,6 @@ module.exports = {
 
     // Allows you to use a custom runner instead of Jest's default test runner
     // runner: "groups",
-
-    // Run all tests serially in the current process, rather than creating a worker pool of child processes that run tests. This can be useful for debugging.
-    // runInBand: false,
-
-    // Run only the tests that were specified with their exact paths.
-    runTestsByPath: false,
 
     sandboxInjectedGlobals: [],
 
@@ -269,6 +177,73 @@ module.exports = {
     // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
     // unmockedModulePathPatterns: undefined,
 
+    // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
+    watchPathIgnorePatterns: [],
+};
+
+module.exports = {
+    // Stop running tests after `n` failures
+    bail: false,
+
+    // Indicates whether the coverage information should be collected while executing the test
+    collectCoverage: false,
+
+    // Indicates which provider should be used to instrument code for coverage
+    coverageProvider: "v8",
+
+    // An object that configures minimum threshold enforcement for coverage results
+    // coverageThreshold: undefined,
+
+    // suppress warning "have you considered..."
+    detectOpenHandles: true,
+
+    expand: true,
+
+    // Force Jest to exit after all tests have completed running.
+    // This is useful when resources set up by test code cannot be adequately cleaned up.
+    forceExit: true,
+
+    // Prints the test results in JSON. This mode will send all other test output and user messages to stderr.
+    json: false,
+
+    // Run all tests affected by file changes in the last commit made
+    lastCommit: false,
+
+    // Lists all test files that Jest will run given the arguments, and exits.
+    listTests: false,
+
+    // Logs the heap usage after every test. Useful to debug memory leaks.
+    logHeapUsage: false,
+
+    // Prevents Jest from executing more than the specified amount of tests at the same time. Only affects tests that use test.concurrent
+    maxConcurrency: 5,
+
+    // The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
+    maxWorkers: 1, // "50%",
+
+    // Disables stack trace in test results output.
+    noStackTrace: false,
+
+    // Activates notifications for test results
+    notify: false,
+
+    // An enum that specifies notification mode. Requires { notify: true }
+    notifyMode: "failure-change",
+
+    // Attempts to identify which tests to run based on which files have changed in the current repository.
+    // Only works if you're running tests in a git/hg repository at the moment and requires a static dependency graph
+    onlyChanged: false,
+    onlyFailures: false,
+
+    // Allows the test suite to pass when no files are found
+    passWithNoTests: false,
+
+    // Run all tests serially in the current process, rather than creating a worker pool of child processes that run tests. This can be useful for debugging.
+    // runInBand: false,
+
+    // Run only the tests that were specified with their exact paths.
+    runTestsByPath: false,
+
     // Use this flag to re-record every snapshot that fails during this test run.
     // Can be used together with a test suite pattern or with --testNamePattern to re-record snapshots.
     updateSnapshot: true,
@@ -283,9 +258,53 @@ module.exports = {
     // If you want to re-run all tests when a file has changed, use the --watchAll option instead.
     watch: false,
 
-    // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
-    watchPathIgnorePatterns: [],
-
     // Whether to use watchman for file crawling
-    watchman: true
+    watchman: true,
+
+    // Run tests from one or more projects, found in the specified paths; also takes path globs.
+    // This option is the CLI equivalent of the projects configuration option.
+    // Note that if configuration files are found in the specified paths, all projects specified within those configuration files will be run.
+    projects: [
+        {
+            displayName: "browser",
+            ...common,
+
+            moduleFileExtensions: ["js", "json", "vue"],
+            moduleNameMapper: {
+              "^@/i18n": "<rootDir>/tests/common/i18n", // Jest doesn't support esm or top level await well
+              "^quasar$": "<rootDir>/node_modules/quasar/dist/quasar.client.js",
+              "^@/(.*)$": "<rootDir>/src/$1"
+            },
+            testMatch: [ "<rootDir>/tests/specs/**/*.spec.js" ],
+            setupFiles: ["<rootDir>/tests/common/jest.polyfills.js"],
+            setupFilesAfterEnv: [ "<rootDir>/tests/common/jest-setup.js" ],
+            testEnvironment: "jest-fixed-jsdom",
+            testEnvironmentOptions: {
+                customExportConditions: ["node", "node-addons"]
+            },
+            testPathIgnorePatterns: [ "<rootDir>/tests/specs/openapi/.*\\.spec\\.js" ],
+            transformIgnorePatterns: [ '/node_modules/(?!(lodash-es|quasar)/)' ],
+            transform: {
+                "^.+\\.yaml$": "yaml-jest-transform",
+                "^.+\\.js$": "babel-jest",
+                "^.+\\.vue$": "@vue/vue3-jest",
+                "^@": "babel-jest",
+
+            },
+        },
+        {
+            displayName: "API",
+            ...common,
+
+            moduleFileExtensions: ["js", "json", "vue"],
+            testMatch: [ "<rootDir>/tests/specs/openapi/**/*.spec.js" ],
+            testEnvironment: "node",
+            transform: {
+                "^.+\\.yaml$": "yaml-jest-transform",
+                "^.+\\.js$": "babel-jest",
+                "^.+\\.vue$": "@vue/vue3-jest",
+                "^@": "babel-jest",
+            },
+        }
+    ]
 };
