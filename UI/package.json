@@ -113,7 +113,7 @@
     "prettier": "3.6.2",
     "rtl-detect": "1.1.2",
     "stylelint": "16.23.0",
-    "stylelint-config-standard": "38.0.0",
+    "stylelint-config-standard": "39.0.0",
     "stylelint-declaration-block-no-ignored-properties": "2.8.0",
     "stylelint-no-nested-media": "0.1.0",
     "stylelint-no-unsupported-browser-features": "8.0.4",
