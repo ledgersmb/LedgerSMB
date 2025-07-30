@@ -146,6 +146,14 @@ CREATE OR REPLACE FUNCTION draft__delete_lines(in_id int) returns bool as
         DELETE FROM invoice_tax_form itf
            WHERE EXISTS (select 1 from invoice i
                           where i.trans_id = in_id and itf.invoice_id = i.id);
+
+        UPDATE parts p
+           SET onhand = p.onhand + i.qty
+               FROM invoice i
+         WHERE i.trans_id = in_id
+           AND p.id = i.parts_id
+           AND p.inventory_accno_id IS NOT NULL;
+
         DELETE FROM invoice WHERE trans_id = in_id;
 
     RETURN true;
