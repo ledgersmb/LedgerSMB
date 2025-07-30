@@ -469,6 +469,7 @@ track_global_sequence
 trial_balance__generate
 trial_balance__heading_accounts
 trial_balance__list_headings
+trigger_invoice_prevent_allocation_delete
 trigger_parts_short
 trigger_workflow_user
 unlock

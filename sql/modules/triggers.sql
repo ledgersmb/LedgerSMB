@@ -129,6 +129,26 @@ BEGIN
 END;
 $$ language plpgsql;
 
+COMMENT ON FUNCTION trigger_workflow_user() IS
+  $$Sets the name of workflow records to `CURRENT_USER` and the user id to
+  the entity_id of the current user.
+  $$;
+
+CREATE OR REPLACE FUNCTION trigger_invoice_prevent_allocation_delete() RETURNS TRIGGER
+AS $$
+BEGIN
+  IF OLD.allocated <> 0 THEN
+    RAISE EXCEPTION 'Cannot DELETE "invoice" record id=%: non-zero "allocated" value', OLD.id;
+  END IF;
+  RETURN OLD;
+END;
+$$ language plpgsql;
+
+COMMENT ON FUNCTION trigger_invoice_prevent_allocation_delete() IS
+  $$Prevents deletion of the "invoice" record in case the "allocated" field is non-zero to
+  maintain correct COGS assignment.
+  $$;
+
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
 COMMIT;

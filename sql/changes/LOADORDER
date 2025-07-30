@@ -184,3 +184,4 @@ mc/delete-migration-validation-data.sql
 1.11/gl-workflows.sql
 1.11/workflow-for-aa-transactions.sql
 1.11/fix-assembly-cogs.sql
+1.11/trigger-invoice-allocated-delete.sql
