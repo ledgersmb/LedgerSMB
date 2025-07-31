@@ -24,8 +24,8 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('cogs__add_for_ap',ARRAY['integer','numeric','numeric']);
-    SELECT has_function('cogs__add_for_ap_line',ARRAY['integer']);
+    SELECT has_function('cogs__add_for_ap',ARRAY['integer','numeric','numeric','date']);
+    SELECT has_function('cogs__add_for_ap_line',ARRAY['integer','date']);
     SELECT has_function('cogs__add_for_ar',ARRAY['integer','numeric']);
     SELECT has_function('cogs__add_for_ar_line',ARRAY['integer']);
     SELECT has_function('cogs__reverse_ap',ARRAY['integer','numeric']);
