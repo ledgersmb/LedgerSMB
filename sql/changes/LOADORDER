@@ -185,3 +185,12 @@ mc/delete-migration-validation-data.sql
 1.11/workflow-for-aa-transactions.sql
 1.11/fix-assembly-cogs.sql
 1.11/trigger-invoice-allocated-delete.sql
+1.11/cogs-allocation.sql
+# 1.12 changes
+1.12/migrate_to_identity.sql
+1.12/add-stored-order-quote-taxes.sql
+1.12/drop-entity-class-entity-trigger.sql
+1.12/reconciliation-workflow.sql
+1.12/rm-new_shipto.sql
+1.12/mv-location-temporality.sql
+1.12/shipto_attn.sql
