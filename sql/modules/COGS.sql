@@ -260,13 +260,13 @@ value is returned to the application for further handling.$$;
 -- that if someone actually needs it.  --CT
 
 CREATE OR REPLACE FUNCTION cogs__add_for_ap
-(in_parts_id int, in_qty numeric, in_lastcost numeric)
+(in_parts_id int, in_qty numeric, in_lastcost numeric, in_transdate date default null)
 returns numeric AS
 $$
 DECLARE t_alloc numeric := 0;
         t_cogs numeric := 0;
         t_inv invoice;
-        t_cp account_checkpoint;
+        t_cp_end_date date;
         t_transdate date;
         t_avail numeric;
 BEGIN
@@ -275,7 +275,7 @@ IF in_qty > 0 THEN
    return (cogs__reverse_ap(in_parts_id, in_qty * -1))[1] * in_lastcost;
 END IF;
 
-SELECT * INTO t_cp FROM account_checkpoint ORDER BY end_date DESC LIMIT 1;
+SELECT end_date INTO t_cp_end_date FROM account_checkpoint ORDER BY end_date DESC LIMIT 1;
 
 FOR t_inv IN
     SELECT i.*
@@ -288,7 +288,7 @@ FOR t_inv IN
   ORDER BY a.transdate, a.id, i.id
 LOOP
    t_avail := t_inv.qty + t_inv.allocated;
-   SELECT transdate INTO t_transdate FROM transactions
+   SELECT coalesce(in_transdate, transdate) INTO t_transdate FROM transactions
     WHERE id = t_inv.trans_id;
    IF t_alloc < in_qty THEN
        RAISE EXCEPTION 'TOO MANY ALLOCATED';
@@ -301,9 +301,9 @@ LOOP
        INSERT INTO acc_trans
               (chart_id, transdate, amount_bc, curr, amount_tc, invoice_id, approved, trans_id)
        SELECT expense_accno_id,
-              CASE WHEN t_transdate > coalesce(t_cp.end_date, t_transdate - 1)
+              CASE WHEN t_transdate > coalesce(t_cp_end_date, t_transdate - 1)
                    THEN t_transdate
-                   ELSE t_cp.end_date + '1 day'::interval
+                   ELSE t_cp_end_date + '1 day'::interval
                END,
                (in_qty + t_alloc) * in_lastcost,
                defaults_get_defaultcurrency(),
@@ -315,9 +315,9 @@ LOOP
               AND expense_accno_id IS NOT NULL
        UNION
        SELECT inventory_accno_id,
-              CASE WHEN t_transdate > coalesce(t_cp.end_date, t_transdate - 1)
+              CASE WHEN t_transdate > coalesce(t_cp_end_date, t_transdate - 1)
                    THEN t_transdate
-                   ELSE t_cp.end_date + '1 day'::interval
+                   ELSE t_cp_end_date + '1 day'::interval
                END,
                -1*(in_qty + t_alloc) * in_lastcost,
                defaults_get_defaultcurrency(),
@@ -338,9 +338,9 @@ LOOP
        INSERT INTO acc_trans
               (chart_id, transdate, amount_bc, curr, amount_tc, invoice_id, approved, trans_id)
        SELECT expense_accno_id,
-              CASE WHEN t_transdate > coalesce(t_cp.end_date, t_transdate - 1)
+              CASE WHEN t_transdate > coalesce(t_cp_end_date, t_transdate - 1)
                    THEN t_transdate
-                   ELSE t_cp.end_date + '1 day'::interval
+                   ELSE t_cp_end_date + '1 day'::interval
                END,
                -1*t_avail * in_lastcost,
                defaults_get_defaultcurrency(),
@@ -351,9 +351,9 @@ LOOP
               AND expense_accno_id IS NOT NULL
        UNION
        SELECT inventory_accno_id,
-              CASE WHEN t_transdate > coalesce(t_cp.end_date, t_transdate - 1)
+              CASE WHEN t_transdate > coalesce(t_cp_end_date, t_transdate - 1)
                    THEN t_transdate
-                   ELSE t_cp.end_date + '1 day'::interval
+                   ELSE t_cp_end_date + '1 day'::interval
                END,
                t_avail * in_lastcost,
                defaults_get_defaultcurrency(),
@@ -437,7 +437,8 @@ END;
 
 $$ LANGUAGE PLPGSQL;
 
-CREATE OR REPLACE FUNCTION cogs__add_for_ap_line(in_invoice_id int)
+CREATE OR REPLACE FUNCTION cogs__add_for_ap_line(in_invoice_id int,
+                                                 in_transdate date default null)
 RETURNS numeric AS
 $$
 DECLARE retval numeric;
@@ -465,7 +466,7 @@ END IF;
 
 IF t_inv.qty < 0 THEN -- normal COGS
 
-    SELECT cogs__add_for_ap(i.parts_id, i.qty + i.allocated, i.sellprice)
+    SELECT cogs__add_for_ap(i.parts_id, i.qty + i.allocated, i.sellprice, in_transdate)
       INTO retval
       FROM invoice i
       JOIN parts p ON p.id = i.parts_id
@@ -484,7 +485,7 @@ ELSE -- reversal
 
    t_adj := t_inv.sellprice * r_cogs[1] + r_cogs[2];
 
-   SELECT transdate INTO t_transdate FROM transactions
+   SELECT coalesce(in_transdate, transdate) INTO t_transdate FROM transactions
     WHERE id = t_inv.trans_id;
 
    INSERT INTO acc_trans
