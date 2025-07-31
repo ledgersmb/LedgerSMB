@@ -298,32 +298,40 @@ sub save {
               $form->round_amount( $form->{"sellprice_$i"} * $form->{"qty_$i"},
                 2 );
 
-            @taxaccounts = Tax::init_taxes( $form, $form->{"taxaccounts_$i"},
-                $form->{taxaccounts} );
-            if ( $form->{taxincluded} ) {
-                $taxamount =
-                  Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 1 );
-                $form->{"sellprice_$i"} =
-                  Tax::extract_taxes( \@taxaccounts, $form,
-                    $form->{"sellprice_$i"} );
-                $taxbase =
-                  Tax::extract_taxes( \@taxaccounts, $form, $linetotal );
-            }
-            else {
-                $taxamount =
-                  Tax::apply_taxes( \@taxaccounts, $form, $linetotal );
-                $taxbase = $linetotal;
-            }
-
-            if ( @taxaccounts && $form->round_amount( $taxamount, 2 ) == 0 ) {
+            if (!$form->{manual_tax}){
+                @taxaccounts = Tax::init_taxes( $form, $form->{"taxaccounts_$i"},
+                                                $form->{taxaccounts} );
                 if ( $form->{taxincluded} ) {
-                    foreach my $item (@taxaccounts) {
-                        $taxamount = $form->round_amount( $item->value, 2 );
-                        $taxaccounts{ $item->account } += $taxamount;
-                        $taxdiff                       += $taxamount;
-                        $taxbase{ $item->account }     += $taxbase;
+                    $taxamount =
+                        Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 1 );
+                    $form->{"sellprice_$i"} =
+                        Tax::extract_taxes( \@taxaccounts, $form,
+                                            $form->{"sellprice_$i"} );
+                    $taxbase =
+                        Tax::extract_taxes( \@taxaccounts, $form, $linetotal );
+                }
+                else {
+                    $taxamount =
+                        Tax::apply_taxes( \@taxaccounts, $form, $linetotal );
+                    $taxbase = $linetotal;
+                }
+
+                if ( @taxaccounts && $form->round_amount( $taxamount, 2 ) == 0 ) {
+                    if ( $form->{taxincluded} ) {
+                        foreach my $item (@taxaccounts) {
+                            $taxamount = $form->round_amount( $item->value, 2 );
+                            $taxaccounts{ $item->account } += $taxamount;
+                            $taxdiff                       += $taxamount;
+                            $taxbase{ $item->account }     += $taxbase;
+                        }
+                        $taxaccounts{ $taxaccounts[0]->account } += $taxdiff;
                     }
-                    $taxaccounts{ $taxaccounts[0]->account } += $taxdiff;
+                    else {
+                        foreach my $item (@taxaccounts) {
+                            $taxaccounts{ $item->account } += $item->value;
+                            $taxbase{ $item->account }     += $taxbase;
+                        }
+                    }
                 }
                 else {
                     foreach my $item (@taxaccounts) {
@@ -331,14 +339,8 @@ sub save {
                         $taxbase{ $item->account }     += $taxbase;
                     }
                 }
+                push @all_taxes, @taxaccounts;
             }
-            else {
-                foreach my $item (@taxaccounts) {
-                    $taxaccounts{ $item->account } += $item->value;
-                    $taxbase{ $item->account }     += $taxbase;
-                }
-            }
-            push @all_taxes, @taxaccounts;
 
             $netamount += $form->{"sellprice_$i"} * $form->{"qty_$i"};
 
@@ -391,34 +393,56 @@ sub save {
         $form->{$_} *= 1;
     }
 
-    # add up the tax
-    my $tax = 0;
-    for ( keys %taxaccounts ) { $tax += $taxaccounts{$_} }
+    if (!$form->{manual_tax}) {
+        # add up the tax
+        my $tax = 0;
+        for ( keys %taxaccounts ) { $tax += $taxaccounts{$_} }
 
-    $amount = $form->round_amount( $netamount + $tax, 2 );
-    $netamount = $form->round_amount( $netamount, 2 );
+        $amount = $form->round_amount( $netamount + $tax, 2 );
+        $netamount = $form->round_amount( $netamount, 2 );
 
-    if (@all_taxes) {
-        my (%taxes, %bases, %rates);
-        my $query = q|
+        if (@all_taxes) {
+            my (%taxes, %bases, %rates);
+            my $query = q|
 INSERT INTO oe_tax (oe_id, tax_id, basis, rate, amount)
 VALUES (?, (select id from account where accno = ?), ?, ?, ?)
 |;
+            my $sth = $dbh->prepare($query)
+                or $form->dberror($query);
+            for my $tax (@all_taxes) {
+                $taxes{ $tax->account } //= 0;
+                $taxes{ $tax->account } += $tax->value;
+                $rates{ $tax->account } = $tax->rate;
+                $bases{ $tax->account } //= 0;
+                $bases{ $tax->account } += $tax->base;
+            }
+
+            for my $tax (keys %taxes) {
+                $sth->execute( $form->{id}, $tax,
+                               $bases{$tax}, $rates{$tax}, $taxes{$tax})
+                    or $form->dberror($query);
+            }
+        }
+    }
+    else {
+        my $query = q|
+INSERT INTO oe_tax (oe_id, tax_id, basis, rate, source, amount)
+VALUES (?, (select id from account where accno = ?), ?, ?, ?, ?)
+|;
         my $sth = $dbh->prepare($query)
             or $form->dberror($query);
-        for my $tax (@all_taxes) {
-            $taxes{ $tax->account } //= 0;
-            $taxes{ $tax->account } += $tax->value;
-            $rates{ $tax->account } = $tax->rate;
-            $bases{ $tax->account } //= 0;
-            $bases{ $tax->account } += $tax->base;
+        for my $taccno (split / /, $form->{taxaccounts}){
+            my $taxamount = $form->parse_amount($myconfig,
+                                                $form->{"mt_amount_$taccno"});
+            my $taxbasis  = $form->parse_amount($myconfig,
+                                                $form->{"mt_basis_$taccno"});
+            my $taxrate   = $form->parse_amount($myconfig,$form->{"mt_rate_$taccno"});
+            my $source    = $form->{"mt_ref_$taccno"};
+            $sth->execute( $form->{id}, $taccno, $taxbasis, $taxrate, $source, $taxamount )
+                or $form->dberror($sth->errstr);
         }
 
-        for my $tax (keys %taxes) {
-            $sth->execute( $form->{id}, $tax,
-                           $bases{$tax}, $rates{$tax}, $taxes{$tax})
-                or $form->dberror($query);
-        }
+        $sth->finish;
     }
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
         $form->{exchangerate} = 1;
@@ -640,7 +664,7 @@ sub retrieve {
                     AND t.language_code = ?)
             WHERE o.trans_id = ?
             ORDER BY o.id|;
-        $sth = $dbh->prepare($query);
+        $sth = $dbh->prepare($query) || $form->dberror($query);
         # The use of vendor_id below helps ensure that partsvendor drops out
         # for sales orders. --CT
         $sth->execute( $form->{vendor_id}, $form->{language_code}, $form->{id} )
@@ -710,6 +734,28 @@ sub retrieve {
 
         }
         $sth->finish;
+
+
+        # get manual taxes
+        $query = <<~'QUERY';
+           SELECT a.accno, o.amount, o.basis, o.rate, o.source
+             FROM oe_tax o
+                  JOIN account a
+                    ON o.tax_id = a.id
+            WHERE oe_id = ?';
+           QUERY
+        $sth = $dbh->prepare( $query ) || $form->dberror( $query );
+
+        $sth->execute( $form->{id} ) || $form->dberror( $sth->errstr );
+        while (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
+            $form->{manual_tax} = 1;
+
+            my $taccno = $ref->{accno};
+            $form->{"mt_amount_$taccno"} = $ref->{amount};
+            $form->{"mt_basis_$taccno"}  = $ref->{basis};
+            $form->{"mt_rate_$taccno"}   = $ref->{rate};
+            $form->{"mt_ref_$taccno"}    = $ref->{source};
+        }
 
         # get recurring transaction
         $form->get_recurring;
