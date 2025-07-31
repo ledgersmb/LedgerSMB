@@ -1639,6 +1639,7 @@ sub _rebuild_modules {
     $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
         or die 'Upgrade failed.';
 
+    $database->run_postupgrade_hooks;
 
     $logger->info('Completed database upgrade run ' . $database->upgrade_run_id);
     return;
