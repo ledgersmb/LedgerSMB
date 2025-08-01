@@ -18,8 +18,8 @@ scheduled for addition. To name a few:
 - class/field/method class syntax (instead of 'use Moo'/'use Moose')
 - any/all operators (instead of grep { ... } @ary)
 
-Next to these additions to the 'core' Perl language have a large number of modules
-been developed by Paul Evans (PEVANS on CPAN) to further enhance the language:
+In addition to these extensions of the 'core' Perl language, a large number of modules
+have been developed by Paul Evans (PEVANS on CPAN) to further enhance the language:
 
 - [Object::Pad](https://metacpan.org/dist/Object-Pad)
 - [Sublike::Extended](https://metacpan.org/pod/Sublike::Extended)
