@@ -30,8 +30,8 @@ been developed by Paul Evans (PEVANS on CPAN) to further enhance the language:
 - [Syntax::Operator::Eqr](https://metacpan.org/pod/Syntax::Operator::Eqr)
 - [Syntax::Operator::Equ](https://metacpan.org/pod/Syntax::Operator::Equ)
 
-A decision is required regarding which language features are to be used in the code base. This
-serves harmonization of the code base.
+A decision is required regarding which language features are to be used in the codebase. This
+serves harmonization of the codebase.
 
 Please note that the decision in this ADR complements the one taken in
 [ADR 0102 - Perl pragma declarations on top of file](./0102-perl-pragmas-top-declarations.md).
