@@ -15,7 +15,9 @@ LedgerSMB::Database::PostUpgrade::CogsAllocationCleanup - Cleanup of backup tabl
 
 =head1 DESCRIPTION
 
-
+This post-upgrade action removes the C<invoice_before_cogs_allocation_fix> table which
+is created as part of the upgrade script in C<sql/changes/1.11/cogs-allocation.sql>. The
+upgrade script schedules this action to be run 5 years in the future.
 
 =head1 METHODS
 
