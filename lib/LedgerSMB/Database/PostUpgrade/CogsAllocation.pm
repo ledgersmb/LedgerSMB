@@ -15,7 +15,9 @@ LedgerSMB::Database::PostUpgrade::CogsAllocation - Post-Upgrade reallocation of 
 
 =head1 DESCRIPTION
 
-
+This post-upgrade action ensures that all available purchased parts are allocated to
+available sold parts as part of the COGS calculation. This post-processing is required
+after fixing the allocated numbers for COGS as done by C<sql/changes/1.11/cogs-allocation.sql>.
 
 =head1 METHODS
 
