@@ -4113,12 +4113,11 @@ cosmiconfig@^9.0.0:
     js-yaml "^4.1.0"
     parse-json "^5.2.0"
 
-coveralls-next@4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/coveralls-next/-/coveralls-next-4.2.1.tgz#6cf872710e4594d2912fb0196a48dbfee061c6b5"
-  integrity sha512-O/SBGZsCryt+6Q3NuJHENyQYaucTEV9qp0KGaed+y42PUh+GuF949LRLHKZbxWwOIc1tV8bJRIVWlfbZ8etEwQ==
+coveralls-next@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/coveralls-next/-/coveralls-next-5.0.0.tgz#94c9ad8bd46aa77cab20966b98a02cdd851c5902"
+  integrity sha512-RCj6Oflf6iQtN3Q5b0SSemEbQBzeBjQlLUrc3bfNECTy83hMJA9krdNZ5GTRm7Jpbyo92yKUbQDP5FYlWcL5sA==
   dependencies:
-    form-data "4.0.0"
     js-yaml "4.1.0"
     lcov-parse "1.0.0"
     log-driver "1.2.7"
@@ -5567,15 +5566,6 @@ foreground-child@^3.1.0, foreground-child@^3.3.1:
   dependencies:
     cross-spawn "^7.0.6"
     signal-exit "^4.0.1"
-
-form-data@4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/form-data/-/form-data-4.0.0.tgz#93919daeaf361ee529584b9b31664dc12c9fa452"
-  integrity sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==
-  dependencies:
-    asynckit "^0.4.0"
-    combined-stream "^1.0.8"
-    mime-types "^2.1.12"
 
 form-data@^2.5.0:
   version "2.5.3"
