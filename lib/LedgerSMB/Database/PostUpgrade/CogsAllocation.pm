@@ -9,7 +9,7 @@ package LedgerSMB::Database::PostUpgrade::CogsAllocation;
 
 LedgerSMB::Database::PostUpgrade::CogsAllocation - Post-Upgrade reallocation of COGS
 
-=head1 SYNOPSYS
+=head1 SYNOPSIS
 
 
 
