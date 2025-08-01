@@ -9,7 +9,7 @@ package LedgerSMB::Database::PostUpgrade::CogsAllocationCleanup;
 
 LedgerSMB::Database::PostUpgrade::CogsAllocationCleanup - Cleanup of backup tables created on upgrade
 
-=head1 SYNOPSYS
+=head1 SYNOPSIS
 
 
 
