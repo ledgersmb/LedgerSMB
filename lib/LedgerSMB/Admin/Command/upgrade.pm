@@ -39,6 +39,8 @@ sub run {
 
     if (!$modules_only) {
         die 'Non-modules-only modes not implemented yet!';
+        # TODO: When we *do* implement the regular upgrades,
+        # remember to '$db->run_postupgrade_hooks'
     }
     my $connect_data = {
         $self->config->get('connect_data')->%*,
