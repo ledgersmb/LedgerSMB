@@ -59,3 +59,4 @@ class LedgerSMB::PGDate {
 
 ## Annotations
 
+See [ADR 0106 - Coding style and Use of new Perl syntax](./0106-coding-style-new-perl-syntax.md).
