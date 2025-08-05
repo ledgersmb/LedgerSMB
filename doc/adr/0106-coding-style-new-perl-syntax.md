@@ -4,7 +4,7 @@ Date: 2025-08-01
 
 ## Status
 
-Draft
+Accepted
 
 ## Context
 
