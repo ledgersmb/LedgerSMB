@@ -122,7 +122,7 @@
     "stylelint-no-unsupported-browser-features": "8.0.4",
     "stylelint-order": "7.0.0",
     "stylelint-webpack-plugin": "5.0.1",
-    "tmp": "0.2.3",
+    "tmp": "0.2.4",
     "typescript": "5.9.2",
     "undici": "7.13.0",
     "unix-timestamp": "1.1.0",
