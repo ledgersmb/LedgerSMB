@@ -46,16 +46,29 @@ sub run($class, $context, $args) {
       ORDER BY t.transdate ASC, i.id ASC
       SQL
     my $rah = $dbh->prepare(<<~'SQL') or die $dbh->errstr;
-      SELECT cogs__add_for_ap_line(?, CURRENT_DATE)
+      SELECT cogs__add_for_ap_line(?, ?)
       SQL
 
+    # If there's no value in the defaults table, use "today"
+    # If the value in the defaults table is "NULL",
+    #  use the regular COGS posting logic
+    # If the value in the defaults table is a date,
+    #  post corrections on that specific date
+    my @date_setting = $dbh->selectrow_array(<<~'SQL');
+      SELECT "value"::date
+        FROM defailts
+       WHERE setting_key = 'migration:cogs-allocation-posting-date'
+      UNION ALL
+      SELECT CURRENT_DATE
+      SQL
+    die $dbh->errstr if $dbh->err;
 
     foreach my $parts_id ($parts_ids->@*) {
         $sth->execute( $parts_id )
             or die $sth->errstr;
 
         while (my $inv = $sth->fetchrow_hashref('NAME_lc')) {
-            $rah->execute($inv->{id})
+            $rah->execute($inv->{id}, $date_setting[0])
                 or die $rah->errstr;
 
             my ($allocated) = $rah->fetchrow_array();
@@ -64,7 +77,6 @@ sub run($class, $context, $args) {
             last if $allocated == 0;
         }
     }
-
 
     $dbh->do(
         <<~'SQL',
@@ -75,6 +87,10 @@ sub run($class, $context, $args) {
         {}, # attrs
         $last_entry)
         or die $dbh->errstr;
+    $dbh->do(<<~'SQL') or die $dbh->errstr;
+        DELETE FROM defaults
+              WHERE setting_key = 'migration:cogs-allocation-posting-date'
+        SQL
 
     return undef;
 }
