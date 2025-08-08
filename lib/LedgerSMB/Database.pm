@@ -41,6 +41,7 @@ use DBI;
 use File::Spec;
 use File::Temp;
 use JSON::PP;
+use Module::Runtime qw( use_module );
 use PGObject::Util::DBAdmin v1.6.2;
 use Scope::Guard;
 use XML::LibXML;
@@ -55,6 +56,8 @@ use LedgerSMB::Database::Loadorder;
 
 our $VERSION = '1.2';
 
+# en/decode in-memory data that's already correct "internal Unicode"; not UTF-8
+my $json = JSON::PP->new->utf8(0);
 
 
 around BUILDARGS => sub {
@@ -750,6 +753,57 @@ sub create_and_load {
 }
 
 
+=head2 $db->run_postupgrade_hooks()
+
+This routine runs upgrade hooks registered during upgrade. Upgrade hooks
+allow parts of the upgrade process to register processing to be done once
+the upgrade is done, meaning the schema and modules are all up-to-date.
+
+=cut
+
+my %postupgrade_actions = (
+    'cogs-allocation'         => 'LedgerSMB::Database::PostUpgrade::CogsAllocation',
+    'cogs-allocation-cleanup' => 'LedgerSMB::Database::PostUpgrade::CogsAllocationCleanup',
+    );
+
+sub run_postupgrade_hooks {
+    my ($self) = @_;
+
+    my $dbh = $self->connect(
+        {
+            PrintError => 0,
+            AutoCommit => 0,
+            RaiseError => 0
+        });
+    my $sth = $dbh->prepare(<<~'SQL') or die $dbh->errstr;
+        SELECT *
+          FROM defaults
+         WHERE setting_key LIKE 'post-upgrade-run:%'
+               AND (NOT value::jsonb \? 'run-after'
+                    OR (value::jsonb->>'run-after')::date < CURRENT_DATE)
+        SQL
+    my $dsh = $dbh->prepare(q{DELETE FROM defaults WHERE setting_key = ?})
+        or die $dbh->errstr;
+
+    $sth->execute or die $sth->errstr;
+    while (my $hook = $sth->fetchrow_hashref('NAME_lc')) {
+        my $data = $json->decode( $hook->{value} );
+        if (not exists $postupgrade_actions{$data->{action}}) {
+            die $self->logger->error("Post-upgrade action '$data->{action}' not defined");
+        }
+
+        my $action_module = $postupgrade_actions{$data->{action}};
+        use_module($action_module)->run({ dbh => $dbh }, $data->{args});
+
+        # delete the hook
+        $dsh->execute( $hook->{setting_key} );
+    }
+
+    $dbh->commit;
+    $dbh->disconnect;
+    return undef;
+}
+
 =head2 $db->upgrade_modules($loadorder, $version)
 
 This routine upgrades modules as required with a patch release upgrade.
@@ -839,8 +893,6 @@ Returns an arrayref of hashes with the following keys:
 =back
 
 =cut
-
-my $json = JSON::PP->new;
 
 sub list_changes {
     my ($self, %args) = @_;

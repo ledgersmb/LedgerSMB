@@ -6,6 +6,7 @@ use warnings;
 use Carp;
 use PageObject;
 use MIME::Base64;
+use Time::HiRes;
 use Test::More;
 
 use Module::Runtime qw(use_module);
@@ -170,6 +171,7 @@ sub click_menu {
             # menu item found; held in $item
             my $expanded = $item->get_attribute('aria-expanded');
             $item->click unless ($expanded and $expanded eq 'true');
+            sleep 0.1;
 
             # the node and its children are siblings in the DOM tree
             # continue the search from one level up...
