@@ -680,10 +680,7 @@ sub run_postupgrade_hooks {
     while (my $hook = $sth->fetchrow_hashref('NAME_lc')) {
         my $data = $json->decode( $hook->{value} );
         if (not exists $postupgrade_actions{$data->{action}}) {
-            ...;
-            # TODO: report the correct error here...
-
-            next; # skip to the next upgrade hook when this one failed
+            die $self->logger->error("Post-upgrade action '$data->{action}' not defined");
         }
 
         my $action_module = $postupgrade_actions{$data->{action}};
