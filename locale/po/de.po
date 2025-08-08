@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.12.12-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-07-12 19:41+0000\n"
+"POT-Creation-Date: 2025-08-08 21:35+0000\n"
 "Last-Translator: E, 2025\n"
 "Language-Team: German (https://app.transifex.com/ledgersmb/teams/58325/de/)\n"
 "Language: de\n"
@@ -4321,8 +4321,8 @@ msgstr "Vorlagen laden"
 msgid "Loaded"
 msgstr "Geladen"
 
-#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:26
-#: UI/src/components/ServerUI.js:40
+#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:40
+#: UI/src/components/ServerUI.js:26
 msgid "Loading..."
 msgstr "Geladen..."
 
