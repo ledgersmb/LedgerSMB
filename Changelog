@@ -167,6 +167,14 @@ Updated dependencies
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.27
+* [MAJOR] Fix parts incorrectly marked as 'used for Cost Of Goods Sold' (#8952)
+* [MAJOR] Repair historic incorrect COGS markings and post missing COGS (#8986)
+   See https://ledgersmb.org/content/bug-explained-double-allocation-parts-cogs
+* Add database triggers to prevent COGS becoming messed up (#8972)
+* Add consistency check for COGS allocation in setup.pl (#8961)
+
+
 Changelog for 1.11.26
 * Fix ETag values without double-quote quoting in API calls (#8898)
 
