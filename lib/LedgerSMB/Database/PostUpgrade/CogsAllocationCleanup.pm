@@ -1,9 +1,9 @@
 
-use v5.36;
+package LedgerSMB::Database::PostUpgrade::CogsAllocationCleanup;
+
+use strict;
 use warnings;
 use experimental qw( signatures );
-
-package LedgerSMB::Database::PostUpgrade::CogsAllocationCleanup;
 
 =head1 NAME
 
