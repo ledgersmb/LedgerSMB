@@ -46,6 +46,15 @@ Updated dependencies
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.12
+* [MAJOR] Fix parts incorrectly marked as 'used for Cost Of Goods Sold' (#8952)
+* [MAJOR] Repair historic incorrect COGS markings and post missing COGS (#8986)
+   See https://ledgersmb.org/content/bug-explained-double-allocation-parts-cogs
+* Add database triggers to prevent COGS becoming messed up (#8972)
+* Add consistency check for COGS allocation in setup.pl (#8961)
+* Fix 'onhand' being clobbered by repeated saving of invoices (#8964)
+* Fix SQL error showing when reversing an AP invoice (#8950)
+
 Changelog for 1.12.11
 * Fix regressions since 1.11 in fixed assets posting (#8919)
 * Fix ETag values without double-quote quoting in API calls (#8898)
