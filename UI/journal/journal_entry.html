@@ -109,13 +109,12 @@
         <tr>
           <th align="right">[% text('FX') %]</th>
           <td colspan="3">
-            [% PROCESS input element_data = {
+            <input type="checkbox"
                    name="fx_transaction"
-                   type='checkbox'
-                   class='fx_checkbox'
-                   "data-dojo-type"="lsmb/journal/fx_checkbox"
-                   value=1
-                   checked=form.fx_transaction } %]
+                   id="fx-transaction"
+                   value="1"
+                   [% form.fx_transaction ? 'checked="CHECKED"' : '' %]
+                   data-dojo-type="lsmb/journal/fx_checkbox">
           </td>
         </tr>
       </table>
