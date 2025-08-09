@@ -30,37 +30,8 @@
             <tr>
               <th align="right">[% text('Account') %]</th>
               <td colspan="3">
-                <!-- tshvr fixed accno is better here, but commented for test
-                            PROCESS input element_data = {
-                            name = "accno"
-                            id = 'accno'
-                            size = '15'
-                            value = accno
-                            type = 'text'
-                            class = 'AccountBox'
-                            };
-                            END %] </td>
-              -->
-                <!-- tshvr test http://sourceforge.net/p/ledger-smb/bugs/1057/ -->
-                     [% IF accno;
-                            accno;
-                            PROCESS input element_data = {
-                            name = 'accno',
-                            id = 'accno',
-                            type = 'hidden',
-                            value = accno
-                            };
-                            ELSE;
-                  PROCESS input element_data = {
-                       name = "accno"
-                       id = 'accno'
-                       size = '15'
-                       value = accno
-                       type = 'text'
-                       class = 'AccountBox'
-                       "data-dojo-type"='lsmb/accounts/AccountSelector'
-                       "data-dojo-props"="required:false"
-                       }; END %] </td>
+                <lsmb-account-select id="accno" name="accno"></lsmb-account-select>
+              </td>
               <!--tshvr end test-->
             </tr>
             <tr>

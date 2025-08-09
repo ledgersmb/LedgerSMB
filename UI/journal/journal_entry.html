@@ -175,20 +175,12 @@
           <tr>
                 [% INDEX=displayrow.index %]
                   <td>
-                        [% IF displayrow.accnoset == 0 %]
-                                [% PROCESS input element_data = {
-                                      name = "accno_$INDEX"
-                                      type = "text"
-                                      initial_value = ${"accno_$INDEX"}
-                                      value = ${"accno_$INDEX"}
-                                      text_attr = 'accno'
-                                      value_attr = 'id'
-                                      class = 'AccountBox'
-                                      readonly = (form.approved || form.reversing)
-                                      'data-dojo-type' = 'lsmb/accounts/AccountSelector'
-                                      'data-dojo-props' = 'required: false'
-                              } %]
-
+                        [% IF displayrow.accnoset == 0;
+                           readonly = (form.approved || form.reversing) ? 'readonly="READONLY"' : '';
+                        %]
+                        <lsmb-account-select name="accno_[% INDEX %]"
+                                             id="accno-[% INDEX %]"
+                                             [% readonly %]></lsmb-account-select>
                           [% ELSE;
                                 displayrow.accno;
                              END %]
