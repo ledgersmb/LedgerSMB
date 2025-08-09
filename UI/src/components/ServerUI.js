@@ -43,9 +43,11 @@ export default {
             [...document.forms].forEach((form) => {
                 if (form.hasAttribute("data-lsmb-focus")) {
                     let focus = form.getAttribute("data-lsmb-focus");
-                    let elm = document.getElementById(focus);
-                    if (elm) {
-                        elm.select();
+                    if (focus) {
+                        let elm = document.getElementById(focus);
+                        if (elm) {
+                            elm.select();
+                        }
                     }
                 }
             });

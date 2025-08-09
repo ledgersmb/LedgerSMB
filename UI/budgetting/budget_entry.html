@@ -65,13 +65,10 @@
                 [% INDEX= loop.count %]
                   <td>
                         [% IF displayrow.accnoset == 0 %]
-                              [% PROCESS input element_data = {
-                                      type = 'text'
-                                      name = "accno_$INDEX"
-                                      initial_value = displayrow.accno
-                                      class = 'AccountBox'
-                                      "data-dojo-type" = "lsmb/accounts/AccountSelector"
-                              } %]
+                           <lsmb-account-select name="accno_[% INDEX %]"
+                                                id="accno-[% INDEX %]"
+                                                value="[% displayrow.accno %]">
+                          </lsmb-account-select>
 
                           [% ELSE %]
 
