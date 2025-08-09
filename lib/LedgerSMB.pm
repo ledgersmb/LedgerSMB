@@ -396,7 +396,7 @@ sub _set_default_locale {
         ->from_header( $self->{_req}->header( 'Accept-Language' ) );
 
     $self->{_user}->{language} = $lang;
-    $self->{_user}->{dateformat} = 'YYYY-MM-DD';
+    $self->{_user}->{dateformat} = 'yyyy-mm-dd';
     $self->{_user}->{numberformat} = '1000.00';
     $self->{_locale}=LedgerSMB::Locale->get_handle($lang);
     $self->error( __FILE__ . ':' . __LINE__
