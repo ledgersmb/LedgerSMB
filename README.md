@@ -50,7 +50,7 @@ fast customization. Supported output formats are PDF, CSV, HTML, ODF and more.
 
 # System requirements
 
-Note that these are the system requirements for LedgerSMB 1.13.0-dev, the current
+Note that these are the system requirements for LedgerSMB 1.13, the current
 development version. Please check the system requirements for [the 1.12 stable
 version](https://github.com/ledgersmb/LedgerSMB/tree/1.12#system-requirements).
 
@@ -74,9 +74,9 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome              | 2024-08  | 128-137                                     |
-| Edge                | 2024-07  | 127-136                                     |
-| Firefox             | 2024-09  | 130-139                                     |
+| Chrome              | 2024-09  | 129-138                                     |
+| Edge                | 2024-09  | 129-138                                     |
+| Firefox             | 2024-10  | 131-140                                     |
 | Opera               | 2024-03  | 108-117                                     |
 | Safari              | 2024-01  | 17.3-17.6, 18.0-18.5                        |
 
@@ -84,13 +84,13 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome for Android  | <missing> | 136                                         |
-| Firefox for Android | <missing> | 137                                         |
-| Android Browser     | <missing> | 136                                         |
+| Chrome for Android  | 2025-06  | 138                                         |
+| Firefox for Android | 2025-06  | 140                                         |
+| Android Browser     | 2025-06  | 138                                         |
 | Safari on iOS       | 2024-01  | 17.3-17.7, 18.0-18.5                        |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
 | Opera Mobile        | 2024-03  | 80                                          |
-| Samsung Internet    | 2022-08  | 18.0, 19.0, 20-27                           |
+| Samsung Internet    | 2022-11  | 19.0, 20-28                                 |
 
 
 **Note**: Safari is very sensitive to using LedgerSMB over HTTPS; using it with
