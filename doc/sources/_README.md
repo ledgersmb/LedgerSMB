@@ -50,7 +50,7 @@ fast customization. Supported output formats are PDF, CSV, HTML, ODF and more.
 
 # System requirements
 
-Note that these are the system requirements for LedgerSMB 1.13.0-dev, the current
+Note that these are the system requirements for LedgerSMB 1.13, the current
 development version. Please check the system requirements for [the 1.12 stable
 version](https://github.com/ledgersmb/LedgerSMB/tree/1.12#system-requirements).
 
