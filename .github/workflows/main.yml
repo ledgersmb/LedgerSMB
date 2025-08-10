@@ -183,8 +183,14 @@ jobs:
     strategy:
       matrix:
         include:
+          - postgres: "13"
+            perl: "5.42"
+            JOB_COUNT: 5
           - postgres: "15"
-            perl: "5.38"
+            perl: "5.42"
+            JOB_COUNT: 5
+          - postgres: "17"
+            perl: "5.42"
             JOB_COUNT: 5
 
     services:
