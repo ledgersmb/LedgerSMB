@@ -33,8 +33,9 @@ use warnings;
 use strict;
 use parent qw( Workflow::Persister::DBI::ExtraData );
 
+use Log::Any qw($log);
+
 use JSON::MaybeXS;
-use Workflow::Context;
 
 use LedgerSMB::App_State;
 
@@ -63,6 +64,7 @@ sub handle {
 
 =head2 fetch_workflow( $wf_id )
 
+
 Implements Workflow::Persister protocol; in addition to restoring the
 workflow state (as per the parent persister Workflow::Persister::DBI),
 also restores the workflow context.
@@ -90,10 +92,10 @@ sub fetch_workflow {
         $sth->execute( $wf_id )
             or die $sth->errstr;
         if (my $row = $sth->fetchrow_hashref( 'NAME_lc' )) {
-            $wf_info->{context} =
-                Workflow::Context->new(
-                    $json->decode( $row->{context} )->%*
-                );
+            $wf_info->{context} = {
+                $json->decode( $row->{context} )->%*,
+                ($wf_info->{context} // {})->%*
+            };
         }
         else {
             $sth->err and die $sth->errstr;

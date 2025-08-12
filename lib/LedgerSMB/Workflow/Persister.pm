@@ -29,7 +29,6 @@ use strict;
 use parent qw( Workflow::Persister::DBI );
 
 use JSON::MaybeXS;
-use Workflow::Context;
 
 use LedgerSMB::App_State;
 
@@ -85,10 +84,10 @@ sub fetch_workflow {
         $sth->execute( $wf_id )
             or die $sth->errstr;
         if (my $row = $sth->fetchrow_hashref( 'NAME_lc' )) {
-            $wf_info->{context} =
-                Workflow::Context->new(
+            $wf_info->{context} = {
+                    ($wf_info->{context} // {})->%*,
                     $json->decode( $row->{context} )->%*
-                );
+                };
         }
         else {
             $sth->err and die $sth->errstr;
