@@ -1525,6 +1525,12 @@ GROUP BY p.id, c.accno, p.reference, p.payment_class, p.closed, p.payment_date,
       ac.chart_id, chart_description,legal_name, eca.id,
       eca.entity_id, eca.discount, eca.meta_number, eca.entity_class;
 
+CREATE OR REPLACE FUNCTION overpayment__get(in_id int) returns overpayments
+language sql as
+$$
+select * from overpayments where payment_id = in_id;
+$$;
+
 CREATE OR REPLACE FUNCTION payment_get_open_overpayment_entities(in_account_class int)
  returns SETOF payment_vc_info AS
 $$

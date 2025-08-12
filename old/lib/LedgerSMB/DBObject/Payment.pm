@@ -730,6 +730,14 @@ sub overpayment_reverse {
         ] );
 }
 
+sub get_overpayment {
+    my ($self, $args) = @_;
+    return $self->call_procedure(
+        funcname => 'overpayment__get',
+        args => [$args->{id}]
+    );
+}
+
 =item init
 
 Initializes the num2text system

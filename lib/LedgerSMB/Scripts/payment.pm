@@ -2055,8 +2055,11 @@ sub apply_overpayment {
     my $url = $payment->script($request->{invoice})
       . ".pl?__action=edit&id=$request->{trans_id}";
     $payment->{ovp_payment_id} = [$request->{overpayment_id}];
+    $payment->{id} = $request->{overpayment_id};
+    my $ovp = $payment->get_overpayment();
     $payment->{memo} = ["Application of overpayment"];
     $payment->{source} = [$request->{reference}];
+    $request->{amount} = $ovp->{available} if $request->{amount} > $ovp->{available};
     $payment->{amount} = [$request->{amount}];
     $payment->{cash_account_id} = [$request->{account_id}];
     $payment->{transaction_id} = [$request->{trans_id}];
