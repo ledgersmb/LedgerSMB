@@ -39,13 +39,15 @@ sub create_workflow($self, $wf) {
         q|select reconciliation__new_report(?,?,?,?,?)|
         ) or die $dbh->errstr;
 
-    $sth->execute(
-        $wf->context->param( 'account_id' ),
-        $wf->context->param( 'ending_balance' ),
-        $wf->context->param( 'end_date' ),
-        $wf->context->param( 'recon_fx' ),
+    my @args = (
+        $wf->context->param( 'account_id' ) // undef,
+        $wf->context->param( 'ending_balance' ) // undef,
+        $wf->context->param( 'end_date' ) // undef,
+        $wf->context->param( 'recon_fx' ) // undef,
         $wf_id,
-        )
+        );
+
+    $sth->execute(@args)
         or die $sth->errstr;
 
     my ($id) = $sth->fetchrow_array;
