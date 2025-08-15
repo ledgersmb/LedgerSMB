@@ -180,3 +180,4 @@ mc/delete-migration-validation-data.sql
 1.13/constrain-language-code.sql
 1.13/drop-function-menu_insert.sql
 1.13/partsgroup-config.sql
+1.13/old-migration-schemas-cleanup.sql
