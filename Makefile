@@ -176,7 +176,7 @@ ifneq ($(origin DOCKER_CMD),undefined)
 	$(DOCKER_CMD) make devtest TEST_OPTS="$(TEST_OPTS)" TESTS="$(TESTS)" \
                            PGTAP_OPTS="$(PGTAP_OPTS)" BDD_OPTS="$(BDD_OPTS)"
 else
-	if [ -z "$${TEST_NO_VERIFY_SCHEMA}" ] && [ -z "$${PSGI_BASE_URL}" ]; then echo 'Missing environment variable $PSGI_BASE_URL'; exit 1; fi
+	if [ -z "$${TEST_NO_VERIFY_SCHEMA}" ] && [ -z "$${PSGI_BASE_URL}" ]; then echo 'Missing environment variable $$PSGI_BASE_URL'; exit 1; fi
 	if [ -z "$${TEST_NO_VERIFY_SCHEMA}" ] && [ "$$(curl -s "$${PSGI_BASE_URL}/status" | jq -r .schema)"  != "xyz" ]; then echo "Server misconfiguration; schema should be 'xyz'"; exit 1; fi
 #        the 'dropdb' command may fail, hence the prefix minus-sign
 	-PERL5OPT="" dropdb --if-exists lsmb_test
