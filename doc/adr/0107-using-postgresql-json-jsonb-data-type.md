@@ -37,9 +37,8 @@ to the software; no ADR should reduce the importance of that.
 There are however, cases where users want to add data to LedgerSMB that is
 neither foreseen nor necessary for the execution of its primary function. To
 that extent, there is no consistency requirement within the application nor
-any means for the application to verify consistency. Since the structure of
-this additional data is - by definition - not known beforehand, it's not
-possible to incorporate in its schema.
+any means for the application to verify consistency. A characteristic of this
+data is that its structure cannot be known beforehand.
 
 ## Decision
 
