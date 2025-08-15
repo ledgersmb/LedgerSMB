@@ -2,7 +2,7 @@
 create table custom_attribute_metadata (
   id uuid default gen_random_uuid() primary key,
   name text not null,
-  obsolete boolean not null default false,
+  obsolete date,
   type text not null,
   description text,
   config jsonb not null default '{}'::jsonb
@@ -28,8 +28,9 @@ comment on column custom_attribute_metadata.name is
   Used as the label in the UI if the `config` does not provide labels.$$;
 
 comment on column custom_attribute_metadata.obsolete is
-  $$Attributes with `obsolete` set to true`, will not be available in the
-  UI except as a read-only attribute when the value is already assigned.
+  $$Attributes with `obsolete` set to a date (not null), will not be available
+  in the UI (after the given date) except as a read-only attribute when the
+  value is already assigned.
 
   The only available action for these attributes is deletion.$$;
 
