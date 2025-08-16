@@ -67,7 +67,7 @@ use LedgerSMB::Magic qw( SCRIPT_OLDSCRIPTS );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Setting;
-
+use LedgerSMB::StopProcessing;
 
 use Carp;
 use List::Util qw(first);
@@ -368,8 +368,7 @@ This function replaces explicit 'exit()' calls.
 =cut
 
 sub finalize_request {
-    undef $@;
-    die;
+    LedgerSMB::StopProcessing->throw;
 }
 
 

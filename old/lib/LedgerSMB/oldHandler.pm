@@ -44,7 +44,7 @@
 #
 #######################################################################
 
-use experimental 'try';
+use experimental qw(try isa);
 
 package lsmb_legacy;
 
@@ -55,9 +55,11 @@ use LedgerSMB::App_State;
 use LedgerSMB::Middleware::SessionStorage;
 use LedgerSMB::Middleware::RequestID;
 use LedgerSMB::PSGI::Util;
+use LedgerSMB::StopProcessing;
 
 use HTML::Escape;
 use Log::Any;
+use Scalar::Util qw(blessed);
 
 our $logger;
 
@@ -162,17 +164,17 @@ sub handle {
         }
     }
     catch  ($err) {
-        # We have an exception here because otherwise we always get an exception
-        # when output terminates.  A mere 'die' will no longer trigger an automatic
-        # error, but die 'foo' will map to $form->error('foo')
-        # -- CT
         $form->{_error} = 1;
-        if ($err =~ /^Died/i or $err =~ /^exit at /) {
+
+        if ($err isa 'LedgerSMB::StopProcessing') {
             $form->{dbh}->commit if defined $form->{dbh};
         }
         else {
+            my $msg = (blessed $err and $err->can('message'))
+                ? $err->message
+                : "$err";
             $form->{dbh}->rollback if defined $form->{dbh};
-            _error($form, "'$err'");
+            _error($form, $msg);
         }
     }
 
