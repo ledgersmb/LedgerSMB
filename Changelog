@@ -13,6 +13,8 @@ Added functionalities
 * Localization of names in the country selection drop-down (#8749)
 * Improved on-boarding experience with new installer supporting more platforms
   to handle dependencies than previous methods; see https://get.ledgersmb.org
+* Technical support for arbitrary attributes on parts and others (#8996)
+* Scheduled actions from upgrades; e.g. removal of migration artifacts (#8979)
 
 Changed functionalities
 * Concurrent logins with different users on one browser throw an error (#8496)
