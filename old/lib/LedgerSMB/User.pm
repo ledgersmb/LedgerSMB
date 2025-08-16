@@ -60,8 +60,10 @@ Deprecated
 use strict;
 use warnings;
 
-use Log::Any;
 use Carp;
+use Log::Any;
+
+use LedgerSMB::StopProcessing;
 
 my $logger = Log::Any->get_logger(category => 'LedgerSMB::User');
 
@@ -143,7 +145,7 @@ sub change_my_password {
     # don't match...
     if ($request->{new_password} ne $request->{confirm_password}){
         Carp::croak $request->{_locale}->text('Passwords must match.');
-        die;
+        LedgerSMB::StopProcessing->throw;
     }
 
     my $verify = $request->{_wire}->get('db')->instance(

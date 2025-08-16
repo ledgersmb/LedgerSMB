@@ -357,6 +357,7 @@ sub setup_url_space {
             root => $wire->get( 'paths/UI' ),
             path => sub { 1 },
             pass_through => 'yes';
+        enable 'HTTPExceptions';
 
         mount '/erp/api/v0' => _api_mount($cookie, $secret, $wire);
 

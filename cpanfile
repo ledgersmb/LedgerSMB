@@ -28,6 +28,7 @@ requires 'HTTP::AcceptLanguage';
 requires 'HTTP::Headers::Fast', '0.21'; # for content_is_text() method
 requires 'HTTP::Negotiate', '6.01';
 requires 'HTTP::Status';
+requires 'HTTP::Throwable';
 requires 'JSON::MaybeXS';
 requires 'JSONSchema::Validator', '0.010';
 recommends 'Cpanel::JSON::XS', '3.0206'; # 3.0206 adds 'allow_bignum' option
@@ -103,6 +104,7 @@ requires 'Plack', '1.0031';
 requires 'Plack::Builder';
 requires 'Plack::Builder::Conditionals';
 requires 'Plack::Middleware::ConditionalGET';
+requires 'Plack::Middleware::HTTPExceptions';
 requires 'Plack::Middleware::ReverseProxy';
 requires 'Plack::Middleware::Static';
 requires 'Plack::Request';
