@@ -57,6 +57,7 @@ use Plack;
 use Plack::Builder;
 use Plack::Request::WithEncoding;
 use Plack::Middleware::ConditionalGET;
+use Plack::Middleware::HTTPExceptions;
 use Plack::Middleware::ReverseProxy;
 use Plack::Middleware::Static;
 use Plack::Builder::Conditionals;
