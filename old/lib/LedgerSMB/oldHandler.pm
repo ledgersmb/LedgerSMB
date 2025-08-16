@@ -59,6 +59,7 @@ use LedgerSMB::StopProcessing;
 
 use HTML::Escape;
 use Log::Any;
+use Scalar::Util qw(blessed);
 
 our $logger;
 
@@ -169,8 +170,11 @@ sub handle {
             $form->{dbh}->commit if defined $form->{dbh};
         }
         else {
+            my $msg = (blessed $err and $err->can('message'))
+                ? $err->message
+                : "$err";
             $form->{dbh}->rollback if defined $form->{dbh};
-            _error($form, "'$err'");
+            _error($form, $msg);
         }
     }
 
