@@ -57,6 +57,7 @@ use Plack;
 use Plack::Builder;
 use Plack::Request::WithEncoding;
 use Plack::Middleware::ConditionalGET;
+use Plack::Middleware::HTTPExceptions;
 use Plack::Middleware::ReverseProxy;
 use Plack::Middleware::Static;
 use Plack::Builder::Conditionals;
@@ -357,6 +358,7 @@ sub setup_url_space {
             root => $wire->get( 'paths/UI' ),
             path => sub { 1 },
             pass_through => 'yes';
+        enable 'HTTPExceptions';
 
         mount '/erp/api/v0' => _api_mount($cookie, $secret, $wire);
 

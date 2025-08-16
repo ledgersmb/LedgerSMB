@@ -90,7 +90,7 @@ Returns a standard error representation for 'LedgerSMB session timed out'
 
 sub session_timed_out {
     return [ HTTP_SEE_OTHER,
-             [ 'Location' => 'login.pl?__action=logout&reason=timeout' ],
+             [ 'Location' => 'logout.pl?__action=logout&reason=timeout' ],
              [] ];
 }
 

@@ -35,7 +35,8 @@ use strict;
 use warnings;
 use parent qw ( Plack::Middleware );
 
-use HTTP::Status qw/ is_server_error /;
+use HTTP::Throwable::Factory qw( http_throw );
+use HTTP::Status qw/ is_server_error HTTP_UNAUTHORIZED /;
 use Log::Any qw($log);
 use Plack::Request;
 use Plack::Util;
@@ -158,10 +159,22 @@ sub call {
                 my $env = shift;
                 my $r;
                 ($dbh, $r) = _connect($self, $env);
-                die 'Internal server error' if defined $r;
+                http_throw(
+                    {
+                        status_code => HTTP_UNAUTHORIZED,
+                        reason => 'Unauthorized',
+                        message => 'Missing credentials or session expired'
+                    })
+                    if defined $r;
 
                 $r = _verify_session($dbh, $env);
-                die 'Internal server error' if defined $r;
+                http_throw(
+                    {
+                        status_code => HTTP_UNAUTHORIZED,
+                        reason => 'Unauthorized',
+                        message => 'Missing credentials or session expired'
+                    })
+                    if defined $r;
 
                 return $dbh;
             };
