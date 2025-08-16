@@ -41,6 +41,7 @@ Cleanup & architecture improvements
 Updated dependencies
 * Feature::Compat::Try (removed)
 * IO::Scalar (removed)
+* Workflow (2.06, from <2.0)
 
 
 Changelog for 1.12 Series

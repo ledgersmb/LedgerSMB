@@ -33,25 +33,27 @@ associated.
 =cut
 
 sub create_workflow($self, $wf) {
-    my $rv = $self->SUPER::create_workflow( $wf );
-    my $dbh = $self->handle;
-    my $sth = $dbh->prepare(
+    my $wf_id = $self->SUPER::create_workflow( $wf );
+    my $dbh   = $self->handle;
+    my $sth   = $dbh->prepare(
         q|select reconciliation__new_report(?,?,?,?,?)|
         ) or die $dbh->errstr;
 
-    $sth->execute(
-        $wf->context->param( 'account_id' ),
-        $wf->context->param( 'ending_balance' ),
-        $wf->context->param( 'end_date' ),
-        $wf->context->param( 'recon_fx' ),
-        $wf->id,
-        )
+    my @args = (
+        $wf->context->param( 'account_id' ) // undef,
+        $wf->context->param( 'ending_balance' ) // undef,
+        $wf->context->param( 'end_date' ) // undef,
+        $wf->context->param( 'recon_fx' ) // undef,
+        $wf_id,
+        );
+
+    $sth->execute(@args)
         or die $sth->errstr;
 
     my ($id) = $sth->fetchrow_array;
     $wf->context->param( 'id', $id );
 
-    return $rv;
+    return $wf_id;
 }
 
 =head2 update_workflow
