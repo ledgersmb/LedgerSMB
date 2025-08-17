@@ -66,7 +66,7 @@ export class LsmbFile extends HTMLElement {
         }
     }
 
-    _connectedCallback() {
+    connectedCallback() {
         let options = `type="file" id="${escHTML(this.elmId)}"`;
         let label = "";
         if (this.hasAttribute("name")) {
