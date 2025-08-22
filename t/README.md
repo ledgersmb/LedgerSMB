@@ -19,7 +19,7 @@ To run the '66' tests, the following works with the right `PostgreSQL`,
 ```
 
 Note that the '66' tests may be run at a much smaller granularity
-as documented in the [specific `README` file](66-cucumber/README.md).
+as documented in the [specific `README` file](../xt/66-cucumber/README.md).
 
 # Test summary
 
