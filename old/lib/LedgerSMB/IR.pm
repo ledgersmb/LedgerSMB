@@ -594,12 +594,14 @@ sub retrieve_invoice {
                        WHERE ac.trans_id = ?|);
         $tax_sth->execute($form->{id});
         my $reverse = $form->{reverse} ? -1 : 1;
+        my $taxtotal = LedgerSMB::PGNumber->new(0);
         while (my $taxref = $tax_sth->fetchrow_hashref('NAME_lc')){
               $form->db_parse_numeric(sth=>$tax_sth,hashref=>$taxref);
               $form->{manual_tax} = 1;
               my $taccno = $taxref->{accno};
               $form->{"mt_amount_$taccno"} =
                   LedgerSMB::PGNumber->new($taxref->{amount} * -1 * $reverse);
+              $taxtotal = $taxtotal + $form->{"mt_amount_$taccno"};
               $form->{"mt_rate_$taccno"}  = $taxref->{rate};
               $form->{"mt_basis_$taccno"} =
                   LedgerSMB::PGNumber->new($taxref->{tax_basis} * -1 * $reverse);
@@ -607,6 +609,7 @@ sub retrieve_invoice {
               $form->{"mt_ref_$taccno"}  = $taxref->{source};
         }
     }
+    $form->{inv_tax_total} = $taxtotal;
 
     my $setting = LedgerSMB::Setting->new(%$form);
     $form->{$_} = $setting->get($_)
