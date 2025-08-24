@@ -329,7 +329,13 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
       [%  colspan = column_count - 2 # We will use this later on totals -%]
       <tr class="listsubtotal">
         <th colspan="[% colspan -%]" align="right">[% text('Subtotal') -%]</th>
-        <th colspan="2">[% topay_subtotal -%]&nbsp;[% curr.value -%]</th>
+      [%- IF defaultcurrency.text != curr.value -%]
+        <th colspan="2">[% topayfx_subtotal -%]&nbsp;[% curr.value -%]</th>
+      </tr>
+      <tr class="listsubtotal">
+        <th colspan="[% colspan -%]" align="right"></th>
+      [%- END; # IF -%]
+        <th colspan="2">[% topay_subtotal -%]&nbsp;[% defaultcurrency.text -%]</th>
       </tr>
     </table>
 
@@ -473,12 +479,24 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
    </tr>
    <tr class="listsubtotal">
    <th colspan="5" align="right">[% text('Subtotal') -%]</th>
-   <th colspan="2">[% overpayment_subtotal -%]&nbsp;[% curr.value -%]</th>
+   [%- IF defaultcurrency.text != curr.value -%]
+   <th colspan="2">[% overpaymentfx_subtotal -%]&nbsp;[% curr.value -%]</th>
+   </tr>
+   <tr class="listsubtotal">
+   <th colspan="5" align="right"></th>
+   [%- END; # IF -%]
+   <th colspan="2">[% overpayment_subtotal -%]&nbsp;[% defaultcurrency.text -%]</th>
    </tr>
    <!-- this bit is repeated in the ELSE section too -->
    <tr class="listtotal">
    <th colspan="5" align="right">[% text('Total') -%]</th>
-   <th colspan="2">[% payment_total -%]&nbsp;[% curr.value -%]</th>
+   [%- IF defaultcurrency.text != curr.value -%]
+   <th colspan="2">[% paymentfx_total -%]&nbsp;[% curr.value -%]</th>
+   </tr>
+   <tr class="listtotal">
+   <th colspan="5" align="right"></th>
+   [%- END; # IF -%]
+   <th colspan="2">[% payment_total -%]&nbsp;[% defaultcurrency.text -%]</th>
    </tr>
    </table>
 

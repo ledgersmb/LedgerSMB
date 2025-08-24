@@ -1198,10 +1198,15 @@ sub payment2 {
             value => $request->{curr}, },
         column_headers => \@column_headers,
         rows        =>  \@invoice_data,
-        topay_subtotal => $request->format_amount(
+        topayfx_subtotal => $request->format_amount(
             LedgerSMB::PGNumber->new(
                 (sum map {$request->parse_amount($_->{topay_fx}->{value} // 0)} @invoice_data) // 0
             ),
+            money => 1),
+        topay_subtotal => $request->format_amount(
+            LedgerSMB::PGNumber->new(
+                (sum map {$request->parse_amount($_->{topay_fx}->{value} // 0)} @invoice_data) // 0
+            ) / ($request->{exrate} // 1),
             money => 1),
         topay_state   => \@topay_state,
         vendorcustomer => {
@@ -1225,9 +1230,22 @@ sub payment2 {
         notes => $request->{notes},
         overpayment         => \@overpayment,
         overpayment_account => \@overpayment_account,
+        overpaymentfx_subtotal => $request->format_amount(
+            LedgerSMB::PGNumber->new(
+                (sum map {$request->parse_amount($_->{amount} // 0)} @overpayment)
+                + $request->parse_amount(0) # never end up with undef
+            ),
+            money => 1),
         overpayment_subtotal => $request->format_amount(
             LedgerSMB::PGNumber->new(
                 (sum map {$request->parse_amount($_->{amount} // 0)} @overpayment)
+                + $request->parse_amount(0) # never end up with undef
+            ) / ($request->{exrate} // 1),
+            money => 1),
+        paymentfx_total => $request->format_amount(
+            LedgerSMB::PGNumber->new(
+                (sum map {$request->parse_amount($_->{amount} // 0)} @overpayment)
+                + (sum map {$request->parse_amount($_->{topay_fx}->{value}  // 0)} @invoice_data)
                 + $request->parse_amount(0) # never end up with undef
             ),
             money => 1),
@@ -1236,7 +1254,7 @@ sub payment2 {
                 (sum map {$request->parse_amount($_->{amount} // 0)} @overpayment)
                 + (sum map {$request->parse_amount($_->{topay_fx}->{value}  // 0)} @invoice_data)
                 + $request->parse_amount(0) # never end up with undef
-            ),
+            ) / ($request->{exrate} // 1),
             money => 1),
     };
 
