@@ -180,6 +180,8 @@ sub header_lines {
              text  => $self->Text('From Date')},
             {value => $self->date_to,
              text  => $self->Text('To Date') },
+            {value => $self->account_name,
+             text  => $self->Text('Account') },
             {value => $self->balance_from,
              text  => $self->Text('From Amount')},
             {value => $self->balance_to,
@@ -196,6 +198,25 @@ sub header_lines {
 sub name {
     my ($self) = @_;
     return $self->Text('Reconciliation Reports');
+}
+
+=head2 account_name
+
+=cut
+
+sub account_name {
+    my ($self) = @_;
+
+    my $sth = $self->dbh->prepare('select accno, description from account where id = ?')
+        or die $self->dbh->errstr;
+    $sth->execute( $self->account_id )
+        or die $sth->errstr;
+    my ($accno, $desc) = $sth->fetchrow_array;
+
+    $accno //= '';
+    $desc //= '';
+
+    return "$accno - $desc";
 }
 
 =head1 METHODS
