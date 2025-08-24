@@ -259,11 +259,11 @@ sub post {
     my $id = $self->{id} // '';
     my $batch_class_id = $self->{batch_class_id} // '';
     $log->info("Deleting batch $id of class $batch_class_id");
-    if (not ($batch_class_id ne ''
-             and ($batch_class_id == BC_PAYMENT
-                  or $batch_class_id == BC_PAYMENT_REVERSAL
-                  or $batch_class_id == BC_RECEIPT
-                  or $batch_class_id == BC_RECEIPT_REVERSAL))) {
+    if ($batch_class_id
+        and not ($batch_class_id == BC_PAYMENT
+                 or $batch_class_id == BC_PAYMENT_REVERSAL
+                 or $batch_class_id == BC_RECEIPT
+                 or $batch_class_id == BC_RECEIPT_REVERSAL)) {
         # payments and receipts (and reversals) are part of a transaction
         # which may already have been approved, meaning that 'batch-approve'
         # isn't available...
