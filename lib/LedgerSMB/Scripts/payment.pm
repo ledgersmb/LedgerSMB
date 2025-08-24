@@ -766,7 +766,7 @@ sub payment {
             name  => 'account_class',
             value => $dbPayment->{account_class}
         },
-        type => {
+        paymenttype => {
             name  => 'type',
             value => $request->{type}
         },
