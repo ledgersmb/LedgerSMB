@@ -128,6 +128,7 @@ $data = {
 };
 $batch = LedgerSMB::Batch->new(%$data);
 isa_ok($batch, ['LedgerSMB::Batch'], 'instantiated object');
+$batch->get;
 $result = $batch->post;
 like($result, qr/^\d{4}-\d{2}-\d{2}$/, 'batch posting returns a date');
 

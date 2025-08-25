@@ -291,6 +291,7 @@ sub single_batch_approve {
     delete $request->{language}; # only applicable for printing of batches
     if ($request->close_form){
         my $batch = LedgerSMB::Batch->new(%$request);
+        $batch->get;
         $batch->post;
         return list_batches($request);
     } else {

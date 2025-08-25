@@ -69,7 +69,8 @@ foreach my $batch_data(@test_batches) {
         $batch = LedgerSMB::Batch->new(
             dbh => $dbh,
             batch_id => $batch_id,
-        );
+            );
+        $batch->get;
         $batch->post or die 'Failed to post/approve test batch';
     }
 }
