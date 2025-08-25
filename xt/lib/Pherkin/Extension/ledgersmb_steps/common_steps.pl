@@ -411,7 +411,9 @@ Given qr/(a batch|batches) with these properties:$/, sub {
                 dbh => S->{ext_lsmb}->admin_dbh,
                 batch_id => $batch_id,
             };
-            LedgerSMB::Batch->new(%$data)->post;
+            my $batch = LedgerSMB::Batch->new(%$data);
+            $batch->get;
+            $batch->post;
         }
     }
 };
