@@ -268,11 +268,13 @@ CREATE OR REPLACE FUNCTION account__obtain_balance
 RETURNS numeric AS
 $$
 WITH cp AS (
-  SELECT amount_bc, end_date, account_id
+  SELECT sum(amount_bc) as amount_bc, end_date, account_id
     FROM account_checkpoint
    WHERE account_id = in_account_id
-     AND end_date <= in_transdate
-ORDER BY end_date DESC LIMIT 1
+     AND end_date = (select max(end_date)
+                       from account_checkpoint
+                      where end_date <= in_transdate)
+   GROUP BY end_date, account_id
 ),
 ac AS (
   SELECT acc_trans.amount_bc
