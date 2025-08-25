@@ -389,6 +389,18 @@ sub _exclude_from_totals {
     return {};
 }
 
+=head2 _exclude_row_from_totals( $row )
+
+Returns true when the row needs to be excluded from
+the calculated totals; C<$row> is a hashref to the column data.
+
+The default implementation returns C<false>.
+
+=cut
+
+sub _exclude_row_from_totals {
+    return '';
+}
 
 =head2 render(renderer => \&renderer($template_name, $report, $vars, $clean_vars) )
 
@@ -552,15 +564,17 @@ sub _render {
                 };
             }
 
-            for my $k (keys %$r){
-                next if $exclude->{$k};
+            unless ($self->_exclude_row_from_totals( $r )) {
+                for my $k (keys %$r){
+                    next if $exclude->{$k};
 
-                if ($r->{$k} isa 'LedgerSMB::PGNumber' ){
-                    $total_row->{$k} //= LedgerSMB::PGNumber->bzero;
-                    $total_row->{$k}->badd($r->{$k});
-                    if ($subtotal) {
-                        $subtotal->{$k} //= LedgerSMB::PGNumber->bzero;
-                        $subtotal->{$k}->badd($r->{$k});
+                    if ($r->{$k} isa 'LedgerSMB::PGNumber' ){
+                        $total_row->{$k} //= LedgerSMB::PGNumber->bzero;
+                        $total_row->{$k}->badd($r->{$k});
+                        if ($subtotal) {
+                            $subtotal->{$k} //= LedgerSMB::PGNumber->bzero;
+                            $subtotal->{$k}->badd($r->{$k});
+                        }
                     }
                 }
             }

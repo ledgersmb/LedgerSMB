@@ -340,6 +340,11 @@ sub _exclude_from_totals {
     return {running_balance => 1};
 }
 
+sub _exclude_row_from_totals {
+    my ($self, $row) = @_;
+    return (not defined $row or not defined $row->{id});
+}
+
 sub run_report{
     my ($self) = @_;
     my $accno = $self->accno;
@@ -392,13 +397,38 @@ sub run_report{
     if (defined $self->accno && @rows){
        my $first_row = $rows[0];
        my $last_row = $rows[$#rows];
+
+       my $starting_balance =
+           $first_row->{running_balance} - $first_row->{amount};
+       my @starting_debcred;
+       if ($starting_balance < 0) {
+           @starting_debcred = (debits => -$starting_balance);
+       }
+       elsif ($starting_balance > 0) {
+           @starting_debcred = (credits => $starting_balance);
+       }
        unshift(@rows, {
-          description => 'Starting Balance',
-          running_balance => $first_row->{running_balance} - $first_row->{amount}
+           html_class => 'listsubtotal',
+           NOINPUT => 1,
+           description => $self->Text('Starting Balance'),
+           running_balance => $first_row->{running_balance} - $first_row->{amount},
+           @starting_debcred
        });
+
+       my $ending_balance = $last_row->{running_balance};
+       my @ending_debcred;
+       if ($ending_balance < 0) {
+           @ending_debcred = (debits => -$ending_balance);
+       }
+       elsif ($ending_balance > 0) {
+           @ending_debcred = (credits => $ending_balance);
+       }
        push(@rows, {
-          description => 'Ending Balance',
-          running_balance => $last_row->{running_balance}
+           html_class => 'listsubtotal',
+           NOINPUT => 1,
+           description => $self->Text('Ending Balance'),
+           running_balance => $last_row->{running_balance},
+           @ending_debcred
        });
     }
     return $self->rows(\@rows);
