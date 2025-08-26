@@ -10,6 +10,7 @@ account__is_used
 account__list_by_heading
 account__list_translations
 account__obtain_balance
+account__obtain_balance_by_currency
 account__obtain_starting_balance
 account__save
 account__save_tax
