@@ -262,6 +262,49 @@ SELECT CASE WHEN (SELECT count(*) > 0 from account_checkpoint
 
 $$;
 
+DROP TYPE IF EXISTS account__balance_by_currency CASCADE;
+CREATE TYPE account__balance_by_currency AS (
+  curr char(3),
+  amount_bc numeric,
+  amount_tc numeric
+);
+
+CREATE OR REPLACE FUNCTION account__obtain_balance_by_currency(
+  in_transdate date,
+  in_account_id int
+) RETURNS setof account__balance_by_currency AS
+$$
+WITH cp AS (
+  SELECT amount_bc, amount_tc, curr
+    FROM account_checkpoint
+   WHERE account_id = in_account_id
+     AND end_date = (select max(end_date)
+                       from account_checkpoint
+                      where end_date <= in_transdate)
+),
+ac AS (
+  SELECT sum(acc.amount_bc), sum(acc.amount_tc), curr
+    FROM acc_trans acc
+    JOIN (select id from transactions where approved) txn
+        ON acc.trans_id = txn.id
+   WHERE transdate <= in_transdate
+     AND transdate > coalesce((select max(end_date)
+                                 from account_checkpoint),
+                              (select min(transdate) - '1 day'::interval
+                                 from acc_trans))
+     AND acc.chart_id = in_account_id
+   GROUP BY curr
+)
+  SELECT curr,
+         sum(amount_bc) as amount_bc,
+         sum(amount_tc) as amount_tc
+    FROM (
+      SELECT * FROM cp
+       UNION ALL
+      SELECT * FROM ac
+    ) x
+  GROUP BY curr;
+$$ language sql;
 
 CREATE OR REPLACE FUNCTION account__obtain_balance
 (in_transdate date, in_account_id int)
