@@ -43,7 +43,10 @@ find . \
   utils/devel/extract-perl >> locale/LedgerSMB.pot
 
 find UI/ templates/ t/data/ \
-     -name '*.html' -o -name '*.tex' -o -name '*.csv' | \
+     -path UI/node_modules -prune \
+     -o -name '*.html' \
+     -o -name '*.tex' \
+     -o -name '*.csv' | \
    grep -v 'UI/\(js\|pod\)/' | sort | \
    utils/devel/extract-template-translations >> locale/LedgerSMB.pot
 
