@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.2
-   Date:     2023-02-02
+   Version:  1.3
+   Date:     2025-08-02
    File:     balance_sheet.tex
    Set:      demo
 
@@ -11,21 +11,14 @@ releases. No explicit versioning was applied before 2021-01-04.
 Version   Changes
 1.1       Merged xelatex targetting templates with those targetting pdflatex
 1.2       Fixed company address not showing
+1.3       Simplify indentation calculations; as of 1.13, many pre-calculated
+          values are provided as variables
 
 -?>
 <?lsmb FILTER latex { format="$FORMAT($PROCESSOR)" } -?>
 
 <?lsmb
-  IF hierarchy == 'flat-hierarchy';
-    max_path_depth = 1;
-  ELSE;
-    max_path_depth = 0;
-    FOREACH row IN report.sorted_row_ids ;
-       IF max_path_depth < report.rheads.ids.$row.path.size ;
-          max_path_depth = report.rheads.ids.$row.path.size ;
-       END;
-    END;
-  END;
+  max_path_depth = report.rheads.max_path_depth;
   last_col_no = max_path_depth + 1 + report.sorted_col_ids.size;
   IF report.legacy_hierarchy ;
      hierarchy = 'flat-hierarchy';
@@ -54,11 +47,10 @@ Version   Changes
 \end{center}
 
 
-\begin{longtable}{@{\extracolsep{10pt}}<?lsmb i = 1; WHILE i <= max_path_depth ; 'l'; i = i + 1; END;
--?>p{2cm}<?lsmb
- FOREACH c IN report.sorted_col_ids; 'r'; END -?>}
+\begin{longtable}{@{\extracolsep{10pt}}<?lsmb l = 'l'; l.repeat(max_path_depth) -?>p{2cm}<?lsmb
+ l = 'r'; l.repeat(report.sorted_col_ids.size); -?>}
 \\
-\multicolumn{<?lsmb max_path_depth + 1 ?>}{l}{}
+\multicolumn{<?lsmb max_path_depth ?>}{l}{} &%
 <?lsmb
  FOREACH col IN report.sorted_col_ids;
      ' & \shortstack{';
@@ -68,44 +60,28 @@ Version   Changes
  ?> \\
 \\
 <?lsmb FOREACH row IN report.sorted_row_ids;
-  IF report.rheads.ids.$row.props.section_for ;
-    row_id = report.rheads.ids.$row.props.section_for ;
+  row_data = report.rheads.ids.$row;
+  path_depth = row_data.path_depth;
+  path_prefix_len = row_data.path_prefix_len;
+  path_suffix_len = row_data.path_suffix_len;
+  IF row_data.props.section_for ;
+    row_id = row_data.props.section_for ;
     IF report.rheads.ids.$row_id.props.account_category == 'QL';
       NEXT;
     END;
   END;
 
-   IF hierarchy == 'flat-hierarchy';
-     path_depth = 1;
-   ELSE;
-     path_depth = report.rheads.ids.$row.path.size;
-   END;
-   path_prefix_len = path_depth - 1;
-   path_suffix_len = max_path_depth - path_prefix_len;
-
-   IF report.incl_accnos && report.rheads.ids.$row.props.account_number;
-     desc = report.rheads.ids.$row.props.account_number _ ' - ' _ report.rheads.ids.$row.props.account_description;
-   ELSE;
-     desc = report.rheads.ids.$row.props.account_description;
-   END;
-
+  desc = row_data.props.row_description;
   IF report.rheads.ids.$row.props.account_type != 'A';
     IF NOT report.rheads.ids.$row.props.section_for ;
       '\cline{' _ path_depth _ '-' _ last_col_no _ '} ';
     ELSE;
-      row_id = report.rheads.ids.$row.props.section_for ;
-      desc = '\Large{' _ report.rheads.ids.$row_id.props.account_description _ '}';
+      desc = '\Large{' _ row_data.props.row_description _ '}';
     END;
     desc = '\textbf{\emph{' _ desc _ '}}';
   END;
 -?>%
-<?lsmb
-   j = 0;
-   WHILE j < path_prefix_len ;
-    '& ';
-    j = j + 1;
-   END;
--?>
+<?lsmb amp = '& '; amp.repeat(path_prefix_len); -?>
 <?lsmb IF path_suffix_len > 1 -?>
 \multicolumn{<?lsmb path_suffix_len ?>}{l}{<?lsmb desc ?>}%
 <?lsmb ELSE; ?>
@@ -119,8 +95,8 @@ END; -?>
 %
 \\
 %
-<?lsmb IF report.rheads.ids.$row.props.account_type != 'A'; -?>
-  <?lsmb IF report.rheads.ids.$row.props.section_for; -?>
+<?lsmb IF row_data.props.account_type != 'A'; -?>
+  <?lsmb IF row_data.props.section_for; -?>
 \cline{<?lsmb path_depth ?>-<?lsmb last_col_no ?>}
 \noalign{\vskip 2pt}
 \cline{<?lsmb path_depth ?>-<?lsmb last_col_no ?>}

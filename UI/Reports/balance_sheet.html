@@ -1,17 +1,12 @@
 [%
 
 FORMATS = LIST_FORMATS();
-DRILLBASE = 'journal.pl?sort=transdate&amp;&amp;category=X'
+DRILLBASE = 'journal.pl?sort=transdate&amp;category=X'
        _ '&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y'
        _ '&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y'
        _ '&amp;col_accno=Y&amp;__action=search&amp;col_running_balance=Y';
 
-max_path_depth = 0;
-FOREACH row IN report.sorted_row_ids ;
-   IF max_path_depth < report.rheads.ids.$row.path.size ;
-     max_path_depth = report.rheads.ids.$row.path.size;
-   END;
-END;
+max_path_depth = report.rheads.max_path_depth;
 IF report.legacy_hierarchy ;
    hierarchy = 'flat-hierarchy';
 ELSE ;
@@ -36,38 +31,41 @@ END ;
 </colgroup>
 <colgroup class="values">
 [% i = 1;
-   WHILE i <= report.cheads.ids.keys.size;
+   WHILE i <= report.cheads.ids.size;
      '  <col class="values' _ i _ '" />';
      i = i + 1;
    END;
 %]
 </colgroup>
-  <tbody>
+  <thead>
     <tr class="report-head">
       <th colspan="[% max_path_depth %]"> </th>
       [% FOREACH col IN report.sorted_col_ids -%]
       <th>[% report.cheads.ids.$col.props.description %]</th>
       [% END -%]
     </tr>
+  </thead>
+  <tbody>
 [% FOREACH row IN report.sorted_row_ids ;
-   path_depth = report.rheads.ids.$row.path.size;
-   path_prefix_len = path_depth - 1;
-   path_suffix_len = max_path_depth - path_prefix_len;
-   IF report.rheads.ids.$row.props.account_type == 'H' ;
-     class = 'class="heading' _ path_depth _ ' ' _ report.rheads.ids.$row.props.account_type _ '"';
-     clazz = "heading" _ path_depth _ ' ' _ report.rheads.ids.$row.props.account_type;
-   ELSIF report.rheads.ids.$row.props.section_for ;
-     row_id = report.rheads.ids.$row.props.section_for ;
-     class = 'class="section' _ path_depth _ ' ' _ report.rheads.ids.$row_id.props.account_category _ '"';
-     clazz = "section" _ path_depth _ ' ' _ report.rheads.ids.$row_id.props.account_category;
+   row_data = report.rheads.ids.$row;
+   path_depth = row_data.path_depth;
+   path_prefix_len = row_data.path_prefix_len;
+   path_suffix_len = row_data.path_suffix_len;
+   IF row_data.props.account_type == 'H' ;
+     class = 'class="heading' _ path_depth _ ' ' _ row_data.props.account_type _ '"';
+     clazz = "heading" _ path_depth _ ' ' _ row_data.props.account_type;
+   ELSIF row_data.props.section_for ;
+     row_id = row_data.props.section_for ;
+     class = 'class="section' _ path_depth _ ' ' _ row_data.props.account_category _ '"';
+     clazz = "section" _ path_depth _ ' ' _ row_data.props.account_category;
    ELSE;
      class = 'class="account"';
      clazz = 'account';
    END;
  %]
-<tr [% class; IF report.rheads.ids.$row.props.account_number;
+<tr [% class; IF row_data.props.account_number;
                      ' data-lsmb-account="';
-                     report.rheads.ids.$row.props.account_number;
+                     row_data.props.account_number;
                      '"';
               END %]>
   [% IF report.legacy_hierarchy %]
@@ -75,26 +73,19 @@ END ;
     <th colspan="[% path_prefix_len %]" class="indent">&nbsp;</th>
     [% END %]
   [% ELSE %]
-    [%
-      colspan = 0;
-      WHILE colspan < path_prefix_len;
-        colspan = colspan + 1;
-    -%]
+    [% FILTER repeat(path_prefix_len) -%]
         <th class="indent">&nbsp;</th>
     [%- END -%]
   [% END %]
   <th colspan="[% path_suffix_len %]" [% class %]>
-[% IF report.rheads.ids.$row.props.section_for ;
-  head_id = report.rheads.ids.$row.props.section_for;
-  report.rheads.ids.$head_id.props.account_description; %]
-</th><th colspan="[% report.cheads.ids.keys.size %]" [% class %]>
+[% IF row_data.props.section_for ;
+  row_data.props.row_description %]
+</th><th colspan="[% report.cheads.ids.size %]" [% class %]>
 [% ELSE -%]
-[% IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -%]
-[% report.rheads.ids.$row.props.account_number %]&nbsp;-&nbsp;[% END; -%]
-[% report.rheads.ids.$row.props.account_description %]</th>
+[% row_data.props.row_description %]</th>
 [% FOREACH col IN report.sorted_col_ids -%]
   <td class="amount [% clazz %]"><a href="[%
- DRILLBASE _ '&amp;accno=' _ report.rheads.ids.$row.props.account_number
+ DRILLBASE _ '&amp;accno=' _ row_data.props.account_number
            _ '&amp;to_date=' _ report.cheads.ids.$col.props.to_date %]">[% report.cells.$row.$col %]</a></td>[% END %]
 [% END %]
 </tr>

@@ -20,6 +20,7 @@ use namespace::autoclean;
 extends 'LedgerSMB::Report';
 
 use Scalar::Util 'blessed';
+use List::Util 'max';
 
 use LedgerSMB::Report::Axis;
 
@@ -229,6 +230,35 @@ before '_render' => sub {
 
     $self->sorted_row_ids($self->rheads->sort);
     $self->sorted_col_ids($self->cheads->sort);
+    $_->{path_depth} = scalar($_->{path}->@*) for values  $self->rheads->ids->%*;
+    $_->{path_depth} = scalar($_->{path}->@*) for values  $self->cheads->ids->%*;
+    my $row_max_depth =
+        $self->rheads->{max_path_depth} =
+        max map { $_->{path_depth} } values $self->rheads->ids->%*;
+    my $col_max_depth =
+        $self->cheads->{max_path_depth} =
+        max map { $_->{path_depth} } values $self->cheads->ids->%*;
+
+    $_->{path_prefix_len} = $_->{path_depth} - 1
+        for values  $self->rheads->ids->%*;
+    $_->{path_prefix_len} = $_->{path_depth} - 1
+        for values  $self->cheads->ids->%*;
+    $_->{path_suffix_len} = $row_max_depth - $_->{path_prefix_len}
+        for values  $self->rheads->ids->%*;
+    $_->{path_suffix_len} = $col_max_depth - $_->{path_prefix_len}
+        for values  $self->cheads->ids->%*;
+
+    for (map { $_->{props} } values $self->rheads->ids->%*) {
+        if ($_->{section_for}) {
+            $_->{row_description} =
+                $self->rheads->ids->{$_->{section_for}}->{props}->{account_number};
+        }
+        else {
+            $_->{row_description} = ($self->incl_accnos && $_->{account_number})
+                ? "$_->{account_number} - $_->{account_description}"
+                : $_->{account_description};
+        }
+    }
 
     for my $row_id (@{$self->sorted_row_ids}) {
         next if $self->rheads->id_props($row_id)->{section_for};
