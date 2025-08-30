@@ -250,8 +250,8 @@ before '_render' => sub {
 
     for (map { $_->{props} } values $self->rheads->ids->%*) {
         if ($_->{section_for}) {
-            $_->{row_description} =
-                $self->rheads->ids->{$_->{section_for}}->{props}->{account_number};
+            $_->{heading_props} = $self->rheads->ids->{$_->{section_for}}->{props};
+            $_->{row_description} = $_->{heading_props}->{account_number};
         }
         else {
             $_->{row_description} = ($self->incl_accnos && $_->{account_number})

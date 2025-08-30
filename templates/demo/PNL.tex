@@ -63,8 +63,7 @@ Version   Changes
   path_prefix_len = row_data.path_prefix_len;
   path_suffix_len = row_data.path_suffix_len;
    IF row_data.props.section_for;
-     row_id = row_data.props.section_for;
-     IF row_data_id.props.account_category == 'Q';
+     IF row_data.heading_props.account_category == 'Q';
        NEXT;
      END;
    END;
