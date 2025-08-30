@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  2.0
-   Date:     2023-11-17
+   Version:  2.1
+   Date:     2025-08-30
    File:     balance_sheet.html
    Set:      demo
 
@@ -10,6 +10,7 @@ releases. No explicit versioning was applied before 2021-01-04.
 
 Version   Changes
 2.0       Created clickable section heads to collapse parts of hierarchical reports
+2.1       Simplify indentation calculations; many values are provided as variables as-of 1.13
 
 -?>
 <!DOCTYPE html>
@@ -283,12 +284,7 @@ th {
       }
   </script></head><?lsmb
 
-max_path_depth = 0;
-FOREACH row IN report.sorted_row_ids ;
-   IF max_path_depth < report.rheads.ids.$row.path.size ;
-     max_path_depth = report.rheads.ids.$row.path.size;
-   END;
-END;
+max_path_depth = report.rheads.max_path_depth;
 IF report.legacy_hierarchy ;
    hierarchy = 'flat-hierarchy';
 ELSE ;
@@ -317,57 +313,56 @@ END ;
       </colgroup>
       <colgroup class="values">
         <?lsmb i = 1;
-        WHILE i <= report.cheads.ids.keys.size;
+        WHILE i <= report.cheads.ids.size;
         '  <col class="values' _ i _ '" />';
         i = i + 1;
         END;
         ?>
       </colgroup>
-      <tbody>
+      <thead>
         <tr class="report-head">
           <th colspan="<?lsmb max_path_depth ?>">
           </th><?lsmb FOREACH col IN report.sorted_col_ids -?>
           <th><?lsmb report.cheads.ids.$col.props.description ?></th><?lsmb END -?>
-        </tr><?lsmb FOREACH row IN report.sorted_row_ids ;
-        path_depth = report.rheads.ids.$row.path.size;
-        path_prefix_len = path_depth - 1;
-        path_suffix_len = max_path_depth - path_prefix_len;
-        IF report.rheads.ids.$row.props.account_type == 'H' ;
-        class = 'class="heading' _ path_depth _ ' ' _ report.rheads.ids.$row.props.account_type _ '"';
-        clazz = "heading" _ path_depth _ ' ' _ report.rheads.ids.$row.props.account_type;
-        row_type = 'H';
-        ELSIF report.rheads.ids.$row.props.section_for ;
-        row_id = report.rheads.ids.$row.props.section_for ;
-        class = 'class="section' _ path_depth _ ' ' _ report.rheads.ids.$row_id.props.account_category _ '"';
-        clazz = "section" _ path_depth _ ' ' _ report.rheads.ids.$row_id.props.account_category;
-        row_type = 'H';
+        </tr>
+      </thead>
+      <tbody>
+        <?lsmb FOREACH row IN report.sorted_row_ids ;
+        row_data = report.rheads.ids.$row;
+        path_depth = row_data.path_depth;
+        path_prefix_len = row_data.path_prefix_len;
+        path_suffix_len = row_data.path_suffix_len;
+        IF row_data.props.account_type == 'H' ;
+          class = 'class="heading' _ path_depth _ ' ' _ row_data.props.account_type _ '"';
+          clazz = "heading" _ path_depth _ ' ' _ row_data.props.account_type;
+          row_type = 'H';
+        ELSIF row_data.props.section_for ;
+          row_id = row_data.props.section_for ;
+          class = 'class="section' _ path_depth _ ' ' _ row_data_id.props.account_category _ '"';
+          clazz = "section" _ path_depth _ ' ' _ row_data_id.props.account_category;
+          row_type = 'H';
         ELSE;
-        class = 'class="account"';
-        clazz = 'account';
-        row_type = 'A';
+          class = 'class="account"';
+          clazz = 'account';
+          row_type = 'A';
         END;
         ?>
-        <tr class="<?lsmb FOREACH sec IN report.rheads.ids.$row.path ; IF NOT loop.last(); " sub-" _ sec ; END; END; ?>" <?lsmb IF row_type == 'H' ; ?>  onclick="toggle('', 'sub-<?lsmb report.rheads.ids.$row.path.last ?>')" <?lsmb END ?> >
+        <tr class="<?lsmb FOREACH sec IN row_data.path ; IF NOT loop.last(); " sub-" _ sec ; END; END; ?>" <?lsmb IF row_type == 'H' ; ?>  onclick="toggle('', 'sub-<?lsmb row_data.path.last ?>')" <?lsmb END ?> >
           <?lsmb IF report.legacy_hierarchy ?>
             <?lsmb IF path_prefix_len > 0 ?>
             <th colspan="<?lsmb path_prefix_len ?>" class="indent">&nbsp;</th>
             <?lsmb END ?>
           <?lsmb ELSE ?>
-            <?lsmb
-              colspan = 0;
-              WHILE colspan < path_prefix_len;
-                colspan = colspan + 1;
-            -?>
+            <?lsmb FILTER repeat(path_prefix_len) -?>
             <th class="indent">&nbsp;</th>
             <?lsmb- END -?>
           <?lsmb END ?>
           <th colspan="<?lsmb path_suffix_len ?>" <?lsmb class ?>>
-          <?lsmb IF report.rheads.ids.$row.props.section_for ;
-          head_id = report.rheads.ids.$row.props.section_for;
-          report.rheads.ids.$head_id.props.account_description; ?></th>
-          <th colspan="<?lsmb report.cheads.ids.keys.size ?>" <?lsmb class ?>>
-          <?lsmb ELSE -?><?lsmb IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -?><?lsmb report.rheads.ids.$row.props.account_number ?>&nbsp;-&nbsp;<?lsmb END; -?>
-          <?lsmb report.rheads.ids.$row.props.account_description ?></th><?lsmb FOREACH col IN report.sorted_col_ids -?>
+          <?lsmb IF row_data.props.section_for ;
+          row_data.props.row_description ?></th>
+          <th colspan="<?lsmb report.cheads.ids.size ?>" <?lsmb class ?>>
+          <?lsmb ELSE -?>
+          <?lsmb row_data.props.row_description ?></th><?lsmb FOREACH col IN report.sorted_col_ids -?>
           <td class="amount <?lsmb clazz ?>">
             <?lsmb report.cells.$row.$col ?>
           </td><?lsmb END ?><?lsmb END ?>

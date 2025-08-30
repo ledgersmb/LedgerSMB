@@ -329,6 +329,10 @@ body {
     min-height: 1em;
 }
 
+#PNL thead tr.report-head {
+    background-color: initial;
+}
+
 #PNL tr.sectionhead th {
     font-weight: bold;
     margin-top: 4em;
