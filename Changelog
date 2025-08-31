@@ -15,6 +15,9 @@ Added functionalities
   to handle dependencies than previous methods; see https://get.ledgersmb.org
 * Technical support for arbitrary attributes on parts and others (#8996)
 * Scheduled actions from upgrades; e.g. removal of migration artifacts (#8979)
+* GL Report improvements:
+  * Opening and closing balances split by FX in GL report (#9023)
+  * Opening and closing balances in GL report FX Debit/credit columns (#9018)
 
 Changed functionalities
 * Concurrent logins with different users on one browser throw an error (#8496)
@@ -28,6 +31,7 @@ Bugs fixed
 * Better referential integrity with more relational constraints (#8661, #8794)
 
 Cleanup & architecture improvements
+* Simplified balance sheet and income statement report templates (#9024, #9025)
 * Added several ADRs (architecture decision records) describing project direction
 * Encapsulation of Dojo widgets in custom (web) elements (#8874)
 * Deprecated 'ledgersmb.conf' configuration in favor of 'ledgersmb.yaml' (#8570)
