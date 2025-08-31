@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.3
-   Date:     2025-08-02
+   Version:  1.4
+   Date:     2025-08-31
    File:     balance_sheet.tex
    Set:      demo
 
@@ -13,13 +13,22 @@ Version   Changes
 1.2       Fixed company address not showing
 1.3       Simplify indentation calculations; as of 1.13, many pre-calculated
           values are provided as variables
+1.4       Support for sections in the column dimension (used for
+          foreign currency reports)
 
 -?>
 <?lsmb FILTER latex { format="$FORMAT($PROCESSOR)" } -?>
 
 <?lsmb
-  max_path_depth = report.rheads.max_path_depth;
-  last_col_no = max_path_depth + 1 + report.sorted_col_ids.size;
+  max_col_path_depth = report.cheads.max_path_depth;
+  max_row_path_depth = report.rheads.max_path_depth;
+  leaf_columns = 0;
+  FOREACH col IN report.sorted_col_ids ;
+    IF report.cheads.ids.$col.is_leaf ;
+      leaf_columns = leaf_columns + 1;
+    END;
+  END;
+  last_col_no = max_row_path_depth + 1 + leaf_columns;
   IF report.legacy_hierarchy ;
      hierarchy = 'flat-hierarchy';
   ELSE ;
@@ -30,6 +39,7 @@ Version   Changes
 
 \documentclass[10pt]{article}
 \usepackage{longtable}
+\usepackage{multirow}
 \usepackage[<?lsmb SETTINGS.papersize ?>paper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
 \begin{document}
 \renewcommand\baselinestretch{1.2}\selectfont
@@ -47,17 +57,28 @@ Version   Changes
 \end{center}
 
 
-\begin{longtable}{@{\extracolsep{10pt}}<?lsmb l = 'l'; l.repeat(max_path_depth) -?>p{2cm}<?lsmb
+\begin{longtable}{@{\extracolsep{10pt}}<?lsmb l = 'l'; l.repeat(max_row_path_depth) -?>p{2cm}<?lsmb
  l = 'r'; l.repeat(report.sorted_col_ids.size); -?>}
 \\
-\multicolumn{<?lsmb max_path_depth ?>}{l}{} &%
+<?lsmb head_level = 1;
+  WHILE head_level <= max_col_path_depth; ?>
+\multicolumn{<?lsmb max_row_path_depth ?>}{l}{} &%
 <?lsmb
  FOREACH col IN report.sorted_col_ids;
-     ' & \shortstack{';
+     IF report.cheads.ids.$col.props.section_for;
+        NEXT;
+     END;
+     IF head_level == report.cheads.ids.$col.path.size ;
+     ' & \multicolumn{'; report.cheads.ids.$col.leaves ; '}{l}{\multirow{'; report.cheads.ids.$col.is_leaf ? (max_col_path_depth - report.cheads.ids.$col.path.size + 1) : 1 ; '}{*}{\shortstack{';
      report.cheads.ids.$col.props.description ;
-     '} ';
+     '}}} ';
+     ELSIF head_level > report.cheads.ids.$col.path.size ;
+       ' & ';
+     END;
  END;
  ?> \\
+ <?lsmb head_level = head_level + 1;
+ END ?>
 \\
 <?lsmb FOREACH row IN report.sorted_row_ids;
   row_data = report.rheads.ids.$row;
@@ -89,7 +110,10 @@ Version   Changes
 %
 & %
 <?lsmb FOREACH col IN report.sorted_col_ids;
-  ' & '; report.cells.$row.$col;
+     IF report.cheads.ids.$col.props.section_for;
+        NEXT;
+     END;
+     ' & '; report.cells.$row.$col;
 END; -?>
 %
 \\

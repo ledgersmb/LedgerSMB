@@ -125,6 +125,37 @@ sub _new_elem {
     return $subtree->{$step};
 }
 
+=item classify_leaves
+
+Calculates the number of leaf subnodes on every level in the
+tree that constitutes the axis. It sets the C<is_leaf> indicator
+on leaf nodes and sets the C<leaves> key to the calculated value.
+
+=cut
+
+sub _classify_leaves {
+    my ($subtree) = @_;
+
+    if (not $subtree->{children}
+        or not $subtree->{children}->%*) {
+        $subtree->{leaves} = 1;
+        $subtree->{is_leaf} = 1;
+        return 1;
+    }
+
+    my $leaves = 0;
+    for my $child (values $subtree->{children}->%*) {
+        $leaves += _classify_leaves( $child );
+    }
+    return $subtree->{leaves} = $leaves;
+}
+
+sub classify_leaves {
+    my $self = shift;
+
+    _classify_leaves( $_ ) for (values $self->tree->%*);
+}
+
 =item sort
 
 Returns an array reference with axis IDs, alphabetically sorted

@@ -230,6 +230,8 @@ before '_render' => sub {
 
     $self->sorted_row_ids($self->rheads->sort);
     $self->sorted_col_ids($self->cheads->sort);
+    $self->cheads->classify_leaves($self->cheads);
+
     $_->{path_depth} = scalar($_->{path}->@*) for values  $self->rheads->ids->%*;
     $_->{path_depth} = scalar($_->{path}->@*) for values  $self->cheads->ids->%*;
     my $row_max_depth =
@@ -251,7 +253,7 @@ before '_render' => sub {
     for (map { $_->{props} } values $self->rheads->ids->%*) {
         if ($_->{section_for}) {
             $_->{heading_props} = $self->rheads->ids->{$_->{section_for}}->{props};
-            $_->{row_description} = $_->{heading_props}->{account_number};
+            $_->{row_description} = $_->{heading_props}->{account_description};
         }
         else {
             $_->{row_description} = ($self->incl_accnos && $_->{account_number})
