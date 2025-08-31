@@ -10,11 +10,7 @@ else
 	YARN_COMMAND=install
 endif
 
-ifeq ($(DIST_VER),travis)
-DIST_DEPS=cached_dojo dbdocs
-else
-DIST_DEPS=dojo dbdocs
-endif
+DIST_DEPS=js dbdocs
 
 ifeq ("$(wildcard /.dockerenv)","")
 ifneq ($(origin CONTAINER),undefined)
@@ -41,9 +37,7 @@ Help on using this Makefile
   The following make targets are available
     - help         : This help text
     - dist         : Builds the release distribution archive
-    - dojo         : Builds the minified dojo blob we serve to clients (legacy)
-    - js           : Builds the minified dojo blob we serve to clients
-    - devdojo      : Builds JS assets with Vue debugger enabled (legacy)
+    - js           : Builds the minified javascript blob we serve to clients
     - jsdev        : Builds JS assets with Vue debugger enabled
     - jslint       : Runs 'eslint' on the JS code (FIX=1 reformats)
     - dbdocs       : Builds the PDF, SVG and PNG schema documentation
@@ -72,14 +66,9 @@ export HELP
 help:
 	@echo "$$HELP"
 
-# make dojo
-#   builds dojo for production/release
+# make js
+#   builds js assets for production/release
 SHELL := /bin/bash
-HOMEDIR := ~/dojo_archive
-SHA := $(shell find UI/js-src/lsmb UI/node_modules/dojo UI/node_modules/dojo-webpack-plugin UI/node_modules/dijit package.json webpack.config.js -exec sha1sum {} + 2>&1 | sort | sha1sum | cut -d' ' -f 1)
-ARCHIVE := $(HOMEDIR)/UI_js_$(SHA).tar
-TEMP := $(HOMEDIR)/_UI_js_$(SHA).tar
-FLAG := $(HOMEDIR)/building_UI_js_$(SHA)
 
 dbdocs:
 	$(DOCKER_CMD) dot -Tsvg doc/database/ledgersmb.dot -o doc/database/ledgersmb.svg
@@ -87,12 +76,6 @@ dbdocs:
 
 js_deps_install:
 	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn $(YARN_COMMAND)'
-
-dojo: js_deps_install
-	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn run build'
-
-devdojo: js_deps_install
-	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn run build:dev'
 
 js: js_deps_install
 	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn run build'
@@ -112,23 +95,6 @@ endif
 
 readme: js_deps_install
 	$(DOCKER_CMD) $(SHELL) -c 'cd UI && yarn run readme'
-
-# TravisCI specific target -- need to find a way to get rid of it
-dojo_archive: dojo
-# TODO: Protect for concurrent invocations
-	mkdir -p $(HOMEDIR)
-	touch $(FLAG)
-	tar cf $(TEMP) UI/js
-	mv $(TEMP) $(ARCHIVE)
-	rm $(FLAG)
-
-# TravisCI specific target -- need to find a way to get rid of it
-cached_dojo:
-ifeq ($(wildcard $(ARCHIVE)),)
-	$(MAKE) dojo_archive
-endif
-	tar xf $(ARCHIVE)
-
 
 blacklist:
 	$(DOCKER_CMD) perl -Ilib -Iold/lib utils/devel/makeblacklist.pl --regenerate
