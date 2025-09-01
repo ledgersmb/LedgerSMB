@@ -1,7 +1,7 @@
 [main]
 host = https://www.transifex.com
 
-[o:ledgersmb:p:ledgersmb:r:LedgerSMB]
+[o:ledgersmb:p:ledgersmb:r:LedgerSMB-113]
 file_filter = locale/po/<lang>.po
 source_file = locale/LedgerSMB.pot
 source_lang = en
