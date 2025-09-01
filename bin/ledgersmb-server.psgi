@@ -131,8 +131,8 @@ LedgerSMB::Locale->initialize($wire);
 
 my $path = $INC{"LedgerSMB.pm"};
 my $version = $LedgerSMB::VERSION;
-die "Library verification failed (found $version from '$path', expected 1.13)"
-    unless $version =~ /^1\.13\./;
+die "Library verification failed (found $version from '$path', expected 1.14)"
+    unless $version =~ /^1\.14\./;
 
 Log::Log4perl::Layout::PatternLayout::add_global_cspec(
     'Z',

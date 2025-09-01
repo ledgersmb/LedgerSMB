@@ -4,6 +4,7 @@
     ],
     "baseBranchPatterns": [
         "master",
+        "1.13",
         "1.12",
         "1.11"
     ],
