@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  2.1
-   Date:     2025-08-30
+   Version:  2.2
+   Date:     2025-08-31
    File:     balance_sheet.html
    Set:      demo
 
@@ -11,6 +11,7 @@ releases. No explicit versioning was applied before 2021-01-04.
 Version   Changes
 2.0       Created clickable section heads to collapse parts of hierarchical reports
 2.1       Simplify indentation calculations; many values are provided as variables as-of 1.13
+2.2       Support sections in the column dimension (used for foreign currency reports)
 
 -?>
 <!DOCTYPE html>
@@ -129,6 +130,8 @@ Version   Changes
 
 #PNL th {
     padding-left: 5px;
+    text-align: left;
+    vertical-align: top;
 }
 
 #PNL table {
@@ -284,7 +287,8 @@ th {
       }
   </script></head><?lsmb
 
-max_path_depth = report.rheads.max_path_depth;
+max_col_path_depth = report.cheads.max_path_depth;
+max_row_path_depth = report.rheads.max_path_depth;
 IF report.legacy_hierarchy ;
    hierarchy = 'flat-hierarchy';
 ELSE ;
@@ -305,7 +309,7 @@ END ;
     <table class="balancesheet c1">
       <colgroup class="headings">
         <?lsmb i = 1;
-        WHILE i <= max_path_depth;
+        WHILE i <= max_row_path_depth;
         '  <col class="level' _ i _ '" />';
         i = i + 1;
         END;
@@ -313,18 +317,32 @@ END ;
       </colgroup>
       <colgroup class="values">
         <?lsmb i = 1;
-        WHILE i <= report.cheads.ids.size;
+        FOREACH col IN report.sorted_col_ids ;
+        IF  report.cheads.ids.$col.is_leaf;
+           NEXT;
+        END;
         '  <col class="values' _ i _ '" />';
         i = i + 1;
         END;
         ?>
       </colgroup>
       <thead>
+      <?lsmb head_level = 1;
+        WHILE head_level <= max_col_path_depth ; ?>
         <tr class="report-head">
-          <th colspan="<?lsmb max_path_depth ?>">
-          </th><?lsmb FOREACH col IN report.sorted_col_ids -?>
-          <th><?lsmb report.cheads.ids.$col.props.description ?></th><?lsmb END -?>
+          <th colspan="<?lsmb max_row_path_depth ?>"></th>
+          <?lsmb FOREACH col IN report.sorted_col_ids;
+         IF report.cheads.ids.$col.props.section_for;
+            NEXT;
+         END;
+         IF head_level == report.cheads.ids.$col.path.size -?>
+      <th data-id="<?lsmb col ?>"
+          colspan="<?lsmb report.cheads.ids.$col.leaves ?>"
+          rowspan="<?lsmb report.cheads.ids.$col.is_leaf ? (max_col_path_depth - report.cheads.ids.$col.path.size + 1) : 1 ?>"><?lsmb report.cheads.ids.$col.props.description ?></th>
+       <?lsmb END -?><?lsmb END ?>
         </tr>
+        <?lsmb head_level = head_level + 1;
+        END ?>
       </thead>
       <tbody>
         <?lsmb FOREACH row IN report.sorted_row_ids ;
@@ -361,7 +379,11 @@ END ;
           row_data.props.row_description ?></th>
           <th colspan="<?lsmb report.cheads.ids.size ?>" <?lsmb class ?>>
           <?lsmb ELSE -?>
-          <?lsmb row_data.props.row_description ?></th><?lsmb FOREACH col IN report.sorted_col_ids -?>
+          <?lsmb row_data.props.row_description ?></th><?lsmb FOREACH col IN report.sorted_col_ids;
+         IF not report.cheads.ids.$col.is_leaf;
+            NEXT;
+         END;
+          -?>
           <td class="amount <?lsmb clazz ?>">
             <?lsmb report.cells.$row.$col ?>
           </td><?lsmb END ?><?lsmb END ?>

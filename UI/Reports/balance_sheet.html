@@ -6,7 +6,8 @@ DRILLBASE = 'journal.pl?sort=transdate&amp;category=X'
        _ '&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y&amp;col_eca_name=Y'
        _ '&amp;col_accno=Y&amp;__action=search&amp;col_running_balance=Y';
 
-max_path_depth = report.rheads.max_path_depth;
+max_row_path_depth = report.rheads.max_path_depth;
+max_col_path_depth = report.cheads.max_path_depth;
 IF report.legacy_hierarchy ;
    hierarchy = 'flat-hierarchy';
 ELSE ;
@@ -23,7 +24,7 @@ END ;
 <table class="balancesheet" style="border-collapse: collapse">
 <colgroup class="headings">
 [% i = 1;
-   WHILE i <= max_path_depth;
+   WHILE i <= max_row_path_depth;
      '  <col class="level' _ i _ '" />';
      i = i + 1;
    END;
@@ -31,19 +32,33 @@ END ;
 </colgroup>
 <colgroup class="values">
 [% i = 1;
-   WHILE i <= report.cheads.ids.size;
+     FOREACH col IN report.sorted_col_ids ;
+     IF  report.cheads.ids.$col.is_leaf;
+        NEXT;
+     END;
      '  <col class="values' _ i _ '" />';
      i = i + 1;
    END;
 %]
 </colgroup>
   <thead>
+  [% head_level = 1;
+     WHILE head_level <= max_col_path_depth ; %]
     <tr class="report-head">
-      <th colspan="[% max_path_depth %]"> </th>
-      [% FOREACH col IN report.sorted_col_ids -%]
-      <th>[% report.cheads.ids.$col.props.description %]</th>
+      <th colspan="[% max_row_path_depth %]"></th>
+      [% FOREACH col IN report.sorted_col_ids;
+         IF report.cheads.ids.$col.props.section_for;
+            NEXT;
+         END;
+         IF head_level == report.cheads.ids.$col.path.size -%]
+      <th data-id="[% col %]"
+          colspan="[% report.cheads.ids.$col.leaves %]"
+          rowspan="[% report.cheads.ids.$col.is_leaf ? (max_col_path_depth - report.cheads.ids.$col.path.size + 1) : 1 %]">[% report.cheads.ids.$col.props.description %]</th>
+      [% END %]
       [% END -%]
     </tr>
+    [% head_level = head_level + 1;
+       END %]
   </thead>
   <tbody>
 [% FOREACH row IN report.sorted_row_ids ;
@@ -82,7 +97,10 @@ END ;
 </th><th colspan="[% report.cheads.ids.size %]" [% class %]>
 [% ELSE -%]
 [% row_data.props.row_description %]</th>
-[% FOREACH col IN report.sorted_col_ids -%]
+[% FOREACH col IN report.sorted_col_ids;
+         IF not report.cheads.ids.$col.is_leaf;
+            NEXT;
+         END; -%]
   <td class="amount [% clazz %]"><a href="[%
  DRILLBASE _ '&amp;accno=' _ row_data.props.account_number
            _ '&amp;to_date=' _ report.cheads.ids.$col.props.to_date %]">[% report.cells.$row.$col %]</a></td>[% END %]

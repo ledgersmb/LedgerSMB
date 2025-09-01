@@ -26,6 +26,8 @@ CREATE TYPE financial_statement_line AS (
     gifi_description text,
     contra boolean,
     amount numeric,
+    curr char(3),
+    amount_tc numeric,
     heading_path int[]
 );
 
@@ -140,12 +142,13 @@ hdr_balance AS (
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
           null::text as gifi, null::text as gifi_description, hm.contra,
-          hb.balance, hm.path
+          hb.balance, null::char(3) as curr, null::numeric as amount_tc, hm.path
      FROM hdr_meta hm
     INNER JOIN hdr_balance hb ON hm.id = hb.id
    UNION
    SELECT am.id, am.accno, am.description, am.account_type, am.category,
-          gifi_accno as gifi, gifi_description, am.contra, ab.balance, am.path
+          gifi_accno as gifi, gifi_description, am.contra, ab.balance,
+          null::char(3) as curr, null::numeric as amount_tc, am.path
      FROM acc_meta am
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
@@ -256,12 +259,13 @@ hdr_balance AS (
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
           null::text as gifi, null::text as gifi_description, hm.contra,
-          hb.balance, hm.path
+          hb.balance, null::char(3) as curr, null::numeric as amount_tc, hm.path
      FROM hdr_meta hm
     INNER JOIN hdr_balance hb ON hm.id = hb.id
     UNION
    SELECT am.id, am.accno, am.description, am.account_type, am.category,
-          gifi_accno as gifi, gifi_description, am.contra, ab.balance, am.path
+          gifi_accno as gifi, gifi_description, am.contra, ab.balance,
+          null::char(3) as curr, null::numeric as amount_tc, am.path
      FROM acc_meta am
     INNER JOIN acc_balance ab on am.id = ab.id
 $BODY$
@@ -378,12 +382,13 @@ hdr_balance AS (
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
           null::text as gifi, null::text as gifi_description, hm.contra,
-          hb.balance, hm.path
+          hb.balance, null::char(3) as curr, null::numeric as amount_tc, hm.path
      FROM hdr_meta hm
     INNER JOIN hdr_balance hb ON hm.id = hb.id
    UNION
    SELECT am.id, am.accno, am.description, am.account_type, am.category,
-          gifi_accno as gifi, gifi_description, am.contra, ab.balance, am.path
+          gifi_accno as gifi, gifi_description, am.contra, ab.balance,
+          null::char(3) as curr, null::numeric as amount_tc, am.path
      FROM acc_meta am
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
@@ -462,12 +467,13 @@ hdr_balance AS (
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
           null::text as gifi, null::text as gifi_description, hm.contra,
-          hb.balance, hm.path
+          hb.balance, null::char(3) as curr, null::numeric as amount_tc, hm.path
      FROM hdr_meta hm
     INNER JOIN hdr_balance hb ON hm.id = hb.id
    UNION
    SELECT am.id, am.accno, am.description, am.account_type, am.category,
-          gifi_accno as gifi, gifi_description, am.contra, ab.balance, am.path
+          gifi_accno as gifi, gifi_description, am.contra, ab.balance,
+          null::char(3) as curr, null::numeric as amount_tc, am.path
      FROM acc_meta am
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
@@ -555,12 +561,13 @@ hdr_balance AS (
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
           null::text as gifi, null::text as gifi_description, hm.contra,
-          hb.balance, hm.path
+          hb.balance, null::char(3) as curr, null::numeric as amount_tc, hm.path
      FROM hdr_meta hm
     INNER JOIN hdr_balance hb ON hm.id = hb.id
    UNION
    SELECT am.id, am.accno, am.description, am.account_type, am.category,
-          gifi_accno as gifi, gifi_description, am.contra, ab.balance, am.path
+          gifi_accno as gifi, gifi_description, am.contra, ab.balance,
+          null::char(3) as curr, null::numeric as amount_tc, am.path
      FROM acc_meta am
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
@@ -646,16 +653,18 @@ acc_balance AS (
              end)
          else a.category
          end as category,
-         balance
+         balance,
+         curr,
+         amount_tc
     FROM (
-      SELECT bal.id, sum(bal.balance) as balance
+      SELECT bal.id, sum(bal.balance) as balance, curr, sum(bal.amount_tc) as amount_tc
         FROM (
-          SELECT account_id as id, amount_bc as balance
+          SELECT account_id as id, amount_bc as balance, curr, amount_tc
             FROM account_checkpoint
            WHERE end_date = (select end_date from chkpoint_date)
 
            UNION ALL
-          SELECT ac.chart_id as id, ac.amount_bc as balance
+          SELECT ac.chart_id as id, ac.amount_bc as balance, ac.curr, ac.amount_tc
             FROM acc_trans ac
                    JOIN transactions t ON t.approved AND t.id = ac.trans_id
            WHERE t.approved AND
@@ -670,7 +679,7 @@ acc_balance AS (
                                                           OR (in_timing='primo'
                                                               AND ac.transdate < in_to_date))
         ) bal
-       GROUP BY bal.id
+       GROUP BY bal.id, curr
       HAVING sum(bal.balance) <> 0.00
     ) b
            INNER JOIN account a
@@ -679,23 +688,23 @@ acc_balance AS (
            LEFT JOIN account_heading_tree nht on a.heading_negative_balance = nht.id
 ),
 hdr_balance AS (
-   select id, sum(balance) as balance
+   select id, sum(balance) as balance, curr, sum(amount_tc) as amount_tc
      FROM (
-       select UNNEST(path) as id, balance from acc_balance ab
+       select UNNEST(path) as id, balance, curr, amount_tc from acc_balance ab
      ) a
-    GROUP BY id
+    GROUP BY id, curr
 )
   SELECT * FROM (
     SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
            null::text as gifi_accno,
            null::text as gifi_description, hm.contra,
-           hb.balance, hm.path
+           hb.balance, hb.curr as curr, hb.amount_tc as amount_tc, hm.path
       FROM hdr_meta hm
              INNER JOIN hdr_balance hb ON hm.id = hb.id
      UNION
     SELECT am.id, am.accno, am.description, am.account_type, ab.category,
            am.gifi_accno, am.gifi_description, am.contra,
-           ab.balance, ab.path
+           ab.balance, ab.curr as curr, ab.amount_tc as amount_tc, ab.path
       FROM acc_meta am
              INNER JOIN acc_balance ab on am.id = ab.id
   ) bs

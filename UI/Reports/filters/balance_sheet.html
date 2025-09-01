@@ -181,6 +181,17 @@
              %]
         </div>
         <div class="input_row">
+          [%
+             label_pos = -1;  # Something leaks label_pos...
+             PROCESS input element_data = {
+             label = text('Split by foreign currencies')    #'
+             name = 'fx_split'
+             type = 'checkbox'
+             value = 1
+             };
+             %]
+        </div>
+        <div class="input_row">
           <div class="label">
             [% text('Hierarchy type') %]
           </div>
