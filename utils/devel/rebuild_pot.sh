@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -x
 
@@ -56,16 +56,17 @@ utils/devel/extract-vue-template-translations.sh >> locale/LedgerSMB.pot
 
 utils/devel/extract-menu-translations >> locale/LedgerSMB.pot
 
-msguniq --sort-output --width=80 --output-file=locale/LedgerSMB.pot locale/LedgerSMB.pot \
+msgcat --sort-output --width=80 --output-file=locale/LedgerSMB.pot <(msguniq locale/LedgerSMB.pot) \
   || exit 1
 
 # Merge with .po files
 
 for pofile in `find ./locale -name '*.po' | sort`
 do
-    msgmerge --quiet --sort-output --width=80 --backup=off \
-             --no-fuzzy-matching \
-             --update $pofile locale/LedgerSMB.pot \
+    msgcat --sort-output --width=80 --output-file=$pofile \
+           <(msgmerge --quiet \
+                      --no-fuzzy-matching \
+                      $pofile locale/LedgerSMB.pot) \
       || (echo "failed $pofile" ;  exit 1)
 done
 

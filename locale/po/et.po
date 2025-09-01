@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-08-27 18:25+0000\n"
+"POT-Creation-Date: 2025-09-01 20:25+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2015\n"
 "Language-Team: Estonian (http://app.transifex.com/ledgersmb/ledgersmb/"
@@ -864,11 +864,11 @@ msgstr "Vara silt"
 msgid "Assets"
 msgstr "Varad"
 
-#: templates/demo/balance_sheet.html:381
+#: templates/demo/balance_sheet.html:375
 msgid "Assets to Equity"
 msgstr "Varad omakapitali suhe"
 
-#: templates/demo/balance_sheet.html:378
+#: templates/demo/balance_sheet.html:372
 msgid "Assets to Liabilities"
 msgstr "Varad kohustustesse suhe"
 
@@ -1029,8 +1029,8 @@ msgstr "Varundus rollid"
 msgid "Balance"
 msgstr "Bilanss"
 
-#: UI/Reports/balance_sheet.html:23 UI/Reports/filters/balance_sheet.html:7
-#: templates/demo/balance_sheet.html:301 templates/demo/balance_sheet.tex:44
+#: UI/Reports/balance_sheet.html:18 UI/Reports/filters/balance_sheet.html:7
+#: templates/demo/balance_sheet.html:297 templates/demo/balance_sheet.tex:37
 #: locale/menu.xml:423
 msgid "Balance Sheet"
 msgstr "Bilansiaruanne"
@@ -1239,8 +1239,8 @@ msgstr "Müügikulud"
 msgid "COGS Lots Report"
 msgstr ""
 
-#: UI/Contact/pricelist.html:127 UI/Reports/PNL.html:117
-#: UI/Reports/aging_report.html:101 UI/Reports/balance_sheet.html:116
+#: UI/Contact/pricelist.html:127 UI/Reports/PNL.html:107
+#: UI/Reports/aging_report.html:101 UI/Reports/balance_sheet.html:106
 #: UI/Reports/display_report.html:60
 msgid "CSV"
 msgstr "CSV"
@@ -2956,7 +2956,7 @@ msgstr "Total de Capital y Pasivos"
 msgid "Equity (Temporary)"
 msgstr ""
 
-#: templates/demo/balance_sheet.html:384
+#: templates/demo/balance_sheet.html:378
 msgid "Equity to Liabilities"
 msgstr ""
 
@@ -3181,7 +3181,7 @@ msgstr ""
 msgid "First Name"
 msgstr "Eesnimi"
 
-#: templates/demo/balance_sheet.html:376
+#: templates/demo/balance_sheet.html:370
 msgid "First column only"
 msgstr ""
 
@@ -3420,7 +3420,7 @@ msgstr "Grupeeri Tõlked"
 msgid "HR"
 msgstr "Personal"
 
-#: UI/Reports/PNL.html:113 UI/Reports/balance_sheet.html:113
+#: UI/Reports/PNL.html:103 UI/Reports/balance_sheet.html:103
 msgid "HTML"
 msgstr ""
 
@@ -3586,7 +3586,7 @@ msgid "Income Class"
 msgstr ""
 
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:47
-#: UI/Reports/filters/income_statement.html:15 templates/demo/PNL.tex:44
+#: UI/Reports/filters/income_statement.html:15 templates/demo/PNL.tex:37
 #: locale/menu.xml:418
 msgid "Income Statement"
 msgstr "Kasumiaruanne"
@@ -3878,7 +3878,7 @@ msgstr "Juun"
 msgid "June"
 msgstr "Juuni"
 
-#: templates/demo/balance_sheet.html:375
+#: templates/demo/balance_sheet.html:369
 msgid "Key Ratios"
 msgstr ""
 
@@ -4918,8 +4918,8 @@ msgstr ""
 msgid "Overpayments"
 msgstr ""
 
-#: UI/Contact/pricelist.html:105 UI/Reports/PNL.html:109
-#: UI/Reports/aging_report.html:96 UI/Reports/balance_sheet.html:110
+#: UI/Contact/pricelist.html:105 UI/Reports/PNL.html:99
+#: UI/Reports/aging_report.html:96 UI/Reports/balance_sheet.html:100
 #: UI/Reports/display_report.html:56
 msgid "PDF"
 msgstr "PDF"
