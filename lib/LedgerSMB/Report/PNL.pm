@@ -113,51 +113,140 @@ sub columns {
 
 =cut
 
+sub _row_handlers_gifi {
+    return (
+        sub {
+            my ($line) = @_;
+            return ($line->{account_type} eq 'H')
+                ? []
+                : [ [ $line->{account_category},
+                      $line->{gifi} ],
+                    [ $line->{account_category} ],
+                ];
+        },
+        sub {
+            my ($line) = @_;
+            $line->{account_number} = $line->{gifi};
+            $line->{account_description} = $line->{gifi_description};
+            $line->{order} = $line->{account_number};
+            return $line;
+       });
+}
+
+sub _non_gifi_row_props {
+    my ($line) = @_;
+    $line->{order} = $line->{account_number};
+    return $line;
+}
+
+sub _row_handlers_legacy {
+    return (
+        sub {
+            my ($line) = @_;
+            return ($line->{account_type} eq 'H')
+                ? []
+                : [ [ 'q',
+                      $line->{account_category},
+                      $line->{account_number} ],
+                    [ 'q',
+                      $line->{account_category} ],
+                    [ 'q' ],
+                ];
+        },
+        \&_non_gifi_row_props
+        );
+}
+
+sub _row_handlers_default {
+    return (
+        sub {
+            my ($line) = @_;
+            return [ ($line->{account_type} eq 'H')
+                     ? $line->{heading_path}
+                     : [ ( # heading_path undefined iff
+                           # hierarchy config missing
+                           @{$line->{heading_path} || []},
+                           $line->{account_number})
+                     ],
+                ];
+        },
+        \&_non_gifi_row_props
+        );
+}
+
+sub _header_descriptions {
+    my ($self) = @_;
+
+    if ($self->gifi || $self->legacy_hierarchy) {
+        return (
+            E => {
+                order            => '2', # Sort *after* Income
+                account_number   => '',
+                account_category => 'E',
+                account_type     => 'H',
+                account_description => $self->Text('Expenses')
+            },
+            I => {
+                order            => '1', # Sort *before* Expenses
+                account_number   => '',
+                account_category => 'I',
+                account_type     => 'H',
+                account_description => $self->Text('Income')
+            },
+            A => {
+                account_number   => 'A',
+                account_category => 'A',
+                account_type     => 'H',
+                account_description => $self->Text('Assets')
+            },
+            L => {
+                account_number   => 'L',
+                account_category => 'L',
+                account_type     => 'H',
+                account_description => $self->Text('Liabilities')
+            },
+            Q => {
+                account_number   => 'Q',
+                account_category => 'Q',
+                account_type     => 'H',
+                account_description => $self->Text('Equity')
+            },
+            q => {
+                account_number   => '',
+                account_category => 'Q',
+                account_type     => 'H',
+                heading_path     => [ 'Q', 'q' ],
+                account_description => $self->Text('Current earnings')
+            },
+            );
+    }
+    else {
+        return (
+            map {
+                $_->{accno} => {
+                    account_number      => $_->{accno},
+                    account_description => $_->{description}
+                }
+            }
+            $self->call_dbmethod(funcname => 'account__all_headings')
+            );
+    }
+}
+
 sub run_report {
     my ($self) = @_;
 
     my @lines = $self->report_base();
-    my $row_map = ($self->gifi) ?
-        sub { my ($line) = @_;
-              return ($line->{account_type} eq 'H')
-                  ? []
-                  : [ [ $line->{account_category},
-                        $line->{gifi} ],
-                      [ $line->{account_category} ],
-                  ];
-        } : ($self->legacy_hierarchy) ?
-        sub { my ($line) = @_;
-              return ($line->{account_type} eq 'H')
-                  ? []
-                  : [ [ 'q',
-                        $line->{account_category},
-                        $line->{account_number} ],
-                      [ 'q',
-                        $line->{account_category} ],
-                      [ 'q' ],
-                  ];
-        } :
-        sub { my ($line) = @_;
-              return [ ($line->{account_type} eq 'H')
-                       ? $line->{heading_path}
-                       : [ ( # heading_path undefined iff
-                             # hierarchy config missing
-                             @{$line->{heading_path} || []},
-                             $line->{account_number})
-                       ],
-                  ];
-        };
-    my $row_props = ($self->gifi) ?
-        sub { my ($line) = @_;
-              $line->{account_number} = $line->{gifi};
-              $line->{account_description} = $line->{gifi_description};
-              $line->{order} = $line->{account_number};
-              return $line;
-       } :
-       sub { my ($line) = @_;
-             $line->{order} = $line->{account_number};
-             return $line; };
-
+    my ($row_map, $row_props);
+    if ($self->gifi) {
+        ($row_map, $row_props) = _row_handlers_gifi;
+    }
+    elsif ($self->legacy_hierarchy) {
+        ($row_map, $row_props) = _row_handlers_legacy;
+    }
+    else {
+        ($row_map, $row_props) = _row_handlers_default;
+    }
 
     my $col_id = $self->cheads->map_path($self->column_path_prefix);
     my $_from_date = $self->from_date->to_output($self->{formatter_options});
@@ -187,50 +276,7 @@ sub run_report {
     }
 
     # Header rows don't have descriptions
-    my %header_desc;
-    if ($self->gifi || $self->legacy_hierarchy) {
-        %header_desc = ( 'E' => { 'order' => '2', # Sort *after* Income
-                                  'account_number' => '',
-                                  'account_category' => 'E',
-                                  'account_type' => 'H',
-                                  'account_description' =>
-                                      $self->Text('Expenses') },
-                         'I' => { 'order' => '1', # Sort *before* Expenses
-                                  'account_number' => '',
-                                  'account_category' => 'I',
-                                  'account_type' => 'H',
-                                  'account_description' =>
-                                      $self->Text('Income') },
-                         'A' => { 'account_number' => 'A',
-                                  'account_category' => 'A',
-                                  'account_type' => 'H',
-                                  'account_description' =>
-                                      $self->Text('Assets') },
-                         'L' => { 'account_number' => 'L',
-                                  'account_category' => 'L',
-                                  'account_type' => 'H',
-                                  'account_description' =>
-                                      $self->Text('Liabilities') },
-                         'Q' => { 'account_number' => 'Q',
-                                  'account_category' => 'Q',
-                                  'account_type' => 'H',
-                                  'account_description' =>
-                                      $self->Text('Equity') },
-                         'q' => { 'account_number' => '',
-                                  'account_category' => 'Q',
-                                  'account_type' => 'H',
-                                  'heading_path' => [ 'Q', 'q' ],
-                                  'account_description' =>
-                                      $self->Text('Current earnings') },
-            );
-    }
-    else {
-        %header_desc =
-            map { $_->{accno} => { 'account_number' => $_->{accno},
-                                   'account_description' => $_->{description} }
-            }
-            $self->call_dbmethod(funcname => 'account__all_headings');
-    };
+    my %header_desc = $self->_header_descriptions;
     for my $id (grep { ! defined $_->{props} } values %{$self->rheads->ids}) {
         $self->rheads->id_props($id->{id}, $header_desc{$id->{accno}});
     }
