@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-08-27 18:25+0000\n"
+"POT-Creation-Date: 2025-09-01 20:25+0000\n"
 "PO-Revision-Date: 2015-12-24 17:27+0000\n"
 "Language-Team: French (Belgium) (http://app.transifex.com/ledgersmb/ledgersmb/"
 "language/fr_BE/)\n"
@@ -866,11 +866,11 @@ msgstr "Étiquette d'actif"
 msgid "Assets"
 msgstr "Actifs"
 
-#: templates/demo/balance_sheet.html:381
+#: templates/demo/balance_sheet.html:375
 msgid "Assets to Equity"
 msgstr "Actifs par rapport aux capitaux propres"
 
-#: templates/demo/balance_sheet.html:378
+#: templates/demo/balance_sheet.html:372
 msgid "Assets to Liabilities"
 msgstr "Actif vs Passif"
 
@@ -1031,8 +1031,8 @@ msgstr "Sauvegarder les rôles"
 msgid "Balance"
 msgstr "Solde"
 
-#: UI/Reports/balance_sheet.html:23 UI/Reports/filters/balance_sheet.html:7
-#: templates/demo/balance_sheet.html:301 templates/demo/balance_sheet.tex:44
+#: UI/Reports/balance_sheet.html:18 UI/Reports/filters/balance_sheet.html:7
+#: templates/demo/balance_sheet.html:297 templates/demo/balance_sheet.tex:37
 #: locale/menu.xml:423
 msgid "Balance Sheet"
 msgstr "Bilan"
@@ -1241,8 +1241,8 @@ msgstr "Coût des produits vendus"
 msgid "COGS Lots Report"
 msgstr ""
 
-#: UI/Contact/pricelist.html:127 UI/Reports/PNL.html:117
-#: UI/Reports/aging_report.html:101 UI/Reports/balance_sheet.html:116
+#: UI/Contact/pricelist.html:127 UI/Reports/PNL.html:107
+#: UI/Reports/aging_report.html:101 UI/Reports/balance_sheet.html:106
 #: UI/Reports/display_report.html:60
 msgid "CSV"
 msgstr "CSV"
@@ -2968,7 +2968,7 @@ msgstr "Capitaux propres et passifs"
 msgid "Equity (Temporary)"
 msgstr "Équité (Temporaire)"
 
-#: templates/demo/balance_sheet.html:384
+#: templates/demo/balance_sheet.html:378
 msgid "Equity to Liabilities"
 msgstr "Capitaux propres vs passifs"
 
@@ -3195,7 +3195,7 @@ msgstr "Premier"
 msgid "First Name"
 msgstr "Prénom"
 
-#: templates/demo/balance_sheet.html:376
+#: templates/demo/balance_sheet.html:370
 msgid "First column only"
 msgstr "Première colonne uniquement"
 
@@ -3434,7 +3434,7 @@ msgstr "Grouper traductions"
 msgid "HR"
 msgstr "Ressources humaines"
 
-#: UI/Reports/PNL.html:113 UI/Reports/balance_sheet.html:113
+#: UI/Reports/PNL.html:103 UI/Reports/balance_sheet.html:103
 msgid "HTML"
 msgstr "HTML"
 
@@ -3606,7 +3606,7 @@ msgid "Income Class"
 msgstr "Classe de revenu"
 
 #: lib/LedgerSMB/Report/PNL/Income_Statement.pm:47
-#: UI/Reports/filters/income_statement.html:15 templates/demo/PNL.tex:44
+#: UI/Reports/filters/income_statement.html:15 templates/demo/PNL.tex:37
 #: locale/menu.xml:418
 msgid "Income Statement"
 msgstr "Compte de résultat"
@@ -3909,7 +3909,7 @@ msgstr "Juin"
 msgid "June"
 msgstr "Juin"
 
-#: templates/demo/balance_sheet.html:375
+#: templates/demo/balance_sheet.html:369
 msgid "Key Ratios"
 msgstr "Principaux ratios"
 
@@ -4971,8 +4971,8 @@ msgstr "Compte de paiement en trop"
 msgid "Overpayments"
 msgstr "Paiements en trop"
 
-#: UI/Contact/pricelist.html:105 UI/Reports/PNL.html:109
-#: UI/Reports/aging_report.html:96 UI/Reports/balance_sheet.html:110
+#: UI/Contact/pricelist.html:105 UI/Reports/PNL.html:99
+#: UI/Reports/aging_report.html:96 UI/Reports/balance_sheet.html:100
 #: UI/Reports/display_report.html:56
 msgid "PDF"
 msgstr "PDF"

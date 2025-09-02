@@ -13,7 +13,7 @@ begin
     return;
   end if;
 
-  execute 'select max(transdate) into t_transdate from ' || quote_ident(in_schema) || '.acc_trans';
+  execute 'select max(transdate) from ' || quote_ident(in_schema) || '.acc_trans' into t_transdate;
   t_cleanup_date := greatest(
     coalesce((t_transdate + '7 years'::interval), CURRENT_DATE),
     (CURRENT_DATE + '2 years'::interval)
