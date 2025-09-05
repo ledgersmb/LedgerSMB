@@ -22,6 +22,10 @@ export default {};
                     <li>{{ $t(`shipping &amp; receiving`) }}</li>
                     <li>{{ $t(`tracking of unpaid invoices`) }}</li>
                 </ul>
+                <p>
+                    Express your support and appreciation by Starring us on
+                    <a href="https://github.com/ledgersmb/LedgerSMB">GitHub</a>.
+                </p>
             </div>
             <div class="welcomed w2">
                 <h2>{{ $t(`Community resources`) }}</h2>
