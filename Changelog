@@ -3,6 +3,12 @@
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.13
+* Fix reconciliations missing workflow context (#9004)
+* Fix starting balance in GL report filtered by account (#9020)
+* Add taxtotal for invoice printing (#9006)
+
+
 Changelog for 1.12.12
 * [MAJOR] Fix parts incorrectly marked as 'used for Cost Of Goods Sold' (#8952)
 * [MAJOR] Repair historic incorrect COGS markings and post missing COGS (#8986)
