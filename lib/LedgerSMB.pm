@@ -258,7 +258,7 @@ use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Setting;
 use LedgerSMB::Template;
 
-our $VERSION = '1.11.28-dev';
+our $VERSION = '1.11.28';
 
 my $logger = Log::Any->get_logger(category => 'LedgerSMB');
 my $expiration_parser = DateTime::Format::Duration::ISO8601->new;
