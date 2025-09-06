@@ -14,7 +14,7 @@ jobs:
     if: github.repository_owner == 'ledgersmb'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v9
+      - uses: actions/stale@v10
         with:
           days-before-issue-stale: -1
           days-before-pr-stale: -1
