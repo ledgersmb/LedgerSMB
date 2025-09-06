@@ -5631,10 +5631,10 @@ eslint-compat-utils@^0.5.1:
   dependencies:
     semver "^7.5.4"
 
-eslint-config-eslint@12.0.0:
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-eslint/-/eslint-config-eslint-12.0.0.tgz#f988a1b6aca38106f0a55b58d9501add771f3357"
-  integrity sha512-yIEhdDG2j9ZLAxxANsYYWmQaHHo8zcsHSt63bmCqi3dzDxsIPAOGF6/mzKqKQT2HmvvQ9PYr8vcarxC9rSuXPw==
+eslint-config-eslint@13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-eslint/-/eslint-config-eslint-13.0.0.tgz#7e4e45bea02e36564bf5df9d4007dbbbd375107b"
+  integrity sha512-5M5+AfOfe8HUV9ytlDMctKMvzOyB1Av+S+obFb2aq4bdOPbVfUnl4rxIwV9Y+aOPOYKV3tKK+mIbG28JYnY50A==
   dependencies:
     "@eslint-community/eslint-plugin-eslint-comments" "^4.3.0"
     "@eslint/js" "^9.0.0"
