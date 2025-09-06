@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.12.13-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-08-08 21:35+0000\n"
+"POT-Creation-Date: 2025-09-06 21:42+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2024\n"
-"Language-Team: French (Canada) (https://app.transifex.com/ledgersmb/"
-"teams/58325/fr_CA/)\n"
+"Language-Team: French (Canada) (https://app.transifex.com/ledgersmb/teams/"
+"58325/fr_CA/)\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -4330,8 +4330,8 @@ msgstr "Charger des modèles"
 msgid "Loaded"
 msgstr "Chargé"
 
-#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:40
-#: UI/src/components/ServerUI.js:26
+#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:26
+#: UI/src/components/ServerUI.js:40
 msgid "Loading..."
 msgstr "Chargement..."
 
