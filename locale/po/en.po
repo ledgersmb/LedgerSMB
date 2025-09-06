@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.11.28-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-07-12 18:58+0000\n"
+"POT-Creation-Date: 2025-09-06 20:55+0000\n"
 "PO-Revision-Date: 2022-01-09T21:20:15.970Z\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
@@ -8639,7 +8639,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/views/Home.vue:57 UI/src/views/Home.vue:42
+#: UI/src/views/Home.vue:42 UI/src/views/Home.vue:57
 msgid "mailing lists"
 msgstr ""
 
