@@ -183,6 +183,10 @@ Updated dependencies
 Changelog for 1.11 Series
 Released 2023-10-03
 
+Changelog for 1.11.28
+* Fix starting balance in GL report filtered by account (#9020)
+
+
 Changelog for 1.11.27
 * [MAJOR] Fix parts incorrectly marked as 'used for Cost Of Goods Sold' (#8952)
 * [MAJOR] Repair historic incorrect COGS markings and post missing COGS (#8986)
