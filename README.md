@@ -5,10 +5,10 @@ Small and Medium business accounting and ERP
 
 
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/795/badge)](https://bestpractices.coreinfrastructure.org/projects/795)
-[![CI](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml/badge.svg)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml)
-[![CodeQL](https://github.com/ledgersmb/LedgerSMB/actions/workflows/codeql.yml/badge.svg?branch=master)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/codeql.yml)
+[![CI](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml/badge.svg?branch=1.13)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/main.yml)
+[![CodeQL](https://github.com/ledgersmb/LedgerSMB/actions/workflows/codeql.yml/badge.svg?branch=1.13)](https://github.com/ledgersmb/LedgerSMB/actions/workflows/codeql.yml)
 [![GPLv2 Licence](https://badges.frapsoft.com/os/gpl/gpl.png?v=103)](https://opensource.org/licenses/GPL-2.0/)
-[![Coverage Status](https://coveralls.io/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=master)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ledgersmb/LedgerSMB/badge.svg?branch=1.13)](https://coveralls.io/github/ledgersmb/LedgerSMB?branch=1.13)
 [![Docker](https://img.shields.io/docker/pulls/ledgersmb/ledgersmb.svg)](https://hub.docker.com/r/ledgersmb/ledgersmb/)
 [![Mentioned in Awesome <awesome-selfhosted>](https://awesome.re/mentioned-badge.svg)](https://github.com/Kickball/awesome-selfhosted#enterprise-resource-planning)
 
@@ -50,10 +50,6 @@ fast customization. Supported output formats are PDF, CSV, HTML, ODF and more.
 
 # System requirements
 
-Note that these are the system requirements for LedgerSMB 1.13, the current
-development version. Please check the system requirements for [the 1.12 stable
-version](https://github.com/ledgersmb/LedgerSMB/tree/1.12#system-requirements).
-
 ## Server
 
 * `Perl 5.36.1+`
@@ -74,20 +70,20 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome              | 2024-09  | 129-138                                     |
-| Edge                | 2024-09  | 129-138                                     |
-| Firefox             | 2024-10  | 131-140                                     |
+| Chrome              | 2024-10  | 130-139                                     |
+| Edge                | 2024-10  | 130-139                                     |
+| Firefox             | 2024-11  | 133-142                                     |
 | Opera               | 2024-03  | 108-117                                     |
-| Safari              | 2024-01  | 17.3-17.6, 18.0-18.5                        |
+| Safari              | 2024-01  | 17.3-17.6, 18.0-18.6                        |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome for Android  | 2025-06  | 138                                         |
-| Firefox for Android | 2025-06  | 140                                         |
-| Android Browser     | 2025-06  | 138                                         |
-| Safari on iOS       | 2024-01  | 17.3-17.7, 18.0-18.5                        |
+| Chrome for Android  | 2025-08  | 139                                         |
+| Firefox for Android | 2025-08  | 142                                         |
+| Android Browser     | 2025-08  | 139                                         |
+| Safari on iOS       | 2024-01  | 17.3-17.7, 18.0-18.6                        |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
 | Opera Mobile        | 2024-03  | 80                                          |
 | Samsung Internet    | 2022-11  | 19.0, 20-28                                 |
