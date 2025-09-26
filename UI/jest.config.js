@@ -159,8 +159,8 @@ module.exports = {
                 "^.+\\.js$": "babel-jest",
                 "^.+\\.vue$": "@vue/vue3-jest",
                 "^@": "babel-jest",
-
             },
+            transformIgnorePatterns: [ '/node_modules/(?!(until-async)/)' ],
         },
         {
             displayName: "API",
@@ -173,6 +173,7 @@ module.exports = {
                 "^.+\\.vue$": "@vue/vue3-jest",
                 "^@": "babel-jest",
             },
+            transformIgnorePatterns: [ '/node_modules/(?!(until-async)/)' ],
         }
     ],
 
