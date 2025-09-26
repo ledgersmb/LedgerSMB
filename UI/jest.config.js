@@ -172,7 +172,7 @@ const common = {
     },
 
     // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-    transformIgnorePatterns: [ '/node_modules/(?!(lodash-es|@quasar)/)' ],
+    transformIgnorePatterns: [ '/node_modules/(?!(lodash-es|@quasar|until-async)/)' ],
 
     // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
     // unmockedModulePathPatterns: undefined,
@@ -283,7 +283,7 @@ module.exports = {
                 customExportConditions: ["node", "node-addons"]
             },
             testPathIgnorePatterns: [ "<rootDir>/tests/specs/openapi/.*\\.spec\\.js" ],
-            transformIgnorePatterns: [ '/node_modules/(?!(lodash-es|quasar)/)' ],
+            transformIgnorePatterns: [ '/node_modules/(?!(lodash-es|quasar|until-async)/)' ],
             transform: {
                 "^.+\\.yaml$": "yaml-jest-transform",
                 "^.+\\.js$": "babel-jest",
