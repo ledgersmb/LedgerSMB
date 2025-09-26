@@ -58,7 +58,7 @@ sub run($class, $context, $args) {
     #  post corrections on that specific date
     my @date_setting = $dbh->selectrow_array(<<~'SQL');
       SELECT "value"::date
-        FROM defailts
+        FROM defaults
        WHERE setting_key = 'migration:cogs-allocation-posting-date'
       UNION ALL
       SELECT CURRENT_DATE
