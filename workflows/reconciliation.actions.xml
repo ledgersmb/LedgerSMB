@@ -1,6 +1,7 @@
 <actions type="reconciliation">
   <action name="add_pending_items"
-          class="LedgerSMB::Workflow::Action::Null" />
+          class="LedgerSMB::Workflow::Action::Reconciliation"
+          entrypoint="add_pending_items" />
   <action name="approve"
           class="LedgerSMB::Workflow::Action::Reconciliation"
           entrypoint="approve" />
@@ -12,7 +13,9 @@
   <action name="submit"
           class="LedgerSMB::Workflow::Action::Reconciliation"
           entrypoint="submit" />
-  <action name="reject"
+  <action name="upload_statement"
+          class="LedgerSMB::Workflow::Action::Null" />
+  <action name="reconcile"
           class="LedgerSMB::Workflow::Action::Reconciliation"
-          entrypoint="reject" />
+          entrypoint="reconcile" />
 </actions>
