@@ -10,7 +10,4 @@ select workflow_id,
          'end_date', c.end_date,
          'ending_balance', c.their_total
        )
-  from cr_report c
- where not exists (select 1
-                     from workflow_context wc
-                    where wc.workflow_id = c.workflow_id);
+  from cr_report c;
