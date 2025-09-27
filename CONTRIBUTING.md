@@ -1,8 +1,7 @@
-
+<!--- Text is manually wrapped to 85 characters --->
 # Community guide
 
 ## Getting involved
-
 
 ### Social media contacts
 
@@ -13,6 +12,37 @@ The ledgerSMB project monitors the following social media platforms. Feel free t
 * [X (Twitter)](https://x.com/LedgerSMB)
 * [LinkedIn](https://www.linkedin.com/groups/13199807/)
 * [Matrix (routine development)](https://app.element.io/#/room/#ledgersmb:matrix.org)
+
+### Contributing
+
+There are lots of ways to donate back to the LedgerSMB community, even if you can't 
+write computer programs. If you are able to help out with the development, there's 
+[a page explaining how to get started](https://ledgersmb.org/content/getting-started-developing).
+
+There are a few other types of contributions we have immediate need for:
+
+* **Support the developers** - If you're not able to contribute to the project by doing any 
+of the activities below, please support the developers by becoming a GitHub sponsor. 
+See [https://github.com/ledgersmb/LedgerSMB](https://github.com/ledgersmb/LedgerSMB) for details.
+* **Help others** - If you have time to get involved in discussions on the mailing lists, 
+IRC channel or other places, supporting other users with the workflows you have worked out 
+to work for you, that just might help them get their challenges resolved quickly. 
+Even just sending your [testimonial](https://ledgersmb.org/testimonials) could help others.  Maybe they can help you next time!
+* **Provide feedback** - Feedback does not need to be a bug report: if you like or dislike 
+specific things, or you have a specific need, let us know through [the mailing lists](https://lists.ledgersmb.org/) or 
+[Matrix](https://app.element.io/#/room/#ledgersmb:matrix.org)! Alternatively, you could start a [discussion on GitHub](https://github.com/ledgersmb/LedgerSMB/discussions/categories/ideas): 
+Ideas for improvements go into the "Ideas" category.
+* **Bug reports** - Please report your problems in the [GitHub issue tracker](https://github.com/ledgersmb/LedgerSMB/issues) or ask your 
+questions in a [GitHub Discussion (Q&A category)](https://github.com/ledgersmb/LedgerSMB/discussions/categories/q-a).
+* **Translations** - We always need help with translations. More details about translations can 
+be found [here](https://ledgersmb.org/community-guide/community-guide/translating).
+* **Release Testing** - Help preventing regressions by testing your processes with any release
+candidates announced on the mailing lists. If we catch regressions before a release, we can
+fix the problems and prevent problematic releases. Also, there are too many possible 
+combinations of Perl, PostgreSQL, Apache, etc versions to test them all; just maybe, 
+your combination is a problematic one. *If so: we want to know about it before the release!*
+* **Create a package for your O/S** - You can help our market penetration by developing a 
+package for your favorite distribution or operating system, if one isn't already available.
 
 ## Community roles
 
