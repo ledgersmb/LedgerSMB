@@ -11,7 +11,7 @@ The ledgerSMB project monitors the following social media platforms. Feel free t
 * [Facebook](https://www.facebook.com/LedgerSMB)
 * [X (Twitter)](https://x.com/LedgerSMB)
 * [LinkedIn](https://www.linkedin.com/groups/13199807/)
-* [Matrix (routine development)](https://app.element.io/#/room/#ledgersmb:matrix.org)
+* [Matrix (routine user and development activity)](https://app.element.io/#/room/#ledgersmb:matrix.org)
 
 ### Contributing
 
@@ -27,22 +27,38 @@ See [https://github.com/ledgersmb/LedgerSMB](https://github.com/ledgersmb/Ledger
 * **Help others** - If you have time to get involved in discussions on the mailing lists, 
 IRC channel or other places, supporting other users with the workflows you have worked out 
 to work for you, that just might help them get their challenges resolved quickly. 
-Even just sending your [testimonial](https://ledgersmb.org/testimonials) could help others.  Maybe they can help you next time!
-* **Provide feedback** - Feedback does not need to be a bug report: if you like or dislike 
-specific things, or you have a specific need, let us know through [the mailing lists](https://lists.ledgersmb.org/) or 
-[Matrix](https://app.element.io/#/room/#ledgersmb:matrix.org)! Alternatively, you could start a [discussion on GitHub](https://github.com/ledgersmb/LedgerSMB/discussions/categories/ideas): 
-Ideas for improvements go into the "Ideas" category.
-* **Bug reports** - Please report your problems in the [GitHub issue tracker](https://github.com/ledgersmb/LedgerSMB/issues) or ask your 
+  * **Testimonials** - sending your [testimonial](https://ledgersmb.org/testimonials) could help others.  Maybe they can help you next time!
+  * **Chat** - The main user and developer chat channel is [Matrix](https://ledgersmb.org/content/chat-support-matrix)
+  * **Mail list** - While more activity happens on [Matrix](https://ledgersmb.org/content/chat-support-matrix), the [LedgerSMB mail lists](https://lists.ledgersmb.org/mailman3/lists/) are also available.
+* **Provide feedback** - Help the developers understand your needs.
+  * **Specific Needs** - if you like or dislike specific things, or you have a specific need, let us 
+  know through [the mailing lists](https://lists.ledgersmb.org/) or [Matrix](https://app.element.io/#/room/#ledgersmb:matrix.org)! 
+  Alternatively, you could start a [discussion on GitHub]    
+  (https://github.com/ledgersmb/LedgerSMB/discussions/categories/ideas)
+  * **Bug reports** - Please report your problems in the [GitHub issue tracker](https://github.com/ledgersmb/LedgerSMB/issues) or ask your 
 questions in a [GitHub Discussion (Q&A category)](https://github.com/ledgersmb/LedgerSMB/discussions/categories/q-a).
-* **Translations** - We always need help with translations. More details about translations can 
-be found [here](https://ledgersmb.org/community-guide/community-guide/translating).
+* **Localization**
+  * **Translations** - We always need help with translations. More details about translations can 
+  be found [here](https://ledgersmb.org/community-guide/community-guide/translating).
+  * **Tax rules** - While we cover a lot of countries we can always use review and additions to our 
+  tax functions.
+  * **Chart of accounts** - Our chart of accounts are localized and always in need of review 
+  and improvmeents. See the [examples here](https://github.com/ledgersmb/LedgerSMB/tree/master/locale/coa).
+  * **Regulatory compliance** - While we cover a lot of countries we can always use review
+   and additions to our to our regulatory compliance functions.
+* **Documentation**
+  * **FAQ items** - We can always use additions or updates to our [FAQ](https://ledgersmb.org/faq) pages.
+  * **Book content** - The [user focused book](https://book.ledgersmb.org) needs non-technical writers to review and 
+  improve it. 
 * **Release Testing** - Help preventing regressions by testing your processes with any release
-candidates announced on the mailing lists. If we catch regressions before a release, we can
+candidates announced on the [LedgerSMB mail lists](https://lists.ledgersmb.org/mailman3/lists/). If we catch regressions before a release, we can
 fix the problems and prevent problematic releases. Also, there are too many possible 
 combinations of Perl, PostgreSQL, Apache, etc versions to test them all; just maybe, 
 your combination is a problematic one. *If so: we want to know about it before the release!*
 * **Create a package for your O/S** - You can help our market penetration by developing a 
 package for your favorite distribution or operating system, if one isn't already available.
+* **Code** - Of course we can always use developers especially with skills in Perl, PostgreSQL, HTML, 
+JavaScript and Gherkin.
 
 ## Community roles
 
@@ -56,17 +72,19 @@ This definition does not include those who sell LedgerSMB (related) services and
 products (in their role of seller). If we include those in the definition, we'd call
 that "the LedgerSMB ecosystem".
 
-Within this community, we live by [the Ubuntu code of conduct](https://launchpad.net/codeofconduct/2.0).
-Apart from that, there are no restrictions on becoming a community member in the
-role of any of the above. Simply join one of the mailing lists and submit your
-contributions.
-
 A listing of people who have contributed at one time or another can be found in the
 [CONTRIBUTORS file](https://github.com/ledgersmb/LedgerSMB/blob/master/CONTRIBUTORS) and
 [the git repository history](https://github.com/ledgersmb/LedgerSMB/graphs/contributors)
 which may be found in the source distribution archive or in the
-source code repository. Unfortunately, GitHub does not provide insigt into contributors
+source code repository. Unfortunately, GitHub does not provide insight into contributors
 to issues and discussions.
+
+### Code Of conduct
+
+Within this community, we live by [the Ubuntu code of conduct](https://launchpad.net/codeofconduct/2.0).
+Apart from that, there are no restrictions on becoming a community member in the
+role of any of the above. Simply join one of the mailing lists and submit your
+contributions.
 
 ### Governance
 
