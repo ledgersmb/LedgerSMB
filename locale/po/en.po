@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.12.14-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-09-06 21:42+0000\n"
+"POT-Creation-Date: 2025-09-28 12:55+0000\n"
 "PO-Revision-Date: 2022-01-09T21:20:15.970Z\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
@@ -4276,8 +4276,8 @@ msgstr ""
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:26
-#: UI/src/components/ServerUI.js:40
+#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:40
+#: UI/src/components/ServerUI.js:26
 msgid "Loading..."
 msgstr ""
 
@@ -8574,7 +8574,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/views/Home.vue:58 UI/src/views/Home.vue:43
+#: UI/src/views/Home.vue:43 UI/src/views/Home.vue:58
 msgid "mailing lists"
 msgstr ""
 
