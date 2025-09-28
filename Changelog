@@ -53,6 +53,11 @@ Updated dependencies
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.14
+* Fix WHERE statement in schema upgrade script (#9061)
+* Fix typo in table name in post-upgrade script (#9060)
+
+
 Changelog for 1.12.13
 * Fix reconciliations missing workflow context (#9004)
 * Fix starting balance in GL report filtered by account (#9020)
