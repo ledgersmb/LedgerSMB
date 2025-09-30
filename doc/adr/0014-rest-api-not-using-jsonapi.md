@@ -17,7 +17,7 @@ using OpenAPI, semantic versioning of the API, and thin client requirements.
 ## Context
 
 LedgerSMB's original API, inherited from SQL-Ledger, was simply the form
-interfact used by the front-end. This has always been a nightmare to integrate
+interface used by the front-end. This has always been a nightmare to integrate
 with -- typos in field names, multiple posts needed to build up an invoice, and
 lots of challenges for a client developer to work against.
 
