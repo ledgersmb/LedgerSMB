@@ -6,6 +6,13 @@ Date: 2023-12-28
 
 Accepted
 
+## Summary
+
+Addresses the design decision regarding reducing the use of global state
+to situations where no other choice is available, the deprecation of 
+`LedgerSMB::App_State`, the use of `local` to limit Perl built in variables
+and the appropriate layer for state to be stored.
+
 ## Context
 
 Global state is the prevalent design in 'old code'[^1]; this means that

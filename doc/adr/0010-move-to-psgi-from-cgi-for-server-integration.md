@@ -6,6 +6,11 @@ Date: October 2014, as-of 1.3.45
 
 Accepted
 
+## Summary
+
+Addresses the design decision to move from CGI to PSGI for web server
+integration.
+
 ## Context
 
 With the growing popularity of webservers that do not natively "speak"

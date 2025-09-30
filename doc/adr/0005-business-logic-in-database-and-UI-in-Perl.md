@@ -9,6 +9,11 @@ completely a CGI application.
 
 Accepted
 
+## Summary
+
+Addresses the design decisions regarding the role of the Perl layer versus the
+database layer, web server and web browser.
+
 ## Context
 
 Given the decisions in ADRs [0001 (Only support PostgreSQL at the database

@@ -6,6 +6,11 @@ Date: 2025-01-25
 
 Accepted
 
+## Summary
+
+Addresses the design decision for limited use of ON DELETE in REFERENCES 
+table relations to reduce database clutter of unused rows.
+
 ## Definition
 
 This ADR considers "core data entities" to be in the classes

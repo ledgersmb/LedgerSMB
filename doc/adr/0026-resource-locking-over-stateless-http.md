@@ -6,6 +6,11 @@ Date: During 1.3 cycle (before 2013)
 
 Accepted
 
+## Summary
+
+Addresses the design decision to use a `session` concept for each logged in
+user which persists in the database.
+
 ## Context
 
 LedgerSMB - being a multi-user (web) application - needs to protect some

@@ -6,6 +6,11 @@ Date: 2025-01-02
 
 Accepted
 
+## Summary
+
+Addresses the design decisions regarding persisting workflow states, the use 
+of actions, and overriding `WorkFlow` with `LedgerSMB::Workflow`.
+
 ## Context
 
 The `Workflow` library provides a state machine engine which is used in
@@ -96,7 +101,7 @@ snapshot, it needs access to the storage layer.
 
 There are two options to deal with the active side of the storage layer:
 
-1. Worklfow actions operate on the active side of the storage layer  
+1. Workflow actions operate on the active side of the storage layer  
    i.e. workflow actions trigger stored procedures
 2. Workflow persisters communicate with actions to make the persister
    perform the necessary actions  

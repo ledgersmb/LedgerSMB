@@ -6,6 +6,12 @@ Date: 2020-01-12
 
 Accepted
 
+## Summary
+
+Addresses the design decision for the `account` and `account_heading` 
+tables in LedgerSMB, specifically whether to move to inheritance across tables 
+or use the current methods like triggers to maintain referential integrity.
+
 ## Context
 
 Issue #861 complains there's no guarantee in the schema which prevents

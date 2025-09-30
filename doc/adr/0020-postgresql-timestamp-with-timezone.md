@@ -6,6 +6,11 @@ Date: Irrecoverable, but likely during 1.3 timeframe
 
 Accepted
 
+## Summary
+
+Addresses the design decision to use TIMESTAMP WITHOUT TIME ZONE for all
+database timestamps.
+
 ## Context
 
 PostgreSQL has two data types for storing timestamps:

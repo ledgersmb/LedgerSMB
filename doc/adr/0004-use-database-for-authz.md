@@ -6,6 +6,11 @@ Date: Early in the 1.3 release cycle
 
 Accepted
 
+## Summary
+
+Addresses the design decision to use fine grained access rights in the
+the form of PostgreSQL roles for authorization in the LedgerSMB application.
+
 ## Context
 
 Most webapps manage authorizations at the web-boundaries, at the time
@@ -14,7 +19,7 @@ requests come in, with little to no protection on any of the other layers.
 At the time of this decision, access to various functionalities was controlled
 by menu-item availability.  However, no enforcement of access restrictions was
 implemented.  That is to say that once a user had knowledge of the URLs
-to trigger specefic functionality *and* the availability of a valid login
+to trigger specific functionality *and* the availability of a valid login
 account, any functionality could be triggered.
 
 ## Decision
@@ -24,7 +29,7 @@ will be used as an (additional) level of access control.
 
 ## Consequences
 
-- Database connections cannot be made with a single, all-encompasing login
+- Database connections cannot be made with a single, all-encompassing login
   account; instead, accounts with authorizations specific for the current
   user will need to be assigned exactly the intended access rights and be
   used to log into the application

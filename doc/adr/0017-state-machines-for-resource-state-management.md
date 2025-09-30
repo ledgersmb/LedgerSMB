@@ -6,6 +6,11 @@ Date: During 1.9 development cycle
 
 Accepted
 
+## Summary
+
+Addresses the design decision to use state machines for managing resources like 
+invoices, orders, e-mails, document templates, recurrence patterns, etc.
+
 ## Context
 
 The application consists of many, wildly different, types of resources, such
@@ -13,9 +18,9 @@ as invoices, orders, e-mails, document templates, recurrence patterns, etc.
 Each of these resources has a set of attributes which together imply the state
 of the resource *and* the allowable actions to be invoked on it.  As a result,
 the developer needs a high level of knowledge of the resource, its implied state
-and the allowable invokable actions to keep the application state consistent.
+and the allowable invocable actions to keep the application state consistent.
 
-By making both the state of the resource and the invokable actions (state
+By making both the state of the resource and the invocable actions (state
 transitions) explicit, the application provides documentation to less
 experienced developers.  Modelling state machines challenges developers to
 step out of the context of the code they are writing, considering more broadly
@@ -23,7 +28,7 @@ the impact of any planned changes.  Additionally, the application gains built-in
 controls to assure its internal state to remain consistent.
 
 Even more: if the state machine allows for introspection, allowing the
-developer to query the available list of invokable actions, the state machine
+developer to query the available list of invocable actions, the state machine
 could be used to guide the user through the process (without hard-coding it into
 the client).
 

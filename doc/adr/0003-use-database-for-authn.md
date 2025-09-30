@@ -6,6 +6,11 @@ Date: Early in the 1.3 release cycle
 
 Accepted
 
+## Summary
+
+Addresses the design decision to use database roles as the 
+authentication provider for the LedgerSMB application.
+
 ## Context
 
 The security of password storage has been and remains a major point of
@@ -15,7 +20,7 @@ insufficiently secure storage mechanisms.
 
 LedgerSMB uses passwords in its authentication process and therefor is
 potentially affected by these problems too; however, we have a strong
-desire to falling into these traps *and* leverage other (much more
+desire to avoid falling into these traps *and* leverage other (much more
 heavily audited) open source solutions.
 
 ## Decision
@@ -26,11 +31,11 @@ credentials received onto the database to authenticate the user.
 
 ## Consequences
 
-- The webapp does not need to store any passwords itself, defering
+- The webapp does not need to store any passwords itself, deferring
   this responsibility to PostgreSQL
 - Whenever PostgreSQL is upgraded to more secure storage methods,
   the webapp automatically benefits from this upgrade
-- Security audits of PostgreSQL are immediatly inherited by our
+- Security audits of PostgreSQL are immediately inherited by our
   project -- most likely PostgreSQL attracts more eyes than LedgerSMB
   meaning much more thorough review than we could ever wish
 - Usernames are roles; roles are global, meaning every username can

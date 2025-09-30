@@ -6,6 +6,11 @@ Date: 2025-05-30
 
 Accepted
 
+## Summary
+
+Addresses the design decision to move the code base from Dojo to Vue and
+Quasar.
+
 ## Context
 
 In [ADR 0015](./0015-js-spa-client-using-vue.md), it was decided to implement
@@ -49,7 +54,7 @@ only available as part of Vuetify Labs, its experimental incubator.
 
 A proof of concept was conducted with the QTree component to replace the
 existing menu.  While not straight forward (due to the lack of mouse events
-with keyboard modifiers), it turned out existing behaviour could be maintained.
+with keyboard modifiers), it turned out existing behavior could be maintained.
 The same applies to the separator element between the menu and the main content
 as well as the password expiration alert (popup) when logging in. With redesign
 of the Preferences screen on the way. Benefits are - so far - mostly found on

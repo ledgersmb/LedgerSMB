@@ -6,6 +6,12 @@ Date: During 1.3 release cycle (when adding Scriptaculous)
 
 Accepted
 
+## Summary
+
+Addresses the design decisions to include all dependencies for JavaScript, 
+images, CSS, etc. in the LedgerSMB distribution and to not use Content 
+Distribution Networks for any browser related resources.
+
 ## Context
 
 Content Distribution Networks (short: CDNs) are in wide use for serving

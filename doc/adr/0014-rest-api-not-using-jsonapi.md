@@ -9,6 +9,11 @@ on 2016-12-11 for the first time.
 
 Accepted
 
+## Summary
+
+Addresses the design decision regarding REST web service API, documented the API 
+using OpenAPI, semantic versioning of the API, and thin client requirements. 
+
 ## Context
 
 LedgerSMB's original API, inherited from SQL-Ledger, was simply the form

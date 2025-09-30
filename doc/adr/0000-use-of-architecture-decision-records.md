@@ -6,6 +6,12 @@ Date: 2023-05-08
 
 Accepted
 
+## Summary
+
+Addresses the design decision to use ADRs to describe 
+most important decisions that impact the structure and future
+direction of the code base. 
+
 ## Context
 
 As in many Open Source projects, most of the important decisions
