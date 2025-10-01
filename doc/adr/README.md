@@ -69,6 +69,11 @@ Date: YYYY-MM-DD
 
 <One of: Proposed | Accepted | Rejected | Replaced by XXXX >
 
+$$ Summary
+
+Addresses the design decision(s) to/regarding <A short summary 
+according to the guidelines provided below>
+
 ## Context
 
 <Description of what functional requirements
@@ -89,9 +94,9 @@ Date: YYYY-MM-DD
 
 ```
 
-### Statusses
+### Statuses
 
-An ADR can be in one of 4 statusses with the following state diagram:
+An ADR can be in one of 4 statuses with the following state diagram:
 
                      +----------+     +----------+
                    --| Accepted |-----| Replaced |
@@ -105,7 +110,7 @@ The states have the following meaning:
 
  1. Proposed  
     The decision has not taken effect yet. It's under discussion.
-    ADRs can by defition never be in this state for long.
+    ADRs can by definition never be in this state for long.
  2. Accepted  
     The decision has taken effect. That means all new code needs to
     comply with this decision (or an ADR should be submitted to allow
@@ -119,8 +124,21 @@ The states have the following meaning:
     project. Its existence is retained for historical purposes.
 
 As long as the ADR has a status "Proposed", it's text can be changed based
-on discussion in the project, meaning that the statusses all relate to the
+on discussion in the project, meaning that the statuses all relate to the
 idea of the decision, not the current version of the text.
+
+### Summary Guidelines
+
+When writing the summary the following guidelines should be followed. 
+The summary should:
+
+1. start with “Addresses the design decision(s) to/regarding”,
+   which helps form a consistent focus of the summary.
+2. contain a clear definition of the scope and purpose of the ADR 
+   with the sole purpose of guiding new coders to relevant ADRs.
+3. appear immediately after the Status section.
+4. be 300 characters or less.
+5. include important keywords from the ADR in the prose (not as a list).
 
 # TODO list for ADRs to be written
 
