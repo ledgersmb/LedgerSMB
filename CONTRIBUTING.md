@@ -59,6 +59,8 @@ your combination is a problematic one. *If so: we want to know about it before t
 package for your favorite distribution or operating system, if one isn't already available.
 * **Code** - Of course we can always use developers especially with skills in Perl, PostgreSQL, HTML, 
 JavaScript and Gherkin.
+  * **Code & Project Standards** - An index of project's important architecture and coding decisions 
+    is located in the [Architecture Design Records index](doc/adr/index.md).
 
 ## Community roles
 
