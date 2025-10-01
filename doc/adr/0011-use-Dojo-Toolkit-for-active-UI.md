@@ -8,8 +8,7 @@ Superseded by [ADR 0105](./0105-change-ui-from-dojo-to-quasar.md)
 
 ## Summary
 
-Superseded by ADR 0105. Addresses the original design decision to use 
-Dojo toolkit. No longer relevant.
+Addresses the original design decision to use Dojo toolkit.
 
 ## Context
 
