@@ -26,9 +26,9 @@ use strict;
 use warnings;
 use File::Spec;
 
-# Directory to scan; defaults to current dir if not given
-my $dir = shift || '../doc/adr';
-my $output_file = "../doc/adr/index.md";
+# Directory to scan; defaults to adr directory if not given
+my $dir = shift || '../../doc/adr';
+my $output_file = "../../doc/adr/index.md";
 
 # Remote base URL
 #my $base_url = "https://github.com/ledgersmb/LedgerSMB/tree/master/doc/adr";
