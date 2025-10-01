@@ -1,0 +1,119 @@
+#!/usr/bin/perl
+
+=head1 NAME
+
+create_adr_index - Scan the ADR files and create an index
+
+=head1 SYNOPSIS
+
+create_adr_index
+
+=head1 DESCRIPTION
+
+Scans all markdown files in 'doc/adr/' with file names that start with
+4 digits followed by a hyphen and ends with the '.md' extension.
+
+For each file found write a line to the file named 'index.md' in 'doc/adr/'
+containing the ADR number as an html link to the adr, the status of
+the ADR, and a summary of the ADR.
+
+Should be run as part of the release process to make sure the Index
+is up to date.
+
+=cut
+
+use strict;
+use warnings;
+use File::Spec;
+
+# Directory to scan; defaults to current dir if not given
+my $dir = shift || '../doc/adr';
+my $output_file = "../doc/adr/index.md";
+
+# Remote base URL
+#my $base_url = "https://github.com/ledgersmb/LedgerSMB/tree/master/doc/adr";
+my $base_url = ".";
+
+# Gather files that match pattern, sorted
+opendir(my $dh, $dir) or die "Cannot open directory $dir: $!";
+my @files = sort grep { /^\d{4}-.*\.md$/ && -f File::Spec->catfile($dir, $_) } readdir($dh);
+closedir $dh;
+
+open my $out, '>', $output_file or die "Cannot write to $output_file: $!";
+
+# Write header
+print $out "# LedgerSMB ADR (Architecture Decision Records) Index\n\n";
+
+# Write table header
+print $out "| ADR Link | Status | Summary |\n";
+print $out "|-----|------|---------|\n";
+
+foreach my $file (@files) {
+    my $filepath = File::Spec->catfile($dir, $file);
+    open my $fh, '<', $filepath or do {
+        warn "Cannot read $filepath: $!";
+        next;
+    };
+
+    # Extract 4-digit prefix
+    my ($prefix) = $file =~ /^(\d{4})-/;
+
+    my $in_summary = 0;
+    my $in_status  = 0;
+    my ($summary, $status) = ("", "");
+
+    while (my $line = <$fh>) {
+        chomp $line;
+
+        # Detect "## Summary" section
+        if ($line =~ /^##\s+Summary\b/) {
+            $in_summary = 1;
+            next;
+        }
+
+        # Detect "## Status" section
+        if ($line =~ /^##\s+Status\b/) {
+            $in_status = 1;
+            next;
+        }
+
+        # Collect summary paragraph
+        if ($in_summary) {
+            if ($line =~ /\S/) {
+                $summary = $line;
+                while (my $next = <$fh>) {
+                    chomp $next;
+                    last if $next =~ /^\s*$/; # end of paragraph
+                    $summary .= " " . $next;
+                }
+                $in_summary = 0; # done with summary
+            }
+        }
+
+        # Collect status line
+        if ($in_status) {
+            if ($line =~ /\S/) {
+                $status = $line;
+                $in_status = 0; # only grab first non-blank line
+            }
+        }
+    }
+    close $fh;
+
+    # Escape pipe chars for markdown safety
+    for ($summary, $status) {
+        s/\|/\\|/g if $_;
+    }
+
+    # Make ADR prefix a link to the file on GitHub
+    my $adr_link = "[$prefix]($base_url/$file)";
+
+    print $out "| $adr_link | $status | $summary |\n";
+}
+
+my $datestring = gmtime();
+print $out "\nIndex Generated: $datestring UTC\n";
+
+close $out;
+
+print "Summaries written to $output_file\n";
