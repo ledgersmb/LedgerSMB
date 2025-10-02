@@ -6,6 +6,11 @@ Date: During 1.10 development cycle
 
 Accepted
 
+## Summary
+
+Addresses the design decision to use state machines robot3 (XState) for
+UI state management.
+
 ## Context
 
 Modern (JavaScript-based) User Interfaces have many components and lots of

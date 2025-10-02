@@ -6,6 +6,12 @@ Date: During 1.9 development cycle
 
 Accepted
 
+## Summary
+
+Addresses the design decisions regarding state machine usage in the Perl layer
+using the perl pod WorkFlow, the modification of database state using its 
+procedural API, and the need for dependency injection in the state machine.
+
 ## Context
 
 ADR [0017 State machines for resource state
@@ -24,7 +30,7 @@ Taking the requirement for customizability so far as to require that ultimately
 new functionality can be added to the application using new state transitions
 (actions) or by replacing actions on existing state transitions, the mechanism
 to configure these state machines should be highly flexible -- with the option
-to extend the application in ways that were not forseen at development time.
+to extend the application in ways that were not foreseen at development time.
 
 Based on the design of the application, there are two layers in which the
 engine can be placed: the database layer or the application layer (Perl).  It
@@ -34,7 +40,7 @@ of the database -- which is highly restricted and won't e.g. be able to send
 e-mail or trigger web services without help from its callers.
 
 The design pattern of ["dependency
-injection"](https://en.wikipedia.org/wiki/Dependency_injection) is a powerfull
+injection"](https://en.wikipedia.org/wiki/Dependency_injection) is a powerful
 means to add functionality to an application at configuration time by taking
 advantage of predefined extension points and interfaces.  This pattern could
 serve to fulfill the above requirements.  In the Perl ecosystem, the

@@ -6,6 +6,11 @@ Date: 2020-11-14
 
 Accepted
 
+## Summary
+
+Addresses the design decision for scripting use-cases using the `ledgersmb-admin`
+command line application, its environment variables, and its YAML configuration.
+
 ## Context
 
 In order to support scripting use-cases, LedgerSMB needs a CLI application.
@@ -44,7 +49,7 @@ intended to run on the same server as the LedgerSMB server application
 
 
 The tool resolves configuration (e.g. which postgresql server to connect
-to) in the following order (in decending priority):
+to) in the following order (in descending priority):
 
 * Command line
 * Configuration file

@@ -6,12 +6,18 @@ Date: 2025-01-03
 
 Accepted
 
+## Summary
+
+Addresses the design decisions regarding the proper location and order for Perl 
+pragmas, modules, and package declarations. Also defines where and when to 
+declare minimum Perl versions.
+
 ## Context
 
 The `use` statement in Perl is used for two distinct purposes. The most
 straight forward being loading of dependency modules (e.g., `use LedgerSMB;`).
 The other purpose is to enable "pragmas" (e.g. `use strict;`); these change
-Perl's behaviour in the scope in which they are declared.
+Perl's behavior in the scope in which they are declared.
 
 Traditionally, Perl pragmas have been declared after the opening `package`
 line in a module; like this:

@@ -9,6 +9,12 @@ cyle of 1.10 added the actual dependency on Vue.
 
 Accepted
 
+## Summary
+
+Addresses the design decision to start incorporating Vue components into
+the UI, eventually removing the use of Dojo, but keeping the Dojo look and
+feel until after all components are converted.
+
 ## Context
 
 The initial user interface used by LedgerSMB was static HTML. This type of
@@ -20,7 +26,7 @@ user interactions, needing to derive the users intent from the difference
 between the original and the resulting state.
 
 The problem of the server needing to second-guess what the user intended,
-is aggrevated by the fact that - in order to speed up data entry - the server
+is aggravated by the fact that - in order to speed up data entry - the server
 sends complete forms (instead of partial forms for which deriving intention
 would be easier).
 

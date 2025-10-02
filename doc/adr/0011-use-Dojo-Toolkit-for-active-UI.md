@@ -6,6 +6,10 @@ Date: During 1.3.42 development
 
 Superseded by [ADR 0105](./0105-change-ui-from-dojo-to-quasar.md)
 
+## Summary
+
+Addresses the original design decision to use Dojo toolkit.
+
 ## Context
 
 LedgerSMB's UI is using standard HTML elements and tags, without

@@ -6,6 +6,11 @@ Date: Early in the 1.3 release cycle
 
 Accepted
 
+## Summary
+
+Address the design decision regarding which template toolkit will
+be used to generate UI.
+
 ## Context
 
 The code base is one huge mix of business logic and HTML to be
@@ -21,7 +26,7 @@ base -- separating code and presentation.
 The code base has its own templating "engine", which is currently used
 to render invoices and other output documents.  This component isn't
 sophisticated enough to deal with the estimated complexity required to
-handle a fulfledged UI.
+handle a full-fledged UI.
 
 At the time of this decision, various templating engines were available
 of which [Template::Toolkit](http://template-toolkit.org/) was the

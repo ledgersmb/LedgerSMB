@@ -6,6 +6,11 @@ Date: During 1.6 development cycle
 
 Accepted
 
+## Summary
+
+Addresses the design decision to not use Perl development frameworks
+like Catalyst, Dancer, Mojolicious etc.
+
 ## Context
 
 Perl has several well known web development frameworks with

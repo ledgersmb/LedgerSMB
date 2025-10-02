@@ -6,6 +6,11 @@ Date: During 1.3 development
 
 Accepted
 
+## Summary
+
+Addresses the design decision related to which database schemas the
+LedgerSMB data can reside.
+
 ## Context
 
 LedgerSMB aims to provide a good foundation to build other

@@ -6,6 +6,12 @@ Date: During 1.3 development (2007)
 
 Accepted
 
+## Summary
+
+Addresses the design decision regarding the separation of responsibilities
+for web request serving, HTML composition, Template::Toolkit, and 
+business logic.
+
 ## Context
 
 The existing code base mixes User Interface rendering (HTML composition)
@@ -14,12 +20,12 @@ state persistence (updating database tables).  This "design" typically
 dates back to the early days of the web when computers weren't as
 powerful and compute resources were expensive.
 
-PostgreSQL is a powerfull database system which offers much more than
+PostgreSQL is a powerful database system which offers much more than
 just state persistence; it can be extended in many ways, the simplest
 of which is by the creation of stored functions through the PL/pgSQL
 language.
 
-Apache 2 is a powerfull web server perfectly suited to execute the CGI
+Apache 2 is a powerful web server perfectly suited to execute the CGI
 application that is LedgerSMB: reviewed by many because of its net-wide
 use and flexible in its configuration.
 

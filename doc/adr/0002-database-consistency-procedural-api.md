@@ -6,6 +6,11 @@ Date: Early in the 1.3 release cycle
 
 Accepted
 
+## Summary
+
+Addresses the design decision for assuring database consistency
+independently of any application accessing the database.
+
 ## Context
 
 For an accounting application, it's of the utmost importance to ensure
@@ -22,7 +27,7 @@ Additional complexity on the database side to fulfill its role in
 enforcement of consistency is that the consistency requirement is spread
 over multiple rows. E.g. the requirement of transactions being balanced
 affects (small) groups of journal lines. Validating the groups of journal
-line rows in triggers is heighly inefficient, because triggers will be
+line rows in triggers is highly inefficient, because triggers will be
 evaluating the set-requirement for each modified line (searching the total
 set to find the other lines). Or - when evaluated on a statement level - need
 to evaluate *all* lines...

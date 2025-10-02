@@ -6,17 +6,22 @@ Date: 2025-08-01
 
 Accepted
 
+## Summary
+
+Addresses the design decisions regarding Perl coding style and the limited use of newer
+Perl syntax.
+
 ## Context
 
 A series of new syntax features have been added to Perl, with several more
 scheduled for addition. To name a few:
 
-- postfix dereference ($var->@* instead of @{ $var })
-- function signatures (sub fun($x, $y) { ... } instead of sub fun { my ($x, $y) = @_; ... })
-- isa operator ($x isa 'b' instead of eval { $x->isa('b') })
-- try/catch (try {} catch ($err) {} finally {} instead of Try::Tiny)
-- class/field/method class syntax (instead of 'use Moo'/'use Moose')
-- any/all operators (instead of grep { ... } @ary)
+- postfix dereference (`$var->@*` instead of `@{ $var }`)
+- function signatures (`sub fun($x, $y) { ... }` instead of `sub fun { my ($x, $y) = @_; ... }`)
+- isa operator (`$x isa 'b'` instead of `eval { $x->isa('b') }`)
+- try/catch (`try {} catch ($err) {} finally {}` instead of `Try::Tiny`)
+- class/field/method class syntax (instead of `use Moo`/`use Moose`)
+- any/all operators (instead of `grep { ... } @ary`)
 
 In addition to these extensions of the 'core' Perl language, a large number of modules
 have been developed by Paul Evans (PEVANS on CPAN) to further enhance the language:
@@ -55,7 +60,7 @@ Perl version exceeds v5.40 (at the time of writing, the minimum is v5.36).
 Existing modules should be developed in the style they already have, when applying minor changes. In
 case of major change, modules should be modified to use these features.
 
-The 'class' feature (and with it the Object::Pad(::*) modules) can't be used (yet): they are
+The 'class' feature (and with it the `Object::Pad(::*)` modules) can't be used (yet): they are
 incompatible with PGObject due to the way they store their field values.
 
 Future::AsyncAwait does not apply to LedgerSMB's code base since it does not handle many requests on

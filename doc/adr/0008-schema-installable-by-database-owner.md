@@ -6,6 +6,11 @@ Date: During 1.4 or 1.5 development
 
 Accepted
 
+## Summary
+
+Addresses the design decision that super user rights should not be
+required to install and run LedgerSMB.
+
 ## Context
 
 Some PostgreSQL features require super user rights to install (e.g.
@@ -27,4 +32,4 @@ run the software must be (non-super user) database owner.
 
 - No use of PostgreSQL non-trusted extensions.
 - Special care must be taken when checking permissions, such as
-  when [changing user access rights](https://github.com/ehuelsmann/LedgerSMB/blob/ca16f284a8380e6596f466e467e67483d95e3e05/sql/modules/admin.sql#L141-L146)
+  when [changing user access rights](https://github.com/ledgersmb/LedgerSMB/blob/ca16f284a8380e6596f466e467e67483d95e3e05/sql/modules/admin.sql#L141-L146)

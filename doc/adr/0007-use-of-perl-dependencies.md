@@ -6,6 +6,10 @@ Date: During development of 1.2
 
 Accepted
 
+## Summary
+
+Addresses the design decisions regarding the acceptable use of Perl dependencies.
+
 ## Context
 
 Historically, the code base has had no external Perl dependencies apart from

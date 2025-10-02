@@ -6,6 +6,11 @@ Date: During 1.10 development cycle
 
 Accepted
 
+## Summary
+
+Addresses the design decision to use Beam::Wire, dependency injection, YAML
+for new configurations and deprecation of the INI configuration format.
+
 ## Context
 
 Considering the project's slogan "Foundation for your business", users should
@@ -22,10 +27,10 @@ as unsuitable.
 
 The current configuration mechanism based on the INI file needs to be equally
 rejected as unsuitable, because it allows to configure existing functionality
-which was forseen to require (small) variations at development time.  The
+which was foreseen to require (small) variations at development time.  The
 definition of customization (over configuration) is that the adjustments in
-application behaviour have *not* been forseen at development time.  By
-consequence, the code required to achieve the new application behaviour
+application behavior have *not* been foreseen at development time.  By
+consequence, the code required to achieve the new application behavior
 likely is not part of the standard application distribution.
 
 [Dependency injection](https://en.wikipedia.org/wiki/Dependency_injection) is
@@ -47,8 +52,8 @@ formats).
    which the code base uses at specifically identified extension points,
    such as an e-mail transport or generation of invoice documents.
 3. The existing INI format will remain to be supported for the existing scope
-   of functionality for the forseeable future -- by generating the required
-   input to make the dependency indjection work.
+   of functionality for the foreseeable future -- by generating the required
+   input to make the dependency injection work.
 4. New functionality will only be supported in a suitable new format for
    Beam::Wire.
 5. The format of choice is YAML, because it is *the* mainstream format for

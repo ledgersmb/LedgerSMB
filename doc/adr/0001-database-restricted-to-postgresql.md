@@ -6,6 +6,11 @@ Date: Early in the 1.3 release cycle
 
 Accepted
 
+## Summary
+
+Addresses the design decision to use PostgreSQL instead of other 
+relational database systems.
+
 ## Context
 
 Many relational database management systems (RDBMSes) are available
@@ -31,7 +36,7 @@ many more features.
 
 Although SQL is a standard, many features are partially available or
 slightly differently implemented across database vendors/implementations,
-making it hard to write truely platform agnostic SQL code.
+making it hard to write truly platform agnostic SQL code.
 
 ## Decision
 

@@ -6,6 +6,11 @@ Date: Irrecoverable; since Pg 9.1
 
 Accepted
 
+## Summary
+
+Addresses the design decision to only use the listed in-core PostgreSQL 
+extensions.
+
 ## Context
 
 The PostgreSQL database allows "extensions" to define new data types,

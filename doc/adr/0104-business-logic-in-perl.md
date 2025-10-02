@@ -6,6 +6,12 @@ Date: 2025-01-12
 
 Accepted
 
+## Summary
+
+Addresses the design decision regarding using the PostgreSQL layer to 
+actively manage the consistency and correctness of the data. It also clarifies
+the responsibilities of the active and passive PostgreSQL layers.
+
 ## Context
 
 In [ADR 0005 Business logic in database and UI in

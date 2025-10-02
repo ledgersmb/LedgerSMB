@@ -6,6 +6,11 @@ Date: 2025-08-15
 
 Draft
 
+## Summary
+
+Addresses the design decisions regarding the use of JSON and JSONB data types,
+and the preferential use of relational schema in the PostgreSQL database..
+
 ## Context
 
 PostgreSQL has added the JSON data type in version 9.2 and the JSONB data type

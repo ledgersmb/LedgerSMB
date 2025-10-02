@@ -6,6 +6,10 @@ Date: 2016-02-18 (during 1.5 release cycle)
 
 Accepted
 
+## Summary
+
+Addresses the design decision regarding the database upgrade process.
+
 ## Context
 
 Database migration from 1.x to 1.3 and from 1.3 to 1.4 involved "full schema
@@ -119,7 +123,7 @@ database may be affected. This includes on any non-released branch such as
 1.5 or master).
 
 **NOTE**: A mechanism was devised to allow releasing fixes to the scripts,
-taking into account that the scripts may alraedy have run successfully in
+taking into account that the scripts may already have run successfully in
 some installations.
 
 ### The solution (data validations)
