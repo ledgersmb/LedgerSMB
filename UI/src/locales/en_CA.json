@@ -2,7 +2,6 @@
     "A return authorization must be obtained from [_1] before goods are returned. Returns must be shipped prepaid and properly insured. [_1] will not be responsible for damages during transit.": "A return authorisation must be obtained from [_1] before goods are returned. Returns must be shipped prepaid and properly insured. [_1] will not be responsible for damages during transit.",
     "Add Labor/Overhead": "Add Labour/Overhead",
     "Check Prefix": "Cheque Prefix",
-    "Customer not on file!": "Debtor not on file!",
     "Database": "Database",
     "E-mail": "Email",
     "E-mail address missing!": "Email address missing",
@@ -10,7 +9,7 @@
     "Edit Labor/Overhead": "Edit Labour/Overhead",
     "Edit User": "Edit User",
     "Labor/Overhead": "Labour/Overhead",
-    "Less Outstanding Checks:": "Less Outstanding Cheques:",
+    "Less Outstanding Checks:": "Less Outstanding Checks:",
     "Max Invoices per Check Stub": "Max Invoices per Cheque Stub",
     "SSN": "SIN"
 }
