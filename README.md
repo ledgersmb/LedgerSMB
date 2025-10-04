@@ -50,9 +50,9 @@ fast customization. Supported output formats are PDF, CSV, HTML, ODF and more.
 
 # System requirements
 
-Note that these are the system requirements for LedgerSMB 1.13, the current
-development version. Please check the system requirements for [the 1.12 stable
-version](https://github.com/ledgersmb/LedgerSMB/tree/1.12#system-requirements).
+Note that these are the system requirements for LedgerSMB 1.14, the current
+development version. Please check the system requirements for [the 1.13 stable
+version](https://github.com/ledgersmb/LedgerSMB/tree/1.13#system-requirements).
 
 ## Server
 
@@ -74,20 +74,20 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome              | 2024-09  | 129-138                                     |
-| Edge                | 2024-09  | 129-138                                     |
-| Firefox             | 2024-10  | 131-140                                     |
-| Opera               | 2024-03  | 108-117                                     |
-| Safari              | 2024-01  | 17.3-17.6, 18.0-18.5                        |
+| Chrome              | 2024-11  | 131-140                                     |
+| Edge                | 2024-11  | 131-140                                     |
+| Firefox             | 2025-01  | 134-143                                     |
+| Opera               | 2024-08  | 113-122                                     |
+| Safari              | 2024-03  | 17.4-17.6, 18.0-18.6, 26.0                  |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome for Android  | 2025-06  | 138                                         |
-| Firefox for Android | 2025-06  | 140                                         |
-| Android Browser     | 2025-06  | 138                                         |
-| Safari on iOS       | 2024-01  | 17.3-17.7, 18.0-18.5                        |
+| Chrome for Android  | 2025-09  | 140                                         |
+| Firefox for Android | 2025-08  | 142                                         |
+| Android Browser     | 2025-09  | 140                                         |
+| Safari on iOS       | 2024-03  | 17.4-17.7, 18.0-18.6, 26.0                  |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
 | Opera Mobile        | 2024-03  | 80                                          |
 | Samsung Internet    | 2022-11  | 19.0, 20-28                                 |
@@ -134,7 +134,7 @@ The system is installed and should be available for evaluation through
   Normal login for the application
 
 The system is ready for [preparation for first
-use](https://ledgersmb.org/content/preparing-ledgersmb-111-first-use).
+use](https://ledgersmb.org/content/preparing-ledgersmb-113-first-use).
 
 
 **NOTE:** This setup does not use a webserver like nginx or Apache. Setups which

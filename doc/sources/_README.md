@@ -50,9 +50,9 @@ fast customization. Supported output formats are PDF, CSV, HTML, ODF and more.
 
 # System requirements
 
-Note that these are the system requirements for LedgerSMB 1.13, the current
-development version. Please check the system requirements for [the 1.12 stable
-version](https://github.com/ledgersmb/LedgerSMB/tree/1.12#system-requirements).
+Note that these are the system requirements for LedgerSMB 1.14, the current
+development version. Please check the system requirements for [the 1.13 stable
+version](https://github.com/ledgersmb/LedgerSMB/tree/1.13#system-requirements).
 
 ## Server
 
@@ -112,7 +112,7 @@ The system is installed and should be available for evaluation through
   Normal login for the application
 
 The system is ready for [preparation for first
-use](https://ledgersmb.org/content/preparing-ledgersmb-111-first-use).
+use](https://ledgersmb.org/content/preparing-ledgersmb-113-first-use).
 
 
 **NOTE:** This setup does not use a webserver like nginx or Apache. Setups which
