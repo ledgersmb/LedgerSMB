@@ -108,7 +108,7 @@ The system is installed and should be available for evaluation through
   Normal login for the application
 
 The system is ready for [preparation for first
-use](https://ledgersmb.org/content/preparing-ledgersmb-111-first-use).
+use](https://ledgersmb.org/content/preparing-ledgersmb-113-first-use).
 
 
 **NOTE:** This setup does not use a webserver like nginx or Apache. Setups which

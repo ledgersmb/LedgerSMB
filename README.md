@@ -70,20 +70,20 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome              | 2024-10  | 130-139                                     |
-| Edge                | 2024-10  | 130-139                                     |
+| Chrome              | 2024-11  | 131-140                                     |
+| Edge                | 2024-11  | 131-140                                     |
 | Firefox             | 2024-11  | 133-142                                     |
-| Opera               | 2024-03  | 108-117                                     |
-| Safari              | 2024-01  | 17.3-17.6, 18.0-18.6                        |
+| Opera               | 2024-07  | 112-121                                     |
+| Safari              | 2024-03  | 17.4-17.6, 18.0-18.6, 26.0                  |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome for Android  | 2025-08  | 139                                         |
+| Chrome for Android  | <missing> | 139                                         |
 | Firefox for Android | 2025-08  | 142                                         |
-| Android Browser     | 2025-08  | 139                                         |
-| Safari on iOS       | 2024-01  | 17.3-17.7, 18.0-18.6                        |
+| Android Browser     | <missing> | 139                                         |
+| Safari on iOS       | 2024-03  | 17.4-17.7, 18.0-18.6, 26.0                  |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
 | Opera Mobile        | 2024-03  | 80                                          |
 | Samsung Internet    | 2022-11  | 19.0, 20-28                                 |
@@ -130,7 +130,7 @@ The system is installed and should be available for evaluation through
   Normal login for the application
 
 The system is ready for [preparation for first
-use](https://ledgersmb.org/content/preparing-ledgersmb-111-first-use).
+use](https://ledgersmb.org/content/preparing-ledgersmb-113-first-use).
 
 
 **NOTE:** This setup does not use a webserver like nginx or Apache. Setups which
