@@ -105,7 +105,7 @@ devices running old browsers is negligible.
 
 # Quick start
 
-For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-112
+For from-tarball installation instructions, see https://ledgersmb.org/content/installing-ledgersmb-113
 
 ## Installation
 
