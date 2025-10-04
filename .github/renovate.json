@@ -5,8 +5,7 @@
     "baseBranchPatterns": [
         "master",
         "1.13",
-        "1.12",
-        "1.11"
+        "1.12"
     ],
     "cpanfile": {
         "enabled": false
