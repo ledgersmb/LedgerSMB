@@ -191,7 +191,7 @@ Updated dependencies
 * Workflow (compatibility with 2.0)
 
 
-Changelog for 1.11 Series
+Changelog for 1.11 Series (End of Life)
 Released 2023-10-03
 
 Changelog for 1.11.28
@@ -430,7 +430,7 @@ Dependency updates
 * Countless JavaScript dependency updates
 
 
-Changelog for 1.10 Series
+Changelog for 1.10 Series (End of Life)
 Released 2022-10-08
 
 Changelog for 1.10.38
@@ -671,7 +671,7 @@ Changelog for 1.10.1
 * Fix HTML-encoding values on (PDF) printed documents (#6861)
 
 
-Changelog for 1.10.0 (End of Life)
+Changelog for 1.10.0
 
 Added functionalities
 * Example hierarchical chart of accounts, US General
