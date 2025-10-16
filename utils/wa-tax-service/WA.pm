@@ -62,8 +62,7 @@ service isn't available.
 
 =cut
 
-has rate        => (isa => 'LedgerSMB::PGNumber',
-                    is => 'ro', coerce => 1);
+has rate        => (isa => 'LedgerSMB::PGNumber', is => 'ro');
 
 =item account
 
@@ -77,7 +76,7 @@ has account     => (isa => 'Str', is => 'rw');
 
 =cut
 
-has value       => (isa => 'LedgerSMB::PGNumber', is => 'rw', coerce => 1);
+has value       => (isa => 'LedgerSMB::PGNumber', is => 'rw');
 
 =item minvalue
 
@@ -85,7 +84,7 @@ Minimum taxable amount to kick in taxation
 
 =cut
 
-has minvalue    => (isa => 'LedgerSMB::PGNumber', is => 'ro', coerce => 1);
+has minvalue    => (isa => 'LedgerSMB::PGNumber', is => 'ro');
 
 =item maxvalue
 
@@ -93,7 +92,7 @@ Maximum taxable amount to apply tax to
 
 =cut
 
-has maxvalue    => (isa => 'LedgerSMB::PGNumber', is => 'ro', coerce => 1);
+has maxvalue    => (isa => 'LedgerSMB::PGNumber', is => 'ro');
 
 =item pass
 
