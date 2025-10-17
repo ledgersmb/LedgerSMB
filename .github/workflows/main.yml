@@ -62,7 +62,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           # Keep aligned with what's in the dev image...
-          node-version: '22'
+          node-version: '24'
 
 
       # This step absolutely MUST come before "uncaching" node_modules!
@@ -246,7 +246,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: latest
+          node-version: '24'
 
       - name: Pre-run installation steps
         run: |
