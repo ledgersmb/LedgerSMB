@@ -434,7 +434,7 @@ if (TARGET !== "readme") {
         resolve: {
             alias: {
                 vue$: "vue/dist/vue.cjs.js",
-                "vue-router": "vue-router/dist/vue-router.cjs.js",
+                "vue-router": "vue-router/dist/vue-router.cjs",
                 "vue-i18n": "vue-i18n/dist/vue-i18n.esm-bundler.js",
                 "@": path.join(__dirname, "src/")
             },
