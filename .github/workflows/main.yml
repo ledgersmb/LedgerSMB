@@ -170,7 +170,7 @@ jobs:
         if: ${{ matrix.COVERAGE }}
 
       - name: Archive coverage artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: pure-perl-coverage ${{ matrix.perl }} ${{ matrix.BROWSER }}
           path: |
@@ -347,7 +347,7 @@ jobs:
         if: ${{ matrix.COVERAGE }}
 
       - name: Archive coverage artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: webservice-coverage ${{ matrix.perl }} ${{ matrix.BROWSER }}
           path: |
@@ -552,7 +552,7 @@ jobs:
         if: always()
 
       - name: Archive production artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: logs-screens-coverage ${{ matrix.perl }} ${{ matrix.BROWSER }}
           path: |
