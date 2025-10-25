@@ -618,6 +618,20 @@ sub _post_invoices {
         uniq map { $_->{part}->{id} } $inv->{lines}->@*
         );
 
+    $inv->{transdate} //= $inv->{crdate};
+    $inv->{crdate} //= $inv->{transdate};
+    if (not $inv->{transdate}) {
+        $env->{'psgix.logger'}->(
+            {
+                level => 'info',
+                message => 'No transaction date supplied; setting default' });
+        my ($now) = $env->{'lsmb.db'}->selectrow_array('SELECT NOW()::date')
+            or die $env->{'lsmb.db'}->errstr;
+
+        $inv->{crdate} =
+            $inv->{transdate} =
+            $now;
+    }
 
     # Step 2: Run the price matrix
     if (keys %part_qty) {
@@ -953,7 +967,7 @@ sub _post_invoices {
         |)
         or die $env->{'lsmb.db'}->errstr;
     for my $tax (values $inv->{taxes}->%*) {
-        $asth->execute($inv_id, undef, $tax->{tax}->{id},
+        $asth->execute($inv_id, undef, $tax->{chart_id},
                        -$sign*$tax->{amount}, -$sign*$tax->{amount},
                        $inv->{currency}, $inv->{transdate},
                        $tax->{source}, $tax->{memo})
@@ -963,7 +977,7 @@ sub _post_invoices {
         die $asth->errstr
             if $asth->err;
 
-        $sth->execute($tax->{'base-amount'}, $tax->{tax}->{rate}, $entry_id)
+        $sth->execute($tax->{'base'}, $tax->{rate}, $entry_id)
             or die $sth->errstr;
     }
     $wf->execute_action( 'post' ); # move to SAVED state
