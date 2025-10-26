@@ -329,8 +329,9 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Country'
-                    example:
-                      $ref: '#/components/examples/validCountry'
+              examples:
+                validCountries:
+                  $ref: '#/components/examples/validCountries'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -512,6 +513,18 @@ components:
         localizedName:
           type: string
   examples:
+    validCountries:
+      summary: Valid countries (collection response)
+      description: countries collection response example
+      value:
+        _links: []
+        items:
+        - code: NL
+          default: false
+          name: Netherlands
+        - code: DE
+          default: false
+          name: Germany
     validCountry:
       summary: Valid Country
       description: Netherlands entry

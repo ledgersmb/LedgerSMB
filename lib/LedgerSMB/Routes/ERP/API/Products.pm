@@ -726,8 +726,9 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Partsgroup'
-                    example:
-                      $ref: '#/components/examples/validPartsgroup'
+              examples:
+                validPartsgroups:
+                  $ref: '#/components/examples/validPartsgroups'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -912,8 +913,9 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Pricegroup'
-                    example:
-                      $ref: '#/components/examples/validPricegroup'
+              examples:
+                validPricegroups:
+                  $ref: '#/components/examples/validPricegroups'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -1098,9 +1100,9 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Warehouse'
-                    example:
-                      validWarehouse:
-                        $ref: '#/components/examples/validWarehouse'
+              examples:
+                validWarehouses:
+                  $ref: '#/components/examples/validWarehouses'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -1326,6 +1328,15 @@ components:
         description:
           type: string
   examples:
+    validPartsgroups:
+      summary: Valid Partsgroups (collection response)
+      description: Parts groups collection response
+      value:
+        _links: []
+        items:
+        - id: 1
+          parent: null
+          description: Partsgroup1
     validPartsgroup:
       summary: Valid Partsgroup
       description: Partsgroup entry
@@ -1333,12 +1344,28 @@ components:
         id: 1
         parent: null
         description: Partsgroup1
+    validPricegroups:
+      summary: Valid pricegroups (collection response)
+      description: Pricegroups collection response
+      value:
+        _links: []
+        items:
+        - id: 1
+          description: Pricegroup1
     validPricegroup:
       summary: Valid Pricegroup
       description: Pricegroup entry
       value:
         id: 1
         description: Pricegroup1
+    validWarehouses:
+      summary: Valid warehouses (collection response)
+      description: Warehouses collection response
+      value:
+        _links: []
+        items:
+        - id: 1
+          description: Warehouse1
     validWarehouse:
       summary: Valid Warehouse
       description: Warehouse entry

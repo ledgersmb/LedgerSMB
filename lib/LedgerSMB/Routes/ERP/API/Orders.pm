@@ -894,8 +894,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Order'
-                example:
-                  $ref: '#/components/examples/validOrder'
+              examples:
+                validOrders:
+                  $ref: '#/components/examples/validOrders'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -1291,6 +1292,84 @@ components:
                   type: string
                   enum: [SAVED, DELETED]
   examples:
+    validOrders:
+      summary: Valid orders (collection response)
+      description: Orders collection response
+      value:
+        - currency: "USD"
+          dates:
+            order: "2022-09-01"
+            required-by: "2022-10-01"
+          eca:
+            number: "Customer 1"
+            type: "customer"
+            credit_limit:
+              total: 0
+              used: 0
+              available: 0
+            description:
+            entity:
+              control_code: C-0
+              name: Customer 1
+            id: 1
+            pay_to_name:
+          id: "1"
+          "internal-notes": "Internal notes"
+          lines:
+            - required-by: "2022-10-27"
+              description: "A description"
+              discount: 12
+              discount_type: "%"
+              id: 1
+              item: 1
+              notes:
+              part:
+                description: Part 1
+                number: "p1"
+                onhand: "0"
+                unit: "ea"
+                weight: "0"
+              price: 56.78
+              price_fixated: false
+              qty: 1
+              serialnumber: "1234567890"
+              total: 49.9664
+              unit: "lbs"
+          lines_total: 49.9664
+          notes: "Notes"
+          "order-number": "order 345"
+          "po-number": "po 456"
+          "quote-number": ""
+          #TODO: Add/debug ship-to
+          #"ship-to": "ship to there"
+          "ship-via": "ship via"
+          "shipping-point": "shipping from here"
+          taxes:
+            "2150":
+              amount: "2.50"
+              basis: "49.97"
+              tax:
+                category: "2150"
+                name: Sales Tax
+                rate: "0.05"
+          taxes_total: 2.50
+          total: 52.4664
+          type: customer
+          workflow:
+            actions:
+              - delete
+              - e_mail
+              - print
+              - print_and_save
+              - print_and_save_as_new
+              - purchase_order
+              - quotation
+              - sales_invoice
+              - save
+              - save_as_new
+              - ship_to
+              - update
+            state: SAVED
     validOrder:
       summary: Example Order
       description: Order entry
