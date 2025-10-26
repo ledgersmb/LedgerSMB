@@ -509,8 +509,9 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/SIC'
-                    example:
-                      $ref: '#/components/examples/validSIC'
+              examples:
+                validSICs:
+                  $ref: '#/components/examples/validSICs'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -698,8 +699,9 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/BusinessType'
-                    example:
-                      $ref: '#/components/examples/validBusinessType'
+              examples:
+                validBusinessTypes:
+                  $ref: '#/components/examples/validBusinessTypes'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -878,12 +880,29 @@ components:
       schema:
         type: string
   examples:
+    validSICs:
+      summary: Valid SICs (collection response)
+      description: SIC collection response
+      value:
+        _links: []
+        items:
+        - code: "541510"
+          description: Design of computer systems
     validSIC:
       summary: Valid SIC
       description: Standard Industry Code
       value:
         code: "541510"
         description: Design of computer systems
+    validBusinessTypes:
+      summary: Valid Business Types (collection response)
+      description: Business Types collection response
+      value:
+        _links: []
+        items:
+        - id: 1
+          description: Big customer
+          discount: 0.05
     validBusinessType:
       summary: Valid Business Type
       description: Business Type Entry

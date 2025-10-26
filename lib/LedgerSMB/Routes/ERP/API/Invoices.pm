@@ -1019,8 +1019,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Invoice'
-                example:
-                  $ref: '#/components/examples/validInvoice'
+              examples:
+                validInvoices:
+                  $ref: '#/components/examples/validInvoices'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -1497,6 +1498,100 @@ components:
                   type: string
                   enum: [INITIAL, SAVED, POSTED, ONHOLD, VOIDED, REVERSED, DELETED]
   examples:
+    validInvoices:
+      summary: Valid invoices (collection response)
+      description: Invoices collection response
+      value:
+        - account:
+            accno: "1200"
+            description: AR
+          currency: "USD"
+          dates:
+            created: "2022-09-01"
+            due: "2022-10-01"
+            book: "2022-10-05"
+          description:
+          eca:
+            number: "Customer 1"
+            type: "customer"
+            credit_limit:
+              total: 0
+              used: 0
+              available: 0
+            description:
+            entity:
+              control_code: C-0
+              name: Customer 1
+            id: 1
+            pay_to_name:
+          id: "1"
+          "internal-notes": "Internal notes"
+          "invoice-number": "2389434"
+          lines:
+            - delivery_date: "2022-10-27"
+              description: "A description"
+              discount: 12
+              discount_type: "%"
+              id: 1
+              item: 1
+              notes:
+              part:
+                description: Part 1
+                number: "p1"
+                onhand: "0"
+                unit: "ea"
+                weight: "0"
+              price: 56.78
+              price_fixated: false
+              qty: 1
+              serialnumber: "1234567890"
+              total: 49.97
+              unit: "lbs"
+          lines_total: 49.97
+          notes: "Notes"
+          "order-number": "order 345"
+          #TODO: Add payments here
+          #payments:
+          #  - account:
+          #      accno: "5010"
+          #    date: "2022-11-05"
+          #    description: Payment 1
+          #    amount: 20
+          #    memo: "depot"
+          #    source: "visa"
+          "po-number": "po 456"
+          "quote-number": ""
+          #TODO: Add/debug ship-to
+          #"ship-to": "ship to there"
+          "ship-via": "ship via"
+          "shipping-point": "shipping from here"
+          taxes:
+            "2150":
+              amount: 6.78
+              "base-amount": 50
+              "calculated-amount": 2.5
+              source: "Part 1"
+              memo: "tax memo"
+              tax:
+                category: "2150"
+                name: Sales Tax
+                rate: "0.05"
+          taxes_total: 6.78
+          total: 56.75
+          type: customer
+          workflow:
+            actions:
+              - approve
+              - copy_to_new
+              - del
+              - edit_and_save
+              - new_screen
+              - sales_order
+              - save_info
+              - schedule
+              - ship_to
+              - update
+            state: SAVED
     validInvoice:
       summary: Example Invoice
       description: Invoice entry

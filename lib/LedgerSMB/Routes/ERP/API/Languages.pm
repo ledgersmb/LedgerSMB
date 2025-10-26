@@ -322,8 +322,9 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Language'
-                    example:
-                      $ref: '#/components/examples/validLanguage'
+              examples:
+                validLanguages:
+                  $ref: '#/components/examples/validLanguages'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -504,6 +505,18 @@ components:
           type: string
           example: French (Canada)
   examples:
+    validLanguages:
+      summary: Valid languages (collection response)
+      description: languages collection response
+      value:
+        _links: []
+        items:
+        - code: fr_CA
+          default: false
+          description: French (Canada)
+        - code: nl_NL
+          default: false
+          description: Dutch (Netherlands)
     validLanguage:
       summary: Valid Language
       description: French Canadian entry
