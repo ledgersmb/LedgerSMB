@@ -287,8 +287,9 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/GIFI'
-                    example:
-                        $ref: '#/components/examples/validGIFI'
+              examples:
+                validGIFIs:
+                  $ref: '#/components/examples/validGIFIs'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -457,6 +458,14 @@ components:
           type: string
           minLength: 1
   examples:
+    validGIFIs:
+      summary: Valid GIFIs (collection response)
+      description: Collection response
+      value:
+        _links: []
+        items:
+        - accno: "99999"
+          description: Test GIFI
     validGIFI:
       summary: Valid GIFI
       description: French Canadian entry
