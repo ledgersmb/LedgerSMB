@@ -268,7 +268,7 @@ paths:
       tags:
         - GIFI
       summary: Get a list of GIFI
-      operationId: getWIFIs
+      operationId: getGIFIs
       responses:
         200:
           description: Returns the full set of GIFI codes
@@ -301,7 +301,7 @@ paths:
       tags:
         - GIFI
       summary: Create a single GIFI
-      operationId: postWIFI
+      operationId: postGIFI
       requestBody:
         content:
           application/json:
@@ -338,7 +338,7 @@ paths:
       tags:
         - GIFI
       summary: Get a single GIFI
-      operationId: getWIFIById
+      operationId: getGIFIById
       responses:
         200:
           description: ...
@@ -366,7 +366,7 @@ paths:
       tags:
         - GIFI
       summary: Put a single GIFI
-      operationId: putWIFIById
+      operationId: putGIFIById
       parameters:
         - $ref: '#/components/parameters/if-match'
       requestBody:
@@ -406,7 +406,7 @@ paths:
       tags:
         - GIFI
       summary: Delete a single GIFI
-      operationId: deleteWIFIById
+      operationId: deleteGIFIById
       parameters:
         - $ref: '#/components/parameters/if-match'
       responses:
@@ -424,7 +424,7 @@ paths:
       tags:
         - GIFI
       summary: Update a single GIFI
-      operationId: updateWIFIById
+      operationId: updateGIFIById
       parameters:
         - $ref: '#/components/parameters/if-match'
       responses:
