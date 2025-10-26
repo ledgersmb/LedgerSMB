@@ -813,11 +813,11 @@ sub _post_invoices {
 
                     my $amount = $base*$tax->{tax}->{rate};
                     $line->{taxes}->{$tax->{tax}->{accno}} = {
-                        base   => $base,
+                        'base-amount'   => $base,
                         rate   => $tax->{tax}->{rate},
                         amount => $amount,
                     };
-                    $inv->{taxes}->{$tax->{tax}->{accno}}->{base}   += $base;
+                    $inv->{taxes}->{$tax->{tax}->{accno}}->{'base-amount'}   += $base;
                     $inv->{taxes}->{$tax->{tax}->{accno}}->{amount} += $amount;
                     $inv->{taxes}->{$tax->{tax}->{accno}}->{tax} = $tax->{tax};
                 }
@@ -989,7 +989,7 @@ sub _post_invoices {
         die $asth->errstr
             if $asth->err;
 
-        $sth->execute($tax->{'base'}, $tax->{tax}->{rate}, $entry_id)
+        $sth->execute($tax->{'base-amount'}, $tax->{tax}->{rate}, $entry_id)
             or die $sth->errstr;
     }
     $wf->execute_action( 'post' ); # move to SAVED state
