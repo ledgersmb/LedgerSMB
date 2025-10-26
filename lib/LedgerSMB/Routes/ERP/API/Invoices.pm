@@ -546,7 +546,7 @@ sub _post_invoices {
             #
             my $sth = $env->{'lsmb.db'}->prepare(
                 q|
-                    SELECT a.accno as category, a.description, t.rate, a.id
+                    SELECT a.accno as category, a.description, t.rate, a.id, t.chart_id
                       FROM account a JOIN tax t ON t.chart_id = a.id
                       WHERE a.accno = ?
                       AND coalesce(validto::timestamp, 'infinity')
@@ -733,7 +733,9 @@ sub _post_invoices {
           or die $env->{'lsmb.db'}->errstr;
         $sth->execute($inv->{eca}->{id}, $inv->{transdate})
             or die $sth->errstr;
-        $inv->{taxes} = $sth->fetchall_hashref('accno');
+        while (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
+            $inv->{taxes}->{$ref->{accno}} = { tax => $ref };
+        }
         die $sth->errstr
             if $sth->err;
         if (keys $inv->{taxes}->%* and keys %part_qty) {
@@ -795,16 +797,16 @@ sub _post_invoices {
 
                 for my $tax (@taxes) {
                     next unless exists $part_tax{$line->{part}->{id}}->{$tax->{accno}};
-                    if ($pass != $tax->{pass}) {
+                    if ($pass != $tax->{tax}->{pass}) {
                         $base += $passtax;
                         $passtax = 0;
-                        $pass = $tax->{pass};
+                        $pass = $tax->{tax}->{pass};
                     }
 
-                    my $amount = $base*$tax->{rate};
-                    $line->{taxes}->{$tax->{accno}} = {
+                    my $amount = $base*$tax->{tax}->{rate};
+                    $line->{taxes}->{$tax->{tax}->{accno}} = {
                         base   => $base,
-                        rate   => $tax->{rate},
+                        rate   => $tax->{tax}->{rate},
                         amount => $amount,
                     };
                     $inv->{taxes}->{$tax->{accno}}->{base}   += $base;
@@ -813,6 +815,7 @@ sub _post_invoices {
             }
         }
     }
+
     ###BUG: These amounts in don't have these names in the invoice resource!!!
     $inv->{taxes_total} =
         reduce { $a + $b->{amount} } LedgerSMB::PGNumber->new(0), values $inv->{taxes}->%*;
@@ -822,6 +825,8 @@ sub _post_invoices {
     # (on the totals, that is) -- how to work that into the line-items??
 
 
+        use Data::Dumper;
+        print STDERR Dumper( $inv->{taxes} ) . "\n";
     ###TODO: Add multi-currency support
     $inv->{amount_tc}    = $inv->{amount};
     $inv->{netamount_tc} = $inv->{netamount};
@@ -967,7 +972,7 @@ sub _post_invoices {
         |)
         or die $env->{'lsmb.db'}->errstr;
     for my $tax (values $inv->{taxes}->%*) {
-        $asth->execute($inv_id, undef, $tax->{chart_id},
+        $asth->execute($inv_id, undef, $tax->{tax}->{chart_id},
                        -$sign*$tax->{amount}, -$sign*$tax->{amount},
                        $inv->{currency}, $inv->{transdate},
                        $tax->{source}, $tax->{memo})
