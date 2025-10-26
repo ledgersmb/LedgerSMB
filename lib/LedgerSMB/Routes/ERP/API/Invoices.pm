@@ -796,7 +796,15 @@ sub _post_invoices {
                 my $pass = 0;
 
                 for my $tax (@taxes) {
-                    next unless exists $part_tax{$line->{part}->{id}}->{$tax->{accno}};
+                    $env->{'psgix.logger'}->(
+                        {
+                            level => 'debug',
+                            message => "Considering tax $tax->{tax}->{accnon} for part $line->{part}->{id}" });
+                    next unless exists $part_tax{$line->{part}->{id}}->{$tax->{tax}->{accno}};
+                    $env->{'psgix.logger'}->(
+                        {
+                            level => 'debug',
+                            message => "processing tax for part ID $line->{part}->{id}" });
                     if ($pass != $tax->{tax}->{pass}) {
                         $base += $passtax;
                         $passtax = 0;
@@ -809,8 +817,9 @@ sub _post_invoices {
                         rate   => $tax->{tax}->{rate},
                         amount => $amount,
                     };
-                    $inv->{taxes}->{$tax->{accno}}->{base}   += $base;
-                    $inv->{taxes}->{$tax->{accno}}->{amount} += $amount;
+                    $inv->{taxes}->{$tax->{tax}->{accno}}->{base}   += $base;
+                    $inv->{taxes}->{$tax->{tax}->{accno}}->{amount} += $amount;
+                    $inv->{taxes}->{$tax->{tax}->{accno}}->{tax} = $tax->{tax};
                 }
             }
         }
@@ -825,8 +834,6 @@ sub _post_invoices {
     # (on the totals, that is) -- how to work that into the line-items??
 
 
-        use Data::Dumper;
-        print STDERR Dumper( $inv->{taxes} ) . "\n";
     ###TODO: Add multi-currency support
     $inv->{amount_tc}    = $inv->{amount};
     $inv->{netamount_tc} = $inv->{netamount};
@@ -982,7 +989,7 @@ sub _post_invoices {
         die $asth->errstr
             if $asth->err;
 
-        $sth->execute($tax->{'base'}, $tax->{rate}, $entry_id)
+        $sth->execute($tax->{'base'}, $tax->{tax}->{rate}, $entry_id)
             or die $sth->errstr;
     }
     $wf->execute_action( 'post' ); # move to SAVED state
