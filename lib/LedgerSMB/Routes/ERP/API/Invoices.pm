@@ -545,7 +545,7 @@ sub _post_invoices {
             #
             my $sth = $env->{'lsmb.db'}->prepare(
                 q|
-                    SELECT a.accno as category, a.description, t.rate, a.id
+                    SELECT a.accno as category, a.description, t.rate, a.id, t.chart_id
                       FROM account a JOIN tax t ON t.chart_id = a.id
                       WHERE a.accno = ?
                       AND coalesce(validto::timestamp, 'infinity')
@@ -617,6 +617,20 @@ sub _post_invoices {
         uniq map { $_->{part}->{id} } $inv->{lines}->@*
         );
 
+    $inv->{transdate} //= $inv->{crdate};
+    $inv->{crdate} //= $inv->{transdate};
+    if (not $inv->{transdate}) {
+        $env->{'psgix.logger'}->(
+            {
+                level => 'info',
+                message => 'No transaction date supplied; setting default' });
+        my ($now) = $env->{'lsmb.db'}->selectrow_array('SELECT NOW()::date')
+            or die $env->{'lsmb.db'}->errstr;
+
+        $inv->{crdate} =
+            $inv->{transdate} =
+            $now;
+    }
 
     # Step 2: Run the price matrix
     if (keys %part_qty) {
@@ -718,7 +732,9 @@ sub _post_invoices {
           or die $env->{'lsmb.db'}->errstr;
         $sth->execute($inv->{eca}->{id}, $inv->{transdate})
             or die $sth->errstr;
-        $inv->{taxes} = $sth->fetchall_hashref('accno');
+        while (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
+            $inv->{taxes}->{$ref->{accno}} = { tax => $ref };
+        }
         die $sth->errstr
             if $sth->err;
         if (keys $inv->{taxes}->%* and keys %part_qty) {
@@ -779,25 +795,35 @@ sub _post_invoices {
                 my $pass = 0;
 
                 for my $tax (@taxes) {
-                    next unless exists $part_tax{$line->{part}->{id}}->{$tax->{accno}};
-                    if ($pass != $tax->{pass}) {
+                    $env->{'psgix.logger'}->(
+                        {
+                            level => 'debug',
+                            message => "Considering tax $tax->{tax}->{accnon} for part $line->{part}->{id}" });
+                    next unless exists $part_tax{$line->{part}->{id}}->{$tax->{tax}->{accno}};
+                    $env->{'psgix.logger'}->(
+                        {
+                            level => 'debug',
+                            message => "processing tax for part ID $line->{part}->{id}" });
+                    if ($pass != $tax->{tax}->{pass}) {
                         $base += $passtax;
                         $passtax = 0;
-                        $pass = $tax->{pass};
+                        $pass = $tax->{tax}->{pass};
                     }
 
-                    my $amount = $base*$tax->{rate};
-                    $line->{taxes}->{$tax->{accno}} = {
-                        base   => $base,
-                        rate   => $tax->{rate},
+                    my $amount = $base*$tax->{tax}->{rate};
+                    $line->{taxes}->{$tax->{tax}->{accno}} = {
+                        'base-amount'   => $base,
+                        rate   => $tax->{tax}->{rate},
                         amount => $amount,
                     };
-                    $inv->{taxes}->{$tax->{accno}}->{base}   += $base;
-                    $inv->{taxes}->{$tax->{accno}}->{amount} += $amount;
+                    $inv->{taxes}->{$tax->{tax}->{accno}}->{'base-amount'}   += $base;
+                    $inv->{taxes}->{$tax->{tax}->{accno}}->{amount} += $amount;
+                    $inv->{taxes}->{$tax->{tax}->{accno}}->{tax} = $tax->{tax};
                 }
             }
         }
     }
+
     ###BUG: These amounts in don't have these names in the invoice resource!!!
     $inv->{taxes_total} =
         reduce { $a + $b->{amount} } LedgerSMB::PGNumber->new(0), values $inv->{taxes}->%*;
@@ -952,7 +978,7 @@ sub _post_invoices {
         |)
         or die $env->{'lsmb.db'}->errstr;
     for my $tax (values $inv->{taxes}->%*) {
-        $asth->execute($inv_id, undef, $tax->{tax}->{id},
+        $asth->execute($inv_id, undef, $tax->{tax}->{chart_id},
                        -$sign*$tax->{amount}, -$sign*$tax->{amount},
                        $inv->{currency}, $inv->{transdate},
                        $tax->{source}, $tax->{memo})
