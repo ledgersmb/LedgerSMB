@@ -332,46 +332,47 @@ sub invoice_details {
 
             push( @{ $form->{linetotal} }, $form->{"linetotal_$i"} );
 
-            @taxaccounts = Tax::init_taxes(
-                $form,
-                $form->{"taxaccounts_$i"},
-                $form->{"taxaccounts"}
-            );
-
-            my $ml       = 1;
-            my @taxrates = ();
-
             $tax = 0;
+            my @taxrates = ();
+                @taxaccounts = Tax::init_taxes(
+                    $form,
+                    $form->{"taxaccounts_$i"},
+                    $form->{"taxaccounts"}
+                    );
 
-            if ( $form->{taxincluded} ) {
-                $taxamount =
-                  Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 1 );
-                $taxbase = ( $linetotal - $taxamount );
-                $tax += Tax::extract_taxes( \@taxaccounts, $form, $linetotal );
-            }
-            else {
-                $taxamount =
-                  Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 0 );
-                $tax += Tax::apply_taxes( \@taxaccounts, $form, $linetotal );
-            }
+                my $ml       = 1;
 
-            foreach my $item (@taxaccounts) {
-                push @taxrates, 100 * $item->rate;
-                if (defined $form->{"mt_amount_" . $item->account}){
-                    $taxaccounts{ $item->account } +=
-                        $form->{"mt_amount_" . $item->account};
-                    $taxbase{ $item->account } +=
-                        $form->{"mt_basis_" . $item->account};
-                    next;
-                }
-                $taxaccounts{ $item->account } += $item->value;
+            if (not $form->{manual_tax}) {
                 if ( $form->{taxincluded} ) {
-                    $taxbase{ $item->account } += $taxbase;
+                    $taxamount =
+                        Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 1 );
+                    $taxbase = ( $linetotal - $taxamount );
+                    $tax += Tax::extract_taxes( \@taxaccounts, $form, $linetotal );
                 }
                 else {
-                    $taxbase{ $item->account } += $linetotal;
+                    $taxamount =
+                        Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 0 );
+                    $tax += Tax::apply_taxes( \@taxaccounts, $form, $linetotal );
                 }
             }
+
+                foreach my $item (@taxaccounts) {
+                    push @taxrates, 100 * $item->rate;
+                    if (defined $form->{"mt_amount_" . $item->account}){
+                        $taxaccounts{ $item->account } +=
+                            $form->{"mt_amount_" . $item->account};
+                        $taxbase{ $item->account } +=
+                            $form->{"mt_basis_" . $item->account};
+                        next;
+                    }
+                    $taxaccounts{ $item->account } += $item->value;
+                    if ( $form->{taxincluded} ) {
+                        $taxbase{ $item->account } += $taxbase;
+                    }
+                    else {
+                        $taxbase{ $item->account } += $linetotal;
+                    }
+                }
 
             push(
                 @{ $form->{lineitems} },
@@ -505,43 +506,95 @@ sub invoice_details {
         }
     }
 
-    $tax = 0;
-    foreach my $item ( sort keys %taxaccounts ) {
-        if ( $form->round_amount( $taxaccounts{$item}, 2 ) ) {
-            $tax += $taxamount = $form->round_amount( $taxaccounts{$item}, 2 );
+    if (not $form->{manual_tax}) {
+        $tax = 0;
+        foreach my $item ( sort keys %taxaccounts ) {
+            if ( $form->round_amount( $taxaccounts{$item}, 2 ) ) {
+                $tax += $taxamount = $form->round_amount( $taxaccounts{$item}, 2 );
 
-            push(
-                @{ $form->{taxbaseinclusive} },
-                $form->{"${item}_taxbaseinclusive"} =
-                  $form->format_amount( $myconfig, $taxbase{$item} + $tax, 2 )
-            );
+                push(
+                    @{ $form->{taxbaseinclusive} },
+                    $form->{"${item}_taxbaseinclusive"} =
+                    $form->format_amount( $myconfig, $taxbase{$item} + $tax, 2 )
+                    );
 
-            push(
-                @{ $form->{taxbase} },
-                $form->{"${item}_taxbase"} =
-                  $form->format_amount( $myconfig, $taxbase{$item}, 2 )
-            );
-            push(
-                @{ $form->{taxsummary} },
-                $form->format_amount( $myconfig, $taxbase{$item} + $taxamount, 2 )
-            );
+                push(
+                    @{ $form->{taxbase} },
+                    $form->{"${item}_taxbase"} =
+                    $form->format_amount( $myconfig, $taxbase{$item}, 2 )
+                    );
+                push(
+                    @{ $form->{taxsummary} },
+                    $form->format_amount( $myconfig, $taxbase{$item} + $taxamount, 2 )
+                    );
 
-            push(
-                @{ $form->{tax} },
-                $form->{"${item}_tax"} =
-                  $form->format_amount( $myconfig, $taxamount, 2 )
-            );
+                push(
+                    @{ $form->{tax} },
+                    $form->{"${item}_tax"} =
+                    $form->format_amount( $myconfig, $taxamount, 2 )
+                    );
 
-            push( @{ $form->{taxdescription} },
-                $form->{_accno_descriptions}->{$item} );
+                push( @{ $form->{taxdescription} },
+                      $form->{_accno_descriptions}->{$item} );
 
-            $form->{"${item}_taxrate"} =
-              $form->format_amount( $myconfig, $form->{"${item}_rate"} * 100 );
-            push( @{ $form->{taxrate} },   $form->{"${item}_taxrate"} );
-            push( @{ $form->{taxnumber} }, $form->{"${item}_taxnumber"} );
+                $form->{"${item}_taxrate"} =
+                    $form->format_amount( $myconfig, $form->{"${item}_rate"} * 100 );
+                push( @{ $form->{taxrate} },   $form->{"${item}_taxrate"} );
+                push( @{ $form->{taxnumber} }, $form->{"${item}_taxnumber"} );
+            }
         }
     }
+    else {
+        $tax = 0;
+        my $query = <<~'SQL';
+           select accno, a.description, taxnumber, te.rate*100 as rate,
+                  tax_basis, amount_tc as amount
+             from acc_trans acc
+                  join tax_extended te
+                       on acc.entry_id = te.entry_id
+                  join account a
+                       on acc.chart_id = a.id
+                  join tax
+                       on a.id = tax.chart_id
+            where trans_id = ?
+           SQL
+        my $sth = $dbh->prepare( $query )
+            or die $form->dberror( $query );
 
+        $sth->execute( $form->{id} )
+            or die $form->dberror( $query );
+
+        while ( my $ref = $sth->fetchrow_hashref( 'NAME_lc' ) ) {
+            if ( my $taxamount = $form->round_amount( $ref->{amount}, 2 ) ) {
+                $tax += $taxamount;
+                push(
+                    @{ $form->{taxbase} },
+                    $form->{"$ref->{accno}_taxbase"} =
+                    $form->format_amount( $myconfig, $ref->{tax_basis}, 2 )
+                    );
+
+                push(
+                    @{ $form->{taxsummary} },
+                    $form->format_amount( $myconfig, $ref->{tax_basis} + $taxamount, 2 )
+                    );
+
+                push(
+                    @{ $form->{tax} },
+                    $form->{"$ref->{accno}_tax"} =
+                    $form->format_amount( $myconfig, $taxamount, 2 )
+                    );
+
+                push( @{ $form->{taxdescription} }, $ref->{description} );
+
+                push( @{ $form->{taxrate} },
+                      $form->{"$ref->{accno}_taxrate"} =
+                      $form->format_amount( $myconfig, $ref->{rate} )
+                    );
+
+                push( @{ $form->{taxnumber} }, $ref->{taxnumber} );
+            }
+        }
+    }
     # adjust taxes for lineitems
     my $total = 0;
     for ( @{ $form->{lineitems} } ) {
