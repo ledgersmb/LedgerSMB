@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.1
-   Date:     2024-08-14
+   Version:  1.2
+   Date:     2025-10-29
    File:     invoice.html
    Set:      demo
 
@@ -10,7 +10,7 @@ releases. No explicit versioning was applied before 2021-01-04.
 
 Version   Changes
 1.1       Extended with 'shiptoattn' (at the attention of)
-
+1.2       Add missing space before 'on' in tax specification row
 
 -?>
 <!DOCTYPE html>
@@ -136,7 +136,7 @@ Version   Changes
           </tr><?lsmb FOREACH tax ?><?lsmb loop_count = loop.index ?>
           <tr>
             <th colspan="7" align="right">
-            <?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?>on
+            <?lsmb taxdescription.${loop_count}.replace("\n","<br />") ?> on
             <?lsmb taxbase.${loop_count} ?> @ <?lsmb taxrate.${loop_count} ?> %</th>
             <td colspan="2" align="right"><?lsmb tax.${loop_count} ?></td>
           </tr><?lsmb END ?><?lsmb END -?>
