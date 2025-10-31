@@ -3,6 +3,15 @@
 Changelog for 1.13 Series
 Released 2025-10-04
 
+Changelog for 1.13.1
+* Fix for printing of invoices with manual taxes (#9116)
+* Fix for comparisons in the Income Statement report (#9114)
+* Fix for tax calculations in invoice API calls without taxes (#9111)
+* Fix spacing in the HTML invoice template (#9118)
+* Fix for WA tax module (#9092)
+* Fix examples in OpenAPI API documentation (#9109)
+
+
 Changelog for 1.13.0
 
 Added functionalities
