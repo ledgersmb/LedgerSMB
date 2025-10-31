@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.13.0-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-10-04 16:35+0000\n"
+"POT-Creation-Date: 2025-10-31 11:36+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2025\n"
 "Language-Team: Dutch (https://app.transifex.com/ledgersmb/teams/58325/nl/)\n"
 "Language: nl\n"
@@ -1138,7 +1138,7 @@ msgstr "Gegroepeerd Afdrukken ID ontbreekt"
 
 #: UI/src/components/ImportCSV-Base.vue:90
 msgid "Batch Information"
-msgstr ""
+msgstr "Groep informatie"
 
 #: old/bin/aa.pl:707
 msgid "Batch Name"
@@ -2265,7 +2265,7 @@ msgstr "Aftrek typen"
 
 #: UI/src/components/ConfigTable.vue:53
 msgid "Default"
-msgstr ""
+msgstr "Standaard"
 
 #: UI/setup/upgrade_info.html:80
 msgid "Default AP"
@@ -8658,7 +8658,7 @@ msgstr ""
 msgid "label"
 msgstr "label"
 
-#: UI/src/views/Home.vue:43 UI/src/views/Home.vue:58
+#: UI/src/views/Home.vue:58 UI/src/views/Home.vue:43
 msgid "mailing lists"
 msgstr ""
 

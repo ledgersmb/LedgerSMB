@@ -1,16 +1,16 @@
 #
 # Translators:
-# Arne Hanssen <arne.senja@gmail.com>, 2025
 # Håvard Sørli <havard@sorli.no>, 2025
-# Stig Berg <stig@tmb.no>, 2025
 # Erik Huelsmann <ehuels@gmail.com>, 2025
+# Stig Berg <stig@tmb.no>, 2025
+# Arne Hanssen <arne.senja@gmail.com>, 2025
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.13.0-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-10-04 16:35+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2025\n"
+"POT-Creation-Date: 2025-10-31 11:36+0000\n"
+"Last-Translator: Arne Hanssen <arne.senja@gmail.com>, 2025\n"
 "Language-Team: Norwegian Bokmål (https://app.transifex.com/ledgersmb/teams/"
 "58325/nb/)\n"
 "Language: nb\n"
@@ -182,7 +182,7 @@ msgid "Access Denied"
 msgstr "Nektet Adgang"
 
 msgid "Access denied: Bad username or password"
-msgstr ""
+msgstr "Tilgang nektet: Feil brukernavn eller passord"
 
 #: lib/LedgerSMB/Report/Aging.pm:100
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:226
@@ -537,7 +537,7 @@ msgstr "Legg til/Oppdatér"
 
 #: UI/src/components/ConfigTableRow.vue:44
 msgid "Added"
-msgstr ""
+msgstr "Lagt til"
 
 #: lib/LedgerSMB/Scripts/business_unit.pm:179
 msgid "Added id [_1]"
@@ -545,7 +545,7 @@ msgstr "Lagt til nr [_1]"
 
 #: UI/src/components/ConfigTableRow.vue:38
 msgid "Adding"
-msgstr ""
+msgstr "Legger til"
 
 #: old/bin/aa.pl:738 old/bin/arap.pl:169 old/bin/ic.pl:1657 old/bin/io.pl:1576
 #: old/bin/ir.pl:419 old/bin/is.pl:477 old/bin/oe.pl:483 old/bin/pe.pl:449
@@ -1140,7 +1140,7 @@ msgstr "Batch ID mangler"
 
 #: UI/src/components/ImportCSV-Base.vue:90
 msgid "Batch Information"
-msgstr ""
+msgstr "Batch Informasjon"
 
 #: old/bin/aa.pl:707
 msgid "Batch Name"
@@ -1622,15 +1622,15 @@ msgstr ""
 
 #: UI/src/views/Countries.vue:20
 msgid "Configure countries"
-msgstr ""
+msgstr "Konfigurer land"
 
 #: UI/src/views/Languages.vue:20
 msgid "Configure languages"
-msgstr ""
+msgstr "Konfigurer språk"
 
 #: UI/src/views/Pricegroups.vue:19
 msgid "Configure pricegroups"
-msgstr ""
+msgstr "Konfigurer prisgrupper"
 
 #: UI/src/views/Warehouses.vue:15
 msgid "Configure warehouses"
@@ -1773,7 +1773,7 @@ msgstr "Kunne ikke laste Mal fra DB"
 
 #: UI/src/components/ServerUI.js:69
 msgid "Could not connect to server"
-msgstr ""
+msgstr "Kunne ikke koble til server"
 
 #: old/bin/ir.pl:1243 old/bin/is.pl:1359 old/bin/oe.pl:1258
 msgid "Could not save the data.  Please try again"
@@ -2268,7 +2268,7 @@ msgstr "Fradragsklasser"
 
 #: UI/src/components/ConfigTable.vue:53
 msgid "Default"
-msgstr ""
+msgstr "Standard"
 
 #: UI/setup/upgrade_info.html:80
 msgid "Default AP"
@@ -2373,7 +2373,7 @@ msgstr "Slettet"
 
 #: UI/src/components/ConfigTableRow.vue:48
 msgid "Deleting"
-msgstr ""
+msgstr "Sletter"
 
 #: UI/accounts/edit.html:105 UI/accounts/edit.html:581
 #: UI/file/internal-file-list.html:32 UI/reconciliation/report.html:465
@@ -2631,7 +2631,7 @@ msgstr "Doble leverandørnummer"
 
 #: UI/src/components/ConfigTable.vue:110
 msgid "Download: "
-msgstr ""
+msgstr "Last ned:"
 
 #: old/bin/aa.pl:1615
 msgid "Draft Posted"
@@ -3082,7 +3082,7 @@ msgstr "Feil fra Funksjon "
 
 #: UI/src/components/ConfigTable.vue:71
 msgid "Error loading data..."
-msgstr ""
+msgstr "Feil ved lastng av data..."
 
 #: lib/LedgerSMB/Scripts/account.pm:162
 msgid "Error: Cannot include summary account in other dropdown menus"
@@ -3162,7 +3162,7 @@ msgstr "Ekstra Brukt"
 
 #: UI/src/views/Home.vue:36
 msgid "FAQ"
-msgstr ""
+msgstr "OSS"
 
 #: UI/budgetting/budget_entry.html:57 UI/journal/journal_entry.html:110
 #: UI/journal/journal_entry.html:154
@@ -3191,11 +3191,11 @@ msgstr ""
 
 #: UI/src/components/ConfigTableRow.vue:73 UI/src/components/ConfigTable.vue:33
 msgid "Failed"
-msgstr ""
+msgstr "Mislykket"
 
 #: UI/src/components/ImportCSV-Base.vue:58
 msgid "Failed to process server response"
-msgstr ""
+msgstr "Mislyktes i å behandle server respons"
 
 #: old/bin/pe.pl:1086
 msgid "Failed to save order!"
@@ -3203,11 +3203,11 @@ msgstr "Kunne ikke lagre Ordre!"
 
 #: UI/src/components/ImportCSV-Base.vue:51
 msgid "Failure processing CSV"
-msgstr ""
+msgstr "Feil ved behandling av CSV"
 
 #: UI/src/components/ImportCSV-Base.vue:44
 msgid "Failure sending CSV"
-msgstr ""
+msgstr "Feil ved sending av CSV"
 
 #: templates/demo/ar_transaction.html:48 templates/demo/ar_transaction.tex:43
 #: templates/demo/letterhead.tex:49
@@ -3521,7 +3521,7 @@ msgstr "Generer Salgsordre fra Innkjøpsordre"
 
 #: UI/src/components/ConfigTableRow.vue:31
 msgid "Getting latest data"
-msgstr ""
+msgstr "Henter nyeste data"
 
 #: UI/Contact/divs/person.html:72
 msgid "Given Name"
@@ -3991,7 +3991,7 @@ msgstr "januar"
 
 #: UI/src/components/ServerUI.js:66
 msgid "JavaScript error: "
-msgstr ""
+msgstr "JavaScript feil:"
 
 #: lib/LedgerSMB/Report/Contact/EmployeeSearch.pm:66
 #: UI/Contact/divs/employee.html:70
@@ -4294,12 +4294,12 @@ msgstr "Hente Maler"
 
 #: UI/src/components/ServerUI.machines.js:96
 msgid "Loaded"
-msgstr ""
+msgstr "Lastet"
 
 #: UI/src/components/ServerUI.machines.js:108
 #: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:29
 msgid "Loading..."
-msgstr ""
+msgstr "Laster..."
 
 #: UI/asset/edit_asset.html:135 UI/asset/search_asset.html:122
 #: UI/payments/payment2.html:34 UI/payments/use_overpayment2.html:32
@@ -4324,7 +4324,7 @@ msgstr "Logget ut på grunn av ikke aktivitet"
 
 #: UI/src/views/LoginPage.vue:116
 msgid "Logging in... Please wait."
-msgstr ""
+msgstr "Logger inn... Vennligst vent."
 
 #: UI/setup/credentials.html:78 UI/src/views/LoginPage.vue:106
 msgid "Login"
@@ -4512,7 +4512,7 @@ msgstr "Modell"
 
 #: UI/src/components/ConfigTableRow.vue:156
 msgid "Modify"
-msgstr ""
+msgstr "Endre"
 
 #: lib/LedgerSMB/Report/Timecards.pm:114
 msgid "Mon"
@@ -6468,7 +6468,7 @@ msgstr "Lageret nr [_1]"
 
 #: UI/src/components/ConfigTableRow.vue:57
 msgid "Saving"
-msgstr ""
+msgstr "Lagrer"
 
 #: UI/accounts/edit.html:647
 msgid "Saving Translations..."
@@ -6480,7 +6480,7 @@ msgstr "Lagre [_1] [_2]"
 
 #: UI/src/components/ConfigTableRow.vue:61
 msgid "Saving default"
-msgstr ""
+msgstr "Lagrer standardinnstilling"
 
 #: UI/oe-save-warn.html:12
 msgid "Saving over an existing document.  Continue?"
@@ -6789,7 +6789,7 @@ msgstr "Serienummer"
 
 #: UI/src/components/ServerUI.js:71
 msgid "Server returned insecure response"
-msgstr ""
+msgstr "Server returnerte usikret respons"
 
 #: old/bin/pe.pl:807
 msgid "Service Code"
@@ -7982,7 +7982,7 @@ msgstr "Ukjent"
 
 #: UI/src/components/ServerUI.js:76
 msgid "Unknown (JavaScript) error"
-msgstr ""
+msgstr "Ukjent (JavaScript) feil"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:1136
 msgid ""
@@ -8002,7 +8002,7 @@ msgstr "Ukjent database funnet"
 
 #: UI/src/views/LoginPage.machines.js:89
 msgid "Unknown error preventing login"
-msgstr ""
+msgstr "Ukjent feil hindrer innlogging"
 
 #: lib/LedgerSMB/Report/Unapproved/Batch_Overview.pm:251
 msgid "Unlock"
@@ -8111,7 +8111,7 @@ msgstr "Opplastede priser"
 
 #: UI/src/components/ImportCSV-Base.vue:33
 msgid "Uploading CSV..."
-msgstr ""
+msgstr "Laster opp CSV..."
 
 #: UI/Configuration/rate.html:86 UI/file/attachment_screen.html:46
 #: UI/file/internal-file-list.html:68
@@ -8392,11 +8392,11 @@ msgstr "Vektenhet"
 
 #: UI/src/views/Home.vue:11
 msgid "Welcome to LedgerSMB"
-msgstr ""
+msgstr "Velkommen til LedgerSMB"
 
 #: UI/src/views/Home.vue:13
 msgid "What is LedgerSMB"
-msgstr ""
+msgstr "Hva er LedgerSMB"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:378 lib/LedgerSMB/Upgrade_Tests.pm:600
 msgid ""
@@ -8565,7 +8565,7 @@ msgstr ""
 
 #: UI/src/views/Home.vue:61
 msgid "bug"
-msgstr ""
+msgstr "feil"
 
 #: UI/templates/widget.html:98
 msgid "csv"
@@ -8629,7 +8629,7 @@ msgstr "i år"
 
 #: UI/src/views/Home.vue:17
 msgid "invoicing"
-msgstr ""
+msgstr "fakturerer"
 
 #: lib/LedgerSMB/Scripts/payment.pm:2063
 msgid "is bigger than the amount available"
@@ -8655,13 +8655,13 @@ msgstr ""
 msgid "label"
 msgstr "Etikett"
 
-#: UI/src/views/Home.vue:43 UI/src/views/Home.vue:58
+#: UI/src/views/Home.vue:58 UI/src/views/Home.vue:43
 msgid "mailing lists"
-msgstr ""
+msgstr "e-post lister"
 
 #: UI/src/views/Home.vue:19
 msgid "ordering"
-msgstr ""
+msgstr "bestiller"
 
 #: sql/Pg-database.sql:2457
 msgid "partial disposal"

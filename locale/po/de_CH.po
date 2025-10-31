@@ -3,15 +3,15 @@
 # d34703e27442b8aae408ee1a019d49fd_1d2c70b, 2025
 # Mikkel Høgh <mikkel@hoegh.org>, 2025
 # E, 2025
-# Mikael Arhelger <mikaelarhelger@gmail.com>, 2025
 # Erik Huelsmann <ehuels@gmail.com>, 2025
+# Mikael Arhelger <mikaelarhelger@gmail.com>, 2025
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.13.0-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-10-04 16:35+0000\n"
-"Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2025\n"
+"POT-Creation-Date: 2025-10-31 11:36+0000\n"
+"Last-Translator: Mikael Arhelger <mikaelarhelger@gmail.com>, 2025\n"
 "Language-Team: German (Switzerland) (https://app.transifex.com/ledgersmb/"
 "teams/58325/de_CH/)\n"
 "Language: de_CH\n"
@@ -183,7 +183,7 @@ msgid "Access Denied"
 msgstr "Zugriff verweigert"
 
 msgid "Access denied: Bad username or password"
-msgstr ""
+msgstr "Zugriff verweigert: Falscher Benutzername oder Passwort"
 
 #: lib/LedgerSMB/Report/Aging.pm:100
 #: lib/LedgerSMB/Report/Invoices/Outstanding.pm:226
@@ -538,7 +538,7 @@ msgstr "Hinzufügen/Aktualisieren"
 
 #: UI/src/components/ConfigTableRow.vue:44
 msgid "Added"
-msgstr ""
+msgstr "Hinzugefügt"
 
 #: lib/LedgerSMB/Scripts/business_unit.pm:179
 msgid "Added id [_1]"
@@ -546,7 +546,7 @@ msgstr "id [_1] hinzugefügt"
 
 #: UI/src/components/ConfigTableRow.vue:38
 msgid "Adding"
-msgstr ""
+msgstr "Hinzufügen"
 
 #: old/bin/aa.pl:738 old/bin/arap.pl:169 old/bin/ic.pl:1657 old/bin/io.pl:1576
 #: old/bin/ir.pl:419 old/bin/is.pl:477 old/bin/oe.pl:483 old/bin/pe.pl:449
@@ -1141,7 +1141,7 @@ msgstr "Posten Nr. fehlt"
 
 #: UI/src/components/ImportCSV-Base.vue:90
 msgid "Batch Information"
-msgstr ""
+msgstr "Posten-Information"
 
 #: old/bin/aa.pl:707
 msgid "Batch Name"
@@ -1556,7 +1556,7 @@ msgstr "Verkaufsaufträge kombinieren"
 
 #: UI/src/views/Home.vue:27
 msgid "Community resources"
-msgstr ""
+msgstr "Gemeinschaftliche Ressourcen"
 
 msgid ""
 "Community support for LedgerSMB is a available through various\n"
@@ -1564,6 +1564,9 @@ msgid ""
 "(depending\n"
 "                  on availability of people):"
 msgstr ""
+"Die Unterstützung der Gemeinschaft für LedgerSMB ist über verschiedene\n"
+"Kanäle, die von statisch bis hin zu nahezu in Echtzeit reichen (je nach\n"
+"je nach Verfügbarkeit von Personen):"
 
 #: lib/LedgerSMB/Report/Taxform/Details.pm:81
 #: lib/LedgerSMB/Report/Taxform/Summary.pm:81
@@ -1622,15 +1625,15 @@ msgstr "E-Mail erstellen"
 
 #: UI/src/views/GIFI.vue:22
 msgid "Configure GIFI codes"
-msgstr ""
+msgstr "GIFI-Codes konfigurieren"
 
 #: UI/src/views/SIC.vue:22
 msgid "Configure Standard Industry Codes (SIC)"
-msgstr ""
+msgstr "Konfigurieren Sie Standard-Industrie-Codes (SIC)"
 
 #: UI/src/views/BusinessTypes.vue:20
 msgid "Configure Type of Businesses"
-msgstr ""
+msgstr "Konfigurieren Sie die Art der Unternehmen"
 
 #: UI/src/views/Countries.vue:20
 msgid "Configure countries"
@@ -1638,15 +1641,15 @@ msgstr ""
 
 #: UI/src/views/Languages.vue:20
 msgid "Configure languages"
-msgstr ""
+msgstr "Sprachen konfigurieren"
 
 #: UI/src/views/Pricegroups.vue:19
 msgid "Configure pricegroups"
-msgstr ""
+msgstr "Preisgruppen konfigurieren"
 
 #: UI/src/views/Warehouses.vue:15
 msgid "Configure warehouses"
-msgstr ""
+msgstr "Lagerhäuser konfigurieren"
 
 #: UI/setup/confirm_operation.html:10
 msgid "Confirm Operation"
@@ -1751,7 +1754,7 @@ msgstr ""
 
 #: UI/src/views/Home.vue:51
 msgid "Contributing"
-msgstr ""
+msgstr "Beitragen"
 
 #: lib/LedgerSMB/Report/Contact/EmployeeSearch.pm:62
 #: lib/LedgerSMB/Report/Contact/Search.pm:66
@@ -1788,7 +1791,7 @@ msgstr "Die Template von der Datenbank konnte nicht geladen werden"
 
 #: UI/src/components/ServerUI.js:69
 msgid "Could not connect to server"
-msgstr ""
+msgstr "Die Verbindung zum Server konnte nicht hergestellt werden"
 
 #: old/bin/ir.pl:1243 old/bin/is.pl:1359 old/bin/oe.pl:1258
 msgid "Could not save the data.  Please try again"
@@ -2113,7 +2116,7 @@ msgid "Database exists."
 msgstr "Datenbank existiert."
 
 msgid "Database version mismatch"
-msgstr ""
+msgstr "Datenbank-Version Abweichung"
 
 #: lib/LedgerSMB/Report/Aging.pm:130 lib/LedgerSMB/Report/GL.pm:101
 #: lib/LedgerSMB/Report/Inventory/History.pm:145
@@ -2388,7 +2391,7 @@ msgstr "Gelöscht"
 
 #: UI/src/components/ConfigTableRow.vue:48
 msgid "Deleting"
-msgstr ""
+msgstr "Löschen"
 
 #: UI/accounts/edit.html:105 UI/accounts/edit.html:581
 #: UI/file/internal-file-list.html:32 UI/reconciliation/report.html:465
@@ -2646,7 +2649,7 @@ msgstr "Doppelte Lieferantennummer"
 
 #: UI/src/components/ConfigTable.vue:110
 msgid "Download: "
-msgstr ""
+msgstr "Herunterladen:"
 
 #: old/bin/aa.pl:1615
 msgid "Draft Posted"
@@ -3097,7 +3100,7 @@ msgstr "Fehler aus Funktion:"
 
 #: UI/src/components/ConfigTable.vue:71
 msgid "Error loading data..."
-msgstr ""
+msgstr "Fehler beim Laden von Daten..."
 
 #: lib/LedgerSMB/Scripts/account.pm:162
 msgid "Error: Cannot include summary account in other dropdown menus"
@@ -3178,7 +3181,7 @@ msgstr "Extra gebraucht"
 
 #: UI/src/views/Home.vue:36
 msgid "FAQ"
-msgstr ""
+msgstr "FAQ"
 
 #: UI/budgetting/budget_entry.html:57 UI/journal/journal_entry.html:110
 #: UI/journal/journal_entry.html:154
@@ -3207,7 +3210,7 @@ msgstr ""
 
 #: UI/src/components/ConfigTableRow.vue:73 UI/src/components/ConfigTable.vue:33
 msgid "Failed"
-msgstr ""
+msgstr "Fehlgeschlagen"
 
 #: UI/src/components/ImportCSV-Base.vue:58
 msgid "Failed to process server response"
@@ -3537,7 +3540,7 @@ msgstr "Verkaufsaufträge aus Kaufaufträgen generieren"
 
 #: UI/src/components/ConfigTableRow.vue:31
 msgid "Getting latest data"
-msgstr ""
+msgstr "Neueste Daten abrufen"
 
 #: UI/Contact/divs/person.html:72
 msgid "Given Name"
@@ -4014,7 +4017,7 @@ msgstr "Januar"
 
 #: UI/src/components/ServerUI.js:66
 msgid "JavaScript error: "
-msgstr ""
+msgstr "JavaScript-Fehler:"
 
 #: lib/LedgerSMB/Report/Contact/EmployeeSearch.pm:66
 #: UI/Contact/divs/employee.html:70
@@ -4207,6 +4210,8 @@ msgid ""
 "LedgerSMB is a double entry accounting system offering a wide\n"
 "                  variety of related functionalities, such as"
 msgstr ""
+"LedgerSMB ist ein System für die doppelte Buchführung, welche eine\n"
+"eine Vielzahl von Funktionalitäten offeriert, beispielsweise"
 
 #: UI/setup/upgrade_info.html:73
 msgid ""
@@ -4317,12 +4322,12 @@ msgstr "Vorlagen laden"
 
 #: UI/src/components/ServerUI.machines.js:96
 msgid "Loaded"
-msgstr ""
+msgstr "Geladen"
 
 #: UI/src/components/ServerUI.machines.js:108
 #: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:29
 msgid "Loading..."
-msgstr ""
+msgstr "Geladen..."
 
 #: UI/asset/edit_asset.html:135 UI/asset/search_asset.html:122
 #: UI/payments/payment2.html:34 UI/payments/use_overpayment2.html:32
@@ -4347,7 +4352,7 @@ msgstr "Wegen Inaktivität abgemeldet"
 
 #: UI/src/views/LoginPage.vue:116
 msgid "Logging in... Please wait."
-msgstr ""
+msgstr "Anmelden... Bitte warten Sie."
 
 #: UI/setup/credentials.html:78 UI/src/views/LoginPage.vue:106
 msgid "Login"
@@ -4535,7 +4540,7 @@ msgstr "Modell"
 
 #: UI/src/components/ConfigTableRow.vue:156
 msgid "Modify"
-msgstr ""
+msgstr "Ändern"
 
 #: lib/LedgerSMB/Report/Timecards.pm:114
 msgid "Mon"
@@ -8404,11 +8409,11 @@ msgstr "Gewichtseinheit"
 
 #: UI/src/views/Home.vue:11
 msgid "Welcome to LedgerSMB"
-msgstr ""
+msgstr "Willkommen bei LedgerSMB"
 
 #: UI/src/views/Home.vue:13
 msgid "What is LedgerSMB"
-msgstr ""
+msgstr "Was ist LedgerSMB"
 
 #: lib/LedgerSMB/Upgrade_Tests.pm:378 lib/LedgerSMB/Upgrade_Tests.pm:600
 msgid ""
@@ -8575,11 +8580,11 @@ msgstr "Balance"
 
 #: UI/src/views/Home.vue:18
 msgid "bank reconciliation"
-msgstr ""
+msgstr "Bankkontenabgleich"
 
 #: UI/src/views/Home.vue:61
 msgid "bug"
-msgstr ""
+msgstr "Fehler"
 
 #: UI/templates/widget.html:98
 msgid "csv"
@@ -8643,7 +8648,7 @@ msgstr "in Jahren"
 
 #: UI/src/views/Home.vue:17
 msgid "invoicing"
-msgstr ""
+msgstr "fakturieren"
 
 #: lib/LedgerSMB/Scripts/payment.pm:2063
 msgid "is bigger than the amount available"
@@ -8663,19 +8668,19 @@ msgstr "ist null"
 
 #: UI/src/views/Home.vue:20
 msgid "keeping stock"
-msgstr ""
+msgstr "Lagerhaltung"
 
 #: UI/Configuration/sequence.html:9
 msgid "label"
 msgstr "Label"
 
-#: UI/src/views/Home.vue:43 UI/src/views/Home.vue:58
+#: UI/src/views/Home.vue:58 UI/src/views/Home.vue:43
 msgid "mailing lists"
-msgstr ""
+msgstr "Mailinglisten"
 
 #: UI/src/views/Home.vue:19
 msgid "ordering"
-msgstr ""
+msgstr "bestellen"
 
 #: sql/Pg-database.sql:2457
 msgid "partial disposal"
@@ -8691,7 +8696,7 @@ msgstr "Produktion"
 
 #: UI/src/views/Home.vue:22
 msgid "shipping &amp; receiving"
-msgstr ""
+msgstr "Versand &amp; Empfang"
 
 #: lib/LedgerSMB/Scripts/currency.pm:154
 msgid "system type"
@@ -8711,11 +8716,11 @@ msgstr "mal"
 
 #: UI/src/views/Home.vue:21
 msgid "tracking hours (timecards)"
-msgstr ""
+msgstr "Verfolgung von Stunden (Timecards)"
 
 #: UI/src/views/Home.vue:23
 msgid "tracking of unpaid invoices"
-msgstr ""
+msgstr "Verfolgung von unbezahlten Rechnungen"
 
 #: old/bin/ic.pl:1413
 msgid "unexpected error!"
