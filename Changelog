@@ -3,6 +3,14 @@
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.15
+* Fix for printing of invoices with manual taxes (#9116)
+* Fix for tax calculations in invoice API calls without taxes (#9111)
+* Fix spacing in the HTML invoice template (#9118)
+* Fix for WA tax module (#9092)
+* Fix examples in OpenAPI API documentation (#9109)
+
+
 Changelog for 1.12.14
 * Fix WHERE statement in schema upgrade script (#9061)
 * Fix typo in table name in post-upgrade script (#9060)
