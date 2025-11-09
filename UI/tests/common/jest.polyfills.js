@@ -5,6 +5,7 @@ const { TextEncoder, TextDecoder } = require("node:util");
 const { ReadableStream, TransformStream } = require("node:stream/web");
 const { MessageChannel, MessagePort } = require("node:worker_threads");
 const { performance } = require("node:perf_hooks");
+const { WritableStream } = require("node:stream/web");
 
 Object.defineProperties(globalThis, {
     MessageChannel: { value: MessageChannel },
@@ -13,7 +14,8 @@ Object.defineProperties(globalThis, {
     TextDecoder: { value: TextDecoder },
     TextEncoder: { value: TextEncoder },
     TransformStream: { value: TransformStream },
-    performance: { value: performance }
+    performance: { value: performance },
+    WritableStream: { value: WritableStream }
 });
 
 const { Blob } = require("node:buffer");
