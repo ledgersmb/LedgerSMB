@@ -123,7 +123,7 @@ requires 'Text::Markdown';
 requires 'Throwable';
 requires 'URI';
 requires 'URI::Escape';
-requires 'Workflow', '2.06';
+requires 'Workflow', '2.07'; # 2.07 Fixes 'return;' back to 'return undef;'
 requires 'Workflow::Action', '2.06';
 requires 'Workflow::Condition', '2.06';
 requires 'Workflow::Context', '2.06';
