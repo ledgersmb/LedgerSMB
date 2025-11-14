@@ -729,6 +729,103 @@ ok lives {
     is( scalar($c->param( '_book_todo' )->@*), 0, 'Book items are matched' );
     is( scalar($rd->@*), 1, 'Items matched' );
 
+
+    ####################################
+    #
+    # 4a. Multiple matched statement lines and book lines
+    # --> correctly updates _stmt_todo
+    #
+    ####################################
+
+    $c = Workflow::Context->new();
+    $wf->{context} = $c;
+    $c->param( 'recon_fx'   => 0 );
+    $c->param( '_prefix'     => 'check' );
+    $c->param( '_pending_items' => []);
+    $c->param( '_book_todo' => [
+                   {
+                       amount => 6,
+                       source => 'source123',
+                       payment_id => 1,
+                       post_date  => '2022-12-15',
+                       links      => [ { entry_id => 1 } ]
+                   },
+                   {
+                       amount => 7,
+                       source => 'source1234',
+                       payment_id => 1,
+                       post_date  => '2022-12-15',
+                       links      => [ { entry_id => 2 } ]
+                   }
+               ]);
+    $c->param( '_recon_done' => []);
+    $c->param( '_stmt_todo' => [
+                   {
+                       source => 'source1234',
+                       amount => 7,
+                       post_date => '2022-12-15',
+                   },
+                   {
+                       source => 'source123',
+                       amount => 6,
+                       post_date => '2022-12-15',
+                   }
+               ]);
+
+    $action->execute( $wf );
+    $rd = $c->param( '_recon_done' );
+    is( scalar($c->param( '_stmt_todo' )->@*), 0, 'Statement items are matched' );
+    is( scalar($c->param( '_book_todo' )->@*), 0, 'Book items are matched' );
+    is( scalar($rd->@*), 2, 'Items matched' );
+
+    ####################################
+    #
+    # 4b. Multiple matched statement lines and book lines (reverse order)
+    # --> correctly updates _stmt_todo
+    #
+    ####################################
+
+    $c = Workflow::Context->new();
+    $wf->{context} = $c;
+    $c->param( 'recon_fx'   => 0 );
+    $c->param( '_prefix'     => 'check' );
+    $c->param( '_pending_items' => []);
+    $c->param( '_book_todo' => [
+                   {
+                       amount => 7,
+                       source => 'source1234',
+                       payment_id => 1,
+                       post_date  => '2022-12-15',
+                       links      => [ { entry_id => 2 } ]
+                   },
+                   {
+                       amount => 6,
+                       source => 'source123',
+                       payment_id => 1,
+                       post_date  => '2022-12-15',
+                       links      => [ { entry_id => 1 } ]
+                   }
+               ]);
+    $c->param( '_recon_done' => []);
+    $c->param( '_stmt_todo' => [
+                   {
+                       source => 'source123',
+                       amount => 6,
+                       post_date => '2022-12-15',
+                   },
+                   {
+                       source => 'source1234',
+                       amount => 7,
+                       post_date => '2022-12-15',
+                   }
+               ]);
+
+    $action->execute( $wf );
+    $rd = $c->param( '_recon_done' );
+    is( scalar($c->param( '_stmt_todo' )->@*), 0, 'Statement items are matched' );
+    is( scalar($c->param( '_book_todo' )->@*), 0, 'Book items are matched' );
+    is( scalar($rd->@*), 2, 'Items matched' );
+
 }, '"reconcile" action', $@;
 
 ok lives {

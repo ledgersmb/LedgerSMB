@@ -239,8 +239,7 @@ sub _delete($self, $wf) {
 #
 #####################################
 
-sub _reconcile_source_id( $stmt_todo, $idx, $source_id, $book_todo, $recon_done ) {
-    my $stmt = $stmt_todo->[$idx];
+sub _reconcile_source_id( $stmt, $source_id, $book_todo, $recon_done ) {
     my $lc_source_id = lc($source_id);
 
     my $candidates = [
@@ -255,9 +254,9 @@ sub _reconcile_source_id( $stmt_todo, $idx, $source_id, $book_todo, $recon_done 
     if (scalar($candidates->@*) == 1) {
         push $recon_done->@*, {
             book => [ splice $book_todo->@*, $candidates->[0], 1 ],
-            stmt => [ splice $stmt_todo->@*, $idx, 1 ],
+            stmt => [ $stmt ],
         };
-        return;
+        return 1;
     }
 
     $candidates = [
@@ -272,14 +271,13 @@ sub _reconcile_source_id( $stmt_todo, $idx, $source_id, $book_todo, $recon_done 
 
     push $recon_done->@*, {
         book => [ splice $book_todo->@*, $candidates->[0], 1 ],
-        stmt => [ splice $stmt_todo->@*, $idx, 1 ],
+        stmt => [ $stmt ],
     };
-    return;
+    return 1;
 }
 
-sub _reconcile_no_source_id($stmt_todo, $idx, $prefix,
+sub _reconcile_no_source_id($stmt, $prefix,
                             $book_todo, $recon_done) {
-    my $stmt = $stmt_todo->[$idx];
     my $candidates = [
         grep {
             $book_todo->[$_]->{amount} == $stmt->{amount}
@@ -292,39 +290,52 @@ sub _reconcile_no_source_id($stmt_todo, $idx, $prefix,
     return unless $candidates->@*;
 
     push $recon_done->@*, {
-        stmt => [ splice $stmt_todo->@*, $candidates->[0], 1 ],
-        book => [ splice $book_todo->@*, $idx, 1 ],
+        book => [ splice $book_todo->@*, $candidates->[0], 1 ],
+        stmt => [ $stmt ],
     };
     return 1;
 }
 
 sub _reconcile($self, $wf) {
+    # This function iterates over the lines in the bank statement which
+    # have not yet been matched with a (group of) lines in the books
+    #
+    # When a match is found, the respective line on the statement is
+    # moved to the list of statement lines which have been reconciled
+    #
     my $stmt_todo    = $wf->context->param( '_stmt_todo' );
     my $book_todo    = $wf->context->param( '_book_todo' );
     my $recon_done   = $wf->context->param( '_recon_done' );
     my $prefix       = $wf->context->param( '_prefix' );
 
-    for my ($idx, $stmt) (indexed $stmt_todo->@*) {
+    for my ($stmt) ($stmt_todo->@*) {
         my $source_id;
         if (defined $stmt->{source}) {
             if ($stmt->{source} =~ m/^[0-9]+$/) {
                 $source_id = "$prefix $stmt->{source}";
             }
-            elsif ($stmt->{source} ne '') {
+            elsif (defined $stmt->{source}
+                   and $stmt->{source} ne '') {
                 $source_id = $stmt->{source};
             }
         }
 
         if (defined $source_id) {
-            _reconcile_source_id(
-                $stmt_todo, $idx, $source_id, $book_todo, $recon_done );
-            return;
+            if (_reconcile_source_id(
+                    $stmt, $source_id, $book_todo, $recon_done )) {
+                $stmt->{_matched} = 1;
+            }
+            next;
         }
 
-        _reconcile_no_source_id(
-            $stmt_todo, $idx, $prefix, $book_todo, $recon_done );
+        if (_reconcile_no_source_id(
+                $stmt, $prefix, $book_todo, $recon_done )) {
+            $stmt->{_matched} = 1;
+        }
     }
 
+    my @stmt_todo = grep { ! $_->{_matched} } $stmt_todo->@*;
+    $wf->context->param( '_stmt_todo', \@stmt_todo );
     return;
 }
 
