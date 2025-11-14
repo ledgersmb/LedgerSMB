@@ -138,7 +138,7 @@ sub _adjust_todo_lines($recon_fx, $pending, $book_todo) {
         push $existing_sources{$line->{source}}->@*, $line;
     }
 
-    for my ($index, $line) (indexed $pending->@*) {
+    for my ($line, $index) (reverse indexed $pending->@*) {
         next unless exists $existing_sources{$line->{source}};
         my $existing = $existing_sources{$line->{source}};
         my @same_date = grep {
@@ -314,8 +314,7 @@ sub _reconcile($self, $wf) {
             if ($stmt->{source} =~ m/^[0-9]+$/) {
                 $source_id = "$prefix $stmt->{source}";
             }
-            elsif (defined $stmt->{source}
-                   and $stmt->{source} ne '') {
+            elsif ($stmt->{source} ne '') {
                 $source_id = $stmt->{source};
             }
         }
