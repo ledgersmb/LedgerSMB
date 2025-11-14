@@ -242,7 +242,7 @@ sub _delete($self, $wf) {
 sub _reconcile_source_id( $stmt_todo, $idx, $source_id, $book_todo, $recon_done ) {
     my $stmt = $stmt_todo->[$idx];
     my $lc_source_id = lc($source_id);
-    print STDERR "source_id: $lc_source_id\n";
+
     my $candidates = [
         grep {
             lc($book_todo->[$_]->{source}) eq $lc_source_id
@@ -251,7 +251,6 @@ sub _reconcile_source_id( $stmt_todo, $idx, $source_id, $book_todo, $recon_done 
         ];
 
     return unless $candidates->@*;
-    print STDERR "Have candidates\n";
 
     if (scalar($candidates->@*) == 1) {
         push $recon_done->@*, {
@@ -293,8 +292,8 @@ sub _reconcile_no_source_id($stmt_todo, $idx, $prefix,
     return unless $candidates->@*;
 
     push $recon_done->@*, {
-        stmt => [ splice $book_todo->@*, $candidates->[0], 1 ],
-        book => [ splice $stmt_todo->@*, $idx, 1 ],
+        stmt => [ splice $stmt_todo->@*, $candidates->[0], 1 ],
+        book => [ splice $book_todo->@*, $idx, 1 ],
     };
     return 1;
 }
