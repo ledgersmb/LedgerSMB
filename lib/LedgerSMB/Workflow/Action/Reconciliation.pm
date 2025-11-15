@@ -22,6 +22,41 @@ LedgerSMB::Workflow::Action::Reconciliation - Collection of actions for reconcil
 
 =head1 DESCRIPTION
 
+This action holds all functionality required to run a (basic) reconciliation
+process: matching of (bank) statement lines against what is recorded in the
+books.
+
+=head2 Book-side algorithm
+
+In some cases, it's required or desirable to combine multiple journal lines
+into a single line to be matched with the (bank) statement.  One case concerns
+payments; these are recorded as multiple journal lines when they are used to
+clear multiple invoices, however in practice there's only a single payment.
+
+A special case is where a payment is combined with transaction costs; the payment
+is recorded in the cash screen and the transaction costs (or other correction) is
+recorded using a general journal, using the same C< source >.
+
+Last, all general journal lines with the same C< source > are combined into a
+single line; except where the C< source > is an empty string or C< NULL > value.
+
+
+=head2 Reconciliation algorithm
+
+Items are taken from the C< _stmt_todo > context parameter in the order given.
+Handling of items differs between the cases where the statement item has a
+C< source > specified or not.
+
+If there B<is> a C<source>, the algorithm finds items in the books which have
+the same posting date I<and> C<source> value. If there is only one, it's a
+match. If there are multiple, the search is repeated; this time the C<amount>
+is included. If there is exactly one resulting item, it's a match. Otherwise
+the algorithm fails.
+
+If there is B<no> C<source>, the algorithm searches items in the books where
+C<amount> and C<post_date> match and the book item does not have a C<source>
+value. The first of all matching items is considered a match.
+
 =head1 PROPERTIES
 
 =head2 entrypoint
@@ -34,11 +69,23 @@ Available values:
 
 =item * add_pending_items
 
+Processes payments and general journal lines, combining them into
+lines which are eligible for inclusion into the reconciliation report.
+
+The C<_book_todo> context parameter is modified to include the result.
+
 =item * approve
 
 =item * delete
 
 =item * reconcile
+
+Processes the items in the C<_book_todo> and C<_stmt_todo> context
+parameters. Matched items are moved to the C<_recon_done> context
+parameter.
+
+The C<_stmt_todo> parameter needs to be set up in the context based
+on an imported statement file before invoking this action.
 
 =item * reject
 
