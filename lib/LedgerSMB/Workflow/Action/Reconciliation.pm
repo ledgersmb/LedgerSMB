@@ -76,6 +76,28 @@ The C<_book_todo> context parameter is modified to include the result.
 
 =item * approve
 
+=item * calculate_totals
+
+Calculates a slew of summarized values for the reconciliation.
+
+=over 8
+
+=item * _cleared_debits, _cleared_credits, _cleared_total, _cleared_balance
+
+=item * _uncleared_debits, _uncleared_credits, _uncleared_total
+
+=item * _mismatch_debits, _mismatch_credits, _mismatch_total
+
+=item * _total_ledger_debits, _total_ledger_credits
+
+=item * _total_stmt_debits, _total_stmt_credits
+
+B<TODO>
+
+=item * _gl_ending_balance
+
+=back
+
 =item * delete
 
 =item * reconcile
@@ -136,6 +158,9 @@ sub execute($self, $wf) {
     }
     elsif ($self->entrypoint eq 'reject') {
         $self->_reject( $wf );
+    }
+    elsif ($self->entrypoint eq 'calculate_totals') {
+        $self->_calculate_totals( $wf );
     }
 }
 
@@ -404,6 +429,72 @@ sub _reject($self, $wf) {
 sub _submit($self, $wf) {
     $wf->context->param( 'submitted', 1 );
 }
+
+#####################################
+#
+# calculate_totals
+#
+#####################################
+
+sub _calculate_totals($self, $wf) {
+    my $ctx        = $wf->context;
+    my $book_todo  = $ctx->param( '_book_todo' );
+    my $stmt_todo  = $ctx->param( '_stmt_todo' );
+    my $recon_done = $ctx->param( '_recon_done' );
+
+    my $credits = LedgerSMB::PGNumber->bzero;
+    my $debits  = LedgerSMB::PGNumber->bzero;
+    my $total   = LedgerSMB::PGNumber->bzero;
+    for my $line (map { $_->{book} } $recon_done->@*) {
+        $credits += $line->{our_credits};
+        $debits  += $line->{our_debits};
+        $total   += $line->{our_balance};
+    }
+    my $cleared_balance = $ctx->param( '_starting_cleared_balance' )
+        + $ctx->param( '_cleared_total' );
+    $ctx->param( '_cleared_credits', $credits );
+    $ctx->param( '_cleared_debits',  $debits  );
+    $ctx->param( '_cleared_total',   $total   );
+    $ctx->param( '_cleared_balance', $cleared_balance );
+
+    $credits = LedgerSMB::PGNumber->bzero;
+    $debits  = LedgerSMB::PGNumber->bzero;
+    $total   = LedgerSMB::PGNumber->bzero;
+    for my $line ($book_todo->@*) {
+        $credits += $line->{our_credits};
+        $debits  += $line->{our_debits};
+        $total   += $line->{our_balance};
+    }
+    $ctx->param( '_uncleared_credits', $credits );
+    $ctx->param( '_uncleared_debits',  $debits  );
+    $ctx->param( '_uncleared_total',   $total   );
+
+    $credits = LedgerSMB::PGNumber->bzero;
+    $debits  = LedgerSMB::PGNumber->bzero;
+    $total   = LedgerSMB::PGNumber->bzero;
+    for my $line ($stmt_todo->@*) {
+        $credits += $line->{our_credits};
+        $debits  += $line->{our_debits};
+        $total   += $line->{our_balance};
+    }
+    $ctx->param( '_mismatch_credits', $credits );
+    $ctx->param( '_mismatch_debits',  $debits  );
+    $ctx->param( '_mismatch_total',   $total   );
+
+    my $total_book_credits =
+        $ctx->param( '_cleared_credits' ) + $ctx->param( '_uncleared_credits' );
+    my $total_book_debits  =
+        $ctx->param( '_cleared_debits' ) + $ctx->param( '_uncleared_debits' );
+    $ctx->param( '_total_ledger_credits', $total_book_credits );
+    $ctx->param( '_total_ledger_debits',  $total_book_debits );
+
+    my $gl_ending_balance  =
+        $ctx->param( '_starting_cleared_balance' )
+        + $ctx->param( '_cleared_total' )
+        + $ctx->param( '_uncleared_total' );
+    $ctx->param( '_gl_ending_balance',  $gl_ending_balance );
+}
+
 
 1;
 
