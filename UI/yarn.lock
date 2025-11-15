@@ -5990,10 +5990,10 @@ eslint-plugin-n@17.23.1, eslint-plugin-n@^17.11.1:
     semver "^7.6.3"
     ts-declaration-location "^1.0.6"
 
-eslint-plugin-package-json@0.74.0:
-  version "0.74.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-package-json/-/eslint-plugin-package-json-0.74.0.tgz#2c775a2a45ceee44cf2bd2d331fadc34e370059d"
-  integrity sha512-aSnLu7ar5pWRR4PkJY54SurFvh9Y9CseICliSFszDCugemItE0+DmWFT/xzcpFIdq6IZJGDgEkn5cyKhCNAYSQ==
+eslint-plugin-package-json@0.77.0:
+  version "0.77.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-package-json/-/eslint-plugin-package-json-0.77.0.tgz#7b74b43c63f0976e25a08ce69008d41668159585"
+  integrity sha512-xJ+tchYmuRPAyeDZlGTEZ9M3bKkM6emtymatmx+YJ1fKpJe0QI9Ol24CS6CKwgPEl19i6/dxq2mfFmGLWycFFQ==
   dependencies:
     "@altano/repository-tools" "^2.0.1"
     change-case "^5.4.4"
