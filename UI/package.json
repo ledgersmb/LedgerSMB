@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.17",
-    "content-disposition": "0.5.4",
+    "content-disposition": "1.0.1",
     "dijit": "1.17.3",
     "dojo": "1.17.3",
     "pinia": "3.0.4",
