@@ -10,6 +10,8 @@ use parent qw( LedgerSMB::Workflow::Action );
 use builtin qw(indexed);
 use List::Util qw(sum0);
 
+use LedgerSMB::PGNumber;
+
 =head1 NAME
 
 LedgerSMB::Workflow::Action::Reconciliation - Collection of actions for reconciliations
