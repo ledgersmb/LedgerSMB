@@ -43,7 +43,7 @@ runs:
     - name: Pre-run installation steps
       shell: bash
       run: |
-        sudo apt -q -y install gettext
+        sudo apt-get -q -y install gettext
 
         # Install missing TeX packages
         tlmgr update --self
