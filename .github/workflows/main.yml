@@ -71,7 +71,7 @@ jobs:
       # impact the value of the hash
       - name: Cache JS
         id: cache-js
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: UI/js
           key: js-${{ hashFiles('UI/js-src/**',
@@ -83,7 +83,7 @@ jobs:
 
       - name: Cache node_modules
         id: cache-node_modules
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
              UI/node_modules
@@ -281,7 +281,7 @@ jobs:
 
       - name: Cache node_modules
         id: cache-npm
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
              UI/node_modules
@@ -465,7 +465,7 @@ jobs:
       # HTML files which otherwise interact with the hash being generated
       - name: Cache JS
         id: cache-js
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: UI/js
           key: js-${{ hashFiles('UI/js-src/**',
@@ -477,7 +477,7 @@ jobs:
 
       - name: Cache node_modules
         id: cache-npm
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
              UI/node_modules
