@@ -1,5 +1,6 @@
 div.login {
     background-color: white;
+    border: #e6e6e6 1px solid;
     border-radius: 12px;
     box-shadow: 6px 6px 4px black;
     margin-left: auto;
@@ -61,5 +62,10 @@ div#login-indicator {
     margin-right: auto;
     text-align: center;
     visibility: hidden;
+    width: 100%;
+}
+
+#widget_password,
+#widget_company {
     width: 100%;
 }
