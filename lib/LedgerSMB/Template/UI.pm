@@ -16,6 +16,7 @@ This module instantiates a singleton UI template rendering engine
 
 use strict;
 use warnings;
+use experimental 'signatures';
 
 use LedgerSMB::Locale;
 use LedgerSMB::Template;
@@ -24,6 +25,7 @@ use Carp;
 use File::Spec;
 use HTML::Escape;
 use HTML::Entities;
+use Scalar::Util qw(blessed reftype);
 use Template;
 
 our $engine;
@@ -101,6 +103,54 @@ be HTML encoded and ready for inclusion in the generated HTML output.
 
 =cut
 
+sub _preprocess($rawvars, $formatter_options) {
+    #
+    # Note: before changing *anything* in the function below,
+    #  please note that it's extremely performance sensitive
+    #  and that the current code is the result of extensive
+    #  profiling work.
+    #
+    return undef unless defined $rawvars;
+
+    if (not ref $rawvars) {
+        return escape_html( $rawvars );
+    }
+
+    if (blessed $rawvars and $rawvars->can('to_output') ){
+        return escape_html( $rawvars->to_output( %{ $formatter_options // {} } ) );
+    }
+
+    my $reftype = (reftype $rawvars) // ''; # '' is falsy, but works with EQ
+    if ($reftype eq 'HASH') { # Hashes and objects
+        return {
+            map { $_ => (ref $rawvars->{$_})
+                      ? _preprocess( $rawvars->{$_}, $formatter_options )
+                      : escape_html( $rawvars->{$_} ) }
+            grep { not /^(?:_|dbh$)/ }
+            keys %{$rawvars}
+        };
+    }
+
+    if ( $reftype eq 'ARRAY' ) {
+        return [ map { (ref $_)
+                           ? _preprocess( $_, $formatter_options )
+                           : escape_html( $_ )
+                 } @{$rawvars} ];
+    }
+
+    if ($reftype eq 'CODE'){ # a code reference makes no sense
+        return $rawvars;
+    }
+
+    if ($reftype eq 'SCALAR' or (ref $rawvars) eq 'Math::BigInt::GMP') {
+        return escape_html( $$rawvars );
+    }
+
+    # return undef for GLOB references (includes IO::File objects)
+    return undef;
+}
+
+
 sub render_string {
     my ($self, $request, $template, $vars, $cvars) = @_;
     my $locale;
@@ -118,7 +168,7 @@ sub render_string {
         $locale = $request->{_locale};
     }
     my $cleanvars = {
-        ( %{LedgerSMB::Template::preprocess(
+        ( %{_preprocess(
                 {
                     $vars->%*,
                     PRINTERS => [
@@ -138,7 +188,6 @@ sub render_string {
                         ),
                     csrf_token => $request->{_req}->env->{'lsmb.session'}->{csrf_token},
                 },
-                sub { return escape_html($_[0]); },
                 $request->formatter_options,
                 )},
           %{$self->{standard_vars}},

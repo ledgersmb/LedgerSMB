@@ -303,9 +303,6 @@ use Template::Parser;
 use Template::Provider;
 use Scalar::Util qw(blessed reftype);
 
-use parent qw( Exporter );
-our @EXPORT_OK = qw( preprocess );
-
 my $logger = Log::Any->get_logger(category => 'LedgerSMB::Template');
 
 sub new {
