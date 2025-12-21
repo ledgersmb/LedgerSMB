@@ -251,8 +251,13 @@ memoize('_formatter');
 # Provide a stringification routine instead of the one inherited
 use overload (
     fallback => 1,
-    q{""}    => 'to_output',
+    q{""}    => '_stringification',
 );
+
+sub _stringification {
+    # drop the second and third parameters before calling to_output()
+    return $_[0]->to_output();
+}
 
 sub to_output {
     my $self = shift @_;
