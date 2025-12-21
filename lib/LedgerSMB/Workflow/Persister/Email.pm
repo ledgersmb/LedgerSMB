@@ -1,4 +1,8 @@
+
 package LedgerSMB::Workflow::Persister::Email;
+
+use v5.36;
+use warnings;
 
 =head1 NAME
 
@@ -61,8 +65,6 @@ The C< content > field will be loaded from the database when it's being accessed
 =cut
 
 
-use warnings;
-use strict;
 use parent qw( LedgerSMB::Workflow::Persister::ExtraData );
 
 use JSON::MaybeXS;
@@ -80,8 +82,7 @@ my $json = JSON::MaybeXS->new(
     );
 
 
-sub _save_email_data {
-    my ($self, $wf) = @_;
+sub _save_email_data( $self, $wf ) {
     my $ctx         = $wf->context;
     my $dbh         = $self->handle;
     my $old_data    = $ctx->param( '_email_data' );
@@ -156,9 +157,7 @@ sub _save_email_data {
 }
 
 
-sub _fetch_attachments {
-    my ($self, $wf) = @_;
-
+sub _fetch_attachments( $self, $wf_id ) {
     my $dbh = $self->handle;
     my $sth = $dbh->prepare(
         q{SELECT id, file_name, description,
@@ -167,7 +166,7 @@ sub _fetch_attachments {
            FROM file_email
            WHERE ref_key = ?}
         ) or die $dbh->errstr;
-    $sth->execute( $wf->id )
+    $sth->execute( $wf_id )
         or die $sth->errstr;
 
     my $rows = $sth->fetchall_arrayref( {} )
@@ -179,9 +178,9 @@ sub _fetch_attachments {
             'LedgerSMB::Workflow::Persister::Email::TiedContent',
             id    => $row->{id},
             dbh   => $dbh,
-            wf_id => $wf->id;
+            wf_id => $wf_id;
     }
-    $wf->context->param( '_attachments' => $rows);
+    return $rows;
 }
 
 
@@ -198,9 +197,7 @@ has been replaced by the content as specified by C<fetch_extra_workflow_data>.
 =cut
 
 
-sub create_workflow {
-    my ( $self, $wf ) = @_;
-
+sub create_workflow( $self, $wf ) {
     my $wf_id  = $self->SUPER::create_workflow( $wf );
     $self->_save_email_data( $wf );
 
@@ -209,7 +206,7 @@ sub create_workflow {
             $self->attach( $wf, $attachment );
         }
     }
-    $self->_fetch_attachments( $wf );
+    $wf->context->param( '_attachments' => $self->_fetch_attachments( $wf_id ));
 
     return $wf_id;
 }
@@ -222,17 +219,16 @@ when they have changed.
 =cut
 
 
-sub update_workflow {
-    my ( $self, $wf ) = @_;
-
+sub update_workflow( $self, $wf ) {
     $self->SUPER::update_workflow( $wf );
     $self->_save_email_data( $wf );
 }
 
-=head2 fetch_extra_workflow_data($wf)
+=head2 fetch_workflow( $wf_id )
 
-Implements Workflow::Persister::DBI protocol; loads an array of hashrefs
-with e-mail attachment data into C<$wf->{attachments}>.
+Implements Workflow::Persister protocol; loads an array of hashrefs
+with e-mail attachment data into the C<attachments> key of the C<context>
+hash of the return value.
 
 Each hashref contains these keys:
 
@@ -265,20 +261,20 @@ named argument C<disable_cache> to prevent caching the content in-memory:
 
 =cut
 
-sub fetch_extra_workflow_data {
-    my ($self, $wf) = @_;
-    my $ctx = $wf->context;
-    $self->SUPER::fetch_extra_workflow_data($wf);
-    $ctx->param(
-        '_email_data',
-        { map { $_ => $ctx->param( $_ ) }
-          qw(from to cc bcc notify subject body expansions)
-        });
-    if ( my $expansions = $ctx->param( 'expansions' ) ) {
-        $ctx->param( 'expansions', $json->decode( $expansions ) );
+sub fetch_workflow( $self, $wf_id ) {
+    my $wf_info = $self->SUPER::fetch_workflow( $wf_id );
+    my $ctx = $wf_info->{context};
+    $ctx->{_email_data} = {
+        map {
+            $_ => $ctx->{$_}
+        } qw(from to cc bcc notify subject body expansions)
+    };
+    if ( my $expansions = $ctx->{expansions} ) {
+        $ctx->{expansions} = $json->decode( $expansions );
     }
 
-    $self->_fetch_attachments( $wf );
+    $ctx->{_attachments} = $self->_fetch_attachments( $wf_id );
+    return $wf_info;
 }
 
 
@@ -286,7 +282,7 @@ sub fetch_extra_workflow_data {
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2020-2024 The LedgerSMB Core Team
+Copyright (C) 2020-2025 The LedgerSMB Core Team
 
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
