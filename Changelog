@@ -3,6 +3,11 @@
 Changelog for 1.13 Series
 Released 2025-10-04
 
+Changelog for 1.13.2
+* Fix 'Send' on e-mail of invoice/order throwing an error (#9180)
+* Fix logs filled with undefined value warnings in LedgerSMB::PGDate (#9177)
+
+
 Changelog for 1.13.1
 * Fix for printing of invoices with manual taxes (#9116)
 * Fix for comparisons in the Income Statement report (#9114)
