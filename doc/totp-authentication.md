@@ -78,10 +78,10 @@ Once TOTP is enabled for a user:
 
 ### Best Practices
 
-- **Backup Your Secret**: Save the secret key in a secure location in case you lose access to your authenticator device
-- **Time Synchronization**: Ensure your device's time is synchronized (use NTP) for codes to work correctly
-- **Recovery Plan**: Have a procedure for account recovery if a user loses their authenticator device
-- **Administrative Override**: Administrators can disable TOTP for a user who has lost access to their authenticator
+- **Backup Your Secret**: Save the secret key in a secure location in case you lose access to your authenticator device.
+- **Time Synchronization**: Ensure your device's time is synchronized (use NTP) for codes to work correctly.
+- **Recovery Plan**: Have a procedure for account recovery if a user loses their authenticator device.
+- **Administrative Override**: Administrators can disable TOTP for a user who has lost access to their authenticator.
 
 ### Brute Force Protection
 

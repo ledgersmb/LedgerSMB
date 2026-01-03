@@ -38,7 +38,7 @@ define([
             '<label for="totp-code-input">Verification Code:</label>' +
             '<input id="totp-code-input" type="text" ' +
             'data-dojo-type="dijit/form/ValidationTextBox" ' +
-            'data-dojo-props="required:true, pattern:\'[0-9]{6}\', ' +
+            'data-dojo-props="required:true, pattern:\'^[0-9]{6}$\', ' +
             'invalidMessage:\'Code must be 6 digits\'" ' +
             'maxlength="6" style="width: 150px;" />' +
             '</div>' +
@@ -84,7 +84,11 @@ define([
             if (codeInput) {
                 codeInput.on("keypress", function(evt) {
                     if (evt.keyCode === 13) { // Enter key
-                        verifyBtn.onClick();
+                        // Trigger the verify button click event
+                        var code = codeInput.get("value");
+                        if (code && code.length === 6) {
+                            callback(code);
+                        }
                     }
                 });
                 
