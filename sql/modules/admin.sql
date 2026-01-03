@@ -730,7 +730,8 @@ BEGIN
                 ELSE NULL
             END
         WHERE username = in_username
-        RETURNING totp_failures, (totp_locked_until IS NOT NULL)
+        RETURNING totp_failures, 
+                  (totp_locked_until IS NOT NULL AND totp_locked_until > CURRENT_TIMESTAMP)
         INTO v_failures, v_is_locked;
         
         RETURN QUERY SELECT v_is_locked, v_failures;

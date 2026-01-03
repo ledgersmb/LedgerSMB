@@ -147,16 +147,10 @@ sub generate_secret {
         close $fh;
     }
     else {
-        # Fallback: use String::Random which is already in dependencies
-        # and provides better randomness than built-in rand()
-        require String::Random;
-        my $sr = String::Random->new();
-        # Generate 20 random bytes
-        $random_bytes = pack('C*', map { int(rand(256)) } 1..20);
-        
-        # Note: This fallback is not cryptographically secure
-        # In production, /dev/urandom should always be available on Unix-like systems
-        warn "Warning: Using non-cryptographic random source for TOTP secret generation";
+        # If /dev/urandom is not available, fail securely
+        # rather than using a weak random source
+        croak "Cannot generate secure TOTP secret: /dev/urandom not available. " .
+              "This system does not support secure random number generation required for TOTP.";
     }
     
     # Encode as Base32

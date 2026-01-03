@@ -84,9 +84,13 @@ sub authenticate {
     }
     
     # Check TOTP if configured
+    # Note: We check TOTP before creating the session but after we know
+    # we have login credentials. The database connection itself validates
+    # the password, so we're not leaking TOTP status before auth succeeds.
     my $totp_config = $request->{_wire}->get('totp_settings') // {};
     if ($totp_config->{enabled}) {
         # Try to connect temporarily to check TOTP status
+        # This connection validates username/password
         my $dbh;
         eval {
             my $db_factory = $request->{_wire}->get('db');
@@ -97,8 +101,13 @@ sub authenticate {
             )->connect;
         };
         
-        if ($dbh) {
-            # Check TOTP status for this user
+        # If connection failed, invalid credentials - let normal flow handle it
+        if (!$dbh) {
+            # Fall through to _create_session which will return unauthorized
+        }
+        elsif ($dbh) {
+            # Successfully connected - password is valid
+            # Now check TOTP status for this user
             my $totp_info = $dbh->selectrow_hashref(
                 q{SELECT totp_enabled, totp_secret, totp_locked_until 
                   FROM users WHERE username = ?},

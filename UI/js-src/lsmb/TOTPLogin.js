@@ -181,9 +181,16 @@ define([
                 var headers = err.response.headers || {};
                 var data = err.response.data || {};
                 
-                // Check if TOTP is required
-                if (headers["x-ledgersmb-totp-required"] === "1" || 
-                    data.totp_required) {
+                // Check if TOTP is required (case-insensitive header check)
+                var totpRequired = false;
+                for (var key in headers) {
+                    if (key.toLowerCase() === "x-ledgersmb-totp-required") {
+                        totpRequired = (headers[key] === "1");
+                        break;
+                    }
+                }
+                
+                if (totpRequired || data.totp_required) {
                     // Show TOTP dialog
                     showTOTPDialog(username, password, company, function(code) {
                         authenticateWithTOTP(username, password, company, code);
