@@ -184,6 +184,126 @@ sub change_password {
     return preference_screen($request);
 }
 
+=item totp_setup
+
+Displays the TOTP setup screen with QR code for scanning.
+
+=cut
+
+sub totp_setup {
+    my ($request) = @_;
+    
+    use LedgerSMB::TOTP;
+    
+    my $login = $request->{_req}->env->{'lsmb.session'}->{login};
+    
+    # Get current TOTP status
+    my ($totp_info) = $request->call_procedure(
+        funcname => 'user__get_totp_info',
+        args => [$login]
+    );
+    
+    # If already enabled, show status
+    if ($totp_info && $totp_info->{totp_enabled}) {
+        my $template = $request->{_wire}->get('ui');
+        return $template->render(
+            $request,
+            'users/totp_status',
+            {
+                request => $request,
+                totp_enabled => 1,
+                login => $login,
+            }
+        );
+    }
+    
+    # Generate new secret if not provided
+    my $secret = $request->{totp_secret} // LedgerSMB::TOTP->generate_secret();
+    
+    # Create TOTP object for QR code generation
+    my $totp = LedgerSMB::TOTP->new(
+        secret => $secret,
+        issuer => 'LedgerSMB',
+        account => $login,
+    );
+    
+    # Generate QR code
+    my $qr_code_base64 = $totp->qr_code_base64();
+    
+    my $template = $request->{_wire}->get('ui');
+    return $template->render(
+        $request,
+        'users/totp_setup',
+        {
+            request => $request,
+            secret => $secret,
+            qr_code => $qr_code_base64,
+            otpauth_uri => $totp->otpauth_uri(),
+            login => $login,
+        }
+    );
+}
+
+=item totp_enable
+
+Enables TOTP for the current user after verifying a test code.
+
+=cut
+
+sub totp_enable {
+    my ($request) = @_;
+    
+    use LedgerSMB::TOTP;
+    
+    my $login = $request->{_req}->env->{'lsmb.session'}->{login};
+    my $secret = $request->{totp_secret};
+    my $code = $request->{totp_code};
+    
+    unless ($secret && $code) {
+        die "Secret and verification code required";
+    }
+    
+    # Verify the code before enabling
+    my $totp = LedgerSMB::TOTP->new(
+        secret => $secret,
+        account => $login,
+    );
+    
+    unless ($totp->verify_code($code)) {
+        $request->{error} = "Invalid TOTP code. Please try again.";
+        $request->{totp_secret} = $secret;
+        return totp_setup($request);
+    }
+    
+    # Enable TOTP for user
+    $request->call_procedure(
+        funcname => 'admin__totp_enable_user',
+        args => [$login, $secret]
+    );
+    
+    return preference_screen($request);
+}
+
+=item totp_disable
+
+Disables TOTP for the current user.
+
+=cut
+
+sub totp_disable {
+    my ($request) = @_;
+    
+    my $login = $request->{_req}->env->{'lsmb.session'}->{login};
+    
+    # Disable TOTP for user
+    $request->call_procedure(
+        funcname => 'admin__totp_disable_user',
+        args => [$login]
+    );
+    
+    return preference_screen($request);
+}
+
 =back
 
 =head1 LICENSE AND COPYRIGHT

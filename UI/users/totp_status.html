@@ -1,0 +1,42 @@
+[% PROCESS elements.html %]
+<body class="lsmb [% dojo_theme %]">
+  <div id="totp-status">
+    <table width="100%">
+      <tr><th class="listtop">[% text('Two-Factor Authentication Status') %]</th></tr>
+      
+      <tr>
+        <td>
+          <div style="padding: 20px;">
+            <h3>[% text('Two-Factor Authentication is Enabled') %]</h3>
+            
+            <p>[% text('Your account is protected with TOTP two-factor authentication. You will need to provide a code from your authenticator app when logging in.') %]</p>
+            
+            <div style="margin-top: 20px;">
+              <form method="post" action="user.pl">
+                [% INCLUDE input element_data = {
+                      name = "action"
+                      type = "hidden"
+                      value = "totp_disable"
+                } %]
+                
+                [% INCLUDE button element_data = {
+                      text = text("Disable Two-Factor Authentication")
+                      type = "submit"
+                      class = "submit"
+                      onclick = "return confirm('" _ text("Are you sure you want to disable two-factor authentication? This will make your account less secure.") _ "');"
+                } %]
+                
+                [% INCLUDE button element_data = {
+                      text = text("Back to Preferences")
+                      type = "button"
+                      class = "cancel"
+                      onclick = "window.location='user.pl?action=preference_screen'"
+                } %]
+              </form>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>

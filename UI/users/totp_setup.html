@@ -1,0 +1,84 @@
+[% PROCESS elements.html %]
+<body class="lsmb [% dojo_theme %]">
+  <div id="totp-setup">
+    <form data-dojo-type="lsmb/Form" method="post" id="totp_setup" name="totp_setup" action="user.pl">
+      [% INCLUDE input element_data = {
+            name = "action"
+            type = "hidden"
+            value = "totp_enable"
+      } %]
+      [% INCLUDE input element_data = {
+            name = "totp_secret"
+            type = "hidden"
+            value = secret
+      } %]
+      
+      <table width="100%">
+        <tr><th class="listtop">[% text('Two-Factor Authentication Setup') %]</th></tr>
+        
+        [% IF error %]
+        <tr><th class="error">[% error %]</th></tr>
+        [% END %]
+        
+        <tr>
+          <td>
+            <h3>[% text('Scan QR Code with Authenticator App') %]</h3>
+            <p>[% text('Use an authenticator app like Google Authenticator, Authy, or any TOTP-compatible app to scan this QR code:') %]</p>
+            
+            <div style="text-align: center; margin: 20px;">
+              <img src="data:image/png;base64,[% qr_code %]" alt="TOTP QR Code" style="border: 2px solid #ccc; padding: 10px;" />
+            </div>
+            
+            <h3>[% text('Or Enter Manually') %]</h3>
+            <p>[% text('If you cannot scan the QR code, enter this secret key manually in your authenticator app:') %]</p>
+            
+            <div style="background: #f0f0f0; padding: 10px; margin: 10px 0; font-family: monospace; font-size: 14px; text-align: center;">
+              <strong>[% secret %]</strong>
+            </div>
+            
+            <h3>[% text('Verify Setup') %]</h3>
+            <p>[% text('Enter the 6-digit code from your authenticator app to verify the setup:') %]</p>
+            
+            [% INCLUDE input element_data = {
+                  name = "totp_code"
+                  type = "text"
+                  size = "10"
+                  maxlength = "6"
+                  label = text("Verification Code")
+                  required = "1"
+                  pattern = "[0-9]{6}"
+            } %]
+          </td>
+        </tr>
+        
+        <tr>
+          <td>
+            <div class="buttons">
+              [% INCLUDE button element_data = {
+                    text = text("Enable Two-Factor Authentication")
+                    type = "submit"
+                    class = "submit"
+              } %]
+              [% INCLUDE button element_data = {
+                    text = text("Cancel")
+                    type = "button"
+                    class = "cancel"
+                    onclick = "window.location='user.pl?action=preference_screen'"
+              } %]
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+    
+    <div style="margin-top: 30px; padding: 20px; background: #fffacd; border: 1px solid #e6d700;">
+      <h3>[% text('Important Security Notes:') %]</h3>
+      <ul>
+        <li>[% text('Keep your secret key safe and secure.') %]</li>
+        <li>[% text('Once enabled, you will need your authenticator app code to log in.') %]</li>
+        <li>[% text('Make sure your device time is synchronized for codes to work properly.') %]</li>
+        <li>[% text('Save backup codes or secret key in a secure location in case you lose access to your authenticator device.') %]</li>
+      </ul>
+    </div>
+  </div>
+</body>

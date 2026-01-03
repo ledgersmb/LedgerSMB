@@ -625,6 +625,138 @@ $$ language plpgsql;
 COMMENT ON FUNCTION admin__drop_session(in_session_id int) IS
 $$ Drops the session identified, releasing all locks held.$$;
 
+-- TOTP Management Functions
+
+CREATE OR REPLACE FUNCTION admin__totp_enable_user(in_username TEXT, in_secret TEXT)
+RETURNS bool AS
+$$
+BEGIN
+    UPDATE users 
+    SET totp_secret = in_secret,
+        totp_enabled = TRUE,
+        totp_failures = 0,
+        totp_locked_until = NULL
+    WHERE username = in_username;
+    
+    RETURN FOUND;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+COMMENT ON FUNCTION admin__totp_enable_user(TEXT, TEXT) IS
+$$ Enables TOTP authentication for a user with the provided Base32-encoded secret.$$;
+
+REVOKE EXECUTE ON FUNCTION admin__totp_enable_user(TEXT, TEXT) FROM PUBLIC;
+
+CREATE OR REPLACE FUNCTION admin__totp_disable_user(in_username TEXT)
+RETURNS bool AS
+$$
+BEGIN
+    UPDATE users 
+    SET totp_secret = NULL,
+        totp_enabled = FALSE,
+        totp_failures = 0,
+        totp_locked_until = NULL,
+        totp_last_used = NULL
+    WHERE username = in_username;
+    
+    RETURN FOUND;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+COMMENT ON FUNCTION admin__totp_disable_user(TEXT) IS
+$$ Disables TOTP authentication for a user and clears all TOTP data.$$;
+
+REVOKE EXECUTE ON FUNCTION admin__totp_disable_user(TEXT) FROM PUBLIC;
+
+CREATE OR REPLACE FUNCTION admin__totp_reset_failures(in_username TEXT)
+RETURNS bool AS
+$$
+BEGIN
+    UPDATE users 
+    SET totp_failures = 0,
+        totp_locked_until = NULL
+    WHERE username = in_username;
+    
+    RETURN FOUND;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+COMMENT ON FUNCTION admin__totp_reset_failures(TEXT) IS
+$$ Resets TOTP failure count and unlocks the user if locked.$$;
+
+REVOKE EXECUTE ON FUNCTION admin__totp_reset_failures(TEXT) FROM PUBLIC;
+
+CREATE OR REPLACE FUNCTION user__totp_verify_and_update(
+    in_username TEXT,
+    in_success BOOL,
+    in_max_failures INT DEFAULT 5,
+    in_lockout_duration INTERVAL DEFAULT '15 minutes'::interval
+)
+RETURNS TABLE(is_locked BOOL, failures INT) AS
+$$
+DECLARE
+    v_failures INT;
+    v_locked_until TIMESTAMP;
+BEGIN
+    -- Check if user is currently locked
+    SELECT totp_locked_until INTO v_locked_until
+    FROM users
+    WHERE username = in_username;
+    
+    IF v_locked_until IS NOT NULL AND v_locked_until > CURRENT_TIMESTAMP THEN
+        -- User is still locked
+        SELECT totp_failures INTO v_failures FROM users WHERE username = in_username;
+        RETURN QUERY SELECT TRUE, v_failures;
+        RETURN;
+    END IF;
+    
+    IF in_success THEN
+        -- Successful verification - reset failures and update last used
+        UPDATE users 
+        SET totp_failures = 0,
+            totp_locked_until = NULL,
+            totp_last_used = CURRENT_TIMESTAMP
+        WHERE username = in_username;
+        
+        RETURN QUERY SELECT FALSE, 0;
+    ELSE
+        -- Failed verification - increment failures
+        UPDATE users 
+        SET totp_failures = totp_failures + 1,
+            totp_locked_until = CASE 
+                WHEN totp_failures + 1 >= in_max_failures 
+                THEN CURRENT_TIMESTAMP + in_lockout_duration
+                ELSE NULL
+            END
+        WHERE username = in_username
+        RETURNING totp_failures, (totp_locked_until IS NOT NULL)
+        INTO v_failures, is_locked;
+        
+        RETURN QUERY SELECT is_locked, v_failures;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION user__totp_verify_and_update(TEXT, BOOL, INT, INTERVAL) IS
+$$ Updates TOTP verification state after an attempt. 
+   Returns whether the user is locked and the current failure count.$$;
+
+CREATE OR REPLACE FUNCTION user__get_totp_info(in_username TEXT)
+RETURNS TABLE(
+    totp_enabled BOOL,
+    totp_secret TEXT,
+    totp_locked_until TIMESTAMP,
+    totp_failures INT
+) AS
+$$
+    SELECT u.totp_enabled, u.totp_secret, u.totp_locked_until, u.totp_failures
+    FROM users u
+    WHERE u.username = in_username;
+$$ LANGUAGE SQL;
+
+COMMENT ON FUNCTION user__get_totp_info(TEXT) IS
+$$ Retrieves TOTP configuration information for a user.$$;
+
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
 COMMIT;
