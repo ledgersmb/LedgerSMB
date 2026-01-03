@@ -107,17 +107,31 @@ sub authenticate {
             );
             
             if ($totp_info && $totp_info->{totp_enabled}) {
-                # Check if locked
+                # Check if locked and lockout period is still active
                 if ($totp_info->{totp_locked_until}) {
-                    $dbh->disconnect;
-                    return [
-                        HTTP::Status::HTTP_FORBIDDEN,
-                        [ 'Content-Type' => 'application/json' ],
-                        [ $json->encode({
-                            error => 'Account temporarily locked due to failed TOTP attempts',
-                            locked => 1
-                        }) ]
-                    ];
+                    # Query current timestamp from database to compare
+                    my ($current_time) = $dbh->selectrow_array(
+                        q{SELECT CURRENT_TIMESTAMP}
+                    );
+                    my ($locked_until) = $dbh->selectrow_array(
+                        q{SELECT ?::timestamp > ?::timestamp},
+                        undef,
+                        $totp_info->{totp_locked_until},
+                        $current_time
+                    );
+                    
+                    if ($locked_until) {
+                        $dbh->disconnect;
+                        return [
+                            HTTP::Status::HTTP_FORBIDDEN,
+                            [ 'Content-Type' => 'application/json' ],
+                            [ $json->encode({
+                                error => 'Account temporarily locked due to failed TOTP attempts',
+                                locked => 1,
+                                locked_until => $totp_info->{totp_locked_until}
+                            }) ]
+                        ];
+                    }
                 }
                 
                 # TOTP is enabled, code required

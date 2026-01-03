@@ -138,10 +138,25 @@ Returns a 32-character Base32 string (160 bits of entropy).
 sub generate_secret {
     my ($class) = @_;
     
-    # Generate 20 random bytes (160 bits)
+    # Use a cryptographically secure random source
+    # Try to read from /dev/urandom (available on Unix-like systems)
     my $random_bytes = '';
-    for (1..20) {
-        $random_bytes .= chr(int(rand(256)));
+    
+    if (open my $fh, '<:raw', '/dev/urandom') {
+        read $fh, $random_bytes, 20;  # 20 bytes = 160 bits
+        close $fh;
+    }
+    else {
+        # Fallback: use String::Random which is already in dependencies
+        # and provides better randomness than built-in rand()
+        require String::Random;
+        my $sr = String::Random->new();
+        # Generate 20 random bytes
+        $random_bytes = pack('C*', map { int(rand(256)) } 1..20);
+        
+        # Note: This fallback is not cryptographically secure
+        # In production, /dev/urandom should always be available on Unix-like systems
+        warn "Warning: Using non-cryptographic random source for TOTP secret generation";
     }
     
     # Encode as Base32

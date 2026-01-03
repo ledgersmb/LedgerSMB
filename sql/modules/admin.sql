@@ -697,6 +697,7 @@ $$
 DECLARE
     v_failures INT;
     v_locked_until TIMESTAMP;
+    v_is_locked BOOL;
 BEGIN
     -- Check if user is currently locked
     SELECT totp_locked_until INTO v_locked_until
@@ -730,9 +731,9 @@ BEGIN
             END
         WHERE username = in_username
         RETURNING totp_failures, (totp_locked_until IS NOT NULL)
-        INTO v_failures, is_locked;
+        INTO v_failures, v_is_locked;
         
-        RETURN QUERY SELECT is_locked, v_failures;
+        RETURN QUERY SELECT v_is_locked, v_failures;
     END IF;
 END;
 $$ LANGUAGE plpgsql;
