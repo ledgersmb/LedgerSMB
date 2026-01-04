@@ -31,7 +31,9 @@ LedgerSMB::TOTP - Time-based One-Time Password (TOTP) authentication support
 This module provides TOTP (Time-based One-Time Password) authentication
 support according to RFC 6238. It allows users to set up two-factor
 authentication using authenticator apps like Google Authenticator, Authy,
-or any other TOTP-compatible application.
+Yubikey, or any other TOTP-compatible application.
+
+Supports both 6-digit (standard) and 8-digit (Yubikey default) TOTP codes.
 
 =head1 METHODS
 
@@ -101,6 +103,19 @@ has 'time_window' => (
     default => 1,
 );
 
+=head3 digits
+
+The number of digits in the TOTP code. Default is 6, but can be set to 8
+for compatibility with Yubikey and other devices that generate 8-digit codes.
+
+=cut
+
+has 'digits' => (
+    is => 'ro',
+    isa => 'Int',
+    default => 6,
+);
+
 =head3 _auth
 
 Internal Auth::GoogleAuth object.
@@ -121,6 +136,7 @@ sub _build_auth {
         secret => $self->secret,
         issuer => $self->issuer,
         key_id => $self->account,
+        digits => $self->digits,
     });
 }
 
@@ -186,8 +202,9 @@ sub verify_code {
     # Remove any spaces or dashes from the code
     $code =~ s/[\s\-]//g;
     
-    # Verify the code is 6 digits
-    return 0 unless $code =~ /^\d{6}$/;
+    # Verify the code is either 6 or 8 digits (supports both standard and Yubikey)
+    my $expected_digits = $self->digits;
+    return 0 unless $code =~ /^\d{$expected_digits}$/;
     
     # Use Auth::GoogleAuth to verify
     # It automatically checks within a time window

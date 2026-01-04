@@ -37,16 +37,16 @@
             </div>
             
             <h3>[% text('Verify Setup') %]</h3>
-            <p>[% text('Enter the 6-digit code from your authenticator app to verify the setup:') %]</p>
+            <p>[% text('Enter the 6-digit or 8-digit code from your authenticator app to verify the setup:') %]</p>
             
             [% INCLUDE input element_data = {
                   name = "totp_code"
                   type = "text"
                   size = "10"
-                  maxlength = "6"
+                  maxlength = "8"
                   label = text("Verification Code")
                   required = "1"
-                  pattern = "^[0-9]{6}$"
+                  pattern = "^[0-9]{6,8}$"
             } %]
           </td>
         </tr>

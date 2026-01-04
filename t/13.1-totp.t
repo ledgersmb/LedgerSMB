@@ -80,6 +80,29 @@ subtest 'Code verification' => sub {
     ok(!$totp->verify_code('1234567'), 'Too-long code rejected');
 };
 
+# Test 8-digit TOTP code verification (Yubikey support)
+subtest '8-digit code verification (Yubikey)' => sub {
+    my $secret = 'JBSWY3DPEHPK3PXP';
+    
+    my $totp = LedgerSMB::TOTP->new(
+        secret => $secret,
+        account => 'testuser',
+        digits => 8,
+    );
+    
+    # Get the current valid code
+    my $current_code = $totp->current_code();
+    ok(defined $current_code, 'Current 8-digit code generated');
+    like($current_code, qr/^\d{8}$/, 'Code is 8 digits');
+    
+    # Verify the current code
+    ok($totp->verify_code($current_code), 'Current 8-digit code verifies successfully');
+    
+    # Test invalid codes
+    ok(!$totp->verify_code('00000000'), 'Invalid 8-digit code rejected');
+    ok(!$totp->verify_code('123456'), '6-digit code rejected when 8 expected');
+};
+
 # Test code with spaces and dashes
 subtest 'Code formatting tolerance' => sub {
     my $secret = 'JBSWY3DPEHPK3PXP';

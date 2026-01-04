@@ -33,14 +33,14 @@ define([
         // Create TOTP form
         var formHtml = '<div class="totp-form">' +
             '<h2>Two-Factor Authentication</h2>' +
-            '<p>Enter the verification code from your authenticator app:</p>' +
+            '<p>Enter the verification code from your authenticator app (6 or 8 digits):</p>' +
             '<div class="totp-input-container">' +
             '<label for="totp-code-input">Verification Code:</label>' +
             '<input id="totp-code-input" type="text" ' +
             'data-dojo-type="dijit/form/ValidationTextBox" ' +
-            'data-dojo-props="required:true, pattern:\'^[0-9]{6}$\', ' +
-            'invalidMessage:\'Code must be 6 digits\'" ' +
-            'maxlength="6" style="width: 150px;" />' +
+            'data-dojo-props="required:true, pattern:\'^[0-9]{6,8}$\', ' +
+            'invalidMessage:\'Code must be 6 or 8 digits\'" ' +
+            'maxlength="8" style="width: 150px;" />' +
             '</div>' +
             '<div class="totp-buttons">' +
             '<button id="totp-verify-btn" type="button" ' +
@@ -65,10 +65,10 @@ define([
             if (verifyBtn) {
                 verifyBtn.on("click", function() {
                     var code = codeInput.get("value");
-                    if (code && code.length === 6) {
+                    if (code && (code.length === 6 || code.length === 8)) {
                         callback(code);
                     } else {
-                        showError("Please enter a valid 6-digit code");
+                        showError("Please enter a valid 6 or 8-digit code");
                     }
                 });
             }
@@ -86,7 +86,7 @@ define([
                     if (evt.keyCode === 13) { // Enter key
                         // Trigger the verify button click event
                         var code = codeInput.get("value");
-                        if (code && code.length === 6) {
+                        if (code && (code.length === 6 || code.length === 8)) {
                             callback(code);
                         }
                     }

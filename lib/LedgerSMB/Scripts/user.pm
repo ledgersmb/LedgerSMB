@@ -264,12 +264,24 @@ sub totp_enable {
     }
     
     # Verify the code before enabling
-    my $totp = LedgerSMB::TOTP->new(
-        secret => $secret,
-        account => $login,
-    );
+    # Try both 6 and 8 digit codes to support both standard and Yubikey
+    my $totp;
+    my $verified = 0;
     
-    unless ($totp->verify_code($code)) {
+    for my $digits (6, 8) {
+        $totp = LedgerSMB::TOTP->new(
+            secret => $secret,
+            account => $login,
+            digits => $digits,
+        );
+        
+        if ($totp->verify_code($code)) {
+            $verified = 1;
+            last;
+        }
+    }
+    
+    unless ($verified) {
         $request->{error} = "Invalid TOTP code. Please try again.";
         $request->{totp_secret} = $secret;
         return totp_setup($request);

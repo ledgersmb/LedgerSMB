@@ -34,7 +34,7 @@ LedgerSMB is a free web-based double-entry accounting system, featuring
 * Timecards
 * Inventory management
 * Shipping
-* Two-Factor Authentication (TOTP)
+* Two-Factor Authentication (TOTP with Yubikey support)
 * and more ...
 
 Directly send orders and invoices from the built-in e-mail function to your
@@ -49,7 +49,8 @@ Customer visible output is fully customizable in templates, allowing easy and
 fast customization. Supported output formats are PDF, CSV, HTML, ODF and more.
 
 LedgerSMB supports optional Two-Factor Authentication (TOTP) for enhanced
-security, compatible with authenticator apps like Google Authenticator and Authy.
+security, compatible with authenticator apps like Google Authenticator, Authy,
+and hardware tokens like Yubikey (both 6-digit and 8-digit codes supported).
 See [doc/totp-authentication.md](doc/totp-authentication.md) for details.
 
 

@@ -2,13 +2,16 @@
 
 ## Overview
 
-LedgerSMB supports Time-based One-Time Password (TOTP) authentication as an additional security layer for user accounts. TOTP provides two-factor authentication using authenticator apps like Google Authenticator, Authy, Microsoft Authenticator, or any other TOTP-compatible application.
+LedgerSMB supports Time-based One-Time Password (TOTP) authentication as an additional security layer for user accounts. TOTP provides two-factor authentication using authenticator apps like Google Authenticator, Authy, Microsoft Authenticator, Yubikey, or any other TOTP-compatible application.
+
+The implementation supports both standard 6-digit codes and 8-digit codes (Yubikey default).
 
 ## Features
 
 - **RFC 6238 Compliant**: Implements standard TOTP algorithm
 - **Optional per-user**: Users can opt-in to enable TOTP on their accounts
 - **QR Code Setup**: Easy setup by scanning a QR code with authenticator app
+- **Yubikey Support**: Supports both 6-digit (standard) and 8-digit (Yubikey) codes
 - **Brute Force Protection**: Automatic lockout after multiple failed attempts
 - **Clock Drift Tolerance**: Configurable time window to handle clock synchronization issues
 - **Fallback Support**: Users without TOTP enabled can still use password-only authentication
@@ -124,11 +127,14 @@ Any TOTP-compatible authenticator application can be used, including:
 - Google Authenticator
 - Microsoft Authenticator
 - Authy
+- Yubikey (with TOTP capability - supports 6 or 8-digit codes)
 - 1Password
 - Bitwarden
 - LastPass Authenticator
 - FreeOTP
 - AndOTP
+
+**Note for Yubikey users**: Yubikeys can be programmed with TOTP and typically generate 8-digit codes. LedgerSMB supports both 6 and 8-digit codes, so both standard authenticators and Yubikeys will work seamlessly.
 
 ### Time Synchronization
 

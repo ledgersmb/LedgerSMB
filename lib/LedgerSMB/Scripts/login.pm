@@ -160,12 +160,21 @@ sub authenticate {
                 
                 # Verify TOTP code
                 use LedgerSMB::TOTP;
-                my $totp = LedgerSMB::TOTP->new(
-                    secret => $totp_info->{totp_secret},
-                    time_window => $totp_config->{time_window} // 1,
-                );
                 
-                my $is_valid = $totp->verify_code($totp_code);
+                # Try both 6 and 8 digit codes to support standard and Yubikey
+                my $is_valid = 0;
+                for my $digits (6, 8) {
+                    my $totp = LedgerSMB::TOTP->new(
+                        secret => $totp_info->{totp_secret},
+                        time_window => $totp_config->{time_window} // 1,
+                        digits => $digits,
+                    );
+                    
+                    if ($totp->verify_code($totp_code)) {
+                        $is_valid = 1;
+                        last;
+                    }
+                }
                 
                 # Update TOTP status
                 my $max_failures = $totp_config->{max_failures} // 5;
