@@ -19,7 +19,7 @@ use strict;
 use warnings;
 
 use Digest::MD5 qw( md5_hex );
-use HTTP::Status qw( HTTP_OK );
+use HTTP::Status qw( HTTP_OK HTTP_UNAUTHORIZED HTTP_FORBIDDEN );
 use JSON::MaybeXS;
 use URI::Escape;
 
@@ -82,6 +82,144 @@ sub authenticate {
     if (my $settings = $request->{_wire}->get( 'login_settings' )) {
         $r->{company} ||= $settings->{default_db};
     }
+    
+    # Check TOTP if configured
+    # Note: We check TOTP before creating the session but after we know
+    # we have login credentials. The database connection itself validates
+    # the password, so we're not leaking TOTP status before auth succeeds.
+    my $totp_config = $request->{_wire}->get('totp_settings') // {};
+    if ($totp_config->{enabled}) {
+        # Try to connect temporarily to check TOTP status
+        # This connection validates username/password
+        my $dbh;
+        eval {
+            my $db_factory = $request->{_wire}->get('db');
+            $dbh = $db_factory->instance(
+                dbname => $r->{company},
+                user => $r->{login},
+                password => $r->{password}
+            )->connect;
+        };
+        
+        # If connection failed, invalid credentials - let normal flow handle it
+        if (!$dbh) {
+            # Fall through to _create_session which will return unauthorized
+        }
+        elsif ($dbh) {
+            # Successfully connected - password is valid
+            # Now check TOTP status for this user
+            my $totp_info = $dbh->selectrow_hashref(
+                q{SELECT totp_enabled, totp_secret, totp_locked_until 
+                  FROM users WHERE username = ?},
+                undef,
+                $r->{login}
+            );
+            
+            if ($totp_info && $totp_info->{totp_enabled}) {
+                # Check if locked and lockout period is still active
+                if ($totp_info->{totp_locked_until}) {
+                    # Query current timestamp from database to compare
+                    my ($current_time) = $dbh->selectrow_array(
+                        q{SELECT CURRENT_TIMESTAMP}
+                    );
+                    my ($locked_until) = $dbh->selectrow_array(
+                        q{SELECT ?::timestamp > ?::timestamp},
+                        undef,
+                        $totp_info->{totp_locked_until},
+                        $current_time
+                    );
+                    
+                    if ($locked_until) {
+                        $dbh->disconnect;
+                        return [
+                            HTTP::Status::HTTP_FORBIDDEN,
+                            [ 'Content-Type' => 'application/json' ],
+                            [ $json->encode({
+                                error => 'Account temporarily locked due to failed TOTP attempts',
+                                locked => 1,
+                                locked_until => $totp_info->{totp_locked_until}
+                            }) ]
+                        ];
+                    }
+                }
+                
+                # TOTP is enabled, code required
+                my $totp_code = $r->{totp_code};
+                if (!defined $totp_code || $totp_code eq '') {
+                    $dbh->disconnect;
+                    return [
+                        HTTP::Status::HTTP_UNAUTHORIZED,
+                        [ 'Content-Type' => 'application/json',
+                          'X-LedgerSMB-TOTP-Required' => '1' ],
+                        [ $json->encode({
+                            error => 'TOTP verification code required',
+                            totp_required => 1
+                        }) ]
+                    ];
+                }
+                
+                # Verify TOTP code
+                use LedgerSMB::TOTP;
+                
+                # Try both 6 and 8 digit codes to support standard and Yubikey
+                my $is_valid = 0;
+                for my $digits (6, 8) {
+                    my $totp = LedgerSMB::TOTP->new(
+                        secret => $totp_info->{totp_secret},
+                        time_window => $totp_config->{time_window} // 1,
+                        digits => $digits,
+                    );
+                    
+                    if ($totp->verify_code($totp_code)) {
+                        $is_valid = 1;
+                        last;
+                    }
+                }
+                
+                # Update TOTP status
+                my $max_failures = $totp_config->{max_failures} // 5;
+                my $lockout_duration = ($totp_config->{lockout_duration} // 900) . ' seconds';
+                
+                my $result = $dbh->selectrow_hashref(
+                    q{SELECT * FROM user__totp_verify_and_update(?, ?, ?, ?::interval)},
+                    undef,
+                    $r->{login},
+                    $is_valid ? 1 : 0,
+                    $max_failures,
+                    $lockout_duration
+                );
+                
+                $dbh->disconnect;
+                
+                if (!$is_valid) {
+                    return [
+                        HTTP::Status::HTTP_UNAUTHORIZED,
+                        [ 'Content-Type' => 'application/json' ],
+                        [ $json->encode({
+                            error => 'Invalid TOTP code',
+                            totp_required => 1,
+                            failures => $result->{failures}
+                        }) ]
+                    ];
+                }
+                
+                if ($result && $result->{is_locked}) {
+                    return [
+                        HTTP::Status::HTTP_FORBIDDEN,
+                        [ 'Content-Type' => 'application/json' ],
+                        [ $json->encode({
+                            error => 'Too many failed TOTP attempts. Account locked.',
+                            locked => 1
+                        }) ]
+                    ];
+                }
+            }
+            else {
+                $dbh->disconnect;
+            }
+        }
+    }
+    
     if (my $r = $request->{_create_session}->($r->{login},
                                               $r->{password},
                                               $r->{company})) {

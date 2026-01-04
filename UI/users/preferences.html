@@ -152,6 +152,27 @@
         <div data-dojo-type="lsmb/users/ChangePassword"
              data-dojo-props="lstrings:{[% password_strings | html %]}"></div>
       </div>
+      <div data-dojo-type="dijit/layout/ContentPane" title="[% text("Two-Factor Authentication") %]" data-dojo-props="selected:false">
+        <div style="padding: 20px;">
+          <h2>[% text("Two-Factor Authentication (TOTP)") %]</h2>
+          <p>[% text("Add an extra layer of security to your account by requiring a time-based code from your mobile device in addition to your password.") %]</p>
+          
+          <div style="margin-top: 20px;">
+            <form method="get" action="user.pl">
+              [% INCLUDE input element_data = {
+                    name = "action"
+                    type = "hidden"
+                    value = "totp_setup"
+              } %]
+              [% INCLUDE button element_data = {
+                    text = text("Manage Two-Factor Authentication")
+                    type = "submit"
+                    class = "submit"
+              } %]
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </body>

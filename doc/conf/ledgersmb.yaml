@@ -106,6 +106,36 @@ login_settings:
   # The default database name when none was specified
   default_db: ledgersmb
 
+# !book: totp_settings
+#
+# Two-Factor Authentication (TOTP) settings
+# See doc/totp-authentication.md for detailed documentation
+totp_settings:
+  # !book: totp_settings.enabled
+  #
+  # Enable TOTP two-factor authentication globally (default: false)
+  # When enabled, users can opt-in to use TOTP for their accounts
+  enabled: false
+
+  # !book: totp_settings.max_failures
+  #
+  # Maximum number of consecutive failed TOTP verification attempts
+  # before the account is temporarily locked (default: 5)
+  max_failures: 5
+
+  # !book: totp_settings.lockout_duration
+  #
+  # Duration in seconds for which an account is locked after exceeding
+  # max_failures (default: 900 = 15 minutes)
+  lockout_duration: 900
+
+  # !book: totp_settings.time_window
+  #
+  # Number of 30-second time periods before and after the current time
+  # to accept TOTP codes. Provides tolerance for clock drift.
+  # A value of 1 means ±30 seconds tolerance (default: 1)
+  time_window: 1
+
 # !book: mail
 #
 # Configuration of the way outgoing mail is to be sent

@@ -193,6 +193,11 @@ extra_middleware: []
 logging:
   level: ERROR
 login_settings: {}
+totp_settings:
+  enabled: false
+  max_failures: 5
+  lockout_duration: 900  # 15 minutes in seconds
+  time_window: 1         # ±30 seconds
 mail:
   transport:
     $class: Email::Sender::Transport::Sendmail

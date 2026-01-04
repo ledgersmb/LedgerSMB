@@ -183,3 +183,4 @@ mc/delete-migration-validation-data.sql
 1.13/partsgroup-config.sql
 1.13/old-migration-schemas-cleanup.sql
 1.13/custom-attributes.sql
+1.13/add-totp-support.sql

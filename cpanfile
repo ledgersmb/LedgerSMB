@@ -5,6 +5,9 @@ requires 'perl', '5.36.1';
 requires 'Array::PrintCols';
 requires 'Archive::Zip';
 recommends 'Authen::SASL';
+requires 'Auth::GoogleAuth'; # For TOTP (RFC 6238) authentication
+requires 'Convert::Base32'; # For TOTP secret encoding
+requires 'GD::Barcode::QRcode'; # For TOTP QR code generation
 requires 'Beam::Wire';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Parse::PSGI';
