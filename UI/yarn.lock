@@ -2504,17 +2504,17 @@
     json-schema-traverse "^1.0.0"
     require-from-string "^2.0.2"
 
-"@redocly/cli@2.14.3":
-  version "2.14.3"
-  resolved "https://registry.yarnpkg.com/@redocly/cli/-/cli-2.14.3.tgz#21a5b230eb40990fb10a243567c68ed50e95de7a"
-  integrity sha512-8sq3xvlt3roeVuMW0L4KYdiMii3PnhNuYId6xDtnEGF+ZDhlImUt/t64XwDPtjuiCdbZmSA4erUxNLRYUlB2Kw==
+"@redocly/cli@2.14.4":
+  version "2.14.4"
+  resolved "https://registry.yarnpkg.com/@redocly/cli/-/cli-2.14.4.tgz#5b3c80a73c58c95e05e1e5e62f5f511e49d31dcb"
+  integrity sha512-DM6xT3hIvEc7a0z4r2DzUkusfmkPs0at6MGOiouASqxlG/k5k38KwIII51mE0c8VmMGhArhxZAFnptoycVpFoQ==
   dependencies:
     "@opentelemetry/exporter-trace-otlp-http" "0.202.0"
     "@opentelemetry/resources" "2.0.1"
     "@opentelemetry/sdk-trace-node" "2.0.1"
     "@opentelemetry/semantic-conventions" "1.34.0"
-    "@redocly/openapi-core" "2.14.3"
-    "@redocly/respect-core" "2.14.3"
+    "@redocly/openapi-core" "2.14.4"
+    "@redocly/respect-core" "2.14.4"
     abort-controller "^3.0.0"
     ajv-formats "^3.0.1"
     chokidar "^3.5.1"
@@ -2549,10 +2549,10 @@
   dependencies:
     json-schema-to-ts "2.7.2"
 
-"@redocly/openapi-core@2.14.3":
-  version "2.14.3"
-  resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-2.14.3.tgz#38e1976d3817d2b89aabcd9bdca1b1ac634e45b8"
-  integrity sha512-h3K19wflV6w+5uFnlo+tDjihSBe+yZvFvnxPxasC8tC78qu7YQOX+hITXYsdaS+ZZ1nxvYvLYiHHmbIplA41VA==
+"@redocly/openapi-core@2.14.4":
+  version "2.14.4"
+  resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-2.14.4.tgz#79cdb8b3a6e4fdd6e1defa285630f695db2d1bac"
+  integrity sha512-FqYf8pBXrZlbhjgcqEpgWrYk3E5j04I4nx0Pn2rMMlDe9S8N9T6axemJGHC6HvrzVJrTWLsUIsV6ndpBICnR2g==
   dependencies:
     "@redocly/ajv" "^8.17.1"
     "@redocly/config" "^0.41.1"
@@ -2579,15 +2579,15 @@
     pluralize "^8.0.0"
     yaml-ast-parser "0.0.43"
 
-"@redocly/respect-core@2.14.3":
-  version "2.14.3"
-  resolved "https://registry.yarnpkg.com/@redocly/respect-core/-/respect-core-2.14.3.tgz#e59949a092e2334b95d5a8c1fdf7b1c14b52e9ba"
-  integrity sha512-p7mTf2vp6PSIQJLpMfVCijGecJzbMJzHEZOF4Uz8Zux3qPj+CpZNFwxPahFHZ8JYsRFsalMDCklyySz1ubQE6w==
+"@redocly/respect-core@2.14.4":
+  version "2.14.4"
+  resolved "https://registry.yarnpkg.com/@redocly/respect-core/-/respect-core-2.14.4.tgz#22f1fcee00d1a0993b8e4c4c8d2aa57d23bf78ea"
+  integrity sha512-b7AZVVo6XXU5DFSUFv0m0ZmaLbRGILUMEV+ZlDKzIYRd9SDUNOze6DtFNPQjz+ePJnvzu1s55ZluQXPyF0y4fQ==
   dependencies:
     "@faker-js/faker" "^7.6.0"
     "@noble/hashes" "^1.8.0"
     "@redocly/ajv" "8.17.1"
-    "@redocly/openapi-core" "2.14.3"
+    "@redocly/openapi-core" "2.14.4"
     better-ajv-errors "^1.2.0"
     colorette "^2.0.20"
     json-pointer "^0.6.2"
@@ -4187,7 +4187,12 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@1.0.30001762, caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001687, caniuse-lite@^1.0.30001759, caniuse-lite@^1.0.30001760:
+caniuse-lite@1.0.30001763:
+  version "1.0.30001763"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001763.tgz#9397446dd110b1aeadb0df249c41b2ece7f90f09"
+  integrity sha512-mh/dGtq56uN98LlNX9qdbKnzINhX0QzhiWBFEkFfsFO4QyCvL8YegrJAazCwXIeqkIob8BlZPGM3xdnY+sgmvQ==
+
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001687, caniuse-lite@^1.0.30001759, caniuse-lite@^1.0.30001760:
   version "1.0.30001762"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001762.tgz#e4dbfeda63d33258cdde93e53af2023a13ba27d4"
   integrity sha512-PxZwGNvH7Ak8WX5iXzoK1KPZttBXNPuaOvI2ZYU7NrlM+d9Ov+TUvlLOBNGzVXAntMSMMlJPd+jY6ovrVjSmUw==
@@ -5685,17 +5690,17 @@ eslint-plugin-n@17.23.1, eslint-plugin-n@^17.11.1:
     semver "^7.6.3"
     ts-declaration-location "^1.0.6"
 
-eslint-plugin-package-json@0.87.1:
-  version "0.87.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-package-json/-/eslint-plugin-package-json-0.87.1.tgz#aa2e29f7d98ddeefccfde6ef35fa415af7602097"
-  integrity sha512-aHOUGdpHrPDji64xwAsspXvfjwgeksARxM2SqzhusSEUCyLr0GX0oNe9hDDPMQ2CKPlKjTPKFhzmsQNIO0aWiQ==
+eslint-plugin-package-json@0.88.1:
+  version "0.88.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-package-json/-/eslint-plugin-package-json-0.88.1.tgz#48856844bef2b4ad21938887b2fa4c656ff9d94e"
+  integrity sha512-azVaiYwKOZBA4I8q7kxZ8pJ64pihQdAh7MWKQveoZeF/4dDWPxehqkbS3psl3yWvz3Etea9oxALEXso0MUi/Wg==
   dependencies:
     "@altano/repository-tools" "^2.0.1"
     change-case "^5.4.4"
     detect-indent "^7.0.2"
     detect-newline "^4.0.1"
     eslint-fix-utils "~0.4.0"
-    package-json-validator "~0.59.0"
+    package-json-validator "~0.59.1"
     semver "^7.7.3"
     sort-object-keys "^2.0.0"
     sort-package-json "^3.4.0"
@@ -9224,7 +9229,7 @@ package-json-from-dist@^1.0.0:
   resolved "https://registry.yarnpkg.com/package-json-from-dist/-/package-json-from-dist-1.0.1.tgz#4f1471a010827a86f94cfd9b0727e36d267de505"
   integrity sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==
 
-package-json-validator@~0.59.0:
+package-json-validator@~0.59.1:
   version "0.59.1"
   resolved "https://registry.yarnpkg.com/package-json-validator/-/package-json-validator-0.59.1.tgz#3ac0c34b120afee138053645fe84e08fe4e58547"
   integrity sha512-cLk5/c/OJX9nA9rl3d2Gymrxv2lqhOBn3+1+D6ZqPNjL6ZyhcjVDUfKyXh+nDyQjGVEQfPoVIE5kLrZ2zn6nDQ==
@@ -12085,10 +12090,10 @@ webpack-5-chain@8.0.2:
     deepmerge "^1.5.2"
     javascript-stringify "^2.0.1"
 
-webpack-bundle-analyzer@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-5.1.0.tgz#f5f2af23eeb4558c506eec27ea6dc3a3d3d70115"
-  integrity sha512-WAWwIoIUx4yC2AEBqXbDkcmh/LzAaenv0+nISBflP5l+XIXO9/x6poWarGA3RTrfavk9H3oWQ64Wm0z26/UGKA==
+webpack-bundle-analyzer@5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-5.1.1.tgz#39273f584a234960158fd9a56ca79e739ae06062"
+  integrity sha512-UzoaIA0Aigo5lUvoUkIkSoHtUK5rBJh9e2vW3Eqct0jc/L8hcruBCz/jsXEvB1hDU1G3V94jo2EJqPcFKeSSeQ==
   dependencies:
     "@discoveryjs/json-ext" "0.5.7"
     acorn "^8.0.4"
