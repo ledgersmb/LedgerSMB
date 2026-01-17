@@ -62,7 +62,6 @@
     "babel-jest": "30.2.0",
     "babel-loader": "10.0.0",
     "browserslist": "4.28.1",
-    "caniuse-lite": "1.0.30001764",
     "clean-webpack-plugin": "4.0.0",
     "compression-webpack-plugin": "11.1.0",
     "copy-webpack-plugin": "13.0.1",
