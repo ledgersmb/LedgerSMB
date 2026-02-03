@@ -10540,10 +10540,10 @@ stylelint-config-standard@40.0.0:
   dependencies:
     stylelint-config-recommended "^18.0.0"
 
-stylelint-declaration-block-no-ignored-properties@2.8.0:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/stylelint-declaration-block-no-ignored-properties/-/stylelint-declaration-block-no-ignored-properties-2.8.0.tgz#a7bc95a46f4bc971aec0e33274bfbdecfe575435"
-  integrity sha512-Ws8Cav7Y+SPN0JsV407LrnNXWOrqGjxShf+37GBtnU/C58Syve9c0+I/xpLcFOosST3ternykn3Lp77f3ITnFw==
+stylelint-declaration-block-no-ignored-properties@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/stylelint-declaration-block-no-ignored-properties/-/stylelint-declaration-block-no-ignored-properties-3.0.0.tgz#aec7ee5ffd0a5629a8bb6e4ddaa5bf12723911ee"
+  integrity sha512-3ml4NgSW6nkHQrk+/ounU7Qljfb7e7FayHzU7Mry6rF9X28RXyPLD2bNn4QVOO7t98d5EGCCVkNbHCZSx+bNUQ==
 
 stylelint-no-nested-media@0.1.0:
   version "0.1.0"
