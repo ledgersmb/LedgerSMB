@@ -2074,13 +2074,13 @@ $$ LANGUAGE PLPGSQL;
 
 
 CREATE TRIGGER ap_track_global_sequence BEFORE INSERT OR UPDATE ON ap
-FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
+FOR EACH ROW EXECUTE PROCEDURE track_global_sequence('ap');
 
 CREATE TRIGGER ar_track_global_sequence BEFORE INSERT OR UPDATE ON ar
-FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
+FOR EACH ROW EXECUTE PROCEDURE track_global_sequence('ar');
 
 CREATE TRIGGER gl_track_global_sequence BEFORE INSERT OR UPDATE ON gl
-FOR EACH ROW EXECUTE PROCEDURE track_global_sequence();
+FOR EACH ROW EXECUTE PROCEDURE track_global_sequence('gl');
 
 
 INSERT INTO taxmodule (

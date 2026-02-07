@@ -31,10 +31,10 @@ BEGIN
     UPDATE parts SET onhand = onhand + t_mfg_lot.qty
      where id = t_mfg_lot.parts_id;
 
-    INSERT INTO gl (reference, description, transdate, approved,
-                   trans_type_code)
-    values ('mfg-' || $1::TEXT, 'Manufacturing lot',
-            now(), true, 'as');
+    INSERT INTO transactions (id, reference, description, transdate, approved,
+                   trans_type_code, table_name)
+    values (nextval('id'), 'mfg-' || $1::TEXT, 'Manufacturing lot',
+            now(), true, 'as', 'mfg_lot');
 
     INSERT INTO invoice (trans_id, parts_id, qty, allocated)
     SELECT currval('id')::int, parts_id, qty, 0
@@ -249,15 +249,13 @@ $$
            AS adjusted
       FROM invoice i
       JOIN parts p ON (i.parts_id = p.id)
-      JOIN (select id, approved, transdate, 'ar' as transtype FROM ar
-             UNION
-            SELECT id, approved, transdate, 'ap' as transtype FROM ap
-             UNION
-            SELECT id, approved, transdate, trans_type_code as transtype
-              FROM gl) a
-            ON (a.id = i.trans_id AND a.approved)
-     WHERE ($1 IS NULL OR a.transdate >= $1)
-           AND ($2 IS NULL OR a.transdate <= $2)
+      JOIN (
+        select id, approved, transdate, trans_type_code as transtype
+          from transactions
+      ) txn ON txn.id = i.trans_id
+     WHERE txn.approved
+           AND ($1 IS NULL OR txn.transdate >= $1)
+           AND ($2 IS NULL OR txn.transdate <= $2)
            AND ($3 IS NULL OR p.partnumber ilike $3 || '%')
            AND ($4 IS NULL OR p.description @@ plainto_tsquery($4))
   GROUP BY p.id, p.description, p.partnumber
@@ -385,9 +383,9 @@ IF inv.trans_id IS NOT NULL THEN
    RETURN inv;
 END IF;
 
-INSERT INTO gl (description, transdate, reference, approved, trans_type_code)
-        VALUES ('Transaction due to approval of inventory adjustment',
-                inv.transdate, 'invadj-' || in_id, true, 'ia')
+INSERT INTO transactions (id, description, transdate, reference, approved, trans_type_code, table_name)
+        VALUES (nextval('id'), 'Transaction due to approval of inventory adjustment',
+                inv.transdate, 'invadj-' || in_id, true, 'ia', 'inventory_report')
     RETURNING id INTO t_trans_id;
 
 UPDATE inventory_report

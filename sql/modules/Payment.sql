@@ -1086,7 +1086,7 @@ BEGIN
                       in_notes, in_approved, 'op');
        SELECT currval('id') INTO var_gl_id;
 
-       UPDATE payment SET gl_id = var_gl_id
+       UPDATE payment SET trans_id = var_gl_id
         WHERE id = var_payment_id;
 
        FOR out_count IN
@@ -1345,10 +1345,10 @@ DECLARE
   t_payment_id int;
 BEGIN
   -- check against being an overpayment??
-  INSERT INTO payment (reference, gl_id, payment_class,
+  INSERT INTO payment (reference, trans_id, payment_class,
                        payment_date, closed, entity_credit_id,
                        employee_id, currency, reversing, notes)
-    SELECT reference, gl_id, payment_class,
+    SELECT reference, trans_id, payment_class,
            in_payment_date, closed, entity_credit_id,
            person__get_my_id(), currency, in_payment_id,
            'This payment reverses ' || in_payment_id
@@ -1518,7 +1518,7 @@ JOIN account c ON (c.id=ac.chart_id)
 JOIN account_link l ON l.account_id = c.id
 JOIN entity_credit_account eca ON (eca.id = p.entity_credit_id)
 JOIN company cmp ON (cmp.entity_id=eca.entity_id)
-WHERE p.gl_id IS NOT NULL
+WHERE p.trans_id IS NOT NULL
       AND (pl.type = 2 OR pl.type = 0)
       AND l.description LIKE '%overpayment'
 GROUP BY p.id, c.accno, p.reference, p.payment_class, p.closed, p.payment_date,

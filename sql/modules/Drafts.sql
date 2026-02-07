@@ -97,7 +97,7 @@ begin
         ELSIF (t_table = 'gl') THEN
                 UPDATE gl set approved = true where id = in_id;
         ELSE
-                raise exception 'Invalid table % in draft_approve for transaction %', t_table, in_id;
+          UPDATE transactions set approved = true where id = in_id;
         END IF;
 
         IF NOT FOUND THEN
@@ -200,7 +200,7 @@ begin
         ELSIF t_table = 'gl' THEN
                 DELETE FROM gl WHERE id = in_id AND approved IS FALSE;
         ELSE
-                raise exception 'Invalid table % in draft_delete for transaction %', t_table, in_id;
+                DELETE FROM transactions WHERE id = in_id AND approved IS FALSE;
         END IF;
         IF NOT FOUND THEN
                 RAISE EXCEPTION 'Invalid transaction id %', in_id;

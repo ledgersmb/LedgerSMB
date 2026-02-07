@@ -62,9 +62,10 @@ BEGIN
      IF in_from_date IS NULL THEN
        SELECT max(end_date) INTO t_roll_forward
          FROM account_checkpoint
-        WHERE end_date < (select max(gl.transdate)
-                            FROM gl JOIN yearend y ON y.trans_id = gl.id
-                           WHERE y.transdate < coalesce(in_to_date, gl.transdate)
+        WHERE end_date < (select max(txn.transdate)
+                            FROM transactions txn
+                                   JOIN yearend y ON y.trans_id = txn.id
+                           WHERE y.transdate < coalesce(in_to_date, txn.transdate)
                          );
     ELSE
       SELECT max(end_date) INTO t_roll_forward
@@ -110,8 +111,8 @@ BEGIN
                              where buac.entry_id = acc_trans.entry_id
                            )) ac
          JOIN (SELECT id, approved FROM transactions
-                WHERE (in_approved is null OR approved = in_approved)) gl
-              ON ac.trans_id = gl.id
+                WHERE (in_approved is null OR approved = in_approved)) txn
+              ON ac.trans_id = txn.id
         WHERE ac.transdate BETWEEN t_roll_forward + '1 day'::interval AND t_end_date
               AND (in_approved is null or ac.approved or in_approved is false)
               AND (ignore_trans is null or ac.trans_id <> ALL(ignore_trans))

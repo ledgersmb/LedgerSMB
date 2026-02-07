@@ -450,23 +450,6 @@ $$ Retrieves the file information specified including content.$$;
 
 DELETE FROM file_view_catalog WHERE file_class in (1, 2);
 
-CREATE OR REPLACE view file_tx_links AS
-SELECT file_id, ref_key, gl.reference, gl.type, dest_class, source_class,
-       sl.ref_key as dest_ref
-  FROM file_secondary_attachment sl
-  JOIN (select id, reference, 'gl' as type
-          FROM gl
-         UNION
-        SELECT id, invnumber, case when invoice then 'is' else 'ar' end as type
-          FROM ar
-         UNION
-        SELECT id, invnumber, case when invoice then 'ir' else 'ap' end as type
-          FROM ap) gl ON sl.ref_key = gl.id and sl.source_class = 1;
--- view of links FROM transactions
-
-INSERT INTO file_view_catalog (file_class, view_name)
-     VALUES (1, 'file_tx_links');
-
 CREATE OR REPLACE view file_order_links AS
 SELECT file_id, ref_key, oe.ordnumber as reference, oc.oe_class, dest_class,
        source_class, sl.ref_key as dest_ref

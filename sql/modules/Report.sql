@@ -408,12 +408,11 @@ SELECT a.id, a.accno, a.description,
                THEN ac.amount_bc ELSE null END),
       SUM(ABS(ac.amount_bc))
  FROM account a
- LEFT
- JOIN acc_trans ac ON ac.chart_id = a.id
- LEFT
- JOIN (select id, approved from transactions) gl
-       ON ac.trans_id = gl.id
-WHERE gl.approved and ac.approved
+LEFT JOIN acc_trans ac
+  ON ac.chart_id = a.id
+LEFT JOIN transactions txn
+  ON ac.trans_id = txn.id
+WHERE txn.approved and ac.approved
       and ac.transdate <= $2
 GROUP BY a.id, a.accno, a.description
 ORDER BY a.accno

@@ -223,7 +223,7 @@ acc_balance AS (
    )
    SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
      FROM acc_trans ac
-    INNER JOIN transactions gl ON ac.trans_id = gl.id AND gl.approved
+    INNER JOIN transactions txn ON ac.trans_id = txn.id AND txn.approved
      LEFT JOIN (SELECT array_agg(path) AS bu_ids, entry_id
                   FROM business_unit_ac buac
                  INNER JOIN bu_tree ON bu_tree.id = buac.bu_id
@@ -342,13 +342,13 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
 )
    SELECT ac.chart_id AS id, sum(ac.amount_bc * ca.portion) AS balance
      FROM acc_trans ac
-     JOIN transactions gl ON ac.trans_id = gl.id AND gl.approved
+     JOIN transactions txn ON ac.trans_id = txn.id AND txn.approved
      JOIN (SELECT id, sum(portion) as portion
              FROM cash_impact ca
             WHERE (in_from_date IS NULL OR ca.transdate >= in_from_date)
                   AND (in_to_date IS NULL OR ca.transdate <= in_to_date)
            GROUP BY id
-          ) ca ON gl.id = ca.id
+          ) ca ON txn.id = ca.id
 LEFT JOIN (select array_agg(path) as bu_ids, entry_id
              FROM business_unit_ac buac
              JOIN bu_tree ON bu_tree.id = buac.bu_id
@@ -537,14 +537,14 @@ hdr_meta AS (
                                   WHERE aht.id = ANY(acc_meta.path)))
 ),
 acc_balance AS (
-WITH gl (id) AS
+WITH aa (id) AS
  ( SELECT id FROM ap WHERE approved is true AND entity_credit_account = in_id
 UNION ALL
    SELECT id FROM ar WHERE approved is true AND entity_credit_account = in_id
 )
 SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
   FROM acc_trans ac
-  JOIN gl ON ac.trans_id = gl.id
+  JOIN aa ON ac.trans_id = aa.id
  WHERE ac.approved is true
           AND (in_from_date IS NULL OR ac.transdate >= in_from_date)
           AND (in_to_date IS NULL OR ac.transdate <= in_to_date)

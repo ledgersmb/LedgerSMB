@@ -28,10 +28,10 @@ BEGIN
 
         SELECT count(*) into approval_check
         FROM acc_trans ac
-        JOIN (select id, approved, transdate from transactions
-             ) gl ON (gl.id = ac.trans_id)
+        JOIN transactions txn
+             ON txn.id = ac.trans_id
         WHERE (ac.approved IS NOT TRUE AND ac.transdate <= in_end_date)
-                OR (gl.approved IS NOT TRUE AND gl.transdate <= in_end_date);
+                OR (txn.approved IS NOT TRUE AND txn.transdate <= in_end_date);
 
         if approval_check > 0 THEN
                 RAISE EXCEPTION 'Unapproved transactions in closed period';
@@ -96,9 +96,9 @@ DECLARE
    ret_val int;
    cp_date date;
 BEGIN
-        INSERT INTO gl (transdate, reference, description, approved,
-                        trans_type_code)
-        VALUES (in_end_date, in_reference, in_description, true, 'ye');
+        INSERT INTO transactions (id, transdate, reference, description, approved,
+                        trans_type_code, table_name)
+        VALUES (nextval('id'), in_end_date, in_reference, in_description, true, 'ye', 'yearend');
 
         INSERT INTO yearend (trans_id, transdate)
              VALUES (currval('id'), in_end_date);
@@ -174,7 +174,7 @@ COMMENT ON FUNCTION eoy_close_books
 in_retention_acc_id int) IS
 $$ Zeroes accounts and then creates a checkpoint. in_end_date is the date when
 the books are to be closed, in_reference and in_description become the
-reference and description of the gl transaction, and in_retention_acc_id is
+reference and description of the transaction, and in_retention_acc_id is
 the retained earnings account id.$$;
 
 CREATE OR REPLACE FUNCTION eoy_reopen_books(in_end_date date)
@@ -200,9 +200,9 @@ BEGIN
     DECLARE
       t_new_trans_id int;
     BEGIN
-      INSERT INTO gl (transdate, reference, description, approved, trans_type_code)
+      INSERT INTO transactions (transdate, reference, description, approved, trans_type_code)
       SELECT in_end_date, 'Reversing ' || reference, 'Reversing ' || description, true, 'ye'
-        FROM gl
+        FROM transactions
        WHERE id = (select trans_id from yearend
                     where transdate = in_end_date
                       and reversed is not true)
