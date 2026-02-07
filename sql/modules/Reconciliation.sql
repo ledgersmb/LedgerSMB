@@ -886,8 +886,10 @@ CREATE OR REPLACE VIEW recon_payee AS
                   JOIN entity e ON eca.entity_id = e.id
        ) aa
       UNION
-     SELECT gl.id, gl.description
+     SELECT txn.id, txn.description
        FROM gl
+            JOIN transactions txn
+                ON gl.id = txn.id
    ) n ON n.id = ac.trans_id;
 
 CREATE OR REPLACE FUNCTION reconciliation__report_details_payee (in_report_id INT) RETURNS setof recon_payee as $$

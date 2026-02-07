@@ -125,18 +125,18 @@ $$
                 GROUP BY v.id, ar.invoice, a.source, eca.meta_number, e.name,
                         v.batch_id, v.trans_id, a.transdate, bc.class
                 UNION ALL
-                SELECT v.id, false, g.reference, g.description,
+                SELECT v.id, false, txn.reference, txn.description,
                         v.batch_id, v.trans_id,
-                        sum(a.amount_bc), g.transdate, 'GL', v.batch_class
+                        sum(a.amount_bc), txn.transdate, 'GL', v.batch_class
                 FROM voucher v
-                JOIN gl g ON (g.id = v.trans_id)
+                JOIN transactions txn ON (txn.id = v.trans_id)
                 JOIN acc_trans a ON (v.trans_id = a.trans_id)
                 WHERE a.amount_bc > 0
                         AND v.batch_id = in_batch_id
                         AND v.batch_class IN (select id from batch_class
                                         where class in ('gl', 'upgrade'))
-                GROUP BY v.id, g.reference, g.description, v.batch_id,
-                        v.trans_id, g.transdate
+                GROUP BY v.id, txn.reference, txn.description, v.batch_id,
+                        v.trans_id, txn.transdate
                 ORDER BY 7, 1
 $$ language sql;
 

@@ -1610,19 +1610,19 @@ $$
 
 -- This should never hit an income statement-side account but I have handled it
 -- in case of configuration error. --CT
-SELECT o.payment_id, e.name, o.available, g.transdate,
+SELECT o.payment_id, e.name, o.available, txn.transdate,
        (select amount_bc * CASE WHEN c.category in ('A', 'E') THEN -1 ELSE 1 END
           from acc_trans
-         where g.id = trans_id
+         where txn.id = trans_id
                AND chart_id = o.chart_id ORDER BY entry_id ASC LIMIT 1) as amount
   FROM overpayments o
   JOIN payment p ON o.payment_id = p.id
-  JOIN gl g ON g.id = p.gl_id
+  JOIN transactions txn ON txn.id = p.trans_id
   JOIN account c ON c.id = o.chart_id
   JOIN entity_credit_account eca ON eca.id = o.entity_credit_id
   JOIN entity e ON eca.entity_id = e.id
- WHERE ($1 IS NULL OR $1 <= g.transdate) AND
-       ($2 IS NULL OR $2 >= g.transdate) AND
+ WHERE ($1 IS NULL OR $1 <= txn.transdate) AND
+       ($2 IS NULL OR $2 >= txn.transdate) AND
        ($3 IS NULL OR $3 = e.control_code) AND
        ($4 IS NULL OR $4 = eca.meta_number) AND
        ($5 IS NULL OR e.name @@ plainto_tsquery($5));

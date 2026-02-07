@@ -64,8 +64,10 @@ BEGIN;
     INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)
     SELECT id, currval('id'), '100', 'XTS', 100, TRUE FROM account WHERE accno = '00002';
 
-    INSERT INTO gl (reference, description, approved)
-    VALUES ('_TEST GL', 'Testing GL Drafts', false);
+    INSERT INTO gl (reference, approved) values ('_TEST GL', false);
+    UPDATE transactions
+       SET description = 'Testing GL Drafts'
+     WHERE id = currval('id');
 
     INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)
     SELECT id, currval('id'), '-100', 'XTS', -100, TRUE FROM account WHERE accno = '00001';
