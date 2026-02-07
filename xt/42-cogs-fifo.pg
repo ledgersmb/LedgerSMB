@@ -835,6 +835,7 @@ BEGIN;
     --  * The second AR invoice is now allocated
     --  * The AP invoice is 50% de-allocated
 
+    --  * Set up an ar invoice and an ap invoice, each at 150 units
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-5203,  true, 'test5003', now() - '4 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -845,11 +846,14 @@ BEGIN;
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5204, -5204, -5, -150, 0, 3);
 
+    --  * Allocate these against each other
     SELECT is(
               cogs__add_for_ap_line(-5204),
               150::numeric,
               'ar-1, allocation invoice 3 series 5'
               );
+
+    -- VERIFY
     SELECT is(
               sum(amount_bc),
               -450::numeric,
@@ -866,16 +870,20 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ar-1, allocation invoice 4 series 5 is 150; ');
     DEALLOCATE test;
 
+    --  * Set up another ar invoice at 75 units
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-5205,  true, 'test5005', now() - '4 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5205, -5205, -5, 75, 0, 3);
 
+    --  * Allocate the new invoice / no units availeble == no effect
     SELECT is(
               cogs__add_for_ar_line(-5205),
               0::numeric,
               'ar-1, allocation invoice 5 series 5'
               );
+
+    -- VERIFY
     SELECT is(
               sum(amount_bc),
               -450::numeric,
@@ -887,6 +895,7 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ar-2, allocation invoice 5 series 5 is 0');
     DEALLOCATE test;
 
+    --  * Reverse the original AR invoice at 150 units
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-5206,  true, 'test5006-rev3', now() - '4 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -903,19 +912,19 @@ BEGIN;
               'ar-1, cogs 3 series 5, expense account total')
      FROM acc_trans WHERE chart_id = -5102;
 
-    PREPARE test AS SELECT allocated = -75
+    PREPARE test AS SELECT allocated
                     FROM invoice WHERE id = -5205;
-    SELECT results_eq('test',ARRAY[true],'post-ar-3, allocation invoice 5 series 5 is -75');
+    SELECT results_eq('test',ARRAY[-75::numeric],'post-ar-3, allocation invoice 5 series 5 is -75');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT allocated = 150
+    PREPARE test AS SELECT allocated
                     FROM invoice WHERE id = -5206;
-    SELECT results_eq('test',ARRAY[true],'post-ar-3, allocation invoice 6 series 5 is 150');
+    SELECT results_eq('test',ARRAY[150::numeric],'post-ar-3, allocation invoice 6 series 5 is 150');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT allocated = 75
+    PREPARE test AS SELECT allocated
        FROM invoice WHERE id = -5204;
-    SELECT results_eq('test',ARRAY[true],'post-ar-3, allocation invoice 4 series 5 is -75');
+    SELECT results_eq('test',ARRAY[75::numeric],'post-ar-3, allocation invoice 4 series 5 is -75');
     DEALLOCATE test;
 
 
