@@ -38,7 +38,7 @@
 | [0105](./0105-change-ui-from-dojo-to-quasar.md) | Accepted | Addresses the design decision to move the code base from Dojo to Vue and Quasar. |
 | [0106](./0106-coding-style-new-perl-syntax.md) | Accepted | Addresses the design decisions regarding Perl coding style and the limited use of newer Perl syntax. |
 | [0107](./0107-using-postgresql-json-jsonb-data-type.md) | Draft | Addresses the design decisions regarding the use of JSON and JSONB data types, and the preferential use of relational schema in the PostgreSQL database. |
-| [0108](./0108-transactions-as-resource-representation.md) | Draft | Addresses the considerations regarding journal lines resulting from e.g. manufacturing lots and fixed assets as to whether they are separate resources or can be combined into a single resource. |
+| [0108](./0108-transactions-as-resource-representation.md) | Accepted | Addresses the considerations regarding journal lines resulting from e.g. manufacturing lots and fixed assets as to whether they are separate resources or can be combined into a single resource. |
 
 
 Index Generated: Wed Oct  1 22:29:31 2025 UTC
