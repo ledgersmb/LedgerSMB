@@ -1590,13 +1590,6 @@ COMMENT ON FUNCTION payment_get_unused_overpayment(
 in_account_class int, in_entity_credit_id int, in_chart_id int) IS
 $$ Returns a list of available overpayments$$;
 
-CREATE OR REPLACE FUNCTION payment__get_gl(in_payment_id int)
-returns gl
-language sql as
-$$
-SELECT * FROM gl WHERE id = (select id from payment where id = $1);
-$$;
-
 
 DROP TYPE IF EXISTS overpayment_list_item CASCADE;
 CREATE TYPE overpayment_list_item AS (

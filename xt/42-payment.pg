@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(53);
+    SELECT plan(52);
 
     -- Add data
 
@@ -30,7 +30,6 @@ BEGIN;
     SELECT has_function('payment_get_available_overpayment_amount',ARRAY['integer','integer']);
     SELECT has_function('payment_get_entity_account_payment_info',ARRAY['integer']);
     SELECT has_function('payment_get_entity_accounts',ARRAY['integer','text','text','date','date']);
-    SELECT has_function('payment__get_gl',ARRAY['integer']);
     SELECT has_function('payment_get_open_accounts',ARRAY['integer','date','date']);
     SELECT has_function('payment_get_open_invoice',ARRAY['integer','integer','character','date','date','numeric','numeric','text','date']);
     SELECT has_function('payment_get_open_invoices',ARRAY['integer','integer','character','date','date','numeric','numeric','date']);
