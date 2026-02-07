@@ -9,7 +9,6 @@ DROP TYPE IF EXISTS draft_search_result CASCADE;
 CREATE TYPE draft_search_result AS (
         id int,
         transdate date,
-        invoice bool,
         reference text,
         eca_name text,
         description text,
@@ -26,10 +25,10 @@ returns setof draft_search_result AS
 $$
 BEGIN
 RETURN QUERY EXECUTE $sql$
-        SELECT id, transdate, invoice, reference, eca_name, description,
+        SELECT id, transdate, reference, eca_name, description,
                type, amount FROM (
             SELECT id, transdate, reference, null::text as eca_name,
-                   description, false as invoice,
+                   description,
                    (SELECT SUM(line.amount_bc)
                       FROM acc_trans line
                      WHERE line.amount_bc > 0
@@ -44,7 +43,7 @@ RETURN QUERY EXECUTE $sql$
             UNION
             SELECT id, transdate, invnumber as reference,
                 (SELECT name FROM eca__get_entity(entity_credit_account)) as eca_name,
-                description, invoice, amount_bc as amount, 'ap' as type
+                description, amount_bc as amount, 'ap' as type
               FROM ap
              WHERE (lower($1) = 'ap' or $1 is null)
                    AND NOT approved
@@ -54,7 +53,7 @@ RETURN QUERY EXECUTE $sql$
             UNION
             SELECT id, transdate, invnumber as reference,
                 (SELECT name FROM eca__get_entity(entity_credit_account)) as eca_name,
-                description, invoice, amount_bc as amount, 'ar' as type
+                description, amount_bc as amount, 'ar' as type
               FROM ar
              WHERE (lower($1) = 'ar' or $1 is null)
                    AND NOT approved
