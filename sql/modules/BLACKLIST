@@ -340,7 +340,6 @@ parts__get_by_id
 parts__get_by_partnumber
 parts__search_lite
 partsgroup__search
-payment__get_gl
 payment__overpayments_list
 payment__reverse
 payment__search
