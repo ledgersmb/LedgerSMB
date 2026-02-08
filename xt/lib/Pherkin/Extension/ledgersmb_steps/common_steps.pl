@@ -359,8 +359,8 @@ Given qr/^(\d+) units inventory of ((?:a|the) part|part "(.*)") purchased at (\d
     my $dbh = S->{ext_lsmb}->admin_dbh;
     $dbh->do(
         q{
-        INSERT INTO gl (reference, description, transdate, person_id, approved)
-               VALUES ('INV-INIT', 'Initial setup', '2020-01-01',
+        INSERT INTO gl (reference, transdate, person_id, approved)
+               VALUES ('INV-INIT', '2020-01-01',
                        person__get_my_id(), true);
         })
         or die $dbh->errstr;

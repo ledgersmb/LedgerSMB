@@ -55,8 +55,8 @@ When qr/^(-?\d+) units are purchased at (\d+) ([A-Z]{3,3}) each$/, sub {
 
     $dbh->do(
         q{
-        INSERT INTO gl (reference, description, transdate, approved)
-                VALUES ('PUR', 'Purchase', '2020-01-01', true)
+        INSERT INTO gl (reference, transdate, approved)
+                VALUES ('PUR', '2020-01-01', true)
         }
         )
         or die $dbh->errstr;

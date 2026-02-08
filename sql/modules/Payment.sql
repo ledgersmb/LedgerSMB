@@ -258,18 +258,18 @@ RETURN QUERY EXECUTE $sql$
                         a.description
                  --TODO HV prepare drop entity_id from ap,ar
                  --FROM  (SELECT id, invnumber, transdate, amount, entity_id,
-                 FROM  (SELECT id, invnumber, invoice, transdate, amount_bc,
+                 FROM  (SELECT txn.id, invnumber, invoice, txn.transdate, amount_bc,
                        amount_tc,
                                1 as invoice_class, curr,
-                               entity_credit_account, approved, description
-                          FROM ap
+                               entity_credit_account, txn.approved, description
+                          FROM ap JOIN transactions txn ON txn.id = ap.id
                          UNION
                          --SELECT id, invnumber, transdate, amount, entity_id,
-                         SELECT id, invnumber, invoice, transdate, amount_bc,
+                         SELECT txn.id, invnumber, invoice, txn.transdate, amount_bc,
                       amount_tc,
                                2 AS invoice_class, curr,
-                               entity_credit_account, approved, description
-                         FROM ar
+                               entity_credit_account, txn.approved, description
+                         FROM ar JOIN transactions txn ON txn.id = ar.id
                          ) a
                 JOIN (SELECT trans_id, chart_id,
                              sum(CASE WHEN $1 = 1 THEN amount_bc
