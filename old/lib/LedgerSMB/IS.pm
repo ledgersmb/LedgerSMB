@@ -1197,7 +1197,6 @@ sub post_invoice {
                invnumber = ?,
                ordnumber = ?,
                quonumber = ?,
-                       description = ?,
                transdate = ?,
                entity_credit_account = ?,
              amount_bc = ?,
@@ -1225,10 +1224,11 @@ sub post_invoice {
                shipto_attn = ?
          WHERE id = ?
              |;
-    $sth = $dbh->prepare($query);
-    $sth->execute(
+    $dbh->do(
+        $query, {},
+
         $form->{invnumber},     $form->{ordnumber},
-        $form->{quonumber},     $form->{description},
+        $form->{quonumber},
         $transdate,
         $form->{customer_id},   $invamount,
         $invamount/$form->{exchangerate},
@@ -1245,6 +1245,21 @@ sub post_invoice {
         $form->{shiptolocationid}, $form->{shiptoattn},
         $form->{id}
     ) || $form->dberror($query);
+
+    # save transaction data
+    $query = qq|
+        UPDATE transactions
+           set description = ?
+         WHERE id = ?
+    |;
+    $dbh->do(
+        $query, {},
+
+        $form->{description},
+        $form->{id}
+    ) || $form->dberror($query);
+
+
 
     # add shipto
     $form->{name} = $form->{customer};
@@ -1277,12 +1292,12 @@ sub retrieve_invoice {
                       a.person_id as employee_id, e.name AS employee,
                       a.reverse, a.entity_credit_account as customer_id,
                       a.language_code, a.ponumber, a.crdate,
-                      a.on_hold, a.description, a.setting_sequence,
+                      a.on_hold, trx.description, a.setting_sequence,
                       a.shipto as shiptolocationid, l.line_one, l.line_two,
                       l.line_three, l.city, l.state, l.country_id, l.mail_code,
-                      tran.workflow_id
+                      trx.workflow_id
                  FROM ar a
-                 JOIN transactions tran USING (id)
+                 JOIN transactions trx USING (id)
             LEFT JOIN entity_employee em ON (em.entity_id = a.person_id)
             LEFT JOIN entity e ON e.id = em.entity_id
             LEFT JOIN location l on a.shipto = l.id

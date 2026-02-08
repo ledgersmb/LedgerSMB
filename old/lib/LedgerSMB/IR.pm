@@ -513,7 +513,6 @@ sub post_invoice {
            SET invnumber = ?,
                ordnumber = ?,
                quonumber = ?,
-                       description = ?,
                transdate = ?,
              amount_bc = ?,
              amount_tc = ?,
@@ -534,11 +533,11 @@ sub post_invoice {
                crdate = ?,
                shipto = ?
          WHERE id = ?|;
+    $dbh->do(
+        $query, {},
 
-    $sth = $dbh->prepare($query);
-    $sth->execute(
         $form->{invnumber},     $form->{ordnumber},     $form->{quonumber},
-        $form->{description},   $form->{transdate},     $invamount,
+        $form->{transdate},     $invamount,
         $invamount/$form->{exchangerate},
         $invnetamount,          $invnetamount/$form->{exchangerate},
         $form->{duedate},       $form->{shippingpoint}, $form->{shipvia},
@@ -549,6 +548,21 @@ sub post_invoice {
         $form->{shiptolocationid},
         $form->{id}
     ) || $form->dberror($query);
+
+
+    # save transaction data
+    $query = qq|
+        UPDATE transactions
+           set description = ?
+         WHERE id = ?
+    |;
+    $dbh->do(
+        $query, {},
+
+        $form->{description},
+        $form->{id}
+    ) || $form->dberror($query);
+
 
     if ($form->{batch_id}){
         $sth = $dbh->prepare(
