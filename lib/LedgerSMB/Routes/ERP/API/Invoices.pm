@@ -83,23 +83,23 @@ sub _get_invoices_by_id {
 
     my $query = q|
         SELECT 'customer' as type,
-              invnumber, ordnumber, quonumber, ponumber, transdate, duedate, crdate,
-              approved, on_hold, reverse, is_return, force_closed,
+              invnumber, ordnumber, quonumber, ponumber, txn.transdate, duedate, crdate,
+              txn.approved, on_hold, reverse, is_return, force_closed,
               entity_credit_account, person_id,
               language_code, description, notes, intnotes, shippingpoint, shipvia,
               amount_bc, netamount_bc, curr, amount_tc, netamount_tc
-          FROM ar
-        WHERE invoice AND id = ?
+          FROM ar JOIN transactions txn ON ar.id = txn.id
+        WHERE invoice AND ar.id = ?
 
         UNION ALL
         SELECT 'vendor' as type,
-              invnumber, ordnumber, quonumber, ponumber, transdate, duedate, crdate,
-              approved, on_hold, reverse, is_return, force_closed,
+              invnumber, ordnumber, quonumber, ponumber, txn.transdate, duedate, crdate,
+              txn.approved, on_hold, reverse, is_return, force_closed,
               entity_credit_account, person_id,
               language_code, description, notes, intnotes, shippingpoint, shipvia,
               amount_bc, netamount_bc, curr, amount_tc, netamount_tc
-          FROM ap
-        WHERE invoice and id = ?
+          FROM ap JOIN transactions txn ON ap.id = txn.id
+        WHERE invoice and ap.id = ?
         |;
     my $sth = $env->{'lsmb.db'}->prepare($query)
         or die $env->{'lsmb.db'}->errstr;
@@ -876,13 +876,13 @@ sub _post_invoices {
             invnumber, ordnumber, quonumber, ponumber,
             amount_bc, netamount_bc, curr, amount_tc, netamount_tc, taxincluded,
             transdate, crdate, duedate,
-            description, notes, intnotes,
+            notes, intnotes,
             shippingpoint, shipvia,
             person_id, language_code,
             entity_credit_account
             )
         VALUES ('t'::boolean, 'f'::boolean,
-                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+                 ?, ?, ?, ?, ?, ?, ?, ?, ?,
                  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         RETURNING id
         |)
@@ -892,7 +892,7 @@ sub _post_invoices {
           qw/ invnumber ordnumber quonumber ponumber
               amount netamount curr amount_tc netamount_tc taxincluded
               transdate crdate duedate
-              description notes intnotes
+              notes intnotes
               shippingpoint shipvia
               person_id language_code
           / },
@@ -902,6 +902,16 @@ sub _post_invoices {
     my ($inv_id) = $sth->fetchrow_array;
     die $sth->errstr
         if $sth->err;
+
+    $sth = $env->{'lsmb.db'}->prepare(
+        q|
+        UPDATE transactions
+           SET description = ?
+         WHERE id = ?
+        |)
+        or die $env->{'lsmb.db'}->errstr;
+    $sth->execute( $inv->{description}, $inv_id )
+        or die $sth->errstr;
 
     my $ctx = Workflow::Context->new;
     $ctx->param( trans_id => $inv_id );
