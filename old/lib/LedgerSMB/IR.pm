@@ -637,12 +637,12 @@ sub retrieve_invoice {
                    a.ordnumber, a.quonumber, a.taxincluded,
                    a.notes, a.intnotes, a.curr AS currency,
                    a.entity_credit_account as vendor_id, a.language_code,
-                   a.ponumber, a.crdate, a.on_hold, a.reverse, a.description,
+                   a.ponumber, a.crdate, a.on_hold, a.reverse, txn.description,
                    a.shipto as shiptolocationid, l.line_one, l.line_two,
                    l.line_three, l.city, l.state, l.country_id, l.mail_code,
-                   tran.workflow_id
+                   txn.workflow_id
               FROM ap a
-              JOIN transactions tran USING (id)
+              JOIN transactions txn USING (id)
             LEFT JOIN location l on a.shipto = l.id
              WHERE a.id = ?|;
         $sth = $dbh->prepare($query);
