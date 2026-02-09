@@ -183,13 +183,13 @@ jobs:
     strategy:
       matrix:
         include:
-          - postgres: "13"
+          - postgres: "14"
             perl: "5.42"
             JOB_COUNT: 5
           - postgres: "15"
             perl: "5.42"
             JOB_COUNT: 5
-          - postgres: "17"
+          - postgres: "18"
             perl: "5.42"
             JOB_COUNT: 5
 
@@ -378,13 +378,13 @@ jobs:
             JOB_COUNT: 5
 
           - perl: "5.40"
-            postgres: "13"
+            postgres: "16"
             BROWSER: "chrome"
             DB_TESTING: 1
             JOB_COUNT: 5
 
           - perl: "5.42"
-            postgres: "17"
+            postgres: "18"
             BROWSER: "chrome"
             DB_TESTING: 1
             JOB_COUNT: 5

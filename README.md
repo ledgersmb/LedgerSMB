@@ -57,7 +57,7 @@ version](https://github.com/ledgersmb/LedgerSMB/tree/1.13#system-requirements).
 ## Server
 
 * `Perl 5.36.1+`
-* `PostgreSQL 13+`
+* `PostgreSQL 14+`
 * Web server (e.g. `nginx`, `Apache HTTPd`, `lighttpd`, `Varnish`)
 
 The web server is only required for production installs;
@@ -74,23 +74,23 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome              | 2024-11  | 131-140                                     |
-| Edge                | 2024-11  | 131-140                                     |
-| Firefox             | 2025-01  | 134-143                                     |
-| Opera               | 2024-08  | 113-122                                     |
-| Safari              | 2024-03  | 17.4-17.6, 18.0-18.6, 26.0                  |
+| Chrome              | 2025-03  | 134-143                                     |
+| Edge                | 2025-03  | 134-143                                     |
+| Firefox             | 2025-04  | 137-146                                     |
+| Opera               | 2025-01  | 116-125                                     |
+| Safari              | 2024-07  | 17.6, 18.0-18.6, 26.0-26.2                  |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome for Android  | 2025-09  | 140                                         |
-| Firefox for Android | 2025-08  | 142                                         |
-| Android Browser     | 2025-09  | 140                                         |
-| Safari on iOS       | 2024-03  | 17.4-17.7, 18.0-18.6, 26.0                  |
+| Chrome for Android  | 2025-12  | 143                                         |
+| Firefox for Android | 2025-12  | 146                                         |
+| Android Browser     | 2025-12  | 143                                         |
+| Safari on iOS       | 2024-07  | 17.6-17.7, 18.0-18.7, 26.0-26.2             |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
 | Opera Mobile        | 2024-03  | 80                                          |
-| Samsung Internet    | 2022-11  | 19.0, 20-28                                 |
+| Samsung Internet    | 2023-02  | 20-29                                       |
 
 
 **Note**: Safari is very sensitive to using LedgerSMB over HTTPS; using it with

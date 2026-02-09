@@ -320,7 +320,7 @@ jobs:
     executor:
       name: test
       perl: '5.38'
-      postgres: '12'
+      postgres: '18'
       browser: chrome
       selenium: selenium/node-chrome
       # coverage: 0
@@ -341,7 +341,7 @@ jobs:
     executor:
       name: test
       perl: '5.36'
-      postgres: '13'
+      postgres: '16'
       browser: firefox
       selenium: selenium/node-firefox
     steps:
