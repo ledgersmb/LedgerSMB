@@ -19,10 +19,9 @@ runs:
       uses: r-lib/actions/setup-tinytex@v2
 
     - name: Setup Perl environment
-      uses: shogo82148/actions-setup-perl@v1
+      uses: shogo82148/actions-setup-perl@v1.36.0
       with:
         perl-version: ${{ inputs.perl-version }}
-        enable-attestations: false
         install-modules-with: cpm
         # Test2 warns when not using Data::UUID::MT
         install-modules: |
