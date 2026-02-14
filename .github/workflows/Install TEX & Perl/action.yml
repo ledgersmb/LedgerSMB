@@ -22,6 +22,7 @@ runs:
       uses: shogo82148/actions-setup-perl@v1
       with:
         perl-version: ${{ inputs.perl-version }}
+        enable-attestations: false
         install-modules-with: cpm
         # Test2 warns when not using Data::UUID::MT
         install-modules: |
