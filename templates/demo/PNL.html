@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  2.1
-   Date:     2025-08-30
+   Version:  2.2
+   Date:     2026-02-19
    File:     PNL.html
    Set:      demo
 
@@ -11,6 +11,7 @@ releases. No explicit versioning was applied before 2021-01-04.
 Version   Changes
 2.0       Created clickable section heads to collapse parts of hierarchical reports
 2.1       Simplify indentation calculations; many values are provided as variables as-of 1.13
+2.2       Fix address not showing below the company name
 
 -?>
 <!DOCTYPE html>
@@ -300,7 +301,7 @@ END ;
       <?lsmb SETTINGS.company_name ?>
     </div>
     <div class="company-address">
-      <?lsmb company_address ?>
+      <?lsmb SETTINGS.company_address ?>
     </div>
     <table class="income_statement c1">
       <colgroup class="headings">
