@@ -75,15 +75,6 @@ commands:
             echo " done"
 
       - run:
-          name: Plot monitoring graph & save artefacts
-          command: |
-            gnuplot -e "filename='logs/${MONITOR_FILE}.txt';outputfile='screens/${MONITOR_FILE}.png'" \
-                    utils/test/monitor.gnuplot || true
-            mkdir -p /tmp/artifact/logs/screens;
-            cp -r logs/* /tmp/artifact/logs || true;
-          when: always
-
-      - run:
           name: Upload coverage data
           command: |
             if [ "x$COVERAGE" == "x1" ]
@@ -122,13 +113,6 @@ commands:
 
       - check-changed-files-or-halt:
           pattern: ^.github/
-
-      - run:
-          name: "Monitor CPU & MEMORY"
-          command: |
-            mkdir -p logs/screens
-            ./utils/test/monitor_rss.sh logs/${MONITOR_FILE}.txt
-          background: true
 
       # Restore node_modules
       - restore_cache:
@@ -296,7 +280,6 @@ executors:
       LSMB_NEW_DB: lsmb_test
       LSMB_NEW_DB_API: lsmb_test_api
       LSMB_TEST_DB: 1
-      MONITOR_FILE: cpu-memory-usage
       PGDB: lsmb_test
       PGHOST: localhost
       POSTGRES_HOST: localhost
