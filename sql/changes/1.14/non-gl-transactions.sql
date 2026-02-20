@@ -6,6 +6,7 @@ values ('ap', 'The transaction is a regular Accounts Payable item'),
 alter table transactions
   add column description text,
   add column trans_type_code char(2) references trans_type(code),
+  add column entered_by int references entity(id),
   drop constraint transactions_table_name_check,
   add constraint transactions_table_name_check check(
     table_name = ANY (ARRAY['gl'::text, 'ap'::text, 'ar'::text,
@@ -25,7 +26,8 @@ update transactions txn
  where txn.id in (select id from ap);
 
 update transactions txn
-   set trans_type_code = gl.trans_type_code
+   set trans_type_code = gl.trans_type_code,
+       entered_by = gl.person_id
   from gl
  where txn.id = gl.id;
 
