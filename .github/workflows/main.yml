@@ -108,7 +108,9 @@ jobs:
         uses: actions/cache@v5
         with:
           path: UI/js
-          key: js-${{ hashFiles('UI/js-src/**',
+          key: js-${{ hashFiles('UI/package.json',
+                                  'UI/yarn.lock',
+                                  'UI/js-src/**',
                                   'UI/src/**',
                                   'UI/css/**',
                                   'UI/*.html',
@@ -470,7 +472,9 @@ jobs:
         uses: actions/cache@v5
         with:
           path: UI/js
-          key: js-${{ hashFiles('UI/js-src/**',
+          key: js-${{ hashFiles('UI/package.json',
+                                  'UI/yarn.lock',
+                                  'UI/js-src/**',
                                   'UI/src/**',
                                   'UI/css/**',
                                   'UI/*.html',
