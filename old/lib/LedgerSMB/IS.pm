@@ -786,9 +786,15 @@ sub post_invoice {
         my $uid = localtime;
         $uid .= "$$";
 
+        $query = q|
+            INSERT INTO transactions (id, table_name, trans_type_code, approved)
+            VALUES (nextval('id'), 'ar', 'ar', false)
+            |;
+        $dbh->do($query) or $form->dberror($query);
+
         $query = qq|
-            INSERT INTO ar (invnumber, person_id, entity_credit_account)
-                 VALUES ('$uid', ?, ?)|;
+            INSERT INTO ar (id, invnumber, person_id, entity_credit_account)
+                 VALUES (currval('id'), '$uid', ?, ?)|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{employee_id}, $form->{customer_id}) || $form->dberror($query);
 
@@ -1015,7 +1021,7 @@ sub post_invoice {
 
             if (defined $form->{approved}) {
 
-                $query = qq| UPDATE ar SET approved = ? WHERE id = ?|;
+                $query = qq| UPDATE transactions SET approved = ? WHERE id = ?|;
                 $dbh->prepare($query)->execute($form->{approved}, $form->{id})
                      || $form->dberror($query);
                 if (!$form->{approved}){
@@ -1190,6 +1196,9 @@ sub post_invoice {
     $form->{terms}       *= 1;
     $form->{taxincluded} *= 1;
 
+    $query = q|UPDATE transactions SET approved = ? WHERE id = ?|;
+    $dbh->do($query, {}, $approved, $form->{id})
+        or $form->dberror( $query );
 
     # save AR record
     $query = qq|
@@ -1215,7 +1224,6 @@ sub post_invoice {
                person_id = ?,
                language_code = ?,
                ponumber = ?,
-                       approved = ?,
                        crdate = ?,
                               reverse = ?,
                        is_return = ?,
@@ -1239,7 +1247,7 @@ sub post_invoice {
         $form->{intnotes},      $form->{taxincluded},
         $form->{currency},
         $form->{employee_id},
-        $form->{language_code}, $form->{ponumber}, $approved,
+        $form->{language_code}, $form->{ponumber},
         $form->{crdate} || 'today', $form->{reverse},
         $form->{is_return},     $form->{setting_sequence},
         $form->{shiptolocationid}, $form->{shiptoattn},

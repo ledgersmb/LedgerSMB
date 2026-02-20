@@ -81,27 +81,22 @@ begin
           UPDATE ar
              set invnumber = setting_increment('sinumber')
            WHERE id = in_id AND invnumber is null;
-          UPDATE ar set approved = true WHERE id = in_id;
         ELSIF (t_table = 'ap') THEN
                 PERFORM cogs__add_for_ap_line(id) FROM invoice
                   WHERE trans_id = in_id;
-                UPDATE ap set approved = true where id = in_id;
-        ELSIF (t_table = 'gl') THEN
-                UPDATE gl set approved = true where id = in_id;
-        ELSE
-          UPDATE transactions set approved = true where id = in_id;
-        END IF;
-
-        IF NOT FOUND THEN
-                RETURN FALSE;
         END IF;
 
         UPDATE transactions
-        SET approved_by =
+           SET approved = true,
+               approved_by =
                         (select entity_id FROM users
                         WHERE username = SESSION_USER),
                 approved_at = now()
         WHERE id = in_id;
+
+        IF NOT FOUND THEN
+                RETURN FALSE;
+        END IF;
 
         UPDATE acc_trans
         SET approved = 't'::boolean
@@ -185,15 +180,9 @@ begin
         SELECT lower(table_name) into t_table
           FROM transactions where id = in_id;
 
-        IF t_table = 'ar' THEN
-                DELETE FROM ar WHERE id = in_id AND approved IS FALSE;
-        ELSIF t_table = 'ap' THEN
-                DELETE FROM ap WHERE id = in_id AND approved IS FALSE;
-        ELSIF t_table = 'gl' THEN
-                DELETE FROM gl WHERE id = in_id AND approved IS FALSE;
-        ELSE
-                DELETE FROM transactions WHERE id = in_id AND approved IS FALSE;
-        END IF;
+        -- this cleans out any referring resources as well, through their
+        -- cascading deletion references
+        DELETE FROM transactions WHERE id = in_id AND approved IS FALSE;
         IF NOT FOUND THEN
                 RAISE EXCEPTION 'Invalid transaction id %', in_id;
         END IF;

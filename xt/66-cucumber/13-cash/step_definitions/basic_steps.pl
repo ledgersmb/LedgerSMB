@@ -40,15 +40,22 @@ sub _uncleared_journal_line {
     my $conf              = S->{ext_lsmb}->admin_conn->configuration;
     my $primary_account   = S->{recon_account};
     my $secondary_account = $conf->coa_nodes->get(by => (accno => '1060'));
+    my $reference         = 'ref-' . $trx_cnt++;
 
+    $dbh->do(q{INSERT INTO transactions (id, reference, transdate, table_name, trans_type_code, approved)
+               VALUES (nextval('id'), ?, ?, 'gl', 'gl', true)},
+             {},
+             $reference,
+             $posting_date)
+        or die $dbh->errstr;
     my $trx = $dbh->selectrow_hashref(
         <<~'STMT',
-        INSERT INTO gl (reference, transdate)
-            VALUES(?, ?)
+        INSERT INTO gl (id, reference, transdate)
+            VALUES(currval('id'), ?, ?)
         RETURNING *
         STMT
         {},
-        'ref-' . $trx_cnt++,
+        $reference,
         $posting_date
         )
         or die $dbh->errstr;

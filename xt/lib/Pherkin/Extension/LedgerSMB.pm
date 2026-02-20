@@ -426,10 +426,17 @@ SELECT id
         $line->{account_id} = $account_id;
     }
 
+    $self->admin_dbh->do(
+        q|INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+          VALUES (nextval('id'), ?, 'gl', 'gl', true)|,
+        {},
+        $posting_date)
+        or die $self->admin_dbh->errstr;
+
     my $trans_sth = $self->admin_dbh->prepare(
         qq|
-INSERT INTO gl(transdate, person_id)
-     VALUES (?, (SELECT entity_id FROM users WHERE username = ?))
+INSERT INTO gl(id, transdate, person_id)
+     VALUES (currval('id'), ?, (SELECT entity_id FROM users WHERE username = ?))
   RETURNING id
 |);
     $trans_sth->execute($posting_date,

@@ -56,14 +56,12 @@ RETURN QUERY EXECUTE $sql$
   FROM transactions txn
      JOIN (select id, invoice, invnumber, ordnumber, ponumber, duedate,
                   notes, shipvia, shippingpoint, amount_bc,
-                  netamount_bc, curr, entity_credit_account, on_hold,
-                  approved
+                  netamount_bc, curr, entity_credit_account, on_hold
              FROM ar WHERE $17 = 2
             UNION
            select id, invoice, invnumber, ordnumber, ponumber, duedate,
                   notes, shipvia, shippingpoint, amount_bc,
-                  netamount_bc, curr, entity_credit_account, on_hold,
-                  approved
+                  netamount_bc, curr, entity_credit_account, on_hold
              FROM ap WHERE $17 = 1) aa ON txn.id = aa.id
      JOIN entity_credit_account eca ON aa.entity_credit_account = eca.id
      JOIN entity e ON e.id = eca.entity_id
@@ -106,8 +104,8 @@ LEFT JOIN (SELECT array_agg(ARRAY[buc.label, bu.control_code])
           AND ($13 IS NULL OR $13 = aa.on_hold)
           AND ($16 IS NULL OR $16 >= ac.transdate)
           AND ($18 is null
-               OR (aa.approved = $18 AND ac.approved = $18))
- GROUP BY aa.id, aa.invnumber, aa.ordnumber, aa.ponumber, aa.transdate,
+               OR (txn.approved = $18 AND ac.approved = $18))
+ GROUP BY aa.id, aa.invnumber, aa.ordnumber, aa.ponumber, txn.transdate,
           aa.duedate, e.name, eca.meta_number, aa.amount_bc,
           aa.netamount_bc, aa.curr, aa.duedate,
           aa.notes, aa.shippingpoint, aa.shipvia, e.id, aa.invoice

@@ -133,9 +133,12 @@ sub post_invoice {
         my $uid = localtime;
         $uid .= "$$";
 
+        $query = q{INSERT INTO transactions (id, table_name, trans_type_code, approved)
+                   VALUES (nextval('id'), 'ap', 'ap', false)};
+        $dbh->do($query) or $form->dberror($query);
         $query = qq|
-            INSERT INTO ap (invnumber, person_id, entity_credit_account)
-                 VALUES ('$uid', ?, ?)|;
+            INSERT INTO ap (id, invnumber, person_id, entity_credit_account)
+                 VALUES (currval('id'), '$uid', ?, ?)|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{employee_id}, $form->{vendor_id}) || $form->dberror($query);
 
@@ -300,7 +303,7 @@ sub post_invoice {
 
             if (defined $form->{approved}) {
 
-                $query = qq| UPDATE ap SET approved = ? WHERE id = ?|;
+                $query = qq| UPDATE transactions SET approved = ? WHERE id = ?|;
                 $dbh->prepare($query)->execute($form->{approved}, $form->{id})
                      || $form->dberror($query);
                 if (!$form->{approved}){
@@ -508,6 +511,10 @@ sub post_invoice {
 
     delete $form->{language_code} unless $form->{language_code};
     # save AP record
+    $query = q|UPDATE transactions SET approved = ? WHERE id = ?|;
+    $dbh->do($query, {}, $approved, $form->{id})
+        or $form->dberror( $query );
+
     $query = qq|
         UPDATE ap
            SET invnumber = ?,
@@ -528,7 +535,6 @@ sub post_invoice {
                curr = ?,
                language_code = ?,
                ponumber = ?,
-                       approved = ?,
                        reverse = ?,
                crdate = ?,
                shipto = ?
@@ -544,7 +550,7 @@ sub post_invoice {
         $form->{taxincluded},   $form->{notes},         $form->{intnotes},
         $form->{currency},
         $form->{language_code}, $form->{ponumber},
-        $approved,              $form->{reverse},       $form->{crdate},
+        $form->{reverse},       $form->{crdate},
         $form->{shiptolocationid},
         $form->{id}
     ) || $form->dberror($query);

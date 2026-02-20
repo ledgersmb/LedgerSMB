@@ -47,28 +47,44 @@ INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_
 values (-201, -201, 'T-11112', 1, -1000, 'XTS');
 
 
+INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+VALUES (-200, '1000-01-01', 'ar', 'ar', true);
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
                 entity_credit_account, transdate, curr)
 values (-200, '-2000', '10', '10', 10, 10, -200, '1000-01-01', 'XTS');
+INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+VALUES (-201, '1000-01-03', 'ar', 'ar', true);
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
                 entity_credit_account, transdate, curr)
 values (-201, '-2001', '10', '10', 10, 10, -200, '1000-01-03', 'XTS');
+INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+VALUES (-204, '1000-01-01', 'ar', 'ar', true);
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
                 entity_credit_account, transdate, curr)
 values (-204, '-2002', '10', '10', 10, 10, -200, '1000-01-01', 'XTS');
+INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+VALUES (-205, '1000-01-03', 'ar', 'ar', true);
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
                 entity_credit_account, transdate, curr)
 values (-205, '-2003', '10', '10', 10, 10, -200, '1000-01-03', 'XTS');
 
+INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+VALUES (-206, '1000-01-01', 'ar', 'ar', true);
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
                 entity_credit_account, transdate, curr)
 values (-206, '-2004', '10', '10', 10, 10, -201, '1000-01-01', 'XTS');
+INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+VALUES (-207, '1000-01-03', 'ar', 'ar', true);
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
                 entity_credit_account, transdate, curr)
 values (-207, '-2005', '10', '10', 10, 10, -201, '1000-01-03', 'XTS');
+INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+VALUES (-208, '1000-01-01', 'ar', 'ar', true);
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
                 entity_credit_account, transdate, curr)
 values (-208, '-2006', '10', '10', 10, 10, -201, '1000-01-01', 'XTS');
+INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+VALUES (-209, '1000-01-03', 'ar', 'ar', true);
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
                 entity_credit_account, transdate, curr)
 values (-209, '-2007', '10', '10', 10, 10, -201, '1000-01-03', 'XTS');
@@ -78,16 +94,31 @@ insert into payment (id, reference, payment_class, payment_date, entity_credit_i
 values (-201, 'reference-test', 2, '1000-01-03', -201, 'XTS');
 
 
+INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+            values (-202, '1000-01-01', 'gl', 'gl', true);
 INSERT INTO gl (id, reference, transdate) values (-202, 'Recon gl test 1', '1000-01-01');
+INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+            values (-203, '1000-01-01', 'gl', 'gl', true);
 INSERT INTO gl (id, reference, transdate) values (-203, 'Recon gl test 2', '1000-01-01');
+INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+            values (-210, '1000-01-03', 'gl', 'gl', true);
 INSERT INTO gl (id, reference, transdate) values (-210, 'Recon gl test 3', '1000-01-03');
+INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+            values (-211, '1000-01-03', 'gl', 'gl', true);
 INSERT INTO gl (id, reference, transdate) values (-211, 'Recon gl test 4', '1000-01-03');
-INSERT INTO gl (id, reference, transdate, approved)
-values (-212, 'Cleared gl trans', '1000-01-03', true);
-INSERT INTO gl (id, reference, transdate, approved)
-values (-213, 'Unapproved gl trans', '1000-01-03', false);
-INSERT INTO gl (id, reference, transdate, approved)
-values (-214, 'gl trans, unapproved lines', '1000-01-03', false);
+
+INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+            values (-212, '1000-01-03', 'gl', 'gl', true);
+INSERT INTO gl (id, reference, transdate)
+values (-212, 'Cleared gl trans', '1000-01-03');
+INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+            values (-213, '1000-01-03', 'gl', 'gl', false);
+INSERT INTO gl (id, reference, transdate)
+values (-213, 'Unapproved gl trans', '1000-01-03');
+INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+            values (-214, '1000-01-03', 'gl', 'gl', false);
+INSERT INTO gl (id, reference, transdate)
+values (-214, 'gl trans, unapproved lines', '1000-01-03');
 
 CREATE OR REPLACE FUNCTION test_get_account_id(in_accno text) returns int as $$ SELECT id FROM account WHERE accno = $1; $$ language sql;
 
@@ -214,6 +245,8 @@ insert into payment (id, reference, payment_class, payment_date, entity_credit_i
 values (-221, 'equal-reference', 2, '1000-01-01', -202, 'XTS');
 
 
+INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+            values (-220, '1000-01-01', 'gl', 'gl', true);
 INSERT INTO gl (id, reference, transdate) values (-220, 'Recon adjustment test (act 3)', '1000-01-01');
 
 

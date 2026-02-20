@@ -190,11 +190,16 @@ Given qr/(an )?unpaid AP transactions? with these values:$/, sub {
     # | Vendor C | 2017-03-01 | INV103         | 250.00 |
     my $dbh = S->{ext_lsmb}->admin_dbh;
 
+    my $txn_query = $dbh->prepare(<<~'SQL');
+      INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+      VALUES (nextval('id'), ?, 'ap', 'ap', true)
+      SQL
+
     my $ap_query = $dbh->prepare("
-        INSERT INTO ap (invnumber, transdate, amount_bc, netamount_bc,
-                        duedate, curr, approved, entity_credit_account,
+        INSERT INTO ap (id, invnumber, transdate, amount_bc, netamount_bc,
+                        duedate, curr, entity_credit_account,
                         amount_tc, netamount_tc)
-        SELECT ?, ?, ?, ?, ?, 'USD', TRUE,
+        SELECT currval('id'), ?, ?, ?, ?, ?, 'USD',
                entity_credit_account.id, ?, ?
         FROM entity
         JOIN entity_credit_account ON (
@@ -213,6 +218,10 @@ Given qr/(an )?unpaid AP transactions? with these values:$/, sub {
     ");
 
     foreach my $data (@{C->data}) {
+        $txn_query->execute(
+            $data->{'Date'},
+        );
+
         $ap_query->execute(
             $data->{'Invoice Number'},
             $data->{'Date'},
@@ -359,9 +368,15 @@ Given qr/^(\d+) units inventory of ((?:a|the) part|part "(.*)") purchased at (\d
     my $dbh = S->{ext_lsmb}->admin_dbh;
     $dbh->do(
         q{
-        INSERT INTO gl (reference, transdate, person_id, approved)
-               VALUES ('INV-INIT', '2020-01-01',
-                       person__get_my_id(), true);
+        INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+        VALUES (nextval('id'), '2020-01-01', 'gl', 'gl', true)
+        })
+        or die $dbh->errstr;
+    $dbh->do(
+        q{
+        INSERT INTO gl (id, reference, transdate, person_id)
+               VALUES (currval('id'), 'INV-INIT', '2020-01-01',
+                       person__get_my_id());
         })
         or die $dbh->errstr;
 

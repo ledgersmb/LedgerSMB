@@ -168,7 +168,7 @@ BEGIN;
     DEALLOCATE test;
 
 
-    update gl set approved = true where id = -214;
+    update transactions set approved = true where id = -214;
     update acc_trans set approved = true
      where trans_id = -214
        and chart_id = test_get_account_id('-11112');

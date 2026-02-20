@@ -102,6 +102,7 @@ SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
      JOIN invoice i ON i.id = ac.invoice_id
      JOIN account_link l ON l.account_id = ac.chart_id
      JOIN ar ON ar.id = ac.trans_id
+     JOIN transactions txn ON txn.id = ar.id
 LEFT JOIN (select array_agg(bu.path) as bu_ids, entry_id
              from business_unit_inv bui
              JOIN bu_tree bu ON bui.bu_id = bu.id
@@ -109,7 +110,7 @@ LEFT JOIN (select array_agg(bu.path) as bu_ids, entry_id
     WHERE i.parts_id = in_parts_id
           AND (ac.transdate >= in_from_date OR in_from_date IS NULL)
           AND (ac.transdate <= in_to_date OR in_to_date IS NULL)
-          AND ar.approved
+          AND txn.approved
           AND l.description = 'IC_expense'
           AND (in_business_units is null or in_business_units = '{}' OR in_tree(in_business_units, bu_ids))
  GROUP BY ac.chart_id
@@ -119,7 +120,7 @@ LEFT JOIN (select array_agg(bu.path) as bu_ids, entry_id
           sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0)))
      FROM invoice i
      JOIN acc_trans ac ON ac.invoice_id = i.id
-     JOIN ar ON ar.id = ac.trans_id
+     JOIN transactions txn ON txn.id = ac.trans_id
 LEFT JOIN (select array_agg(bu.path) as bu_ids, entry_id
              from business_unit_inv bui
              JOIN bu_tree bu ON bui.bu_id = bu.id
@@ -127,7 +128,7 @@ LEFT JOIN (select array_agg(bu.path) as bu_ids, entry_id
     WHERE i.parts_id = in_parts_id
           AND (ac.transdate >= in_from_date OR in_from_date IS NULL)
           AND (ac.transdate <= in_to_date OR in_to_date IS NULL)
-          AND ar.approved
+          AND txn.approved
           AND (in_business_units is null or in_business_units = '{}' OR in_tree(in_business_units, bu_ids))
  GROUP BY ac.chart_id
    HAVING sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0))) <> 0.00
@@ -538,9 +539,9 @@ hdr_meta AS (
 ),
 acc_balance AS (
 WITH aa (id) AS
- ( SELECT id FROM ap WHERE approved is true AND entity_credit_account = in_id
+ ( SELECT id FROM ap JOIN transactions USING (id) WHERE approved is true AND entity_credit_account = in_id
 UNION ALL
-   SELECT id FROM ar WHERE approved is true AND entity_credit_account = in_id
+   SELECT id FROM ar JOIN transactions USING (id) WHERE approved is true AND entity_credit_account = in_id
 )
 SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
   FROM acc_trans ac

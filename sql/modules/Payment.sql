@@ -427,21 +427,21 @@ RETURN QUERY EXECUTE $sql$
 
                     FROM entity e
                     JOIN entity_credit_account c ON (e.id = c.entity_id)
-                    JOIN (SELECT ap.id, invnumber, transdate, amount_bc,
+                    JOIN (SELECT ap.id, invnumber, txn.transdate, amount_bc,
                                  curr, 1 as invoice_class,
                                  entity_credit_account, on_hold, v.batch_id,
-                                 approved
-                            FROM ap
+                                 txn.approved
+                            FROM ap JOIN transactions txn USING (id)
                        LEFT JOIN (select * from voucher where batch_class = 1) v
                                  ON (ap.id = v.trans_id)
                            WHERE $1 = 1
                                  AND (v.batch_class = 1 or v.batch_id IS NULL)
                            UNION
-                          SELECT ar.id, invnumber, transdate, amount_bc,
+                          SELECT ar.id, invnumber, txn.transdate, amount_bc,
                                  curr, 2 as invoice_class,
                                  entity_credit_account, on_hold, v.batch_id,
-                                 approved
-                            FROM ar
+                                 txn.approved
+                            FROM ar JOIN transactions txn USING (id)
                        LEFT JOIN (select * from voucher where batch_class = 2) v
                                  ON (ar.id = v.trans_id)
                            WHERE $1 = 2
@@ -1643,8 +1643,8 @@ returns bool LANGUAGE PLPGSQL AS
 $$
 declare
   t_id int;
+  t_curr_data record;
   in_cash_accno text;
-  t_orig_payment payment;
 BEGIN
 
   PERFORM * FROM payment__overpayments_list(null, null, null, null, null)
@@ -1654,9 +1654,12 @@ BEGIN
     RAISE 'Cannot reverse used overpayment: reverse payments first';
   END IF;
 
-  SELECT * INTO t_orig_payment
-    FROM payment
-   WHERE id = in_id;
+SELECT *
+  INTO t_curr_data
+  FROM payment p
+         JOIN transactions txn
+             ON p.trans_id = txn.id
+ WHERE p.id = in_id;
 
   IF NOT FOUND THEN
     RETURN FALSE;
@@ -1664,26 +1667,25 @@ BEGIN
 
   -- reverse overpayment gl
 
-  INSERT INTO transactions (transdate, reference, description, approved,
-              trans_type_code, table_name)
-  SELECT transdate, reference || '-reversal',
+  INSERT INTO transactions (
+      transdate, reference, reversing, description, approved,
+      trans_type_code, table_name)
+  SELECT transdate, reference || '-reversal', t_curr_data.trans_id,
          'reversal of ' || description, false, 'op', 'payment'
-    FROM transactions WHERE id = t_orig_payment.trans_id;
+    FROM transactions WHERE id = t_curr_data.trans_id;
 
   t_id := currval('id');
 
 
   -- reverse payment record
 
-  INSERT INTO payment (reference, gl_id, payment_class, payment_date,
+  INSERT INTO payment (reference, trans_id, payment_class, payment_date,
               closed, entity_credit_id, employee_id, currency, reversing)
-  VALUES (t_orig_payment.reference, t_id, t_orig_payment.payment_class,
-         t_orig_payment.payment_date, t_orig_payment.closed,
-         t_orig_payment.entity_credit_id, person__get_my_id(),
-         t_orig_payment.currency, t_orig_payment.id);
+  VALUES (t_curr_data.reference, t_id, t_curr_data.payment_class,
+         t_curr_data.payment_date, t_curr_data.closed,
+         t_curr_data.entity_credit_id, person__get_my_id(),
+         t_curr_data.currency, t_curr_data.id);
 
-
-UPDATE transactions SET reversing = in_id WHERE id = t_id;
 
 INSERT INTO voucher (batch_id, trans_id, batch_class)
 VALUES (in_batch_id, t_id, CASE WHEN in_account_class = 1 THEN 4 ELSE 7 END);

@@ -355,39 +355,29 @@ $$;
 CREATE OR REPLACE FUNCTION batch_post(in_batch_id INTEGER)
 returns date AS
 $$
-        UPDATE ar SET approved = true
-        WHERE id IN (select trans_id FROM voucher
-                WHERE batch_id = in_batch_id
-                AND batch_class = 2);
-
-        UPDATE ap SET approved = true
-        WHERE id IN (select trans_id FROM voucher
-                WHERE batch_id = in_batch_id
-                AND batch_class = 1);
-
-        UPDATE gl SET approved = true
-        WHERE id IN (select trans_id FROM voucher
+  UPDATE transactions SET approved = true
+  WHERE id IN (select trans_id FROM voucher
                 WHERE batch_id = in_batch_id);
 
-        -- When approving the AR/AP batch import,
-        -- we need to approve the acc_trans line also.
-        UPDATE acc_trans SET approved = true
-        WHERE trans_id IN (select trans_id FROM voucher
-                WHERE batch_id = in_batch_id
-                AND batch_class IN (1, 2));
+  -- When approving the AR/AP batch import,
+  -- we need to approve the acc_trans line also.
+  UPDATE acc_trans SET approved = true
+  WHERE trans_id IN (select trans_id FROM voucher
+                      WHERE batch_id = in_batch_id
+                        AND batch_class IN (1, 2));
 
-        UPDATE acc_trans SET approved = true
-        WHERE voucher_id IN (select id FROM voucher
-                WHERE batch_id = in_batch_id
-                AND batch_class IN (3, 4, 6, 7));
+  UPDATE acc_trans SET approved = true
+   WHERE voucher_id IN (select id FROM voucher
+                         WHERE batch_id = in_batch_id
+                           AND batch_class IN (3, 4, 6, 7));
 
-        UPDATE batch
-        SET approved_on = now(),
-                approved_by = (select entity_id FROM users
-                        WHERE username = SESSION_USER)
-        WHERE id = in_batch_id;
+  UPDATE batch
+     SET approved_on = now(),
+         approved_by = (select entity_id FROM users
+                         WHERE username = SESSION_USER)
+   WHERE id = in_batch_id;
 
-        SELECT now()::date;
+  SELECT now()::date;
 $$ LANGUAGE SQL SECURITY DEFINER;
 
 REVOKE EXECUTE ON FUNCTION batch_post(in_batch_id INTEGER) FROM public;

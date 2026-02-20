@@ -139,13 +139,17 @@ BEGIN;
     --
 
 
-    INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account, approved)
-    VALUES (-1102,  true, 'test1002', now() - '10 days'::interval, -1000, 't');
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-1102, now() - '10 days'::interval, 'ap', 'ap', true);
+    INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
+    VALUES (-1102,  true, 'test1002', now() - '10 days'::interval, -1000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-1102, -1102, -1, -150, 50, 0.5);
 
-    INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account, approved)
-    VALUES (-1103,  true, 'test1003', now() - '10 days'::interval, -1000, 't');
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-1103, now() - '10 days'::interval, 'ap', 'ap', true);
+    INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
+    VALUES (-1103,  true, 'test1003', now() - '10 days'::interval, -1000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-1103, -1103, -2, -150, 75, 9);
 
@@ -258,10 +262,10 @@ BEGIN;
                            'stock assembly without stock');
     DEALLOCATE test;
 
-    INSERT INTO ap (id, invoice, invnumber, transdate,
-                    entity_credit_account, approved)
-            VALUES (-7101, true, 'test1001', now() - '17 days'::interval,
-                    -1000, 't');
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-7101, now() - '17 days'::interval, 'ap', 'ap', true);
+    INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
+            VALUES (-7101, true, 'test1001', now() - '17 days'::interval, -1000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
                  VALUES (-7101, -7101, -7, -100, 0, -3);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -291,10 +295,11 @@ BEGIN;
     --- First test: bought parts appear on the inventory report
 
     ---- Simulate bought parts: insert 'ap' and 'invoice' lines
-    INSERT INTO ap (id, invoice, invnumber, transdate,
-                    entity_credit_account, approved)
-            VALUES (-1101, true, 'test1001', now() - '10 days'::interval,
-                    -1000, 't');
+
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-1101, now() - '10 days'::interval, 'ap', 'ap', true);
+    INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
+            VALUES (-1101, true, 'test1001', now() - '10 days'::interval, -1000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
                  VALUES (-1101, -1101, -3, -100, 0, 3);
 
@@ -399,10 +404,11 @@ BEGIN;
     --- Second test: sold parts appear on the inventory report
 
     ---- Simulate sold parts: insert 'ar' and 'invoice' lines
-    INSERT INTO ar (id, invoice, invnumber, transdate,
-                    entity_credit_account, approved)
-            VALUES (-1201, true, 'test1001', now() - '10 days'::interval,
-                    -2000, 't');
+
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-1201, now() - '10 days'::interval, 'ar', 'ar', true);
+    INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
+            VALUES (-1201, true, 'test1001', now() - '10 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
                  VALUES (-1201, -1201, -4, 100, 0, -3);
 
@@ -505,10 +511,10 @@ BEGIN;
 
     --- Third test: stocked items should be on the inventory report
 
-    INSERT INTO ap (id, invoice, invnumber, transdate,
-                    entity_credit_account, approved)
-            VALUES (-8101, true, 'test1001', now() - '17 days'::interval,
-                    -1000, 't');
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-8101, now() - '17 days'::interval, 'ap', 'ap', true);
+    INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
+            VALUES (-8101, true, 'test1001', now() - '17 days'::interval, -1000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
                  VALUES (-8101, -8101, -10, -100, 0, -10);
 

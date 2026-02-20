@@ -16,9 +16,15 @@ Given qr/^(-?\d+) units sold/, sub {
     }
     $dbh->do(
         q{
-        INSERT INTO ar (invnumber, transdate, invoice, approved,
+        INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+        VALUES (nextval('id'), '2020-01-02', 'ar', 'ar', true)
+        })
+        or die $dbh->errstr;
+    $dbh->do(
+        q{
+        INSERT INTO ar (id, invnumber, transdate, invoice,
                         entity_credit_account)
-             VALUES ('sale', '2020-01-02', true, true,
+             VALUES (currval('id'), 'sale', '2020-01-02', true,
                      (select id from entity_credit_account
                        where meta_number=?)
                     );
@@ -55,8 +61,14 @@ When qr/^(-?\d+) units are purchased at (\d+) ([A-Z]{3,3}) each$/, sub {
 
     $dbh->do(
         q{
-        INSERT INTO gl (reference, transdate, approved)
-                VALUES ('PUR', '2020-01-01', true)
+        INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+        VALUES (nextval('id'), '2020-01-01', 'gl', 'gl', true)
+        })
+        or die $dbh->errstr;
+    $dbh->do(
+        q{
+        INSERT INTO gl (id, reference, transdate)
+                VALUES (currval('id'), 'PUR', '2020-01-01')
         }
         )
         or die $dbh->errstr;
@@ -107,9 +119,15 @@ When qr/^(-?\d+) units are sold$/, sub {
     $sales_count++;
     $dbh->do(
         q{
-        INSERT INTO ar (invnumber, transdate, invoice, approved,
+        INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+        VALUES (nextval('id'), '2020-01-02', 'ar', 'ar', true)
+        })
+        or die $dbh->errstr;
+    $dbh->do(
+        q{
+        INSERT INTO ar (id, invnumber, transdate, invoice,
                         entity_credit_account)
-             VALUES (?, '2020-01-02', true, true,
+             VALUES (currval('id'), ?, '2020-01-02', true,
                      (select id from entity_credit_account
                        where meta_number=?)
                     );
@@ -148,9 +166,15 @@ When qr/^(\d+) units are credited$/, sub {
     $sales_count++;
     $dbh->do(
         q{
-        INSERT INTO ar (invnumber, transdate, invoice, approved, reverse,
+        INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+        VALUES (nextval('id'), '2020-01-02', 'ar', 'ar', true)
+        })
+        or die $dbh->errstr;
+    $dbh->do(
+        q{
+        INSERT INTO ar (id, invnumber, transdate, invoice, reverse,
                         entity_credit_account)
-             VALUES (?, '2020-01-02', true, true, true,
+             VALUES (currval('id'), ?, '2020-01-02', true, true,
                      (select id from entity_credit_account
                        where meta_number=?)
                     );

@@ -869,10 +869,21 @@ sub _post_invoices {
         $inv->{invnumber} = $invnumber;
     }
     my $sth = $env->{'lsmb.db'}->prepare(
+        q|
+        INSERT INTO transactions (id, approved, transdate, table_name, trans_type_code)
+        VALUES (nextval('id'), false, ?, 'ar', 'ar')
+        RETURNING id
+        |)
+        or die $env->{'lsmb.db'}->errstr;
+    $sth->execute($inv->{transdate})
+        or die $sth->errstr;
+    my ($inv_id) = $sth->fetchrow_array;
+
+    $sth = $env->{'lsmb.db'}->prepare(
         # What to do with 'setting_sequence' (for 'ar')?
         # and why does that not exist for 'ap'??
         q|
-        INSERT INTO ar (invoice, approved,
+        INSERT INTO ar (id, invoice,
             invnumber, ordnumber, quonumber, ponumber,
             amount_bc, netamount_bc, curr, amount_tc, netamount_tc, taxincluded,
             transdate, crdate, duedate,
@@ -881,13 +892,13 @@ sub _post_invoices {
             person_id, language_code,
             entity_credit_account
             )
-        VALUES ('t'::boolean, 'f'::boolean,
+        VALUES ( ?, 't'::boolean,
                  ?, ?, ?, ?, ?, ?, ?, ?, ?,
                  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        RETURNING id
         |)
         or die $env->{'lsmb.db'}->errstr;
     $sth->execute(
+        $inv_id,
         $inv->@{
           qw/ invnumber ordnumber quonumber ponumber
               amount netamount curr amount_tc netamount_tc taxincluded
@@ -899,7 +910,6 @@ sub _post_invoices {
         $inv->{eca}->{id}
         )
         or die $sth->errstr;
-    my ($inv_id) = $sth->fetchrow_array;
     die $sth->errstr
         if $sth->err;
 

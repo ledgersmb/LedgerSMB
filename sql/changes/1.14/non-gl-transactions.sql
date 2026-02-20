@@ -35,29 +35,43 @@ alter table transactions
   alter column trans_type_code set not null;
 
 update transactions txn
-   set description = old.description
+   set description = old.description,
+       approved = old.approved
    from (
-     select id, description from ar
+     select id, description, approved from ar
       union
-     select id, description from ap
+     select id, description, approved from ap
       union
-     select id, description from gl
+     select id, description, approved from gl
    ) old
    where txn.id = old.id;
 
 alter table ar
-  drop column description;
+  drop column approved,
+  drop column description,
+  drop constraint ar_id_fkey,
+  -- the on delete cascade prevents deletion of approved lots (= transactions)
+  add constraint ar_id_fkey foreign key (id) references transactions (id) on delete cascade;
 
 alter table ap
-  drop column description;
+  drop column approved,
+  drop column description,
+  drop constraint ap_id_fkey,
+  -- the on delete cascade prevents deletion of approved lots (= transactions)
+  add constraint ap_id_fkey foreign key (id) references transactions (id) on delete cascade;
 
 alter table gl
+  drop column approved,
+  drop column description,
   drop column trans_type_code,
-  drop column description;
+  drop constraint gl_id_fkey,
+  -- the on delete cascade prevents deletion of approved lots (= transactions)
+  add constraint gl_id_fkey foreign key (id) references transactions (id) on delete cascade;
 
 
 alter table mfg_lot
-  add column trans_id int references transactions(id);
+  -- the on delete cascade prevents deletion of approved lots (= transactions)
+  add column trans_id int references transactions(id) on delete cascade;
 
 update mfg_lot
   set trans_id = (select id
@@ -75,7 +89,8 @@ delete from gl
 
 
 alter table asset_report
-  add column trans_id int references transactions(id);
+  -- the on delete cascade prevents deletion of approved lots (= transactions)
+  add column trans_id int references transactions(id) on delete cascade;
 
 update asset_report
    set trans_id = gl_id;
@@ -91,7 +106,8 @@ update transactions
 
 alter table inventory_report
   drop constraint inventory_report_trans_id_fkey,
-  add constraint inventory_report_trans_id_fkey foreign key (trans_id) references transactions(id);
+  -- the on delete cascade prevents deletion of approved lots (= transactions)
+  add constraint inventory_report_trans_id_fkey foreign key (trans_id) references transactions(id) on delete cascade;
 
 update transactions
    set table_name = 'inventory_report'
@@ -117,14 +133,13 @@ update transactions
 
 alter table yearend
   drop constraint yearend_trans_id_fkey,
-  add constraint yearend_trans_id_fkey foreign key (trans_id) references transactions(id);
+  -- the on delete cascade prevents deletion of approved lots (= transactions)
+  add constraint yearend_trans_id_fkey foreign key (trans_id) references transactions(id) on delete cascade;
 
 update transactions
    set table_name = 'yearend'
   from yearend
  where yearend.trans_id = transactions.id;
-
-
 
 
 -- based on 'gl', 'ar' and 'ap', but those lost their roles

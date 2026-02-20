@@ -29,9 +29,14 @@ BEGIN;
 
     -- Set specific data
 
-COPY gl(id, transdate, approved) FROM stdin DELIMITER '|';
--1000|1900-01-01|TRUE
--1001|1900-01-03|TRUE
+COPY transactions(id, transdate, table_name, trans_type_code, approved) FROM stdin DELIMITER '|';
+-1000|1900-01-01|gl|gl|true
+-1001|1900-01-03|gl|gl|true
+\.
+
+COPY gl(id, transdate) FROM stdin DELIMITER '|';
+-1000|1900-01-01
+-1001|1900-01-03
 \.
 
 COPY acc_trans(trans_id,chart_id,amount_bc,curr,amount_tc,transdate,approved,entry_id) FROM stdin DELIMITER '|';
