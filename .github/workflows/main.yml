@@ -51,7 +51,7 @@ jobs:
     steps:
       - name: Restore TeX Live cache
         id: tex-live
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /opt/texlive
           key: texlive-snapshot
@@ -175,7 +175,7 @@ jobs:
 
       - name: Restore TeX Live cache
         id: tex-live
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /opt/texlive
           key: texlive-snapshot
