@@ -1640,22 +1640,46 @@ CREATE OR REPLACE FUNCTION overpayment__reverse
 (in_id int, in_transdate date, in_batch_id int, in_account_class int)
 returns bool LANGUAGE PLPGSQL AS
 $$
-declare t_id int;
-        in_cash_accno text;
+declare
+  t_id int;
+  in_cash_accno text;
+  t_orig_payment payment;
 BEGIN
 
--- reverse overpayment gl
+  PERFORM * FROM payment__overpayments_list(null, null, null, null, null)
+    WHERE available <> amount
+          AND payment_id = in_id;
+  IF FOUND THEN
+    RAISE 'Cannot reverse used overpayment: reverse payments first';
+  END IF;
 
-INSERT INTO gl (transdate, reference, description, approved, trans_type_code)
-SELECT transdate, reference || '-reversal',
-       'reversal of ' || description, '0', 'op'
-  FROM gl WHERE id = (select gl_id from payment where id = in_id);
+  SELECT * INTO t_orig_payment
+    FROM payment
+   WHERE id = in_id;
 
-IF NOT FOUND THEN
-   RETURN FALSE;
-END IF;
+  IF NOT FOUND THEN
+    RETURN FALSE;
+  END IF;
 
-t_id := currval('id');
+  -- reverse overpayment gl
+
+  INSERT INTO gl (transdate, reference, description, approved, trans_type_code)
+  SELECT transdate, reference || '-reversal',
+         'reversal of ' || description, false, 'op'
+    FROM gl WHERE id = t_orig_payment.gl_id;
+
+  t_id := currval('id');
+
+
+  -- reverse payment record
+
+  INSERT INTO payment (reference, gl_id, payment_class, payment_date,
+              closed, entity_credit_id, employee_id, currency, reversing)
+  VALUES (t_orig_payment.reference, t_id, t_orig_payment.payment_class,
+         t_orig_payment.payment_date, t_orig_payment.closed,
+         t_orig_payment.entity_credit_id, person__get_my_id(),
+         t_orig_payment.currency, t_orig_payment.id);
+
 
 UPDATE transactions SET reversing = in_id WHERE id = t_id;
 
@@ -1668,12 +1692,6 @@ SELECT in_transdate, t_id, chart_id, amount_bc * -1, curr, amount_tc * -1
   FROM acc_trans
  WHERE trans_id = in_id;
 
-PERFORM * FROM payment__overpayments_list(null, null, null, null, null)
-    WHERE available<>amount and payment_id = in_id;
-
-IF FOUND THEN
-   RAISE 'Cannot reverse used overpayment: reverse payments first';
-END IF;
 
 -- reverse overpayment usage
 --
