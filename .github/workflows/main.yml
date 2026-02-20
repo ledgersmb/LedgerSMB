@@ -64,6 +64,8 @@ jobs:
         with:
           # Keep aligned with what's in the dev image...
           node-version: '24'
+          cache: 'yarn'
+          cache-dependency-path: 'UI/yarn.lock'
 
 
       # This step absolutely MUST come before "uncaching" node_modules!
@@ -81,23 +83,13 @@ jobs:
                                   'UI/**/*.html',
                                   'doc/sources/**') }}
 
-      - name: Cache node_modules
-        id: cache-node_modules
-        uses: actions/cache@v5
-        with:
-          path: |
-             UI/node_modules
-          key: |
-            modules-${{ hashFiles('UI/yarn.lock') }}
-
       - name: Build JS
+        if: steps.cache-js.outputs.cache-hit != 'true'
         run: |
           make js_deps_install
           make lint
           make js
           make readme
-        if: steps.cache-js.outputs.cache-hit != 'true' ||
-            steps.cache-node_modules.outputs.cache-hit != 'true'
 
   # Prep-up the cache
   build-perl-env:
@@ -264,6 +256,8 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: '24'
+          cache: 'yarn'
+          cache-dependency-path: 'UI/yarn.lock'
 
       - name: Pre-run installation steps
         run: |
@@ -274,19 +268,13 @@ jobs:
           cp doc/conf/ledgersmb.yaml ledgersmb.yaml
           sed -i -e 's/# schema: public/schema: xyz/ ; s/#stylesheet: ledgersmb.css/stylesheet: ledgersmb-test.css/' ledgersmb.yaml
 
+          # make sure the dependencies are installed in UI/node_modules/
+          make js_deps_install
+
           # Start 'nginx' reverse proxy
           mkdir logs
           nginx -c $GITHUB_WORKSPACE/doc/conf/webserver/nginx-github.conf \
                 -p $GITHUB_WORKSPACE &
-
-      - name: Cache node_modules
-        id: cache-npm
-        uses: actions/cache@v5
-        with:
-          path: |
-             UI/node_modules
-          key: |
-            modules-${{ hashFiles('UI/yarn.lock') }}
 
       - name: Setup Perl environment & start starman
         uses: ./.github/workflows/Install TEX & Perl
@@ -474,15 +462,6 @@ jobs:
                                   'UI/*.html',
                                   'UI/**/*.html',
                                   'doc/sources/**') }}
-
-      - name: Cache node_modules
-        id: cache-npm
-        uses: actions/cache@v5
-        with:
-          path: |
-             UI/node_modules
-          key: |
-            modules-${{ hashFiles('UI/yarn.lock') }}
 
       # This will start a hub and JOB_COUNT matrix.
       - name: Starting hub with ${{ matrix.BROWSER }}
