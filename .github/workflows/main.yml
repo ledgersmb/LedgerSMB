@@ -44,10 +44,43 @@ jobs:
         with:
           access_token: ${{ github.token }}
 
-  webpack:
-
+  latex:
     if: github.event.action != 'closed' || github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Restore TeX Live cache
+        id: tex-live
+        uses: actions/cache@v4
+        with:
+          path: /opt/texlive
+          key: texlive-snapshot
 
+      - name: Install TeX Live
+        if: steps.tex-live.outputs.cache-hit != 'true'
+        run: |
+          wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+          tar xzf install-tl-unx.tar.gz
+          cd install-tl-*/
+
+          # Create a profile for unattended install
+          cat > texlive.profile <<'EOF'
+          selected_scheme scheme-basic
+          TEXDIR /opt/texlive
+          TEXMFLOCAL /opt/texlive/texmf-local
+          TEXMFSYSVAR /opt/texlive/texmf-var
+          TEXMFSYSCONFIG /opt/texlive/texmf-config
+          TEXMFVAR ~/.texlive/texmf-var
+          TEXMFCONFIG ~/.texlive/texmf-config
+          TEXMFHOME ~/texmf
+          tlpdbopt_install_docfiles 0
+          tlpdbopt_install_srcfiles 0
+          binary_x86_64-linux 1
+          EOF
+
+          sudo ./install-tl --profile=texlive.profile
+          sudo /opt/texlive/bin/x86_64-linux/tlmgr install latexmk koma-script collection-xetex collection-fontsrecommended collection-fontsextra
+  webpack:
+    if: github.event.action != 'closed' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
@@ -63,6 +96,8 @@ jobs:
         with:
           # Keep aligned with what's in the dev image...
           node-version: '24'
+          cache: 'yarn'
+          cache-dependency-path: 'UI/yarn.lock'
 
 
       # This step absolutely MUST come before "uncaching" node_modules!
@@ -80,23 +115,13 @@ jobs:
                                   'UI/**/*.html',
                                   'doc/sources/**') }}
 
-      - name: Cache node_modules
-        id: cache-node_modules
-        uses: actions/cache@v5
-        with:
-          path: |
-             UI/node_modules
-          key: |
-            modules-${{ hashFiles('UI/yarn.lock') }}
-
       - name: Build JS
+        if: steps.cache-js.outputs.cache-hit != 'true'
         run: |
           make js_deps_install
           make lint
           make js
           make readme
-        if: steps.cache-js.outputs.cache-hit != 'true' ||
-            steps.cache-node_modules.outputs.cache-hit != 'true'
 
   # Prep-up the cache
   build-perl-env:
@@ -116,7 +141,7 @@ jobs:
 
   test-pure-perl:
     runs-on: ubuntu-latest
-    needs: build-perl-env
+    needs: [ build-perl-env, latex ]
     strategy:
       matrix:
         include:
@@ -143,6 +168,17 @@ jobs:
           perl-version: ${{ matrix.perl }}
           DEVEL_COVER_OPTIONS: ${{ env.DEVEL_COVER_OPTIONS }}
           coverage: ${{ matrix.COVERAGE }}
+
+      - name: Restore TeX Live cache
+        id: tex-live
+        uses: actions/cache@v4
+        with:
+          path: /opt/texlive
+          key: texlive-snapshot
+
+      - name: Set environment variables
+        run: |
+          echo "/opt/texlive/bin/x86_64-linux" >> $GITHUB_PATH
 
       # Do perl tests
       - name: Run Pure Perl tests
@@ -247,6 +283,8 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: '24'
+          cache: 'yarn'
+          cache-dependency-path: 'UI/yarn.lock'
 
       - name: Pre-run installation steps
         run: |
@@ -257,19 +295,13 @@ jobs:
           cp doc/conf/ledgersmb.conf.default ledgersmb.conf
           sed -i -e 's/db_namespace = public/db_namespace = xyz/ ; s/#suppress_tooltips/suppress_tooltips/' ledgersmb.conf
 
+          # make sure the dependencies are installed in UI/node_modules/
+          make js_deps_install
+
           # Start 'nginx' reverse proxy
           mkdir logs
           nginx -c $GITHUB_WORKSPACE/doc/conf/webserver/nginx-github.conf \
                 -p $GITHUB_WORKSPACE &
-
-      - name: Cache node_modules
-        id: cache-npm
-        uses: actions/cache@v5
-        with:
-          path: |
-             UI/node_modules
-          key: |
-            modules-${{ hashFiles('UI/yarn.lock') }}
 
       - name: Setup Perl environment & start starman
         uses: ./.github/workflows/Install TEX & Perl
@@ -444,15 +476,6 @@ jobs:
                                   'UI/*.html',
                                   'UI/**/*.html',
                                   'doc/sources/**') }}
-
-      - name: Cache node_modules
-        id: cache-npm
-        uses: actions/cache@v5
-        with:
-          path: |
-             UI/node_modules
-          key: |
-            modules-${{ hashFiles('UI/yarn.lock') }}
 
       # This will start a hub and JOB_COUNT matrix.
       - name: Starting hub with ${{ matrix.BROWSER }}

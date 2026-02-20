@@ -183,7 +183,7 @@ ifneq ($(origin DOCKER_CMD),undefined)
 	$(DOCKER_CMD) make jstest
 else
 	# Test API answer
-	$(SHELL) -c 'cd UI && yarn run jest $(TESTS)'
+	$(SHELL) -c 'cd UI && yarn run test $(TESTS)'
 endif
 
 serve:
