@@ -85,7 +85,8 @@ update transactions
                where reference like 'mfg-%');
 
 delete from gl
- where reference like 'mfg-%';
+ where exists (select *
+                 from mfg_lot ml where gl.id = ml.trans_id);
 
 
 alter table asset_report
@@ -103,6 +104,10 @@ update transactions
   from asset_report
  where asset_report.trans_id = transactions.id;
 
+delete from gl
+ where exists (select *
+                 from asset_report ar where gl.id = ar.trans_id);
+
 
 alter table inventory_report
   drop constraint inventory_report_trans_id_fkey,
@@ -113,6 +118,10 @@ update transactions
    set table_name = 'inventory_report'
   from inventory_report
  where inventory_report.trans_id = transactions.id;
+
+delete from gl
+ where exists (select *
+                 from inventory_report ir where gl.id = ir.trans_id);
 
 
 alter table payment
@@ -129,7 +138,9 @@ update transactions
   from payment
  where payment.trans_id = transactions.id;
 
-
+delete from gl
+ where exists (select *
+                 from payment p where gl.id = p.trans_id);
 
 alter table yearend
   drop constraint yearend_trans_id_fkey,
@@ -140,6 +151,10 @@ update transactions
    set table_name = 'yearend'
   from yearend
  where yearend.trans_id = transactions.id;
+
+delete from gl
+ where exists (select *
+                 from yearend ye where gl.id = ye.trans_id);
 
 
 -- based on 'gl', 'ar' and 'ap', but those lost their roles
