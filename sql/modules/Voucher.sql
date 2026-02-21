@@ -425,12 +425,12 @@ in_batch_number text, in_description text, in_batch_class text,
 in_batch_date date)
 RETURNS int AS
 $$
-        INSERT INTO
-                batch (batch_class_id, default_date, description, control_code,
-                        created_by)
+        INSERT INTO batch (batch_class_id,
+                   default_date, description, control_code,
+                   created_by)
         VALUES ((SELECT id FROM batch_class WHERE class = in_batch_class),
                 in_batch_date, in_description, in_batch_number,
-                        (select entity_id FROM users WHERE username = session_user))
+                (select entity_id FROM users WHERE username = session_user))
         RETURNING id;
 
 $$ LANGUAGE SQL;
