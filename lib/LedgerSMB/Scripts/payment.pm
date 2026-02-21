@@ -1627,9 +1627,8 @@ sub use_overpayment2 {
     my @hiddens;
     my $vc_entity_info;
     my $default_currency;
+    my $n_name;
     my %amount_to_be_used;
-    my %ovp_repeated_invoices;
-    my %invoice_id_amount_to_pay;
     my $count;
     my $warning = $Payment->{'warning'};
 
@@ -1656,19 +1655,17 @@ sub use_overpayment2 {
     $default_currency = $Payment->get_default_currency();
 
 
-    # WE NEED TO KNOW IF WE ARE USING A CURRENCY THAT NEEDS AN EXCHANGERATE
     if ($default_currency ne $request->{curr} ) {
-        # DOES THE CURRENCY IN USE HAS AN EXCHANGE RATE?, IF SO
-        # WE MUST SET THE VALUE, OTHERWISE THE UI WILL HANDLE IT
         $exchangerate = $Payment->{exrate};
 
         if ($exchangerate) {
+            # Double quotes are needed due to interactions of TemplateTooklit
+            # and Math::BigFloat and subtypes
             $ui_exchangerate = {
                 id => 'exrate',
                 name => 'exrate',
-                value => "$exchangerate", #THERE IS A STRANGE BEHAVIOUR WITH THIS,
-                text =>  "$exchangerate"  #IF I DONT USE THE DOUBLE QUOTES, IT WILL PRINT THE ADDRESS
-                    #THERE MUST BE A REASON FOR THIS, I MUST RETURN TO IT LATER
+                value => "$exchangerate",
+                text =>  "$exchangerate"
             };
         } else {
             $ui_exchangerate = {
@@ -1677,8 +1674,7 @@ sub use_overpayment2 {
         }
     }
     else {
-        # WE MUST SET EXCHANGERATE TO 1 FOR THE MATHS SINCE WE
-        # ARE USING THE DEFAULT CURRENCY
+        # Default currency
         $exchangerate = 1;
         $ui_exchangerate = {
             id => 'exrate',
@@ -1695,178 +1691,121 @@ sub use_overpayment2 {
 
     #list all the vendor/customer
     @vc_info = $Payment->get_entity_credit_account();
+    push @vc_info, {}; # inserting a blank at the start
     for my $ref (0 .. $#vc_info) {
-        my ($name) = split(/:/, $vc_info[$ref]->{name});
+        my ($vcname) = split(/:/, $vc_info[$ref]->{name});
         push @vc_list, { value            => $vc_info[$ref]->{id},
-                         name            => $name,
+                         name            => $vcname,
                          vc_discount_accno => $vc_info[$ref]->{discount}};
+        $n_name = $vcname if $vc_info[$ref]->{id} == $Payment->{new_entity_id};
     }
 
 
-    $count=1;
     #lets see which invoice do we have printed
-    while ($Payment->{"entity_id_$count"})
+    for my $count(1 .. $request->{count})
     {
-        if ($Payment->{"checkbox_$count"})
+        # we should rename the checkbox to remove_ or ignore_
+        if ($Payment->{"checkbox_$count"} or not $Payment->{"entity_id_$count"})
         {
             $count++;
             next;
         }
 
-        if ($ovp_repeated_invoices{qq|$Payment->{"invoice_id_$count"}|}->{qq|$Payment->{"selected_accno_$count"}|}
-            != $Payment->{"selected_accno_$count"}) {
+        $ui_to_use_subtotal += $Payment->{"amount_$count"};
 
-            # the "ovp_repeated_invoices" hash will store the conbination
-            # of invoice id and overpayment account, if this convination has
-            # already printed do not print it again
-            $ovp_repeated_invoices{$Payment->{"invoice_id_$count"}}->{$Payment->{"selected_accno_$count"}} =
-                $Payment->{"selected_accno_$count"};
-
-            # the "repeated invoice" flag will check if this invoice has
-            # already been printed, if it does, do not print the apply
-            # discount checkbox in the UI
-
-            my $ovp_inv_payment =
-                $ovp_repeated_invoices{$Payment->{"invoice_id_$count"}};
-            if (! $ovp_inv_payment->{repeated_invoice}){
-                $ovp_inv_payment->{optional_discount} =
-                    $Payment->{"optional_discount_$count"};
-                $ovp_inv_payment->{repeated_invoice} = 'false';
-            } else{
-                $ovp_inv_payment->{repeated_invoice} = 'true';
-            }
-
-            $ui_to_use_subtotal += $Payment->{"amount_$count"};
-
-            my ($id,$name) = split(/--/, $Payment->{"entity_id_$count"});
-            my ($ovp_chart_id, $ovp_selected_accno) =
+        my ($id,$name) = split(/--/, $Payment->{"entity_id_$count"});
+        my ($ovp_chart_id, $ovp_selected_accno) =
                 split(/--/, $Payment->{"selected_accno_$count"});
-            my $applied_due =
-                ($ovp_inv_payment->{optional_discount})
-                ? $Payment->{"due_$count"}
-            : $Payment->{"due_$count"} + $Payment->{"discount_$count"};
+        my $applied_due = $Payment->{"due_$count"};
 
-            $amount_to_be_used{"$ovp_selected_accno"} +=
-                $Payment->{"amount_$count"};
-            # this hash will keep track of the amount to be paid of an
-            # specific invoice_id, this amount could not be more than the
-            # due of that invoice.
-            $invoice_id_amount_to_pay{qq|$Payment->{"invoice_id_$count"}|} +=
-                $Payment->{"amount_$count"};
-            if($invoice_id_amount_to_pay{qq|$Payment->{"invoice_id_$count"}|}
-               > $applied_due) {
-                $warning .= $locale->text('The amount of the invoice number').qq| $Payment->{"invnumber_$count"} |.$locale->text('is lesser than the amount to be paid').qq|\n|;
-            }
-            ###################################################################
-            #    ojo no me gusta como esta implementado
-            ###################################################################
-            if($Payment->{"amount_$count"} < 0){
-                $warning .= $locale->text('The amount of the invoice number').qq| $Payment->{"invnumber_$count"} |.$locale->text('is lesser than 0').qq|\n|;
-            }
-            #lets make the href for the invoice
-            my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-            $uri .= '.pl?__action=edit&id='
-                . $Payment->{"invoice_id_$count"} . '&login='
-                . $request->{login};
+        $amount_to_be_used{$ovp_selected_accno} += $Payment->{"amount_$count"};
 
-            push @ui_selected_inv,
+        if($Payment->{"amount_$count"} > $applied_due) {
+                $warning .= $locale->text('The amount of the invoice number [_1] is less than the amount to be paid.', $Payment->{"invnumber_$count"});
+        }
+
+        if($Payment->{"amount_$count"} < 0){
+            $warning .= $locale->text('The amount of the invoice number [_1] is less than 0', $Payment->{"invnumber_$count"});
+        }
+
+        #lets make the href for the invoice
+        my $uri = $Payment->script($Payment->{"is_invoice_$count"});
+        $uri .= '.pl?__action=edit&id='
+            . $Payment->{"invoice_id_$count"} . '&login='
+            . $request->{login};
+
+        push @ui_selected_inv,
             {
                 invoice           => {
-                    number => $Payment->{"invnumber_$count"},
-                    id     => $Payment->{"invoice_id_$count"},
-                    href   => $uri },
-                entity_name        => $name,
+                    number     => $Payment->{"invnumber_$count"},
+                    id         => $Payment->{"invoice_id_$count"},
+                    is_invoice => $Payment->{"is_invoice_$count"},
+                    href       => $uri },
+                entity_name        => $Payment->{"entity_name_$count"},
                 entity_id          => $Payment->{"entity_id_$count"},
                 vc_discount_accno     => $Payment->{"vc_discount_accno_$count"},
                 invoice_date       => $Payment->{"invoice_date_$count"},
                 applied_due        => $applied_due,
-                optional_discount => $ovp_inv_payment->{optional_discount},
-                repeated_invoice  => $ovp_inv_payment->{repeated_invoice},
                 due                => $Payment->{"due_$count"},
                 discount        => $Payment->{"discount_$count"},
                 selected_accno    => {
                     id        => $ovp_chart_id,
                     ovp_accno => $ovp_selected_accno },
-                amount             => $Payment->{"amount_$count"}} unless ($seen_invoices{$Payment->{"invoice_id_$count"}}++);
-        }
-        $count++;
+                amount             => $Payment->{"amount_$count"}
+            } unless ($seen_invoices{$Payment->{"invoice_id_$count"}}++);
     }
+    $count++;
 
 
     #lets search which available invoice do we have for the selected entity
-    if (($Payment->{new_entity_id} != $Payment->{entity_credit_id})
-        && ! $Payment->{new_checkbox})
+    if ($Payment->{new_entity_id})
     {
         $request->{entity_credit_id} = $Payment->{new_entity_id};
         # lets create an object who has the entity_credit_id of the
         # selected entity
         $Selected_entity =
             LedgerSMB::DBObject::Payment->new(%$Payment);
-        $Selected_entity->{invnumber} = $Selected_entity->{new_invoice} ;
-
+        $Selected_entity->{invnumber} = $request->{new_invoice} ;
         my ($id,$name,$vc_discount_accno) =
-            split(/--/, $Selected_entity->{new_entity_id});
+            split(/--/, $request->{new_entity_id});
         my ($ovp_chart_id, $ovp_selected_accno) =
-            split(/--/, $Selected_entity->{new_accno});
+            split(/--/, $request->{new_accno});
 
         $Selected_entity->{entity_credit_id} = $id;
 
         @avble_invoices = $Selected_entity->get_open_invoice();
-        for my $ref (0 .. $#avble_invoices) {
-
-            # this hash will store the convination of invoice id and
-            # overpayment account, if this convination has already printed
-            # do not print it again
-            if ($ovp_repeated_invoices{$avble_invoices[$ref]->{invoice_id}}->{$Selected_entity->{new_accno}}
-                != $Selected_entity->{new_accno}){
-                $ovp_repeated_invoices{$avble_invoices[$ref]->{invoice_id}}->{$Selected_entity->{new_accno}} =
-                    $Selected_entity->{new_accno};
-
-                # the "repeated invoice" flag will check if this invoice has
-                # already been printed, if it does, do not print the apply
-                # discount checkbox in the UI
-                if (!$ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{repeated_invoice}){
-                    $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{repeated_invoice} = 'false';
-                } else{
-                    $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{repeated_invoice} = 'true';
-                }
-
-
-                if (!$ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{optional_discount}){
-                    $ovp_repeated_invoices{qq|$avble_invoices[$ref]->{invoice_id}|}->{optional_discount} = 'true';
-                }
-
-                $invoice_id_amount_to_pay{qq|$avble_invoices[$ref]->{invoice_id}|} +=
-                    $Selected_entity->{new_amount};
-                $ui_to_use_subtotal += $Selected_entity->{new_amount};
-                $amount_to_be_used{$ovp_selected_accno} +=
+        for my $ref (@avble_invoices) {
+            # Checking for repeated invoices
+            $ui_to_use_subtotal += $Selected_entity->{new_amount};
+            $amount_to_be_used{$ovp_selected_accno} +=
                     $Selected_entity->{new_amount};
 
                 #lets make the href for the invoice
-                my $uri = $Payment->{account_class} == 1 ? 'ap' : 'ar';
-                $uri .= '.pl?__action=edit&id='
-                    . $avble_invoices[$ref]->{invoice_id}
+            my $uri = $Payment->script($ref->{invoice});
+            $uri .= '.pl?__action=edit&id='. $ref->{invoice_id}
                 . '&login=' . $request->{login};
 
-                push @ui_avble_invoices, {
+            my $name = $ref->{legal_name};
+
+            push @ui_selected_inv, {
                     invoice       => {
-                        number => $avble_invoices[$ref]->{invnumber},
-                        id     => $avble_invoices[$ref]->{invoice_id},
-                        href   => $uri },
-                    entity_name       => $name,
+                        number     => $ref->{invnumber},
+                        id         => $ref->{invoice_id},
+                        is_invoice => $ref->{invoice},
+                        href       => $uri },
+                    entity_name       => $n_name,
                     vc_discount_accno => $vc_discount_accno,
                     entity_id        => qq|$Selected_entity->{entity_credit_id}--$name|,
-                    invoice_date        => $avble_invoices[$ref]->{invoice_date},
-                    applied_due       => $Payment->{"due_$count"},
-                    repeated_invoice  => $ovp_repeated_invoices{$avble_invoices[$ref]->{invoice_id}}->{repeated_invoice},
-                    due            => $avble_invoices[$ref]->{due},
-                    discount          => $avble_invoices[$ref]->{discount},
+                    invoice_date        => $ref->{invoice_date},
+                    applied_due       => $ref->{due},
+                    due            => $ref->{due},
+                    discount          => $ref->{discount},
                     selected_accno    => {
                         id       => $ovp_chart_id,
                         ovp_accno => $ovp_selected_accno },
-                    amount        => $Selected_entity->{new_amount}} unless ($seen_invoices{$avble_invoices[$ref]->{invoice_id}}++)
-            }
-        }
+                    amount        => $Selected_entity->{new_amount}
+            } unless ($seen_invoices{$ref->{invoice_id}}++);
+         }
     }
 
 
@@ -1945,20 +1884,21 @@ sub post_overpayment {
     # be used to pay the invoices
     my %entity_unused_ovp;
     my $unused_ovp_index;
+    $request->{exchangerate} = $request->{exrate} // 1;
 
     #let's store all unused invoice in entity_unused_ovp, it will be
 
     #lets see which invoice do we have, and reorganize them by vendor/customer
-    my $count=1;
-    while ($request->{"entity_id_$count"})
+    for my $count (1 .. $request->{count})
     {
 
-        if ($request->{"checkbox_$count"})
+        if ($request->{"checkbox_$count"} or not $request->{"amount_$count"})
         {
             $count++;
             next;
         }
 
+        # complication -- this does not set $entity_name
         my ($entity_id, $entity_name) =
             split(/--/, $request->{"entity_id_$count"});
         my ($ovp_chart_id, $ovp_selected_accno) =
@@ -2043,11 +1983,11 @@ sub post_overpayment {
 
         #Let's fill all our entity invoice info, if it has a discount, store it into the discount accno
         if ($list_key->{"optional_discount_$count"} && $list_key->{"amount_$count"} == $list_key->{"due_$count"}) {
-            push @{$list_key->{array_amount}}, $list_key->{"discount_$count"};
-            push @{$list_key->{array_cash_account_id}}, $list_key->{"vc_discount_accno_$count"};
-            push @{$list_key->{array_source}}, undef;
-            push @{$list_key->{array_transaction_id}}, $list_key->{"invoice_id_$count"};
-            push @{$list_key->{array_memo}}, $locale->text('Applied discount by an overpayment');
+            push @{$list_key->{amount}}, $list_key->{"discount_$count"};
+            push @{$list_key->{cash_account_id}}, $list_key->{"vc_discount_accno_$count"};
+            push @{$list_key->{source}}, undef;
+            push @{$list_key->{transaction_id}}, $list_key->{"invoice_id_$count"};
+            push @{$list_key->{memo}}, $locale->text('Applied discount by an overpayment');
             push @{$list_key->{ovp_payment_id}}, undef;
         }
 
@@ -2066,13 +2006,13 @@ sub post_overpayment {
             }
             if (@{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available} >= $tmp_ovp_amount)
             {
-                push @{$list_key->{array_amount}}, $tmp_ovp_amount;
-                push @{$list_key->{array_cash_account_id}}, $ovp_chart_id;
-                push @{$list_key->{array_source}},
+                push @{$list_key->{amount}}, $tmp_ovp_amount;
+                push @{$list_key->{cash_account_id}}, $ovp_chart_id;
+                push @{$list_key->{source}},
                 $locale->text('use of an overpayment');
-                push @{$list_key->{array_transaction_id}},
+                push @{$list_key->{transaction_id}},
                 $list_key->{"invoice_id_$count"};
-                push @{$list_key->{array_memo}}, undef;
+                push @{$list_key->{memo}}, undef;
                 push @{$list_key->{ovp_payment_id}},
                 @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
 
@@ -2086,11 +2026,11 @@ sub post_overpayment {
             } else{
                 $tmp_ovp_amount -= @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
 
-                push @{$list_key->{array_amount}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
-                push @{$list_key->{array_cash_account_id}}, $ovp_chart_id;
-                push @{$list_key->{array_source}}, $locale->text('use of an overpayment');
-                push @{$list_key->{array_transaction_id}}, $list_key->{"invoice_id_$count"};
-                push @{$list_key->{array_memo}}, undef;
+                push @{$list_key->{amount}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{available};
+                push @{$list_key->{cash_account_id}}, $ovp_chart_id;
+                push @{$list_key->{source}}, $locale->text('use of an overpayment');
+                push @{$list_key->{transaction_id}}, $list_key->{"invoice_id_$count"};
+                push @{$list_key->{memo}}, undef;
                 push @{$list_key->{ovp_payment_id}}, @{$entity_unused_ovp{$ovp_chart_id}->{unused_overpayment}}[$unused_ovp_index]->{payment_id};
 
                 $unused_ovp_index = $entity_unused_ovp{$ovp_chart_id}->{unused_ovp_index}++;
@@ -2106,11 +2046,6 @@ sub post_overpayment {
     for my $key (keys %entity_list)
     {
         my $list_key = $entity_list{$key};
-        for my $field (qw(amount cash_account_id source memo transaction_id
-                          ovp_payment_id)) {
-            $list_key->{$key} =
-                $list_key->{"array_$field"};
-        }
 
         $entity_list{$key}->post_payment();
     }
