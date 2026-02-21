@@ -55,7 +55,5 @@ Configuration.sql
 # Why weren't those loaded before
 Backup.sql
 #Business_Dates.sql
-#Invoice.sql
-#Journal.sql
 # This should remain the last check
 Duplicates_Functions.sql
