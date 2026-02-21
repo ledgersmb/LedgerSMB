@@ -42,9 +42,9 @@ BEGIN
           FROM account_checkpoint
          WHERE end_date < in_end_date;
 
-        INSERT INTO
-        account_checkpoint (end_date, account_id, amount_bc,
-                            amount_tc, curr, debits, credits)
+        INSERT INTO account_checkpoint (
+              end_date, account_id, amount_bc,
+              amount_tc, curr, debits, credits)
         SELECT in_end_date, account.id,
             COALESCE(a.amount_bc,0) + COALESCE(cp.amount_bc, 0),
             COALESCE(a.amount_tc,0) + COALESCE(cp.amount_tc, 0),
