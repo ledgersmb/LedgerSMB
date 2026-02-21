@@ -36,6 +36,10 @@ BEGIN
     values (nextval('id'), 'mfg-' || $1::TEXT, 'Manufacturing lot',
             now(), true, 'as', 'mfg_lot');
 
+    UPDATE mfg_lot
+       SET trans_id = currval('id')
+     WHERE id = in_id;
+
     INSERT INTO invoice (trans_id, parts_id, qty, allocated)
     SELECT currval('id')::int, parts_id, qty, 0
       FROM mfg_lot_item WHERE mfg_lot_id = $1;
@@ -383,9 +387,15 @@ IF inv.trans_id IS NOT NULL THEN
    RETURN inv;
 END IF;
 
-INSERT INTO transactions (id, description, transdate, reference, approved, trans_type_code, table_name)
-        VALUES (nextval('id'), 'Transaction due to approval of inventory adjustment',
-                inv.transdate, 'invadj-' || in_id, true, 'ia', 'inventory_report')
+  INSERT INTO transactions (
+    id,
+    description,
+    transdate, reference, approved,
+    trans_type_code, table_name)
+  VALUES (nextval('id'),
+          'Transaction due to approval of inventory adjustment',
+          inv.transdate, 'invadj-' || in_id, true,
+          'ia', 'inventory_report')
     RETURNING id INTO t_trans_id;
 
 UPDATE inventory_report

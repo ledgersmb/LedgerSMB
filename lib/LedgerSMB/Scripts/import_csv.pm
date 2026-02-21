@@ -280,9 +280,16 @@ sub _process_gl_multi {
                        ?, ?, ?, ?)
                                 })
         or die $dbh->errstr;
+    my $sth_tx = $dbh->prepare(q{
+        INSERT INTO transactions (
+               id, transdate, reference, description,
+               table_name, trans_type_code, approved)
+        VALUES (nextval('id'), ?, ?, ?, 'gl', 'gl', true)
+        })
+        or die $dbh->errstr;
     my $sth_gl = $dbh->prepare(q{
-        INSERT INTO gl (transdate, reference, description)
-               VALUES (?, ?, ?)
+        INSERT INTO gl (id, transdate, reference)
+               VALUES (currval('id'), ?, ?)
         RETURNING id })
         or die $dbh->errstr;
     for my $entry (@$entries) {
@@ -298,7 +305,9 @@ sub _process_gl_multi {
             LedgerSMB::Setting::Sequence->increment('glnumber', $request)
             unless defined $entry{reference};
 
-        $sth_gl->execute(@entry{('transdate', 'reference', 'description')})
+        $sth_tx->execute(@entry{qw/ transdate reference description /})
+            or die $sth_tx->errstr;
+        $sth_gl->execute(@entry{qw/ transdate reference/})
             or die $sth_gl->errstr;
         my ($trans_id) = $sth_gl->fetchrow_array;
         $sth_gl->finish;

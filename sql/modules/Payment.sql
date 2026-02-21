@@ -910,7 +910,7 @@ CREATE OR REPLACE FUNCTION payment_post
 RETURNS INT AS
 $$
 DECLARE var_payment_id int;
-DECLARE var_gl_id int;
+DECLARE var_txn_id int;
 DECLARE var_entry record;
 DECLARE var_entry_id int[];
 DECLARE out_count int;
@@ -1079,16 +1079,16 @@ BEGIN
    --
    -- HANDLE THE OVERPAYMENTS NOW
    IF (array_upper(in_op_cash_account_id, 1) > 0) THEN
-     INSERT INTO transactions (reference, description,
-                               transdate, entered_by, approved,
-                               trans_type_code, table_name)
-          VALUES (setting_increment('glnumber'), in_gl_description,
-                  in_date_paid, var_employee, in_approved,
-                  'op', 'payment');
-     SELECT currval('id') INTO var_gl_id;
+     INSERT INTO transactions (
+       id, reference, description,
+       transdate, entered_by, approved, trans_type_code, table_name)
+     VALUES (nextval('id'), setting_increment('glnumber'),
+             in_gl_description, in_datepaid, var_employee,
+             in_approved, 'op', 'payment')
+     RETURNING id INTO var_txn_id;
 
-     UPDATE payment SET trans_id = var_gl_id
-      WHERE id = var_payment_id;
+       UPDATE payment SET trans_id = var_txn_id
+        WHERE id = var_payment_id;
 
        FOR out_count IN
                         array_lower(in_op_cash_account_id, 1) ..
@@ -1101,7 +1101,7 @@ BEGIN
                      in_op_amount[out_count]*current_exchangerate*sign,
                      in_curr,
                      in_op_amount[out_count]*sign,
-                     var_gl_id,
+                     var_txn_id,
                      in_datepaid,
                      coalesce(in_approved, true),
                      in_op_source[out_count],
@@ -1122,7 +1122,7 @@ BEGIN
                      in_op_amount[out_count]*current_exchangerate*sign*-1,
                      in_curr,
                      in_op_amount[out_count]*sign*-1,
-                     var_gl_id,
+                     var_txn_id,
                      in_datepaid,
                      coalesce(in_approved, true),
                      in_op_source[out_count],
@@ -1667,10 +1667,10 @@ SELECT *
 
   -- reverse overpayment gl
 
-  INSERT INTO transactions (
-      transdate, reference, reversing, description, approved,
-      trans_type_code, table_name)
-  SELECT transdate, reference || '-reversal', t_curr_data.trans_id,
+  INSERT INTO transactions (id, transdate, reference,
+              description, approved,
+              trans_type_code, table_name)
+  SELECT nextval('id'), transdate, reference || '-reversal',
          'reversal of ' || description, false, 'op', 'payment'
     FROM transactions WHERE id = t_curr_data.trans_id;
 
@@ -1714,7 +1714,7 @@ SELECT in_transdate, t_id, chart_id, amount_bc * -1, curr, amount_tc * -1
 --   JOIN payment_links pl ON pl.entry_id = ac.entry_id
 --   JOIN overpayments op ON op.payment_id = pl.payment_id
 --   JOIN payment p ON p.id = op.payment_id
---  WHERE p.gl_id = in_id
+--  WHERE p.trans_id = in_id
 -- GROUP BY ac.source, ac.transdate, eca.id, eca.entity_class,
 --          at.accno, al.description;
 

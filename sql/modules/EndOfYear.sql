@@ -97,7 +97,7 @@ DECLARE
    cp_date date;
 BEGIN
         INSERT INTO transactions (id, transdate, reference, description, approved,
-                        trans_type_code, table_name)
+                                  trans_type_code, table_name)
         VALUES (nextval('id'), in_end_date, in_reference, in_description, true, 'ye', 'yearend');
 
         INSERT INTO yearend (trans_id, transdate)
@@ -200,20 +200,18 @@ BEGIN
     DECLARE
       t_new_trans_id int;
     BEGIN
-      INSERT INTO transactions (transdate, reference, description, approved, trans_type_code)
-      SELECT in_end_date, 'Reversing ' || reference, 'Reversing ' || description, true, 'ye'
+      INSERT INTO transactions (
+        id, transdate, reference,
+        description, approved, reversing,
+        trans_type_code, table_name)
+      SELECT nextval('id'), in_end_date, 'Reversing ' || reference,
+             'Reversing ' || description, true, id,
+             'ye', 'yearend'
         FROM transactions
        WHERE id = (select trans_id from yearend
                     where transdate = in_end_date
                       and reversed is not true)
              RETURNING id INTO t_new_trans_id;
-
-      UPDATE transactions
-         SET reversing = (select trans_id
-                            from yearend
-                           where transdate = in_end_date
-                             and reversed is not true)
-       WHERE id = t_new_trans_id;
 
       INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc,
                              transdate, trans_id, approved)
