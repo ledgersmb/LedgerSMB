@@ -71,6 +71,14 @@ help:
 SHELL := /bin/bash
 
 dbdocs:
+ifneq ($(origin DBNAME),undefined)
+ifneq ($(origin DOCKER_CMD),undefined)
+	$(DOCKER_CMD) make dbdocs DBNAME="$(DBNAME)"
+else
+	perl -Ilib bin/ledgersmb-admin create $${PGUSER:-postgres}@$${PGHOST:-localhost}/$(DBNAME)
+	( cd doc/database ; postgresql_autodoc -h "$${PGHOST:-localhost}" -d "$(DBNAME)" -U "$${PGUSER:-postgres}" )
+endif
+endif
 	$(DOCKER_CMD) dot -Tsvg doc/database/ledgersmb.dot -o doc/database/ledgersmb.svg
 	$(DOCKER_CMD) dot -Tpdf doc/database/ledgersmb.dot -o doc/database/ledgersmb.pdf
 
@@ -160,7 +168,7 @@ ifneq ($(origin DOCKER_CMD),undefined)
 #       if there's a docker container, jump into it and run from there
 	$(DOCKER_CMD) make jstest
 else
-	# Test API answer
+# Test API answer
 	$(SHELL) -c 'cd UI && yarn run test $(TESTS)'
 endif
 
