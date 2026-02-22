@@ -22,9 +22,9 @@ Given qr/^(-?\d+) units sold/, sub {
         or die $dbh->errstr;
     $dbh->do(
         q{
-        INSERT INTO ar (id, invnumber, transdate, invoice,
+        INSERT INTO ar (id, invnumber, invoice,
                         entity_credit_account)
-             VALUES (currval('id'), 'sale', '2020-01-02', true,
+             VALUES (currval('id'), 'sale', true,
                      (select id from entity_credit_account
                        where meta_number=?)
                     );
@@ -67,8 +67,8 @@ When qr/^(-?\d+) units are purchased at (\d+) ([A-Z]{3,3}) each$/, sub {
         or die $dbh->errstr;
     $dbh->do(
         q{
-        INSERT INTO gl (id, reference, transdate)
-                VALUES (currval('id'), 'PUR', '2020-01-01')
+        INSERT INTO gl (id, reference)
+                VALUES (currval('id'), 'PUR')
         }
         )
         or die $dbh->errstr;
@@ -125,9 +125,9 @@ When qr/^(-?\d+) units are sold$/, sub {
         or die $dbh->errstr;
     $dbh->do(
         q{
-        INSERT INTO ar (id, invnumber, transdate, invoice,
+        INSERT INTO ar (id, invnumber, invoice,
                         entity_credit_account)
-             VALUES (currval('id'), ?, '2020-01-02', true,
+             VALUES (currval('id'), ?, true,
                      (select id from entity_credit_account
                        where meta_number=?)
                     );
@@ -172,9 +172,9 @@ When qr/^(\d+) units are credited$/, sub {
         or die $dbh->errstr;
     $dbh->do(
         q{
-        INSERT INTO ar (id, invnumber, transdate, invoice, reverse,
+        INSERT INTO ar (id, invnumber, invoice, reverse,
                         entity_credit_account)
-             VALUES (currval('id'), ?, '2020-01-02', true, true,
+             VALUES (currval('id'), ?, true, true,
                      (select id from entity_credit_account
                        where meta_number=?)
                     );

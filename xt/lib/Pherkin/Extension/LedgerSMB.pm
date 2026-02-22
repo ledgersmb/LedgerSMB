@@ -384,8 +384,8 @@ sub assert_closed_posting_date {
     sleep 1; # wait for any handling to finish
     my $sth = $self->admin_dbh->prepare(
         qq|
-   INSERT INTO gl (transdate, person_id)
-        VALUES (?, (SELECT entity_id FROM users WHERE username = ?))
+   INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+        VALUES (nextval('id'), ?, 'gl', 'gl', true)
      RETURNING id
 |);
 
@@ -435,12 +435,11 @@ SELECT id
 
     my $trans_sth = $self->admin_dbh->prepare(
         qq|
-INSERT INTO gl(id, transdate, person_id)
-     VALUES (currval('id'), ?, (SELECT entity_id FROM users WHERE username = ?))
+INSERT INTO gl(id, person_id)
+     VALUES (currval('id'), (SELECT entity_id FROM users WHERE username = ?))
   RETURNING id
 |);
-    $trans_sth->execute($posting_date,
-                        $self->last_scenario_stash->{"the admin user"})
+    $trans_sth->execute($self->last_scenario_stash->{"the admin user"})
         or die "Failed to create 'gl' table row: " . $trans_sth->errstr;
     my ($trans_id) = $trans_sth->fetchrow_array();
 

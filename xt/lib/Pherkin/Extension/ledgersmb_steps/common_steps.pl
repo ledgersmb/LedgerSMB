@@ -196,10 +196,10 @@ Given qr/(an )?unpaid AP transactions? with these values:$/, sub {
       SQL
 
     my $ap_query = $dbh->prepare("
-        INSERT INTO ap (id, invnumber, transdate, amount_bc, netamount_bc,
+        INSERT INTO ap (id, invnumber, amount_bc, netamount_bc,
                         duedate, curr, entity_credit_account,
                         amount_tc, netamount_tc)
-        SELECT currval('id'), ?, ?, ?, ?, ?, 'USD',
+        SELECT currval('id'), ?, ?, ?, ?, 'USD',
                entity_credit_account.id, ?, ?
         FROM entity
         JOIN entity_credit_account ON (
@@ -224,7 +224,6 @@ Given qr/(an )?unpaid AP transactions? with these values:$/, sub {
 
         $ap_query->execute(
             $data->{'Invoice Number'},
-            $data->{'Date'},
             $data->{'Amount'},
             $data->{'Amount'},
             $data->{'Date'},
@@ -374,8 +373,8 @@ Given qr/^(\d+) units inventory of ((?:a|the) part|part "(.*)") purchased at (\d
         or die $dbh->errstr;
     $dbh->do(
         q{
-        INSERT INTO gl (id, reference, transdate, person_id)
-               VALUES (currval('id'), 'INV-INIT', '2020-01-01',
+        INSERT INTO gl (id, reference, person_id)
+               VALUES (currval('id'), 'INV-INIT',
                        person__get_my_id());
         })
         or die $dbh->errstr;

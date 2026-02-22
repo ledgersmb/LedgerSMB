@@ -28,7 +28,6 @@ BEGIN
     VALUES (new.id, TG_RELNAME, t_new_reference, TG_ARGV[0] );
   ELSEIF tg_op = 'UPDATE' THEN
     IF new.id <> old.id
-      OR new.approved <> old.approved
       OR t_new_reference <> t_old_reference THEN
         UPDATE transactions
            SET id = new.id,
