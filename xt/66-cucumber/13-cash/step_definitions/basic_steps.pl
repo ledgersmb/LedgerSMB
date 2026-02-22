@@ -50,13 +50,12 @@ sub _uncleared_journal_line {
         or die $dbh->errstr;
     my $trx = $dbh->selectrow_hashref(
         <<~'STMT',
-        INSERT INTO gl (id, reference, transdate)
-            VALUES(currval('id'), ?, ?)
+        INSERT INTO gl (id, reference)
+            VALUES(currval('id'), ?)
         RETURNING *
         STMT
         {},
         $reference,
-        $posting_date
         )
         or die $dbh->errstr;
     $dbh->do(q|UPDATE transactions SET description = 'uncleared journal line' WHERE id = ?|,

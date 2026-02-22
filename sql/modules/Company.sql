@@ -125,9 +125,9 @@ $$
 BEGIN
 RETURN QUERY EXECUTE $sql$
      WITH arap AS (
-       select  invnumber, ar.curr, ar.transdate, entity_credit_account, id,
+       select  invnumber, ar.curr, txn.transdate, entity_credit_account, ar.id,
                    person_id, notes
-             FROM ar
+             FROM ar JOIN transactions txn USING (id)
              JOIN acc_trans ON ar.id  = acc_trans.trans_id
              JOIN account_link l ON acc_trans.chart_id = l.account_id
                   and l.description = 'AR'
@@ -136,9 +136,9 @@ RETURN QUERY EXECUTE $sql$
                   having (($17 and sum(acc_trans.amount_bc) = 0)
                       or ($18 and 0 <> sum(acc_trans.amount_bc)))
             UNION ALL
-           select invnumber, ap.curr, ap.transdate, entity_credit_account, id,
+           select invnumber, ap.curr, txn.transdate, entity_credit_account, ap.id,
                   person_id, notes
-             FROM ap
+             FROM ap JOIN transactions txn USING (id)
              JOIN acc_trans ON ap.id  = acc_trans.trans_id
              JOIN account_link l ON acc_trans.chart_id = l.account_id
                   and l.description = 'AP'
