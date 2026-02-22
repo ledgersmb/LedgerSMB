@@ -26488,29 +26488,6 @@ Does not hold summary information in 1.3 for AR or AP entries.#</dia:string>
           </dia:attribute>
         </dia:composite>
 
-        <dia:composite type="umlattribute">
-          <dia:attribute name="name">
-            <dia:string>#  trans_type_code#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="type">
-            <dia:string>#character(2)#</dia:string>
-          </dia:attribute>
-          <dia:attribute name="value">
-
-            <dia:string>#&#39;gl&#39;::bpchar#</dia:string>
-
-          </dia:attribute>
-          <dia:attribute name="visibility">
-            <dia:enum val="3"/>
-          </dia:attribute>
-          <dia:attribute name="abstract">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-          <dia:attribute name="class_scope">
-            <dia:boolean val="false"/>
-          </dia:attribute>
-        </dia:composite>
-
       </dia:attribute>
 
       <dia:attribute name="visible_operations">
@@ -52967,32 +52944,6 @@ the books at yearend.#</dia:string>
         <dia:point val="25.05,2.7"/>
       </dia:attribute>
       <dia:attribute name="constraint">
-        <dia:string>#gl_trans_type_code_fkey#</dia:string>
-      </dia:attribute>
-      <dia:attribute name="text_pos">
-        <dia:point val="12.525,3.1"/>
-      </dia:attribute>
-      <dia:attribute name="line_colour">
-        <dia:color val="#000000"/>
-      </dia:attribute>
-      <dia:connections>
-        <dia:connection handle="0" to="O96" connection="22"/>
-        <dia:connection handle="1" to="O171" connection="9"/>
-      </dia:connections>
-    </dia:object>
-
-    <dia:object type="UML - Constraint" version="0" id="O355">
-      <dia:attribute name="obj_pos">
-        <dia:point val="0,3.5"/>
-      </dia:attribute>
-      <dia:attribute name="obj_bb">
-        <dia:rectangle val="-0.0515705,2.29861;25.1127,3.55157"/>
-      </dia:attribute>
-      <dia:attribute name="conn_endpoints">
-        <dia:point val="0,3.5"/>
-        <dia:point val="25.05,2.7"/>
-      </dia:attribute>
-      <dia:attribute name="constraint">
         <dia:string>#inventory_report_trans_id_fkey#</dia:string>
       </dia:attribute>
       <dia:attribute name="text_pos">
@@ -53007,7 +52958,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O356">
+    <dia:object type="UML - Constraint" version="0" id="O355">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53033,7 +52984,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O357">
+    <dia:object type="UML - Constraint" version="0" id="O356">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53059,7 +53010,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O358">
+    <dia:object type="UML - Constraint" version="0" id="O357">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53085,7 +53036,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O359">
+    <dia:object type="UML - Constraint" version="0" id="O358">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53111,7 +53062,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O360">
+    <dia:object type="UML - Constraint" version="0" id="O359">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53137,7 +53088,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O361">
+    <dia:object type="UML - Constraint" version="0" id="O360">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53163,7 +53114,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O362">
+    <dia:object type="UML - Constraint" version="0" id="O361">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53189,7 +53140,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O363">
+    <dia:object type="UML - Constraint" version="0" id="O362">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53215,7 +53166,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O364">
+    <dia:object type="UML - Constraint" version="0" id="O363">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53241,7 +53192,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O365">
+    <dia:object type="UML - Constraint" version="0" id="O364">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53267,7 +53218,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O366">
+    <dia:object type="UML - Constraint" version="0" id="O365">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53293,7 +53244,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O367">
+    <dia:object type="UML - Constraint" version="0" id="O366">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53319,7 +53270,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O368">
+    <dia:object type="UML - Constraint" version="0" id="O367">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53345,7 +53296,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O369">
+    <dia:object type="UML - Constraint" version="0" id="O368">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53371,7 +53322,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O370">
+    <dia:object type="UML - Constraint" version="0" id="O369">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53397,7 +53348,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O371">
+    <dia:object type="UML - Constraint" version="0" id="O370">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53423,7 +53374,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O372">
+    <dia:object type="UML - Constraint" version="0" id="O371">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53449,7 +53400,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O373">
+    <dia:object type="UML - Constraint" version="0" id="O372">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53475,7 +53426,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O374">
+    <dia:object type="UML - Constraint" version="0" id="O373">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53501,7 +53452,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O375">
+    <dia:object type="UML - Constraint" version="0" id="O374">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53527,7 +53478,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O376">
+    <dia:object type="UML - Constraint" version="0" id="O375">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53553,7 +53504,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O377">
+    <dia:object type="UML - Constraint" version="0" id="O376">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53579,7 +53530,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O378">
+    <dia:object type="UML - Constraint" version="0" id="O377">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53605,7 +53556,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O379">
+    <dia:object type="UML - Constraint" version="0" id="O378">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53631,7 +53582,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O380">
+    <dia:object type="UML - Constraint" version="0" id="O379">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53657,7 +53608,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O381">
+    <dia:object type="UML - Constraint" version="0" id="O380">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53683,7 +53634,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O382">
+    <dia:object type="UML - Constraint" version="0" id="O381">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53709,7 +53660,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O383">
+    <dia:object type="UML - Constraint" version="0" id="O382">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53735,7 +53686,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O384">
+    <dia:object type="UML - Constraint" version="0" id="O383">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53761,7 +53712,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O385">
+    <dia:object type="UML - Constraint" version="0" id="O384">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53787,7 +53738,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O386">
+    <dia:object type="UML - Constraint" version="0" id="O385">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53813,7 +53764,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O387">
+    <dia:object type="UML - Constraint" version="0" id="O386">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53839,7 +53790,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O388">
+    <dia:object type="UML - Constraint" version="0" id="O387">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53865,7 +53816,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O389">
+    <dia:object type="UML - Constraint" version="0" id="O388">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53891,7 +53842,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O390">
+    <dia:object type="UML - Constraint" version="0" id="O389">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53917,7 +53868,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O391">
+    <dia:object type="UML - Constraint" version="0" id="O390">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53943,7 +53894,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O392">
+    <dia:object type="UML - Constraint" version="0" id="O391">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53969,7 +53920,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O393">
+    <dia:object type="UML - Constraint" version="0" id="O392">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -53995,7 +53946,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O394">
+    <dia:object type="UML - Constraint" version="0" id="O393">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54021,7 +53972,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O395">
+    <dia:object type="UML - Constraint" version="0" id="O394">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54047,7 +53998,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O396">
+    <dia:object type="UML - Constraint" version="0" id="O395">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54073,7 +54024,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O397">
+    <dia:object type="UML - Constraint" version="0" id="O396">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54099,7 +54050,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O398">
+    <dia:object type="UML - Constraint" version="0" id="O397">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54125,7 +54076,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O399">
+    <dia:object type="UML - Constraint" version="0" id="O398">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54151,7 +54102,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O400">
+    <dia:object type="UML - Constraint" version="0" id="O399">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54177,7 +54128,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O401">
+    <dia:object type="UML - Constraint" version="0" id="O400">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54203,7 +54154,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O402">
+    <dia:object type="UML - Constraint" version="0" id="O401">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54229,7 +54180,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O403">
+    <dia:object type="UML - Constraint" version="0" id="O402">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54255,7 +54206,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O404">
+    <dia:object type="UML - Constraint" version="0" id="O403">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54281,7 +54232,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O405">
+    <dia:object type="UML - Constraint" version="0" id="O404">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54307,7 +54258,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O406">
+    <dia:object type="UML - Constraint" version="0" id="O405">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54333,7 +54284,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O407">
+    <dia:object type="UML - Constraint" version="0" id="O406">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54359,7 +54310,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O408">
+    <dia:object type="UML - Constraint" version="0" id="O407">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54385,7 +54336,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O409">
+    <dia:object type="UML - Constraint" version="0" id="O408">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54411,7 +54362,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O410">
+    <dia:object type="UML - Constraint" version="0" id="O409">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54437,7 +54388,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O411">
+    <dia:object type="UML - Constraint" version="0" id="O410">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54463,7 +54414,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O412">
+    <dia:object type="UML - Constraint" version="0" id="O411">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54489,7 +54440,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O413">
+    <dia:object type="UML - Constraint" version="0" id="O412">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54515,7 +54466,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O414">
+    <dia:object type="UML - Constraint" version="0" id="O413">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54541,7 +54492,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O415">
+    <dia:object type="UML - Constraint" version="0" id="O414">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54567,7 +54518,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O416">
+    <dia:object type="UML - Constraint" version="0" id="O415">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54593,7 +54544,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O417">
+    <dia:object type="UML - Constraint" version="0" id="O416">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54619,7 +54570,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O418">
+    <dia:object type="UML - Constraint" version="0" id="O417">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54645,7 +54596,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O419">
+    <dia:object type="UML - Constraint" version="0" id="O418">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54671,7 +54622,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O420">
+    <dia:object type="UML - Constraint" version="0" id="O419">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54697,7 +54648,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O421">
+    <dia:object type="UML - Constraint" version="0" id="O420">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54723,7 +54674,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O422">
+    <dia:object type="UML - Constraint" version="0" id="O421">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54749,7 +54700,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O423">
+    <dia:object type="UML - Constraint" version="0" id="O422">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54775,7 +54726,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O424">
+    <dia:object type="UML - Constraint" version="0" id="O423">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54801,7 +54752,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O425">
+    <dia:object type="UML - Constraint" version="0" id="O424">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54827,7 +54778,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O426">
+    <dia:object type="UML - Constraint" version="0" id="O425">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54853,7 +54804,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O427">
+    <dia:object type="UML - Constraint" version="0" id="O426">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54879,7 +54830,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O428">
+    <dia:object type="UML - Constraint" version="0" id="O427">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54905,7 +54856,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O429">
+    <dia:object type="UML - Constraint" version="0" id="O428">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54931,7 +54882,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O430">
+    <dia:object type="UML - Constraint" version="0" id="O429">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54957,7 +54908,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O431">
+    <dia:object type="UML - Constraint" version="0" id="O430">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -54983,7 +54934,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O432">
+    <dia:object type="UML - Constraint" version="0" id="O431">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55009,7 +54960,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O433">
+    <dia:object type="UML - Constraint" version="0" id="O432">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55035,7 +54986,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O434">
+    <dia:object type="UML - Constraint" version="0" id="O433">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55061,7 +55012,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O435">
+    <dia:object type="UML - Constraint" version="0" id="O434">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55087,7 +55038,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O436">
+    <dia:object type="UML - Constraint" version="0" id="O435">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55113,7 +55064,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O437">
+    <dia:object type="UML - Constraint" version="0" id="O436">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55139,7 +55090,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O438">
+    <dia:object type="UML - Constraint" version="0" id="O437">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55165,7 +55116,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O439">
+    <dia:object type="UML - Constraint" version="0" id="O438">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55191,7 +55142,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O440">
+    <dia:object type="UML - Constraint" version="0" id="O439">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55217,7 +55168,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O441">
+    <dia:object type="UML - Constraint" version="0" id="O440">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55243,7 +55194,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O442">
+    <dia:object type="UML - Constraint" version="0" id="O441">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55269,7 +55220,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O443">
+    <dia:object type="UML - Constraint" version="0" id="O442">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55295,7 +55246,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O444">
+    <dia:object type="UML - Constraint" version="0" id="O443">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55321,7 +55272,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O445">
+    <dia:object type="UML - Constraint" version="0" id="O444">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55347,7 +55298,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O446">
+    <dia:object type="UML - Constraint" version="0" id="O445">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55373,7 +55324,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O447">
+    <dia:object type="UML - Constraint" version="0" id="O446">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55399,7 +55350,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O448">
+    <dia:object type="UML - Constraint" version="0" id="O447">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55425,7 +55376,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O449">
+    <dia:object type="UML - Constraint" version="0" id="O448">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55451,7 +55402,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O450">
+    <dia:object type="UML - Constraint" version="0" id="O449">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55477,7 +55428,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O451">
+    <dia:object type="UML - Constraint" version="0" id="O450">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55503,7 +55454,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O452">
+    <dia:object type="UML - Constraint" version="0" id="O451">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55529,7 +55480,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O453">
+    <dia:object type="UML - Constraint" version="0" id="O452">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55555,7 +55506,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O454">
+    <dia:object type="UML - Constraint" version="0" id="O453">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55581,7 +55532,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O455">
+    <dia:object type="UML - Constraint" version="0" id="O454">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55607,7 +55558,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O456">
+    <dia:object type="UML - Constraint" version="0" id="O455">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55633,7 +55584,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O457">
+    <dia:object type="UML - Constraint" version="0" id="O456">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55659,7 +55610,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O458">
+    <dia:object type="UML - Constraint" version="0" id="O457">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55685,7 +55636,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O459">
+    <dia:object type="UML - Constraint" version="0" id="O458">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55711,7 +55662,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O460">
+    <dia:object type="UML - Constraint" version="0" id="O459">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55737,7 +55688,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O461">
+    <dia:object type="UML - Constraint" version="0" id="O460">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55763,7 +55714,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O462">
+    <dia:object type="UML - Constraint" version="0" id="O461">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55789,7 +55740,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O463">
+    <dia:object type="UML - Constraint" version="0" id="O462">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55815,7 +55766,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O464">
+    <dia:object type="UML - Constraint" version="0" id="O463">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55841,7 +55792,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O465">
+    <dia:object type="UML - Constraint" version="0" id="O464">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55867,7 +55818,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O466">
+    <dia:object type="UML - Constraint" version="0" id="O465">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55893,7 +55844,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O467">
+    <dia:object type="UML - Constraint" version="0" id="O466">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55919,7 +55870,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O468">
+    <dia:object type="UML - Constraint" version="0" id="O467">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55945,7 +55896,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O469">
+    <dia:object type="UML - Constraint" version="0" id="O468">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55971,7 +55922,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O470">
+    <dia:object type="UML - Constraint" version="0" id="O469">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -55997,7 +55948,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O471">
+    <dia:object type="UML - Constraint" version="0" id="O470">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -56023,7 +55974,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O472">
+    <dia:object type="UML - Constraint" version="0" id="O471">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -56049,7 +56000,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O473">
+    <dia:object type="UML - Constraint" version="0" id="O472">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -56075,7 +56026,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O474">
+    <dia:object type="UML - Constraint" version="0" id="O473">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -56101,7 +56052,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O475">
+    <dia:object type="UML - Constraint" version="0" id="O474">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -56127,7 +56078,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O476">
+    <dia:object type="UML - Constraint" version="0" id="O475">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -56153,7 +56104,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O477">
+    <dia:object type="UML - Constraint" version="0" id="O476">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -56179,7 +56130,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O478">
+    <dia:object type="UML - Constraint" version="0" id="O477">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
@@ -56205,7 +56156,7 @@ the books at yearend.#</dia:string>
       </dia:connections>
     </dia:object>
 
-    <dia:object type="UML - Constraint" version="0" id="O479">
+    <dia:object type="UML - Constraint" version="0" id="O478">
       <dia:attribute name="obj_pos">
         <dia:point val="0,3.5"/>
       </dia:attribute>
