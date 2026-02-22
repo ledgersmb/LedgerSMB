@@ -288,8 +288,8 @@ sub _process_gl_multi {
         })
         or die $dbh->errstr;
     my $sth_gl = $dbh->prepare(q{
-        INSERT INTO gl (id, transdate, reference)
-               VALUES (currval('id'), ?, ?)
+        INSERT INTO gl (id, reference)
+               VALUES (currval('id'), ?)
         RETURNING id })
         or die $dbh->errstr;
     for my $entry (@$entries) {
@@ -307,7 +307,7 @@ sub _process_gl_multi {
 
         $sth_tx->execute(@entry{qw/ transdate reference description /})
             or die $sth_tx->errstr;
-        $sth_gl->execute(@entry{qw/ transdate reference/})
+        $sth_gl->execute($entry{reference})
             or die $sth_gl->errstr;
         my ($trans_id) = $sth_gl->fetchrow_array;
         $sth_gl->finish;

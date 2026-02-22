@@ -13,6 +13,12 @@ alter table ap
   drop column transdate;
 
 
+drop trigger gl_prevent_closed on gl;
+
+alter table gl
+  drop column transdate;
+
+
 --###BUG??? The cash impact below doesn't take 'approved' into account?
 CREATE VIEW cash_impact AS
   SELECT id, '1'::numeric

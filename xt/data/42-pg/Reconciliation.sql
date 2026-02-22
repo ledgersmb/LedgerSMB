@@ -96,29 +96,29 @@ values (-201, 'reference-test', 2, '1000-01-03', -201, 'XTS');
 
 INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
             values (-202, '1000-01-01', 'gl', 'gl', true);
-INSERT INTO gl (id, reference, transdate) values (-202, 'Recon gl test 1', '1000-01-01');
+INSERT INTO gl (id, reference) values (-202, 'Recon gl test 1');
 INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
             values (-203, '1000-01-01', 'gl', 'gl', true);
-INSERT INTO gl (id, reference, transdate) values (-203, 'Recon gl test 2', '1000-01-01');
+INSERT INTO gl (id, reference) values (-203, 'Recon gl test 2');
 INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
             values (-210, '1000-01-03', 'gl', 'gl', true);
-INSERT INTO gl (id, reference, transdate) values (-210, 'Recon gl test 3', '1000-01-03');
+INSERT INTO gl (id, reference) values (-210, 'Recon gl test 3');
 INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
             values (-211, '1000-01-03', 'gl', 'gl', true);
-INSERT INTO gl (id, reference, transdate) values (-211, 'Recon gl test 4', '1000-01-03');
+INSERT INTO gl (id, reference) values (-211, 'Recon gl test 4');
 
 INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
             values (-212, '1000-01-03', 'gl', 'gl', true);
-INSERT INTO gl (id, reference, transdate)
-values (-212, 'Cleared gl trans', '1000-01-03');
+INSERT INTO gl (id, reference)
+values (-212, 'Cleared gl trans');
 INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
             values (-213, '1000-01-03', 'gl', 'gl', false);
-INSERT INTO gl (id, reference, transdate)
-values (-213, 'Unapproved gl trans', '1000-01-03');
+INSERT INTO gl (id, reference)
+values (-213, 'Unapproved gl trans');
 INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
             values (-214, '1000-01-03', 'gl', 'gl', false);
-INSERT INTO gl (id, reference, transdate)
-values (-214, 'gl trans, unapproved lines', '1000-01-03');
+INSERT INTO gl (id, reference)
+values (-214, 'gl trans, unapproved lines');
 
 CREATE OR REPLACE FUNCTION test_get_account_id(in_accno text) returns int as $$ SELECT id FROM account WHERE accno = $1; $$ language sql;
 
@@ -247,7 +247,7 @@ values (-221, 'equal-reference', 2, '1000-01-01', -202, 'XTS');
 
 INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
             values (-220, '1000-01-01', 'gl', 'gl', true);
-INSERT INTO gl (id, reference, transdate) values (-220, 'Recon adjustment test (act 3)', '1000-01-01');
+INSERT INTO gl (id, reference) values (-220, 'Recon adjustment test (act 3)');
 
 
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
