@@ -545,12 +545,12 @@ $$
             JOIN oe_class c ON o.oe_class_id = c.id
            UNION
           SELECT id, 'ar' as o_table, invnumber as ordnumber, 'is' as oe_class,
-                 null, transdate, entity_credit_account, 'i' as expected_line
-            FROM ar
+                 null, txn.transdate, entity_credit_account, 'i' as expected_line
+            FROM ar JOIN transactions txn USING (id)
            UNION
           SELECT id, 'ap' as o_table, invnumber as ordnumber, 'ir' as oe_class,
-                 null, transdate, entity_credit_account, 'i' as expected_line
-            FROM ap) o ON o.id = i.trans_id
+                 null, txn.transdate, entity_credit_account, 'i' as expected_line
+            FROM ap JOIN transactions txn USING (id)) o ON o.id = i.trans_id
                           AND o.expected_line = i.i_type
     JOIN entity_credit_account eca ON o.entity_credit_account = eca.id
     JOIN entity e ON e.id = eca.entity_id

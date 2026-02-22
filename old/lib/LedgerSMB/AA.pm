@@ -295,9 +295,16 @@ sub post_transaction {
 
         ( $form->{id} ) = $sth->fetchrow_array;
 
-        $query = q|UPDATE transactions SET workflow_id = ?, reversing = ? WHERE id = ? AND workflow_id IS NULL|;
+        $query = <<~'SQL';
+           UPDATE transactions
+              SET workflow_id = ?,
+                  reversing = ?,
+                  transdate = ?
+            WHERE id = ?
+                  AND workflow_id IS NULL
+           SQL
         $sth   = $dbh->prepare($query);
-        $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{id} )
+        $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{transdate}, $form->{id} )
             || $form->dberror($query);
     }
 
@@ -308,7 +315,6 @@ sub post_transaction {
          SET invnumber = ?,
              description = ?,
              ordnumber = ?,
-             transdate = ?,
              taxincluded = ?,
              amount_bc = ?,
              netamount_bc = ?,
@@ -334,7 +340,6 @@ sub post_transaction {
          SET invnumber = ?,
              description = ?,
              ordnumber = ?,
-             transdate = ?,
              taxincluded = ?,
              amount_bc = ?,
              netamount_bc = ?,
@@ -362,7 +367,7 @@ sub post_transaction {
 
     my @queryargs = (
         $form->{invnumber},        $form->{description},
-        $form->{ordnumber},        $form->{transdate},
+        $form->{ordnumber},
         $form->{taxincluded},
         $invamount,                $invnetamount,
         $form->{currency},

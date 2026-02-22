@@ -20,18 +20,18 @@ BEGIN
   end if;
   IF tg_op = 'INSERT' THEN
     PERFORM * FROM transactions WHERE id = new.id;
-
-    IF NOT FOUND THEN
-      INSERT INTO transactions (id, table_name, transdate, reference, trans_type_code)
-      VALUES (new.id, TG_RELNAME, new.transdate, t_new_reference, TG_ARGV[0] );
+    IF FOUND THEN
+      RETURN new;
     END IF;
+
+    INSERT INTO transactions (id, table_name, reference, trans_type_code)
+    VALUES (new.id, TG_RELNAME, t_new_reference, TG_ARGV[0] );
   ELSEIF tg_op = 'UPDATE' THEN
     IF new.id <> old.id
-      OR new.transdate <> old.transdate
+      OR new.approved <> old.approved
       OR t_new_reference <> t_old_reference THEN
         UPDATE transactions
            SET id = new.id,
-               transdate = new.transdate,
                reference = t_new_reference
          WHERE id = old.id;
     END IF;

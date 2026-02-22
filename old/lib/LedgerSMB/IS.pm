@@ -1196,8 +1196,8 @@ sub post_invoice {
     $form->{terms}       *= 1;
     $form->{taxincluded} *= 1;
 
-    $query = q|UPDATE transactions SET approved = ? WHERE id = ?|;
-    $dbh->do($query, {}, $approved, $form->{id})
+    $query = q|UPDATE transactions SET approved = ?, transdate = ? WHERE id = ?|;
+    $dbh->do($query, {}, $approved, $transdate, $form->{id})
         or $form->dberror( $query );
 
     # save AR record
@@ -1206,7 +1206,6 @@ sub post_invoice {
                invnumber = ?,
                ordnumber = ?,
                quonumber = ?,
-               transdate = ?,
                entity_credit_account = ?,
              amount_bc = ?,
              amount_tc = ?,
@@ -1237,7 +1236,6 @@ sub post_invoice {
 
         $form->{invnumber},     $form->{ordnumber},
         $form->{quonumber},
-        $transdate,
         $form->{customer_id},   $invamount,
         $invamount/$form->{exchangerate},
         $invnetamount,          $invnetamount/$form->{exchangerate},
@@ -1292,7 +1290,7 @@ sub retrieve_invoice {
         #HV TODO drop entity_id from ar
         $query = qq|
                SELECT a.invnumber, a.ordnumber, a.quonumber,
-                      a.transdate,
+                      trx.transdate,
                       case when a.amount_tc = 0 then 1 else a.amount_bc/a.amount_tc end as exchangerate,
                       a.shippingpoint, a.shipvia, a.terms, a.notes,
                       a.intnotes,

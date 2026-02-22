@@ -511,8 +511,8 @@ sub post_invoice {
 
     delete $form->{language_code} unless $form->{language_code};
     # save AP record
-    $query = q|UPDATE transactions SET approved = ? WHERE id = ?|;
-    $dbh->do($query, {}, $approved, $form->{id})
+    $query = q|UPDATE transactions SET approved = ?, transdate = ? WHERE id = ?|;
+    $dbh->do($query, {}, $approved, $form->{transdate}, $form->{id})
         or $form->dberror( $query );
 
     $query = qq|
@@ -520,7 +520,6 @@ sub post_invoice {
            SET invnumber = ?,
                ordnumber = ?,
                quonumber = ?,
-               transdate = ?,
              amount_bc = ?,
              amount_tc = ?,
              netamount_bc = ?,
@@ -543,7 +542,7 @@ sub post_invoice {
         $query, {},
 
         $form->{invnumber},     $form->{ordnumber},     $form->{quonumber},
-        $form->{transdate},     $invamount,
+        $invamount,
         $invamount/$form->{exchangerate},
         $invnetamount,          $invnetamount/$form->{exchangerate},
         $form->{duedate},       $form->{shippingpoint}, $form->{shipvia},
@@ -639,7 +638,7 @@ sub retrieve_invoice {
     if ( $form->{id} ) {
 
         $query = qq|
-            SELECT a.invnumber, a.transdate, a.duedate,
+            SELECT a.invnumber, txn.transdate, a.duedate,
                    a.ordnumber, a.quonumber, a.taxincluded,
                    a.notes, a.intnotes, a.curr AS currency,
                    a.entity_credit_account as vendor_id, a.language_code,

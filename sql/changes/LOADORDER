@@ -185,3 +185,4 @@ mc/delete-migration-validation-data.sql
 1.13/custom-attributes.sql
 # 1.14 changes
 1.14/non-gl-transactions.sql
+1.14/centralized-transdate.sql

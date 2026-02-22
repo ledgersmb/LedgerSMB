@@ -113,9 +113,9 @@ BEGIN;
     INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
     VALUES (nextval('id'), now(), 'ap', 'ap', true);
     INSERT INTO ap (id, invnumber, entity_credit_account,
-                    amount_bc, amount_tc, netamount_bc, curr, transdate)
+                    amount_bc, amount_tc, netamount_bc, curr)
             VALUES (currval('id'), 'test_show2', -101, 100000, 100000, 100000,
-                    'XTS', now()::date);
+                    'XTS');
 
     INSERT INTO acc_trans (approved, transdate, amount_bc, curr,
                            amount_tc, trans_id, chart_id)
@@ -129,9 +129,9 @@ BEGIN;
     INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
     VALUES (-300, now(), 'ap', 'ap', true);
     INSERT INTO ap (id, invnumber, entity_credit_account,
-                    amount_bc, amount_tc, netamount_bc, curr, transdate)
+                    amount_bc, amount_tc, netamount_bc, curr)
             VALUES (-300, 'test_show3', -101, 1000000, 1000000, 1000000,
-                    'XTS', now()::date);
+                    'XTS');
 
     INSERT INTO acc_trans (approved, transdate, amount_bc, curr,
                            amount_tc, trans_id, chart_id)
@@ -147,8 +147,8 @@ BEGIN;
     INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
     VALUES (nextval('id'), now(), 'ap', 'ap', false);
     INSERT INTO ap (id, invnumber, entity_credit_account,
-                    amount_bc, amount_tc, netamount_bc, curr, transdate)
-            values (currval('id'), 'test_show', -101, '1', '1', '1', 'XTS', now()::date);
+                    amount_bc, amount_tc, netamount_bc, curr)
+            values (currval('id'), 'test_show', -101, '1', '1', '1', 'XTS');
 
     INSERT INTO acc_trans (approved, transdate, amount_bc,
                            curr, amount_tc, trans_id, chart_id)
@@ -317,9 +317,9 @@ BEGIN;
     INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
     VALUES (nextval('id'), now(), 'ap', 'ap', true);
     INSERT INTO ap (id, invnumber, entity_credit_account,
-                    amount_bc, amount_tc, netamount_bc, curr, transdate)
+                    amount_bc, amount_tc, netamount_bc, curr)
             values (currval('id'), 'test_reverse', -101, '1', '1', '1',
-                    'XTS', now()::date)
+                    'XTS')
        returning id as invoice_id
     \gset
 
@@ -389,9 +389,9 @@ BEGIN;
     INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
     VALUES (nextval('id'), now(), 'ap', 'ap', true);
     INSERT INTO ap (id, invnumber, entity_credit_account,
-                    amount_bc, amount_tc, netamount_bc, curr, transdate)
+                    amount_bc, amount_tc, netamount_bc, curr)
             values (currval('id'), 'test_bulk', -101, '1', '1', '1',
-                    'XTS', now()::date)
+                    'XTS')
        returning id as invoice_id
     \gset
     SELECT payment_bulk_post(ARRAY[ARRAY[(:invoice_id)::numeric, 1::numeric]]::numeric[],

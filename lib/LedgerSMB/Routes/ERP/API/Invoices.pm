@@ -886,14 +886,14 @@ sub _post_invoices {
         INSERT INTO ar (id, invoice,
             invnumber, ordnumber, quonumber, ponumber,
             amount_bc, netamount_bc, curr, amount_tc, netamount_tc, taxincluded,
-            transdate, crdate, duedate,
+            crdate, duedate,
             notes, intnotes,
             shippingpoint, shipvia,
             person_id, language_code,
             entity_credit_account
             )
         VALUES ( ?, 't'::boolean,
-                 ?, ?, ?, ?, ?, ?, ?, ?, ?,
+                 ?, ?, ?, ?, ?, ?, ?, ?,
                  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         |)
         or die $env->{'lsmb.db'}->errstr;
@@ -902,7 +902,7 @@ sub _post_invoices {
         $inv->@{
           qw/ invnumber ordnumber quonumber ponumber
               amount netamount curr amount_tc netamount_tc taxincluded
-              transdate crdate duedate
+              crdate duedate
               notes intnotes
               shippingpoint shipvia
               person_id language_code

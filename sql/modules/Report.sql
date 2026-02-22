@@ -31,15 +31,16 @@ RETURNS SETOF incoming_lot_cogs_line AS
 $$
 BEGIN
 RETURN QUERY EXECUTE $sql$
-SELECT i.id, a.id, a.invnumber, a.transdate, i.parts_id, p.partnumber,
+SELECT i.id, a.id, a.invnumber, txn.transdate, i.parts_id, p.partnumber,
        i.description, i.qty * -1, i.allocated, p.onhand,
        i.sellprice, i.qty * i.sellprice * -1, i.allocated * i.sellprice
   FROM ap a
+  JOIN transactions txn USING (id)
   JOIN invoice i ON a.id = i.trans_id
   JOIN parts p ON i.parts_id = p.id
  WHERE p.income_accno_id IS NOT NULL AND p.expense_accno_id IS NOT NULL
-       AND (a.transdate >= $1 OR $1 IS NULL)
-       AND (a.transdate <= $2 OR $2 IS NULL)
+       AND (txn.transdate >= $1 OR $1 IS NULL)
+       AND (txn.transdate <= $2 OR $2 IS NULL)
        AND (p.partnumber like $3 || '%' OR $3 IS NULL)
        AND (p.description @@ plainto_tsquery($4)
             OR p.description LIKE '%' || $4 || '%'
@@ -150,26 +151,26 @@ RETURN QUERY EXECUTE $sql$
                    (coalesce($5, now())::date - a.transdate) as age
                   FROM (select id, invnumber, ordnumber, amount_bc, duedate,
                                curr, ponumber, notes, entity_credit_account,
-                               -1 AS sign, transdate, force_closed,
+                               -1 AS sign, txn.transdate, force_closed,
                                CASE WHEN $7
                                     THEN coalesce($5, now())::date
                                          - duedate
                                     ELSE coalesce($5, now())::date
                                          - transdate
                                END as age
-                          FROM ar
+                          FROM ar JOIN transactions txn USING (id)
                          WHERE $2 = 2
                          UNION
                         SELECT id, invnumber, ordnumber, amount_bc, duedate,
                                curr, ponumber, notes, entity_credit_account,
-                               1 as sign, transdate, force_closed,
+                               1 as sign, txn.transdate, force_closed,
                                CASE WHEN $7
                                     THEN coalesce($5, now())::date
                                          - duedate
                                     ELSE coalesce($5, now())::date
                                          - transdate
                                END as age
-                          FROM ap
+                          FROM ap JOIN transactions txn USING (id)
                          WHERE $2 = 1) a
                   JOIN acc_trans ac ON ac.trans_id = a.id
                   JOIN account acc ON ac.chart_id = acc.id
@@ -197,13 +198,13 @@ RETURN QUERY EXECUTE $sql$
               GROUP BY c.entity_id, c.meta_number, e.name, c.language_code,
                        l.line_one, l.line_two, l.line_three,
                        l.city, l.state, l.mail_code, country.name,
-                       a.invnumber, a.transdate, a.ordnumber,
+                       a.invnumber, txn.transdate, a.ordnumber,
                        a.ponumber, a.notes, a.amount_bc, a.sign,
                        a.duedate, a.id, a.curr, a.age
                 HAVING ($6 is null
                         or $6 <@ compound_array(bu_tree.path))
                        AND sum(ac.amount_bc::numeric(20,2)) <> 0
-              ORDER BY entity_id, meta_number, curr, transdate, invnumber
+              ORDER BY entity_id, meta_number, curr, txn.transdate, invnumber
 $sql$
 USING in_entity_id, in_entity_class, in_credit_id, in_accno, in_to_date,
  in_business_units, in_use_duedate, in_name_part;

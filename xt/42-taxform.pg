@@ -111,9 +111,9 @@ BEGIN;
 
     INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
     VALUES (-1024, date1(), 'ap', 'ap', true);
-    INSERT INTO ap (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
+    INSERT INTO ap (id, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
                     entity_credit_account)
-    values(-1024, date1(), 1010, 1010, 'XTS', 1010, 1010, -255);
+    values(-1024, 1010, 1010, 'XTS', 1010, 1010, -255);
 
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
          VALUES (-1024, -1000, date1(), 1010, 'XTS', 1010, true, -111);
@@ -137,9 +137,9 @@ BEGIN;
 
     INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
     VALUES (-1025, date1(), 'ap', 'ap', true);
-    INSERT INTO ap (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
+    INSERT INTO ap (id, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
                     entity_credit_account)
-    values(-1025, date1(), 1010, 1010, 'XTS', 1010, 1010, -255);
+    values(-1025, 1010, 1010, 'XTS', 1010, 1010, -255);
 
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
          VALUES (-1025, -1000, date1(), 1010, 'XTS', 1010, true, -121);
@@ -163,9 +163,9 @@ BEGIN;
 
     INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
     VALUES (-1026, date1(), 'ap', 'ap', true);
-    INSERT INTO ap (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
+    INSERT INTO ap (id, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
                     entity_credit_account)
-          values(-1026, date1(), 1010, 1010, 'XTS', 1010, 10101, -255);
+          values(-1026, 1010, 1010, 'XTS', 1010, 10101, -255);
 
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
          VALUES (-1026, -1000, date1(), 1010, 'XTS', 1010, true, -131);
@@ -196,9 +196,9 @@ BEGIN;
 
     INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
     VALUES (-1027, date1(), 'ap', 'ap', true);
-    INSERT INTO ap (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
+    INSERT INTO ap (id, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
                     entity_credit_account)
-    values(-1027, date1(), 1010, 1010, 'XTS', 1010, 1010, -256);
+    values(-1027, 1010, 1010, 'XTS', 1010, 1010, -256);
 
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
          VALUES (-1027, -1000, date1(), 1010, 'XTS', 1010, true, -141);
@@ -222,9 +222,9 @@ BEGIN;
 
     INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
     VALUES (-1035, date1(), 'ar', 'ar', true);
-    INSERT INTO ar (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
+    INSERT INTO ar (id, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
                     entity_credit_account, invoice, invnumber)
-         values (-1035, date1(), 1010, 1010, 'XTS', 1010, 1010, -255, true, 'test1');
+         values (-1035, 1010, 1010, 'XTS', 1010, 1010, -255, true, 'test1');
 
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
          VALUES (-1035, -1000, date1(), 1010, 'XTS', 1010, true, -221);
@@ -255,9 +255,9 @@ BEGIN;
 
     INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
     VALUES (-1036, date1(), 'ar', 'ar', true);
-    INSERT INTO ar (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
+    INSERT INTO ar (id, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
                     entity_credit_account, invoice, invnumber)
-          values(-1036, date1(), 1010, 1010, 'XTS', 1010, 1010, -255, true, 'test2');
+          values(-1036, 1010, 1010, 'XTS', 1010, 1010, -255, true, 'test2');
 
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
          VALUES (-1036, -1000, date1(), 1010, 'XTS', 1010, true, -231);
@@ -295,9 +295,9 @@ BEGIN;
 
     INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
     VALUES (-1037, date1(), 'ar', 'ar', true);
-    INSERT INTO ar (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
+    INSERT INTO ar (id, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
                     entity_credit_account, invoice, invnumber)
-          values(-1037, date1(), 1010, 1010, 'XTS', 1010, 1010, -256, true, 'test3');
+          values(-1037, 1010, 1010, 'XTS', 1010, 1010, -256, true, 'test3');
 
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
          VALUES (-1037, -1000, date1(), 1010, 'XTS', 1010, true, -241);

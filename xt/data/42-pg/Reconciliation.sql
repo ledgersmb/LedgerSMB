@@ -50,44 +50,44 @@ values (-201, -201, 'T-11112', 1, -1000, 'XTS');
 INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
 VALUES (-200, '1000-01-01', 'ar', 'ar', true);
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
-                entity_credit_account, transdate, curr)
-values (-200, '-2000', '10', '10', 10, 10, -200, '1000-01-01', 'XTS');
+                entity_credit_account, curr)
+values (-200, '-2000', '10', '10', 10, 10, -200, 'XTS');
 INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
 VALUES (-201, '1000-01-03', 'ar', 'ar', true);
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
-                entity_credit_account, transdate, curr)
-values (-201, '-2001', '10', '10', 10, 10, -200, '1000-01-03', 'XTS');
+                entity_credit_account, curr)
+values (-201, '-2001', '10', '10', 10, 10, -200, 'XTS');
 INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
 VALUES (-204, '1000-01-01', 'ar', 'ar', true);
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
-                entity_credit_account, transdate, curr)
-values (-204, '-2002', '10', '10', 10, 10, -200, '1000-01-01', 'XTS');
+                entity_credit_account, curr)
+values (-204, '-2002', '10', '10', 10, 10, -200, 'XTS');
 INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
 VALUES (-205, '1000-01-03', 'ar', 'ar', true);
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
-                entity_credit_account, transdate, curr)
-values (-205, '-2003', '10', '10', 10, 10, -200, '1000-01-03', 'XTS');
+                entity_credit_account, curr)
+values (-205, '-2003', '10', '10', 10, 10, -200, 'XTS');
 
 INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
 VALUES (-206, '1000-01-01', 'ar', 'ar', true);
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
-                entity_credit_account, transdate, curr)
-values (-206, '-2004', '10', '10', 10, 10, -201, '1000-01-01', 'XTS');
+                entity_credit_account, curr)
+values (-206, '-2004', '10', '10', 10, 10, -201, 'XTS');
 INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
 VALUES (-207, '1000-01-03', 'ar', 'ar', true);
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
-                entity_credit_account, transdate, curr)
-values (-207, '-2005', '10', '10', 10, 10, -201, '1000-01-03', 'XTS');
+                entity_credit_account, curr)
+values (-207, '-2005', '10', '10', 10, 10, -201, 'XTS');
 INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
 VALUES (-208, '1000-01-01', 'ar', 'ar', true);
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
-                entity_credit_account, transdate, curr)
-values (-208, '-2006', '10', '10', 10, 10, -201, '1000-01-01', 'XTS');
+                entity_credit_account, curr)
+values (-208, '-2006', '10', '10', 10, 10, -201, 'XTS');
 INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
 VALUES (-209, '1000-01-03', 'ar', 'ar', true);
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, amount_tc, netamount_tc,
-                entity_credit_account, transdate, curr)
-values (-209, '-2007', '10', '10', 10, 10, -201, '1000-01-03', 'XTS');
+                entity_credit_account, curr)
+values (-209, '-2007', '10', '10', 10, 10, -201, 'XTS');
 
 
 insert into payment (id, reference, payment_class, payment_date, entity_credit_id, currency)

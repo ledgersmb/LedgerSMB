@@ -77,8 +77,8 @@ BEGIN;
 
     INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
     VALUES (-11, '1901-01-01', 'ap', 'ap', true);
-    INSERT INTO ap (id, transdate, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
-         VALUES (-11, '1901-01-01', 100, 110, 'inv_test1', 'xts', -101);
+    INSERT INTO ap (id, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
+         VALUES (-11, 100, 110, 'inv_test1', 'xts', -101);
     INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id)
          VALUES (-11, '1901-01-01', 100, 'xts', 110, 't', (select id from account where accno = '00001')),
                 (-11, '1901-01-01', -100, 'xts', -110, 't', (select id from account where accno = '00002'));
@@ -129,8 +129,8 @@ BEGIN;
 
     INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
     VALUES (-12, '1901-01-02', 'ap', 'ap', true);
-    INSERT INTO ap (id, transdate, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
-         VALUES (-12, '1901-01-02', 100, 110, 'inv_test2', 'xts', -101);
+    INSERT INTO ap (id, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
+         VALUES (-12, 100, 110, 'inv_test2', 'xts', -101);
     INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id)
          VALUES (-12, '1901-01-02', 100, 'xts', 110, 't', (select id from account where accno = '00001')),
                 (-12, '1901-01-02', -100, 'xts', -110, 't', (select id from account where accno = '00002'));
@@ -167,8 +167,8 @@ BEGIN;
     -- Test 3: Single payment
     INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
     VALUES (-13, '1901-01-01', 'ap', 'ap', true);
-    INSERT INTO ap (id, transdate, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
-         VALUES (-13, '1901-01-01', 100, 110, 'inv_test1', 'xts', -101);
+    INSERT INTO ap (id, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
+         VALUES (-13, 100, 110, 'inv_test1', 'xts', -101);
     INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id)
          VALUES (-13, '1901-01-01', 100, 'xts', 110, 't', (select id from account where accno = '00001')),
                 (-13, '1901-01-01', -100, 'xts', -110, 't', (select id from account where accno = '00002'));
@@ -204,8 +204,8 @@ BEGIN;
     -- Test 4: Bulk payment
     INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
     VALUES (-14, '1901-01-02', 'ap', 'ap', true);
-    INSERT INTO ap (id, transdate, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
-         VALUES (-14, '1901-01-02', 100, 110, 'inv_test2', 'xts', -101);
+    INSERT INTO ap (id, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
+         VALUES (-14, 100, 110, 'inv_test2', 'xts', -101);
     INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id)
          VALUES (-14, '1901-01-02', 100, 'xts', 110, 't', (select id from account where accno = '00001')),
                 (-14, '1901-01-02', -100, 'xts', -110, 't', (select id from account where accno = '00002'));

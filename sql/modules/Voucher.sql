@@ -54,9 +54,10 @@ $$
                 SELECT v.id, a.invoice, a.invnumber,
                         eca.meta_number || '--' || e.name,
                         v.batch_id, v.trans_id,
-                        a.amount_bc, a.transdate, 'Payable', v.batch_class
+                        a.amount_bc, txn.transdate, 'Payable', v.batch_class
                 FROM voucher v
                 JOIN ap a ON (v.trans_id = a.id)
+                JOIN transactions txn ON a.id = txn.id
                 JOIN entity_credit_account eca
                         ON (eca.id = a.entity_credit_account)
                 JOIN entity e ON (eca.entity_id = e.id)
@@ -67,9 +68,10 @@ $$
                 SELECT v.id, a.invoice, a.invnumber,
                         eca.meta_number || '--' || e.name,
                         v.batch_id, v.trans_id,
-                        a.amount_bc, a.transdate, 'Receivable', v.batch_class
+                        a.amount_bc, txn.transdate, 'Receivable', v.batch_class
                 FROM voucher v
                 JOIN ar a ON (v.trans_id = a.id)
+                JOIN transactions txn ON a.id = txn.id
                 JOIN entity_credit_account eca
                         ON (eca.id = a.entity_credit_account)
                 JOIN entity e ON (eca.entity_id = e.id)
