@@ -148,7 +148,7 @@ UPDATE gl
     }
 
     if (defined $form->{approved}) {
-        my $query = qq| UPDATE gl SET approved = ? WHERE id = ?|;
+        my $query = qq| UPDATE transactions SET approved = ? WHERE id = ?|;
         $dbh->prepare($query)->execute($form->{approved}, $form->{id})
              || $form->dberror($query);
         if (!$form->{approved} and $form->{batch_id}){
