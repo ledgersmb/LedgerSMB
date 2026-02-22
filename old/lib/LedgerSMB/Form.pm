@@ -1978,7 +1978,7 @@ sub create_links {
     if ( $self->{id} ) {
 
         $query = qq|
-            SELECT a.invnumber, a.transdate,
+            SELECT a.invnumber, txn.transdate,
                 a.entity_credit_account AS entity_id,
                 a.entity_credit_account AS ${vc}_id,
                 a.duedate, a.ordnumber,
