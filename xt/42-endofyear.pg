@@ -30,8 +30,8 @@ BEGIN;
 
     -- Set specific data
 
-    INSERT INTO gl (id, reference, description, transdate, approved)
-    values (-1000, 'test', 'test', '1520-01-01', true); -- way in the future.
+    INSERT INTO transactions (id, reference, description, transdate, approved, table_name, trans_type_code)
+    values (-1000, 'test', 'test', '1520-01-01', true, 'gl', 'gl'); -- way in the future.
     INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc,
                 curr, amount_tc, approved)
     values (-1000, '-1000', '1520-01-01', '10000', 'XTS', '10000', true);
@@ -39,8 +39,8 @@ BEGIN;
                 curr, amount_tc, approved)
     values (-1000, '-1001', '1520-01-01', '-10000', 'XTS', '-10000', true);
 
-    INSERT INTO gl (id, reference, description, transdate, approved)
-    values (-1001, 'test', 'test', '1520-06-01', true); -- way in the future.
+    INSERT INTO transactions (id, reference, description, transdate, approved, table_name, trans_type_code)
+    values (-1001, 'test', 'test', '1520-06-01', true, 'gl', 'gl'); -- way in the future.
     INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc,
                 curr, amount_tc, approved)
     values (-1001, '-1000', '1520-06-01', '10000', 'XTS', '10000', true);
@@ -92,8 +92,8 @@ BEGIN;
     DELETE FROM account_checkpoint;
     INSERT INTO currency VALUES ('xts','xts');
 
-    INSERT INTO gl (id, reference, description, transdate, approved)
-    values (-1010, 'test', 'test', '1519-01-01', true); -- way in the future.
+    INSERT INTO transactions (id, reference, description, transdate, approved, trans_type_code, table_name)
+    values (-1010, 'test', 'test', '1519-01-01', true, 'gl', 'gl'); -- way in the future.
     INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc,
                 curr, amount_tc, approved)
     values (-1010, '-1003', '1519-01-01', '10000', 'XTS', '10000', true),

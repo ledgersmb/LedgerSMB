@@ -71,13 +71,17 @@ END IF;
 
 -- First satisfy invoices in back-order
 FOR t_inv IN
-    SELECT i.*
-      FROM invoice i
-      JOIN (SELECT id, approved, transdate FROM ar
-            UNION
-            SELECT id, approved, transdate FROM gl) a ON a.id = i.trans_id
-     WHERE qty + allocated > 0 and a.approved and parts_id = in_parts_id
-   ORDER BY a.transdate ASC, a.id ASC, i.id ASC
+  SELECT i.*
+    FROM invoice i
+         JOIN transactions txn
+              ON i.trans_id = txn.id
+   WHERE qty + allocated > 0
+         AND txn.approved
+         -- exclude 'ap', because we don't want AP reversals
+         -- @@@BUG? what about inventory report items?
+         AND txn.table_name <> 'ap'
+         AND parts_id = in_parts_id
+ORDER BY txn.transdate ASC, txn.id ASC, i.id ASC
 LOOP
    t_reallocated := least(t_alloc - in_qty, t_inv.qty + t_inv.allocated);
    UPDATE invoice
@@ -97,15 +101,19 @@ END LOOP;
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
-      JOIN (select id, approved, transdate from ap
-            union
-            select id, approved, transdate from gl) a ON a.id = i.trans_id
-     WHERE allocated > 0 and a.approved and parts_id = in_parts_id
+           JOIN transactions txn
+                ON txn.id = i.trans_id
+     WHERE allocated > 0
+           AND txn.approved
+           -- exclude 'ar', because we don't want AR reversals
+           -- @@@BUG? what about inventory report items?
+           AND txn.table_name <> 'ar'
+           AND parts_id = in_parts_id
            -- the sellprice check is here because of github issue #4791:
            -- when a negative number of assemblies has been "stocked",
            -- reversal of a sales invoice for that part, fails.
-           and sellprice is not null
-  ORDER BY a.transdate DESC, a.id DESC, i.id DESC
+           AND sellprice IS NOT NULL
+  ORDER BY txn.transdate DESC, txn.id DESC, i.id DESC
 LOOP
    t_reversed := least((in_qty - t_alloc) * -1, t_inv.allocated);
    UPDATE invoice SET allocated = allocated - t_reversed
@@ -138,19 +146,22 @@ returns numeric[] AS
 $$
 DECLARE t_alloc numeric := 0;
         t_cogs numeric := 0;
-        t_inv invoice;
+        t_inv record;
         t_avail numeric;
 BEGIN
-
 
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
-      JOIN (select id, approved, transdate from ap
-             union
-            select id, approved, transdate from gl) a ON a.id = i.trans_id
-     WHERE qty + allocated < 0 AND i.parts_id = in_parts_id AND a.approved
-  ORDER BY a.transdate asc, a.id asc, i.id asc
+           JOIN transactions txn
+                ON txn.id = i.trans_id
+     WHERE qty + allocated < 0
+           AND i.parts_id = in_parts_id
+           AND txn.approved
+           -- exclude 'ar', because we don't want AR reversals
+           -- @@@BUG? what about inventory report items?
+           AND txn.table_name <> 'ar'
+  ORDER BY txn.transdate asc, txn.id asc, i.id asc
 LOOP
    t_avail := (t_inv.qty + t_inv.allocated) * -1;
    IF t_alloc > in_qty THEN
@@ -200,12 +211,15 @@ BEGIN
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
-      JOIN (select id, approved, transdate from ap
-             union
-            select id, approved, transdate from gl) a
-           ON a.id = i.trans_id
-     WHERE qty + allocated < 0 AND parts_id = in_parts_id AND a.approved
-  ORDER BY a.transdate, a.id, i.id
+           JOIN transactions txn
+                ON txn.id = i.trans_id
+  WHERE qty + allocated < 0
+        AND parts_id = in_parts_id
+        AND txn.approved
+         -- exclude 'ar', because we don't want AR reversals
+         -- @@@BUG? what about inventory report items?
+        AND txn.table_name <> 'ar'
+  ORDER BY txn.transdate, txn.id, i.id
 LOOP
    t_realloc := least(in_qty - t_alloc, -1 * (t_inv.allocated + t_inv.qty));
    UPDATE invoice SET allocated = allocated + t_realloc
@@ -225,11 +239,15 @@ END LOOP;
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
-      JOIN (select id, approved, transdate from ar
-            union
-            select id, approved, transdate from gl) a ON a.id = i.trans_id
-     WHERE allocated < 0 and a.approved and parts_id = in_parts_id
-  ORDER BY a.transdate, a.id, i.id
+           JOIN transactions txn
+                ON txn.id = i.trans_id
+     WHERE allocated < 0
+           AND txn.approved
+           -- exclude 'ap', because we don't want AP reversals
+           -- @@@BUG? what about inventory report items?
+           AND txn.table_name <> 'ap'
+           AND parts_id = in_parts_id
+  ORDER BY txn.transdate, txn.id, i.id
 LOOP
    t_reversed := least(in_qty - t_alloc, -1 * t_inv.allocated);
    UPDATE invoice SET allocated = allocated + t_reversed
@@ -280,12 +298,14 @@ SELECT end_date INTO t_cp_end_date FROM account_checkpoint ORDER BY end_date DES
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
-      JOIN (select id, approved, transdate from ar
-             union
-            select id, approved, transdate from gl) a
-           ON a.id = i.trans_id AND a.approved
-     WHERE qty + allocated > 0 and parts_id  = in_parts_id
-  ORDER BY a.transdate, a.id, i.id
+      JOIN transactions txn
+           ON txn.id = i.trans_id AND txn.approved
+     WHERE qty + allocated > 0
+           -- exclude 'ap', because we don't want AP reversals
+           -- @@@BUG? what about inventory report items?
+           AND txn.table_name <> 'ap'
+           AND parts_id  = in_parts_id
+  ORDER BY txn.transdate, txn.id, i.id
 LOOP
    t_avail := t_inv.qty + t_inv.allocated;
    SELECT coalesce(in_transdate, transdate) INTO t_transdate FROM transactions

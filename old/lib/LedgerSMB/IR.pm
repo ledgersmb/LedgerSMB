@@ -133,9 +133,12 @@ sub post_invoice {
         my $uid = localtime;
         $uid .= "$$";
 
+        $query = q{INSERT INTO transactions (id, table_name, trans_type_code, approved)
+                   VALUES (nextval('id'), 'ap', 'ap', false)};
+        $dbh->do($query) or $form->dberror($query);
         $query = qq|
-            INSERT INTO ap (invnumber, person_id, entity_credit_account)
-                 VALUES ('$uid', ?, ?)|;
+            INSERT INTO ap (id, invnumber, person_id, entity_credit_account)
+                 VALUES (currval('id'), '$uid', ?, ?)|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{employee_id}, $form->{vendor_id}) || $form->dberror($query);
 
@@ -300,7 +303,7 @@ sub post_invoice {
 
             if (defined $form->{approved}) {
 
-                $query = qq| UPDATE ap SET approved = ? WHERE id = ?|;
+                $query = qq| UPDATE transactions SET approved = ? WHERE id = ?|;
                 $dbh->prepare($query)->execute($form->{approved}, $form->{id})
                      || $form->dberror($query);
                 if (!$form->{approved}){
@@ -508,12 +511,15 @@ sub post_invoice {
 
     delete $form->{language_code} unless $form->{language_code};
     # save AP record
+    $query = q|UPDATE transactions SET approved = ? WHERE id = ?|;
+    $dbh->do($query, {}, $approved, $form->{id})
+        or $form->dberror( $query );
+
     $query = qq|
         UPDATE ap
            SET invnumber = ?,
                ordnumber = ?,
                quonumber = ?,
-                       description = ?,
                transdate = ?,
              amount_bc = ?,
              amount_tc = ?,
@@ -529,26 +535,40 @@ sub post_invoice {
                curr = ?,
                language_code = ?,
                ponumber = ?,
-                       approved = ?,
                        reverse = ?,
                crdate = ?,
                shipto = ?
          WHERE id = ?|;
+    $dbh->do(
+        $query, {},
 
-    $sth = $dbh->prepare($query);
-    $sth->execute(
         $form->{invnumber},     $form->{ordnumber},     $form->{quonumber},
-        $form->{description},   $form->{transdate},     $invamount,
+        $form->{transdate},     $invamount,
         $invamount/$form->{exchangerate},
         $invnetamount,          $invnetamount/$form->{exchangerate},
         $form->{duedate},       $form->{shippingpoint}, $form->{shipvia},
         $form->{taxincluded},   $form->{notes},         $form->{intnotes},
         $form->{currency},
         $form->{language_code}, $form->{ponumber},
-        $approved,              $form->{reverse},       $form->{crdate},
+        $form->{reverse},       $form->{crdate},
         $form->{shiptolocationid},
         $form->{id}
     ) || $form->dberror($query);
+
+
+    # save transaction data
+    $query = qq|
+        UPDATE transactions
+           set description = ?
+         WHERE id = ?
+    |;
+    $dbh->do(
+        $query, {},
+
+        $form->{description},
+        $form->{id}
+    ) || $form->dberror($query);
+
 
     if ($form->{batch_id}){
         $sth = $dbh->prepare(
@@ -623,12 +643,12 @@ sub retrieve_invoice {
                    a.ordnumber, a.quonumber, a.taxincluded,
                    a.notes, a.intnotes, a.curr AS currency,
                    a.entity_credit_account as vendor_id, a.language_code,
-                   a.ponumber, a.crdate, a.on_hold, a.reverse, a.description,
+                   a.ponumber, a.crdate, a.on_hold, a.reverse, txn.description,
                    a.shipto as shiptolocationid, l.line_one, l.line_two,
                    l.line_three, l.city, l.state, l.country_id, l.mail_code,
-                   tran.workflow_id
+                   txn.workflow_id
               FROM ap a
-              JOIN transactions tran USING (id)
+              JOIN transactions txn USING (id)
             LEFT JOIN location l on a.shipto = l.id
              WHERE a.id = ?|;
         $sth = $dbh->prepare($query);

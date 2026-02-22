@@ -24,48 +24,40 @@ in_from_date date, in_to_date date, in_amount_lt numeric, in_amount_gt numeric)
 returns setof draft_search_result AS
 $$
 BEGIN
-RETURN QUERY EXECUTE $sql$
-        SELECT id, transdate, reference, eca_name, description,
-               type, amount FROM (
-            SELECT id, transdate, reference, null::text as eca_name,
-                   description,
-                   (SELECT SUM(line.amount_bc)
-                      FROM acc_trans line
-                     WHERE line.amount_bc > 0
-                           and line.trans_id = gl.id) as amount,
-                   'gl' as type
-              from gl
-             WHERE (lower($1) = 'gl' or $1 is null)
-                  AND NOT approved
-                  AND NOT EXISTS (SELECT 1
-                                    FROM voucher v
-                                   WHERE v.trans_id = gl.id)
-            UNION
-            SELECT id, transdate, invnumber as reference,
-                (SELECT name FROM eca__get_entity(entity_credit_account)) as eca_name,
-                description, amount_bc as amount, 'ap' as type
-              FROM ap
-             WHERE (lower($1) = 'ap' or $1 is null)
-                   AND NOT approved
-                   AND NOT EXISTS (SELECT 1
-                                     FROM voucher v
-                                    WHERE v.trans_id = ap.id)
-            UNION
-            SELECT id, transdate, invnumber as reference,
-                (SELECT name FROM eca__get_entity(entity_credit_account)) as eca_name,
-                description, amount_bc as amount, 'ar' as type
-              FROM ar
-             WHERE (lower($1) = 'ar' or $1 is null)
-                   AND NOT approved
-                   AND NOT EXISTS (SELECT 1
-                                     FROM voucher v
-                                    WHERE v.trans_id = ar.id)) trans
-        WHERE ($3 IS NULL or trans.transdate >= $3)
-          AND ($4 IS NULL or trans.transdate <= $4)
-          AND ($6 IS NULL or amount >= $6)
-          AND ($5 IS NULL or amount <= $5)
-          AND ($2 IS NULL or trans.reference = $2)
-        ORDER BY trans.reference
+  RETURN QUERY EXECUTE $sql$
+    SELECT *
+      FROM (
+        SELECT txn.id, txn.transdate, txn.reference,
+               (select name
+                  from eca__get_entity(coalesce(ar.entity_credit_account,
+                                                ap.entity_credit_account))) as eca_name,
+               description, table_name as type,
+               CASE WHEN txn.table_name = 'ar' THEN ar.amount_bc
+                    WHEN txn.table_name = 'ap' THEN ap.amount_bc
+                    ELSE (
+                      SELECT SUM(line.amount_bc)
+                        FROM acc_trans line
+                       WHERE line.amount_bc > 0
+                         and line.trans_id = txn.id
+                    )
+               END as amount
+          FROM transactions txn
+                 LEFT JOIN ar
+                     ON ar.id = txn.id
+                 LEFT JOIN ap
+                     ON ap.id = txn.id
+         WHERE NOT EXISTS (select 1
+                             from voucher v
+                            where v.trans_id = txn.id)
+           AND NOT txn.approved
+           AND (lower($1) = txn.table_name or $1 is null)
+           AND ($3 IS NULL or txn.transdate >= $3)
+           AND ($4 IS NULL or txn.transdate <= $4)
+           AND ($2 IS NULL or txn.reference = $2)
+      ) x
+    WHERE ($6 IS NULL or amount >= $6)
+           AND ($5 IS NULL or amount <= $5)
+    ORDER BY reference
 $sql$
 USING in_type, in_reference, in_from_date, in_to_date, in_amount_lt, in_amount_gt;
 END
@@ -89,27 +81,22 @@ begin
           UPDATE ar
              set invnumber = setting_increment('sinumber')
            WHERE id = in_id AND invnumber is null;
-          UPDATE ar set approved = true WHERE id = in_id;
         ELSIF (t_table = 'ap') THEN
                 PERFORM cogs__add_for_ap_line(id) FROM invoice
                   WHERE trans_id = in_id;
-                UPDATE ap set approved = true where id = in_id;
-        ELSIF (t_table = 'gl') THEN
-                UPDATE gl set approved = true where id = in_id;
-        ELSE
-                raise exception 'Invalid table % in draft_approve for transaction %', t_table, in_id;
-        END IF;
-
-        IF NOT FOUND THEN
-                RETURN FALSE;
         END IF;
 
         UPDATE transactions
-        SET approved_by =
+           SET approved = true,
+               approved_by =
                         (select entity_id FROM users
                         WHERE username = SESSION_USER),
                 approved_at = now()
         WHERE id = in_id;
+
+        IF NOT FOUND THEN
+                RETURN FALSE;
+        END IF;
 
         UPDATE acc_trans
         SET approved = 't'::boolean
@@ -193,15 +180,9 @@ begin
         SELECT lower(table_name) into t_table
           FROM transactions where id = in_id;
 
-        IF t_table = 'ar' THEN
-                DELETE FROM ar WHERE id = in_id AND approved IS FALSE;
-        ELSIF t_table = 'ap' THEN
-                DELETE FROM ap WHERE id = in_id AND approved IS FALSE;
-        ELSIF t_table = 'gl' THEN
-                DELETE FROM gl WHERE id = in_id AND approved IS FALSE;
-        ELSE
-                raise exception 'Invalid table % in draft_delete for transaction %', t_table, in_id;
-        END IF;
+        -- this cleans out any referring resources as well, through their
+        -- cascading deletion references
+        DELETE FROM transactions WHERE id = in_id AND approved IS FALSE;
         IF NOT FOUND THEN
                 RAISE EXCEPTION 'Invalid transaction id %', in_id;
         END IF;

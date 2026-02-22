@@ -109,9 +109,11 @@ BEGIN;
     --1) AP transaction: Reportable amount 1000, non-reportable amount $10, paid
     -- in full in current year. id -1024
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-1024, date1(), 'ap', 'ap', true);
     INSERT INTO ap (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
-                    entity_credit_account, approved)
-    values(-1024, date1(), 1010, 1010, 'XTS', 1010, 1010, -255, true);
+                    entity_credit_account)
+    values(-1024, date1(), 1010, 1010, 'XTS', 1010, 1010, -255);
 
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
          VALUES (-1024, -1000, date1(), 1010, 'XTS', 1010, true, -111);
@@ -133,9 +135,11 @@ BEGIN;
     -- 2) AP transaction: Reportable amount $1000, non-reportable amount $10,
     -- partially paid ($500) in current year -1025
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-1025, date1(), 'ap', 'ap', true);
     INSERT INTO ap (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
-                    entity_credit_account, approved)
-    values(-1025, date1(), 1010, 1010, 'XTS', 1010, 1010, -255, true);
+                    entity_credit_account)
+    values(-1025, date1(), 1010, 1010, 'XTS', 1010, 1010, -255);
 
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
          VALUES (-1025, -1000, date1(), 1010, 'XTS', 1010, true, -121);
@@ -157,9 +161,11 @@ BEGIN;
     -- 3)_AP Transaction: Reportable amount $1000, non-reportable amount $10,
     -- paid $500 currnet year, $500 in future year -1026
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-1026, date1(), 'ap', 'ap', true);
     INSERT INTO ap (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
-                    entity_credit_account, approved)
-          values(-1026, date1(), 1010, 1010, 'XTS', 1010, 10101, -255, true);
+                    entity_credit_account)
+          values(-1026, date1(), 1010, 1010, 'XTS', 1010, 10101, -255);
 
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
          VALUES (-1026, -1000, date1(), 1010, 'XTS', 1010, true, -131);
@@ -188,9 +194,11 @@ BEGIN;
     -- $500 currnet year, $500 in future year -1027, to second vendor
     -- Vendor Invoices.
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-1027, date1(), 'ap', 'ap', true);
     INSERT INTO ap (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
-                    entity_credit_account, approved)
-    values(-1027, date1(), 1010, 1010, 'XTS', 1010, 1010, -256, true);
+                    entity_credit_account)
+    values(-1027, date1(), 1010, 1010, 'XTS', 1010, 1010, -256);
 
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
          VALUES (-1027, -1000, date1(), 1010, 'XTS', 1010, true, -141);
@@ -212,9 +220,11 @@ BEGIN;
     -- 2) AP invoice: Reportable amount $1000, non-reportable amount $10,
     -- partially paid ($500) in current year -1035
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-1035, date1(), 'ar', 'ar', true);
     INSERT INTO ar (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
-                    entity_credit_account, approved, invoice, invnumber)
-         values (-1035, date1(), 1010, 1010, 'XTS', 1010, 1010, -255, true, true, 'test1');
+                    entity_credit_account, invoice, invnumber)
+         values (-1035, date1(), 1010, 1010, 'XTS', 1010, 1010, -255, true, 'test1');
 
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
          VALUES (-1035, -1000, date1(), 1010, 'XTS', 1010, true, -221);
@@ -243,9 +253,11 @@ BEGIN;
     -- 3)_AP invoice: Reportable amount $1000, non-reportable amount $10,
     -- paid $500 currnet year, $500 in future year -1036
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-1036, date1(), 'ar', 'ar', true);
     INSERT INTO ar (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
-                    entity_credit_account, approved, invoice, invnumber)
-          values(-1036, date1(), 1010, 1010, 'XTS', 1010, 1010, -255, true, true, 'test2');
+                    entity_credit_account, invoice, invnumber)
+          values(-1036, date1(), 1010, 1010, 'XTS', 1010, 1010, -255, true, 'test2');
 
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
          VALUES (-1036, -1000, date1(), 1010, 'XTS', 1010, true, -231);
@@ -281,9 +293,11 @@ BEGIN;
     -- $500 currnet year, $500 in future year -1037, to second vendor
 
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-1037, date1(), 'ar', 'ar', true);
     INSERT INTO ar (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
-                    entity_credit_account, approved, invoice, invnumber)
-          values(-1037, date1(), 1010, 1010, 'XTS', 1010, 1010, -256, true, true, 'test3');
+                    entity_credit_account, invoice, invnumber)
+          values(-1037, date1(), 1010, 1010, 'XTS', 1010, 1010, -256, true, 'test3');
 
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
          VALUES (-1037, -1000, date1(), 1010, 'XTS', 1010, true, -241);

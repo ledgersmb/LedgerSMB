@@ -204,14 +204,15 @@ DECLARE
         t_dep_amount numeric;
 
 Begin
-        INSERT INTO gl (reference, description, transdate,
-                        approved, trans_type_code)
-        SELECT setting_increment('glnumber'),
+
+  INSERT INTO transactions (id, reference, description, transdate,
+                        approved, trans_type_code, table_name)
+        SELECT nextval('id'), setting_increment('glnumber'),
                'Asset Report ' || asset_report.id,
                 report_date,
                 coalesce((select value::boolean from defaults
                            where setting_key = 'debug_fixed_assets'), true),
-                'fa'
+                'fa', 'asset_report'
         FROM asset_report
         JOIN asset_report_line
                 ON (asset_report.id = asset_report_line.report_id)
@@ -220,27 +221,34 @@ Begin
         WHERE asset_report.id = in_report_id
         GROUP BY asset_report.id, asset_report.report_date;
 
+  IF NOT FOUND THEN
+    RAISE WARNING 'asset_report__generate_gl(): Nothing to generate -- report has no lines';
+    RETURN in_report_id;
+  END IF;
+
         INSERT INTO acc_trans (trans_id, chart_id, transdate, approved,
                               amount_bc, curr, amount_tc)
-        SELECT gl.id, a.exp_account_id, r.report_date, true, sum(amount) * -1,
+        SELECT currval('id'), a.exp_account_id, r.report_date, true, sum(amount) * -1,
                defaults_get_defaultcurrency(), sum(amount) * -1
         FROM asset_report r
         JOIN asset_report_line l ON (r.id = l.report_id)
         JOIN asset_item a ON (l.asset_id = a.id)
-        JOIN gl ON (gl.description = 'Asset Report ' || l.report_id)
         WHERE r.id = in_report_id
-        GROUP BY gl.id, r.report_date, a.exp_account_id;
+        GROUP BY currval('id'), r.report_date, a.exp_account_id;
 
         INSERT INTO acc_trans (trans_id, chart_id, transdate, approved,
                                amount_bc, curr, amount_tc)
-        SELECT gl.id, a.dep_account_id, r.report_date, true, sum(amount),
+        SELECT currval('id'), a.dep_account_id, r.report_date, true, sum(amount),
                defaults_get_defaultcurrency(), sum(amount)
         FROM asset_report r
         JOIN asset_report_line l ON (r.id = l.report_id)
         JOIN asset_item a ON (l.asset_id = a.id)
-        JOIN gl ON (gl.description = 'Asset Report ' || l.report_id)
         WHERE r.id = in_report_id
-        GROUP BY gl.id, a.dep_account_id, r.report_date, a.tag, a.description;
+        GROUP BY currval('id'), a.dep_account_id, r.report_date, a.tag, a.description;
+
+        UPDATE asset_report
+           SET trans_id = currval('id')
+         WHERE id = in_report_id;
 
         RETURN in_report_id;
 END;
@@ -810,11 +818,19 @@ CREATE OR REPLACE FUNCTION asset_report__disposal_gl
 (in_id int, in_gain_acct int, in_loss_acct int, in_cash_acct int)
 RETURNS bool AS
 $$
-  INSERT INTO gl (reference, description, transdate, approved, trans_type_code)
-  SELECT setting_increment('glnumber'), 'Asset Report ' || asset_report.id,
-                report_date, false, 'fd'
+  INSERT INTO transactions (
+    id, reference,
+    description,
+    transdate, approved, trans_type_code, table_name)
+  SELECT nextval('id'), setting_increment('glnumber'),
+        'Asset Report ' || asset_report.id,
+        report_date, false, 'fd', 'asset_report'
     FROM asset_report
   WHERE asset_report.id = in_id;
+
+  UPDATE asset_report
+     SET trans_id = currval('id')
+   WHERE id = in_id;
 
   -- Clear cumulative depreciation account
   INSERT
@@ -1002,7 +1018,7 @@ CREATE OR REPLACE FUNCTION asset_report__search
  in_entered_by int)
 returns setof asset_report_result AS $$
 
-  SELECT r.id, r.report_date, r.gl_id, r.asset_class, r.report_class,
+  SELECT r.id, r.report_date, r.trans_id, r.asset_class, r.report_class,
          r.entered_by, r.approved_by, r.entered_at, r.approved_at,
          r.depreciated_qty, r.dont_approve, r.submitted, sum(l.amount)
     FROM asset_report r
@@ -1014,7 +1030,7 @@ returns setof asset_report_result AS $$
               or (in_approved is true and approved_by is not null)
               or (in_approved is false and approved_by is null))
          and (in_entered_by is null or in_entered_by = entered_by)
-GROUP BY r.id, r.report_date, r.gl_id, r.asset_class, r.report_class,
+GROUP BY r.id, r.report_date, r.trans_id, r.asset_class, r.report_class,
          r.entered_by, r.approved_by, r.entered_at, r.approved_at,
          r.depreciated_qty, r.dont_approve, r.submitted;
 $$ language sql;
@@ -1211,10 +1227,15 @@ if retval.report_class = 2 then
      t_disposed_percent := 100;
 end if;
 
-INSERT INTO gl (reference, description, approved, transdate, trans_type_code)
-select 'Asset Report ' || in_id, 'Asset Disposal Report for ' || report_date,
-       false, report_date, 'fd'
- FROM asset_report where id = in_id;
+
+  INSERT INTO transactions (id, reference, description, approved, transdate, trans_type_code, table_name)
+  select nextval('id'), 'Asset Report ' || in_id, 'Asset Disposal Report for ' || report_date,
+         false, report_date, 'fd', 'asset_report'
+    FROM asset_report where id = in_id;
+
+  UPDATE asset_report
+     SET trans_id = currval('id')
+   WHERE id = in_id;
 
 -- REMOVING ASSETS FROM ACCOUNT (Credit)
 insert into acc_trans (trans_id, chart_id, amount_bc, curr, amount_tc,

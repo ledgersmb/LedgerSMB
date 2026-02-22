@@ -107,8 +107,10 @@ BEGIN;
     -----------------------------------
     --  Step 1: Create invoice -1201
 
-    INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account, approved)
-    VALUES (-1201, true, 'test1001', now() - '10 days'::interval, -2000, 't');
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-1201, now() - '10 days'::interval,  'ar', 'ar', true);
+    INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
+    VALUES (-1201, true, 'test1001', now() - '10 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-1201, -1201, -1, 100, 0, 3);
 
@@ -134,8 +136,10 @@ BEGIN;
     -----------------------------------
     --  Step 3: Create invoice -1202 (AP) and post COGS
 
-    INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account, approved)
-    VALUES (-1202,  true, 'test1002', now() - '10 days'::interval, -1000, 't');
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-1202, now() - '10 days'::interval, 'ap', 'ap', true);
+    INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
+    VALUES (-1202,  true, 'test1002', now() - '10 days'::interval, -1000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-1202, -1202, -1, -75, 0, 0.5);
 
@@ -157,6 +161,8 @@ BEGIN;
     -----------------------------------
     --  Step 4: Create invoice -1203 (AR) and post COGS
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-1203, now() - '9 days'::interval, 'ar', 'ar', true);
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-1203, true, 'test1003', now() - '9 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -191,6 +197,9 @@ BEGIN;
     -----------------------------------
     --  Step 5: Create invoice -1204 (AP) and post COGS
 
+
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-1204, now() - '8 days'::interval, 'ap', 'ap', true);
     INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-1204,  true, 'test1004', now() - '8 days'::interval, -1000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -233,6 +242,8 @@ BEGIN;
     -----------------------------------
     --  Step 6: Create invoice -1205 (AP) and post COGS
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-1205, now() - '8 days'::interval, 'ap', 'ap', true);
     INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-1205,  true, 'test1004', now() - '8 days'::interval, -1000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -283,6 +294,8 @@ BEGIN;
 
 
 */
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-2201, now() - '10 days'::interval, 'ap', 'ap', true);
     INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-2201,  true, 'test2001', now() - '10 days'::interval, -1000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -295,6 +308,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'Allocated is 0 post-AP run (invoice 1 series 2)');
     DEALLOCATE test;
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-2202, now() - '10 days'::interval, 'ar', 'ar', true);
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-2202,  true, 'test2001', now() - '10 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -318,6 +333,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ar-run COGS is 37.50, (invoice 2, series 2)');
     DEALLOCATE test;
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-2203, now() - '9 days'::interval, 'ap', 'ap', true);
     INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-2203,  true, 'test2003', now() - '9 days'::interval, -1000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -340,6 +357,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'Allocated is 0 post-AP run (invoice 3 series 2)');
     DEALLOCATE test;
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-2204, now() - '7 days'::interval, 'ar', 'ar', true);
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-2204,  true, 'test2004', now() - '7 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -379,6 +398,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ar-4 COGS is 62.50, (invoice 2, series 4)');
     DEALLOCATE test;
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-2205, now() - '5 days'::interval, 'ar', 'ar', true);
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-2205,  true, 'test2005', now() - '5 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -434,6 +455,8 @@ BEGIN;
 
 
 */
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-2206, now() - '4 days'::interval, 'ar', 'ar', true);
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-2206,  true, 'test2006', now() - '4 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -500,6 +523,8 @@ BEGIN;
 
 
 */
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-3201, now() - '10 days'::interval, 'ap', 'ap', true);
     INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-3201,  true, 'test3001', now() - '10 days'::interval, -1000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -512,6 +537,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ap-1, allocation invoice 1 series 3 is 0');
     DEALLOCATE test;
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-3202, now() - '9 days'::interval, 'ar', 'ar', true);
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-3202,  true, 'test3002', now() - '9 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -535,6 +562,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ar-run COGS is 37.50, (invoice 2, series 3)');
     DEALLOCATE test;
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-3203, now() - '9 days'::interval, 'ar', 'ar', true);
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-3203,  true, 'test3003', now() - '9 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -569,6 +598,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ar-run COGS is 12.5, (invoice 3, series 3)');
     DEALLOCATE test;
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-3204, now() - '8 days'::interval, 'ap', 'ap', true);
     INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-3204,  true, 'test3004', now() - '8 days'::interval, -1000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -610,6 +641,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ap-4 COGS is 62.5, (invoice 3, series 3)');
     DEALLOCATE test;
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-3205, now() - '9 days'::interval, 'ar', 'ar', true);
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-3205,  true, 'test3005', now() - '9 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -668,6 +701,9 @@ BEGIN;
 
 
 */
+
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-4201, now() - '10 days'::interval, 'ap', 'ap', true);
     INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-4201,  true, 'test3001', now() - '10 days'::interval, -1000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -680,6 +716,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ap-1 Allocated is 0 (invoice 1 series 4)');
     DEALLOCATE test;
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-4202, now() - '10 days'::interval, 'ap', 'ap', true);
     INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-4202,  true, 'test4002', now() - '10 days'::interval, -1000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -703,6 +741,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ap-2 COGS is 0, invoice 2, series 4)');
     DEALLOCATE test;
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-4203, now() - '7 days'::interval, 'ap', 'ap', true);
     INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-4203,  true, 'test4003', now() - '7 days'::interval, -1000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -731,6 +771,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ap-3 COGS is 0, invoice 2, series 4)');
     DEALLOCATE test;
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-4204, now() - '5 days'::interval, 'ap', 'ap', true);
     INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-4204,  true, 'test4002', now() - '5 days'::interval, -1000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -793,6 +835,9 @@ BEGIN;
 
     ---------------------------------------
     -- Step 1:  Simple reversal of invoice without allocation
+
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-5201, now() - '4 days'::interval, 'ar', 'ar', true);
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-5201,  true, 'test5001', now() - '4 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -805,6 +850,8 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ar-1, allocation invoice 1 series 5 is 0; ');
     DEALLOCATE test;
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-5202, now() - '4 days'::interval, 'ar', 'ar', true);
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-5202,  true, 'test5002', now() - '4 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -835,21 +882,30 @@ BEGIN;
     --  * The second AR invoice is now allocated
     --  * The AP invoice is 50% de-allocated
 
+    --  * Set up an ar invoice and an ap invoice, each at 150 units
+
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-5203, now() - '4 days'::interval, 'ar', 'ar', true);
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-5203,  true, 'test5003', now() - '4 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5203, -5203, -5, 150, 0, 3);
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-5204, now() - '4 days'::interval, 'ap', 'ap', true);
     INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-5204,  true, 'test5004', now() - '4 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5204, -5204, -5, -150, 0, 3);
 
+    --  * Allocate these against each other
     SELECT is(
               cogs__add_for_ap_line(-5204),
               150::numeric,
               'ar-1, allocation invoice 3 series 5'
               );
+
+    -- VERIFY
     SELECT is(
               sum(amount_bc),
               -450::numeric,
@@ -866,16 +922,22 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ar-1, allocation invoice 4 series 5 is 150; ');
     DEALLOCATE test;
 
+    --  * Set up another ar invoice at 75 units
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-5205, now() - '4 days'::interval, 'ar', 'ar', true);
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-5205,  true, 'test5005', now() - '4 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5205, -5205, -5, 75, 0, 3);
 
+    --  * Allocate the new invoice / no units availeble == no effect
     SELECT is(
               cogs__add_for_ar_line(-5205),
               0::numeric,
               'ar-1, allocation invoice 5 series 5'
               );
+
+    -- VERIFY
     SELECT is(
               sum(amount_bc),
               -450::numeric,
@@ -887,6 +949,9 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'post-ar-2, allocation invoice 5 series 5 is 0');
     DEALLOCATE test;
 
+    --  * Reverse the original AR invoice at 150 units
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-5206, now() - '4 days'::interval, 'ar', 'ar', true);
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-5206,  true, 'test5006-rev3', now() - '4 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -903,19 +968,19 @@ BEGIN;
               'ar-1, cogs 3 series 5, expense account total')
      FROM acc_trans WHERE chart_id = -5102;
 
-    PREPARE test AS SELECT allocated = -75
+    PREPARE test AS SELECT allocated
                     FROM invoice WHERE id = -5205;
-    SELECT results_eq('test',ARRAY[true],'post-ar-3, allocation invoice 5 series 5 is -75');
+    SELECT results_eq('test',ARRAY[-75::numeric],'post-ar-3, allocation invoice 5 series 5 is -75');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT allocated = 150
+    PREPARE test AS SELECT allocated
                     FROM invoice WHERE id = -5206;
-    SELECT results_eq('test',ARRAY[true],'post-ar-3, allocation invoice 6 series 5 is 150');
+    SELECT results_eq('test',ARRAY[150::numeric],'post-ar-3, allocation invoice 6 series 5 is 150');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT allocated = 75
+    PREPARE test AS SELECT allocated
        FROM invoice WHERE id = -5204;
-    SELECT results_eq('test',ARRAY[true],'post-ar-3, allocation invoice 4 series 5 is -75');
+    SELECT results_eq('test',ARRAY[75::numeric],'post-ar-3, allocation invoice 4 series 5 is -75');
     DEALLOCATE test;
 
 
@@ -933,11 +998,15 @@ BEGIN;
     --  * The second AP invoice is now allocated
     --  * The AR invoice is 50% de-allocated
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-5207, now() - '4 days'::interval, 'ar', 'ar', true);
     INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-5207,  true, 'test5007', now() - '4 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5207, -5207, -6, 150, 0, 3);
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-5208, now() - '4 days'::interval, 'ap', 'ap', true);
     INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-5208,  true, 'test5008', now() - '4 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -957,6 +1026,8 @@ BEGIN;
               ARRAY[150, -150]::numeric[],
               'post-ar-1, allocation invoice 8,7 series 5 is 150,-150; ');
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-5209, now() - '4 days'::interval, 'ap', 'ap', true);
     INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-5209,  true, 'test5009', now() - '4 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -976,6 +1047,8 @@ BEGIN;
       FROM invoice WHERE id = -5209;
 
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-5210, now() - '4 days'::interval, 'ap', 'ap', true);
     INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
     VALUES (-5210,  true, 'test5010-rev8', now() - '4 days'::interval, -2000);
     INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)

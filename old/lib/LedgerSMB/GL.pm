@@ -105,21 +105,32 @@ sub post_transaction {
 
     if ( !$form->{id} ) {
 
+        $query = q|
+              INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+              VALUES (nextval('id'), ?, 'gl', 'gl', true)
+              |;
+        $dbh->do($query, {}, $form->{transdate}) or $form->dberror($query);
+
         $query = qq|
-      INSERT INTO gl (reference, description, notes, transdate)
-           VALUES (?, ?, ?, ?)
+      INSERT INTO gl (id, reference, notes, transdate)
+           VALUES (currval('id'), ?, ?, ?)
       RETURNING id|;
 
         $sth = $dbh->prepare($query) || $form->dberror($query);
-        $sth->execute($form->{reference}, $form->{description},
-                      $form->{notes}, $form->{transdate})
+        $sth->execute($form->{reference}, $form->{notes}, $form->{transdate})
             || $form->dberror($query);
 
         ( $form->{id} ) = $sth->fetchrow_array();
-        $query = q|UPDATE transactions SET workflow_id = ?, reversing = ? WHERE id = ? AND workflow_id IS NULL|;
+        $query = q|
+             UPDATE transactions
+                SET workflow_id = ?,
+                    reversing = ?,
+                    description = ?
+              WHERE id = ?
+                    AND workflow_id IS NULL|;
         $sth   = $dbh->prepare($query);
         $form->{reversing} ||= undef; # convert empty string to NULL
-        $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{id} )
+        $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{description}, $form->{id} )
             || $form->dberror($query);
     }
 

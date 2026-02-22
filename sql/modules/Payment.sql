@@ -258,18 +258,18 @@ RETURN QUERY EXECUTE $sql$
                         a.description
                  --TODO HV prepare drop entity_id from ap,ar
                  --FROM  (SELECT id, invnumber, transdate, amount, entity_id,
-                 FROM  (SELECT id, invnumber, invoice, transdate, amount_bc,
+                 FROM  (SELECT txn.id, invnumber, invoice, txn.transdate, amount_bc,
                        amount_tc,
                                1 as invoice_class, curr,
-                               entity_credit_account, approved, description
-                          FROM ap
+                               entity_credit_account, txn.approved, description
+                          FROM ap JOIN transactions txn ON txn.id = ap.id
                          UNION
                          --SELECT id, invnumber, transdate, amount, entity_id,
-                         SELECT id, invnumber, invoice, transdate, amount_bc,
+                         SELECT txn.id, invnumber, invoice, txn.transdate, amount_bc,
                       amount_tc,
                                2 AS invoice_class, curr,
-                               entity_credit_account, approved, description
-                         FROM ar
+                               entity_credit_account, txn.approved, description
+                         FROM ar JOIN transactions txn ON txn.id = ar.id
                          ) a
                 JOIN (SELECT trans_id, chart_id,
                              sum(CASE WHEN $1 = 1 THEN amount_bc
@@ -427,21 +427,21 @@ RETURN QUERY EXECUTE $sql$
 
                     FROM entity e
                     JOIN entity_credit_account c ON (e.id = c.entity_id)
-                    JOIN (SELECT ap.id, invnumber, transdate, amount_bc,
+                    JOIN (SELECT ap.id, invnumber, txn.transdate, amount_bc,
                                  curr, 1 as invoice_class,
                                  entity_credit_account, on_hold, v.batch_id,
-                                 approved
-                            FROM ap
+                                 txn.approved
+                            FROM ap JOIN transactions txn USING (id)
                        LEFT JOIN (select * from voucher where batch_class = 1) v
                                  ON (ap.id = v.trans_id)
                            WHERE $1 = 1
                                  AND (v.batch_class = 1 or v.batch_id IS NULL)
                            UNION
-                          SELECT ar.id, invnumber, transdate, amount_bc,
+                          SELECT ar.id, invnumber, txn.transdate, amount_bc,
                                  curr, 2 as invoice_class,
                                  entity_credit_account, on_hold, v.batch_id,
-                                 approved
-                            FROM ar
+                                 txn.approved
+                            FROM ar JOIN transactions txn USING (id)
                        LEFT JOIN (select * from voucher where batch_class = 2) v
                                  ON (ar.id = v.trans_id)
                            WHERE $1 = 2
@@ -910,7 +910,7 @@ CREATE OR REPLACE FUNCTION payment_post
 RETURNS INT AS
 $$
 DECLARE var_payment_id int;
-DECLARE var_gl_id int;
+DECLARE var_txn_id int;
 DECLARE var_entry record;
 DECLARE var_entry_id int[];
 DECLARE out_count int;
@@ -1079,14 +1079,15 @@ BEGIN
    --
    -- HANDLE THE OVERPAYMENTS NOW
    IF (array_upper(in_op_cash_account_id, 1) > 0) THEN
-       INSERT INTO gl (reference, description, transdate,
-                       person_id, notes, approved, trans_type_code)
-              VALUES (setting_increment('glnumber'),
-                      in_gl_description, in_datepaid, var_employee,
-                      in_notes, in_approved, 'op');
-       SELECT currval('id') INTO var_gl_id;
+     INSERT INTO transactions (
+       id, reference, description,
+       transdate, entered_by, approved, trans_type_code, table_name)
+     VALUES (nextval('id'), setting_increment('glnumber'),
+             in_gl_description, in_datepaid, var_employee,
+             in_approved, 'op', 'payment')
+     RETURNING id INTO var_txn_id;
 
-       UPDATE payment SET gl_id = var_gl_id
+       UPDATE payment SET trans_id = var_txn_id
         WHERE id = var_payment_id;
 
        FOR out_count IN
@@ -1100,7 +1101,7 @@ BEGIN
                      in_op_amount[out_count]*current_exchangerate*sign,
                      in_curr,
                      in_op_amount[out_count]*sign,
-                     var_gl_id,
+                     var_txn_id,
                      in_datepaid,
                      coalesce(in_approved, true),
                      in_op_source[out_count],
@@ -1121,7 +1122,7 @@ BEGIN
                      in_op_amount[out_count]*current_exchangerate*sign*-1,
                      in_curr,
                      in_op_amount[out_count]*sign*-1,
-                     var_gl_id,
+                     var_txn_id,
                      in_datepaid,
                      coalesce(in_approved, true),
                      in_op_source[out_count],
@@ -1345,10 +1346,10 @@ DECLARE
   t_payment_id int;
 BEGIN
   -- check against being an overpayment??
-  INSERT INTO payment (reference, gl_id, payment_class,
+  INSERT INTO payment (reference, trans_id, payment_class,
                        payment_date, closed, entity_credit_id,
                        employee_id, currency, reversing, notes)
-    SELECT reference, gl_id, payment_class,
+    SELECT reference, trans_id, payment_class,
            in_payment_date, closed, entity_credit_id,
            person__get_my_id(), currency, in_payment_id,
            'This payment reverses ' || in_payment_id
@@ -1518,7 +1519,7 @@ JOIN account c ON (c.id=ac.chart_id)
 JOIN account_link l ON l.account_id = c.id
 JOIN entity_credit_account eca ON (eca.id = p.entity_credit_id)
 JOIN company cmp ON (cmp.entity_id=eca.entity_id)
-WHERE p.gl_id IS NOT NULL
+WHERE p.trans_id IS NOT NULL
       AND (pl.type = 2 OR pl.type = 0)
       AND l.description LIKE '%overpayment'
 GROUP BY p.id, c.accno, p.reference, p.payment_class, p.closed, p.payment_date,
@@ -1610,19 +1611,19 @@ $$
 
 -- This should never hit an income statement-side account but I have handled it
 -- in case of configuration error. --CT
-SELECT o.payment_id, e.name, o.available, g.transdate,
+SELECT o.payment_id, e.name, o.available, txn.transdate,
        (select amount_bc * CASE WHEN c.category in ('A', 'E') THEN -1 ELSE 1 END
           from acc_trans
-         where g.id = trans_id
+         where txn.id = trans_id
                AND chart_id = o.chart_id ORDER BY entry_id ASC LIMIT 1) as amount
   FROM overpayments o
   JOIN payment p ON o.payment_id = p.id
-  JOIN gl g ON g.id = p.gl_id
+  JOIN transactions txn ON txn.id = p.trans_id
   JOIN account c ON c.id = o.chart_id
   JOIN entity_credit_account eca ON eca.id = o.entity_credit_id
   JOIN entity e ON eca.entity_id = e.id
- WHERE ($1 IS NULL OR $1 <= g.transdate) AND
-       ($2 IS NULL OR $2 >= g.transdate) AND
+ WHERE ($1 IS NULL OR $1 <= txn.transdate) AND
+       ($2 IS NULL OR $2 >= txn.transdate) AND
        ($3 IS NULL OR $3 = e.control_code) AND
        ($4 IS NULL OR $4 = eca.meta_number) AND
        ($5 IS NULL OR e.name @@ plainto_tsquery($5));
@@ -1642,8 +1643,8 @@ returns bool LANGUAGE PLPGSQL AS
 $$
 declare
   t_id int;
+  t_curr_data record;
   in_cash_accno text;
-  t_orig_payment payment;
 BEGIN
 
   PERFORM * FROM payment__overpayments_list(null, null, null, null, null)
@@ -1653,9 +1654,12 @@ BEGIN
     RAISE 'Cannot reverse used overpayment: reverse payments first';
   END IF;
 
-  SELECT * INTO t_orig_payment
-    FROM payment
-   WHERE id = in_id;
+SELECT *
+  INTO t_curr_data
+  FROM payment p
+         JOIN transactions txn
+             ON p.trans_id = txn.id
+ WHERE p.id = in_id;
 
   IF NOT FOUND THEN
     RETURN FALSE;
@@ -1663,25 +1667,25 @@ BEGIN
 
   -- reverse overpayment gl
 
-  INSERT INTO gl (transdate, reference, description, approved, trans_type_code)
-  SELECT transdate, reference || '-reversal',
-         'reversal of ' || description, false, 'op'
-    FROM gl WHERE id = t_orig_payment.gl_id;
+  INSERT INTO transactions (id, transdate, reference,
+              description, approved,
+              trans_type_code, table_name)
+  SELECT nextval('id'), transdate, reference || '-reversal',
+         'reversal of ' || description, false, 'op', 'payment'
+    FROM transactions WHERE id = t_curr_data.trans_id;
 
   t_id := currval('id');
 
 
   -- reverse payment record
 
-  INSERT INTO payment (reference, gl_id, payment_class, payment_date,
+  INSERT INTO payment (reference, trans_id, payment_class, payment_date,
               closed, entity_credit_id, employee_id, currency, reversing)
-  VALUES (t_orig_payment.reference, t_id, t_orig_payment.payment_class,
-         t_orig_payment.payment_date, t_orig_payment.closed,
-         t_orig_payment.entity_credit_id, person__get_my_id(),
-         t_orig_payment.currency, t_orig_payment.id);
+  VALUES (t_curr_data.reference, t_id, t_curr_data.payment_class,
+         t_curr_data.payment_date, t_curr_data.closed,
+         t_curr_data.entity_credit_id, person__get_my_id(),
+         t_curr_data.currency, t_curr_data.id);
 
-
-UPDATE transactions SET reversing = in_id WHERE id = t_id;
 
 INSERT INTO voucher (batch_id, trans_id, batch_class)
 VALUES (in_batch_id, t_id, CASE WHEN in_account_class = 1 THEN 4 ELSE 7 END);
@@ -1710,7 +1714,7 @@ SELECT in_transdate, t_id, chart_id, amount_bc * -1, curr, amount_tc * -1
 --   JOIN payment_links pl ON pl.entry_id = ac.entry_id
 --   JOIN overpayments op ON op.payment_id = pl.payment_id
 --   JOIN payment p ON p.id = op.payment_id
---  WHERE p.gl_id = in_id
+--  WHERE p.trans_id = in_id
 -- GROUP BY ac.source, ac.transdate, eca.id, eca.entity_class,
 --          at.accno, al.description;
 

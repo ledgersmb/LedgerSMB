@@ -112,7 +112,7 @@
 <body>
 
 <!-- Primary Index -->
-<p><br><br>Dumped on 2026-02-21</p>
+<p><br><br>Dumped on 2026-02-22</p>
 <h1><a name="index">Index of database - ledgersmb</a></h1>
 <ul>
   
@@ -20554,35 +20554,6 @@ the entry.
     </td>
   </tr>
   
-  <tr class="tr1">
-    <td>
-      
-      
-      <a href="#public.table.trans-type">trans_type.code</a>
-      
-      
-    </td>
-    <td>trans_type_code</td>
-    <td>character(2)</td>
-    <td>
-      <i>
-        
-        
-        
-        
-        
-        
-        NOT NULL
-        DEFAULT &#39;gl&#39;::bpchar
-      </i>
-      <br><br>This column indicates the source or type of the transaction.
-
-Ultimately, every insert specifies the type of transaction being generated.
-At the time of creation of the column (March 2017), we specify a default
-value because this goal has not been realised yet.
-    </td>
-  </tr>
-  
 </table>
 
 <!-- Inherits -->
@@ -34814,10 +34785,6 @@ and purpose of the transaction type.
   <p>Tables referencing this one via Foreign Key Constraints:</p>
   
   <ul>
-    <li><a href="#public.table.gl">gl</a></li>
-  </ul>
-  
-  <ul>
     <li><a href="#public.table.transactions">transactions</a></li>
   </ul>
   
@@ -38274,14 +38241,12 @@ RETURN QUERY EXECUTE $sql$
   FROM transactions txn
      JOIN (select id, invoice, invnumber, ordnumber, ponumber, duedate,
                   notes, shipvia, shippingpoint, amount_bc,
-                  netamount_bc, curr, entity_credit_account, on_hold,
-                  approved
+                  netamount_bc, curr, entity_credit_account, on_hold
              FROM ar WHERE $17 = 2
             UNION
            select id, invoice, invnumber, ordnumber, ponumber, duedate,
                   notes, shipvia, shippingpoint, amount_bc,
-                  netamount_bc, curr, entity_credit_account, on_hold,
-                  approved
+                  netamount_bc, curr, entity_credit_account, on_hold
              FROM ap WHERE $17 = 1) aa ON txn.id = aa.id
      JOIN entity_credit_account eca ON aa.entity_credit_account = eca.id
      JOIN entity e ON e.id = eca.entity_id
@@ -38324,8 +38289,8 @@ LEFT JOIN (SELECT array_agg(ARRAY[buc.label, bu.control_code])
           AND ($13 IS NULL OR $13 = aa.on_hold)
           AND ($16 IS NULL OR $16 &gt;= ac.transdate)
           AND ($18 is null
-               OR (aa.approved = $18 AND ac.approved = $18))
- GROUP BY aa.id, aa.invnumber, aa.ordnumber, aa.ponumber, aa.transdate,
+               OR (txn.approved = $18 AND ac.approved = $18))
+ GROUP BY aa.id, aa.invnumber, aa.ordnumber, aa.ponumber, txn.transdate,
           aa.duedate, e.name, eca.meta_number, aa.amount_bc,
           aa.netamount_bc, aa.curr, aa.duedate,
           aa.notes, aa.shippingpoint, aa.shipvia, e.id, aa.invoice
@@ -38897,10 +38862,15 @@ if retval.report_class = 2 then
      t_disposed_percent := 100;
 end if;
 
-INSERT INTO transactions (id, reference, description, approved, transdate, trans_type_code, table_name)
-select nextval(&#39;id&#39;), &#39;Asset Report &#39; || in_id, &#39;Asset Disposal Report for &#39; || report_date,
-       false, report_date, &#39;fd&#39;, &#39;asset_report&#39;
- FROM asset_report where id = in_id;
+
+  INSERT INTO transactions (id, reference, description, approved, transdate, trans_type_code, table_name)
+  select nextval(&#39;id&#39;), &#39;Asset Report &#39; || in_id, &#39;Asset Disposal Report for &#39; || report_date,
+         false, report_date, &#39;fd&#39;, &#39;asset_report&#39;
+    FROM asset_report where id = in_id;
+
+  UPDATE asset_report
+     SET trans_id = currval(&#39;id&#39;)
+   WHERE id = in_id;
 
 -- REMOVING ASSETS FROM ACCOUNT (Credit)
 insert into acc_trans (trans_id, chart_id, amount_bc, curr, amount_tc,
@@ -39147,11 +39117,19 @@ SELECT * FROM asset_report where id = currval(&#39;asset_report_id_seq&#39;);
 <h3>Language: SQL</h3>
 <p> Generates GL transactions for ful disposal reports.</p>
 <pre>
-  INSERT INTO transactions (reference, description, transdate, approved, trans_type_code)
-  SELECT setting_increment(&#39;glnumber&#39;), &#39;Asset Report &#39; || asset_report.id,
-                report_date, false, &#39;fd&#39;
+  INSERT INTO transactions (
+    id, reference,
+    description,
+    transdate, approved, trans_type_code, table_name)
+  SELECT nextval(&#39;id&#39;), setting_increment(&#39;glnumber&#39;),
+        &#39;Asset Report &#39; || asset_report.id,
+        report_date, false, &#39;fd&#39;, &#39;asset_report&#39;
     FROM asset_report
   WHERE asset_report.id = in_id;
+
+  UPDATE asset_report
+     SET trans_id = currval(&#39;id&#39;)
+   WHERE id = in_id;
 
   -- Clear cumulative depreciation account
   INSERT
@@ -39272,14 +39250,15 @@ DECLARE
         t_dep_amount numeric;
 
 Begin
-        INSERT INTO transactions (reference, description, transdate,
-                        approved, trans_type_code)
-        SELECT setting_increment(&#39;glnumber&#39;),
+
+  INSERT INTO transactions (id, reference, description, transdate,
+                        approved, trans_type_code, table_name)
+        SELECT nextval(&#39;id&#39;), setting_increment(&#39;glnumber&#39;),
                &#39;Asset Report &#39; || asset_report.id,
                 report_date,
                 coalesce((select value::boolean from defaults
                            where setting_key = &#39;debug_fixed_assets&#39;), true),
-                &#39;fa&#39;
+                &#39;fa&#39;, &#39;asset_report&#39;
         FROM asset_report
         JOIN asset_report_line
                 ON (asset_report.id = asset_report_line.report_id)
@@ -39287,6 +39266,11 @@ Begin
                 ON (asset_report_line.asset_id = asset_item.id)
         WHERE asset_report.id = in_report_id
         GROUP BY asset_report.id, asset_report.report_date;
+
+  IF NOT FOUND THEN
+    RAISE WARNING &#39;asset_report__generate_gl(): Nothing to generate -- report has no lines&#39;;
+    RETURN in_report_id;
+  END IF;
 
         INSERT INTO acc_trans (trans_id, chart_id, transdate, approved,
                               amount_bc, curr, amount_tc)
@@ -39307,6 +39291,10 @@ Begin
         JOIN asset_item a ON (l.asset_id = a.id)
         WHERE r.id = in_report_id
         GROUP BY currval(&#39;id&#39;), a.dep_account_id, r.report_date, a.tag, a.description;
+
+        UPDATE asset_report
+           SET trans_id = currval(&#39;id&#39;)
+         WHERE id = in_report_id;
 
         RETURN in_report_id;
 END;
@@ -39763,12 +39751,12 @@ RETURNING true;
 <h3>Language: SQL</h3>
 <p> Inserts the batch into the table.</p>
 <pre>
-        INSERT INTO
-                batch (batch_class_id, default_date, description, control_code,
-                        created_by)
+        INSERT INTO batch (batch_class_id,
+                   default_date, description, control_code,
+                   created_by)
         VALUES ((SELECT id FROM batch_class WHERE class = in_batch_class),
                 in_batch_date, in_description, in_batch_number,
-                        (select entity_id FROM users WHERE username = session_user))
+                (select entity_id FROM users WHERE username = session_user))
         RETURNING id;
 
 </pre>
@@ -39906,8 +39894,7 @@ on standard financial reports.</p>
 <pre>
   UPDATE transactions SET approved = true
   WHERE id IN (select trans_id FROM voucher
-                WHERE batch_id = in_batch_id
-                  AND batch_class IN (1, 2));
+                WHERE batch_id = in_batch_id);
 
   -- When approving the AR/AP batch import,
   -- we need to approve the acc_trans line also.
@@ -42031,7 +42018,7 @@ BEGIN
                      ON ar.id = txn.id
                  LEFT JOIN ap
                      ON ap.id = txn.id
-         WHERE NOT EXISTS (select *
+         WHERE NOT EXISTS (select 1
                              from voucher v
                             where v.trans_id = txn.id)
            AND NOT txn.approved
@@ -43642,9 +43629,9 @@ BEGIN
           FROM account_checkpoint
          WHERE end_date &lt; in_end_date;
 
-        INSERT INTO
-        account_checkpoint (end_date, account_id, amount_bc,
-                            amount_tc, curr, debits, credits)
+        INSERT INTO account_checkpoint (
+              end_date, account_id, amount_bc,
+              amount_tc, curr, debits, credits)
         SELECT in_end_date, account.id,
             COALESCE(a.amount_bc,0) + COALESCE(cp.amount_bc, 0),
             COALESCE(a.amount_tc,0) + COALESCE(cp.amount_tc, 0),
@@ -43722,20 +43709,18 @@ BEGIN
     DECLARE
       t_new_trans_id int;
     BEGIN
-      INSERT INTO transactions (transdate, reference, description, approved, trans_type_code)
-      SELECT in_end_date, &#39;Reversing &#39; || reference, &#39;Reversing &#39; || description, true, &#39;ye&#39;
+      INSERT INTO transactions (
+        id, transdate, reference,
+        description, approved, reversing,
+        trans_type_code, table_name)
+      SELECT nextval(&#39;id&#39;), in_end_date, &#39;Reversing &#39; || reference,
+             &#39;Reversing &#39; || description, true, id,
+             &#39;ye&#39;, &#39;yearend&#39;
         FROM transactions
        WHERE id = (select trans_id from yearend
                     where transdate = in_end_date
                       and reversed is not true)
              RETURNING id INTO t_new_trans_id;
-
-      UPDATE transactions
-         SET reversing = (select trans_id
-                            from yearend
-                           where transdate = in_end_date
-                             and reversed is not true)
-       WHERE id = t_new_trans_id;
 
       INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc,
                              transdate, trans_id, approved)
@@ -43773,7 +43758,7 @@ DECLARE
    cp_date date;
 BEGIN
         INSERT INTO transactions (id, transdate, reference, description, approved,
-                        trans_type_code, table_name)
+                                  trans_type_code, table_name)
         VALUES (nextval(&#39;id&#39;), in_end_date, in_reference, in_description, true, &#39;ye&#39;, &#39;yearend&#39;);
 
         INSERT INTO yearend (trans_id, transdate)
@@ -44871,9 +44856,15 @@ IF inv.trans_id IS NOT NULL THEN
    RETURN inv;
 END IF;
 
-INSERT INTO transactions (id, description, transdate, reference, approved, trans_type_code, table_name)
-        VALUES (nextval(&#39;id&#39;), &#39;Transaction due to approval of inventory adjustment&#39;,
-                inv.transdate, &#39;invadj-&#39; || in_id, true, &#39;ia&#39;, &#39;inventory_report&#39;)
+  INSERT INTO transactions (
+    id,
+    description,
+    transdate, reference, approved,
+    trans_type_code, table_name)
+  VALUES (nextval(&#39;id&#39;),
+          &#39;Transaction due to approval of inventory adjustment&#39;,
+          inv.transdate, &#39;invadj-&#39; || in_id, true,
+          &#39;ia&#39;, &#39;inventory_report&#39;)
     RETURNING id INTO t_trans_id;
 
 UPDATE inventory_report
@@ -46103,6 +46094,10 @@ BEGIN
     values (nextval(&#39;id&#39;), &#39;mfg-&#39; || $1::TEXT, &#39;Manufacturing lot&#39;,
             now(), true, &#39;as&#39;, &#39;mfg_lot&#39;);
 
+    UPDATE mfg_lot
+       SET trans_id = currval(&#39;id&#39;)
+     WHERE id = in_id;
+
     INSERT INTO invoice (trans_id, parts_id, qty, allocated)
     SELECT currval(&#39;id&#39;)::int, parts_id, qty, 0
       FROM mfg_lot_item WHERE mfg_lot_id = $1;
@@ -46370,10 +46365,10 @@ SELECT *
 
   -- reverse overpayment gl
 
-  INSERT INTO transactions (
-      transdate, reference, reversing, description, approved,
-      trans_type_code, table_name)
-  SELECT transdate, reference || &#39;-reversal&#39;, t_curr_data.trans_id,
+  INSERT INTO transactions (id, transdate, reference,
+              description, approved,
+              trans_type_code, table_name)
+  SELECT nextval(&#39;id&#39;), transdate, reference || &#39;-reversal&#39;,
          &#39;reversal of &#39; || description, false, &#39;op&#39;, &#39;payment&#39;
     FROM transactions WHERE id = t_curr_data.trans_id;
 
@@ -46417,7 +46412,7 @@ SELECT in_transdate, t_id, chart_id, amount_bc * -1, curr, amount_tc * -1
 --   JOIN payment_links pl ON pl.entry_id = ac.entry_id
 --   JOIN overpayments op ON op.payment_id = pl.payment_id
 --   JOIN payment p ON p.id = op.payment_id
---  WHERE p.gl_id = in_id
+--  WHERE p.trans_id = in_id
 -- GROUP BY ac.source, ac.transdate, eca.id, eca.entity_class,
 --          at.accno, al.description;
 
@@ -47527,7 +47522,7 @@ with a bank current account.
 </p>
 <pre>
 DECLARE var_payment_id int;
-DECLARE var_gl_id int;
+DECLARE var_txn_id int;
 DECLARE var_entry record;
 DECLARE var_entry_id int[];
 DECLARE out_count int;
@@ -47696,16 +47691,16 @@ BEGIN
    --
    -- HANDLE THE OVERPAYMENTS NOW
    IF (array_upper(in_op_cash_account_id, 1) &gt; 0) THEN
-     INSERT INTO transactions (reference, description,
-                               transdate, entered_by, approved,
-                               trans_type_code, table_name)
-          VALUES (setting_increment(&#39;glnumber&#39;), in_gl_description,
-                  in_date_paid, var_employee, in_approved,
-                  &#39;op&#39;, &#39;payment&#39;);
-     SELECT currval(&#39;id&#39;) INTO var_gl_id;
+     INSERT INTO transactions (
+       id, reference, description,
+       transdate, entered_by, approved, trans_type_code, table_name)
+     VALUES (nextval(&#39;id&#39;), setting_increment(&#39;glnumber&#39;),
+             in_gl_description, in_datepaid, var_employee,
+             in_approved, &#39;op&#39;, &#39;payment&#39;)
+     RETURNING id INTO var_txn_id;
 
-     UPDATE payment SET trans_id = var_gl_id
-      WHERE id = var_payment_id;
+       UPDATE payment SET trans_id = var_txn_id
+        WHERE id = var_payment_id;
 
        FOR out_count IN
                         array_lower(in_op_cash_account_id, 1) ..
@@ -47718,7 +47713,7 @@ BEGIN
                      in_op_amount[out_count]*current_exchangerate*sign,
                      in_curr,
                      in_op_amount[out_count]*sign,
-                     var_gl_id,
+                     var_txn_id,
                      in_datepaid,
                      coalesce(in_approved, true),
                      in_op_source[out_count],
@@ -47739,7 +47734,7 @@ BEGIN
                      in_op_amount[out_count]*current_exchangerate*sign*-1,
                      in_curr,
                      in_op_amount[out_count]*sign*-1,
-                     var_gl_id,
+                     var_txn_id,
                      in_datepaid,
                      coalesce(in_approved, true),
                      in_op_source[out_count],
@@ -48764,7 +48759,8 @@ SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
      FROM acc_trans ac
      JOIN invoice i ON i.id = ac.invoice_id
      JOIN account_link l ON l.account_id = ac.chart_id
-     JOIN transactions txn ON txn.id = ac.trans_id
+     JOIN ar ON ar.id = ac.trans_id
+     JOIN transactions txn ON txn.id = ar.id
 LEFT JOIN (select array_agg(bu.path) as bu_ids, entry_id
              from business_unit_inv bui
              JOIN bu_tree bu ON bui.bu_id = bu.id

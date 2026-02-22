@@ -849,9 +849,9 @@ $$
                         IN ('A', 'E') THEN sum(a.amount_bc) * -1
                 ELSE sum(a.amount_bc) END
         FROM acc_trans a
-        JOIN ( SELECT id FROM transactions WHERE approved IS true
-             ) gl ON a.trans_id = gl.id
-        WHERE a.approved IS TRUE
+        JOIN transactions txn on a.trans_id = txn.id
+             WHERE txn.approved IS TRUE
+                AND a.approved IS TRUE
                 AND a.chart_id = in_account_id
                 AND a.transdate <= in_date;
 
@@ -865,25 +865,32 @@ this is the credit balance.$$;
 
 CREATE OR REPLACE VIEW recon_payee AS
  SELECT DISTINCT ON (rr.id)
-   n.name AS payee, rr.id, rr.report_id, rr.scn, rr.their_balance,
-   rr.our_balance, rr."user", rr.clear_time, rr.insert_time, rr.trans_type,
-   rr.post_date, rr.cleared
+      n.name AS payee, rr.id, rr.report_id, rr.scn, rr.their_balance,
+      rr.our_balance, rr."user", rr.clear_time, rr.insert_time, rr.trans_type,
+      rr.post_date, rr.cleared
    FROM cr_report_line rr
    LEFT JOIN cr_report_line_links rll ON rr.id = rll.report_line_id
    LEFT JOIN acc_trans ac ON rll.entry_id = ac.entry_id
-   LEFT JOIN gl ON ac.trans_id = gl.id
-   LEFT JOIN (( SELECT ap.id, e.name
-   FROM ap
-   JOIN entity_credit_account eca ON ap.entity_credit_account = eca.id
-   JOIN entity e ON eca.entity_id = e.id
-UNION
- SELECT ar.id, e.name
-   FROM ar
-   JOIN entity_credit_account eca ON ar.entity_credit_account = eca.id
-   JOIN entity e ON eca.entity_id = e.id)
-UNION
- SELECT gl.id, gl.description
-   FROM gl) n ON n.id = ac.trans_id;
+   LEFT JOIN gl ON ac.trans_id = gl.id -- this is a bug? why join on GL when the fields aren't used above?
+   LEFT JOIN (
+     SELECT *
+       FROM (
+         SELECT ap.id, e.name
+           FROM ap
+                  JOIN entity_credit_account eca ON ap.entity_credit_account = eca.id
+                  JOIN entity e ON eca.entity_id = e.id
+          UNION
+         SELECT ar.id, e.name
+           FROM ar
+                  JOIN entity_credit_account eca ON ar.entity_credit_account = eca.id
+                  JOIN entity e ON eca.entity_id = e.id
+       ) aa
+      UNION
+     SELECT txn.id, txn.description
+       FROM gl
+            JOIN transactions txn
+                ON gl.id = txn.id
+   ) n ON n.id = ac.trans_id;
 
 CREATE OR REPLACE FUNCTION reconciliation__report_details_payee (in_report_id INT) RETURNS setof recon_payee as $$
                 select * from recon_payee where report_id = in_report_id

@@ -271,7 +271,6 @@ sub post_reversing {
         my $query = <<~'QUERY';
         UPDATE gl
            SET reference = ?,
-               description = ?,
                transdate = ?,
                notes = ?
          WHERE id = ?
@@ -284,6 +283,20 @@ sub post_reversing {
             $form->{description},
             $form->{transdate},
             $form->{notes},
+
+            $form->{id})
+            or $form->dberror($query);
+
+        $query = <<~'QUERY';
+        UPDATE transactions
+           SET description = ?
+         WHERE id = ?
+        QUERY
+
+        $form->{dbh}->do(
+            $query,
+            {},
+            $form->{description},
 
             $form->{id})
             or $form->dberror($query);

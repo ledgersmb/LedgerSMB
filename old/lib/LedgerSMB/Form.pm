@@ -1989,13 +1989,14 @@ sub create_links {
                 else a.amount_bc / a.amount_tc end as exchangerate,
                 a.person_id as employee_id, e.name AS employee,
                 c.language_code, a.ponumber, a.reverse,
-                a.approved, ctf.default_reportable,
-                a.description, a.on_hold, a.crdate,
+                txn.approved, ctf.default_reportable,
+                txn.description, a.on_hold, a.crdate,
                 a.shipto as shiptolocationid, a.shipto_attn as shiptoattn,
                 a.is_return, $seq,
                 t.workflow_id, t.reversing, t.reversing_reference,
                 t.reversed_by, t.reversed_by_reference
             FROM $arap a
+            JOIN transactions txn ON a.id = txn.id
             JOIN transactions_reversal t ON t.id = a.id
             JOIN entity_credit_account c
                 ON (a.entity_credit_account = c.id)

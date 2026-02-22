@@ -44,33 +44,32 @@ RETURNS SETOF purchase_info AS
 $$
 BEGIN
 RETURN QUERY EXECUTE $sql$
-   SELECT gl.id, gl.invoice,
-          gl.invnumber, gl.ordnumber, gl.ponumber, gl.transdate,
-          e.name, eca.meta_number::text, e.id, gl.amount_bc,
-          gl.amount_bc - sum(CASE WHEN l.description IN ('AR', 'AP')
+   SELECT txn.id, aa.invoice,
+          aa.invnumber, aa.ordnumber, aa.ponumber, txn.transdate,
+          e.name, eca.meta_number::text, e.id, aa.amount_bc,
+          aa.amount_bc - sum(CASE WHEN l.description IN ('AR', 'AP')
                                THEN ac.amount_bc ELSE 0
                            END),
-          gl.amount_bc - gl.netamount_bc, gl.curr, gl.duedate,
-          gl.notes, gl.shippingpoint, gl.shipvia,
+          aa.amount_bc - aa.netamount_bc, aa.curr, aa.duedate,
+          aa.notes, aa.shippingpoint, aa.shipvia,
           compound_array(bua.business_units || bui.business_units)
-     FROM (select id, invoice, invnumber, ordnumber, ponumber, transdate, duedate,
-                  description, notes, shipvia, shippingpoint, amount_bc,
-                  netamount_bc, curr, entity_credit_account, on_hold,
-                  approved
+  FROM transactions txn
+     JOIN (select id, invoice, invnumber, ordnumber, ponumber, duedate,
+                  notes, shipvia, shippingpoint, amount_bc,
+                  netamount_bc, curr, entity_credit_account, on_hold
              FROM ar WHERE $17 = 2
             UNION
-           select id, invoice, invnumber, ordnumber, ponumber, transdate, duedate,
-                  description, notes, shipvia, shippingpoint, amount_bc,
-                  netamount_bc, curr, entity_credit_account, on_hold,
-                  approved
-             FROM ap WHERE $17 = 1) gl
-     JOIN entity_credit_account eca ON gl.entity_credit_account = eca.id
+           select id, invoice, invnumber, ordnumber, ponumber, duedate,
+                  notes, shipvia, shippingpoint, amount_bc,
+                  netamount_bc, curr, entity_credit_account, on_hold
+             FROM ap WHERE $17 = 1) aa ON txn.id = aa.id
+     JOIN entity_credit_account eca ON aa.entity_credit_account = eca.id
      JOIN entity e ON e.id = eca.entity_id
-     JOIN acc_trans ac ON gl.id = ac.trans_id
+     JOIN acc_trans ac ON aa.id = ac.trans_id
      JOIN account act ON act.id = ac.chart_id
 LEFT JOIN account_link l ON l.account_id = act.id
                           AND l.description IN ('AR', 'AP')
-LEFT JOIN invoice inv ON gl.id = inv.trans_id
+LEFT JOIN invoice inv ON aa.id = inv.trans_id
 LEFT JOIN (SELECT array_agg(ARRAY[buc.label, bu.control_code])
                   as business_units, entry_id
              FROM business_unit_class buc
@@ -91,25 +90,25 @@ LEFT JOIN (SELECT array_agg(ARRAY[buc.label, bu.control_code])
                    @@ plainto_tsquery(get_default_lang()::regconfig, $2))
           AND ($3 IS NULL
                 OR eca.meta_number LIKE $3 || '%')
-          AND ($4 IS NULL or gl.invnumber LIKE $4 || '%')
-          AND ($5 IS NULL or gl.ordnumber LIKE $5 || '%')
-          AND ($6 IS NULL or gl.ponumber LIKE $6 || '%')
+          AND ($4 IS NULL or aa.invnumber LIKE $4 || '%')
+          AND ($5 IS NULL or aa.ordnumber LIKE $5 || '%')
+          AND ($6 IS NULL or aa.ponumber LIKE $6 || '%')
           AND ($8 IS NULL
-                or to_tsvector(get_default_lang()::regconfig, gl.description)
+                or to_tsvector(get_default_lang()::regconfig, txn.description)
                   @@ plainto_tsquery(get_default_lang()::regconfig, $8))
           AND ($9 IS NULL OR
-                to_tsvector(get_default_lang()::regconfig, gl.notes)
+                to_tsvector(get_default_lang()::regconfig, aa.notes)
                  @@ plainto_tsquery(get_default_lang()::regconfig, $9))
-          AND ($11 IS NULL OR $11 <= gl.transdate)
-          AND ($12 IS NULL OR $12 >= gl.transdate)
-          AND ($13 IS NULL OR $13 = gl.on_hold)
+          AND ($11 IS NULL OR $11 <= txn.transdate)
+          AND ($12 IS NULL OR $12 >= txn.transdate)
+          AND ($13 IS NULL OR $13 = aa.on_hold)
           AND ($16 IS NULL OR $16 >= ac.transdate)
           AND ($18 is null
-               OR (gl.approved = $18 AND ac.approved = $18))
- GROUP BY gl.id, gl.invnumber, gl.ordnumber, gl.ponumber, gl.transdate,
-          gl.duedate, e.name, eca.meta_number, gl.amount_bc,
-          gl.netamount_bc, gl.curr, gl.duedate,
-          gl.notes, gl.shippingpoint, gl.shipvia, e.id, gl.invoice
+               OR (txn.approved = $18 AND ac.approved = $18))
+ GROUP BY aa.id, aa.invnumber, aa.ordnumber, aa.ponumber, txn.transdate,
+          aa.duedate, e.name, eca.meta_number, aa.amount_bc,
+          aa.netamount_bc, aa.curr, aa.duedate,
+          aa.notes, aa.shippingpoint, aa.shipvia, e.id, aa.invoice
    HAVING $7 = ANY(array_agg(ac.source)) or $7 IS NULL
 $sql$
 USING in_account_id, in_name_part, in_meta_number, in_invnumber,

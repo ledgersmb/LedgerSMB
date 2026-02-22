@@ -176,7 +176,7 @@ edge [];
 
 "gifi" [shape = record, label = "{<col0> \N| accno:  text\ldescription:  text\llast_updated:  timestamp without time zone\l}" ];
 
-"gl" [shape = record, label = "{<col0> \N| id:  integer\lreference:  text\ltransdate:  date\lperson_id:  integer\lnotes:  text\ltrans_type_code:  character(2)\l}" ];
+"gl" [shape = record, label = "{<col0> \N| id:  integer\lreference:  text\ltransdate:  date\lperson_id:  integer\lnotes:  text\l}" ];
 
 "inventory_report" [shape = record, label = "{<col0> \N| id:  serial\ltransdate:  date\lsource:  text\ltrans_id:  integer\l}" ];
 
@@ -512,7 +512,6 @@ edge [];
 "file_view_catalog" -> "file_class" [label="file_view_catalog_file_class_fkey"];
 "gl" -> "transactions" [label="gl_id_fkey"];
 "gl" -> "person" [label="gl_person_id_fkey"];
-"gl" -> "trans_type" [label="gl_trans_type_code_fkey"];
 "inventory_report" -> "transactions" [label="inventory_report_trans_id_fkey"];
 "inventory_report_line" -> "inventory_report" [label="inventory_report_line_adjust_id_fkey"];
 "inventory_report_line" -> "parts" [label="inventory_report_line_parts_id_fkey"];

@@ -125,18 +125,18 @@ $$
                 GROUP BY v.id, ar.invoice, a.source, eca.meta_number, e.name,
                         v.batch_id, v.trans_id, a.transdate, bc.class
                 UNION ALL
-                SELECT v.id, false, g.reference, g.description,
+                SELECT v.id, false, txn.reference, txn.description,
                         v.batch_id, v.trans_id,
-                        sum(a.amount_bc), g.transdate, 'GL', v.batch_class
+                        sum(a.amount_bc), txn.transdate, 'GL', v.batch_class
                 FROM voucher v
-                JOIN gl g ON (g.id = v.trans_id)
+                JOIN transactions txn ON (txn.id = v.trans_id)
                 JOIN acc_trans a ON (v.trans_id = a.trans_id)
                 WHERE a.amount_bc > 0
                         AND v.batch_id = in_batch_id
                         AND v.batch_class IN (select id from batch_class
                                         where class in ('gl', 'upgrade'))
-                GROUP BY v.id, g.reference, g.description, v.batch_id,
-                        v.trans_id, g.transdate
+                GROUP BY v.id, txn.reference, txn.description, v.batch_id,
+                        v.trans_id, txn.transdate
                 ORDER BY 7, 1
 $$ language sql;
 
@@ -355,39 +355,29 @@ $$;
 CREATE OR REPLACE FUNCTION batch_post(in_batch_id INTEGER)
 returns date AS
 $$
-        UPDATE ar SET approved = true
-        WHERE id IN (select trans_id FROM voucher
-                WHERE batch_id = in_batch_id
-                AND batch_class = 2);
-
-        UPDATE ap SET approved = true
-        WHERE id IN (select trans_id FROM voucher
-                WHERE batch_id = in_batch_id
-                AND batch_class = 1);
-
-        UPDATE gl SET approved = true
-        WHERE id IN (select trans_id FROM voucher
+  UPDATE transactions SET approved = true
+  WHERE id IN (select trans_id FROM voucher
                 WHERE batch_id = in_batch_id);
 
-        -- When approving the AR/AP batch import,
-        -- we need to approve the acc_trans line also.
-        UPDATE acc_trans SET approved = true
-        WHERE trans_id IN (select trans_id FROM voucher
-                WHERE batch_id = in_batch_id
-                AND batch_class IN (1, 2));
+  -- When approving the AR/AP batch import,
+  -- we need to approve the acc_trans line also.
+  UPDATE acc_trans SET approved = true
+  WHERE trans_id IN (select trans_id FROM voucher
+                      WHERE batch_id = in_batch_id
+                        AND batch_class IN (1, 2));
 
-        UPDATE acc_trans SET approved = true
-        WHERE voucher_id IN (select id FROM voucher
-                WHERE batch_id = in_batch_id
-                AND batch_class IN (3, 4, 6, 7));
+  UPDATE acc_trans SET approved = true
+   WHERE voucher_id IN (select id FROM voucher
+                         WHERE batch_id = in_batch_id
+                           AND batch_class IN (3, 4, 6, 7));
 
-        UPDATE batch
-        SET approved_on = now(),
-                approved_by = (select entity_id FROM users
-                        WHERE username = SESSION_USER)
-        WHERE id = in_batch_id;
+  UPDATE batch
+     SET approved_on = now(),
+         approved_by = (select entity_id FROM users
+                         WHERE username = SESSION_USER)
+   WHERE id = in_batch_id;
 
-        SELECT now()::date;
+  SELECT now()::date;
 $$ LANGUAGE SQL SECURITY DEFINER;
 
 REVOKE EXECUTE ON FUNCTION batch_post(in_batch_id INTEGER) FROM public;

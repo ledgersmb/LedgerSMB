@@ -739,9 +739,9 @@ $$
 WITH ac (chart_id) AS (
      SELECT chart_id
        FROM acc_trans
-       JOIN (select id, approved from transactions) gl
-             ON gl.id = acc_trans.trans_id
-      WHERE acc_trans.approved and gl.approved
+              JOIN transactions txn
+                  ON txn.id = acc_trans.trans_id
+      WHERE acc_trans.approved and txn.approved
 ),
 l(account_id, link) AS (
      SELECT account_id, array_to_string(array_agg(description), ':')

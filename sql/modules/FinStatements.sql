@@ -102,6 +102,7 @@ SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
      JOIN invoice i ON i.id = ac.invoice_id
      JOIN account_link l ON l.account_id = ac.chart_id
      JOIN ar ON ar.id = ac.trans_id
+     JOIN transactions txn ON txn.id = ar.id
 LEFT JOIN (select array_agg(bu.path) as bu_ids, entry_id
              from business_unit_inv bui
              JOIN bu_tree bu ON bui.bu_id = bu.id
@@ -109,7 +110,7 @@ LEFT JOIN (select array_agg(bu.path) as bu_ids, entry_id
     WHERE i.parts_id = in_parts_id
           AND (ac.transdate >= in_from_date OR in_from_date IS NULL)
           AND (ac.transdate <= in_to_date OR in_to_date IS NULL)
-          AND ar.approved
+          AND txn.approved
           AND l.description = 'IC_expense'
           AND (in_business_units is null or in_business_units = '{}' OR in_tree(in_business_units, bu_ids))
  GROUP BY ac.chart_id
@@ -119,7 +120,7 @@ LEFT JOIN (select array_agg(bu.path) as bu_ids, entry_id
           sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0)))
      FROM invoice i
      JOIN acc_trans ac ON ac.invoice_id = i.id
-     JOIN ar ON ar.id = ac.trans_id
+     JOIN transactions txn ON txn.id = ac.trans_id
 LEFT JOIN (select array_agg(bu.path) as bu_ids, entry_id
              from business_unit_inv bui
              JOIN bu_tree bu ON bui.bu_id = bu.id
@@ -127,7 +128,7 @@ LEFT JOIN (select array_agg(bu.path) as bu_ids, entry_id
     WHERE i.parts_id = in_parts_id
           AND (ac.transdate >= in_from_date OR in_from_date IS NULL)
           AND (ac.transdate <= in_to_date OR in_to_date IS NULL)
-          AND ar.approved
+          AND txn.approved
           AND (in_business_units is null or in_business_units = '{}' OR in_tree(in_business_units, bu_ids))
  GROUP BY ac.chart_id
    HAVING sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0))) <> 0.00
@@ -223,7 +224,7 @@ acc_balance AS (
    )
    SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
      FROM acc_trans ac
-    INNER JOIN transactions gl ON ac.trans_id = gl.id AND gl.approved
+    INNER JOIN transactions txn ON ac.trans_id = txn.id AND txn.approved
      LEFT JOIN (SELECT array_agg(path) AS bu_ids, entry_id
                   FROM business_unit_ac buac
                  INNER JOIN bu_tree ON bu_tree.id = buac.bu_id
@@ -342,13 +343,13 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
 )
    SELECT ac.chart_id AS id, sum(ac.amount_bc * ca.portion) AS balance
      FROM acc_trans ac
-     JOIN transactions gl ON ac.trans_id = gl.id AND gl.approved
+     JOIN transactions txn ON ac.trans_id = txn.id AND txn.approved
      JOIN (SELECT id, sum(portion) as portion
              FROM cash_impact ca
             WHERE (in_from_date IS NULL OR ca.transdate >= in_from_date)
                   AND (in_to_date IS NULL OR ca.transdate <= in_to_date)
            GROUP BY id
-          ) ca ON gl.id = ca.id
+          ) ca ON txn.id = ca.id
 LEFT JOIN (select array_agg(path) as bu_ids, entry_id
              FROM business_unit_ac buac
              JOIN bu_tree ON bu_tree.id = buac.bu_id
@@ -537,14 +538,14 @@ hdr_meta AS (
                                   WHERE aht.id = ANY(acc_meta.path)))
 ),
 acc_balance AS (
-WITH gl (id) AS
- ( SELECT id FROM ap WHERE approved is true AND entity_credit_account = in_id
+WITH aa (id) AS
+ ( SELECT id FROM ap JOIN transactions USING (id) WHERE approved is true AND entity_credit_account = in_id
 UNION ALL
-   SELECT id FROM ar WHERE approved is true AND entity_credit_account = in_id
+   SELECT id FROM ar JOIN transactions USING (id) WHERE approved is true AND entity_credit_account = in_id
 )
 SELECT ac.chart_id AS id, sum(ac.amount_bc) AS balance
   FROM acc_trans ac
-  JOIN gl ON ac.trans_id = gl.id
+  JOIN aa ON ac.trans_id = aa.id
  WHERE ac.approved is true
           AND (in_from_date IS NULL OR ac.transdate >= in_from_date)
           AND (in_to_date IS NULL OR ac.transdate <= in_to_date)

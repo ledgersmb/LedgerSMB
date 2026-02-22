@@ -786,9 +786,15 @@ sub post_invoice {
         my $uid = localtime;
         $uid .= "$$";
 
+        $query = q|
+            INSERT INTO transactions (id, table_name, trans_type_code, approved)
+            VALUES (nextval('id'), 'ar', 'ar', false)
+            |;
+        $dbh->do($query) or $form->dberror($query);
+
         $query = qq|
-            INSERT INTO ar (invnumber, person_id, entity_credit_account)
-                 VALUES ('$uid', ?, ?)|;
+            INSERT INTO ar (id, invnumber, person_id, entity_credit_account)
+                 VALUES (currval('id'), '$uid', ?, ?)|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{employee_id}, $form->{customer_id}) || $form->dberror($query);
 
@@ -1015,7 +1021,7 @@ sub post_invoice {
 
             if (defined $form->{approved}) {
 
-                $query = qq| UPDATE ar SET approved = ? WHERE id = ?|;
+                $query = qq| UPDATE transactions SET approved = ? WHERE id = ?|;
                 $dbh->prepare($query)->execute($form->{approved}, $form->{id})
                      || $form->dberror($query);
                 if (!$form->{approved}){
@@ -1190,6 +1196,9 @@ sub post_invoice {
     $form->{terms}       *= 1;
     $form->{taxincluded} *= 1;
 
+    $query = q|UPDATE transactions SET approved = ? WHERE id = ?|;
+    $dbh->do($query, {}, $approved, $form->{id})
+        or $form->dberror( $query );
 
     # save AR record
     $query = qq|
@@ -1197,7 +1206,6 @@ sub post_invoice {
                invnumber = ?,
                ordnumber = ?,
                quonumber = ?,
-                       description = ?,
                transdate = ?,
                entity_credit_account = ?,
              amount_bc = ?,
@@ -1216,7 +1224,6 @@ sub post_invoice {
                person_id = ?,
                language_code = ?,
                ponumber = ?,
-                       approved = ?,
                        crdate = ?,
                               reverse = ?,
                        is_return = ?,
@@ -1225,10 +1232,11 @@ sub post_invoice {
                shipto_attn = ?
          WHERE id = ?
              |;
-    $sth = $dbh->prepare($query);
-    $sth->execute(
+    $dbh->do(
+        $query, {},
+
         $form->{invnumber},     $form->{ordnumber},
-        $form->{quonumber},     $form->{description},
+        $form->{quonumber},
         $transdate,
         $form->{customer_id},   $invamount,
         $invamount/$form->{exchangerate},
@@ -1239,12 +1247,27 @@ sub post_invoice {
         $form->{intnotes},      $form->{taxincluded},
         $form->{currency},
         $form->{employee_id},
-        $form->{language_code}, $form->{ponumber}, $approved,
+        $form->{language_code}, $form->{ponumber},
         $form->{crdate} || 'today', $form->{reverse},
         $form->{is_return},     $form->{setting_sequence},
         $form->{shiptolocationid}, $form->{shiptoattn},
         $form->{id}
     ) || $form->dberror($query);
+
+    # save transaction data
+    $query = qq|
+        UPDATE transactions
+           set description = ?
+         WHERE id = ?
+    |;
+    $dbh->do(
+        $query, {},
+
+        $form->{description},
+        $form->{id}
+    ) || $form->dberror($query);
+
+
 
     # add shipto
     $form->{name} = $form->{customer};
@@ -1277,12 +1300,12 @@ sub retrieve_invoice {
                       a.person_id as employee_id, e.name AS employee,
                       a.reverse, a.entity_credit_account as customer_id,
                       a.language_code, a.ponumber, a.crdate,
-                      a.on_hold, a.description, a.setting_sequence,
+                      a.on_hold, trx.description, a.setting_sequence,
                       a.shipto as shiptolocationid, l.line_one, l.line_two,
                       l.line_three, l.city, l.state, l.country_id, l.mail_code,
-                      tran.workflow_id
+                      trx.workflow_id
                  FROM ar a
-                 JOIN transactions tran USING (id)
+                 JOIN transactions trx USING (id)
             LEFT JOIN entity_employee em ON (em.entity_id = a.person_id)
             LEFT JOIN entity e ON e.id = em.entity_id
             LEFT JOIN location l on a.shipto = l.id

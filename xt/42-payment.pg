@@ -91,9 +91,11 @@ BEGIN;
                  (select id from account where accno = '00001'), 'XTS',
                  0.1, 30, -2000); -- 10%, 30 days
 
-    INSERT INTO ap (invnumber, entity_credit_account, approved,
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (nextval('id'), now(), 'ap', 'ap', false);
+    INSERT INTO ap (id, invnumber, entity_credit_account,
                     amount_bc, amount_tc, netamount_bc, curr)
-            values ('test_hide', -101, false, '1', '1', '1', 'XTS');
+            values (currval('id'), 'test_hide', -101, '1', '1', '1', 'XTS');
 
     INSERT INTO voucher (trans_id, batch_class, batch_id)
                  VALUES (currval('id'), 1, currval('batch_id_seq'));
@@ -108,9 +110,11 @@ BEGIN;
 
     -- Test contact invoice selection (payment__get_all_contact_invoices())
 
-    INSERT INTO ap (invnumber, entity_credit_account, approved,
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (nextval('id'), now(), 'ap', 'ap', true);
+    INSERT INTO ap (id, invnumber, entity_credit_account,
                     amount_bc, amount_tc, netamount_bc, curr, transdate)
-            VALUES ('test_show2', -101, true, 100000, 100000, 100000,
+            VALUES (currval('id'), 'test_show2', -101, 100000, 100000, 100000,
                     'XTS', now()::date);
 
     INSERT INTO acc_trans (approved, transdate, amount_bc, curr,
@@ -122,9 +126,11 @@ BEGIN;
                            '-100000', currval('id'),
                            (select id from account where accno = '00002'));
 
-    INSERT INTO ap (id, invnumber, entity_credit_account, approved,
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-300, now(), 'ap', 'ap', true);
+    INSERT INTO ap (id, invnumber, entity_credit_account,
                     amount_bc, amount_tc, netamount_bc, curr, transdate)
-            VALUES (-300, 'test_show3', -101, true, 1000000, 1000000, 1000000,
+            VALUES (-300, 'test_show3', -101, 1000000, 1000000, 1000000,
                     'XTS', now()::date);
 
     INSERT INTO acc_trans (approved, transdate, amount_bc, curr,
@@ -138,9 +144,11 @@ BEGIN;
 
     update transactions set locked_by = -200 where id = -300;
 
-    INSERT INTO ap (invnumber, entity_credit_account, approved,
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (nextval('id'), now(), 'ap', 'ap', false);
+    INSERT INTO ap (id, invnumber, entity_credit_account,
                     amount_bc, amount_tc, netamount_bc, curr, transdate)
-            values ('test_show', -101, false, '1', '1', '1', 'XTS', now()::date);
+            values (currval('id'), 'test_show', -101, '1', '1', '1', 'XTS', now()::date);
 
     INSERT INTO acc_trans (approved, transdate, amount_bc,
                            curr, amount_tc, trans_id, chart_id)
@@ -306,9 +314,11 @@ BEGIN;
     -- Explicitly tests posting to a non-default (for the ECA) AP account
     -- as a test for GitHub issue #2558
 
-    INSERT INTO ap (invnumber, entity_credit_account, approved,
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (nextval('id'), now(), 'ap', 'ap', true);
+    INSERT INTO ap (id, invnumber, entity_credit_account,
                     amount_bc, amount_tc, netamount_bc, curr, transdate)
-            values ('test_reverse', -101, true, '1', '1', '1',
+            values (currval('id'), 'test_reverse', -101, '1', '1', '1',
                     'XTS', now()::date)
        returning id as invoice_id
     \gset
@@ -375,9 +385,12 @@ BEGIN;
     -- bulk post payment
     SELECT batch_create('test3', 'test3', 'payment', now()::date) as batch_id
     \gset
-    INSERT INTO ap (invnumber, entity_credit_account, approved,
+
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (nextval('id'), now(), 'ap', 'ap', true);
+    INSERT INTO ap (id, invnumber, entity_credit_account,
                     amount_bc, amount_tc, netamount_bc, curr, transdate)
-            values ('test_bulk', -101, true, '1', '1', '1',
+            values (currval('id'), 'test_bulk', -101, '1', '1', '1',
                     'XTS', now()::date)
        returning id as invoice_id
     \gset

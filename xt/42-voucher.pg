@@ -55,14 +55,18 @@ BEGIN;
 
     INSERT INTO account_link(account_id, description) values (-5, 'AP');
 
-    INSERT INTO ap (id, invnumber, amount_bc, curr, amount_tc, approved, entity_credit_account)
-    VALUES (-5, 'test1', '1000', 'XTS', 1000, false, -1);
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-5, now(), 'ap', 'ap', false);
+    INSERT INTO ap (id, invnumber, amount_bc, curr, amount_tc, entity_credit_account)
+    VALUES (-5, 'test1', '1000', 'XTS', 1000, -1);
 
     INSERT INTO acc_trans(trans_id, chart_id, amount_bc, curr, amount_tc, approved)
     values (-5, test_get_account_id('-21111'), 1000, 'XTS', 1000, true);
 
-    INSERT INTO ap (id, invnumber, amount_bc, curr, amount_tc, approved, entity_credit_account)
-    VALUES (-6, 'test1', '1000', 'XTS', 1000, false, -1);
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-6, now(), 'ap', 'ap', false);
+    INSERT INTO ap (id, invnumber, amount_bc, curr, amount_tc, entity_credit_account)
+    VALUES (-6, 'test1', '1000', 'XTS', 1000, -1);
 
     INSERT INTO acc_trans(trans_id, chart_id, amount_bc, curr, amount_tc, approved, entry_id)
     values (-6, test_get_account_id('-21111'), 1000, 'XTS', 1000, true, -1);
@@ -73,8 +77,10 @@ BEGIN;
     INSERT INTO ac_tax_form (entry_id, reportable)
     values (-1, false);
 
-    INSERT INTO ap (id, invnumber, amount_bc, curr, amount_tc, approved, entity_credit_account)
-    VALUES (-7, 'test1', '1000', 'XTS', 1000, false, -1);
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-7, now(), 'ap', 'ap', false);
+    INSERT INTO ap (id, invnumber, amount_bc, curr, amount_tc, entity_credit_account)
+    VALUES (-7, 'test1', '1000', 'XTS', 1000, -1);
 
     INSERT INTO acc_trans(trans_id, chart_id, amount_bc, curr, amount_tc, approved, entry_id)
     values (-7, test_get_account_id('-21111'), 1000, 'XTS', 1000, true, -2);

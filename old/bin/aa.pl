@@ -250,6 +250,7 @@ sub post_reversing {
             or $form->dberror($query);
     }
     else {
+        ###BUG?? what does the GL table do in an AR/AP module??
         my $query = <<~'QUERY';
         UPDATE gl
            SET reference = ?,

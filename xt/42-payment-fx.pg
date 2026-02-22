@@ -75,6 +75,8 @@ BEGIN;
     INSERT INTO entity_credit_account (id, meta_number, threshold, entity_id, entity_class, business_id, ar_ap_account_id, curr)
          VALUES (-101, 'TEST1', 100000, -101, 1, -101, -1000, 'xts');
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-11, '1901-01-01', 'ap', 'ap', true);
     INSERT INTO ap (id, transdate, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
          VALUES (-11, '1901-01-01', 100, 110, 'inv_test1', 'xts', -101);
     INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id)
@@ -125,6 +127,8 @@ BEGIN;
 
     -- Test 2: payment_bulk_post
 
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-12, '1901-01-02', 'ap', 'ap', true);
     INSERT INTO ap (id, transdate, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
          VALUES (-12, '1901-01-02', 100, 110, 'inv_test2', 'xts', -101);
     INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id)
@@ -161,6 +165,8 @@ BEGIN;
 
 
     -- Test 3: Single payment
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-13, '1901-01-01', 'ap', 'ap', true);
     INSERT INTO ap (id, transdate, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
          VALUES (-13, '1901-01-01', 100, 110, 'inv_test1', 'xts', -101);
     INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id)
@@ -196,6 +202,8 @@ BEGIN;
 
 
     -- Test 4: Bulk payment
+    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
+    VALUES (-14, '1901-01-02', 'ap', 'ap', true);
     INSERT INTO ap (id, transdate, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
          VALUES (-14, '1901-01-02', 100, 110, 'inv_test2', 'xts', -101);
     INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id)

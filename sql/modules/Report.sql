@@ -317,22 +317,27 @@ FOR retval IN
                 + t_balance
                 as running_balance,
               array_agg(ARRAY[bac.class_id, bac.bu_id])
-         FROM (select id, 'gl' as type, false as invoice, reference,
-                      null::text as eca_name, description, approved
-                 FROM gl
-               UNION
-               SELECT ar.id, 'ar', invoice, invnumber, e.name, ar.description, approved
-                 FROM ar
-                 JOIN entity_credit_account eca ON ar.entity_credit_account
-                      = eca.id
-                 JOIN entity e ON e.id = eca.entity_id
-               UNION
-               SELECT ap.id, 'ap', invoice, invnumber, e.name, ap.description, approved
-                 FROM ap
-                 JOIN entity_credit_account eca ON ap.entity_credit_account
-                      = eca.id
-                 JOIN entity e ON e.id = eca.entity_id) g
-         JOIN acc_trans ac ON ac.trans_id = g.id
+         FROM (select txn.id, trans_type_code as type,
+                      coalesce(ar.invoice, ap.invoice, false) as invoice,
+                      coalesce(ar.invnumber, ap.invnumber, reference) as reference,
+                      coalesce(ar.entity_name, ap.entity_name, null::text) as eca_name,
+                      description, txn.approved
+                 FROM transactions txn
+                        LEFT JOIN (select ar.*, entity.name as entity_name
+                                     from ar
+                                            join entity_credit_account eca
+                                                on ar.entity_credit_account = eca.id
+                                            join entity
+                                                on eca.entity_id = entity.id) ar
+                            ON txn.id = ar.id
+                        LEFT JOIN (select ap.*, entity.name as entity_name
+                                     from ap
+                                            join entity_credit_account eca
+                                                on ap.entity_credit_account = eca.id
+                                            join entity
+                                                on eca.entity_id = entity.id) ap
+                            ON txn.id = ap.id) g
+           JOIN acc_trans ac ON ac.trans_id = g.id
          JOIN account c ON ac.chart_id = c.id
     LEFT JOIN business_unit_ac bac ON ac.entry_id = bac.entry_id
     LEFT JOIN bu_tree ON bac.bu_id = bu_tree.id
@@ -408,12 +413,11 @@ SELECT a.id, a.accno, a.description,
                THEN ac.amount_bc ELSE null END),
       SUM(ABS(ac.amount_bc))
  FROM account a
- LEFT
- JOIN acc_trans ac ON ac.chart_id = a.id
- LEFT
- JOIN (select id, approved from transactions) gl
-       ON ac.trans_id = gl.id
-WHERE gl.approved and ac.approved
+LEFT JOIN acc_trans ac
+  ON ac.chart_id = a.id
+LEFT JOIN transactions txn
+  ON ac.trans_id = txn.id
+WHERE txn.approved and ac.approved
       and ac.transdate <= $2
 GROUP BY a.id, a.accno, a.description
 ORDER BY a.accno
@@ -466,19 +470,19 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number::text, eeca.name, a.transdate,
        a.amount_bc - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
        ee.name, me.name, a.shippingpoint, a.shipvia,
        '{}'::text[] as business_units -- TODO
-  FROM (select id, transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
+  FROM (select txn.id, txn.transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
                notes, person_id, entity_credit_account, invoice,
                shippingpoint, shipvia, ordnumber, ponumber, description,
                on_hold, force_closed
-          FROM ar
-         WHERE $1 = 2 and approved
+          FROM ar JOIN transactions txn ON ar.id = txn.id
+         WHERE $1 = 2 and txn.approved
          UNION
-        SELECT id, transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
+        SELECT txn.id, txn.transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
                notes, person_id, entity_credit_account, invoice,
                shippingpoint, shipvia, ordnumber, ponumber, description,
                on_hold, force_closed
-          FROM ap
-         WHERE $1 = 1 and approved) a
+          FROM ap JOIN transactions txn ON ap.id = txn.id
+         WHERE $1 = 1 and txn.approved) a
   LEFT
   JOIN (SELECT trans_id, sum(amount_bc) *
                CASE WHEN $1 = 1 THEN 1 ELSE -1 END AS due,
@@ -605,21 +609,21 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number::text, eeca.name,
        eee.name as employee, mee.name as manager, a.shippingpoint,
        a.shipvia, '{}'::text[]
 
-  FROM (select id, transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
+  FROM (select txn.id, txn.transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
                notes,
                person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
-          FROM ar
+          FROM ar JOIN transactions txn ON ar.id = txn.id
          WHERE $1 = 2
-               and ($21 is null or ($21 = approved))
+               and ($21 is null or ($21 = txn.approved))
          UNION
-        SELECT id, transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
+        SELECT txn.id, txn.transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
                notes,
                person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
-          FROM ap
+          FROM ap JOIN transactions txn ON ap.id = txn.id
          WHERE $1 = 1
-               and ($21 is null or ($21 = approved))) a
+               and ($21 is null or ($21 = txn.approved))) a
   LEFT
   JOIN (select sum(amount_bc) * case when $1 = 1 THEN 1 ELSE -1 END
                as due, trans_id, max(transdate) as last_payment
