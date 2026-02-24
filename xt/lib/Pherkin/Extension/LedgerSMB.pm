@@ -435,11 +435,11 @@ SELECT id
 
     my $trans_sth = $self->admin_dbh->prepare(
         qq|
-INSERT INTO gl(id, person_id)
-     VALUES (currval('id'), (SELECT entity_id FROM users WHERE username = ?))
+INSERT INTO gl(id)
+     VALUES (currval('id'))
   RETURNING id
 |);
-    $trans_sth->execute($self->last_scenario_stash->{"the admin user"})
+    $trans_sth->execute()
         or die "Failed to create 'gl' table row: " . $trans_sth->errstr;
     my ($trans_id) = $trans_sth->fetchrow_array();
 

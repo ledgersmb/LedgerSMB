@@ -186,3 +186,4 @@ mc/delete-migration-validation-data.sql
 # 1.14 changes
 1.14/non-gl-transactions.sql
 1.14/centralized-transdate.sql
+1.14/mv-gl_person_id.sql

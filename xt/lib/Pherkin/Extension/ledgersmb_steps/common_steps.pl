@@ -373,9 +373,8 @@ Given qr/^(\d+) units inventory of ((?:a|the) part|part "(.*)") purchased at (\d
         or die $dbh->errstr;
     $dbh->do(
         q{
-        INSERT INTO gl (id, reference, person_id)
-               VALUES (currval('id'), 'INV-INIT',
-                       person__get_my_id());
+        INSERT INTO gl (id, reference)
+               VALUES (currval('id'), 'INV-INIT');
         })
         or die $dbh->errstr;
 
