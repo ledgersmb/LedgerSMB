@@ -348,6 +348,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: webservices-ui
+          fail-on-error: false
           parallel: true
           file: ${{ github.workspace }}/UI/coverage/lcov.info
         if: ${{ matrix.COVERAGE }}
@@ -566,6 +567,7 @@ jobs:
         uses: coverallsapp/github-action@v2.3.6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          fail-on-error: false
           parallel-finished: true
 
       # Run the build hook again (Coveralls suggested patch)
