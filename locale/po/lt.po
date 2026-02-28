@@ -1,4 +1,3 @@
-#
 # Translators:
 # Erik Huelsmann <ehuels@gmail.com>, 2025
 #
@@ -6,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.13.3-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-12-21 16:19+0000\n"
+"POT-Creation-Date: 2026-02-28 23:08+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2025\n"
 "Language-Team: Lithuanian (https://app.transifex.com/ledgersmb/teams/58325/"
 "lt/)\n"
@@ -884,11 +883,11 @@ msgstr ""
 msgid "Assets"
 msgstr ""
 
-#: templates/demo/balance_sheet.html:397
+#: templates/demo/balance_sheet.html:398
 msgid "Assets to Equity"
 msgstr ""
 
-#: templates/demo/balance_sheet.html:394
+#: templates/demo/balance_sheet.html:395
 msgid "Assets to Liabilities"
 msgstr ""
 
@@ -1049,7 +1048,7 @@ msgstr ""
 msgid "Balance"
 msgstr "Balansas"
 
-#: templates/demo/balance_sheet.html:301 templates/demo/balance_sheet.tex:47
+#: templates/demo/balance_sheet.html:302 templates/demo/balance_sheet.tex:47
 #: UI/Reports/balance_sheet.html:19 UI/Reports/filters/balance_sheet.html:7
 #: locale/menu.xml:423
 msgid "Balance Sheet"
@@ -1280,8 +1279,8 @@ msgstr ""
 #: lib/LedgerSMB/Scripts/report_aging.pm:165 lib/LedgerSMB/Scripts/setup.pm:189
 #: lib/LedgerSMB/Scripts/setup.pm:255 old/bin/io.pl:1757
 #: UI/templates/widget.html:150 UI/templates/widget.html:166
-#: UI/src/components/ConfigTableRow.vue:170
 #: UI/src/components/PartsGroupTreeNode.vue:342
+#: UI/src/components/ConfigTableRow.vue:170
 msgid "Cancel"
 msgstr ""
 
@@ -1517,8 +1516,8 @@ msgstr ""
 
 #: lib/LedgerSMB/Report/Listings/Language.pm:49
 #: lib/LedgerSMB/Report/Listings/SIC.pm:47 UI/src/views/GIFI.vue:13
-#: UI/src/views/Languages.vue:11 UI/src/views/Countries.vue:12
-#: UI/src/views/SIC.vue:13
+#: UI/src/views/SIC.vue:13 UI/src/views/Languages.vue:11
+#: UI/src/views/Countries.vue:12
 msgid "Code"
 msgstr ""
 
@@ -2337,8 +2336,9 @@ msgstr ""
 #: UI/Contact/divs/company.html:146 UI/Contact/divs/contact_info.html:11
 #: UI/Contact/divs/credit.html:22 UI/Contact/divs/person.html:153
 #: UI/Contact/pricelist.html:66 UI/file/internal-file-list.html:31
-#: UI/reconciliation/report.html:461 UI/src/components/ConfigTableRow.vue:178
+#: UI/reconciliation/report.html:461
 #: UI/src/components/PartsGroupTreeNode.vue:207
+#: UI/src/components/ConfigTableRow.vue:178
 msgid "Delete"
 msgstr "Ištrinti"
 
@@ -2516,10 +2516,10 @@ msgstr ""
 #: UI/Reports/filters/purchase_history.html:249
 #: UI/Reports/filters/search_goods.html:63
 #: UI/Reports/filters/search_goods.html:271 UI/timecards/timecard.html:45
-#: UI/timecards/timecard-week.html:111 UI/src/views/BusinessTypes.vue:11
-#: UI/src/views/Warehouses.vue:9 UI/src/views/GIFI.vue:14
-#: UI/src/views/Languages.vue:12 UI/src/views/Pricegroups.vue:11
-#: UI/src/views/SIC.vue:14 locale/menu.xml:511 locale/menu.xml:575
+#: UI/timecards/timecard-week.html:111 UI/src/views/GIFI.vue:14
+#: UI/src/views/BusinessTypes.vue:11 UI/src/views/Warehouses.vue:9
+#: UI/src/views/SIC.vue:14 UI/src/views/Pricegroups.vue:11
+#: UI/src/views/Languages.vue:12 locale/menu.xml:511 locale/menu.xml:575
 msgid "Description"
 msgstr "Aprašymas"
 
@@ -3055,7 +3055,7 @@ msgstr ""
 msgid "Equity (Temporary)"
 msgstr ""
 
-#: templates/demo/balance_sheet.html:400
+#: templates/demo/balance_sheet.html:401
 msgid "Equity to Liabilities"
 msgstr ""
 
@@ -3308,7 +3308,7 @@ msgstr ""
 msgid "First Name"
 msgstr ""
 
-#: templates/demo/balance_sheet.html:392
+#: templates/demo/balance_sheet.html:393
 msgid "First column only"
 msgstr ""
 
@@ -4015,7 +4015,7 @@ msgstr "Bir"
 msgid "June"
 msgstr "Birželis"
 
-#: templates/demo/balance_sheet.html:391
+#: templates/demo/balance_sheet.html:392
 msgid "Key Ratios"
 msgstr ""
 
@@ -4280,8 +4280,8 @@ msgstr ""
 msgid "Loaded"
 msgstr ""
 
-#: UI/src/components/ServerUI.machines.js:108
-#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:29
+#: UI/src/components/ServerUI.js:29 UI/src/components/ServerUI.machines.js:108
+#: UI/src/components/ConfigTable.vue:64
 msgid "Loading..."
 msgstr ""
 
@@ -6366,9 +6366,9 @@ msgstr ""
 #: UI/taxform/add_taxform.html:71 UI/templates/widget.html:146
 #: UI/templates/widget.html:160 UI/timecards/timecard.html:168
 #: UI/timecards/timecard-week.html:125 UI/users/preferences.html:148
+#: UI/src/components/PartsGroupTreeNode.vue:330
 #: UI/src/components/ConfigTableRow.vue:163
 #: UI/src/components/ImportCSV-Base.vue:143
-#: UI/src/components/PartsGroupTreeNode.vue:330
 msgid "Save"
 msgstr "Išsaugoti"
 
