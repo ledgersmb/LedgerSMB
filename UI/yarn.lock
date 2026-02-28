@@ -5406,10 +5406,10 @@ eslint-import-resolver-webpack@0.13.10:
     resolve "^2.0.0-next.5"
     semver "^5.7.2"
 
-eslint-plugin-compat@6.2.1:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-compat/-/eslint-plugin-compat-6.2.1.tgz#5784ea09b52426b8e6f55881535d3300c1d534d9"
-  integrity sha512-gLKqUH+lQcCL+HzsROUjBDvakc5Zaga51Y4ZAkPCXc41pzKBfyluqTr2j8zOx8QQQb7zyglu1LVoL5aSNWf2SQ==
+eslint-plugin-compat@7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-compat/-/eslint-plugin-compat-7.0.0.tgz#94ab27a3b7e11bd0752fc0858dd906d5d597d611"
+  integrity sha512-P5AKzirW/Z6T5XzN+4N7O2HKVyFwfDD9NaUdBNrG9c4652Ef2W77whXDtzJXxPuRXppljJavzBvTLcYpcY0UXw==
   dependencies:
     "@mdn/browser-compat-data" "^6.1.1"
     ast-metadata-inferer "^0.8.1"
