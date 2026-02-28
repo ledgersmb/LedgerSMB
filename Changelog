@@ -67,6 +67,10 @@ Updated dependencies
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.16
+* Fix undefined value warning caused by converting dates to strings (#9178)
+
+
 Changelog for 1.12.15
 * Fix for printing of invoices with manual taxes (#9116)
 * Fix for tax calculations in invoice API calls without taxes (#9111)
