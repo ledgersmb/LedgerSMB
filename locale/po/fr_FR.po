@@ -1,4 +1,3 @@
-#
 # Translators:
 # ylavoie <ylavoie@yveslavoie.com>, 2024
 # Erik Huelsmann <ehuels@gmail.com>, 2024
@@ -7,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.12.16-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2025-10-31 10:47+0000\n"
+"POT-Creation-Date: 2026-02-28 22:10+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2024\n"
 "Language-Team: French (France) (https://app.transifex.com/ledgersmb/teams/"
 "58325/fr_FR/)\n"
@@ -1513,8 +1512,8 @@ msgstr "Solde de clôture"
 
 #: lib/LedgerSMB/Report/Listings/Language.pm:49
 #: lib/LedgerSMB/Report/Listings/SIC.pm:47 UI/src/views/GIFI.vue:13
-#: UI/src/views/Languages.vue:11 UI/src/views/Countries.vue:12
-#: UI/src/views/SIC.vue:13
+#: UI/src/views/SIC.vue:13 UI/src/views/Languages.vue:11
+#: UI/src/views/Countries.vue:12
 msgid "Code"
 msgstr "Code"
 
@@ -2512,10 +2511,10 @@ msgstr "Début d'amortissement"
 #: UI/Reports/filters/search_goods.html:63
 #: UI/Reports/filters/search_goods.html:271 UI/timecards/timecard.html:45
 #: UI/timecards/timecard-week.html:111 sql/Pg-database.sql:2291
-#: sql/Pg-database.sql:2296 UI/src/views/BusinessTypes.vue:11
-#: UI/src/views/Warehouses.vue:9 UI/src/views/GIFI.vue:14
-#: UI/src/views/Languages.vue:12 UI/src/views/Pricegroups.vue:11
-#: UI/src/views/SIC.vue:14
+#: sql/Pg-database.sql:2296 UI/src/views/GIFI.vue:14
+#: UI/src/views/BusinessTypes.vue:11 UI/src/views/Warehouses.vue:9
+#: UI/src/views/SIC.vue:14 UI/src/views/Pricegroups.vue:11
+#: UI/src/views/Languages.vue:12
 msgid "Description"
 msgstr "Description"
 
@@ -4330,8 +4329,8 @@ msgstr "Charger des modèles"
 msgid "Loaded"
 msgstr "Chargé"
 
-#: UI/src/components/ConfigTable.vue:64 UI/src/components/ServerUI.js:26
-#: UI/src/components/ServerUI.js:40
+#: UI/src/components/ServerUI.js:40 UI/src/components/ServerUI.js:26
+#: UI/src/components/ConfigTable.vue:64
 msgid "Loading..."
 msgstr "Chargement..."
 
@@ -8677,7 +8676,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/views/Home.vue:43 UI/src/views/Home.vue:58
+#: UI/src/views/Home.vue:58 UI/src/views/Home.vue:43
 msgid "mailing lists"
 msgstr ""
 
