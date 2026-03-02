@@ -1,8 +1,11 @@
 /** @format */
+/* global lsmbConfig */
 
 import { LsmbBaseInput } from "@/elements/lsmb-base-input";
 
+const dojoDateLocale = require("dojo/date/locale");
 const dojoDateBox = require("lsmb/DateTextBox");
+const isoDate = /^\d\d\d\d-\d\d-\d\d$/;
 
 export class LsmbDate extends LsmbBaseInput {
     widgetWrapper = null;
@@ -29,6 +32,18 @@ export class LsmbDate extends LsmbBaseInput {
         let props = super._collectProps();
         if (props.value === "today") {
             props.value = new Date();
+        } else if (typeof props.value === typeof "") {
+            if (isoDate.test(props.value)) {
+                props.value = dojoDateLocale.parse(props.value, {
+                    datePattern: "yyyy-MM-dd",
+                    selector: "date"
+                });
+            } else {
+                props.value = dojoDateLocale.parse(props.value, {
+                    datePattern: lsmbConfig.dateformat.replace(/mm/, "MM"),
+                    selector: "date"
+                });
+            }
         }
         return props;
     }
