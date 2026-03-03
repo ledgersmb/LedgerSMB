@@ -70,7 +70,7 @@
     "buffer": "6.0.3",
     "clean-webpack-plugin": "4.0.0",
     "compression-webpack-plugin": "12.0.0",
-    "copy-webpack-plugin": "13.0.1",
+    "copy-webpack-plugin": "14.0.0",
     "core-js": "3.48.0",
     "coveralls-next": "6.0.1",
     "css-loader": "7.1.4",
