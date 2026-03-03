@@ -69,7 +69,7 @@
     "browserslist": "4.28.1",
     "buffer": "6.0.3",
     "clean-webpack-plugin": "4.0.0",
-    "compression-webpack-plugin": "11.1.0",
+    "compression-webpack-plugin": "12.0.0",
     "copy-webpack-plugin": "13.0.1",
     "core-js": "3.48.0",
     "coveralls-next": "6.0.1",
