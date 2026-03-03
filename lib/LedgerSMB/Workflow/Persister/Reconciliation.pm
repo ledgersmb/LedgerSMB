@@ -11,6 +11,56 @@ This module provides e-mail attachment metadata to e-mail workflow.
 The class inherits from LedgerSMB::Workflow::Persister::ExtraData; users are
 expected to declare the email table and fields as "ExtraData" configuration.
 
+=head1 CONTEXT VARIABLES
+
+=head2 Persisted variables
+
+=over 8
+
+=item * account_id
+
+=item * ending_balance
+
+=item * end_date
+
+=item * recon_fx
+
+=back
+
+=head2 Non-persisted variables
+
+=over 8
+
+=item * _book_todo
+
+An array of items (payments, journal lines) represented as hashes with
+keys C<source>, C<post_date>, C<amount>, C<links>; where C<links> is
+an array of journal lines.
+
+=item * _pending_items
+
+An array of journal lines before the report end date which are available
+for merging into the report (that is, lines which are not already part of
+the report).
+
+=item * _preceeding_draft_count
+
+Number of draft transactions before the end date of the report.
+
+=item * _recon_done
+
+An array of hashes with the keys C<book> and C<stmt>; each a hash with
+the same content as described under C<book_todo> and C<stmt_todo> respectively.
+
+=item * _starting_cleared_balance
+
+=item * _stmt_todo
+
+An array of statement lines that have not been matched; hashes with at least
+the keys C<post_date>, C<amount>, C<source>.
+
+=back
+
 =head1 METHODS
 
 =cut
@@ -54,6 +104,35 @@ sub create_workflow($self, $wf) {
     $wf->context->param( 'id', $id );
 
     return $wf_id;
+}
+
+=head2 fetch_workflow
+
+=cut
+
+sub fetch_workflow($self, $wf_id) {
+    my $wf_info = $self->SUPER::fetch_workflow($wf_id);
+    return unless $wf_info;
+
+    my $dbh     = $self->handle;
+    $wf_info->{context} //= {};
+
+    # Retrieve pending book items (acc_trans lines)
+    $wf_info->{context}->{_pending_items} = [];
+
+    # Retrieve todo book lines
+    $wf_info->{context}->{_book_todo} = [];
+
+    # Retrieve todo statement lines
+    $wf_info->{context}->{_stmt_todo} = [];
+
+    # Retrieve reconciled book+statement items
+    $wf_info->{context}->{_book_done} = [];
+
+    # Retrieve draft transaction lines before report closing date
+    $wf_info->{preceeding_draft_count} = 0;
+
+    return $wf_info;
 }
 
 =head2 update_workflow
