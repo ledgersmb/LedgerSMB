@@ -58,6 +58,9 @@ Option (b) has the following consequences:
   be calculated explicitly in a transaction
 * Not all data is readily available from the database, so more data needs to
   be read (eg, data on allocation of stock)
+* Depending on the number of parts to calculate COGS for and the number of
+  purchase transactions, the amount of data to be retrieved from the server
+  can be huge as the history may be required for the calculation
 * Any COGS method that the user wants to create can be customized with
   regular mechanisms (ie., dependency injection)
 * Locking needs to be added to workflows asata is generally read from the
