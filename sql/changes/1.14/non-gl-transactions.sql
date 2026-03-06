@@ -4,6 +4,7 @@ values ('ap', 'The transaction is a regular Accounts Payable item'),
        ('ar', 'The transaction is a regular Accounts Receivable item');
 
 alter table transactions
+  alter column id set default nextval('id'),
   add column description text,
   add column trans_type_code char(2) references trans_type(code),
   add column entered_by int references entity(id),
@@ -47,6 +48,7 @@ update transactions txn
    where txn.id = old.id;
 
 alter table ar
+  alter column id drop default,
   drop column approved,
   drop column description,
   drop constraint ar_id_fkey,
@@ -54,6 +56,7 @@ alter table ar
   add constraint ar_id_fkey foreign key (id) references transactions (id) on delete cascade;
 
 alter table ap
+  alter column id drop default,
   drop column approved,
   drop column description,
   drop constraint ap_id_fkey,
@@ -61,6 +64,7 @@ alter table ap
   add constraint ap_id_fkey foreign key (id) references transactions (id) on delete cascade;
 
 alter table gl
+  alter column id drop default,
   drop column approved,
   drop column description,
   drop column trans_type_code,
