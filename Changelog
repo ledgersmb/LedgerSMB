@@ -1,5 +1,27 @@
                                                         -*- fundamental -*-
 
+Changelog for 1.14 Series
+
+Changelog for 1.14.0
+
+Added functionalities
+
+Changed functionalities
+
+Removed functionalities
+
+Bugs fixed
+* Overpayment reversals don't have a 'payment' record (#9257)
+
+Cleanup & architecture improvements
+* Centralized 'transactions' table, reducing role of ar/ap/gl tables (#9283)
+* Subledger transactions no longer *also* gl transactions (#9235)
+* Removed unused SQL modules (#9279)
+
+Updated dependencies
+* PostgreSQL minimum version increased to v14
+
+
 Changelog for 1.13 Series
 Released 2025-10-04
 
