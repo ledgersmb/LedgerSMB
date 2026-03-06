@@ -1217,8 +1217,7 @@ SELECT lsmb__grant_perms('assembly_stock', t_name, perm)
        unnest(ARRAY['SELECT'::text, 'INSERT', 'UPDATE']) perm;
 
 SELECT lsmb__grant_perms('assembly_stock', t_name, perm)
-  FROM unnest(ARRAY['mfg_lot_id_seq'::text, 'mfg_lot_item_id_seq',
-                    'lot_tracking_number']) t_name
+  FROM unnest(ARRAY['mfg_lot_id_seq'::text, 'mfg_lot_item_id_seq']) t_name
  CROSS JOIN unnest(ARRAY['SELECT'::text, 'UPDATE']) perm;
 
 SELECT lsmb__create_role('inventory_ship',

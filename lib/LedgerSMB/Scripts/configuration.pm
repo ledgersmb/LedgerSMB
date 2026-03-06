@@ -117,6 +117,7 @@ sub _default_settings {
               { name => 'ponumber', label => $locale->text('Purchase Order Number') },
               { name => 'rfqnumber', label => $locale->text('RFQ Number') },
               { name => 'partnumber', label => $locale->text('Part Number') },
+              { name => 'lotnumber', label => $locale->text('Production Lot Number') },
               { name => 'projectnumber', label => $locale->text('Business Unit Number') },
               { name => 'employeenumber', label => $locale->text('Employee Number') },
               { name => 'entity_control', label => $locale->text('Entity number') },

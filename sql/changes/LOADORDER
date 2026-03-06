@@ -188,3 +188,4 @@ mc/delete-migration-validation-data.sql
 1.14/centralized-transdate.sql
 1.14/mv-gl_person_id.sql
 1.14/inventory_report-report_date.sql
+1.14/drop-lot_tracking_number.sql
