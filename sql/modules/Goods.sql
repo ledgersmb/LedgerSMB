@@ -31,35 +31,35 @@ BEGIN
     UPDATE parts SET onhand = onhand + t_mfg_lot.qty
      where id = t_mfg_lot.parts_id;
 
-    INSERT INTO transactions (id, reference, description, transdate, approved,
+    INSERT INTO transactions (reference, description, transdate, approved,
                    trans_type_code, table_name)
-    values (nextval('id'), 'mfg-' || $1::TEXT, 'Manufacturing lot',
+    values ('mfg-' || $1::TEXT, 'Manufacturing lot',
             now(), true, 'as', 'mfg_lot');
 
     UPDATE mfg_lot
-       SET trans_id = currval('id')
+       SET trans_id = currval('transactions_id_seq')
      WHERE id = in_id;
 
     INSERT INTO invoice (trans_id, parts_id, qty, allocated)
-    SELECT currval('id')::int, parts_id, qty, 0
+    SELECT currval('transactions_id_seq')::int, parts_id, qty, 0
       FROM mfg_lot_item WHERE mfg_lot_id = $1;
 
     PERFORM cogs__add_for_ar_line(id) FROM invoice
-      WHERE trans_id = currval('id')::int;
+      WHERE trans_id = currval('transactions_id_seq')::int;
 
 
     PERFORM * FROM invoice
-      WHERE qty + allocated <> 0 AND trans_id = currval('id')::int;
+      WHERE qty + allocated <> 0 AND trans_id = currval('transactions_id_seq')::int;
 
     IF FOUND THEN
        RAISE EXCEPTION 'Not enough parts in stock';
     END IF;
 
     INSERT INTO invoice (trans_id, parts_id, qty, allocated, sellprice)
-    SELECT currval('id')::int, t_mfg_lot.parts_id, t_mfg_lot.qty * -1, 0,
+    SELECT currval('transactions_id_seq')::int, t_mfg_lot.parts_id, t_mfg_lot.qty * -1, 0,
            -1*sum(amount_bc) / t_mfg_lot.qty
       FROM acc_trans
-     WHERE amount_bc < 0 and trans_id = currval('id')::int;
+     WHERE amount_bc < 0 and trans_id = currval('transactions_id_seq')::int;
 
     PERFORM cogs__add_for_ap_line(currval('invoice_id_seq')::int);
 
@@ -71,7 +71,7 @@ BEGIN
            amount_bc * -1, curr, amount_tc * -1,
            currval('invoice_id_seq')::int, 'Collect assembly parts costs from COGS'
       FROM acc_trans
-     WHERE amount_bc < 0 and trans_id = currval('id')::int;
+     WHERE amount_bc < 0 and trans_id = currval('transactions_id_seq')::int;
 
     -- difference goes into inventory
     INSERT INTO acc_trans(trans_id, transdate, chart_id,
@@ -83,7 +83,7 @@ BEGIN
            sum(amount_bc) * -1, curr, sum(amount_tc) * -1,
            currval('invoice_id_seq')::int, 'Post assembly parts cost in inventory'
       FROM acc_trans
-     WHERE trans_id = currval('id')::int
+     WHERE trans_id = currval('transactions_id_seq')::int
   GROUP BY trans_id, curr;
 
 
@@ -388,12 +388,10 @@ IF inv.trans_id IS NOT NULL THEN
 END IF;
 
   INSERT INTO transactions (
-    id,
     description,
     transdate, reference, approved,
     trans_type_code, table_name)
-  VALUES (nextval('id'),
-          'Transaction due to approval of inventory adjustment',
+  VALUES ('Transaction due to approval of inventory adjustment',
           inv.report_date, 'invadj-' || in_id, true,
           'ia', 'inventory_report')
     RETURNING id INTO t_trans_id;

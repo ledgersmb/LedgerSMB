@@ -670,7 +670,7 @@ SELECT lsmb__grant_perms('ar_transaction_create', 'journal_line', 'INSERT');
 SELECT lsmb__grant_perms('ar_transaction_create', 'journal_line', 'SELECT');
 SELECT lsmb__grant_perms('ar_transaction_create', 'business_unit_jl', 'INSERT');
 SELECT lsmb__grant_perms('ar_transaction_create', 'oe', 'SELECT'); --@@TODO: Why??
-SELECT lsmb__grant_perms('ar_transaction_create', 'id', 'ALL');
+SELECT lsmb__grant_perms('ar_transaction_create', 'transactions_id_seq', 'ALL');
 SELECT lsmb__grant_perms('ar_transaction_create', 'acc_trans', 'INSERT');
 SELECT lsmb__grant_perms('ar_transaction_create', 'acc_trans_entry_id_seq', 'ALL');
 SELECT lsmb__grant_perms('ar_transaction_create', 'journal_entry_id_seq', 'ALL');
@@ -688,7 +688,7 @@ SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'warehouse_inventory',
 SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'acc_trans', 'INSERT');
 SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'tax_extended', 'INSERT');
 SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'business_unit_ac', 'INSERT');
-SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'id', 'all');
+SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'transactions_id_seq', 'all');
 SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'invoice_id_seq', 'all');
 SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'acc_trans_entry_id_seq', 'all');
 SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'warehouse_inventory_entry_id_seq', 'all');
@@ -856,7 +856,7 @@ SELECT lsmb__grant_perms('ap_transaction_create', obj, ptype)
  CROSS JOIN unnest(array['SELECT'::text, 'INSERT']) ptype;
 
 SELECT lsmb__grant_perms('ap_transaction_create', obj, 'ALL')
-  FROM unnest(array['id'::text, 'acc_trans_entry_id_seq',
+  FROM unnest(array['transactions_id_seq'::text, 'acc_trans_entry_id_seq',
                     'journal_entry_id_seq', 'journal_line_id_seq']) obj;
 
 SELECT lsmb__grant_perms('ap_transaction_create', 'acc_trans', 'INSERT');
@@ -884,7 +884,7 @@ SELECT lsmb__grant_perms('ap_transaction_create_voucher', obj, ptype)
  CROSS JOIN unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) ptype;
 
 SELECT lsmb__grant_perms('ap_transaction_create_voucher', obj, 'ALL')
-  FROM unnest(array['id'::text, 'acc_trans_entry_id_seq']) obj;
+  FROM unnest(array['transactions_id_seq'::text, 'acc_trans_entry_id_seq']) obj;
 
 SELECT lsmb__create_role('ap_invoice_create',
                          $DOC$
@@ -1286,7 +1286,7 @@ SELECT lsmb__grant_perms('gl_transaction_create', obj, 'INSERT')
   FROM unnest(array['acc_trans'::text, 'journal_entry', 'journal_line']) obj;
 
 SELECT lsmb__grant_perms('gl_transaction_create', obj, 'ALL')
-  FROM unnest(array['id'::text, 'acc_trans_entry_id_seq',
+  FROM unnest(array['transactions_id_seq'::text, 'acc_trans_entry_id_seq',
                    'journal_entry_id_seq', 'journal_line_id_seq'])obj;
 
 SELECT lsmb__create_role('gl_voucher_create',
@@ -1298,7 +1298,7 @@ SELECT lsmb__grant_perms('gl_voucher_create', obj, 'INSERT')
   FROM unnest(array['gl'::text, 'acc_trans', 'business_unit_ac']) obj;
 
 SELECT lsmb__grant_perms('gl_voucher_create', obj, 'ALL')
-  FROM unnest(array['id'::text, 'acc_trans_entry_id_seq']) obj;
+  FROM unnest(array['transactions_id_seq'::text, 'acc_trans_entry_id_seq']) obj;
 -- TODO Add menu permissions
 
 SELECT lsmb__create_role('gl_reports',

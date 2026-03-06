@@ -106,14 +106,14 @@ sub post_transaction {
     if ( !$form->{id} ) {
 
         $query = q|
-              INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-              VALUES (nextval('id'), ?, 'gl', 'gl', true)
+              INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
+              VALUES (?, 'gl', 'gl', true)
               |;
         $dbh->do($query, {}, $form->{transdate}) or $form->dberror($query);
 
         $query = qq|
       INSERT INTO gl (id, reference, notes)
-           VALUES (currval('id'), ?, ?)
+           VALUES (currval('transactions_id_seq'), ?, ?)
       RETURNING id|;
 
         $sth = $dbh->prepare($query) || $form->dberror($query);

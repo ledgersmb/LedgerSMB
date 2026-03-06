@@ -1080,9 +1080,9 @@ BEGIN
    -- HANDLE THE OVERPAYMENTS NOW
    IF (array_upper(in_op_cash_account_id, 1) > 0) THEN
      INSERT INTO transactions (
-       id, reference, description,
+       reference, description,
        transdate, entered_by, approved, trans_type_code, table_name)
-     VALUES (nextval('id'), setting_increment('paynumber'),
+     VALUES (setting_increment('paynumber'),
              in_gl_description, in_datepaid, var_employee,
              in_approved, 'op', 'payment')
      RETURNING id INTO var_txn_id;
@@ -1667,14 +1667,14 @@ SELECT *
 
   -- reverse overpayment gl
 
-  INSERT INTO transactions (id, transdate, reference,
+  INSERT INTO transactions (transdate, reference,
               description, approved,
               trans_type_code, table_name)
-  SELECT nextval('id'), transdate, reference || '-reversal',
+  SELECT transdate, reference || '-reversal',
          'reversal of ' || description, false, 'op', 'payment'
     FROM transactions WHERE id = t_curr_data.trans_id;
 
-  t_id := currval('id');
+  t_id := currval('transactions_id_seq');
 
 
   -- reverse payment record

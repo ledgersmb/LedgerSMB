@@ -42,8 +42,8 @@ sub _uncleared_journal_line {
     my $secondary_account = $conf->coa_nodes->get(by => (accno => '1060'));
     my $reference         = 'ref-' . $trx_cnt++;
 
-    $dbh->do(q{INSERT INTO transactions (id, reference, transdate, table_name, trans_type_code, approved)
-               VALUES (nextval('id'), ?, ?, 'gl', 'gl', true)},
+    $dbh->do(q{INSERT INTO transactions (reference, transdate, table_name, trans_type_code, approved)
+               VALUES (?, ?, 'gl', 'gl', true)},
              {},
              $reference,
              $posting_date)
@@ -51,7 +51,7 @@ sub _uncleared_journal_line {
     my $trx = $dbh->selectrow_hashref(
         <<~'STMT',
         INSERT INTO gl (id, reference)
-            VALUES(currval('id'), ?)
+            VALUES(currval('transactions_id_seq'), ?)
         RETURNING *
         STMT
         {},

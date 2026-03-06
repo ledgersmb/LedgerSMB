@@ -16,15 +16,15 @@ Given qr/^(-?\d+) units sold/, sub {
     }
     $dbh->do(
         q{
-        INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-        VALUES (nextval('id'), '2020-01-02', 'ar', 'ar', true)
+        INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
+        VALUES ('2020-01-02', 'ar', 'ar', true)
         })
         or die $dbh->errstr;
     $dbh->do(
         q{
         INSERT INTO ar (id, invnumber, invoice,
                         entity_credit_account)
-             VALUES (currval('id'), 'sale', true,
+             VALUES (currval('transactions_id_seq'), 'sale', true,
                      (select id from entity_credit_account
                        where meta_number=?)
                     );
@@ -38,7 +38,7 @@ Given qr/^(-?\d+) units sold/, sub {
         q{
         INSERT INTO invoice (trans_id, parts_id, qty, sellprice, discount,
                              allocated)
-               VALUES (currval('id'), (select id from parts where partnumber=?),
+               VALUES (currval('transactions_id_seq'), (select id from parts where partnumber=?),
                        ?, ?, ?, 0);
         },
         {},
@@ -61,14 +61,14 @@ When qr/^(-?\d+) units are purchased at (\d+) ([A-Z]{3,3}) each$/, sub {
 
     $dbh->do(
         q{
-        INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-        VALUES (nextval('id'), '2020-01-01', 'gl', 'gl', true)
+        INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
+        VALUES ('2020-01-01', 'gl', 'gl', true)
         })
         or die $dbh->errstr;
     $dbh->do(
         q{
         INSERT INTO gl (id, reference)
-                VALUES (currval('id'), 'PUR')
+                VALUES (currval('transactions_id_seq'), 'PUR')
         }
         )
         or die $dbh->errstr;
@@ -76,7 +76,7 @@ When qr/^(-?\d+) units are purchased at (\d+) ([A-Z]{3,3}) each$/, sub {
         q{
         INSERT INTO invoice (trans_id, parts_id, qty, sellprice, discount,
                              allocated)
-             VALUES (currval('id'), (select id from parts where partnumber=?),
+             VALUES (currval('transactions_id_seq'), (select id from parts where partnumber=?),
                      ?, ?, ?, 0)
         },
         {},
@@ -88,10 +88,10 @@ When qr/^(-?\d+) units are purchased at (\d+) ([A-Z]{3,3}) each$/, sub {
         INSERT INTO acc_trans (trans_id, chart_id,
                                transdate, invoice_id, approved,
                                amount_bc, amount_tc, curr)
-            VALUES (currval('id'), (select id from account where accno='3350'),
+            VALUES (currval('transactions_id_seq'), (select id from account where accno='3350'),
                     '2020-01-01', currval('invoice_id_seq'), true,
                     ?, ?, ?),
-                   (currval('id'), (select id from account where accno='1510'),
+                   (currval('transactions_id_seq'), (select id from account where accno='1510'),
                     '2020-01-01', currval('invoice_id_seq'), true,
                     ?, ?, ?);
         },
@@ -119,15 +119,15 @@ When qr/^(-?\d+) units are sold$/, sub {
     $sales_count++;
     $dbh->do(
         q{
-        INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-        VALUES (nextval('id'), '2020-01-02', 'ar', 'ar', true)
+        INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
+        VALUES ('2020-01-02', 'ar', 'ar', true)
         })
         or die $dbh->errstr;
     $dbh->do(
         q{
         INSERT INTO ar (id, invnumber, invoice,
                         entity_credit_account)
-             VALUES (currval('id'), ?, true,
+             VALUES (currval('transactions_id_seq'), ?, true,
                      (select id from entity_credit_account
                        where meta_number=?)
                     );
@@ -142,7 +142,7 @@ When qr/^(-?\d+) units are sold$/, sub {
         q{
         INSERT INTO invoice (trans_id, parts_id, qty, sellprice, discount,
                              allocated)
-               VALUES (currval('id'), (select id from parts where partnumber=?),
+               VALUES (currval('transactions_id_seq'), (select id from parts where partnumber=?),
                        ?, ?, ?, 0);
         },
         {},
@@ -166,15 +166,15 @@ When qr/^(\d+) units are credited$/, sub {
     $sales_count++;
     $dbh->do(
         q{
-        INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-        VALUES (nextval('id'), '2020-01-02', 'ar', 'ar', true)
+        INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
+        VALUES ('2020-01-02', 'ar', 'ar', true)
         })
         or die $dbh->errstr;
     $dbh->do(
         q{
         INSERT INTO ar (id, invnumber, invoice, reverse,
                         entity_credit_account)
-             VALUES (currval('id'), ?, true, true,
+             VALUES (currval('transactions_id_seq'), ?, true, true,
                      (select id from entity_credit_account
                        where meta_number=?)
                     );
@@ -189,7 +189,7 @@ When qr/^(\d+) units are credited$/, sub {
         q{
         INSERT INTO invoice (trans_id, parts_id, qty, sellprice, discount,
                              allocated)
-               VALUES (currval('id'), (select id from parts where partnumber=?),
+               VALUES (currval('transactions_id_seq'), (select id from parts where partnumber=?),
                        ?, ?, ?, 0);
         },
         {},

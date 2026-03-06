@@ -191,15 +191,15 @@ Given qr/(an )?unpaid AP transactions? with these values:$/, sub {
     my $dbh = S->{ext_lsmb}->admin_dbh;
 
     my $txn_query = $dbh->prepare(<<~'SQL');
-      INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-      VALUES (nextval('id'), ?, 'ap', 'ap', true)
+      INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
+      VALUES (?, 'ap', 'ap', true)
       SQL
 
     my $ap_query = $dbh->prepare("
         INSERT INTO ap (id, invnumber, amount_bc, netamount_bc,
                         duedate, curr, entity_credit_account,
                         amount_tc, netamount_tc)
-        SELECT currval('id'), ?, ?, ?, ?, 'USD',
+        SELECT currval('transactions_id_seq'), ?, ?, ?, ?, 'USD',
                entity_credit_account.id, ?, ?
         FROM entity
         JOIN entity_credit_account ON (
@@ -367,14 +367,14 @@ Given qr/^(\d+) units inventory of ((?:a|the) part|part "(.*)") purchased at (\d
     my $dbh = S->{ext_lsmb}->admin_dbh;
     $dbh->do(
         q{
-        INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-        VALUES (nextval('id'), '2020-01-01', 'gl', 'gl', true)
+        INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
+        VALUES ('2020-01-01', 'gl', 'gl', true)
         })
         or die $dbh->errstr;
     $dbh->do(
         q{
         INSERT INTO gl (id, reference)
-               VALUES (currval('id'), 'INV-INIT');
+               VALUES (currval('transactions_id_seq'), 'INV-INIT');
         })
         or die $dbh->errstr;
 
@@ -382,7 +382,7 @@ Given qr/^(\d+) units inventory of ((?:a|the) part|part "(.*)") purchased at (\d
         q{
         INSERT INTO invoice (trans_id, parts_id, qty, sellprice, precision,
                              fxsellprice, discount, unit, allocated)
-            VALUES (currval('id'), (select id from parts where partnumber = ?),
+            VALUES (currval('transactions_id_seq'), (select id from parts where partnumber = ?),
                     ?, ?, 2, ?, 0, 'ea', 0);
         },
         {},
@@ -394,10 +394,10 @@ Given qr/^(\d+) units inventory of ((?:a|the) part|part "(.*)") purchased at (\d
         INSERT INTO acc_trans (trans_id, chart_id,
                                transdate, invoice_id, approved,
                                amount_bc, amount_tc, curr)
-            VALUES (currval('id'), (select id from account where accno='3350'),
+            VALUES (currval('transactions_id_seq'), (select id from account where accno='3350'),
                     '2020-01-01', currval('invoice_id_seq'), true,
                     ?, ?, ?),
-                   (currval('id'), (select id from account where accno='1510'),
+                   (currval('transactions_id_seq'), (select id from account where accno='1510'),
                     '2020-01-01', currval('invoice_id_seq'), true,
                     ?, ?, ?);
         },

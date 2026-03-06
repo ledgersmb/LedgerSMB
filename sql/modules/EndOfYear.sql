@@ -96,12 +96,12 @@ DECLARE
    ret_val int;
    cp_date date;
 BEGIN
-        INSERT INTO transactions (id, transdate, reference, description, approved,
+        INSERT INTO transactions (transdate, reference, description, approved,
                                   trans_type_code, table_name)
-        VALUES (nextval('id'), in_end_date, in_reference, in_description, true, 'ye', 'yearend');
+        VALUES (in_end_date, in_reference, in_description, true, 'ye', 'yearend');
 
         INSERT INTO yearend (trans_id, transdate)
-             VALUES (currval('id'), in_end_date);
+             VALUES (currval('transactions_id_seq'), in_end_date);
 
         SELECT coalesce(max(end_date),
                         (SELECT min(transdate)-1 FROM acc_trans)) INTO cp_date
@@ -109,7 +109,7 @@ BEGIN
 
         INSERT INTO acc_trans (transdate, chart_id, trans_id,
                                amount_bc, curr, amount_tc)
-        SELECT in_end_date, a.chart_id, currval('id'),
+        SELECT in_end_date, a.chart_id, currval('transactions_id_seq'),
                (coalesce(a.amount_bc, 0) + coalesce(cp.amount_bc, 0)) * -1,
                coalesce(a.curr,cp.curr),
                (coalesce(a.amount_tc, 0) + coalesce(cp.amount_tc, 0)) * -1
@@ -132,16 +132,16 @@ BEGIN
 
         INSERT INTO acc_trans (transdate, trans_id, chart_id,
                                amount_bc, curr, amount_tc)
-        SELECT in_end_date, currval('id'), in_retention_acc_id,
+        SELECT in_end_date, currval('transactions_id_seq'), in_retention_acc_id,
                coalesce(sum(amount_bc) * -1, 0),
                -- post only default currency in retained earnings
                defaults_get_defaultcurrency(),
                coalesce(sum(amount_tc) * -1, 0)
-        FROM acc_trans WHERE trans_id = currval('id');
+        FROM acc_trans WHERE trans_id = currval('transactions_id_seq');
 
 
         SELECT count(*) INTO ret_val from acc_trans
-        where trans_id = currval('id');
+        where trans_id = currval('transactions_id_seq');
 
         RETURN ret_val;
 end;
@@ -201,10 +201,10 @@ BEGIN
       t_new_trans_id int;
     BEGIN
       INSERT INTO transactions (
-        id, transdate, reference,
+        transdate, reference,
         description, approved, reversing,
         trans_type_code, table_name)
-      SELECT nextval('id'), in_end_date, 'Reversing ' || reference,
+      SELECT in_end_date, 'Reversing ' || reference,
              'Reversing ' || description, true, id,
              'ye', 'yearend'
         FROM transactions
