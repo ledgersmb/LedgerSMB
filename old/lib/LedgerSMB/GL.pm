@@ -125,27 +125,19 @@ sub post_transaction {
              UPDATE transactions
                 SET workflow_id = ?,
                     reversing = ?,
-                    description = ?
+                    description = ?,
+                    reference = ?
               WHERE id = ?
                     AND workflow_id IS NULL|;
         $sth   = $dbh->prepare($query);
         $form->{reversing} ||= undef; # convert empty string to NULL
-        $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{description}, $form->{id} )
+        $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{description}, $form->{id}, $form->{reference} )
             || $form->dberror($query);
     }
 
     ( $null, $department_id ) =
         split( /--/, $form->{department}) if $form->{department};
     ($department_id //= 0) *= 1;
-
-    if (! $form->{reference} ) {
-        $form->{reference} = $form->{id};
-        $dbh->do(qq|
-UPDATE gl
-   SET reference = ?
- WHERE id = ?|, {}, $form->{reference}, $form->{id})
-            or $form->dberror($dbh->errstr);
-    }
 
     if (defined $form->{approved}) {
         my $query = qq| UPDATE transactions SET approved = ? WHERE id = ?|;
