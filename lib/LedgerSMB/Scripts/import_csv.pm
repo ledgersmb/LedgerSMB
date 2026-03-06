@@ -282,14 +282,14 @@ sub _process_gl_multi {
         or die $dbh->errstr;
     my $sth_tx = $dbh->prepare(q{
         INSERT INTO transactions (
-               id, transdate, reference, description,
+               transdate, reference, description,
                table_name, trans_type_code, approved)
-        VALUES (nextval('id'), ?, ?, ?, 'gl', 'gl', true)
+        VALUES (?, ?, ?, 'gl', 'gl', true)
         })
         or die $dbh->errstr;
     my $sth_gl = $dbh->prepare(q{
         INSERT INTO gl (id, reference)
-               VALUES (currval('id'), ?)
+               VALUES (currval('transactions_id_seq'), ?)
         RETURNING id })
         or die $dbh->errstr;
     for my $entry (@$entries) {

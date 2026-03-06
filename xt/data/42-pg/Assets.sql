@@ -7,7 +7,7 @@ declare
     acc_id int;
 begin
     insert into account ( accno, description, category, heading )
-        values ( 'fa' || nextval('id'), 'fixed asset account',
+        values ( 'fa' || nextval('account_id_seq'), 'fixed asset account',
                  'A', (select id from account_heading
                         where accno = '000000000000000000000'))
     returning id into acc_id;
@@ -25,7 +25,7 @@ declare
     acc_id int;
 begin
     insert into account ( accno, description, category, heading, contra )
-        values ( 'ad' || nextval('id'), 'asset depreciation account',
+        values ( 'ad' || nextval('account_id_seq'), 'asset depreciation account',
                  'A', (select id from account_heading
                         where accno = '000000000000000000000'), 't')
     returning id into acc_id;
@@ -43,7 +43,7 @@ declare
     acc_id int;
 begin
     insert into account ( accno, description, category, heading, contra )
-        values ( 'ae' || nextval('id'), 'asset expense',
+        values ( 'ae' || nextval('account_id_seq'), 'asset expense',
                  'E', (select id from account_heading
                         where accno = '000000000000000000000'), 't')
     returning id into acc_id;
@@ -62,7 +62,7 @@ declare
     acc_id int;
 begin
     insert into account ( accno, description, category, heading, contra )
-        values ( 'al' || nextval('id'), 'asset loss',
+        values ( 'al' || nextval('account_id_seq'), 'asset loss',
                  'E', (select id from account_heading
                         where accno = '000000000000000000000'), 't')
     returning id into acc_id;
@@ -81,7 +81,7 @@ declare
     acc_id int;
 begin
     insert into account ( accno, description, category, heading, contra )
-        values ( 'ag' || nextval('id'), 'asset gain',
+        values ( 'ag' || nextval('account_id_seq'), 'asset gain',
                  'I', (select id from account_heading
                         where accno = '000000000000000000000'), 't')
     returning id into acc_id;

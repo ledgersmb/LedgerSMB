@@ -178,14 +178,14 @@ BEGIN;
     PREPARE test AS SELECT report_date, trans_id
                      FROM inventory_report
                     WHERE id = currval('inventory_report_id_seq');
-    SELECT results_eq('test', $$VALUES(now()::date, currval('id')::int)$$,
+    SELECT results_eq('test', $$VALUES(now()::date, currval('transactions_id_seq')::int)$$,
                               'inventory adjustment, adjustment transactions');
     DEALLOCATE test;
 
     SELECT is(
           ARRAY(SELECT count(*)
             FROM acc_trans
-           WHERE trans_id = currval('id')),
+           WHERE trans_id = currval('transactions_id_seq')),
            ARRAY[4]::bigint[],
            'There are 4 lines in acc_trans (correcting the inventory account)'
     );
@@ -193,28 +193,28 @@ BEGIN;
     SELECT is(
           (SELECT ARRAY[count(*), sum(amount_bc)]
             FROM acc_trans
-           WHERE trans_id = currval('id') AND chart_id = -1101),
+           WHERE trans_id = currval('transactions_id_seq') AND chart_id = -1101),
            ARRAY[1, -5]::numeric[],
            'There is 1 line on "series 1" inventory'
     );
     SELECT is(
           (SELECT ARRAY[count(*), sum(amount_bc)]
             FROM acc_trans
-           WHERE trans_id = currval('id') AND chart_id = -1102),
+           WHERE trans_id = currval('transactions_id_seq') AND chart_id = -1102),
            ARRAY[1, 5]::numeric[],
            'There is 1 line on "series 1" COGS'
     );
     SELECT is(
           (SELECT ARRAY[count(*), sum(amount_bc)]
             FROM acc_trans
-           WHERE trans_id = currval('id') AND chart_id = -2101),
+           WHERE trans_id = currval('transactions_id_seq') AND chart_id = -2101),
            ARRAY[1, 45]::numeric[],
            'There is 1 line on "series 2" inventory'
     );
     SELECT is(
           (SELECT ARRAY[count(*), sum(amount_bc)]
             FROM acc_trans
-           WHERE trans_id = currval('id') AND chart_id = -2102),
+           WHERE trans_id = currval('transactions_id_seq') AND chart_id = -2102),
            ARRAY[1, -45]::numeric[],
            'There is 1 line on "series 2" COGS'
     );

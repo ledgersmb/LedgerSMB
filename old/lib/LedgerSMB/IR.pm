@@ -133,12 +133,12 @@ sub post_invoice {
         my $uid = localtime;
         $uid .= "$$";
 
-        $query = q{INSERT INTO transactions (id, table_name, trans_type_code, approved)
-                   VALUES (nextval('id'), 'ap', 'ap', false)};
+        $query = q{INSERT INTO transactions (table_name, trans_type_code, approved)
+                   VALUES ('ap', 'ap', false)};
         $dbh->do($query) or $form->dberror($query);
         $query = qq|
             INSERT INTO ap (id, invnumber, person_id, entity_credit_account)
-                 VALUES (currval('id'), '$uid', ?, ?)|;
+                 VALUES (currval('transactions_id_seq'), '$uid', ?, ?)|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{employee_id}, $form->{vendor_id}) || $form->dberror($query);
 

@@ -787,14 +787,14 @@ sub post_invoice {
         $uid .= "$$";
 
         $query = q|
-            INSERT INTO transactions (id, table_name, trans_type_code, approved)
-            VALUES (nextval('id'), 'ar', 'ar', false)
+            INSERT INTO transactions (table_name, trans_type_code, approved)
+            VALUES ('ar', 'ar', false)
             |;
         $dbh->do($query) or $form->dberror($query);
 
         $query = qq|
             INSERT INTO ar (id, invnumber, person_id, entity_credit_account)
-                 VALUES (currval('id'), '$uid', ?, ?)|;
+                 VALUES (currval('transactions_id_seq'), '$uid', ?, ?)|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{employee_id}, $form->{customer_id}) || $form->dberror($query);
 
