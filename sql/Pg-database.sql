@@ -1035,7 +1035,7 @@ projectnumber|1
 rcptnumber|1
 paynumber|1
 separate_duties|1
-entity_control|A-00001
+entity_control|A-00000
 batch_cc|B-11111
 check_prefix|CK
 decimal_places|2
