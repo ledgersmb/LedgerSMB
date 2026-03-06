@@ -13,16 +13,7 @@
         <th align="right">[% ITEM.label %]</th>
         <td colspan="[% ITEM.info ? 1 : 2 %]" style='white-space:nowrap'>
           [%
-             IF ITEM.name == 'password_duration';
-               PROCESS input element_data = {
-                       name = ITEM.name,
-                       type = 'text',
-                       value = form.${ITEM.name},
-                       size = 5,
-                       'data-dojo-type' = 'dijit/form/NumberTextBox',
-                       'data-dojo-props' = 'constraints:{min:0.00001,max:3653}',
-               };
-             ELSIF ITEM.type == 'YES_NO' OR ITEM.type == 'YES_NO_AUTO';
+             IF ITEM.type == 'YES_NO' OR ITEM.type == 'YES_NO_AUTO';
                IF form.${ITEM.name} == 'auto';
                  AUTO="CHECKED";
                  YES=undef;
