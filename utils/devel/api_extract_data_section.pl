@@ -4,12 +4,13 @@ use warnings;
 
 use File::Spec;
 
+my $outDir = shift @ARGV;
 while ( my $file=shift(@ARGV)) {
     my (undef,undef,$yml) = File::Spec->splitpath( $file );
     $yml =~ s/.pm/.yml/;
 
     open(FILE,'<',$file) or die $!;
-    open(YML,'>',$yml) or die $!;
+    open(YML,'>',"$outDir/$yml") or die $!;
 
     my $keep=0;
     while(<FILE>)

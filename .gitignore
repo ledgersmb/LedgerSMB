@@ -32,7 +32,13 @@ META.yml
 /doc/manual/*.log
 /doc/manual/*.out
 
-* README.md is now produced from a template
+# /doc/database/
+/doc/database/ledgersmb.dot_shortfk
+/doc/database/ledgersmb.pdf
+/doc/database/ledgersmb.svg
+
+
+# README.md is now produced from a template
 ./README.md
 
 # Custom extensions to Tests and Validations
@@ -49,6 +55,10 @@ META.yml
 
 # Webpack
 /UI/node_modules/
+
+# redocly
+/UI/openapi/
+/doc/openapi/API.yaml
 
 # local configurations
 *.local
