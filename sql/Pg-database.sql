@@ -1669,7 +1669,7 @@ VALUES (1, 'Department', '0', '10'),
        (4, 'Fund', '0', '40'),
        (5, 'Customer', '0', '50'),
        (6, 'Vendor', '0', '60'),
-       (7, 'Lot',  '0', 50);
+       (7, 'Lot',  '0', '70');
 
 SELECT pg_catalog.setval('business_unit_class_id_seq', 7, true);
 
