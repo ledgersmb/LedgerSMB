@@ -4,7 +4,6 @@ set client_min_messages = 'warning';
 
 BEGIN;
 
-DROP FUNCTION IF EXISTS file__get_mime_type(int, text);
 
 CREATE OR REPLACE FUNCTION file__get_mime_type
  (in_mime_type_id int, in_mime_type_text text)

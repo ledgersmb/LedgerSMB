@@ -127,27 +127,6 @@ make text,
 model text
 );
 
-DROP FUNCTION IF EXISTS goods__search
-(in_partnumber text, in_description text,
- in_partsgroup_id int, in_serial_number text, in_make text,
- in_model text, in_drawing text, in_microfiche text,
- in_status text, in_date_from date, in_date_to date,
- in_sales_invoices bool, in_purchase_invoices bool,
- in_sales_orders bool, in_purchase_orders bool, in_quotations bool,
- in_rfqs bool);
-
-DROP FUNCTION IF EXISTS goods__search
-(in_partnumber text, in_description text,
- in_partsgroup_id int, in_serial_number text, in_make text,
- in_model text, in_drawing text, in_microfiche text,
- in_status text, in_date_from date, in_date_to date);
-
-DROP FUNCTION IF EXISTS goods__search
-(in_parttype text, in_partnumber text, in_description text,
- in_partsgroup_id int, in_serial_number text, in_make text,
- in_model text, in_drawing text, in_microfiche text,
- in_status text, in_date_from date, in_date_to date);
-
 
 CREATE OR REPLACE FUNCTION goods__search
 (in_parttype text, in_partnumber text, in_description text,
@@ -369,9 +348,6 @@ RETURNING *;
 $$;
 
 
--- 'inventory_ajdust__approve()' had its return type changed in 1.5.4
-DROP FUNCTION IF EXISTS inventory_adjust__approve(int);
-
 
 CREATE OR REPLACE FUNCTION inventory_adjust__approve(in_id int)
 RETURNS inventory_report language plpgsql as
@@ -472,7 +448,6 @@ SELECT * FROM inventory_report
 
 $$;
 
-DROP FUNCTION IF EXISTS inventory_adjust__get(in_id int);
 CREATE OR REPLACE FUNCTION inventory_adjust__get(in_id int)
 RETURNS inventory_report -- only 0-1....
 LANGUAGE SQL AS
@@ -512,12 +487,6 @@ discount numeric,
 serialnumber text
 );
 
-DROP FUNCTION IF EXISTS goods__history(
-  in_date_from date, in_date_to date,
-  in_partnumber text, in_description text, in_serial_number text,
-  in_inc_po bool, in_inc_so bool, in_inc_quo bool, in_inc_rfq bool,
-  in_inc_is bool, in_inc_ir bool
-);
 
 CREATE OR REPLACE FUNCTION goods__history(
   in_date_from date, in_date_to date,

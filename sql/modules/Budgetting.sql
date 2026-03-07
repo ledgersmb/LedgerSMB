@@ -213,7 +213,6 @@ CREATE TYPE budget_line_details AS (
 );
 
 
-DROP FUNCTION IF EXISTS budget__get_details(int) CASCADE;
 CREATE OR REPLACE FUNCTION budget__get_details(in_id int)
 RETURNS SETOF budget_line_details AS
 $$

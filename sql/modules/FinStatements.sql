@@ -13,7 +13,6 @@ BEGIN;
 -- reports do not return total and summary lines.  These must be done by the
 -- application handling this.
 
-DROP FUNCTION IF EXISTS pnl__product(in_from_date date, in_to_date date, in_parts_id integer, in_business_units integer[]);
 DROP TYPE IF EXISTS pnl_line CASCADE;
 DROP TYPE IF EXISTS financial_statement_line CASCADE;
 CREATE TYPE financial_statement_line AS (
@@ -154,8 +153,6 @@ hdr_balance AS (
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
 
-DROP FUNCTION IF EXISTS pnl__income_statement_accrual(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[]);
-DROP FUNCTION IF EXISTS pnl__income_statement_accrual(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[], in_language text);
 CREATE OR REPLACE FUNCTION pnl__income_statement_accrual(in_from_date date, in_to_date date, in_business_units integer[], in_language text)
   RETURNS SETOF financial_statement_line AS
 $BODY$
@@ -273,8 +270,6 @@ $BODY$
   LANGUAGE sql;
 
 
-DROP FUNCTION IF EXISTS pnl__income_statement_cash(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[]);
-DROP FUNCTION IF EXISTS pnl__income_statement_cash(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[], in_language text);
 CREATE OR REPLACE FUNCTION pnl__income_statement_cash(in_from_date date, in_to_date date, in_business_units integer[], in_language text)
   RETURNS SETOF financial_statement_line LANGUAGE SQL AS
 $$
@@ -394,7 +389,6 @@ hdr_balance AS (
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
 
-DROP FUNCTION IF EXISTS pnl__invoice(in_id integer);
 CREATE OR REPLACE FUNCTION pnl__invoice(in_id integer, in_language text)
   RETURNS SETOF financial_statement_line LANGUAGE SQL AS
 $$
@@ -479,7 +473,6 @@ hdr_balance AS (
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
 
-DROP FUNCTION IF EXISTS pnl__customer(in_id integer, in_from_date date, in_to_date date);
 CREATE OR REPLACE FUNCTION pnl__customer(in_id integer, in_from_date date, in_to_date date, in_language text)
   RETURNS SETOF financial_statement_line LANGUAGE SQL AS
 $$
@@ -573,9 +566,6 @@ hdr_balance AS (
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
 
-
-DROP FUNCTION IF EXISTS report__balance_sheet(in_to_date date);
-DROP FUNCTION IF EXISTS report__balance_sheet(in_to_date date, in_language text);
 CREATE OR REPLACE FUNCTION report__balance_sheet(in_to_date date,
                                                  in_language text,
                                                  in_timing text)

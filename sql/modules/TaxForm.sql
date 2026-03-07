@@ -4,8 +4,6 @@ set client_min_messages = 'warning';
 
 BEGIN;
 
-DROP FUNCTION IF EXISTS tax_form__save(in_id int, in_country_id int,
-                          in_form_name text, in_default_reportable bool);
 CREATE OR REPLACE FUNCTION tax_form__save(in_id int, in_country_id int,
                           in_form_name text, in_default_reportable bool,
                           in_is_accrual bool)
@@ -57,7 +55,6 @@ CREATE TYPE tax_form_list AS (
    is_accrual bool
 );
 
-DROP FUNCTION IF EXISTS tax_form__list_all();
 CREATE OR REPLACE FUNCTION tax_form__list_all()
 RETURNS SETOF tax_form_list AS
 $BODY$

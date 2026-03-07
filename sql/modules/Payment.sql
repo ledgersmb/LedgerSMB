@@ -31,7 +31,6 @@ to account for its behavior in future versions.$$;
 -- ### To be dropped in 1.4: it's imprecise
 -- to return a set of entity accounts based on their names,
 -- if we're going to use them for discount calculations...
-DROP FUNCTION IF EXISTS payment_get_entity_accounts (int, text, text);
 CREATE OR REPLACE FUNCTION payment_get_entity_accounts
 (in_account_class int,
  in_vc_name text,
@@ -115,8 +114,6 @@ CREATE TYPE payment_open_account AS (
 );
 
 
-DROP FUNCTION IF EXISTS payment_get_open_accounts(int);
-DROP FUNCTION IF EXISTS payment_get_open_accounts(int, date, date);
 -- payment_get_open_accounts and the option to get all accounts need to be
 -- refactored and redesigned.  -- CT
 CREATE OR REPLACE FUNCTION payment_get_open_accounts
@@ -170,8 +167,6 @@ COMMENT ON FUNCTION payment_get_open_accounts(int, date, date) IS
   which have a validity interval (between 'start' and 'end' dates) which overlaps with the
   interval between 'from' and 'to' dates. $$;
 
-DROP FUNCTION if exists payment_get_all_accounts(int);
-
 CREATE OR REPLACE FUNCTION payment_get_all_accounts(in_account_class int)
 RETURNS SETOF payment_open_account AS
 $$
@@ -212,15 +207,6 @@ CREATE TYPE payment_invoice AS (
         description text
 );
 
-
-DROP FUNCTION IF EXISTS payment_get_open_invoices
-(in_account_class int,
- in_entity_credit_id int,
- in_curr char(3),
- in_datefrom date,
- in_dateto date,
- in_amountfrom numeric,
- in_amountto   numeric);
 
 CREATE OR REPLACE FUNCTION payment_get_open_invoices
 (in_account_class int,
@@ -314,16 +300,6 @@ date, date, numeric, numeric, date) IS
 $$ This function is the base for get_open_invoice and returns all open invoices for the entity_credit_id
 it has a lot of options to enable filtering and use the same logic for entity_class_id and currency. $$;
 
-DROP FUNCTION IF EXISTS payment_get_open_invoice
-(in_account_class int,
- in_entity_credit_id int,
- in_curr char(3),
- in_datefrom date,
- in_dateto date,
- in_amountfrom numeric,
- in_amountto   numeric,
- in_invnumber text);
-
 CREATE OR REPLACE FUNCTION payment_get_open_invoice
 (in_account_class int,
  in_entity_credit_id int,
@@ -366,11 +342,6 @@ CREATE TYPE payment_contact_invoice AS (
         has_vouchers bigint,
         got_lock bool
 );
-
-DROP FUNCTION IF EXISTS payment_get_all_contact_invoices
-(in_account_class int, in_business_id int, in_currency char(3),
-        in_date_from date, in_date_to date, in_batch_id int,
-        in_ar_ap_accno text, in_meta_number text, in_payment_date date);
 
 CREATE OR REPLACE FUNCTION payment_get_all_contact_invoices
 (in_account_class int, in_business_id int, in_currency char(3),
@@ -515,18 +486,6 @@ either approved or in the batch_id specified.  It also locks the invoices using
 the LedgerSMB discretionary locking framework, and if not possible, returns the
 username of the individual who has the lock.
 $$;
-
-DROP FUNCTION IF EXISTS payment_bulk_post
-(in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
-        in_ar_ap_accno text, in_cash_accno text,
-        in_payment_date date, in_account_class int,
-        in_exchangerate numeric, in_curr text);
-
-DROP FUNCTION IF EXISTS payment_bulk_post
-(in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
-        in_ar_ap_accno text, in_cash_accno text,
-        in_payment_date date, in_account_class int,
-        in_exchangerate numeric, in_currency text);
 
 
 CREATE OR REPLACE FUNCTION payment_bulk_post
@@ -842,49 +801,6 @@ $$ This posts the payments for large batch workflows.
 Note that in_transactions is a two-dimensional numeric array.  Of each
 sub-array, the first element is the (integer) transaction id, and the second
 is the amount for that transaction.  $$;
-
-DROP FUNCTION IF EXISTS payment_post
-(in_datepaid                      date,
- in_account_class                 int,
- in_entity_credit_id              int,
- in_curr                          char(3),
- in_notes                         text,
- in_gl_description                text,
- in_cash_account_id               int[],
- in_amount                        numeric[],
- in_cash_approved                 bool[],
- in_source                        text[],
- in_memo                          text[],
- in_transaction_id                int[],
- in_op_amount                     numeric[],
- in_op_cash_account_id            int[],
- in_op_source                     text[],
- in_op_memo                       text[],
- in_op_account_id                 int[],
- in_ovp_payment_id                int[],
- in_approved                      bool);
-
-DROP FUNCTION IF EXISTS payment_post
-(in_datepaid                      date,
- in_account_class                 int,
- in_entity_credit_id                     int,
- in_curr                          char(3),
- in_exchangerate          numeric,
- in_notes                         text,
- in_gl_description                text,
- in_cash_account_id               int[],
- in_amount                        numeric[],
- in_cash_approved                 bool[],
- in_source                        text[],
- in_memo                          text[],
- in_transaction_id                int[],
- in_op_amount                     numeric[],
- in_op_cash_account_id            int[],
- in_op_source                     text[],
- in_op_memo                       text[],
- in_op_account_id                 int[],
- in_ovp_payment_id                int[],
- in_approved                      bool);
 
 
 CREATE OR REPLACE FUNCTION payment_post
@@ -1259,8 +1175,6 @@ CREATE TYPE payment_record AS (
         reversed_by int
 );
 
-DROP FUNCTION IF EXISTS payment__search(text, date, date, int, text, int, char(3));
-
 CREATE OR REPLACE FUNCTION payment__search
 (in_source text, in_from_date date, in_to_date date, in_credit_id int,
         in_cash_accno text, in_entity_class int, in_currency char(3),
@@ -1325,16 +1239,6 @@ date range.  All other matches are exact except that null matches all values.
 Currently (and to support earlier data) we define a payment as a collection of
 acc_trans records against the same credit account and cash account, on the same
 day with the same source number, and optionally the same voucher id.$$;
-
-DROP FUNCTION IF EXISTS payment__reverse
-(in_source text, in_date_paid date, in_credit_id int, in_cash_accno text,
-        in_date_reversed date, in_account_class int, in_batch_id int,
-        in_voucher_id int, in_exchangerate numeric, in_currency char(3));
-
-DROP FUNCTION IF EXISTS payment__reverse
-(in_source text, in_date_paid date, in_credit_id int, in_cash_accno text,
-        in_date_reversed date, in_account_class int, in_batch_id int,
-        in_voucher_id int);
 
 
 CREATE OR REPLACE FUNCTION payment__reverse
@@ -1628,13 +1532,6 @@ SELECT o.payment_id, e.name, o.available, txn.transdate,
        ($4 IS NULL OR $4 = eca.meta_number) AND
        ($5 IS NULL OR e.name @@ plainto_tsquery($5));
 $$;
-
-DROP FUNCTION IF EXISTS overpayment__reverse
-(in_id int, in_transdate date, in_batch_id int, in_account_class int,
-in_cash_accno text, in_exchangerate numeric, in_curr char(3));
-
-DROP FUNCTION IF EXISTS overpayment__reverse
-(in_id int, in_transdate date, in_batch_id int, in_account_class int, in_exchangerate numeric, in_curr char(3));
 
 
 CREATE OR REPLACE FUNCTION overpayment__reverse

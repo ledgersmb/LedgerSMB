@@ -52,7 +52,6 @@ SELECT e.id, e.control_code, e.name, e.country_id, c.name,
  WHERE e.control_code = $1;
 $$ LANGUAGE SQL;
 
-DROP FUNCTION IF EXISTS robot__save (int, text, text, text, int);
 CREATE OR REPLACE FUNCTION robot__save
 (in_entity_id integer,
 in_first_name text, in_middle_name text, in_last_name text,

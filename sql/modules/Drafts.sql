@@ -16,8 +16,6 @@ CREATE TYPE draft_search_result AS (
         amount numeric
 );
 
-DROP FUNCTION IF EXISTS draft__search(in_type text, in_with_accno text,
-in_from_date date, in_to_date date, in_amount_lt numeric, in_amount_gt numeric);
 
 CREATE OR REPLACE FUNCTION draft__search(in_type text, in_reference text,
 in_from_date date, in_to_date date, in_amount_lt numeric, in_amount_gt numeric)

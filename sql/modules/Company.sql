@@ -106,13 +106,6 @@ END
 $$ LANGUAGE PLPGSQL;
 
 
-DROP FUNCTION IF EXISTS eca__history
-(in_name text, in_meta_number text, in_contact_info text, in_address_line text,
- in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
- in_country_id int, in_from_date date, in_to_date date, in_type char(1),
- in_start_from date, in_start_to date, in_entity_class int,
- in_inc_open bool, in_inc_closed bool);
-
 
 CREATE OR REPLACE FUNCTION eca__history
 (in_name_part text, in_meta_number text, in_contact_info text, in_address_line text,
@@ -238,12 +231,6 @@ a customer over a specific date range.
 meta_number is an exact match, as are in_open and inc_closed.  All other fields
 allow for partial matches.  NULL matches all values.$$;
 
-DROP FUNCTION IF EXISTS eca__history_summary
-(in_name text, in_meta_number text, in_contact_info text, in_address_line text,
- in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
- in_country_id int, in_from_date date, in_to_date date, in_type char(1),
- in_start_from date, in_start_to date, in_entity_class int,
- in_inc_open bool, in_inc_closed bool);
 CREATE OR REPLACE FUNCTION eca__history_summary
 (in_name_part text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
@@ -283,20 +270,6 @@ $$Creates a summary account (no quantities, just parts group by invoice).
 meta_number must match exactly or be NULL.  inc_open and inc_closed are exact
 matches too.  All other values specify ranges or may match partially.$$;
 
-DROP FUNCTION IF EXISTS  contact__search
-(in_entity_class int, in_contact text, in_contact_info text[],
-        in_meta_number text, in_address text, in_city text, in_state text,
-        in_mail_code text, in_country text, in_active_date_from date,
-        in_active_date_to date,
-        in_business_id int, in_name_part text, in_control_code text);
-
-DROP FUNCTION IF EXISTS contact__search
-(in_entity_class int, in_contact text, in_contact_info text[],
-        in_meta_number text, in_address text, in_city text, in_state text,
-        in_mail_code text, in_country text, in_active_date_from date,
-        in_active_date_to date,
-        in_business_id int, in_name_part text, in_control_code text,
-        in_notes text);
 
 CREATE OR REPLACE FUNCTION contact__search
 (in_entity_class int, in_contact text, in_contact_info text[],
@@ -448,7 +421,6 @@ COMMENT ON FUNCTION eca__is_used(in_id int) IS
 In case it isn't used, it should be possible to delete it.
 $$; --'
 
-DROP FUNCTION IF EXISTS eca__get_taxes(in_credit_id int);
 
 CREATE OR REPLACE FUNCTION eca__get_taxes(in_id int)
 returns setof eca_tax AS
@@ -459,7 +431,6 @@ $$ language sql;
 COMMENT ON FUNCTION eca__get_taxes(in_credit_id int) IS
 $$ Returns a set of taxable account id's.$$; --'
 
-DROP FUNCTION IF EXISTS eca__set_taxes(int, int[]);
 CREATE OR REPLACE FUNCTION eca__set_taxes(in_id int, in_tax_ids int[])
 RETURNS bool AS
 $$
@@ -477,7 +448,6 @@ The entity credit account must exist before calling this function, and must
 have a type of either 1 or 2.
 $$;
 
-DROP FUNCTION if exists entity__save_notes(integer,text,text);
 CREATE OR REPLACE FUNCTION entity__save_notes(in_entity_id int, in_note text, in_subject text)
 RETURNS entity_note AS
 $$
@@ -493,7 +463,6 @@ COMMENT ON FUNCTION entity__save_notes
 $$ Saves an entity-level note.  Such a note is valid for all credit accounts
 attached to that entity.  Returns the id of the note.  $$;
 
-DROP FUNCTION if exists eca__save_notes(integer,text,text);
 CREATE OR REPLACE FUNCTION eca__save_notes(in_credit_id int, in_note text, in_subject text)
 RETURNS eca_note AS
 $$
@@ -691,27 +660,6 @@ $$ Returns billing information (billing name and address) for a given credit
 account.$$;
 
 
-DROP FUNCTION IF EXISTS company_save (
-    in_id int, in_control_code text, in_entity_class int,
-    in_name text, in_tax_id TEXT,
-    in_entity_id int, in_sic_code text,in_country_id int,
-    in_sales_tax_id text, in_license_number text
-);
-
-DROP FUNCTION IF EXISTS company__save (
-    in_id int, in_control_code text, in_entity_class int,
-    in_legal_name text, in_tax_id TEXT,
-    in_entity_id int, in_sic_code text,in_country_id int,
-    in_sales_tax_id text, in_license_number text
-);
-
-DROP FUNCTION IF EXISTS company__save (
-    in_control_code text, in_entity_class int,
-    in_legal_name text, in_tax_id TEXT,
-    in_entity_id int, in_sic_code text,in_country_id int,
-    in_sales_tax_id text, in_license_number text
-);
-
 CREATE OR REPLACE FUNCTION company__save (
     in_control_code text,
     in_legal_name text, in_tax_id TEXT,
@@ -780,33 +728,6 @@ $$ LANGUAGE SQL;
 COMMENT ON FUNCTION pricegroup__list() IS
 $$ Returns an alphabetically ordered pricegroup list.$$;
 
-DROP FUNCTION IF EXISTS entity_credit_save (
-    in_credit_id int, in_entity_class int,
-    in_entity_id int, in_description text,
-    in_discount numeric, in_taxincluded bool, in_creditlimit numeric,
-    in_discount_terms int,
-    in_terms int, in_meta_number varchar(32), in_business_id int,
-    in_language varchar(6), in_pricegroup_id int,
-    in_curr char, in_startdate date, in_enddate date,
-    in_threshold NUMERIC,
-    in_ar_ap_account_id int,
-    in_cash_account_id int,
-    in_pay_to_name text,
-    in_taxform_id int);
-
-DROP FUNCTION IF EXISTS eca__save (
-    in_credit_id int, in_entity_class int,
-    in_entity_id int, in_description text,
-    in_discount numeric, in_taxincluded bool, in_creditlimit numeric,
-    in_discount_terms int,
-    in_terms int, in_meta_number varchar(32), in_business_id int,
-    in_language_code varchar(6), in_pricegroup_id int,
-    in_curr char, in_startdate date, in_enddate date,
-    in_threshold NUMERIC,
-    in_ar_ap_account_id int,
-    in_cash_account_id int,
-    in_pay_to_name text,
-    in_taxform_id int);
 
 CREATE OR REPLACE FUNCTION eca__save (
     in_id int, in_entity_class int,
@@ -981,13 +902,6 @@ $$ LANGUAGE SQL;
 COMMENT ON FUNCTION entity__list_bank_account(in_entity_id int) IS
 $$ Lists all bank accounts for the entity.$$;
 
-DROP FUNCTION IF EXISTS entity__save_bank_account
-(in_entity_id int, in_credit_id int, in_bic text, in_iban text,
-in_bank_account_id int);
-
-drop function if exists entity__save_bank_account
-(in_entity_id int, in_credit_id int, in_bic text, in_iban text, in_remark text,
-in_bank_account_id int);
 
 CREATE OR REPLACE FUNCTION entity__save_bank_account
 (in_entity_id int, in_credit_id int, in_bic text, in_iban text, in_remark text,
@@ -1064,9 +978,6 @@ COMMENT ON FUNCTION eca__delete_contact
 $$ Returns true if at least one record was deleted.  False if no records were
 affected.$$;
 
-DROP FUNCTION IF EXISTS entity__save_contact
-(in_entity_id int, in_class_id int, in_description text, in_contact text,
-in_old_contact text, in_old_class_id int);
 
 CREATE OR REPLACE FUNCTION entity__save_contact
 (in_entity_id int, in_class_id int, in_description text, in_contact text,
@@ -1136,12 +1047,6 @@ CREATE OR REPLACE FUNCTION company__next_id() returns bigint as $$
 
 $$ language 'sql';
 
-DROP FUNCTION IF EXISTS entity__location_save (
-    in_entity_id int, in_id int,
-    in_location_class int, in_line_one text, in_line_two text,
-    in_city TEXT, in_state TEXT, in_mail_code text, in_country_id int,
-    in_created date
-);
 
 CREATE OR REPLACE FUNCTION entity__location_save (
     in_entity_id int, in_id int,
@@ -1338,7 +1243,6 @@ $$ language plpgsql;
 COMMENT ON FUNCTION eca__list_contacts(in_credit_id int) IS
 $$ Returns a list of contact info attached to the entity credit account.$$;
 
-DROP FUNCTION IF EXISTS eca__save_contact(int, int, text, text, text, int);
 
 CREATE OR REPLACE FUNCTION eca__save_contact
 (in_credit_id int, in_class_id int, in_description text, in_contact text,

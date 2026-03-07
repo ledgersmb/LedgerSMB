@@ -16,9 +16,6 @@ $$
 SELECT * FROM payroll_income_type where country_id = $1
 $$ language sql;
 
-DROP FUNCTION IF EXISTS wage__save
-(in_rate numeric, in_entity_id int, in_type_id int);
-
 CREATE OR REPLACE FUNCTION wage__save
 (in_rate numeric, in_entity_id int, in_type_id int)
 RETURNS payroll_wage
@@ -57,9 +54,6 @@ RETURNS SETOF payroll_deduction_type AS
 $$
 SELECT * FROM payroll_deduction_type where country_id = $1
 $$ language sql;
-
-DROP FUNCTION IF EXISTS deduction__save
-(in_rate numeric, in_entity_id int, in_type_id int);
 
 CREATE OR REPLACE FUNCTION deduction__save
 (in_rate numeric, in_entity_id int, in_type_id int)

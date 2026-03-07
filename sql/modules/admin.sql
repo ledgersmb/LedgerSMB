@@ -102,7 +102,6 @@ $$ language 'plpgsql' SECURITY DEFINER;
 REVOKE EXECUTE ON FUNCTION admin__remove_user_from_role(TEXT, TEXT) FROM PUBLIC;
 
 
-DROP FUNCTION IF EXISTS  admin__get_user(in_entity_id INT);
 CREATE OR REPLACE FUNCTION admin__get_user(in_id INT) returns users as $$
 
         select * from users where id = in_id;
@@ -112,7 +111,6 @@ $$ language sql;
 COMMENT ON FUNCTION admin__get_user(in_user_id INT) IS
 $$ Returns a set of (only one) user specified by the id.$$;
 
-DROP FUNCTION IF EXISTS admin__get_user_by_entity(in_entity_id INT);
 
 CREATE OR REPLACE FUNCTION admin__get_user_by_entity(in_entity_id INT) returns users as $$
 
@@ -123,7 +121,6 @@ $$ language sql;
 COMMENT ON FUNCTION admin__get_user_by_entity(in_entity_id INT) IS
 $$ Returns a set of (only one) user specified by the entity_id.$$;
 
-DROP FUNCTION IF EXISTS admin__get_roles_for_user(in_entity_id INT);
 CREATE OR REPLACE FUNCTION admin__get_roles_for_user(in_user_id INT) returns setof text as $$
 
     declare
@@ -308,7 +305,6 @@ COMMENT ON FUNCTION user__change_password(in_new_password text) IS
 $$ Allows a user to change his or her own password.  The password is set to
 expire setting_get('password_duration') days after the password change.$$;
 
-DROP FUNCTION IF EXISTS admin__save_user(int, int, text, text, bool);
 
 CREATE OR REPLACE FUNCTION admin__save_user(
     in_id int,
@@ -476,7 +472,6 @@ create or replace function user__get_all_users () returns setof user_listable as
 $$ language sql;
 
 
-DROP FUNCTION IF EXISTS admin__get_roles();
 
 create or replace function admin__get_roles () returns setof pg_roles as $$
 DECLARE
@@ -542,7 +537,6 @@ CREATE TYPE user_preferences AS (
   printer text
 );
 
-DROP FUNCTION IF EXISTS user__get_preferences (in_user_id int);
 create or replace function user__get_preferences (in_user_id int)
 returns user_preferences as $$
 

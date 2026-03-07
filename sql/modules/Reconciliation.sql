@@ -137,7 +137,6 @@ CREATE TRIGGER cr_report_line_link_insert BEFORE INSERT
     EXECUTE PROCEDURE cr_report_line_link_insert();
 
 -- drop and recreate because of the signature change.
-DROP FUNCTION IF exists reconciliation__submit_set(in_report_id integer, in_line_ids integer[]);
 CREATE OR REPLACE FUNCTION reconciliation__submit_set(in_report_id int)
 RETURNS bool AS
 $$
@@ -283,8 +282,6 @@ $$ This is a simple filter that prevents updating or deleting reconciliation
 reports that have already been approved.  To purge old reconciliations you must
 disable the block_change_when_approved trigger on cr_report.$$;
 
-DROP FUNCTION IF EXISTS reconciliation__get_cleared_balance(int);
-DROP FUNCTION IF EXISTS reconciliation__get_cleared_balance(int,date);
 CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(
   in_chart_id int,
   in_report_date date DEFAULT date_trunc('second', now()),
@@ -357,13 +354,6 @@ $$ language 'plpgsql' security definer;
 COMMENT ON  FUNCTION reconciliation__report_approve (in_report_id INT) IS
 $$Marks the report approved and marks all cleared transactions in it cleared.$$;
 
-
-DROP FUNCTION IF EXISTS reconciliation__new_report(
-    in_chart_id int,
-    in_total numeric,
-    in_end_date date,
-    in_recon_fx bool
-);
 
 CREATE OR REPLACE FUNCTION reconciliation__new_report(
     in_chart_id int,
@@ -553,11 +543,6 @@ wrap it in another function which can operate on a set, perhaps in 1.4....
 It returns the ID of the inserted/updated entry$$;
 
 
-DROP FUNCTION IF EXISTS
-  reconciliation__pending_transactions(in_end_date date,
-                                       in_chart_id integer,
-                                       in_report_id integer,
-                                       in_their_total numeric);
 CREATE OR REPLACE FUNCTION reconciliation__pending_transactions(
     in_report_id integer,
     in_their_total numeric

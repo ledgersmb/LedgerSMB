@@ -76,14 +76,12 @@ in_gifi bool) IS
 $$ This is a simple routine to generate trial balances for the full
 company, for a project, or for a department.$$;
 
-DROP FUNCTION IF EXISTS chart_list_all();
 CREATE OR REPLACE FUNCTION chart_list_all()
 RETURNS SETOF account AS
 $$
 SELECT * FROM account ORDER BY accno;
 $$ LANGUAGE SQL;
 
-drop function if exists chart_get_ar_ap(int);
 CREATE OR REPLACE FUNCTION chart_get_ar_ap(in_account_class int)
 RETURNS SETOF account AS
 $$
@@ -312,7 +310,6 @@ CREATE TYPE account_config AS (
   link text
 );
 
-DROP FUNCTION IF EXISTS account_get(int);
 CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS account_config AS
 $$
   select c.id, c.accno, c.description, c.is_temp, c.category, c.gifi_accno,
@@ -330,7 +327,6 @@ COMMENT ON FUNCTION account_get(in_id int) IS
 $$Returns an entry from the account table which matches the id requested, and which
 is an account, not a heading.$$;
 
-DROP FUNCTION IF EXISTS account__list_translations(int);
 CREATE OR REPLACE FUNCTION account__list_translations(in_id int)
 RETURNS SETOF account_translation AS
 $$
@@ -389,7 +385,6 @@ COMMENT ON FUNCTION account_heading_get(in_id int) IS
 $$Returns an entry from the account heading tablewhich matches the id requested, and which
 is a heading, not an account.$$;
 
-DROP FUNCTION IF EXISTS account_heading__list_translations(int);
 CREATE OR REPLACE FUNCTION account_heading__list_translations(in_id int)
 RETURNS SETOF account_heading_translation AS
 $$
@@ -450,11 +445,6 @@ $$ LANGUAGE plpgsql;
 COMMENT ON FUNCTION account_has_transactions (in_id int) IS
 $$ Checks to see if any transactions use this account.  If so, returns true.
 If not, returns false.$$;
-
-DROP FUNCTION IF EXISTS account__save
-(in_id int, in_accno text, in_description text, in_category char(1),
-in_gifi_accno text, in_heading int, in_contra bool, in_tax bool,
-in_link text[], in_obsolete bool, in_is_temp bool);
 
 CREATE OR REPLACE FUNCTION account__save
 (in_id int, in_accno text, in_description text, in_category char(1),
@@ -644,8 +634,6 @@ COMMENT ON FUNCTION cr_coa_to_account_save(in_accno text, in_description text)
 IS $$ Provides default rules for setting reconciliation labels.  Currently
 saves a label of accno ||'--' || description.$$;
 
-DROP FUNCTION IF EXISTS account__get_by_accno(text);
-
 CREATE OR REPLACE FUNCTION account__get_by_link_desc(in_description text)
 RETURNS SETOF account AS $$
 SELECT * FROM account
@@ -656,7 +644,6 @@ COMMENT ON FUNCTION account__get_by_link_desc(in_description text) IS
 $$ Gets a list of accounts with a specific link description set.  For example,
 for a dropdown list.$$;
 
-DROP FUNCTION IF EXISTS get_link_descriptions();
 CREATE OR REPLACE FUNCTION get_link_descriptions(in_summary BOOLEAN, in_custom BOOLEAN)
 RETURNS SETOF account_link_description AS
 $$
@@ -677,9 +664,6 @@ COMMENT ON FUNCTION account_heading__list() IS
 $$ Returns a list of all account headings, currently ordered by account number.
 $$;
 
-DROP FUNCTION IF EXISTS account__save_tax
-(in_chart_id int, in_validto date, in_rate numeric, in_taxnumber text,
-in_pass int, in_taxmodule_id int, in_old_validto date);
 
 CREATE OR REPLACE FUNCTION account__save_tax
 (in_chart_id int, in_validto date, in_rate numeric, in_minvalue numeric,
