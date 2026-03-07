@@ -8,14 +8,12 @@ apis:
   ledgersmb@v0.01:
     # Update the path to your OpenAPI root file
     root: ./openapi/API.yaml
+    openapi:
+      codeSamples:
+        languages:
+          - lang: JavaScript
+          - lang: curl
+          - lang: Python
+      schemasExpansionLevel: 3
 
-theme:
-  openapi:
-    defaultSampleLanguage: JavaScript
-    schemaExpansionLevel: 2
-    generateCodeSamples:
-      languages:
-        - lang: JavaScript
-        - lang: curl
-        - lang: Python
-    layout: "three-panel"
+
