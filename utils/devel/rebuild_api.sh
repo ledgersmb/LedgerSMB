@@ -34,5 +34,6 @@ mv $TMPDIR/API.yaml doc/openapi/
 mv $TMPDIR/openapi.json doc/openapi/
 
 rm -r $TMPDIR
-rm -r UI/openapi
-cp -r doc/openapi UI/
+rm -rf UI/openapi
+mkdir UI/openapi
+cp -r doc/openapi/LedgerSMB-api.html doc/openapi/openapi.json UI/openapi
