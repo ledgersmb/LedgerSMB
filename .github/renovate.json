@@ -20,6 +20,10 @@
             ]
         },
         {
+            "matchUpdateTypes": ["lockFileMaintenance"],
+            "automerge": true
+        },
+        {
             "matchUpdateTypes": [
                 "minor",
                 "patch"
