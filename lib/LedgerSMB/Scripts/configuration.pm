@@ -1,4 +1,7 @@
 
+use v5.38;
+use Syntax::Operator::In;
+
 package LedgerSMB::Scripts::configuration;
 
 =head1 NAME
@@ -341,13 +344,11 @@ sub sequence_screen {
         $request->{setting_keys} = $subset->{items}
              if $subset->{title} eq $locale->text('Next in Sequence');
     }
-    my $count = 0;
-    for my $item (@{$request->{setting_keys}}){
-        for my $blacklist (qw(customernumber vendornumber employeenumber)){
-            delete $request->{setting_keys}->[$count] if $item->{name} eq $blacklist;
-        }
-        ++$count;
-    }
+    $request->{setting_keys} = [
+        grep {
+           not ($_->{name} in:eq qw(customernumber vendornumber employeenumber))
+        } $request->{setting_keys}->@*
+        ];
     return $request->{_wire}->get('ui')
         ->render($request, 'Configuration/sequence', $request);
 }

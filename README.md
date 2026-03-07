@@ -56,7 +56,7 @@ version](https://github.com/ledgersmb/LedgerSMB/tree/1.13#system-requirements).
 
 ## Server
 
-* `Perl 5.36.1+`
+* `Perl 5.38+`
 * `PostgreSQL 14+`
 * Web server (e.g. `nginx`, `Apache HTTPd`, `lighttpd`, `Varnish`)
 
@@ -74,20 +74,20 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome              | 2025-03  | 134-143                                     |
-| Edge                | 2025-03  | 134-143                                     |
-| Firefox             | 2025-04  | 137-146                                     |
+| Chrome              | 2025-04  | 136-145                                     |
+| Edge                | 2025-05  | 136-145                                     |
+| Firefox             | 2025-05  | 139-148                                     |
 | Opera               | 2025-01  | 116-125                                     |
-| Safari              | 2024-07  | 17.6, 18.0-18.6, 26.0-26.2                  |
+| Safari              | 2024-09  | 18.0-18.6, 26.0-26.3                        |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome for Android  | 2025-12  | 143                                         |
-| Firefox for Android | 2025-12  | 146                                         |
-| Android Browser     | 2025-12  | 143                                         |
-| Safari on iOS       | 2024-07  | 17.6-17.7, 18.0-18.7, 26.0-26.2             |
+| Chrome for Android  | 2026-02  | 145                                         |
+| Firefox for Android | 2026-01  | 147                                         |
+| Android Browser     | 2026-02  | 145                                         |
+| Safari on iOS       | 2024-09  | 18.0-18.7, 26.0-26.3                        |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
 | Opera Mobile        | 2024-03  | 80                                          |
 | Samsung Internet    | 2023-02  | 20-29                                       |

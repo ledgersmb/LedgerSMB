@@ -323,13 +323,13 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: '5.36'
+      perl: '5.38'
       postgres: '16'
       browser: firefox
       selenium: selenium/node-firefox
     steps:
       - prep_env:
-          perl: '5.36'
+          perl: '5.38'
       - start_starman
       - start_proxy
       - prove

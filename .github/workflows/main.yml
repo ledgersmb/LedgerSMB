@@ -131,7 +131,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        perl: [ "5.42", "5.40", "5.38", "5.36" ]
+        perl: [ "5.42", "5.40", "5.38" ]
 
     steps:
       - name: Checkout
@@ -151,9 +151,6 @@ jobs:
           - perl: "5.38"
             JOB_COUNT: 5
             COVERAGE: 1
-
-          - perl: "5.36"
-            JOB_COUNT: 5
 
           - perl: "5.40"
             JOB_COUNT: 5
@@ -405,12 +402,6 @@ jobs:
             BROWSER: "firefox"
             COVERAGE: 1
             JOB_COUNT: 3
-
-          - perl: "5.36"
-            postgres: "15"
-            BROWSER: "firefox"
-            COA_TESTING: 1
-            JOB_COUNT: 5
 
           - perl: "5.40"
             postgres: "16"
