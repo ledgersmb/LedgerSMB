@@ -1,39 +1,38 @@
 #!/bin/bash
 
-# Find ledgerSMB root directory
-gitDirName=`git rev-parse --show-toplevel 2>/dev/null`
-
-# Allow finding openapi modules 
-PATH="$gitDirName/UI/node_modules/.bin:$PATH"
+# Allow finding openapi modules
+PATH="$PWD/UI/node_modules/.bin:$PATH"
 
 # Build in a temporary directory
 TMPDIR=$(mktemp -d)
 
 set -x
 
+cp doc/openapi/redocly.yaml $TMPDIR
+utils/devel/api_extract_data_section.pl $TMPDIR lib/LedgerSMB/Routes/ERP/API.pm
+utils/devel/api_extract_data_section.pl $TMPDIR $(grep -l __DATA__ $(find lib/LedgerSMB/Routes/ERP/ -name '*.pm'))
+
 pushd $TMPDIR
 
 # Extract OpenAPI specs from the Perl sources
-$gitDirName/openapi/extract_data_section.pl $gitDirName/lib/LedgerSMB/Routes/ERP/API.pm
 mv API.yml _LedgerSMB.yml
 echo -n '{"inputs": [{"inputFile": "_LedgerSMB.yml"}' > openapi-merge.json
-grep -l __DATA__ $(find $gitDirName/lib/LedgerSMB/Routes/ERP/ -name '*.pm') | xargs $gitDirName/openapi/extract_data_section.pl
 find . -name '[A-Z]*.yml' -exec echo -n ",{\"inputFile\": \"{}\"}" \; >> openapi-merge.json
 echo '],"output": "API.yaml"}'  >> openapi-merge.json
 
-# Merge them into openapi.yaml 
+# Merge them into openapi.yaml
 npx --yes openapi-merge-cli --config openapi-merge.json
 
 # Validate the resulting OpenAPI spec
-cp $gitDirName/openapi/.redocly.yaml .
 npx --yes @redocly/cli lint API.yaml || exit
-
 # Build the documentation
-cp $gitDirName/openapi/LedgerSMB-api.html $gitDirName/doc/openapi/
-npx --yes @redocly/cli bundle API.yaml -o $gitDirName/doc/openapi/openapi.json
-
-mv API.yaml $gitDirName/openapi/
+npx --yes @redocly/cli bundle $TMPDIR/API.yaml -o openapi.json
 
 popd
 
+mv $TMPDIR/API.yaml doc/openapi/
+mv $TMPDIR/openapi.json doc/openapi/
+
 rm -r $TMPDIR
+rm -r UI/openapi
+cp -r doc/openapi UI/
