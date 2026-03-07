@@ -1,6 +1,6 @@
 #!perl
 
-requires 'perl', '5.36.1';
+requires 'perl', '5.38.0';
 
 requires 'Array::PrintCols';
 requires 'Archive::Zip';
@@ -115,6 +115,7 @@ requires 'Pod::Find';
 requires 'Scope::Guard', '0.10';
 requires 'Session::Storage::Secure';
 requires 'String::Random';
+requires 'Syntax::Operator::In';
 requires 'Template', '2.14';
 requires 'Template::Parser';
 requires 'Template::Provider';
