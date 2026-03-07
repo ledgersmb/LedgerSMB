@@ -59,7 +59,6 @@ CREATE TYPE tax_form_report_detail_item AS (
     duedate text,
     invoice_id int);
 
-drop function if exists tax_form_summary_report(int,date,date);
 CREATE OR REPLACE FUNCTION tax_form_summary_report(in_tax_form_id int, in_from_date date, in_to_date date)
 RETURNS SETOF tax_form_report_item AS $BODY$
               SELECT entity_credit_account.id,
@@ -179,7 +178,6 @@ COMMENT ON FUNCTION tax_form_summary_report
 $$This provides the total reportable value per vendor.  As per 1099 forms, these
 are cash-basis documents and show amounts paid.$$;
 
-drop function if exists tax_form_details_report(int, date, date, text);
 CREATE OR REPLACE FUNCTION tax_form_details_report(in_tax_form_id int, in_from_date date, in_to_date date, in_meta_number text)
 RETURNS SETOF tax_form_report_detail_item AS $BODY$
               SELECT entity_credit_account.id,
@@ -293,7 +291,6 @@ $$ This provides a list of invoices and transactions that a report hits.  This
 is intended to allow an organization to adjust what is reported on the 1099
 before printing them.$$;
 
-drop function if exists tax_form_summary_report_accrual(int, date, date);
 CREATE OR REPLACE FUNCTION tax_form_summary_report_accrual
 (in_tax_form_id int, in_from_date date, in_to_date date)
 RETURNS SETOF tax_form_report_item AS $BODY$
@@ -393,7 +390,6 @@ COMMENT ON FUNCTION tax_form_summary_report_accrual
 $$This provides the total reportable value per vendor.  As per 1099 forms, these
 are cash-basis documents and show amounts paid.$$;
 
-drop function if exists tax_form_details_report_accrual(int, date, date, text);
 CREATE OR REPLACE FUNCTION tax_form_details_report_accrual
 (in_tax_form_id int, in_from_date date, in_to_date date, in_meta_number text)
 RETURNS SETOF tax_form_report_detail_item AS $BODY$

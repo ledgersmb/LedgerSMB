@@ -82,7 +82,6 @@ $$ SELECT * FROM salutation ORDER BY id ASC $$ language sql;
 COMMENT ON FUNCTION person__list_salutations() IS
 $$ Returns a list of salutations ordered by id.$$;
 
-DROP FUNCTION IF EXISTS person__save (int, int, text, text, text, int);
 CREATE OR REPLACE FUNCTION person__save
 (in_entity_id integer, in_salutation_id int,
 in_first_name text, in_middle_name text, in_last_name text,
@@ -199,9 +198,6 @@ COMMENT ON FUNCTION person__delete_contact
 (in_person_id int, in_contact_class_id int, in_contact text) IS
 $$ Deletes a contact record specified for the person.  Returns true if a record
 was found and deleted, false if not.$$;
-
-DROP FUNCTION IF EXISTS  person__save_contact
-(in_entity_id int, in_contact_class int, in_contact_orig text, in_contact_new TEXT);
 
 CREATE OR REPLACE FUNCTION person__save_contact
 (in_entity_id int, in_contact_class int, in_old_contact text, in_contact_new TEXT, in_description text, in_old_contact_class int)

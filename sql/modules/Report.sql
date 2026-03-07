@@ -80,13 +80,6 @@ CREATE TYPE report_aging_item AS (
         age int
 );
 
-DROP FUNCTION IF EXISTS report__invoice_aging_detail
-(in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
- in_business_units int[], in_use_duedate bool);
-
-DROP FUNCTION IF EXISTS report__invoice_aging_detail
-(in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
- in_business_units int[], in_use_duedate bool, in_name_part text);
 
 CREATE OR REPLACE FUNCTION report__invoice_aging_detail
 (in_entity_id int, in_entity_class int, in_credit_id int, in_accno text, in_to_date date,
@@ -211,13 +204,6 @@ USING in_entity_id, in_entity_class, in_credit_id, in_accno, in_to_date,
 END
 $$ LANGUAGE PLPGSQL;
 
-DROP FUNCTION IF EXISTS report__invoice_aging_summary
-(in_entity_id int, in_entity_class int, in_credit_id int, in_accno text, in_to_date date,
- in_business_units int[], in_use_duedate bool);
-
-DROP FUNCTION IF EXISTS report__invoice_aging_summary
-(in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
- in_business_units int[], in_use_duedate bool, in_name_part text);
 
 CREATE OR REPLACE FUNCTION report__invoice_aging_summary
 (in_entity_id int, in_entity_class int, in_credit_id int, in_accno text, in_to_date date,
@@ -268,11 +254,6 @@ CREATE TYPE gl_report_item AS (
     business_units int[]
 );
 
-DROP FUNCTION IF EXISTS report__gl
-(in_reference text, in_accno text, in_category char(1),
-in_source text, in_memo text,  in_description text, in_from_date date,
-in_to_date date, in_approved bool, in_from_amount numeric, in_to_amount numeric,
-in_business_units int[]);
 
 CREATE OR REPLACE FUNCTION report__gl
 (in_reference text, in_accno text, in_category char(1),
@@ -565,29 +546,7 @@ USING in_entity_class, in_account_id, in_entity_name, in_meta_number,
 END
 $$ LANGUAGE PLPGSQL;
 
-DROP FUNCTION IF EXISTS report__aa_transactions
-(in_entity_class int, in_account_id int, in_entity_name text,
- in_meta_number text,
- in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text,
- in_ponumber text, in_source text, in_description text, in_notes text,
- in_shipvia text, in_from_date date, in_to_date date, in_on_hold bool,
- in_taxable bool, in_tax_account_id int, in_open bool, in_closed bool);
-DROP FUNCTION IF EXISTS report__aa_transactions
-(in_entity_class int, in_account_id int, in_entity_name text,
- in_meta_number text,
- in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text,
- in_ponumber text, in_source text, in_description text, in_notes text,
- in_shipvia text, in_from_date date, in_to_date date, in_on_hold bool,
- in_taxable bool, in_tax_account_id int, in_open bool, in_closed bool,
- in_approved bool);
-DROP FUNCTION IF EXISTS report__aa_transactions
-(in_entity_class int, in_account_id int, in_entity_name text,
- in_meta_number text,
- in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text,
- in_ponumber text, in_source text, in_description text, in_notes text,
- in_shipvia text, in_from_date date, in_to_date date, in_on_hold bool,
- in_taxable bool, in_tax_account_id int, in_open bool, in_closed bool,
- in_approved bool, in_partnumber text);
+
 CREATE OR REPLACE FUNCTION report__aa_transactions
 (in_entity_class int, in_account_id int, in_entity_name text,
  in_meta_number text,

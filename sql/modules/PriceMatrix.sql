@@ -13,8 +13,6 @@ SELECT *
        AND credit_id = in_credit_id;
 $$;
 
-DROP FUNCTION IF EXISTS pricematrix__for_customer
-(in_credit_id int, in_parts_id int, in_transdate date, in_qty numeric);
 CREATE OR REPLACE FUNCTION pricematrix__for_customer
 (in_credit_id int, in_parts_id int, in_transdate date, in_qty numeric, in_currency text)
 RETURNS SETOF partscustomer LANGUAGE SQL AS

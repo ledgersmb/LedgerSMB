@@ -29,10 +29,6 @@ set client_min_messages = 'warning';
 
 BEGIN;
 
-DROP FUNCTION IF EXISTS asset_dep__straight_line_base
-                        (numeric, numeric, numeric, numeric, numeric)
-     CASCADE;
-
 CREATE OR REPLACE FUNCTION asset_dep__straight_line_base
 (in_base_life numeric, in_used numeric, in_basis numeric, in_dep_to_date numeric)
 returns numeric as $$
@@ -445,14 +441,6 @@ $$ LANGUAGE SQL;
 COMMENT ON FUNCTION asset_class__get_dep_accounts() IS
 $$ Returns a list of asset depreciation accounts, ordered by account number$$;
 
-DROP FUNCTION IF EXISTS asset__save
-(in_id int, in_asset_class int, in_description text, in_tag text,
-in_purchase_date date, in_purchase_value numeric,
-in_usable_life numeric, in_salvage_value numeric,
-in_start_depreciation date, in_warehouse_id int,
-in_department_id int, in_invoice_id int,
-in_asset_account_id int, in_dep_account_id int, in_exp_account_id int);
-
 CREATE OR REPLACE FUNCTION asset__save
 (in_id int, in_asset_class int, in_description text, in_tag text,
 in_purchase_date date, in_purchase_value numeric,
@@ -776,7 +764,6 @@ $$ LANGUAGE SQL;
 COMMENT ON FUNCTION asset_report_partial_disposal_details(in_id int) IS
 $$ Returns the partial disposal details for a partial disposal report.$$;
 
-DROP FUNCTION IF EXISTS asset_report__approve(int, int, int, int);
 
 CREATE OR REPLACE FUNCTION asset_report__approve
 (in_id int, in_expense_acct int, in_gain_acct int, in_loss_acct int, in_cash_acct int)
@@ -812,7 +799,6 @@ COMMENT ON function asset_report__approve(int, int, int, int, int) is
 $$ This function approves an asset report (whether depreciation or disposal).
 Also generates relevant GL drafts for review and posting.$$;
 
-DROP FUNCTION IF EXISTS asset_report__disposal_gl(int, int, int);
 
 CREATE OR REPLACE FUNCTION asset_report__disposal_gl
 (in_id int, in_gain_acct int, in_loss_acct int, in_cash_acct int)

@@ -23,7 +23,6 @@ COMMENT ON FUNCTION currency__save(text, text) IS
 $$Creates a new currency if 'in_curr' doesn''t exist yet;
 otherwise, updates the description.$$;
 
-DROP FUNCTION IF EXISTS currency__delete(in_curr text);
 CREATE OR REPLACE FUNCTION currency__delete(in_curr CHAR(3))
 RETURNS void AS $$
 BEGIN
@@ -73,7 +72,6 @@ CREATE TYPE currency_list AS (
   is_used BOOLEAN
 );
 
-DROP FUNCTION IF EXISTS currency__list();
 CREATE OR REPLACE FUNCTION currency__list(in_check_use boolean)
 RETURNS SETOF currency_list AS
 $$
@@ -159,7 +157,6 @@ CREATE TYPE exchangerate_type_list AS (
   is_used BOOLEAN
 );
 
-DROP FUNCTION IF EXISTS exchangerate_type__list();
 CREATE OR REPLACE FUNCTION exchangerate_type__list()
 RETURNS SETOF exchangerate_type_list AS
 $$

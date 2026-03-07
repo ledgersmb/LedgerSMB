@@ -6,7 +6,6 @@ BEGIN;
 
 DELETE FROM menu_acl WHERE node_id in (206, 210);
 
-DROP FUNCTION IF EXISTS lsmb__create_role(text);
 CREATE OR REPLACE FUNCTION lsmb__create_role(in_role text, in_documentation text) RETURNS bool
 LANGUAGE PLPGSQL AS
 $$
@@ -36,7 +35,6 @@ BEGIN
 END;
 $$ SECURITY INVOKER; -- intended only to be used for setup scripts
 
-DROP FUNCTION IF EXISTS lsmb__grant_role(text, text);
 CREATE OR REPLACE FUNCTION lsmb__grant_role(in_child text, in_parent text)
 RETURNS BOOL LANGUAGE PLPGSQL SECURITY INVOKER AS
 $$

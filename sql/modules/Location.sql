@@ -14,7 +14,6 @@ authoritative bool,
 entity_classes int[]
 );
 
-DROP FUNCTION IF EXISTS location_list_class();
 CREATE OR REPLACE FUNCTION location_list_class()
 RETURNS SETOF location_class_item AS
 $$

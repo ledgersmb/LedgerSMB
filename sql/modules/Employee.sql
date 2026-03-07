@@ -10,11 +10,6 @@ set client_min_messages = 'warning';
 -- Docstrings already added to this file.
 BEGIN;
 
-DROP FUNCTION IF EXISTS employee__save
-(in_entity_id int, in_start_date date, in_end_date date, in_dob date,
-        in_role text, in_ssn text, in_sales bool, in_manager_id int,
-        in_employeenumber text);
-
 CREATE OR REPLACE FUNCTION employee__save
 (in_entity_id int, in_start_date date, in_end_date date, in_dob date,
         in_role text, in_ssn text, in_sales bool, in_manager_id int,
@@ -57,7 +52,6 @@ COMMENT ON FUNCTION employee__save
         in_employee_number text, in_is_manager bool) IS
 $$ Saves an employeerecord with the specified information.$$;
 
-drop function if exists  employee__get_user(in_entity_id int);
 CREATE OR REPLACE FUNCTION employee__get_user(in_entity_id int)
 RETURNS users AS
 $$SELECT * FROM users WHERE entity_id = $1;$$ language sql;
@@ -151,11 +145,6 @@ CREATE TYPE employee_search_result AS (
         employeenumber varchar(32),
         dob date
 );
-
-DROP FUNCTION IF EXISTS employee__search
-(in_employeenumber text, in_startdate_from date, in_startdate_to date,
-in_first_name text, in_middle_name text, in_last_name text,
-in_notes text, in_is_user bool);
 
 CREATE OR REPLACE FUNCTION employee__search
 (in_entity_class int, in_contact text, in_contact_info text[],

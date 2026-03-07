@@ -6,8 +6,6 @@ set client_min_messages = 'warning';
 
 BEGIN;
 
-DROP FUNCTION IF EXISTS journal__add(text, text, int, date, bool, bool);
-
 CREATE OR REPLACE FUNCTION journal__add(
 in_reference text,
 in_description text,
@@ -28,8 +26,6 @@ $$
 $$ language sql;
 
 
-DROP FUNCTION IF EXISTS journal__add_line(integer, integer, numeric,
-    boolean, text, integer[]);
 
 CREATE OR REPLACE FUNCTION journal__add_line(
 in_account_id int, in_journal_id int, in_amount numeric,
@@ -94,19 +90,6 @@ meta_number text,
 entity_name text,
 entity_class text,
 nextdate date
-);
-
-DROP FUNCTION IF EXISTS  journal__search(
-in_reference text,
-in_description text,
-in_entry_type int,
-in_transaction_date date,
-in_approved bool,
-in_department_id int,
-in_is_template bool,
-in_meta_number text,
-in_entity_class int,
-in_recurring bool
 );
 
 

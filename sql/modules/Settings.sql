@@ -11,7 +11,6 @@ set client_min_messages = 'warning';
 
 BEGIN;
 
-DROP FUNCTION IF EXISTS defaults_get_defaultcurrency();
 CREATE OR REPLACE FUNCTION defaults_get_defaultcurrency()
 RETURNS char(3) AS
 $$
@@ -23,7 +22,6 @@ $$ language sql STABLE;
 COMMENT ON FUNCTION defaults_get_defaultcurrency() IS
 $$ This function return the default currency asigned by the program. $$;
 
-DROP FUNCTION IF EXISTS setting__set(varchar, varchar);
 CREATE OR REPLACE FUNCTION setting__set (in_setting_key varchar, in_value varchar)
 RETURNS BOOL AS
 $$

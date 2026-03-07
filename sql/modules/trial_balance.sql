@@ -18,23 +18,6 @@ create type tb_row AS (
    ending_balance_credit numeric
 );
 
-DROP FUNCTION IF EXISTS trial_balance__generate
-(in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
- in_ignore_yearend TEXT, in_business_units int[]);
-
-DROP FUNCTION IF EXISTS trial_balance__generate
-(in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
- in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int);
-
-DROP FUNCTION IF EXISTS trial_balance__generate
-(in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
- in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int,
- in_all_accounts boolean);
-
-DROP FUNCTION IF EXISTS trial_balance__generate
-(in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
- in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int,
- in_all_accounts boolean, in_approved boolean);
 
 CREATE OR REPLACE FUNCTION trial_balance__generate
 (in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],

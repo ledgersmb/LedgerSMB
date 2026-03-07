@@ -27,13 +27,6 @@ CREATE TYPE purchase_info AS (
     business_units text[]
 );
 
-DROP FUNCTION IF EXISTS ar_ap__transaction_search
-(in_account_id int, in_name_part text, in_meta_number text, in_invnumber text,
- in_ordnumber text, in_ponumber text, in_source text, in_description text,
- in_notes text, in_shipvia text, in_from_date date, in_to_date date,
- in_on_hold bool, in_inc_open bool, in_inc_closed bool, in_as_of date,
- in_entity_class int);
-
 CREATE OR REPLACE FUNCTION ar_ap__transaction_search
 (in_account_id int, in_name_part text, in_meta_number text, in_invnumber text,
  in_ordnumber text, in_ponumber text, in_source text, in_description text,
@@ -119,12 +112,6 @@ USING in_account_id, in_name_part, in_meta_number, in_invnumber,
 END
 $$ LANGUAGE PLPGSQL;
 
-DROP FUNCTION IF EXISTS ar_ap__transaction_search_summary
-(in_account_id int, in_name_part text, in_meta_number text, in_invnumber text,
- in_ordnumber text, in_ponumber text, in_source text, in_description text,
- in_notes text, in_shipvia text, in_from_date date, in_to_date date,
- in_on_hold bool, in_inc_open bool, in_inc_closed bool, in_as_of date,
- in_entity_class int);
 CREATE OR REPLACE FUNCTION ar_ap__transaction_search_summary
 (in_account_id int, in_name_part text, in_meta_number text, in_invnumber text,
  in_ordnumber text, in_ponumber text, in_source text, in_description text,
