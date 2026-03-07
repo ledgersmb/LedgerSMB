@@ -19,6 +19,7 @@ Cleanup & architecture improvements
 * Removed unused SQL modules (#9279)
 
 Updated dependencies
+* Perl minimum version increased to 5.38
 * PostgreSQL minimum version increased to v14
 
 
