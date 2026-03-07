@@ -2,6 +2,9 @@
     "extends": [
         "config:recommended"
     ],
+    "lockFileMaintenance": {
+        "enabled": true
+    },
     "baseBranchPatterns": [
         "master",
         "1.13",
