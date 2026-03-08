@@ -1,0 +1,70 @@
+#!/usr/bin/env perl
+
+use v5.38;
+use Scalar::Util qw(reftype);
+use YAML::PP;
+
+sub merge_into( $path, $left, $right ) {
+    my $rv = {};
+    my $keys = {};
+    $keys->{$_} = -1 for (keys $left->%*);
+    $keys->{$_} += 1 for (keys $right->%*);
+    for my $k (sort keys $keys->%*) {
+        if ((my $leftref = reftype $left) ne (my $rightref = reftype $right)) {
+            die "Can't merge incompatible type $rightref into $leftref";
+        }
+        elsif (reftype $left ne 'HASH') {
+            die "Can't merge non-HASH parameters";
+        }
+        elsif ($keys->{$k} == 0) {
+            if ($left->{$k} eq $right->{$k}) {
+                $rv->{$k} = $left->{$k};
+            }
+            elsif (not reftype $left->{$k}) {
+                die "Can't merge non-hash values at $path$k: '$left->{$k}' and '$right->{$k}' ";
+            }
+            elsif (reftype $left->{$k}
+                   and reftype $right->{$k}
+                   and reftype $left->{$k} ne reftype $right->{$k}) {
+                die "Can't merge incompatible types $path$k";
+            }
+            elsif (reftype $left->{$k} ne 'HASH') {
+                die "Can't merge non hash keys with different values";
+            }
+            elsif (exists $left->{$k}->{description}
+                   and $left->{$k}->{description} eq '...') {
+                $rv->{$k} = $right->{$k};
+            }
+            elsif (exists $right->{$k}->{description}
+                   and $right->{$k}->{description} eq '...') {
+                $rv->{$k} = $left->{$k};
+            }
+            else {
+                $rv->{$k} = merge_into( "$path$k.", $left->{$k}, $right->{$k} );
+            }
+        }
+        else {
+            $rv->{$k} = $left->{$k} // $right->{$k};
+        }
+    }
+    return $rv;
+}
+
+my $yaml = YAML::PP->new;
+my $merged;
+
+if (@ARGV == 0) {
+}
+elsif (@ARGV == 1) {
+}
+else {
+    my $first = shift @ARGV;
+    $merged = $yaml->load_file( $first );
+    say STDERR "Base file: $first";
+    for my $file (@ARGV) {
+        say STDERR "Merging $file";
+        my $next = $yaml->load_file( $file );
+        $merged = merge_into( '', $merged, $next );
+    }
+    say $yaml->dump_string( $merged );
+}

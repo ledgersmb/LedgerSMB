@@ -872,9 +872,9 @@ your software.
 1;
 
 __DATA__
-openapi: 3.0.0
+openapi: 3.0.3
 info:
-  title: Management of Orders
+  title: LedgerSMB API
   version: 0.0.1
 paths:
   /orders:
