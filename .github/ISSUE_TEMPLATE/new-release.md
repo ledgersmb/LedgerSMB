@@ -88,4 +88,5 @@ about: Tracking the progress on preparing a new release branch
 * [ ] Update the screenshots
   * [ ] ledgersmb.org
   * [ ] [Preparing LedgerSMB XXX for first use](https://ledgersmb.org/content/preparing-ledgersmb-17-first-use)
+* [ ] Update the manual installation links in the book. Append the new link to the file [https://github.com/ledgersmb/ledgersmb-book/manual-install.tex](https://github.com/ledgersmb/ledgersmb-book/manual-install.tex) formatted as new-line then `\url{https://ledgersmb.org/content/installing-ledgersmb-113}`.  Of course, the version number should be the current version, NOT `113`.
 
