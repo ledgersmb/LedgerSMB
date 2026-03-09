@@ -1,11 +1,9 @@
 openapi: 3.0.3
 info:
-  title: LedgerSMB API
-  version: 0.0.1
   contact:
+    email: devel@lists.ledgersmb.org
     name: LedgerSMB API Support
     url: 'https://github.com/ledgersmb/LedgerSMB/issues'
-    email: devel@lists.ledgersmb.org
   description: |
     LedgerSMB comes with a web service API. The version number assigned follows
     the [rules of semantic versioning](https://semver.org/). The current major
@@ -22,46 +20,37 @@ info:
   license:
     name: GPL-2.0-or-later
     url: 'https://spdx.org/licenses/GPL-2.0-or-later.html'
+  title: LedgerSMB API
+  version: 0.0.1
 servers:
   - url: 'http://lsmb/erp/api/v0'
-security:
-  - cookieAuth: []
 paths:
-  /menu-nodes:
-    description: Menu items for the active user
+  /contacts/business-types:
+    description: Manage business types
     get:
-      tags:
-        - UserMenu
-      summary: Get the user's menu items
-      operationId: getUserMenuNodes
+      operationId: getBusinessTypes
+      summary: Get business types
       responses:
         '200':
-          description: |
-            Returns the full set of menu nodes accessible
-            by the requesting user.
+          description: Returns the list of business types
           content:
             application/json:
+              examples:
+                validBusinessTypes:
+                  $ref: '#/components/examples/validBusinessTypes'
               schema:
-                type: array
-                items:
-                  type: object
-                  required:
-                    - id
-                    - url
-                    - parent
-                    - label
-                    - menu
-                  properties:
-                    id:
-                      type: number
-                    url:
-                      type: string
-                    parent:
-                      type: number
-                    label:
-                      type: string
-                    menu:
-                      type: boolean
+                type: object
+                properties:
+                  _links:
+                    type: array
+                    items:
+                      type: object
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BusinessType'
+                required:
+                  - items
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -70,22 +59,367 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+      tags:
+        - Business types
+    post:
+      operationId: postBusinessType
+      summary: Create a business type
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewBusinessType'
+      responses:
+        '201':
+          description: 'Confirms creation of the new business type, redirecting to the new resource URI'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+            Location:
+              schema:
+                type: string
+                format: uri-reference
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+        - Business types
+  '/contacts/business-types/{id}':
+    delete:
+      operationId: deleteBusinessTypesById
+      summary: Delete a single business type
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      responses:
+        '204':
+          description: Confirms deletion of the business type resource
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '412':
+          $ref: '#/components/responses/412'
+        '428':
+          $ref: '#/components/responses/428'
+      tags:
+        - Business types
+    description: Manage business type
+    get:
+      operationId: getBusinessTypesById
+      summary: Get a single business type
+      responses:
+        '200':
+          description: Returns the requested business type data
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              examples:
+                validBusinessType:
+                  $ref: '#/components/examples/validBusinessType'
+              schema:
+                $ref: '#/components/schemas/BusinessType'
+        '304':
+          $ref: '#/components/responses/304'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+        - Business types
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/business-type-id'
+        style: simple
+    patch:
+      operationId: updateBusinessTypesById
+      summary: Update a single business type
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      responses:
+        '200':
+          description: 'Confirms updating the business type data, returning the new resource data'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessType'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '412':
+          $ref: '#/components/responses/412'
+        '413':
+          $ref: '#/components/responses/413'
+        '428':
+          $ref: '#/components/responses/428'
+      tags:
+        - Business types
+    put:
+      operationId: putBusinessTypesById
+      summary: Update a single business type
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessType'
+      responses:
+        '200':
+          description: Confirms replacement of the business type data
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessType'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '412':
+          $ref: '#/components/responses/412'
+        '413':
+          $ref: '#/components/responses/413'
+        '428':
+          $ref: '#/components/responses/428'
+      tags:
+        - Business types
+  /contacts/sic:
+    description: Collection of Standard Industry Codes (SICs)
+    get:
+      operationId: getSICs
+      summary: Get a list of SICs
+      responses:
+        '200':
+          description: Returns the list of SIC codes
+          content:
+            application/json:
+              examples:
+                validSICs:
+                  $ref: '#/components/examples/validSICs'
+              schema:
+                type: object
+                properties:
+                  _links:
+                    type: array
+                    items:
+                      type: object
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SIC'
+                required:
+                  - items
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+        - SICs
+    post:
+      operationId: postSIC
+      summary: Add SIC entry
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SIC'
+      responses:
+        '201':
+          description: 'Confirms creation of the new SIC, redirecting to the new resource URI'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+            Location:
+              schema:
+                type: string
+                format: uri-reference
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+        - SICs
+  '/contacts/sic/{id}':
+    delete:
+      operationId: deleteSICByCode
+      summary: Delete a single SIC
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      responses:
+        '204':
+          description: Confirms deletion of the SIC resource
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '412':
+          $ref: '#/components/responses/412'
+        '428':
+          $ref: '#/components/responses/428'
+      tags:
+        - SICs
+    description: Management of individual Standard Industry Code items
+    get:
+      operationId: getSICById
+      summary: Get a single SIC
+      responses:
+        '200':
+          description: Returns the data associated with the SIC code
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              examples:
+                validSIC:
+                  $ref: '#/components/examples/validSIC'
+              schema:
+                $ref: '#/components/schemas/SIC'
+        '304':
+          $ref: '#/components/responses/304'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+        - SICs
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/sic-code'
+        style: simple
+    patch:
+      operationId: updateSICByCode
+      summary: Update a single SIC
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      responses:
+        '200':
+          description: 'Confirms updating the data associated with the SIC code, returning the new SIC data'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SIC'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '412':
+          $ref: '#/components/responses/412'
+        '413':
+          $ref: '#/components/responses/413'
+        '428':
+          $ref: '#/components/responses/428'
+      tags:
+        - SICs
+    put:
+      operationId: putSICByCode
+      summary: Update a single SIC
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SIC'
+      responses:
+        '200':
+          description: 'Confirms replacement of SIC resource, returning the new data'
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SIC'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '412':
+          $ref: '#/components/responses/412'
+        '413':
+          $ref: '#/components/responses/413'
+        '428':
+          $ref: '#/components/responses/428'
+      tags:
+        - SICs
   /countries:
     description: Management of country configuration
     get:
-      tags:
-        - Countries
-      summary: Get available countries
       operationId: getCountries
+      summary: Get available countries
       responses:
         '200':
           description: Returns a list of configured countries
           content:
             application/json:
+              examples:
+                validCountries:
+                  $ref: '#/components/examples/validCountries'
               schema:
                 type: object
-                required:
-                  - items
                 properties:
                   _links:
                     type: array
@@ -95,9 +429,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Country'
-              examples:
-                validCountries:
-                  $ref: '#/components/examples/validCountries'
+                required:
+                  - items
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -106,11 +439,11 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-    post:
       tags:
         - Countries
-      summary: Create a country
+    post:
       operationId: postCountry
+      summary: Create a country
       requestBody:
         content:
           application/json:
@@ -134,20 +467,37 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/countries/{id}':
-    description: Manage a single country
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          $ref: '#/components/schemas/country-code'
-        style: simple
-    get:
       tags:
         - Countries
-      summary: Get a single country
+  '/countries/{id}':
+    delete:
+      operationId: deleteCountryById
+      summary: Delete a single country
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      responses:
+        '204':
+          description: Confirms deletion of the country resource
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '412':
+          $ref: '#/components/responses/412'
+        '428':
+          $ref: '#/components/responses/428'
+      tags:
+        - Countries
+    description: Manage a single country
+    get:
       operationId: getCountryById
+      summary: Get a single country
       responses:
         '200':
           description: Returns the data associated with the country
@@ -156,11 +506,11 @@ paths:
               $ref: '#/components/headers/ETag'
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Country'
               examples:
                 validCountry:
                   $ref: '#/components/examples/validCountry'
+              schema:
+                $ref: '#/components/schemas/Country'
         '304':
           $ref: '#/components/responses/304'
         '400':
@@ -171,11 +521,42 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-    put:
       tags:
         - Countries
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/country-code'
+        style: simple
+    patch:
+      operationId: updateCountryById
       summary: Update a single country
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      responses:
+        '200':
+          description: 'Confirms updating the country resource, returning the new data'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '412':
+          $ref: '#/components/responses/412'
+        '413':
+          $ref: '#/components/responses/413'
+        '428':
+          $ref: '#/components/responses/428'
+      tags:
+        - Countries
+    put:
       operationId: putCountryById
+      summary: Update a single country
       parameters:
         - $ref: '#/components/parameters/if-match'
       requestBody:
@@ -209,16 +590,34 @@ paths:
           $ref: '#/components/responses/413'
         '428':
           $ref: '#/components/responses/428'
-    delete:
       tags:
         - Countries
-      summary: Delete a single country
-      operationId: deleteCountryById
-      parameters:
-        - $ref: '#/components/parameters/if-match'
+  /gl/gifi:
+    description: A list of GIFI
+    get:
+      operationId: getGIFIs
+      summary: Get a list of GIFI
       responses:
-        '204':
-          description: Confirms deletion of the country resource
+        '200':
+          description: Returns the full set of GIFI codes
+          content:
+            application/json:
+              examples:
+                validGIFIs:
+                  $ref: '#/components/examples/validGIFIs'
+              schema:
+                type: object
+                properties:
+                  _links:
+                    type: array
+                    items:
+                      type: object
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GIFI'
+                required:
+                  - items
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -227,22 +626,135 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-        '409':
-          $ref: '#/components/responses/409'
-        '412':
-          $ref: '#/components/responses/412'
-        '428':
-          $ref: '#/components/responses/428'
-    patch:
       tags:
-        - Countries
-      summary: Update a single country
-      operationId: updateCountryById
+        - GIFI
+    post:
+      operationId: postGIFI
+      summary: Create a single GIFI
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GIFI'
+      responses:
+        '201':
+          description: Returns the full collection of defined GIFI codes
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+            Location:
+              schema:
+                type: string
+                format: uri-reference
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+        - GIFI
+  '/gl/gifi/{id}':
+    delete:
+      operationId: deleteGIFIById
+      summary: Delete a single GIFI
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      responses:
+        '204':
+          description: The resource was succesfully deleted
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+        - GIFI
+    description: A single GIFI
+    get:
+      operationId: getGIFIById
+      summary: Get a single GIFI
+      responses:
+        '200':
+          description: ...
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              examples:
+                validGIFI:
+                  $ref: '#/components/examples/validGIFI'
+              schema:
+                $ref: '#/components/schemas/GIFI'
+        '304':
+          $ref: '#/components/responses/304'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+        - GIFI
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/accno-code'
+        style: simple
+    patch:
+      operationId: updateGIFIById
+      summary: Update a single GIFI
       parameters:
         - $ref: '#/components/parameters/if-match'
       responses:
         '200':
-          description: 'Confirms updating the country resource, returning the new data'
+          description: |
+            The resource was succesfully updated,
+            returning the new data for the resource.
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+        - GIFI
+    put:
+      operationId: putGIFIById
+      summary: Put a single GIFI
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GIFI'
+      responses:
+        '200':
+          description: |
+            The resource was succesfully replaced,
+            returning the new data for the resource.
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GIFI'
+        '304':
+          $ref: '#/components/responses/304'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -257,26 +769,25 @@ paths:
           $ref: '#/components/responses/413'
         '428':
           $ref: '#/components/responses/428'
+      tags:
+        - GIFI
   /invoices:
     description: Management of Invoices
     get:
-      tags:
-        - Invoices
-        - Experimental
-      summary: Lists invoices
       operationId: getInvoices
+      summary: Lists invoices
       responses:
         '200':
           description: ...
           content:
             application/json:
+              examples:
+                validInvoices:
+                  $ref: '#/components/examples/validInvoices'
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Invoice'
-              examples:
-                validInvoices:
-                  $ref: '#/components/examples/validInvoices'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -291,12 +802,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
-    post:
       tags:
         - Invoices
         - Experimental
-      summary: Add an invoice
+    post:
       operationId: postInvoices
+      summary: Add an invoice
       requestBody:
         description: ...
         required: true
@@ -309,7 +820,7 @@ paths:
           description: Created
           headers:
             ETag:
-              $ref: '#/components/headers/ETag1'
+              $ref: '#/components/headers/ETag'
             Location:
               schema:
                 type: string
@@ -326,33 +837,26 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/invoices/{id}':
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-          minLength: 1
-    get:
       tags:
         - Invoices
         - Experimental
-      summary: Get a single invoice
+  '/invoices/{id}':
+    get:
       operationId: getInvoicesById
+      summary: Get a single invoice
       responses:
         '200':
           description: ...
           headers:
             ETag:
-              $ref: '#/components/headers/ETag1'
+              $ref: '#/components/headers/ETag'
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Invoice'
               examples:
                 validInvoice:
                   $ref: '#/components/examples/validInvoice'
+              schema:
+                $ref: '#/components/schemas/Invoice'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -361,14 +865,21 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-    put:
       tags:
         - Invoices
         - Experimental
-      summary: Update a single invoice
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          minLength: 1
+    put:
       operationId: putInvoiceById
+      summary: Update a single invoice
       parameters:
-        - $ref: '#/components/parameters/if-match1'
+        - $ref: '#/components/parameters/if-match'
       requestBody:
         content:
           application/json:
@@ -379,7 +890,7 @@ paths:
           description: ...
           headers:
             ETag:
-              $ref: '#/components/headers/ETag1'
+              $ref: '#/components/headers/ETag'
           content:
             application/json:
               schema:
@@ -400,410 +911,24 @@ paths:
           $ref: '#/components/responses/413'
         '428':
           $ref: '#/components/responses/428'
-  /contacts/sic:
-    description: Collection of Standard Industry Codes (SICs)
-    get:
       tags:
-        - SICs
-      summary: Get a list of SICs
-      operationId: getSICs
-      responses:
-        '200':
-          description: Returns the list of SIC codes
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - items
-                properties:
-                  _links:
-                    type: array
-                    items:
-                      type: object
-                  items:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/SIC'
-              examples:
-                validSICs:
-                  $ref: '#/components/examples/validSICs'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    post:
-      tags:
-        - SICs
-      summary: Add SIC entry
-      operationId: postSIC
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SIC'
-      responses:
-        '201':
-          description: >-
-            Confirms creation of the new SIC, redirecting to the new resource
-            URI
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETag2'
-            Location:
-              schema:
-                type: string
-                format: uri-reference
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/contacts/sic/{id}':
-    description: Management of individual Standard Industry Code items
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          $ref: '#/components/schemas/sic-code'
-        style: simple
-    get:
-      tags:
-        - SICs
-      summary: Get a single SIC
-      operationId: getSICById
-      responses:
-        '200':
-          description: Returns the data associated with the SIC code
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETag2'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SIC'
-              examples:
-                validSIC:
-                  $ref: '#/components/examples/validSIC'
-        '304':
-          $ref: '#/components/responses/304'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    put:
-      tags:
-        - SICs
-      summary: Update a single SIC
-      operationId: putSICByCode
-      parameters:
-        - $ref: '#/components/parameters/if-match2'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SIC'
-      responses:
-        '200':
-          description: 'Confirms replacement of SIC resource, returning the new data'
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETag2'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SIC'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '412':
-          $ref: '#/components/responses/412'
-        '413':
-          $ref: '#/components/responses/413'
-        '428':
-          $ref: '#/components/responses/428'
-    delete:
-      tags:
-        - SICs
-      summary: Delete a single SIC
-      operationId: deleteSICByCode
-      parameters:
-        - $ref: '#/components/parameters/if-match2'
-      responses:
-        '204':
-          description: Confirms deletion of the SIC resource
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '412':
-          $ref: '#/components/responses/412'
-        '428':
-          $ref: '#/components/responses/428'
-    patch:
-      tags:
-        - SICs
-      summary: Update a single SIC
-      operationId: updateSICByCode
-      parameters:
-        - $ref: '#/components/parameters/if-match2'
-      responses:
-        '200':
-          description: >-
-            Confirms updating the data associated with the SIC code, returning
-            the new SIC data
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETag2'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SIC'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '412':
-          $ref: '#/components/responses/412'
-        '413':
-          $ref: '#/components/responses/413'
-        '428':
-          $ref: '#/components/responses/428'
-  /contacts/business-types:
-    description: Manage business types
-    get:
-      tags:
-        - Business types
-      summary: Get business types
-      operationId: getBusinessTypes
-      responses:
-        '200':
-          description: Returns the list of business types
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - items
-                properties:
-                  _links:
-                    type: array
-                    items:
-                      type: object
-                  items:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/BusinessType'
-              examples:
-                validBusinessTypes:
-                  $ref: '#/components/examples/validBusinessTypes'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    post:
-      tags:
-        - Business types
-      summary: Create a business type
-      operationId: postBusinessType
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NewBusinessType'
-      responses:
-        '201':
-          description: >-
-            Confirms creation of the new business type, redirecting to the new
-            resource URI
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETag2'
-            Location:
-              schema:
-                type: string
-                format: uri-reference
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/contacts/business-types/{id}':
-    description: Manage business type
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          $ref: '#/components/schemas/business-type-id'
-        style: simple
-    get:
-      tags:
-        - Business types
-      summary: Get a single business type
-      operationId: getBusinessTypesById
-      responses:
-        '200':
-          description: Returns the requested business type data
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETag2'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BusinessType'
-              examples:
-                validBusinessType:
-                  $ref: '#/components/examples/validBusinessType'
-        '304':
-          $ref: '#/components/responses/304'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    put:
-      tags:
-        - Business types
-      summary: Update a single business type
-      operationId: putBusinessTypesById
-      parameters:
-        - $ref: '#/components/parameters/if-match2'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BusinessType'
-      responses:
-        '200':
-          description: Confirms replacement of the business type data
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETag2'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BusinessType'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '412':
-          $ref: '#/components/responses/412'
-        '413':
-          $ref: '#/components/responses/413'
-        '428':
-          $ref: '#/components/responses/428'
-    delete:
-      tags:
-        - Business types
-      summary: Delete a single business type
-      operationId: deleteBusinessTypesById
-      parameters:
-        - $ref: '#/components/parameters/if-match2'
-      responses:
-        '204':
-          description: Confirms deletion of the business type resource
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '412':
-          $ref: '#/components/responses/412'
-        '428':
-          $ref: '#/components/responses/428'
-    patch:
-      tags:
-        - Business types
-      summary: Update a single business type
-      operationId: updateBusinessTypesById
-      parameters:
-        - $ref: '#/components/parameters/if-match2'
-      responses:
-        '200':
-          description: >-
-            Confirms updating the business type data, returning the new resource
-            data
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETag2'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BusinessType'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '412':
-          $ref: '#/components/responses/412'
-        '413':
-          $ref: '#/components/responses/413'
-        '428':
-          $ref: '#/components/responses/428'
+        - Invoices
+        - Experimental
   /languages:
     description: Management of language configuration
     get:
-      tags:
-        - Languages
-      summary: Get available languages
       operationId: getLanguages
+      summary: Get available languages
       responses:
         '200':
           description: Returns the full set of configured languages
           content:
             application/json:
+              examples:
+                validLanguages:
+                  $ref: '#/components/examples/validLanguages'
               schema:
                 type: object
-                required:
-                  - items
                 properties:
                   _links:
                     type: array
@@ -813,9 +938,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Language'
-              examples:
-                validLanguages:
-                  $ref: '#/components/examples/validLanguages'
+                required:
+                  - items
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -824,11 +948,11 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-    post:
       tags:
         - Languages
-      summary: Create a language
+    post:
       operationId: postLanguage
+      summary: Create a language
       requestBody:
         content:
           application/json:
@@ -855,20 +979,33 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/languages/{id}':
-    description: Manage a single language
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          $ref: '#/components/schemas/language-code'
-        style: simple
-    get:
       tags:
         - Languages
-      summary: Get a single language
+  '/languages/{id}':
+    delete:
+      operationId: deleteLanguageById
+      summary: Delete a single language
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      responses:
+        '204':
+          description: Confirms successful deletion of the resource
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+      tags:
+        - Languages
+    description: Manage a single language
+    get:
       operationId: getLanguageById
+      summary: Get a single language
       responses:
         '200':
           description: Returns the requested single resource's data
@@ -877,11 +1014,11 @@ paths:
               $ref: '#/components/headers/ETag'
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Language'
               examples:
                 validLanguage:
                   $ref: '#/components/examples/validLanguage'
+              schema:
+                $ref: '#/components/schemas/Language'
         '304':
           $ref: '#/components/responses/304'
         '400':
@@ -892,11 +1029,38 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-    put:
       tags:
         - Languages
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/language-code'
+        style: simple
+    patch:
+      operationId: updateLanguageById
       summary: Update a single language
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      responses:
+        '200':
+          description: |
+            Confirms successful update,
+            returning the new data for the resource
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+        - Languages
+    put:
       operationId: putLanguageById
+      summary: Update a single language
       parameters:
         - $ref: '#/components/parameters/if-match'
       requestBody:
@@ -934,245 +1098,68 @@ paths:
           $ref: '#/components/responses/413'
         '428':
           $ref: '#/components/responses/428'
-    delete:
       tags:
         - Languages
-      summary: Delete a single language
-      operationId: deleteLanguageById
-      parameters:
-        - $ref: '#/components/parameters/if-match'
-      responses:
-        '204':
-          description: Confirms successful deletion of the resource
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          $ref: '#/components/responses/409'
-    patch:
-      tags:
-        - Languages
-      summary: Update a single language
-      operationId: updateLanguageById
-      parameters:
-        - $ref: '#/components/parameters/if-match'
+  /menu-nodes:
+    description: Menu items for the active user
+    get:
+      operationId: getUserMenuNodes
+      summary: Get the user's menu items
       responses:
         '200':
           description: |
-            Confirms successful update,
-            returning the new data for the resource
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  /gl/gifi:
-    description: A list of GIFI
-    get:
-      tags:
-        - GIFI
-      summary: Get a list of GIFI
-      operationId: getGIFIs
-      responses:
-        '200':
-          description: Returns the full set of GIFI codes
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - items
-                properties:
-                  _links:
-                    type: array
-                    items:
-                      type: object
-                  items:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/GIFI'
-              examples:
-                validGIFIs:
-                  $ref: '#/components/examples/validGIFIs'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    post:
-      tags:
-        - GIFI
-      summary: Create a single GIFI
-      operationId: postGIFI
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GIFI'
-      responses:
-        '201':
-          description: Returns the full collection of defined GIFI codes
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETag'
-            Location:
-              schema:
-                type: string
-                format: uri-reference
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  '/gl/gifi/{id}':
-    description: A single GIFI
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          $ref: '#/components/schemas/accno-code'
-        style: simple
-    get:
-      tags:
-        - GIFI
-      summary: Get a single GIFI
-      operationId: getGIFIById
-      responses:
-        '200':
-          description: ...
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETag'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GIFI'
-              examples:
-                validGIFI:
-                  $ref: '#/components/examples/validGIFI'
-        '304':
-          $ref: '#/components/responses/304'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    put:
-      tags:
-        - GIFI
-      summary: Put a single GIFI
-      operationId: putGIFIById
-      parameters:
-        - $ref: '#/components/parameters/if-match'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GIFI'
-      responses:
-        '200':
-          description: |
-            The resource was succesfully replaced,
-            returning the new data for the resource.
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETag'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GIFI'
-        '304':
-          $ref: '#/components/responses/304'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '412':
-          $ref: '#/components/responses/412'
-        '413':
-          $ref: '#/components/responses/413'
-        '428':
-          $ref: '#/components/responses/428'
-    delete:
-      tags:
-        - GIFI
-      summary: Delete a single GIFI
-      operationId: deleteGIFIById
-      parameters:
-        - $ref: '#/components/parameters/if-match'
-      responses:
-        '204':
-          description: The resource was succesfully deleted
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-    patch:
-      tags:
-        - GIFI
-      summary: Update a single GIFI
-      operationId: updateGIFIById
-      parameters:
-        - $ref: '#/components/parameters/if-match'
-      responses:
-        '200':
-          description: |
-            The resource was succesfully updated,
-            returning the new data for the resource.
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-  /orders:
-    description: Management of Orders
-    get:
-      tags:
-        - Orders
-        - Experimental
-      summary: Lists orders
-      operationId: getOrders
-      responses:
-        '200':
-          description: ...
+            Returns the full set of menu nodes accessible
+            by the requesting user.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Order'
+                  properties:
+                    id:
+                      type: number
+                    label:
+                      type: string
+                    menu:
+                      type: boolean
+                    parent:
+                      type: number
+                    url:
+                      type: string
+                  required:
+                    - id
+                    - url
+                    - parent
+                    - label
+                    - menu
+                  type: object
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+      tags:
+        - UserMenu
+  /orders:
+    description: Management of Orders
+    get:
+      operationId: getOrders
+      summary: Lists orders
+      responses:
+        '200':
+          description: ...
+          content:
+            application/json:
               examples:
                 validOrders:
                   $ref: '#/components/examples/validOrders'
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1187,12 +1174,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error'
-    post:
       tags:
         - Orders
         - Experimental
-      summary: Add an order
+    post:
       operationId: postOrders
+      summary: Add an order
       requestBody:
         description: ...
         required: true
@@ -1205,7 +1192,7 @@ paths:
           description: Created
           headers:
             ETag:
-              $ref: '#/components/headers/ETag3'
+              $ref: '#/components/headers/ETag'
             Location:
               schema:
                 type: string
@@ -1222,33 +1209,26 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/orders/{id}':
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-          minLength: 1
-    get:
       tags:
         - Orders
         - Experimental
-      summary: Get a single order
+  '/orders/{id}':
+    get:
       operationId: getOrdersById
+      summary: Get a single order
       responses:
         '200':
           description: ...
           headers:
             ETag:
-              $ref: '#/components/headers/ETag3'
+              $ref: '#/components/headers/ETag'
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Order'
               examples:
                 validOrder:
                   $ref: '#/components/examples/validOrder'
+              schema:
+                $ref: '#/components/schemas/Order'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1257,14 +1237,21 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-    put:
       tags:
         - Orders
         - Experimental
-      summary: Update a single order
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          minLength: 1
+    put:
       operationId: putOrderById
+      summary: Update a single order
       parameters:
-        - $ref: '#/components/parameters/if-match3'
+        - $ref: '#/components/parameters/if-match'
       requestBody:
         content:
           application/json:
@@ -1275,7 +1262,7 @@ paths:
           description: ...
           headers:
             ETag:
-              $ref: '#/components/headers/ETag3'
+              $ref: '#/components/headers/ETag'
           content:
             application/json:
               schema:
@@ -1296,22 +1283,24 @@ paths:
           $ref: '#/components/responses/413'
         '428':
           $ref: '#/components/responses/428'
+      tags:
+        - Orders
+        - Experimental
   /products/partsgroups:
     description: Managing products and related configuration
     get:
-      tags:
-        - Parts groups
-      summary: Get products parts groups
       operationId: getProductsPartsgroups
+      summary: Get products parts groups
       responses:
         '200':
           description: Returns the full list of defined parts groups
           content:
             application/json:
+              examples:
+                validPartsgroups:
+                  $ref: '#/components/examples/validPartsgroups'
               schema:
                 type: object
-                required:
-                  - items
                 properties:
                   _links:
                     type: array
@@ -1321,9 +1310,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Partsgroup'
-              examples:
-                validPartsgroups:
-                  $ref: '#/components/examples/validPartsgroups'
+                required:
+                  - items
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1332,11 +1320,11 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-    post:
       tags:
         - Parts groups
-      summary: Create products parts group
+    post:
       operationId: postProductsPartsgroup
+      summary: Create products parts group
       requestBody:
         content:
           application/json:
@@ -1362,19 +1350,32 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/products/partsgroups/{id}':
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          $ref: '#/components/schemas/partsgroup-id'
-        style: simple
-    get:
       tags:
         - Parts groups
-      summary: Get a single products parts group
+  '/products/partsgroups/{id}':
+    delete:
+      operationId: deleteProductsPartsgroupById
+      summary: Delete a single products price group
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      responses:
+        '204':
+          description: Confirms successful deletion of the resource
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+      tags:
+        - Parts groups
+    get:
       operationId: getProductsPartsgroupById
+      summary: Get a single products parts group
       responses:
         '200':
           description: |
@@ -1384,11 +1385,11 @@ paths:
               $ref: '#/components/headers/ETag'
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Partsgroup'
               examples:
                 validPartsgroup:
                   $ref: '#/components/examples/validPartsgroup'
+              schema:
+                $ref: '#/components/schemas/Partsgroup'
         '304':
           $ref: '#/components/responses/304'
         '400':
@@ -1399,11 +1400,40 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-    put:
       tags:
         - Parts groups
-      summary: Create single products parts group
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/partsgroup-id'
+        style: simple
+    patch:
+      operationId: updateProductsPartsgroupById
+      summary: Updaet a single products parts group
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      responses:
+        '200':
+          description: |
+            Confirms successful update of the resource,
+            returning the new resource state
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+      tags:
+        - Parts groups
+    put:
       operationId: putProductsPartsgroupById
+      summary: Create single products parts group
       parameters:
         - $ref: '#/components/parameters/if-match'
       requestBody:
@@ -1441,64 +1471,23 @@ paths:
           $ref: '#/components/responses/413'
         '428':
           $ref: '#/components/responses/428'
-    delete:
       tags:
         - Parts groups
-      summary: Delete a single products price group
-      operationId: deleteProductsPartsgroupById
-      parameters:
-        - $ref: '#/components/parameters/if-match'
-      responses:
-        '204':
-          description: Confirms successful deletion of the resource
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          $ref: '#/components/responses/409'
-    patch:
-      tags:
-        - Parts groups
-      summary: Updaet a single products parts group
-      operationId: updateProductsPartsgroupById
-      parameters:
-        - $ref: '#/components/parameters/if-match'
-      responses:
-        '200':
-          description: |
-            Confirms successful update of the resource,
-            returning the new resource state
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          $ref: '#/components/responses/409'
   /products/pricegroups:
     description: Managing products and related configuration
     get:
-      tags:
-        - Price groups
-      summary: Get products price groups
       operationId: getProductsPricegroups
+      summary: Get products price groups
       responses:
         '200':
           description: Returns the full list of defined price groups
           content:
             application/json:
+              examples:
+                validPricegroups:
+                  $ref: '#/components/examples/validPricegroups'
               schema:
                 type: object
-                required:
-                  - items
                 properties:
                   _links:
                     type: array
@@ -1508,9 +1497,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Pricegroup'
-              examples:
-                validPricegroups:
-                  $ref: '#/components/examples/validPricegroups'
+                required:
+                  - items
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1519,11 +1507,11 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-    post:
       tags:
         - Price groups
-      summary: Create products price group
+    post:
       operationId: postProductsPricegroup
+      summary: Create products price group
       requestBody:
         content:
           application/json:
@@ -1549,19 +1537,32 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/products/pricegroups/{id}':
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          $ref: '#/components/schemas/pricegroup-id'
-        style: simple
-    get:
       tags:
         - Price groups
-      summary: Get a single products price group
+  '/products/pricegroups/{id}':
+    delete:
+      operationId: deleteProductsPricegroupById
+      summary: Delete a single products price group
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      responses:
+        '204':
+          description: Confirms successful deletion of the resource
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+      tags:
+        - Price groups
+    get:
       operationId: getProductsPricegroupById
+      summary: Get a single products price group
       responses:
         '200':
           description: |
@@ -1571,11 +1572,11 @@ paths:
               $ref: '#/components/headers/ETag'
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Pricegroup'
               examples:
                 validPricegroup:
                   $ref: '#/components/examples/validPricegroup'
+              schema:
+                $ref: '#/components/schemas/Pricegroup'
         '304':
           $ref: '#/components/responses/304'
         '400':
@@ -1586,11 +1587,40 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-    put:
       tags:
         - Price groups
-      summary: Create single products price group
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/pricegroup-id'
+        style: simple
+    patch:
+      operationId: updateProductsPricegroupById
+      summary: Update a single products price group
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      responses:
+        '200':
+          description: |
+            Confirms successful update of the resource, returning
+            the new resource state
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+      tags:
+        - Price groups
+    put:
       operationId: putProductsPricegroupById
+      summary: Create single products price group
       parameters:
         - $ref: '#/components/parameters/if-match'
       requestBody:
@@ -1628,64 +1658,23 @@ paths:
           $ref: '#/components/responses/413'
         '428':
           $ref: '#/components/responses/428'
-    delete:
       tags:
         - Price groups
-      summary: Delete a single products price group
-      operationId: deleteProductsPricegroupById
-      parameters:
-        - $ref: '#/components/parameters/if-match'
-      responses:
-        '204':
-          description: Confirms successful deletion of the resource
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          $ref: '#/components/responses/409'
-    patch:
-      tags:
-        - Price groups
-      summary: Update a single products price group
-      operationId: updateProductsPricegroupById
-      parameters:
-        - $ref: '#/components/parameters/if-match'
-      responses:
-        '200':
-          description: |
-            Confirms successful update of the resource, returning
-            the new resource state
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          $ref: '#/components/responses/409'
   /products/warehouses:
     description: Manage warehouses
     get:
-      tags:
-        - Warehouses
-      summary: Get a list of warehouses
       operationId: getWarehouses
+      summary: Get a list of warehouses
       responses:
         '200':
           description: Returns the full set of configured warehouses
           content:
             application/json:
+              examples:
+                validWarehouses:
+                  $ref: '#/components/examples/validWarehouses'
               schema:
                 type: object
-                required:
-                  - items
                 properties:
                   _links:
                     type: array
@@ -1695,9 +1684,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Warehouse'
-              examples:
-                validWarehouses:
-                  $ref: '#/components/examples/validWarehouses'
+                required:
+                  - items
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -1706,11 +1694,11 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-    post:
       tags:
         - Warehouses
-      summary: Create a warehouse
+    post:
       operationId: postWarehouse
+      summary: Create a warehouse
       requestBody:
         content:
           application/json:
@@ -1736,20 +1724,33 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-  '/products/warehouses/{id}':
-    description: Manage a warehouse
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          $ref: '#/components/schemas/warehouse-id'
-        style: simple
-    get:
       tags:
         - Warehouses
-      summary: Get a single warehouse
+  '/products/warehouses/{id}':
+    delete:
+      operationId: deleteWarehousesById
+      summary: Delete a single warehouse
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      responses:
+        '204':
+          description: Confirms deletion of the resource
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+      tags:
+        - Warehouses
+    description: Manage a warehouse
+    get:
       operationId: getWarehousesById
+      summary: Get a single warehouse
       responses:
         '200':
           description: Returns the data of a single resource
@@ -1758,11 +1759,11 @@ paths:
               $ref: '#/components/headers/ETag'
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Warehouse'
               examples:
                 validWarehouse:
                   $ref: '#/components/examples/validWarehouse'
+              schema:
+                $ref: '#/components/schemas/Warehouse'
         '304':
           $ref: '#/components/responses/304'
         '400':
@@ -1773,11 +1774,40 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
-    put:
       tags:
         - Warehouses
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/warehouse-id'
+        style: simple
+    patch:
+      operationId: updateWarehousesById
       summary: Update a single warehouse
+      parameters:
+        - $ref: '#/components/parameters/if-match'
+      responses:
+        '200':
+          description: |
+            Confirms successful update of the resource,
+            returning the new state
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+      tags:
+        - Warehouses
+    put:
       operationId: putWarehousesById
+      summary: Update a single warehouse
       parameters:
         - $ref: '#/components/parameters/if-match'
       requestBody:
@@ -1815,167 +1845,34 @@ paths:
           $ref: '#/components/responses/413'
         '428':
           $ref: '#/components/responses/428'
-    delete:
       tags:
         - Warehouses
-      summary: Delete a single warehouse
-      operationId: deleteWarehousesById
-      parameters:
-        - $ref: '#/components/parameters/if-match'
-      responses:
-        '204':
-          description: Confirms deletion of the resource
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          $ref: '#/components/responses/409'
-    patch:
-      tags:
-        - Warehouses
-      summary: Update a single warehouse
-      operationId: updateWarehousesById
-      parameters:
-        - $ref: '#/components/parameters/if-match'
-      responses:
-        '200':
-          description: |
-            Confirms successful update of the resource,
-            returning the new state
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '403':
-          $ref: '#/components/responses/403'
-        '404':
-          $ref: '#/components/responses/404'
-        '409':
-          $ref: '#/components/responses/409'
 components:
-  responses:
-    '304':
-      description: Not modified
-    '400':
-      description: Bad request
-    '401':
-      description: Unauthorized
-    '403':
-      description: Forbidden
-    '404':
-      description: Not Found
-    '409':
-      description: Conflict
-    '412':
-      description: Precondition failed (If-Match header)
-    '413':
-      description: Payload too large
-    '428':
-      description: Precondition required
   parameters:
     if-match:
-      name: If-Match
-      in: header
       description: |
         Clients need to provide the If-Match parameter on update operations
         (PUT and PATCH) with the ETag obtained in the request from which
         data are being updated. Requests missing this header will be
         rejected with HTTP response code 428. Requests trying to update
         outdated content will be rejected with HTTP response code 412.
-      required: true
-      schema:
-        type: string
-    if-match1:
-      name: If-Match
       in: header
-      description: ...
-      required: true
-      schema:
-        type: string
-    if-match2:
       name: If-Match
-      in: header
-      description: ...
       required: true
       schema:
         type: string
-    if-match3:
-      name: If-Match
-      in: header
-      description: ...
-      required: true
-      schema:
-        type: string
-  headers:
-    ETag:
-      description: |
-        The API uses the ETag parameter to prevent different clients modifying
-        the same resource around the same time from overwriting each other's
-        data: the later updates will be rejected based on verification of this
-        parameter.
-        Clients need to retain the ETag returned on a request when they might
-        want to update the values later.
-      required: true
-      schema:
-        type: string
-    ETag1:
-      description: ...
-      required: true
-      schema:
-        type: string
-    ETag2:
-      description: ...
-      required: true
-      schema:
-        type: string
-    ETag3:
-      description: ...
-      required: true
-      schema:
-        type: string
-  securitySchemes:
-    cookieAuth:
-      type: apiKey
-      in: cookie
-      name: LedgerSMB
-      description: |
-        The authenticating cookie can be obtained by sending a `POST` request
-        to `login.pl?__action=authenticate&company=<url-encoded-company` with a
-        JSON object in the body of the request, containing these three fields
-
-        * company
-        * username
-        * password
-
-        as if they had been entered on the login page in the browser. Please
-        note that the request `Content-Type` must be set to `application/json`
-        and that an `X-Requested-With` header is expected with the value
-        `XMLHttpRequest`.
-
-        **Note**: the cookie value is updated on each response; the next
-        request *must* be executed with the new cookie value.
-
-        **Note 2**: the validity of the cookie is as long the user's timeout
-        when logged into the application (default: 90 minutes).
-
-        **Note 3**: Sites may customize the name of the cookie in order to run
-        multiple versions in parallel. The advice is to append the version name
-        to the cookie, resulting in cookie name `LedgerSMB-1.1` for LedgerSMB
-        version 1.1.
   schemas:
-    country-code:
-      type: string
-      pattern: '^[a-zA-Z]{2}$'
+    BusinessType:
+      allOf:
+        - $ref: '#/components/schemas/NewBusinessType'
+        - properties:
+            id:
+              $ref: '#/components/schemas/business-type-id'
+          required:
+            - id
+          type: object
     Country:
       type: object
-      required:
-        - code
-        - name
       properties:
         _meta:
           type: object
@@ -1983,190 +1880,40 @@ components:
           $ref: '#/components/schemas/country-code'
         default:
           type: boolean
-        name:
-          type: string
         localizedName:
           type: string
-    error:
-      type: object
-    newInvoice:
-      type: object
-      required:
-        - eca
-        - account
-        - currency
-        - dates
-        - lines
-      properties:
-        eca:
-          anyOf:
-            - type: object
-              required:
-                - id
-              properties:
-                id:
-                  type: integer
-                  format: int64
-                  minimum: 1
-            - type: object
-              required:
-                - number
-                - type
-              properties:
-                number:
-                  type: string
-                  minLength: 1
-                type:
-                  type: string
-                  enum:
-                    - customer
-                    - vendor
-        account:
-          type: object
-          properties:
-            accno:
-              type: string
-              minLength: 1
-        currency:
+        name:
           type: string
-          minLength: 3
-          maxLength: 3
+      required:
+        - code
+        - name
+    GIFI:
+      type: object
+      properties:
+        accno:
+          $ref: '#/components/schemas/accno-code'
         description:
           type: string
-          nullable: true
-        notes:
-          type: string
-          nullable: true
-        internal-notes:
-          type: string
-          nullable: true
-        invoice-number:
-          type: string
-        order-number:
-          type: string
-        po-number:
-          type: string
-        ship-via:
-          type: string
-          nullable: true
-        shipping-point:
-          type: string
-          nullable: true
-        ship-to:
-          type: object
-        dates:
-          type: object
-          required:
-            - book
-          properties:
-            due:
-              type: string
-              format: date
-            book:
-              type: string
-              format: date
-            created:
-              type: string
-              format: date
-        lines:
-          type: array
-          items:
-            type: object
-            required:
-              - part
-            properties:
-              description:
-                type: string
-              price:
-                type: number
-              price_fixated:
-                type: boolean
-                default: false
-              unit:
-                type: string
-              qty:
-                type: number
-                default: 1
-              taxform:
-                type: boolean
-                default: false
-              serialnumber:
-                type: string
-                nullable: true
-              discount:
-                description: |
-                  A value of 10 means the customer gets a 10% discount,
-                  if discount_type has a value of '%'
-                type: number
-                minimum: 0
-                maximum: 100
-              discount_type:
-                type: string
-                enum:
-                  - '%'
-              delivery_date:
-                type: string
-                format: date
-                nullable: true
-              part:
-                type: object
-                required:
-                  - number
-                properties:
-                  number:
-                    type: string
-                    minLength: 1
-        taxes:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              tax:
-                type: object
-                required:
-                  - category
-                properties:
-                  category:
-                    type: string
-              base-amount:
-                type: number
-              amount:
-                type: number
-              source:
-                type: string
-              memo:
-                type: string
-        payments:
-          type: array
-          items:
-            type: object
-            required:
-              - account
-              - amount
-              - date
-            properties:
-              date:
-                type: string
-                format: date
-              source:
-                type: string
-              memo:
-                type: string
-              amount:
-                type: number
-              account:
-                type: object
-                required:
-                  - accno
-                properties:
-                  accno:
-                    type: string
-                    minLength: 1
+          minLength: 1
+      required:
+        - accno
+        - description
     Invoice:
       description: ...
       allOf:
-        - type: object
-          properties:
+        - properties:
+            account:
+              type: object
+              properties:
+                accno:
+                  type: string
+                  minLength: 1
+                description:
+                  type: string
+                  minLength: 2
+            description:
+              type: string
+              nullable: true
             eca:
               type: object
               properties:
@@ -2202,22 +1949,9 @@ components:
                   enum:
                     - customer
                     - vendor
-            account:
-              type: object
-              properties:
-                accno:
-                  type: string
-                  minLength: 1
-                description:
-                  type: string
-                  minLength: 2
-            description:
-              type: string
-              nullable: true
             lines:
               type: array
               items:
-                type: object
                 properties:
                   delivery_date:
                     type: string
@@ -2230,8 +1964,8 @@ components:
                       A value of 10 means the customer gets a 10% discount,
                       if discount_type has a value of '%'
                     type: number
-                    minimum: 0
                     maximum: 100
+                    minimum: 0
                   discount_type:
                     type: string
                     enum:
@@ -2243,75 +1977,76 @@ components:
                   notes:
                     type: string
                     nullable: true
-                  price:
-                    type: number
-                  price_fixated:
-                    type: boolean
-                    default: false
-                  unit:
-                    type: string
-                  qty:
-                    type: number
-                    default: 1
-                  serialnumber:
-                    type: string
-                    nullable: true
                   part:
                     type: object
-                    required:
-                      - number
                     properties:
                       _self:
+                        type: string
+                      description:
                         type: string
                       number:
                         type: string
                         minLength: 1
-                      description:
-                        type: string
                       onhand:
                         type: string
                       unit:
                         type: string
                       weight:
                         type: string
+                    required:
+                      - number
+                  price:
+                    type: number
+                  price_fixated:
+                    type: boolean
+                    default: false
+                  qty:
+                    type: number
+                    default: 1
+                  serialnumber:
+                    type: string
+                    nullable: true
                   total:
                     type: number
+                  unit:
+                    type: string
+                type: object
             payments:
               type: array
               items:
-                type: object
                 properties:
                   account:
                     type: object
                     properties:
                       description:
                         type: string
+                type: object
             taxes:
               type: object
               additionalProperties:
-                type: object
                 properties:
-                  tax:
-                    type: object
-                    required:
-                      - category
-                    properties:
-                      category:
-                        type: string
-                      rate:
-                        type: string
-                      name:
-                        type: string
-                  base-amount:
-                    type: number
                   amount:
+                    type: number
+                  base-amount:
                     type: number
                   calculated-amount:
                     type: number
-                  source:
-                    type: string
                   memo:
                     type: string
+                  source:
+                    type: string
+                  tax:
+                    type: object
+                    properties:
+                      category:
+                        type: string
+                      name:
+                        type: string
+                      rate:
+                        type: string
+                    required:
+                      - category
+                type: object
             workflow:
               type: object
               properties:
@@ -2327,50 +2062,9 @@ components:
                     - VOIDED
                     - REVERSED
                     - DELETED
-    sic-code:
-      type: string
-      minLength: 1
-    SIC:
-      type: object
-      required:
-        - code
-        - description
-      properties:
-        code:
-          $ref: '#/components/schemas/sic-code'
-        description:
-          type: string
-    business-type-id:
-      type: number
-      format: int64
-    BusinessType:
-      allOf:
-        - $ref: '#/components/schemas/NewBusinessType'
-        - type: object
-          required:
-            - id
-          properties:
-            id:
-              $ref: '#/components/schemas/business-type-id'
-    NewBusinessType:
-      type: object
-      required:
-        - description
-      properties:
-        description:
-          type: string
-        discount:
-          type: number
-          format: float
-    language-code:
-      type: string
-      pattern: '^[a-z]{2}(_[A-Z]{2})?$'
-      example: fr_CA
+          type: object
     Language:
       type: object
-      required:
-        - code
-        - description
       properties:
         _meta:
           type: object
@@ -2381,140 +2075,52 @@ components:
         description:
           type: string
           example: French (Canada)
-    accno-code:
-      type: string
-      minLength: 1
-    GIFI:
-      type: object
       required:
-        - accno
+        - code
         - description
+    NewBusinessType:
+      type: object
       properties:
-        accno:
-          $ref: '#/components/schemas/accno-code'
         description:
           type: string
-          minLength: 1
-    newOrder:
-      type: object
+        discount:
+          type: number
+          format: float
       required:
-        - eca
-        - currency
-        - dates
-        - lines
+        - description
+    NewPartsgroup:
+      type: object
       properties:
-        eca:
-          anyOf:
-            - type: object
-              required:
-                - id
-              properties:
-                id:
-                  type: integer
-                  format: int64
-                  minimum: 1
-            - type: object
-              required:
-                - number
-                - type
-              properties:
-                number:
-                  type: string
-                  minLength: 1
-                type:
-                  type: string
-                  enum:
-                    - customer
-                    - vendor
-        currency:
+        description:
           type: string
-          minLength: 3
-          maxLength: 3
-        notes:
-          type: string
+        parent:
+          type: integer
+          format: int64
+          minimum: 1
           nullable: true
-        internal-notes:
+      required:
+        - description
+    NewPricegroup:
+      type: object
+      properties:
+        description:
           type: string
-          nullable: true
-        order-number:
+      required:
+        - description
+    NewWarehouse:
+      type: object
+      properties:
+        description:
           type: string
-        po-number:
-          type: string
-        ship-via:
-          type: string
-          nullable: true
-        shipping-point:
-          type: string
-          nullable: true
-        ship-to:
-          type: object
-        dates:
-          type: object
-          required:
-            - order
-          properties:
-            order:
-              type: string
-              format: date
-            required-by:
-              type: string
-              format: date
-        lines:
-          type: array
-          items:
-            type: object
-            required:
-              - part
-            properties:
-              description:
-                type: string
-              notes:
-                type: string
-                nullable: true
-              price:
-                type: number
-              price_fixated:
-                type: boolean
-                default: false
-              unit:
-                type: string
-              qty:
-                type: number
-                default: 1
-              taxform:
-                type: boolean
-                default: false
-              serialnumber:
-                type: string
-                nullable: true
-              discount:
-                description: |
-                  A value of 10 means the customer gets a 10% discount,
-                  if discount_type has a value of '%'
-                type: number
-                minimum: 0
-                maximum: 100
-              discount_type:
-                type: string
-                enum:
-                  - '%'
-              required-by:
-                type: string
-                format: date
-                nullable: true
-              part:
-                type: object
-                required:
-                  - number
-                properties:
-                  number:
-                    type: string
-                    minLength: 1
+      required:
+        - description
     Order:
       description: ...
       allOf:
-        - type: object
-          properties:
+        - properties:
+            description:
+              type: string
+              nullable: true
             eca:
               type: object
               properties:
@@ -2550,18 +2156,10 @@ components:
                   enum:
                     - customer
                     - vendor
-            description:
-              type: string
-              nullable: true
             lines:
               type: array
               items:
-                type: object
                 properties:
-                  required-by:
-                    type: string
-                    format: date
-                    nullable: true
                   description:
                     type: string
                   discount:
@@ -2569,8 +2167,8 @@ components:
                       A value of 10 means the customer gets a 10% discount,
                       if discount_type has a value of '%'
                     type: number
-                    minimum: 0
                     maximum: 100
+                    minimum: 0
                   discount_type:
                     type: string
                     enum:
@@ -2582,61 +2180,66 @@ components:
                   notes:
                     type: string
                     nullable: true
-                  price:
-                    type: number
-                  price_fixated:
-                    type: boolean
-                    default: false
-                  unit:
-                    type: string
-                  qty:
-                    type: number
-                    default: 1
-                  serialnumber:
-                    type: string
-                    nullable: true
                   part:
                     type: object
-                    required:
-                      - number
                     properties:
                       _self:
+                        type: string
+                      description:
                         type: string
                       number:
                         type: string
                         minLength: 1
-                      description:
-                        type: string
                       onhand:
                         type: string
                       unit:
                         type: string
                       weight:
                         type: string
+                    required:
+                      - number
+                  price:
+                    type: number
+                  price_fixated:
+                    type: boolean
+                    default: false
+                  qty:
+                    type: number
+                    default: 1
+                  required-by:
+                    type: string
+                    format: date
+                    nullable: true
+                  serialnumber:
+                    type: string
+                    nullable: true
                   total:
                     type: number
+                  unit:
+                    type: string
+                type: object
             taxes:
               type: object
               additionalProperties:
-                type: object
                 properties:
-                  tax:
-                    type: object
-                    required:
-                      - category
-                    properties:
-                      category:
-                        type: string
-                      rate:
-                        type: string
-                      name:
-                        type: string
-                  basis:
-                    type: string
                   amount:
+                    type: string
+                  basis:
                     type: string
                   source:
                     type: string
+                  tax:
+                    type: object
+                    properties:
+                      category:
+                        type: string
+                      name:
+                        type: string
+                      rate:
+                        type: string
+                    required:
+                      - category
+                type: object
             workflow:
               type: object
               properties:
@@ -2647,73 +2250,380 @@ components:
                   enum:
                     - SAVED
                     - DELETED
+          type: object
+    Partsgroup:
+      allOf:
+        - $ref: '#/components/schemas/NewPartsgroup'
+        - properties:
+            id:
+              $ref: '#/components/schemas/partsgroup-id'
+          required:
+            - id
+          type: object
+    Pricegroup:
+      allOf:
+        - $ref: '#/components/schemas/NewPricegroup'
+        - properties:
+            id:
+              $ref: '#/components/schemas/pricegroup-id'
+          required:
+            - id
+          type: object
+    SIC:
+      type: object
+      properties:
+        code:
+          $ref: '#/components/schemas/sic-code'
+        description:
+          type: string
+      required:
+        - code
+        - description
+    Warehouse:
+      allOf:
+        - $ref: '#/components/schemas/NewWarehouse'
+        - properties:
+            id:
+              $ref: '#/components/schemas/warehouse-id'
+          required:
+            - id
+          type: object
+    accno-code:
+      type: string
+      minLength: 1
+    business-type-id:
+      type: number
+      format: int64
     common-id:
       type: integer
       format: int64
       minimum: 1
+    country-code:
+      type: string
+      pattern: '^[a-zA-Z]{2}$'
+    error:
+      type: object
+    language-code:
+      type: string
+      example: fr_CA
+      pattern: '^[a-z]{2}(_[A-Z]{2})?$'
+    newInvoice:
+      type: object
+      properties:
+        account:
+          type: object
+          properties:
+            accno:
+              type: string
+              minLength: 1
+        currency:
+          type: string
+          maxLength: 3
+          minLength: 3
+        dates:
+          type: object
+          properties:
+            book:
+              type: string
+              format: date
+            created:
+              type: string
+              format: date
+            due:
+              type: string
+              format: date
+          required:
+            - book
+        description:
+          type: string
+          nullable: true
+        eca:
+          anyOf:
+            - properties:
+                id:
+                  type: integer
+                  format: int64
+                  minimum: 1
+              required:
+                - id
+              type: object
+            - properties:
+                number:
+                  type: string
+                  minLength: 1
+                type:
+                  type: string
+                  enum:
+                    - customer
+                    - vendor
+              required:
+                - number
+                - type
+              type: object
+        internal-notes:
+          type: string
+          nullable: true
+        invoice-number:
+          type: string
+        lines:
+          type: array
+          items:
+            properties:
+              delivery_date:
+                type: string
+                format: date
+                nullable: true
+              description:
+                type: string
+              discount:
+                description: |
+                  A value of 10 means the customer gets a 10% discount,
+                  if discount_type has a value of '%'
+                type: number
+                maximum: 100
+                minimum: 0
+              discount_type:
+                type: string
+                enum:
+                  - '%'
+              part:
+                type: object
+                properties:
+                  number:
+                    type: string
+                    minLength: 1
+                required:
+                  - number
+              price:
+                type: number
+              price_fixated:
+                type: boolean
+                default: false
+              qty:
+                type: number
+                default: 1
+              serialnumber:
+                type: string
+                nullable: true
+              taxform:
+                type: boolean
+                default: false
+              unit:
+                type: string
+            required:
+              - part
+            type: object
+        notes:
+          type: string
+          nullable: true
+        order-number:
+          type: string
+        payments:
+          type: array
+          items:
+            properties:
+              account:
+                type: object
+                properties:
+                  accno:
+                    type: string
+                    minLength: 1
+                required:
+                  - accno
+              amount:
+                type: number
+              date:
+                type: string
+                format: date
+              memo:
+                type: string
+              source:
+                type: string
+            required:
+              - account
+              - amount
+              - date
+            type: object
+        po-number:
+          type: string
+        ship-to:
+          type: object
+        ship-via:
+          type: string
+          nullable: true
+        shipping-point:
+          type: string
+          nullable: true
+        taxes:
+          type: object
+          additionalProperties:
+            properties:
+              amount:
+                type: number
+              base-amount:
+                type: number
+              memo:
+                type: string
+              source:
+                type: string
+              tax:
+                type: object
+                properties:
+                  category:
+                    type: string
+                required:
+                  - category
+            type: object
+      required:
+        - eca
+        - account
+        - currency
+        - dates
+        - lines
+    newOrder:
+      type: object
+      properties:
+        currency:
+          type: string
+          maxLength: 3
+          minLength: 3
+        dates:
+          type: object
+          properties:
+            order:
+              type: string
+              format: date
+            required-by:
+              type: string
+              format: date
+          required:
+            - order
+        eca:
+          anyOf:
+            - properties:
+                id:
+                  type: integer
+                  format: int64
+                  minimum: 1
+              required:
+                - id
+              type: object
+            - properties:
+                number:
+                  type: string
+                  minLength: 1
+                type:
+                  type: string
+                  enum:
+                    - customer
+                    - vendor
+              required:
+                - number
+                - type
+              type: object
+        internal-notes:
+          type: string
+          nullable: true
+        lines:
+          type: array
+          items:
+            properties:
+              description:
+                type: string
+              discount:
+                description: |
+                  A value of 10 means the customer gets a 10% discount,
+                  if discount_type has a value of '%'
+                type: number
+                maximum: 100
+                minimum: 0
+              discount_type:
+                type: string
+                enum:
+                  - '%'
+              notes:
+                type: string
+                nullable: true
+              part:
+                type: object
+                properties:
+                  number:
+                    type: string
+                    minLength: 1
+                required:
+                  - number
+              price:
+                type: number
+              price_fixated:
+                type: boolean
+                default: false
+              qty:
+                type: number
+                default: 1
+              required-by:
+                type: string
+                format: date
+                nullable: true
+              serialnumber:
+                type: string
+                nullable: true
+              taxform:
+                type: boolean
+                default: false
+              unit:
+                type: string
+            required:
+              - part
+            type: object
+        notes:
+          type: string
+          nullable: true
+        order-number:
+          type: string
+        po-number:
+          type: string
+        ship-to:
+          type: object
+        ship-via:
+          type: string
+          nullable: true
+        shipping-point:
+          type: string
+          nullable: true
+      required:
+        - eca
+        - currency
+        - dates
+        - lines
     partsgroup-id:
       $ref: '#/components/schemas/common-id'
-    Partsgroup:
-      allOf:
-        - $ref: '#/components/schemas/NewPartsgroup'
-        - type: object
-          required:
-            - id
-          properties:
-            id:
-              $ref: '#/components/schemas/partsgroup-id'
-    NewPartsgroup:
-      type: object
-      required:
-        - description
-      properties:
-        description:
-          type: string
-        parent:
-          type: integer
-          format: int64
-          minimum: 1
-          nullable: true
     pricegroup-id:
       $ref: '#/components/schemas/common-id'
-    Pricegroup:
-      allOf:
-        - $ref: '#/components/schemas/NewPricegroup'
-        - type: object
-          required:
-            - id
-          properties:
-            id:
-              $ref: '#/components/schemas/pricegroup-id'
-    NewPricegroup:
-      type: object
-      required:
-        - description
-      properties:
-        description:
-          type: string
+    sic-code:
+      type: string
+      minLength: 1
     warehouse-id:
       $ref: '#/components/schemas/common-id'
-    Warehouse:
-      allOf:
-        - $ref: '#/components/schemas/NewWarehouse'
-        - type: object
-          required:
-            - id
-          properties:
-            id:
-              $ref: '#/components/schemas/warehouse-id'
-    NewWarehouse:
-      type: object
-      required:
-        - description
-      properties:
-        description:
-          type: string
   examples:
+    validBusinessType:
+      description: Business Type Entry
+      summary: Valid Business Type
+      value:
+        description: Big customer
+        discount: 0.05
+        id: 1
+    validBusinessTypes:
+      description: Business Types collection response
+      summary: Valid Business Types (collection response)
+      value:
+        _links: []
+        items:
+          - description: Big customer
+            discount: 0.05
+            id: 1
     validCountries:
-      summary: Valid countries (collection response)
       description: countries collection response example
+      summary: Valid countries (collection response)
       value:
         _links: []
         items:
@@ -2724,121 +2634,52 @@ components:
             default: false
             name: Germany
     validCountry:
-      summary: Valid Country
       description: Netherlands entry
+      summary: Valid Country
       value:
         code: NL
         default: false
         name: Netherlands
-    validInvoices:
-      summary: Valid invoices (collection response)
-      description: Invoices collection response
+    validGIFI:
+      description: French Canadian entry
+      summary: Valid GIFI
       value:
-        - account:
-            accno: '1200'
-            description: AR
-          currency: USD
-          dates:
-            created: '2022-09-01'
-            due: '2022-10-01'
-            book: '2022-10-05'
-          description: null
-          eca:
-            number: Customer 1
-            type: customer
-            credit_limit:
-              total: 0
-              used: 0
-              available: 0
-            description: null
-            entity:
-              control_code: C-0
-              name: Customer 1
-            id: 1
-            pay_to_name: null
-          id: '1'
-          internal-notes: Internal notes
-          invoice-number: '2389434'
-          lines:
-            - delivery_date: '2022-10-27'
-              description: A description
-              discount: 12
-              discount_type: '%'
-              id: 1
-              item: 1
-              notes: null
-              part:
-                description: Part 1
-                number: p1
-                onhand: '0'
-                unit: ea
-                weight: '0'
-              price: 56.78
-              price_fixated: false
-              qty: 1
-              serialnumber: '1234567890'
-              total: 49.97
-              unit: lbs
-          lines_total: 49.97
-          notes: Notes
-          order-number: order 345
-          po-number: po 456
-          quote-number: ''
-          ship-via: ship via
-          shipping-point: shipping from here
-          taxes:
-            '2150':
-              amount: 6.78
-              base-amount: 50
-              calculated-amount: 2.5
-              source: Part 1
-              memo: tax memo
-              tax:
-                category: '2150'
-                name: Sales Tax
-                rate: '0.05'
-          taxes_total: 6.78
-          total: 56.75
-          type: customer
-          workflow:
-            actions:
-              - approve
-              - copy_to_new
-              - del
-              - edit_and_save
-              - new_screen
-              - sales_order
-              - save_info
-              - schedule
-              - ship_to
-              - update
-            state: SAVED
+        accno: '99999'
+        description: Test GIFI
+    validGIFIs:
+      description: Collection response
+      summary: Valid GIFIs (collection response)
+      value:
+        _links: []
+        items:
+          - accno: '99999'
+            description: Test GIFI
     validInvoice:
-      summary: Example Invoice
       description: Invoice entry
+      summary: Example Invoice
       value:
         account:
           accno: '1200'
           description: AR
         currency: USD
         dates:
+          book: '2022-10-05'
           created: '2022-09-01'
           due: '2022-10-01'
-          book: '2022-10-05'
         description: null
         eca:
-          number: Customer 1
-          type: customer
           credit_limit:
+            available: 0
             total: 0
             used: 0
-            available: 0
           description: null
           entity:
             control_code: C-0
             name: Customer 1
           id: 1
+          number: Customer 1
           pay_to_name: null
+          type: customer
         id: '1'
         internal-notes: Internal notes
         invoice-number: '2389434'
@@ -2874,8 +2715,8 @@ components:
             amount: 6.78
             base-amount: 50
             calculated-amount: 2.5
-            source: Part 1
             memo: tax memo
+            source: Part 1
             tax:
               category: '2150'
               name: Sales Tax
@@ -2896,94 +2737,37 @@ components:
             - ship_to
             - update
           state: SAVED
-    validSICs:
-      summary: Valid SICs (collection response)
-      description: SIC collection response
+    validInvoices:
+      description: Invoices collection response
+      summary: Valid invoices (collection response)
       value:
-        _links: []
-        items:
-          - code: '541510'
-            description: Design of computer systems
-    validSIC:
-      summary: Valid SIC
-      description: Standard Industry Code
-      value:
-        code: '541510'
-        description: Design of computer systems
-    validBusinessTypes:
-      summary: Valid Business Types (collection response)
-      description: Business Types collection response
-      value:
-        _links: []
-        items:
-          - id: 1
-            description: Big customer
-            discount: 0.05
-    validBusinessType:
-      summary: Valid Business Type
-      description: Business Type Entry
-      value:
-        id: 1
-        description: Big customer
-        discount: 0.05
-    validLanguages:
-      summary: Valid languages (collection response)
-      description: languages collection response
-      value:
-        _links: []
-        items:
-          - code: fr_CA
-            default: false
-            description: French (Canada)
-          - code: nl_NL
-            default: false
-            description: Dutch (Netherlands)
-    validLanguage:
-      summary: Valid Language
-      description: French Canadian entry
-      value:
-        code: fr_CA
-        default: false
-        description: French (Canada)
-    validGIFIs:
-      summary: Valid GIFIs (collection response)
-      description: Collection response
-      value:
-        _links: []
-        items:
-          - accno: '99999'
-            description: Test GIFI
-    validGIFI:
-      summary: Valid GIFI
-      description: French Canadian entry
-      value:
-        accno: '99999'
-        description: Test GIFI
-    validOrders:
-      summary: Valid orders (collection response)
-      description: Orders collection response
-      value:
-        - currency: USD
+        - account:
+            accno: '1200'
+            description: AR
+          currency: USD
           dates:
-            order: '2022-09-01'
-            required-by: '2022-10-01'
+            book: '2022-10-05'
+            created: '2022-09-01'
+            due: '2022-10-01'
+          description: null
           eca:
-            number: Customer 1
-            type: customer
             credit_limit:
+              available: 0
               total: 0
               used: 0
-              available: 0
             description: null
             entity:
               control_code: C-0
               name: Customer 1
             id: 1
+            number: Customer 1
             pay_to_name: null
+            type: customer
           id: '1'
           internal-notes: Internal notes
+          invoice-number: '2389434'
           lines:
-            - required-by: '2022-10-27'
+            - delivery_date: '2022-10-27'
               description: A description
               discount: 12
               discount_type: '%'
@@ -3000,9 +2784,9 @@ components:
               price_fixated: false
               qty: 1
               serialnumber: '1234567890'
-              total: 49.9664
+              total: 49.97
               unit: lbs
-          lines_total: 49.9664
+          lines_total: 49.97
           notes: Notes
           order-number: order 345
           po-number: po 456
@@ -3011,56 +2795,75 @@ components:
           shipping-point: shipping from here
           taxes:
             '2150':
-              amount: '2.50'
-              basis: '49.97'
+              amount: 6.78
+              base-amount: 50
+              calculated-amount: 2.5
+              memo: tax memo
+              source: Part 1
               tax:
                 category: '2150'
                 name: Sales Tax
                 rate: '0.05'
-          taxes_total: 2.5
-          total: 52.4664
+          taxes_total: 6.78
+          total: 56.75
           type: customer
           workflow:
             actions:
-              - delete
-              - e_mail
-              - print
-              - print_and_save
-              - print_and_save_as_new
-              - purchase_order
-              - quotation
-              - sales_invoice
-              - save
-              - save_as_new
+              - approve
+              - copy_to_new
+              - del
+              - edit_and_save
+              - new_screen
+              - sales_order
+              - save_info
+              - schedule
               - ship_to
               - update
             state: SAVED
+    validLanguage:
+      description: French Canadian entry
+      summary: Valid Language
+      value:
+        code: fr_CA
+        default: false
+        description: French (Canada)
+    validLanguages:
+      description: languages collection response
+      summary: Valid languages (collection response)
+      value:
+        _links: []
+        items:
+          - code: fr_CA
+            default: false
+            description: French (Canada)
+          - code: nl_NL
+            default: false
+            description: Dutch (Netherlands)
     validOrder:
-      summary: Example Order
       description: Order entry
+      summary: Example Order
       value:
         currency: USD
         dates:
           order: '2022-09-01'
           required-by: '2022-10-01'
         eca:
-          number: Customer 1
-          type: customer
           credit_limit:
+            available: 0
             total: 0
             used: 0
-            available: 0
           description: null
           entity:
             control_code: C-0
             name: Customer 1
           id: 1
+          number: Customer 1
           pay_to_name: null
+          type: customer
         id: '1'
         internal-notes: Internal notes
         lines:
-          - required-by: '2022-10-27'
-            description: A description
+          - description: A description
             discount: 12
             discount_type: '%'
             id: 1
@@ -3075,6 +2878,7 @@ components:
             price: 56.78
             price_fixated: false
             qty: 1
+            required-by: '2022-10-27'
             serialnumber: '1234567890'
             total: 49.9664
             unit: lbs
@@ -3111,47 +2915,199 @@ components:
             - ship_to
             - update
           state: SAVED
-    validPartsgroups:
-      summary: Valid Partsgroups (collection response)
-      description: Parts groups collection response
+    validOrders:
+      description: Orders collection response
+      summary: Valid orders (collection response)
       value:
-        _links: []
-        items:
-          - id: 1
-            parent: null
-            description: Partsgroup1
+        - currency: USD
+          dates:
+            order: '2022-09-01'
+            required-by: '2022-10-01'
+          eca:
+            credit_limit:
+              available: 0
+              total: 0
+              used: 0
+            description: null
+            entity:
+              control_code: C-0
+              name: Customer 1
+            id: 1
+            number: Customer 1
+            pay_to_name: null
+            type: customer
+          id: '1'
+          internal-notes: Internal notes
+          lines:
+            - description: A description
+              discount: 12
+              discount_type: '%'
+              id: 1
+              item: 1
+              notes: null
+              part:
+                description: Part 1
+                number: p1
+                onhand: '0'
+                unit: ea
+                weight: '0'
+              price: 56.78
+              price_fixated: false
+              qty: 1
+              required-by: '2022-10-27'
+              serialnumber: '1234567890'
+              total: 49.9664
+              unit: lbs
+          lines_total: 49.9664
+          notes: Notes
+          order-number: order 345
+          po-number: po 456
+          quote-number: ''
+          ship-via: ship via
+          shipping-point: shipping from here
+          taxes:
+            '2150':
+              amount: '2.50'
+              basis: '49.97'
+              tax:
+                category: '2150'
+                name: Sales Tax
+                rate: '0.05'
+          taxes_total: 2.5
+          total: 52.4664
+          type: customer
+          workflow:
+            actions:
+              - delete
+              - e_mail
+              - print
+              - print_and_save
+              - print_and_save_as_new
+              - purchase_order
+              - quotation
+              - sales_invoice
+              - save
+              - save_as_new
+              - ship_to
+              - update
+            state: SAVED
     validPartsgroup:
-      summary: Valid Partsgroup
       description: Partsgroup entry
+      summary: Valid Partsgroup
       value:
+        description: Partsgroup1
         id: 1
         parent: null
-        description: Partsgroup1
-    validPricegroups:
-      summary: Valid pricegroups (collection response)
-      description: Pricegroups collection response
+    validPartsgroups:
+      description: Parts groups collection response
+      summary: Valid Partsgroups (collection response)
       value:
         _links: []
         items:
-          - id: 1
-            description: Pricegroup1
+          - description: Partsgroup1
+            id: 1
+            parent: null
     validPricegroup:
-      summary: Valid Pricegroup
       description: Pricegroup entry
+      summary: Valid Pricegroup
       value:
-        id: 1
         description: Pricegroup1
-    validWarehouses:
-      summary: Valid warehouses (collection response)
-      description: Warehouses collection response
+        id: 1
+    validPricegroups:
+      description: Pricegroups collection response
+      summary: Valid pricegroups (collection response)
       value:
         _links: []
         items:
-          - id: 1
-            description: Warehouse1
-    validWarehouse:
-      summary: Valid Warehouse
-      description: Warehouse entry
+          - description: Pricegroup1
+            id: 1
+    validSIC:
+      description: Standard Industry Code
+      summary: Valid SIC
       value:
-        id: 1
+        code: '541510'
+        description: Design of computer systems
+    validSICs:
+      description: SIC collection response
+      summary: Valid SICs (collection response)
+      value:
+        _links: []
+        items:
+          - code: '541510'
+            description: Design of computer systems
+    validWarehouse:
+      description: Warehouse entry
+      summary: Valid Warehouse
+      value:
         description: Warehouse1
+        id: 1
+    validWarehouses:
+      description: Warehouses collection response
+      summary: Valid warehouses (collection response)
+      value:
+        _links: []
+        items:
+          - description: Warehouse1
+            id: 1
+  headers:
+    ETag:
+      description: |
+        The API uses the ETag parameter to prevent different clients modifying
+        the same resource around the same time from overwriting each other's
+        data: the later updates will be rejected based on verification of this
+        parameter.
+        Clients need to retain the ETag returned on a request when they might
+        want to update the values later.
+      required: true
+      schema:
+        type: string
+  responses:
+    '304':
+      description: Not modified
+    '400':
+      description: Bad request
+    '401':
+      description: Unauthorized
+    '403':
+      description: Forbidden
+    '404':
+      description: Not Found
+    '409':
+      description: Conflict
+    '412':
+      description: Precondition failed (If-Match header)
+    '413':
+      description: Payload too large
+    '428':
+      description: Precondition required
+  securitySchemes:
+    cookieAuth:
+      description: |
+        The authenticating cookie can be obtained by sending a `POST` request
+        to `login.pl?__action=authenticate&company=<url-encoded-company` with a
+        JSON object in the body of the request, containing these three fields
+
+        * company
+        * username
+        * password
+
+        as if they had been entered on the login page in the browser. Please
+        note that the request `Content-Type` must be set to `application/json`
+        and that an `X-Requested-With` header is expected with the value
+        `XMLHttpRequest`.
+
+        **Note**: the cookie value is updated on each response; the next
+        request *must* be executed with the new cookie value.
+
+        **Note 2**: the validity of the cookie is as long the user's timeout
+        when logged into the application (default: 90 minutes).
+
+        **Note 3**: Sites may customize the name of the cookie in order to run
+        multiple versions in parallel. The advice is to append the version name
+        to the cookie, resulting in cookie name `LedgerSMB-1.1` for LedgerSMB
+        version 1.1.
+      in: cookie
+      name: LedgerSMB
+      type: apiKey
+security:
+  - cookieAuth: []
