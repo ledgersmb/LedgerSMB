@@ -10700,10 +10700,10 @@ postcss-selector-parser@^7.0.0, postcss-selector-parser@^7.1.0, postcss-selector
     cssesc "^3.0.0"
     util-deprecate "^1.0.2"
 
-postcss-sorting@^9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/postcss-sorting/-/postcss-sorting-9.1.0.tgz#d2e7d43896dd399c23b5b86fc0b807a86146b590"
-  integrity sha512-Mn8KJ45HNNG6JBpBizXcyf6LqY/qyqetGcou/nprDnFwBFBLGj0j/sNKV2lj2KMOVOwdXu14aEzqJv8CIV6e8g==
+postcss-sorting@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/postcss-sorting/-/postcss-sorting-10.0.0.tgz#45789c87f60e6d9153f640c706bd79216701ccf6"
+  integrity sha512-TXbU+h6vVRW+86c/+ewhWq9k7pr7ijASTnepVhCQiC87zAOTkvB1v2dHyWP+ggstSTX/PNvjzS+IOqzejndz9w==
 
 postcss-svgo@^7.1.1:
   version "7.1.1"
@@ -10734,7 +10734,7 @@ postcss@8.4.49:
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
-postcss@8.5.8, postcss@^8.4.21, postcss@^8.4.32, postcss@^8.4.40, postcss@^8.4.47, postcss@^8.5.6:
+postcss@8.5.8, postcss@^8.4.21, postcss@^8.4.32, postcss@^8.4.40, postcss@^8.4.47, postcss@^8.5.6, postcss@^8.5.8:
   version "8.5.8"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.8.tgz#6230ecc8fb02e7a0f6982e53990937857e13f399"
   integrity sha512-OW/rX8O/jXnm82Ey1k44pObPtdblfiuWnrd8X7GJ7emImCOstunGbXUpp7HdBrFQX6rJzn3sPT397Wp5aCwCHg==
@@ -12375,13 +12375,13 @@ stylelint-no-unsupported-browser-features@8.1.1:
     doiuse "^6.0.6"
     postcss "^8.4.32"
 
-stylelint-order@7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/stylelint-order/-/stylelint-order-7.0.1.tgz#6075378153d8727ff5b5dee8615150f56bce35d3"
-  integrity sha512-GWPei1zBVDDjxM+/BmcSCiOcHNd8rSqW6FUZtqQGlTRpD0Z5nSzspzWD8rtKif5KPdzUG68DApKEV/y/I9VbTw==
+stylelint-order@8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/stylelint-order/-/stylelint-order-8.0.0.tgz#608e572bab842f993110ed30354b2d7c83df7de7"
+  integrity sha512-1oAwPRz6Ba8u9LPjgvdbeMjZszHhjY6DBBK+xMlS3IC89GdTsvAPpGYvW+dkn6pxc4ZaI1S959g4c8CftZbhIg==
   dependencies:
-    postcss "^8.5.6"
-    postcss-sorting "^9.1.0"
+    postcss "^8.5.8"
+    postcss-sorting "^10.0.0"
 
 stylelint-webpack-plugin@5.1.0:
   version "5.1.0"
