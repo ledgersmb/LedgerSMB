@@ -397,6 +397,8 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        409:
+          $ref: '#/components/responses/409'
         412:
           $ref: '#/components/responses/412'
         413:
@@ -421,6 +423,12 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+        409:
+          $ref: '#/components/responses/409'
+        412:
+          $ref: '#/components/responses/412'
+        428:
+          $ref: '#/components/responses/428'
     patch:
       tags:
         - GIFI

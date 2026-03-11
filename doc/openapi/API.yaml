@@ -106,6 +106,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
         '412':
           $ref: '#/components/responses/412'
         '428':
@@ -207,6 +209,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
         '412':
           $ref: '#/components/responses/412'
         '413':
@@ -296,6 +300,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
         '412':
           $ref: '#/components/responses/412'
         '428':
@@ -397,6 +403,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
         '412':
           $ref: '#/components/responses/412'
         '413':
@@ -673,6 +681,12 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
+        '412':
+          $ref: '#/components/responses/412'
+        '428':
+          $ref: '#/components/responses/428'
       tags:
         - GIFI
     description: A single GIFI
@@ -763,6 +777,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
         '412':
           $ref: '#/components/responses/412'
         '413':
@@ -905,6 +921,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
         '412':
           $ref: '#/components/responses/412'
         '413':
@@ -1000,6 +1018,10 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           $ref: '#/components/responses/409'
+        '412':
+          $ref: '#/components/responses/412'
+        '428':
+          $ref: '#/components/responses/428'
       tags:
         - Languages
     description: Manage a single language
@@ -1277,6 +1299,8 @@ paths:
           $ref: '#/components/responses/403'
         '404':
           $ref: '#/components/responses/404'
+        '409':
+          $ref: '#/components/responses/409'
         '412':
           $ref: '#/components/responses/412'
         '413':
@@ -1371,6 +1395,10 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           $ref: '#/components/responses/409'
+        '412':
+          $ref: '#/components/responses/412'
+        '428':
+          $ref: '#/components/responses/428'
       tags:
         - Parts groups
     get:
@@ -1558,6 +1586,10 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           $ref: '#/components/responses/409'
+        '412':
+          $ref: '#/components/responses/412'
+        '428':
+          $ref: '#/components/responses/428'
       tags:
         - Price groups
     get:
@@ -1745,6 +1777,10 @@ paths:
           $ref: '#/components/responses/404'
         '409':
           $ref: '#/components/responses/409'
+        '412':
+          $ref: '#/components/responses/412'
+        '428':
+          $ref: '#/components/responses/428'
       tags:
         - Warehouses
     description: Manage a warehouse
