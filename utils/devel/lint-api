@@ -1,0 +1,116 @@
+#!/usr/bin/env perl
+
+use v5.38;
+use YAML::PP;
+
+sub verify_path_get_responses( $responses ) {
+    # a GET response of 304 (Not Modified) makes sense
+    # for individual resources; collection resources
+    # do not need to define 304 as it may not be applicable
+    for my $status (qw/ 200 400 401 403 404 /) {
+        die "GET response missing $status"
+            unless $responses->{$status};
+    }
+}
+
+sub verify_path_patch_responses( $responses ) {
+    for my $status (qw/ 201 400 401 403 404 412 428 /) {
+        die "POST response missing $status"
+            unless $responses->{$status};
+    }
+}
+
+sub verify_path_post_responses( $responses ) {
+    for my $status (qw/ 201 400 401 403 404 /) {
+        die "POST response missing $status"
+            unless $responses->{$status};
+    }
+}
+
+sub verify_path_put_responses( $responses ) {
+    for my $status (qw/ 200 400 401 403 404 412 428 /) {
+        die "PUT response missing $status"
+            unless $responses->{$status};
+    }
+}
+
+sub verify_path_delete_responses( $responses ) {
+    for my $status (qw/ 204 400 401 403 404 412 428 /) {
+        die "DELETE response missing $status"
+            unless $responses->{$status};
+    }
+}
+
+sub verify_path_get( $get ) {
+    verify_path_get_responses( $get->{responses} );
+}
+
+sub verify_path_patch( $patch ) {
+    verify_path_patch_responses( $patch->{responses} );
+}
+
+sub verify_path_post( $post ) {
+    verify_path_post_responses( $post->{responses} );
+}
+
+sub verify_path_put( $put ) {
+    verify_path_put_responses( $put->{responses} );
+}
+
+sub verify_path_delete( $delete ) {
+    verify_path_delete_responses( $delete->{responses} );
+}
+
+sub verify_path( $api, $path ) {
+    verify_path_get( $path->{get} )
+        if $path->{get};
+    verify_path_post( $path->{post} )
+        if $path->{post};
+    verify_path_put( $path->{put} )
+        if $path->{put};
+    verify_path_delete( $path->{delete} )
+        if $path->{delete};
+}
+
+sub verify_paths( $api, $paths ) {
+    for my $path (sort keys $paths->%*) {
+        say "Verifying path $path";
+        verify_path( $api, $paths->{$path} );
+    }
+}
+
+sub verify_schema( $api, $schema ) {
+    
+}
+
+sub verify_schemas( $api, $schemas ) {
+    for my $schema ( sort keys $schemas->%* ) {
+        verify_schema( $api, $schemas->{$schema} );
+    }
+}
+
+sub verify_example( $api, $example ) {
+}
+
+sub verify_examples( $api, $examples ) {
+    for my $example ( sort keys $examples->%* ) {
+        verify_example( $api, $examples->{$example} );
+    }
+}
+
+sub verify_components( $api, $components ) {
+    verify_schemas( $api, $components->{schemas} );
+    verify_examples( $api, $components->{examples} );
+}
+
+sub verify_api( $api ) {
+    verify_paths( $api, $api->{paths} );
+    verify_components( $api, $api->{components} );
+}
+
+
+my $yaml = YAML::PP->new;
+my $api_def = shift @ARGV;
+my $api = $yaml->load_file( $api_def );
+
+verify_api( $api );
