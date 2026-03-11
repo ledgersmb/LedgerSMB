@@ -414,6 +414,7 @@ jobs:
             BROWSER: "chrome"
             DB_TESTING: 1
             JOB_COUNT: 5
+            COA_TESTING: 1
 
     services:
       # Label used to access the service container
