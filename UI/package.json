@@ -123,7 +123,7 @@
     "stylelint-webpack-plugin": "5.1.0",
     "tmp": "0.2.5",
     "typescript": "5.9.3",
-    "undici": "7.22.0",
+    "undici": "7.24.0",
     "unix-timestamp": "1.1.0",
     "unused-webpack-plugin": "2.4.0",
     "vue-eslint-parser": "^10.0.0",
