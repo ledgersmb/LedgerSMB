@@ -12373,10 +12373,10 @@ stylelint-no-unsupported-browser-features@8.1.1:
     doiuse "^6.0.6"
     postcss "^8.4.32"
 
-stylelint-order@8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/stylelint-order/-/stylelint-order-8.1.0.tgz#f773b9512c38745048bcca606911211c37039296"
-  integrity sha512-ao2+VzToCqbAVGaEYEeSR2zNurvQx+86Kw1d0//kZDx3zlyjvb24dE4J0e4HQgOTruOwZpfaHHRtK58+lrsTAQ==
+stylelint-order@8.1.1:
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/stylelint-order/-/stylelint-order-8.1.1.tgz#75fa085cf4cce68eab7f438b5df7ef1597908ea2"
+  integrity sha512-LqsEB6VggJuu5v10RtkrQsBObcdwBE7GuAOlwfc/LR3VL/w8UqKX2BOLIjhyGt0Gne/njo7gRNGiJAKhfmPMNw==
   dependencies:
     postcss "^8.5.8"
     postcss-sorting "^10.0.0"
