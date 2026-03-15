@@ -283,6 +283,12 @@ sub post_transaction {
         my $uid = localtime;
         $uid .= "$$";
 
+        $query = q|
+            INSERT INTO transactions (table_name, trans_type_code, approved)
+            VALUES ('ar', 'ar', false)
+            |;
+        $dbh->do($query) or $form->dberror($query);
+
         $query = qq|
             INSERT INTO $table (invnumber, person_id, entity_credit_account)
                  VALUES ('$uid', ?, ?)|;
