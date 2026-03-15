@@ -195,6 +195,7 @@ for my $change (@changes) {
 
     $test1->{_content} = $content;
     $test1->{properties}->{no_transactions} = 1;
+    diag "Splitting statements in $change";
     my $joined_content = join('', $test1->_split_statements);
     $joined_content =~ s/[\s\n\t]+//g;
     $content =~ s/--.*//g;
