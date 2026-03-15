@@ -481,7 +481,7 @@ sub _split_statements {
    (?<BareIdentifier>[a-zA-Z_][a-zA-Z0-9_]*)
    (?<QuotedIdentifier>"[^\"]+")
    (?<SingularIdentifier>(?&BareIdentifier)|(?&QuotedIdentifier)|\*)
-   (?<Identifier>(?&SingularIdentifier)(\.(?&SingularIdentifier))*)
+   (?<Identifier>(?&SingularIdentifier)( (?&WhiteSp)? \. (?&WhiteSp)? (?&SingularIdentifier))*)
    (?<QuotedString>'([^\\']|\\.)*')
    (?<DollarQString>\$(?<_dollar_block>(?&BareIdentifier)?)\$
                       [^\$]* (?: \$(?!\g{_dollar_block}\$) [^\$]*+)*
