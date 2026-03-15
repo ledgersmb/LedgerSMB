@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@acemir/cssom@^0.9.31":
-  version "0.9.31"
-  resolved "https://registry.yarnpkg.com/@acemir/cssom/-/cssom-0.9.31.tgz#bd5337d290fb8be2ac18391f37386bc53778b0bc"
-  integrity sha512-ZnR3GSaH+/vJ0YlHau21FjfLYjMpYVIzTD8M8vIEQvIGxeOXyXdzCI140rrCY862p/C/BbzWsjc1dgnM9mkoTA==
-
 "@altano/repository-tools@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@altano/repository-tools/-/repository-tools-2.0.1.tgz#22b43b5ee9dde190a055c281059d57ac665128df"
@@ -34,16 +29,16 @@
     "@csstools/css-tokenizer" "^4.0.0"
     lru-cache "^11.2.6"
 
-"@asamuzakjp/dom-selector@^6.8.1":
-  version "6.8.1"
-  resolved "https://registry.yarnpkg.com/@asamuzakjp/dom-selector/-/dom-selector-6.8.1.tgz#39b20993672b106f7cd9a3a9a465212e87e0bfd1"
-  integrity sha512-MvRz1nCqW0fsy8Qz4dnLIvhOlMzqDVBabZx6lH+YywFDdjXhMY37SmpV1XFX3JzG5GWHn63j6HX6QPr3lZXHvQ==
+"@asamuzakjp/dom-selector@^7.0.2":
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/@asamuzakjp/dom-selector/-/dom-selector-7.0.3.tgz#4417c419c79a560dac6c191d4e7592fa06057da1"
+  integrity sha512-Q6mU0Z6bfj6YvnX2k9n0JxiIwrCFN59x/nWmYQnAqP000ruX/yV+5bp/GRcF5T8ncvfwJQ7fgfP74DlpKExILA==
   dependencies:
     "@asamuzakjp/nwsapi" "^2.3.9"
     bidi-js "^1.0.3"
-    css-tree "^3.1.0"
+    css-tree "^3.2.1"
     is-potential-custom-element-name "^1.0.1"
-    lru-cache "^11.2.6"
+    lru-cache "^11.2.7"
 
 "@asamuzakjp/nwsapi@^2.3.9":
   version "2.3.9"
@@ -1089,10 +1084,15 @@
   resolved "https://registry.yarnpkg.com/@csstools/css-parser-algorithms/-/css-parser-algorithms-4.0.0.tgz#e1c65dc09378b42f26a111fca7f7075fc2c26164"
   integrity sha512-+B87qS7fIG3L5h3qwJ/IFbjoVoOe/bpOdh9hAjXbvx0o8ImEmUsGXN0inFOnk2ChCFgqkkGFQ+TpM5rbhkKe4w==
 
-"@csstools/css-syntax-patches-for-csstree@^1.0.27", "@csstools/css-syntax-patches-for-csstree@^1.0.28":
+"@csstools/css-syntax-patches-for-csstree@^1.0.27":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@csstools/css-syntax-patches-for-csstree/-/css-syntax-patches-for-csstree-1.1.0.tgz#6c41ea7084e17ee5b8aa3ecd86f85f35eb64994f"
   integrity sha512-H4tuz2nhWgNKLt1inYpoVCfbJbMwX/lQKp3g69rrrIMIYlFD9+zTykOKhNR8uGrAmbS/kT9n6hTFkmDkxLgeTA==
+
+"@csstools/css-syntax-patches-for-csstree@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@csstools/css-syntax-patches-for-csstree/-/css-syntax-patches-for-csstree-1.1.1.tgz#ce4c9a0cbe30590491fcd5c03fe6426d22ba89e4"
+  integrity sha512-BvqN0AMWNAnLk9G8jnUT77D+mUbY/H2b3uDTvg2isJkHaOufUE2R3AOwxWo7VBQKT1lOdwdvorddo2B/lk64+w==
 
 "@csstools/css-tokenizer@^3.0.3":
   version "3.0.4"
@@ -1398,7 +1398,7 @@
     "@eslint/core" "^0.17.0"
     levn "^0.4.1"
 
-"@exodus/bytes@^1.11.0", "@exodus/bytes@^1.6.0":
+"@exodus/bytes@^1.11.0", "@exodus/bytes@^1.15.0", "@exodus/bytes@^1.6.0":
   version "1.15.0"
   resolved "https://registry.yarnpkg.com/@exodus/bytes/-/bytes-1.15.0.tgz#54479e0f406cbad024d6fe1c3190ecca4468df3b"
   integrity sha512-UY0nlA+feH81UGSHv92sLEPLCeZFjXOuHhrIo0HQydScuQc8s0A7kL/UdgwgDq8g8ilksmuoF35YVTNphV2aBQ==
@@ -5266,7 +5266,7 @@ css-tree@^2.0.1:
     mdn-data "2.0.30"
     source-map-js "^1.0.1"
 
-css-tree@^3.0.0, css-tree@^3.0.1, css-tree@^3.1.0:
+css-tree@^3.0.0, css-tree@^3.0.1, css-tree@^3.1.0, css-tree@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/css-tree/-/css-tree-3.2.1.tgz#86cac7011561272b30e6b1e042ba6ce047aa7518"
   integrity sha512-X7sjQzceUhu1u7Y/ylrRZFU2FS6LRiFVp6rKLPg23y3x3c3DOKAwuXGDp+PAGjh6CSnCjYeAul8pcT8bAl+lSA==
@@ -5355,16 +5355,6 @@ cssstyle@^4.2.1:
   dependencies:
     "@asamuzakjp/css-color" "^3.2.0"
     rrweb-cssom "^0.8.0"
-
-cssstyle@^6.0.1:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/cssstyle/-/cssstyle-6.2.0.tgz#c41b59955c19c7a1223352d67ca462750204ad0f"
-  integrity sha512-Fm5NvhYathRnXNVndkUsCCuR63DCLVVwGOOwQw782coXFi5HhkXdu289l59HlXZBawsyNccXfWRYvLzcDCdDig==
-  dependencies:
-    "@asamuzakjp/css-color" "^5.0.1"
-    "@csstools/css-syntax-patches-for-csstree" "^1.0.28"
-    css-tree "^3.1.0"
-    lru-cache "^11.2.6"
 
 csstype@3.2.3, csstype@^3.2.3:
   version "3.2.3"
@@ -8623,31 +8613,31 @@ jsdoc-type-pratt-parser@~4.0.0:
   resolved "https://registry.yarnpkg.com/jsdoc-type-pratt-parser/-/jsdoc-type-pratt-parser-4.0.0.tgz#136f0571a99c184d84ec84662c45c29ceff71114"
   integrity sha512-YtOli5Cmzy3q4dP26GraSOeAhqecewG04hoO8DY56CH4KJ9Fvv5qKWUCCo3HZob7esJQHCv6/+bnTy72xZZaVQ==
 
-jsdom@28.1.0:
-  version "28.1.0"
-  resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-28.1.0.tgz#ac4203e58fd24d7b0f34359ab00d6d9caebd4b62"
-  integrity sha512-0+MoQNYyr2rBHqO1xilltfDjV9G7ymYGlAUazgcDLQaUf8JDHbuGwsxN6U9qWaElZ4w1B2r7yEGIL3GdeW3Rug==
+jsdom@29.0.0:
+  version "29.0.0"
+  resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-29.0.0.tgz#5f2e47251570df4bf0c8dec7b68644259f73aaa4"
+  integrity sha512-9FshNB6OepopZ08unmmGpsF7/qCjxGPbo3NbgfJAnPeHXnsODE9WWffXZtRFRFe0ntzaAOcSKNJFz8wiyvF1jQ==
   dependencies:
-    "@acemir/cssom" "^0.9.31"
-    "@asamuzakjp/dom-selector" "^6.8.1"
+    "@asamuzakjp/css-color" "^5.0.1"
+    "@asamuzakjp/dom-selector" "^7.0.2"
     "@bramus/specificity" "^2.4.2"
-    "@exodus/bytes" "^1.11.0"
-    cssstyle "^6.0.1"
+    "@csstools/css-syntax-patches-for-csstree" "^1.1.1"
+    "@exodus/bytes" "^1.15.0"
+    css-tree "^3.2.1"
     data-urls "^7.0.0"
     decimal.js "^10.6.0"
     html-encoding-sniffer "^6.0.0"
-    http-proxy-agent "^7.0.2"
-    https-proxy-agent "^7.0.6"
     is-potential-custom-element-name "^1.0.1"
+    lru-cache "^11.2.7"
     parse5 "^8.0.0"
     saxes "^6.0.0"
     symbol-tree "^3.2.4"
-    tough-cookie "^6.0.0"
-    undici "^7.21.0"
+    tough-cookie "^6.0.1"
+    undici "^7.24.3"
     w3c-xmlserializer "^5.0.0"
     webidl-conversions "^8.0.1"
     whatwg-mimetype "^5.0.0"
-    whatwg-url "^16.0.0"
+    whatwg-url "^16.0.1"
     xml-name-validator "^5.0.0"
 
 jsdom@^26.1.0:
@@ -8993,7 +8983,7 @@ lru-cache@^10.2.0, lru-cache@^10.4.3:
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-10.4.3.tgz#410fc8a17b70e598013df257c2446b7f3383f119"
   integrity sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==
 
-lru-cache@^11.0.0, lru-cache@^11.2.6:
+lru-cache@^11.0.0, lru-cache@^11.2.6, lru-cache@^11.2.7:
   version "11.2.7"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-11.2.7.tgz#9127402617f34cd6767b96daee98c28e74458d35"
   integrity sha512-aY/R+aEsRelme17KGQa/1ZSIpLpNYYrhcrepKTZgE+W3WM16YMCaPwOHLHsmopZHELU0Ojin1lPVxKR0MihncA==
@@ -12717,7 +12707,7 @@ tough-cookie@^5.1.1:
   dependencies:
     tldts "^6.1.32"
 
-tough-cookie@^6.0.0:
+tough-cookie@^6.0.0, tough-cookie@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-6.0.1.tgz#a495f833836609ed983c19bc65639cfbceb54c76"
   integrity sha512-LktZQb3IeoUWB9lqR5EWTHgW/VTITCXg4D21M+lvybRVdylLrRMnqaIONLVb5mav8vM19m44HIcGq4qASeu2Qw==
@@ -12949,10 +12939,10 @@ undici@^6.23.0:
   resolved "https://registry.yarnpkg.com/undici/-/undici-6.24.0.tgz#ad36b879b4882d14addc13dd641da7ed7ac7623a"
   integrity sha512-lVLNosgqo5EkGqh5XUDhGfsMSoO8K0BAN0TyJLvwNRSl4xWGZlCVYsAIpa/OpA3TvmnM01GWcoKmc3ZWo5wKKA==
 
-undici@^7.21.0:
-  version "7.24.1"
-  resolved "https://registry.yarnpkg.com/undici/-/undici-7.24.1.tgz#3fd0fe40e67388860810ad3275f9a23b322de650"
-  integrity sha512-5xoBibbmnjlcR3jdqtY2Lnx7WbrD/tHlT01TmvqZUFVc9Q1w4+j5hbnapTqbcXITMH1ovjq/W7BkqBilHiVAaA==
+undici@^7.24.3:
+  version "7.24.3"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-7.24.3.tgz#9c26a00b5e6cfbf10c1238471eb4ec0166b0374b"
+  integrity sha512-eJdUmK/Wrx2d+mnWWmwwLRyA7OQCkLap60sk3dOK4ViZR7DKwwptwuIvFBg2HaiP9ESaEdhtpSymQPvytpmkCA==
 
 unicode-canonical-property-names-ecmascript@^2.0.0:
   version "2.0.1"
@@ -13554,7 +13544,7 @@ whatwg-url@^14.0.0, whatwg-url@^14.1.1:
     tr46 "^5.1.0"
     webidl-conversions "^7.0.0"
 
-whatwg-url@^16.0.0:
+whatwg-url@^16.0.0, whatwg-url@^16.0.1:
   version "16.0.1"
   resolved "https://registry.yarnpkg.com/whatwg-url/-/whatwg-url-16.0.1.tgz#047f7f4bd36ef76b7198c172d1b1cebc66f764dd"
   integrity sha512-1to4zXBxmXHV3IiSSEInrreIlu02vUOvrhxJJH5vcxYTBDAx51cqZiKdyTxlecdKNSjj8EcxGBxNf6Vg+945gw==
