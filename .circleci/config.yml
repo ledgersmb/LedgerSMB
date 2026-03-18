@@ -252,8 +252,8 @@ executors:
         type: integer
         default: 0
     docker:
-      - image: ghcr.io/ledgersmb/ledgersmb_circleci-perl:<< parameters.perl >>
-      - image: ghcr.io/ledgersmb/ledgersmb_circleci-postgres:<< parameters.postgres >>
+      - image: ghcr.io/ledgersmb-devel/ledgersmb_circleci-perl:<< parameters.perl >>
+      - image: ghcr.io/ledgersmb-devel/ledgersmb_circleci-postgres:<< parameters.postgres >>
         environment:
           POSTGRES_PASSWORD: test
       - image: << parameters.hub >>
