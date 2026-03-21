@@ -101,7 +101,7 @@
     "markdownlint": "0.40.0",
     "markdownlint-cli": "0.48.0",
     "mini-css-extract-plugin": "2.10.1",
-    "msw": "2.12.13",
+    "msw": "2.12.14",
     "openapi-merge-cli": "1.3.2",
     "postcss": "8.5.8",
     "prettier": "3.8.1",
