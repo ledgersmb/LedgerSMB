@@ -30,9 +30,9 @@
     lru-cache "^11.2.7"
 
 "@asamuzakjp/dom-selector@^7.0.3":
-  version "7.0.4"
-  resolved "https://registry.yarnpkg.com/@asamuzakjp/dom-selector/-/dom-selector-7.0.4.tgz#744ad572c70b00cc8e92e76d539b14afb7bd99b1"
-  integrity sha512-jXR6x4AcT3eIrS2fSNAwJpwirOkGcd+E7F7CP3zjdTqz9B/2huHOL8YJZBgekKwLML+u7qB/6P1LXQuMScsx0w==
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/@asamuzakjp/dom-selector/-/dom-selector-7.0.5.tgz#dbdd244d326d1352030bcdf7d2cc82b7b5c878c4"
+  integrity sha512-7vyrLx4ck24AhfXUSa+aPlL9rw3yw8U0or/TG2yxCutt5CxMnycucf3/DVBsxRqny74l6WNZ/PQ5SD3Moa0lAQ==
   dependencies:
     "@asamuzakjp/nwsapi" "^2.3.9"
     bidi-js "^1.0.3"
