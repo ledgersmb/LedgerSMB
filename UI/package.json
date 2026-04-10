@@ -53,6 +53,7 @@
     "@babel/eslint-parser": "7.28.6",
     "@babel/plugin-transform-object-rest-spread": "^7.24.7",
     "@babel/preset-env": "7.29.2",
+    "@ehuelsmann/jest-openapi": "0.15.0",
     "@eslint/js": "9.39.4",
     "@pinia/testing": "1.0.3",
     "@quasar/app-webpack": "^4.2.0",
@@ -93,7 +94,6 @@
     "jest": "30.3.0",
     "jest-environment-jsdom": "^30.0.0",
     "jest-fixed-jsdom": "^0.0.11",
-    "@ehuelsmann/jest-openapi": "0.15.0",
     "jest-serializer-vue": "3.1.0",
     "jsdom": "29.0.1",
     "jsonc-eslint-parser": "3.1.0",
@@ -145,6 +145,7 @@
     "test": "jest",
     "test:unit": "jest --group=test:unit"
   },
+  "packageManager": "yarn@4.13.0+sha512.5c20ba010c99815433e5c8453112165e673f1c7948d8d2b267f4b5e52097538658388ebc9f9580656d9b75c5cc996f990f611f99304a2197d4c56d21eea370e7",
   "babel": {
     "presets": [
       [
