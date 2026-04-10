@@ -97,6 +97,8 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: 'UI/yarn.lock'
 
+      - name: Enable Corepack (Yarn Berry)
+        run: corepack enable
 
       # This step absolutely MUST come before "uncaching" node_modules!
       # there are HTML files in the node_modules directory which otherwise
@@ -298,6 +300,9 @@ jobs:
           node-version: '24'
           cache: 'yarn'
           cache-dependency-path: 'UI/yarn.lock'
+
+      - name: Enable Corepack (Yarn Berry)
+        run: corepack enable
 
       - name: Pre-run installation steps
         run: |
