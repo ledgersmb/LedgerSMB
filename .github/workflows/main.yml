@@ -89,6 +89,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Enable Corepack (Yarn Berry)
+        run: corepack enable
+
       - name: Setup Node.js environment
         uses: actions/setup-node@v6
         with:
@@ -96,9 +99,6 @@ jobs:
           node-version: '24'
           cache: 'yarn'
           cache-dependency-path: 'UI/yarn.lock'
-
-      - name: Enable Corepack (Yarn Berry)
-        run: corepack enable
 
       # This step absolutely MUST come before "uncaching" node_modules!
       # there are HTML files in the node_modules directory which otherwise
@@ -294,15 +294,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Enable Corepack (Yarn Berry)
+        run: corepack enable
+
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: '24'
           cache: 'yarn'
           cache-dependency-path: 'UI/yarn.lock'
-
-      - name: Enable Corepack (Yarn Berry)
-        run: corepack enable
 
       - name: Pre-run installation steps
         run: |
