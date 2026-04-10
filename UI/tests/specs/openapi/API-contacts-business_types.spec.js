@@ -5,7 +5,7 @@
 /* global process, require */
 
 // Import test packages
-import jestOpenAPI from "jest-openapi";
+import jestOpenAPI from "@ehuelsmann/jest-openapi";
 import { StatusCodes } from "http-status-codes";
 import { create_database, drop_database } from "./database";
 import { server } from "../../common/mocks/server.js";
