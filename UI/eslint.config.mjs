@@ -165,6 +165,7 @@ export default [
                         "homepage",
                         "scripts",
                         "engines",
+                        "packageManager",
                         "os",
                         "cpu",
                         "babel",

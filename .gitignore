@@ -56,6 +56,9 @@ META.yml
 # Webpack
 /UI/node_modules/
 
+# Yarn Berry
+/UI/.yarn/install-state.gz
+
 # redocly
 /UI/openapi/
 /doc/openapi/API.yaml
