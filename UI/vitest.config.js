@@ -19,6 +19,13 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
     test: {
         // The workspace file defines all individual projects.
-        workspace: "vitest.workspace.js"
+        workspace: "vitest.workspace.js",
+        coverage: {
+            enabled: true,
+            provider: "v8",
+            reporter: ["text", "html", ["lcov", { file: "lcov.info" }]],
+            include: ["{src,js-src}/**/*.{js,vue}"],
+            exclude: ["**/webpack*.js"]
+        }
     }
 });

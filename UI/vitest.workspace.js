@@ -80,15 +80,7 @@ export default defineWorkspace([
             setupFiles: [
                 "tests/common/vitest-polyfills.js",
                 "tests/common/vitest-setup.js"
-            ],
-
-            coverage: {
-                provider: "v8",
-                reporter: ["text", "lcov"],
-                reportsDirectory: "coverage",
-                include: ["{src,js-src}/**/*.{js,vue}"],
-                exclude: ["**/webpack*.js"]
-            }
+            ]
         }
     },
 
@@ -101,11 +93,6 @@ export default defineWorkspace([
             name: "API",
             environment: "node",
             hookTimeout: 30000,
-            coverage: {
-                provider: "v8",
-                reporter: ["text", "lcov"],
-                reportsDirectory: "coverage"
-            },
 
             include: ["tests/specs/openapi/**/*.spec.js"],
 
