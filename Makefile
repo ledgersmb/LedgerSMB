@@ -164,10 +164,10 @@ jstest: TESTS ?=
 jstest: api
 ifneq ($(origin DOCKER_CMD),undefined)
 #       if there's a docker container, jump into it and run from there
-	$(DOCKER_CMD) make jstest
+	$(DOCKER_CMD) make jstest TESTS="$(TESTS)"
 else
 # Test browser and API projects (API tests require a running server)
-	$(SHELL) -c 'cd UI && yarn vitest run --project browser --project API $(TESTS)'
+	$(SHELL) -c 'cd UI && yarn vitest run $(TESTS)'
 endif
 
 serve:
