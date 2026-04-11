@@ -106,7 +106,7 @@ module.exports = {
     moduleDirectories: ["node_modules"],
 
     // An array of file extensions your modules use
-    moduleFileExtensions: ["js", "json", "vue"],
+    moduleFileExtensions: ["js", "mjs", "cjs", "json", "vue"],
 
     // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
 
@@ -141,7 +141,7 @@ module.exports = {
     projects: [
         {
             displayName: "browser",
-            moduleFileExtensions: ["js", "json", "vue"],
+            moduleFileExtensions: ["js", "mjs", "cjs", "json", "vue"],
             moduleNameMapper: {
               "^@/i18n": "<rootDir>/tests/common/i18n", // Jest doesn't support esm or top level await well
               "^@/(.*)$": "<rootDir>/src/$1"
@@ -156,7 +156,7 @@ module.exports = {
             testPathIgnorePatterns: [ "<rootDir>/tests/specs/openapi/.*\\.spec\\.js" ],
             transform: {
                 "^.+\\.yaml$": "yaml-jest-transform",
-                "^.+\\.js$": "babel-jest",
+                "^.+\\.[mc]?js$": "babel-jest",
                 "^.+\\.vue$": "@vue/vue3-jest",
                 "^@": "babel-jest",
             },
@@ -164,12 +164,12 @@ module.exports = {
         },
         {
             displayName: "API",
-            moduleFileExtensions: ["js", "json", "vue"],
+            moduleFileExtensions: ["js", "mjs", "cjs", "json", "vue"],
             testMatch: [ "<rootDir>/tests/specs/openapi/**/*.spec.js" ],
             testEnvironment: "node",
             transform: {
                 "^.+\\.yaml$": "yaml-jest-transform",
-                "^.+\\.js$": "babel-jest",
+                "^.+\\.[mc]?js$": "babel-jest",
                 "^.+\\.vue$": "@vue/vue3-jest",
                 "^@": "babel-jest",
             },
@@ -257,7 +257,7 @@ module.exports = {
     // A map from regular expressions to paths to transformers
     transform: {
         "^.+\\.yaml$": "yaml-jest-transform",
-        "^.+\\.js$": "babel-jest",
+        "^.+\\.[mc]?js$": "babel-jest",
         "^@": "babel-jest",
         "^.+\\.vue$": "@vue/vue3-jest"
     },
