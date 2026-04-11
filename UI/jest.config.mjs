@@ -288,9 +288,12 @@ export default {
               "^pinia$": "<rootDir>/node_modules/pinia/index.cjs",
               "^vue-i18n$": "<rootDir>/node_modules/vue-i18n/index.js",
               "^@/i18n": "<rootDir>/tests/common/i18n",
-              // quasar is ESM-only (package "type":"module") so map it to the
-              // CJS server build which contains all the same components.
-              "^quasar$": "<rootDir>/node_modules/quasar/dist/quasar.server.prod.cjs",
+              // quasar is ESM-only (package "type":"module") so we can't require it
+              // directly from Jest's CJS runtime.  The shim wraps the server CJS build
+              // and patches Quasar.install() to tolerate a missing ssrContext argument
+              // (vue-test-utils only passes two args → ssrContext would be undefined →
+              // Object.assign(undefined,…) throws in the raw server build).
+              "^quasar$": "<rootDir>/tests/common/shims/quasar.cjs",
               "^@/(.*)$": "<rootDir>/src/$1"
             },
             testMatch: [ "<rootDir>/tests/specs/**/*.spec.js" ],
