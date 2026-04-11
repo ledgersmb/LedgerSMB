@@ -80,7 +80,7 @@ const common = {
     moduleDirectories: ["node_modules"],
 
     // An array of file extensions your modules use
-    moduleFileExtensions: ["js", "json", "vue"],
+    moduleFileExtensions: ["js", "mjs", "cjs", "json", "vue"],
 
     // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
 
@@ -166,13 +166,13 @@ const common = {
     // A map from regular expressions to paths to transformers
     transform: {
         "^.+\\.yaml$": "yaml-jest-transform",
-        "^.+\\.js$": "babel-jest",
+        "^.+\\.[mc]?js$": "babel-jest",
         "^@": "babel-jest",
         "^.+\\.vue$": "@vue/vue3-jest"
     },
 
     // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-    transformIgnorePatterns: [ '/node_modules/(?!(lodash-es|@quasar|until-async)/)' ],
+    transformIgnorePatterns: [ '/node_modules/(?!(lodash-es|@quasar|until-async|msw|@mswjs|rettime)/)' ],
 
     // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
     // unmockedModulePathPatterns: undefined,
@@ -269,7 +269,7 @@ module.exports = {
             displayName: "browser",
             ...common,
 
-            moduleFileExtensions: ["js", "json", "vue"],
+            moduleFileExtensions: ["js", "mjs", "cjs", "json", "vue"],
             moduleNameMapper: {
               "^@/i18n": "<rootDir>/tests/common/i18n", // Jest doesn't support esm or top level await well
               "^quasar$": "<rootDir>/node_modules/quasar/dist/quasar.client.js",
@@ -283,10 +283,10 @@ module.exports = {
                 customExportConditions: ["node", "node-addons"]
             },
             testPathIgnorePatterns: [ "<rootDir>/tests/specs/openapi/.*\\.spec\\.js" ],
-            transformIgnorePatterns: [ '/node_modules/(?!(lodash-es|quasar|until-async)/)' ],
+            transformIgnorePatterns: [ '/node_modules/(?!(lodash-es|quasar|until-async|msw|@mswjs|rettime)/)' ],
             transform: {
                 "^.+\\.yaml$": "yaml-jest-transform",
-                "^.+\\.js$": "babel-jest",
+                "^.+\\.[mc]?js$": "babel-jest",
                 "^.+\\.vue$": "@vue/vue3-jest",
                 "^@": "babel-jest",
 
@@ -296,12 +296,12 @@ module.exports = {
             displayName: "API",
             ...common,
 
-            moduleFileExtensions: ["js", "json", "vue"],
+            moduleFileExtensions: ["js", "mjs", "cjs", "json", "vue"],
             testMatch: [ "<rootDir>/tests/specs/openapi/**/*.spec.js" ],
             testEnvironment: "node",
             transform: {
                 "^.+\\.yaml$": "yaml-jest-transform",
-                "^.+\\.js$": "babel-jest",
+                "^.+\\.[mc]?js$": "babel-jest",
                 "^.+\\.vue$": "@vue/vue3-jest",
                 "^@": "babel-jest",
             },
