@@ -59,6 +59,7 @@
     "@quasar/app-webpack": "^4.2.0",
     "@redocly/cli": "2.30.0",
     "@vitejs/plugin-vue": "5.2.4",
+    "@vitest/coverage-v8": "3.1.1",
     "@vue/test-utils": "2.4.8",
     "babel-loader": "10.1.1",
     "browserslist": "4.28.2",
