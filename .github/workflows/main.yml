@@ -351,9 +351,11 @@ jobs:
       # Make Coverage appear from root instead of UI to integrate in Coveralls
       - name: Fix UI Coverage report
         run: |
-          if [[ -e UI/coverage/lcov.info ]]
+          UI_LCOV=$(find UI/coverage -type f -name lcov.info | head -n 1)
+          if [[ -n "${UI_LCOV}" ]]
           then
-            sed -i -E "s~^SF:(js-src|src)/~SF:UI/\1/~g" UI/coverage/lcov.info
+            sed -i -E "s~^SF:(js-src|src)/~SF:UI/\1/~g" "${UI_LCOV}"
+            echo "UI_LCOV=${UI_LCOV}" >> $GITHUB_ENV
           fi
         if: ${{ matrix.COVERAGE }}
 
@@ -365,8 +367,8 @@ jobs:
           flag-name: webservices-ui
           fail-on-error: false
           parallel: true
-          file: ${{ github.workspace }}/UI/coverage/lcov.info
-        if: ${{ matrix.COVERAGE }}
+          file: ${{ github.workspace }}/${{ env.UI_LCOV }}
+        if: ${{ matrix.COVERAGE && env.UI_LCOV != '' }}
 
         # Upload coverage data if needed
       - name: Upload coverage data
