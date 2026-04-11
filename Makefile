@@ -166,8 +166,8 @@ ifneq ($(origin DOCKER_CMD),undefined)
 #       if there's a docker container, jump into it and run from there
 	$(DOCKER_CMD) make jstest
 else
-# Test API answer (OpenAPI integration tests – require a running server)
-	$(SHELL) -c 'cd UI && yarn vitest run --project API $(TESTS)'
+# Test browser and API projects (API tests require a running server)
+	$(SHELL) -c 'cd UI && yarn vitest run --project browser --project API $(TESTS)'
 endif
 
 serve:
