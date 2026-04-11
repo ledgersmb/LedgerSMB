@@ -126,7 +126,7 @@ commands:
       - run:
           name: Make JS + README
           command: |
-            sudo npm install -g yarn
+            corepack enable
             make js
             make readme
 
