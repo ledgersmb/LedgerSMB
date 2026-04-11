@@ -23,6 +23,7 @@ export default defineConfig({
         coverage: {
             enabled: true,
             provider: "v8",
+            reportsDirectory: "../coverage",
             reporter: ["text", "html", ["lcov", { file: "lcov.info" }]],
             include: ["{src,js-src}/**/*.{js,vue}"],
             exclude: ["**/webpack*.js"]

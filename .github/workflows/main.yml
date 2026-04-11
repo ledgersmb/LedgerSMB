@@ -351,7 +351,7 @@ jobs:
       # Make Coverage appear from root instead of UI to integrate in Coveralls
       - name: Fix UI Coverage report
         run: |
-          sed -i -E "s~^SF:(js-src|src)/~SF:UI/\1/~g" UI/coverage/lcov.info
+          sed -i -E "s~^SF:(js-src|src)/~SF:UI/\1/~g" ./coverage/lcov.info
         if: ${{ matrix.COVERAGE }}
 
       # Send UI coverage before Perl
@@ -362,7 +362,7 @@ jobs:
           flag-name: webservices-ui
           fail-on-error: false
           parallel: true
-          file: ${{ github.workspace }}/UI/coverage/lcov.info
+          file: ${{ github.workspace }}/coverage/lcov.info
         if: ${{ matrix.COVERAGE }}
 
         # Upload coverage data if needed
