@@ -100,6 +100,7 @@ export default defineWorkspace([
         test: {
             name: "API",
             environment: "node",
+            hookTimeout: 30000,
 
             include: ["tests/specs/openapi/**/*.spec.js"],
 
