@@ -1,8 +1,13 @@
 /** @format */
 
-const rtlDetect = require("rtl-detect");
-
+import { createRequire } from "node:module";
+import { fileURLToPath } from "node:url";
+import { dirname, resolve } from "node:path";
+import rtlDetect from "rtl-detect";
 import { createI18n } from "vue-i18n";
+
+const _require = createRequire(import.meta.url);
+const _dirname = dirname(fileURLToPath(import.meta.url));
 
 const SUPPORT_LOCALES = ["en", "fr_CA", "ar_EG"];
 
@@ -17,8 +22,9 @@ function _mapLocale(locale) {
 var _messages = {};
 SUPPORT_LOCALES.forEach(function (it) {
     const locale = _mapLocale(it);
-    // eslint-disable-next-line import-x/no-dynamic-require, global-require
-    _messages[locale] = require("@/locales/" + locale + ".json");
+    _messages[locale] = _require(
+        resolve(_dirname, "../../src/locales/", locale + ".json")
+    );
 });
 
 export const i18n = createI18n({

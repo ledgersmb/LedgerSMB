@@ -232,7 +232,7 @@ if (TARGET !== "readme") {
         }
     };
     const DojoWebpackPluginOptions = {
-        loaderConfig: require("./js-src/lsmb/webpack.loaderConfig.js"),
+        loaderConfig: require("./js-src/lsmb/webpack.loaderConfig.cjs"),
         environment: { dojoRoot: "js" }, // used at run time for non-packed resources (e.g. blank.gif)
         buildEnvironment: { dojoRoot: "node_modules" }, // used at build time
         locales: getPOFilenames("src/locales", ".json"),
@@ -608,6 +608,6 @@ if (TARGET !== "readme") {
     const { merge } = require("webpack-merge");
 
     /* Include Markdown compiling for README.md */
-    const WebpackCompileMarkdown = require("./js-src/webpack-compile-markdown.js");
+    const WebpackCompileMarkdown = require("./js-src/webpack-compile-markdown.cjs");
     module.exports = merge({ entry: {} }, WebpackCompileMarkdown);
 }

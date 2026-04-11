@@ -17,8 +17,8 @@ function findWidgets(root, skipNode) {
     getChildrenHelper(root);
 
     return outAry;
-};
+}
 
 registry.findWidgets = findWidgets;
 
-module.exports = registry;
+export default registry;

@@ -2,7 +2,6 @@
  * @format
  * @jest-environment node
  */
-/* global process, require */
 
 // Import test packages
 import jestOpenAPI from "@ehuelsmann/jest-openapi";
@@ -15,13 +14,14 @@ import {
 } from "./database";
 import { server } from "../../common/mocks/server.js";
 
+import fs from "node:fs";
+import yaml from "js-yaml";
+
 // Load an OpenAPI file (YAML or JSON) into this plugin
 const openapi = process.env.PWD.replace("/UI", "");
 jestOpenAPI(openapi + "/doc/openapi/API.yaml");
 
 // Load the API definition
-const fs = require("node:fs");
-const yaml = require("js-yaml");
 const API_yaml = yaml.load(fs.readFileSync(openapi + "/doc/openapi/API.yaml"));
 
 // Set API version to use
@@ -416,7 +416,6 @@ describe("Modifying the new Invoice", () => {
         expect(res.data).toSatisfySchemaInApiSpec("Invoice");
     });
 });
-
 
  * Not implemented yet
 describe("Updating the Invoice 1", () => {

@@ -7,7 +7,7 @@
 
 
 /* This is a workaround for the fact that Jest itself doesn't correctly merge base configuration
-   with per-project configuration: sometimes vue-jest and/or basel-jest don't see the merged
+   with per-project configuration: sometimes vue-jest and/or babel-jest don't see the merged
    config correctly. Instead, make each project a complete configuration with the common part
    configured through the 'common' object below.
 
@@ -46,6 +46,13 @@ const common = {
     // Make calling deprecated APIs throw helpful error messages
     errorOnDeprecated: true,
 
+    // Treat .js files as native ES modules (avoids having to keep updating
+    // transformIgnorePatterns whenever a dependency switches to ESM-only).
+    // With "type": "module" in package.json, Jest 30 automatically infers
+    // ESM for .js files; explicit .js entry here would cause a validation error.
+    // For the UI package, tests/package.json has "type":"module" so that test
+    // files run as native ESM (enabling direct import of ESM-only deps like msw),
+    // while source files under src/ remain CJS for transformer compatibility.
     extensionsToTreatAsEsm: [],
 
     // The default configuration for fake timers
@@ -163,16 +170,18 @@ const common = {
     // This option allows use of a custom test runner
     testRunner: "jest-circus/runner",
 
-    // A map from regular expressions to paths to transformers
     transform: {
-        "^.+\\.yaml$": "yaml-jest-transform",
         "^.+\\.[mc]?js$": "babel-jest",
-        "^@": "babel-jest",
-        "^.+\\.vue$": "@vue/vue3-jest"
+        "^.+\\.yaml$": "yaml-jest-transform",
+        // Custom wrapper delegates to @vue/vue3-jest but appends a small
+        // normalisation snippet so that ESM test files get the component
+        // object directly when they `import X from "…vue"`.
+        "^.+\\.vue$": "<rootDir>/jest-vue3-esm-wrapper.cjs"
     },
 
-    // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-    transformIgnorePatterns: [ '/node_modules/(?!(lodash-es|@quasar|until-async|msw|@mswjs|rettime)/)' ],
+    // No node_modules allowlist needed: ESM test files import ESM deps
+    // natively via Jest's ESM loader; no transformation of node_modules required.
+    transformIgnorePatterns: ["/node_modules/"],
 
     // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
     // unmockedModulePathPatterns: undefined,
@@ -181,7 +190,7 @@ const common = {
     watchPathIgnorePatterns: [],
 };
 
-module.exports = {
+export default {
     // Stop running tests after `n` failures
     bail: false,
 
@@ -271,25 +280,32 @@ module.exports = {
 
             moduleFileExtensions: ["js", "mjs", "cjs", "json", "vue"],
             moduleNameMapper: {
-              "^@/i18n": "<rootDir>/tests/common/i18n", // Jest doesn't support esm or top level await well
-              "^quasar$": "<rootDir>/node_modules/quasar/dist/quasar.client.js",
+              // Force the same (CJS) module instance for packages that maintain
+              // module-level state (pinia active instance, vue app, i18n). Without
+              // this, ESM test files and CJS @vue/vue3-jest transforms each load
+              // a different module, causing "no active Pinia" and similar errors.
+              "^vue$": "<rootDir>/node_modules/vue/index.js",
+              "^pinia$": "<rootDir>/node_modules/pinia/index.cjs",
+              "^vue-i18n$": "<rootDir>/node_modules/vue-i18n/index.js",
+              "^@/i18n": "<rootDir>/tests/common/i18n",
+              // quasar is ESM-only (package "type":"module") so map it to the
+              // CJS server build which contains all the same components.
+              "^quasar$": "<rootDir>/node_modules/quasar/dist/quasar.server.prod.cjs",
               "^@/(.*)$": "<rootDir>/src/$1"
             },
             testMatch: [ "<rootDir>/tests/specs/**/*.spec.js" ],
-            setupFiles: ["<rootDir>/tests/common/jest.polyfills.js"],
+            setupFiles: ["<rootDir>/tests/common/jest-globals.js", "<rootDir>/tests/common/jest.polyfills.js"],
             setupFilesAfterEnv: [ "<rootDir>/tests/common/jest-setup.js" ],
             testEnvironment: "jest-fixed-jsdom",
             testEnvironmentOptions: {
                 customExportConditions: ["node", "node-addons"]
             },
             testPathIgnorePatterns: [ "<rootDir>/tests/specs/openapi/.*\\.spec\\.js" ],
-            transformIgnorePatterns: [ '/node_modules/(?!(lodash-es|quasar|until-async|msw|@mswjs|rettime)/)' ],
+            transformIgnorePatterns: ["/node_modules/"],
             transform: {
-                "^.+\\.yaml$": "yaml-jest-transform",
                 "^.+\\.[mc]?js$": "babel-jest",
-                "^.+\\.vue$": "@vue/vue3-jest",
-                "^@": "babel-jest",
-
+                "^.+\\.yaml$": "yaml-jest-transform",
+                "^.+\\.vue$": "<rootDir>/jest-vue3-esm-wrapper.cjs"
             },
         },
         {
@@ -299,11 +315,18 @@ module.exports = {
             moduleFileExtensions: ["js", "mjs", "cjs", "json", "vue"],
             testMatch: [ "<rootDir>/tests/specs/openapi/**/*.spec.js" ],
             testEnvironment: "node",
+            setupFiles: ["<rootDir>/tests/common/jest-globals.js"],
+            moduleNameMapper: {
+              // @ehuelsmann/jest-openapi ships CJS with __esModule+exports.default envelope;
+              // loadCjsAsEsm() makes the whole module.exports the ESM default so we need
+              // a shim that unwraps exports.default to the actual callable function.
+              "^@ehuelsmann/jest-openapi$": "<rootDir>/tests/common/shims/jest-openapi.mjs",
+              "^@/(.*)$": "<rootDir>/src/$1"
+            },
             transform: {
-                "^.+\\.yaml$": "yaml-jest-transform",
                 "^.+\\.[mc]?js$": "babel-jest",
-                "^.+\\.vue$": "@vue/vue3-jest",
-                "^@": "babel-jest",
+                "^.+\\.yaml$": "yaml-jest-transform",
+                "^.+\\.vue$": "<rootDir>/jest-vue3-esm-wrapper.cjs"
             },
         }
     ]
