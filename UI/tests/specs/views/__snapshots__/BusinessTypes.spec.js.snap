@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`BusinessTypes - register as a component should show dialog 1`] = `
+exports[`BusinessTypes - register as a component > should show dialog 1`] = `
 <div
   data-v-app=""
 >
@@ -119,7 +119,7 @@ exports[`BusinessTypes - register as a component should show dialog 1`] = `
     
     <span>
       <a
-        href="http://localhost/erp/api/v0/contacts/business-types?format=HTML"
+        href="http://localhost:3000/erp/api/v0/contacts/business-types?format=HTML"
         target="_blank"
       >
         [ HTML ]
@@ -132,7 +132,7 @@ exports[`BusinessTypes - register as a component should show dialog 1`] = `
 </div>
 `;
 
-exports[`BusinessTypes - register as a component should show dialog with editable data 1`] = `
+exports[`BusinessTypes - register as a component > should show dialog with editable data 1`] = `
 <div
   data-v-app=""
 >
@@ -301,7 +301,7 @@ exports[`BusinessTypes - register as a component should show dialog with editabl
     
     <span>
       <a
-        href="http://localhost/erp/api/v0/contacts/business-types?format=HTML"
+        href="http://localhost:3000/erp/api/v0/contacts/business-types?format=HTML"
         target="_blank"
       >
         [ HTML ]

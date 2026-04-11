@@ -170,7 +170,7 @@ describe("Languages", () => {
                 .map((row) => row.element.checked)
                 .at(0);
         });
-        expect(defaults).toEqual([false, false]);
+        expect(defaults).toEqual([false, false, undefined]);
 
         // Find 3rd item
         let language_item = wrapper.findAll(".data-row").at(2);
@@ -215,7 +215,7 @@ describe("Languages", () => {
                 .map((row) => row.element.checked)
                 .at(0);
         });
-        expect(defaults).toEqual([false, false, false]);
+        expect(defaults).toEqual([false, false, false, undefined]);
     });
 
     it("should allow setting a default language", async () => {

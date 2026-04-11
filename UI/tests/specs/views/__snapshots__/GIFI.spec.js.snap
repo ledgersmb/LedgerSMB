@@ -1,12 +1,13 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`GIFI - register as a component should show dialog 1`] = `
+exports[`GIFI - register as a component > should show dialog 1`] = `
 <div
   data-v-app=""
 >
   
   <h1
     class="listtop"
+    data-v-dcfeeef6=""
   >
     Configure GIFI codes
   </h1>
@@ -119,7 +120,7 @@ exports[`GIFI - register as a component should show dialog 1`] = `
     
     <span>
       <a
-        href="http://localhost/erp/api/v0/gl/gifi?format=HTML"
+        href="http://localhost:3000/erp/api/v0/gl/gifi?format=HTML"
         target="_blank"
       >
         [ HTML ]
@@ -130,25 +131,33 @@ exports[`GIFI - register as a component should show dialog 1`] = `
   
   <div
     class="import-section"
+    data-v-dcfeeef6=""
   >
     <h2
       class="listheading"
+      data-v-dcfeeef6=""
     >
       Import
     </h2>
     <div
+      data-v-0e53fdf3=""
+      data-v-dcfeeef6=""
       id="import-gifi"
     >
       
       <!-- eslint-disable prettier/prettier -->
       <div
+        data-v-0e53fdf3=""
+        data-v-58373c58=""
         id="gifi"
       >
         <!--v-if-->
         <form
+          data-v-58373c58=""
           name="csvupload"
         >
           <input
+            data-v-58373c58=""
             name="type"
             type="hidden"
             value="gifi"
@@ -156,10 +165,13 @@ exports[`GIFI - register as a component should show dialog 1`] = `
           <!--v-if-->
           <div
             class="non-grid"
+            data-v-58373c58=""
             style="width: fit-content;"
           >
             <!--v-if-->
-            <div>
+            <div
+              data-v-58373c58=""
+            >
               <label>
                 From File
               </label>
@@ -175,14 +187,17 @@ exports[`GIFI - register as a component should show dialog 1`] = `
           </div>
           <div
             class="inputrow non-grid"
+            data-v-58373c58=""
             id="buttonrow"
           >
             <input
+              data-v-58373c58=""
               name="trans_type"
               type="hidden"
             />
             <button
               class="submit"
+              data-v-58373c58=""
               disabled=""
               name="action"
             >
@@ -193,18 +208,29 @@ exports[`GIFI - register as a component should show dialog 1`] = `
           </div>
           <div
             class="details"
+            data-v-58373c58=""
           >
             
              The following fields are expected (in this order): 
-            <dl>
-              <dt>
+            <dl
+              data-v-0e53fdf3=""
+            >
+              <dt
+                data-v-0e53fdf3=""
+              >
                 accno
               </dt>
-              <dd />
-              <dt>
+              <dd
+                data-v-0e53fdf3=""
+              />
+              <dt
+                data-v-0e53fdf3=""
+              >
                 description
               </dt>
-              <dd />
+              <dd
+                data-v-0e53fdf3=""
+              />
             </dl>
             
           </div>
@@ -217,13 +243,14 @@ exports[`GIFI - register as a component should show dialog 1`] = `
 </div>
 `;
 
-exports[`GIFI - register as a component should show dialog with editable data 1`] = `
+exports[`GIFI - register as a component > should show dialog with editable data 1`] = `
 <div
   data-v-app=""
 >
   
   <h1
     class="listtop"
+    data-v-dcfeeef6=""
   >
     Configure GIFI codes
   </h1>
@@ -386,7 +413,7 @@ exports[`GIFI - register as a component should show dialog with editable data 1`
     
     <span>
       <a
-        href="http://localhost/erp/api/v0/gl/gifi?format=HTML"
+        href="http://localhost:3000/erp/api/v0/gl/gifi?format=HTML"
         target="_blank"
       >
         [ HTML ]
@@ -397,25 +424,33 @@ exports[`GIFI - register as a component should show dialog with editable data 1`
   
   <div
     class="import-section"
+    data-v-dcfeeef6=""
   >
     <h2
       class="listheading"
+      data-v-dcfeeef6=""
     >
       Import
     </h2>
     <div
+      data-v-0e53fdf3=""
+      data-v-dcfeeef6=""
       id="import-gifi"
     >
       
       <!-- eslint-disable prettier/prettier -->
       <div
+        data-v-0e53fdf3=""
+        data-v-58373c58=""
         id="gifi"
       >
         <!--v-if-->
         <form
+          data-v-58373c58=""
           name="csvupload"
         >
           <input
+            data-v-58373c58=""
             name="type"
             type="hidden"
             value="gifi"
@@ -423,10 +458,13 @@ exports[`GIFI - register as a component should show dialog with editable data 1`
           <!--v-if-->
           <div
             class="non-grid"
+            data-v-58373c58=""
             style="width: fit-content;"
           >
             <!--v-if-->
-            <div>
+            <div
+              data-v-58373c58=""
+            >
               <label>
                 From File
               </label>
@@ -442,14 +480,17 @@ exports[`GIFI - register as a component should show dialog with editable data 1`
           </div>
           <div
             class="inputrow non-grid"
+            data-v-58373c58=""
             id="buttonrow"
           >
             <input
+              data-v-58373c58=""
               name="trans_type"
               type="hidden"
             />
             <button
               class="submit"
+              data-v-58373c58=""
               disabled=""
               name="action"
             >
@@ -460,18 +501,29 @@ exports[`GIFI - register as a component should show dialog with editable data 1`
           </div>
           <div
             class="details"
+            data-v-58373c58=""
           >
             
              The following fields are expected (in this order): 
-            <dl>
-              <dt>
+            <dl
+              data-v-0e53fdf3=""
+            >
+              <dt
+                data-v-0e53fdf3=""
+              >
                 accno
               </dt>
-              <dd />
-              <dt>
+              <dd
+                data-v-0e53fdf3=""
+              />
+              <dt
+                data-v-0e53fdf3=""
+              >
                 description
               </dt>
-              <dd />
+              <dd
+                data-v-0e53fdf3=""
+              />
             </dl>
             
           </div>

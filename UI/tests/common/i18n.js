@@ -1,10 +1,11 @@
 /** @format */
+/* eslint-disable camelcase */
 
-const rtlDetect = require("rtl-detect");
-
+import rtlDetect from "rtl-detect";
 import { createI18n } from "vue-i18n";
-
-const SUPPORT_LOCALES = ["en", "fr_CA", "ar_EG"];
+import en from "@/locales/en.json";
+import fr_CA from "@/locales/fr_CA.json";
+import ar_EG from "@/locales/ar_EG.json";
 
 function _mapLocale(locale) {
     const _locale = locale.match(/([a-z]{2})-([a-z]{2})/);
@@ -14,12 +15,7 @@ function _mapLocale(locale) {
     return locale;
 }
 
-var _messages = {};
-SUPPORT_LOCALES.forEach(function (it) {
-    const locale = _mapLocale(it);
-    // eslint-disable-next-line import-x/no-dynamic-require, global-require
-    _messages[locale] = require("@/locales/" + locale + ".json");
-});
+const _messages = { en, fr_CA, ar_EG };
 
 export const i18n = createI18n({
     useScope: "global",

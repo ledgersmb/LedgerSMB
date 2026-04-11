@@ -1,8 +1,7 @@
 /**
  * @format
- * @jest-environment node
  */
-/* global process, require */
+/* global process */
 
 // Import test packages
 import jestOpenAPI from "@ehuelsmann/jest-openapi";
@@ -20,9 +19,9 @@ const openapi = process.env.PWD.replace("/UI", "");
 jestOpenAPI(openapi + "/doc/openapi/API.yaml");
 
 // Load the API definition
-const fs = require("node:fs");
-const yaml = require("js-yaml");
-const API_yaml = yaml.load(fs.readFileSync(openapi + "/doc/openapi/API.yaml"), {
+import { readFileSync as _readFileSync } from "node:fs";
+import yaml from "js-yaml";
+const API_yaml = yaml.load(_readFileSync(openapi + "/doc/openapi/API.yaml"), {
     schema: yaml.JSON_SCHEMA
 });
 

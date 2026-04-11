@@ -1,7 +1,7 @@
 /** @format */
 
 import { guard, transition } from "@/robot-vue";
-const registry = require("dijit/registry");
+import registry from "dijit/registry";
 
 export function testNot(fn) {
     return (...args) => !fn(...args);

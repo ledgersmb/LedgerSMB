@@ -160,14 +160,14 @@ else
             $(PGTAP_OPTS) $(BDD_OPTS) $(TEST_OPTS) $(TESTS)
 endif
 
-jstest: TESTS ?= tests
+jstest: TESTS ?=
 jstest: api
 ifneq ($(origin DOCKER_CMD),undefined)
 #       if there's a docker container, jump into it and run from there
 	$(DOCKER_CMD) make jstest
 else
-# Test API answer
-	$(SHELL) -c 'cd UI && yarn run test $(TESTS)'
+# Test API answer (OpenAPI integration tests – require a running server)
+	$(SHELL) -c 'cd UI && yarn vitest run --project API $(TESTS)'
 endif
 
 serve:

@@ -1,12 +1,13 @@
 /** @format */
 /* global retry */
 
+import { vi } from "vitest";
 import { mount } from "@vue/test-utils";
 
 import LoginPage from "@/views/LoginPage.vue";
 
 let wrapper;
-const successFn = jest.fn();
+const successFn = vi.fn();
 
 describe("LoginPage", () => {
     it("should show dialog", () => {
@@ -41,7 +42,7 @@ describe("LoginPage", () => {
 
     it("should fail on bad user", async () => {
         const jsdomAlert = window.alert; // remember the jsdom alert
-        window.alert = jest.fn(); // provide an empty implementation for window.alert
+        window.alert = vi.fn(); // provide an empty implementation for window.alert
 
         wrapper = mount(LoginPage);
 
@@ -66,7 +67,7 @@ describe("LoginPage", () => {
 
     it("should fail on bad version", async () => {
         const jsdomAlert = window.alert; // remember the jsdom alert
-        window.alert = jest.fn(); // provide an empty implementation for window.alert
+        window.alert = vi.fn(); // provide an empty implementation for window.alert
 
         wrapper = mount(LoginPage);
 
@@ -86,7 +87,7 @@ describe("LoginPage", () => {
 
     it("should fail unknown error", async () => {
         const jsdomAlert = window.alert; // remember the jsdom alert
-        window.alert = jest.fn(); // provide an empty implementation for window.alert
+        window.alert = vi.fn(); // provide an empty implementation for window.alert
 
         wrapper = mount(LoginPage);
 
