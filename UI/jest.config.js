@@ -157,10 +157,11 @@ module.exports = {
             transform: {
                 "^.+\\.yaml$": "yaml-jest-transform",
                 "^.+\\.[mc]?js$": "babel-jest",
+                "^.+\\.jsx$": "babel-jest",
                 "^.+\\.vue$": "@vue/vue3-jest",
                 "^@": "babel-jest",
             },
-            transformIgnorePatterns: [ '/node_modules/(?!(until-async|msw|@mswjs|rettime)/)' ],
+            transformIgnorePatterns: [ '/node_modules/(?!(until-async|msw|@mswjs|rettime|@open-draft)/)' ],
         },
         {
             displayName: "API",
@@ -170,10 +171,11 @@ module.exports = {
             transform: {
                 "^.+\\.yaml$": "yaml-jest-transform",
                 "^.+\\.[mc]?js$": "babel-jest",
+                "^.+\\.jsx$": "babel-jest",
                 "^.+\\.vue$": "@vue/vue3-jest",
                 "^@": "babel-jest",
             },
-            transformIgnorePatterns: [ '/node_modules/(?!(until-async|msw|@mswjs|rettime)/)' ],
+            transformIgnorePatterns: [ '/node_modules/(?!(until-async|msw|@mswjs|rettime|@open-draft)/)' ],
         }
     ],
 
