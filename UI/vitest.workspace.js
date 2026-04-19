@@ -71,6 +71,11 @@ export default defineWorkspace([
         test: {
             name: "browser",
             environment: "jsdom",
+            environmentOptions: {
+                jsdom: {
+                    url: "http://localhost/"
+                }
+            },
 
             include: ["tests/specs/**/*.spec.js"],
             exclude: ["tests/specs/openapi/**/*.spec.js"],

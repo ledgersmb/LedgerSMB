@@ -94,7 +94,7 @@ exports[`Pricegroups - register as a component > should show dialog 1`] = `
     
     <span>
       <a
-        href="http://localhost:3000/erp/api/v0/products/pricegroups?format=HTML"
+        href="http://localhost/erp/api/v0/products/pricegroups?format=HTML"
         target="_blank"
       >
         [ HTML ]
@@ -251,7 +251,7 @@ exports[`Pricegroups - register as a component > should show dialog with editabl
     
     <span>
       <a
-        href="http://localhost:3000/erp/api/v0/products/pricegroups?format=HTML"
+        href="http://localhost/erp/api/v0/products/pricegroups?format=HTML"
         target="_blank"
       >
         [ HTML ]

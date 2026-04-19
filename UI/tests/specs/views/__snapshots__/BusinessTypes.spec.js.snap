@@ -119,7 +119,7 @@ exports[`BusinessTypes - register as a component > should show dialog 1`] = `
     
     <span>
       <a
-        href="http://localhost:3000/erp/api/v0/contacts/business-types?format=HTML"
+        href="http://localhost/erp/api/v0/contacts/business-types?format=HTML"
         target="_blank"
       >
         [ HTML ]
@@ -301,7 +301,7 @@ exports[`BusinessTypes - register as a component > should show dialog with edita
     
     <span>
       <a
-        href="http://localhost:3000/erp/api/v0/contacts/business-types?format=HTML"
+        href="http://localhost/erp/api/v0/contacts/business-types?format=HTML"
         target="_blank"
       >
         [ HTML ]

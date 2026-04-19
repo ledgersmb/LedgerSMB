@@ -131,7 +131,7 @@ exports[`Countries - register as a component > should show dialog 1`] = `
     
     <span>
       <a
-        href="http://localhost:3000/erp/api/v0/countries?format=HTML"
+        href="http://localhost/erp/api/v0/countries?format=HTML"
         target="_blank"
       >
         [ HTML ]

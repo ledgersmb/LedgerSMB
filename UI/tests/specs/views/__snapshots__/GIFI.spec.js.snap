@@ -120,7 +120,7 @@ exports[`GIFI - register as a component > should show dialog 1`] = `
     
     <span>
       <a
-        href="http://localhost:3000/erp/api/v0/gl/gifi?format=HTML"
+        href="http://localhost/erp/api/v0/gl/gifi?format=HTML"
         target="_blank"
       >
         [ HTML ]
@@ -413,7 +413,7 @@ exports[`GIFI - register as a component > should show dialog with editable data 
     
     <span>
       <a
-        href="http://localhost:3000/erp/api/v0/gl/gifi?format=HTML"
+        href="http://localhost/erp/api/v0/gl/gifi?format=HTML"
         target="_blank"
       >
         [ HTML ]

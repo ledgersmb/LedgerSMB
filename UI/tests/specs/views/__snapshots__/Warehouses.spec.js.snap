@@ -119,7 +119,7 @@ exports[`Warehouses - register as a component > should show dialog 1`] = `
     
     <span>
       <a
-        href="http://localhost:3000/erp/api/v0/products/warehouses?format=HTML"
+        href="http://localhost/erp/api/v0/products/warehouses?format=HTML"
         target="_blank"
       >
         [ HTML ]
@@ -326,7 +326,7 @@ exports[`Warehouses - register as a component > should show dialog with editable
     
     <span>
       <a
-        href="http://localhost:3000/erp/api/v0/products/warehouses?format=HTML"
+        href="http://localhost/erp/api/v0/products/warehouses?format=HTML"
         target="_blank"
       >
         [ HTML ]
