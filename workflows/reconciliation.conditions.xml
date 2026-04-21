@@ -1,0 +1,12 @@
+<conditions>
+  <type>reconciliation</type>
+  <condition name="acl-approve"
+             class="LedgerSMB::Workflow::Condition::ACL"
+             role="reconciliation_approve" />
+<!--
+  <condition name="reconciliation_gl_ok"
+             class="LedgerSMB::Workflow::Condition::Reconciliation::GL_Ok" />
+  <condition name="reconciliation_stmt_ok"
+             class="LedgerSMB::Workflow::Condition::Reconciliation::StatementOk" />
+-->
+</conditions>
