@@ -64,9 +64,137 @@ commands:
             done
             if [ "x$COVERAGE" == "x1" ]
             then
-              make devtest TESTS="--no-progress --job-count $JOB_COUNT \"--cover=$DEVEL_COVER_OPTIONS\" xt/"
+              make devtest TESTS="--no-progress --job-count $JOB_COUNT \"--cover=$DEVEL_COVER_OPTIONS\" xt/*.t"
             else
-              make devtest TESTS='--no-progress --job-count 2 xt/'
+              make devtest TESTS="--no-progress --job-count 2 xt/*.t"
+            fi
+
+      - run:
+          command: |
+            while [ $(pidof starman) ];
+            do
+              kill -SIGTERM `pidof starman`
+              echo -n "."
+              sleep 5
+            done
+            echo " done"
+
+      - run:
+          name: Upload coverage data
+          command: |
+            if [ "x$COVERAGE" == "x1" ]
+            then
+              COVERALLS_PARALLEL=true cover -report coveralls
+              COVERALLS_FLAG_NAME: Perl Tests
+              cover -report text > /tmp/artifact/coverage.txt
+            fi
+
+      - when:
+          condition:
+            equal: [ "$COVERAGE", "1" ]
+          steps:
+            - coveralls/upload:
+                parallel: true
+                flag_name: UI Tests
+                verbose: false
+
+      - when:
+          condition:
+            equal: [ "$COVERAGE", "1" ]
+          steps:
+            - coveralls/upload:
+                parallel_finished: true
+
+  dev-prove-bdd:
+    steps:
+      - run:
+          name: Set up coverage
+          command: |
+            if [ "x$COVERAGE" == "x1" ]
+            then
+              echo "JOB_COUNT=4" >> $BASH_ENV
+              echo "STARMAN_DEVEL_COVER_OPTIONS='-MDevel::Cover=$DEVEL_COVER_OPTIONS'" >> $BASH_ENV
+              echo "YATH_DEVEL_COVER_OPTIONS='--cover=$DEVEL_COVER_OPTIONS'" >> $BASH_ENV
+              echo "UITESTS='--coverage *'" >> $BASH_ENV
+            fi
+
+      - run:
+          command: |
+            source $BASH_ENV
+            export PERL5OPT="$PERL5OPT -MSyntax::Keyword::Try::Deparse"
+            echo "Waiting for starman to listen to our port:"
+            while ! echo -n > /dev/tcp/localhost/5762; do
+              sleep 1
+            done
+            if [ "x$COVERAGE" == "x1" ]
+            then
+              make devtest TESTS="--no-progress --job-count $JOB_COUNT \"--cover=$DEVEL_COVER_OPTIONS\" xt/*.feature xt/66-cucumber/*/*.feature"
+            else
+              make devtest TESTS="--no-progress --job-count 2 xt/*.feature xt/66-cucumber/*/*.feature"
+            fi
+
+      - run:
+          command: |
+            while [ $(pidof starman) ];
+            do
+              kill -SIGTERM `pidof starman`
+              echo -n "."
+              sleep 5
+            done
+            echo " done"
+
+      - run:
+          name: Upload coverage data
+          command: |
+            if [ "x$COVERAGE" == "x1" ]
+            then
+              COVERALLS_PARALLEL=true cover -report coveralls
+              COVERALLS_FLAG_NAME: Perl Tests
+              cover -report text > /tmp/artifact/coverage.txt
+            fi
+
+      - when:
+          condition:
+            equal: [ "$COVERAGE", "1" ]
+          steps:
+            - coveralls/upload:
+                parallel: true
+                flag_name: UI Tests
+                verbose: false
+
+      - when:
+          condition:
+            equal: [ "$COVERAGE", "1" ]
+          steps:
+            - coveralls/upload:
+                parallel_finished: true
+
+  dev-prove-pg:
+    steps:
+      - run:
+          name: Set up coverage
+          command: |
+            if [ "x$COVERAGE" == "x1" ]
+            then
+              echo "JOB_COUNT=4" >> $BASH_ENV
+              echo "STARMAN_DEVEL_COVER_OPTIONS='-MDevel::Cover=$DEVEL_COVER_OPTIONS'" >> $BASH_ENV
+              echo "YATH_DEVEL_COVER_OPTIONS='--cover=$DEVEL_COVER_OPTIONS'" >> $BASH_ENV
+              echo "UITESTS='--coverage *'" >> $BASH_ENV
+            fi
+
+      - run:
+          command: |
+            source $BASH_ENV
+            export PERL5OPT="$PERL5OPT -MSyntax::Keyword::Try::Deparse"
+            echo "Waiting for starman to listen to our port:"
+            while ! echo -n > /dev/tcp/localhost/5762; do
+              sleep 1
+            done
+            if [ "x$COVERAGE" == "x1" ]
+            then
+              make devtest TESTS="--no-progress --job-count $JOB_COUNT \"--cover=$DEVEL_COVER_OPTIONS\" xt/*.pg"
+            else
+              make devtest TESTS="--no-progress --job-count 2 xt/*.pg"
             fi
 
       - run:
@@ -403,7 +531,24 @@ jobs:
       - start_proxy
       - jest
 
-  test_dev:
+  test:
+    <<: *defaults
+    executor:
+      name: test
+      perl: '5.38'
+      postgres: '16'
+      browser: firefox
+      selenium: selenium/node-firefox
+    steps:
+      - prep_env:
+          perl: '5.38'
+      - start_starman
+      - start_proxy
+      - prove
+    environment:
+      COA_TESTING: 1
+
+  test_author:
     <<: *defaults
     executor:
       name: test
@@ -420,6 +565,23 @@ jobs:
     environment:
       COA_TESTING: 1
 
+  test_pg:
+    <<: *defaults
+    executor:
+      name: test
+      perl: '5.38'
+      postgres: '16'
+      browser: firefox
+      selenium: selenium/node-firefox
+    steps:
+      - prep_env:
+          perl: '5.38'
+      - start_starman
+      - start_proxy
+      - dev-prove-pg
+    environment:
+      COA_TESTING: 1
+
   test_webpack_firefox:
     <<: *defaults
     executor:
@@ -433,7 +595,7 @@ jobs:
           perl: '5.38'
       - start_starman
       - start_proxy
-      - prove
+      - dev-prove-bdd
     environment:
       COA_TESTING: 1
 
@@ -454,7 +616,11 @@ workflows:
     jobs:
       - test_api:
           filters: *_filters
-      - test_dev:
+      - test:
+          filters: *_filters
+      - test_author:
+          filters: *_filters
+      - test_pg:
           filters: *_filters
       - test_webpack_firefox:
           filters: *_filters
