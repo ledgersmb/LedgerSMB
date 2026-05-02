@@ -9,7 +9,6 @@ BEGIN;
 
     -- Add data
 
-    \i xt/data/42-pg/Base.sql
     \i xt/data/42-pg/COA.sql
 
     SELECT has_table('account_heading');

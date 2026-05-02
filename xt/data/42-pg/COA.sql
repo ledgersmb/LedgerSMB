@@ -1,6 +1,7 @@
 -- Import the US General.xml. Data from 1.13 as of Saturday, May 2, 2026 12:51:47 CDT
 
-SELECT count(*) FROM account WHERE id > 0 AS account_count
+-- Exclude old style testing data with an id < 0
+SELECT count(*) FROM account AS account_count WHERE id > 0
 \gset
 
 -- Do not copy CoA if non-test CoA already exists
