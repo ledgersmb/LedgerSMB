@@ -8,6 +8,25 @@ SELECT count(*) = 0 AS no_accounts FROM account WHERE id > 0
 \if :no_accounts
 
 --
+-- Data for Name: account_heading; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY account_heading (id, accno, parent_id, description, category) FROM stdin;
+1	1000	\N	CURRENT ASSETS	\N
+2	1500	\N	INVENTORY ASSETS	\N
+3	1800	\N	CAPITAL ASSETS	\N
+4	2000	\N	CURRENT LIABILITIES	\N
+5	2600	\N	LONG TERM LIABILITIES	\N
+6	3300	\N	SHARE CAPITAL	\N
+7	3500	\N	RETAINED EARNINGS	\N
+8	4000	\N	SALES REVENUE	\N
+9	4400	\N	OTHER REVENUE	\N
+10	5000	\N	COST OF GOODS SOLD	\N
+11	5400	\N	PAYROLL EXPENSES	\N
+12	5600	\N	GENERAL & ADMINISTRATIVE EXPENSES	\N
+\.
+
+--
 -- Data for Name: account; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -78,25 +97,6 @@ COPY account (id, accno, description, is_temp, category, gifi_accno, heading, co
 64	5795	Registrations	f	E	\N	12	f	f	f	\N	\N
 65	5800	Licenses	f	E	\N	12	f	f	f	\N	\N
 66	5810	Foreign Exchange Loss	f	E	\N	12	f	f	f	\N	\N
-\.
-
---
--- Data for Name: account_heading; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY account_heading (id, accno, parent_id, description, category) FROM stdin;
-1	1000	\N	CURRENT ASSETS	\N
-2	1500	\N	INVENTORY ASSETS	\N
-3	1800	\N	CAPITAL ASSETS	\N
-4	2000	\N	CURRENT LIABILITIES	\N
-5	2600	\N	LONG TERM LIABILITIES	\N
-6	3300	\N	SHARE CAPITAL	\N
-7	3500	\N	RETAINED EARNINGS	\N
-8	4000	\N	SALES REVENUE	\N
-9	4400	\N	OTHER REVENUE	\N
-10	5000	\N	COST OF GOODS SOLD	\N
-11	5400	\N	PAYROLL EXPENSES	\N
-12	5600	\N	GENERAL & ADMINISTRATIVE EXPENSES	\N
 \.
 
 --
