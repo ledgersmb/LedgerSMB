@@ -1,16 +1,16 @@
 -- Import the US General.xml. Data from 1.13 as of Saturday, May 2, 2026 12:51:47 CDT
 
-SELECT count(*) from public.account as account_count
+SELECT count(*) FROM account WHERE id > 0 AS account_count
 \gset
 
--- Do not copy CoA if one already exists
+-- Do not copy CoA if non-test CoA already exists
 \if :account_count = 0
 
 --
 -- Data for Name: account; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.account (id, accno, description, is_temp, category, gifi_accno, heading, contra, tax, obsolete, heading_negative_balance, custom_attributes) FROM stdin;
+COPY account (id, accno, description, is_temp, category, gifi_accno, heading, contra, tax, obsolete, heading_negative_balance, custom_attributes) FROM stdin;
 1	1060	Checking Account	f	A	\N	1	f	f	f	\N	\N
 2	1065	Petty Cash	f	A	\N	1	f	f	f	\N	\N
 3	1200	Accounts Receivables	f	A	\N	1	f	f	f	\N	\N
@@ -83,7 +83,7 @@ COPY public.account (id, accno, description, is_temp, category, gifi_accno, head
 -- Data for Name: account_heading; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.account_heading (id, accno, parent_id, description, category) FROM stdin;
+COPY account_heading (id, accno, parent_id, description, category) FROM stdin;
 1	1000	\N	CURRENT ASSETS	\N
 2	1500	\N	INVENTORY ASSETS	\N
 3	1800	\N	CAPITAL ASSETS	\N
@@ -102,7 +102,7 @@ COPY public.account_heading (id, accno, parent_id, description, category) FROM s
 -- Data for Name: account_link; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.account_link (account_id, description) FROM stdin;
+COPY account_link (account_id, description) FROM stdin;
 1	AR_paid
 1	AP_paid
 2	AR_paid
@@ -145,7 +145,7 @@ COPY public.account_link (account_id, description) FROM stdin;
 -- Data for Name: account_link_description; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.account_link_description (description, summary, custom) FROM stdin;
+COPY account_link_description (description, summary, custom) FROM stdin;
 AR	t	f
 AP	t	f
 IC	t	f
