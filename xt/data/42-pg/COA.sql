@@ -146,34 +146,34 @@ COPY account_link (account_id, description) FROM stdin;
 -- Data for Name: account_link_description; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY account_link_description (description, summary, custom) FROM stdin;
-AR	t	f
-AP	t	f
-IC	t	f
-AR_amount	f	f
-AR_tax	f	f
-AR_paid	f	f
-AR_overpayment	f	f
-AR_discount	f	f
-AP_amount	f	f
-AP_expense	f	f
-AP_tax	f	f
-AP_paid	f	f
-AP_overpayment	f	f
-AP_discount	f	f
-IC_sale	f	f
-IC_tax	f	f
-IC_cogs	f	f
-IC_taxpart	f	f
-IC_taxservice	f	f
-IC_income	f	f
-IC_expense	f	f
-IC_returns	f	f
-Asset_Dep	f	f
-Fixed_Asset	f	f
-asset_expense	f	f
-asset_gain	f	f
-asset_loss	f	f
-\.
+-- COPY account_link_description (description, summary, custom) FROM stdin;
+-- AR	t	f
+-- AP	t	f
+-- IC	t	f
+-- AR_amount	f	f
+-- AR_tax	f	f
+-- AR_paid	f	f
+-- AR_overpayment	f	f
+-- AR_discount	f	f
+-- AP_amount	f	f
+-- AP_expense	f	f
+-- AP_tax	f	f
+-- AP_paid	f	f
+-- AP_overpayment	f	f
+-- AP_discount	f	f
+-- IC_sale	f	f
+-- IC_tax	f	f
+-- IC_cogs	f	f
+-- IC_taxpart	f	f
+-- IC_taxservice	f	f
+-- IC_income	f	f
+-- IC_expense	f	f
+-- IC_returns	f	f
+-- Asset_Dep	f	f
+-- Fixed_Asset	f	f
+-- asset_expense	f	f
+-- asset_gain	f	f
+-- asset_loss	f	f
+-- \.
 
 \endif
