@@ -19,9 +19,10 @@ BEGIN;
     -- Run tests
 
     -- Exclude old style testing data with an id < 0
-    PREPARE test AS SELECT count(*) FROM account WHERE id > 0;
-    SELECT results_eq('test', 'SELECT 66', 'Check number of account rows');
+    SELECT results_eq('SELECT count(*) FROM account WHERE id > 0', 'SELECT 66', 'Check number of account rows');
     DEALLOCATE test;
+
+    SELECT count(*) FROM account WHERE id > 0;
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
