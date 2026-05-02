@@ -1,0 +1,23 @@
+BEGIN;
+    -- Load the TAP functions.
+    CREATE EXTENSION pgtap;
+    SET client_min_messages TO warning;
+
+    -- Plan the tests.
+
+    SELECT plan(1);
+
+    -- Add data
+
+    \i xt/data/42-pg/COA.sql
+
+    -- Run tests
+
+   PREPARE test AS SELECT count(*) FROM account;
+   SELECT results_eq('test', 66, 'Check number of account rows');
+   DEALLOCATE test;
+
+    -- Finish the tests and clean up.
+    SELECT * FROM finish();
+
+ROLLBACK;
