@@ -1,21 +1,28 @@
 BEGIN;
     -- Load the TAP functions.
-    CREATE EXTENSION pgtap;
+    CREATE EXTENSION IF NOT EXISTS pgtap;
     SET client_min_messages TO warning;
 
     -- Plan the tests.
 
-    SELECT plan(1);
+    SELECT plan(5);
 
     -- Add data
 
+    \i xt/data/42-pg/Base.sql
     \i xt/data/42-pg/COA.sql
+
+    SELECT has_table('account_heading');
+    SELECT has_table('account');
+    SELECT has_table('account_link_description');
+    SELECT has_table('account_link');
 
     -- Run tests
 
-   PREPARE test AS SELECT count(*) FROM account;
-   SELECT results_eq('test', 66, 'Check number of account rows');
-   DEALLOCATE test;
+    -- Exclude old style testing data with an id < 0
+    PREPARE test AS SELECT count(*) FROM account WHERE id > 0;
+    SELECT results_eq('test', 66, 'Check number of account rows');
+    DEALLOCATE test;
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
