@@ -1,11 +1,11 @@
 -- Import the US General.xml. Data from 1.13 as of Saturday, May 2, 2026 12:51:47 CDT
 
 -- Exclude old style testing data with an id < 0
-SELECT count(*) FROM account AS account_count WHERE id > 0
+SELECT count(*) = 0 AS no_accounts FROM account WHERE id > 0
 \gset
 
--- Do not copy CoA if non-test CoA already exists
-\if :account_count = 0
+-- Only add these CoA if there are no accounts with id > 0
+\if :no_accounts
 
 --
 -- Data for Name: account; Type: TABLE DATA; Schema: public; Owner: postgres
