@@ -1,7 +1,7 @@
 BEGIN;
     -- Load the TAP functions.
     CREATE EXTENSION IF NOT EXISTS pgtap;
-    SET client_min_messages TO debug1;
+    SET client_min_messages TO debug5;
 
     -- Plan the tests.
 
