@@ -1440,30 +1440,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ehuelsmann/jest-openapi@npm:0.16.1":
-  version: 0.16.1
-  resolution: "@ehuelsmann/jest-openapi@npm:0.16.1"
+"@ehuelsmann/jest-openapi@npm:0.16.2":
+  version: 0.16.2
+  resolution: "@ehuelsmann/jest-openapi@npm:0.16.2"
   dependencies:
-    "@ehuelsmann/openapi-validator": "npm:^0.16.1"
+    "@ehuelsmann/openapi-validator": "npm:^0.16.2"
     jest-matcher-utils: "npm:^29.0.0"
-  checksum: 10c0/30f11ed56aeb34d24b03807291d2f5708c652140e984ebfd196d5aab3c19be21e9300a2df28712865e6a88610a0feb7ba49fdd9b6c851e0783208983192e2874
+  checksum: 10c0/7af16f4216336b41dba2100fb4d4da87d585fe22622347c904ba8a0adc8b489897b3818b7d24b93b7a134d75c455321bc2a3faf8e14cf38ff90fa1bfdd7474ac
   languageName: node
   linkType: hard
 
-"@ehuelsmann/openapi-validator@npm:^0.16.1":
-  version: 0.16.1
-  resolution: "@ehuelsmann/openapi-validator@npm:0.16.1"
+"@ehuelsmann/openapi-validator@npm:^0.16.2":
+  version: 0.16.2
+  resolution: "@ehuelsmann/openapi-validator@npm:0.16.2"
   dependencies:
     "@types/superagent": "npm:^4.1.12"
-    axios: "npm:^1.15.0"
+    axios: "npm:^1.15.2"
     combos: "npm:^0.2.0"
     fs-extra: "npm:^9.0.0"
     js-yaml: "npm:^4.0.0"
     openapi-response-validator: "npm:^12.1.3"
-    openapi-schema-validator: "npm:^9.2.0"
+    openapi-schema-validator: "npm:^12.1.3"
     path-parser: "npm:^6.1.0"
     typeof: "npm:^1.0.0"
-  checksum: 10c0/1fefbffac073f165fa9cb9562d405e242fbdc558a1fd030ee330dd3d93ba3713d552281bff3ac2e729d618a7dd684d3f70ea58e8654e2c53dfe3ccc61b5827eb
+  checksum: 10c0/75c916a884b3584cdc8400021634855e169a07a9f3aae492f500adb9b349a3ccb2d5eb54c6d7ad34a0ea3ed455334072d410c7e8128a715f9c177642c45c0173
   languageName: node
   linkType: hard
 
@@ -5652,7 +5652,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.15.0":
+"axios@npm:^1.15.2":
   version: 1.16.0
   resolution: "axios@npm:1.16.0"
   dependencies:
@@ -11226,7 +11226,7 @@ __metadata:
     "@babel/eslint-parser": "npm:7.28.6"
     "@babel/plugin-transform-object-rest-spread": "npm:^7.24.7"
     "@babel/preset-env": "npm:7.29.3"
-    "@ehuelsmann/jest-openapi": "npm:0.16.1"
+    "@ehuelsmann/jest-openapi": "npm:0.16.2"
     "@eslint/js": "npm:9.39.4"
     "@pinia/testing": "npm:1.0.3"
     "@quasar/app-webpack": "npm:^4.2.0"
@@ -12821,15 +12821,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openapi-schema-validator@npm:^9.2.0":
-  version: 9.3.1
-  resolution: "openapi-schema-validator@npm:9.3.1"
+"openapi-schema-validator@npm:^12.1.3":
+  version: 12.1.3
+  resolution: "openapi-schema-validator@npm:12.1.3"
   dependencies:
     ajv: "npm:^8.1.0"
     ajv-formats: "npm:^2.0.2"
     lodash.merge: "npm:^4.6.1"
-    openapi-types: "npm:^9.3.1"
-  checksum: 10c0/87bff410950be8675ebd5d9c89018322077e4d0cca43508eb33bf7635fb7a8632ef25e17b92c016e65b29603e2071a39b2481f06747abf46e94091fe87aabcd1
+    openapi-types: "npm:^12.1.3"
+  checksum: 10c0/701c2f3d911fb7f69760642169defe7ab114a337a23063caeb36a1dda4362b742be526feb4c5cd0ff645836c2d32aca9d5e6fdf6a1b49af3f2ac89ecbfb1a64b
   languageName: node
   linkType: hard
 
@@ -12837,13 +12837,6 @@ __metadata:
   version: 12.1.3
   resolution: "openapi-types@npm:12.1.3"
   checksum: 10c0/4ad4eb91ea834c237edfa6ab31394e87e00c888fc2918009763389c00d02342345195d6f302d61c3fd807f17723cd48df29b47b538b68375b3827b3758cd520f
-  languageName: node
-  linkType: hard
-
-"openapi-types@npm:^9.3.1":
-  version: 9.3.1
-  resolution: "openapi-types@npm:9.3.1"
-  checksum: 10c0/13ac72f52d5a045ae7820c257e9db24c989ab6ae63b41ec2193a0823ef6280be9929ab92673243bd439b08f4dbdccfe897e2c7e90bbe796e92105ed0caa58292
   languageName: node
   linkType: hard
 

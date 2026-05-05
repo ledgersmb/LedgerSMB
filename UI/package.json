@@ -53,7 +53,7 @@
     "@babel/eslint-parser": "7.28.6",
     "@babel/plugin-transform-object-rest-spread": "^7.24.7",
     "@babel/preset-env": "7.29.3",
-    "@ehuelsmann/jest-openapi": "0.16.1",
+    "@ehuelsmann/jest-openapi": "0.16.2",
     "@eslint/js": "9.39.4",
     "@pinia/testing": "1.0.3",
     "@quasar/app-webpack": "^4.2.0",
