@@ -1,0 +1,16 @@
+<actions type="Payment">
+  <action name="post"
+          text="Save"
+          class="LedgerSMB::Workflow::Action::Null" />
+  <action name="approve"
+          text="Post"
+          class="LedgerSMB::Workflow::Action::Null" />
+  <action name="batch-approve"
+          group="main"
+          ui="none"
+          class="LedgerSMB::Workflow::Action::Null" />
+  <action name="batch-delete"
+          group="main"
+          ui="none"
+          class="LedgerSMB::Workflow::Action::Null" />
+</actions>

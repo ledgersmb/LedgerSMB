@@ -259,49 +259,6 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'payments/img/down.g
                 name = "orig_" _ row.topay_fx.name
                 value = row.orig_topay_fx
           } %]
-          <img src="payments/img/up.gif" alt=[% text('Up') %]
-               data-dojo-type="lsmb/MaximizeMinimize"
-               data-dojo-props="mmNodeId: 'div_topay_[% row.invoice.id %]'"
-               class="details-toggler">
-          <div id="div_topay_[% row.invoice.id %]" class="[% alterning_style %] details-popup" >
-            <table class="invoice-posting-details">
-              <tr id="[% "account-row$i"%]">
-                [% # here goes all the posible accounts were the paid can be  done %]
-                <th align="right" nowrap id="[% "account_label_column$i" %]">[% text('Account') %]</th>
-                <td colspan="2" id="[% "account_column$i" %]">
-                  [% PROCESS select element_data = {
-                                                  id="account_"  _ row.invoice.id
-                                                  name="account_" _ row.invoice.id
-                                                  options=account
-                                                  value_attr='id'
-                                                  text_attr='description'
-                                                  default_values=[row.selected_account] } %]
-                </td>
-              </tr>
-              <tr id="[% "source_row$i" %]">
-                [% # here goes all the posible sources which we can used %]
-                <th align="right" nowrap id="[% "source_label_column$i" %]">[% text('Source') %]</th>
-                <td>[% PROCESS input element_data={
-                           name  => "source_text_$row.invoice.id",
-                  id    => "source_text_$row.invoice.id",
-                                              value => row.source_text
-                  } -%]</td>
-                <td nowrap align="left">
-                       [% IF row.optional ;
-                                   CHECKED='checked' ;
-                                   ELSE ;
-                                   CHECKED='';
-                                   END ; %]
-                       [% PROCESS input element_data = {
-                                   name="optional_pay_" _ row.invoice.id
-                                   id="optional_pay_" _ row.invoice.id
-                                   type="checkbox"
-                                   class="checkbox"
-                                   checked=CHECKED } %]
-                     </td>
-              </tr>
-            </table>
-          </div>
         </td>
         <td valign="middle"
             align="center">

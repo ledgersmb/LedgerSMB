@@ -338,116 +338,113 @@ CREATE OR REPLACE FUNCTION payment_get_all_contact_invoices
         in_payment_date date)
 RETURNS SETOF payment_contact_invoice AS
 $$
-BEGIN
-RETURN QUERY EXECUTE $sql$
-                  SELECT c.id AS contact_id, e.control_code as econtrol_code,
-                        c.description as eca_description,
-                        e.name AS contact_name,
-                         c.meta_number::text AS account_number,
-                         sum( case when u.username IS NULL or
-                                       u.username = SESSION_USER
-                             THEN
-                              coalesce(p.due::numeric, 0) -
-                              CASE WHEN (c.discount_terms||' days')::interval
-                                        > age(coalesce($10, current_date), a.transdate)
-                                   THEN 0
-                                   ELSE (coalesce(p.due::numeric, 0)) *
-                                        coalesce(c.discount::numeric, 0) / 100
-                              END
-                             ELSE 0::numeric
-                             END) AS total_due,
-                         array_agg(ARRAY[
-                              a.id::text, a.open_item_id::text, a.invnumber, a.transdate::text,
-                              a.amount_bc::text, (a.amount_bc - p.due)::text,
-                              (CASE WHEN (c.discount_terms||' days')::interval
-                                        < age(coalesce($10, current_date), a.transdate)
-                                   THEN 0
-                                   ELSE (coalesce(p.due, 0) * coalesce(c.discount, 0) / 100)
-                              END)::text,
-                              (coalesce(p.due, 0) -
-                              (CASE WHEN (c.discount_terms||' days')::interval
-                                        < age(coalesce($10, current_date), a.transdate)
-                                   THEN 0
-                                   ELSE (coalesce(p.due, 0)) * coalesce(c.discount, 0) / 100
-                              END))::text,
-                                case when u.username IS NOT NULL
-                                          and u.username <> SESSION_USER
-                                     THEN 0::text
-                                     ELSE 1::text
-                                END,
-                                COALESCE(u.username, 0::text)
-                                ]),
-                              sum(case when a.batch_id = $6 then 1
-                                  else 0 END),
-                              bool_and(lock_record(a.id, (select max(session_id)
-                                FROM "session" where users_id = (
-                                        select id from users WHERE username =
-                                        SESSION_USER))))
+  SELECT c.id AS contact_id, e.control_code as econtrol_code,
+         c.description as eca_description,
+         e.name AS contact_name,
+         c.meta_number::text AS account_number,
+         sum(
+           case when u.username IS NULL or
+                   u.username = SESSION_USER
+             THEN coalesce(p.due::numeric, 0) -
+             CASE WHEN (c.discount_terms||' days')::interval
+                    > age(coalesce(in_payment_date, current_date), t.transdate)
+             THEN 0
+              ELSE (coalesce(p.due::numeric, 0)) *
+              coalesce(c.discount::numeric, 0) / 100
+              END
+              ELSE 0::numeric
+              END) AS total_due,
+         array_agg(ARRAY[
+           a.id::text, a.open_item_id::text, a.invnumber, t.transdate::text,
+           a.amount_bc::text, (a.amount_bc - p.due)::text,
+           (CASE WHEN (c.discount_terms||' days')::interval
+                     < age(coalesce(in_payment_date, current_date), t.transdate)
+             THEN 0
+            ELSE (coalesce(p.due, 0) * coalesce(c.discount, 0) / 100)
+            END)::text,
+            (coalesce(p.due, 0) -
+            (CASE WHEN (c.discount_terms||' days')::interval
+                      < age(coalesce(in_payment_date, current_date), t.transdate)
+              THEN 0
+             ELSE (coalesce(p.due, 0)) * coalesce(c.discount, 0) / 100
+             END))::text,
+             case when u.username IS NOT NULL
+             and u.username <> SESSION_USER
+             THEN 0::text
+             ELSE 1::text
+             END,
+             COALESCE(u.username, 0::text)
+             ]),
+         sum(case when a.batch_id = in_batch_id then 1
+             else 0 END),
+         bool_and(lock_record(a.id, (select max(session_id)
+                                       FROM "session" where users_id = (
+                                         select id from users WHERE username =
+                                                                    SESSION_USER))))
 
-                    FROM entity e
-                    JOIN entity_credit_account c ON (e.id = c.entity_id)
-                    JOIN (SELECT txn.id, ap.open_item_id, invnumber, txn.transdate, amount_bc,
-                                 curr, 1 as invoice_class,
-                                 entity_credit_account, on_hold, v.batch_id,
-                                 txn.approved
-                            FROM ap JOIN transactions txn ON ap.trans_id = txn.id
-                       LEFT JOIN (select * from voucher where batch_class = 1) v
-                                 ON (ap.trans_id = v.trans_id)
-                           WHERE $1 = 1
-                                 AND (v.batch_class = 1 or v.batch_id IS NULL)
-                           UNION
-                          SELECT txn.id, ar.open_item_id, invnumber, txn.transdate, amount_bc,
-                                 curr, 2 as invoice_class,
-                                 entity_credit_account, on_hold, v.batch_id,
-                                 txn.approved
-                            FROM ar JOIN transactions txn ON ar.trans_id = txn.id
-                       LEFT JOIN (select * from voucher where batch_class = 2) v
-                                 ON (ar.trans_id = v.trans_id)
-                           WHERE $1 = 2
-                                 AND (v.batch_class = 2 or v.batch_id IS NULL)
-                        ORDER BY transdate
-                         ) a ON (a.entity_credit_account = c.id)
-                    JOIN transactions t ON (a.id = t.id)
-                    JOIN (SELECT acc_trans.open_item_id,
-                                 sum(CASE WHEN $1 = 1 THEN amount_bc
-                                          WHEN $1 = 2
-                                          THEN amount_bc * -1
-                                     END) AS due
+    FROM entity e
+           JOIN entity_credit_account c
+               ON e.id = c.entity_id
+           JOIN (
+             SELECT ap.trans_id as id, ap.open_item_id, invnumber, amount_bc,
+                    curr, 1 as invoice_class,
+                    entity_credit_account, on_hold, v.batch_id
+               FROM ap
+                      LEFT JOIN voucher v
+                          ON ap.trans_id = v.trans_id
+              WHERE in_account_class = 1
+              UNION ALL
+             SELECT ar.trans_id, ar.open_item_id, invnumber, amount_bc,
+                    curr, 2 as invoice_class,
+                    entity_credit_account, on_hold, v.batch_id
+               FROM ar
+                      LEFT JOIN voucher v
+                          ON ar.trans_id = v.trans_id
+              WHERE in_account_class = 2
+           ) a
+               ON a.entity_credit_account = c.id
+           JOIN transactions t
+               ON a.id = t.id
+           JOIN (
+             SELECT acc_trans.open_item_id,
+                    sum(CASE WHEN in_account_class = 1 THEN amount_bc
+                        WHEN in_account_class = 2
+                          THEN amount_bc * -1
+                        END) AS due
+               FROM acc_trans
+              WHERE approved IS TRUE
+              GROUP BY acc_trans.open_item_id
+           ) p
+               ON a.open_item_id = p.open_item_id
+           LEFT JOIN "session" s
+               ON s."session_id" = t.locked_by
+           LEFT JOIN users u
+               ON u.id = s.users_id
+   WHERE (a.batch_id = in_batch_id
+          OR (a.invoice_class = in_account_class
+              AND t.approved
+              AND due <> 0
+              AND NOT a.on_hold
+              AND a.curr = in_currency
+              AND EXISTS (select 1
                             FROM acc_trans
-                       LEFT JOIN voucher v ON (acc_trans.voucher_id = v.id)
-                           WHERE (approved IS TRUE or v.batch_class IN (3, 6))
-                        GROUP BY acc_trans.open_item_id) p ON (a.open_item_id = p.open_item_id)
-                LEFT JOIN "session" s ON (s."session_id" = t.locked_by)
-                LEFT JOIN users u ON (u.id = s.users_id)
-                   WHERE (a.batch_id = $6
-                          OR (a.invoice_class = $1
-                             AND a.approved
-                         AND due <> 0
-                         AND NOT a.on_hold
-                         AND a.curr = $3
-                         AND EXISTS (select 1
-                                       FROM acc_trans
-                                      WHERE trans_id = a.id AND
-                                            chart_id = (SELECT id from account
-                                                         WHERE accno
-                                                               = $7)
-                                    )))
-                         AND ($8 IS NULL OR
-                              $8 = c.meta_number)
-                         AND ($9 IS NULL OR
-                              e.name ilike '%' || $9 || '%')
-                GROUP BY c.id, e.name, c.meta_number, c.threshold,
-                        e.control_code, c.description
-                  HAVING  c.threshold is null or (sum(p.due) >= c.threshold
-                        OR sum(case when a.batch_id = $6 then 1
-                                  else 0 END) > 0)
-        ORDER BY c.meta_number ASC
-$sql$
-USING in_account_class, in_business_id, in_currency, in_date_from,
- in_date_to, in_batch_id, in_ar_ap_accno, in_meta_number,
- in_contact_name, in_payment_date;
-END
-$$ LANGUAGE PLPGSQL;
+                           WHERE trans_id = a.id AND
+                                 chart_id = (SELECT id from account
+                                              WHERE accno
+                                                    = in_ar_ap_accno)
+              )))
+     AND (in_meta_number IS NULL OR
+          in_meta_number = c.meta_number)
+     AND (in_contact_name IS NULL OR
+          e.name ilike '%' || in_contact_name || '%')
+   GROUP BY c.id, e.name, c.meta_number, c.threshold,
+            e.control_code, c.description
+  HAVING  c.threshold is null or (sum(p.due) >= c.threshold
+                                  OR sum(case when a.batch_id = in_batch_id then 1
+                                         else 0 END) > 0)
+   ORDER BY c.meta_number ASC;
+
+$$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION payment_get_all_contact_invoices
 (in_account_class int, in_business_id int, in_currency char(3),
@@ -481,298 +478,300 @@ CREATE OR REPLACE FUNCTION payment_bulk_post
 RETURNS int AS
 $$
 DECLARE
-        out_count int;
-        t_voucher_id int;
-        t_trans_id int;
-        t_amount numeric;
-        t_ar_ap_id int;
-        t_cash_id int;
-        t_defaultcurr text;
-        t_exchangerate numeric;
-        t_cash_sign int;
-        t_batch batch;
+  out_count int;
+  t_amount numeric;
+  t_ar_ap_id int;
+  t_cash_id int;
+  t_defaultcurr text;
+  t_exchangerate numeric;
+  t_cash_sign int;
+  t_batch batch;
 BEGIN
-        t_exchangerate := in_exchangerate;
+  t_exchangerate := in_exchangerate;
 
-        IF in_batch_id IS NULL THEN
-                -- t_voucher_id := NULL;
-                RAISE EXCEPTION 'Bulk Post Must be from Batch!';
-        ELSE
-                SELECT * INTO t_batch FROM batch WHERE in_batch_id = id;
-                IF t_batch.approved_by IS NOT NULL THEN
-                    RAISE EXCEPTION 'Approved Batch';
-                ELSIF t_batch.locked_by IS NOT NULL THEN
-                    PERFORM * FROM session
-                       JOIN users ON (session.users_id = users.id)
-                      WHERE session_id = t_batch.locked_by
-                            AND users.username = SESSION_USER;
+  IF in_batch_id IS NULL THEN
+    -- t_voucher_id := NULL;
+    RAISE EXCEPTION 'Bulk Post Must be from Batch!';
+  ELSE
+    SELECT * INTO t_batch FROM batch WHERE in_batch_id = id;
+    IF t_batch.approved_by IS NOT NULL THEN
+      RAISE EXCEPTION 'Approved Batch';
+    ELSIF t_batch.locked_by IS NOT NULL THEN
+      PERFORM *
+         FROM session
+              JOIN users ON (session.users_id = users.id)
+        WHERE session_id = t_batch.locked_by
+              AND users.username = SESSION_USER;
 
-                    IF NOT FOUND THEN
-                        -- locked by someone else
-                        RAISE EXCEPTION 'batch locked by %, I am %', t_batch.locked_by, session_user;
-                    END IF;
-                END IF;
-                INSERT INTO voucher (batch_id, batch_class, trans_id)
-                values (in_batch_id,
-                (SELECT batch_class_id FROM batch WHERE id = in_batch_id),
-                in_transactions[1][1]);
+      IF NOT FOUND THEN
+        -- locked by someone else
+        RAISE EXCEPTION 'batch locked by %, I am %', t_batch.locked_by, session_user;
+      END IF;
+    END IF;
+  END IF;
 
-                t_voucher_id := currval('voucher_id_seq');
-        END IF;
-
-        SELECT * INTO t_defaultcurr
-          FROM defaults_get_defaultcurrency();
+  SELECT * INTO t_defaultcurr
+    FROM defaults_get_defaultcurrency();
 
 
-        IF in_account_class = 1 THEN
-            t_cash_sign := 1;
-        ELSE
-            t_cash_sign := -1;
-        END IF;
+  IF in_account_class = 1 THEN
+    t_cash_sign := 1;
+  ELSE
+    t_cash_sign := -1;
+  END IF;
 
-        IF (in_currency IS NULL OR in_currency = t_defaultcurr) THEN
-                t_exchangerate := 1;
-        END IF;
-        IF t_exchangerate IS NULL THEN
-            RAISE EXCEPTION 'No exchangerate provided and not default currency';
-        END IF;
+  IF (in_currency IS NULL OR in_currency = t_defaultcurr) THEN
+    t_exchangerate := 1;
+  END IF;
+  IF t_exchangerate IS NULL THEN
+    RAISE EXCEPTION 'No exchangerate provided and not default currency';
+  END IF;
 
-        CREATE TEMPORARY TABLE bulk_payments_in (
-            id int,                   -- AR/AP id
-            open_item_id int,         -- open_item.id
-            payment_id int,           -- payment.id
-            eca_id int,               -- entity_credit_account.id
-            entry_id int,             -- acc_trans.entry_id
-            amount_bc numeric,        -- amount in local currency (current rate)
-            amount_tc numeric,        -- amount in foreign currency
-            disc_amount_bc numeric,   -- discount amount in
-            disc_amount_tc numeric,
-            fxrate numeric,
-            gain_loss_accno int,
-            want_gain_loss_accno boolean,
-            invoice_date date);
+  CREATE TEMPORARY TABLE bulk_payments_in (
+    id int,                   -- AR/AP id
+    trans_id int,             -- payment transaction id
+    voucher_id int,           -- voucher id
+    open_item_id int,         -- open_item.id
+    payment_id int,           -- payment.id
+    eca_id int,               -- entity_credit_account.id
+    entry_id int,             -- acc_trans.entry_id
+    amount_bc numeric,        -- amount in local currency (current rate)
+    amount_tc numeric,        -- amount in foreign currency
+    disc_amount_bc numeric,   -- discount amount in
+    disc_amount_tc numeric,
+    fxrate numeric,
+    gain_loss_accno int,
+    want_gain_loss_accno boolean,
+    invoice_date date);
 
-        FOR out_count IN
-                        array_lower(in_transactions, 1) ..
-                        array_upper(in_transactions, 1)
-        LOOP
-            -- Fill the bulk payments table
-            IF in_transactions[out_count][2] <> 0 THEN
-               INSERT INTO bulk_payments_in(id, open_item_id, amount_tc)
-               VALUES (in_transactions[out_count][1],
-                       in_transactions[out_count][2],
-                       in_transactions[out_count][3]);
-            END IF;
-        END LOOP;
+  FOR out_count IN
+    array_lower(in_transactions, 1) ..
+    array_upper(in_transactions, 1)
+  LOOP
+      -- Fill the bulk payments table
+      IF in_transactions[out_count][2] <> 0 THEN
+        INSERT INTO bulk_payments_in(id, open_item_id, amount_tc)
+        VALUES (in_transactions[out_count][1],
+                in_transactions[out_count][2],
+                in_transactions[out_count][3]);
+      END IF;
+    END LOOP;
 
-        UPDATE bulk_payments_in bpi
-           SET eca_id =
-                  (SELECT entity_credit_account FROM ar
-                            WHERE in_account_class = 2
-                              AND bpi.id = ar.trans_id
-                            UNION
-                           SELECT entity_credit_account FROM ap
-                            WHERE in_account_class = 1
-                              AND bpi.id = ap.trans_id);
+  UPDATE bulk_payments_in bpi
+     SET eca_id =
+         (SELECT entity_credit_account FROM ar
+           WHERE in_account_class = 2
+             AND bpi.id = ar.trans_id
+           UNION
+          SELECT entity_credit_account FROM ap
+           WHERE in_account_class = 1
+             AND bpi.id = ap.trans_id);
 
-        CREATE TEMPORARY TABLE eca_payments_in AS
-        SELECT eca_id, nextval('payment_id_seq') as payment_id,
-                       -- this logic is reversed, but mirrors what's been
-                       -- incorrect in payment post since 12 years...
-                       case when in_account_class = 1
-                                 then setting_increment('rcptnumber')
-                            else setting_increment('paynumber')
-                       end as reference
-          FROM bulk_payments_in
-         GROUP BY eca_id;
+  CREATE TEMPORARY TABLE eca_payments_in AS
+    WITH new_workflow (workflow_id) AS (
+      INSERT INTO workflow (workflow_id, type, state)
+      VALUES (nextval('workflow_seq'), 'Payment', 'SAVED')
+             RETURNING workflow_id
+    )
+    SELECT eca_id, nextval('payment_id_seq') as payment_id,
+           nextval('transactions_id_seq') as trans_id,
+           nextval('voucher_id_seq') as voucher_id,
+           -- this logic is reversed, but mirrors what's been
+           -- incorrect in payment post since 12 years...
+           case when in_account_class = 1
+             then setting_increment('rcptnumber')
+             else setting_increment('paynumber')
+             end as reference,
+           (select workflow_id
+              from new_workflow) as workflow_id
+      FROM bulk_payments_in
+     GROUP BY eca_id;
 
-        UPDATE bulk_payments_in bpi
-           SET payment_id = (select payment_id from eca_payments_in ep
-                              where bpi.eca_id = ep.eca_id);
-
-
-        UPDATE bulk_payments_in bpi
-           SET invoice_date = (select transdate from transactions trn
-                                where trn.id = bpi.id);
-
-        IF (in_currency IS NULL OR in_currency = t_defaultcurr) THEN
-            UPDATE bulk_payments_in
-               SET fxrate = 1;
-        ELSE
-            UPDATE bulk_payments_in
-               SET fxrate =
-                (SELECT fxrate
-
-                   FROM (SELECT id, CASE WHEN amount_tc<>0
-                                      THEN amount_bc/amount_tc
-                                    ELSE NULL END as fxrate
-                         FROM ar
-                         UNION
-                         SELECT id, CASE WHEN amount_tc<>0
-                                      THEN amount_bc/amount_tc
-                                    ELSE NULL END as fxrate
-                         FROM ap) a
-                   WHERE a.id = bulk_payments_in.id);
-
-            UPDATE bulk_payments_in
-               SET want_gain_loss_accno = true,
-                   gain_loss_accno =
-                (SELECT value::int FROM defaults
-                  WHERE setting_key = 'fxgain_accno_id')
-             WHERE ((t_exchangerate - bulk_payments_in.fxrate)
-                    * t_cash_sign) < 0;
-
-            UPDATE bulk_payments_in
-               SET want_gain_loss_accno = true,
-                   gain_loss_accno = (SELECT value::int FROM defaults
-                  WHERE setting_key = 'fxloss_accno_id')
-             WHERE ((t_exchangerate - bulk_payments_in.fxrate)
-                    * t_cash_sign) > 0;
-            -- explicitly leave zero gain/loss accno_id entries at NULL
-            -- so we have an easy check later
-        END IF;
-
-        PERFORM * FROM bulk_payments_in
-                  WHERE want_gain_loss_accno AND gain_loss_accno IS NULL;
-        IF FOUND THEN
-           RAISE 'Missing gain/loss account while posting FX difference';
-        END IF;
-
-        UPDATE bulk_payments_in bpi
-           SET disc_amount_tc = coalesce(
-                  (SELECT bpi.amount_tc
-                          / (100 - eca.discount::numeric)
-                          * eca.discount::numeric
-                     FROM entity_credit_account eca
-                    WHERE age(in_payment_date, bpi.invoice_date)
-                                  < (eca.discount_terms||' days')::interval
-                          AND eca.discount_terms IS NOT NULL
-                          AND eca.discount IS NOT NULL
-                          AND eca.discount_account_id IS NOT NULL
-                          AND eca.id = bpi.eca_id),
-                  0);
-
-        UPDATE bulk_payments_in
-           SET amount_bc = amount_tc * t_exchangerate,
-               disc_amount_bc = disc_amount_tc * t_exchangerate;
+  UPDATE bulk_payments_in bpi
+     SET payment_id = ep.payment_id,
+         trans_id = ep.trans_id,
+         voucher_id = ep.voucher_id
+    from eca_payments_in ep
+   where bpi.eca_id = ep.eca_id;
 
 
-        select id into t_ar_ap_id from account where accno = in_ar_ap_accno;
-        select id into t_cash_id from account where accno = in_cash_accno;
+  UPDATE bulk_payments_in bpi
+     SET invoice_date = (select transdate from transactions trn
+                          where trn.id = bpi.id);
+
+  IF (in_currency IS NULL OR in_currency = t_defaultcurr) THEN
+    UPDATE bulk_payments_in
+    SET fxrate = 1;
+  ELSE
+    UPDATE bulk_payments_in
+       SET fxrate =
+           (SELECT fxrate
+
+              FROM (SELECT id, CASE WHEN amount_tc<>0
+                THEN amount_bc/amount_tc
+                               ELSE NULL END as fxrate
+                      FROM ar
+                     UNION
+                    SELECT id, CASE WHEN amount_tc<>0
+                      THEN amount_bc/amount_tc
+                               ELSE NULL END as fxrate
+                      FROM ap) a
+             WHERE a.id = bulk_payments_in.id);
+
+    UPDATE bulk_payments_in
+       SET want_gain_loss_accno = true,
+           gain_loss_accno =
+           (SELECT value::int FROM defaults
+             WHERE setting_key = 'fxgain_accno_id')
+     WHERE ((t_exchangerate - bulk_payments_in.fxrate)
+            * t_cash_sign) < 0;
+
+    UPDATE bulk_payments_in
+       SET want_gain_loss_accno = true,
+           gain_loss_accno = (SELECT value::int FROM defaults
+                               WHERE setting_key = 'fxloss_accno_id')
+     WHERE ((t_exchangerate - bulk_payments_in.fxrate)
+            * t_cash_sign) > 0;
+    -- explicitly leave zero gain/loss accno_id entries at NULL
+    -- so we have an easy check later
+  END IF;
+
+  PERFORM * FROM bulk_payments_in
+    WHERE want_gain_loss_accno AND gain_loss_accno IS NULL;
+  IF FOUND THEN
+    RAISE 'Missing gain/loss account while posting FX difference';
+  END IF;
+
+  UPDATE bulk_payments_in bpi
+     SET disc_amount_tc = coalesce(
+       (SELECT bpi.amount_tc
+                 / (100 - eca.discount::numeric)
+                 * eca.discount::numeric
+          FROM entity_credit_account eca
+         WHERE age(in_payment_date, bpi.invoice_date)
+               < (eca.discount_terms||' days')::interval
+           AND eca.discount_terms IS NOT NULL
+           AND eca.discount IS NOT NULL
+           AND eca.discount_account_id IS NOT NULL
+           AND eca.id = bpi.eca_id),
+           0);
+
+  UPDATE bulk_payments_in
+     SET amount_bc = amount_tc * t_exchangerate,
+         disc_amount_bc = disc_amount_tc * t_exchangerate;
+
+
+  select id into t_ar_ap_id from account where accno = in_ar_ap_accno;
+  select id into t_cash_id from account where accno = in_cash_accno;
 
 
 
--- Given an open item, created on an earlier date, at an FX rate of '2',
--- the code below inserts this transaction (for each line in bulk_payments_in),
--- with the FX rate of the current transaction being '3' and the terms of the
--- transaction being 10/30 and the transaction being paid within the term.
+  -- Given an open item, created on an earlier date, at an FX rate of '2',
+  -- the code below inserts this transaction (for each line in bulk_payments_in),
+  -- with the FX rate of the current transaction being '3' and the terms of the
+  -- transaction being 10/30 and the transaction being paid within the term.
 
---                   |   Credits       |   Debits        |   FX  |
---                   |   BC   |   TC   |   BC   |   TC   |  rate |
---   ----------------+--------+--------+--------+--------+-------|
---   Current account |     81 |     27 |        |        |  curr |
---   Discounts       |      9 |      3 |        |        |  curr |
---   ----------------+--------+--------+--------+--------+-------|
---   Accounts rec    |        |        |     60 |     30 |  orig |
---   FX effects      |        |        |     30 |      0 |   na  |
---   ----------------+--------+--------+--------+--------+-------|
---   Total           |     90 |     30 |     90 |     30 |       |
---   ----------------+--------+--------+--------+--------|-------|
+  --                   |   Credits       |   Debits        |   FX  |
+  --                   |   BC   |   TC   |   BC   |   TC   |  rate |
+  --   ----------------+--------+--------+--------+--------+-------|
+  --   Current account |     81 |     27 |        |        |  curr |
+  --   Discounts       |      9 |      3 |        |        |  curr |
+  --   ----------------+--------+--------+--------+--------+-------|
+  --   Accounts rec    |        |        |     60 |     30 |  orig |
+  --   FX effects      |        |        |     30 |      0 |   na  |
+  --   ----------------+--------+--------+--------+--------+-------|
+  --   Total           |     90 |     30 |     90 |     30 |       |
+  --   ----------------+--------+--------+--------+--------|-------|
 
--- Note: due to the fact that the discount is valued at the current rate,
---   the revaluation is based on the accounts receivable amount.
---   If the discount amount were to be valued at the original rate,
---   the FX effect should be calculated based on the current payment amount
+  -- Note: due to the fact that the discount is valued at the current rate,
+  --   the revaluation is based on the accounts receivable amount.
+  --   If the discount amount were to be valued at the original rate,
+  --   the FX effect should be calculated based on the current payment amount
 
-        -- The 'id' values were allocated above
-        INSERT INTO payment (id, reference, payment_class, payment_date,
-                             entity_credit_id, employee_id, currency, notes)
-        SELECT epi.payment_id, epi.reference, in_account_class,
-               in_payment_date, epi.eca_id, person__get_my_id(), in_currency,
-               'generated from bulk payment'
-          FROM eca_payments_in epi;
+  INSERT INTO transactions (id, table_name, transdate, approved,
+                            reference, trans_type_code, entered_by, workflow_id)
+              OVERRIDING SYSTEM VALUE
+  SELECT epi.trans_id, 'payment', in_payment_date, false,
+         epi.reference, 'pa', person__get_my_entity_id(), workflow_id
+    FROM eca_payments_in epi;
 
-        -- Insert cash side @ current fx rate
-        UPDATE bulk_payments_in
-           SET entry_id = nextval('acc_trans_entry_id_seq')
-         WHERE amount_tc <> 0;
-        INSERT INTO acc_trans
-             (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
+  INSERT INTO voucher (id, batch_id, trans_id, batch_class)
+              OVERRIDING SYSTEM VALUE
+  SELECT epi.voucher_id, in_batch_id, epi.trans_id,
+         (SELECT batch_class_id FROM batch WHERE id = in_batch_id)
+    FROM eca_payments_in epi;
+
+  -- The 'id' values were allocated above
+  INSERT INTO payment (id, trans_id, reference, payment_class, payment_date,
+                       entity_credit_id, employee_id, currency, notes, account_id)
+  SELECT epi.payment_id, epi.trans_id, epi.reference, in_account_class,
+         in_payment_date, epi.eca_id, person__get_my_id(), in_currency,
+         'generated from bulk payment', t_cash_id
+    FROM eca_payments_in epi;
+
+  -- Insert cash side @ current fx rate
+  UPDATE bulk_payments_in
+     SET entry_id = nextval('acc_trans_entry_id_seq')
+   WHERE amount_tc <> 0;
+  INSERT INTO acc_trans
+              (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
               voucher_id, transdate, source, entry_id)
-           SELECT id, t_cash_id, amount_bc * t_cash_sign,
-                  in_currency, amount_tc * t_cash_sign,
-                  CASE WHEN t_voucher_id IS NULL THEN true
-                       ELSE false END,
-                  t_voucher_id, in_payment_date, in_source, entry_id
-             FROM bulk_payments_in  where amount_tc <> 0;
-        INSERT INTO payment_links (payment_id, entry_id, type)
-        SELECT payment_id, entry_id, 1 FROM bulk_payments_in
-         WHERE amount_tc <> 0;
+  SELECT trans_id, t_cash_id, amount_bc * t_cash_sign,
+         in_currency, amount_tc * t_cash_sign, false,
+         voucher_id, in_payment_date, in_source, entry_id
+    FROM bulk_payments_in  where amount_tc <> 0;
 
-        -- Insert discount @ current fx rate
-        UPDATE bulk_payments_in
-           SET entry_id = nextval('acc_trans_entry_id_seq')
-         WHERE disc_amount_bc <> 0;
-        INSERT INTO acc_trans
-               (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
-               voucher_id, transdate, source, entry_id)
-        SELECT bpi.id, eca.discount_account_id,
-               disc_amount_bc * t_cash_sign, in_currency,
-               disc_amount_tc * t_cash_sign,
-               CASE WHEN t_voucher_id IS NULL THEN true
-                       ELSE false END,
-               t_voucher_id, in_payment_date, in_source, entry_id
-          FROM bulk_payments_in bpi
-          JOIN entity_credit_account eca ON bpi.eca_id = eca.id
-         WHERE bpi.disc_amount_bc <> 0;
-        INSERT INTO payment_links (payment_id, entry_id, type)
-        SELECT payment_id, entry_id, 1 FROM bulk_payments_in
-         WHERE disc_amount_bc <> 0;
-
-        -- Insert AR/AP amount @ orginal rate
-        UPDATE bulk_payments_in
-           SET entry_id = nextval('acc_trans_entry_id_seq');
-        INSERT INTO acc_trans
-               (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
-               voucher_id, transdate, source, entry_id, open_item_id)
-        SELECT bpi.id, t_ar_ap_id,
-               (bpi.amount_tc + bpi.disc_amount_tc)
-                  * t_cash_sign * -1 * bpi.fxrate, in_currency,
-               (bpi.amount_tc + bpi.disc_amount_tc)
-                  * t_cash_sign * -1,
-               CASE WHEN t_voucher_id IS NULL THEN true
-                       ELSE false END,
-               t_voucher_id, in_payment_date, in_source, entry_id, open_item_id
-          FROM bulk_payments_in bpi
-          JOIN entity_credit_account eca ON bpi.eca_id = eca.id;
-        INSERT INTO payment_links (payment_id, entry_id, type)
-        SELECT payment_id, entry_id, 1 FROM bulk_payments_in;
-
-        -- Insert fx gain/loss effects, if applicable
-        UPDATE bulk_payments_in
-           SET entry_id = nextval('acc_trans_entry_id_seq')
-         WHERE gain_loss_accno IS NOT NULL;
-        INSERT INTO acc_trans
-             (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
+  -- Insert discount @ current fx rate
+  UPDATE bulk_payments_in
+     SET entry_id = nextval('acc_trans_entry_id_seq')
+   WHERE disc_amount_bc <> 0;
+  INSERT INTO acc_trans
+              (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
               voucher_id, transdate, source, entry_id)
-           SELECT id, gain_loss_accno,
-                  amount_tc * t_cash_sign *
-                     (t_exchangerate - fxrate),
-                  in_currency, 0,
-                  CASE WHEN t_voucher_id IS NULL THEN true
-                       ELSE false END,
-                  t_voucher_id, in_payment_date, in_source, entry_id
-             FROM bulk_payments_in
-            WHERE gain_loss_accno IS NOT NULL;
-        INSERT INTO payment_links (payment_id, entry_id, type)
-        SELECT payment_id, entry_id, 1 FROM bulk_payments_in
-         WHERE gain_loss_accno IS NOT NULL;
+  SELECT bpi.trans_id, eca.discount_account_id,
+         disc_amount_bc * t_cash_sign, in_currency,
+         disc_amount_tc * t_cash_sign, false,
+         voucher_id, in_payment_date, in_source, entry_id
+    FROM bulk_payments_in bpi
+           JOIN entity_credit_account eca ON bpi.eca_id = eca.id
+   WHERE bpi.disc_amount_bc <> 0;
 
-        DROP TABLE bulk_payments_in;
-        DROP TABLE eca_payments_in;
-        perform unlock_all();
-        return out_count;
+  -- Insert AR/AP amount @ orginal rate
+  UPDATE bulk_payments_in
+     SET entry_id = nextval('acc_trans_entry_id_seq');
+  INSERT INTO acc_trans
+              (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
+              voucher_id, transdate, source, entry_id, open_item_id)
+  SELECT bpi.trans_id, t_ar_ap_id,
+         (bpi.amount_tc + bpi.disc_amount_tc)
+           * t_cash_sign * -1 * bpi.fxrate, in_currency,
+         (bpi.amount_tc + bpi.disc_amount_tc)
+           * t_cash_sign * -1, false,
+         voucher_id, in_payment_date, in_source, entry_id, open_item_id
+    FROM bulk_payments_in bpi
+           JOIN entity_credit_account eca ON bpi.eca_id = eca.id;
+
+  -- Insert fx gain/loss effects, if applicable
+  UPDATE bulk_payments_in
+     SET entry_id = nextval('acc_trans_entry_id_seq')
+   WHERE gain_loss_accno IS NOT NULL;
+  INSERT INTO acc_trans
+              (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
+              voucher_id, transdate, source, entry_id)
+  SELECT trans_id, gain_loss_accno,
+         amount_tc * t_cash_sign *
+           (t_exchangerate - fxrate),
+         in_currency, 0, false,
+         voucher_id, in_payment_date, in_source, entry_id
+    FROM bulk_payments_in
+   WHERE gain_loss_accno IS NOT NULL;
+
+  DROP TABLE bulk_payments_in;
+  DROP TABLE eca_payments_in;
+  perform unlock_all();
+  return out_count;
 END;
+
 $$ language plpgsql;
 
 COMMENT ON FUNCTION payment_bulk_post
@@ -793,9 +792,9 @@ is the amount for that transaction.  $$;
 CREATE OR REPLACE FUNCTION payment_post
 (in_datepaid                      date,
  in_account_class                 int,
- in_entity_credit_id                     int,
+ in_entity_credit_id              int,
  in_curr                          char(3),
- in_exchangerate          numeric,
+ in_exchangerate                  numeric,
  in_notes                         text,
  in_gl_description                text,
  in_cash_account_id               int[],
@@ -813,49 +812,74 @@ CREATE OR REPLACE FUNCTION payment_post
  in_approved                      bool)
 RETURNS INT AS
 $$
-DECLARE var_payment_id int;
-DECLARE var_txn_id int;
-DECLARE var_entry record;
-DECLARE var_entry_id int[];
-DECLARE out_count int;
-DECLARE coa_id record;
-DECLARE var_employee int;
-DECLARE var_account_id int;
-DECLARE default_currency char(3);
-DECLARE current_exchangerate numeric;
-DECLARE old_exchangerate numeric;
-DECLARE fx_gain_loss_amount numeric;
-DECLARE gain_loss_accno_id int;
-DECLARE sign int;
+DECLARE
+  var_cash_account_id int;
+  var_payment_id int;
+  var_txn_id int;
+  var_entry record;
+  var_entry_id int[];
+  out_count int;
+  coa_id record;
+  var_employee int;
+  var_account_id int;
+  default_currency char(3);
+  current_exchangerate numeric;
+  old_exchangerate numeric;
+  fx_gain_loss_amount numeric;
+  gain_loss_accno_id int;
+  sign int;
 BEGIN
-      IF array_upper(in_amount, 1) <> array_upper(in_cash_account_id, 1) THEN
-          RAISE EXCEPTION 'Wrong number of accounts';
-      END IF;
+  IF array_upper(in_amount, 1) <> array_upper(in_cash_account_id, 1) THEN
+    RAISE EXCEPTION 'Wrong number of accounts';
+  END IF;
+  IF (select count(distinct acct)
+        from unnest(in_cash_account_id) as arr(acct)) > 1 THEN
+    RAISE EXCEPTION 'Single payments only supported against a single payment account';
+  ELSE
+    var_cash_account_id := in_cash_account_id[array_lower(in_cash_account_id, 1)];
+  END IF;
 
-   current_exchangerate := in_exchangerate;
-   IF in_account_class = 1 THEN
-      sign := 1;
-   ELSE
-      sign := -1;
-   END IF;
-   SELECT * INTO default_currency  FROM defaults_get_defaultcurrency();
+  current_exchangerate := in_exchangerate;
+  IF in_account_class = 1 THEN
+    sign := 1;
+  ELSE
+    sign := -1;
+  END IF;
+  SELECT * INTO default_currency  FROM defaults_get_defaultcurrency();
 
-        SELECT INTO var_employee p.id
-        FROM users u
-        JOIN person p ON (u.entity_id=p.entity_id)
-    WHERE username = SESSION_USER
-    LIMIT 1;
+  SELECT INTO var_employee p.id
+    FROM users u
+           JOIN person p ON (u.entity_id=p.entity_id)
+   WHERE username = SESSION_USER
+   LIMIT 1;
 
-        -- WE HAVE TO INSERT THE PAYMENT, USING THE GL INFORMATION
-        -- THE ID IS GENERATED BY payment_id_seq
-        INSERT INTO payment (reference, payment_class, payment_date,
-                              employee_id, currency, notes, entity_credit_id)
-    VALUES (-- the rcptnumber and paynumber are reversed; have been for 12 years
-            (CASE WHEN in_account_class = 1 THEN setting_increment('rcptnumber')
-                                 ELSE setting_increment('paynumber')
-                                     END),
-                 in_account_class, in_datepaid, var_employee,
-                 in_curr, in_notes, in_entity_credit_id);
+  INSERT INTO workflow (workflow_id, type, last_update, state)
+  VALUES (nextval('workflow_seq'), 'Payment', NOW(),
+          CASE WHEN coalesce(in_approved, true) THEN 'POSTED' ELSE 'SAVED' END);
+
+  INSERT INTO transactions (table_name, transdate, approved,
+                            reference,
+                            trans_type_code, entered_by, workflow_id)
+  VALUES ('payment', in_datepaid, coalesce(in_approved, true),
+          (
+            CASE WHEN in_account_class = 1 THEN setting_increment('rcptnumber')
+            ELSE setting_increment('paynumber')
+            END
+          ),
+          'pa', person__get_my_entity_id(), currval('workflow_seq'))
+  RETURNING id into var_txn_id;
+
+  -- WE HAVE TO INSERT THE PAYMENT, USING THE GL INFORMATION
+  -- THE ID IS GENERATED BY payment_id_seq
+  INSERT INTO payment (trans_id, account_id, reference, payment_class, payment_date,
+                       employee_id, currency, notes, entity_credit_id)
+  VALUES (var_txn_id, var_cash_account_id,
+          -- the rcptnumber and paynumber are reversed; have been for 12 years
+          (CASE WHEN in_account_class = 1 THEN setting_increment('rcptnumber')
+           ELSE setting_increment('paynumber')
+           END),
+           in_account_class, in_datepaid, var_employee,
+           in_curr, in_notes, in_entity_credit_id);
 
   -- Assuming a transaction with foreign currency being recorded,
   -- at an exchangerate of 3 upon AR creation and an exchangerate of 2
@@ -880,179 +904,164 @@ BEGIN
   -- +-------+----------+----------+----------+----------+
 
 
-   SELECT currval('payment_id_seq') INTO var_payment_id;
-   IF (array_upper(in_cash_account_id, 1) > 0) THEN
+  SELECT currval('payment_id_seq') INTO var_payment_id;
+  IF (array_upper(in_cash_account_id, 1) > 0) THEN
+    DECLARE
+      var_payment_bc numeric;
+      var_payment_tc numeric;
+      var_overpayment_id int;
+    BEGIN
+      IF (select count(distinct coalesce(opmt_id, -1))
+            from unnest(in_ovp_payment_id) as arr(opmt_id)) > 1 THEN
+        RAISE EXCEPTION 'Single payments do not support a mix of overpayments';
+      ELSE
+        var_overpayment_id := in_ovp_payment_id[array_lower(in_ovp_payment_id, 1)];
+      END IF;
+
+      var_payment_bc := 0;
+      var_payment_tc := 0;
       FOR out_count IN
-                      array_lower(in_cash_account_id, 1) ..
-                      array_upper(in_cash_account_id, 1)
+        array_lower(in_cash_account_id, 1) ..
+        array_upper(in_cash_account_id, 1)
       LOOP
-        -- Insert the side the allocation is coming from;
-        -- which can be (a) a cash account; or (b) an overpayment account
-        --
-        -- When overpayments are posted, the source account must be posted
-        -- with an open_item_id to attribute the transaction as change in
-        -- the overpayment balance
-        --
-        -- Each payment can have its own cash account set through the UI
-        DECLARE
-          t_open_item_id int;
-        BEGIN
-          IF (in_ovp_payment_id IS NOT NULL) THEN
-            t_open_item_id := in_ovp_payment_id[out_count];
-          ELSE
-            t_open_item_id := NULL;
-          END IF;
-          INSERT INTO acc_trans
-                 (chart_id, amount_bc, curr, amount_tc, trans_id,
+        var_payment_bc := var_payment_bc + in_amount[out_count]*current_exchangerate*sign;
+        var_payment_tc := var_payment_tc + in_amount[out_count]*sign;
+      END LOOP;
+
+      -- If there's an overpayment creation involved, add those amounts too
+      IF (array_upper(in_op_cash_account_id, 1) > 0) THEN
+        FOR out_count IN
+          array_lower(in_op_cash_account_id, 1) ..
+          array_upper(in_op_cash_account_id, 1)
+        LOOP
+          var_payment_bc := var_payment_bc + in_op_amount[out_count]*current_exchangerate*sign;
+          var_payment_tc := var_payment_tc + in_op_amount[out_count]*sign;
+        END LOOP;
+      END IF;
+
+      -- Insert the side the allocation is coming from;
+      -- which can be (a) a cash account; or (b) an overpayment account
+      --
+      -- When overpayments are posted, the source account must be posted
+      -- with an open_item_id to attribute the transaction as change in
+      -- the overpayment balance
+      INSERT INTO acc_trans
+                  (chart_id, amount_bc, curr, amount_tc, trans_id,
                   transdate, approved, source, memo, open_item_id)
-                VALUES (in_cash_account_id[out_count],
-                        in_amount[out_count]*current_exchangerate*sign,
-                        in_curr,
-                        in_amount[out_count]*sign,
-                        in_transaction_id[out_count],
-                        in_datepaid,
-                        coalesce(in_approved, true),
-                        in_source[out_count],
-                        in_memo[out_count],
-                        t_open_item_id);
-        END;
+      VALUES (var_cash_account_id,
+              var_payment_bc,
+              in_curr,
+              var_payment_tc,
+              var_txn_id,
+              in_datepaid,
+              coalesce(in_approved, true),
+              in_source[array_lower(in_source, 1)],
+              in_memo[array_lower(in_memo, 1)],
+              var_overpayment_id);
+    END;
 
-        -- Link the ledger line to the payment record
-        INSERT INTO payment_links
-             VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
-      END LOOP;
-
-      -- HANDLE THE AR/AP ACCOUNTS
-      -- OBTAIN THE ACCOUNT AND EXCHANGERATE FROM THERE
-      FOR out_count IN
-                   array_lower(in_transaction_id, 1) ..
-                   array_upper(in_transaction_id, 1)
-      LOOP
-        SELECT oi.account_id, amount_bc/amount_tc
-               INTO var_account_id, old_exchangerate
-          FROM (select open_item_id, amount_bc, amount_tc from ar
-                union all
-                select open_item_id, amount_bc, amount_tc from ap) aa
+    -- HANDLE THE AR/AP ACCOUNTS
+    -- OBTAIN THE ACCOUNT AND EXCHANGERATE FROM THERE
+    FOR out_count IN
+        array_lower(in_transaction_id, 1) ..
+        array_upper(in_transaction_id, 1)
+    LOOP
+      SELECT oi.account_id, amount_bc/amount_tc
+        INTO var_account_id, old_exchangerate
+        FROM (select open_item_id, amount_bc, amount_tc from ar
+               union all
+              select open_item_id, amount_bc, amount_tc from ap) aa
                JOIN open_item oi ON aa.open_item_id = oi.id
-         WHERE open_item_id = in_open_item_id[out_count];
+       WHERE open_item_id = in_open_item_id[out_count];
 
-        -- Now we post the AP/AR account
-        INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc,
-                               trans_id, transdate, approved, source, memo, open_item_id)
-              VALUES (var_account_id,
-                      in_amount[out_count]*old_exchangerate*sign*-1,
-                      in_curr,
-                      in_amount[out_count]*sign*-1,
-                      in_transaction_id[out_count],
-                      in_datepaid,
-                      coalesce(in_approved, true),
-                      in_source[out_count],
-                      in_memo[out_count],
-                      in_open_item_id[out_count]);
-        -- Link the ledger line to the payment record
-        INSERT INTO payment_links
-              VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
+      -- Now we post the AP/AR account
+      INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc,
+                             trans_id, transdate, approved, source, memo, open_item_id)
+      VALUES (var_account_id,
+              in_amount[out_count]*old_exchangerate*sign*-1,
+              in_curr,
+              in_amount[out_count]*sign*-1,
+              var_txn_id,
+              in_datepaid,
+              coalesce(in_approved, true),
+              in_source[out_count],
+              in_memo[out_count],
+              in_open_item_id[out_count]);
 
-        -- Calculate the gain/loss on the transaction
-        -- everything above depends on this being an AR/AP posting
-        -- the PNL posting and decision to post a gain or loss does not
-        --  --> incorporate sign here instead of when posting.
-        fx_gain_loss_amount :=
-            in_amount[out_count]*sign*(old_exchangerate-current_exchangerate);
+      -- Calculate the gain/loss on the transaction
+      -- everything above depends on this being an AR/AP posting
+      -- the PNL posting and decision to post a gain or loss does not
+      --  --> incorporate sign here instead of when posting.
+      fx_gain_loss_amount :=
+        in_amount[out_count]*sign*(old_exchangerate-current_exchangerate);
 
-        IF (fx_gain_loss_amount > 0) THEN
-          SELECT value::int INTO gain_loss_accno_id
-            FROM defaults
-           WHERE setting_key = 'fxgain_accno_id';
-        ELSIF (fx_gain_loss_amount < 0) THEN
-          SELECT value::int INTO gain_loss_accno_id
-            FROM defaults
-           WHERE setting_key = 'fxloss_accno_id';
-        END IF;
-        IF fx_gain_loss_amount <> 0.00 THEN
-          INSERT INTO acc_trans
-                   (chart_id, amount_bc, curr, amount_tc,
-                    trans_id, transdate, approved, source)
-                -- In this transaction we can't use the default currency,
-                -- because by definition the tc and bc amounts are the same.
-                VALUES (gain_loss_accno_id,
-                  fx_gain_loss_amount,
-                  in_curr,
-                  0, -- the transaction currency side is zero by definition
-                  in_transaction_id[out_count],
-                  in_datepaid,
-                  coalesce(in_approved, true),
-                  in_source[out_count]);
+      IF (fx_gain_loss_amount > 0) THEN
+        SELECT value::int INTO gain_loss_accno_id
+        FROM defaults
+        WHERE setting_key = 'fxgain_accno_id';
+      ELSIF (fx_gain_loss_amount < 0) THEN
+        SELECT value::int INTO gain_loss_accno_id
+        FROM defaults
+        WHERE setting_key = 'fxloss_accno_id';
+      END IF;
+      IF fx_gain_loss_amount <> 0.00 THEN
+        INSERT INTO acc_trans
+        (chart_id, amount_bc, curr, amount_tc,
+        trans_id, transdate, approved, source)
+        -- In this transaction we can't use the default currency,
+        -- because by definition the tc and bc amounts are the same.
+        VALUES (gain_loss_accno_id,
+                fx_gain_loss_amount,
+                in_curr,
+                0, -- the transaction currency side is zero by definition
+                var_txn_id,
+                in_datepaid,
+                coalesce(in_approved, true),
+                in_source[out_count]);
 
-          INSERT INTO payment_links
-                VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
-        END IF;
-      END LOOP;
-   END IF;
+      END IF;
+    END LOOP;
+  END IF;
 
 
-   --
-   -- HANDLE THE OVERPAYMENTS NOW
-   IF (array_upper(in_op_cash_account_id, 1) > 0) THEN
-       INSERT INTO transactions (
-         reference, description,
-         transdate, entered_by, approved, trans_type_code, table_name)
-       VALUES (setting_increment('paynumber'),
-               in_gl_description, in_datepaid, var_employee,
-               in_approved, 'op', 'payment')
-       RETURNING id INTO var_txn_id;
+  --
+  -- HANDLE THE OVERPAYMENTS NOW
+  IF (array_upper(in_op_cash_account_id, 1) > 0) THEN
+    -- HANDLE THE OVERPAYMENT ACCOUNTS
+    -- The cash side was dealt with when we created the cash account journal line
+    FOR out_count IN
+      array_lower(in_op_account_id, 1) ..
+      array_upper(in_op_account_id, 1)
+    LOOP
+      INSERT INTO open_item (
+        item_number, item_type, account_id
+      )
+      VALUES ('overpay-' || var_txn_id, 'op', in_op_account_id[out_count]);
 
-       FOR out_count IN
-                        array_lower(in_op_cash_account_id, 1) ..
-                        array_upper(in_op_cash_account_id, 1)
-       LOOP
-         -- Cash account side of the transaction
-         INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc,
-                               trans_id, transdate, approved, source, memo)
-                VALUES (in_op_cash_account_id[out_count],
-                     in_op_amount[out_count]*current_exchangerate*sign,
-                     in_curr,
-                     in_op_amount[out_count]*sign,
-                     var_txn_id,
-                     in_datepaid,
-                     coalesce(in_approved, true),
-                     in_op_source[out_count],
-                     in_op_memo[out_count]);
-       END LOOP;
+      INSERT INTO overpayment (
+        open_item_id, eca_id
+      )
+      VALUES (currval('open_item_id_seq'), in_entity_credit_id);
 
-       -- NOW LETS HANDLE THE OVERPAYMENT ACCOUNTS
-       FOR out_count IN
-                     array_lower(in_op_account_id, 1) ..
-                     array_upper(in_op_account_id, 1)
-       LOOP
-         INSERT INTO open_item (
-           item_number, item_type, account_id
-         )
-         VALUES ('overpay-' || var_txn_id, 'op', in_op_account_id[out_count]);
-
-         INSERT INTO overpayment (
-           open_item_id, eca_id
-         )
-         VALUES (currval('open_item_id_seq'), in_entity_credit_id);
-
-         INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc, trans_id,
-                                transdate, approved, source, memo, open_item_id)
-                VALUES (in_op_account_id[out_count],
-                     in_op_amount[out_count]*current_exchangerate*sign*-1,
-                     in_curr,
-                     in_op_amount[out_count]*sign*-1,
-                     var_txn_id,
-                     in_datepaid,
-                     coalesce(in_approved, true),
-                     in_op_source[out_count],
-                     in_op_memo[out_count],
-                     currval('open_item_id_seq'));
-       END LOOP;
- END IF;
- return var_payment_id;
+      INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc, trans_id,
+                             transdate, approved, source, memo, open_item_id)
+      VALUES (in_op_account_id[out_count],
+              in_op_amount[out_count]*current_exchangerate*sign*-1,
+              in_curr,
+              in_op_amount[out_count]*sign*-1,
+              var_txn_id,
+              in_datepaid,
+              coalesce(in_approved, true),
+              in_op_source[out_count],
+              in_op_memo[out_count],
+              currval('open_item_id_seq'));
+    END LOOP;
+  END IF;
+  return var_payment_id;
 END;
+
 $$ LANGUAGE PLPGSQL;
--- I HAVE TO MAKE A COMMENT ON THIS FUNCTION
+
 COMMENT ON FUNCTION payment_post
 (in_datepaid                      date,
  in_account_class                 int,
@@ -1195,10 +1204,9 @@ RETURN QUERY EXECUTE $sql$
           v.id, p.payment_date,
           (select r.id from payment r where r.reversing = p.id)
      from payment p
-     join payment_links l on p.id = l.payment_id
      join entity_credit_account c on p.entity_credit_id = c.id
      join entity e on e.id = c.entity_id
-     join acc_trans a on l.entry_id = a.entry_id
+     join acc_trans a on p.trans_id = a.trans_id
      join account act on a.chart_id = act.id
      left join voucher v on a.voucher_id = v.id
      left join batch b on v.batch_id = b.id
@@ -1253,10 +1261,19 @@ DECLARE
   t_payment_id int;
 BEGIN
   -- check against being an overpayment??
-  INSERT INTO payment (reference, trans_id, payment_class,
+  INSERT INTO transactions (
+    table_name, transdate, trans_type_code, reversing, approved
+    )
+  SELECT table_name, in_payment_date, 'pa', id, coalesce(in_approved, false)
+    FROM transactions
+   WHERE id = (select trans_id
+                 from payment
+                where id = in_payment_id);
+
+  INSERT INTO payment (reference, trans_id, payment_class, account_id,
                        payment_date, closed, entity_credit_id,
                        employee_id, currency, reversing, notes)
-    SELECT reference, trans_id, payment_class,
+    SELECT reference, currval('transactions_id_seq'), payment_class, account_id,
            in_payment_date, closed, entity_credit_id,
            person__get_my_id(), currency, in_payment_id,
            'This payment reverses ' || in_payment_id
@@ -1265,46 +1282,35 @@ BEGIN
   RETURNING id INTO t_payment_id;
 
   IF in_batch_id IS NOT NULL THEN
-    -- Note that we're using the original payment to derive the
-    -- value for 'trans_id', because the reversal inserts into the
-    -- same trans_id (see 'new_entries' query below for determination
-    -- of the value of 'trans_id' in the new acc_trans lines)
     INSERT INTO voucher (trans_id, batch_id, batch_class)
-    select trans_id, in_batch_id,
-         (select case when payment_class = 1 then 4
-                      else 7 end
-            from payment c where c.id = t_payment_id)
-      from acc_trans a join payment_links pl on a.entry_id = pl.entry_id
-     where pl.payment_id = in_payment_id
-     group by trans_id;
+    VALUES (
+      currval('transactions_id_seq'),
+      in_batch_id,
+      (select case when payment_class = 1 then 4 else 7 end
+         from payment
+        where id = in_payment_id)
+    );
   END IF;
 
-  -- Using a CTE because we can use the returned result to fill
-  -- the payment_links table without further temporary tables
-  WITH new_entries AS (
-    INSERT INTO acc_trans (trans_id, chart_id, transdate, source,
-                           cleared, memo, invoice_id, approved,
-                           amount_bc, amount_tc, curr,
-                           voucher_id, open_item_id)
-     SELECT trans_id, chart_id, in_payment_date, source,
-            false, memo, null, coalesce(in_approved, true),
-            -1 * amount_bc, -1 * amount_tc, curr,
-            (select id from voucher v
-              where a.trans_id = v.trans_id
-                and v.batch_id = in_batch_id) as voucher_id,
-            open_item_id
-       FROM acc_trans a
-      WHERE exists (select 1 from payment_links pl
-                     where pl.payment_id = in_payment_id
-                           and a.entry_id = pl.entry_id)
-    RETURNING entry_id
-  )
-  INSERT INTO payment_links (payment_id, entry_id)
-  SELECT t_payment_id, entry_id
-    FROM new_entries;
+  INSERT INTO acc_trans (trans_id, chart_id, transdate, source,
+                         cleared, memo, invoice_id, approved,
+                         amount_bc, amount_tc, curr,
+                         voucher_id, open_item_id)
+  SELECT currval('transactions_id_seq'), chart_id, in_payment_date, source,
+         false, memo, null, coalesce(in_approved, true),
+         -1 * amount_bc, -1 * amount_tc, curr,
+         (select id from voucher v
+           where currval('transactions_id_seq') = v.trans_id
+             and v.batch_id = in_batch_id) as voucher_id,
+         open_item_id
+    FROM acc_trans a
+   WHERE trans_id = (select trans_id
+                       from payment
+                      where id = in_payment_id);
 
   RETURN t_payment_id;
 END;
+
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment__reverse
@@ -1329,36 +1335,27 @@ employee_last_name  text,
 currency char(3),
 notes text
 );
--- I NEED TO PLACE THE COMPANY TELEPHONE AND ALL THAT STUFF
+
 CREATE OR REPLACE FUNCTION payment_gather_header_info(in_account_class int, in_payment_id int)
  RETURNS SETOF payment_header_item AS
 $$
 BEGIN
 RETURN QUERY EXECUTE $sql$
    SELECT p.id as payment_id, p.reference as payment_reference, p.payment_date,
-          c.legal_name as legal_name, am.amount_bc as amount, em.first_name, em.last_name, p.currency, p.notes
+          c.legal_name as legal_name, sum(a.amount_bc) as amount, em.first_name,
+          em.last_name, p.currency, p.notes
    FROM payment p
    JOIN entity_employee ent_em ON (ent_em.entity_id = p.employee_id)
    JOIN person em ON (ent_em.entity_id = em.entity_id)
    JOIN entity_credit_account eca ON (eca.id = p.entity_credit_id)
    JOIN company c ON   (c.entity_id  = eca.entity_id)
-   JOIN payment_links pl ON (p.id = pl.payment_id)
-   LEFT JOIN (  SELECT sum(a.amount_bc) as amount_bc
-                FROM acc_trans a
-                JOIN account acc ON (a.chart_id = acc.id)
-                JOIN account_link al ON (acc.id =al.account_id)
-                JOIN payment_links pl ON (pl.entry_id=a.entry_id)
-                WHERE al.description in
-                       ('AP_paid', 'AP_discount', 'AR_paid', 'AR_discount')
-                       and (($1 = 1 AND al.description like 'AP%')
-                       or ($1 = 2 AND al.description like 'AR%'))
-             ) am ON (true)
+   LEFT JOIN acc_trans a ON (p.account_id = a.chart_id AND p.trans_id = a.trans_id)
    WHERE p.id = $2
+   GROUP BY p.id, c.legal_name, em.first_name, em.last_name;
 $sql$
 USING in_account_class, in_payment_id;
 END
 $$ LANGUAGE PLPGSQL;
-
 
 COMMENT ON FUNCTION payment_gather_header_info(int,int) IS
 $$ This function finds a payment based on the id and retrieves the record,
@@ -1368,7 +1365,6 @@ DROP TYPE IF EXISTS payment_line_item CASCADE;
 CREATE TYPE payment_line_item AS (
   payment_id int,
   entry_id int,
-  link_type int,
   trans_id int,
   invoice_number text,
   chart_id int,
@@ -1388,20 +1384,20 @@ CREATE OR REPLACE FUNCTION payment_gather_line_info(in_account_class int, in_pay
 $$
 BEGIN
 RETURN QUERY EXECUTE $sql$
-     SELECT pl.payment_id, ac.entry_id, pl.type as link_type, ac.trans_id, a.invnumber as invoice_number,
+     SELECT pl.payment_id, ac.entry_id, ac.trans_id, a.invnumber as invoice_number,
      ac.chart_id, ch.accno as chart_accno, ch.description as chart_description,
      ac.amount_bc, ac.transdate as trans_date, ac.source, ac.cleared,
      ac.memo, ac.invoice_id, ac.approved
      FROM acc_trans ac
-     JOIN payment_links pl ON (pl.entry_id = ac.entry_id )
+     JOIN payment p ON p.trans_id = ac.trans_id
      JOIN account ch ON (ch.id = ac.chart_id)
-     LEFT JOIN (SELECT id,invnumber
+     LEFT JOIN (SELECT trans_id,invnumber
                  FROM ar WHERE $1 = 2
                  UNION
-                 SELECT id,invnumber
+                 SELECT trans_id,invnumber
                  FROM ap WHERE $1 = 1
-                ) a ON (ac.trans_id = a.id)
-     WHERE pl.payment_id = $2
+                ) a ON (ac.trans_id = a.trans_id)
+     WHERE p.id = $2
 $sql$
 USING in_account_class, in_payment_id;
 END
@@ -1409,7 +1405,7 @@ $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION payment_gather_line_info(int,int) IS
 $$ This function finds a payment based on the id and retrieves all the line records,
-it is usefull for printing payments and build reports :) $$;
+it is usefull for printing payments and build reports $$;
 
 -- We will use a view to handle all the overpayments
 
@@ -1617,9 +1613,8 @@ SELECT in_transdate, t_id, chart_id, amount_bc * -1, curr, amount_tc * -1
 
 -- reverse overpayment usage
 --
--- The query below will automatically do what the above simply bails out on.
--- However, it doesn't work and I don't understand it enough - right now -
--- to fix it.
+-- The query below should automatically do what the above simply bails out on.
+-- However, it doesn't work.
 -- PERFORM payment__reverse(ac.source, ac.transdate, eca.id, at.accno,
 --         in_transdate, eca.entity_class, in_batch_id, null,
 --         in_exchangerate, in_curr)

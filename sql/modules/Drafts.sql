@@ -115,16 +115,6 @@ CREATE OR REPLACE FUNCTION draft__delete_lines(in_id int) returns bool as
                         WHERE entry_id = atf.entry_id
                               AND trans_id = in_id);
 
-        DELETE FROM payment_links pl
-         WHERE EXISTS (SELECT 1 FROM acc_trans
-                        WHERE entry_id = pl.entry_id
-                              AND trans_id = in_id)
-               AND (SELECT count(distinct ac.trans_id)
-                      FROM payment p
-                      JOIN payment_links pli ON p.id = pli.payment_id
-                      JOIN acc_trans ac ON pli.entry_id = ac.entry_id
-                     WHERE pl.payment_id = p.id) <= 1;
-
         DELETE FROM acc_trans WHERE trans_id = in_id;
 
         DELETE FROM invoice_tax_form itf
@@ -159,16 +149,6 @@ begin
          WHERE EXISTS (SELECT 1 FROM acc_trans
                         WHERE entry_id = atf.entry_id
                               AND trans_id = in_id);
-
-        DELETE FROM payment_links pl
-         WHERE EXISTS (SELECT 1 FROM acc_trans
-                        WHERE entry_id = pl.entry_id
-                              AND trans_id = in_id)
-               AND (SELECT count(distinct ac.trans_id)
-                      FROM payment p
-                      JOIN payment_links pli ON p.id = pli.payment_id
-                      JOIN acc_trans ac ON pli.entry_id = ac.entry_id
-                     WHERE pl.payment_id = p.id) <= 1;
 
         DELETE FROM acc_trans WHERE trans_id = in_id;
         DELETE FROM invoice_tax_form itf

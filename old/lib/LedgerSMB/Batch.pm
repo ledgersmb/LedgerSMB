@@ -262,23 +262,19 @@ sub post {
     croak $log->fatal("Batch class not specified while posting batch $id")
         unless $batch_class_id;
     $log->info("Deleting batch $id of class $batch_class_id");
-    if (not ($batch_class_id == BC_PAYMENT
-             or $batch_class_id == BC_PAYMENT_REVERSAL
-             or $batch_class_id == BC_RECEIPT
-             or $batch_class_id == BC_RECEIPT_REVERSAL)) {
-        # payments and receipts (and reversals) are part of a transaction
-        # which may already have been approved, meaning that 'batch-approve'
-        # isn't available...
-        $self->_iterate_batch_items(
-            sub {
-                my %args = @_;
-                my $wf = $self->{_wire}->get('workflows')->fetch_workflow(
-                    $args{type}, $args{workflow_id}
-                    );
-                $wf->execute_action( 'batch-approve' );
-                $log->info("Updated workflow $args{workflow_id}, batch-approve");
-            });
-    }
+
+    # payments and receipts (and reversals) are part of a transaction
+    # which may already have been approved, meaning that 'batch-approve'
+    # isn't available...
+    $self->_iterate_batch_items(
+        sub {
+            my %args = @_;
+            my $wf = $self->{_wire}->get('workflows')->fetch_workflow(
+                $args{type}, $args{workflow_id}
+                );
+            $wf->execute_action( 'batch-approve' );
+            $log->info("Updated workflow $args{workflow_id}, batch-approve");
+        });
 
     ($self->{post_return_ref}) = $self->call_dbmethod(funcname => 'batch_post');
     return $self->{post_return_ref}->{batch_post};

@@ -622,16 +622,16 @@ $$
 
         -- step 2: add lines part of a payment one line per payment
         for t_row in
-           select payment_id, array_agg(ac.entry_id) as entries,
+           select p.id as payment_id, array_agg(ac.entry_id) as entries,
                   sum(case when t_recon_fx then amount_tc
                            else amount_bc end) as our_balance,
                   payment_date, source
-             from payment_links pl
-             join acc_trans ac on pl.entry_id = ac.entry_id
-             join payment p on p.id = pl.payment_id
+             from transactions txn
+             join acc_trans ac on txn.id = ac.trans_id
+             join payment p on txn.id = p.trans_id
             where ac.chart_id = t_chart_id
-                  and pl.entry_id in (select entry_id from lines_to_be_added)
-           group by payment_id, payment_date, source
+                  and ac.entry_id in (select entry_id from lines_to_be_added)
+           group by p.id, payment_date, source
         loop
             insert into cr_report_line (report_id, scn, their_balance,
                                        our_balance, post_date, "user")
@@ -662,8 +662,8 @@ $$
                                                     and rl.report_id = rli.report_id
                                                     and rli.scn = rl.scn
                                                     and rl.id <> rli.id)
-                             and not exists (select 1 from payment_links pl
-                                              where pl.entry_id = ac.entry_id))
+                             and not exists (select 1 from payment p
+                                              where p.trans_id = ac.trans_id))
             where la.report_line_id is null
            returning report_line_id, entry_id
         )

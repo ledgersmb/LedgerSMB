@@ -336,23 +336,13 @@ sub recurring_details {
 
     my $dbh   = $form->{dbh};
     my $query = qq|
-           SELECT s.*, ar.id AS arid, ar.invoice AS arinvoice,
-                  ap.id AS apid, ap.invoice AS apinvoice,
-                  ar.duedate - ar.transdate AS overdue,
-                  oe.reqdate - oe.transdate AS req,
-                  oe.id AS oeid,
-                          CASE oe.oe_class_id
-                             WHEN 1 THEN oe.entity_credit_account
-                             ELSE NULL
-                             END AS customer_id,
-                          CASE oe.oe_class_id
-                             WHEN 2 THEN oe.entity_credit_account
-                             ELSE NULL
-                             END AS vendor_id
+           SELECT s.*, ar.trans_id AS arid, ar.invoice AS arinvoice,
+                  ap.trans_id AS apid, ap.invoice AS apinvoice,
+                  ar.duedate - txn.transdate AS overdue
              FROM recurring s
-        LEFT JOIN ar ON (ar.id = s.id)
-        LEFT JOIN ap ON (ap.id = s.id)
-        LEFT JOIN oe ON (oe.id = s.id)
+        LEFT JOIN ar ON (ar.trans_id = s.id)
+             JOIN transactions txn ON ar.trans_id = txn.id
+        LEFT JOIN ap ON (ap.trans_id = s.id)
             WHERE s.id = ?|;
 
     my $sth = $dbh->prepare($query);

@@ -31,8 +31,7 @@ Scenario: Search for all unapproved batches
    And I expect the 'Type' report column to contain 'ap' for Batch Number 'B-1001'
    And I expect the 'Date' report column to contain '2018-01-01' for Batch Number 'B-1001'
    And I expect the 'Description' report column to contain 'Batch-1' for Batch Number 'B-1001'
-   And I expect the 'AR/AP/GL Amount' report column to contain '0.00' for Batch Number 'B-1001'
-   And I expect the 'Payment Amount' report column to contain '0.00' for Batch Number 'B-1001'
+   And I expect the 'Batch total' report column to contain '0.00' for Batch Number 'B-1001'
 
 Scenario: Search for batches, filtering by batch type
   When I navigate the menu and select the item at "Transaction Approval > Batches"

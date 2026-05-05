@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(29);
+    SELECT plan(30);
 
     -- Add data
 
@@ -103,9 +103,19 @@ BEGIN;
 
     -- Run tests
 
-    PREPARE test AS SELECT count(*)=2
-                    FROM voucher__list( currval('batch_id_seq')::int);
-    SELECT results_eq('test',ARRAY[true],'Voucher Seach finds Payable Vouchers');
+-- the code above inserts approved acc_trans lines where the transaction itself is
+-- not approved. that doesn't make sense. the sense we make of it at this point is
+-- to allow the voucher to be reported as the transactions *are* bound to the
+-- requested batch...
+    PREPARE test AS SELECT count(*)
+      FROM voucher__list( currval('batch_id_seq')::int);
+    SELECT results_eq('test',ARRAY[4::bigint],'Voucher Seach finds all vouchers');
+    DEALLOCATE test;
+
+    PREPARE test AS SELECT count(*)
+      FROM voucher__list( currval('batch_id_seq')::int)
+      WHERE batch_class_id = 3;
+    SELECT results_eq('test',ARRAY[2::bigint],'Voucher Seach finds Payable Vouchers');
     DEALLOCATE test;
 
     PREPARE test AS SELECT count(*) > 1

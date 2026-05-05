@@ -1,0 +1,5 @@
+<conditions type="Payment">
+  <condition name="is-batch-member"
+             test="$context->{'batch-id'}"
+             class="Workflow::Condition::Evaluate"/>
+</conditions>

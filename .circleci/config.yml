@@ -130,7 +130,7 @@ commands:
             then
               make devtest TESTS="--no-progress --job-count $JOB_COUNT \"--cover=$DEVEL_COVER_OPTIONS\" xt/*.feature xt/66-cucumber/*/*.feature"
             else
-              make devtest TESTS="--no-progress --job-count 2 xt/*.feature xt/66-cucumber/*/*.feature"
+              make devtest TESTS="--no-progress --job-count 6 xt/*.feature xt/66-cucumber/*/*.feature"
             fi
 
       - run:
@@ -498,6 +498,7 @@ executors:
 jobs:
   test_webpack_chrome:
     <<: *defaults
+    resource_class: large
     executor:
       name: test
       perl: '5.38'
@@ -511,11 +512,6 @@ jobs:
       - start_starman
       - start_proxy
       - prove
-
-    # The resource_class feature allows configuring CPU and RAM resources for each job.
-    # Different resource classes are available for different executors.
-    # https://circleci.com/docs/2.0/configuration-reference/#resourceclass
-    resource_class: large
 
 
   test_api:
@@ -584,6 +580,7 @@ jobs:
 
   test_webpack_firefox:
     <<: *defaults
+    resource_class: large
     executor:
       name: test
       perl: '5.38'

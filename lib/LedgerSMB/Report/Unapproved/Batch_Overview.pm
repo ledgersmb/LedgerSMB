@@ -150,13 +150,7 @@ sub columns {
          pwidth => '6', },
 
         {col_id => 'transaction_total',
-         name => $self->_locale->text('AR/AP/GL Amount'),
-         type => 'text',
-         money => 1,
-         pwidth => '2', },
-
-        {col_id => 'payment_total',
-         name => $self->_locale->text('Payment Amount'),
+         name => $self->_locale->text('Batch total'),
          type => 'text',
          money => 1,
          pwidth => '2', },

@@ -11,6 +11,7 @@ Added functionalities
 Changed functionalities
 
 Removed functionalities
+* Use of multiple cash accounts on the single payment entry screen (#9508)
 * Support for the INI configuration file format (#9433)
 
 Bugs fixed
@@ -18,7 +19,9 @@ Bugs fixed
 * Overpayments don't show on AR/AP invoices and transactions (#2367)
 
 Cleanup & architecture improvements
-* Refactored tracking of AR/AP invoice/transaction balances (#9405)
+* Payments are now tracked as first-order transactions (#9508)
+* Refactored tracking of AR/AP/overpayment invoice/transaction balances (#9405)
+* Refactored tracking of customer/vendor overpayment balances (#9449)
 * Centralized 'transactions' table, reducing role of ar/ap/gl tables (#9283)
 * Subledger transactions no longer *also* gl transactions (#9235)
 * Removed unused SQL modules (#9279)

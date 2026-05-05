@@ -1439,7 +1439,7 @@ paths:
         style: simple
     patch:
       operationId: updateProductsPartsgroupById
-      summary: Updaet a single products parts group
+      summary: Update a single products parts group
       parameters:
         - $ref: '#/components/parameters/if-match'
       responses:

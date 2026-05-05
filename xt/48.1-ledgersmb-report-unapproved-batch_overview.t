@@ -104,7 +104,6 @@ is($row->{control_code}, 'TEST-001', 'row control_code field is correct');
 is($row->{description}, 'Test AP batch Description', 'row payment field is correct');
 is($row->{default_date}, '2018-09-08', 'row default_date field is correct');
 is($row->{transaction_total}, 0, 'row transaction_total field is correct');
-is($row->{payment_total}, 0, 'row payment_total field is correct');
 like($row->{created_on}, qr/\d{4}-\d{2}-\d{2}/, 'row created_on field is of expected format');
 ok(exists $row->{created_by}, 'row created_by field exists');
 ok(exists $row->{lock_success}, 'row lock_success field exists');

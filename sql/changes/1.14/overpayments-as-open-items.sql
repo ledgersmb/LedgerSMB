@@ -1,4 +1,15 @@
 
+/*
+ *
+ *  THIS FILE NEEDS TO BE EXECUTED *BEFORE*
+ *
+ *   payments-first-order.sql
+ *
+ *
+ *  because it assumes overpayments do not exist,
+ *  which is what this file is all about.
+ */
+
 alter table open_item
   drop constraint open_item_item_type_check;
 alter table open_item

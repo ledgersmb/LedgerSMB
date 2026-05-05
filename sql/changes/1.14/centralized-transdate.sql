@@ -19,5 +19,7 @@ alter table gl
   drop column transdate;
 
 
-
-
+create trigger transactions_prevent_closed
+  before insert or update
+  on transactions
+  for each row execute function prevent_closed_transactions();

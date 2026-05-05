@@ -1072,7 +1072,7 @@ SELECT lsmb__grant_perms('payment_process', obj, 'ALL')
        ) obj;
 
 SELECT lsmb__grant_perms('payment_process', obj, ptype)
-  FROM unnest(array['payment_links'::text, 'overpayments', 'acc_trans']) obj,
+  FROM unnest(array['overpayments'::text, 'acc_trans']) obj,
        unnest(array['SELECT'::text, 'INSERT']) ptype;
 
 SELECT lsmb__create_role('receipt_process',
@@ -1090,7 +1090,7 @@ SELECT lsmb__grant_perms('receipt_process', obj, 'ALL')
        ) obj;
 
 SELECT lsmb__grant_perms('receipt_process', obj, ptype)
-  FROM unnest(array['payment_links'::text, 'overpayments', 'acc_trans']) obj,
+  FROM unnest(array['overpayments'::text, 'acc_trans']) obj,
        unnest(array['SELECT'::text, 'INSERT']) ptype;
 
 SELECT lsmb__create_role('cash_all',

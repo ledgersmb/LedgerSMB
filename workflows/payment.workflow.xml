@@ -1,0 +1,22 @@
+<workflow class="LedgerSMB::Workflow">
+  <type>Payment</type>
+  <persister>JournalEntry</persister>
+  <description></description>
+  <state name="INITIAL" autorun="yes">
+    <action name="post" resulting_state="SAVED"/>
+  </state>
+  <state name="SAVED">
+    <action name="approve" resulting_state="POSTED">
+      <condition name="!is-batch-member"/>
+    </action>
+    <action name="batch-approve" resulting_state="POSTED">
+      <condition name="is-batch-member"/>
+    </action>
+    <action name="batch-delete" resulting_state="DELETED">
+      <condition name="is-batch-member"/>
+    </action>
+  </state>
+  <state name="POSTED"/>
+  <state name="DELETED"/>
+  <state name="REVERSED"/>
+</workflow>

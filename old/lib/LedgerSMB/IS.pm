@@ -643,12 +643,6 @@ sub invoice_details {
     $form->{invtotal} =
       ( $form->{taxincluded} ) ? $form->{total} : $form->{total} + $tax;
 
-    my $c = LedgerSMB::Num2text->new(
-        LedgerSMB::Locale->get_handle(
-            ($form->{language_code} ne "")
-            ? $form->{language_code} : $myconfig->{countrycode}
-        ));
-    $c->init;
     my $whole;
     ( $whole, $form->{decimal} ) = split /\./, $form->{invtotal};
     $form->{decimal} .= "00";
@@ -791,10 +785,10 @@ sub post_invoice {
         $uid .= "$$";
 
         $query = q|
-            INSERT INTO transactions (table_name, trans_type_code, approved)
-            VALUES ('ar', 'ar', false)
+            INSERT INTO transactions (table_name, trans_type_code, approved, transdate)
+            VALUES ('ar', 'ar', false, ?)
             |;
-        $dbh->do($query) or $form->dberror($query);
+        $dbh->do($query, {}, $form->{transdate}) or $form->dberror($query);
 
         ($accno) = split /--/, $form->{AR};
         $query = q{

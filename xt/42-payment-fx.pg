@@ -114,17 +114,15 @@ BEGIN;
     --TODO: 0.01? Ain't that dependent of the country
     PREPARE test AS SELECT abs(sum(amount_bc)) < 0.01
                         from acc_trans
-                       where trans_id = -11
-                         and chart_id = (select id from account where accno = '00001');
-    SELECT results_eq('test',ARRAY[true],'Local currency marks fully paid');
+                       where open_item_id = (select open_item_id from ap where invnumber = 'inv_test1');
+    SELECT results_eq('test',ARRAY[true],'Local currency marks fully paid (test1)');
     DEALLOCATE test;
 
     --TODO: 0.01? Ain't that dependent of the country
     PREPARE test AS SELECT abs(sum(amount_tc)) < 0.01
                         from acc_trans
-                       where trans_id = -11
-                         and chart_id = (select id from account where accno = '00001');
-    SELECT results_eq('test',ARRAY[true],'Foreign currency marks fully paid');
+                       where open_item_id = (select open_item_id from ap where invnumber = 'inv_test1');
+    SELECT results_eq('test',ARRAY[true],'Foreign currency marks fully paid (test1)');
     DEALLOCATE test;
 
 
@@ -150,16 +148,16 @@ BEGIN;
 
     PREPARE test AS SELECT abs(sum(amount_bc)) < 0.01
                         from acc_trans
-                       where trans_id = -12
+                       where open_item_id = currval('open_item_id_seq')
                          and chart_id = (select id from account where accno = '00001');
-    SELECT results_eq('test',ARRAY[true],'Local currency marks fully paid');
+    SELECT results_eq('test',ARRAY[true],'Local currency marks fully paid (test2)');
     DEALLOCATE test;
 
     PREPARE test AS SELECT abs(sum(amount_tc)) < 0.01
                         from acc_trans
-                       where trans_id = -12
+                       where open_item_id = currval('open_item_id_seq')
                          and chart_id = (select id from account where accno = '00001');
-    SELECT results_eq('test',ARRAY[true],'Foreign currency marks fully paid');
+    SELECT results_eq('test',ARRAY[true],'Foreign currency marks fully paid (test2)');
     DEALLOCATE test;
 
 

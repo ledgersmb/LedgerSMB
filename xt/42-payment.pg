@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(52);
+    SELECT plan(51);
 
     -- Add data
 
@@ -15,7 +15,6 @@ BEGIN;
 
     SELECT has_table('ap');
     SELECT has_table('payment');
-    SELECT has_table('payment_links');
     SELECT has_table('payment_type');
 
     -- Validate required functions
@@ -381,7 +380,7 @@ BEGIN;
     DEALLOCATE test;
 
    SELECT payment__reverse(currval('payment_id_seq')::int, now()::date,
-                           null::boolean, null::int);
+                           true, null::int);
 
    PREPARE test AS
    SELECT amount::int, due::int
@@ -428,27 +427,27 @@ BEGIN;
     PREPARE test AS
     SELECT count(*)::int FROM payment p
      WHERE notes = 'generated from bulk payment'
-           AND EXISTS (select 1 from payment_links pl
-                                join acc_trans ac on pl.entry_id = ac.entry_id
-                                join ap on ac.trans_id = ap.trans_id
-                        where ap.invnumber = 'test_bulk');
+           AND EXISTS (select 1 from acc_trans ac
+                                join ap on ac.open_item_id = ap.open_item_id
+                        where ap.invnumber = 'test_bulk'
+                          and ac.trans_id = p.trans_id);
     SELECT results_eq('test', array[1::int],
                       'After payment, the payment table contains a record');
     DEALLOCATE test;
 
-    SELECT id as payment_id FROM payment p
+    SELECT trans_id as trans_id FROM payment p
      WHERE notes = 'generated from bulk payment'
-           AND EXISTS (select 1 from payment_links pl
-                                join acc_trans ac on pl.entry_id = ac.entry_id
-                                join ap on ac.trans_id = ap.trans_id
-                        where ap.invnumber = 'test_bulk')
+           AND EXISTS (select 1 from acc_trans ac
+                                join ap on ac.open_item_id = ap.open_item_id
+                        where ap.invnumber = 'test_bulk'
+                          and ac.trans_id = p.trans_id)
     \gset
 
 
 
     PREPARE test AS
-    SELECT count(*)::int FROM payment_links
-     WHERE payment_id = :payment_id ;
+    SELECT count(*)::int FROM acc_trans
+     WHERE trans_id = :trans_id ;
     SELECT results_eq('test', array[3::int],
                       'There are 3 links: the cash account, the discount account and the ap account line');
     DEALLOCATE test;

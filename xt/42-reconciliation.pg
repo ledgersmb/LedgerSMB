@@ -90,12 +90,12 @@ BEGIN;
     SELECT results_eq('test',ARRAY[true],'Pending Transactions Ran');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT count(distinct ac.trans_id)::int
+    PREPARE test AS SELECT count(distinct ac.entry_id)::int
                       FROM acc_trans ac
                       JOIN cr_report_line_links rll on ac.entry_id = rll.entry_id
                       JOIN cr_report_line rl ON rll.report_line_id = rl.id
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',Array[11],'Correct number of transactions 1');
+    SELECT results_eq('test',Array[11],'Correct number of journal lines 1');
     DEALLOCATE test;
 
     PREPARE test AS SELECT count(*)::int
@@ -159,12 +159,12 @@ BEGIN;
        'There are two recon lines; with balances [20 (gl), 90(payments)]'
        );
 
-    PREPARE test AS SELECT count(distinct ac.trans_id)::int
+    PREPARE test AS SELECT count(distinct ac.entry_id)::int
                       FROM acc_trans ac
                       JOIN cr_report_line_links rll on ac.entry_id = rll.entry_id
                       JOIN cr_report_line rl ON rll.report_line_id = rl.id
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',ARRAY[11],'Correct number of transactions 2');
+    SELECT results_eq('test',ARRAY[11],'Correct number of journal lines 2');
     DEALLOCATE test;
 
 
@@ -179,12 +179,12 @@ BEGIN;
     SELECT results_eq('test',$$ SELECT id+3 FROM test_parameters $$,'1 Pending Transactions Ran');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT count(distinct ac.trans_id)::int
+    PREPARE test AS SELECT count(distinct ac.entry_id)::int
                       FROM acc_trans ac
                       JOIN cr_report_line_links rll on ac.entry_id = rll.entry_id
                       JOIN cr_report_line rl ON rll.report_line_id = rl.id
                       WHERE report_id = currval('cr_report_id_seq')::int;
-    SELECT results_eq('test',ARRAY[12],'Correct number of transactions 3');
+    SELECT results_eq('test',ARRAY[12],'Correct number of journal lines 3');
     DEALLOCATE test;
 
     PREPARE test AS SELECT count(*)::int
@@ -234,13 +234,13 @@ BEGIN;
     SELECT results_eq('test',ARRAY[2],'Correct number of report lines 4');
     DEALLOCATE test;
 
-    PREPARE test AS SELECT count(distinct ac.trans_id)::int
+    PREPARE test AS SELECT count(distinct ac.entry_id)::int
                       FROM acc_trans ac
                       JOIN cr_report_line_links rll on ac.entry_id = rll.entry_id
                       JOIN cr_report_line rl ON rll.report_line_id = rl.id
                       WHERE report_id = currval('cr_report_id_seq')::int;
     -- 1 payment
-    SELECT results_eq('test',ARRAY[12],'Correct number of transactions 4');
+    SELECT results_eq('test',ARRAY[12],'Correct number of journal lines 4');
     DEALLOCATE test;
 
 
