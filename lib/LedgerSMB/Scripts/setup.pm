@@ -551,6 +551,19 @@ sub consistency {
     my $paths = find_checks($request->{_wire}->get( 'paths/sql' ) );
     my $checks = load_checks( $paths );
     my $results = run_checks( $dbh, $checks );
+    my $upgrade_results = [
+        grep {
+            $_->{frontmatter}->{category}
+            and $_->{frontmatter}->{category} eq 'upgrade'
+        } $results->@*
+        ];
+
+    $results = [
+        grep {
+            not ($_->{frontmatter}->{category}
+                 and $_->{frontmatter}->{category} eq 'upgrade')
+        } $results->@*
+        ];
 
     return $request->{_wire}->get('ui')->render(
         $request,
@@ -558,7 +571,8 @@ sub consistency {
         {
             database => $request->{database},
             login    => $request->{login},
-            results  => $results
+            results  => $results,
+            upgrade_results  => $upgrade_results
         });
 }
 
