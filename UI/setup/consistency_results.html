@@ -1,7 +1,7 @@
 [% WRAPPER "ui-header.html"
           stylesheet="ledgersmb.css"
           include_stylesheet=["system/setup.css"]
-       %]
+%]
 [% PROCESS elements.html %]
 <body id="setup-system-info" class="lsmb [% dojo_theme %]">
 <div><div class="setupconsole">
@@ -9,8 +9,34 @@
 [% INCLUDE 'setup/ui-db-credentials.html' %]
 <p>[% text('Note: '); %]</p>
 
+
 <table>
-  <caption>[% text('LedgerSMB consistency check results') %]</caption>
+  <caption style="min-width:fit-content">[% text('LedgerSMB database upgrade check results') %]</caption>
+  <tbody>
+    [% IF upgrade_results %]
+    [% FOR item IN upgrade_results %]
+    <tr>
+      <td style="text-align: right">
+        [% IF item.result == 'consistent' %]
+        <span style="font-weight:bold;color:green">✓</span>
+        [% ELSE %]
+        <span style="color:red" title="[% item.count %] failed row(s)">✗</span>[% END %]
+      </td>
+      <th>[% item.frontmatter.title %]</th>
+    </tr>
+    [% END %]
+    [% ELSE %]
+    <tr>
+      <td>
+        [% text('No checks applicable') %]
+      </td>
+    </tr>
+    [% END %]
+  </tbody>
+</table>
+
+<table>
+  <caption>[% text('LedgerSMB database consistency check results') %]</caption>
   <tbody>
     [% FOR item IN results %]
     <tr>
