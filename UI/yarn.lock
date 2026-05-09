@@ -2552,9 +2552,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/core@npm:30.4.1":
-  version: 30.4.1
-  resolution: "@jest/core@npm:30.4.1"
+"@jest/core@npm:30.4.2":
+  version: 30.4.2
+  resolution: "@jest/core@npm:30.4.2"
   dependencies:
     "@jest/console": "npm:30.4.1"
     "@jest/pattern": "npm:30.4.0"
@@ -2570,14 +2570,14 @@ __metadata:
     fast-json-stable-stringify: "npm:^2.1.0"
     graceful-fs: "npm:^4.2.11"
     jest-changed-files: "npm:30.4.1"
-    jest-config: "npm:30.4.1"
+    jest-config: "npm:30.4.2"
     jest-haste-map: "npm:30.4.1"
     jest-message-util: "npm:30.4.1"
     jest-regex-util: "npm:30.4.0"
     jest-resolve: "npm:30.4.1"
-    jest-resolve-dependencies: "npm:30.4.1"
-    jest-runner: "npm:30.4.1"
-    jest-runtime: "npm:30.4.1"
+    jest-resolve-dependencies: "npm:30.4.2"
+    jest-runner: "npm:30.4.2"
+    jest-runtime: "npm:30.4.2"
     jest-snapshot: "npm:30.4.1"
     jest-util: "npm:30.4.1"
     jest-validate: "npm:30.4.1"
@@ -2589,7 +2589,7 @@ __metadata:
   peerDependenciesMeta:
     node-notifier:
       optional: true
-  checksum: 10c0/cdd12af123b1331659018671258b3a0ab65c2bb8aa91d3c83c3a3144fcb91e1aed91e9df691c50c7099665a889513c372f90855d0293a028a7469871de70f0d3
+  checksum: 10c0/4237ec79d5403b82ba89e3be6e4318d9f37c3a11281bd76cfbdd4ff08d8c89850555607c4d494dab3526e01a90db3539e549017883967dd392b5084f1be0d5b2
   languageName: node
   linkType: hard
 
@@ -7457,9 +7457,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cssnano-preset-default@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "cssnano-preset-default@npm:8.0.0"
+"cssnano-preset-default@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "cssnano-preset-default@npm:8.0.1"
   dependencies:
     browserslist: "npm:^4.28.2"
     cssnano-utils: "npm:^6.0.0"
@@ -7475,7 +7475,7 @@ __metadata:
     postcss-minify-font-values: "npm:^8.0.0"
     postcss-minify-gradients: "npm:^8.0.0"
     postcss-minify-params: "npm:^8.0.0"
-    postcss-minify-selectors: "npm:^8.0.0"
+    postcss-minify-selectors: "npm:^8.0.1"
     postcss-normalize-charset: "npm:^8.0.0"
     postcss-normalize-display-values: "npm:^8.0.0"
     postcss-normalize-positions: "npm:^8.0.0"
@@ -7492,7 +7492,7 @@ __metadata:
     postcss-unique-selectors: "npm:^8.0.0"
   peerDependencies:
     postcss: ^8.5.14
-  checksum: 10c0/02599d960b86769108ba908f0f2aa2927ecf16db1c903dfe86a30e8a6aea742668b7e9425f22fecaf117695e4c86b6efd72f41fcfa3cca79ac3b80e56c7fad1d
+  checksum: 10c0/a51376bcd9da7bb8cc52d2256a4d7649583a7b4a488d3dd7804a146c85a68ee22be4a05dfe5ca28219fe126a919c6dff35a3b59cb35b1b803731cb5dd69cd067
   languageName: node
   linkType: hard
 
@@ -7514,15 +7514,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cssnano@npm:8.0.0":
-  version: 8.0.0
-  resolution: "cssnano@npm:8.0.0"
+"cssnano@npm:8.0.1":
+  version: 8.0.1
+  resolution: "cssnano@npm:8.0.1"
   dependencies:
-    cssnano-preset-default: "npm:^8.0.0"
+    cssnano-preset-default: "npm:^8.0.1"
     lilconfig: "npm:^3.1.3"
   peerDependencies:
     postcss: ^8.5.14
-  checksum: 10c0/a14f81ff7d8189cdffbae76a4bca8f28276c235b9944bb3b88ea2788880813f7c09389dfcaac66e1fba2bdecb17211d6e9f4ee5c4aec00c84f3199f56a51515b
+  checksum: 10c0/fdc1f5dcb897052628b1f6a2bdcfa1d5e223841e491b9537b6db732f42b6212bd66036414f7f1321e28a3293e70c3b7c202c1512640477458570ab4164ab57e1
   languageName: node
   linkType: hard
 
@@ -11369,9 +11369,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-circus@npm:30.4.1":
-  version: 30.4.1
-  resolution: "jest-circus@npm:30.4.1"
+"jest-circus@npm:30.4.2":
+  version: 30.4.2
+  resolution: "jest-circus@npm:30.4.2"
   dependencies:
     "@jest/environment": "npm:30.4.1"
     "@jest/expect": "npm:30.4.1"
@@ -11385,7 +11385,7 @@ __metadata:
     jest-each: "npm:30.4.1"
     jest-matcher-utils: "npm:30.4.1"
     jest-message-util: "npm:30.4.1"
-    jest-runtime: "npm:30.4.1"
+    jest-runtime: "npm:30.4.2"
     jest-snapshot: "npm:30.4.1"
     jest-util: "npm:30.4.1"
     p-limit: "npm:^3.1.0"
@@ -11393,21 +11393,21 @@ __metadata:
     pure-rand: "npm:^7.0.0"
     slash: "npm:^3.0.0"
     stack-utils: "npm:^2.0.6"
-  checksum: 10c0/6d0feb90985c4e79e1e7b238d16a6ec675e196328751cc0571e46bf91e6711e150c4af6b76e041240b6b0cea67895144b9010ac584e4c0a7d4e03a2287e98dc4
+  checksum: 10c0/5d99f1336eb249057063a007fabad4ced802501fbaad7ddeea8db9553fa54fbd44d26e71e8bf61a0979d42b3b93a3d920e6f00afa26cdbb70d1e7d0969515d10
   languageName: node
   linkType: hard
 
-"jest-cli@npm:30.4.1":
-  version: 30.4.1
-  resolution: "jest-cli@npm:30.4.1"
+"jest-cli@npm:30.4.2":
+  version: 30.4.2
+  resolution: "jest-cli@npm:30.4.2"
   dependencies:
-    "@jest/core": "npm:30.4.1"
+    "@jest/core": "npm:30.4.2"
     "@jest/test-result": "npm:30.4.1"
     "@jest/types": "npm:30.4.1"
     chalk: "npm:^4.1.2"
     exit-x: "npm:^0.2.2"
     import-local: "npm:^3.2.0"
-    jest-config: "npm:30.4.1"
+    jest-config: "npm:30.4.2"
     jest-util: "npm:30.4.1"
     jest-validate: "npm:30.4.1"
     yargs: "npm:^17.7.2"
@@ -11418,13 +11418,13 @@ __metadata:
       optional: true
   bin:
     jest: ./bin/jest.js
-  checksum: 10c0/3f5e08ce4c12af424c7050391a5c458da8e4791bc888621496d714686d452612ebbe02df4809806de538c419dd84f681b9aa7e065cb09e265cc3940af7e8f0df
+  checksum: 10c0/a036a1bf06ce7d5fed644a518c4a4ccf60c5fe5f3d96d143973048e6690c4a28a4f97fa3275d90ca236430a1b2a7c10544e7e190a4f2edfdf0a4e6daf1f6a384
   languageName: node
   linkType: hard
 
-"jest-config@npm:30.4.1":
-  version: 30.4.1
-  resolution: "jest-config@npm:30.4.1"
+"jest-config@npm:30.4.2":
+  version: 30.4.2
+  resolution: "jest-config@npm:30.4.2"
   dependencies:
     "@babel/core": "npm:^7.27.4"
     "@jest/get-type": "npm:30.1.0"
@@ -11437,12 +11437,12 @@ __metadata:
     deepmerge: "npm:^4.3.1"
     glob: "npm:^10.5.0"
     graceful-fs: "npm:^4.2.11"
-    jest-circus: "npm:30.4.1"
+    jest-circus: "npm:30.4.2"
     jest-docblock: "npm:30.4.0"
     jest-environment-node: "npm:30.4.1"
     jest-regex-util: "npm:30.4.0"
     jest-resolve: "npm:30.4.1"
-    jest-runner: "npm:30.4.1"
+    jest-runner: "npm:30.4.2"
     jest-util: "npm:30.4.1"
     jest-validate: "npm:30.4.1"
     parse-json: "npm:^5.2.0"
@@ -11460,7 +11460,7 @@ __metadata:
       optional: true
     ts-node:
       optional: true
-  checksum: 10c0/08673851d1673420e910b3d2b2c050ac94408236890bc066765730d081b8ecbf79ea0144da085110d33a6c4b4b39e9f46e5876dec18b54a5d1cfa09f3a6b350e
+  checksum: 10c0/18300b1dc54a4bfb5d1db6c10aeb01b6c64736224e3f60d119da9504d49cbab5a76d789f38c44af7d168418463356db6843ad7e44f249c63ce7f409758eba0c6
   languageName: node
   linkType: hard
 
@@ -11637,13 +11637,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-resolve-dependencies@npm:30.4.1":
-  version: 30.4.1
-  resolution: "jest-resolve-dependencies@npm:30.4.1"
+"jest-resolve-dependencies@npm:30.4.2":
+  version: 30.4.2
+  resolution: "jest-resolve-dependencies@npm:30.4.2"
   dependencies:
     jest-regex-util: "npm:30.4.0"
     jest-snapshot: "npm:30.4.1"
-  checksum: 10c0/32fef6d63087856fd3e9865a1542ca8f3ab4ceacf9d167cb90c801dafa92e041ab82c98bbc8a5879735cb089b5605d0795a201527bee0319d2e6f07197878299
+  checksum: 10c0/4101afabd2a4ef4e6c82bf82ea145286c1238373f7611938e8d47ddcf5aaa6e10af365436a934b7af194451e351774829cb021ac73f857b4873dcccc7aabb616
   languageName: node
   linkType: hard
 
@@ -11663,9 +11663,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-runner@npm:30.4.1":
-  version: 30.4.1
-  resolution: "jest-runner@npm:30.4.1"
+"jest-runner@npm:30.4.2":
+  version: 30.4.2
+  resolution: "jest-runner@npm:30.4.2"
   dependencies:
     "@jest/console": "npm:30.4.1"
     "@jest/environment": "npm:30.4.1"
@@ -11683,19 +11683,19 @@ __metadata:
     jest-leak-detector: "npm:30.4.1"
     jest-message-util: "npm:30.4.1"
     jest-resolve: "npm:30.4.1"
-    jest-runtime: "npm:30.4.1"
+    jest-runtime: "npm:30.4.2"
     jest-util: "npm:30.4.1"
     jest-watcher: "npm:30.4.1"
     jest-worker: "npm:30.4.1"
     p-limit: "npm:^3.1.0"
     source-map-support: "npm:0.5.13"
-  checksum: 10c0/ea078ddc7d897dc2892de2ee14147fb49a0e5fab0483af446593064eca78a54212297b89f59c00c60481d2b201c9873892e13d701390f8bf02ee3654ffaa5f8c
+  checksum: 10c0/339e630fb1a7db52e208ed9f12f722122733fe9a450d9bd83c0fccc10fbc5142a8808f624c41ab1e25833af02f9c3eca85561554b75a5b3ad75b4a226f72c5cf
   languageName: node
   linkType: hard
 
-"jest-runtime@npm:30.4.1":
-  version: 30.4.1
-  resolution: "jest-runtime@npm:30.4.1"
+"jest-runtime@npm:30.4.2":
+  version: 30.4.2
+  resolution: "jest-runtime@npm:30.4.2"
   dependencies:
     "@jest/environment": "npm:30.4.1"
     "@jest/fake-timers": "npm:30.4.1"
@@ -11719,7 +11719,7 @@ __metadata:
     jest-util: "npm:30.4.1"
     slash: "npm:^3.0.0"
     strip-bom: "npm:^4.0.0"
-  checksum: 10c0/528d85843a508226d509c841513b744af452a551f492c846da016ab8cc0edb0636718a225b0b4cf576af03814ed076c216313ed89d5c3c6b0c2814f9cd61a12c
+  checksum: 10c0/9fce55b0c78fbe47dc2c10a944e9513833fd43c14f292460ef5cdd91e375088bf35549336e66f69fc9d29bf4f410894e9a7eef0bf12a6f39d99174a5300c2c53
   languageName: node
   linkType: hard
 
@@ -11882,14 +11882,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:30.4.1":
-  version: 30.4.1
-  resolution: "jest@npm:30.4.1"
+"jest@npm:30.4.2":
+  version: 30.4.2
+  resolution: "jest@npm:30.4.2"
   dependencies:
-    "@jest/core": "npm:30.4.1"
+    "@jest/core": "npm:30.4.2"
     "@jest/types": "npm:30.4.1"
     import-local: "npm:^3.2.0"
-    jest-cli: "npm:30.4.1"
+    jest-cli: "npm:30.4.2"
   peerDependencies:
     node-notifier: ^8.0.1 || ^9.0.0 || ^10.0.0
   peerDependenciesMeta:
@@ -11897,7 +11897,7 @@ __metadata:
       optional: true
   bin:
     jest: ./bin/jest.js
-  checksum: 10c0/451344b9c963d90162a86f3ff01cf4caa44242f7b3e1c19bc55a37274f69d3973e23e9cf14ae295277e6f36b753e4dea807f942090c0ba3e3356f93704b62d78
+  checksum: 10c0/26a76eaabfc043abd8ee702b97f61ff968dde03412efdb4a69c22c99a5e4bf47788a3e45f75134aec1377a686a9d59d1e3bae85a816e409013475a80de1458ec
   languageName: node
   linkType: hard
 
@@ -12306,7 +12306,7 @@ __metadata:
     coveralls-next: "npm:6.0.1"
     css-loader: "npm:7.1.4"
     css-minimizer-webpack-plugin: "npm:8.0.0"
-    cssnano: "npm:8.0.0"
+    cssnano: "npm:8.0.1"
     dijit: "npm:1.17.3"
     dojo: "npm:1.17.3"
     dojo-util: "npm:1.17.3"
@@ -12329,7 +12329,7 @@ __metadata:
     html-webpack-plugin: "npm:5.6.7"
     http-status-codes: "npm:2.3.0"
     i18next-conv: "npm:16.0.0"
-    jest: "npm:30.4.1"
+    jest: "npm:30.4.2"
     jest-environment-jsdom: "npm:^30.0.0"
     jest-fixed-jsdom: "npm:^0.0.11"
     jest-serializer-vue: "npm:3.1.0"
@@ -14780,9 +14780,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-minify-selectors@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "postcss-minify-selectors@npm:8.0.0"
+"postcss-minify-selectors@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "postcss-minify-selectors@npm:8.0.1"
   dependencies:
     browserslist: "npm:^4.28.1"
     caniuse-api: "npm:^3.0.0"
@@ -14790,7 +14790,7 @@ __metadata:
     postcss-selector-parser: "npm:^7.1.1"
   peerDependencies:
     postcss: ^8.5.14
-  checksum: 10c0/100712daa011d4b4473e17db1040935f7130bdc506905544c5ac5e10857c253bbad364cecf3dc2a5d46c3e80be0ffed1657c10fad0573559da5fe11513367781
+  checksum: 10c0/41e1f2595962616f2a329bb56cce3d28555dc7a1437737dd9c72d563fd4e381b66000197507ff7f78dc0f6a0c53003efcae147508e553f86da7f39bd6148f2d5
   languageName: node
   linkType: hard
 
