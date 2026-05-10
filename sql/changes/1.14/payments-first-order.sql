@@ -75,6 +75,9 @@ update payments_migration pmo
         and pmo.chart_id = pmi.chart_id
    );
 
+
+alter table transactions disable trigger transactions_prevent_closed;
+
 insert into transactions (
   id, table_name, approved, transdate,
   workflow_id, reversing,
@@ -91,6 +94,8 @@ select pm.trans_id, 'payment', pm.approved, p.payment_date,
   from payments_migration pm
          join payment p
              on pm.id = p.id;
+
+alter table transactions enable trigger transactions_prevent_closed;
 
 
 -- fails if there are two or more cash accounts in a payment
