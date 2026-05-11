@@ -6900,10 +6900,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"content-disposition@npm:1.1.0":
-  version: 1.1.0
-  resolution: "content-disposition@npm:1.1.0"
-  checksum: 10c0/94e0aef65873e69330f5f187fbc44ebce593bdcb8013dd8a68b7d0f159ca089bd30db3f8095d829f81c341695b60a6085ee6e15e6d775c4a325b586cc8d91974
+"content-disposition@npm:2.0.0":
+  version: 2.0.0
+  resolution: "content-disposition@npm:2.0.0"
+  checksum: 10c0/4e6fa11e3296c5295bec5a72dbe03dcfcf245f88e196cd245be31b204cda06657be644a1c152d27dbdc8dc75c4f790d93042c9438b4095b1baf6ebca3d14406e
   languageName: node
   linkType: hard
 
@@ -12070,7 +12070,7 @@ __metadata:
     browserslist: "npm:4.28.2"
     clean-webpack-plugin: "npm:4.0.0"
     compression-webpack-plugin: "npm:12.0.0"
-    content-disposition: "npm:1.1.0"
+    content-disposition: "npm:2.0.0"
     copy-webpack-plugin: "npm:14.0.0"
     core-js: "npm:3.49.0"
     coveralls-next: "npm:6.0.1"
