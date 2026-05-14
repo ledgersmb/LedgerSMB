@@ -1,6 +1,5 @@
 /** @format */
 
-import { describe, expect, it } from "@jest/globals";
 import { mount } from "@vue/test-utils";
 import { Quasar } from "quasar";
 

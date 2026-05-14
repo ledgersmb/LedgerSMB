@@ -7,7 +7,7 @@ import eslintConfigESLint from "eslint-config-eslint";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 import eslintImportX from "eslint-plugin-import-x";
 import js from "@eslint/js";
-import jest from "eslint-plugin-jest";
+import vitest from "eslint-plugin-vitest";
 import packageJson from "eslint-plugin-package-json";
 import pluginVue from "eslint-plugin-vue";
 
@@ -188,22 +188,28 @@ export default [
             ]
         }
     },
-    // Test files
+    // Test files (spec files + Vitest setup/config files)
     {
         files: [
             "**/__tests__/**/*.[jt]s?(x)",
-            "**/?(*.)+(spec|test).[tj]s?(x)"
+            "**/?(*.)+(spec|test).[tj]s?(x)",
+            "tests/common/vitest*.js"
         ],
-        ...jest.configs["flat/recommended"],
+        ...vitest.configs.recommended,
+        languageOptions: {
+            globals: {
+                ...vitest.environments.env.globals
+            }
+        },
         rules: {
-            ...jest.configs["flat/recommended"].rules,
-            "jest/prefer-expect-assertions": "off",
-            "jest/no-commented-out-tests": "off",
-            "jest/no-disabled-tests": "warn",
-            "jest/no-focused-tests": "error",
-            "jest/no-identical-title": "error",
-            "jest/prefer-to-have-length": "warn",
-            "jest/valid-expect": "error",
+            ...vitest.configs.recommended.rules,
+            "vitest/prefer-expect-assertions": "off",
+            "vitest/no-commented-out-tests": "off",
+            "vitest/no-disabled-tests": "warn",
+            "vitest/no-focused-tests": "error",
+            "vitest/no-identical-title": "error",
+            "vitest/prefer-to-have-length": "warn",
+            "vitest/valid-expect": "error",
             "no-console": "off",
             camelcase: "off"
         }

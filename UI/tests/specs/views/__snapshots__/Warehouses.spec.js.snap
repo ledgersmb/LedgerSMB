@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Warehouses - register as a component should show dialog 1`] = `
+exports[`Warehouses - register as a component > should show dialog 1`] = `
 <div
   data-v-app=""
 >
@@ -132,7 +132,7 @@ exports[`Warehouses - register as a component should show dialog 1`] = `
 </div>
 `;
 
-exports[`Warehouses - register as a component should show dialog with editable data 1`] = `
+exports[`Warehouses - register as a component > should show dialog with editable data 1`] = `
 <div
   data-v-app=""
 >

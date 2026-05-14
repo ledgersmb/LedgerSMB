@@ -1,6 +1,11 @@
 /** @format */
 
-import { beforeAll, afterAll, beforeEach, afterEach } from "@jest/globals";
+/**
+ * Vitest setup file – runs before each test file in the "browser" project.
+ *
+ * Sets up MSW, global stubs and helpers that every browser test expects.
+ */
+
 import "core-js";
 import { server } from "./mocks/server.js";
 import { setGlobalOrigin } from "undici";
@@ -17,7 +22,7 @@ Object.defineProperty(window, "lsmbConfig", {
 
 // Enable i18n
 import { config } from "@vue/test-utils";
-import { i18n } from "../common/i18n";
+import { i18n } from "./i18n";
 
 config.global.plugins = [i18n];
 
@@ -28,7 +33,7 @@ beforeAll(() => {
             console.error(
                 "Found an unhandled %s request to %s",
                 req.method,
-                req.url.href
+                req.url
             );
         }
     });
@@ -40,7 +45,7 @@ afterAll(() => {
 });
 
 beforeEach(() => {
-    // Set the global origin (used by fetch) to the url provided in vitest.config.ts
+    // Set the global origin (used by fetch) to the url provided in the config
     setGlobalOrigin(window.location.href);
 });
 
@@ -51,7 +56,6 @@ afterEach(() => {
 });
 
 // Helper function to wait for DOM updates
-// eslint no-unused-expressions: ["error", { "allowTernary": true }]
 export const retry = (assertion, { interval = 20, timeout = 1000 } = {}) => {
     return new Promise((resolve, reject) => {
         const startTime = Date.now();
