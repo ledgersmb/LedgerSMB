@@ -3,7 +3,8 @@
 /**
  * Vitest configuration for LedgerSMB UI tests.
  *
- * The test suite is split into two named projects (see vitest.workspace.js):
+ * The test suite is split into two named projects (see
+ * vitest.workspace.config.js and vitest.api.config.js):
  *
  *   browser – component / store / view tests running in jsdom
  *             run alone:  yarn test:unit
@@ -18,8 +19,8 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
     test: {
-        // The workspace file defines all individual projects.
-        workspace: "vitest.workspace.js",
+        // Project config files define all individual projects.
+        projects: ["vitest.workspace.config.js", "vitest.api.config.js"],
         coverage: {
             enabled: true,
             provider: "v8",
