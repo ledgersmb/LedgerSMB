@@ -1,29 +1,17 @@
 /** @format */
 
 /**
- * Vitest configuration for LedgerSMB UI tests.
- *
- * Two test projects mirror the previous Jest "browser" and "API" projects:
- *
- *   browser – component / store / view tests running in jsdom
- *             run alone:  yarn test:unit
- *
- *   API     – OpenAPI integration tests running in Node (need a real server)
- *             run alone:  yarn vitest run --project API
- *
- * Run all tests:  yarn test
+ * Browser project for Vitest.
  */
 
-import { defineWorkspace } from "vitest/config";
+import { defineProject } from "vitest/config";
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
-export default defineWorkspace([
-    // ── browser project ────────────────────────────────────────────────────
-    {
+export default defineProject({
         plugins: [vue()],
 
         resolve: {
@@ -87,21 +75,4 @@ export default defineWorkspace([
                 "tests/common/vitest-setup.js"
             ]
         }
-    },
-
-    // ── API project ─────────────────────────────────────────────────────────
-    // These are integration tests that require a running LedgerSMB server
-    // (LSMB_BASE_URL env var).  They are not run in the regular unit-test CI
-    // step; they run in the test-webservices job via `make jstest`.
-    {
-        test: {
-            name: "API",
-            environment: "node",
-            hookTimeout: 30000,
-
-            include: ["tests/specs/openapi/**/*.spec.js"],
-
-            globals: true
-        }
-    }
-]);
+    });
