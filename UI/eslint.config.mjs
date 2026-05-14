@@ -7,7 +7,7 @@ import eslintConfigESLint from "eslint-config-eslint";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 import eslintImportX from "eslint-plugin-import-x";
 import js from "@eslint/js";
-import vitest from "eslint-plugin-vitest";
+import vitest from "@vitest/eslint-plugin";
 import packageJson from "eslint-plugin-package-json";
 import pluginVue from "eslint-plugin-vue";
 
