@@ -74,20 +74,20 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome              | 2025-04  | 136-145                                     |
-| Edge                | 2025-05  | 136-145                                     |
-| Firefox             | 2025-05  | 139-148                                     |
-| Opera               | 2025-01  | 116-125                                     |
-| Safari              | 2024-09  | 18.0-18.6, 26.0-26.3                        |
+| Chrome              | 2025-06  | 138-147                                     |
+| Edge                | 2025-06  | 138-147                                     |
+| Firefox             | 2025-07  | 141-150                                     |
+| Opera               | 2025-05  | 119-127, 131                                |
+| Safari              | 2024-10  | 18.1-18.7, 26.0-26.4                        |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome for Android  | 2026-02  | 145                                         |
-| Firefox for Android | 2026-01  | 147                                         |
-| Android Browser     | 2026-02  | 145                                         |
-| Safari on iOS       | 2024-09  | 18.0-18.7, 26.0-26.3                        |
+| Chrome for Android  | 2026-04  | 147                                         |
+| Firefox for Android | 2026-04  | 150                                         |
+| Android Browser     | 2026-04  | 147                                         |
+| Safari on iOS       | 2024-10  | 18.1-18.7, 26.0-26.4                        |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
 | Opera Mobile        | 2024-03  | 80                                          |
 | Samsung Internet    | 2023-02  | 20-29                                       |
@@ -156,6 +156,7 @@ Live chat: [#ledgersmb:matrix.org](https://app.element.io/#/room/#ledgersmb:matr
 
 Groups:
 
+* [Reddit r/LedgerSMB](https://www.reddit.com/r/LedgerSMB/)
 * [LinkedIN LedgerSMB group](https://www.linkedin.com/groups/4238725/)
 * [Facebook LedgerSMB page](https://www.facebook.com/LedgerSMB)
 * [Mastodon](https://mastodon.social/@LedgerSMB)

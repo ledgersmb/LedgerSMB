@@ -30,7 +30,9 @@ sub _verify {
 sub run {
     my ($self, %options) = @_;
 
-    $self->find('.//input[@id="to-date"]')->send_keys($options{date});
+    my $date_widget = $self->find('.//input[@id="to-date"]');
+    $date_widget->clear;
+    $date_widget->send_keys($options{date});
     my $btn = $self->find('*button', text => 'Continue');
     $btn->click;
     $self->session->page->body->maindiv->wait_for_content(replaces => $btn);

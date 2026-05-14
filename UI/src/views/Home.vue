@@ -46,6 +46,11 @@ export default {};
                     one of the <a href="http://lists.ledgersmb.org/" target="_blank"
                                   rel="noopener noreferrer">{{ $t(`mailing lists`) }}</a></p>
 
+                <p>Alternatively, join the <a href="https://www.reddit.com/r/LedgerSMB/"
+                                              rel="noopener noreferrer">LedgerSMB
+                    sub-reddit</a>
+                </p>
+
                 <p>There's also the near-realtime chat experience in the
                     <a href="https://app.element.io/%23/room/%23ledgersmb:matrix.org"
                        target="_blank" rel="noopener noreferrer">matrix

@@ -7,11 +7,12 @@
 
 The ledgerSMB project monitors the following social media platforms. Feel free to reach out with any questions.
 
+* [Matrix (routine user and development activity)](https://app.element.io/#/room/#ledgersmb:matrix.org)
 * [Mastodon](https://mastodon.social/@LedgerSMB)
 * [Facebook](https://www.facebook.com/LedgerSMB)
 * [X (Twitter)](https://x.com/LedgerSMB)
 * [LinkedIn](https://www.linkedin.com/groups/13199807/)
-* [Matrix (routine user and development activity)](https://app.element.io/#/room/#ledgersmb:matrix.org)
+* [reddit](https://www.reddit.com/r/LedgerSMB/)
 
 ### Contributing
 
