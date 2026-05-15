@@ -22,7 +22,7 @@ if (!globalThis.WritableStream) {
  * relevant modules directly.
  */
 if (!globalThis.define) {
-    globalThis.define = function amdStub(deps, factory) {
+    globalThis.define = function amdStub(name, deps, factory) {
         if (typeof deps === "function") {
             // define(factory) – factory-only form
             return deps();
