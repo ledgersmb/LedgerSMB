@@ -67,9 +67,7 @@ describe("Pricegroup Store", () => {
 
     it("get Invalid Price Group 3", async () => {
         await pricegroups.initialize();
-        await expect(async () => {
-            await pricegroups.get("3");
-        }).rejects.toThrow("HTTP Error: 404");
+        await expect(pricegroups.get("3")).rejects.toThrow("HTTP Error: 404");
     });
 
     it("add Price Group 3", async () => {

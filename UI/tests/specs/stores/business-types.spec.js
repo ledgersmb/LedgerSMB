@@ -79,9 +79,7 @@ describe("Business Types Store", () => {
 
     it("get Invalid Business Type #3", async () => {
         await businessTypes.initialize();
-        await expect(async () => {
-            await businessTypes.get("3");
-        }).rejects.toThrow("HTTP Error: 404");
+        await expect(businessTypes.get("3")).rejects.toThrow("HTTP Error: 404");
     });
 
     it("add Business Type #3", async () => {

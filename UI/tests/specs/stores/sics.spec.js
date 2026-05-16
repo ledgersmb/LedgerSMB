@@ -70,9 +70,7 @@ describe("Sic Store", () => {
 
     it("get Invalid sic 541510", async () => {
         await sics.initialize();
-        await expect(async () => {
-            await sics.get("541510");
-        }).rejects.toThrow("HTTP Error: 404");
+        await expect(sics.get("541510")).rejects.toThrow("HTTP Error: 404");
     });
 
     it("add Design of computer systems sic 541510", async () => {

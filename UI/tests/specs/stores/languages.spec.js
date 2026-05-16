@@ -80,9 +80,7 @@ describe("Language Store", () => {
 
     it("get Invalid language zz", async () => {
         await languages.initialize();
-        await expect(async () => {
-            await languages.get("zz");
-        }).rejects.toThrow("HTTP Error: 404");
+        await expect(languages.get("zz")).rejects.toThrow("HTTP Error: 404");
     });
 
     it("add Mayan language my", async () => {

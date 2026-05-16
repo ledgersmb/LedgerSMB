@@ -77,9 +77,7 @@ describe("Country Store", () => {
 
     it("get Invalid country zz", async () => {
         await countries.initialize();
-        await expect(async () => {
-            await countries.get("zz");
-        }).rejects.toThrow("HTTP Error: 404");
+        await expect(countries.get("zz")).rejects.toThrow("HTTP Error: 404");
     });
 
     it("add Atlantida country zz", async () => {
