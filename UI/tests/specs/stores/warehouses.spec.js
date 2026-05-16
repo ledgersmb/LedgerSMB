@@ -80,9 +80,7 @@ describe("Warehouses Store", () => {
 
     it("get Invalid warehouse #4", async () => {
         await warehouses.initialize();
-        await expect(async () => {
-            await warehouses.get("4");
-        }).rejects.toThrow("HTTP Error: 404");
+        await expect(warehouses.get("4")).rejects.toThrow("HTTP Error: 404");
     });
 
     it("add Mars warehouse", async () => {

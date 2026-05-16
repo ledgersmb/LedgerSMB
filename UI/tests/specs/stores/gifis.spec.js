@@ -63,9 +63,7 @@ describe("GIFI Store", () => {
 
     it("get Invalid GIFI 0002", async () => {
         await gifies.initialize();
-        await expect(async () => {
-            await gifies.get("0002");
-        }).rejects.toThrow("HTTP Error: 404");
+        await expect(gifies.get("0002")).rejects.toThrow("HTTP Error: 404");
     });
 
     it("add Dummy account 0002", async () => {
