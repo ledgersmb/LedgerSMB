@@ -8360,24 +8360,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-package-json@npm:0.91.2":
-  version: 0.91.2
-  resolution: "eslint-plugin-package-json@npm:0.91.2"
+"eslint-plugin-package-json@npm:1.0.0":
+  version: 1.0.0
+  resolution: "eslint-plugin-package-json@npm:1.0.0"
   dependencies:
     "@altano/repository-tools": "npm:^2.0.1"
     change-case: "npm:^5.4.4"
     detect-indent: "npm:^7.0.2"
     detect-newline: "npm:^4.0.1"
     eslint-fix-utils: "npm:~0.4.1"
-    package-json-validator: "npm:^1.4.1"
+    jsonc-eslint-parser: "npm:^3.1.0"
+    package-json-validator: "npm:^1.5.0"
     semver: "npm:^7.7.3"
     sort-object-keys: "npm:^2.0.0"
     sort-package-json: "npm:^3.4.0"
-    validate-npm-package-name: "npm:^7.0.0"
   peerDependencies:
-    eslint: ">=8.0.0"
-    jsonc-eslint-parser: ">=2.0.0"
-  checksum: 10c0/60ff9c6ee9cc5833ac5fb98a608938242b703782fccbae91b9eeec0e00ac68d32c89e3db0796510b9087a788c7e07373df1c3213fb635267d595b4004be67249
+    eslint: ">=9.0.0"
+  checksum: 10c0/87c193c6c956368ea7195e7eb27f62c1a808fab2c7f7a30c50faf07602b98d52c29c9556b8761637089d3a564dcad3679bb8dc8021df7cbacc5c716138f2b032
   languageName: node
   linkType: hard
 
@@ -11009,7 +11008,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonc-eslint-parser@npm:3.1.0":
+"jsonc-eslint-parser@npm:3.1.0, jsonc-eslint-parser@npm:^3.1.0":
   version: 3.1.0
   resolution: "jsonc-eslint-parser@npm:3.1.0"
   dependencies:
@@ -11177,7 +11176,7 @@ __metadata:
     eslint-plugin-import-x: "npm:4.16.2"
     eslint-plugin-json: "npm:4.0.1"
     eslint-plugin-n: "npm:18.0.1"
-    eslint-plugin-package-json: "npm:0.91.2"
+    eslint-plugin-package-json: "npm:1.0.0"
     eslint-plugin-prettier: "npm:5.5.5"
     eslint-plugin-vue: "npm:10.9.1"
     eslint-webpack-plugin: "npm:6.0.0"
@@ -13017,7 +13016,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"package-json-validator@npm:^1.4.1":
+"package-json-validator@npm:^1.5.0":
   version: 1.5.1
   resolution: "package-json-validator@npm:1.5.1"
   dependencies:
