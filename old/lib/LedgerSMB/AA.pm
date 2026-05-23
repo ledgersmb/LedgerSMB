@@ -284,10 +284,10 @@ sub post_transaction {
         $uid .= "$$";
 
         $query = q|
-            INSERT INTO transactions (table_name, trans_type_code, approved, transdate)
-            VALUES ('ar', 'ar', false, ?)
+            INSERT INTO transactions (trans_type_code, approved, transdate)
+            VALUES (?, false, ?)
             |;
-        $dbh->do($query, {}, $form->{transdate}) or $form->dberror($query);
+        $dbh->do($query, {}, $table, $form->{transdate}) or $form->dberror($query);
 
         ($accno) = split /--/, $form->{$ARAP};
         $query = qq{

@@ -118,8 +118,8 @@ BEGIN;
     INSERT INTO entity_credit_account (id, meta_number, entity_id, entity_class, ar_ap_account_id, curr)
     values (-100, 'test1', -100, 1, -1000, 'XTS');
 
-    INSERT INTO transactions (id, reference, approved, table_name, trans_type_code)
-    VALUES (-100, 'TEST', false, 'ap', 'ap');
+    INSERT INTO transactions (id, reference, approved, trans_type_code)
+    VALUES (-100, 'TEST', false, 'ap');
 
     INSERT INTO open_item (item_number,  item_type, account_id)
     VALUES('TEST', 'ap', (select id from account where accno = '00002'));

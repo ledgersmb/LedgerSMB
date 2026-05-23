@@ -870,8 +870,8 @@ sub _post_invoices {
     }
     my $sth = $env->{'lsmb.db'}->prepare(
         q|
-        INSERT INTO transactions (approved, transdate, table_name, trans_type_code, notes)
-        VALUES (false, ?, 'ar', 'ar', ?)
+        INSERT INTO transactions (approved, transdate, trans_type_code, notes)
+        VALUES (false, ?, 'ar', ?)
         RETURNING id
         |)
         or die $env->{'lsmb.db'}->errstr;

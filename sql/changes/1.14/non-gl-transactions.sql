@@ -1,27 +1,32 @@
 
 -- since we have so many tables now which refer transactions - none of
--- which is *originating* transactions anymore, drop the triggers.
--- Note: this trigger calls trigger_track_global_sequence()
+-- which is *originating* transactions anymore, drop the trigger.
+-- Note: this trigger calls the (dropped) 'track_global_sequence()' trigger
 drop trigger if exists gl_track_deleted_transaction on gl;
 
-insert into trans_type (code, description)
-values ('ap', 'The transaction is a regular Accounts Payable item'),
-       ('ar', 'The transaction is a regular Accounts Receivable item');
+alter table trans_type
+  add column details_table text;
+
+update trans_type set details_table = 'gl' where code in ('gl', 'up');
+update trans_type set details_table = 'mfg_lot' where code in ('as');
+update trans_type set details_table = 'yearend' where code in ('ye');
+update trans_type set details_table = 'inventory_report' where code in ('ia');
+update trans_type set details_table = 'asset_report' where code in ('fa', 'fd');
+
+comment on column trans_type.details_table is
+  $$Contains the name of the table which contains (subledger) details of the transaction.$$;
+
+insert into trans_type (code, details_table, description)
+values ('ap', 'ap', 'The transaction is a regular Accounts Payable item'),
+       ('ar', 'ar', 'The transaction is a regular Accounts Receivable item');
 
 alter table transactions
+  drop column table_name cascade,
   add column description text,
   add column trans_type_code char(2) references trans_type(code),
   add column entered_by int references entity(id),
-  add column notes text,
-  drop constraint transactions_table_name_check,
-  add constraint transactions_table_name_check check(
-    table_name = ANY (ARRAY['gl'::text, 'ap'::text, 'ar'::text,
-                            'mfg_lot'::text, 'asset_report'::text,
-                            'inventory_report'::text, 'yearend'::text,
-                            'payment'::text
-                            ]
-    )
-  );
+  add column notes text;
+
 
 update transactions txn
    set trans_type_code = 'ar'
@@ -113,12 +118,6 @@ update mfg_lot
                     from transactions
                    where reference = 'mfg-' || mfg_lot.id::text);
 
-update transactions
-   set table_name = 'mfg_lot'
- where id in (select id
-                from transactions
-               where reference like 'mfg-%');
-
 delete from gl
  where exists (select *
                  from mfg_lot ml where gl.id = ml.trans_id);
@@ -133,11 +132,6 @@ update asset_report
 alter table asset_report
   drop column gl_id;
 
-update transactions
-   set table_name = 'asset_report'
-  from asset_report
- where asset_report.trans_id = transactions.id;
-
 delete from gl
  where exists (select *
                  from asset_report ar where gl.id = ar.trans_id);
@@ -146,11 +140,6 @@ alter table inventory_report
   drop constraint inventory_report_trans_id_fkey,
   -- the on delete cascade prevents deletion of approved lots (= transactions)
   add constraint inventory_report_trans_id_fkey foreign key (trans_id) references transactions(id) on delete cascade;
-
-update transactions
-   set table_name = 'inventory_report'
-  from inventory_report
- where inventory_report.trans_id = transactions.id;
 
 delete from gl
  where exists (select *
@@ -167,11 +156,6 @@ drop view if exists overpayments cascade;
 alter table payment
   drop column gl_id;
 
-update transactions
-   set table_name = 'payment'
-  from payment
- where payment.trans_id = transactions.id;
-
 delete from gl
  where exists (select *
                  from payment p where gl.id = p.trans_id);
@@ -180,11 +164,6 @@ alter table yearend
   drop constraint yearend_trans_id_fkey,
   -- the on delete cascade prevents deletion of approved lots (= transactions)
   add constraint yearend_trans_id_fkey foreign key (trans_id) references transactions(id) on delete cascade;
-
-update transactions
-   set table_name = 'yearend'
-  from yearend
- where yearend.trans_id = transactions.id;
 
 delete from gl
  where exists (select *

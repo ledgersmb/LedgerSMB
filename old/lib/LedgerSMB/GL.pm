@@ -106,8 +106,8 @@ sub post_transaction {
     if ( !$form->{id} ) {
 
         $query = q|
-              INSERT INTO transactions (transdate, table_name, trans_type_code, approved, reference, notes)
-              VALUES (?, 'gl', 'gl', true, ?, ?)
+              INSERT INTO transactions (transdate, trans_type_code, approved, reference, notes)
+              VALUES (?, 'gl', true, ?, ?)
               |;
         $dbh->do($query, {}, $form->{transdate}, $form->{reference}, $form->{notes}) or $form->dberror($query);
 

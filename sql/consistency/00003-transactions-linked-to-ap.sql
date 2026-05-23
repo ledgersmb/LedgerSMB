@@ -13,4 +13,4 @@ select *
   from transactions
          join ap
              on transactions.id = ap.trans_id
- where transactions.table_name is distinct from 'ap'
+ where transactions.trans_type_code is distinct from 'ap'

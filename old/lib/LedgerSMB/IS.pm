@@ -785,8 +785,8 @@ sub post_invoice {
         $uid .= "$$";
 
         $query = q|
-            INSERT INTO transactions (table_name, trans_type_code, approved, transdate)
-            VALUES ('ar', 'ar', false, ?)
+            INSERT INTO transactions (trans_type_code, approved, transdate)
+            VALUES ('ar', false, ?)
             |;
         $dbh->do($query, {}, $form->{transdate}) or $form->dberror($query);
 

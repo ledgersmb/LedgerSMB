@@ -90,8 +90,8 @@ BEGIN;
                  (select id from account where accno = '00001'), 'XTS',
                  0.1, 30, -2000); -- 10%, 30 days
 
-    INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
-    VALUES (now(), 'ap', 'ap', false);
+    INSERT INTO transactions (transdate, trans_type_code, approved)
+    VALUES (now(), 'ap', false);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('test_hide', 'ap', (select id from account where accno = '-2000000000'));
     INSERT INTO ap (trans_id, open_item_id, invnumber, entity_credit_account,
@@ -112,8 +112,8 @@ BEGIN;
 
     -- Test contact invoice selection (payment__get_all_contact_invoices())
 
-    INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
-    VALUES (now(), 'ap', 'ap', true);
+    INSERT INTO transactions (transdate, trans_type_code, approved)
+    VALUES (now(), 'ap', true);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('test_show2', 'ap', (select id from account where accno = '00001'));
     INSERT INTO ap (trans_id, open_item_id, invnumber, entity_credit_account,
@@ -133,8 +133,8 @@ BEGIN;
                            (select id from account where accno = '00002'),
                           null);
 
-    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-    VALUES (-300, now(), 'ap', 'ap', true);
+    INSERT INTO transactions (id, transdate, trans_type_code, approved)
+    VALUES (-300, now(), 'ap', true);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('test_show3', 'ap', (select id from account where accno = '00001'));
     INSERT INTO ap (trans_id, open_item_id, invnumber, entity_credit_account,
@@ -155,8 +155,8 @@ BEGIN;
 
     update transactions set locked_by = -200 where id = -300;
 
-    INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
-    VALUES (now(), 'ap', 'ap', false);
+    INSERT INTO transactions (transdate, trans_type_code, approved)
+    VALUES (now(), 'ap', false);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('test_show', 'ap', (select id from account where accno = '00001'));
     INSERT INTO ap (trans_id, open_item_id, invnumber, entity_credit_account,
@@ -330,8 +330,8 @@ BEGIN;
     -- Explicitly tests posting to a non-default (for the ECA) AP account
     -- as a test for GitHub issue #2558
 
-    INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
-    VALUES (now(), 'ap', 'ap', true);
+    INSERT INTO transactions (transdate, trans_type_code, approved)
+    VALUES (now(), 'ap', true);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('test_reverse', 'ap', (select id from account where accno = '00001AP2'));
     INSERT INTO ap (trans_id, open_item_id, invnumber, entity_credit_account,
@@ -407,8 +407,8 @@ BEGIN;
     SELECT batch_create('test3', 'test3', 'payment', now()::date) as batch_id
     \gset
 
-    INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
-    VALUES (now(), 'ap', 'ap', true);
+    INSERT INTO transactions (transdate, trans_type_code, approved)
+    VALUES (now(), 'ap', true);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('test_bulk', 'ap', (select id from account where accno = '00001'));
     INSERT INTO ap (trans_id, open_item_id, invnumber, entity_credit_account,

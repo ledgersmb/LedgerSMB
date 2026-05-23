@@ -133,8 +133,8 @@ sub post_invoice {
         my $uid = localtime;
         $uid .= "$$";
 
-        $query = q{INSERT INTO transactions (table_name, trans_type_code, approved, transdate)
-                   VALUES ('ap', 'ap', false, ?)};
+        $query = q{INSERT INTO transactions (trans_type_code, approved, transdate)
+                   VALUES ('ap', false, ?)};
         $dbh->do($query, {}, $form->{transdate}) or $form->dberror($query);
 
         ($accno) = split /--/, $form->{AP};

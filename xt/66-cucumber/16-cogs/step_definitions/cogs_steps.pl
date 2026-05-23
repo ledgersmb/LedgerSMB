@@ -16,8 +16,8 @@ Given qr/^(-?\d+) units sold/, sub {
     }
     $dbh->do(
         q{
-        INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
-        VALUES ('2020-01-02', 'ar', 'ar', true)
+        INSERT INTO transactions (transdate, trans_type_code, approved)
+        VALUES ('2020-01-02', 'ar', true)
         })
         or die $dbh->errstr;
     $dbh->do(
@@ -70,8 +70,8 @@ When qr/^(-?\d+) units are purchased at (\d+) ([A-Z]{3,3}) each$/, sub {
 
     $dbh->do(
         q{
-        INSERT INTO transactions (transdate, table_name, trans_type_code, approved, reference)
-        VALUES ('2020-01-01', 'gl', 'gl', true, 'PUR')
+        INSERT INTO transactions (transdate, trans_type_code, approved, reference)
+        VALUES ('2020-01-01', 'gl', true, 'PUR')
         })
         or die $dbh->errstr;
     $dbh->do(
@@ -128,8 +128,8 @@ When qr/^(-?\d+) units are sold$/, sub {
     $sales_count++;
     $dbh->do(
         q{
-        INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
-        VALUES ('2020-01-02', 'ar', 'ar', true)
+        INSERT INTO transactions (transdate, trans_type_code, approved)
+        VALUES ('2020-01-02', 'ar', true)
         })
         or die $dbh->errstr;
     $dbh->do(
@@ -184,8 +184,8 @@ When qr/^(\d+) units are credited$/, sub {
     $sales_count++;
     $dbh->do(
         q{
-        INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
-        VALUES ('2020-01-02', 'ar', 'ar', true)
+        INSERT INTO transactions (transdate, trans_type_code, approved)
+        VALUES ('2020-01-02', 'ar', true)
         })
         or die $dbh->errstr;
     $dbh->do(

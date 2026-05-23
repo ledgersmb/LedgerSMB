@@ -42,8 +42,8 @@ BEGIN;
     SELECT account__save
            (NULL, '00002', 'test only', 'A', NULL, (select id from account_heading limit 1), null, FALSE, FALSE,'{}', false, false,
            false);
-    INSERT INTO transactions (reference, transdate, table_name, trans_type_code, approved)
-    VALUES ('_TEST AP', now(), 'ap', 'ap', false);
+    INSERT INTO transactions (reference, transdate, trans_type_code, approved)
+    VALUES ('_TEST AP', now(), 'ap', false);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('_TEST AP', 'ap', (select id from account where accno = '00001'));
     INSERT INTO ap (trans_id, open_item_id, invnumber, entity_credit_account, amount_bc, netamount_bc,
@@ -60,8 +60,8 @@ BEGIN;
     VALUES (currval('acc_trans_entry_id_seq')::int, false);
 
 
-    INSERT INTO transactions (reference, transdate, table_name, trans_type_code, approved)
-    VALUES ('_TEST AR', now(), 'ar', 'ar', false);
+    INSERT INTO transactions (reference, transdate, trans_type_code, approved)
+    VALUES ('_TEST AR', now(), 'ar', false);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('_TEST AR', 'ar', (select id from account where accno = '00002'));
     INSERT INTO ar (trans_id, open_item_id, invnumber, entity_credit_account, amount_bc, netamount_bc,
@@ -73,8 +73,8 @@ BEGIN;
     INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)
     SELECT id, currval('transactions_id_seq'), '100', 'XTS', 100, TRUE FROM account WHERE accno = '00002';
 
-    INSERT INTO transactions (reference, description, transdate, table_name, trans_type_code, approved)
-    VALUES ('_TEST GL', 'Testing GL Drafts', now(), 'gl', 'gl', false);
+    INSERT INTO transactions (reference, description, transdate, trans_type_code, approved)
+    VALUES ('_TEST GL', 'Testing GL Drafts', now(), 'gl', false);
     INSERT INTO gl (id) values (currval('transactions_id_seq'));
 
     INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)

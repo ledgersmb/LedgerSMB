@@ -42,8 +42,8 @@ sub _uncleared_journal_line {
     my $secondary_account = $conf->coa_nodes->get(by => (accno => '1060'));
     my $reference         = 'ref-' . $trx_cnt++;
 
-    $dbh->do(q{INSERT INTO transactions (reference, transdate, table_name, trans_type_code, approved)
-               VALUES (?, ?, 'gl', 'gl', true)},
+    $dbh->do(q{INSERT INTO transactions (reference, transdate, trans_type_code, approved)
+               VALUES (?, ?, 'gl', true)},
              {},
              $reference,
              $posting_date)

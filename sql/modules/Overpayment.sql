@@ -179,9 +179,9 @@ SELECT *
 
   INSERT INTO transactions (transdate, reference,
               description, approved,
-              trans_type_code, table_name)
+              trans_type_code)
   SELECT transdate, reference || '-reversal',
-         'reversal of ' || description, false, 'op', 'payment'
+         'reversal of ' || description, false, 'op'
     FROM transactions WHERE id = t_curr_data.trans_id;
 
   t_id := currval('transactions_id_seq');

@@ -89,8 +89,8 @@ BEGIN;
     --1) AP transaction: Reportable amount 1000, non-reportable amount $10, paid
     -- in full in current year. id -1024
 
-    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-    VALUES (-1024, date1(), 'ap', 'ap', true);
+    INSERT INTO transactions (id, transdate, trans_type_code, approved)
+    VALUES (-1024, date1(), 'ap', true);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('_TEST AP', 'ap', -1000);
     INSERT INTO ap (trans_id, open_item_id, amount_bc, netamount_bc, curr,
@@ -136,8 +136,8 @@ BEGIN;
     -- 2) AP transaction: Reportable amount $1000, non-reportable amount $10,
     -- partially paid ($500) in current year -1025
 
-    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-    VALUES (-1025, date1(), 'ap', 'ap', true);
+    INSERT INTO transactions (id, transdate, trans_type_code, approved)
+    VALUES (-1025, date1(), 'ap', true);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('_TEST AP2', 'ap', -1000);
     INSERT INTO ap (trans_id, open_item_id, amount_bc, netamount_bc, amount_tc, netamount_tc,
@@ -184,8 +184,8 @@ BEGIN;
     -- 3)_AP Transaction: Reportable amount $1000, non-reportable amount $10,
     -- paid $500 currnet year, $500 in future year -1026
 
-    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-    VALUES (-1026, date1(), 'ap', 'ap', true);
+    INSERT INTO transactions (id, transdate, trans_type_code, approved)
+    VALUES (-1026, date1(), 'ap', true);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('_TEST AP3', 'ap', -1000);
     INSERT INTO ap (trans_id, open_item_id, amount_bc, netamount_bc, curr,
@@ -250,8 +250,8 @@ BEGIN;
     -- $500 currnet year, $500 in future year -1027, to second vendor
     -- Vendor Invoices.
 
-    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-    VALUES (-1027, date1(), 'ap', 'ap', true);
+    INSERT INTO transactions (id, transdate, trans_type_code, approved)
+    VALUES (-1027, date1(), 'ap', true);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('_TEST AP4', 'ap', -1000);
     INSERT INTO ap (trans_id, open_item_id, amount_bc, netamount_bc, curr,

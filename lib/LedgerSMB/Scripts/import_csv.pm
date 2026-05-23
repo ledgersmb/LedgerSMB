@@ -295,8 +295,8 @@ sub _process_gl_multi {
     my $sth_tx = $dbh->prepare(q{
         INSERT INTO transactions (
                workflow_id, transdate, reference, description,
-               table_name, trans_type_code, approved)
-        VALUES (?, ?, ?, ?, 'gl', 'gl', true)
+               trans_type_code, approved)
+        VALUES (?, ?, ?, ?, 'gl', true)
         })
         or die $dbh->errstr;
     my $sth_gl = $dbh->prepare(q{

@@ -191,8 +191,8 @@ Given qr/(an )?unpaid AP transactions? with these values:$/, sub {
     my $dbh = S->{ext_lsmb}->admin_dbh;
 
     my $txn_query = $dbh->prepare(<<~'SQL');
-      INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
-      VALUES (?, 'ap', 'ap', true)
+      INSERT INTO transactions (transdate, trans_type_code, approved)
+      VALUES (?, 'ap', true)
       SQL
 
     my $oi_query = $dbh->prepare(<<~'SQL');
@@ -378,8 +378,8 @@ Given qr/^(\d+) units inventory of ((?:a|the) part|part "(.*)") purchased at (\d
     my $dbh = S->{ext_lsmb}->admin_dbh;
     $dbh->do(
         q{
-        INSERT INTO transactions (transdate, table_name, trans_type_code, approved, reference)
-        VALUES ('2020-01-01', 'gl', 'gl', true, 'INV-INIT')
+        INSERT INTO transactions (transdate, trans_type_code, approved, reference)
+        VALUES ('2020-01-01', 'gl', true, 'INV-INIT')
         })
         or die $dbh->errstr;
     $dbh->do(
