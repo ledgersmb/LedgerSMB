@@ -471,7 +471,6 @@ timecard__report
 timecard__save
 timecard_type__get
 timecard_type__list
-track_global_sequence
 trial_balance__generate
 trial_balance__heading_accounts
 trial_balance__list_headings

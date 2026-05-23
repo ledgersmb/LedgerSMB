@@ -1,5 +1,8 @@
 
-alter table gl disable trigger gl_track_deleted_transaction;
+-- since we have so many tables now which refer transactions - none of
+-- which is *originating* transactions anymore, drop the triggers.
+-- Note: this trigger calls trigger_track_global_sequence()
+drop trigger if exists gl_track_deleted_transaction on gl;
 
 insert into trans_type (code, description)
 values ('ap', 'The transaction is a regular Accounts Payable item'),
@@ -191,12 +194,9 @@ delete from gl
 -- based on 'gl', 'ar' and 'ap', but those lost their roles
 drop view if exists file_tx_links cascade;
 
-alter table gl enable trigger gl_track_deleted_transaction;
-
-create or replace trigger gl_track_global_sequence before INSERT OR UPDATE on gl
-  for each row execute procedure track_global_sequence('gl');
-create or replace trigger ap_track_global_sequence before INSERT OR UPDATE on ap
-  for each row execute procedure track_global_sequence('ap');
-create or replace trigger ar_track_global_sequence before INSERT OR UPDATE on ar
-  for each row execute procedure track_global_sequence('ar');
+-- since we have so many tables now which refer transactions - none of
+-- which is *originating* transactions anymore, drop the triggers.
+drop trigger if exists gl_track_global_sequence on gl;
+drop trigger if exists ap_track_global_sequence on ap;
+drop trigger if exists ar_track_global_sequence on ar;
 
