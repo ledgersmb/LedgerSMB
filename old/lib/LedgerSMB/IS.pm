@@ -1201,8 +1201,13 @@ sub post_invoice {
     $form->{terms}       *= 1;
     $form->{taxincluded} *= 1;
 
-    $query = q|UPDATE transactions SET approved = ?, transdate = ? WHERE id = ?|;
-    $dbh->do($query, {}, $approved, $transdate, $form->{id})
+    $query = q|
+        UPDATE transactions
+           SET approved = ?,
+               transdate = ?,
+               notes = ?
+         WHERE id = ?|;
+    $dbh->do($query, {}, $approved, $transdate, $form->{intnotes}, $form->{id})
         or $form->dberror( $query );
 
     # save AR record
@@ -1222,7 +1227,6 @@ sub post_invoice {
                shipvia = ?,
                terms = ?,
                notes = ?,
-               intnotes = ?,
                taxincluded = ?,
                curr = ?,
                person_id = ?,
@@ -1247,7 +1251,7 @@ sub post_invoice {
         $form->{duedate},
         $form->{shippingpoint}, $form->{shipvia},
         $form->{terms},         $form->{notes},
-        $form->{intnotes},      $form->{taxincluded},
+        $form->{taxincluded},
         $form->{currency},
         $form->{employee_id},
         $form->{language_code}, $form->{ponumber},
@@ -1298,7 +1302,7 @@ sub retrieve_invoice {
                       txn.transdate,
                       case when a.amount_tc = 0 then 1 else a.amount_bc/a.amount_tc end as exchangerate,
                       a.shippingpoint, a.shipvia, a.terms, a.notes,
-                      a.intnotes,
+                      txn.notes as intnotes,
                       a.duedate, a.taxincluded, a.curr AS currency,
                       a.person_id as employee_id, e.name AS employee,
                       a.reverse, a.entity_credit_account as customer_id,

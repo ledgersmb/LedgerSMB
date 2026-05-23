@@ -106,14 +106,14 @@ sub post_transaction {
     if ( !$form->{id} ) {
 
         $query = q|
-              INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
-              VALUES (?, 'gl', 'gl', true)
+              INSERT INTO transactions (transdate, table_name, trans_type_code, approved, reference, notes)
+              VALUES (?, 'gl', 'gl', true, ?, ?)
               |;
-        $dbh->do($query, {}, $form->{transdate}) or $form->dberror($query);
+        $dbh->do($query, {}, $form->{transdate}, $form->{reference}, $form->{notes}) or $form->dberror($query);
 
         $query = qq|
-      INSERT INTO gl (id, reference, notes)
-           VALUES (currval('transactions_id_seq'), ?, ?)
+      INSERT INTO gl (id)
+           VALUES (currval('transactions_id_seq'))
       RETURNING id|;
 
         $sth = $dbh->prepare($query) || $form->dberror($query);
@@ -126,12 +126,13 @@ sub post_transaction {
                 SET workflow_id = ?,
                     reversing = ?,
                     description = ?,
-                    reference = ?
+                    reference = ?,
+                    notes = ?
               WHERE id = ?
                     AND workflow_id IS NULL|;
         $sth   = $dbh->prepare($query);
         $form->{reversing} ||= undef; # convert empty string to NULL
-        $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{description}, $form->{reference}, $form->{id} )
+        $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{description}, $form->{reference}, $form->{notes}, $form->{id} )
             || $form->dberror($query);
     }
 

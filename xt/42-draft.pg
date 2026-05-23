@@ -75,7 +75,7 @@ BEGIN;
 
     INSERT INTO transactions (reference, description, transdate, table_name, trans_type_code, approved)
     VALUES ('_TEST GL', 'Testing GL Drafts', now(), 'gl', 'gl', false);
-    INSERT INTO gl (id, reference) values (currval('transactions_id_seq'), '_TEST GL');
+    INSERT INTO gl (id) values (currval('transactions_id_seq'));
 
     INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)
     SELECT id, currval('transactions_id_seq'), '-100', 'XTS', -100, TRUE FROM account WHERE accno = '00001';

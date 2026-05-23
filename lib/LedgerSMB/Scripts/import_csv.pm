@@ -300,8 +300,8 @@ sub _process_gl_multi {
         })
         or die $dbh->errstr;
     my $sth_gl = $dbh->prepare(q{
-        INSERT INTO gl (id, reference)
-               VALUES (currval('transactions_id_seq'), ?)
+        INSERT INTO gl (id)
+               VALUES (currval('transactions_id_seq'))
         RETURNING id })
         or die $dbh->errstr;
     for my $entry (@$entries) {

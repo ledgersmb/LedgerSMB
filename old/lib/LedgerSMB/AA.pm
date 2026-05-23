@@ -312,7 +312,8 @@ sub post_transaction {
            UPDATE transactions
               SET workflow_id = ?,
                   reversing = ?,
-                  transdate = ?
+                  transdate = ?,
+                  notes = ?
             WHERE id = ?
                   AND workflow_id IS NULL
            SQL
@@ -335,7 +336,6 @@ sub post_transaction {
              netamount_tc = ?,
              duedate = ?,
              notes = ?,
-             intnotes = ?,
              ponumber = ?,
              crdate = ?,
              reverse = ?,
@@ -358,7 +358,6 @@ sub post_transaction {
              netamount_tc = ?,
              duedate = ?,
              notes = ?,
-             intnotes = ?,
              ponumber = ?,
              crdate = ?,
              reverse = ?,
@@ -382,7 +381,7 @@ sub post_transaction {
         $form->{currency},
         $fxinvamount,              $fxinvnetamount,
         $form->{duedate},
-        $form->{notes},            $form->{intnotes},
+        $form->{notes},
         $form->{ponumber},         $form->{crdate},
         $form->{reverse},          $form->{employee_id},
         $form->{"$form->{vc}_id"},
@@ -395,9 +394,15 @@ sub post_transaction {
     $sth = $dbh->prepare($query) or $form->dberror($query);
     $sth->execute(@queryargs) or $form->dberror($query);
 
-    $dbh->do(q{UPDATE transactions SET description = ?, approved = ? WHERE id = ?},
+    my $query = q{
+          UPDATE transactions
+             SET description = ?,
+                 approved = ?,
+                 notes = ?
+           WHERE id = ?};
+    $dbh->do($query,
              {},
-             $form->{description}, $approved, $form->{id})
+             $form->{description}, $approved, $form->{intnotes}, $form->{id})
         or die $dbh->errstr;
 
     if (defined $form->{approved}) {
@@ -956,8 +961,8 @@ sub save_intnotes {
     } else {
         $form->error('Bad arap in save_intnotes');
     }
-    my $sth = $form->{dbh}->prepare("UPDATE $table SET intnotes = ? " .
-                                      "where trans_id = ?");
+    my $query = "UPDATE transactions SET notes = ? WHERE id = (select trans_id from $table where id = ?)";
+    my $sth = $form->{dbh}->prepare($query);
     $sth->execute($form->{intnotes}, $form->{id});
 }
 

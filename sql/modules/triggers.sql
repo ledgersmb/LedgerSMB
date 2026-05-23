@@ -71,8 +71,10 @@ IF TG_TABLE_NAME IN ('ar', 'ap') THEN
     t_reference := t_row.invnumber;
     t_id := t_row.trans_id;
 ELSE
-    t_reference := t_row.reference;
-    t_id := t_row.id;
+  select reference into t_reference
+    from transactions
+   where id = t_row.id;
+  t_id := t_row.id;
 END IF;
 
 INSERT INTO audittrail (trans_id,tablename,reference, action, person_id)

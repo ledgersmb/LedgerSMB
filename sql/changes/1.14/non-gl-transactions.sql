@@ -9,6 +9,7 @@ alter table transactions
   add column description text,
   add column trans_type_code char(2) references trans_type(code),
   add column entered_by int references entity(id),
+  add column notes text,
   drop constraint transactions_table_name_check,
   add constraint transactions_table_name_check check(
     table_name = ANY (ARRAY['gl'::text, 'ap'::text, 'ar'::text,
@@ -38,14 +39,20 @@ alter table transactions
 
 update transactions txn
    set description = old.description,
-       approved = old.approved
-   from (
-     select id, description, approved from ar
-      union
-     select id, description, approved from ap
-      union
-     select id, description, approved from gl
+       approved = old.approved,
+       notes = old.intnotes
+  from (
+     select id, description, approved, intnotes from ar
+      union all
+     select id, description, approved, intnotes from ap
    ) old
+ where txn.id = old.id;
+
+update transactions txn
+   set description = old.description,
+       approved = old.approved,
+       notes = old.notes
+   from gl old
    where txn.id = old.id;
 
 drop view if exists recon_payee cascade;
@@ -54,6 +61,7 @@ alter table ar
   alter column id drop default,
   drop column approved,
   drop column description,
+  drop column intnotes,
   drop constraint ar_id_fkey,
   -- the on delete cascade prevents deletion of approved lots (= transactions)
   add constraint ar_id_fkey foreign key (id) references transactions (id) on delete cascade;
@@ -62,6 +70,7 @@ alter table ap
   alter column id drop default,
   drop column approved,
   drop column description,
+  drop column intnotes,
   drop constraint ap_id_fkey,
   -- the on delete cascade prevents deletion of approved lots (= transactions)
   add constraint ap_id_fkey foreign key (id) references transactions (id) on delete cascade;
@@ -70,7 +79,9 @@ alter table gl
   alter column id drop default,
   drop column approved,
   drop column description,
+  drop column notes,
   drop column trans_type_code,
+  drop column reference,
   drop constraint gl_id_fkey,
   -- the on delete cascade prevents deletion of approved lots (= transactions)
   add constraint gl_id_fkey foreign key (id) references transactions (id) on delete cascade;
@@ -96,13 +107,13 @@ alter table mfg_lot
 
 update mfg_lot
   set trans_id = (select id
-                    from gl
+                    from transactions
                    where reference = 'mfg-' || mfg_lot.id::text);
 
 update transactions
    set table_name = 'mfg_lot'
  where id in (select id
-                from gl
+                from transactions
                where reference like 'mfg-%');
 
 delete from gl

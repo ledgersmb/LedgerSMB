@@ -378,14 +378,14 @@ Given qr/^(\d+) units inventory of ((?:a|the) part|part "(.*)") purchased at (\d
     my $dbh = S->{ext_lsmb}->admin_dbh;
     $dbh->do(
         q{
-        INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
-        VALUES ('2020-01-01', 'gl', 'gl', true)
+        INSERT INTO transactions (transdate, table_name, trans_type_code, approved, reference)
+        VALUES ('2020-01-01', 'gl', 'gl', true, 'INV-INIT')
         })
         or die $dbh->errstr;
     $dbh->do(
         q{
-        INSERT INTO gl (id, reference)
-               VALUES (currval('transactions_id_seq'), 'INV-INIT');
+        INSERT INTO gl (id)
+               VALUES (currval('transactions_id_seq'));
         })
         or die $dbh->errstr;
 

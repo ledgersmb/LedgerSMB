@@ -86,7 +86,7 @@ sub _get_invoices_by_id {
               invnumber, ordnumber, quonumber, ponumber, txn.transdate, duedate, crdate,
               txn.approved, on_hold, reverse, is_return, force_closed,
               entity_credit_account, person_id,
-              language_code, description, notes, intnotes, shippingpoint, shipvia,
+              language_code, description, ar.notes, txn.notes as intnotes, shippingpoint, shipvia,
               amount_bc, netamount_bc, curr, amount_tc, netamount_tc
           FROM ar JOIN transactions txn ON ar.trans_id = txn.id
         WHERE invoice AND txn.id = ?
@@ -96,7 +96,7 @@ sub _get_invoices_by_id {
               invnumber, ordnumber, quonumber, ponumber, txn.transdate, duedate, crdate,
               txn.approved, on_hold, reverse, is_return, force_closed,
               entity_credit_account, person_id,
-              language_code, description, notes, intnotes, shippingpoint, shipvia,
+              language_code, description, ap.notes, txn.notes as intnotes, shippingpoint, shipvia,
               amount_bc, netamount_bc, curr, amount_tc, netamount_tc
           FROM ap JOIN transactions txn ON ap.trans_id = txn.id
         WHERE invoice and txn.id = ?
@@ -870,12 +870,12 @@ sub _post_invoices {
     }
     my $sth = $env->{'lsmb.db'}->prepare(
         q|
-        INSERT INTO transactions (approved, transdate, table_name, trans_type_code)
-        VALUES (false, ?, 'ar', 'ar')
+        INSERT INTO transactions (approved, transdate, table_name, trans_type_code, notes)
+        VALUES (false, ?, 'ar', 'ar', ?)
         RETURNING id
         |)
         or die $env->{'lsmb.db'}->errstr;
-    $sth->execute($inv->{transdate})
+    $sth->execute($inv->{transdate}, $inv->{intnotes})
         or die $sth->errstr;
     my ($inv_id) = $sth->fetchrow_array;
 
@@ -896,14 +896,14 @@ sub _post_invoices {
             invnumber, ordnumber, quonumber, ponumber,
             amount_bc, netamount_bc, curr, amount_tc, netamount_tc, taxincluded,
             crdate, duedate,
-            notes, intnotes,
+            notes,
             shippingpoint, shipvia,
             person_id, language_code,
             entity_credit_account
             )
         VALUES ( ?, currval('open_item_id_seq'), 't'::boolean,
                  ?, ?, ?, ?, ?, ?, ?, ?,
-                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         RETURNING open_item_id
         |)
         or die $env->{'lsmb.db'}->errstr;
@@ -913,7 +913,7 @@ sub _post_invoices {
           qw/ invnumber ordnumber quonumber ponumber
               amount netamount curr amount_tc netamount_tc taxincluded
               crdate duedate
-              notes intnotes
+              notes
               shippingpoint shipvia
               person_id language_code
           / },

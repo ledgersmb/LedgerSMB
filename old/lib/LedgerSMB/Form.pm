@@ -1983,7 +1983,7 @@ sub create_links {
                 a.entity_credit_account AS ${vc}_id,
                 a.duedate, a.ordnumber,
                 a.taxincluded, a.curr AS currency, a.notes,
-                a.intnotes, ce.name AS $vc,
+                txn.notes as intnotes, ce.name AS $vc,
                 a.amount_tc AS oldinvtotal,
                 case when a.amount_tc = 0 then 0
                 else a.amount_bc / a.amount_tc end as exchangerate,
@@ -2772,7 +2772,7 @@ sub save_intnotes {
 
     my $dbh = $self->{dbh};
 
-    my $query = qq|UPDATE $vc SET intnotes = ? WHERE id = ?|;
+    my $query = qq|UPDATE transactions SET notes = ? WHERE id = (select trans_id from $vc where id = ?)|;
 
     my $sth = $dbh->prepare($query);
     $sth->execute(

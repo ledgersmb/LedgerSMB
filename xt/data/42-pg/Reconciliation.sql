@@ -260,11 +260,11 @@ CREATE OR REPLACE FUNCTION pg_temp.create_gl_transaction(
     in_approved  bool,
     in_reference text
 ) RETURNS void AS $$
-  INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-  VALUES (in_trans_id, in_transdate, 'gl', 'gl', in_approved);
+  INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved, reference)
+  VALUES (in_trans_id, in_transdate, 'gl', 'gl', in_approved, in_reference);
 
-  INSERT INTO gl (id, reference)
-  VALUES (in_trans_id, in_reference);
+  INSERT INTO gl (id)
+  VALUES (in_trans_id);
 $$ LANGUAGE sql;
 
 -- Approved GL transactions (two per date, so Scenario 1 can test aggregation)
