@@ -42,20 +42,19 @@ sub _uncleared_journal_line {
     my $secondary_account = $conf->coa_nodes->get(by => (accno => '1060'));
     my $reference         = 'ref-' . $trx_cnt++;
 
-    $dbh->do(q{INSERT INTO transactions (reference, transdate, table_name, trans_type_code, approved)
-               VALUES (?, ?, 'gl', 'gl', true)},
+    $dbh->do(q{INSERT INTO transactions (reference, transdate, trans_type_code, approved)
+               VALUES (?, ?, 'gl', true)},
              {},
              $reference,
              $posting_date)
         or die $dbh->errstr;
     my $trx = $dbh->selectrow_hashref(
         <<~'STMT',
-        INSERT INTO gl (id, reference)
-            VALUES(currval('transactions_id_seq'), ?)
+        INSERT INTO gl (id)
+            VALUES(currval('transactions_id_seq'))
         RETURNING *
         STMT
         {},
-        $reference,
         )
         or die $dbh->errstr;
     $dbh->do(q|UPDATE transactions SET description = 'uncleared journal line' WHERE id = ?|,

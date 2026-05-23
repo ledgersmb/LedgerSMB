@@ -384,8 +384,8 @@ sub assert_closed_posting_date {
     sleep 1; # wait for any handling to finish
     my $sth = $self->admin_dbh->prepare(
         qq|
-   INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
-        VALUES (?, 'gl', 'gl', true)
+   INSERT INTO transactions (transdate, trans_type_code, approved)
+        VALUES (?, 'gl', true)
      RETURNING id
 |);
 
@@ -427,8 +427,8 @@ SELECT id
     }
 
     $self->admin_dbh->do(
-        q|INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
-          VALUES (?, 'gl', 'gl', true)|,
+        q|INSERT INTO transactions (transdate, trans_type_code, approved)
+          VALUES (?, 'gl', true)|,
         {},
         $posting_date)
         or die $self->admin_dbh->errstr;

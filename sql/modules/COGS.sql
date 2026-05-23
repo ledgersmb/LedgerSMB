@@ -79,7 +79,7 @@ FOR t_inv IN
          AND txn.approved
          -- exclude 'ap', because we don't want AP reversals
          -- @@@BUG? what about inventory report items?
-         AND txn.table_name <> 'ap'
+         AND txn.trans_type_code <> 'ap'
          AND parts_id = in_parts_id
 ORDER BY txn.transdate ASC, txn.id ASC, i.id ASC
 LOOP
@@ -107,7 +107,7 @@ FOR t_inv IN
            AND txn.approved
            -- exclude 'ar', because we don't want AR reversals
            -- @@@BUG? what about inventory report items?
-           AND txn.table_name <> 'ar'
+           AND txn.trans_type_code <> 'ar'
            AND parts_id = in_parts_id
            -- the sellprice check is here because of github issue #4791:
            -- when a negative number of assemblies has been "stocked",
@@ -160,7 +160,7 @@ FOR t_inv IN
            AND txn.approved
            -- exclude 'ar', because we don't want AR reversals
            -- @@@BUG? what about inventory report items?
-           AND txn.table_name <> 'ar'
+           AND txn.trans_type_code <> 'ar'
   ORDER BY txn.transdate asc, txn.id asc, i.id asc
 LOOP
    t_avail := (t_inv.qty + t_inv.allocated) * -1;
@@ -218,7 +218,7 @@ FOR t_inv IN
         AND txn.approved
          -- exclude 'ar', because we don't want AR reversals
          -- @@@BUG? what about inventory report items?
-        AND txn.table_name <> 'ar'
+        AND txn.trans_type_code <> 'ar'
   ORDER BY txn.transdate, txn.id, i.id
 LOOP
    t_realloc := least(in_qty - t_alloc, -1 * (t_inv.allocated + t_inv.qty));
@@ -245,7 +245,7 @@ FOR t_inv IN
            AND txn.approved
            -- exclude 'ap', because we don't want AP reversals
            -- @@@BUG? what about inventory report items?
-           AND txn.table_name <> 'ap'
+           AND txn.trans_type_code <> 'ap'
            AND parts_id = in_parts_id
   ORDER BY txn.transdate, txn.id, i.id
 LOOP
@@ -303,7 +303,7 @@ FOR t_inv IN
      WHERE qty + allocated > 0
            -- exclude 'ap', because we don't want AP reversals
            -- @@@BUG? what about inventory report items?
-           AND txn.table_name <> 'ap'
+           AND txn.trans_type_code <> 'ap'
            AND parts_id  = in_parts_id
   ORDER BY txn.transdate, txn.id, i.id
 LOOP

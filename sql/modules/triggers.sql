@@ -5,52 +5,6 @@ set client_min_messages = 'warning';
 
 BEGIN;
 
-CREATE OR REPLACE FUNCTION track_global_sequence() RETURNS trigger AS
-$BODY$
-  DECLARE
-  t_new_reference text;
-  t_old_reference text;
-  t_id int;
-BEGIN
-  if tg_relname in ('ar','ap') then
-    t_new_reference := new.invnumber;
-    t_old_reference := old.invnumber;
-    t_id := new.trans_id;
-  else
-    t_new_reference := new.reference;
-    t_old_reference := old.reference;
-    t_id := new.id;
-  end if;
-  IF tg_op = 'INSERT' THEN
-    PERFORM * FROM transactions WHERE id = new.id;
-    IF FOUND THEN
-      RETURN new;
-    END IF;
-
-    INSERT INTO transactions (id, table_name, reference, trans_type_code)
-    VALUES (t_id, TG_RELNAME, t_new_reference, TG_ARGV[0] );
-  ELSEIF tg_op = 'UPDATE' THEN
-    IF new.id <> old.id
-      OR t_new_reference <> t_old_reference THEN
-        UPDATE transactions
-           SET id = new.id,
-               reference = t_new_reference
-         WHERE id = old.id;
-    END IF;
-  ELSE
-    DELETE FROM transactions WHERE id = t_id;
-  END IF;
-  RETURN new;
-END;
-$BODY$
-  LANGUAGE plpgsql;
-
-COMMENT ON FUNCTION track_global_sequence() IS
-' This trigger is used to track the id sequence entries across the
-transactions table, and with the ar, ap, and gl tables.  This is necessary
-because these have not been properly refactored yet.
-';
-
 
 CREATE OR REPLACE FUNCTION gl_audit_trail_append()
 RETURNS TRIGGER AS
@@ -71,8 +25,10 @@ IF TG_TABLE_NAME IN ('ar', 'ap') THEN
     t_reference := t_row.invnumber;
     t_id := t_row.trans_id;
 ELSE
-    t_reference := t_row.reference;
-    t_id := t_row.id;
+  select reference into t_reference
+    from transactions
+   where id = t_row.id;
+  t_id := t_row.id;
 END IF;
 
 INSERT INTO audittrail (trans_id,tablename,reference, action, person_id)

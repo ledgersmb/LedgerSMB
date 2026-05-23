@@ -2063,25 +2063,6 @@ CREATE TABLE jcitems (
 COMMENT ON TABLE jcitems IS $$ Time and materials cards.
 Materials cards not implemented.$$;
 
-CREATE OR REPLACE FUNCTION track_global_sequence() RETURNS TRIGGER AS
-$$
-BEGIN
-  -- dummy; actual function defined in modules/triggers.sql
-  -- exists here in order to be able to create the triggers below
-  RETURN new;
-END;
-$$ LANGUAGE PLPGSQL;
-
-
-CREATE TRIGGER ap_track_global_sequence BEFORE INSERT OR UPDATE ON ap
-FOR EACH ROW EXECUTE PROCEDURE track_global_sequence('ap');
-
-CREATE TRIGGER ar_track_global_sequence BEFORE INSERT OR UPDATE ON ar
-FOR EACH ROW EXECUTE PROCEDURE track_global_sequence('ar');
-
-CREATE TRIGGER gl_track_global_sequence BEFORE INSERT OR UPDATE ON gl
-FOR EACH ROW EXECUTE PROCEDURE track_global_sequence('gl');
-
 
 INSERT INTO taxmodule (
   taxmodule_id, taxmodulename

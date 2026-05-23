@@ -97,8 +97,8 @@ DECLARE
    cp_date date;
 BEGIN
         INSERT INTO transactions (transdate, reference, description, approved,
-                                  trans_type_code, table_name)
-        VALUES (in_end_date, in_reference, in_description, true, 'ye', 'yearend');
+                                  trans_type_code)
+        VALUES (in_end_date, in_reference, in_description, true, 'ye');
 
         INSERT INTO yearend (trans_id, transdate)
              VALUES (currval('transactions_id_seq'), in_end_date);
@@ -202,11 +202,9 @@ BEGIN
     BEGIN
       INSERT INTO transactions (
         transdate, reference,
-        description, approved, reversing,
-        trans_type_code, table_name)
+        description, approved, reversing, trans_type_code)
       SELECT in_end_date, 'Reversing ' || reference,
-             'Reversing ' || description, true, id,
-             'ye', 'yearend'
+             'Reversing ' || description, true, id, 'ye'
         FROM transactions
        WHERE id = (select trans_id from yearend
                     where transdate = in_end_date

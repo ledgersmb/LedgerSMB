@@ -12,4 +12,4 @@ select *
   from transactions
          join ar
              on transactions.id = ar.trans_id
- where transactions.table_name is distinct from 'ar'
+ where transactions.trans_type_code is distinct from 'ar'

@@ -25,16 +25,18 @@ BEGIN
                               - (select qty from mfg_lot_item
                                   WHERE parts_id = parts.id AND
                                         mfg_lot_id = $1)
-     WHERE id in (select parts_id from mfg_lot_item
-                   WHERE mfg_lot_id = $1);
+     WHERE id IN (select parts_id from mfg_lot_item
+                   where mfg_lot_id = $1);
 
     UPDATE parts SET onhand = onhand + t_mfg_lot.qty
-     where id = t_mfg_lot.parts_id;
+     WHERE id = t_mfg_lot.parts_id;
 
-    INSERT INTO transactions (reference, description, transdate, approved,
-                   trans_type_code, table_name)
-    values ('mfg-' || $1::TEXT, 'Manufacturing lot',
-            now(), true, 'as', 'mfg_lot');
+    INSERT INTO transactions (
+      reference, description,
+      transdate, approved, trans_type_code
+    )
+    VALUES ('mfg-' || $1::TEXT, 'Manufacturing lot',
+            now(), true, 'as');
 
     UPDATE mfg_lot
        SET trans_id = currval('transactions_id_seq')
@@ -365,11 +367,9 @@ END IF;
 
   INSERT INTO transactions (
     description,
-    transdate, reference, approved,
-    trans_type_code, table_name)
+    transdate, reference, approved, trans_type_code)
   VALUES ('Transaction due to approval of inventory adjustment',
-          inv.report_date, 'invadj-' || in_id, true,
-          'ia', 'inventory_report')
+          inv.report_date, 'invadj-' || in_id, true, 'ia')
     RETURNING id INTO t_trans_id;
 
 UPDATE inventory_report

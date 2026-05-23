@@ -12,4 +12,4 @@ select *
   from transactions
          join gl
              on transactions.id = gl.id
- where transactions.table_name is distinct from 'gl'
+ where transactions.trans_type_code is distinct from 'gl'

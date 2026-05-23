@@ -39,8 +39,6 @@ comment on column ar.trans_id is
   balance under Accounts Receivable (unless the transaction voids an invoice or
   is a credit invoice or note).$$;
 
-drop trigger ar_track_global_sequence on ar; -- the 'id' sequence is no longer shared between ar/ap/gl
-
 alter table ar
   add column open_item_id int references open_item(id);
 
@@ -54,8 +52,6 @@ comment on column ar.trans_id is
   This is the transaction responsible for creating or adding to the creditors
   balance under Accounts Payable (unless the transaction voids an invoice or
   is a debit invoice or note).$$;
-
-drop trigger ap_track_global_sequence on ap; -- the 'id' sequence is no longer shared between ar/ap/gl
 
 alter table ap
   add column open_item_id int references open_item(id);

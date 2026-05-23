@@ -29,9 +29,9 @@ BEGIN
                (select name
                   from eca__get_entity(coalesce(ar.entity_credit_account,
                                                 ap.entity_credit_account))) as eca_name,
-               description, table_name as type,
-               CASE WHEN txn.table_name = 'ar' THEN ar.amount_bc
-                    WHEN txn.table_name = 'ap' THEN ap.amount_bc
+               description, trans_type_code::text as type,
+               CASE WHEN txn.trans_type_code = 'ar' THEN ar.amount_bc
+                    WHEN txn.trans_type_code = 'ap' THEN ap.amount_bc
                     ELSE (
                       SELECT SUM(line.amount_bc)
                         FROM acc_trans line
@@ -48,7 +48,7 @@ BEGIN
                              from voucher v
                             where v.trans_id = txn.id)
            AND NOT txn.approved
-           AND (lower($1) = txn.table_name or $1 is null)
+           AND (lower($1) = txn.trans_type_code or $1 is null)
            AND ($3 IS NULL or txn.transdate >= $3)
            AND ($4 IS NULL or txn.transdate <= $4)
            AND ($2 IS NULL or txn.reference = $2)
@@ -68,39 +68,44 @@ IS $$ Searches for drafts.  in_type may be any of 'ar', 'ap', or 'gl'.$$;
 CREATE OR REPLACE FUNCTION draft_approve(in_id int) returns bool as
 $$
 declare
-        t_table text;
+  t_trans_type text;
 begin
-        SELECT table_name into t_table FROM transactions where id = in_id;
+  SELECT trans_type_code into t_trans_type
+    FROM transactions
+   WHERE id = in_id;
 
-        IF (t_table = 'ar') THEN
-          PERFORM cogs__add_for_ar_line(id)
-             FROM invoice
-            WHERE trans_id = in_id;
-          UPDATE ar
-             set invnumber = setting_increment('sinumber')
-           WHERE trans_id = in_id AND invnumber is null;
-        ELSIF (t_table = 'ap') THEN
-                PERFORM cogs__add_for_ap_line(id) FROM invoice
-                  WHERE trans_id = in_id;
-        END IF;
+  IF (t_trans_type = 'ar') THEN
+    PERFORM cogs__add_for_ar_line(id)
+       FROM invoice
+      WHERE trans_id = in_id;
 
-        UPDATE transactions
-           SET approved = true,
-               approved_by =
-                        (select entity_id FROM users
-                        WHERE username = SESSION_USER),
-                approved_at = now()
-        WHERE id = in_id;
+    UPDATE ar
+       set invnumber = setting_increment('sinumber')
+     WHERE trans_id = in_id
+       AND invnumber is null;
+  ELSIF (t_trans_type = 'ap') THEN
+    PERFORM cogs__add_for_ap_line(id) FROM invoice
+      WHERE trans_id = in_id;
+  END IF;
 
-        IF NOT FOUND THEN
-                RETURN FALSE;
-        END IF;
+  UPDATE transactions
+     SET approved = true,
+         approved_by = (
+           select entity_id FROM users
+            WHERE username = SESSION_USER
+         ),
+         approved_at = now()
+   WHERE id = in_id;
 
-        UPDATE acc_trans
-        SET approved = 't'::boolean
-        WHERE trans_id = in_id;
+  IF NOT FOUND THEN
+    RETURN FALSE;
+  END IF;
 
-        RETURN TRUE;
+  UPDATE acc_trans
+     SET approved = 't'::boolean
+   WHERE trans_id = in_id;
+
+  RETURN TRUE;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
@@ -143,28 +148,43 @@ $$ Deletes the lines from the draft to prepare it for a re-save action.$$;
 CREATE OR REPLACE FUNCTION draft_delete(in_id int) returns bool as
 $$
 declare
-        t_table text;
+  t_trans_type text;
 begin
-        DELETE FROM ac_tax_form atf
-         WHERE EXISTS (SELECT 1 FROM acc_trans
-                        WHERE entry_id = atf.entry_id
-                              AND trans_id = in_id);
+  DELETE FROM ac_tax_form atf
+   WHERE EXISTS (
+     SELECT 1
+       FROM acc_trans
+      WHERE entry_id = atf.entry_id
+        AND trans_id = in_id
+   );
 
-        DELETE FROM acc_trans WHERE trans_id = in_id;
-        DELETE FROM invoice_tax_form itf
-           WHERE EXISTS (select 1 from invoice i
-                          where i.trans_id = in_id and itf.invoice_id = i.id);
-        DELETE FROM invoice WHERE trans_id = in_id;
-        SELECT lower(table_name) into t_table
-          FROM transactions where id = in_id;
+  DELETE FROM acc_trans
+   WHERE trans_id = in_id;
+  DELETE FROM invoice_tax_form itf
+   WHERE EXISTS (
+     select 1
+       from invoice i
+      where i.trans_id = in_id
+        and itf.invoice_id = i.id
+   );
+  DELETE FROM invoice
+   WHERE trans_id = in_id;
 
-        -- this cleans out any referring resources as well, through their
-        -- cascading deletion references
-        DELETE FROM transactions WHERE id = in_id AND approved IS FALSE;
-        IF NOT FOUND THEN
-                RAISE EXCEPTION 'Invalid transaction id %', in_id;
-        END IF;
-        RETURN TRUE;
+  SELECT lower(trans_type_code) into t_trans_type
+    FROM transactions
+   WHERE id = in_id;
+
+  -- this cleans out any referring resources as well, through their
+  -- cascading deletion references
+  DELETE FROM transactions
+   WHERE id = in_id
+     AND approved IS FALSE;
+
+  IF NOT FOUND THEN
+    RAISE EXCEPTION 'Invalid transaction id %', in_id;
+  END IF;
+
+  RETURN TRUE;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 

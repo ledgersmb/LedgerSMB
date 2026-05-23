@@ -1,23 +1,32 @@
 
-alter table gl disable trigger gl_track_deleted_transaction;
+-- since we have so many tables now which refer transactions - none of
+-- which is *originating* transactions anymore, drop the trigger.
+-- Note: this trigger calls the (dropped) 'track_global_sequence()' trigger
+drop trigger if exists gl_track_deleted_transaction on gl;
 
-insert into trans_type (code, description)
-values ('ap', 'The transaction is a regular Accounts Payable item'),
-       ('ar', 'The transaction is a regular Accounts Receivable item');
+alter table trans_type
+  add column details_table text;
+
+update trans_type set details_table = 'gl' where code in ('gl', 'up');
+update trans_type set details_table = 'mfg_lot' where code in ('as');
+update trans_type set details_table = 'yearend' where code in ('ye');
+update trans_type set details_table = 'inventory_report' where code in ('ia');
+update trans_type set details_table = 'asset_report' where code in ('fa', 'fd');
+
+comment on column trans_type.details_table is
+  $$Contains the name of the table which contains (subledger) details of the transaction.$$;
+
+insert into trans_type (code, details_table, description)
+values ('ap', 'ap', 'The transaction is a regular Accounts Payable item'),
+       ('ar', 'ar', 'The transaction is a regular Accounts Receivable item');
 
 alter table transactions
+  drop column table_name cascade,
   add column description text,
   add column trans_type_code char(2) references trans_type(code),
   add column entered_by int references entity(id),
-  drop constraint transactions_table_name_check,
-  add constraint transactions_table_name_check check(
-    table_name = ANY (ARRAY['gl'::text, 'ap'::text, 'ar'::text,
-                            'mfg_lot'::text, 'asset_report'::text,
-                            'inventory_report'::text, 'yearend'::text,
-                            'payment'::text
-                            ]
-    )
-  );
+  add column notes text;
+
 
 update transactions txn
    set trans_type_code = 'ar'
@@ -38,14 +47,20 @@ alter table transactions
 
 update transactions txn
    set description = old.description,
-       approved = old.approved
-   from (
-     select id, description, approved from ar
-      union
-     select id, description, approved from ap
-      union
-     select id, description, approved from gl
+       approved = old.approved,
+       notes = old.intnotes
+  from (
+     select id, description, approved, intnotes from ar
+      union all
+     select id, description, approved, intnotes from ap
    ) old
+ where txn.id = old.id;
+
+update transactions txn
+   set description = old.description,
+       approved = old.approved,
+       notes = old.notes
+   from gl old
    where txn.id = old.id;
 
 drop view if exists recon_payee cascade;
@@ -54,6 +69,7 @@ alter table ar
   alter column id drop default,
   drop column approved,
   drop column description,
+  drop column intnotes,
   drop constraint ar_id_fkey,
   -- the on delete cascade prevents deletion of approved lots (= transactions)
   add constraint ar_id_fkey foreign key (id) references transactions (id) on delete cascade;
@@ -62,6 +78,7 @@ alter table ap
   alter column id drop default,
   drop column approved,
   drop column description,
+  drop column intnotes,
   drop constraint ap_id_fkey,
   -- the on delete cascade prevents deletion of approved lots (= transactions)
   add constraint ap_id_fkey foreign key (id) references transactions (id) on delete cascade;
@@ -70,7 +87,9 @@ alter table gl
   alter column id drop default,
   drop column approved,
   drop column description,
+  drop column notes,
   drop column trans_type_code,
+  drop column reference,
   drop constraint gl_id_fkey,
   -- the on delete cascade prevents deletion of approved lots (= transactions)
   add constraint gl_id_fkey foreign key (id) references transactions (id) on delete cascade;
@@ -96,14 +115,8 @@ alter table mfg_lot
 
 update mfg_lot
   set trans_id = (select id
-                    from gl
+                    from transactions
                    where reference = 'mfg-' || mfg_lot.id::text);
-
-update transactions
-   set table_name = 'mfg_lot'
- where id in (select id
-                from gl
-               where reference like 'mfg-%');
 
 delete from gl
  where exists (select *
@@ -119,11 +132,6 @@ update asset_report
 alter table asset_report
   drop column gl_id;
 
-update transactions
-   set table_name = 'asset_report'
-  from asset_report
- where asset_report.trans_id = transactions.id;
-
 delete from gl
  where exists (select *
                  from asset_report ar where gl.id = ar.trans_id);
@@ -132,11 +140,6 @@ alter table inventory_report
   drop constraint inventory_report_trans_id_fkey,
   -- the on delete cascade prevents deletion of approved lots (= transactions)
   add constraint inventory_report_trans_id_fkey foreign key (trans_id) references transactions(id) on delete cascade;
-
-update transactions
-   set table_name = 'inventory_report'
-  from inventory_report
- where inventory_report.trans_id = transactions.id;
 
 delete from gl
  where exists (select *
@@ -153,11 +156,6 @@ drop view if exists overpayments cascade;
 alter table payment
   drop column gl_id;
 
-update transactions
-   set table_name = 'payment'
-  from payment
- where payment.trans_id = transactions.id;
-
 delete from gl
  where exists (select *
                  from payment p where gl.id = p.trans_id);
@@ -167,11 +165,6 @@ alter table yearend
   -- the on delete cascade prevents deletion of approved lots (= transactions)
   add constraint yearend_trans_id_fkey foreign key (trans_id) references transactions(id) on delete cascade;
 
-update transactions
-   set table_name = 'yearend'
-  from yearend
- where yearend.trans_id = transactions.id;
-
 delete from gl
  where exists (select *
                  from yearend ye where gl.id = ye.trans_id);
@@ -180,12 +173,9 @@ delete from gl
 -- based on 'gl', 'ar' and 'ap', but those lost their roles
 drop view if exists file_tx_links cascade;
 
-alter table gl enable trigger gl_track_deleted_transaction;
-
-create or replace trigger gl_track_global_sequence before INSERT OR UPDATE on gl
-  for each row execute procedure track_global_sequence('gl');
-create or replace trigger ap_track_global_sequence before INSERT OR UPDATE on ap
-  for each row execute procedure track_global_sequence('ap');
-create or replace trigger ar_track_global_sequence before INSERT OR UPDATE on ar
-  for each row execute procedure track_global_sequence('ar');
+-- since we have so many tables now which refer transactions - none of
+-- which is *originating* transactions anymore, drop the triggers.
+drop trigger if exists gl_track_global_sequence on gl;
+drop trigger if exists ap_track_global_sequence on ap;
+drop trigger if exists ar_track_global_sequence on ar;
 

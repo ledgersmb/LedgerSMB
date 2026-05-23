@@ -205,8 +205,8 @@ CREATE OR REPLACE FUNCTION pg_temp.create_ar_transaction(
     in_invnumber          text,
     in_entity_credit_acct int   -- which entity_credit_account this invoice belongs to
 ) RETURNS void AS $$
-  INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-  VALUES (in_trans_id, in_transdate, 'ar', 'ar', true);
+  INSERT INTO transactions (id, transdate, trans_type_code, approved)
+  VALUES (in_trans_id, in_transdate, 'ar', true);
 
   INSERT INTO open_item (id, item_number, item_type, account_id)
   OVERRIDING SYSTEM VALUE
@@ -237,8 +237,8 @@ SELECT pg_temp.create_ar_transaction(-209, -2009, '1000-01-03', '-2009', -201);
 -- AR transaction with an UNAPPROVED acc_trans line (trans itself is approved).
 -- The acc_trans line is inserted below with approved=false, so this row must
 -- be excluded from reconciliation output.
-INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-VALUES (-300, '1000-01-01', 'ar', 'ar', true);
+INSERT INTO transactions (id, transdate, trans_type_code, approved)
+VALUES (-300, '1000-01-01', 'ar', true);
 INSERT INTO open_item (id, item_number, item_type, account_id)
 OVERRIDING SYSTEM VALUE
 VALUES (-3000, '-3000', 'ar', test_get_account_id('-11111'));
@@ -260,11 +260,11 @@ CREATE OR REPLACE FUNCTION pg_temp.create_gl_transaction(
     in_approved  bool,
     in_reference text
 ) RETURNS void AS $$
-  INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-  VALUES (in_trans_id, in_transdate, 'gl', 'gl', in_approved);
+  INSERT INTO transactions (id, transdate, trans_type_code, approved, reference)
+  VALUES (in_trans_id, in_transdate, 'gl', in_approved, in_reference);
 
-  INSERT INTO gl (id, reference)
-  VALUES (in_trans_id, in_reference);
+  INSERT INTO gl (id)
+  VALUES (in_trans_id);
 $$ LANGUAGE sql;
 
 -- Approved GL transactions (two per date, so Scenario 1 can test aggregation)
@@ -287,9 +287,9 @@ SELECT pg_temp.create_gl_transaction(-214, '1000-01-03', false, 'gl trans, unapp
 -- All acc_trans lines on account -11112 that belong to trans_id -2010 are
 -- collapsed into one reconciliation row; GL lines on -11112 dated 1000-01-03
 -- (== payment_date) with the same source are included in that same row.
-INSERT INTO transactions (id, table_name, transdate, approved, reference, trans_type_code, workflow_id)
+INSERT INTO transactions (id, transdate, approved, reference, trans_type_code, workflow_id)
 OVERRIDING SYSTEM VALUE
-VALUES (-2010, 'payment', '1000-01-03', true, 'reference-test', 'pa',
+VALUES (-2010, '1000-01-03', true, 'reference-test', 'pa',
         null --###BUG: need workflow_id
         );
 INSERT INTO payment (trans_id, id, reference, payment_class, payment_date,
@@ -299,9 +299,9 @@ VALUES (-2010, -201, 'reference-test', 2, '1000-01-03',
 
 -- Payment -202 (NOT approved): present only so that its acc_trans line can be
 -- marked cleared+unapproved and verified as excluded from reconciliation.
-INSERT INTO transactions (id, table_name, transdate, approved, reference, trans_type_code, workflow_id)
+INSERT INTO transactions (id, transdate, approved, reference, trans_type_code, workflow_id)
 OVERRIDING SYSTEM VALUE
-VALUES (-2011, 'payment', '1000-01-03', false, 'reference-test2', 'pa',
+VALUES (-2011, '1000-01-03', false, 'reference-test2', 'pa',
         null --###BUG: need workflow_id
         );
 INSERT INTO payment (trans_id, id, reference, payment_class, payment_date,
@@ -449,16 +449,16 @@ UPDATE cr_report SET approved  = true WHERE id = currval('cr_report_id_seq');
 -- ======================================================================
 
 -- Payment A for Scenario 3
-INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
-VALUES ('1000-01-01', 'payment', 'pa', true);
+INSERT INTO transactions (transdate, trans_type_code, approved)
+VALUES ('1000-01-01', 'pa', true);
 INSERT INTO payment (trans_id, id, reference, payment_class, payment_date,
                      entity_credit_id, currency, account_id)
 VALUES (currval('transactions_id_seq'), -220, 'equal-reference', 2, '1000-01-01',
         -202, 'XTS', test_get_account_id('-11123'));
 
 -- Payment B for Scenario 3 (same reference as Payment A — intentional)
-INSERT INTO transactions (transdate, table_name, trans_type_code, approved)
-VALUES ('1000-01-01', 'payment', 'pa', true);
+INSERT INTO transactions (transdate, trans_type_code, approved)
+VALUES ('1000-01-01', 'pa', true);
 INSERT INTO payment (trans_id, id, reference, payment_class, payment_date,
                      entity_credit_id, currency, account_id)
 VALUES (currval('transactions_id_seq'), -221, 'equal-reference', 2, '1000-01-01',

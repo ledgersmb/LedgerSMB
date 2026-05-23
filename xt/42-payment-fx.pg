@@ -75,8 +75,8 @@ BEGIN;
     INSERT INTO entity_credit_account (id, meta_number, threshold, entity_id, entity_class, business_id, ar_ap_account_id, curr)
          VALUES (-101, 'TEST1', 100000, -101, 1, -101, -1000, 'xts');
 
-    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-    VALUES (-11, '1901-01-01', 'ap', 'ap', true);
+    INSERT INTO transactions (id, transdate, trans_type_code, approved)
+    VALUES (-11, '1901-01-01', 'ap', true);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('inv_test1', 'ap', (select id from account where accno = '00001'));
     INSERT INTO ap (trans_id, open_item_id, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
@@ -128,8 +128,8 @@ BEGIN;
 
     -- Test 2: payment_bulk_post
 
-    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-    VALUES (-12, '1901-01-02', 'ap', 'ap', true);
+    INSERT INTO transactions (id, transdate, trans_type_code, approved)
+    VALUES (-12, '1901-01-02', 'ap', true);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('inv_test2', 'ap', (select id from account where accno = '00001'));
     INSERT INTO ap (trans_id, open_item_id, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
@@ -168,8 +168,8 @@ BEGIN;
 
 
     -- Test 3: Single payment
-    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-    VALUES (-13, '1901-01-01', 'ap', 'ap', true);
+    INSERT INTO transactions (id, transdate, trans_type_code, approved)
+    VALUES (-13, '1901-01-01', 'ap', true);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('inv_test1/2', 'ap', (select id from account where accno = '00001'));
     INSERT INTO ap (trans_id, open_item_id, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
@@ -208,8 +208,8 @@ BEGIN;
 
 
     -- Test 4: Bulk payment
-    INSERT INTO transactions (id, transdate, table_name, trans_type_code, approved)
-    VALUES (-14, '1901-01-02', 'ap', 'ap', true);
+    INSERT INTO transactions (id, transdate, trans_type_code, approved)
+    VALUES (-14, '1901-01-02', 'ap', true);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('inv_test2/2', 'ap', (select id from account where accno = '00001'));
     INSERT INTO ap (trans_id, open_item_id, amount_bc, amount_tc, invnumber, curr, entity_credit_account)

@@ -688,10 +688,10 @@ BEGIN
   --   If the discount amount were to be valued at the original rate,
   --   the FX effect should be calculated based on the current payment amount
 
-  INSERT INTO transactions (id, table_name, transdate, approved,
+  INSERT INTO transactions (id, transdate, approved,
                             reference, trans_type_code, entered_by, workflow_id)
               OVERRIDING SYSTEM VALUE
-  SELECT epi.trans_id, 'payment', in_payment_date, false,
+  SELECT epi.trans_id, in_payment_date, false,
          epi.reference, 'pa', person__get_my_entity_id(), workflow_id
     FROM eca_payments_in epi;
 
@@ -857,10 +857,9 @@ BEGIN
   VALUES (nextval('workflow_seq'), 'Payment', NOW(),
           CASE WHEN coalesce(in_approved, true) THEN 'POSTED' ELSE 'SAVED' END);
 
-  INSERT INTO transactions (table_name, transdate, approved,
-                            reference,
+  INSERT INTO transactions (transdate, approved, reference,
                             trans_type_code, entered_by, workflow_id)
-  VALUES ('payment', in_datepaid, coalesce(in_approved, true),
+  VALUES (in_datepaid, coalesce(in_approved, true),
           (
             CASE WHEN in_account_class = 1 THEN setting_increment('rcptnumber')
             ELSE setting_increment('paynumber')
@@ -1262,9 +1261,9 @@ DECLARE
 BEGIN
   -- check against being an overpayment??
   INSERT INTO transactions (
-    table_name, transdate, trans_type_code, reversing, approved
+    transdate, trans_type_code, reversing, approved
     )
-  SELECT table_name, in_payment_date, 'pa', id, coalesce(in_approved, false)
+  SELECT in_payment_date, 'pa', id, coalesce(in_approved, false)
     FROM transactions
    WHERE id = (select trans_id
                  from payment

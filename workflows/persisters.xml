@@ -10,5 +10,5 @@
       date_format="%Y-%m-%d %H:%M:%S"
       driver="Pg"
       extra_table="transactions"
-      extra_data_field="id,table_name,transdate" />
+      extra_data_field="id,trans_type_code,transdate" />
 </persisters>

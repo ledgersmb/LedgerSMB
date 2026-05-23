@@ -1,7 +1,7 @@
 <conditions>
   <type>AR/AP</type>
   <condition name="is_sales"
-             test="($context->{table_name} eq 'ar')"
+             test="($context->{trans_type_code} eq 'ar')"
              class="Workflow::Condition::Evaluate"/>
   <condition name="complete"
              test="$context->{transdate}"
