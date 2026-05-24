@@ -119,7 +119,7 @@ BEGIN
 RETURN QUERY EXECUTE $sql$
      WITH arap AS (
        select  invnumber, ar.curr, txn.transdate, entity_credit_account, txn.id,
-                   person_id, notes
+                   person_id, ar.notes
         FROM ar
              JOIN transactions txn
                   ON ar.trans_id = txn.id
@@ -130,7 +130,7 @@ RETURN QUERY EXECUTE $sql$
                       or ($18 and 0 <> sum(acc_trans.amount_bc)))
             UNION ALL
            select invnumber, ap.curr, txn.transdate, entity_credit_account, txn.id,
-                  person_id, notes
+                  person_id, ap.notes
              FROM ap
                   JOIN transactions txn
                        ON ap.trans_id = txn.id
