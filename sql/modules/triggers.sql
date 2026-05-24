@@ -10,31 +10,39 @@ CREATE OR REPLACE FUNCTION gl_audit_trail_append()
 RETURNS TRIGGER AS
 $$
 DECLARE
-   t_reference text;
-   t_row RECORD;
-   t_id int;
+  t_reference text;
+  t_row RECORD;
+  t_id int;
 BEGIN
 
-IF TG_OP = 'INSERT' then
-   t_row := NEW;
-ELSE
-   t_row := OLD;
-END IF;
+  IF TG_OP = 'INSERT' then
+    t_row := NEW;
+  ELSE
+    t_row := OLD;
+  END IF;
 
-IF TG_TABLE_NAME IN ('ar', 'ap') THEN
+  IF TG_TABLE_NAME IN ('ar', 'ap') THEN
     t_reference := t_row.invnumber;
     t_id := t_row.trans_id;
-ELSE
-  select reference into t_reference
-    from transactions
-   where id = t_row.id;
-  t_id := t_row.id;
-END IF;
+  ELSE
+    select reference into t_reference
+      from transactions
+     where id = t_row.id;
+    t_id := t_row.id;
+  END IF;
 
-INSERT INTO audittrail (trans_id,tablename,reference, action, person_id)
-values (t_id,TG_TABLE_NAME,t_reference, TG_OP, person__get_my_entity_id());
+  INSERT INTO audittrail (
+    trans_id, tablename, reference, action, person_id
+  )
+  VALUES (
+    t_id,
+    TG_TABLE_NAME,
+    t_reference,
+    TG_OP,
+    person__get_my_entity_id()
+  );
 
-return null; -- AFTER TRIGGER ONLY, SAFE
+  RETURN NULL; -- AFTER TRIGGER ONLY, SAFE
 END;
 $$ language plpgsql security definer;
 
