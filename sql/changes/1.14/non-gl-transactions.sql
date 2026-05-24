@@ -4,6 +4,9 @@
 -- Note: this trigger calls the (dropped) 'track_global_sequence()' trigger
 drop trigger if exists gl_track_deleted_transaction on gl;
 
+-- based on 'gl', 'ar' and 'ap', but those lose their roles here
+drop view if exists file_tx_links cascade;
+
 alter table trans_type
   add column details_table text;
 
@@ -108,6 +111,9 @@ begin
 end;
   $$;
 
+-- calls 'gl_audit_trail_append()'
+-- which depends on gl.reference (which is no longer available)
+alter table gl disable trigger gl_audit_trail;
 
 alter table mfg_lot
   -- the on delete cascade prevents deletion of approved lots (= transactions)
@@ -169,9 +175,7 @@ delete from gl
  where exists (select *
                  from yearend ye where gl.id = ye.trans_id);
 
-
--- based on 'gl', 'ar' and 'ap', but those lost their roles
-drop view if exists file_tx_links cascade;
+alter table gl enable trigger gl_audit_trail;
 
 -- since we have so many tables now which refer transactions - none of
 -- which is *originating* transactions anymore, drop the triggers.
