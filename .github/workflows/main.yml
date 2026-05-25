@@ -592,19 +592,25 @@ jobs:
   testing-done:
     runs-on: ubuntu-latest
     needs: [ test-database, test-pure-perl, test-remainder, test-webservices ]
-    if: ${{ always() && (
-              needs.test-database.result != 'success' ||
-              needs.test-pure-perl.result != 'success' ||
-              needs.test-remainder.result != 'success' ||
-              needs.test-webservices.result != 'success'
-            )
-        }}
+    if: ${{ always() }}
     # This job gets skipped on successful completion of the dependent jobs
     # Skipped jobs are interpreted as 'success' condition in branch protection rules...
     steps:
       - name: Failed
+        id: failed
+        if: ${{ (
+               needs.test-database.result != 'success' ||
+               needs.test-pure-perl.result != 'success' ||
+               needs.test-remainder.result != 'success' ||
+               needs.test-webservices.result != 'success'
+             ) }}
         run: |
           exit 1
+
+      - name: Success
+        if: ${{ steps.failed.outcome == 'skipped' }}
+        run: |
+          exit 0
 
   build-dev:
     if: github.event_name == 'push' && github.ref == 'refs/heads/master' && github.repository == 'ledgersmb/LedgerSMB'
