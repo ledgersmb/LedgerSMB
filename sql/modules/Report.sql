@@ -144,7 +144,7 @@ RETURN QUERY EXECUTE $sql$
                                 WHERE i.trans_id = a.trans_id) AS line_items,
                    (coalesce($5, now())::date - a.transdate) as age
                   FROM (select trans_id, open_item_id, invnumber, ordnumber, amount_bc, duedate,
-                               curr, ponumber, notes, entity_credit_account,
+                               curr, ponumber, ar.notes, entity_credit_account,
                                -1 AS sign, txn.transdate, force_closed,
                                CASE WHEN $7
                                     THEN coalesce($5, now())::date
@@ -156,7 +156,7 @@ RETURN QUERY EXECUTE $sql$
                          WHERE $2 = 2
                          UNION
                         SELECT trans_id, open_item_id, invnumber, ordnumber, amount_bc, duedate,
-                               curr, ponumber, notes, entity_credit_account,
+                               curr, ponumber, ap.notes, entity_credit_account,
                                1 as sign, txn.transdate, force_closed,
                                CASE WHEN $7
                                     THEN coalesce($5, now())::date
@@ -450,14 +450,14 @@ SELECT a.id, a.open_item_id, a.invoice, eeca.id, eca.meta_number::text, eeca.nam
        ee.name, me.name, a.shippingpoint, a.shipvia,
        '{}'::text[] as business_units -- TODO
   FROM (select txn.id, open_item_id, txn.transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
-               notes, person_id, entity_credit_account, invoice,
+               ar.notes, person_id, entity_credit_account, invoice,
                shippingpoint, shipvia, ordnumber, ponumber, description,
                on_hold, force_closed
           FROM ar JOIN transactions txn ON ar.trans_id = txn.id
          WHERE $1 = 2 and txn.approved
          UNION
         SELECT txn.id, open_item_id, txn.transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
-               notes, person_id, entity_credit_account, invoice,
+               ap.notes, person_id, entity_credit_account, invoice,
                shippingpoint, shipvia, ordnumber, ponumber, description,
                on_hold, force_closed
           FROM ap JOIN transactions txn ON ap.trans_id = txn.id
@@ -567,7 +567,7 @@ SELECT a.id, a.open_item_id, a.invoice, eeca.id, eca.meta_number::text, eeca.nam
        a.shipvia, '{}'::text[]
 
   FROM (select txn.id, open_item_id, txn.transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
-               notes,
+               ar.notes,
                person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ar JOIN transactions txn ON ar.trans_id = txn.id
@@ -575,7 +575,7 @@ SELECT a.id, a.open_item_id, a.invoice, eeca.id, eca.meta_number::text, eeca.nam
                and ($21 is null or ($21 = txn.approved))
          UNION
         SELECT txn.id, open_item_id, txn.transdate, invnumber, curr, amount_bc, netamount_bc, duedate,
-               notes,
+               ap.notes,
                person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ap JOIN transactions txn ON ap.trans_id = txn.id
