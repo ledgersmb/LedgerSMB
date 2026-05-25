@@ -38,7 +38,6 @@ returns int as
   $sql$ language sql;
 
 alter table payment
-  drop constraint check_payment_trans_id_null,
   drop constraint payment_trans_id_fkey,
   add constraint payment_trans_id_fkey foreign key (trans_id) references transactions (id) on delete cascade;
 
