@@ -1,3 +1,4 @@
+
 version: 2.1
 
 # Define defaults
@@ -9,6 +10,7 @@ _defaults: &defaults
 aliases:
   - &store_artifacts
     store_artifacts:
+      when: always
       path: /tmp/artifact/
 
 # UI Coverage orbs
@@ -66,7 +68,7 @@ commands:
             then
               make devtest TESTS="--no-progress --job-count $JOB_COUNT \"--cover=$DEVEL_COVER_OPTIONS\" xt/*.t"
             else
-              make devtest TESTS="--no-progress --job-count 2 xt/*.t"
+              make devtest TESTS="--no-progress --job-count 6 xt/*.t"
             fi
 
       - run:
@@ -169,6 +171,8 @@ commands:
             - coveralls/upload:
                 parallel_finished: true
 
+      - *store_artifacts
+
   dev-prove-pg:
     steps:
       - run:
@@ -194,7 +198,7 @@ commands:
             then
               make devtest TESTS="--no-progress --job-count $JOB_COUNT \"--cover=$DEVEL_COVER_OPTIONS\" xt/*.pg"
             else
-              make devtest TESTS="--no-progress --job-count 2 xt/*.pg"
+              make devtest TESTS="--no-progress --job-count 6 xt/*.pg"
             fi
 
       - run:
@@ -257,7 +261,7 @@ commands:
             then
               make devtest TESTS="--no-progress --job-count $JOB_COUNT \"--cover=$DEVEL_COVER_OPTIONS\" t/"
             else
-              make devtest TESTS='--no-progress --job-count 2 t/'
+              make devtest TESTS='--no-progress --job-count 6 t/'
             fi
 
       - run:
@@ -335,7 +339,9 @@ commands:
       - run:
           name: Set up dirs and files
           command: |
-            mkdir -p logs/screens
+            # make sure the logs are uploaded as artifacts
+            ln -s /tmp/artifact logs
+            mkdir -p /tmp/artifact/screens
             # these commands are in start.sh of the Perl container too:
 
       # Freshen up CPAN
@@ -406,8 +412,8 @@ commands:
             if [ "x$COVERAGE" == "x1" ]
             then
               JOB_COUNT=2
+              export PERL5OPT="$PERL5OPT -MDevel::Cover=$DEVEL_COVER_OPTIONS"
             fi
-            PERL5OPT="$PERL5OPT -MDevel::Cover=$DEVEL_COVER_OPTIONS" \
             starman --preload-app -E test --pid starman.pid --workers $JOB_COUNT \
                   --max-requests 5000 --error-log logs/starman-error.log \
                   -Ilib -Iold/lib -Ixt/lib --port 5762 bin/ledgersmb-server.psgi
