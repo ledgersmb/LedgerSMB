@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.12.19-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2026-04-26 10:09+0000\n"
+"POT-Creation-Date: 2026-05-29 17:13+0000\n"
 "PO-Revision-Date: 2022-01-09T21:20:15.970Z\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
@@ -2070,7 +2070,7 @@ msgstr ""
 msgid "Database does not exist."
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1132
+#: lib/LedgerSMB/Scripts/setup.pm:1146
 msgid "Database exists."
 msgstr ""
 
@@ -3372,7 +3372,7 @@ msgstr ""
 msgid "Full"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1264
+#: lib/LedgerSMB/Scripts/setup.pm:1278
 msgid "Full Permissions"
 msgstr ""
 
@@ -3752,7 +3752,7 @@ msgstr ""
 msgid "Invalid date/time entered"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1170 lib/LedgerSMB/Scripts/setup.pm:1177
+#: lib/LedgerSMB/Scripts/setup.pm:1184 lib/LedgerSMB/Scripts/setup.pm:1191
 msgid "Invalid request"
 msgstr ""
 
@@ -4120,14 +4120,18 @@ msgstr ""
 msgid "LedgerSMB Database Statistics"
 msgstr ""
 
-#: UI/setup/consistency_results.html:13
-msgid "LedgerSMB consistency check results"
-msgstr ""
-
 #: lib/LedgerSMB/Upgrade_Tests.pm:894
 msgid ""
 "LedgerSMB customers must be assigned to a valid business.<br>\n"
 "Please review the selection or select the proper business from the list"
+msgstr ""
+
+#: UI/setup/consistency_results.html:39
+msgid "LedgerSMB database consistency check results"
+msgstr ""
+
+#: UI/setup/consistency_results.html:14
+msgid "LedgerSMB database upgrade check results"
 msgstr ""
 
 #: UI/setup/system_info.html:10
@@ -4310,7 +4314,7 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1134
+#: lib/LedgerSMB/Scripts/setup.pm:1148
 msgid "Login?"
 msgstr ""
 
@@ -4362,7 +4366,7 @@ msgid ""
 "only and is at least one character long"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1263
+#: lib/LedgerSMB/Scripts/setup.pm:1277
 msgid "Manage Users"
 msgstr ""
 
@@ -4629,8 +4633,12 @@ msgstr ""
 msgid "No Null employeenumber"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1265
+#: lib/LedgerSMB/Scripts/setup.pm:1279
 msgid "No changes"
+msgstr ""
+
+#: UI/setup/consistency_results.html:31
+msgid "No checks applicable"
 msgstr ""
 
 #: old/bin/aa.pl:312 old/bin/ir.pl:163 old/bin/is.pl:173
@@ -8069,7 +8077,7 @@ msgstr ""
 msgid "User"
 msgstr ""
 
-#: lib/LedgerSMB/Scripts/setup.pm:1343
+#: lib/LedgerSMB/Scripts/setup.pm:1357
 msgid "User already exists. Import?"
 msgstr ""
 
@@ -8574,7 +8582,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/views/Home.vue:43 UI/src/views/Home.vue:58
+#: UI/src/views/Home.vue:58 UI/src/views/Home.vue:43
 msgid "mailing lists"
 msgstr ""
 

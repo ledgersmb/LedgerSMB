@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.12.19-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2026-04-26 10:09+0000\n"
+"POT-Creation-Date: 2026-05-29 17:13+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2025\n"
 "Language-Team: Dutch (https://app.transifex.com/ledgersmb/teams/58325/nl/)\n"
 "Language: nl\n"
@@ -2078,7 +2078,7 @@ msgstr ""
 msgid "Database does not exist."
 msgstr "Database bestaat niet."
 
-#: lib/LedgerSMB/Scripts/setup.pm:1132
+#: lib/LedgerSMB/Scripts/setup.pm:1146
 msgid "Database exists."
 msgstr "Database bestaat al."
 
@@ -3382,7 +3382,7 @@ msgstr "Vanaf datum"
 msgid "Full"
 msgstr "Volledig"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1264
+#: lib/LedgerSMB/Scripts/setup.pm:1278
 msgid "Full Permissions"
 msgstr "Systeem administrateur"
 
@@ -3762,7 +3762,7 @@ msgstr "Ongeldige backup verzoek"
 msgid "Invalid date/time entered"
 msgstr "Ongeldige datum/tijd ingevoerd"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1170 lib/LedgerSMB/Scripts/setup.pm:1177
+#: lib/LedgerSMB/Scripts/setup.pm:1184 lib/LedgerSMB/Scripts/setup.pm:1191
 msgid "Invalid request"
 msgstr ""
 
@@ -4139,14 +4139,18 @@ msgstr ""
 msgid "LedgerSMB Database Statistics"
 msgstr "LedgerSMB database statistieken"
 
-#: UI/setup/consistency_results.html:13
-msgid "LedgerSMB consistency check results"
-msgstr ""
-
 #: lib/LedgerSMB/Upgrade_Tests.pm:894
 msgid ""
 "LedgerSMB customers must be assigned to a valid business.<br>\n"
 "Please review the selection or select the proper business from the list"
+msgstr ""
+
+#: UI/setup/consistency_results.html:39
+msgid "LedgerSMB database consistency check results"
+msgstr ""
+
+#: UI/setup/consistency_results.html:14
+msgid "LedgerSMB database upgrade check results"
 msgstr ""
 
 #: UI/setup/system_info.html:10
@@ -4329,7 +4333,7 @@ msgstr ""
 msgid "Login"
 msgstr "Aanmelden"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1134
+#: lib/LedgerSMB/Scripts/setup.pm:1148
 msgid "Login?"
 msgstr "Inloggen?"
 
@@ -4383,7 +4387,7 @@ msgstr ""
 "Controleer dat iedere naam alleen bestaat uit alfanumerieke karakters (en "
 "lage streep) en minimaal een karakter lang is"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1263
+#: lib/LedgerSMB/Scripts/setup.pm:1277
 msgid "Manage Users"
 msgstr "Toekennen bevoegdheden aan gebruikers"
 
@@ -4652,9 +4656,13 @@ msgstr "Bedragen moeten groter zijn dan 0"
 msgid "No Null employeenumber"
 msgstr "Werknemer NUMMER (moet ingevuld worden!)"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1265
+#: lib/LedgerSMB/Scripts/setup.pm:1279
 msgid "No changes"
 msgstr "Geen veranderingen"
+
+#: UI/setup/consistency_results.html:31
+msgid "No checks applicable"
+msgstr ""
 
 #: old/bin/aa.pl:312 old/bin/ir.pl:163 old/bin/is.pl:173
 msgid "No currencies defined.  Please set these up under System/Defaults."
@@ -8114,7 +8122,7 @@ msgstr "al in gebruik"
 msgid "User"
 msgstr "Gebruiker"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1343
+#: lib/LedgerSMB/Scripts/setup.pm:1357
 msgid "User already exists. Import?"
 msgstr "Gebruiker bestaat al    Importeer?"
 
@@ -8621,7 +8629,7 @@ msgstr ""
 msgid "label"
 msgstr "label"
 
-#: UI/src/views/Home.vue:43 UI/src/views/Home.vue:58
+#: UI/src/views/Home.vue:58 UI/src/views/Home.vue:43
 msgid "mailing lists"
 msgstr ""
 
