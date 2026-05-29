@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.13.6-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2026-04-26 11:18+0000\n"
+"POT-Creation-Date: 2026-05-29 18:35+0000\n"
 "Last-Translator: ylavoie <ylavoie@yveslavoie.com>, 2025\n"
 "Language-Team: French (France) (https://app.transifex.com/ledgersmb/teams/"
 "58325/fr_FR/)\n"
@@ -2099,7 +2099,7 @@ msgstr "Composant de base de données"
 msgid "Database does not exist."
 msgstr "Base de données inexistante."
 
-#: lib/LedgerSMB/Scripts/setup.pm:1149
+#: lib/LedgerSMB/Scripts/setup.pm:1163
 msgid "Database exists."
 msgstr "La base de données existe."
 
@@ -3433,7 +3433,7 @@ msgstr "Date initiale"
 msgid "Full"
 msgstr "Complet"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1287
+#: lib/LedgerSMB/Scripts/setup.pm:1301
 msgid "Full Permissions"
 msgstr "Autorisations complètes"
 
@@ -3806,7 +3806,7 @@ msgstr ""
 msgid "Invalid date/time entered"
 msgstr "Date/heure invalide"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1191 lib/LedgerSMB/Scripts/setup.pm:1198
+#: lib/LedgerSMB/Scripts/setup.pm:1205 lib/LedgerSMB/Scripts/setup.pm:1212
 msgid "Invalid request"
 msgstr "Requête invalide"
 
@@ -4179,14 +4179,18 @@ msgstr "Banque de données LedgerSMB 1.9 trouvée"
 msgid "LedgerSMB Database Statistics"
 msgstr "Statistiques de la base de données LedgerSMB"
 
-#: UI/setup/consistency_results.html:13
-msgid "LedgerSMB consistency check results"
-msgstr ""
-
 #: lib/LedgerSMB/Upgrade_Tests.pm:894
 msgid ""
 "LedgerSMB customers must be assigned to a valid business.<br>\n"
 "Please review the selection or select the proper business from the list"
+msgstr ""
+
+#: UI/setup/consistency_results.html:39
+msgid "LedgerSMB database consistency check results"
+msgstr ""
+
+#: UI/setup/consistency_results.html:14
+msgid "LedgerSMB database upgrade check results"
 msgstr ""
 
 #: UI/setup/system_info.html:10
@@ -4363,7 +4367,7 @@ msgstr "Connexion... Veuillez patienter."
 msgid "Login"
 msgstr "Login"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1151
+#: lib/LedgerSMB/Scripts/setup.pm:1165
 msgid "Login?"
 msgstr "Connexion?"
 
@@ -4422,7 +4426,7 @@ msgstr ""
 "alphanumériques (et de traits de soulignement) et comporte au moins un "
 "caractère"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1286
+#: lib/LedgerSMB/Scripts/setup.pm:1300
 msgid "Manage Users"
 msgstr "Gérer les utilisateurs"
 
@@ -4704,9 +4708,13 @@ msgstr "Aucun montant NULL"
 msgid "No Null employeenumber"
 msgstr "Aucun numéro d'employé NULL"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1288
+#: lib/LedgerSMB/Scripts/setup.pm:1302
 msgid "No changes"
 msgstr "Aucun changement"
+
+#: UI/setup/consistency_results.html:31
+msgid "No checks applicable"
+msgstr ""
 
 #: old/bin/aa.pl:311 old/bin/ir.pl:162 old/bin/is.pl:172
 msgid "No currencies defined.  Please set these up under System/Defaults."
@@ -8214,7 +8222,7 @@ msgstr "Utilisé"
 msgid "User"
 msgstr "Utilisateur"
 
-#: lib/LedgerSMB/Scripts/setup.pm:1366
+#: lib/LedgerSMB/Scripts/setup.pm:1380
 msgid "User already exists. Import?"
 msgstr "L'utilisateur existe déjà. Importer?"
 
@@ -8714,7 +8722,7 @@ msgstr ""
 msgid "label"
 msgstr ""
 
-#: UI/src/views/Home.vue:58 UI/src/views/Home.vue:43
+#: UI/src/views/Home.vue:43 UI/src/views/Home.vue:58
 msgid "mailing lists"
 msgstr ""
 
