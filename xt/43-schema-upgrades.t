@@ -25,7 +25,6 @@ use LedgerSMB::Database::ChangeChecks qw/load_checks run_checks run_with_formatt
 
 use DBI;
 use IO::Scalar;
-use Carp::Always;
 
 use Log::Log4perl qw(:easy);
 Log::Log4perl->easy_init($OFF);
