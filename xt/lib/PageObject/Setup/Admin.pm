@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use Carp;
-use Carp::Always;
 use PageObject;
 use Test::More;
 
