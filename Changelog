@@ -3,6 +3,14 @@
 Changelog for 1.13 Series
 Released 2025-10-04
 
+Changelog for 1.13.6
+* Fix double-counting of transaction amounts in batch searches (#9522)
+* Add pre-upgrade consistency checks in setup.pl (#9559)
+* Add upgrade consistency checks for payments (#9559)
+* Add consistency checks on transaction balancedness (#9573)
+* Add consistency checks ov voucher linkage (#9573)
+
+
 Changelog for 1.13.5
 * Restore ability to run upgrades as non-superuser (#9381)
 * Fix the New (new contact) link on the Order screen (#9409)
