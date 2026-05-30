@@ -4533,10 +4533,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@quasar/extras@npm:^1.16.17":
-  version: 1.18.0
-  resolution: "@quasar/extras@npm:1.18.0"
-  checksum: 10c0/deb795bbca27b2ea0fad47c224af2029459b1896b06fdc3d2d58ef9fe014968508f28005b4f96246461fdbcb1e75ccbfe6fb193095787d473627f9af1c9dabb6
+"@quasar/extras@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@quasar/extras@npm:2.0.0"
+  checksum: 10c0/12da06f8d5d751a77e6ca916a1911853b4bb3e36494159143dca2e62b0e6cd6837b71ed5c0117e17a91a7046ad422f6eb7857d79c9cd1d2eaa3ec3451fa087b9
   languageName: node
   linkType: hard
 
@@ -12241,7 +12241,7 @@ __metadata:
     "@eslint/js": "npm:10.0.1"
     "@pinia/testing": "npm:1.0.3"
     "@quasar/app-webpack": "npm:^4.2.0"
-    "@quasar/extras": "npm:^1.16.17"
+    "@quasar/extras": "npm:^2.0.0"
     "@redocly/cli": "npm:2.31.5"
     "@typescript-eslint/utils": "npm:8.60.0"
     "@vitejs/plugin-vue": "npm:6.0.7"

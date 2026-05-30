@@ -36,7 +36,7 @@
     "url": "https://github.com/ledgersmb/LedgerSMB"
   },
   "dependencies": {
-    "@quasar/extras": "^1.16.17",
+    "@quasar/extras": "^2.0.0",
     "content-disposition": "2.0.1",
     "dijit": "1.17.3",
     "dojo": "1.17.3",
