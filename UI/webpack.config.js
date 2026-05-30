@@ -215,17 +215,6 @@ if (TARGET !== "readme") {
                 from: "dojo/resources/**/*",
                 to: "."
             },
-            // Add Quasar assets
-            {
-                context: "node_modules",
-                from: "@quasar/extras/material-icons/**/*",
-                to: "quasar/material-icons/[name][ext]"
-            },
-            {
-                context: "node_modules",
-                from: "@quasar/extras/roboto-font/**/*",
-                to: "quasar/roboto-font/[name][ext]"
-            }
         ],
         options: {
             concurrency: 100
