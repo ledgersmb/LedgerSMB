@@ -9,6 +9,10 @@ import LoginPage from "@/views/LoginPage";
 import LsmbMain from "@/views/LsmbMain";
 import { useSessionUserStore } from "@/store/sessionUser";
 
+// import quasar extras compliant with v2
+import "@quasar/extras/material-icons/material-icons.css";
+import "@quasar/extras/roboto-font/roboto-font.css";
+
 import { installQuasar } from "./quasar-init";
 
 const dojoParser = require("dojo/parser");
