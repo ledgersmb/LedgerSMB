@@ -74,8 +74,8 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome              | 2025-06  | 138-147                                     |
-| Edge                | 2025-06  | 138-147                                     |
+| Chrome              | 2025-08  | 139-148                                     |
+| Edge                | 2025-08  | 139-148                                     |
 | Firefox             | 2025-07  | 141-150                                     |
 | Opera               | 2025-05  | 119-127, 131                                |
 | Safari              | 2024-10  | 18.1-18.7, 26.0-26.4                        |
@@ -84,9 +84,9 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome for Android  | 2026-04  | 147                                         |
+| Chrome for Android  | 2026-05  | 148                                         |
 | Firefox for Android | 2026-04  | 150                                         |
-| Android Browser     | 2026-04  | 147                                         |
+| Android Browser     | 2026-05  | 148                                         |
 | Safari on iOS       | 2024-10  | 18.1-18.7, 26.0-26.4                        |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
 | Opera Mobile        | 2024-03  | 80                                          |
