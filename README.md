@@ -157,7 +157,7 @@ Live chat: [#ledgersmb:matrix.org](https://app.element.io/#/room/#ledgersmb:matr
 Groups:
 
 * [Reddit r/LedgerSMB](https://www.reddit.com/r/LedgerSMB/)
-* [LinkedIN LedgerSMB group](https://www.linkedin.com/groups/4238725/)
+* [LinkedIN LedgerSMB group](https://www.linkedin.com/groups/13199807/)
 * [Facebook LedgerSMB page](https://www.facebook.com/LedgerSMB)
 * [Mastodon](https://mastodon.social/@LedgerSMB)
 
