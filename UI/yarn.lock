@@ -1639,35 +1639,35 @@
   resolved "https://registry.yarnpkg.com/@inquirer/type/-/type-4.0.7.tgz#9c6f0d857fe6ad549a3a932343b64e76acb34b10"
   integrity sha512-t28inv14nMQ1PhKpsJPY+kEs/c00qzeCOS2gTNRyTjG5d6qsVA2fItxW4hkvGZ5lvanGLdtCzVIx5dwdRpN1+g==
 
-"@intlify/core-base@11.4.4":
-  version "11.4.4"
-  resolved "https://registry.yarnpkg.com/@intlify/core-base/-/core-base-11.4.4.tgz#ea20ab23eae5e96657fdd006e6b7fd57851fbbc8"
-  integrity sha512-w/vItlylrAmhebkIbVl5YY8XMCtj8Mb2g70ttxktMYuf5AuRahgEHL2iLgLIsZBIbTSgs4hkUo7ucCL0uTJvOg==
+"@intlify/core-base@11.4.5":
+  version "11.4.5"
+  resolved "https://registry.yarnpkg.com/@intlify/core-base/-/core-base-11.4.5.tgz#63cc25be7fe6b6d945a61f343aa82bb95050fcb3"
+  integrity sha512-lja3F/iKVIvTa48mIwmrIeDcQUFZ0F0drvFvT8AwINOvbwnAzl/S/p8p2DxILZpWEUHRi1qewfWNIkMvhD3kKA==
   dependencies:
-    "@intlify/devtools-types" "11.4.4"
-    "@intlify/message-compiler" "11.4.4"
-    "@intlify/shared" "11.4.4"
+    "@intlify/devtools-types" "11.4.5"
+    "@intlify/message-compiler" "11.4.5"
+    "@intlify/shared" "11.4.5"
 
-"@intlify/devtools-types@11.4.4":
-  version "11.4.4"
-  resolved "https://registry.yarnpkg.com/@intlify/devtools-types/-/devtools-types-11.4.4.tgz#a64d9e135c04c5f00e430fff86ca5467e8fbd9cf"
-  integrity sha512-PcBLmGmDQsTSVV911P8upzpcLJO1CNVYi/IH6bGnLR2nA+0L963+kXN1ZrisTEnbtw2ewN6HMMSldqzjronA0Q==
+"@intlify/devtools-types@11.4.5":
+  version "11.4.5"
+  resolved "https://registry.yarnpkg.com/@intlify/devtools-types/-/devtools-types-11.4.5.tgz#ea9b7bf1626ea547bceb55cfd0af8391e05cd990"
+  integrity sha512-W5vydP9Yq3t82IyWqCM6aR0BTWCZrN5RAwjZEPpH8I2OQWp2RLy03Evh2ANZlSMhcvGAoyDg25k0so85Kwncpw==
   dependencies:
-    "@intlify/core-base" "11.4.4"
-    "@intlify/shared" "11.4.4"
+    "@intlify/core-base" "11.4.5"
+    "@intlify/shared" "11.4.5"
 
-"@intlify/message-compiler@11.4.4":
-  version "11.4.4"
-  resolved "https://registry.yarnpkg.com/@intlify/message-compiler/-/message-compiler-11.4.4.tgz#946d5de62a9129a5009382def22cc4e0e2532df9"
-  integrity sha512-vn0OAV9pYkJlPPmgnsSm5eAG3mL0+9C/oaded2JY9jmxBbhmUXT3TcAUY8WRgLY9Hte7lkUJKpXrVlYjMXBD2w==
+"@intlify/message-compiler@11.4.5":
+  version "11.4.5"
+  resolved "https://registry.yarnpkg.com/@intlify/message-compiler/-/message-compiler-11.4.5.tgz#da059bb41cee170245d15fcdcade7c1e031169e5"
+  integrity sha512-IEOZiHtbQopyPc/Dz2M869lOlZYX1SdcniNJwphATDYHhovvIneEKf1EFF37DE7NAABZtza1FNtnwwqZWInfpw==
   dependencies:
-    "@intlify/shared" "11.4.4"
+    "@intlify/shared" "11.4.5"
     source-map-js "^1.0.2"
 
-"@intlify/shared@11.4.4":
-  version "11.4.4"
-  resolved "https://registry.yarnpkg.com/@intlify/shared/-/shared-11.4.4.tgz#4ccb2816bd0a41de288048f87bd946a8d629e906"
-  integrity sha512-QRUCHqda1U6aR14FR0vvXD4+4gj6+fm0AhAozvSuRCw0fCvrmCugWpgiR4xH2NI6s8am6N9p5OhirplsX8ZS3g==
+"@intlify/shared@11.4.5":
+  version "11.4.5"
+  resolved "https://registry.yarnpkg.com/@intlify/shared/-/shared-11.4.5.tgz#18d842c41b43fef73f3327e7cbbec92751a16a4b"
+  integrity sha512-g/i5mtdUa9ia/8BaJ4w6ZRHgAXYQd9XyCaQPRMvsd8d5qmZwkjoTmHrNsI28Q/7I8h+2ijUkI4uEnnMCziKupQ==
 
 "@isaacs/cliui@^8.0.2":
   version "8.0.2"
@@ -2847,18 +2847,18 @@
   dependencies:
     ulid "^2.3.0"
 
-"@redocly/cli@2.31.5":
-  version "2.31.5"
-  resolved "https://registry.yarnpkg.com/@redocly/cli/-/cli-2.31.5.tgz#07b75dba9b1d53c9dd8f6959865f125af3280561"
-  integrity sha512-+mod7DgdS85mm/16QWDqLDaOOcPNEstcDC5X6hATsKbk3bh/mb15KIu/lkxj43rZItuVjroiv721MrK+yZv2cQ==
+"@redocly/cli@2.31.6":
+  version "2.31.6"
+  resolved "https://registry.yarnpkg.com/@redocly/cli/-/cli-2.31.6.tgz#3f9e05636a9c07e389e4a6c3322242e93c45a235"
+  integrity sha512-OQ7t/kDlewWIqYlo0jnNTUIkhmAuZx6P2OQmuZlaxghdRXbu/k+MevXSjR5uD2RGw4GLYsasGjUWPUonp6liTQ==
   dependencies:
     "@opentelemetry/exporter-trace-otlp-http" "0.214.0"
     "@opentelemetry/resources" "2.6.1"
     "@opentelemetry/sdk-trace-node" "2.6.1"
     "@opentelemetry/semantic-conventions" "1.40.0"
     "@redocly/cli-otel" "0.3.1"
-    "@redocly/openapi-core" "2.31.5"
-    "@redocly/respect-core" "2.31.5"
+    "@redocly/openapi-core" "2.31.6"
+    "@redocly/respect-core" "2.31.6"
     ajv "npm:@redocly/ajv@8.18.1"
     ajv-formats "^3.0.1"
     colorette "^1.2.0"
@@ -2870,13 +2870,13 @@
     mobx "^6.0.4"
     picomatch "^4.0.4"
     pluralize "^8.0.0"
-    react "^17.0.0 || ^18.2.0 || ^19.2.1"
-    react-dom "^17.0.0 || ^18.2.0 || ^19.2.1"
-    redoc "2.5.1"
+    react "^17.0.0 || ^18.2.0 || ^19.2.7"
+    react-dom "^17.0.0 || ^18.2.0 || ^19.2.7"
+    redoc "2.5.3"
     semver "^7.5.2"
     set-cookie-parser "^2.3.5"
     simple-websocket "^9.0.0"
-    styled-components "6.4.1"
+    styled-components "6.4.2"
     ulid "^3.0.1"
     undici "6.24.0"
     yargs "17.0.1"
@@ -2893,10 +2893,10 @@
   dependencies:
     json-schema-to-ts "2.7.2"
 
-"@redocly/openapi-core@2.31.5":
-  version "2.31.5"
-  resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-2.31.5.tgz#e93166f29432d33801e36a37307004069d73a011"
-  integrity sha512-300dxFZLlaVd4KxrS7OGTIOTL7T20DBmhAnP3QuRYvL7gCchOevmPGRrk+sx48xtMc99hpgPcX5Ap0XiFIjf4A==
+"@redocly/openapi-core@2.31.6":
+  version "2.31.6"
+  resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-2.31.6.tgz#3103c3876a1f53024edad440622a99e1782c6b23"
+  integrity sha512-h+zh6UQ4e5oRspUZUaNl1XRXwMf0ENHbGLKIDFAjhV6JACpqUrcBxkPKHY/uCXGdJSCzxVP3twCrnOWB0iMVuw==
   dependencies:
     "@redocly/ajv" "^8.18.1"
     "@redocly/config" "^0.49.0"
@@ -2909,7 +2909,7 @@
     pluralize "^8.0.0"
     yaml-ast-parser "0.0.43"
 
-"@redocly/openapi-core@^1.4.0":
+"@redocly/openapi-core@^1.34.15":
   version "1.34.15"
   resolved "https://registry.yarnpkg.com/@redocly/openapi-core/-/openapi-core-1.34.15.tgz#2988f8a51ca6352b5b53093dfe6206ed75120aa0"
   integrity sha512-HAwCnNyKcs5XGQqms+9t7OdAPM/5TDstmhF+0i7tdCFato2QKuYIlyWETwkXd8c5zbltr1oB+6y9NTeQLr2d6Q==
@@ -2924,15 +2924,15 @@
     pluralize "8.0.0"
     yaml-ast-parser "0.0.43"
 
-"@redocly/respect-core@2.31.5":
-  version "2.31.5"
-  resolved "https://registry.yarnpkg.com/@redocly/respect-core/-/respect-core-2.31.5.tgz#e9aaa0b3036ada1f59ea2b563c646f31aa2b91bd"
-  integrity sha512-pLXKw2HeLMrGFwLVZX6TVznNn8EA++6PGL5SQ1k53TvlkYHzgQ+tc8MI7HQQdg5l66mDVZZVkhc/yZVjNPlLmw==
+"@redocly/respect-core@2.31.6":
+  version "2.31.6"
+  resolved "https://registry.yarnpkg.com/@redocly/respect-core/-/respect-core-2.31.6.tgz#6ce08edcca1702a46e0631779f07fe6a1597a84d"
+  integrity sha512-xLsbP+jRVTaYKMnx44nx4p9UqVGjZGqyq6bsYlQQWeLem83OrU4EPE7vKKIdWTuwtQkEQ1ousEuenW7lqeqFnA==
   dependencies:
     "@faker-js/faker" "^7.6.0"
     "@noble/hashes" "^1.8.0"
     "@redocly/ajv" "^8.18.1"
-    "@redocly/openapi-core" "2.31.5"
+    "@redocly/openapi-core" "2.31.6"
     ajv "npm:@redocly/ajv@8.18.1"
     better-ajv-errors "^2.0.3"
     colorette "^2.0.20"
@@ -3744,10 +3744,10 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.5.35.tgz#192eb3d720c40715db79313454c4937432a4e86d"
   integrity sha512-zSbjL7gRXwks2ZQLRGCajBtBXEOXW9Ddhn/HvSdrGkE2dqGnumzW8XtusRrxrE9LvqtiqDXQ+A60Hp6mvdYxfA==
 
-"@vue/test-utils@2.4.10":
-  version "2.4.10"
-  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-2.4.10.tgz#f3b006e03918e66b5df1f2a6f7f5200663b525d3"
-  integrity sha512-SmoZ5EA1kYiAFs9NkYdiFFQF+cSnUwnvlYEbY+DogWQZUiqOm/Y29eSbc5T6yi75SgSF9863SBeXniIEoPajCA==
+"@vue/test-utils@2.4.11":
+  version "2.4.11"
+  resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-2.4.11.tgz#448e56e07fb4c19cf0e57ec1d883f30f94ca71bd"
+  integrity sha512-GDqaqZsA6m2E5vNzej0aYiIb6BX8xV9pNSbbbXKOfEYwg7ZNblVX8suyqmUBThq8VIrgAJNxn+z72hVtUeiWHA==
   dependencies:
     js-beautify "^1.14.9"
     vue-component-type-helpers "^3.0.0"
@@ -6336,10 +6336,10 @@ eslint-plugin-n@^17.11.1:
     semver "^7.6.3"
     ts-declaration-location "^1.0.6"
 
-eslint-plugin-package-json@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-package-json/-/eslint-plugin-package-json-1.2.0.tgz#768e386ba65e96b784532ff1fe96dc0d48fa6c17"
-  integrity sha512-3BszsD7XVddaUNbMfK+1lF1Qg8ck0nO3bNT/7IjXP8wrGzPThHZpkhm5UnbY1Nb/s3o6DUNgHI4aEqQV/t83fw==
+eslint-plugin-package-json@1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-package-json/-/eslint-plugin-package-json-1.3.0.tgz#351c0b649040a1f45050da131409da0e49644a38"
+  integrity sha512-YC4lXD7sZJ5Pj8NrK9npvIBzMH9WMrkXb4VaBXRqyxTriCwqFcEJMX51K3TjkzLiXS3eUQ3CzimKWNPiSpq5tA==
   dependencies:
     "@altano/repository-tools" "^2.0.1"
     change-case "^5.4.4"
@@ -6396,10 +6396,10 @@ eslint-plugin-unicorn@^52.0.0:
     semver "^7.5.4"
     strip-indent "^3.0.0"
 
-eslint-plugin-vue@10.9.1:
-  version "10.9.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-10.9.1.tgz#18f5c63780123270eca4bf438c40c7b4186ab840"
-  integrity sha512-cHB0Tf4Duvzwecwd/AqWzZvF/QszE13BhjVUpVXWCy9AeMR5GjkAjP3i85vqgLgOuTmkHR1OJ5oMeqLHtuw8zg==
+eslint-plugin-vue@10.9.2:
+  version "10.9.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-vue/-/eslint-plugin-vue-10.9.2.tgz#571a3e1d826628f078094a748c9d4df49ad18668"
+  integrity sha512-4g7ZP3pYcuqd7Zp0pzUKcos0W+RkjBz4EGdhJ92FcYk6v03Ti/GK5NwjgsjxHK+98eXDbHeK7VtX1az7/8doZA==
   dependencies:
     "@eslint-community/eslint-utils" "^4.4.0"
     natural-compare "^1.4.0"
@@ -10026,7 +10026,7 @@ openapi-response-validator@^9.2.0:
     ajv "^8.4.0"
     openapi-types "^9.3.1"
 
-openapi-sampler@^1.5.0, openapi-sampler@^1.7.1:
+openapi-sampler@^1.6.2, openapi-sampler@^1.7.1:
   version "1.7.4"
   resolved "https://registry.yarnpkg.com/openapi-sampler/-/openapi-sampler-1.7.4.tgz#453c50aa6fa8b1d02cb83a399c5aad965deb0e79"
   integrity sha512-CKS/rd5ucPCuEDbJnjGDXZTsuGWcmv53aCmQx7soZlPEONUGN4af0/dY5+THRFZraSEjeA78nlfzdFswC/N5SA==
@@ -11144,7 +11144,7 @@ raw-loader@0.5.1:
   resolved "https://registry.yarnpkg.com/raw-loader/-/raw-loader-0.5.1.tgz#0c3d0beaed8a01c966d9787bf778281252a979aa"
   integrity sha512-sf7oGoLuaYAScB4VGr0tzetsYlS8EJH6qnTCfQ/WVEa89hALQ4RQfCKt5xCyPQKPDUbVUAIP1QsxAwfAjlDp7Q==
 
-"react-dom@^17.0.0 || ^18.2.0 || ^19.2.1":
+"react-dom@^17.0.0 || ^18.2.0 || ^19.2.7":
   version "19.2.7"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-19.2.7.tgz#0450dc9ae9ddbff76ef196401cd8b8c7fb466ccc"
   integrity sha512-t0BRVXvbiE/o20Hfw669rLbMCDWtYZLvmJigy2f0MxsXF+71pxhR3xOkspmsO8h3ZlNzyibAmtCa3l4lYKk6gQ==
@@ -11179,7 +11179,7 @@ react-tabs@^6.0.2:
     clsx "^2.0.0"
     prop-types "^15.5.0"
 
-"react@^17.0.0 || ^18.2.0 || ^19.2.1":
+"react@^17.0.0 || ^18.2.0 || ^19.2.7":
   version "19.2.7"
   resolved "https://registry.yarnpkg.com/react/-/react-19.2.7.tgz#1f47a1bfc06f8ec885752c6f4af14369a9f8260b"
   integrity sha512-HNe9WslTbXmFK8o8cmwgAeJFSBvt1bPdHCVKtaaV+WlAN36mpT4hcRpwbf3fY56ar2oIXzsBpOAiIRHAdY0OlQ==
@@ -11277,12 +11277,12 @@ rechoir@^0.8.0:
   dependencies:
     resolve "^1.20.0"
 
-redoc@2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/redoc/-/redoc-2.5.1.tgz#12f57c08c460178c06a6440222f111fe69ee2b4f"
-  integrity sha512-LmqA+4A3CmhTllGG197F0arUpmChukAj9klfSdxNRemT9Hr07xXr7OGKu4PHzBs359sgrJ+4JwmOlM7nxLPGMg==
+redoc@2.5.3:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/redoc/-/redoc-2.5.3.tgz#f44692cbdf81bb2077fb38358885d976e6e27f88"
+  integrity sha512-bBbat+Sx6xKWdyoCGTtA0BWeTEW9Vs4VnEja7q7ZLOk4IM7cHQLrf+kDxWF6dKeKxT8kOBnoy/OsNXCeLttpyQ==
   dependencies:
-    "@redocly/openapi-core" "^1.4.0"
+    "@redocly/openapi-core" "^1.34.15"
     classnames "^2.3.2"
     decko "^1.2.0"
     dompurify "^3.2.4"
@@ -11292,7 +11292,7 @@ redoc@2.5.1:
     mark.js "^8.11.1"
     marked "^4.3.0"
     mobx-react "9.2.0"
-    openapi-sampler "^1.5.0"
+    openapi-sampler "^1.6.2"
     path-browserify "^1.0.1"
     perfect-scrollbar "^1.5.5"
     polished "^4.2.2"
@@ -12508,10 +12508,10 @@ strnum@^2.3.0:
   resolved "https://registry.yarnpkg.com/strnum/-/strnum-2.3.0.tgz#81bfbfef53db8c3217ea62a98c026886ec4a2761"
   integrity sha512-ums3KNd42PGyx5xaoVTO1mjU1bH3NpY4vsrVlnv9PNGqQj8wd7rJ6nEypLrJ7z5vxK5RP0yMLo6J/Gsm62DI5Q==
 
-styled-components@6.4.1:
-  version "6.4.1"
-  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-6.4.1.tgz#5b44c0d9140a28458eba931f53253613a99ebe30"
-  integrity sha512-ADu2dF53esUzzM4I0ewxhxFtsDd6v4V6dNkg3vG0iFKhnt06sJneTZnRvujAosZwW0XD58IKgGMQoqri4wHRqg==
+styled-components@6.4.2:
+  version "6.4.2"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-6.4.2.tgz#2e92f7b8a1e49f5791c80c864eddf215dd1046c6"
+  integrity sha512-xZBhBJsMtGqb+aKcwKgaT+BtuFums9VynX2JRvXJGTx5UfZzN12rk5r4nVdhXYvRw+hE7yiYxVrOqJZaK2+Txg==
   dependencies:
     "@emotion/is-prop-valid" "1.4.0"
     css-to-react-native "3.2.0"
@@ -13401,14 +13401,14 @@ vue-i18n-extract@^1.0.3:
     is-valid-glob "^1.0.0"
     js-yaml "^3.14.0"
 
-vue-i18n@11.4.4:
-  version "11.4.4"
-  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-11.4.4.tgz#92de5050e582074168f115458358a123b915debd"
-  integrity sha512-gIbXVSFQV4jcSJxfwdZ5zSZmZ+12CnX0K3vBkRSd6Zn+HSzCp+QwUgPwpD/uN0oKNKI9RzlUXPKVedEuMgNG0A==
+vue-i18n@11.4.5:
+  version "11.4.5"
+  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-11.4.5.tgz#41dac75b7c25dff6a819b7f7835cac99e32ec41e"
+  integrity sha512-rm8YJ6RpjOrkcgS2GLrZwLvs/VbhxbTSuEspbyXDo233+fPK0OMFNLOj3fdQYVKdOgcpSfLW91JhbqgpkkcBWA==
   dependencies:
-    "@intlify/core-base" "11.4.4"
-    "@intlify/devtools-types" "11.4.4"
-    "@intlify/shared" "11.4.4"
+    "@intlify/core-base" "11.4.5"
+    "@intlify/devtools-types" "11.4.5"
+    "@intlify/shared" "11.4.5"
     "@vue/devtools-api" "^6.5.0"
 
 vue-loader@17.4.2, vue-loader@^17.4.2:
