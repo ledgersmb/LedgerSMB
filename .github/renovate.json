@@ -13,6 +13,7 @@
     "cpanfile": {
         "enabled": false
     },
+    "minimumReleaseAge": "3 days",
     "packageRules": [
         {
             "matchManagers": [
