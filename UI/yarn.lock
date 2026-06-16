@@ -1479,30 +1479,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ehuelsmann/jest-openapi@npm:0.17.3":
-  version: 0.17.3
-  resolution: "@ehuelsmann/jest-openapi@npm:0.17.3"
+"@ehuelsmann/jest-openapi@npm:0.18.0":
+  version: 0.18.0
+  resolution: "@ehuelsmann/jest-openapi@npm:0.18.0"
   dependencies:
-    "@ehuelsmann/openapi-validator": "npm:^0.17.3"
+    "@ehuelsmann/openapi-validator": "npm:^0.18.0"
     jest-matcher-utils: "npm:^30.4.1"
-  checksum: 10c0/c9f09b825f371b77464d8124ec82ea57031a0daed3b3b4664f17f83933fdade05bd2379d970f0bb42d920bccdf55450e5983baf81ac67c09d11c08add3e67eb1
+  checksum: 10c0/261759814d3dafba7ddde05f9b879e9aeebdf2c8453c5bf541011e87b69f900ef7e103ccb6253e2ffba122ffb8e3f4e132eb3d14118cc49b2ae3c4badd15355c
   languageName: node
   linkType: hard
 
-"@ehuelsmann/openapi-validator@npm:^0.17.3":
-  version: 0.17.3
-  resolution: "@ehuelsmann/openapi-validator@npm:0.17.3"
+"@ehuelsmann/openapi-validator@npm:^0.18.0":
+  version: 0.18.0
+  resolution: "@ehuelsmann/openapi-validator@npm:0.18.0"
   dependencies:
-    "@types/superagent": "npm:^8.1.9"
+    "@types/superagent": "npm:^8.1.10"
     axios: "npm:^1.16.1"
     combos: "npm:^0.2.0"
     fs-extra: "npm:^11.3.5"
-    js-yaml: "npm:^4.0.0"
+    js-yaml: "npm:^4.2.0"
     openapi-response-validator: "npm:^12.1.3"
     openapi-schema-validator: "npm:^12.1.3"
     path-parser: "npm:^6.1.0"
     typeof: "npm:^1.0.0"
-  checksum: 10c0/5a397b11518b0e09d15a5870155da0cf5ce349013974f90303b8d6ab74beb0deb8274861686357fcd7301fe632a4b0ebb9c158f2caa105ad428a30f2fbb38a03
+  checksum: 10c0/5439b708562c281bdaab052d863ce34ddf7d0ddd3c2d9a3254cd4fec16532b572efc9daf112e983c14707fa7970d586593ff2e82d82cc70349ddbf1139041c50
   languageName: node
   linkType: hard
 
@@ -4244,7 +4244,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/superagent@npm:^8.1.9":
+"@types/superagent@npm:^8.1.10":
   version: 8.1.10
   resolution: "@types/superagent@npm:8.1.10"
   dependencies:
@@ -7357,19 +7357,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dojo-webpack-plugin@npm:3.0.9":
-  version: 3.0.9
-  resolution: "dojo-webpack-plugin@npm:3.0.9"
+"dojo-webpack-plugin@npm:3.0.14":
+  version: 3.0.14
+  resolution: "dojo-webpack-plugin@npm:3.0.14"
   dependencies:
     loader-utils: "npm:2.0.4"
     node-stringify: "npm:0.2.1"
     raw-loader: "npm:0.5.1"
-    tmp: "npm:0.0.30"
+    tmp: "npm:0.2.6"
   peerDependencies:
     tapable: ">=2.0"
     webpack: ">=5.0.0"
     webpack-sources: ">=2.0.0"
-  checksum: 10c0/0fb6d6f506afa14b522adf8805a4c6bca1baddfa6f230363e05c890c6bd6792264c00b693280aa337ac6cf5a0202619de90b8e55aacc65cc26d787bd21e6d317
+  checksum: 10c0/44162be3d8e975cc6593b30b2a150e0bd24c8cc0c9038bab3366025eb3ecfb0fe3db5a246938456a280517aefa674e2897798c0046b11a049c3a3e0c598fd6ea
   languageName: node
   linkType: hard
 
@@ -10799,7 +10799,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:^4.0.0, js-yaml@npm:^4.1.0, js-yaml@npm:^4.1.1":
+"js-yaml@npm:^4.1.0, js-yaml@npm:^4.1.1, js-yaml@npm:^4.2.0":
   version: 4.2.0
   resolution: "js-yaml@npm:4.2.0"
   dependencies:
@@ -11084,7 +11084,7 @@ __metadata:
     "@babel/eslint-parser": "npm:7.29.7"
     "@babel/plugin-transform-object-rest-spread": "npm:^7.24.7"
     "@babel/preset-env": "npm:7.29.7"
-    "@ehuelsmann/jest-openapi": "npm:0.17.3"
+    "@ehuelsmann/jest-openapi": "npm:0.18.0"
     "@eslint/js": "npm:10.0.1"
     "@pinia/testing": "npm:1.0.3"
     "@quasar/app-webpack": "npm:^4.2.0"
@@ -11109,7 +11109,7 @@ __metadata:
     dijit: "npm:1.17.3"
     dojo: "npm:1.17.3"
     dojo-util: "npm:1.17.3"
-    dojo-webpack-plugin: "npm:3.0.9"
+    dojo-webpack-plugin: "npm:3.0.14"
     ejs-loader: "npm:0.5.0"
     eslint: "npm:9.39.4"
     eslint-config-eslint: "npm:13.0.0"
@@ -11161,7 +11161,7 @@ __metadata:
     webpack-bundle-analyzer: "npm:5.3.0"
     webpack-cli: "npm:7.0.3"
     webpack-deduplication-plugin: "npm:0.0.8"
-    webpack-dev-server: "npm:5.2.4"
+    webpack-dev-server: "npm:5.2.5"
     webpack-merge: "npm:6.0.1"
     webpack-sources: "npm:3.5.0"
     webpack-virtual-modules: "npm:0.6.2"
@@ -12857,13 +12857,6 @@ __metadata:
     type-check: "npm:^0.4.0"
     word-wrap: "npm:^1.2.5"
   checksum: 10c0/4afb687a059ee65b61df74dfe87d8d6815cd6883cb8b3d5883a910df72d0f5d029821f37025e4bccf4048873dbdb09acc6d303d27b8f76b1a80dd5a7d5334675
-  languageName: node
-  linkType: hard
-
-"os-tmpdir@npm:~1.0.1":
-  version: 1.0.2
-  resolution: "os-tmpdir@npm:1.0.2"
-  checksum: 10c0/f438450224f8e2687605a8dd318f0db694b6293c5d835ae509a69e97c8de38b6994645337e5577f5001115470414638978cc49da1cdcc25106dad8738dc69990
   languageName: node
   linkType: hard
 
@@ -16697,12 +16690,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tmp@npm:0.0.30":
-  version: 0.0.30
-  resolution: "tmp@npm:0.0.30"
-  dependencies:
-    os-tmpdir: "npm:~1.0.1"
-  checksum: 10c0/ebaa6fb9a6f355294a8aa85d9bcbfba992eb333d7bd9c1ec97902e3935cd4c8ed7b482c1b0b446a52d3ff1f9ca075d3d6aef368876969c86304c3c59f0c6cce7
+"tmp@npm:0.2.6":
+  version: 0.2.6
+  resolution: "tmp@npm:0.2.6"
+  checksum: 10c0/fa5b9bfbe60f70904aba5c96b4970e9158d99867891302d10320fe35eee1e45f42946fded4cf5c8514baa087bebee44419029b7deb227da05a68b5205a12d8ab
   languageName: node
   linkType: hard
 
@@ -17818,52 +17809,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-dev-server@npm:5.2.4":
-  version: 5.2.4
-  resolution: "webpack-dev-server@npm:5.2.4"
-  dependencies:
-    "@types/bonjour": "npm:^3.5.13"
-    "@types/connect-history-api-fallback": "npm:^1.5.4"
-    "@types/express": "npm:^4.17.25"
-    "@types/express-serve-static-core": "npm:^4.17.21"
-    "@types/serve-index": "npm:^1.9.4"
-    "@types/serve-static": "npm:^1.15.5"
-    "@types/sockjs": "npm:^0.3.36"
-    "@types/ws": "npm:^8.5.10"
-    ansi-html-community: "npm:^0.0.8"
-    bonjour-service: "npm:^1.2.1"
-    chokidar: "npm:^3.6.0"
-    colorette: "npm:^2.0.10"
-    compression: "npm:^1.8.1"
-    connect-history-api-fallback: "npm:^2.0.0"
-    express: "npm:^4.22.1"
-    graceful-fs: "npm:^4.2.6"
-    http-proxy-middleware: "npm:^2.0.9"
-    ipaddr.js: "npm:^2.1.0"
-    launch-editor: "npm:^2.6.1"
-    open: "npm:^10.0.3"
-    p-retry: "npm:^6.2.0"
-    schema-utils: "npm:^4.2.0"
-    selfsigned: "npm:^5.5.0"
-    serve-index: "npm:^1.9.1"
-    sockjs: "npm:^0.3.24"
-    spdy: "npm:^4.0.2"
-    webpack-dev-middleware: "npm:^7.4.2"
-    ws: "npm:^8.18.0"
-  peerDependencies:
-    webpack: ^5.0.0
-  peerDependenciesMeta:
-    webpack:
-      optional: true
-    webpack-cli:
-      optional: true
-  bin:
-    webpack-dev-server: bin/webpack-dev-server.js
-  checksum: 10c0/42f8afe11b7bfe65d72e30d861ddf1e4d05f27202c4c1162d204cb41a4a858dffc91c5a02bf44ec08acc8c02b4a57aaf46924ec12a5e5b97c307991379282669
-  languageName: node
-  linkType: hard
-
-"webpack-dev-server@npm:^5.2.3":
+"webpack-dev-server@npm:5.2.5, webpack-dev-server@npm:^5.2.3":
   version: 5.2.5
   resolution: "webpack-dev-server@npm:5.2.5"
   dependencies:
