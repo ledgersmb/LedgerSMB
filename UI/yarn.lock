@@ -5693,15 +5693,15 @@ dojo-util@1.17.3:
   resolved "https://registry.yarnpkg.com/dojo-util/-/dojo-util-1.17.3.tgz#1b2a8aaed5f932d93ab376fc2f4a7d096c6e7f5f"
   integrity sha512-3hZMwVh9XmofCJh3v3epTlODTnk3FJoGHZiZKVlbhvYLtRC8pkLg6zitOpT2Zg4Jn5URYmPrMmAdwxRHrG736A==
 
-dojo-webpack-plugin@3.0.9:
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/dojo-webpack-plugin/-/dojo-webpack-plugin-3.0.9.tgz#837fdb32888de9e90ee036a194333ef7ca965941"
-  integrity sha512-NSQV4EBiUOfTujlVyTAhz7D/vHqX1NjyhXZUAeHCi7bEUhQL3mi67YbNxwLVYcj+U8lTlagsOGAD04ZAk64skQ==
+dojo-webpack-plugin@3.0.14:
+  version "3.0.14"
+  resolved "https://registry.yarnpkg.com/dojo-webpack-plugin/-/dojo-webpack-plugin-3.0.14.tgz#453c3eb8fe8319c765de26ac8d6c73f41c8345b8"
+  integrity sha512-YRR8/vPWa7jgP8gwBcW7Hd7uDU083+ZQ236QBo2jsNIOlw0Bc9+LXRI3QoCfsn+H8wd3yl0vyuFryPCGhkTFAA==
   dependencies:
     loader-utils "2.0.4"
     node-stringify "0.2.1"
     raw-loader "0.5.1"
-    tmp "0.0.30"
+    tmp "0.2.6"
 
 dojo@1.17.3:
   version "1.17.3"
@@ -10117,11 +10117,6 @@ optionator@^0.9.3:
     type-check "^0.4.0"
     word-wrap "^1.2.5"
 
-os-tmpdir@~1.0.1:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
-  integrity sha512-D2FR03Vir7FIu45XBY20mTb+/ZSWB00sjU9jdQXt83gDrI4Ztz5Fs7/yy74g2N5SVQY4xY1qDr4rNddwYRVX0g==
-
 outdent@^0.8.0:
   version "0.8.0"
   resolved "https://registry.yarnpkg.com/outdent/-/outdent-0.8.0.tgz#2ebc3e77bf49912543f1008100ff8e7f44428eb0"
@@ -12899,12 +12894,10 @@ tldts@^7.0.5:
   dependencies:
     tldts-core "^7.4.2"
 
-tmp@0.0.30:
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.30.tgz#72419d4a8be7d6ce75148fd8b324e593a711c2ed"
-  integrity sha512-HXdTB7lvMwcb55XFfrTM8CPr/IYREk4hVBFaQ4b/6nInrluSL86hfHm7vu0luYKCfyBZp2trCjpc8caC3vVM3w==
-  dependencies:
-    os-tmpdir "~1.0.1"
+tmp@0.2.6:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.2.6.tgz#0dfac10fd09a9319288eb0e8f0ed524604e183b4"
+  integrity sha512-5sJPdPjfI5Kx+qbrDesxkglRBxW//g7hCsqspEjwkewGvBMGIKMOTKzLt1hFVJzyadba3lDUN20O9qhvbQUSTA==
 
 tmpl@1.0.5:
   version "1.0.5"
@@ -13620,41 +13613,7 @@ webpack-dev-middleware@^7.4.2:
     range-parser "^1.2.1"
     schema-utils "^4.0.0"
 
-webpack-dev-server@5.2.4:
-  version "5.2.4"
-  resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-5.2.4.tgz#6e6306ce59848ed322c235e48b326632b1eed6d6"
-  integrity sha512-GqDPGZN9bRqKBTkp4aWkobDDHMsrXKoGSdOH56smIri8qR0JG8gfL8/v/f/OZR3/OKXjG8uwJbFVhKm/FNU/UA==
-  dependencies:
-    "@types/bonjour" "^3.5.13"
-    "@types/connect-history-api-fallback" "^1.5.4"
-    "@types/express" "^4.17.25"
-    "@types/express-serve-static-core" "^4.17.21"
-    "@types/serve-index" "^1.9.4"
-    "@types/serve-static" "^1.15.5"
-    "@types/sockjs" "^0.3.36"
-    "@types/ws" "^8.5.10"
-    ansi-html-community "^0.0.8"
-    bonjour-service "^1.2.1"
-    chokidar "^3.6.0"
-    colorette "^2.0.10"
-    compression "^1.8.1"
-    connect-history-api-fallback "^2.0.0"
-    express "^4.22.1"
-    graceful-fs "^4.2.6"
-    http-proxy-middleware "^2.0.9"
-    ipaddr.js "^2.1.0"
-    launch-editor "^2.6.1"
-    open "^10.0.3"
-    p-retry "^6.2.0"
-    schema-utils "^4.2.0"
-    selfsigned "^5.5.0"
-    serve-index "^1.9.1"
-    sockjs "^0.3.24"
-    spdy "^4.0.2"
-    webpack-dev-middleware "^7.4.2"
-    ws "^8.18.0"
-
-webpack-dev-server@^5.2.3:
+webpack-dev-server@5.2.5, webpack-dev-server@^5.2.3:
   version "5.2.5"
   resolved "https://registry.yarnpkg.com/webpack-dev-server/-/webpack-dev-server-5.2.5.tgz#648fceaac6a5736b0935e5c1e55d6aa1d0626119"
   integrity sha512-4wZtCquSuv9CKX8oybo+mqxtxZqWz47uM1Ch94lxowBztOhWCbhqvRbfC/mODOwxgV2brY+JGZpHq58/SuVFYg==
