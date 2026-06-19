@@ -5,7 +5,7 @@
     "lockFileMaintenance": {
         "enabled": true
     },
-    "baseBranchPatterns": [
+    "baseBranches": [
         "master",
         "1.13",
         "1.12"
@@ -23,6 +23,16 @@
         {
             "matchUpdateTypes": ["lockFileMaintenance"],
             "automerge": true
+        },
+        {
+            "baseBranches": [ "1.12", "1.13" ],
+            "matchPackageNames": [ "babel*", "@babel/*" ],
+            "allowedVersions": "<8"
+        },
+        {
+           "baseBranches": [ "1.12", "1.13" ],
+           "matchPackageNames": [ "eslint monorepo" ],
+           "allowedVersions": "<10"
         },
         {
             "matchUpdateTypes": [
@@ -45,16 +55,6 @@
             "groupSlug": "stylelint-major",
             "matchPackageNames": [
                 "/stylelint/"
-            ]
-        },
-        {
-            "matchBaseBranches": [
-                "1.11",
-                "1.10"
-            ],
-            "enabled": false,
-            "matchPackageNames": [
-                "/^eslint/"
             ]
         },
         {
