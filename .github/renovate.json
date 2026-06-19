@@ -31,7 +31,7 @@
         },
         {
            "baseBranches": [ "1.12", "1.13" ],
-           "matchPackageNames": [ "eslint monorepo" ],
+           "matchPackageNames": [ "eslint", "@eslint/*" ],
            "allowedVersions": "<10"
         },
         {
