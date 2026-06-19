@@ -37,12 +37,6 @@
             ]
         },
         {
-            "allowedVersions": "<4",
-            "matchPackageNames": [
-                "/^selenium//"
-            ]
-        },
-        {
             "allowedVersions": "<0.8",
             "matchPackageNames": [
                 "/^@intlify/unplugin-vue-i18n/"
