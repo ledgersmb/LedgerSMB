@@ -129,10 +129,16 @@ function processTemplate(descriptor, filename, config) {
         }
     }
 
-    const babelified = transformSync(result.code, {
-        filename: "file.js",
-        presets: ["@babel/preset-env"]
-    });
+    let babelified;
+    try {
+        babelified = transformSync(result.code, {
+            filename,
+            presets: ["@babel/preset-env"]
+        });
+    } catch (error) {
+        error.message = `Babel 8 failed to transform Vue template for ${filename}: ${error.message}`;
+        throw error;
+    }
 
     return { code: babelified.code };
 }
