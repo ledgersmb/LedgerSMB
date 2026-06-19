@@ -169,7 +169,7 @@ const common = {
         "^.+\\.[mc]?js$": "babel-jest",
         "^.+\\.jsx$": "babel-jest",
         "^@": "babel-jest",
-        "^.+\\.vue$": "@vue/vue3-jest"
+        "^.+\\.vue$": "<rootDir>/tests/common/vue3-jest-babel8.js"
     },
 
     // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
@@ -289,7 +289,7 @@ module.exports = {
                 "^.+\\.yaml$": "yaml-jest-transform",
                 "^.+\\.[mc]?js$": "babel-jest",
                 "^.+\\.jsx$": "babel-jest",
-                "^.+\\.vue$": "@vue/vue3-jest",
+                "^.+\\.vue$": "<rootDir>/tests/common/vue3-jest-babel8.js",
                 "^@": "babel-jest",
 
             },
@@ -305,7 +305,7 @@ module.exports = {
                 "^.+\\.yaml$": "yaml-jest-transform",
                 "^.+\\.[mc]?js$": "babel-jest",
                 "^.+\\.jsx$": "babel-jest",
-                "^.+\\.vue$": "@vue/vue3-jest",
+                "^.+\\.vue$": "<rootDir>/tests/common/vue3-jest-babel8.js",
                 "^@": "babel-jest",
             },
         }
