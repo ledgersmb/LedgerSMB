@@ -57,7 +57,7 @@ export default defineComponent({
                         alt="LedgerSMB Logo"
                     >
                 </a>
-                <div id="maindiv">
+                <div id="maindiv" data-lsmb-done="true">
                     <div class="maindivContent">
                         <div>
                             <div id="company_div">
