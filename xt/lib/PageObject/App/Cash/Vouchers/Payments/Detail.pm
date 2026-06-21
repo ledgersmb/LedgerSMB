@@ -26,7 +26,7 @@ __PACKAGE__->self_register(
 
 sub payment_rows {
     my $self = shift;
-    my $rows = $self->find_all('//table[@id="payments-table"]/tbody/tr');
+    my $rows = $self->find_all('//table[@id="payments-table"]/tbody/tr[td[@class="entity_name"]]', scheme => 'xpath');
 
     return $rows;
 }
@@ -41,9 +41,9 @@ sub parse_payment_row {
     my $self = shift;
     my $row = shift;
     my $rv = {
-        'Name' => $row->find('./td[@class="entity_name"]')->get_text,
-        'Invoice Total' => $row->find('./td[@class="invoice"]')->get_text,
-        'Source' => $row->find('//input[@title="Source"]')->get_attribute('value'),
+        'Name' => $row->find('./td[@class="entity_name"]', scheme => 'xpath')->get_text,
+        'Invoice Total' => $row->find('./td[@class="invoice"]', scheme => 'xpath')->get_text,
+        'Source' => $row->find('.//input[@title="Source"]', scheme => 'xpath')->get_attribute('value'),
     };
 
     return $rv;
@@ -97,7 +97,8 @@ sub find_invoice_detail_table {
     my $wanted = shift;
     my $payment_row = $self->find_payment_row($wanted);
     my $detail_table = $payment_row->find(
-        './following-sibling::tr/td[@class="invoice_detail_list"]/table'
+        './following-sibling::tr/td[@class="invoice_detail_list"]/table',
+        scheme => 'xpath'
     );
     return $detail_table;
 }
@@ -130,14 +131,15 @@ sub parse_invoice_detail_row {
     my $self = shift;
     my $row = shift;
     my $rv = {
-        'Date' => $row->find('./td[@class="invoice_date_list"]')->get_text,
-        'Invoice Number' => $row->find('./td[@class="invoice_list"]')->get_text,
-        'Total' => $row->find('./td[@class="total_due_list"]')->get_text,
-        'Paid' => $row->find('./td[@class="paid_list"]')->get_text,
-        'Discount' => $row->find('./td[@class="discount_list"]')->get_text,
-        'Net Due' => $row->find('./td[@class="net_due_list"]')->get_text,
+        'Date' => $row->find('./td[@class="invoice_date_list"]', scheme => 'xpath')->get_text,
+        'Invoice Number' => $row->find('./td[@class="invoice_list"]', scheme => 'xpath')->get_text,
+        'Total' => $row->find('./td[@class="total_due_list"]', scheme => 'xpath')->get_text,
+        'Paid' => $row->find('./td[@class="paid_list"]', scheme => 'xpath')->get_text,
+        'Discount' => $row->find('./td[@class="discount_list"]', scheme => 'xpath')->get_text,
+        'Net Due' => $row->find('./td[@class="net_due_list"]', scheme => 'xpath')->get_text,
         'To Pay' => $row->find(
-            './td[@class="to_pay_list"]//input[contains(@name, "payment_")]'
+            './td[@class="to_pay_list"]//input[contains(@name, "payment_")]',
+            scheme => 'xpath'
         )->get_attribute('value'),
     };
 

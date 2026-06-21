@@ -216,7 +216,7 @@ Then qr/I expect to see the '(.*)' value of '(.*)'/, sub {
     my $elm = S->{ext_wsl}->page->body->maindiv
         ->content->find(qq|.//*[\@id="$id" or \@title="$id"
                                 or \@alt="$id"]
-        |);
+        |, scheme => 'xpath');
     ok(defined $elm, "value-defining element ($id) found");
     my $actual = $elm->get_text || $elm->get_attribute('value');
     $actual =~ s/^\s+|\s+$//g;

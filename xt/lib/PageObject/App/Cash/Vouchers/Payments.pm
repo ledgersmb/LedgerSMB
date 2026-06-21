@@ -18,14 +18,13 @@ __PACKAGE__->self_register(
     }
 );
 
-
 # batch_rows()
 #
 # Returns an arrayref of rows in the table of existing batches.
 
 sub batch_rows {
     my $self = shift;
-    my $rows = $self->find_all('//table[@id="batch_list"]/tbody/tr');
+    my $rows = $self->find_all('//table[@id="batch_list"]/tbody/tr', scheme => 'xpath');
     return $rows;
 }
 
@@ -43,7 +42,8 @@ sub batch_row {
         "//table[\@id='batch_list']/tbody/tr[" .
         "  td[contains(\@class,'description') and " .
         "  normalize-space(.)='$params{description}']" .
-        "]"
+        "]",
+        scheme => 'xpath'
     );
 
     return $row;
@@ -110,9 +110,10 @@ sub batch_link {
     my %params = @_;
 
     my $row = $self->find(
-        "//table[\@id='batch_list']/tbody/tr/td/a[" .
-        "  normalize-space(.)='$params{batch_number}'" .
-        "]"
+        "//table[\@id='batch_list']//a[" .
+        "  normalize-space(.)=normalize-space('$params{batch_number}')" .
+        "]",
+        scheme => 'xpath'
     );
 
     return $row;
