@@ -234,7 +234,7 @@ on 'develop' => sub {
     requires 'Perl::Critic::Policy::Modules::RequireExplicitInclusion';
     requires 'Pherkin::Extension::Weasel', '0.18';
     requires 'Pod::ProjectDocs';
-    requires 'Selenium::Remote::Driver';
+    requires 'Selenium::Client';
     requires 'TAP::Parser::SourceHandler::pgTAP', '3.33';
     requires 'Test::BDD::Cucumber', '0.87';
     requires 'Test::Dependencies', '0.34';
