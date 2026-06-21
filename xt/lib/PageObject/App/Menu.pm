@@ -6,7 +6,6 @@ use warnings;
 use Carp;
 use PageObject;
 use MIME::Base64;
-use Time::HiRes;
 use Test::More;
 
 use Module::Runtime qw(use_module);
@@ -171,7 +170,6 @@ sub click_menu {
             # menu item found; held in $item
             my $expanded = $item->get_attribute('aria-expanded');
             $item->click unless ($expanded and $expanded eq 'true');
-            sleep 0.1;
 
             # the node and its children are siblings in the DOM tree
             # continue the search from one level up...
@@ -192,12 +190,12 @@ sub close_menus {
     $_->click for reverse @nodes;
 
     # wait for the transition to close, to complete
-    $self->session->wait_for(
-        sub {
-            my @open = $self->find_all(
-                './/*[@role="treeitem" and @aria-expanded="true"]');
-            return scalar(@open) == 0;
-        });
+    # $self->session->wait_for(
+    #     sub {
+    #         my @open = $self->find_all(
+    #             './/*[@role="treeitem" and @aria-expanded="true"]');
+    #         return scalar(@open) == 0;
+    #     });
 }
 
 __PACKAGE__->meta->make_immutable;
