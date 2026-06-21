@@ -471,6 +471,7 @@ executors:
           SE_EVENT_BUS_HOST: selenium-hub
           SE_EVENT_BUS_PORT: 4444
           SE_NODE_MAX_SESSIONS: 5
+          SE_NODE_OVERRIDE_MAX_SESSIONS: true
           SE_NODE_MAX_INSTANCES: 5
       - image: mailhog/mailhog:latest
 
