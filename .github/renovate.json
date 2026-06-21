@@ -17,6 +17,14 @@
     "packageRules": [
         {
             "matchManagers": [
+                "docker"
+            ],
+            "matchPackageNames": [ "*selenium*" ],
+            "baseBranches": [ "1.12" ],
+            "allowedVersions": "<4"
+        },
+        {
+            "matchManagers": [
                 "github-actions"
             ]
         },
