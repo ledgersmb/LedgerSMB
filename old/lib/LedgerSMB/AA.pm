@@ -318,7 +318,7 @@ sub post_transaction {
                   AND workflow_id IS NULL
            SQL
         $sth   = $dbh->prepare($query);
-        $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{transdate}, $form->{id} )
+        $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{transdate}, $form->{intnotes}, $form->{id} )
             || $form->dberror($query);
     }
 
