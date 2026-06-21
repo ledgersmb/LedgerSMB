@@ -16,10 +16,7 @@
     "minimumReleaseAge": "3 days",
     "packageRules": [
         {
-            "matchManagers": [
-                "docker"
-            ],
-            "matchPackageNames": [ "*selenium*" ],
+            "matchPackageNames": [ "selenium/*" ],
             "baseBranchPatterns": [
                 "1.12"
             ],
