@@ -15,18 +15,18 @@ use YAML qw(LoadFile);
 #    if @missing;
 
 plan tests => 2;
-require Selenium::Remote::Driver;
+require Selenium::Client;
 
 my $config_data_whole = LoadFile('t/.pherkin.yaml');
 my $selenium = $config_data_whole->{default}->{extensions}->{"Pherkin::Extension::Weasel"}->{sessions}->{selenium};
 
-my $browser = $selenium->{driver}->{caps}->{browser_name} =~ /\$\{([^\}]+)\}/
+my $browser = $selenium->{driver}->{caps}->{browser} =~ /\$\{([^\}]+)\}/
           ? $ENV{$1} // "phantomjs"
-          : $selenium->{driver}->{caps}->{browser_name};
+          : $selenium->{driver}->{caps}->{browser};
 
-my $remote_server_addr = $selenium->{driver}->{caps}->{remote_server_addr} =~ /\$\{([a-zA-Z0-9_]+)\}/
+my $remote_server_addr = $selenium->{driver}->{caps}->{host} =~ /\$\{([a-zA-Z0-9_]+)\}/
           ? $ENV{$1} // "localhost"
-          : $selenium->{driver}->{caps}->{remote_server_addr};
+          : $selenium->{driver}->{caps}->{host};
 
 my $base_url = $selenium->{base_url} =~ /\$\{([a-zA-Z0-9_]+)\}/
           ? $ENV{$1} // "http://localhost:5000"
@@ -34,19 +34,21 @@ my $base_url = $selenium->{base_url} =~ /\$\{([a-zA-Z0-9_]+)\}/
 
 my %caps = (
           port => $selenium->{driver}->{caps}->{port},
-          browser_name => $browser,
-          remote_server_addr => $remote_server_addr
+          browser => $browser,
+    host => $remote_server_addr
 );
 
-my $driver = Selenium::Remote::Driver->new(%caps)
+my $driver = Selenium::Client->new(%caps)
           || die "Unable to connect to remote browser";
 
-$driver->set_implicit_wait_timeout(30000); # 30s
-$driver->get($base_url . '/login.pl');
+my ($sess_caps, $sess) = $driver->NewSession();
 
-ok($driver->find_element_by_name('password'), 'got a password');
+$sess->SetTimeouts(implicit => 30000); # 30s
+$sess->NavigateTo(url => $base_url . '/login.pl');
 
-$driver->get($base_url . '/setup.pl');
+ok($sess->FindElement(using => 'css selector', value => '[name="password"]'), 'got a password');
 
-ok($driver->find_element_by_name('s_password'), 'got a user');
+$sess->NavigateTo(url => $base_url . '/setup.pl');
+
+ok($sess->FindElement(using => 'css selector', value => '[name="s_password"]'), 'got a user');
 
