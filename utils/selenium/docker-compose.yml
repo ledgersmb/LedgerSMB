@@ -3,7 +3,7 @@ version: '2.1'
 services:
 
   hub:
-    image: selenium/hub:3
+    image: selenium/hub:4
     container_name: hub
     hostname: hub
     privileged: true
