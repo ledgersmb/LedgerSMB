@@ -5,7 +5,7 @@
     "lockFileMaintenance": {
         "enabled": true
     },
-    "baseBranches": [
+    "baseBranchPatterns": [
         "master",
         "1.13",
         "1.12"
@@ -20,7 +20,9 @@
                 "docker"
             ],
             "matchPackageNames": [ "*selenium*" ],
-            "baseBranches": [ "1.12" ],
+            "baseBranchPatterns": [
+                "1.12"
+            ],
             "allowedVersions": "<4"
         },
         {
@@ -33,12 +35,18 @@
             "automerge": true
         },
         {
-            "baseBranches": [ "1.12", "1.13" ],
+            "baseBranchPatterns": [
+                "1.12",
+                "1.13"
+            ],
             "matchPackageNames": [ "babel*", "@babel/*" ],
             "allowedVersions": "<8"
         },
         {
-           "baseBranches": [ "1.12", "1.13" ],
+           "baseBranchPatterns": [
+                "1.12",
+                "1.13"
+            ],
            "matchPackageNames": [ "eslint", "@eslint/*" ],
            "allowedVersions": "<10"
         },
