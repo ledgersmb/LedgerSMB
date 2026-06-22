@@ -91,7 +91,7 @@
     "globals": "17.6.0",
     "html-webpack-plugin": "5.6.7",
     "http-status-codes": "2.3.0",
-    "i18next-conv": "16.0.0",
+    "i18next-conv": "17.0.0",
     "jsdom": "29.1.1",
     "jsonc-eslint-parser": "3.1.0",
     "markdown-include": "0.4.3",
