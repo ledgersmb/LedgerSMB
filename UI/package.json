@@ -89,7 +89,7 @@
     "globals": "17.6.0",
     "html-webpack-plugin": "5.6.7",
     "http-status-codes": "2.3.0",
-    "i18next-conv": "16.0.0",
+    "i18next-conv": "17.0.0",
     "jest": "30.4.2",
     "jest-environment-jsdom": "^30.0.0",
     "jest-fixed-jsdom": "^0.0.11",
