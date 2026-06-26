@@ -234,7 +234,7 @@ sub post_transaction {
             my ($count) = $s_sth->fetchrow_array()
                 or $form->dberror($s_sth->errstr);
             if ($count == 0){
-                 $form->error($locale->text('Account [_1] not found',
+                 $form->error($locale->text(q(Account '[_1]' not found),
                                             $accno));
             }
 
