@@ -371,6 +371,7 @@ sub _process_gl {
         }
         ++$form->{rowcount};
     }
+    $form->{rowcount}--;
     return GL->post_transaction( ## no critic
         $request->{_user}, $form, $request->{_locale});
 }
@@ -593,11 +594,20 @@ sub _parse_file {
     my $self = shift @_;
 
     my $handle = $self->upload('import_file');
-    my $csv = Text::CSV->new({ blank_is_undef => 1 });
-    $csv->header($handle);
-    $self->{import_entries} = $csv->getline_all($handle);
+    my $csv = Text::CSV->new({ blank_is_undef => 1, allow_whitespace => 1 });
+    my @headers = $csv->header($handle);
+    if (not @headers) {
+        my ($code, $msg) = $csv->error_diag();
+        if ($code) {
+            die "Invalid CSV input ($code): $msg";
+        }
+        else {
+            die 'Failed to parse CSV input';
+        }
+    }
 
-    return ([$csv->fields], @{$self->{import_entries}});
+    $self->{import_entries} = $csv->getline_all($handle);
+    return (\@headers, @{$self->{import_entries}});
 }
 
 
