@@ -117,7 +117,7 @@ sub post_transaction {
       RETURNING id|;
 
         $sth = $dbh->prepare($query) || $form->dberror($query);
-        $sth->execute($form->{reference}, $form->{notes})
+        $sth->execute()
             || $form->dberror($query);
 
         ( $form->{id} ) = $sth->fetchrow_array();
