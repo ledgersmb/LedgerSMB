@@ -10,10 +10,10 @@
 <p>[% text('Note: '); %]</p>
 
 
+[% IF upgrade_results.size > 0 %]
 <table>
   <caption style="min-width:fit-content">[% text('LedgerSMB database upgrade check results') %]</caption>
   <tbody>
-    [% IF upgrade_results %]
     [% FOR item IN upgrade_results %]
     <tr>
       <td style="text-align: right">
@@ -25,15 +25,9 @@
       <th>[% item.frontmatter.title %]</th>
     </tr>
     [% END %]
-    [% ELSE %]
-    <tr>
-      <td>
-        [% text('No checks applicable') %]
-      </td>
-    </tr>
-    [% END %]
   </tbody>
 </table>
+[% END %]
 
 <table>
   <caption>[% text('LedgerSMB database consistency check results') %]</caption>
