@@ -8115,9 +8115,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.376":
-  version: 1.5.378
-  resolution: "electron-to-chromium@npm:1.5.378"
-  checksum: 10c0/bb8cc9632b6e47aa7458d6f270145ef10a51a5da0c82605ae6f7cabfc851c3792e21db25caab7e3bd9434380e6afd404ee8999cdf5fa5faa3e2468456df11f5c
+  version: 1.5.379
+  resolution: "electron-to-chromium@npm:1.5.379"
+  checksum: 10c0/65b61c9fc83a037d800ae3aeb4e71fe508e72fc4fffd425d480c349bdc69a3720057462206fec2610d70179e1db0090bf35fb1d6de220438827fb1bd1d4e287c
   languageName: node
   linkType: hard
 
@@ -8406,15 +8406,16 @@ __metadata:
   linkType: hard
 
 "es-to-primitive@npm:^1.3.0":
-  version: 1.3.3
-  resolution: "es-to-primitive@npm:1.3.3"
+  version: 1.3.4
+  resolution: "es-to-primitive@npm:1.3.4"
   dependencies:
     es-abstract-get: "npm:^1.0.0"
+    es-define-property: "npm:^1.0.1"
     es-errors: "npm:^1.3.0"
     is-callable: "npm:^1.2.7"
     is-date-object: "npm:^1.1.0"
     is-symbol: "npm:^1.1.1"
-  checksum: 10c0/22d70464be87b562aa60c29426f12f0ca1c95fe817e6ce0acddbd0cd718a28c3b2b5446c5c055d0d2d72b9f454912943a8c1111c177d224beb96fa7abf908680
+  checksum: 10c0/b10029f8b0b13841bade224ff39005a13d76d9cb803cd1efb18cc96a24414e83e2e7ed15d7ad9d0d0bda66884afd211b7b579b8fa31940e05b060934aa7077d8
   languageName: node
   linkType: hard
 
@@ -10325,9 +10326,9 @@ __metadata:
   linkType: hard
 
 "immutable@npm:^5.1.5":
-  version: 5.1.7
-  resolution: "immutable@npm:5.1.7"
-  checksum: 10c0/8b5176f966314d99a3678daaf412be3de82627fa659693d2fd96de4cc6ba9a87144b58e6786ce76caff8a5bbbaa0c5b0fa858aaf993bb81e119684033b056168
+  version: 5.1.8
+  resolution: "immutable@npm:5.1.8"
+  checksum: 10c0/b34b237d324a94ed0f7749ae293c4b10aaa1755e0cb04c73360e18f4f35d5684551fe92c2b195c97562e57aab970ff47d04e25c5bc8c393ecde7da0f54356b48
   languageName: node
   linkType: hard
 
