@@ -3,6 +3,10 @@
 Changelog for 1.13 Series
 Released 2025-10-04
 
+Changelog for 1.13.7
+* Fix error thrown when selecting 'All accounts' on the trial balance (#9699)
+
+
 Changelog for 1.13.6
 * Fix double-counting of transaction amounts in batch searches (#9522)
 * Add pre-upgrade consistency checks in setup.pl (#9559)
