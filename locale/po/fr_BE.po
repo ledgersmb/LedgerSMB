@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.12.20-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2026-05-29 17:13+0000\n"
+"POT-Creation-Date: 2026-07-05 20:47+0000\n"
 "Last-Translator: Erik Huelsmann <ehuels@gmail.com>, 2024\n"
 "Language-Team: French (Belgium) (https://app.transifex.com/ledgersmb/teams/"
 "58325/fr_BE/)\n"
@@ -617,7 +617,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:236
 #: UI/Reports/filters/invoice_search.html:257 UI/Reports/filters/orders.html:119
 #: UI/Reports/filters/search_goods.html:17 UI/Reports/filters/timecards.html:42
-#: UI/Reports/filters/trial_balance.html:61
+#: UI/Reports/filters/trial_balance.html:62
 msgid "All"
 msgstr "Tous"
 
@@ -769,7 +769,7 @@ msgstr "Approuver"
 #: UI/reconciliation/report.html:448 UI/Reports/filters/batches.html:23
 #: UI/Reports/filters/gl.html:130 UI/Reports/filters/invoice_search.html:224
 #: UI/Reports/filters/reconciliation_search.html:51
-#: UI/Reports/filters/trial_balance.html:48
+#: UI/Reports/filters/trial_balance.html:49
 msgid "Approved"
 msgstr "Approuvé"
 
@@ -1059,7 +1059,7 @@ msgstr "Bilan"
 msgid "Balance sheet"
 msgstr "Bilan"
 
-#: UI/Reports/filters/trial_balance.html:67
+#: UI/Reports/filters/trial_balance.html:68
 msgid "Balances as"
 msgstr "Soldes comme"
 
@@ -1705,7 +1705,7 @@ msgstr ""
 #: UI/Reports/filters/invoice_search.html:430 UI/Reports/filters/orders.html:222
 #: UI/Reports/filters/purchase_history.html:360
 #: UI/Reports/filters/taxforms.html:145
-#: UI/Reports/filters/trial_balance.html:127 UI/timecards/entry_filter.html:41
+#: UI/Reports/filters/trial_balance.html:128 UI/timecards/entry_filter.html:41
 msgid "Continue"
 msgstr "Continuer"
 
@@ -6102,7 +6102,7 @@ msgstr ""
 msgid "Report Submitted"
 msgstr "Rapport soumis"
 
-#: UI/Reports/filters/trial_balance.html:75
+#: UI/Reports/filters/trial_balance.html:76
 msgid "Report Type"
 msgstr "Type de rapport"
 
@@ -7944,7 +7944,7 @@ msgstr ""
 
 #: UI/Reports/filters/batches.html:30 UI/Reports/filters/gl.html:135
 #: UI/Reports/filters/invoice_search.html:230
-#: UI/Reports/filters/trial_balance.html:55
+#: UI/Reports/filters/trial_balance.html:56
 msgid "Unapproved"
 msgstr "Non approuvé"
 
