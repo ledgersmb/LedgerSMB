@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.13.7-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2026-05-29 18:35+0000\n"
+"POT-Creation-Date: 2026-07-05 21:45+0000\n"
 "Last-Translator: Mikael Arhelger <mikaelarhelger@gmail.com>, 2025\n"
 "Language-Team: German (Switzerland) (https://app.transifex.com/ledgersmb/"
 "teams/58325/de_CH/)\n"
@@ -616,7 +616,7 @@ msgstr "Fälligkeitsübersicht "
 #: UI/Reports/filters/invoice_search.html:236
 #: UI/Reports/filters/invoice_search.html:257 UI/Reports/filters/orders.html:119
 #: UI/Reports/filters/search_goods.html:17 UI/Reports/filters/timecards.html:42
-#: UI/Reports/filters/trial_balance.html:68
+#: UI/Reports/filters/trial_balance.html:69
 msgid "All"
 msgstr "Alle"
 
@@ -773,7 +773,7 @@ msgstr "Genehmigen"
 #: UI/reconciliation/report.html:447 UI/Reports/filters/batches.html:23
 #: UI/Reports/filters/gl.html:101 UI/Reports/filters/invoice_search.html:224
 #: UI/Reports/filters/reconciliation_search.html:49
-#: UI/Reports/filters/trial_balance.html:55
+#: UI/Reports/filters/trial_balance.html:56
 msgid "Approved"
 msgstr "Genehmigt"
 
@@ -1063,7 +1063,7 @@ msgstr "Bilanz"
 msgid "Balance sheet"
 msgstr "Bilanz"
 
-#: UI/Reports/filters/trial_balance.html:71
+#: UI/Reports/filters/trial_balance.html:72
 msgid "Balances as"
 msgstr "Bilanz zum"
 
@@ -1728,7 +1728,7 @@ msgstr "Inhalt"
 #: UI/Reports/filters/invoice_search.html:430 UI/Reports/filters/orders.html:222
 #: UI/Reports/filters/purchase_history.html:356
 #: UI/Reports/filters/taxforms.html:145
-#: UI/Reports/filters/trial_balance.html:131 UI/timecards/entry_filter.html:36
+#: UI/Reports/filters/trial_balance.html:132 UI/timecards/entry_filter.html:36
 msgid "Continue"
 msgstr "Weiter"
 
@@ -6130,7 +6130,7 @@ msgstr "Berichtsergebnisse"
 msgid "Report Submitted"
 msgstr "Bericht eingereicht"
 
-#: UI/Reports/filters/trial_balance.html:79
+#: UI/Reports/filters/trial_balance.html:80
 msgid "Report Type"
 msgstr "Berichtstyp"
 
@@ -7952,7 +7952,7 @@ msgstr "AKTUALISIEREN"
 
 #: UI/Reports/filters/batches.html:30 UI/Reports/filters/gl.html:106
 #: UI/Reports/filters/invoice_search.html:230
-#: UI/Reports/filters/trial_balance.html:62
+#: UI/Reports/filters/trial_balance.html:63
 msgid "Unapproved"
 msgstr "Nicht genehmigt"
 
