@@ -46,7 +46,7 @@
     "content-disposition": "2.0.1",
     "dijit": "1.17.3",
     "dojo": "1.17.3",
-    "pinia": "3.0.4",
+    "pinia": "4.0.0",
     "robot3": "1.2.0",
     "rtl-detect": "1.1.2",
     "tapable": "2.3.3",
