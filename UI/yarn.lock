@@ -4027,12 +4027,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pinia/testing@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@pinia/testing@npm:1.0.3"
+"@pinia/testing@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@pinia/testing@npm:2.0.0"
+  dependencies:
+    nostics: "npm:^1.1.4"
   peerDependencies:
-    pinia: ">=3.0.4"
-  checksum: 10c0/4c87fd04e74d1dfc6b5b89ca6ea36ff35e6fbbd81203aa5e07d3b6c154baac14ec777d64a93c701d38f6575175ea6b7513a3a9d65eccebfedde100e0ef02dbd2
+    pinia: ">=4.0.0"
+  checksum: 10c0/9b3fa33b15aff4eb91a32ee9e2753b6596ef1613ea8c811a35fb7c2ad327ac5a017d76e325130d689790e38caf6a94af057121b6abb51806b125e27ffb0b5aa8
   languageName: node
   linkType: hard
 
@@ -11519,7 +11521,7 @@ __metadata:
     "@babel/preset-env": "npm:8.0.0"
     "@ehuelsmann/jest-openapi": "npm:0.18.0"
     "@eslint/js": "npm:10.0.1"
-    "@pinia/testing": "npm:1.0.3"
+    "@pinia/testing": "npm:2.0.0"
     "@quasar/app-webpack": "npm:^4.2.0"
     "@quasar/extras": "npm:^2.0.0"
     "@redocly/cli": "npm:2.37.0"
@@ -12939,6 +12941,13 @@ __metadata:
   version: 3.0.0
   resolution: "normalize-path@npm:3.0.0"
   checksum: 10c0/e008c8142bcc335b5e38cf0d63cfd39d6cf2d97480af9abdbe9a439221fd4d749763bab492a8ee708ce7a194bb00c9da6d0a115018672310850489137b3da046
+  languageName: node
+  linkType: hard
+
+"nostics@npm:^1.1.4":
+  version: 1.1.4
+  resolution: "nostics@npm:1.1.4"
+  checksum: 10c0/297adc5af7fdd03b8a24f3a26fb6dfae7902d533815deeae72ea4a3e11e90225bd357c4a7e40726eef51026147b7d389424d5ac3ade56bc2731c4fc8b22a19ca
   languageName: node
   linkType: hard
 

@@ -58,7 +58,7 @@
     "@babel/preset-env": "8.0.0",
     "@ehuelsmann/jest-openapi": "0.18.0",
     "@eslint/js": "10.0.1",
-    "@pinia/testing": "1.0.3",
+    "@pinia/testing": "2.0.0",
     "@quasar/app-webpack": "^4.2.0",
     "@redocly/cli": "2.37.0",
     "@typescript-eslint/utils": "8.63.0",
