@@ -113,7 +113,7 @@
     "stylelint-no-unsupported-browser-features": "8.1.1",
     "stylelint-order": "8.1.1",
     "stylelint-webpack-plugin": "5.1.0",
-    "typescript": "6.0.3",
+    "typescript": "7.0.2",
     "unused-webpack-plugin": "2.4.0",
     "vitest": "4.1.10",
     "vue-eslint-parser": "^10.0.0",
