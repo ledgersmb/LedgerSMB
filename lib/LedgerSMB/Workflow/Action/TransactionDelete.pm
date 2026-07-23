@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 
 package LedgerSMB::Workflow::Action::TransactionDelete;
 
@@ -49,8 +48,6 @@ sub execute( $self, $wf ) {
 
     return;
 }
-
-1;
 
 =head1 LICENSE AND COPYRIGHT
 

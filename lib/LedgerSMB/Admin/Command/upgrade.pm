@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental 'try';
 
 package LedgerSMB::Admin::Command::upgrade;
@@ -22,8 +21,7 @@ use namespace::autoclean;
 
 has modules_only => (is => 'ro');
 
-sub run {
-    my ($self, @args) = @_;
+sub run($self, @args) {
 
     my $logger = $self->logger;
 
@@ -69,8 +67,6 @@ sub run {
 
 
 __PACKAGE__->meta->make_immutable;
-
-1;
 
 __END__
 

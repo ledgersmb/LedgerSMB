@@ -1,7 +1,7 @@
-package LedgerSMB::Database::ConsistencyChecks;
 
-use v5.28.0;
-use warnings;
+use v5.38;
+
+package LedgerSMB::Database::ConsistencyChecks;
 
 use Exporter 'import';
 use File::Find::Rule;
@@ -38,8 +38,7 @@ schema.
 
 =cut
 
-sub find_checks {
-    my ($path) = @_;
+sub find_checks($path) {
     my @checks = sort File::Find::Rule->new()
         ->name( '*.sql' )
         ->in( File::Spec->catdir( $path, 'consistency' ) );
@@ -51,8 +50,7 @@ sub find_checks {
 
 =cut
 
-sub load_checks {
-    my ($paths) = @_;
+sub load_checks($paths) {
 
     return [
         map {
@@ -103,8 +101,7 @@ Number of failures in case the check failed.
 
 =cut
 
-sub run_checks {
-    my ($dbh, $checks) = @_;
+sub run_checks($dbh, $checks) {
 
     for my $check ($checks->@*) {
         my $query = qq|select count(*) from ($check->{query}) x|;
@@ -129,5 +126,4 @@ your software.
 
 =cut
 
-1;
 

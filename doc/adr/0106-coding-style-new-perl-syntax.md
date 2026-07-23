@@ -92,3 +92,10 @@ sub func2($u, :$v = undef) { ... }
 
 ## Annotations
 
+As of `use v5.38` the `warnings` and `signatures` features are enabled. The
+following pragmas should not be used in files declaring `use v5.38` or higher:
+
+```perl
+use warnings;
+use experimental qw( signatures );
+```

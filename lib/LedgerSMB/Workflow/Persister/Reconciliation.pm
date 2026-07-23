@@ -1,4 +1,9 @@
+
+use v5.38;
+
 package LedgerSMB::Workflow::Persister::Reconciliation;
+
+use parent qw( LedgerSMB::Workflow::Persister );
 
 =head1 NAME
 
@@ -12,15 +17,6 @@ The class inherits from LedgerSMB::Workflow::Persister::ExtraData; users are
 expected to declare the email table and fields as "ExtraData" configuration.
 
 =head1 METHODS
-
-=cut
-
-
-use v5.36;
-use strict;
-use parent qw( LedgerSMB::Workflow::Persister );
-
-
 
 =head2 create_workflow
 
@@ -103,8 +99,6 @@ sub update_workflow($self, $wf) {
     return;
 }
 
-
-1;
 
 =head1 LICENSE AND COPYRIGHT
 

@@ -1,4 +1,6 @@
 
+use v5.38;
+
 package LedgerSMB::Report;
 
 =head1 NAME
@@ -167,8 +169,6 @@ C<UI/reports/display_report> template will be used.
 
 =cut
 
-use v5.36.1;
-use warnings;
 
 use List::Util qw{ any pairgrep };
 use LedgerSMB::PGNumber;
@@ -370,7 +370,7 @@ reports.
 
 =cut
 
-sub set_buttons {
+sub set_buttons($self) {
     return [];
 }
 
@@ -385,7 +385,7 @@ a meaningless sum displayed on the totals row.
 
 =cut
 
-sub _exclude_from_totals {
+sub _exclude_from_totals($self) {
     return {};
 }
 
@@ -398,7 +398,7 @@ The default implementation returns C<false>.
 
 =cut
 
-sub _exclude_row_from_totals {
+sub _exclude_row_from_totals($self, $row) {
     return '';
 }
 
@@ -413,11 +413,9 @@ the template).
 
 =cut
 
-sub render {
-    my $self = shift;
-
+sub render($self, @args) {
     $self->run_report() if not defined $self->rows;
-    return $self->_render(@_);
+    return $self->_render(@args);
 }
 
 
@@ -427,8 +425,7 @@ Returns the suggested file name to be used to store the report.
 
 =cut
 
-sub output_name {
-    my $self = shift;
+sub output_name($self) {
     my $name = $self->name // '';
     $name =~ s/ /_/g;
 
@@ -451,8 +448,7 @@ set true into correctly formatted strings. Invoked as part of C<render>.
 
 =cut
 
-sub format_money_columns {
-    my ($self, $columns) = @_;
+sub format_money_columns($self, $columns) {
     my @columns = ($columns // $self->columns)->@*;
 
     for my $col (@columns){
@@ -480,10 +476,8 @@ sub format_money_columns {
 # Render the report.
 
 
-sub _render {
-    my $self = shift;
+sub _render($self, %args) {
     my $template;
-    my %args = @_;
 
     # This is a hook for other modules to use to override the default
     # template --CT
@@ -646,7 +640,7 @@ individual reports.
 
 =cut
 
-sub header_lines {
+sub header_lines($self) {
     return [];
 }
 
@@ -659,8 +653,7 @@ bc_$class_id holding the $bu_id fields.
 
 =cut
 
-sub process_bclasses {
-    my ($self, $ref) = @_;
+sub process_bclasses($self, $ref) {
     for my $bu (@{$ref->{business_units}}){
      if($bu->[1]){#avoid message:Use of uninitialized value in hash element
         push @{$ref->{$bu->[0]}}, $bu->[1]
@@ -682,5 +675,3 @@ your software.
 =cut
 
 __PACKAGE__->meta->make_immutable;
-
-1;

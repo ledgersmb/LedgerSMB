@@ -1,4 +1,6 @@
 
+use v5.38;
+
 package LedgerSMB::PGNumber;
 
 =head1 NAME
@@ -15,8 +17,6 @@ Math::BigFloat and can be used in this way.
 
 =cut
 
-use v5.36.1;
-use warnings;
 use parent qw(PGObject::Type::BigFloat);
 
 # try using the GMP library for Math::BigFloat for speed
@@ -66,9 +66,7 @@ use overload 'bool' => '_bool';
 
 # function to return boolean value based on the numerical value
 # of the BigFloat (zero being false)
-sub _bool {
-    my ($self) = @_;
-
+sub _bool($self, $, $) {
     return !($self == 0);
 }
 
@@ -150,8 +148,8 @@ Constructor to prevent BigFloat downgrades to BigInt
 
 =cut
 
-sub _formatter {
-    return Number::Format->new(@_);
+sub _formatter(@args) {
+    return Number::Format->new(@args);
 }
 
 # Together with the memoization in PGNumber,
@@ -160,10 +158,9 @@ sub _formatter {
 memoize('_formatter');
 
 
-sub new {
-    my $class = shift;
+sub new($class, @args) {
     local $Math::BigFloat::downgrade = undef;
-    return $class->SUPER::new(@_);
+    return $class->SUPER::new(@args);
 }
 
 =item from_input(string $input, hashref %args);
@@ -172,15 +169,12 @@ The input is formatted.
 
 =cut
 
-sub from_input {
-    my $self = shift;
-    my $string = shift;
-
+sub from_input($self, $string, @args) {
     return $string if $string isa __PACKAGE__;
     if (!defined $string || $string eq '') {
         return undef;
     }
-    my %args   = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
+    my %args   = (ref($args[0]) eq 'HASH') ? %{$args[0]} : @args;
     my $format = $args{format} // $args{numberformat};
     croak 'LedgerSMB::PGNumber No Format Set' if !$format;
 
@@ -234,9 +228,8 @@ Specifies the negative format
 =cut
 
 
-sub to_output {
-    my $self = shift @_;
-    my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
+sub to_output($self, @args) {
+    my %args  = (ref($args[0]) eq 'HASH')? %{$args[0]}: @args;
     my $is_neg = $self->is_neg;
 
     my $format = $args{format} // $args{numberformat};
@@ -272,8 +265,8 @@ Returns the value for sorting purposes
 
 =cut
 
-sub to_sort {
-    return $_[0]->bstr;
+sub to_sort($self) {
+    return $self->bstr;
 }
 
 =back
@@ -288,5 +281,3 @@ your software.
 
 =cut
 
-
-1;

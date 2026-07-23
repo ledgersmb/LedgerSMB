@@ -1,7 +1,5 @@
 
-use warnings;
 use v5.38;
-use experimental qw/ signatures /;
 
 package LedgerSMB::Num2text;
 
@@ -72,5 +70,3 @@ option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
-
-1;

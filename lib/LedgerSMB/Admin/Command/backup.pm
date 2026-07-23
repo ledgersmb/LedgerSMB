@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental 'try';
 
 package LedgerSMB::Admin::Command::backup;
@@ -20,8 +19,7 @@ extends 'LedgerSMB::Admin::Command';
 use namespace::autoclean;
 
 
-sub run {
-    my ($self, $dbname, $filename) = @_;
+sub run($self, $dbname, $filename) {
 
     return $self->help('backup')
         if !$dbname || $dbname eq 'help';
@@ -50,8 +48,6 @@ sub run {
 }
 
 __PACKAGE__->meta->make_immutable;
-
-1;
 
 __END__
 

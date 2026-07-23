@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental 'try';
 
 package LedgerSMB::Scripts::contact;
@@ -34,6 +33,7 @@ use LedgerSMB::Entity::Bank;
 use LedgerSMB::Entity::Note;
 use LedgerSMB::Entity::User;
 use LedgerSMB::File;
+use LedgerSMB::Form;
 use LedgerSMB::I18N;
 use LedgerSMB::Magic qw( EC_EMPLOYEE );
 use LedgerSMB::Part;
@@ -68,8 +68,7 @@ for (@pluginmods){
 
 =cut
 
-sub delete_entity {
-    my ($request) = @_;
+sub delete_entity($request) {
     my $entity =
            LedgerSMB::Entity::Company->get_by_cc($request->{control_code});
     $entity ||=  LedgerSMB::Entity::Person->get_by_cc($request->{control_code});
@@ -88,13 +87,12 @@ control code
 
 =cut
 
-sub get_by_cc {
-    my ($request) = @_;
+sub get_by_cc($request) {
     if ($request->{entity_class} == EC_EMPLOYEE){
         my $emp = LedgerSMB::Entity::Person::Employee->get_by_cc(
                             $request->{control_code}
         );
-        return _main_screen($request, undef, $emp);
+        return _main_screen($request, {}, $emp);
     }
     my $entity =
            LedgerSMB::Entity::Company->get_by_cc($request->{control_code});
@@ -111,7 +109,7 @@ sub get_by_cc {
 }
 
 
-=item get($self, $request, $user)
+=item get($request)
 
 Requires form var: id
 
@@ -121,8 +119,7 @@ of the company information.
 
 =cut
 
-sub get {
-    my ($request) = @_;
+sub get($request) {
     if ($request->{entity_class} && $request->{entity_class} == EC_EMPLOYEE){
         my $emp = LedgerSMB::Entity::Person::Employee->get(
                           $request->{entity_id}
@@ -148,8 +145,7 @@ sub get {
 #
 # this attaches everything other than {company} to $request and displays it.
 
-sub _main_screen {
-    my ($request, $company, $person) = @_;
+sub _main_screen($request, $company, $person) {
 
     # DIVS logic
     my @DIVS;
@@ -398,8 +394,7 @@ Saves a company and moves on to the next screen
 
 =cut
 
-sub save_employee {
-    my ($request) = @_;
+sub save_employee($request) {
     unless ($request->{control_code}){
         my ($ref) = $request->call_procedure(
                              funcname => 'setting_increment',
@@ -431,8 +426,7 @@ Generates a control code and hands off execution to other routines
 
 =cut
 
-sub generate_control_code {
-    my ($request) = @_;
+sub generate_control_code($request) {
     my ($ref) = $request->call_procedure(
                              funcname => 'setting_increment',
                              args     => ['entity_control']
@@ -456,9 +450,7 @@ Not fully documented because this will go away as soon as possible.
 
 =cut
 
-sub dispatch_legacy {
-    our ($request) = shift @_;
-    use LedgerSMB::Form;
+sub dispatch_legacy($request) {
     my $aa;
     my $inv;
     my $otype;
@@ -520,8 +512,7 @@ Dispatches to the Add (AR or AP as appropriate) transaction screen.
 
 =cut
 
-sub add_transaction {
-    my $request = shift @_;
+sub add_transaction($request) {
     return dispatch_legacy($request);
 }
 
@@ -531,8 +522,7 @@ Dispatches to the (sales or vendor, as appropriate) invoice screen.
 
 =cut
 
-sub add_invoice {
-    my $request = shift @_;
+sub add_invoice($request) {
     return dispatch_legacy($request);
 }
 
@@ -542,8 +532,7 @@ Dispatches to the sales/purchase order screen.
 
 =cut
 
-sub add_order {
-    my $request = shift @_;
+sub add_order($request) {
     return dispatch_legacy($request);
 }
 
@@ -553,8 +542,7 @@ Dispatches to the quotation/rfq screen
 
 =cut
 
-sub rfq {
-    my $request = shift @_;
+sub rfq($request) {
     return dispatch_legacy($request);
 }
 
@@ -564,10 +552,9 @@ This method creates a blank screen for entering a company's information.
 
 =cut
 
-sub add {
-    my ($request) = @_;
+sub add($request) {
     $request->{target_div} //= 'company_div';
-    return _main_screen($request, $request);
+    return _main_screen($request, $request, {});
 }
 
 =item save_company
@@ -576,8 +563,7 @@ Saves a company and moves on to the next screen
 
 =cut
 
-sub save_company {
-    my ($request) = @_;
+sub save_company($request) {
     unless ($request->{control_code}){
         my ($ref) = $request->call_procedure(
                              funcname => 'setting_increment',
@@ -591,7 +577,7 @@ sub save_company {
         created => $request->parse_date( $request->{created} ),
         );
     $request->{target_div} = 'credit_div';
-    return _main_screen($request, $company->save);
+    return _main_screen($request, $company->save, {});
 }
 
 =item save_person
@@ -600,8 +586,7 @@ Saves a person and moves on to the next screen
 
 =cut
 
-sub save_person {
-    my ($request) = @_;
+sub save_person($request) {
     if ($request->{entity_class} == EC_EMPLOYEE ){
         $request->{dob} = $request->{birthdate} if $request->{birthdate};
        return save_employee($request);
@@ -630,8 +615,7 @@ has sufficient access rights.
 
 =cut
 
-sub delete_credit {
-    my ($request) = @_;
+sub delete_credit($request) {
 
     my $credit = LedgerSMB::Entity::Credit_Account->get_by_id( $request->{credit_id} );
     if ($credit) {
@@ -646,9 +630,7 @@ This inserts or updates a credit account of the sort listed here.
 
 =cut
 
-sub save_credit {
-
-    my ($request) = @_;
+sub save_credit($request) {
     $request->{target_div} = 'credit_div';
     my $company;
 
@@ -696,8 +678,7 @@ This inserts a new credit account.
 =cut
 
 
-sub save_credit_new {
-    my ($request) = @_;
+sub save_credit_new($request) {
     delete $request->{id};
     return save_credit($request);
 }
@@ -709,8 +690,7 @@ Reload the drop-downs linked to the Class drop-down (customer/vendor)
 =cut
 
 
-sub update_credit {
-    my ($request) = @_;
+sub update_credit($request) {
     $request->{target_div} = 'credit_div';
     return get($request);
 }
@@ -721,8 +701,7 @@ Adds a location to the company as defined in the inherited object
 
 =cut
 
-sub save_location {
-    my ($request) = @_;
+sub save_location($request) {
 
     my $credit_id = $request->{credit_id};
     if ($request->{attach_to} == 1){
@@ -750,8 +729,7 @@ overwriting existing locations.
 
 =cut
 
-sub save_new_location {
-    my ($request) = @_;
+sub save_new_location($request) {
     delete $request->{location_id};
     return save_location($request);
 }
@@ -762,10 +740,9 @@ This is a synonym of get() which is preferred to use for editing operations.
 
 =cut
 
-sub edit {
-    my ($request) = @_;
+sub edit($request, @args) {
     $request->{action} = 'edit';
-    return get (@_);
+    return get($request, @args);
 }
 
 =item delete_location
@@ -774,8 +751,7 @@ Deletes the specified location
 
 =cut
 
-sub delete_location {
-    my ($request) = @_;
+sub delete_location($request) {
 
     my $credit_id=$request->{credit_id};
 
@@ -796,8 +772,7 @@ Saves the specified contact info
 
 =cut
 
-sub save_contact {
-    my ($request) = @_;
+sub save_contact($request) {
     my $credit_id = $request->{credit_id};
     if ($request->{attach_to} == 1){
        delete $request->{credit_id};
@@ -818,8 +793,7 @@ Saves the specified contact info as an additional item
 
 =cut
 
-sub save_contact_new {
-    my ($request) = @_;
+sub save_contact_new($request) {
     delete $request->{contact_id};
     delete $request->{old_contact};
 
@@ -833,8 +807,7 @@ credit id over in this case.
 
 =cut
 
-sub delete_contact {
-    my ($request) = @_;
+sub delete_contact($request) {
     LedgerSMB::Entity::Contact::delete($request);
     $request->{target_div} = 'contact_info_div';
     return get($request);
@@ -851,8 +824,7 @@ Required request variables:
 
 =cut
 
-sub delete_bank_account{
-    my ($request) = @_;
+sub delete_bank_account($request) {
     LedgerSMB::Entity::Bank->delete(
         $request->{id},
         $request->{entity_id}
@@ -867,8 +839,7 @@ Adds a bank account to a company and, if defined, an entity credit account.
 
 =cut
 
-sub save_bank_account {
-    my ($request) = @_;
+sub save_bank_account($request) {
     my $bank = LedgerSMB::Entity::Bank->new(%$request);
     $bank->save;
     $request->{target_div} = 'bank_act_div';
@@ -882,8 +853,7 @@ subject.
 
 =cut
 
-sub save_notes {
-    my ($request) = @_;
+sub save_notes($request) {
     my $note = LedgerSMB::Entity::Note->new(%$request);
     $note->save;
     return get($request);
@@ -895,8 +865,7 @@ This returns and displays the pricelist.  The id field is required.
 
 =cut
 
-sub get_pricelist {
-    my ($request) = @_;
+sub get_pricelist($request) {
     my $credit = LedgerSMB::Entity::Credit_Account->get_by_id(
        $request->{credit_id}
     );
@@ -918,8 +887,7 @@ and the description is a full text search.
 
 =cut
 
-sub save_pricelist {
-    my ($request) = @_;
+sub save_pricelist($request) {
     my $count = $request->{rowcount_pricematrix};
     my @lines;
 
@@ -977,8 +945,7 @@ sub save_pricelist {
 
 =cut
 
-sub delete_pricelist {
-    my ($request) = @_;
+sub delete_pricelist($request) {
     $request->call_procedure(
         funcname => 'pricelist__delete',
         args     => [ $request->{entry_id}, $request->{credit_id} ]);
@@ -993,8 +960,7 @@ This turns the employee into a user.
 
 =cut
 
-sub create_user {
-    my ($request) = @_;
+sub create_user($request) {
     $request->{target_div} = 'user_div';
     if ($request->close_form){
        $request->{password} = $request->{reset_password};
@@ -1024,8 +990,7 @@ This removes the user from the company.
 
 =cut
 
-sub delete_user {
-    my ($request) = @_;
+sub delete_user($request) {
     $request->{target_div} = 'user_div';
     if ($request->close_form){
        my $user = LedgerSMB::Entity::User->new(%$request);
@@ -1046,8 +1011,7 @@ This resets the user's password
 
 =cut
 
-sub reset_password {
-    my ($request) = @_;
+sub reset_password($request) {
     if ($request->close_form){
        $request->{password} = $request->{reset_password};
        my $user = LedgerSMB::Entity::User->new(%$request);
@@ -1062,8 +1026,7 @@ Saves the user's permissions
 
 =cut
 
-sub save_roles {
-    my ($request) = @_;
+sub save_roles($request) {
     my $roles = [];
 
     $request->close_form or die 'Form submission is invalid';
@@ -1098,4 +1061,3 @@ your software.
 
 =cut
 
-1;

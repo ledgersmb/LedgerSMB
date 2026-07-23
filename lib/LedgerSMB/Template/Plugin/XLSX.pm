@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 
 package LedgerSMB::Template::Plugin::XLSX;
 
@@ -44,8 +43,7 @@ has format => (is => 'ro', required => 1);
 my $binmode = undef;
 my $extension = 'xlsx';
 
-sub _get_extension {
-    my ($parent) = shift;
+sub _get_extension($parent) {
     if ($parent->{format_options}->{filetype}){
         return $parent->{format_options}->{filetype};
     } else {
@@ -59,8 +57,7 @@ my $rowcount;
 my $currcol;
 my $format;
 
-sub _worksheet_handler {
-    my ($twig, $elt) = @_;
+sub _worksheet_handler($twig, $elt) {
     $rowcount = 0;
     $currcol = 0;
 
@@ -74,8 +71,7 @@ sub _row_handler {
     return undef;
 }
 
-sub _cell_handler {
-    my ($twig, $elt) = @_;
+sub _cell_handler($twig, $elt) {
     $worksheet->write($rowcount,$currcol,$elt->att('text'),$format);
     $currcol++;
     return undef;
@@ -86,9 +82,7 @@ sub _formula_handler {
     return undef;
 }
 
-sub _format_handler {
-    my ($t, $format) = @_;
-
+sub _format_handler($t, $format) {
     my %properties;
     while (my ($attr, $val) = each %{$format->{att}}) {
         if ($attr eq 'border') {
@@ -130,13 +124,11 @@ sub _format_handler {
 #    return undef;
 #}
 
-sub _format_cleanup_handler {
-    my ($t, $format) = @_;
+sub _format_cleanup_handler($t, $format) {
     return ($t, $format); # dubious; evaluation of my is undoc/undefined
 }
 
-sub _xlsx_process {
-    my ($wbk, $template) = @_;
+sub _xlsx_process($wbk, $template) {
     $workbook = $wbk;
 
     my $parser = XML::Twig->new(
@@ -173,8 +165,7 @@ Implements the template's initialization protocol.
 
 =cut
 
-sub setup {
-    my ($self, $parent, $cleanvars, $output) = @_;
+sub setup($self, $parent, $cleanvars, $output) {
 
     my $temp_output;
     return (\$temp_output, {
@@ -191,8 +182,7 @@ Implements the template's post-processing protocol.
 
 =cut
 
-sub postprocess {
-    my ($self, $parent, $temp_output, $config) = @_;
+sub postprocess($self, $parent, $temp_output, $config) {
 
     # Implement Template Toolkit's protocol: if the variable
     # '$output' contains a string, it's a filename. If it's a
@@ -226,9 +216,7 @@ Returns the rendered template's mimetype.
 
 =cut
 
-sub mimetype {
-    my $self = shift;
-    my $config = shift;
+sub mimetype($self, $config) {
     my $mimetype;
 
     if (lc $self->format eq 'xlsx') {
@@ -251,4 +239,3 @@ your software.
 
 =cut
 
-1;

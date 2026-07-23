@@ -1,7 +1,7 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental 'try';
+use Sublike::Extended 0.29 'sub';
 
 package LedgerSMB::PSGI;
 
@@ -89,10 +89,7 @@ Returns a 'PSGI app' which handles requests for the 'old-code' scripts in old/bi
 
 =cut
 
-sub old_app {
-    my $script = shift;
-    my $wire = shift;
-
+sub old_app($script, $wire) {
     # marshall the psgi environment into the cgi environment
     # so we can re-use state from the various middlewares
     return sub {
@@ -128,13 +125,13 @@ sub old_app {
                     return;
                 }
             )->($env),
-            sub {
-                Plack::Util::header_set($_[0]->[1],
+            sub($triplet) {
+                Plack::Util::header_set($triplet->[1],
                                         'Content-Security-Policy',
                                         q{frame-ancestors 'self'});
-                if (not Plack::Util::header_exists($_[0]->[1],
+                if (not Plack::Util::header_exists($triplet->[1],
                                                    'X-LedgerSMB-App-Content')) {
-                    Plack::Util::header_push($_[0]->[1],
+                    Plack::Util::header_push($triplet->[1],
                                              'X-LedgerSMB-App-Content', 'yes');
                 }
             });
@@ -150,11 +147,8 @@ in LedgerSMB::Scripts::*.
 =cut
 
 
-sub psgi_app {
-    my $wire = shift;
-
-    return sub {
-        my $env = shift;
+sub psgi_app($wire) {
+    return sub($env) {
         my $psgi_req = Plack::Request::WithEncoding->new($env);
         my $request  = LedgerSMB->new($psgi_req, $wire);
 
@@ -192,8 +186,7 @@ sub psgi_app {
 
         return Plack::Util::response_cb(
             $res,
-            sub {
-                my $res = shift;
+            sub($res) {
                 Plack::Util::header_set($res->[1],
                                         'Content-Security-Policy',
                                         q{frame-ancestors 'self'});
@@ -208,14 +201,11 @@ appropriate PSGI handlers/apps.
 
 =cut
 
-sub _hook_psgi_logger {
-    my ($env, $settings, $router) = @_;
+sub _hook_psgi_logger($env, $settings, $router, $path) {
     my $logger_name = $settings->{logger} ? ".$settings->{logger}" : '';
     my $logger = Log::Any->get_logger(category => "LedgerSMB$logger_name");
 
-    $env->{'psgix.logger'} = sub {
-        my ($level, $msg) = @{$_[0]}{qw/ level message /};
-
+    $env->{'psgix.logger'} = sub(:$level, :$msg = undef) {
         return if not defined $msg;
 
         local $Log::Log4perl::caller_depth = $Log::Log4perl::caller_depth + 1;
@@ -226,8 +216,7 @@ sub _hook_psgi_logger {
     return;
 }
 
-sub _oldscript_mount {
-    my ($script, $cookie, $secret, $wire) = @_;
+sub _oldscript_mount($script, $cookie, $secret, $wire) {
     builder {
         enable '+LedgerSMB::Middleware::RequestID';
         enable 'AccessLog', format => 'Req:%{Request-Id}i %h %l %u %t "%r" %>s %b "%{Referer}i" "%{User-agent}i"';
@@ -251,8 +240,7 @@ sub _oldscript_mount {
     }
 }
 
-sub _psgiscript_mount {
-    my ($script, $cookie, $secret, $wire, $app, $open_connection) = @_;
+sub _psgiscript_mount($script, $cookie, $secret, $wire, $app, $open_connection) {
 
     builder {
         enable '+LedgerSMB::Middleware::RequestID';
@@ -279,8 +267,7 @@ sub _psgiscript_mount {
     }
 }
 
-sub _api_mount {
-    my ($cookie, $secret, $wire) = @_;
+sub _api_mount($cookie, $secret, $wire) {
     builder {
         enable '+LedgerSMB::Middleware::RequestID';
         enable 'AccessLog',
@@ -301,9 +288,7 @@ sub _api_mount {
         my $router = router 'erp/api';
         $router->hooks('before' => \&_hook_psgi_logger);
         $router->hooks(
-            'before' => sub {
-                my ($env) = @_;
-
+            'before' => sub($env, $, $, $) {
                 $env->{wire} = $wire;
                 return;
             });
@@ -311,8 +296,7 @@ sub _api_mount {
     }
 }
 
-sub _session_url_space {
-    my ($wire, $cookie, $secret) = @_;
+sub _session_url_space($wire, $cookie, $secret) {
     my $psgi_app    = psgi_app($wire);
 
     builder {
@@ -338,8 +322,7 @@ sub _session_url_space {
     }
 }
 
-sub setup_url_space {
-    my %args        = @_;
+sub setup_url_space(%args) {
     my $wire        = $args{wire};
 
     my $cookie      = $wire->get( 'cookie' )->{name} // 'LedgerSMB';
@@ -442,5 +425,3 @@ your software.
 
 =cut
 
-
-1;

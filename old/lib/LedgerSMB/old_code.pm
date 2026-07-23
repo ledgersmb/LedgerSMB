@@ -1,3 +1,7 @@
+
+use v5.38;
+use experimental 'try';
+
 =head1 NAME
 
 LedgerSMB::old_code - dispatching from new code to old code
@@ -20,10 +24,6 @@ LedgerSMB::old_code - dispatching from new code to old code
 =over
 
 =cut
-
-use v5.36;
-use warnings;
-use experimental 'try';
 
 package LedgerSMB::old_code;
 
@@ -55,13 +55,7 @@ Wraps a "call" to old code, returning a PSGI triplet for the response.
 
 =cut
 
-sub dispatch {
-    my $script = shift;
-    my $entrypoint = shift;
-    my $user = shift;
-    my $form_args = shift;
-    my @entrypoint_args = @_;
-
+sub dispatch($script, $entrypoint, $user, $form_args, @entrypoint_args) {
     my $stdout = IO::File->new_tmpfile;
     binmode $stdout, ':utf8';
     if (my $cpid = fork()) {
@@ -140,5 +134,3 @@ option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
-
-1;

@@ -1,8 +1,7 @@
 
-package LedgerSMB::Workflow::Persister::Email;
+use v5.38;
 
-use v5.36;
-use warnings;
+package LedgerSMB::Workflow::Persister::Email;
 
 =head1 NAME
 
@@ -277,8 +276,6 @@ sub fetch_workflow( $self, $wf_id ) {
     return $wf_info;
 }
 
-
-1;
 
 =head1 LICENSE AND COPYRIGHT
 

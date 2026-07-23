@@ -84,7 +84,7 @@ while (<>) {
           $state==NUL &&
               # the reports use a workaround with a function called Text()
               # or MarkText()
-              $source =~ m/^[^\n]*\b(([Mm]ark)?[tT]ext)[\s\t\n]*\(/gs
+              $source =~ m/^[^\n]*(?<!sub )\b(([Mm]ark)?[tT]ext)[\s\t\n]*\(/gs
               && do { $state = TXT; $text = $1; redo; };
 
          $state==TXT # All patterns must give $1 for the whole

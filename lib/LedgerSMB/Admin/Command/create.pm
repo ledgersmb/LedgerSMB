@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental 'try';
 
 package LedgerSMB::Admin::Command::create;
@@ -25,15 +24,13 @@ use Getopt::Long qw(GetOptionsFromArray);
 
 has options => (is => 'ro', default => sub { {} });
 
-sub _option_spec {
-    my ($self, $command) = @_;
+sub _option_spec($self) {
     return (
         'prepare-only' => \$self->options->{'prepare-only'},
     );
 }
 
-sub run {
-    my ($self, @args) = @_;
+sub run($self, @args) {
     my $options = {};
 
     Getopt::Long::Configure(qw(bundling require_order));
@@ -96,8 +93,6 @@ sub run {
 
 
 __PACKAGE__->meta->make_immutable;
-
-1;
 
 __END__
 

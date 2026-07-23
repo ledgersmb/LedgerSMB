@@ -1,4 +1,6 @@
 
+use v5.38;
+
 package LedgerSMB::Scripts::budgets;
 
 =head1 NAME
@@ -10,9 +12,6 @@ LedgerSMB::Scripts::budgets - web entry points for administration of budgets
 Budget workflow scripts.
 
 =cut
-
-use v5.36.1;
-use warnings;
 
 use LedgerSMB::Budget;
 use LedgerSMB::Business_Unit;
@@ -37,8 +36,7 @@ defaults however.
 
 =cut
 
-sub new_budget {
-    my ($request) = @_;
+sub new_budget($request) {
     $request->{rowcount} ||= 0;
     my $budget = LedgerSMB::Budget->new($request);
     return _render_screen($request, $budget);
@@ -49,8 +47,7 @@ sub new_budget {
 # used by new_budget, view_budget, and update
 # Prepares and renders screen with budget info.
 
-sub _render_screen {
-    my ($request, $budget) = @_;
+sub _render_screen($request, $budget) {
     my $additional_rows = EDIT_BUDGET_ROWS;
     $additional_rows = NEW_BUDGET_ROWS unless $budget->lines;
     $additional_rows = 0 if $budget->id;
@@ -144,8 +141,7 @@ Updates the screen.  Part of initial entry workflow only.
 
 =cut
 
-sub update {
-    my ($request) = @_;
+sub update($request, @args) {
     $request->{display_rows} = [];
     for (1 .. $request->{rowcount}){
         push @{$request->{display_rows}},
@@ -157,7 +153,7 @@ sub update {
 
     }
     $request->{rowcount} = scalar @{$request->{display_rows}} + 1;
-    return new_budget(@_);
+    return new_budget($request, @args);
 }
 
 =item view_budget
@@ -165,8 +161,7 @@ Reuuires id to be set.  Displays a budget for review.
 
 =cut
 
-sub view_budget {
-    my ($request) = @_;
+sub view_budget($request) {
     my $budget = LedgerSMB::Budget->new(%$request);
     $budget = $budget->get($request->{id});
     $budget->{display_rows} = [];
@@ -194,8 +189,7 @@ LedgerSMB::Budget properties required.  Lines represented by
 
 =cut
 
-sub save {
-    my ($request) = @_;
+sub save($request) {
     my $budget = LedgerSMB::Budget->from_input($request);
     $budget->save();
     return view_budget($budget);
@@ -206,8 +200,7 @@ Requires id.  Approves the budget.
 
 =cut
 
-sub approve {
-    my ($request) = @_;
+sub approve($request) {
     my $budget = LedgerSMB::Budget->new(%$request);
     $budget->approve;
     return view_budget($request);
@@ -218,8 +211,7 @@ Requires id.  Rejects unapproved budget and deletes it.
 
 =cut
 
-sub reject {
-    my ($request) = @_;
+sub reject($request) {
     my $budget = LedgerSMB::Budget->new(%$request);
     $budget->reject;
     return begin_search($request);
@@ -230,8 +222,7 @@ Requires id, Marks budget obsolete.
 
 =cut
 
-sub obsolete {
-    my ($request) = @_;
+sub obsolete($request) {
     my $budget = LedgerSMB::Budget->new(%$request);
     $budget->obsolete;
     return view_budget($request);
@@ -242,8 +233,7 @@ Requires id, subject, and note.  Adds a note to the budget.
 
 =cut
 
-sub add_note {
-    my ($request) = @_;
+sub add_note($request) {
     my $budget = LedgerSMB::Budget->new(%$request);
     $budget->save_note($request->{subject}, $request->{note});
     return view_budget($request);
@@ -254,8 +244,7 @@ No inputs expected or used
 
 =cut
 
-sub begin_search{
-    my ($request) = @_;
+sub begin_search($request) {
     $request->{module_name} = 'gl';
     $request->{report_name} = 'budget_search';
     use LedgerSMB::Scripts::reports;
@@ -282,5 +271,3 @@ your software.
 
 =cut
 
-
-1;

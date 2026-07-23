@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental 'try';
 
 package LedgerSMB::FileFormats::OFX::BankStatement;
@@ -87,8 +86,7 @@ not identified as a OFX document.
 
 =cut
 
-sub new {
-    my ($class, $fh) = @_;
+sub new($class, $fh) {
     return unless defined $fh;
 
     my ($dom, $is_ofx);
@@ -111,8 +109,7 @@ Returns the XML::LibXML DOM tree representing the input xml.
 
 =cut
 
-sub dom {
-    my ($self) = @_;
+sub dom($self) {
     return $self->{dom};
 }
 
@@ -129,9 +126,7 @@ following elements:
 
 =cut
 
-sub transactions {
-    my ($self) = @_;
-
+sub transactions($self) {
     my $transactions = $self->dom->find('//STMTTRNRS/STMTRS/BANKTRANLIST/STMTTRN');
 
     my @transactions = map {{
@@ -154,5 +149,3 @@ option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
-
-1;
