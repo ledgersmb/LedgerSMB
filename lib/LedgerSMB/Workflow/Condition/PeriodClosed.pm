@@ -76,7 +76,7 @@ in a closed period.
 =cut
 
 sub evaluate($self, $wf) {
-    my $dbh = $wf->handle;
+    my $dbh = $wf->app->dbh;
     my $date = $wf->context->param( $self->workflow_parameter );
     my $opened;
     if ($date) {

@@ -90,7 +90,7 @@ sub _build_admin_dbh {
 sub _build_admin_conn {
     my $self = shift;
 
-    return LedgerSMB::Company->new( dbh => $self->admin_dbh );
+    return LedgerSMB::Company->new( dbh => $self->admin_dbh, wire => undef );
 }
 
 
@@ -271,6 +271,7 @@ sub create_template {
     $db->create_and_load;
     my $company = LedgerSMB::Company->new(
         dbh => $db->connect(),
+        wire => undef
         );
      my $fn = './locale/coa/us/General.xml';
     open my $fh, '<:raw', $fn
@@ -531,7 +532,7 @@ sub create_vc {
     $company = $company->save;
 
     local $LedgerSMB::App_State::DBH = $admin_dbh;
-    my $cfg = LedgerSMB::Company::Configuration->new(dbh => $self->admin_dbh);
+    my $cfg = LedgerSMB::Company::Configuration->new(dbh => $self->admin_dbh, wire => undef);
     my @accounts = $cfg->coa_nodes->get(filter => q{not is_heading});
     my %accno_ids = map {
         $_->{accno} => ($_->{id} =~ s/^A-//r)

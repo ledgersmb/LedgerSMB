@@ -31,13 +31,20 @@ C<LedgerSMB::App_State::DBH>.
 
 use warnings;
 use strict;
-use parent qw( Workflow::Persister::DBI::ExtraData );
+use parent qw( LedgerSMB::Workflow::Persister );
+
+use experimental 'try';
 
 use Log::Any qw($log);
-
 use JSON::MaybeXS;
+use Workflow::Exception qw( configuration_error persist_error );
 
 use LedgerSMB::App_State;
+
+
+my @FIELDS = qw( table data_field context_key );
+__PACKAGE__->mk_accessors(@FIELDS);
+
 
 =head2 create_handle()
 
@@ -62,7 +69,50 @@ sub handle {
     return LedgerSMB::App_State::DBH();
 }
 
-=head2 fetch_workflow( $wf_id )
+=head2 init($params)
+
+Parses the input parameters and sets instance fields.
+
+=cut
+
+sub init {
+    my ( $self, $params ) = @_;
+    $self->SUPER::init($params);
+
+    my @not_found = ();
+    foreach (qw( table data_field )) {
+        push @not_found, $_ unless ( $params->{"extra_$_"} );
+    }
+    if ( scalar @not_found ) {
+        $self->log->error( 'Required configuration fields not found: ',
+            join ', ', @not_found );
+        configuration_error
+            'To fetch extra data with each workflow with this implementation ',
+            'you must specify: ', join ', ', @not_found;
+    }
+
+    $self->table( $params->{extra_table} );
+    my $data_field = $params->{extra_data_field};
+
+    # If multiple data fields specified we don't allow the user to
+    # specify a context key
+
+    if ( $data_field =~ /,/ ) {
+        $self->data_field( [ split /\s*,\s*/, $data_field ] );
+    } else {
+        $self->data_field($data_field);
+        my $context_key = $params->{extra_context_key} || $data_field;
+        $self->context_key($context_key);
+    }
+    $self->log->info( 'Configured extra data fetch with: ',
+                      join( '; ', $self->table, $data_field,
+                            ( defined $self->context_key
+                              ? $self->context_key : '' ) ) );
+}
+
+
+
+=head2 fetch_workflow( $app, $wf_id )
 
 
 Implements Workflow::Persister protocol; in addition to restoring the
@@ -79,81 +129,55 @@ my $json = JSON::MaybeXS->new(
     allow_singlequote => 0 );
 
 sub fetch_workflow {
-    my ($self, $wf_id) = @_;
+    my ($self, $app, $wf_id) = @_;
+    my $wf_info = $self->SUPER::fetch_workflow( $app, $wf_id );
+    my $context = ($wf_info->{context} //= {});
 
-    my $wf_info = $self->SUPER::fetch_workflow( $wf_id );
-    if ($wf_info) { # found
-        my $dbh = $self->handle;
-        my $sth = $dbh->prepare(
-            q{SELECT * FROM workflow_context WHERE workflow_id = ?}
-            )
-            or die $dbh->errstr;
+    $self->log->debug( q{Fetching extra workflow data for '}, $wf_id, q{'} );
 
-        $sth->execute( $wf_id )
-            or die $sth->errstr;
-        if (my $row = $sth->fetchrow_hashref( 'NAME_lc' )) {
-            $wf_info->{context} = {
-                $json->decode( $row->{context} )->%*,
-                ($wf_info->{context} // {})->%*
-            };
+    my $sql = q{SELECT %s FROM %s WHERE workflow_id = ?};
+    my $data_field = $self->data_field;
+    my $dbh = $app->dbh;
+    my $select_data_fields
+        = ( ref $data_field )
+        ? join( ', ',
+                map { $dbh->quote_identifier($_) } @{$data_field} )
+        : $dbh->quote_identifier($data_field);
+    $sql = sprintf $sql, $select_data_fields,
+        $dbh->quote_identifier( $self->table );
+    $self->log->debug( 'Using SQL: ', $sql);
+    $self->log->debug( 'Bind parameters: ', $wf_id );
+
+    my ($sth);
+    try {
+        $sth = $dbh->prepare($sql);
+        $sth->execute( $wf_id );
+    }
+    catch ($error) {
+        persist_error 'Failed to retrieve extra data from table ',
+            $self->table, ": $error";
+    }
+
+    $self->log->debug('Prepared/executed extra data fetch ok');
+    my $row = $sth->fetchrow_arrayref;
+    if ( ref $data_field ) {
+        foreach my $i ( 0 .. $#{$data_field} ) {
+            $context->{$data_field->[$i]} = $row->[$i];
+            $self->log->info(
+                sprintf( 'Set data from %s.%s into context key %s ok',
+                         $self->table, $data_field->[$i],
+                         $data_field->[$i] ) );
         }
-        else {
-            $sth->err and die $sth->errstr;
-        }
+    } else {
+        my $value = $row->[0];
+        $context->{ $self->context_key } = $value;
+        $self->log->info(
+            sprintf( 'Set data from %s.%s into context key %s ok',
+                     $self->table, $self->data_field,
+                     $self->context_key ) );
     }
 
     return $wf_info;
-}
-
-=head2 create_workflow( $wf )
-
-Implements Workflow::Persister protocol; in addition to initializing
-the workflow state (as per the parent persister Workflow::Persister::DBI),
-also persists the workflow context.
-
-=cut
-
-sub _persist_context {
-    my ($self, $wf) = @_;
-    my $dbh = $self->handle;
-    my $sth = $dbh->prepare(
-        q{
-        INSERT INTO workflow_context (workflow_id, context) VALUES ($1, $2)
-            ON CONFLICT (workflow_id) DO UPDATE SET context = $2 }
-        ) or die $dbh->errstr;
-
-    my $params = $wf->context->{PARAMS};
-    my $ctx = {
-        map { $_ => $params->{$_} }
-        grep { ! /^_/ }
-        keys $params->%*
-    };
-    $sth->execute( $wf->id, $json->encode($ctx) )
-        or die $sth->errstr;
-}
-
-
-sub create_workflow {
-    my ($self, $wf) = @_;
-    my $id = $self->SUPER::create_workflow( $wf );
-    $self->_persist_context( $wf );
-
-    return $id;
-}
-
-=head2 update_workflow( $wf )
-
-Implements Workflow::Persister protocol; in addition to updating
-the workflow state (as pertheparent persister Workflow::Persister::DBI),
-also updates the workflow context.
-
-=cut
-
-sub update_workflow {
-    my ($self, $wf) = @_;
-
-    $self->SUPER::update_workflow( $wf );
-    $self->_persist_context( $wf );
 }
 
 

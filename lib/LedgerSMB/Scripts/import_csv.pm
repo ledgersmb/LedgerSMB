@@ -36,7 +36,6 @@ use LedgerSMB::Timecard;
 
 use List::MoreUtils qw{ any };
 use Text::CSV;
-use Workflow::Context;
 
 our $cols = {
     gl              =>  ['accno', 'debit', 'credit', 'curr', 'debit_fx',
@@ -274,13 +273,13 @@ sub _process_gl_multi($request, $entries) {
                                 })
         or die $dbh->errstr;
 
-    my $wf = $request->{_wire}->get('workflows')
-        ->create_workflow( 'GL',
-                           Workflow::Context->new(
-                               'transdate' => $request->{transdate},
-                               'batch-id'  => $batch_id,
-                               'table_name' => 'gl'
-                           ) );
+    my $wf = $request->conn->workflows->create(
+        'GL',
+        {
+            'transdate' => $request->{transdate},
+            'batch-id'  => $batch_id,
+            'table_name' => 'gl'
+        });
     $wf->execute_action( 'post' ); # misnomer: actually only saves...
 
     # then, insert the workflow ID in the insertion below.

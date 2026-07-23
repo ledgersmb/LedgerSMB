@@ -38,7 +38,6 @@ use JSONSchema::Validator;
 use List::Util qw( reduce sum0 uniq );
 use Plack::Request::WithEncoding;
 use Scalar::Util qw( blessed reftype );
-use Workflow::Context;
 use YAML::PP;
 
 use LedgerSMB::App_State;
@@ -266,8 +265,7 @@ sub _get_orders_by_id {
     $ord{total}       = $ord{lines_total} + $ord{taxes_total};
 
     local $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
-    my $wf = $env->{wire}->get('workflows')
-        ->fetch_workflow( 'Order/Quote', $workflow_id );
+    my $wf = $c->workflows->fetch( 'Order/Quote', $workflow_id );
 
     $ord{workflow} = {
         state => $wf->state,
@@ -784,12 +782,12 @@ sub _post_orders {
     die $sth->errstr
         if $sth->err;
 
-    my $ctx = Workflow::Context->new;
-    $ctx->param( trans_id => $ord_id );
-    $ctx->param( transdate => $ord->{transdate} );
     local $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
-    my $wf  = $env->{wire}->get('workflows')
-        ->create_workflow( 'Order/Quote', $ctx );
+    my $wf  = $c->workflows->create( 'Order/Quote',
+                                     {
+                                         trans_id => $ord_id,
+                                         transdate => $ord->{transdate}
+                                     });
     $env->{'lsmb.db'}->do(q{UPDATE oe SET workflow_id = ? where id = ?},
              {}, $wf->id, $ord_id)
         or die $env->{'lsmb.db'}->errstr;

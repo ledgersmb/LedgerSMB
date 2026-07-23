@@ -41,6 +41,10 @@ This returns true if the form_id was associated with the session, and false if
 not and also removes the form_id from the
 session.
 
+=item conn()
+
+Returns a C<LedgerSMB::Company> instance.
+
 =item is_allowed_role({allowed_roles => @role_names})
 
 This function returns 1 if the user's roles include any of the roles in
@@ -269,6 +273,7 @@ use PGObject;
 use Plack;
 use URI;
 
+use LedgerSMB::Company;
 use LedgerSMB::Locale;
 use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
@@ -380,6 +385,17 @@ sub initialize_with_db {
         $self->{_user}->{stylesheet} unless $self->{stylesheet};
 
     return;
+}
+
+
+sub conn {
+    my $self = shift;
+    my $sess = $self->{_req}->env->{'lsmb.session'} // {};
+    return $self->{_conn} //= LedgerSMB::Company->new(
+        dbh      => $self->{dbh},
+        username => $sess->{username} || $sess->{login} || $self->{login},
+        wire     => $self->{_wire}
+        );
 }
 
 

@@ -28,9 +28,9 @@ associated.
 
 =cut
 
-sub create_workflow($self, $wf) {
-    my $wf_id = $self->SUPER::create_workflow( $wf );
-    my $dbh   = $self->handle;
+sub create_workflow($self, $app, $wf) {
+    my $wf_id = $self->SUPER::create_workflow( $app, $wf );
+    my $dbh   = $app->dbh;
     my $sth   = $dbh->prepare(
         q|select reconciliation__new_report(?,?,?,?,?)|
         ) or die $dbh->errstr;
@@ -60,7 +60,7 @@ Stores updates to existing workflows.
 
 sub update_workflow($self, $wf) {
     my $ctx = $wf->context;
-    my $dbh = $self->handle;
+    my $dbh = $wf->app->dbh;
 
     if ($ctx->delete_param( 'approved' )) {
         $dbh->do(q|select reconciliation__report_approve(?)|,

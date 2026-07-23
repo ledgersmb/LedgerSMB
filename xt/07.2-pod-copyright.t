@@ -53,7 +53,7 @@ foreach my $file(@files) {
                 : $template_text,
             "pod LICENSE AND COPYRIGHT section in $file matches template"
         );
-    }
+    };
 }
 
 done_testing;

@@ -15,7 +15,7 @@ LedgerSMB::Workflow::Persister::Order - Store Order/Quote workflow data
 =head1 DESCRIPTION
 
 This module handles persistence of workflow (history) data through the
-existing database connection in C<LedgerSMB::App_State::DBH()>.
+existing database connection in C<<$wf->handle>>.
 
 The class inherits from Workflow::Persister::DBI and uses
 the same configuration semantics.
@@ -41,16 +41,16 @@ context parameter.
 =cut
 
 sub fetch_workflow {
-    my ($self, $wf_id) = @_;
+    my ($self, $app, $wf_id) = @_;
 
-    my $wf_info = $self->SUPER::fetch_workflow( $wf_id );
+    my $wf_info = $self->SUPER::fetch_workflow( $app, $wf_id );
     if ($wf_info) {
         my $sql =
             q{ SELECT * FROM oe WHERE workflow_id = ? ORDER BY id DESC LIMIT 1 };
 
         my ($sth);
         eval {
-            $sth = $self->handle->prepare($sql);
+            $sth = $app->dbh->prepare($sql);
             $sth->execute( $wf_id );
         };
         if ($EVAL_ERROR) {

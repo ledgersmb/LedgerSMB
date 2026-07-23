@@ -17,7 +17,6 @@ use strict;
 use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_SEE_OTHER );
-use Workflow::Context;
 
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Entity;
@@ -180,8 +179,7 @@ sub _render_statement_batch {
     my $rows = [ $results->@* ];
     for my $row ($rows->@*) {
         $row->{id_href_suffix} = $row->{id};
-        my $nested_wf = $request->{_wire}->get('workflows')
-            ->fetch_workflow( 'Email' => $row->{id} );
+        my $nested_wf = $request->conn->workflows->fetch( 'Email' => $row->{id} );
         $row->{status} = $nested_wf->state;
     }
     return $template->render(
@@ -216,13 +214,12 @@ sub-workflows and renders an overview page.
 
 sub cancel {
     my ($request) = @_;
-    my $wf = $request->{_wire}->get('workflows')->fetch_workflow(
+    my $wf = $request->conn->workflows->fetch(
         'Aging statement batch' => $request->{workflow_id}
         );
 
     for my $result ($wf->context->param( 'results' )->@*) {
-        my $nested_wf = $request->{_wire}->get('workflows')
-            ->fetch_workflow('Email' => $result->{id});
+        my $nested_wf = $request->conn->workflows->fetch('Email' => $result->{id});
 
         if ($nested_wf and
             grep { $_ eq 'Cancel' } $nested_wf->get_current_actions
@@ -243,7 +240,7 @@ Marks the batch processing completed and renders an overview page.
 
 sub mark_complete {
     my ($request) = @_;
-    my $wf = $request->{_wire}->get('workflows')->fetch_workflow(
+    my $wf = $request->conn->workflows->fetch(
         'Aging statement batch' => $request->{workflow_id}
         );
 
@@ -260,7 +257,7 @@ aging statements.
 
 sub render_statement_batch {
     my ($request) = @_;
-    my $wf = $request->{_wire}->get('workflows')->fetch_workflow(
+    my $wf = $request->conn->workflows->fetch(
         'Aging statement batch' => $request->{workflow_id}
         );
 
@@ -416,11 +413,8 @@ sub generate_statement {
         return $sink_output;
     }
 
-    my $context = Workflow::Context->new(
-        results => \@results
-        );
-    my $wf = $request->{_wire}->get('workflows')
-        ->create_workflow( 'Aging statement batch', $context );
+    my $wf = $request->conn->workflows->create( 'Aging statement batch',
+                                                { results => \@results } );
     $request->{workflow_id} = $wf->id;
 
     return _render_statement_batch($request, $wf);

@@ -506,7 +506,8 @@ sub api {
                 return _error($req, HTTP_BAD_REQUEST, [], @$errors);
             }
 
-            my $company = LedgerSMB::Company->new(dbh => $env->{'lsmb.app'});
+            my $company = LedgerSMB::Company->new(dbh => $env->{'lsmb.app'},
+                                                  wire => $env->{wire});
             my $triplet = $code->($env, $req, $company, $body, $params, @args);
             if (not defined $triplet
                 or not defined $triplet->[2]) {

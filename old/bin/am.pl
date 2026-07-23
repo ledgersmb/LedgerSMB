@@ -39,7 +39,6 @@ use LedgerSMB::User;
 use LedgerSMB::GL;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::PGDate;
-use Workflow::Context;
 
 # end of main
 
@@ -645,10 +644,10 @@ sub process_transactions {
                     for (qw(id workflow_id recurring intnotes)) {
                         delete $form->{$_};
                     }
-                    my $wf = $form->{_wire}->get('workflows')
-                        ->create_workflow( 'AR/AP', Workflow::Context->new(
-                                               transdate => $form->{transdate}
-                                           ));
+                    my $wf = $form->{_conn}->workflows->create(
+                        'AR/AP',
+                        { transdate => $form->{transdate} }
+                        );
                     $form->{workflow_id} = $wf->id;
 
                     ( $form->{ $form->{ARAP} } ) = split /--/,
@@ -715,9 +714,7 @@ sub process_transactions {
                     # action because that's only available when
                     # "separate_duties" *isn't* enabled, so execute 2 actions
                     # which are guaranteed to exist, separately
-                    $wf = $form->{_wire}->get('workflows')->fetch_workflow(
-                        'AR/AP',
-                        $form->{workflow_id} );
+                    $wf = $form->{_conn}->workflows->fetch('AR/AP', $form->{workflow_id} );
                     # Make sure the transaction isn't posted as a draft
                     $wf->execute_action( 'post' )
                         if $wf->state eq 'INITIAL';
@@ -843,10 +840,8 @@ sub process_transactions {
 
                 for (qw(id workflow_id recurring)) { delete $form->{$_} }
 
-                my $wf = $form->{_wire}->get('workflows')
-                    ->create_workflow( 'GL', Workflow::Context->new(
-                                           transdate => $form->{transdate}
-                                       ));
+                my $wf = $form->{_conn}->workflows->create(
+                    'GL', { transdate => $form->{transdate} });
                 $form->{workflow_id} = $wf->id;
                 $form->info(
                     "\n"
@@ -863,7 +858,7 @@ sub process_transactions {
                 # action because that's only available when
                 # "separate_duties" *isn't* enabled, so execute 2 actions
                 # which are guaranteed to exist, separately
-                $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+                $wf = $form->{_conn}->workflows->fetch(
                     'GL',
                     $form->{workflow_id} );
                 # Make sure the transaction isn't posted as a draft

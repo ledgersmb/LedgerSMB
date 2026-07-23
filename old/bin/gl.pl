@@ -90,7 +90,7 @@ sub edit_and_save {
     $form->call_procedure(funcname=>'draft_delete', args => [ $form->{id} ]);
     GL->post_transaction( \%myconfig, \%$form, $locale);
     if ($form->{workflow_id}) {
-        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+        my $wf = $form->{_conn}->workflows->fetch(
             'GL', $form->{workflow_id}
             );
         $wf->context->param( transdate => $form->{transdate} );
@@ -102,7 +102,7 @@ sub edit_and_save {
 sub save_info {
     GL->save_notes( \%myconfig, \%$form, $locale);
     if ($form->{workflow_id}) {
-        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+        my $wf = $form->{_conn}->workflows->fetch(
             'GL', $form->{workflow_id}
             );
         $wf->context->param( transdate => $form->{transdate} );
@@ -112,7 +112,7 @@ sub save_info {
 }
 
 sub approve {
-    my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+    my $wf = $form->{_conn}->workflows->fetch(
         'GL', $form->{workflow_id}
         );
     die q|No workflow found to approve| unless $wf;
@@ -152,7 +152,7 @@ sub new {
 
 sub copy_to_new {
     if ($form->{workflow_id}) {
-        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+        my $wf = $form->{_conn}->workflows->fetch(
             'GL', $form->{workflow_id}
             );
         $wf->context->param( transdate => $form->{transdate} );
@@ -200,7 +200,7 @@ sub _reverse_amounts {
 sub reverse {
     $form->{title}     = "Reverse";
     if ($form->{workflow_id}) {
-        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+        my $wf = $form->{_conn}->workflows->fetch(
             'GL', $form->{workflow_id}
             );
         $wf->context->param( transdate => $form->{transdate} );
@@ -241,14 +241,14 @@ sub post_reversing {
 
             &create_links; # create_links overwrites 'reversing'
         };
-        my $wf = $form->{_wire}->get('workflows')
-            ->create_workflow( 'GL',
-                               Workflow::Context->new(
-                                   'transdate' => $form->{transdate},
-                                   'batch-id' => $form->{batch_id},
-                                   'table_name' => 'gl',
-                                   'reversing' => $form->{reversing}
-                               ) );
+        my $wf = $form->{_conn}->workflows->create(
+            'GL',
+            {
+                'transdate' => $form->{transdate},
+                'batch-id' => $form->{batch_id},
+                'table_name' => 'gl',
+                'reversing' => $form->{reversing}
+            });
         $form->{workflow_id} = $wf->id;
         $wf->execute_action( $form->{__action} );
 
@@ -348,17 +348,16 @@ sub display_form
 
     my $wf;
     if($form->{workflow_id}) {
-        $wf = $form->{_wire}->get('workflows')
-            ->fetch_workflow( 'GL', $form->{workflow_id} );
+        $wf = $form->{_conn}->workflows->fetch( 'GL', $form->{workflow_id} );
     }
     else {
-        $wf = $form->{_wire}->get('workflows')
-            ->create_workflow( 'GL',
-                               Workflow::Context->new(
-                                   'batch-id' => $form->{batch_id},
-                                   'table_name' => 'gl',
-                                   'reversing' => $form->{reversing}
-                               ) );
+        $wf = $form->{_conn}->workflows->create(
+            'GL',
+            {
+                'batch-id' => $form->{batch_id},
+                'table_name' => 'gl',
+                'reversing' => $form->{reversing}
+            });
         $form->{workflow_id} = $wf->id;
     }
     $wf->context->param( transdate => $form->{transdate} );
@@ -454,7 +453,7 @@ sub save_as_template {
     my ($department_name, $department_id) = split/--/, $form->{department};
 
     if ($form->{workflow_id}) {
-        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+        my $wf = $form->{_conn}->workflows->fetch(
             'GL', $form->{workflow_id}
             );
         $wf->context->param( transdate => $form->{transdate} );
@@ -723,7 +722,7 @@ sub post {
     };
     $form->isblank( "transdate", $locale->text('Transaction Date missing!') );
     if ($form->{workflow_id}) {
-        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+        my $wf = $form->{_conn}->workflows->fetch(
             'GL', $form->{workflow_id}
             );
         $wf->context->param( transdate => $form->{transdate} );
@@ -750,7 +749,7 @@ sub post {
 }
 
 sub del {
-    my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+    my $wf = $form->{_conn}->workflows->fetch(
         'GL', $form->{workflow_id}
         );
     die 'No workflow to mark deleted' unless $wf;
@@ -791,7 +790,7 @@ sub check_balanced {
 sub save_as_new {
     for (qw(id)) { delete $form->{$_} }
     if ($form->{workflow_id}) {
-        my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+        my $wf = $form->{_conn}->workflows->fetch(
             'GL', $form->{workflow_id}
             );
         $wf->context->param( transdate => $form->{transdate} );

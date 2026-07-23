@@ -460,7 +460,11 @@ Given qr/^(a reconciliation report|reconciliation reports) with these properties
         local $LedgerSMB::App_State::User = {
             numberformat => '1000.00'
         };
-        my $wf = S->{ext_lsmb}->wire->get('workflows')->create_workflow(
+        my $app = LedgerSMB::Company->new(
+            dbh => $LedgerSMB::App_State::DBH,
+            wire => S->{ext_lsmb}->wire
+            );
+        my $wf = $app->workflows->create(
             'reconciliation',
             Workflow::Context->new(
                 account_id => $account->{id},

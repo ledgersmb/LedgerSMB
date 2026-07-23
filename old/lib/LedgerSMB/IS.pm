@@ -45,8 +45,6 @@ use Log::Any;
 
 use LedgerSMB::Magic qw(BC_SALES_INVOICE);
 
-use Workflow::Context;
-
 my $logger = Log::Any->get_logger(category => 'LedgerSMB::IS');
 
 

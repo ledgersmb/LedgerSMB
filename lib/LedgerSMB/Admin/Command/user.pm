@@ -13,7 +13,6 @@ LedgerSMB::Admin::Command::user - ledgersmb-admin 'user' command
 use Getopt::Long qw(GetOptionsFromArray);
 use LedgerSMB::Admin::Command;
 use LedgerSMB::App_State;
-use LedgerSMB::Company;
 use LedgerSMB::Database;
 use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::Entity::User;

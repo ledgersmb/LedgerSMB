@@ -53,7 +53,6 @@ use LedgerSMB::Tax;
 # use LedgerSMB::DBObject::TransTemplate;
 
 use List::Util qw(uniq);
-use Workflow::Context;
 
 # any custom scripts for this one
 if ( -f "old/bin/custom/aa.pl" ) {
@@ -144,8 +143,7 @@ sub add {
 }
 
 sub del {
-    my $wf = $form->{_wire}->get('workflows')
-        ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
     $wf->execute_action( 'del' );
 
     $form->info($locale->text('Draft deleted'));
@@ -174,8 +172,7 @@ sub reverse {
     $form->{title}     = $locale->text('Add');
     $form->{reversing_reference} = $form->{invnumber};
     $form->{invnumber} .= '-VOID';
-    my $wf = $form->{_wire}->get( 'workflows' )
-        ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
     $wf->execute_action( 'reverse' );
 
     &create_links;
@@ -224,15 +221,15 @@ sub post_reversing {
             &create_links; # create_links overwrites 'reversing'
         };
 
-        my $wf = $form->{_wire}->get('workflows')
-            ->create_workflow( 'AR/AP',
-                               Workflow::Context->new(
-                                   'transdate' => $form->{transdate},
-                                   'batch-id' => $form->{batch_id},
-                                   'table_name' => 'gl',
-                                   'reversing' => $form->{reversing},
-                                   'is_transaction' => 1
-                               ) );
+        my $wf = $form->{_conn}->workflows->create(
+            'AR/AP',
+            {
+                'transdate' => $form->{transdate},
+                'batch-id' => $form->{batch_id},
+                'table_name' => 'gl',
+                'reversing' => $form->{reversing},
+                'is_transaction' => 1
+            });
         $form->{workflow_id} = $wf->id;
         $wf->execute_action( $form->{__action} );
 
@@ -474,18 +471,17 @@ sub form_header {
 
     my $wf;
     if($form->{workflow_id}) {
-        $wf = $form->{_wire}->get('workflows')
-            ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+        $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
     }
     else {
-        $wf = $form->{_wire}->get('workflows')
-            ->create_workflow( 'AR/AP',
-                               Workflow::Context->new(
-                                   'batch-id' => $form->{batch_id},
-                                   'table_name' => lc($form->{ARAP}),
-                                   is_transaction => 1,
-                                   reversing => $form->{reversing},
-                               ) );
+        $wf = $form->{_conn}->workflows->create(
+            'AR/AP',
+            {
+                'batch-id' => $form->{batch_id},
+                'table_name' => lc($form->{ARAP}),
+                is_transaction => 1,
+                reversing => $form->{reversing},
+            });
         $form->{workflow_id} = $wf->id;
     }
     $wf->context->param( transdate => $form->{transdate} );
@@ -1093,8 +1089,7 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
 sub form_footer {
     $form->hide_form(qw(callback path login sessionid form_id));
 
-    my $wf = $form->{_wire}->get('workflows')
-        ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
     if ($form->{transdate} eq 'today') {
         $transdate = '';
     }
@@ -1262,8 +1257,7 @@ sub on_hold {
             my $toggled = IR->toggle_on_hold($form);
         }
         if ($form->{workflow_id}) {
-            my $wf = $form->{_wire}->get('workflows')
-                ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+            my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
             $wf->execute_action( $form->{__action} );
         }
         &edit();
@@ -1312,8 +1306,7 @@ sub edit_and_save {
     AA->post_transaction( \%myconfig, \%$form );
 
     if ($form->{workflow_id}) {
-        my $wf = $form->{_wire}->get('workflows')
-            ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+        my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
         $wf->execute_action( $form->{__action} );
     }
     $form->{rowcount} = 0;
@@ -1324,8 +1317,7 @@ sub edit_and_save {
 sub approve {
     $form->call_procedure(funcname=>'draft_approve', args => [ $form->{id} ]);
 
-    my $wf = $form->{_wire}->get('workflows')
-        ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
     $wf->execute_action( $form->{__action} );
     my $query =
         ($form->{vc} eq 'customer')
@@ -1534,7 +1526,7 @@ sub post {
     if ( !$form->{repost} ) {
         if ( $form->{id} ) {
             my $id = $form->{old_workflow_id} // $form->{workflow_id};
-            my $wf = $form->{_wire}->get('workflows')->fetch_workflow( 'AR/AP', $id );
+            my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $id );
             $wf->execute_action( $form->{__action} );
 
             &repost;
@@ -1547,7 +1539,7 @@ sub post {
     if ( AA->post_transaction( \%myconfig, \%$form ) ) {
 
         my $id = $form->{old_workflow_id} // $form->{workflow_id};
-        my $wf = $form->{_wire}->get('workflows')->fetch_workflow( 'AR/AP', $id );
+        my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $id );
         $wf->execute_action( $form->{__action} );
 
        if ( $form->{printandpost} ) {
@@ -1600,8 +1592,7 @@ sub save_info {
         }
 
         if ($form->{workflow_id}) {
-            my $wf = $form->{_wire}->get('workflows')
-                ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+            my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
             $wf->execute_action( $form->{__action} );
         }
         if ($form->{callback}){

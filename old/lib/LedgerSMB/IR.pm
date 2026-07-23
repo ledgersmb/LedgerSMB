@@ -46,8 +46,6 @@ use LedgerSMB::IIAA;
 
 use LedgerSMB::Magic qw(BC_VENDOR_INVOICE);
 
-use Workflow::Context;
-
 =over
 
 =item get_files

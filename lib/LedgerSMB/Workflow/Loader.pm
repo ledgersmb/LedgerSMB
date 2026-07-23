@@ -41,25 +41,25 @@ use Log::Any qw($log);
 
 use File::Find::Rule;
 use File::Spec;
-use Workflow::Factory;
+use LedgerSMB::Workflow::Factory;
 use Workflow::Condition;
 
 $Workflow::Condition::STRICT_BOOLEANS = 0;
 
 =head1 CLASS METHODS
 
-=head2 load( directories => @directories, lifecycle => $lifecycle )
+=head2 load( directories => @directories, lifecycle => $lifecycle, ... )
 
 Loads the workflow specifications from the given directories and registers
-them with the C<Workflow::Factory>. Default is to load the configuration
-when necessary. This is a good choice for smaller applications which are
-unlikely to require access to all workflows on each invocation, but makes
-less sense for persistent environments such as the Plack server.
+them with the C<LedgerSMB::Workflow::Factory>. Default is to load the
+configuration when necessary. This is a good choice for smaller applications
+which are unlikely to require access to all workflows on each invocation, but
+makes little sense for persistent environments such as the Plack server.
 
 To force all workflows to be loaded on start-up, provide the C<lifecycle>
 parameter with a value of C<eager>.
 
-Returns the C<Workflow::Factory> (singleton) instance.
+Returns the C<LedgerSMB::Workflow::Factory> (singleton) instance.
 
 =cut
 
@@ -76,7 +76,7 @@ sub _type_to_fn($type) {
     return $type_fn;
 }
 
-sub load($class, :$directories, :$lifecycle = undef) {
+sub load($class, :$directories, :$lifecycle = undef, %) {
     my %files = map {
         map { _fn($_) => $_ } $finder->in( $_ )
     } grep { -d $_ } $directories->@*;
@@ -106,7 +106,7 @@ sub load($class, :$directories, :$lifecycle = undef) {
         };
     };
 
-    my $instance = Workflow::Factory->instance;
+    my $instance = LedgerSMB::Workflow::Factory->instance;
 
     # Always load the common configuration:
     $instance->add_config_from_file( $config->('')->%* );

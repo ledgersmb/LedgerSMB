@@ -42,7 +42,7 @@ my $query = <<~'SQL';
 sub execute( $self, $wf ) {
     $self->SUPER::execute($wf);
 
-    my $dbh = $wf->handle;
+    my $dbh = $wf->app->dbh;
     $dbh->do($query, {}, $wf->id)
         or die $dbh->errstr;
 

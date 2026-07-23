@@ -57,7 +57,7 @@ error in case separation of duties is I<not> enabled.
 =cut
 
 sub evaluate($self, $wf) {
-    my $dbh = $wf->handle;
+    my $dbh = $wf->app->dbh;
     my ($access) =
         $dbh->selectrow_array('SELECT lsmb__is_allowed_role(?)', {}, [$self->param('role')]);
     die $dbh->errstr if $dbh->err;

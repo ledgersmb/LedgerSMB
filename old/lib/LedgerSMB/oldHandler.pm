@@ -52,6 +52,7 @@ use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::App_State;
+use LedgerSMB::Company;
 use LedgerSMB::Middleware::SessionStorage;
 use LedgerSMB::Middleware::RequestID;
 use LedgerSMB::PSGI::Util;
@@ -136,6 +137,10 @@ sub handle {
         %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
         $form->{_user} = \%myconfig;
         $form->{_req} = Plack::Request::WithEncoding->new($psgi_env);
+        $form->{_conn} = LedgerSMB::Company->new(
+            dbh  => $LedgerSMB::App_State::DBH,
+            wire => $wire
+            );
         map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
             unless ( $form->{type} and $form->{type} eq 'preferences' );
 

@@ -1191,6 +1191,7 @@ sub select_coa($request) {
 
             my $c = LedgerSMB::Company->new(
                 dbh => $database->connect(),
+                wire => $request->{_wire}
                 )->configuration;
             my $fn = File::Spec->catdir('.', 'locale', 'coa',
                                         $request->{coa_lc}, $request->{chart});
@@ -1652,7 +1653,7 @@ which is also where the 'initial-data.xml' file is located.
 
 sub _reload_menu($request, $database) {
 
-    my $c = LedgerSMB::Company->new( dbh => $request->{dbh} );
+    my $c = LedgerSMB::Company->new( dbh => $request->{dbh}, wire => $request->{_wire} );
     my $m = $c->menu;
     try {
         open( my $fh, '<:raw', File::Spec->catfile( $database->data_dir, 'menu.xml' ) )

@@ -41,7 +41,6 @@
 package lsmb_legacy;
 
 use List::Util qw(min max uniq);
-use Workflow::Context;
 
 use LedgerSMB::Form;
 use LedgerSMB::IIAA;
@@ -70,8 +69,7 @@ sub edit_and_save {
     IR->post_invoice( \%myconfig, \%$form );
 
     if ($form->{workflow_id}) {
-        my $wf = $form->{_wire}->get('workflows')
-            ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+        my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
         $wf->execute_action( $form->{__action} );
     }
     edit();
@@ -114,8 +112,7 @@ sub add {
 }
 
 sub del {
-    my $wf = $form->{_wire}->get('workflows')
-        ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
     $wf->execute_action( 'del' );
 
     $form->info($locale->text('Draft deleted'));
@@ -124,8 +121,7 @@ sub del {
 sub edit {
     $form->{ARAP} = 'AP';
     if (not $form->{id} and $form->{workflow_id}) {
-        my $wf = $form->{_wire}->get('workflows')
-            ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+        my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
         $form->{id} = $wf->context->param( 'id' );
     }
 
@@ -272,15 +268,11 @@ sub form_header {
 
     my $wf;
     if($form->{workflow_id}) {
-        $wf = $form->{_wire}->get('workflows')
-            ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+        $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
     }
     else {
-        $wf = $form->{_wire}->get('workflows')
-            ->create_workflow( 'AR/AP',
-                               Workflow::Context->new(
-                                   'batch-id' => $form->{batch_id}
-                               ) );
+        $wf = $form->{_conn}->workflows->create(
+            'AR/AP', { 'batch-id' => $form->{batch_id} });
         $form->{workflow_id} = $wf->id;
     }
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
@@ -528,8 +520,7 @@ sub reverse {
     $form->{reversing} = delete $form->{id};
     $form->{reversing_reference} = $form->{invnumber};
 
-    my $wf = $form->{_wire}->get('workflows')
-        ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
     $wf->execute_action( $form->{__action} );
 
     delete $form->{workflow_id};
@@ -927,7 +918,7 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
         $form->print_button( \%button, $_ );
     }
 
-    my $wf = $form->{_wire}->get( 'workflows' )->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
     if ( $wf and grep { $_ eq 'print' } $wf->get_current_actions ) {
         my $printops = &print_options;
 
@@ -1303,7 +1294,7 @@ sub post {
     IR->post_invoice( \%myconfig, \%$form );
 
     my $id = $form->{old_workflow_id} // $form->{workflow_id};
-    my $wf = $form->{_wire}->get('workflows')->fetch_workflow( 'AR/AP', $id );
+    my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $id );
 
     # m/save_as/ matches both 'print_and_save_as_new' as well as 'save_as_new'
     # note that "post" is modelled through the 'approve' entrypoint
@@ -1340,8 +1331,7 @@ sub on_hold {
 
         #&invoice_links(); # is that it?
         if ($form->{workflow_id}) {
-            my $wf = $form->{_wire}->get('workflows')
-                ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+            my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
             $wf->execute_action( $form->{__action} );
         }
         &edit(); # it was already IN edit for this to be reached.
@@ -1376,8 +1366,7 @@ sub save_info {
         }
 
         if ($form->{workflow_id}) {
-            my $wf = $form->{_wire}->get('workflows')
-                ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+            my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
             $wf->execute_action( $form->{__action} );
         }
         if ($form->{callback}){

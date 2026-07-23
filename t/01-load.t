@@ -31,7 +31,7 @@ sub module_loads {
     return if $tested{$module}; # don't test twice
     $tested{$module} = 1;
 
-    tests modules_loadable => { iso => 1, async => (! $ENV{COVERAGE}) }, sub {
+    tests "Loading of $module" => { iso => 1, async => (! $ENV{COVERAGE}) }, sub {
         for (@required_modules) {
             eval "require $_"
                 or skip_all "Test missing required module '$_'";

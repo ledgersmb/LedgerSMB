@@ -19,7 +19,6 @@ use warnings;
 
 use HTTP::Status qw( HTTP_BAD_REQUEST );
 use Log::Any qw($log);
-use Workflow::Context;
 
 use LedgerSMB::DBObject::Reconciliation;
 use LedgerSMB::File;
@@ -104,8 +103,7 @@ must be set:
 sub reject {
     my ($request) = @_;
 
-    my $wf = $request->{_wire}->get('workflows')
-        ->fetch_workflow( 'reconciliation', $request->{workflow_id} );
+    my $wf = $request->conn->workflows->fetch( 'reconciliation', $request->{workflow_id} );
     $wf->execute_action( 'reject' );
 
     return search($request);
@@ -119,8 +117,7 @@ Submits the recon set to be approved.
 
 sub submit_recon_set {
     my ($request) = shift;
-    my $wf = $request->{_wire}->get('workflows')
-        ->fetch_workflow( 'reconciliation', $request->{workflow_id} );
+    my $wf = $request->conn->workflows->fetch( 'reconciliation', $request->{workflow_id} );
     $wf->execute_action( 'submit' );
 
     my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
@@ -360,9 +357,7 @@ sub start_report {
         ending_balance => $request->{total},
         recon_fx       => $request->{recon_fx},
     };
-    my $ctx = Workflow::Context->new(%$recon_data);
-    my $wf = $request->{_wire}->get( 'workflows' )->
-        create_workflow( 'reconciliation', $ctx );
+    my $wf = $request->conn->workflows->create( 'reconciliation', $recon_data );
 
     my $recon = LedgerSMB::DBObject::Reconciliation->new(
         dbh => $request->{dbh},
@@ -392,8 +387,7 @@ delete any non-approved reports.
 sub delete_report {
     my ($request) = @_;
 
-    my $wf = $request->{_wire}->get('workflows')
-        ->fetch_workflow( 'reconciliation', $request->{workflow_id} );
+    my $wf = $request->conn->workflows->fetch( 'reconciliation', $request->{workflow_id} );
     $wf->execute_action( 'delete' );
 
     return search($request);
@@ -422,8 +416,7 @@ sub approve {
              [ q{'report_id' parameter missing} ]
         ] if ! $request->{report_id};
 
-    my $wf = $request->{_wire}->get('workflows')
-        ->fetch_workflow( 'reconciliation', $request->{workflow_id} );
+    my $wf = $request->conn->workflows->fetch( 'reconciliation', $request->{workflow_id} );
     $wf->execute_action( 'approve' );
 
     my $recon = LedgerSMB::DBObject::Reconciliation->new(%$request);
