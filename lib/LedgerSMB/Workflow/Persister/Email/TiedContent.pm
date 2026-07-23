@@ -1,7 +1,7 @@
-package LedgerSMB::Workflow::Persister::Email::TiedContent;
 
-use v5.32;
-use warnings;
+use v5.38;
+
+package LedgerSMB::Workflow::Persister::Email::TiedContent;
 
 =head1 NAME
 
@@ -38,9 +38,7 @@ Constructor. Called by Perl's C< tie() >.
 
 =cut
 
-sub TIESCALAR {
-    my $class = shift;
-    my %args = @_;
+sub TIESCALAR($class, %args) {
     my $self = bless { %args }, $class;
 
     $self->{dirty}     = defined $self->{value};
@@ -54,8 +52,7 @@ Called each time the variable's value is retrieved.
 
 =cut
 
-sub FETCH {
-    my $self = shift;
+sub FETCH($self) {
     return $self->{value} if $self->{has_value};
 
     my $dbh = $self->{dbh};
@@ -82,9 +79,7 @@ Called each time the variable is being assigned a new value.
 
 =cut
 
-sub STORE {
-    my ($self, $value) = @_;
-
+sub STORE($self, $value) {
     $self->{dirty} = 1;
     $self->{value} = $value;
     $self->{has_value} = 1;
@@ -98,8 +93,7 @@ Not implemented.
 
 =cut
 
-sub persist {
-    my ($self) = @_;
+sub persist($self) {
     return if not $self->{dirty};
 
     if ($self->{id}) { # update
@@ -107,8 +101,6 @@ sub persist {
     else { # create
     }
 }
-
-1;
 
 =head1 LICENSE AND COPYRIGHT
 

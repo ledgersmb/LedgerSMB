@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 
 package LedgerSMB::Workflow::Condition::PeriodClosed;
 
@@ -95,9 +94,6 @@ sub evaluate($self, $wf) {
     return not $opened;
 }
 
-
-
-1;
 
 =head1 LICENSE AND COPYRIGHT
 

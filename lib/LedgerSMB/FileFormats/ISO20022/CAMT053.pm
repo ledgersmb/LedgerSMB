@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental 'try';
 
 package LedgerSMB::FileFormats::ISO20022::CAMT053;
@@ -35,8 +34,7 @@ not identified as a CAMT053 document.
 
 =cut
 
-sub new {
-    my ($class, $fh) = @_;
+sub new($class, $fh) {
     return unless defined $fh;
 
     my ($dom, $ns);
@@ -62,8 +60,7 @@ Returns the XML::LibXML DOM tree representing the input xml.
 
 =cut
 
-sub dom {
-    my ($self) = @_;
+sub dom($self) {
     return $self->{dom};
 }
 
@@ -90,8 +87,7 @@ Returns a flattened list with the following elements:
 
 =cut
 
-sub _decode_crdt {
-    my ($code) = @_;
+sub _decode_crdt($code) {
     die "bad debit/credit code: $code"
           unless lc($code) =~ /^(crdt|dbit)$/;
     my $ret;
@@ -99,8 +95,7 @@ sub _decode_crdt {
     return $ret // 'debit';
 }
 
-sub lineitems_simple {
-    my ($self) = @_;
+sub lineitems_simple($self) {
 
     my $xpc = XML::LibXML::XPathContext->new;
     $xpc->registerNs(
@@ -136,5 +131,3 @@ option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
-
-1;

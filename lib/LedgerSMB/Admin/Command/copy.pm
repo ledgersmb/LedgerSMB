@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental 'try';
 
 package LedgerSMB::Admin::Command::copy;
@@ -19,8 +18,7 @@ use experimental 'try'; # Work around Moose re-enabling experimenal warnings
 extends 'LedgerSMB::Admin::Command';
 use namespace::autoclean;
 
-sub run {
-    my ($self, $dbname, $newname) = @_;
+sub run($self, $dbname, $newname) {
 
     return $self->help('copy')
         if !$dbname || $dbname eq 'help';
@@ -56,8 +54,6 @@ sub run {
 }
 
 __PACKAGE__->meta->make_immutable;
-
-1;
 
 __END__
 

@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental 'try';
 
 package LedgerSMB::Template::Plugin::External;
@@ -138,9 +137,7 @@ Implements the template's initialization protocol.
 
 =cut
 
-sub setup {
-    my ($self, $parent, $cleanvars, $output) = @_;
-
+sub setup($self, $parent, $cleanvars, $output) {
     my (undef, undef, $base) =
         File::Spec->splitpath( $self->rendered_template_name );
     my $dir = File::Temp->newdir( UNLINK => $self->cleanup );
@@ -163,8 +160,7 @@ Implements the template's post-processing protocol.
 
 =cut
 
-sub postprocess {
-    my ($self, $parent, $output, $config) = @_;
+sub postprocess($self, $parent, $output, $config) {
 
     my $dir = $config->{_dir}->dirname;
     my $cmd = $self->command;
@@ -207,14 +203,13 @@ sub postprocess {
     return undef;
 }
 
-=head2 mimetype()
+=head2 mimetype($config)
 
 Returns the rendered template's mimetype.
 
 =cut
 
-sub mimetype {
-    my $self = shift;
+sub mimetype($self, $config) {
     return $self->mime_type;
 }
 
@@ -228,5 +223,3 @@ your software.
 
 =cut
 
-
-1;

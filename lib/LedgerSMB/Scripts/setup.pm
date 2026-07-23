@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental 'try';
 
 package LedgerSMB::Scripts::setup;
@@ -74,8 +73,7 @@ login.pl.
 
 =cut
 
-sub authenticate {
-    my ($request) = @_;
+sub authenticate($request) {
     my $creds = $request->{_req}->env->{'lsmb.auth'}->get_credentials;
 
     return [ HTTP_UNAUTHORIZED,
@@ -90,14 +88,12 @@ sub authenticate {
 }
 
 
-sub __default {
-    my ($request) = @_;
+sub __default($request) {
     my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'setup/credentials', $request);
 }
 
-sub _get_database {
-    my ($request) = @_;
+sub _get_database($request) {
     my $creds = $request->{_req}->env->{'lsmb.auth'}->get_credentials;
     $request->{login} = $creds->{login};
 
@@ -124,8 +120,7 @@ sub _get_database {
 }
 
 
-sub _init_db {
-    my ($request) = @_;
+sub _init_db($request) {
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
@@ -151,8 +146,7 @@ Returns the main dispatch table for the versions with supported upgrades
 
 =cut
 
-sub get_dispatch_table {
-    my ($request) = @_;
+sub get_dispatch_table($request) {
     my $sl_detect = $request->{_locale}->text('SQL-Ledger database detected.');
     my $migratemsg =  $request->{_locale}->text(
                'Would you like to migrate the database?'
@@ -262,15 +256,14 @@ sub get_dispatch_table {
 }
 
 
-sub _sanity_checks {
+sub _sanity_checks() {
     my $checks = LedgerSMB::Database->verify_helpers(helpers => [ 'psql' ]);
 
     die q{Unable to execute 'psql'} unless $checks->{psql};
 }
 
 
-sub login {
-    my ($request) = @_;
+sub login($request) {
     if (!$request->{database}){
         return list_databases($request);
     }
@@ -353,8 +346,7 @@ Lists all databases as hyperlinks to continue operations.
 
 =cut
 
-sub list_databases {
-    my ($request) = @_;
+sub list_databases($request) {
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
@@ -376,8 +368,7 @@ Lists all users in the selected database
 
 =cut
 
-sub list_users {
-    my ($request) = @_;
+sub list_users($request) {
     my ($reauth) = _init_db($request);
     return $reauth if $reauth;
 
@@ -396,8 +387,7 @@ Copies db to the name of $request->{new_name}
 
 =cut
 
-sub copy_db {
-    my ($request) = @_;
+sub copy_db($request) {
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
     }
@@ -417,8 +407,7 @@ Backs up a full db
 
 =cut
 
-sub backup_db {
-    my $request = shift @_;
+sub backup_db($request) {
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
     }
@@ -432,8 +421,7 @@ Backs up roles only (for all db's)
 
 =cut
 
-sub backup_roles {
-    my $request = shift @_;
+sub backup_roles($request) {
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
     }
@@ -442,8 +430,7 @@ sub backup_roles {
 }
 
 # Private method, basically just passes the inputs on to the next screen.
-sub _begin_backup {
-    my $request = shift @_;
+sub _begin_backup($request) {
     $request->{can_email} = eval {
         # when accessing an undefined service, an exception is thrown;
         # suppress the exception: all we want to know is if there is a value
@@ -460,8 +447,7 @@ Runs the backup.  If backup_type is set to email, emails the
 
 =cut
 
-sub run_backup {
-    my $request = shift @_;
+sub run_backup($request) {
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
     }
@@ -547,8 +533,7 @@ sub run_backup {
 
 =cut
 
-sub consistency {
-    my ($request) = @_;
+sub consistency($request) {
     my ($reauth, $database) = _get_database($request);
     return $reauth if $reauth;
 
@@ -586,8 +571,7 @@ sub consistency {
 
 =cut
 
-sub revert_migration {
-    my ($request) = @_;
+sub revert_migration($request) {
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
     }
@@ -620,8 +604,7 @@ the user.
 
 =cut
 
-sub template_screen {
-    my ($request, $entrypoint) = @_;
+sub template_screen($request, $entrypoint) {
     $request->{template_dirs} =
         [ map { +{ text => $_, value => $_ } }
           sort keys %{ LedgerSMB::Database::Config->new(
@@ -640,8 +623,7 @@ and not the user creation screen.
 
 =cut
 
-sub _save_templates {
-    my ($request, $entrypoint) = @_;
+sub _save_templates($request, $entrypoint) {
     my $templates = LedgerSMB::Database::Config->new(
         templates_dir => $request->{_wire}->get( 'paths/templates' ),
         )->templates;
@@ -662,8 +644,7 @@ sub _save_templates {
     return;
 }
 
-sub load_templates {
-    my ($request) = @_;
+sub load_templates($request) {
 
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
@@ -736,8 +717,7 @@ my %upgrade_next_steps = (
     _load_menu             => '_complete',
     );
 
-sub _dispatch_upgrade_workflow {
-    my ($request, $step_name) = @_;
+sub _dispatch_upgrade_workflow($request, $step_name) {
 
     if (my $next = $upgrade_next_steps{$step_name}) {
         return __PACKAGE__->can($next)->($request);
@@ -746,8 +726,7 @@ sub _dispatch_upgrade_workflow {
     croak "Upgrade workflow error: no next step for '$step_name'";
 }
 
-sub _select_coa {
-    my ($request) = @_;
+sub _select_coa($request) {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
@@ -755,8 +734,7 @@ sub _select_coa {
             or _dispatch_upgrade_workflow($request, '_select_coa'));
 }
 
-sub _process_and_run_upgrade_script {
-    my ($request, $type) = @_;
+sub _process_and_run_upgrade_script($request, $type) {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
@@ -822,37 +800,32 @@ sub _process_and_run_upgrade_script {
     return;
 }
 
-sub _run_sl28_upgrade {
-    my ($request) = @_;
+sub _run_sl28_upgrade($request) {
 
     return (_process_and_run_upgrade_script($request, 'sql-ledger/2.8')
             or _dispatch_upgrade_workflow($request, '_run_sl28_upgrade'));
 }
 
-sub _run_sl30_upgrade {
-    my ($request) = @_;
+sub _run_sl30_upgrade($request) {
 
     return (_process_and_run_upgrade_script($request, 'sql-ledger/3.0')
             or _dispatch_upgrade_workflow($request, '_run_sl30_upgrade'));
 }
 
-sub _run_ls12_upgrade {
-    my ($request) = @_;
+sub _run_ls12_upgrade($request) {
 
     return (_process_and_run_upgrade_script($request, 'ledgersmb/1.2')
             or _dispatch_upgrade_workflow($request, '_run_ls12_upgrade'));
 }
 
-sub _run_ls13_upgrade {
-    my ($request) = @_;
+sub _run_ls13_upgrade($request) {
 
     return (_process_and_run_upgrade_script($request, 'ledgersmb/1.3')
             or _dispatch_upgrade_workflow($request, '_run_ls13_upgrade'));
 }
 
 
-sub _post_sl28_migration {
-    my ($request) = @_;
+sub _post_sl28_migration($request) {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
@@ -861,8 +834,7 @@ sub _post_sl28_migration {
             or _dispatch_upgrade_workflow($request, '_post_sl28_migration'));
 }
 
-sub _post_sl30_migration {
-    my ($request) = @_;
+sub _post_sl30_migration($request) {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
@@ -871,8 +843,7 @@ sub _post_sl30_migration {
             or _dispatch_upgrade_workflow($request, '_post_sl30_migration'));
 }
 
-sub _post_ls12_migration {
-    my ($request) = @_;
+sub _post_ls12_migration($request) {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
@@ -881,8 +852,7 @@ sub _post_ls12_migration {
             or _dispatch_upgrade_workflow($request, '_post_ls12_migration'));
 }
 
-sub _post_ls13_migration {
-    my ($request) = @_;
+sub _post_ls13_migration($request) {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
@@ -892,8 +862,7 @@ sub _post_ls13_migration {
 }
 
 
-sub _select_templates {
-    my ($request) = @_;
+sub _select_templates($request) {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
@@ -902,8 +871,7 @@ sub _select_templates {
             or _dispatch_upgrade_workflow($request, '_select_templates'));
 }
 
-sub _load_templates {
-    my ($request) = @_;
+sub _load_templates($request) {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
@@ -919,8 +887,7 @@ sub _load_templates {
 
 
 
-sub upgrade {
-    my ($request) = @_;
+sub upgrade($request) {
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
     }
@@ -983,8 +950,7 @@ sub upgrade {
     return $template->render($request, 'setup/upgrade_info', $request);
 }
 
-sub _failed_check {
-    my ($request, $check, $sth) = @_;
+sub _failed_check($request, $check, $sth) {
 
     my %selectable_values =
         %{$check->query_selectable_values($request->{dbh})};
@@ -1092,8 +1058,7 @@ script.
 
 =cut
 
-sub fix_tests {
-    my ($request) = @_;
+sub fix_tests($request) {
 
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
@@ -1150,8 +1115,7 @@ sub fix_tests {
 
 =cut
 
-sub create_db {
-    my ($request) = @_;
+sub create_db($request) {
 
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
@@ -1195,8 +1159,7 @@ coa_lc not set:  Select the coa location code
 
 =cut
 
-sub select_coa {
-    my ($request) = @_;
+sub select_coa($request) {
     my $hdr = $request->{_req}->header( 'Accept-Language' );
     my $lang = $request->{_wire}->get( 'default_locale' )->from_header( $hdr );
     my $coa_data = LedgerSMB::Database::Config
@@ -1277,8 +1240,7 @@ button facilitates that scenario.
 
 =cut
 
-sub skip_coa {
-    my ($request) = @_;
+sub skip_coa($request) {
 
     return _dispatch_upgrade_workflow($request, '_select_coa')
 }
@@ -1291,8 +1253,7 @@ select_coa and skip_coa functions.
 
 =cut
 
-sub _render_user {
-    my ($request, $entrypoint) = @_;
+sub _render_user($request, $entrypoint) {
 
     @{$request->{salutations}} = $request->call_procedure(
         funcname => 'person__list_salutations'
@@ -1319,8 +1280,7 @@ select_coa and skip_coa functions.
 
 =cut
 
-sub _render_new_user {
-    my ($request, $entrypoint) = @_;
+sub _render_new_user($request, $entrypoint) {
 
     # One thing to remember here is that the setup.pl does not get the
     # benefit of the automatic db connection.  So in order to build this
@@ -1354,8 +1314,7 @@ Saves the administrative user, and then directs to the login page.
 
 =cut
 
-sub _save_user {
-    my ($request, $entrypoint) = @_;
+sub _save_user($request, $entrypoint) {
     $request->{entity_class} = EC_EMPLOYEE;
     $request->{name} = "$request->{last_name}, $request->{first_name}";
 
@@ -1417,8 +1376,7 @@ sub _save_user {
 
 
 
-sub _post_migration_schema_upgrade {
-    my ($request, $database, $entrypoint) = @_;
+sub _post_migration_schema_upgrade($request, $database, $entrypoint) {
     my $dbh = $request->{dbh};
     my $guard = Scope::Guard->new(
         sub {
@@ -1457,8 +1415,7 @@ sub _post_migration_schema_upgrade {
     return;
 }
 
-sub _load_menu {
-    my ($request) = @_;
+sub _load_menu($request) {
     my ($reauth, $database) = _init_db($request);
     return $reauth if $reauth;
 
@@ -1474,8 +1431,7 @@ sub _load_menu {
 
 =cut
 
-sub _create_initial_user {
-    my ($request) = @_;
+sub _create_initial_user($request) {
     return _render_new_user($request, '_create_initial_user')
         unless $request->{username};
 
@@ -1483,8 +1439,7 @@ sub _create_initial_user {
             or _dispatch_upgrade_workflow($request, '_create_initial_user'));
 }
 
-sub add_user {
-    my ($request) = @_;
+sub add_user($request) {
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
     }
@@ -1497,8 +1452,7 @@ sub add_user {
 
 =cut
 
-sub edit_user_roles {
-    my ($request) = @_;
+sub edit_user_roles($request) {
 
     my $reauth;
     ($reauth) = _init_db($request)
@@ -1540,8 +1494,7 @@ sub edit_user_roles {
 
 =cut
 
-sub save_user_roles {
-    my ($request) = @_;
+sub save_user_roles($request) {
 
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
@@ -1583,8 +1536,7 @@ sub save_user_roles {
 
 =cut
 
-sub reset_password {
-    my ($request) = @_;
+sub reset_password($request) {
 
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
@@ -1607,8 +1559,8 @@ sub reset_password {
 Cancels work.  Returns to login screen.
 
 =cut
-sub cancel{
-    return __default(@_);
+sub cancel(@args) {
+    return __default(@args);
 }
 
 =item force
@@ -1617,8 +1569,7 @@ Force work.  Forgets unmatching tests, applies a curing statement and move on.
 
 =cut
 
-sub force {
-    my ($request) = @_;
+sub force($request) {
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
     }
@@ -1647,8 +1598,7 @@ between versions on a stable branch (typically upgrading)
 
 =cut
 
-sub _rebuild_modules {
-    my ($request, $entrypoint, $database) = @_;
+sub _rebuild_modules($request, $entrypoint, $database) {
 
     # The order is important here:
     #  New modules should be able to depend on the latest changes
@@ -1675,8 +1625,7 @@ sub _rebuild_modules {
     return;
 }
 
-sub rebuild_modules {
-    my ($request) = @_;
+sub rebuild_modules($request) {
 
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
@@ -1701,8 +1650,7 @@ which is also where the 'initial-data.xml' file is located.
 
 =cut
 
-sub _reload_menu {
-    my ($request, $database) = @_;
+sub _reload_menu($request, $database) {
 
     my $c = LedgerSMB::Company->new( dbh => $request->{dbh} );
     my $m = $c->menu;
@@ -1722,8 +1670,7 @@ sub _reload_menu {
 }
 
 
-sub reload_menu {
-    my ($request) = @_;
+sub reload_menu($request) {
 
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
@@ -1745,8 +1692,7 @@ Gets the statistics info and shows the complete screen.
 
 =cut
 
-sub _complete {
-    my ($request, $database) = @_;
+sub _complete($request, $database = undef) {
 
     # the workflow state machine dispatches here (without database)
     if (not defined $database) {
@@ -1772,8 +1718,7 @@ sub _complete {
     return $template->render($request, 'setup/complete', $request);
 }
 
-sub complete {
-    my ($request) = @_;
+sub complete($request) {
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
     }
@@ -1787,8 +1732,7 @@ Asks the various modules for system and version info, showing the result
 
 =cut
 
-sub system_info {
-    my ($request) = @_;
+sub system_info($request) {
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
     }
@@ -1816,8 +1760,7 @@ Lists all database schema patches that have been applied.
 
 =cut
 
-sub db_patches_log {
-    my ($request) = @_;
+sub db_patches_log($request) {
     if (my $csrf = $request->verify_csrf) {
         return $csrf;
     }
@@ -1848,4 +1791,3 @@ your software.
 =cut
 
 
-1;

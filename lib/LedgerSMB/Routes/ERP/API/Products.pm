@@ -221,9 +221,10 @@ get api '/products/partsgroups/{id}' => sub {
 put api '/products/partsgroups/{id}' => sub {
     my ($env, $r, $c, $body, $params) = @_;
 
-    $env->{'psgix.logger'}->({
-        message => "PUT /products/partsgroups/$params->{id}",
-        level => 'info' });
+    $env->{'psgix.logger'}->(
+        msg => "PUT /products/partsgroups/$params->{id}",
+        level => 'info'
+        );
     my ($ETag) = ($r->headers->header('If-Match') =~ m/^\s*(?>W\/)?"(.*)"\s*$/);
     my ($response, $meta) = _update_partsgroup(
         $c, {

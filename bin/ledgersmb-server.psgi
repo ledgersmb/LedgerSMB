@@ -1,7 +1,7 @@
 #!/usr/bin/plackup
 #                                                      -*- mode: perl; -*-
 
-
+use v5.38;
 
 BEGIN {
     if ( $ENV{'LSMB_WORKINGDIR'}
@@ -11,8 +11,6 @@ BEGIN {
 }
 
 package LedgerSMB::FCGI;
-
-use v5.14.0;
 
 no lib '.';
 
@@ -33,9 +31,7 @@ use Plack::Builder;
 use Scalar::Util qw(reftype);
 use YAML::PP;
 
-sub merge_config_hashes {
-    my ($left, $right, $relative_entry, $path) = @_;
-    $path //= '';
+sub merge_config_hashes($left, $right, $relative_entry = undef, $path //= '') {
     my $ref_left = reftype $left;
     my $ref_right = reftype $right;
 
@@ -161,8 +157,7 @@ for my $mw ($wire->get( 'extra_middleware' )->@*) {
     $builder->add_middleware( $mw->{name}, $mw->{args}->@* );
 }
 
-sub _inject_wire {
-    my $app = shift;
+sub _inject_wire($app) {
     sub { my $env = shift; $env->{wire} = $wire; $app->($env) }
 }
 

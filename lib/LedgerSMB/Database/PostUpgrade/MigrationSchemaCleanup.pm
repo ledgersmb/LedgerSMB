@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental qw( signatures );
 
 package LedgerSMB::Database::PostUpgrade::MigrationSchemaCleanup;
@@ -47,4 +46,3 @@ your software.
 
 =cut
 
-1;

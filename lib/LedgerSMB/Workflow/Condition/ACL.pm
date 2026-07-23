@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 
 package LedgerSMB::Workflow::Condition::ACL;
 
@@ -66,9 +65,6 @@ sub evaluate($self, $wf) {
     return $access;
 }
 
-
-
-1;
 
 =head1 LICENSE AND COPYRIGHT
 

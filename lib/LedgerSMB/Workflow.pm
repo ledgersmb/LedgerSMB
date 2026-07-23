@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 
 package LedgerSMB::Workflow;
 
@@ -64,8 +63,6 @@ sub init($self, @params) {
         $self->_factory->get_persister_for_workflow_type( $self->type );
     $self->{handle} = $persister->handle; # workaround for Workflow preventing write access
 }
-
-1;
 
 =head1 LICENSE AND COPYRIGHT
 

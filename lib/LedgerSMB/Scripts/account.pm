@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental 'try';
 
 package LedgerSMB::Scripts::account;
@@ -34,8 +33,7 @@ Displays a screen to create a new account.
 
 =cut
 
-sub new_account {
-    my ($request) = @_;
+sub new_account($request) {
     return _display_account_screen($request, { charttype => 'A' });
 }
 
@@ -45,8 +43,7 @@ Displays a screen to create a new Chart of Accounts heading.
 
 =cut
 
-sub new_heading {
-    my ($request) = @_;
+sub new_heading($request) {
     return _display_account_screen($request, { charttype => 'H' });
 }
 
@@ -58,8 +55,7 @@ Requires the id and charttype variables in the request to be set.
 
 =cut
 
-sub edit {
-    my ($request) = @_;
+sub edit($request) {
     my $func = 'account_get';
     my $trans_func = 'account__list_translations';
 
@@ -107,8 +103,7 @@ link:  a list of strings representing text box identifier.
 
 =cut
 
-sub _generate_links {
-    my $request = shift;
+sub _generate_links($request) {
     my @links;
     my @descriptions = $request->call_procedure(
         funcname => 'get_link_descriptions',
@@ -128,8 +123,7 @@ sub _generate_links {
      return \@links;
 }
 
-sub save {
-    my ($request) = @_;
+sub save($request) {
 
     if ( defined $request->{parent} and $request->{parent} == -1 ) {
         $request->{parent} = undef;
@@ -193,8 +187,7 @@ Saves selected translations
 
 =cut
 
-sub update_translations {
-    my ($request) = @_;
+sub update_translations($request) {
     my $trans_save_func = 'account__save_translation';
     my $trans_del_func = 'account__delete_translation';
     if ($request->{charttype} and $request->{charttype} eq 'H') {
@@ -233,15 +226,13 @@ Saves as a new account.  Deletes the id field and then calls save()
 
 =cut
 
-sub save_as_new {
-    my ($request) = @_;
+sub save_as_new($request) {
     $request->{id} = undef;
     return save($request);
 }
 
 
-sub _display_account_screen {
-    my ($request, $account) = @_;
+sub _display_account_screen($request, $account) {
     @{$account->{all_headings}} =
         $request->call_procedure(funcname => 'account_heading__list');
     $account->{custom_link_descriptions} = [
@@ -277,8 +268,7 @@ Shows the yearend screen.  No expected inputs.
 
 =cut
 
-sub yearend_info {
-    my ($request) = @_;
+sub yearend_info($request) {
     my $template = $request->{_wire}->get('ui');
     my $dbh = $request->{dbh};
     my @closing_dates = $dbh->selectall_array(
@@ -323,8 +313,7 @@ in_retention_acc_id: Account id to post retained earnings into
 
 =cut
 
-sub post_yearend {
-    my ($request) = @_;
+sub post_yearend($request) {
     $request->call_procedure(
         funcname => 'eoy_close_books',
         args     => [
@@ -346,8 +335,7 @@ period_close_date: Date up to (inclusive) which to close the books
 
 =cut
 
-sub close_period {
-    my ($request) = @_;
+sub close_period($request) {
     $request->call_procedure(
         funcname => 'eoy_create_checkpoint',
         args     => [ $request->{period_close_date} ]);
@@ -362,8 +350,7 @@ This reopens books as of $request->{reopen_date}
 
 =cut
 
-sub reopen_books {
-    my ($request) = @_;
+sub reopen_books($request) {
     $request->call_procedure(
         funcname => 'eoy_reopen_books',
         args     => [ $request->{reopen_date} ]);
@@ -383,5 +370,3 @@ your software.
 
 =cut
 
-
-1;

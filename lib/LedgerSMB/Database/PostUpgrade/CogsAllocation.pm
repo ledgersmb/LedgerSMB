@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental qw( signatures );
 
 package LedgerSMB::Database::PostUpgrade::CogsAllocation;
@@ -107,4 +106,3 @@ your software.
 
 =cut
 
-1;

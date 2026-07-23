@@ -1,4 +1,6 @@
 
+use v5.38;
+
 package LedgerSMB::PGTimestamp;
 
 =head1 NAME
@@ -14,8 +16,6 @@ The type behaves internally as a Datetime module.
 
 =cut
 
-use v5.36.1;
-use warnings;
 use parent qw(PGObject::Type::DateTime);
 
 use Carp;
@@ -32,9 +32,7 @@ use overload (
 __PACKAGE__->register(registry => 'default',
                       types => ['timestamp', 'timestamptz']);
 
-sub _stringify {
-    my $self = shift;
-
+sub _stringify($self, $, $) {
     # Stringify without the 'T' in the middle
     #   which is the same way Pg stringifies
     return $self->strftime('%F %T');
@@ -68,10 +66,7 @@ defers object creation to the superclass.
 
 =cut
 
-sub new {
-    my $class = shift;
-    my @args = @_;
-
+sub new($class, @args) {
     if (! @args) {
         my $self = {};
         bless $self, $class;
@@ -91,8 +86,7 @@ This adds $n * $interval to the date, defaulting to 1 if $n is not supplied.
 
 =cut
 
-sub add_interval {
-    my ($self,$interval,$n) = @_;
+sub add_interval($self, $interval, $n) {
 
     my %delta_names = (
         day => 'days',
@@ -150,10 +144,7 @@ my $fb_parser =  DateTime::Format::Strptime->new(
     on_error  => 'undef' );
 
 
-sub from_input{
-    my $self = shift;
-    my $input = shift;
-
+sub from_input($self, $input) {
     return $input if $input isa __PACKAGE__ && $input->is_date;
     return __PACKAGE__->new()
         if ! $input; # matches undefined as well as ''
@@ -176,10 +167,9 @@ used.  If $format is not supplied, the dateformat of the user is used.
 
 =cut
 
-sub to_output {
-    my $self = shift @_;
+sub to_output($self, @args) {
     return '' if not $self->is_date();
-    my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
+    my %args  = (ref($args[0]) eq 'HASH')? %{$args[0]}: @args;
 
     my $fmt = $args{format} // $args{datetimeformat};
     if (not defined $fmt) {
@@ -208,8 +198,7 @@ Returns sortable key for the Date/Time value (epoch)
 
 =cut
 
-sub to_sort {
-    my $self = shift;
+sub to_sort($self) {
     return $self->epoch;
 }
 
@@ -226,6 +215,3 @@ option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
-
-
-1;

@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 
 package LedgerSMB::Workflow::Condition::SeparateDuties;
 
@@ -49,9 +48,6 @@ sub evaluate($self, $wf) {
     return $separate_duties;
 }
 
-
-
-1;
 
 =head1 LICENSE AND COPYRIGHT
 

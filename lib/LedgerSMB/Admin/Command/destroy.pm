@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental 'try';
 
 package LedgerSMB::Admin::Command::destroy;
@@ -21,8 +20,7 @@ use namespace::autoclean;
 
 my $logger;
 
-sub run {
-    my ($self, $dbname) = @_;
+sub run($self, $dbname) {
 
     return $self->help('destroy')
         if !$dbname || $dbname eq 'help';
@@ -122,8 +120,7 @@ sub run {
     return 0;
 }
 
-sub _get_role_prefix {
-    my $db = shift;
+sub _get_role_prefix($db) {
 
     my $dbh = $db->connect;
     my $role_prefix;
@@ -144,8 +141,6 @@ sub _get_role_prefix {
 }
 
 __PACKAGE__->meta->make_immutable;
-
-1;
 
 __END__
 

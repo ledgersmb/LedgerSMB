@@ -1,4 +1,6 @@
 
+use v5.38;
+
 package LedgerSMB::I18N;
 
 =head1 NAME
@@ -16,8 +18,6 @@ object from the 'language' property.
 
 =cut
 
-#use v5.24.0;
-
 use Locale::CLDR;
 use Locales unicode => 1;
 use Moose::Role;
@@ -31,8 +31,7 @@ has 'locale' => (is => 'ro',
                  lazy => 1,
                  builder => '_build_locale');
 
-sub _build_locale {
-    my ($self) = @_;
+sub _build_locale($self) {
 
     my $locale;
     if ($self->language) {
@@ -57,10 +56,8 @@ Note: The first argument must be a string constant for
 
 =cut
 
-sub Text {
-    my $self = shift;
-
-    return $self->locale->maketext(@_);
+sub Text($self, @args) {
+    return $self->locale->maketext(@args);
 }
 
 
@@ -76,10 +73,8 @@ Note: In order for the first string (if it is an inline constant string)
 
 =cut
 
-sub Maketext {
-    my $self = shift;
-
-    return $self->locale->maketext(@_);
+sub Maketext($self, @args) {
+    return $self->locale->maketext(@args);
 }
 
 
@@ -89,8 +84,7 @@ Get a country localized list to allow user selection
 
 =cut
 
-sub get_country_list {
-    my $language = shift;
+sub get_country_list($language) {
     my %regions = Locale::CLDR->new($language)->all_regions->%*;
     return [
         sort { $a->{text} cmp $b->{text} }
@@ -111,5 +105,3 @@ option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
-
-1;

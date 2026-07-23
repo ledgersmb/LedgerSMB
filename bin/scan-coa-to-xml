@@ -1,8 +1,6 @@
 #!/usr/bin/env perl
 
-use v5.020;
-use strict;
-use warnings;
+use v5.38;
 
 use Data::Dumper;
 use List::Util qw/first/;
@@ -17,17 +15,14 @@ sub strip_sq {
     return ($_[0] =~ s/(?:^'|'$)//rg) =~ s/''/'/rg;
 }
 
-sub extract_accno {
-    my $select = shift;
-
+sub extract_accno($select) {
     $select =~ m/accno\s*=\s*'([^']*)'/
        or return $select;
 
     return $1;
 }
 
-sub extract_accnos {
-    my $accnos = shift;
+sub extract_accnos($accnos) {
     my @accnos;
 
     while ($accnos =~ m/'(?<ACCNO>[^']*)'/igsx) {

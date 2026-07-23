@@ -22,14 +22,10 @@ This module does not specify any methods.
 
 =cut
 
-use strict;
-use warnings;
-
 use LedgerSMB::I18N;
 use LedgerSMB::Setting::Sequence;
 
-sub _default_settings {
-    my ($request) = @_;
+sub _default_settings($request) {
     my $locale = $request->{_locale};
 
     my @default_settings = (
@@ -175,8 +171,7 @@ Shows the defaults screen
 
 =cut
 
-sub defaults_screen {
-    my ($request) = @_;
+sub defaults_screen($request) {
 
     my @curr = map { { curr => $_ } } $request->setting->get_currencies();
     my @defaults;
@@ -335,8 +330,7 @@ No inputs expected or used
 
 =cut
 
-sub sequence_screen {
-    my ($request) = @_;
+sub sequence_screen($request) {
     @{$request->{sequence_list}} = LedgerSMB::Setting::Sequence->list();
     my @default_settings = &_default_settings($request);
     my $locale = $request->{_locale};
@@ -360,8 +354,7 @@ Saves settings from the defaults screen
 
 =cut
 
-sub save_defaults {
-    my ($request) = @_;
+sub save_defaults($request) {
     if (!$request->is_allowed_role(
         {allowed_roles => ['system_settings_change'] })
     ){
@@ -387,8 +380,7 @@ Saves the items in the sequence screen
 
 =cut
 
-sub save_sequences {
-    my ($request) = @_;
+sub save_sequences($request) {
     for my $count (1 .. $request->{count}){
         if ($request->{"save_$count"} and $request->{"label_$count"}){
            LedgerSMB::Setting::Sequence->new(
@@ -412,4 +404,3 @@ your software.
 
 =cut
 
-1;

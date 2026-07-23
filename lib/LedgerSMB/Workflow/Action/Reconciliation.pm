@@ -1,8 +1,8 @@
-package LedgerSMB::Workflow::Action::Reconciliation;
 
-use v5.36;
-use warnings;
+use v5.38;
 no warnings "experimental::for_list"; ## no critic -- accepted in 5.40
+
+package LedgerSMB::Workflow::Action::Reconciliation;
 
 use parent qw( LedgerSMB::Workflow::Action );
 
@@ -97,9 +97,6 @@ sub _reject($self, $wf) {
     $wf->context->param( 'rejected', 1 );
 }
 
-
-
-1;
 
 =head1 LICENSE AND COPYRIGHT
 

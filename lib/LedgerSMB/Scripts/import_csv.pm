@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental 'try';
 
 package LedgerSMB::Scripts::import_csv;
@@ -76,8 +75,7 @@ my %template_file = (
 our $preprocess = {};
 our $postprocess = {};
 
-sub _inventory_template_setup {
-    my ($request) = @_;
+sub _inventory_template_setup($request) {
     my $sth = $request->{dbh}->prepare(
         q{SELECT concat(accno,'--',description) as value
              FROM chart_get_ar_ap(?)}
@@ -108,8 +106,7 @@ Takes two arrayrefs and returns a hashref as you'd expect from the args.
 
 =cut
 
-sub map_columns_into_hash {
-    my ($keys, $values) = @_;
+sub map_columns_into_hash($keys, $values) {
     my %rv;
 
     @rv{@$keys} = @$values;
@@ -119,8 +116,7 @@ sub map_columns_into_hash {
 
 
 
-sub _aa_multi {
-    my ($request, $entries, $arap) = @_;
+sub _aa_multi($request, $entries, $arap) {
     my $batch = LedgerSMB::Batch->new(%$request);
     $batch->{batch_number} = $request->{reference};
     $batch->{batch_date} = $request->{transdate};
@@ -216,8 +212,7 @@ sub _aa_multi {
     return 1;
 }
 
-sub _inventory_single_date {
-    my ($request, $entries, $transdate) = @_;
+sub _inventory_single_date($request, $entries, $transdate) {
     # NOTE ! This implementation largely mirrors the one
     #  in LedgerSMB::Scripts::inventory::_lines_from_form()
 
@@ -245,18 +240,15 @@ sub _inventory_single_date {
     $adjustment->save;
 }
 
-sub _process_ar_multi {
-    my  ($request, $entries) = @_;
+sub _process_ar_multi ($request, $entries) {
     return &_aa_multi($request, $entries, 'ar');
 }
 
-sub _process_ap_multi {
-    my  ($request, $entries) = @_;
+sub _process_ap_multi ($request, $entries) {
     return &_aa_multi($request, $entries, 'ap');
 }
 
-sub _process_gl_multi {
-    my ($request, $entries) = @_;
+sub _process_gl_multi($request, $entries) {
     my $dbh = $request->{dbh};
     my $batch = LedgerSMB::Batch->new(
         dbh => $dbh,
@@ -341,8 +333,7 @@ sub _process_gl_multi {
     }
 }
 
-sub _process_gl {
-    my ($request, $entries) = @_;
+sub _process_gl($request, $entries) {
     my $form = Form->new(); ## no critic
     $form->{reference} = $request->{reference};
     $form->{description} = $request->{description};
@@ -376,8 +367,7 @@ sub _process_gl {
         $request->{_user}, $form, $request->{_locale});
 }
 
-sub _process_chart {
-    my ($request, $entries) = @_;
+sub _process_chart($request, $entries) {
 
     my %imported;
     my $cfg = LedgerSMB::Company::Configuration->new(dbh => $request->{dbh});
@@ -408,8 +398,7 @@ sub _process_chart {
     return;
 }
 
-sub _process_gifi {
-    my ($request, $entries) = @_;
+sub _process_gifi($request, $entries) {
     my $dbh = $request->{dbh};
     my $sth =
         $dbh->prepare('INSERT INTO gifi (accno, description) VALUES (?, ?)')
@@ -421,8 +410,7 @@ sub _process_gifi {
     return;
 }
 
-sub _process_sic {
-    my ($request, $entries) = @_;
+sub _process_sic($request, $entries) {
     my $dbh = $request->{dbh};
     my $sth =
         $dbh->prepare('INSERT INTO sic (code, sictype, description) VALUES (?, ?, ?)') || die $dbh->errstr;;
@@ -434,8 +422,7 @@ sub _process_sic {
     return;
 }
 
-sub _process_timecard {
-    my ($request, $entries) = @_;
+sub _process_timecard($request, $entries) {
     for my $entry (@$entries) {
         my $jc = {};
         my $counter = 0;
@@ -456,16 +443,14 @@ sub _process_timecard {
     return;
 }
 
-sub _process_inventory {
-    my ($request, $entries) = @_;
+sub _process_inventory($request, $entries) {
     @$entries =
         map { map_columns_into_hash($cols->{inventory}, $_) } @$entries;
 
     return _inventory_single_date($request, $entries, $request->{transdate});
 }
 
-sub _process_inventory_multi {
-    my ($request, $entries) = @_;
+sub _process_inventory_multi($request, $entries) {
 
     @$entries =
         map { map_columns_into_hash($cols->{inventory_multi}, $_) }
@@ -482,8 +467,7 @@ sub _process_inventory_multi {
     return;
 }
 
-sub _process_parts {
-    my ($request, $entries, $columns, $acc_types) = @_;
+sub _process_parts($request, $entries, $columns, $acc_types) {
     my %table_columns =
         map { $_ => ($_ =~ s/(_accno|partsgroup)$/$1_id/r) }
         grep { $_ ne 'taxaccnos' }
@@ -546,8 +530,8 @@ sub _process_parts {
     }
 }
 
-sub _process_goods {
-    return _process_parts(@_, $cols->{goods},
+sub _process_goods(@args) {
+    return _process_parts(@args, $cols->{goods},
         { income_accno    => 'IC_sale',
           expense_accno   => 'IC_cogs',
           inventory_accno => 'IC',
@@ -555,15 +539,15 @@ sub _process_goods {
           tax_accno       => 'IC_taxpart' });
 }
 
-sub _process_services {
-    return _process_parts(@_, $cols->{services},
+sub _process_services(@args) {
+    return _process_parts(@args, $cols->{services},
         { income_accno  => 'IC_income',
           expense_accno => 'IC_expense',
           tax_accno     => 'IC_taxservice' });
 }
 
-sub _process_overhead {
-    return _process_parts(@_, $cols->{overhead},
+sub _process_overhead(@args) {
+    return _process_parts(@args, $cols->{overhead},
         { inventory_accno => 'IC',
           expense_accno   => 'IC_expense' });
 }
@@ -590,8 +574,7 @@ This parses a file, and returns a the csv in tabular format.
 
 =cut
 
-sub _parse_file {
-    my $self = shift @_;
+sub _parse_file($self) {
 
     my $handle = $self->upload('import_file');
     my $csv = Text::CSV->new({ blank_is_undef => 1, allow_whitespace => 1 });
@@ -616,8 +599,7 @@ sub _parse_file {
 This displays the begin data entry screen.
 =cut
 
-sub begin_import {
-    my ($request) = @_;
+sub begin_import($request) {
     my $template_file =
         ($template_file{$request->{type}}) ?
         $template_file{$request->{type}} : 'import_csv';
@@ -639,8 +621,7 @@ data in $request and processes it according to the dispatch tables.
 
 my $json = JSON::PP->new;
 
-sub run_import {
-    my ($request) = @_;
+sub run_import($request) {
 
     try {
         my @entries = _parse_file($request);
@@ -672,4 +653,3 @@ your software.
 
 =cut
 
-1;

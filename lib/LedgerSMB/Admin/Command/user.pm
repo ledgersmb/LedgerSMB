@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental 'try';
 
 package LedgerSMB::Admin::Command::user;
@@ -30,8 +29,7 @@ use namespace::autoclean;
 
 has options => (is => 'ro', default => sub { {} });
 
-sub _get_valid_salutation {
-    my ($self, $dbh) = @_;
+sub _get_valid_salutation($self, $dbh) {
     my $sth = $dbh->prepare('SELECT id FROM salutation WHERE salutation ilike ?');
     $sth->execute($self->options->{salutation})
         or die $dbh->errstr;
@@ -41,8 +39,7 @@ sub _get_valid_salutation {
     return $value->{id};
 }
 
-sub _get_salutation_by_id {
-    my ($self, $dbh, $id) = @_;
+sub _get_salutation_by_id($self, $dbh, $id) {
     my $sth = $dbh->prepare('SELECT salutation FROM salutation WHERE id=?');
     $sth->execute($id)
         or die $dbh->errstr;
@@ -50,9 +47,7 @@ sub _get_salutation_by_id {
     return $values->{salutation};
 }
 
-sub _get_user {
-    my ($self, $dbh, $_username) = @_;
-    $_username //= $self->options->{username};
+sub _get_user($self, $dbh, $_username = $self->options->{username}) {
 
     # Get user by username
     my $sth =
@@ -63,8 +58,7 @@ sub _get_user {
     return $user;
 }
 
-sub _get_valid_country {
-    my ($self, $dbh) = @_;
+sub _get_valid_country($self, $dbh) {
     return if !$self->options->{country};
     my $sth = $dbh->prepare('SELECT * FROM country WHERE name ilike ? OR short_name=?');
     $sth->execute($self->options->{country},uc $self->options->{country})
@@ -78,8 +72,7 @@ sub _get_valid_country {
     return;
 }
 
-sub _get_country_by_id {
-    my ($self, $dbh, $id) = @_;
+sub _get_country_by_id($self, $dbh, $id) {
     my $sth = $dbh->prepare('SELECT * FROM country WHERE id=?');
     $sth->execute($id)
         or die $dbh->errstr;
@@ -87,8 +80,7 @@ sub _get_country_by_id {
     return $values->{name};
 }
 
-sub _option_spec {
-    my ($self, $command) = @_;
+sub _option_spec($self, $command) {
     my %option_spec = ();
 
     if ( $command eq 'change'
@@ -134,8 +126,7 @@ sub _option_spec {
     return %option_spec;
 }
 
-sub _add_permissions{
-    my ($self, $dbh, $user) = @_;
+sub _add_permissions($self, $dbh, $user) {
 
     my $roles;
     @$roles = @{$user->{role_list}};
@@ -156,8 +147,7 @@ sub _add_permissions{
     return 1;
 }
 
-sub _remove_permissions{
-    my ($self, $dbh, $user) = @_;
+sub _remove_permissions($self, $dbh, $user) {
 
         my $roles;
         @$roles = @{$user->{role_list}};
@@ -178,8 +168,7 @@ sub _remove_permissions{
     return 1;
 }
 
-sub change {
-    my ($self, $dbh, $options, @args) = @_;
+sub change($self, $dbh, $options, @args) {
 
     try {
         my %options = ();
@@ -248,8 +237,7 @@ sub change {
     }
 }
 
-sub create {
-    my ($self, $dbh, $options, @args) = @_;
+sub create($self, $dbh, $options, @args) {
 
     try {
         my %options = ();
@@ -312,8 +300,7 @@ sub create {
     }
 }
 
-sub _create_employee {
-    my ($self, %args) = @_;
+sub _create_employee($self, %args) {
 
     my $dbh = $args{dbh};
 
@@ -365,8 +352,7 @@ sub _create_employee {
     return $emp;
 }
 
-sub _create_user {
-    my ($self, %args) = @_;
+sub _create_user($self, %args) {
 
     my $dbh = $args{dbh};
     my $_username = $args{username};
@@ -386,8 +372,7 @@ sub _create_user {
 
 # What about all the data attached to this user?
 # Marked inactive would be better?
-sub delete {
-    my ($self, $dbh, $options, @args) = @_;
+sub delete($self, $dbh, $options, @args) {
 
     try {
         my %options = ();
@@ -433,8 +418,7 @@ sub delete {
     }
 }
 
-sub list {
-    my ($self, $dbh, $options, $db_uri, $user) = @_;
+sub list($self, $dbh, $options, $db_uri, $user) {
 
     if (!defined $user) {
         my @users = LedgerSMB::User->get_all_users( { dbh => $dbh } );
@@ -488,8 +472,7 @@ Id     Username        Created
     return 0;
 }
 
-sub _before_dispatch {
-    my ($self, $options, @args) = @_;
+sub _before_dispatch($self, $options, @args) {
 
     my $db_uri = (@args) ? $args[0] : undef;
     my $connect_data = {
@@ -506,8 +489,6 @@ sub _before_dispatch {
 }
 
 __PACKAGE__->meta->make_immutable;
-
-1;
 
 __END__
 

@@ -1,3 +1,6 @@
+
+use v5.38;
+
 =head1 NAME
 
 LedgerSMB::Form - Provides general legacy support functions and the central object.
@@ -56,7 +59,6 @@ Deprecated
 
 package Form;
 
-use v5.36.1;
 use charnames qw(:full);
 use open ':utf8';
 use utf8;
@@ -2928,6 +2930,8 @@ sub get_batch_description {
 This function returns the HTML code for a dropdown box for a given setting
 key.  It is not generally to be used with code on new templates.
 
+=back
+
 =cut
 
 sub sequence_dropdown{
@@ -2954,10 +2958,4 @@ sub sequence_dropdown{
         return '';
     }
 }
-#end decrysiption
-
-1;
-
-
-=back
 

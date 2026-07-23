@@ -1,6 +1,5 @@
 
-use v5.36;
-use warnings;
+use v5.38;
 use experimental 'try';
 
 package LedgerSMB::Admin::Command::restore;
@@ -25,8 +24,7 @@ use namespace::autoclean;
 
 my $schema = 'public';
 
-sub _option_spec {
-    my ($self, $command) = @_;
+sub _option_spec($self, $command) {
     my %option_spec = ();
 
     if ( $command eq 'restore' ) {
@@ -38,8 +36,7 @@ sub _option_spec {
 }
 
 
-sub run {
-    my ($self, $dbname, $filename, @args) = @_;
+sub run($self, $dbname, $filename, @args) {
 
     return $self->help('restore')
         if !$dbname || $dbname eq 'help';
@@ -90,8 +87,6 @@ sub run {
 }
 
 __PACKAGE__->meta->make_immutable;
-
-1;
 
 __END__
 

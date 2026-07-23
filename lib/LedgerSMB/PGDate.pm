@@ -1,4 +1,6 @@
 
+use v5.38;
+
 package LedgerSMB::PGDate;
 
 =head1 NAME
@@ -14,8 +16,6 @@ The type behaves internally as a Datetime module.
 
 =cut
 
-use v5.36.1;
-use warnings;
 use parent qw(PGObject::Type::DateTime);
 
 use Carp;
@@ -142,10 +142,7 @@ defers object creation to the superclass.
 
 =cut
 
-sub new {
-    my $class = shift;
-    my @args = @_;
-
+sub new($class, @args) {
     if (! @args) {
         my $self = {};
         bless $self, $class;
@@ -165,8 +162,7 @@ This adds $n * $interval to the date, defaulting to 1 if $n is not supplied.
 
 =cut
 
-sub add_interval {
-    my ($self,$interval,$n) = @_;
+sub add_interval($self,$interval,$n = 1) {
 
     my %delta_names = (
         day => 'days',
@@ -179,7 +175,6 @@ sub add_interval {
     #Validate asked interval
     die "Bad interval: $interval" if not defined $delta_name;
 
-    $n //= 1;    # Default to 1
     $n *= MONTHS_PER_QUARTER if $interval eq 'quarter'; # A quarter is 3 months
 
     my $has_time = $self->is_time();
@@ -196,15 +191,12 @@ unless C<$format> has been specified to override it.
 
 =cut
 
-sub from_input{
-    my $self = shift;
-    my $input = shift;
-
+sub from_input($self, $input, @args) {
     return $input if $input isa __PACKAGE__ && $input->is_date;
     return __PACKAGE__->new()
         if ! $input; # matches undefined as well as ''
 
-    my %args   = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
+    my %args   = (ref($args[0]) eq 'HASH') ? %{$args[0]} : @args;
     my $format = $args{format} // $args{dateformat};
     croak 'LedgerSMB::PGDate No Format Set' if !$format;
 
@@ -238,8 +230,8 @@ used.  If $format is not supplied, the dateformat of the user is used.
 
 =cut
 
-sub _formatter {
-    return DateTime::Format::Strptime->new(@_);
+sub _formatter(@args) {
+    return DateTime::Format::Strptime->new(@args);
 }
 
 # Together with the memoization in PGNumber,
@@ -253,15 +245,14 @@ use overload (
     q{""}    => '_stringification',
 );
 
-sub _stringification {
+sub _stringification($self, $, $) {
     # drop the second and third parameters before calling to_output()
-    return $_[0]->to_output();
+    return $self->to_output();
 }
 
-sub to_output {
-    my $self = shift @_;
+sub to_output($self, @args) {
     return '' if not $self->is_date();
-    my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
+    my %args  = (ref($args[0]) eq 'HASH')? %{$args[0]}: @args;
 
     my $fmt = $args{format} // $args{dateformat} // '%F';
     $fmt = $formats->{uc($fmt)} if defined $formats->{uc($fmt)};
@@ -288,8 +279,7 @@ Returns sortable key for the Date/Time value (epoch)
 
 =cut
 
-sub to_sort {
-    my $self = shift;
+sub to_sort($self) {
     return $self->epoch;
 }
 
@@ -306,6 +296,3 @@ option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
-
-
-1;
