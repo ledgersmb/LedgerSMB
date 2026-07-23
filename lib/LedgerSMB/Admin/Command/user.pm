@@ -223,11 +223,10 @@ sub change($self, $dbh, $options, @args) {
         $dbh->disconnect;
         $dbh = undef;
         $self->logger->warn('User successfully changed');
-
-        return 0;
     }
     catch ($e) {
         $self->logger->error("Unhandled error caught during user modification: $e");
+        return 1;
     }
     finally {
         if ($dbh) {
@@ -235,6 +234,9 @@ sub change($self, $dbh, $options, @args) {
             $dbh->disconnect;
         }
     }
+
+
+    return 0;
 }
 
 sub create($self, $dbh, $options, @args) {
@@ -286,11 +288,10 @@ sub create($self, $dbh, $options, @args) {
         $dbh->disconnect;
         $dbh = undef;
         $self->logger->warn('User successfully created');
-
-        return 0;
     }
     catch ($e) {
         $self->logger->error("Unhandled exception during user creation: $e");
+        return 1;
     }
     finally {
         if ($dbh) {
@@ -298,6 +299,8 @@ sub create($self, $dbh, $options, @args) {
             $dbh->disconnect;
         }
     }
+
+    return 0;
 }
 
 sub _create_employee($self, %args) {
@@ -405,10 +408,10 @@ sub delete($self, $dbh, $options, @args) {
         $dbh->disconnect;
         $dbh = undef;
         $self->logger->info('User successfully deleted');
-        return 0;
     }
     catch ($e) {
         $self->logger->error("Unhandled error during user deletion: $e");
+        return 1;
     }
     finally {
         if ($dbh) {
@@ -416,6 +419,8 @@ sub delete($self, $dbh, $options, @args) {
             $dbh->disconnect;
         }
     }
+
+    return 0;
 }
 
 sub list($self, $dbh, $options, $db_uri, $user) {
