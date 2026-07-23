@@ -166,6 +166,7 @@ sub call {
 
 
     $env->{__dbh_guard__} = guard {
+        return if ${^GLOBAL_PHASE} eq 'DESTRUCT';
         if ($dbh and $dbh->{Active}) {
             $dbh->rollback;
             $dbh->disconnect;
