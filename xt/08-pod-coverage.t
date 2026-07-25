@@ -71,7 +71,7 @@ sub module_covered {
 
     $tested{$module} = 1;
 
-    tests modules_covered => sub {
+    tests "Coverage for $module" => sub {
         for (@required_modules) {
             eval "require $_"
                 or skip_all "Test missing required module '$_'";

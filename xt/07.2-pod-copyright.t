@@ -6,6 +6,7 @@
 # matching a template in `xt/data/07.2-license-and-copyright.template`.
 
 use Test2::V0;
+use Test2::Tools::Spec;
 use Test2::Require::Module 'Test::Pod' => '1.00';
 use Test::Pod;
 
@@ -34,7 +35,7 @@ my $payment_template_text = read_file($payment_template_file)
 chomp $payment_template_text;
 
 foreach my $file(@files) {
-    {
+    tests "Copyright for $file" => sub {
         my $file_text = get_raw_pod_section_from_file(
             $file,
             'LICENSE AND COPYRIGHT'
