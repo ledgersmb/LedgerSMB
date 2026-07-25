@@ -6,6 +6,7 @@
 # matching a template in `xt/data/07.2-license-and-copyright.template`.
 
 use Test2::V0;
+use Test2::Tools::Spec;
 use Test2::Require::Module 'Test::Pod' => '1.00';
 use Test::Pod;
 
@@ -34,7 +35,7 @@ my $payment_template_text = read_file($payment_template_file)
 chomp $payment_template_text;
 
 foreach my $file(@files) {
-    {
+    tests "Copyright for $file" => sub {
         my $file_text = get_raw_pod_section_from_file(
             $file,
             'LICENSE AND COPYRIGHT'
@@ -42,7 +43,7 @@ foreach my $file(@files) {
 
         # Copyright years vary between files. We replace the first occurence
         # with a placeholder to allow comparison with the template.
-        $file_text =~ s/\d{4}(-\d{4}){0,1}/YYYY/i;
+        $file_text =~ s/\d{4}(-\d{4}){0,1}/YYYY/i if defined $file_text;
 
         ok($file_text, "$file pod has LICENSE AND COPYRIGHT section");
         is(
