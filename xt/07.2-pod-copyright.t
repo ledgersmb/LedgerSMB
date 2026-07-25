@@ -43,7 +43,7 @@ foreach my $file(@files) {
 
         # Copyright years vary between files. We replace the first occurence
         # with a placeholder to allow comparison with the template.
-        $file_text =~ s/\d{4}(-\d{4}){0,1}/YYYY/i;
+        $file_text =~ s/\d{4}(-\d{4}){0,1}/YYYY/i if defined $file_text;
 
         ok($file_text, "$file pod has LICENSE AND COPYRIGHT section");
         is(
