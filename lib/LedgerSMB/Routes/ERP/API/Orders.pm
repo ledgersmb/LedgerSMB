@@ -40,7 +40,6 @@ use Plack::Request::WithEncoding;
 use Scalar::Util qw( blessed reftype );
 use YAML::PP;
 
-use LedgerSMB::App_State;
 use LedgerSMB::Company;
 use LedgerSMB::Entity::Credit_Account;
 use LedgerSMB::Magic qw( EC_CUSTOMER EC_VENDOR OEC_SALES_ORDER OEC_PURCHASE_ORDER );
@@ -264,7 +263,6 @@ sub _get_orders_by_id {
     $ord{taxes_total} = reduce { $a + $b->{amount} } 0, values $ord{taxes}->%*;
     $ord{total}       = $ord{lines_total} + $ord{taxes_total};
 
-    local $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
     my $wf = $c->workflows->fetch( 'Order/Quote', $workflow_id );
 
     $ord{workflow} = {
@@ -782,7 +780,6 @@ sub _post_orders {
     die $sth->errstr
         if $sth->err;
 
-    local $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
     my $wf  = $c->workflows->create( 'Order/Quote',
                                      {
                                          trans_id => $ord_id,

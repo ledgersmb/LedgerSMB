@@ -19,11 +19,6 @@ LedgerSMB::Workflow::Persister::ExtraData - Store additional workflow data
 
 This module loads additional data for workflows from a specified table.
 
-The class inherits from Workflow::Persister::DBI::ExtraData and uses
-the same configuration semantics. Like L<LedgerSMB::Workflow::Persister>,
-this module uses the existing database connection from
-C<LedgerSMB::App_State::DBH>.
-
 =head1 METHODS
 
 =cut
@@ -39,35 +34,10 @@ use Log::Any qw($log);
 use JSON::MaybeXS;
 use Workflow::Exception qw( configuration_error persist_error );
 
-use LedgerSMB::App_State;
-
 
 my @FIELDS = qw( table data_field context_key );
 __PACKAGE__->mk_accessors(@FIELDS);
 
-
-=head2 create_handle()
-
-Implements Workflow::Persister::DBI protocol; returns undef.
-
-=cut
-
-sub create_handle {
-    return undef;
-}
-
-=head2 handle()
-
-Implements Workflow::Persister::DBI protocol; returns the handle for the
-current request from C<LedgerSMB::App_State::DBH()>.
-
-=cut
-
-sub handle {
-    LedgerSMB::App_State::DBH()->{RaiseError} = 1
-        if LedgerSMB::App_State::DBH();
-    return LedgerSMB::App_State::DBH();
-}
 
 =head2 init($params)
 

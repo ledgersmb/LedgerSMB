@@ -40,7 +40,6 @@ use Plack::Request::WithEncoding;
 use Scalar::Util qw( blessed reftype );
 use YAML::PP;
 
-use LedgerSMB::App_State;
 use LedgerSMB::Entity::Credit_Account;
 use LedgerSMB::Magic qw( EC_CUSTOMER EC_VENDOR );
 use LedgerSMB::PGNumber;
@@ -317,7 +316,6 @@ sub _get_invoices_by_id {
     my $trans = $sth->fetchrow_hashref( 'NAME_lc' );
     die $sth->errstr if not $trans and $sth->err;
 
-    local $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
     my $wf = $c->workflows->fetch( 'AR/AP', $trans->{workflow_id} );
 
     $inv{workflow} = {
@@ -931,7 +929,6 @@ sub _post_invoices {
     $sth->execute( $inv->{description}, $inv_id )
         or die $sth->errstr;
 
-    local $LedgerSMB::App_State::DBH = $env->{'lsmb.db'};
     my $wf  = $c->workflows->create( 'AR/AP',
                                      {
                                          trans_id => $inv_id,
