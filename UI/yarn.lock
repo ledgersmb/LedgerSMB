@@ -9007,13 +9007,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-json@npm:4.0.1":
-  version: 4.0.1
-  resolution: "eslint-plugin-json@npm:4.0.1"
+"eslint-plugin-json@npm:5.0.0":
+  version: 5.0.0
+  resolution: "eslint-plugin-json@npm:5.0.0"
   dependencies:
     lodash: "npm:^4.17.21"
     vscode-json-languageservice: "npm:^4.1.6"
-  checksum: 10c0/9eb37d8f306180b194073af91a62a24afac9a4b805c7e685524c792bb6550ad9362f84ee226553e9f5099a56238f0697ae8a85d4e39bb2e12fdccbccd77669e0
+  checksum: 10c0/43d0dc0d8055b24270980ffe5b7cf9b9f591a872bc1ec3bc5178d55441242ebfa6f0db80e14fe3c947a776fd9b60fb493f5d21f0c887b2e969a0bf753a64185e
   languageName: node
   linkType: hard
 
@@ -11828,7 +11828,7 @@ __metadata:
     eslint-import-resolver-webpack: "npm:0.13.11"
     eslint-plugin-compat: "npm:7.0.2"
     eslint-plugin-import-x: "npm:4.17.1"
-    eslint-plugin-json: "npm:4.0.1"
+    eslint-plugin-json: "npm:5.0.0"
     eslint-plugin-n: "npm:18.2.2"
     eslint-plugin-package-json: "npm:1.6.0"
     eslint-plugin-prettier: "npm:5.5.6"
