@@ -9,14 +9,6 @@ div.login {
     padding: 2em;
 }
 
-div.login div.login {
-    border-style: solid;
-    border-width: 1px;
-    height: 23em;
-    max-width: fit-content;
-    padding-bottom: 2em;
-}
-
 div.labelledinput {
     clear: both;
     width: 100%;
