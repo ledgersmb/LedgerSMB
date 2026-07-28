@@ -23,6 +23,8 @@ use namespace::autoclean;
 
 use LedgerSMB::Company::Configuration;
 use LedgerSMB::Company::Menu;
+use LedgerSMB::Company::Roles;
+use LedgerSMB::Company::Users;
 use LedgerSMB::Company::Workflows;
 
 =head1 DESCRIPTION
@@ -78,6 +80,22 @@ sub _build_configuration {
 }
 
 
+=head2 current_user
+
+=cut
+
+has current_user => (
+    is => 'ro',
+    init_arg => undef,
+    lazy => 1,
+    builder => '_build_current_user');
+
+sub _build_current_user($self) {
+    return undef unless defined $self->username;
+    return $self->users->get_by_name( $self->username );
+}
+
+
 =head2 menu
 
 Holds a L<LedgerSMB::Company::Menu> instance, representing the
@@ -97,6 +115,46 @@ sub _build_menu($self) {
     return LedgerSMB::Company::Menu->new( dbh => $self->dbh );
 }
 
+=head2 roles
+
+=cut
+
+has roles => (
+    is => 'ro',
+    init_arg => undef,
+    lazy => 1,
+    builder => '_build_roles');
+
+sub _build_roles($self) {
+    return LedgerSMB::Company::Roles->new(
+        app => $self
+        );
+}
+
+=head2 username
+
+=cut
+
+has username => (
+    is => 'ro',
+    );
+
+=head2 users
+
+=cut
+
+has users => (
+    is => 'ro',
+    init_arg => undef,
+    lazy => 1,
+    builder => '_build_users');
+
+sub _build_users($self) {
+    return LedgerSMB::Company::Users->new(
+        app => $self
+        );
+}
+
 =head2 workflows
 
 =cut
@@ -109,8 +167,6 @@ has workflows => (
 
 sub _build_workflows($self) {
     return LedgerSMB::Company::Workflows->new(
-        dbh => $self->dbh,
-        wire => $self->wire,
         app => $self
         );
 }
