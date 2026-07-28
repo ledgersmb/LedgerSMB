@@ -17,7 +17,6 @@ This module provides the workflow scripts for managing users and permissions.
 
 =cut
 
-use LedgerSMB::Entity::User;
 use LedgerSMB::Report::Listings::User;
 use LedgerSMB::Scripts::contact;
 
@@ -72,20 +71,28 @@ sub delete_user {
 
 sub edit_user {
     my ($request) = @_;
-    my ($user) = $request->call_procedure(
-        funcname => 'admin__get_user',
-        args => [ $request->{id} ]
-        );
-    my $user_data = LedgerSMB::Entity::User->get($user->{entity_id});
-    $user_data->{id} = $request->{id};
+    my $user = $request->conn->users->get_by_id( $request->{id} );
+
     my $template = $request->{_wire}->get('ui');
     $request->open_form();
     return $template->render($request, 'Contact/divs/user', {
         stand_alone => 1,
-        user        => $user_data,
-        entity_id   => $user->{entity_id},
+        user        => {
+            id  => $user->id,
+            entity_id => $user->entity_id,
+            pls_import => 0,
+            role_list => [
+                sort map { $_->name } $user->roles->list->@*
+                ]
+        },
+        entity_id   => $user->entity_id,
         request     => $request,
-        roles       => $user_data->list_roles,
+        roles       => [
+            sort { $a->{rolname} cmp $b->{rolname} }
+            map {
+                +{ rolname => $_->name, description => $_->pretty }
+            } $request->conn->roles->list->@*
+            ],
         form_id     => $request->{form_id}
     });
 }
