@@ -106,7 +106,7 @@ When qr/I post the following GL transaction on (.{10})/, sub {
 };
 
 Given qr/a logged in user with '(.*)' rights/, sub {
-    my $role = $1;
+    my $rolename = $1;
 
     my $emp = S->{ext_lsmb}->create_employee;
     my $user = S->{ext_lsmb}->create_user(
@@ -117,12 +117,9 @@ Given qr/a logged in user with '(.*)' rights/, sub {
     S->{"the user"} = $user->username;
     S->{"the password"} = 'password123';
 
-    my @roles =
-        grep { $_ eq $role }
-        map { $_->{rolname} }
-        @{$user->list_roles};
-    is(scalar @roles, 1, "The requested role ($role) exists");
-    $user->save_roles(\@roles);
+    my $role = $user->app->roles->get_by_name( $rolename );
+    ok(defined $role, "The requested role ($rolename) exists");
+    $role->assign( $user );
 
     PageObject::App::Login->open(S->{ext_wsl});
     S->{ext_wsl}->page->body->login(
@@ -140,14 +137,15 @@ Given qr/a logged in user with these rights:/, sub {
     S->{"the user"} = $user->username;
     S->{"the password"} = 'password123';
 
-    my %roles = map { $_->{role} => 1 } @{C->data};
-    my @roles =
-        grep { $roles{$_} }
-        map { $_->{rolname} }
-        @{$user->list_roles};
-    is(scalar @roles, scalar @{C->data},
-       'The requested roles have not all been found to be available');
-    $user->save_roles(\@roles);
+    my $app = $user->app;
+    for my $rolename (map { $_->{role} } @{C->data}) {
+        my $role = $app->roles->get_by_name( $rolename );
+
+        ok((defined $role), "The requested role ($rolename) was found");
+        next unless $role;
+
+        $role->assign( $user );
+    }
 
     PageObject::App::Login->open(S->{ext_wsl});
     S->{ext_wsl}->page->body->login(
@@ -462,7 +460,8 @@ Given qr/^(a reconciliation report|reconciliation reports) with these properties
         };
         my $app = LedgerSMB::Company->new(
             dbh => $LedgerSMB::App_State::DBH,
-            wire => S->{ext_lsmb}->wire
+            username => S->{ext_lsmb}->admin_user_name,
+            wire     => S->{ext_lsmb}->wire
             );
         my $wf = $app->workflows->create(
             'reconciliation',

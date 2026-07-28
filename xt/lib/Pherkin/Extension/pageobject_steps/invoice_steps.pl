@@ -8,7 +8,6 @@ use warnings;
 use LedgerSMB::App_State;
 use LedgerSMB::Database;
 use LedgerSMB::Entity::Person::Employee;
-use LedgerSMB::Entity::User;
 use Selenium::Remote::WDKeys;
 
 use Module::Runtime qw(use_module);
