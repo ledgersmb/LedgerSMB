@@ -35,7 +35,6 @@
 package lsmb_legacy;
 use LedgerSMB::AM;
 use LedgerSMB::Form;
-use LedgerSMB::User;
 use LedgerSMB::GL;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::PGDate;

@@ -317,9 +317,6 @@ Given qr/inventory has been built up for '(.*)' from these transactions:$/, sub 
     my $part = $1;
 
     local $LedgerSMB::App_State::DBH = S->{ext_lsmb}->admin_dbh;
-    local $LedgerSMB::App_State::User = {
-        numberformat => '1000.00'
-    };
 
     my $part_props = S->{ext_lsmb}->admin_dbh->selectrow_hashref(
         qq|SELECT * FROM parts WHERE partnumber = ?|, undef, $part);
@@ -455,9 +452,6 @@ Given qr/^(a reconciliation report|reconciliation reports) with these properties
         ) or die 'Failed to find account number ' . $report_spec->{'Account Number'};
 
         local $LedgerSMB::App_State::DBH = S->{ext_lsmb}->admin_dbh;
-        local $LedgerSMB::App_State::User = {
-            numberformat => '1000.00'
-        };
         my $app = LedgerSMB::Company->new(
             dbh => $LedgerSMB::App_State::DBH,
             username => S->{ext_lsmb}->admin_user_name,
