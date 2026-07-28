@@ -138,8 +138,9 @@ sub handle {
         $form->{_user} = \%myconfig;
         $form->{_req} = Plack::Request::WithEncoding->new($psgi_env);
         $form->{_conn} = LedgerSMB::Company->new(
-            dbh  => $LedgerSMB::App_State::DBH,
-            wire => $wire
+            dbh      => $LedgerSMB::App_State::DBH,
+            username => $form->{_session}->{username} // $form->{_session}->{login},
+            wire     => $wire
             );
         map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
             unless ( $form->{type} and $form->{type} eq 'preferences' );
