@@ -147,6 +147,25 @@ sub save($self, :$passwd = undef, :$import = false, :$force = false) {
     $self->reset_password( $passwd );
 }
 
+
+=head2 change_password
+
+  $user->change_password( $passwd )
+
+=cut
+
+sub change_password( $self, $passwd ) {
+    unless ( $self->app->current_user->username eq $self->username ) {
+        croak $log->error( 'Cannot change user password of another user (use "reset_password()"' );
+    }
+
+    my $dbh = $self->app->dbh;
+    $dbh->do(q{SELECT user__change_password(?)},
+             {},
+             $passwd)
+        or croak $log->error( q{Failed to change user password: } . $dbh->errstr );
+}
+
 =head2 reset_password
 
   $user->reset_password( $passwd );
@@ -154,6 +173,14 @@ sub save($self, :$passwd = undef, :$import = false, :$force = false) {
 =cut
 
 sub reset_password( $self, $passwd ) {
+    unless ( $self->app->is_bootstrap_user
+             or $self->app->current_user->is_users_manager ) {
+        my $current_username = $self->app->current_user->username;
+        my $db_name = $self->app->dbh->{Name};
+        my $db_user = $self->app->dbh->{Username};
+        croak $log->error( qq{Cannot reset user password: current user ($current_username) is not an administrator in db '$db_name' connected with '$db_user'} );
+    }
+
     my $dbh = $self->app->dbh;
 
     my $quoted_username = $dbh->quote_identifier( $self->username );

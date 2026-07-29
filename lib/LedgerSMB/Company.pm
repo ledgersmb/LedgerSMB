@@ -21,6 +21,9 @@ LedgerSMB::Company - Entrypoint to the Perl API for a LedgerSMB company
 use Moose;
 use namespace::autoclean;
 
+use Carp qw(croak);
+use Log::Any qw($log);
+
 use LedgerSMB::Company::Configuration;
 use LedgerSMB::Company::Menu;
 use LedgerSMB::Company::Roles;
@@ -82,6 +85,10 @@ sub _build_configuration {
 
 =head2 current_user
 
+Returns a C<LedgerSMB::Company::User> instance for the user identified by
+the C<username> attribute, or C<undef> if the user by that name does not
+have an entry in the C<users> table.
+
 =cut
 
 has current_user => (
@@ -95,6 +102,48 @@ sub _build_current_user($self) {
     return $self->users->get_by_name( $self->username );
 }
 
+
+=head2 is_bootstrap_user
+
+Returns C<true> when the C<username> attribute names a super-user or
+a user who is a database owner I<and> has the C<CREATEROLE> PostgreSQL
+privilege.
+
+=cut
+
+has is_bootstrap_user => (
+    is => 'ro',
+    init_arg => undef,
+    lazy => 1,
+    builder => '_build_is_bootstrap_user');
+
+sub _build_is_bootstrap_user($self) {
+    my $dbh = $self->dbh;
+    my $username = $self->username;
+    my $user_atts = $dbh->selectrow_hashref(
+        q{SELECT * FROM pg_roles WHERE rolname = ?},
+        {},
+        $username)
+        or croak $log->error( qq{Failed to query role attributes (for '$username'): } . $dbh->errstr );
+    if ($user_atts->{rolsuper}) {
+        return 1;
+    }
+    if ($user_atts->{createdb} and $user_atts->{createrole}) {
+        my ($db_owner) = $dbh->selectrow_array(
+            q{SELECT pg_has_role(?, (select rolname
+                                       from pg_database db
+                                            inner join pg_roles rol
+                                                       on db.datdba = rol.oid
+                                      where db.datname = current_database()), 'USAGE')},
+            {},
+            $self->username);
+        if ($dbh->err) {
+            croak $log->error( 'Failed to query role permissions: ' . $dbh->errstr );
+        }
+        return $db_owner;
+    }
+    return 0;
+}
 
 =head2 menu
 

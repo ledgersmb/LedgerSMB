@@ -28,8 +28,10 @@ use strict;
 use warnings;
 use feature 'fc';
 
+use Carp qw(croak);
 use DateTime::Format::Duration::ISO8601;
 use File::Spec;
+use HTTP::Status qw( HTTP_BAD_REQUEST );
 use Locale::CLDR;
 
 use LedgerSMB::Locale;
@@ -175,9 +177,27 @@ preferences screen
 
 sub change_password {
     my ($request) = @_;
-    if ($request->{confirm_password}){
-        LedgerSMB::User->change_my_password($request);
+
+    unless ($request->{new_password} # non-empty
+            and $request->{new_password} eq $request->{confirm_password}) {
+        return [ HTTP_BAD_REQUEST,
+                 [ 'Content-Type' => 'text/plain; charset="us-ascii"' ],
+                 [ q{New password doesn't match confirmation password} ] ];
     }
+
+    # breaking lots of concerns here: we shouldn't be assuming the authentication mechanism!
+    my $verify = $request->{_wire}->get('db')->instance(
+        dbname   => $request->{company},
+        user     => $request->{login},
+        password => $request->{old_password}
+        )->connect();
+    if (!$verify){
+        croak $request->{_locale}->text('Incorrect Password');
+    }
+    $verify->disconnect;
+
+    $request->conn->current_user->change_password( $request->{new_password} );
+
     ###TODO we're breaking the separation of concerns here!
     $request->{_req}->env->{'lsmb.session'}->{password} =
         $request->{new_password};
