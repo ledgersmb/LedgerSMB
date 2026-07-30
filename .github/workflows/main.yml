@@ -130,7 +130,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        perl: [ "5.42", "5.40", "5.38" ]
+        perl: [ "5.44", "5.42", "5.40", "5.38" ]
 
     steps:
       - name: Checkout
@@ -149,13 +149,16 @@ jobs:
         include:
           - perl: "5.38"
             JOB_COUNT: 5
-            COVERAGE: 1
 
           - perl: "5.40"
             JOB_COUNT: 5
 
           - perl: "5.42"
             JOB_COUNT: 5
+
+          - perl: "5.44"
+            JOB_COUNT: 5
+            COVERAGE: 1
 
     env:
       RELEASE_TESTING: 1
@@ -218,13 +221,13 @@ jobs:
       matrix:
         include:
           - postgres: "14"
-            perl: "5.42"
+            perl: "5.44"
             JOB_COUNT: 5
           - postgres: "15"
-            perl: "5.42"
+            perl: "5.44"
             JOB_COUNT: 5
           - postgres: "18"
-            perl: "5.42"
+            perl: "5.44"
             JOB_COUNT: 5
 
     services:
@@ -399,8 +402,7 @@ jobs:
           - perl: "5.38"
             postgres: "14"
             BROWSER: "firefox"
-            COVERAGE: 1
-            JOB_COUNT: 3
+            JOB_COUNT: 5
 
           - perl: "5.40"
             postgres: "16"
@@ -414,6 +416,12 @@ jobs:
             DB_TESTING: 1
             JOB_COUNT: 5
             COA_TESTING: 1
+
+          - perl: "5.44"
+            postgres: "17"
+            BROWSER: "firefox"
+            JOB_COUNT: 3
+            COVERAGE: 1
 
     services:
       # Label used to access the service container
