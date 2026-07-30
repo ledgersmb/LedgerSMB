@@ -549,7 +549,9 @@ sub _redirect {
     $form->{__action} ||= $self->{__action}; # default to old action if not set
     $form->{script} = $script;
 
-    my %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
+    my %myconfig = %{
+        $form->{_conn}->current_user->preferences->fetch
+    };
     if ( !$form->{dbh} and ( $script ne 'admin.pl' ) ) {
         $form->db_init( \%myconfig );
     }

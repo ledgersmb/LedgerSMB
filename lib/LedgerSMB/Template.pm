@@ -23,7 +23,7 @@ Instantiates a new template. Accepts the following arguments:
 
 =item user (optional)
 
-A LedgerSMB::User object defining user preferences.
+A hash with user preferences.
 
 =item template
 

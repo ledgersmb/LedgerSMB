@@ -13,6 +13,7 @@ use Carp qw(croak);
 use Log::Any qw($log);
 
 use LedgerSMB::Company::User;
+use LedgerSMB::Company::Preferences;
 
 =head1 NAME
 
@@ -54,6 +55,22 @@ the collection holds all users in the company.
 
 has for_role => (
     is => 'ro');
+
+=head2 preferences
+
+=cut
+
+has preferences => (
+    is => 'ro',
+    init_arg => undef,
+    lazy => 1,
+    builder => '_build_preferences');
+
+sub _build_preferences($self) {
+    return LedgerSMB::Company::Preferences->new(
+        app => $self->app
+        );
+}
 
 =head1 METHODS
 

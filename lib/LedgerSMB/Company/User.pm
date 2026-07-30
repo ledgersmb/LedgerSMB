@@ -15,6 +15,7 @@ use DateTime::Format::Strptime;
 use Log::Any qw($log);
 
 use LedgerSMB::Company::Roles;
+use LedgerSMB::Company::Preferences;
 
 my $formatter = DateTime::Format::Strptime->new( pattern => '%Y-%m-%d %H:%S:%M' );
 
@@ -57,13 +58,23 @@ has username => (is => 'ro', required => 1);
 
 has entity_id => (is => 'ro', required => 1);
 
-#
-#
-#
-#
-#
+=head2 preferences
 
-has _preferences => (is => 'ro', default => sub { {} });
+=cut
+
+has preferences => (
+    is => 'ro',
+    init_arg => undef,
+    lazy => 1,
+    builder => '_build_preferences'
+    );
+
+sub _build_preferences($self) {
+    return LedgerSMB::Company::Preferences->new(
+        app => $self->app,
+        for_user => $self
+        );
+}
 
 =head1 METHODS
 

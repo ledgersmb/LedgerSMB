@@ -98,7 +98,7 @@ Returns HTML errors in LedgerSMB. Needs refactored into a general Error class.
 
 =item get_user_info()
 
-Loads user configuration info from LedgerSMB::User
+Loads user configuration info from LedgerSMB::Company::User
 
 =item initialize_with_db
 
@@ -280,7 +280,6 @@ use LedgerSMB::PGNumber;
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Setting;
 use LedgerSMB::Template;
-use LedgerSMB::User;
 
 our $VERSION = '1.14.0-dev';
 
@@ -401,7 +400,7 @@ sub conn {
 
 sub get_user_info {
     my ($self) = @_;
-    $self->{_user} = LedgerSMB::User->fetch_config($self);
+    $self->{_user} = $self->conn->current_user->preferences->fetch;
     return $self->{_user}->{language} ||= 'en';
 }
 

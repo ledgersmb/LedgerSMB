@@ -34,8 +34,8 @@ use File::Spec;
 use HTTP::Status qw( HTTP_BAD_REQUEST );
 use Locale::CLDR;
 
+use LedgerSMB::Company::Preferences;
 use LedgerSMB::Locale;
-use LedgerSMB::User;
 
 our $VERSION = 1.0;
 
@@ -164,7 +164,13 @@ sub save_preferences {
     my $locale =  LedgerSMB::Locale->get_handle($request->{_user}->{language});
     $request->{_locale} = $locale;
 
-    LedgerSMB::User->save_preferences( $request );
+    my $app = $request->conn;
+    my $user = $app->users->get_by_name( $request->{login} );
+    my $prefs = $user->preferences;
+    for my $prefname (@LedgerSMB::Company::Preferences::PREFERENCES) {
+        next unless $request->{$prefname};
+        $prefs->set( $prefname, $request->{$prefname} );
+    }
     return preference_screen($request);
 }
 
