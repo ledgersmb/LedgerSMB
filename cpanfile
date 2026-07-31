@@ -164,14 +164,13 @@ requires 'Text::Markdown';
 requires 'Throwable';
 requires 'URI';
 requires 'URI::Escape';
-requires 'Workflow', '2.07'; # 2.07 Fixes 'return;' back to 'return undef;'
-requires 'Workflow::Action', '2.06';
-requires 'Workflow::Condition', '2.06';
-requires 'Workflow::Context', '2.06';
-requires 'Workflow::Exception', '2.06';
-requires 'Workflow::Factory', '2.06';
-requires 'Workflow::Persister::DBI', '2.06';
-requires 'Workflow::Persister::DBI::ExtraData', '2.06';
+requires 'Workflow', '2.10'; # 2.10 Fixes use of bare hash context initialization
+requires 'Workflow::Action', '2.10';
+requires 'Workflow::Condition', '2.10';
+requires 'Workflow::Context', '2.10';
+requires 'Workflow::Exception', '2.10';
+requires 'Workflow::Factory', '2.10';
+requires 'Workflow::Persister', '2.10';
 requires 'XML::LibXML';
 requires 'XML::LibXML::XPathContext';
 requires 'YAML::PP';
@@ -233,6 +232,7 @@ on 'develop' => sub {
     requires 'Perl::Critic';
     requires 'Perl::Critic::Moose';
     requires 'Perl::Critic::Policy::Modules::RequireExplicitInclusion';
+    requires 'PPI', '1.291';
     requires 'Pherkin::Extension::Weasel', '0.18';
     requires 'Pod::ProjectDocs';
     requires 'Selenium::Client';

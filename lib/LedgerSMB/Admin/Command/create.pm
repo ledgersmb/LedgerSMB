@@ -72,7 +72,7 @@ sub run($self, @args) {
             or die "Unable to open 'menu.xml' menu definition file: $!";
 
         my $dbh = $self->db->connect;
-        LedgerSMB::Company->new( dbh => $dbh )
+        LedgerSMB::Company->new( dbh => $dbh, wire => undef )
             ->menu
             ->from_xml( $fh );
         $dbh->commit;

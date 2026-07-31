@@ -53,7 +53,7 @@ my $sth = $dbh->prepare(q{SELECT COUNT(*), 'TESTRESULT' from account})
 
 for my $xmlfile (@files) {
     subtest "$xmlfile" => sub {
-        my $company = LedgerSMB::Company->new(dbh => $dbh);
+        my $company = LedgerSMB::Company->new(dbh => $dbh, wire => undef);
         open my $fh, '<:encoding(utf-8)', $xmlfile
             or die "Unable to open $xmlfile: $!";
         ok( lives { $company->configuration->from_xml($fh); } )

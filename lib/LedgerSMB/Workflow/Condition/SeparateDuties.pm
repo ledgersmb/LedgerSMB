@@ -41,7 +41,7 @@ error in case separation of duties is I<not> enabled.
 =cut
 
 sub evaluate($self, $wf) {
-    my $dbh = $wf->handle;
+    my $dbh = $wf->app->dbh;
     my $separate_duties = LedgerSMB::Setting->new(dbh => $dbh)->get('separate_duties');
     $log->info("separate duties: $separate_duties");
 

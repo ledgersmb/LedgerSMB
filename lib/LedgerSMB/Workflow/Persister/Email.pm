@@ -196,8 +196,8 @@ has been replaced by the content as specified by C<fetch_extra_workflow_data>.
 =cut
 
 
-sub create_workflow( $self, $wf ) {
-    my $wf_id  = $self->SUPER::create_workflow( $wf );
+sub create_workflow( $self, $app, $wf ) {
+    my $wf_id  = $self->SUPER::create_workflow( $app, $wf );
     $self->_save_email_data( $wf );
 
     if (my $attachments = $wf->context->param( 'attachments' )) {
@@ -218,8 +218,8 @@ when they have changed.
 =cut
 
 
-sub update_workflow( $self, $wf ) {
-    $self->SUPER::update_workflow( $wf );
+sub update_workflow( $self, $app, $wf ) {
+    $self->SUPER::update_workflow( $app, $wf );
     $self->_save_email_data( $wf );
 }
 
@@ -260,8 +260,8 @@ named argument C<disable_cache> to prevent caching the content in-memory:
 
 =cut
 
-sub fetch_workflow( $self, $wf_id ) {
-    my $wf_info = $self->SUPER::fetch_workflow( $wf_id );
+sub fetch_workflow( $self, $app, $wf_id ) {
+    my $wf_info = $self->SUPER::fetch_workflow( $app, $wf_id );
     my $ctx = $wf_info->{context};
     $ctx->{_email_data} = {
         map {

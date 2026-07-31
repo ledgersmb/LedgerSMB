@@ -10,17 +10,41 @@ BEGIN {
     Log::Log4perl->easy_init($OFF);
 }
 
+use Beam::Wire;
+use Carp::Always;
 use Email::Sender::Transport::DevNull;
 
-use Workflow;
+use LedgerSMB::Company;
+use LedgerSMB::Workflow;
 use Workflow::Persister;
+
+
 use LedgerSMB::Workflow::Action::Email;
 
-package TestFactory {};
+
+package TestPersister {
+    sub handle { 1 };
+}
+package TestFactory {
+    sub get_persister_for_workflow_type {
+        return bless {}, 'TestPersister';
+    }
+};
 
 my $c  = Workflow::Context->new();
 my $f  = bless {}, 'TestFactory';
-my $wf = Workflow->new( 'id', 'INITIAL', { type => 'test' }, [], $f );
+my $wf = LedgerSMB::Workflow->new( 'id', 'INITIAL', { type => 'test' }, [], $f );
+my $app = LedgerSMB::Company->new(
+    wire => Beam::Wire->new(
+        config => {
+            mail => {
+                transport => {
+                    '$class' => 'Email::Sender::Transport::DevNull'
+                }
+            }
+        }),
+    dbh => 1);
+$wf->{app} = $app;
 $wf->context( $c );
 
 ok lives {
@@ -30,7 +54,6 @@ ok lives {
     $c->param( 'bcc'        => 'them@example.org,they@example.com' );
     $c->param( 'subject'    => 'About us...' );
     $c->param( 'body'       => 'What about us?' );
-    $c->param( '_transport' => Email::Sender::Transport::DevNull->new() );
 
     my $action = LedgerSMB::Workflow::Action::Email->new( $wf, { action => 'send' } );
     $action->execute( $wf );

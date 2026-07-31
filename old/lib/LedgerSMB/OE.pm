@@ -191,8 +191,7 @@ sub save {
     my $did_insert = 0;
     if ( !$form->{id} ) {
         if (! $form->{workflow_id}) {
-            my $wf = $form->{_wire}->get('workflows')
-                ->create_workflow( 'Order/Quote' );
+            my $wf = $form->{_conn}->workflows->create( 'Order/Quote' );
             $form->{workflow_id} = $wf->id;
         }
         $query = qq|SELECT nextval('oe_id_seq')|;

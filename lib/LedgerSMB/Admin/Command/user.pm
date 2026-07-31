@@ -16,9 +16,7 @@ use LedgerSMB::App_State;
 use LedgerSMB::Company;
 use LedgerSMB::Database;
 use LedgerSMB::Entity::Person::Employee;
-use LedgerSMB::Entity::User;
 use LedgerSMB::PGDate;
-use LedgerSMB::User;
 
 use Array::PrintCols;
 
@@ -128,43 +126,50 @@ sub _option_spec($self, $command) {
 
 sub _add_permissions($self, $dbh, $user) {
 
-    my $roles;
-    @$roles = @{$user->{role_list}};
+    my $app = $user->app;
+    my $roles = $app->roles;
     if ($self->options->{permission}->[0] =~ /Full Permissions/i) {
-        @$roles = map { $_->{rolname} } @{$user->list_roles};
+        for my $role ($roles->list->@*) {
+            $role->assign( $user );
+        }
     } else {
-        foreach my $p ($self->options->{permission}->@*) {
-            my ($h) = grep { lc($p) eq $_->{description} } @{$user->list_roles};
-            if (!$h ) {
-                $self->logger->error("Invalid permission '$p'");
+        for my $perm (map { lc($_) } $self->options->{permission}->@*) {
+            my $role = $roles->get_by_name( $perm );
+            if ($role) {
+                $role->assign( $user );
+            }
+            else {
+                $self->logger->error("Invalid permission '$perm'");
                 $dbh->rollback;
                 return 0;
             }
-            push @$roles, $h->{rolname};
         }
     }
-    $user->save_roles($roles);
     return 1;
 }
 
 sub _remove_permissions($self, $dbh, $user) {
 
-        my $roles;
-        @$roles = @{$user->{role_list}};
-        if ($self->options->{no_permission}->[0] =~ /Full Permissions/i) {
-            $roles = [];
-        } else {
-            foreach my $p ($self->options->{no_permission}) {
-                my ($h) = grep { lc($p) eq $_->{description} } @{$user->list_roles};
-                if (!$h ) {
-                    $self->logger->error("Invalid permission '$p'");
-                    $dbh->rollback;
-                    return 0;
-                }
-                @$roles = grep { $h->{rolname} ne $_ } @$roles;
+    my $app = $user->app;
+
+    if ($self->options->{no_permission}->[0] =~ /Full Permissions/i) {
+        for my $role ($user->roles->@*) {
+            $role->revoke;
+        }
+    } else {
+        my $roles = $app->roles;
+        for my $perm (map { lc $_ } $self->options->{no_permission}->@*) {
+            my $role = $roles->get_by_name( $perm );
+            if ($role) {
+                $role->revoke( $user );
+            }
+            else {
+                $self->logger->error("Invalid permission '$perm'");
+                $dbh->rollback;
+                return 0;
             }
         }
-        $user->save_roles($roles);
+    }
     return 1;
 }
 
@@ -179,20 +184,23 @@ sub change($self, $dbh, $options, @args) {
             return 1;
         }
 
-        my $_user = $self->_get_user($dbh);
-        if (!$_user) {
-            my $username = $self->options->{username};
+        my $app = LedgerSMB::Company->new(
+            dbh => $dbh,
+            wire => 1
+            );
+        my $username = $self->options->{username};
+        my $user = $app->users->get_by_name( $username );
+        if (!$user) {
             $self->logger->error("User '$username' does not exists");
             return 1;
         }
 
         local $LedgerSMB::App_State::DBH = $dbh;
-        my $user = LedgerSMB::Entity::User->get($_user->{entity_id});
-        my $emp = LedgerSMB::Entity::Person::Employee->get($_user->{entity_id});
+        my $emp = LedgerSMB::Entity::Person::Employee->get( $user->entity_id );
         my $_country = $self->_get_valid_country($dbh);
 
         if ( $self->options->{password} ) {
-            $user->reset_password($self->options->{password});
+            $user->reset_password( $self->options->{password} );
         }
         my $needs_save = 0;
         for my $setting (qw(dob employeenumber end_date first_name
@@ -270,9 +278,7 @@ sub create($self, $dbh, $options, @args) {
             $self->logger->error('Invalid user');
             return 1;
         }
-        #TODO: Fix validity
-        my $ident_username=$dbh->quote_identifier($self->options->{username});
-        $dbh->do(qq(ALTER USER $ident_username VALID UNTIL 'infinity'));
+        #TODO: Fix validity -- now set to infinity!
 
         # Add permissions
         return 1
@@ -357,18 +363,22 @@ sub _create_employee($self, %args) {
 
 sub _create_user($self, %args) {
 
-    my $dbh = $args{dbh};
-    my $_username = $args{username};
-    my $ident_username=$dbh->quote_identifier($_username);
-
-    $dbh->do(qq(DROP ROLE IF EXISTS $ident_username));
-    my $user = LedgerSMB::Entity::User->new(
-        entity_id => $args{entity_id},
-        username => $_username,
-        _dbh => $dbh,
+    my $app = LedgerSMB::Company->new(
+        dbh => $args{dbh},
+        username => $args{dbh}->{Username},
+        wire     => 1
         );
-    $user->create($args{password});
-    $dbh->do(qq(ALTER USER $ident_username VALID UNTIL 'infinity'));
+
+    my $username = $args{username};
+    my $user = $app->users->create(
+        $username,
+        entity_id => $args{entity_id},
+        force => 1,
+        passwd => $args{password}
+        );
+
+    my $ident_username = $app->dbh->quote_identifier($username);
+    $app->dbh->do(qq(ALTER USER $ident_username VALID UNTIL 'infinity'));
 
     return $user;
 }
@@ -423,10 +433,17 @@ sub delete($self, $dbh, $options, @args) {
     return 0;
 }
 
-sub list($self, $dbh, $options, $db_uri, $user) {
+sub list($self, $dbh, $options, $db_uri, $username) {
+    my $app = LedgerSMB::Company->new(
+        dbh => $dbh,
+        wire => 1     # fake the trigger to think we provided a value
+        );
 
-    if (!defined $user) {
-        my @users = LedgerSMB::User->get_all_users( { dbh => $dbh } );
+    if (!defined $username) {
+        my $user; # for the format below
+        my @users = map {
+            +{ id => $_->id, username => $_->username }
+        } $app->users->list;
 
         ## no critic (ProhibitFormats)
     format LANG =
@@ -448,18 +465,17 @@ Id     Username        Created
         }
     }
     else {
-        my $_user = $self->_get_user($dbh,$user);
-        if (!$_user) {
-            $self->logger->error("User '$user' does not exists");
+        my $user = $app->users->get_by_name( $username );
+        if (!$user) {
+            $self->logger->error("User '$username' does not exists");
             $dbh->rollback;
             return 1;
         }
 
         local $LedgerSMB::App_State::DBH = $dbh;
-        $user = LedgerSMB::Entity::User->get($_user->{entity_id});
-        my $emp = LedgerSMB::Entity::Person::Employee->get($_user->{entity_id});
+        my $emp = LedgerSMB::Entity::Person::Employee->get( $user->entity_id );
 
-        print STDOUT 'Username: ',$user->{username},
+        print STDOUT 'Username: ',$username,
             ', Name: "',$self->_get_salutation_by_id($dbh,$emp->{salutation_id}), ' ',
             $emp->{first_name}, ' ',
             $emp->{middle_name} ? $emp->{middle_name} . ' ' : '',
@@ -471,7 +487,7 @@ Id     Username        Created
             'Country: ', $self->_get_country_by_id($dbh, $emp->{country_id}), ', SSN: ', $emp->{ssn} // 'undef',"\n",
             "Permissions:\n";
         $Array::PrintCols::PreSorted = 0;
-        print_cols \$user->{role_list}->@*, -5, 0, 1;
+        print_cols [ map { $_->name } $user->roles->list ], -5, 0, 1;
     }
     $dbh->disconnect;
     return 0;

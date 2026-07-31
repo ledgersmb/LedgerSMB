@@ -1,8 +1,34 @@
+
+use v5.38;
+
 package LedgerSMB::Company;
 
 =head1 NAME
 
 LedgerSMB::Company - Entrypoint to the Perl API for a LedgerSMB company
+
+=head1 SYNOPSIS
+
+  use LedgerSMB::Company;
+
+  # assuming a connected $dbh database handle
+  my $c = LedgerSMB::Company->new( dbh => $dbh );
+
+  print $c->setting('company.legalname');
+
+=cut
+
+use Moose;
+use namespace::autoclean;
+
+use Carp qw(croak);
+use Log::Any qw($log);
+
+use LedgerSMB::Company::Configuration;
+use LedgerSMB::Company::Menu;
+use LedgerSMB::Company::Roles;
+use LedgerSMB::Company::Users;
+use LedgerSMB::Company::Workflows;
 
 =head1 DESCRIPTION
 
@@ -10,31 +36,6 @@ This module defines the class which encapsulates a connection to a LedgerSMB
 company database. Its responsibility is to provide access to the various
 groups of functionality (modules) in the database and their wrapping
 Perl API modules.
-
-=head1 SYNOPSIS
-
-  use LedgerSMB::Company;
-
-  my $dbh = DBI->connect(...);
-  my $c = LedgerSMB::Company->new( dbh => $dbh );
-
-  print $c->setting('company.legalname');
-
-=head1 METHODS
-
-=cut
-
-use strict;
-use warnings;
-
-use Moose;
-use namespace::autoclean;
-
-
-use LedgerSMB::Company::Configuration;
-use LedgerSMB::Company::Menu;
-
-=head1 DESCRIPTION
 
 =head1 ATTRIBUTES
 
@@ -45,7 +46,16 @@ access rights to the company are derived from the connected user.
 
 =cut
 
-has _dbh => (is => 'ro', init_arg => 'dbh', reader => 'dbh', required => 1);
+has _dbh => (is => 'ro', init_arg => 'dbh', reader => 'dbh', required => 1,
+             trigger => sub { die '<undef> dbh passed to Company' if not defined $_[1]; });
+
+=head2 wire (required)
+
+Configuration instance (dependency injection container). L<Beam::Wire> instance.
+
+=cut
+
+has _wire => (is => 'ro', init_arg => 'wire', reader => 'wire', required => 1);
 
 =head2 configuration
 
@@ -72,6 +82,69 @@ sub _build_configuration {
     return LedgerSMB::Company::Configuration->new( dbh => $self->dbh );
 }
 
+
+=head2 current_user
+
+Returns a C<LedgerSMB::Company::User> instance for the user identified by
+the C<username> attribute, or C<undef> if the user by that name does not
+have an entry in the C<users> table.
+
+=cut
+
+has current_user => (
+    is => 'ro',
+    init_arg => undef,
+    lazy => 1,
+    builder => '_build_current_user');
+
+sub _build_current_user($self) {
+    return undef unless defined $self->username;
+    return $self->users->get_by_name( $self->username );
+}
+
+
+=head2 is_bootstrap_user
+
+Returns C<true> when the C<username> attribute names a super-user or
+a user who is a database owner I<and> has the C<CREATEROLE> PostgreSQL
+privilege.
+
+=cut
+
+has is_bootstrap_user => (
+    is => 'ro',
+    init_arg => undef,
+    lazy => 1,
+    builder => '_build_is_bootstrap_user');
+
+sub _build_is_bootstrap_user($self) {
+    my $dbh = $self->dbh;
+    my $username = $self->username;
+    my $user_atts = $dbh->selectrow_hashref(
+        q{SELECT * FROM pg_roles WHERE rolname = ?},
+        {},
+        $username)
+        or croak $log->error( qq{Failed to query role attributes (for '$username'): } . $dbh->errstr );
+    if ($user_atts->{rolsuper}) {
+        return 1;
+    }
+    if ($user_atts->{createdb} and $user_atts->{createrole}) {
+        my ($db_owner) = $dbh->selectrow_array(
+            q{SELECT pg_has_role(?, (select rolname
+                                       from pg_database db
+                                            inner join pg_roles rol
+                                                       on db.datdba = rol.oid
+                                      where db.datname = current_database()), 'USAGE')},
+            {},
+            $self->username);
+        if ($dbh->err) {
+            croak $log->error( 'Failed to query role permissions: ' . $dbh->errstr );
+        }
+        return $db_owner;
+    }
+    return 0;
+}
+
 =head2 menu
 
 Holds a L<LedgerSMB::Company::Menu> instance, representing the
@@ -87,9 +160,64 @@ has menu => (
     lazy => 1,
     builder => '_build_menu');
 
-sub _build_menu {
-    my $self = shift;
+sub _build_menu($self) {
     return LedgerSMB::Company::Menu->new( dbh => $self->dbh );
+}
+
+=head2 roles
+
+=cut
+
+has roles => (
+    is => 'ro',
+    init_arg => undef,
+    lazy => 1,
+    builder => '_build_roles');
+
+sub _build_roles($self) {
+    return LedgerSMB::Company::Roles->new(
+        app => $self
+        );
+}
+
+=head2 username
+
+=cut
+
+has username => (
+    is => 'ro',
+    );
+
+=head2 users
+
+=cut
+
+has users => (
+    is => 'ro',
+    init_arg => undef,
+    lazy => 1,
+    builder => '_build_users');
+
+sub _build_users($self) {
+    return LedgerSMB::Company::Users->new(
+        app => $self
+        );
+}
+
+=head2 workflows
+
+=cut
+
+has workflows => (
+    is => 'ro',
+    init_arg => undef,
+    lazy => 1,
+    builder => '_build_workflows');
+
+sub _build_workflows($self) {
+    return LedgerSMB::Company::Workflows->new(
+        app => $self
+        );
 }
 
 
@@ -104,5 +232,3 @@ your software.
 =cut
 
 __PACKAGE__->meta->make_immutable;
-
-1;

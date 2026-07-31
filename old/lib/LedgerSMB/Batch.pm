@@ -269,7 +269,7 @@ sub post {
     $self->_iterate_batch_items(
         sub {
             my %args = @_;
-            my $wf = $self->{_wire}->get('workflows')->fetch_workflow(
+            my $wf = $self->{_conn}->workflows->fetch(
                 $args{type}, $args{workflow_id}
                 );
             $wf->execute_action( 'batch-approve' );
@@ -296,7 +296,7 @@ sub delete {
     $self->_iterate_batch_items(
         sub {
             my %args = @_;
-            my $wf = $self->{_wire}->get('workflows')->fetch_workflow(
+            my $wf = $self->{_conn}->workflows->fetch(
                 $args{type}, $args{workflow_id}
                 );
             $wf->execute_action( 'batch-delete' );

@@ -454,15 +454,18 @@ $$ language plpgsql;
 COMMENT ON function admin__is_user (in_user text) IS
 $$ Returns true if user is set up in LedgerSMB.  False otherwise.$$;
 
+
+drop view if exists user_listable cascade;
+
 create or replace view user_listable as
-    select
-        u.id,
-        u.username,
-        e.created,
-        e.name,
-        e.control_code
+  select u.id,
+         u.entity_id,
+         u.username,
+         e.created,
+         e.name,
+         e.control_code
     from entity e
-    join users u on u.entity_id = e.id;
+           join users u on u.entity_id = e.id;
 
 
 create or replace function user__get_all_users () returns setof user_listable as $$

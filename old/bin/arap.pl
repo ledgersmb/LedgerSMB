@@ -324,8 +324,7 @@ sub post_as_new {
     for (qw(id workflow_id invnumber)) { delete $form->{$_} }
     $form->{invnumber} = $args{invnumber} // '';
 
-    my $wf = $form->{_wire}->get('workflows')
-        ->create_workflow( 'AR/AP' );
+    my $wf = $form->{_conn}->workflows->create( 'AR/AP' );
     $form->{workflow_id} = $wf->id;
     $form->{__action} = 'post';
 
@@ -337,8 +336,7 @@ sub print_and_post_as_new {
     $form->{old_workflow_id} = $form->{workflow_id};
     for (qw(id workflow_id)) { delete $form->{$_} }
 
-    my $wf = $form->{_wire}->get('workflows')
-        ->create_workflow( 'AR/AP' );
+    my $wf = $form->{_conn}->workflows->create( 'AR/AP' );
     $form->{workflow_id} = $wf->id;
 
     &print_and_post;

@@ -1,5 +1,6 @@
 
 use v5.38;
+use experimental qw(signatures);
 
 package LedgerSMB::Workflow;
 
@@ -41,12 +42,13 @@ Provides the C<DBI> handle of the associated company database.
 
 use parent qw( Workflow );
 
+use Carp qw(croak);
 use DateTime;
 use Log::Any qw($log);
 
-
-my @PROPS = qw( handle );
+my @PROPS = qw( app );
 __PACKAGE__->mk_accessors(@PROPS);
+
 
 =head1 METHODS
 
@@ -59,10 +61,9 @@ Implements the C<Workflow> protocol.
 sub init($self, @params) {
     $self->SUPER::init(@params);
 
-    my $persister =
-        $self->_factory->get_persister_for_workflow_type( $self->type );
-    $self->{handle} = $persister->handle; # workaround for Workflow preventing write access
+    # No need to initialize 'app': it is set by LedgerSMB::Workflow::Factory
 }
+
 
 =head1 LICENSE AND COPYRIGHT
 

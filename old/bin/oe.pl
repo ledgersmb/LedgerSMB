@@ -89,8 +89,7 @@ sub add {
 
 sub edit {
     if (not $form->{id} and $form->{workflow_id}) {
-        my $wf = $form->{_wire}->get('workflows')
-            ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+        my $wf = $form->{_conn}->workflows->fetch( 'Order/Quote', $form->{workflow_id} );
         $form->{id} = $wf->context->param( '_extra' )->{id};
         delete $form->{workflow_id};
     }
@@ -311,18 +310,17 @@ sub form_header {
         }
     }
     if($form->{workflow_id}) {
-        $wf = $form->{_wire}->get('workflows')
-            ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+        $wf = $form->{_conn}->workflows->fetch( 'Order/Quote', $form->{workflow_id} );
     }
     else {
-        $wf = $form->{_wire}->get('workflows')
-            ->create_workflow( 'Order/Quote',
-                               Workflow::Context->new(
-                                   'batch-id' => $form->{batch_id},
-                                   '_extra' => {
-                                       oe_class_id => $class_id
-                                   }
-                               ) );
+        $wf = $form->{_conn}->workflows->create(
+            'Order/Quote',
+            {
+                'batch-id' => $form->{batch_id},
+                '_extra' => {
+                    oe_class_id => $class_id
+                }
+            });
         $form->{workflow_id} = $wf->id;
     }
     if ( $form->{type} =~ /_order$/ ) {
@@ -839,7 +837,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" id=intnotes name=intnotes rows
         $form->print_button( \%button, $_ );
     }
 
-    my $wf = $form->{_wire}->get( 'workflows' )->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    my $wf = $form->{_conn}->workflows->fetch( 'Order/Quote', $form->{workflow_id} );
     if ( $wf and grep { $_ eq 'print' } $wf->get_current_actions ) {
         my $printops = &print_options;
 
@@ -1265,8 +1263,7 @@ sub _save {
        # the old workflow is being saved-as. the new workflow has its id
        # set in workflow_id, because the form was saved already...
        my $id  = $form->{old_workflow_id} // $form->{workflow_id};
-       my $wf  = $form->{_wire}->get('workflows')
-           ->fetch_workflow( 'Order/Quote', $id );
+       my $wf  = $form->{_conn}->workflows->fetch( 'Order/Quote', $id );
        my $ctx = $wf->context;
        $ctx->param( spawned_type => 'Order/Quote' );
        $ctx->param( spawned_id   => $form->{workflow_id} );
@@ -1287,8 +1284,7 @@ sub _save {
 
 sub print_and_save {
 
-    my $wf = $form->{_wire}->get('workflows')
-        ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    my $wf = $form->{_conn}->workflows->fetch( 'Order/Quote', $form->{workflow_id} );
     $wf->execute_action( 'print_and_save' );
 
     &_print_and_save;
@@ -1306,8 +1302,7 @@ sub _print_and_save {
     $old_form->{rowcount}++;
 
     my $wf =
-        $form->{_wire}->get('workflows')
-        ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+        $form->{_conn}->workflows->fetch( 'Order/Quote', $form->{workflow_id} );
     $wf->execute_action( 'print' );
     &print_form($old_form);
 
@@ -1320,8 +1315,8 @@ sub delete {
     # in limbo if the "yes" action isn't performed on the UI side (the
     # workflow has a DELETED state whereas the quote still exists...)
     #
-    # my $wf = $form->{_wire}->get('workflows')
-    #     ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    # my $wf = $form->{_conn}->workflows
+    #     ->fetch( 'Order/Quote', $form->{workflow_id} );
     # $wf->execute_action( 'delete' );
     # $form->header;
 
@@ -1362,8 +1357,7 @@ sub delete {
 
 sub yes {
 
-    my $wf = $form->{_wire}->get('workflows')
-        ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    my $wf = $form->{_conn}->workflows->fetch( 'Order/Quote', $form->{workflow_id} );
     $wf->execute_action( 'delete' );
     $form->header;
 
@@ -1426,8 +1420,7 @@ sub invoice {
     $form->{closed} = 1;
 
     OE->save( \%myconfig, \%$form );
-    my $wf = $form->{_wire}->get('workflows')
-        ->fetch_workflow( 'Order/Quote', $form->{workflow_id} );
+    my $wf = $form->{_conn}->workflows->fetch( 'Order/Quote', $form->{workflow_id} );
     my $action;
 
     $form->{transdate} = '';
@@ -1518,8 +1511,7 @@ sub invoice {
         local $form->{separate_duties} = 1;
         local $form->{approved} = undef;
 
-        my $wf = $form->{_wire}->get('workflows')
-            ->create_workflow( 'AR/AP' );
+        my $wf = $form->{_conn}->workflows->create( 'AR/AP' );
         $form->{workflow_id} = $wf->id;
 
         $wf->execute_action( 'post' );

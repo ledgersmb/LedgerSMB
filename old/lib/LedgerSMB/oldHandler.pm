@@ -48,10 +48,10 @@ use experimental qw(try isa);
 
 package lsmb_legacy;
 
-use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::App_State;
+use LedgerSMB::Company;
 use LedgerSMB::Middleware::SessionStorage;
 use LedgerSMB::Middleware::RequestID;
 use LedgerSMB::PSGI::Util;
@@ -132,10 +132,18 @@ sub handle {
         $form->{session_id} = $psgi_env->{'lsmb.session'}->{session_id};
         $form->db_init( $psgi_env->{'lsmb.app'},  \%myconfig );
 
+        $form->{_conn} = LedgerSMB::Company->new(
+            dbh      => $LedgerSMB::App_State::DBH,
+            username => $form->{_session}->{username} // $form->{_session}->{login},
+            wire     => $wire
+            );
         # we get rid of myconfig and use User as a real object
-        %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
+        %myconfig = %{
+            $form->{_conn}->current_user->preferences->fetch
+        };
         $form->{_user} = \%myconfig;
         $form->{_req} = Plack::Request::WithEncoding->new($psgi_env);
+
         map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
             unless ( $form->{type} and $form->{type} eq 'preferences' );
 

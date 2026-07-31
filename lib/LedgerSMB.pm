@@ -41,6 +41,10 @@ This returns true if the form_id was associated with the session, and false if
 not and also removes the form_id from the
 session.
 
+=item conn()
+
+Returns a C<LedgerSMB::Company> instance.
+
 =item is_allowed_role({allowed_roles => @role_names})
 
 This function returns 1 if the user's roles include any of the roles in
@@ -94,7 +98,7 @@ Returns HTML errors in LedgerSMB. Needs refactored into a general Error class.
 
 =item get_user_info()
 
-Loads user configuration info from LedgerSMB::User
+Loads user configuration info from LedgerSMB::Company::User
 
 =item initialize_with_db
 
@@ -269,13 +273,13 @@ use PGObject;
 use Plack;
 use URI;
 
+use LedgerSMB::Company;
 use LedgerSMB::Locale;
 use LedgerSMB::PGDate;
 use LedgerSMB::PGNumber;
 use LedgerSMB::PSGI::Util qw( template_response );
 use LedgerSMB::Setting;
 use LedgerSMB::Template;
-use LedgerSMB::User;
 
 our $VERSION = '1.14.0-dev';
 
@@ -383,9 +387,20 @@ sub initialize_with_db {
 }
 
 
+sub conn {
+    my $self = shift;
+    my $sess = $self->{_req}->env->{'lsmb.session'} // {};
+    return $self->{_conn} //= LedgerSMB::Company->new(
+        dbh      => $self->{dbh},
+        username => $sess->{username} || $sess->{login} || $self->{login},
+        wire     => $self->{_wire}
+        );
+}
+
+
 sub get_user_info {
     my ($self) = @_;
-    $self->{_user} = LedgerSMB::User->fetch_config($self);
+    $self->{_user} = $self->conn->current_user->preferences->fetch;
     return $self->{_user}->{language} ||= 'en';
 }
 

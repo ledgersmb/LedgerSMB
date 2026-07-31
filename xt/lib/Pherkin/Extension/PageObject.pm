@@ -56,7 +56,6 @@ sub pre_scenario {
     $self->last_stash($stash);
     $stash->{ext_page} = $self;
 
-    local $LedgerSMB::App_State::User = {};
     $stash->{today} = LedgerSMB::PGDate->today->to_output;
 }
 

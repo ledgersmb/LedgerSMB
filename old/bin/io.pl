@@ -131,8 +131,7 @@ sub _calc_taxes {
 }
 
 sub approve {
-    my $wf = $form->{_wire}->get('workflows')
-        ->fetch_workflow( 'AR/AP', $form->{workflow_id} );
+    my $wf = $form->{_conn}->workflows->fetch( 'AR/AP', $form->{workflow_id} );
     die 'No workflow found to approve' unless $wf;
 
     $wf->execute_action( 'approve' );
@@ -894,7 +893,7 @@ sub validate_items {
 
 sub purchase_order {
 
-    my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+    my $wf = $form->{_conn}->workflows->fetch(
         ($form->{type} eq 'invoice') ? 'AR/AP' : 'Order/Quote',
         $form->{workflow_id}
         );
@@ -913,7 +912,7 @@ sub purchase_order {
 
 sub sales_order {
 
-    my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+    my $wf = $form->{_conn}->workflows->fetch(
         ($form->{type} eq 'invoice') ? 'AR/AP' : 'Order/Quote',
         $form->{workflow_id}
         );
@@ -932,7 +931,7 @@ sub sales_order {
 
 sub rfq {
 
-    my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+    my $wf = $form->{_conn}->workflows->fetch(
         ($form->{type} eq 'invoice') ? 'AR/AP' : 'Order/Quote',
         $form->{workflow_id}
         );
@@ -951,7 +950,7 @@ sub rfq {
 
 sub quotation {
 
-    my $wf = $form->{_wire}->get('workflows')->fetch_workflow(
+    my $wf = $form->{_conn}->workflows->fetch(
         ($form->{type} eq 'invoice') ? 'AR/AP' : 'Order/Quote',
         $form->{workflow_id}
         );
@@ -1378,7 +1377,6 @@ sub print_form {
         my $body = $template->{output};
         utf8::encode($body) if utf8::is_utf8($body);  ## no critic
         my $email_data = {
-            _transport    => $form->{_wire}->get( 'mail' )->{transport},
             immediateSend => $form->{immediate},
             expansions    => \%expansions,
             body          => $form->{message},
@@ -1417,8 +1415,7 @@ sub print_form {
                     q{select workflow_id from oe where id = ?},
                     {}, $form->{id});
 
-            $trans_wf = $form->{_wire}->get('workflows')
-                ->fetch_workflow( 'Order/Quote', $wf_id );
+            $trans_wf = $form->{_conn}->workflows->fetch( 'Order/Quote', $wf_id );
         }
         else {
             ($wf_id) =
@@ -1426,8 +1423,7 @@ sub print_form {
                     q{select workflow_id from transactions where id = ?},
                     {}, $form->{id});
 
-            $trans_wf = $form->{_wire}->get('workflows')
-                ->fetch_workflow( 'AR/AP', $wf_id );
+            $trans_wf = $form->{_conn}->workflows->fetch( 'AR/AP', $wf_id );
         }
 
         $trans_wf->context->param( '_email_data' => $email_data );

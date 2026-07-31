@@ -31,7 +31,6 @@ use LedgerSMB::Entity::Location;
 use LedgerSMB::Entity::Contact;
 use LedgerSMB::Entity::Bank;
 use LedgerSMB::Entity::Note;
-use LedgerSMB::Entity::User;
 use LedgerSMB::File;
 use LedgerSMB::Form;
 use LedgerSMB::I18N;
@@ -172,7 +171,7 @@ sub _main_screen($request, $company, $person) {
        );
        my $employee = LedgerSMB::Entity::Person::Employee->get($entity_id);
        $person = $employee if $employee;
-       $user = LedgerSMB::Entity::User->get($entity_id);
+       $user = $request->conn->users->get_by_entity_id( $entity_id );
     } elsif (defined $person->{entity_class}
                 && $person->{entity_class} == EC_EMPLOYEE ) {
        @DIVS = ('employee');
@@ -333,7 +332,12 @@ sub _main_screen($request, $company, $person) {
     my @eca_classes = grep { $_->{id} < 3 } @entity_classes;
 
     my $roles;
-    $roles = $user->list_roles if $user;
+    $roles = [
+        sort { $a->{rolname} cmp $b->{rolname} }
+        map {
+            +{ rolname => $_->name, description => $_->pretty }
+        } $request->conn->roles->list->@*
+        ];
 
     # Template info and rendering
     my $template = $request->{_wire}->get('ui');
@@ -346,7 +350,14 @@ sub _main_screen($request, $company, $person) {
                   company => $company,
                    person => $person,
                  employee => $person,
-                     user => $user,
+                     user => ($user ? {
+                         id        => $user->id,
+                         entity_id => $user->entity_id,
+                         username  => $user->username,
+                         role_list => [
+                             sort map { $_->name } $user->roles->list->@*
+                         ]
+                     } : undef),
                     roles => $roles,
              country_list => \@country_list,
                credit_act => $credit_act,
@@ -963,21 +974,20 @@ This turns the employee into a user.
 sub create_user($request) {
     $request->{target_div} = 'user_div';
     if ($request->close_form){
-       $request->{password} = $request->{reset_password};
-       my $user = LedgerSMB::Entity::User->new(%$request);
-       my $return_with_import;
-
-       delete $request->{pls_import}; ## remove after user-object instantiation
-       try {
-           $user->create($request->{reset_password});
+        my $user;
+        my $passwd = delete $request->{reset_password};
+        my $import = delete $request->{pls_import};
+        try {
+            $user = $request->conn->users->create(
+                $request->{username},
+                entity_id => $request->{entity_id},
+                passwd    => $passwd,
+                'import'  => $import,
+                );
        }
        catch ($err) {
            die $err unless $err =~ /duplicate user/i;
            $request->{dbh}->rollback;
-           $return_with_import = 1;
-       }
-
-       if ($return_with_import){
            $request->{pls_import} = 1;
        }
     }
@@ -992,15 +1002,14 @@ This removes the user from the company.
 
 sub delete_user($request) {
     $request->{target_div} = 'user_div';
-    if ($request->close_form){
-       my $user = LedgerSMB::Entity::User->new(%$request);
-       delete $request->{pls_import}; ## remove after user-object instantiation
-       try {
-           $user->delete;
-       }
-       catch ($err) {
-           $request->{dbh}->rollback;
-       }
+    if ($request->close_form) {
+        my $user = $request->conn->users->get_by_name( $request->{username} );
+        try {
+            $user->remove;
+        }
+        catch ($err) {
+            $request->{dbh}->rollback;
+        }
     }
     return get($request);
 }
@@ -1013,9 +1022,8 @@ This resets the user's password
 
 sub reset_password($request) {
     if ($request->close_form){
-       $request->{password} = $request->{reset_password};
-       my $user = LedgerSMB::Entity::User->new(%$request);
-       $user->reset_password($request->{password});
+        my $user = $request->conn->users->get_by_name( $request->{username } );
+        $user->reset_password( $request->{reset_password} );
     }
     return get($request);
 }
@@ -1027,24 +1035,21 @@ Saves the user's permissions
 =cut
 
 sub save_roles($request) {
-    my $roles = [];
-
     $request->close_form or die 'Form submission is invalid';
 
-    foreach my $key (keys %$request) {
+    my $app = $request->conn;
+    my $user = $app->users->get_by_entity_id( $request->{entity_id} );
+    foreach my $role (sort { $a->name cmp $b->name } $app->roles->list->@*) {
+        my $key = 'role__' . $role->name;
 
-        # Role parameters are distinguished by a special prefix
-        $key =~ m/^role__/ or next;
-        $request->{$key} or next;
-
-        # Strip prefix to obtain 'global' role name
-        $key =~ s/^role__//;
-
-        push @$roles, $key;
+        if ($request->{$key}) {
+            $role->assign( $user );
+        }
+        else {
+            $role->revoke( $user );
+        }
     }
-
-    my $user = LedgerSMB::Entity::User->get($request->{entity_id});
-    $user->save_roles($roles);
+    $app->dbh->commit;
 
     return get($request);
 }

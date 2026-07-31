@@ -1,4 +1,4 @@
-<workflow class="LedgerSMB::Workflow">
+<workflow>
   <type>Email</type>
   <persister>Email</persister>
   <description>Handles lifecycle of e-mail</description>

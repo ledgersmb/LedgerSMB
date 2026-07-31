@@ -47,7 +47,6 @@ use LedgerSMB::Company::Menu;
 use LedgerSMB::Database;
 use LedgerSMB::Database::Config;
 use LedgerSMB::Database::ConsistencyChecks;
-use LedgerSMB::Entity::User;
 use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::I18N;
 use LedgerSMB::Magic qw( EC_EMPLOYEE HTTP_454 PERL_TIME_EPOCH );
@@ -56,7 +55,6 @@ use LedgerSMB::PSGI::Util;
 use LedgerSMB::Setup::SchemaChecks qw( html_formatter_context );
 use LedgerSMB::Template::DB;
 use LedgerSMB::Database::Upgrade;
-use LedgerSMB::User;
 
 
 
@@ -372,11 +370,13 @@ sub list_users($request) {
     my ($reauth) = _init_db($request);
     return $reauth if $reauth;
 
-    my @users = LedgerSMB::User->get_all_users($request);
-    $request->{users} = [];
-    for my $user (@users) {
-        push @{$request->{users}}, {row_id => $user->{id}, name => $user->{username} };
-    }
+    my $users = $request->conn->users->list;
+    $request->{users} = [
+        map {
+            +{ row_id => $_->id,
+               name   => $_->username
+            }
+        } $users->@* ];
     my $template = $request->{_wire}->get('ui');
     return $template->render($request, 'setup/list_users', $request);
 }
@@ -1191,6 +1191,8 @@ sub select_coa($request) {
 
             my $c = LedgerSMB::Company->new(
                 dbh => $database->connect(),
+                wire => $request->{_wire},
+                username => $request->{login}
                 )->configuration;
             my $fn = File::Spec->catdir('.', 'locale', 'coa',
                                         $request->{coa_lc}, $request->{chart});
@@ -1332,10 +1334,16 @@ sub _save_user($request, $entrypoint) {
         );
     $emp->save;
     $request->{entity_id} = $emp->entity_id;
-    my $user = LedgerSMB::Entity::User->new(%$request);
 
+    my $app = $request->conn;
+    my $user;
     try {
-        $user->create($request->{password});
+        $user = $app->users->create(
+            $request->{username},
+            entity_id => $emp->entity_id,
+            passwd => $request->{password},
+            'import' => $request->{pls_import}
+            );
     }
     catch ($var) {
         if ($var =~ /duplicate user/i){
@@ -1354,20 +1362,12 @@ sub _save_user($request, $entrypoint) {
     };
 
     if ($request->{perms} == 1){
-         for my $role (
-                $request->call_procedure(funcname => 'admin__get_roles')
-         ){
-             $request->call_procedure(funcname => 'admin__add_user_to_role',
-                                      args => [ $request->{username},
-                                                $role->{rolname}
-                                              ]);
-         }
+        for my $role ( $app->roles->list->@* ) {
+            $role->assign( $user );
+        }
     } elsif ($request->{perms} == 0) {
-        $request->call_procedure(funcname => 'admin__add_user_to_role',
-                                 args => [ $request->{username},
-                                           'users_manage',
-                                         ]
-        );
+        my $role = $app->roles->get_by_name( 'users_manage' );
+        $role->assign( $user );
     }
     $request->{dbh}->commit;
 
@@ -1544,10 +1544,11 @@ sub reset_password($request) {
     my ($reauth) = _init_db($request);
     return $reauth if $reauth;
 
-    my $user = LedgerSMB::Entity::User->new(%$request);
-    $user->reset_password($request->{password});
-
-    $request->{password} = '';
+    my $user = $request->conn->users->get_by_name( $request->{username} );
+    if ($user) {
+        $user->reset_password( $request->{password} );
+        $request->{password} = '';
+    }
 
     return edit_user_roles($request);
 }
@@ -1652,7 +1653,10 @@ which is also where the 'initial-data.xml' file is located.
 
 sub _reload_menu($request, $database) {
 
-    my $c = LedgerSMB::Company->new( dbh => $request->{dbh} );
+    my $c = LedgerSMB::Company->new(
+        dbh => $request->{dbh},
+        wire => $request->{_wire},
+        username => $request->{login} );
     my $m = $c->menu;
     try {
         open( my $fh, '<:raw', File::Spec->catfile( $database->data_dir, 'menu.xml' ) )

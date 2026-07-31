@@ -208,13 +208,13 @@ sub send {
                 $mail->email,
                 {
                     to => [ keys %bcc ],
-                    transport => $ctx->param( '_transport' ),
+                    transport => $wf->app->wire->get( 'mail' )->{transport},
                 });
         }
         Email::Sender::Simple->send(
             $mail->email,
             {
-                transport => $ctx->param( '_transport' ),
+                transport => $wf->app->wire->get( 'mail' )->{transport},
             });
     };
     die "Could not send email: $@.  Please check your configuration." if $@;

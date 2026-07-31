@@ -68,7 +68,6 @@ use YAML::PP;
 
 use LedgerSMB::Company;
 use LedgerSMB::Locale;
-use LedgerSMB::User;
 
 use constant {
     MAP_NEXT    => 0,
@@ -506,7 +505,8 @@ sub api {
                 return _error($req, HTTP_BAD_REQUEST, [], @$errors);
             }
 
-            my $company = LedgerSMB::Company->new(dbh => $env->{'lsmb.app'});
+            my $company = LedgerSMB::Company->new(dbh => $env->{'lsmb.app'},
+                                                  wire => $env->{wire});
             my $triplet = $code->($env, $req, $company, $body, $params, @args);
             if (not defined $triplet
                 or not defined $triplet->[2]) {
@@ -653,10 +653,12 @@ sub set {
 
 sub user {
     my $env = shift;
-    $env->{'lsmb.user'} //= LedgerSMB::User->fetch_config(
-        {
-            dbh => $env->{'lsmb.app'},
-        }) // {};
+    my $app = LedgerSMB::Company->new(
+        dbh => $env->{'lsmb.app'},
+        username => $env->{'lsmb.session'}->{login},
+        wire => $env->{_wire} );
+    my $user = $app->current_user;
+    $env->{'lsmb.user'} //= $user ? $user->preferences->fetch : {};
     return $env->{'lsmb.user'};
 }
 

@@ -60,7 +60,8 @@ sub _before_dispatch {
             schema       => $self->config->get('schema'),
         ));
 
-    return (LedgerSMB::Company->new(dbh => $self->db->connect),
+    return (LedgerSMB::Company->new(dbh => $self->db->connect,
+                                    wire => undef),
             $options, @args);
 }
 

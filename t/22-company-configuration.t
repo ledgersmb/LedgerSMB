@@ -19,7 +19,7 @@ my @queries;
 
 
 $mock    = DBI->connect('dbi:Mock:', '', '', { PrintError => 1 });
-$company = LedgerSMB::Company->new( dbh => $mock );
+$company = LedgerSMB::Company->new( dbh => $mock, wire => undef );
 $conf    = $company->configuration;
 
 $mock->{mock_add_resultset} = {
@@ -92,7 +92,7 @@ is($queries[0]->{bound_params}, [ 'EUR', 'EURO payment area currency' ],
 
 $mock    = DBI->connect('dbi:Mock:', '', '',
                         { PrintError => 1, RaiseError => 1 });
-$company = LedgerSMB::Company->new( dbh => $mock );
+$company = LedgerSMB::Company->new( dbh => $mock, wire => undef );
 $conf    = $company->configuration;
 
 $mock->{mock_add_resultset} = {

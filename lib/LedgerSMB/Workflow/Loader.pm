@@ -1,4 +1,7 @@
 
+use v5.38;
+use Sublike::Extended 0.29 'sub';
+
 package LedgerSMB::Workflow::Loader;
 
 =head1 NAME
@@ -32,64 +35,54 @@ standard workflows by storing them in one of the alternative directories.
 
 =cut
 
-use strict;
-use warnings;
-
 our $VERSION = '0.0.1';
 
 use Log::Any qw($log);
 
 use File::Find::Rule;
 use File::Spec;
-use Workflow::Factory;
+use LedgerSMB::Workflow::Factory;
 use Workflow::Condition;
 
 $Workflow::Condition::STRICT_BOOLEANS = 0;
 
 =head1 CLASS METHODS
 
-=head2 load( directories => @directories, lifecycle => $lifecycle )
+=head2 load( directories => @directories, lifecycle => $lifecycle, ... )
 
 Loads the workflow specifications from the given directories and registers
-them with the C<Workflow::Factory>. Default is to load the configuration
-when necessary. This is a good choice for smaller applications which are
-unlikely to require access to all workflows on each invocation, but makes
-less sense for persistent environments such as the Plack server.
+them with the C<LedgerSMB::Workflow::Factory>. Default is to load the
+configuration when necessary. This is a good choice for smaller applications
+which are unlikely to require access to all workflows on each invocation, but
+makes little sense for persistent environments such as the Plack server.
 
 To force all workflows to be loaded on start-up, provide the C<lifecycle>
 parameter with a value of C<eager>.
 
-Returns the C<Workflow::Factory> (singleton) instance.
+Returns the C<LedgerSMB::Workflow::Factory> (singleton) instance.
 
 =cut
 
 
 my $finder = File::Find::Rule->new->name( '*.xml' );
 
-sub _fn {
-    my (undef, undef, $file) = File::Spec->splitpath($_[0]);
+sub _fn($path) {
+    my (undef, undef, $file) = File::Spec->splitpath($path);
     return $file;
 }
 
-sub _type_to_fn {
-    my ($type) = @_;
-
+sub _type_to_fn($type) {
     my $type_fn = ($type =~ tr|a-zA-Z /|a-za-z\-\-|r);
     return $type_fn;
 }
 
-sub load {
-    my $class = shift;
-    my %args = @_;
-    my @directories = $args{directories}->@*;
-
+sub load($class, :$directories, :$lifecycle = undef, %) {
     my %files = map {
         map { _fn($_) => $_ } $finder->in( $_ )
-    } grep { -d $_ } @directories;
+    } grep { -d $_ } $directories->@*;
     my @files = values %files;
 
-    my $config = sub {
-        my $type = shift;
+    my $config = sub($type = undef) {
         my $prefix;
         if (defined $type) {
             if ($type) {
@@ -104,24 +97,22 @@ sub load {
             $prefix = '.';
         }
         $log->debug( "workflow files finder called for $type (prefix: $prefix)" );
-        my $cfg = {
+        return {
             action    => [ grep { m|\Q${prefix}actions.xml\E$| } @files ],
             condition => [ grep { m|\Q${prefix}conditions.xml\E$| } @files ],
             persister => [ grep { m|\Q${prefix}persisters.xml\E$| } @files ],
             validator => [ grep { m|\Q${prefix}validators.xml\E$| } @files ],
             workflow  => [ grep { m|\Q${prefix}workflow.xml\E$| } @files ],
         };
-
-        return $cfg;
     };
 
-    my $instance = Workflow::Factory->instance;
+    my $instance = LedgerSMB::Workflow::Factory->instance;
 
     # Always load the common configuration:
     $instance->add_config_from_file( $config->('')->%* );
 
     # Load the workflow specific configuration based on 'lifecycle'
-    if ($args{lifecycle} and $args{lifecycle} eq 'eager') {
+    if ($lifecycle and $lifecycle eq 'eager') {
         $instance->add_config_from_file( $config->()->%* );
     }
     else {
@@ -130,9 +121,6 @@ sub load {
 
     return $instance;
 }
-
-
-1;
 
 
 =head1 LICENSE AND COPYRIGHT

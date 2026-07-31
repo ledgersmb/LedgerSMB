@@ -1,4 +1,4 @@
-<workflow class="LedgerSMB::Workflow">
+<workflow>
   <type>reconciliation</type>
   <persister>reconciliation</persister>
   <description></description>

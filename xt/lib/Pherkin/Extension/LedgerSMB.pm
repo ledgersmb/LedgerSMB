@@ -19,7 +19,6 @@ use LedgerSMB::Company::Configuration;
 use LedgerSMB::Database;
 use LedgerSMB::PGDate;
 use LedgerSMB::Entity::Person::Employee;
-use LedgerSMB::Entity::User;
 
 use Beam::Wire;
 use List::Util qw(any);
@@ -90,7 +89,11 @@ sub _build_admin_dbh {
 sub _build_admin_conn {
     my $self = shift;
 
-    return LedgerSMB::Company->new( dbh => $self->admin_dbh );
+    return LedgerSMB::Company->new(
+        dbh      => $self->admin_dbh,
+        username => $self->admin_user_name,
+        wire     => undef,
+        );
 }
 
 
@@ -209,7 +212,6 @@ sub create_employee {
     my $dbh = $args{dbh} // $self->admin_dbh;
     my $employeenumber = 'E-' . ($emp_counter++);
 
-    local $LedgerSMB::App_State::User = {};
     my $emp = LedgerSMB::Entity::Person::Employee->new(
         employeenumber => $employeenumber,
         control_code => $employeenumber,
@@ -231,21 +233,20 @@ my $user_counter = 0;
 
 sub create_user {
     my $self = shift;
+    my $app = shift;
     my %args = @_;
 
-    my $dbh = $args{dbh} // $self->admin_dbh;
     my $username = $args{username} //
         $self->db_name . '_user' . ($user_counter++);
 
-    $self->super_dbh->do(qq(DROP ROLE IF EXISTS "$username"));
-    my $user = LedgerSMB::Entity::User->new(
-        entity_id => $args{entity_id},
-        username => $username,
-        _dbh => $dbh,
-        );
-    $user->create($args{password} // 'password', { language => 'en' });
-    my $ident_username=$dbh->quote_identifier($username);
-    $dbh->do(qq(ALTER USER $ident_username VALID UNTIL 'infinity'));
+    my $user = $app->users->create( $username,
+                                    entity_id => $args{entity_id},
+                                    passwd    => $args{password} // 'password',
+                                    force     => 1);
+    my $query =
+        sprintf q{ALTER ROLE %s VALID UNTIL 'infinity'}, $app->dbh->quote_identifier( $username );
+    $app->dbh->do( $query )
+        or die 'Password expiration failed to extend: ' . $app->dbh->errstr;
 
     return $user;
 }
@@ -269,30 +270,29 @@ sub create_template {
         schema   => 'xyz');
 
     $db->create_and_load;
-    my $company = LedgerSMB::Company->new(
+    my $app = LedgerSMB::Company->new(
         dbh => $db->connect(),
+        username => $self->username,
+        wire     => undef
         );
      my $fn = './locale/coa/us/General.xml';
     open my $fh, '<:raw', $fn
         or die "Failed to open $fn: $!";
-    $company->configuration->from_xml($fh);
+    $app->configuration->from_xml($fh);
     close $fh
         or warn "Error closing $fn: $!";
 
     open $fh, '<:raw', './locale/menu.xml'
         or die "Failed to open menu definition: $!";
-    $company->menu->from_xml( $fh );
+    $app->menu->from_xml( $fh );
     close $fh
         or warn "Error closing menu.xml: $!";
 
-    $company->dbh->commit;
-    $company->dbh->disconnect;
+    $app->dbh->commit;
 
     # NOTE: $db is connected with the template, *not* with the
     #  test database (which means we can't use $self->super_dbh!)
-    my $dbh = $db->connect({ PrintError => 0,
-                             RaiseError => 1,
-                             AutoCommit => 0 });
+    my $dbh = $app->dbh;
     $dbh->do(q{set client_min_messages = 'warning'});
 
     # Disable the toaster for more immediate page interaction
@@ -323,13 +323,13 @@ INSERT INTO business_unit (class_id, control_code, description)
              |);
 
     my $emp = $self->create_employee(dbh => $dbh);
-    my $user = $self->create_user(dbh => $dbh,
+    my $user = $self->create_user($app,
                                   entity_id => $emp->entity_id,
                                   username => $admin);
 
-    my $roles;
-    @$roles = map { $_->{rolname} } @{$user->list_roles};
-    $user->save_roles($roles);
+    for my $role ($app->roles->list->@*) {
+        $role->assign( $user );
+    }
 
     $dbh->do("INSERT INTO defaults
                      VALUES ('role_prefix', 'lsmb_${template}__')");
@@ -531,7 +531,7 @@ sub create_vc {
     $company = $company->save;
 
     local $LedgerSMB::App_State::DBH = $admin_dbh;
-    my $cfg = LedgerSMB::Company::Configuration->new(dbh => $self->admin_dbh);
+    my $cfg = LedgerSMB::Company::Configuration->new(dbh => $self->admin_dbh, wire => undef);
     my @accounts = $cfg->coa_nodes->get(filter => q{not is_heading});
     my %accno_ids = map {
         $_->{accno} => ($_->{id} =~ s/^A-//r)

@@ -1,4 +1,4 @@
-<workflow class="LedgerSMB::Workflow">
+<workflow>
   <type>Payment</type>
   <persister>JournalEntry</persister>
   <description></description>
