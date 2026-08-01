@@ -95,7 +95,7 @@
     "html-webpack-plugin": "5.6.7",
     "http-status-codes": "2.3.0",
     "i18next-conv": "17.0.0",
-    "jsdom": "29.1.1",
+    "jsdom": "30.0.1",
     "jsonc-eslint-parser": "3.1.0",
     "markdown-include": "0.4.3",
     "markdownlint": "0.41.1",
