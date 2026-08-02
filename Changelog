@@ -9,6 +9,7 @@ Added functionalities
 * New numbering sequences for lots, payments and asset reports (#9283, #9321)
 
 Changed functionalities
+* Added support for spaces around commas in CSV uploads (#9505)
 
 Removed functionalities
 * Use of multiple cash accounts on the single payment entry screen (#9508)
@@ -17,6 +18,7 @@ Removed functionalities
 Bugs fixed
 * Overpayment reversals don't have a 'payment' record (#9257)
 * Overpayments don't show on AR/AP invoices and transactions (#2367)
+* One voucher per batch instead of one per transaction in a batch (#9572)
 
 Cleanup & architecture improvements
 * Payments are now tracked as first-order transactions (#9508)
@@ -28,6 +30,8 @@ Cleanup & architecture improvements
 * Move last tables to GENERATED IDENTITY (#9319)
 * Various improvements to the generation of our API documentation (#9334, #9335, #9344)
 * Dropped custom number-to-text conversion in favor of Lingua::Num2Word (#9430)
+* Reduce use of App_State::DBH and remove App_State::User remnants (#9760)
+* Harmonization of syntax in modules which 'use v5.xx' to v5.38 (#9744)
 
 Updated dependencies
 * Perl minimum version increased to 5.38 (from 5.36)
