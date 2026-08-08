@@ -52,9 +52,9 @@ comment on column overpayment.eca_id is
  * The migration impact table from ADR 0111 lists the following changes:
  *
  * - Introduction of overpayment open items for tracking overpayment balance (per
- *   overpayment, similar to tracking of open invoices). [Rows 5, 6 and 11]
+ *   overpayment, similar to tracking of open invoices). [Rows 4, 5 and 10]
  *
- * - Introduction of an overpayment-use transaction. [Rows 6 and 7]
+ * - Introduction of an overpayment-use transaction. [Rows 5 and 6]
  *
  *
  *                                   Approach

@@ -200,7 +200,7 @@ Cross transaction tracking
         <tr>
             <th rowspan="2">Overpayment create</th>
             <th>Cash</th>
-            <td>4</td>
+            <td>3</td>
             <td rowspan="2">GL</td>
             <td>&mdash;</td>
             <td rowspan="2">&mdash;</td>
@@ -214,7 +214,7 @@ Cross transaction tracking
         </tr>
         <tr>
             <th>Balance</th>
-            <td>5</td>
+            <td>4</td>
             <td>Payment</td>
             <td>Payment <mark>&amp; Overpayment open item<span title="open item creation skipped for accounts not marked as AR_overpayment/AP_overpayment">*</span></mark> </td>
             <td><s>Payment &amp;</s> Overpayment open item</td>
@@ -222,7 +222,7 @@ Cross transaction tracking
         <tr>
             <th rowspan="2">Overpayment use</th>
             <th>Balance</th>
-            <td>6</td>
+            <td>5</td>
             <td rowspan="2">AR/AP</td>
             <td>Payment</td>
             <td rowspan="2">Payment</td>
@@ -236,7 +236,7 @@ Cross transaction tracking
         </tr>
         <tr>
             <th>Invoice</th>
-            <td>7</td>
+            <td>6</td>
             <td>AR/AP open item </td>
             <td>AR/AP open item</td>
             <td>AR/AP open item</td>
@@ -245,7 +245,7 @@ Cross transaction tracking
             <th rowspan="6">Reverse</th>
             <th rowspan="2">Payment<span title="Payment reversals only exist as vouchers (batches); this line applies to 'vouchers for single payments'">*</span></th>
             <th>Cash</th>
-            <td>8</td>
+            <td>7</td>
             <td rowspan="2">AR/AP<span title="Not applicable: journal lines linked to vouchers &amp; batches of types 4 or 7">*</span></td>
             <td>payment links on cash account</td>
             <td rowspan="2">Payment</td>
@@ -259,7 +259,7 @@ Cross transaction tracking
         </tr>
         <tr>
             <th>Invoice</th>
-            <td>9</td>
+            <td>8</td>
             <td>AR/AP open item</td>
             <td>AR/AP open item</td>
             <td>AR/AP open item</td>
@@ -267,7 +267,7 @@ Cross transaction tracking
         <tr>
             <th rowspan="2">Overpayment create</th>
             <th>Cash</th>
-            <td>10</td>
+            <td>9</td>
             <td rowspan="2">GL<span title="voucher of type 4 or 7 with trans_id matching the GL record&apos;s id">*</span></td>
             <td>&mdash;</td>
             <td rowspan="2">&mdash;</td>
@@ -281,7 +281,7 @@ Cross transaction tracking
         </tr>
         <tr>
             <th>Balance</th>
-            <td>11</td>
+            <td>10</td>
             <td><span title="This case does not have payment_links inserted, which breaks marking the original as used.">(broken)</span></td>
             <td>(broken) <mark>&amp; Overpayment open item<span title="open item creation skipped for accounts not marked as AR_overpayment/AP_overpayment">*</span></mark></td>
             <td><s>(broken) &amp;</s> Overpayment open item</td>
@@ -289,20 +289,20 @@ Cross transaction tracking
         <tr>
             <th rowspan="2">Overpayment use</th>
             <th>Balance</th>
-            <td>12</td>
+            <td>11</td>
             <td rowspan="2" colspan="9">Not implemented</td>
             <td rowspan="2"><!-- notes --></td>
         </tr>
         <tr>
             <th>Invoice</th>
-            <td>13</td>
+            <td>12</td>
         </tr>
         <tr>
             <th rowspan="12">Batch</th>
             <th rowspan="6">Initial</th>
             <th rowspan="2">Payment</th>
             <th>Cash</th>
-            <td>14</td>
+            <td>13</td>
             <td rowspan="2">AR/AP</td>
             <td>Voucher on cash account</td>
             <td rowspan="2">Voucher (&amp; Payment, since 1.8)</td>
@@ -316,7 +316,7 @@ Cross transaction tracking
         </tr>
         <tr>
             <th>Invoice</th>
-            <td>15</td>
+            <td>14</td>
             <td>AR/AP open item </td>
             <td>AR/AP open item</td>
             <td>AR/AP open item</td>
@@ -324,30 +324,30 @@ Cross transaction tracking
         <tr>
             <th rowspan="2">Overpayment create</th>
             <th>Cash</th>
-            <td>16</td>
+            <td>15</td>
             <td rowspan="2" colspan="9">Not implemented</td>
             <td rowspan="2"><!-- notes --></td>
         </tr>
         <tr>
             <th>Balance</th>
-            <td>17</td>
+            <td>16</td>
         </tr>
         <tr>
             <th rowspan="2">Overpayment use</th>
             <th>Balance</th>
-            <td>18</td>
+            <td>17</td>
             <td rowspan="2" colspan="9">Not implemented</td>
             <td rowspan="2"><!-- notes --></td>
         </tr>
         <tr>
             <th>Invoice</th>
-            <td>19</td>
+            <td>18</td>
         </tr>
         <tr>
             <th rowspan="6">Reverse</th>
             <th rowspan="2">Payment</th>
             <th>Cash</th>
-            <td>20</td>
+            <td>19</td>
             <td rowspan="2">AR/AP<span title="Not applicable: journal lines linked to vouchers of types 4 or 7">*</span>?</td>
             <td>payment links on cash account</td>
             <td rowspan="2">Payment</td>
@@ -361,7 +361,7 @@ Cross transaction tracking
         </tr>
         <tr>
             <th>Invoice</th>
-            <td>21</td>
+            <td>20</td>
             <td>AR/AP open item </td>
             <td>AR/AP open item</td>
             <td>AR/AP open item</td>
@@ -369,24 +369,24 @@ Cross transaction tracking
         <tr>
             <th rowspan="2">Overpayment create</th>
             <th>Cash</th>
-            <td>22</td>
+            <td>21</td>
             <td rowspan="2" colspan="9">Not implemented</td>
             <td rowspan="2"><!-- notes --></td>
         </tr>
         <tr>
             <th>Balance</th>
-            <td>23</td>
+            <td>22</td>
         </tr>
         <tr>
             <th rowspan="2">Overpayment use</th>
             <th>Balance</th>
-            <td>24</td>
+            <td>23</td>
             <td rowspan="2" colspan="9">Not implemented</td>
             <td rowspan="2"><!-- notes --></td>
         </tr>
         <tr>
             <th>Invoice</th>
-            <td>25</td>
+            <td>24</td>
         </tr>
     </tbody>
 </table>
