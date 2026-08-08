@@ -80,36 +80,31 @@ sub post_transaction {
     my $query;
     my $sth;
 
-    my $id = $dbh->quote( $form->{id} );
     $form->{approved} = '0';
     if ( $form->{id} ) {
 
-        $query = qq|SELECT id FROM gl WHERE id = $id|;
-        ( $form->{id} ) = $dbh->selectrow_array($query);
+        $query = q|SELECT id FROM gl WHERE id = ?|;
+        ( $form->{id} ) = $dbh->selectrow_array($query, {}, $form->{id});
         die $dbh->errstr if $dbh->err;
 
         if ( $form->{id} ) {
 
-            # delete individual transactions
-            $query = qq|
-            DELETE FROM acc_trans WHERE trans_id = $id|;
-
-            $dbh->do($query) || $form->dberror($query);
-            $query = qq|
-            DELETE FROM voucher WHERE trans_id = $id
-                                            and batch_class = 5|;
-
-            $dbh->do($query) || $form->dberror($query);
+            # delete journal lines
+            $query = q|DELETE FROM acc_trans WHERE trans_id = ?|;
+            $dbh->do($query, {}, $form->{id}) || $form->dberror($query);
         }
     }
 
     if ( !$form->{id} ) {
 
         $query = q|
-              INSERT INTO transactions (transdate, trans_type_code, approved, reference, notes)
-              VALUES (?, 'gl', true, ?, ?)
+              INSERT INTO transactions (transdate, trans_type_code, approved, reference, notes, batch_id)
+              VALUES (?, 'gl', true, ?, ?, ?)
               |;
-        $dbh->do($query, {}, $form->{transdate}, $form->{reference}, $form->{notes}) or $form->dberror($query);
+        $dbh->do($query, {},
+                 $form->{transdate}, $form->{reference},
+                 $form->{notes}, $form->{batch_id})
+            or $form->dberror($query);
 
         $query = qq|
       INSERT INTO gl (id)
@@ -145,9 +140,6 @@ sub post_transaction {
         $dbh->prepare($query)->execute($form->{approved}, $form->{id})
              || $form->dberror($query);
         if (!$form->{approved} and $form->{batch_id}){
-           if (not defined $form->{batch_id}){
-               $form->error($locale->text('Batch ID Missing'));
-           }
            my $vqh =
                $dbh->prepare('SELECT * FROM batch__lock_for_update(?)')
                or die $dbh->errstr;
@@ -157,14 +149,6 @@ sub post_transaction {
            # Change the below to die with localization in 1.4
            $form->error('Approved Batch') if $bref->{approved_by};
            $form->error('Locked Batch') if $bref->{locked_by};
-           my $query = qq|
-         INSERT INTO voucher (batch_id, trans_id, batch_class)
-         VALUES (?, ?, (select id FROM batch_class
-                                 WHERE class = ?))|;
-           my $sth2 = $dbh->prepare($query)
-               or $form->dberror($query);
-           $sth2->execute($form->{batch_id}, $form->{id}, 'gl') ||
-                $form->dberror($query);
        }
     }
 

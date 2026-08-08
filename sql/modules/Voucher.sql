@@ -104,21 +104,18 @@ FROM voucher v
           v.batch_id, v.trans_id, ac.transdate, bc.class
 
  UNION ALL
-SELECT v.id, false, txn.reference, txn.description,
-       v.batch_id, v.trans_id,
-       sum(a.amount_bc), txn.transdate, 'GL', v.batch_class
-  FROM voucher v
-         JOIN transactions txn
-             ON (txn.id = v.trans_id)
+SELECT txn.id, false, txn.reference, txn.description,
+       txn.batch_id, txn.id as trans_id,
+       sum(a.amount_bc), txn.transdate, 'GL', 5::int as batch_class
+  FROM transactions txn
          JOIN acc_trans a
-             ON (v.trans_id = a.trans_id)
+             ON (txn.id = a.trans_id)
  WHERE a.amount_bc > 0
-   AND v.batch_id = in_batch_id
+   AND txn.batch_id = in_batch_id
    AND exists (select 1
                  from gl
-                where gl.id = v.trans_id)
- GROUP BY v.id, txn.reference, txn.description, v.batch_id,
-          v.trans_id, txn.transdate
+                where gl.id = txn.id)
+ GROUP BY txn.id, txn.reference, txn.description, txn.transdate
  ORDER BY transdate, id
 
 $$ language sql;
@@ -183,12 +180,15 @@ SELECT b.id, c.class, b.control_code, b.description, u.username,
              ON (b.batch_class_id = c.id)
          LEFT JOIN users u
              ON (u.entity_id = b.created_by)
+         LEFT JOIN transactions txn
+             ON (txn.batch_id = b.id)
          LEFT JOIN voucher v
              ON (v.batch_id = b.id)
          LEFT JOIN batch_class vc
              ON (v.batch_class = vc.id)
          LEFT JOIN acc_trans al
-             ON v.trans_id = al.trans_id
+             ON (v.trans_id = al.trans_id
+                 OR txn.id = al.trans_id)
  WHERE (c.id = in_class_id OR in_class_id IS NULL) AND
        (b.description LIKE
        '%' || in_description || '%' OR
@@ -340,6 +340,10 @@ UPDATE transactions txn
  WHERE txn.id = v.trans_id
        AND v.batch_id = in_batch_id;
 
+UPDATE transactions txn
+   SET approved = true
+ WHERE txn.batch_id = in_batch_id;
+
 -- When approving the AR/AP batch import,
 -- we need to approve the acc_trans line also.
 UPDATE acc_trans ac
@@ -446,6 +450,20 @@ BEGIN
    WHERE trans_id = ANY(t_transaction_ids);
   DELETE FROM voucher
    WHERE batch_id = in_batch_id;
+
+  DELETE FROM acc_trans ac
+   USING transactions txn
+   WHERE txn.id = ac.trans_id
+     AND txn.batch_id = in_batch_id;
+
+  DELETE FROM invoice inv
+   USING transactions txn
+   WHERE txn.id = inv.trans_id
+     AND txn.batch_id = in_batch_id;
+
+  DELETE FROM transactions
+   WHERE batch_id = in_batch_id;
+
   DELETE FROM batch
    WHERE id = in_batch_id;
   /* deleting from transactions means deleting from

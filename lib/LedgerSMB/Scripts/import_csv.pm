@@ -258,18 +258,11 @@ sub _process_gl_multi($request, $entries) {
         );
     my $batch_id = $batch->create;
 
-    my $sth_voucher = $dbh->prepare(q{
-         INSERT INTO voucher (batch_id, trans_id, batch_class)
-               VALUES (?, ?, (select id FROM batch_class
-                                      WHERE class = 'gl'))
-         RETURNING id
-                                 });
-
     my $sth_acc = $dbh->prepare(q{
         INSERT INTO acc_trans (trans_id, transdate, source, memo, chart_id,
-                               curr, voucher_id, amount_bc, amount_tc)
+                               curr, amount_bc, amount_tc)
                VALUES (?, ?, ?, ?, (select id from account where accno = ?),
-                       ?, ?, ?, ?)
+                       ?, ?, ?)
                                 })
         or die $dbh->errstr;
 
@@ -286,8 +279,8 @@ sub _process_gl_multi($request, $entries) {
     my $sth_tx = $dbh->prepare(q{
         INSERT INTO transactions (
                workflow_id, transdate, reference, description,
-               trans_type_code, approved)
-        VALUES (?, ?, ?, ?, 'gl', true)
+               trans_type_code, approved, batch_id)
+        VALUES (?, ?, ?, ?, 'gl', true, ?)
         })
         or die $dbh->errstr;
     my $sth_gl = $dbh->prepare(q{
@@ -308,26 +301,24 @@ sub _process_gl_multi($request, $entries) {
             LedgerSMB::Setting::Sequence->increment('glnumber', $request)
             unless defined $entry{reference};
 
-        $sth_tx->execute($wf->id, @entry{qw/ transdate reference description /})
+        $sth_tx->execute($wf->id,
+                         @entry{qw/ transdate reference description /},
+                         $batch_id)
             or die $sth_tx->errstr;
         $sth_gl->execute($entry{reference})
             or die $sth_gl->errstr;
         my ($trans_id) = $sth_gl->fetchrow_array;
         $sth_gl->finish;
 
-        $sth_voucher->execute($batch_id, $trans_id)
-            or die $sth_voucher->errstr;
-        my ($voucher_id) = $sth_voucher->fetchrow_array;
-
         # debit row
         $sth_acc->execute($trans_id, @entry{qw(transdate source_debit memo
                                                debit_accno curr )},
-                          $voucher_id, -1*$entry{amount}, -1*$entry{amount_fx})
+                          -1*$entry{amount}, -1*$entry{amount_fx})
             or die $sth_acc->errstr;
         # credit row
         $sth_acc->execute($trans_id, @entry{qw(transdate source_credit memo
                                                credit_accno curr )},
-                          $voucher_id, $entry{amount}, $entry{amount_fx})
+                          $entry{amount}, $entry{amount_fx})
             or die $sth_acc->errstr;
     }
 }
