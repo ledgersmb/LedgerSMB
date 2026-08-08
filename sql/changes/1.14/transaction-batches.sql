@@ -17,7 +17,7 @@ update transactions txn
    set batch_id = v.batch_id
        from voucher v
  where txn.id = v.trans_id
-   and v.batch_class not in (5, 10); -- gl, upgrade
+   and v.batch_class in (5, 10); -- gl, upgrade
 
 alter table transactions
   enable trigger transactions_prevent_closed;
