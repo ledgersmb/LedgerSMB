@@ -7,6 +7,8 @@
 alter table transactions
   add column batch_id int references batch(id);
 
+comment on column transactions.batch_id is
+  $$The id of the batch this transaction is part of; see ADR 0112$$;
 
 alter table transactions
   disable trigger transactions_prevent_closed;

@@ -4,7 +4,7 @@ Date: 2026-08-08
 
 ## Status
 
-Draft
+Accepted
 
 ## Summary
 
@@ -28,7 +28,7 @@ vouchers are no longer required to identify transaction journal sub-groups.
 ## Decision
 
 1. Batches will be groups of transactions
-2. Vouchers lost their function of grouping journal lines
+2. Vouchers will lose their function of grouping journal lines
 
 ## Consequences
 
