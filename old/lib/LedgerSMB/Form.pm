@@ -2087,9 +2087,8 @@ sub create_links {
             JOIN account c ON (c.id = a.chart_id)
                    LEFT JOIN business_unit_ac bul ON a.entry_id = bul.entry_id
             WHERE a.trans_id = ?
---          AND a.fx_transaction = '0'
                         GROUP BY c.accno, c.description, a.source, a.amount_tc,
-                           a.amount_bc, a.memo,a.entry_id, a.transdate, a.cleared
+                           a.amount_bc, a.memo, a.entry_id, a.transdate, a.cleared
             ORDER BY transdate|;
 
         $sth = $dbh->prepare($query);
@@ -2113,8 +2112,48 @@ sub create_links {
 
             push @{ $self->{acc_trans}{ $xkeyref{ $ref->{accno} } } }, $ref;
         }
-
         $sth->finish;
+
+        # negate amount: we're using the amount from the AR account (the allocated amount)
+        # where the code base assumes we're using the amount from the cash account
+        # which has the opposite sign of the allocated amount.
+        $query = <<~'SQL';
+            SELECT ac.memo, ac.entry_id, ac.transdate, ac.cleared,
+                   array_agg(ARRAY[bul.class_id, bul.bu_id]) as bu_lines,
+                   ac.approved, ac.source, -ac.amount_tc as amount,
+                   case when ac.amount_tc = 0 then 0 else (-ac.amount_bc/ac.amount_tc)::numeric end as exchangerate,
+                   c.accno, c.description
+              FROM acc_trans ac
+                   LEFT JOIN business_unit_ac bul
+                        ON ac.entry_id = bul.entry_id
+                   JOIN payment p
+                        ON p.trans_id = ac.trans_id
+                   JOIN account c
+                        ON c.id = p.account_id
+             WHERE ac.open_item_id = ?
+             GROUP BY ac.entry_id, c.accno, c.description
+             ORDER BY ac.transdate
+            SQL
+
+        $sth = $dbh->prepare($query);
+        $sth->execute( $self->{open_item_id} ) || $self->dberror($query);
+        # store amounts in {acc_trans}{$key} for payments
+        while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+            $self->db_parse_numeric(sth=>$sth, hashref=>$ref);#tshvr
+
+            for my $aref (@{$ref->{bu_lines}}){
+                if ($aref && $aref->[0]) {
+                    $ref->{"b_unit_$aref->[0]"} = $aref->[1];
+                }
+            }
+
+            if ($self->{reverse}){
+                $ref->{amount} *= -1;
+            }
+
+            push @{ $self->{acc_trans}{ $xkeyref{ $ref->{accno} } } }, $ref;
+        }
+
     }
 
     for (qw(separate_duties curr lock_description)) {

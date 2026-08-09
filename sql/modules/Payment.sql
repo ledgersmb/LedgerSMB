@@ -1201,7 +1201,11 @@ RETURN QUERY EXECUTE $sql$
                                      act.description]),
           a.source, b.control_code, b.description,
           v.id, p.payment_date,
-          (select r.id from payment r where r.reversing = p.id)
+          (select r.id
+             from payment r
+                  join transactions txn
+                     on r.trans_id = txn.id
+             where txn.reversing = p.trans_id)
      from payment p
      join entity_credit_account c on p.entity_credit_id = c.id
      join entity e on e.id = c.entity_id
@@ -1237,6 +1241,7 @@ $sql$
 USING in_source, in_from_date, in_to_date, in_credit_id,
  in_cash_accno, in_entity_class, in_currency, in_meta_number;
 END
+
 $$ LANGUAGE PLPGSQL;
 
 
@@ -1271,10 +1276,10 @@ BEGIN
 
   INSERT INTO payment (reference, trans_id, payment_class, account_id,
                        payment_date, closed, entity_credit_id,
-                       employee_id, currency, reversing, notes)
+                       employee_id, currency, notes)
     SELECT reference, currval('transactions_id_seq'), payment_class, account_id,
            in_payment_date, closed, entity_credit_id,
-           person__get_my_id(), currency, in_payment_id,
+           person__get_my_id(), currency,
            'This payment reverses ' || in_payment_id
       FROM payment
      WHERE id = in_payment_id
