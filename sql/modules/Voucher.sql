@@ -344,13 +344,17 @@ UPDATE transactions txn
    SET approved = true
  WHERE txn.batch_id = in_batch_id;
 
--- When approving the AR/AP batch import,
--- we need to approve the acc_trans line also.
 UPDATE acc_trans ac
    SET approved = true
        FROM voucher v
  WHERE ac.trans_id = v.trans_id
        AND v.batch_id = in_batch_id;
+
+UPDATE acc_trans ac
+   SET approved = true
+       FROM transactions txn
+ WHERE txn.batch_id = in_batch_id
+   AND ac.trans_id = txn.id;
 
 UPDATE batch
    SET approved_on = now(),
