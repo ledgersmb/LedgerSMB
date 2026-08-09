@@ -1256,9 +1256,9 @@ DECLARE
 BEGIN
   -- check against being an overpayment??
   INSERT INTO transactions (
-    transdate, trans_type_code, reversing, approved
+    transdate, trans_type_code, reversing, approved, batch_id
     )
-  SELECT in_payment_date, 'pa', id, coalesce(in_approved, false)
+  SELECT in_payment_date, 'pa', id, coalesce(in_approved, false), in_batch_id
     FROM transactions
    WHERE id = (select trans_id
                  from payment
@@ -1275,28 +1275,12 @@ BEGIN
      WHERE id = in_payment_id
   RETURNING id INTO t_payment_id;
 
-  IF in_batch_id IS NOT NULL THEN
-    INSERT INTO voucher (trans_id, batch_id, batch_class)
-    VALUES (
-      currval('transactions_id_seq'),
-      in_batch_id,
-      (select case when payment_class = 1 then 4 else 7 end
-         from payment
-        where id = in_payment_id)
-    );
-  END IF;
-
   INSERT INTO acc_trans (trans_id, chart_id, transdate, source,
                          cleared, memo, invoice_id, approved,
-                         amount_bc, amount_tc, curr,
-                         voucher_id, open_item_id)
+                         amount_bc, amount_tc, curr, open_item_id)
   SELECT currval('transactions_id_seq'), chart_id, in_payment_date, source,
          false, memo, null, coalesce(in_approved, true),
-         -1 * amount_bc, -1 * amount_tc, curr,
-         (select id from voucher v
-           where currval('transactions_id_seq') = v.trans_id
-             and v.batch_id = in_batch_id) as voucher_id,
-         open_item_id
+         -1 * amount_bc, -1 * amount_tc, curr, open_item_id
     FROM acc_trans a
    WHERE trans_id = (select trans_id
                        from payment
