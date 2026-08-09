@@ -388,18 +388,14 @@ $$
            JOIN (
              SELECT ap.trans_id as id, ap.open_item_id, invnumber, amount_bc,
                     curr, 1 as invoice_class,
-                    entity_credit_account, on_hold, v.batch_id
-               FROM ap
-                      LEFT JOIN voucher v
-                          ON ap.trans_id = v.trans_id
+                    entity_credit_account, on_hold, txn.batch_id
+               FROM ap JOIN transactions txn ON ap.trans_id = txn.id
               WHERE in_account_class = 1
               UNION ALL
              SELECT ar.trans_id, ar.open_item_id, invnumber, amount_bc,
                     curr, 2 as invoice_class,
-                    entity_credit_account, on_hold, v.batch_id
-               FROM ar
-                      LEFT JOIN voucher v
-                          ON ar.trans_id = v.trans_id
+                    entity_credit_account, on_hold, txn.batch_id
+               FROM ar JOIN transactions txn ON ar.trans_id = txn.id
               WHERE in_account_class = 2
            ) a
                ON a.entity_credit_account = c.id
@@ -461,7 +457,7 @@ batch_id:  For payment batches, where fees are concerned.
 ar_ap_accno:  The AR/AP account number.
 
 This then returns a set of contact information with a 2 dimensional array
-cnsisting of outstanding invoices.
+consisting of outstanding invoices.
 
 Note that the payment selection logic is that this returns all invoices which are
 either approved or in the batch_id specified.  It also locks the invoices using
@@ -1190,19 +1186,19 @@ RETURN QUERY EXECUTE $sql$
           array_agg(array[act.id::text, act.accno,
                                      act.description]),
           a.source, b.control_code, b.description,
-          v.id, p.payment_date,
+          txn.batch_id, p.payment_date,
           (select r.id
              from payment r
                   join transactions txn
                      on r.trans_id = txn.id
              where txn.reversing = p.trans_id)
      from payment p
+     join transactions txn on txn.id = p.trans_id
      join entity_credit_account c on p.entity_credit_id = c.id
      join entity e on e.id = c.entity_id
      join acc_trans a on p.trans_id = a.trans_id
      join account act on a.chart_id = act.id
-     left join voucher v on a.voucher_id = v.id
-     left join batch b on v.batch_id = b.id
+     left join batch b on txn.batch_id = b.id
     where ($2 is null
            or $2 <= p.payment_date)
           and ($3 is null
@@ -1226,7 +1222,7 @@ RETURN QUERY EXECUTE $sql$
                                  where accno = $5))
         group by p.id, c.meta_number, c.id, e.name,
                  a.source, b.control_code, b.description,
-                 v.id, p.payment_date
+                 txn.batch_id, p.payment_date
 $sql$
 USING in_source, in_from_date, in_to_date, in_credit_id,
  in_cash_accno, in_entity_class, in_currency, in_meta_number;

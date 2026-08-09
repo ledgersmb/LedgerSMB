@@ -487,7 +487,6 @@ user__check_my_expiration
 user__get_all_users
 user__get_preferences
 user__save_preferences
-voucher__delete
 voucher__list
 voucher_get_batch
 wage__list_for_entity

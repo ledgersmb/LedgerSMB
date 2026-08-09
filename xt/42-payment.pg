@@ -99,9 +99,6 @@ BEGIN;
     values (currval('transactions_id_seq'),
             currval('open_item_id_seq'), 'test_hide', -101, '1', '1', '1', 'XTS');
 
-    INSERT INTO voucher (trans_id, batch_class, batch_id)
-                 VALUES (currval('transactions_id_seq'), 1, currval('batch_id_seq'));
-
     PREPARE test AS SELECT batch_create('test2', 'test2', 'ap', now()::date)
                     IS NOT NULL;
     SELECT results_eq('test',ARRAY[true],'Payment Batch created');
@@ -155,8 +152,8 @@ BEGIN;
 
     update transactions set locked_by = -200 where id = -300;
 
-    INSERT INTO transactions (transdate, trans_type_code, approved)
-    VALUES (now(), 'ap', false);
+    INSERT INTO transactions (transdate, trans_type_code, approved, batch_id)
+    VALUES (now(), 'ap', false, :batch_id);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('test_show', 'ap', (select id from account where accno = '00001'));
     INSERT INTO ap (trans_id, open_item_id, invnumber, entity_credit_account,
@@ -172,9 +169,6 @@ BEGIN;
                           (true, now()::date, '-1', 'XTS', '-1', currval('transactions_id_seq'),
                           (select id from account where accno = '00002'),
                           null);
-
-    INSERT INTO voucher (trans_id, batch_class, batch_id)
-                 VALUES (currval('transactions_id_seq'), 1, :batch_id);
 
     CREATE FUNCTION test_convert_array(anyarray) RETURNS text AS $$
         SELECT array_to_string($1, '::');
@@ -308,22 +302,6 @@ BEGIN;
     SELECT results_eq('test', ARRAY[0], 'Open accounts(startdate), no startdate & enddate(before startdate)');
     DEALLOCATE test;
 
-    -- Test vouchers (TODO)
-
-    INSERT INTO voucher (batch_id, batch_class, id, trans_id)
-                 values (currval('batch_id_seq')::int, 4, -100,
-                         currval('transactions_id_seq')::int);
-    INSERT INTO acc_trans (trans_id, chart_id, voucher_id, approved,
-                           amount_bc, curr, amount_tc, transdate, source, open_item_id)
-                   values (currval('transactions_id_seq')::int,
-                           (select id from account where accno = '00003'),
-                           -100, true, '1', 'XTS', '1', now(), '_test_src1', null),
-                          (currval('transactions_id_seq')::int,
-                           (select id from account where accno = '00001'),
-                           -100, true, '-1', 'XTS', '-1', now(), '_test_src1', currval('open_item_id_seq'));
-
-    SELECT todo('Missing Voucher test',0);
-
 
     -- Test payment reversal
 
@@ -454,9 +432,8 @@ BEGIN;
 
     PREPARE test AS
     SELECT count(*)::int FROM acc_trans a
-                    JOIN voucher v ON v.id = a.voucher_id
-                    JOIN batch b ON v.batch_id = b.id
-     WHERE b.id = :batch_id ;
+                    JOIN transactions txn ON a.trans_id = txn.id
+     WHERE txn.batch_id = :batch_id ;
     SELECT results_eq('test', array[3::int],
                       'There are 3 journal lines as there are 3 payment links');
     DEALLOCATE test;

@@ -629,7 +629,6 @@ SELECT lsmb__create_role('voucher_delete',
                          This role allows deletion of vouchers (i.e. groups of e.g. payments).
                          $DOC$
 );
-SELECT lsmb__grant_exec('voucher_delete', 'voucher__delete(int)');
 SELECT lsmb__grant_exec('voucher_delete', 'batch_delete(int)');
 
 SELECT lsmb__create_role('draft_modify',

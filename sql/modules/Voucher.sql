@@ -49,12 +49,13 @@ CREATE TYPE voucher_list AS (
 CREATE OR REPLACE FUNCTION voucher__list (in_batch_id integer)
 RETURNS SETOF voucher_list AS
 $$
-SELECT v.id, a.invoice, a.invnumber,
+-- invoices & transactions
+SELECT b.id, a.invoice, a.invnumber,
        eca.meta_number || '--' || e.name,
-       v.batch_id, v.trans_id,
+       txn.batch_id, txn.id,
        a.amount_bc, txn.transdate,
-       bc.class, v.batch_class
-  FROM voucher v
+       bc.class, b.batch_class_id
+  FROM transactions txn
          JOIN (
            select trans_id, invoice, invnumber, amount_bc,
                   entity_credit_account, open_item_id
@@ -64,27 +65,30 @@ SELECT v.id, a.invoice, a.invnumber,
                   entity_credit_account, open_item_id
              from ar
          ) a
-             ON (v.trans_id = a.trans_id)
-         JOIN transactions txn
              ON a.trans_id = txn.id
          JOIN entity_credit_account eca
              ON (eca.id = a.entity_credit_account)
          JOIN entity e
              ON (eca.entity_id = e.id)
+         JOIN batch b
+             ON b.id = txn.batch_id
          JOIN batch_class bc
-             ON bc.id = v.batch_class
- WHERE v.batch_id = in_batch_id
+             ON bc.id = b.batch_class_id
+ WHERE txn.batch_id = in_batch_id
        UNION ALL
-SELECT v.id, a.invoice, ac.source,
+-- payments
+SELECT b.id, a.invoice, ac.source,
        eca.meta_number || '--'  || e.name,
-       v.batch_id, v.trans_id,
+       txn.batch_id, txn.id,
        sum(ac.amount_bc * -1), ac.transdate,
-       bc.class, v.batch_class
-FROM voucher v
+       bc.class, b.batch_class_id
+  FROM transactions txn
+       JOIN batch b
+           ON b.id = txn.batch_id
        JOIN acc_trans ac
-           ON v.id = ac.voucher_id
+           ON txn.id = ac.trans_id
        JOIN batch_class bc
-           ON bc.id = v.batch_class
+           ON bc.id = b.batch_class_id
        JOIN (
          select invoice, open_item_id, entity_credit_account
            from ap
@@ -97,13 +101,13 @@ FROM voucher v
            ON a.entity_credit_account = eca.id
        JOIN entity e
            ON eca.entity_id = e.id
- WHERE v.batch_id = in_batch_id
+ WHERE txn.batch_id = in_batch_id
   -- no need to select batch_class: ac.voucher_id == null for all but classes 3,4,6,7
-   AND ac.voucher_id = v.id
- GROUP BY v.id, a.invoice, ac.source, eca.meta_number, e.name,
-          v.batch_id, v.trans_id, ac.transdate, bc.class
+ GROUP BY b.id, a.invoice, ac.source, eca.meta_number, e.name,
+          txn.batch_id, txn.id, ac.transdate, bc.class
 
  UNION ALL
+-- GL transactions
 SELECT txn.id, false, txn.reference, txn.description,
        txn.batch_id, txn.id as trans_id,
        sum(a.amount_bc), txn.transdate, 'GL', 5::int as batch_class
@@ -116,7 +120,7 @@ SELECT txn.id, false, txn.reference, txn.description,
                  from gl
                 where gl.id = txn.id)
  GROUP BY txn.id, txn.reference, txn.description, txn.transdate
- ORDER BY transdate, id
+ ORDER BY 8, 1
 
 $$ language sql;
 
@@ -182,13 +186,8 @@ SELECT b.id, c.class, b.control_code, b.description, u.username,
              ON (u.entity_id = b.created_by)
          LEFT JOIN transactions txn
              ON (txn.batch_id = b.id)
-         LEFT JOIN voucher v
-             ON (v.batch_id = b.id)
-         LEFT JOIN batch_class vc
-             ON (v.batch_class = vc.id)
          LEFT JOIN acc_trans al
-             ON (v.trans_id = al.trans_id
-                 OR txn.id = al.trans_id)
+             ON txn.id = al.trans_id
  WHERE (c.id = in_class_id OR in_class_id IS NULL) AND
        (b.description LIKE
        '%' || in_description || '%' OR
@@ -303,19 +302,15 @@ SELECT b.id, c.class, b.control_code, b.description, u.username,
              ON (b.batch_class_id = c.id)
          JOIN users u
              ON (u.entity_id = b.created_by)
-         LEFT JOIN voucher v
-             ON (v.batch_id = b.id)
- where v.id is null
-   and(u.entity_id = in_created_by_eid
-       or in_created_by_eid is null) and
-       (in_description is null or b.description
-       like '%'  || in_description || '%') and
-       (in_class_id is null or c.id = in_class_id)
+ where not exists (select 1 from transactions txn where txn.batch_id = b.id)
+   and (u.entity_id = in_created_by_eid
+        or in_created_by_eid is null)
+   and (in_description is null
+        or b.description like '%'  || in_description || '%')
+   and (in_class_id is null or c.id = in_class_id)
  GROUP BY b.id, c.class, b.description, u.username, b.created_on,
           b.control_code, b.default_date
  ORDER BY b.control_code, b.description
-
-
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION
@@ -336,19 +331,7 @@ returns date AS
 $$
 UPDATE transactions txn
    SET approved = true
-       FROM voucher v
- WHERE txn.id = v.trans_id
-       AND v.batch_id = in_batch_id;
-
-UPDATE transactions txn
-   SET approved = true
  WHERE txn.batch_id = in_batch_id;
-
-UPDATE acc_trans ac
-   SET approved = true
-       FROM voucher v
- WHERE ac.trans_id = v.trans_id
-       AND v.batch_id = in_batch_id;
 
 UPDATE acc_trans ac
    SET approved = true
@@ -422,8 +405,6 @@ $$ Inserts the batch into the table.$$;
 
 CREATE OR REPLACE FUNCTION batch_delete(in_batch_id int) RETURNS int AS
 $$
-DECLARE
-  t_transaction_ids int[];
 BEGIN
   perform *
      from batch
@@ -434,26 +415,19 @@ BEGIN
     RAISE EXCEPTION 'Batch not found';
   END IF;
 
-  SELECT array_agg(trans_id) INTO t_transaction_ids
-    FROM voucher
-   WHERE batch_id = in_batch_id;
+  DELETE FROM ac_tax_form atf
+   USING transactions txn
+         JOIN acc_trans ac
+            ON txn.id = ac.trans_id
+   WHERE ac.entry_id = atf.entry_id
+     AND txn.batch_id = in_batch_id;
 
-  DELETE FROM ac_tax_form
-   WHERE entry_id in
-         (select entry_id from acc_trans
-           where trans_id = any(t_transaction_ids));
-
-  DELETE FROM invoice_tax_form
-   WHERE invoice_id in
-         (select id from invoice
-           where trans_id = any(t_transaction_ids));
-
-  DELETE FROM invoice
-   WHERE trans_id = ANY(t_transaction_ids);
-  DELETE FROM acc_trans
-   WHERE trans_id = ANY(t_transaction_ids);
-  DELETE FROM voucher
-   WHERE batch_id = in_batch_id;
+  DELETE FROM invoice_tax_form itf
+   USING transactions txn
+         JOIN invoice inv
+            ON txn.id = inv.trans_id
+   WHERE inv.id = itf.invoice_id
+     AND txn.batch_id = in_batch_id;
 
   DELETE FROM acc_trans ac
    USING transactions txn
@@ -470,10 +444,6 @@ BEGIN
 
   DELETE FROM batch
    WHERE id = in_batch_id;
-  /* deleting from transactions means deleting from
-     a whole slew of other tables too; check the schema for ON DELETE CASCADE */
-  DELETE FROM transactions
-   WHERE id = ANY(t_transaction_ids);
 
   RETURN 1;
 END;
@@ -484,39 +454,6 @@ $$ If the batch is found and unapproved, deletes it and returns 1.
 Otherwise raises an exception.$$;
 
 REVOKE ALL ON FUNCTION batch_delete(int) FROM PUBLIC;
-
-CREATE OR REPLACE FUNCTION voucher__delete(in_voucher_id int)
-RETURNS int AS
-$$
-DECLARE
-  voucher_row RECORD;
-BEGIN
-  SELECT * INTO voucher_row FROM voucher WHERE id = in_voucher_id;
-
-  DELETE FROM ac_tax_form atf
-              USING acc_trans ac
-   WHERE atf.entry_id = ac.entry_id
-     AND ac.trans_id = voucher_row.trans_id;
-
-  DELETE FROM acc_trans
-   WHERE trans_id = voucher_row.trans_id;
-
-  DELETE FROM voucher
-   WHERE id = voucher_row.id;
-
-  /* deletes from ar/ap/gl/payments and a slew of other tables */
-  DELETE FROM transactions
-   WHERE id = voucher_row.trans_id;
-
-  RETURN 1;
-END;
-
-$$ LANGUAGE PLPGSQL SECURITY DEFINER;
-
-REVOKE ALL ON FUNCTION voucher__delete(int) FROM public;
-
-COMMENT ON FUNCTION voucher__delete(in_voucher_id int) IS
-$$ Deletes the specified voucher from the batch.$$;
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
