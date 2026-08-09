@@ -783,10 +783,10 @@ sub post_invoice {
         $uid .= "$$";
 
         $query = q|
-            INSERT INTO transactions (trans_type_code, approved, transdate)
-            VALUES ('ar', false, ?)
+            INSERT INTO transactions (trans_type_code, approved, transdate, batch_id)
+            VALUES ('ar', false, ?, ?)
             |;
-        $dbh->do($query, {}, $form->{transdate}) or $form->dberror($query);
+        $dbh->do($query, {}, $form->{transdate}, $form->{batch_id}) or $form->dberror($query);
 
         ($accno) = split /--/, $form->{AR};
         $query = q{
@@ -1005,13 +1005,6 @@ sub post_invoice {
                 ) || $form->dberror($query);
             ($invoice_id) = $sth->fetchrow_array();
 
-            if ($form->{batch_id}){
-                $sth = $dbh->prepare(
-                   'INSERT INTO voucher (batch_id, trans_id, batch_class)
-                    VALUES (?, ?, ?)');
-                $sth->execute($form->{batch_id}, $form->{id}, BC_SALES_INVOICE);
-            }
-
             for my $cls(@{$form->{bu_class}}){
                 if ($form->{"b_unit_$cls->{id}_$i"}){
                  $b_unit_sth->execute($cls->{id}, $form->{"b_unit_$cls->{id}_$i"});
@@ -1031,11 +1024,6 @@ sub post_invoice {
                     if (not defined $form->{batch_id}){
                        $form->error('Batch ID Missing');
                    }
-                   $query = qq|
-            INSERT INTO voucher (batch_id, trans_id) VALUES (?, ?)|;
-                   $sth = $dbh->prepare($query);
-                   $sth->execute($form->{batch_id}, $form->{id}) ||
-                        $form->dberror($query);
                }
             }
 

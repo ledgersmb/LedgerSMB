@@ -490,7 +490,6 @@ BEGIN
   t_exchangerate := in_exchangerate;
 
   IF in_batch_id IS NULL THEN
-    -- t_voucher_id := NULL;
     RAISE EXCEPTION 'Bulk Post Must be from Batch!';
   ELSE
     SELECT * INTO t_batch FROM batch WHERE in_batch_id = id;
@@ -530,7 +529,6 @@ BEGIN
   CREATE TEMPORARY TABLE bulk_payments_in (
     id int,                   -- AR/AP id
     trans_id int,             -- payment transaction id
-    voucher_id int,           -- voucher id
     open_item_id int,         -- open_item.id
     payment_id int,           -- payment.id
     eca_id int,               -- entity_credit_account.id
@@ -575,7 +573,6 @@ BEGIN
     )
     SELECT eca_id, nextval('payment_id_seq') as payment_id,
            nextval('transactions_id_seq') as trans_id,
-           nextval('voucher_id_seq') as voucher_id,
            -- this logic is reversed, but mirrors what's been
            -- incorrect in payment post since 12 years...
            case when in_account_class = 1
@@ -589,8 +586,7 @@ BEGIN
 
   UPDATE bulk_payments_in bpi
      SET payment_id = ep.payment_id,
-         trans_id = ep.trans_id,
-         voucher_id = ep.voucher_id
+         trans_id = ep.trans_id
     from eca_payments_in ep
    where bpi.eca_id = ep.eca_id;
 
@@ -688,17 +684,11 @@ BEGIN
   --   If the discount amount were to be valued at the original rate,
   --   the FX effect should be calculated based on the current payment amount
 
-  INSERT INTO transactions (id, transdate, approved,
+  INSERT INTO transactions (id, transdate, approved, batch_id,
                             reference, trans_type_code, entered_by, workflow_id)
               OVERRIDING SYSTEM VALUE
-  SELECT epi.trans_id, in_payment_date, false,
+  SELECT epi.trans_id, in_payment_date, false, in_batch_id,
          epi.reference, 'pa', person__get_my_entity_id(), workflow_id
-    FROM eca_payments_in epi;
-
-  INSERT INTO voucher (id, batch_id, trans_id, batch_class)
-              OVERRIDING SYSTEM VALUE
-  SELECT epi.voucher_id, in_batch_id, epi.trans_id,
-         (SELECT batch_class_id FROM batch WHERE id = in_batch_id)
     FROM eca_payments_in epi;
 
   -- The 'id' values were allocated above
@@ -715,10 +705,10 @@ BEGIN
    WHERE amount_tc <> 0;
   INSERT INTO acc_trans
               (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
-              voucher_id, transdate, source, entry_id)
+               transdate, source, entry_id)
   SELECT trans_id, t_cash_id, amount_bc * t_cash_sign,
          in_currency, amount_tc * t_cash_sign, false,
-         voucher_id, in_payment_date, in_source, entry_id
+         in_payment_date, in_source, entry_id
     FROM bulk_payments_in  where amount_tc <> 0;
 
   -- Insert discount @ current fx rate
@@ -727,11 +717,11 @@ BEGIN
    WHERE disc_amount_bc <> 0;
   INSERT INTO acc_trans
               (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
-              voucher_id, transdate, source, entry_id)
+               transdate, source, entry_id)
   SELECT bpi.trans_id, eca.discount_account_id,
          disc_amount_bc * t_cash_sign, in_currency,
          disc_amount_tc * t_cash_sign, false,
-         voucher_id, in_payment_date, in_source, entry_id
+         in_payment_date, in_source, entry_id
     FROM bulk_payments_in bpi
            JOIN entity_credit_account eca ON bpi.eca_id = eca.id
    WHERE bpi.disc_amount_bc <> 0;
@@ -741,13 +731,13 @@ BEGIN
      SET entry_id = nextval('acc_trans_entry_id_seq');
   INSERT INTO acc_trans
               (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
-              voucher_id, transdate, source, entry_id, open_item_id)
+               transdate, source, entry_id, open_item_id)
   SELECT bpi.trans_id, t_ar_ap_id,
          (bpi.amount_tc + bpi.disc_amount_tc)
            * t_cash_sign * -1 * bpi.fxrate, in_currency,
          (bpi.amount_tc + bpi.disc_amount_tc)
            * t_cash_sign * -1, false,
-         voucher_id, in_payment_date, in_source, entry_id, open_item_id
+         in_payment_date, in_source, entry_id, open_item_id
     FROM bulk_payments_in bpi
            JOIN entity_credit_account eca ON bpi.eca_id = eca.id;
 
@@ -757,12 +747,12 @@ BEGIN
    WHERE gain_loss_accno IS NOT NULL;
   INSERT INTO acc_trans
               (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
-              voucher_id, transdate, source, entry_id)
+               transdate, source, entry_id)
   SELECT trans_id, gain_loss_accno,
          amount_tc * t_cash_sign *
            (t_exchangerate - fxrate),
          in_currency, 0, false,
-         voucher_id, in_payment_date, in_source, entry_id
+         in_payment_date, in_source, entry_id
     FROM bulk_payments_in
    WHERE gain_loss_accno IS NOT NULL;
 
