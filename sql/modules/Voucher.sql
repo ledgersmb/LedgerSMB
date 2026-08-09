@@ -163,6 +163,25 @@ UPDATE batch SET locked_by = NULL
        RETURNING true;
 $$;
 
+DROP TYPE IF EXISTS batch_search_item CASCADE;
+CREATE TYPE batch_search_item AS (
+    id integer,
+    batch_class text,
+    control_code text,
+    description text,
+    created_by text,
+    created_on date,
+    default_date date,
+    transaction_total numeric,
+    lock_success bool
+);
+
+-- due to return value change:
+drop function if exists batch__search(in_class_id int, in_description text, in_created_by_eid int,
+        in_date_from date, in_date_to date,
+        in_amount_gt numeric,
+        in_amount_lt numeric, in_approved bool);
+
 CREATE OR REPLACE FUNCTION
 batch__search(in_class_id int, in_description text, in_created_by_eid int,
         in_date_from date, in_date_to date,
@@ -252,6 +271,9 @@ $$ language sql;
 COMMENT ON FUNCTION batch_get_class_name (in_class_id int) IS
 $$ returns the batch class name associated with the in_class_id id provided.$$;
 
+drop function if exists batch_search_mini
+  (in_class_id int, in_description text, in_created_by_eid int, in_approved bool);
+
 CREATE OR REPLACE FUNCTION
 batch_search_mini
 (in_class_id int, in_description text, in_created_by_eid int, in_approved bool)
@@ -288,6 +310,10 @@ NULLs match all values.
 in_description is a partial match
 All other inouts are exact matches.
 $$;
+
+drop function if exists batch_search_empty(in_class_id int, in_description text, in_created_by_eid int,
+        in_amount_gt numeric,
+        in_amount_lt numeric, in_approved bool);
 
 CREATE OR REPLACE FUNCTION
 batch_search_empty(in_class_id int, in_description text, in_created_by_eid int,
