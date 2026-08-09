@@ -615,8 +615,6 @@ SELECT lsmb__create_role('batch_create',
 SELECT lsmb__grant_perms('batch_create', 'batch', 'INSERT');
 SELECT lsmb__grant_perms('batch_create', 'batch_id_seq', 'ALL');
 SELECT lsmb__grant_perms('batch_create', 'batch_class', 'SELECT');
-SELECT lsmb__grant_perms('batch_create', 'voucher', 'INSERT');
-SELECT lsmb__grant_perms('batch_create', 'voucher_id_seq', 'ALL');
 SELECT lsmb__grant_exec('batch_create', 'batch__lock_for_update(int)');
 
 SELECT lsmb__create_role('batch_post',
@@ -1349,7 +1347,7 @@ SELECT lsmb__create_role('batch_list',
 );
 SELECT lsmb__grant_role('batch_list', 'gl_reports');
 SELECT lsmb__grant_perms('batch_list', obj, 'SELECT')
-  FROM unnest(array['batch'::text, 'batch_class', 'voucher']) obj;
+  FROM unnest(array['batch'::text, 'batch_class']) obj;
 
 SELECT lsmb__create_role('gl_all',
                          $DOC$
@@ -1847,7 +1845,7 @@ SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
                     'account_heading_descendant',
                     'account_heading_derived_category',
                     'account_heading_tree', 'payment_type', 'warehouse',
-                    'sic', 'voucher', 'mime_type',
+                    'sic', 'mime_type',
                     'parts_translation', 'partsgroup_translation',
                     'asset_report_class', 'asset_rl_to_disposal_method',
                     'asset_disposal_method', 'file_class', 'jctype']) obj;
