@@ -61,13 +61,13 @@
         <acl role="ar_transaction_list" access="allow"/>
       </acls>
     </menu-item>
-    <menu-item id="249" label="Vouchers">
-      <menu-item id="198" label="AR Voucher" url="vouchers.pl?__action=create_batch&amp;batch_type=ar">
+    <menu-item id="249" label="Batches">
+      <menu-item id="198" label="AR Batch" url="vouchers.pl?__action=create_batch&amp;batch_type=ar">
         <acls>
           <acl role="ar_transaction_create_voucher" access="allow"/>
         </acls>
       </menu-item>
-      <menu-item id="20" label="Invoice Vouchers" url="vouchers.pl?__action=create_batch&amp;batch_type=sales_invoice">
+      <menu-item id="20" label="Invoice Batches" url="vouchers.pl?__action=create_batch&amp;batch_type=sales_invoice">
         <acls>
           <acl role="ar_transaction_create_voucher" access="allow"/>
         </acls>
@@ -127,13 +127,13 @@
         <acl role="ap_transaction_list" access="allow"/>
       </acls>
     </menu-item>
-    <menu-item id="250" label="Vouchers">
-      <menu-item id="199" label="AP Voucher" url="vouchers.pl?__action=create_batch&amp;batch_type=ap">
+    <menu-item id="250" label="Batches">
+      <menu-item id="199" label="AP Batch" url="vouchers.pl?__action=create_batch&amp;batch_type=ap">
         <acls>
           <acl role="ap_transaction_create_voucher" access="allow"/>
         </acls>
       </menu-item>
-      <menu-item id="39" label="Invoice Vouchers" url="vouchers.pl?__action=create_batch&amp;batch_type=vendor_invoice">
+      <menu-item id="39" label="Invoice Batches" url="vouchers.pl?__action=create_batch&amp;batch_type=vendor_invoice">
         <acls>
           <acl role="ap_transaction_create_voucher" access="allow"/>
         </acls>
@@ -183,7 +183,7 @@
         <acl role="payment_process" access="allow"/>
       </acls>
     </menu-item>
-    <menu-item id="200" label="Vouchers">
+    <menu-item id="200" label="Batches">
       <menu-item id="201" label="Payments" url="vouchers.pl?__action=create_batch&amp;batch_type=payment">
         <acls>
           <acl role="payment_process" access="allow"/>

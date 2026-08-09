@@ -52,9 +52,9 @@ Scenario Outline: Navigate to menu "<path>" and open screen "<screen>"
   @wip
   Examples:
     | path                                       | screen                   |
-    | Accounts Payable > Vouchers > AP Voucher                 |                          |
-    | Accounts Payable > Vouchers > Import AP Batch            |                          |
-    | Accounts Payable > Vouchers > Invoice Vouchers           |                          |
+    | Accounts Payable > Batches > AP Voucher                 |                          |
+    | Accounts Payable > Batches > Import AP Batch            |                          |
+    | Accounts Payable > Batches > Invoice Batches           |                          |
     | Accounts Receivable > Add Return                            | AR returns               |
 
   Examples:
@@ -84,9 +84,9 @@ Scenario Outline: Navigate to menu "<path>" and open screen "<screen>"
   @wip
   Examples:
     | path                                       | screen                   |
-    | Accounts Receivable > Vouchers > AR Voucher                 |                          |
-    | Accounts Receivable > Vouchers > Import AR Batch            |                          |
-    | Accounts Receivable > Vouchers > Invoice Vouchers           |                          |
+    | Accounts Receivable > Batches > AR Voucher                 |                          |
+    | Accounts Receivable > Batches > Import AR Batch            |                          |
+    | Accounts Receivable > Batches > Invoice Batches           |                          |
   Examples:
     | path                                       | screen                   |
     | Budgets > Add Budget                       | Budget                   |
@@ -111,13 +111,13 @@ Scenario Outline: Navigate to menu "<path>" and open screen "<screen>"
     | Cash & Banking > Transfer                            |                          |
     | Cash & Banking > Use AR Overpayment                  |                          |
     | Cash & Banking > Use Overpayment                     |                          |
-    | Cash & Banking > Vouchers                            |                          |
-    | Cash & Banking > Vouchers > Payments                 |                          |
-    | Cash & Banking > Vouchers > Receipts                 |                          |
-    | Cash & Banking > Vouchers > Reverse AR Overpay       |                          |
-    | Cash & Banking > Vouchers > Reverse Overpay          |                          |
-    | Cash & Banking > Vouchers > Reverse Payment          |                          |
-    | Cash & Banking > Vouchers > Reverse Receipts         |                          |
+    | Cash & Banking > Batches                            |                          |
+    | Cash & Banking > Batches > Payments                 |                          |
+    | Cash & Banking > Batches > Receipts                 |                          |
+    | Cash & Banking > Batches > Reverse AR Overpay       |                          |
+    | Cash & Banking > Batches > Reverse Overpay          |                          |
+    | Cash & Banking > Batches > Reverse Payment          |                          |
+    | Cash & Banking > Batches > Reverse Receipts         |                          |
 
   Examples:
     | path                                       | screen                   |
