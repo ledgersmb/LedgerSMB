@@ -15,7 +15,7 @@ Scenario: Add payments to a new batch
        | Vendor A | 2017-01-01 | INV100         | 100.00 |
   When I navigate the menu and select the item at "Cash & Banking > Vouchers > Payments"
   Then I should see the Create New Batch screen
-  When I enter "2018-01-01" into "Batch Date"
+  When I enter "2018-01-01" into "Default Posting Date"
    And I enter "B-1001" into "Batch Number"
    And I enter "Test Batch" into "Description"
    And I press "Continue"
@@ -51,10 +51,10 @@ Scenario: Add payments to an existing batch
        | Vendor   | Date       | Invoice Number | Amount |
        | Vendor B | 2017-01-02 | INV101         | 25.00  |
    And a payment batch with these properties:
-       | Property     | Value      |
-       | Description  | Test Batch |
-       | Batch Date   | 2018-01-01 |
-       | Batch Number | B-1001     |
+       | Property             | Value      |
+       | Description          | Test Batch |
+       | Default Posting Date | 2018-01-01 |
+       | Batch Number         | B-1001     |
   When I navigate the menu and select the item at "Cash & Banking > Vouchers > Payments"
   Then I should see the Create New Batch screen
    And I should see a Batch with these values:
@@ -85,10 +85,10 @@ Scenario: Add partial payment to an existing batch
        | Vendor   | Date       | Invoice Number | Amount |
        | Vendor C | 2017-03-01 | INV103         | 250.00 |
    And a payment batch with these properties:
-       | Property     | Value      |
-       | Description  | Test Batch |
-       | Batch Date   | 2018-01-01 |
-       | Batch Number | B-1001     |
+       | Property             | Value      |
+       | Description          | Test Batch |
+       | Default Posting Date | 2018-01-01 |
+       | Batch Number         | B-1001     |
   When I navigate the menu and select the item at "Cash & Banking > Vouchers > Payments"
   Then I should see the Create New Batch screen
    And I should see a Batch with these values:

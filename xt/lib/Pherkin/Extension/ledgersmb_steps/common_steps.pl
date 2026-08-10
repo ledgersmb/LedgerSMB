@@ -167,7 +167,7 @@ Given qr/a (vendor|customer) "(.*)"(?: from (.+))?$/, sub {
 Given qr/a (\w+) batch with these properties:$/, sub {
     my $batch_class = $1;
     my %map = (
-        'Batch Date' => 'batch_date',
+        'Default Posting Date' => 'batch_date',
         'Batch Number' => 'batch_number',
         'Description' => 'description',
         );
