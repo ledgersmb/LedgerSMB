@@ -57,11 +57,10 @@ sub _iterate_batch_items {
     my ($self, $cb) = @_;
     my $dbh = $self->dbh;
     my $sth = $dbh->prepare(<<~'QUERY'
-        SELECT v.trans_id, w.workflow_id, w.type
+        SELECT t.id as trans_id, w.workflow_id, w.type
           from transactions t
-          join voucher v on t.id = v.trans_id
           join workflow w using (workflow_id)
-         WHERE v.batch_id = ?
+         WHERE t.batch_id = ?
         QUERY
       )
         or die $dbh->errstr();
