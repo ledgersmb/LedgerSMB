@@ -4,7 +4,7 @@ set client_min_messages = 'warning';
 
 BEGIN;
 
-CREATE OR REPLACE FUNCTION batch__lock_for_update (in_batch_id integer)
+CREATE OR REPLACE FUNCTION batch__lock_for_update(in_batch_id integer)
 RETURNS batch LANGUAGE SQL
 SECURITY DEFINER AS
 $$
@@ -15,26 +15,20 @@ REVOKE EXECUTE ON FUNCTION batch__lock_for_update(int) FROM PUBLIC;
 
 COMMENT ON FUNCTION batch__lock_for_update(in_batch_id integer) is
 $$ Locks a batch for the duration of the running transaction.
-To be used when adding vouchers to the batch to prevent others
+To be used when adding transactions to the batch to prevent others
 from hitting the batch for other purposes (e.g. approval) $$;
 
-CREATE OR REPLACE FUNCTION voucher_get_batch (in_batch_id integer)
+CREATE OR REPLACE FUNCTION batch__get(in_batch_id integer)
 RETURNS batch AS
 $$
-DECLARE
-        batch_out batch%ROWTYPE;
-BEGIN
-        SELECT * INTO batch_out FROM batch b WHERE b.id = in_batch_id;
-        RETURN batch_out;
-END;
-$$ language plpgsql;
+  SELECT * FROM batch WHERE id = in_batch_id;
+$$ language sql;
 
-COMMENT ON FUNCTION voucher_get_batch (in_batch_id integer) is
+COMMENT ON FUNCTION batch__get(in_batch_id integer) is
 $$ Retrieves basic batch information based on batch_id.$$;
 
-DROP TYPE IF EXISTS voucher_list CASCADE;
-CREATE TYPE voucher_list AS (
-        id int,
+DROP TYPE IF EXISTS batch_item CASCADE;
+CREATE TYPE batch_item AS (
         invoice bool,
         reference text,
         description text,
@@ -46,11 +40,11 @@ CREATE TYPE voucher_list AS (
         batch_class_id int
 );
 
-CREATE OR REPLACE FUNCTION voucher__list (in_batch_id integer)
-RETURNS SETOF voucher_list AS
+CREATE OR REPLACE FUNCTION batch__list(in_batch_id integer)
+RETURNS SETOF batch_item AS
 $$
 -- invoices & transactions
-SELECT b.id, a.invoice, a.invnumber,
+SELECT a.invoice, a.invnumber,
        eca.meta_number || '--' || e.name,
        txn.batch_id, txn.id,
        a.amount_bc, txn.transdate,
@@ -77,7 +71,7 @@ SELECT b.id, a.invoice, a.invnumber,
  WHERE txn.batch_id = in_batch_id
        UNION ALL
 -- payments
-SELECT b.id, a.invoice, ac.source,
+SELECT a.invoice, ac.source,
        eca.meta_number || '--'  || e.name,
        txn.batch_id, txn.id,
        sum(ac.amount_bc * -1), ac.transdate,
@@ -102,13 +96,12 @@ SELECT b.id, a.invoice, ac.source,
        JOIN entity e
            ON eca.entity_id = e.id
  WHERE txn.batch_id = in_batch_id
-  -- no need to select batch_class: ac.voucher_id == null for all but classes 3,4,6,7
- GROUP BY b.id, a.invoice, ac.source, eca.meta_number, e.name,
-          txn.batch_id, txn.id, ac.transdate, bc.class
+ GROUP BY a.invoice, ac.source, eca.meta_number, e.name,
+          txn.batch_id, txn.id, ac.transdate, bc.class, b.batch_class_id
 
  UNION ALL
 -- GL transactions
-SELECT txn.id, false, txn.reference, txn.description,
+SELECT false, txn.reference, txn.description,
        txn.batch_id, txn.id as trans_id,
        sum(a.amount_bc), txn.transdate, 'GL', 5::int as batch_class
   FROM transactions txn
@@ -124,21 +117,8 @@ SELECT txn.id, false, txn.reference, txn.description,
 
 $$ language sql;
 
-COMMENT ON FUNCTION voucher__list (in_batch_id integer) IS
-$$ Retrieves a list of vouchers and amounts attached to the batch.$$;
-
-DROP TYPE IF EXISTS batch_list_item CASCADE;
-CREATE TYPE batch_list_item AS (
-    id integer,
-    batch_class text,
-    control_code text,
-    description text,
-    created_by text,
-    created_on date,
-    default_date date,
-    transaction_total numeric,
-    lock_success bool
-);
+COMMENT ON FUNCTION batch__list(in_batch_id integer) IS
+$$ Retrieves a list of transactions and amounts in the batch.$$;
 
 CREATE OR REPLACE FUNCTION batch__lock(in_batch_id int)
 RETURNS BOOL LANGUAGE SQL SECURITY DEFINER AS
@@ -187,7 +167,7 @@ batch__search(in_class_id int, in_description text, in_created_by_eid int,
         in_date_from date, in_date_to date,
         in_amount_gt numeric,
         in_amount_lt numeric, in_approved bool)
-RETURNS SETOF batch_list_item AS
+RETURNS SETOF batch_search_item AS
 $$
 SELECT b.id, c.class, b.control_code, b.description, u.username,
        b.created_on, b.default_date,
@@ -277,7 +257,7 @@ drop function if exists batch_search_mini
 CREATE OR REPLACE FUNCTION
 batch_search_mini
 (in_class_id int, in_description text, in_created_by_eid int, in_approved bool)
-RETURNS SETOF batch_list_item AS
+RETURNS SETOF batch_search_item AS
 $$
 SELECT b.id, c.class, b.control_code, b.description, u.username,
        b.created_on, b.default_date, NULL::NUMERIC, false
@@ -304,7 +284,7 @@ COMMENT ON FUNCTION batch_search_mini
 (in_class_id int, in_description text, in_created_by_eid int, in_approved bool)
 IS $$ This performs a simple search of open batches created by the entity_id
 in question.  This is used to pull up batches that were currently used so that
-they can be picked up and more vouchers added.
+they can be picked up and more transactions added.
 
 NULLs match all values.
 in_description is a partial match
@@ -319,7 +299,7 @@ CREATE OR REPLACE FUNCTION
 batch_search_empty(in_class_id int, in_description text, in_created_by_eid int,
         in_amount_gt numeric,
         in_amount_lt numeric, in_approved bool)
-RETURNS SETOF batch_list_item AS
+RETURNS SETOF batch_search_item AS
 $$
 SELECT b.id, c.class, b.control_code, b.description, u.username,
        b.created_on, b.default_date, 0::numeric, false

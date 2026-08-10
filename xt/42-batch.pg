@@ -17,6 +17,8 @@ BEGIN;
 
     -- Validate required functions
 
+    SELECT has_function('batch__get',ARRAY['integer']);
+    SELECT has_function('batch__list',ARRAY['integer']);
     SELECT has_function('batch__lock',ARRAY['integer']);
     SELECT has_function('batch__lock_for_update',ARRAY['integer']);
     SELECT has_function('batch__search',ARRAY['integer','text','integer','date','date','numeric','numeric','boolean']);
@@ -30,8 +32,6 @@ BEGIN;
     SELECT has_function('batch_post',ARRAY['integer']);
     SELECT has_function('batch_search_empty',ARRAY['integer','text','integer','numeric','numeric','boolean']);
     SELECT has_function('batch_search_mini',ARRAY['integer','text','integer','boolean']);
-    SELECT has_function('voucher__list',ARRAY['integer']);
-    SELECT has_function('voucher_get_batch',ARRAY['integer']);
 
     -- Set specific data
 
@@ -106,17 +106,20 @@ BEGIN;
 
 -- the code above inserts approved acc_trans lines where the transaction itself is
 -- not approved. that doesn't make sense. the sense we make of it at this point is
--- to allow the voucher to be reported as the transactions *are* bound to the
+-- to allow the <cough>voucher<cough> to be reported as the transactions *are* bound to the
 -- requested batch...
+
+-- 20260810 EH: the text above doesn't make sense to me at all...
+
     PREPARE test AS SELECT count(*)
-      FROM voucher__list( (:ap_batch_id)::int );
-    SELECT results_eq('test',ARRAY[1::bigint],'Voucher Seach finds all batches');
+      FROM batch__list( (:ap_batch_id)::int );
+    SELECT results_eq('test',ARRAY[1::bigint],'Batch content lists all transactions');
     DEALLOCATE test;
 
     PREPARE test AS SELECT count(*)
-      FROM voucher__list( (:payment_batch_id)::int )
+      FROM batch__list( (:payment_batch_id)::int )
       WHERE batch_class_id = 3;
-    SELECT results_eq('test',ARRAY[1::bigint],'Voucher Seach finds Payable Batches');
+    SELECT results_eq('test',ARRAY[1::bigint],'Batch content lists Payable transactions');
     DEALLOCATE test;
 
     -- Adding the test for empty batch sproc

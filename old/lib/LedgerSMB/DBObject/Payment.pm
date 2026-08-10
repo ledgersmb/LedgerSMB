@@ -128,7 +128,7 @@ sub get_metadata {
     }
 
     if ($self->{batch_id}) {
-        my ($ref) = $self->call_dbmethod(funcname => 'voucher_get_batch');
+        my ($ref) = $self->call_dbmethod(funcname => 'batch__get');
         $self->{batch_date} = $ref->{default_date};
     }
 
@@ -320,7 +320,7 @@ $payment->{date_to}, and $payment->{ar_ap_accno}.
 The $payment->{ar_ap_accno} property is used to filter out by AR or AP account.
 
 The following can also be optionally passed: $payment->{batch_id}.  If this is
-patched, vouchers in the current batch will be picked up as well.
+patched, transactions in the current batch will be picked up as well.
 
 The returned list of hashrefs is stored in the $payment->{contact} property.
 Each hashref has the following keys:  id (entity id), name, and entity_class.

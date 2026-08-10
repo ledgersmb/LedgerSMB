@@ -5,8 +5,9 @@ update transactions txn
  where txn.id = v.trans_id
    and v.batch_class not in (3, 4, 6, 7); -- not a payment voucher (shouldn't happen anyway)
 
-alter table acc_trans drop column voucher_id;
-drop table voucher;
+alter table acc_trans
+  rename column voucher_id to "deprecated-voucher_id";
+drop table voucher cascade;
 
 drop function if exists voucher_get_batch(integer);
 drop function if exists voucher__list(integer);

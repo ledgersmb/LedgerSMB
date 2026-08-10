@@ -1,4 +1,4 @@
-package PageObject::App::Cash::Vouchers::Payments::Filter;
+package PageObject::App::Cash::Batches::Payments::Filter;
 
 use strict;
 use warnings;
@@ -12,7 +12,7 @@ extends 'PageObject';
 with 'PageObject::App::Roles::Dynatable';
 
 __PACKAGE__->self_register(
-              'cash-vouchers-payments-filter',
+              'cash-batches-payments-filter',
               './/div[@id="payments-filter"]',
               tag_name => 'div',
               attributes => {

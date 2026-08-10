@@ -1,18 +1,15 @@
 
-package LedgerSMB::Scripts::vouchers;
+package LedgerSMB::Scripts::batches;
 
 =head1 NAME
 
-LedgerSMB::Scripts::vouchers - web entry points for voucher/batch workflows
+LedgerSMB::Scripts::batches - web entry points for batch workflows
 
 =head1 DESCRIPTION
 
-TODO: This would be a great place to describe the roles and differences
-between batches and vouchers...
-
 =head1 SYNPOSIS
 
- LedgerSMB::Scripts::vouchers::delete_batch($request);
+ LedgerSMB::Scripts::batches::delete_batch($request);
 
 =head1 METHODS
 
@@ -75,9 +72,9 @@ sub create_batch {
                                batch => $batch });
 }
 
-=head2 create_vouchers($request)
+=head2 save_batch($request)
 
-Creates a new voucher batch, then forwards to C<add_vouchers> to begin
+Saves a new batch, then forwards to C<add_transactions> to begin
 selection of transactions to add to the new batch.
 
 Only proceeds if the form is successfully closed. Otherwise displays the
@@ -105,7 +102,7 @@ If a new batch is successfully created, C<batch_id> is added to the request.
 
 =cut
 
-sub create_vouchers {
+sub save_batch {
     my ($request) = shift @_;
 
     unless ($request->close_form) {
@@ -125,10 +122,10 @@ sub create_vouchers {
     my $batch = LedgerSMB::Batch->new(%$batch_data);
 
     $request->{batch_id} = $batch->create;
-    return add_vouchers($request);
+    return add_transactions($request);
 }
 
-sub _add_vouchers_old {
+sub _add_transactions_old {
     my ($request, $entry) = @_;
 
     $request->{approved} = 0;
@@ -140,9 +137,9 @@ sub _add_vouchers_old {
                     $request);
 }
 
-=head2 add_vouchers($request)
+=head2 add_transactions($request)
 
-Add vouchers to a batch. Forwards the request to the appropriate
+Add transactions to a batch. Forwards the request to the appropriate
 filtering screen according to the type of batch.
 
 C<$request> is a L<LedgerSMB> object reference, which must contain:
@@ -166,10 +163,10 @@ C<receipt>, C<payment>, C<payment_reversal>, C<receipt_reversal>.
 
 =cut
 
-sub add_vouchers {
+sub add_transactions {
     my ($request) = shift @_;
 
-    our $vouchers_dispatch =
+    our $transactions_dispatch =
     {
         ap         => {script => 'ap.pl', function => 'add'},
         ar         => {script => 'ar.pl', function => 'add'},
@@ -217,11 +214,11 @@ sub add_vouchers {
                      }},
     };
 
-    my $entry = $vouchers_dispatch->{$request->{batch_type}};
-    return _add_vouchers_old($request, $entry)
+    my $entry = $transactions_dispatch->{$request->{batch_type}};
+    return _add_transactions_old($request, $entry)
         if defined $entry->{script};
 
-    return $vouchers_dispatch->{$request->{batch_type}}{function}($request);
+    return $transactions_dispatch->{$request->{batch_type}}{function}($request);
 }
 
 =head2 list_batches
@@ -259,7 +256,7 @@ sub list_batches {
 
 Requires that batch_id is set.
 
-Displays all vouchers from the batch by type, and includes amount.
+Displays all transactions from the batch by type, and includes amount.
 
 =cut
 
@@ -337,20 +334,20 @@ sub single_batch_unlock {
     }
 }
 
-=head2 batch_vouchers_delete
+=head2 batch_transactions_delete
 
-Deletes selected vouchers.
+Deletes selected transactions.
 
 =cut
 
-sub batch_vouchers_delete {
+sub batch_transactions_delete {
     my ($request) = @_;
     delete $request->{language}; # only applicable for printing of batches
     if ($request->close_form){
         my $batch = LedgerSMB::Batch->new(%$request);
         for my $count (1 .. $request->{rowcount_}){
             next unless $request->{"select_$count"};
-            $batch->delete_voucher($request->{"row_$count"});
+            $batch->delete_transaction($request->{"row_$count"});
         }
     }
     else {
@@ -435,7 +432,7 @@ sub batch_delete {
 
 =head2 reverse_overpayment
 
-Adds overpayment reversal vouchers to a batch
+Adds overpayment reversals to a batch
 
 =cut
 
@@ -503,7 +500,7 @@ my %print_dispatch = (
 
 =head2 print_batch
 
-Prints vouchers of a given batch.  Currently payments, receipts, ap transactions
+Prints transactions of a given batch.  Currently payments, receipts, ap transactions
 and gl transactions are not printed.
 
 =cut
@@ -550,7 +547,7 @@ sub print_batch {
     if (@files) {
         my $zip = Archive::Zip->new;
         unless ( $zip->addTree("$dirname/.", '') == AZ_OK ) {
-            die 'Unable to add vouchers from temporary directory to zip file';
+            die 'Unable to add transactions from temporary directory to zip file';
         };
         my $fh = File::Temp->new( CLEANUP => 1 );
         unless ( $zip->writeToFileHandle( $fh, 1 ) == AZ_OK ) {

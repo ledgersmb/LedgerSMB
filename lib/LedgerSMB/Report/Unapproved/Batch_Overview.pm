@@ -15,7 +15,7 @@ LedgerSMB
 
 This provides an ability to search for (and approve or delete) pending
 transactions grouped in batches.  This report only handles the batches
-themselves.  You cannot delete individual vouchers in this report.  For that,
+themselves.  You cannot delete individual transactions in this report.  For that,
 use LedgerSMB::Report::Unapproved::Batch_Detail instead.
 
 =head1 INHERITS
@@ -141,7 +141,7 @@ sub columns {
         {col_id => 'control_code',
          name => $self->_locale->text('Batch Number'),
          type => 'href',
-         href_base => 'vouchers.pl?__action=get_batch&batch_id=',
+         href_base => 'batches.pl?__action=get_batch&batch_id=',
          pwidth => '3', },
 
         {col_id => 'description',
@@ -210,7 +210,7 @@ Returns a list of buttons to be displayed at the bottom of the form.
 
 If the report includes 'approved' batches, no buttons are returned, as
 their actions are not possible once a batch has been approved (meaning its
-vouchers have been posted to the books).
+transactions have been posted to the books).
 
 =cut
 

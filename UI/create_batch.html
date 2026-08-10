@@ -36,7 +36,7 @@
 </div>
 <div id="buttons">
 [% PROCESS button element_data = {
-       value = "create_vouchers"
+       value = "save_batch"
        type = "submit"
        class = "submit"
        name = "__action"
@@ -67,7 +67,7 @@ PROCESS dynatable
                tbody = {rows = batch.search_results}
                columns = [
         { col_id='control_code', type='href', name=text('Batch Number'), #'
-       href_base="vouchers.pl?__action=add_vouchers" _
+       href_base="batches.pl?__action=add_transactions" _
                    hidden_url_base _ "&amp;batch_id=" }
         { col_id='description', type='text', name = text('Description') }
         { col_id='created_by', type='text', name = text('Created By') } #'

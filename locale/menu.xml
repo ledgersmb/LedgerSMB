@@ -62,12 +62,12 @@
       </acls>
     </menu-item>
     <menu-item id="249" label="Batches">
-      <menu-item id="198" label="AR Batch" url="vouchers.pl?__action=create_batch&amp;batch_type=ar">
+      <menu-item id="198" label="AR Batch" url="batches.pl?__action=create_batch&amp;batch_type=ar">
         <acls>
           <acl role="ar_transaction_create_voucher" access="allow"/>
         </acls>
       </menu-item>
-      <menu-item id="20" label="Invoice Batches" url="vouchers.pl?__action=create_batch&amp;batch_type=sales_invoice">
+      <menu-item id="20" label="Invoice Batches" url="batches.pl?__action=create_batch&amp;batch_type=sales_invoice">
         <acls>
           <acl role="ar_transaction_create_voucher" access="allow"/>
         </acls>
@@ -128,12 +128,12 @@
       </acls>
     </menu-item>
     <menu-item id="250" label="Batches">
-      <menu-item id="199" label="AP Batch" url="vouchers.pl?__action=create_batch&amp;batch_type=ap">
+      <menu-item id="199" label="AP Batch" url="batches.pl?__action=create_batch&amp;batch_type=ap">
         <acls>
           <acl role="ap_transaction_create_voucher" access="allow"/>
         </acls>
       </menu-item>
-      <menu-item id="39" label="Invoice Batches" url="vouchers.pl?__action=create_batch&amp;batch_type=vendor_invoice">
+      <menu-item id="39" label="Invoice Batches" url="batches.pl?__action=create_batch&amp;batch_type=vendor_invoice">
         <acls>
           <acl role="ap_transaction_create_voucher" access="allow"/>
         </acls>
@@ -184,32 +184,32 @@
       </acls>
     </menu-item>
     <menu-item id="200" label="Batches">
-      <menu-item id="201" label="Payments" url="vouchers.pl?__action=create_batch&amp;batch_type=payment">
+      <menu-item id="201" label="Payments" url="batches.pl?__action=create_batch&amp;batch_type=payment">
         <acls>
           <acl role="payment_process" access="allow"/>
         </acls>
       </menu-item>
-      <menu-item id="202" label="Reverse Payment" url="vouchers.pl?batch_type=payment_reversal&amp;__action=create_batch">
+      <menu-item id="202" label="Reverse Payment" url="batches.pl?batch_type=payment_reversal&amp;__action=create_batch">
         <acls>
           <acl role="payment_process" access="allow"/>
         </acls>
       </menu-item>
-      <menu-item id="18" label="Reverse Overpay" url="vouchers.pl?batch_type=payment_reversal&amp;__action=create_batch&amp;overpayment=1">
+      <menu-item id="18" label="Reverse Overpay" url="batches.pl?batch_type=payment_reversal&amp;__action=create_batch&amp;overpayment=1">
         <acls>
           <acl role="payment_process" access="allow"/>
         </acls>
       </menu-item>
-      <menu-item id="203" label="Receipts" url="vouchers.pl?__action=create_batch&amp;batch_type=receipt">
+      <menu-item id="203" label="Receipts" url="batches.pl?__action=create_batch&amp;batch_type=receipt">
         <acls>
           <acl role="receipt_process" access="allow"/>
         </acls>
       </menu-item>
-      <menu-item id="204" label="Reverse Receipts" url="vouchers.pl?batch_type=receipt_reversal&amp;__action=create_batch">
+      <menu-item id="204" label="Reverse Receipts" url="batches.pl?batch_type=receipt_reversal&amp;__action=create_batch">
         <acls>
           <acl role="receipt_process" access="allow"/>
         </acls>
       </menu-item>
-      <menu-item id="26" label="Reverse AR Overpay" url="vouchers.pl?batch_type=receipt_reversal&amp;__action=create_batch&amp;overpayment=1">
+      <menu-item id="26" label="Reverse AR Overpay" url="batches.pl?batch_type=receipt_reversal&amp;__action=create_batch&amp;overpayment=1">
         <acls>
           <acl role="receipt_process" access="allow"/>
         </acls>
