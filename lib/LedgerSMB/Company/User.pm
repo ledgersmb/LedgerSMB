@@ -203,7 +203,7 @@ sub reset_password( $self, $passwd ) {
         or croak $log->error( 'Password reset failed: ' . $dbh->errstr );
 }
 
-=head2
+=head2 roles
 
   my $roles = $user->roles;
 
