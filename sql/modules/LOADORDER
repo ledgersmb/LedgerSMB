@@ -32,7 +32,7 @@ Person.sql
 FinStatements.sql
 trial_balance.sql
 Report.sql
-Voucher.sql
+Batch.sql
 admin.sql
 Reconciliation.sql
 TaxForm.sql

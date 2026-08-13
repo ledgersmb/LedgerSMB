@@ -51,7 +51,7 @@ my %menu_path_pageobject_map = (
 
     "Cash & Banking > Receipt" => 'PageObject::App::Cash::SelectVC',
     "Cash & Banking > Payment" => 'PageObject::App::Cash::SelectVC',
-    "Cash & Banking > Vouchers > Payments" => 'PageObject::App::Cash::Vouchers::Payments',
+    "Cash & Banking > Batches > Payments" => 'PageObject::App::Cash::Batches::Payments',
     "Cash & Banking > Reconciliation" => 'PageObject::App::Cash::Reconciliation::NewReport',
     "Cash & Banking > Reports > Payments" => 'PageObject::App::Cash::PaymentSearch',
     "Cash & Banking > Reports > Receipts" => 'PageObject::App::Cash::PaymentSearch',

@@ -284,10 +284,10 @@ sub post_transaction {
         $uid .= "$$";
 
         $query = q|
-            INSERT INTO transactions (trans_type_code, approved, transdate)
-            VALUES (?, false, ?)
+            INSERT INTO transactions (trans_type_code, approved, transdate, batch_id)
+            VALUES (?, false, ?, ?)
             |;
-        $dbh->do($query, {}, $table, $form->{transdate}) or $form->dberror($query);
+        $dbh->do($query, {}, $table, $form->{transdate}, $form->{batch_id}) or $form->dberror($query);
 
         ($accno) = split /--/, $form->{$ARAP};
         $query = qq{
@@ -418,13 +418,7 @@ sub post_transaction {
            # Change the below to die with localization in 1.4
            $form->error('Approved Batch') if $bref->{approved_by};
            $form->error('Locked Batch') if $bref->{locked_by};
-           $query = qq|
-        INSERT INTO voucher (batch_id, trans_id, batch_class)
-        VALUES (?, ?, (select id from batch_class where class = ?))|;
-           $dbh->prepare($query)->execute($form->{batch_id}, $form->{id},
-                $batch_class) || $form->dberror($query);
         }
-
     }
 
     my $ref;

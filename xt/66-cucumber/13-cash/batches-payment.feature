@@ -1,7 +1,7 @@
 @weasel
 Feature: Bulk payments
   As a LedgerSMB user I want to be able to create a new batch of payment
-  vouchers and add a payment to that batch. I then want to review that
+  batches and add a payment to that batch. I then want to review that
   batch to see what payments it contains.
 
 Background:
@@ -13,7 +13,7 @@ Scenario: Add payments to a new batch
    And an unpaid AP transaction with these values:
        | Vendor   | Date       | Invoice Number | Amount |
        | Vendor A | 2017-01-01 | INV100         | 100.00 |
-  When I navigate the menu and select the item at "Cash & Banking > Vouchers > Payments"
+  When I navigate the menu and select the item at "Cash & Banking > Batches > Payments"
   Then I should see the Create New Batch screen
   When I enter "2018-01-01" into "Default Posting Date"
    And I enter "B-1001" into "Batch Number"
@@ -55,7 +55,7 @@ Scenario: Add payments to an existing batch
        | Description          | Test Batch |
        | Default Posting Date | 2018-01-01 |
        | Batch Number         | B-1001     |
-  When I navigate the menu and select the item at "Cash & Banking > Vouchers > Payments"
+  When I navigate the menu and select the item at "Cash & Banking > Batches > Payments"
   Then I should see the Create New Batch screen
    And I should see a Batch with these values:
        | Batch Number | Description | Post Date  |
@@ -89,7 +89,7 @@ Scenario: Add partial payment to an existing batch
        | Description          | Test Batch |
        | Default Posting Date | 2018-01-01 |
        | Batch Number         | B-1001     |
-  When I navigate the menu and select the item at "Cash & Banking > Vouchers > Payments"
+  When I navigate the menu and select the item at "Cash & Banking > Batches > Payments"
   Then I should see the Create New Batch screen
    And I should see a Batch with these values:
        | Batch Number | Description | Post Date  |

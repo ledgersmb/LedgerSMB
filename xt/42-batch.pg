@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(30);
+    SELECT plan(26);
 
     -- Add data
 
@@ -13,10 +13,12 @@ BEGIN;
 
     -- Validate required tables
 
-    SELECT has_table('voucher');
+    SELECT has_table('batch');
 
     -- Validate required functions
 
+    SELECT has_function('batch__get',ARRAY['integer']);
+    SELECT has_function('batch__list',ARRAY['integer']);
     SELECT has_function('batch__lock',ARRAY['integer']);
     SELECT has_function('batch__lock_for_update',ARRAY['integer']);
     SELECT has_function('batch__search',ARRAY['integer','text','integer','date','date','numeric','numeric','boolean']);
@@ -30,9 +32,6 @@ BEGIN;
     SELECT has_function('batch_post',ARRAY['integer']);
     SELECT has_function('batch_search_empty',ARRAY['integer','text','integer','numeric','numeric','boolean']);
     SELECT has_function('batch_search_mini',ARRAY['integer','text','integer','boolean']);
-    SELECT has_function('voucher__delete',ARRAY['integer']);
-    SELECT has_function('voucher__list',ARRAY['integer']);
-    SELECT has_function('voucher_get_batch',ARRAY['integer']);
 
     -- Set specific data
 
@@ -40,6 +39,18 @@ BEGIN;
             batch_create('_TEST', '_TEST', 'payment', '2008-01-01') IS NOT NULL;
     SELECT results_eq('test',ARRAY[true],'Batch Created');
     DEALLOCATE test;
+
+    select currval('batch_id_seq') as payment_batch_id
+    \gset
+
+    PREPARE test AS SELECT
+            batch_create('_TEST2', '_TEST2', 'ap', '2008-01-01') IS NOT NULL;
+    SELECT results_eq('test',ARRAY[true],'Batch Created');
+    DEALLOCATE test;
+
+    select currval('batch_id_seq') as ap_batch_id
+    \gset
+
 
     INSERT INTO entity (id, name, control_code, country_id)
     values (-3, 'Test', 'test', 242);
@@ -55,8 +66,8 @@ BEGIN;
 
     INSERT INTO account_link(account_id, description) values (-5, 'AP');
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-5, now(), 'ap', false);
+    INSERT INTO transactions (id, transdate, trans_type_code, approved, batch_id)
+    VALUES (-5, now(), 'ap', false, :payment_batch_id);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('test1', 'ap', test_get_account_id('-21111'));
     INSERT INTO ap (trans_id, open_item_id, invnumber, amount_bc, curr, amount_tc, entity_credit_account)
@@ -65,8 +76,8 @@ BEGIN;
     INSERT INTO acc_trans(trans_id, chart_id, amount_bc, curr, amount_tc, approved)
     values (-5, test_get_account_id('-21111'), 1000, 'XTS', 1000, true);
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-6, now(), 'ap', false);
+    INSERT INTO transactions (id, transdate, trans_type_code, approved, batch_id)
+    VALUES (-6, now(), 'ap', false, :ap_batch_id);
     INSERT INTO open_item (item_number, item_type, account_id)
     VALUES ('test1/2', 'ap', test_get_account_id('-21111'));
     INSERT INTO ap (trans_id, open_item_id, invnumber, amount_bc, curr, amount_tc, entity_credit_account)
@@ -74,9 +85,6 @@ BEGIN;
 
     INSERT INTO acc_trans(trans_id, chart_id, amount_bc, curr, amount_tc, approved, entry_id)
     values (-6, test_get_account_id('-21111'), 1000, 'XTS', 1000, true, -1);
-
-    INSERT INTO voucher(id, trans_id, batch_id, batch_class)
-    values (-6, -6, currval('batch_id_seq'), 1);
 
     INSERT INTO ac_tax_form (entry_id, reportable)
     values (-1, false);
@@ -94,33 +102,24 @@ BEGIN;
     INSERT INTO ac_tax_form (entry_id, reportable)
     values (-2, false);
 
-    INSERT INTO voucher (id, trans_id, batch_id, batch_class)
-    values (-1, -5, currval('batch_id_seq'), 1);
-    INSERT INTO voucher (id, trans_id, batch_id, batch_class)
-    values (-2, -5, currval('batch_id_seq'), 3);
-    INSERT INTO voucher (id, trans_id, batch_id, batch_class)
-    values (-3, -5, currval('batch_id_seq'), 3);
-
     -- Run tests
 
 -- the code above inserts approved acc_trans lines where the transaction itself is
 -- not approved. that doesn't make sense. the sense we make of it at this point is
--- to allow the voucher to be reported as the transactions *are* bound to the
+-- to allow the <cough>voucher<cough> to be reported as the transactions *are* bound to the
 -- requested batch...
+
+-- 20260810 EH: the text above doesn't make sense to me at all...
+
     PREPARE test AS SELECT count(*)
-      FROM voucher__list( currval('batch_id_seq')::int);
-    SELECT results_eq('test',ARRAY[4::bigint],'Voucher Seach finds all vouchers');
+      FROM batch__list( (:ap_batch_id)::int );
+    SELECT results_eq('test',ARRAY[1::bigint],'Batch content lists all transactions');
     DEALLOCATE test;
 
     PREPARE test AS SELECT count(*)
-      FROM voucher__list( currval('batch_id_seq')::int)
+      FROM batch__list( (:payment_batch_id)::int )
       WHERE batch_class_id = 3;
-    SELECT results_eq('test',ARRAY[2::bigint],'Voucher Seach finds Payable Vouchers');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) > 1
-                    FROM voucher where trans_id = -5 and batch_class = 3;
-    SELECT results_eq('test',ARRAY[true],'partial payment support');
+    SELECT results_eq('test',ARRAY[1::bigint],'Batch content lists Payable transactions');
     DEALLOCATE test;
 
     -- Adding the test for empty batch sproc
@@ -140,20 +139,6 @@ BEGIN;
                               'f'::bool                 -- Approved
     );
     SELECT results_eq('test',ARRAY[true],'Empty Batch Detected');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT voucher__delete(-6) = 1;
-    SELECT results_eq('test',ARRAY[true],'Delete voucher with tax_form');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) > 0
-    FROM ac_tax_form;
-    SELECT results_eq('test',ARRAY[true],'not all tax form lines deleted');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 0
-    FROM ap WHERE trans_id = -6;
-    SELECT results_eq('test',ARRAY[true],'DELETED voucher does not exist');
     DEALLOCATE test;
 
     PREPARE test AS SELECT batch_delete(currval('batch_id_seq')::int) = 1;

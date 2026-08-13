@@ -89,6 +89,8 @@ asset_report__save
 asset_report__search
 asset_report_partial_disposal_details
 avgcost
+batch__get
+batch__list
 batch__lock
 batch__lock_for_update
 batch__search
@@ -487,9 +489,6 @@ user__check_my_expiration
 user__get_all_users
 user__get_preferences
 user__save_preferences
-voucher__delete
-voucher__list
-voucher_get_batch
 wage__list_for_entity
 wage__list_types
 wage__save

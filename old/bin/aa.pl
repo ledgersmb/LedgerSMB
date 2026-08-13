@@ -1547,7 +1547,7 @@ sub post {
         }
 
         if(defined($form->{batch_id}) and $form->{batch_id}
-           and ($form->{callback} !~ /vouchers/)) {
+           and ($form->{callback} !~ /batches/)) {
             $form->{callback}.= qq|&batch_id=$form->{batch_id}|;
     }
         $form->{rowcount} = 0;

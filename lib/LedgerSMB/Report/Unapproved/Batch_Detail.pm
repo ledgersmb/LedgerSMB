@@ -3,7 +3,7 @@ package LedgerSMB::Report::Unapproved::Batch_Detail;
 
 =head1 NAME
 
-LedgerSMB::Report::Unapproved::Batch_Detail - List Vouchers by Batch
+LedgerSMB::Report::Unapproved::Batch_Detail - List Transactions by Batch
 in LedgerSMB
 
 =head1 SYNPOSIS
@@ -16,7 +16,7 @@ in LedgerSMB
 =head1 DESCRIPTION
 
 This provides an ability to search for (and approve or delete) pending
-transactions grouped in batches.  This report only handles the vouchers in the
+transactions grouped in batches.  This report only handles the transactions in the
 bach themselves. For searching for batches, use
 LedgerSMB::Report::Unapproved::Batch_Overview instead.
 
@@ -77,7 +77,7 @@ Description of transaction
 
 =item amount
 
-Total on voucher.  For AR/AP amount, this is the total of the AR/AP account
+Total on the transaction.  For AR/AP amount, this is the total of the AR/AP account
 before payments.  For payments, receipts, and GL, it is the sum of the credits.
 
 =item default_language
@@ -144,7 +144,7 @@ Returns the localized template name
 
 sub name {
     my ($self) = @_;
-    return $self->Text('Voucher List');
+    return $self->Text('Batch Item List');
 }
 
 =item header_lines
@@ -169,7 +169,7 @@ Note that in all cases, undef matches everything.
 
 =item batch_id (Int)
 
-ID of batch to list vouchers of.
+ID of batch to list transactions of.
 
 =cut
 
@@ -206,8 +206,8 @@ sub set_buttons {
         {
             name  => '__action',
             type  => 'submit',
-            text  => $self->Text('Delete Vouchers'),
-            value => 'batch_vouchers_delete',
+            text  => $self->Text('Delete Transactions'),
+            value => 'batch_transactions_delete',
             class => 'submit',
         },
         {
@@ -260,7 +260,7 @@ sub run_report{
         '8' => 'is',
         '9' => 'ir',
     };
-    my @rows = $self->call_dbmethod(funcname => 'voucher__list');
+    my @rows = $self->call_dbmethod(funcname => 'batch__list');
     for my $ref (@rows){
         $ref->{row_id} = $ref->{id};
 

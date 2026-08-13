@@ -196,4 +196,5 @@ mc/delete-migration-validation-data.sql
 1.14/transaction-batches.sql
 1.14/overpayments-as-open-items.sql
 1.14/payments-first-order.sql
+1.14/drop-vouchers.sql
 1.14/parts_id-fkey-corrections.sql

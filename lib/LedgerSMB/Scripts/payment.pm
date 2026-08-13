@@ -119,7 +119,7 @@ set:
   * account_class
 
 Optionally the following key may be defined, if the search is to be used to
-find payments to add as vouchers to a reversing batch:
+find payments to add to a reversing batch:
 
   * batch_id
 
@@ -134,7 +134,7 @@ sub get_search_criteria {
         all_months => $request->all_months->{dropdown},
     };
 
-    # Additional data needed if this search is to create reversing vouchers
+    # Additional data needed if this search is to create reversals
     $payment_data->{batch_id} = $request->{batch_id} if $request->{batch_id};
 
     my $payment = LedgerSMB::DBObject::Payment->new(%$payment_data);

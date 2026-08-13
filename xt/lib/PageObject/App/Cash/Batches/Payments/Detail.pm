@@ -1,4 +1,4 @@
-package PageObject::App::Cash::Vouchers::Payments::Detail;
+package PageObject::App::Cash::Batches::Payments::Detail;
 
 use strict;
 use warnings;
@@ -11,7 +11,7 @@ use namespace::autoclean;
 extends 'PageObject';
 
 __PACKAGE__->self_register(
-    'cash-vouchers-payments-detail',
+    'cash-batches-payments-detail',
     './/div[@id="payments-detail"]',
     tag_name => 'div',
     attributes => {

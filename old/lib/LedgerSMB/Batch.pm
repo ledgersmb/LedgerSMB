@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Batch - Batch/voucher management model for LedgerSMB 1.3
+LedgerSMB::Batch - Batch management model for LedgerSMB 1.3
 
 =head1 SYNOPSIS
 
@@ -57,11 +57,10 @@ sub _iterate_batch_items {
     my ($self, $cb) = @_;
     my $dbh = $self->dbh;
     my $sth = $dbh->prepare(<<~'QUERY'
-        SELECT v.trans_id, w.workflow_id, w.type
+        SELECT t.id as trans_id, w.workflow_id, w.type
           from transactions t
-          join voucher v on t.id = v.trans_id
           join workflow w using (workflow_id)
-         WHERE v.batch_id = ?
+         WHERE t.batch_id = ?
         QUERY
       )
         or die $dbh->errstr();
@@ -111,15 +110,15 @@ sub create {
     return $self->{id};
 }
 
-=item delete_voucher($id)
+=item delete_transaction($id)
 
-Deletes the voucher specified by $id.
+Deletes the transaction specified by $id.
 
 =cut
 
-sub delete_voucher {
-    my ($self, $voucher_id) = @_;
-    return $self->call_procedure(funcname => 'voucher__delete', args => [$voucher_id]);
+sub delete_transaction {
+    my ($self, $trans_id) = @_;
+    return $self->call_procedure(funcname => 'draft_delete', args => [$trans_id]);
 }
 
 =item unlock($id)
@@ -247,7 +246,7 @@ sub get_class_id {
 =item post
 
 Posts the batch to the books with C<id> matching the current object's
-C<batch_id> and makes the vouchers show up in transaction reports,
+C<batch_id> and makes the transactions show up in transaction reports,
 financial statements, and more. Marks the batch as approved.
 
 Returns the batch C<approved_on> date (being the current database date).
@@ -283,7 +282,7 @@ sub post {
 =item delete
 
 Deletes the batch with C<id> matching the current object's C<batch_id>
-attribute and all vouchers under it. A batch cannot be deleted once it
+attribute and all transactions under it. A batch cannot be deleted once it
 is approved/posted.
 
 Returns true on success.
@@ -305,19 +304,6 @@ sub delete {
 
     my ($ref) = $self->call_dbmethod(funcname => 'batch_delete');
     return $ref->{batch_delete};
-}
-
-=item list_vouchers
-
-Returns a list of all vouchers in the batch and attaches that list to
-$self->{vouchers}
-
-=cut
-
-sub list_vouchers {
-    my ($self) = @_;
-    @{$self->{vouchers}} = $self->call_dbmethod(funcname => 'voucher_list');
-    return @{$self->{vouchers}};
 }
 
 =item get
@@ -357,7 +343,7 @@ according to the retrieved record:
 
 sub get {
     my ($self) = @_;
-    my ($ref) = $self->call_dbmethod(funcname => 'voucher_get_batch');
+    my ($ref) = $self->call_dbmethod(funcname => 'batch__get');
     @{$self}{keys %$ref} = values %$ref if $ref;
     return $self;
 }

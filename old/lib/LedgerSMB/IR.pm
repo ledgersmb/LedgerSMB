@@ -131,9 +131,9 @@ sub post_invoice {
         my $uid = localtime;
         $uid .= "$$";
 
-        $query = q{INSERT INTO transactions (trans_type_code, approved, transdate)
-                   VALUES ('ap', false, ?)};
-        $dbh->do($query, {}, $form->{transdate}) or $form->dberror($query);
+        $query = q{INSERT INTO transactions (trans_type_code, approved, transdate, batch_id)
+                   VALUES ('ap', false, ?, ?)};
+        $dbh->do($query, {}, $form->{transdate}, $form->{batch_id}) or $form->dberror($query);
 
         ($accno) = split /--/, $form->{AP};
         $query = q{
@@ -316,11 +316,6 @@ sub post_invoice {
                    if (not defined $form->{batch_id}){
                        $form->error('Batch ID Missing');
                    }
-                   $query = qq|
-            INSERT INTO voucher (batch_id, trans_id) VALUES (?, ?)|;
-                   $sth = $dbh->prepare($query);
-                   $sth->execute($form->{batch_id}, $form->{id}) ||
-                        $form->dberror($query);
                }
             }
 
@@ -578,13 +573,6 @@ sub post_invoice {
         $form->{id}
     ) || $form->dberror($query);
 
-
-    if ($form->{batch_id}){
-        $sth = $dbh->prepare(
-           'INSERT INTO voucher (batch_id, trans_id, batch_class)
-            VALUES (?, ?, ?)');
-        $sth->execute($form->{batch_id}, $form->{id}, BC_VENDOR_INVOICE);
-    }
 
     # add shipto
     $form->{name} = $form->{vendor};

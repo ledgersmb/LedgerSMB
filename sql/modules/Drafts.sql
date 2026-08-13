@@ -44,9 +44,7 @@ BEGIN
                      ON ar.trans_id = txn.id
                  LEFT JOIN ap
                      ON ap.trans_id = txn.id
-         WHERE NOT EXISTS (select 1
-                             from voucher v
-                            where v.trans_id = txn.id)
+         WHERE txn.batch_id IS NULL
            AND NOT txn.approved
            AND (lower($1) = txn.trans_type_code or $1 is null)
            AND ($3 IS NULL or txn.transdate >= $3)
