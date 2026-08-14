@@ -10,7 +10,6 @@ description: |
 select * from batch
  where approved_on is not null
    and exists (select 1 from transactions t
-                               join voucher v on v.trans_id = t.id
-                where batch.id = v.batch_id
+                where batch.id = t.batch_id
                   and not t.approved)
 
