@@ -284,23 +284,17 @@ sub is_applied {
            no_chdir => 1 }, dirname($path));
 
     my $sth = $dbh->prepare(
-        'SELECT * FROM db_patches WHERE sha = ?'
+        'SELECT * FROM db_patches WHERE sha = ANY(?)'
         );
 
-    my $retval = 0;
-    for my $sha (@shas) {
-        $sth->execute($sha)
-            or die $sth->errstr;
-        my $rv = $sth->fetchall_arrayref
-            or die $sth->errstr;
-        $sth->finish
-            or die $sth->errstr;
+    $sth->execute(\@shas)
+        or die $sth->errstr;
+    my $rv = $sth->fetchall_arrayref
+        or die $sth->errstr;
+    $sth->finish
+        or die $sth->errstr;
 
-        $retval = scalar @$rv;
-        last if $retval;
-    }
-
-    return $retval;
+    return scalar @$rv;
 }
 
 =head2 run($dbh)

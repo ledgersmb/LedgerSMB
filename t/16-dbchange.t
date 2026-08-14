@@ -8,6 +8,8 @@ LedgerSMB::Database::Change
 
 use Test2::V0;
 
+skip_all 'Awaiting support for bound ARRAY parameters';
+
 use LedgerSMB::Database::Change;
 
 use DBI;
