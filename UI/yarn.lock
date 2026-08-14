@@ -37,6 +37,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@atlassian/atlassian-openapi@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "@atlassian/atlassian-openapi@npm:1.0.6"
+  dependencies:
+    jsonpointer: "npm:^5.0.0"
+    urijs: "npm:^1.19.10"
+  checksum: 10c0/aab1a410e1f9daba1180aa259e3fb23d72cae1709c3bba3318bd4298d8ea44fe5ae7699373c0f01577755398156a8d6dd2873b7cb64f3eb2f0339186c4fdb9cf
+  languageName: node
+  linkType: hard
+
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.29.7":
   version: 7.29.7
   resolution: "@babel/code-frame@npm:7.29.7"
@@ -5933,6 +5943,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ajv-formats@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "ajv-formats@npm:3.0.1"
+  dependencies:
+    ajv: "npm:^8.0.0"
+  peerDependencies:
+    ajv: ^8.0.0
+  peerDependenciesMeta:
+    ajv:
+      optional: true
+  checksum: 10c0/168d6bca1ea9f163b41c8147bae537e67bd963357a5488a1eaf3abe8baa8eec806d4e45f15b10767e6020679315c7e1e5e6803088dfb84efa2b4e9353b83dd0a
+  languageName: node
+  linkType: hard
+
 "ajv-keywords@npm:^3.5.2":
   version: 3.5.2
   resolution: "ajv-keywords@npm:3.5.2"
@@ -5953,19 +5977,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ajv@npm:^6.12.2, ajv@npm:^6.12.4, ajv@npm:^6.12.5, ajv@npm:^6.14.0":
-  version: 6.15.0
-  resolution: "ajv@npm:6.15.0"
-  dependencies:
-    fast-deep-equal: "npm:^3.1.1"
-    fast-json-stable-stringify: "npm:^2.0.0"
-    json-schema-traverse: "npm:^0.4.1"
-    uri-js: "npm:^4.2.2"
-  checksum: 10c0/67966499dd272ecde1c2e467084411132891523d057487587879d39ac04207f4351b7b2324c83198013967fbfa632c1612adc960114a30770fbe07a0773b32c2
-  languageName: node
-  linkType: hard
-
-"ajv@npm:^8.0.0, ajv@npm:^8.0.1, ajv@npm:^8.1.0, ajv@npm:^8.4.0, ajv@npm:^8.9.0":
+"ajv@npm:8, ajv@npm:^8.0.0, ajv@npm:^8.0.1, ajv@npm:^8.1.0, ajv@npm:^8.4.0, ajv@npm:^8.9.0":
   version: 8.20.0
   resolution: "ajv@npm:8.20.0"
   dependencies:
@@ -5974,6 +5986,18 @@ __metadata:
     json-schema-traverse: "npm:^1.0.0"
     require-from-string: "npm:^2.0.2"
   checksum: 10c0/5df9a1c8f83863cde1bd3a9ddb426f599718f88e3dc9153616c79fb28e0be455335830d7f21d745576519f057b371352daa31047b6a33d7036fe08777d60cf2a
+  languageName: node
+  linkType: hard
+
+"ajv@npm:^6.12.4, ajv@npm:^6.12.5, ajv@npm:^6.14.0":
+  version: 6.15.0
+  resolution: "ajv@npm:6.15.0"
+  dependencies:
+    fast-deep-equal: "npm:^3.1.1"
+    fast-json-stable-stringify: "npm:^2.0.0"
+    json-schema-traverse: "npm:^0.4.1"
+    uri-js: "npm:^4.2.2"
+  checksum: 10c0/67966499dd272ecde1c2e467084411132891523d057487587879d39ac04207f4351b7b2324c83198013967fbfa632c1612adc960114a30770fbe07a0773b32c2
   languageName: node
   linkType: hard
 
@@ -6283,16 +6307,6 @@ __metadata:
   version: 0.4.0
   resolution: "asynckit@npm:0.4.0"
   checksum: 10c0/d73e2ddf20c4eb9337e1b3df1a0f6159481050a5de457c55b14ea2e5cb6d90bb69e004c9af54737a5ee0917fcf2c9e25de67777bbe58261847846066ba75bc9d
-  languageName: node
-  linkType: hard
-
-"atlassian-openapi@npm:^1.0.8":
-  version: 1.0.21
-  resolution: "atlassian-openapi@npm:1.0.21"
-  dependencies:
-    jsonpointer: "npm:^5.0.0"
-    urijs: "npm:^1.19.10"
-  checksum: 10c0/194557208d59343420c86dba7d3f5c3f69f6e1913c28eb4c57a617c309de7a55ffcbd69c42f99c7ecd3eb21ff5e790567ad97e2171561359cb71412392dd100e
   languageName: node
   linkType: hard
 
@@ -7144,17 +7158,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:^15.0.0, commander@npm:~15.0.0":
+  version: 15.0.0
+  resolution: "commander@npm:15.0.0"
+  checksum: 10c0/539229c171914ea1ccd45ee5f10d924289a12a684ea3a7a44147abe54003c35ed6de9ae4ad198d88c29fdf403dca0428451a388234e6dc01b6faa978fb207206
+  languageName: node
+  linkType: hard
+
 "commander@npm:^2.20.0":
   version: 2.20.3
   resolution: "commander@npm:2.20.3"
   checksum: 10c0/74c781a5248c2402a0a3e966a0a2bba3c054aad144f5c023364be83265e796b20565aa9feff624132ff629aa64e16999fa40a743c10c12f7c61e96a794b99288
-  languageName: node
-  linkType: hard
-
-"commander@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "commander@npm:5.1.0"
-  checksum: 10c0/da9d71dbe4ce039faf1fe9eac3771dca8c11d66963341f62602f7b66e36d2a3f8883407af4f9a37b1db1a55c59c0c1325f186425764c2e963dc1d67aec2a4b6d
   languageName: node
   linkType: hard
 
@@ -7176,13 +7190,6 @@ __metadata:
   version: 8.3.0
   resolution: "commander@npm:8.3.0"
   checksum: 10c0/8b043bb8322ea1c39664a1598a95e0495bfe4ca2fad0d84a92d7d1d8d213e2a155b441d2470c8e08de7c4a28cf2bc6e169211c49e1b21d9f7edc6ae4d9356060
-  languageName: node
-  linkType: hard
-
-"commander@npm:~15.0.0":
-  version: 15.0.0
-  resolution: "commander@npm:15.0.0"
-  checksum: 10c0/539229c171914ea1ccd45ee5f10d924289a12a684ea3a7a44147abe54003c35ed6de9ae4ad198d88c29fdf403dca0428451a388234e6dc01b6faa978fb207206
   languageName: node
   linkType: hard
 
@@ -8596,13 +8603,6 @@ __metadata:
     is-date-object: "npm:^1.1.0"
     is-symbol: "npm:^1.1.1"
   checksum: 10c0/b10029f8b0b13841bade224ff39005a13d76d9cb803cd1efb18cc96a24414e83e2e7ed15d7ad9d0d0bda66884afd211b7b579b8fa31940e05b060934aa7077d8
-  languageName: node
-  linkType: hard
-
-"es6-promise@npm:^4.2.8":
-  version: 4.2.8
-  resolution: "es6-promise@npm:4.2.8"
-  checksum: 10c0/2373d9c5e9a93bdd9f9ed32ff5cb6dd3dd785368d1c21e9bbbfd07d16345b3774ae260f2bd24c8f836a6903f432b4151e7816a7fa8891ccb4e1a55a028ec42c3
   languageName: node
   linkType: hard
 
@@ -11212,16 +11212,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"isomorphic-fetch@npm:^3":
-  version: 3.0.0
-  resolution: "isomorphic-fetch@npm:3.0.0"
-  dependencies:
-    node-fetch: "npm:^2.6.1"
-    whatwg-fetch: "npm:^3.4.1"
-  checksum: 10c0/511b1135c6d18125a07de661091f5e7403b7640060355d2d704ce081e019bc1862da849482d079ce5e2559b8976d3de7709566063aec1b908369c0b98a2b075b
-  languageName: node
-  linkType: hard
-
 "istanbul-lib-coverage@npm:^3.0.0, istanbul-lib-coverage@npm:^3.2.2":
   version: 3.2.2
   resolution: "istanbul-lib-coverage@npm:3.2.2"
@@ -11446,7 +11436,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:~5.2.1":
+"js-yaml@npm:^5.2.2, js-yaml@npm:~5.2.1":
   version: 5.2.3
   resolution: "js-yaml@npm:5.2.3"
   dependencies:
@@ -11620,7 +11610,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonpointer@npm:^5.0.0, jsonpointer@npm:~5.0.1":
+"jsonpointer@npm:^5.0.0, jsonpointer@npm:^5.0.1, jsonpointer@npm:~5.0.1":
   version: 5.0.1
   resolution: "jsonpointer@npm:5.0.1"
   checksum: 10c0/89929e58b400fcb96928c0504fcf4fc3f919d81e9543ceb055df125538470ee25290bb4984251e172e6ef8fcc55761eb998c118da763a82051ad89d4cb073fe7
@@ -11765,7 +11755,7 @@ __metadata:
     markdownlint-cli: "npm:0.49.1"
     mini-css-extract-plugin: "npm:2.10.2"
     msw: "npm:2.15.0"
-    openapi-merge-cli: "npm:1.3.2"
+    openapi-merge-cli: "npm:2.0.2"
     path-browserify: "npm:^1.0.1"
     pinia: "npm:4.0.2"
     postcss: "npm:8.5.25"
@@ -13031,20 +13021,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.6.1":
-  version: 2.7.0
-  resolution: "node-fetch@npm:2.7.0"
-  dependencies:
-    whatwg-url: "npm:^5.0.0"
-  peerDependencies:
-    encoding: ^0.1.0
-  peerDependenciesMeta:
-    encoding:
-      optional: true
-  checksum: 10c0/b55786b6028208e6fbe594ccccc213cab67a72899c9234eb59dba51062a299ea853210fcf526998eaa2867b0963ad72338824450905679ff0fa304b8c5093ae8
-  languageName: node
-  linkType: hard
-
 "node-gyp@npm:latest":
   version: 13.0.1
   resolution: "node-gyp@npm:13.0.1"
@@ -13299,30 +13275,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"openapi-merge-cli@npm:1.3.2":
-  version: 1.3.2
-  resolution: "openapi-merge-cli@npm:1.3.2"
+"openapi-merge-cli@npm:2.0.2":
+  version: 2.0.2
+  resolution: "openapi-merge-cli@npm:2.0.2"
   dependencies:
-    ajv: "npm:^6.12.2"
-    commander: "npm:^5.1.0"
-    es6-promise: "npm:^4.2.8"
-    isomorphic-fetch: "npm:^3"
-    js-yaml: "npm:^3.14.0"
-    openapi-merge: "npm:^1.2.0"
+    "@atlassian/atlassian-openapi": "npm:^1.0.6"
+    ajv: "npm:8"
+    ajv-formats: "npm:^3.0.1"
+    commander: "npm:^15.0.0"
+    js-yaml: "npm:^5.2.2"
+    openapi-merge: "npm:^2.0.2"
   bin:
     openapi-merge-cli: dist/cli.js
-  checksum: 10c0/24b7bdc89604fc542d0ccc2ef0258f8b1e8bec06bc136c8e3a033abc0e2a4f1b977a9ca8f8e72789e6e1a58c2d605f1bff73e4e854074befa98585e6cbc8202e
+  checksum: 10c0/8f219479d641676e123b40608f882473de194d466c312cac1900b38a90e5fc27445e0ecfd1b356de44b2e9a4e4fead5c8f1d22e1be561f15b63b970b5f948495
   languageName: node
   linkType: hard
 
-"openapi-merge@npm:^1.2.0":
-  version: 1.3.3
-  resolution: "openapi-merge@npm:1.3.3"
+"openapi-merge@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "openapi-merge@npm:2.0.2"
   dependencies:
-    atlassian-openapi: "npm:^1.0.8"
+    "@atlassian/atlassian-openapi": "npm:^1.0.6"
+    jsonpointer: "npm:^5.0.1"
     lodash: "npm:^4.17.15"
     ts-is-present: "npm:^1.1.1"
-  checksum: 10c0/381b4f2311727bc335f2092ee8c5317541ca2b12c871899bd93ef2c2d0e3aff6057fab6c678d5a45a682a83ca91e119e9a606f2e9b7328e3238c3ef91e571ea1
+  checksum: 10c0/55c7ae0517dd63215ffbefc4973b690ba4859cce2f6537eb54b6a8bdf202053d2ae8f4dffd8669dbbc683641388ffa2cb71aff75f2a6889f15b84a09acb111c7
   languageName: node
   linkType: hard
 
@@ -17006,13 +16983,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tr46@npm:~0.0.3":
-  version: 0.0.3
-  resolution: "tr46@npm:0.0.3"
-  checksum: 10c0/047cb209a6b60c742f05c9d3ace8fa510bff609995c129a37ace03476a9b12db4dbf975e74600830ef0796e18882b2381fb5fb1f6b4f96b832c374de3ab91a11
-  languageName: node
-  linkType: hard
-
 "tree-dump@npm:^1.0.3, tree-dump@npm:^1.1.0":
   version: 1.1.0
   resolution: "tree-dump@npm:1.1.0"
@@ -18050,13 +18020,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webidl-conversions@npm:^3.0.0":
-  version: 3.0.1
-  resolution: "webidl-conversions@npm:3.0.1"
-  checksum: 10c0/5612d5f3e54760a797052eb4927f0ddc01383550f542ccd33d5238cfd65aeed392a45ad38364970d0a0f4fea32e1f4d231b3d8dac4a3bdd385e5cf802ae097db
-  languageName: node
-  linkType: hard
-
 "webidl-conversions@npm:^8.0.1":
   version: 8.0.1
   resolution: "webidl-conversions@npm:8.0.1"
@@ -18418,13 +18381,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"whatwg-fetch@npm:^3.4.1":
-  version: 3.6.20
-  resolution: "whatwg-fetch@npm:3.6.20"
-  checksum: 10c0/fa972dd14091321d38f36a4d062298df58c2248393ef9e8b154493c347c62e2756e25be29c16277396046d6eaa4b11bd174f34e6403fff6aaca9fb30fa1ff46d
-  languageName: node
-  linkType: hard
-
 "whatwg-mimetype@npm:^5.0.0":
   version: 5.0.0
   resolution: "whatwg-mimetype@npm:5.0.0"
@@ -18451,16 +18407,6 @@ __metadata:
     tr46: "npm:^6.0.0"
     webidl-conversions: "npm:^8.0.1"
   checksum: 10c0/08fe809e90e1d20f6de631c9cdf312623fe5526731dc176ad38967c7d0f34e6e9700cbc0bad5ecd3d5ea8c62737a487883948e85937432f3a598746d8e05e80e
-  languageName: node
-  linkType: hard
-
-"whatwg-url@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "whatwg-url@npm:5.0.0"
-  dependencies:
-    tr46: "npm:~0.0.3"
-    webidl-conversions: "npm:^3.0.0"
-  checksum: 10c0/1588bed84d10b72d5eec1d0faa0722ba1962f1821e7539c535558fb5398d223b0c50d8acab950b8c488b4ba69043fd833cc2697056b167d8ad46fac3995a55d5
   languageName: node
   linkType: hard
 
