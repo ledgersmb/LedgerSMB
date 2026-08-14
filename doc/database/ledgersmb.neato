@@ -4,9 +4,9 @@ edge [];
 
 "ac_tax_form" [shape = record, label = "{<col0> \N| entry_id:  integer\lreportable:  boolean\l}" ];
 
-"acc_trans" [shape = record, label = "{<col0> \N| trans_id:  integer\lchart_id:  integer\ltransdate:  date\lsource:  text\lcleared:  boolean\lmemo:  text\linvoice_id:  integer\lapproved:  boolean\lvoucher_id:  integer\lentry_id:  serial\lamount_bc:  numeric\lamount_tc:  numeric\lcurr:  character(3)\l}" ];
+"acc_trans" [shape = record, label = "{<col0> \N| trans_id:  integer\lchart_id:  integer\ltransdate:  date\lsource:  text\lcleared:  boolean\lmemo:  text\linvoice_id:  integer\lapproved:  boolean\ldeprecated-voucher_id:  integer\lentry_id:  serial\lamount_bc:  numeric\lamount_tc:  numeric\lcurr:  character(3)\lopen_item_id:  integer\ladditional_data:  jsonb\l}" ];
 
-"account" [shape = record, label = "{<col0> \N| id:  serial\laccno:  text\ldescription:  text\lis_temp:  boolean\lcategory:  character(1)\lgifi_accno:  text\lheading:  integer\lcontra:  boolean\ltax:  boolean\lobsolete:  boolean\lheading_negative_balance:  integer\lcustom_attributes:  jsonb\l}" ];
+"account" [shape = record, label = "{<col0> \N| id:  serial\laccno:  text\ldescription:  text\lis_temp:  boolean\lcategory:  character(1)\lgifi_accno:  text\lheading:  integer\lcontra:  boolean\ltax:  boolean\lobsolete:  boolean\lheading_negative_balance:  integer\lcustom_attributes:  jsonb\lopen_item_managed:  boolean\l}" ];
 
 "account_checkpoint" [shape = record, label = "{<col0> \N| end_date:  date\laccount_id:  integer\lid:  serial\ldebits:  numeric\lcredits:  numeric\lamount_bc:  numeric\lamount_tc:  numeric\lcurr:  character(3)\l}" ];
 
@@ -20,9 +20,9 @@ edge [];
 
 "account_translation" [shape = record, label = "{<col0> \N| trans_id:  integer\llanguage_code:  character varying(6)\ldescription:  text\l}" ];
 
-"ap" [shape = record, label = "{<col0> \N| id:  integer\linvnumber:  text\ltransdate:  date\ltaxincluded:  boolean\lduedate:  date\linvoice:  boolean\lordnumber:  text\lcurr:  character(3)\lnotes:  text\lperson_id:  integer\lquonumber:  text\lintnotes:  text\lshipvia:  text\llanguage_code:  character varying(6)\lponumber:  text\lshippingpoint:  text\lon_hold:  boolean\lreverse:  boolean\lterms:  smallint\lforce_closed:  boolean\lcrdate:  date\lis_return:  boolean\lentity_credit_account:  integer\lamount_bc:  numeric\lamount_tc:  numeric\lnetamount_bc:  numeric\lnetamount_tc:  numeric\lshipto:  integer\lshipto_attn:  text\l}" ];
+"ap" [shape = record, label = "{<col0> \N| trans_id:  integer\linvnumber:  text\ltaxincluded:  boolean\lduedate:  date\linvoice:  boolean\lordnumber:  text\lcurr:  character(3)\lnotes:  text\lperson_id:  integer\lquonumber:  text\lshipvia:  text\llanguage_code:  character varying(6)\lponumber:  text\lshippingpoint:  text\lon_hold:  boolean\lreverse:  boolean\lterms:  smallint\lforce_closed:  boolean\lcrdate:  date\lis_return:  boolean\lentity_credit_account:  integer\lamount_bc:  numeric\lamount_tc:  numeric\lnetamount_bc:  numeric\lnetamount_tc:  numeric\lshipto:  integer\lshipto_attn:  text\lopen_item_id:  integer\l}" ];
 
-"ar" [shape = record, label = "{<col0> \N| id:  integer\linvnumber:  text\ltransdate:  date\ltaxincluded:  boolean\lduedate:  date\linvoice:  boolean\lshippingpoint:  text\lterms:  smallint\lnotes:  text\lcurr:  character(3)\lordnumber:  text\lperson_id:  integer\lquonumber:  text\lintnotes:  text\lshipvia:  text\llanguage_code:  character varying(6)\lponumber:  text\lon_hold:  boolean\lreverse:  boolean\lentity_credit_account:  integer\lforce_closed:  boolean\lis_return:  boolean\lcrdate:  date\lsetting_sequence:  text\lamount_bc:  numeric\lamount_tc:  numeric\lnetamount_bc:  numeric\lnetamount_tc:  numeric\lshipto:  integer\lshipto_attn:  text\l}" ];
+"ar" [shape = record, label = "{<col0> \N| trans_id:  integer\linvnumber:  text\ltaxincluded:  boolean\lduedate:  date\linvoice:  boolean\lshippingpoint:  text\lterms:  smallint\lnotes:  text\lcurr:  character(3)\lordnumber:  text\lperson_id:  integer\lquonumber:  text\lshipvia:  text\llanguage_code:  character varying(6)\lponumber:  text\lon_hold:  boolean\lreverse:  boolean\lentity_credit_account:  integer\lforce_closed:  boolean\lis_return:  boolean\lcrdate:  date\lsetting_sequence:  text\lamount_bc:  numeric\lamount_tc:  numeric\lnetamount_bc:  numeric\lnetamount_tc:  numeric\lshipto:  integer\lshipto_attn:  text\lopen_item_id:  integer\l}" ];
 
 "assembly" [shape = record, label = "{<col0> \N| id:  integer\lparts_id:  integer\lqty:  numeric\lbom:  boolean\ladj:  boolean\l}" ];
 
@@ -176,9 +176,9 @@ edge [];
 
 "gifi" [shape = record, label = "{<col0> \N| accno:  text\ldescription:  text\llast_updated:  timestamp without time zone\l}" ];
 
-"gl" [shape = record, label = "{<col0> \N| id:  integer\lreference:  text\ltransdate:  date\lperson_id:  integer\lnotes:  text\l}" ];
+"gl" [shape = record, label = "{<col0> \N| id:  integer\l}" ];
 
-"inventory_report" [shape = record, label = "{<col0> \N| id:  serial\ltransdate:  date\lsource:  text\ltrans_id:  integer\l}" ];
+"inventory_report" [shape = record, label = "{<col0> \N| id:  serial\lreport_date:  date\lsource:  text\ltrans_id:  integer\l}" ];
 
 "inventory_report_line" [shape = record, label = "{<col0> \N| adjust_id:  integer\lparts_id:  integer\lcounted:  numeric\lexpected:  numeric\lvariance:  numeric\l}" ];
 
@@ -236,7 +236,11 @@ edge [];
 
 "open_forms" [shape = record, label = "{<col0> \N| id:  integer\lsession_id:  integer\lform_name:  character varying(100)\llast_used:  timestamp without time zone\l}" ];
 
+"open_item" [shape = record, label = "{<col0> \N| id:  serial\litem_number:  text\litem_type:  character(2)\laccount_id:  integer\l}" ];
+
 "orderitems" [shape = record, label = "{<col0> \N| id:  serial\ltrans_id:  integer\lparts_id:  integer\ldescription:  text\lqty:  numeric\lsellprice:  numeric\lprecision:  integer\ldiscount:  numeric\lunit:  character varying(5)\lreqdate:  date\lship:  numeric\lserialnumber:  text\lnotes:  text\l}" ];
+
+"overpayment" [shape = record, label = "{<col0> \N| id:  serial\lopen_item_id:  integer\leca_id:  integer\l}" ];
 
 "parts" [shape = record, label = "{<col0> \N| id:  serial\lpartnumber:  text\ldescription:  text\lunit:  character varying(5)\llistprice:  numeric\lsellprice:  numeric\llastcost:  numeric\lpriceupdate:  date\lweight:  numeric\lonhand:  numeric\lnotes:  text\lmakemodel:  boolean\lassembly:  boolean\lalternate:  boolean\lrop:  numeric\linventory_accno_id:  integer\lincome_accno_id:  integer\lexpense_accno_id:  integer\lreturns_accno_id:  integer\lbin:  text\lobsolete:  boolean\lbom:  boolean\limage:  text\ldrawing:  text\lmicrofiche:  text\lpartsgroup_id:  integer\lavgcost:  numeric\lcustom_attributes:  jsonb\l}" ];
 
@@ -252,9 +256,7 @@ edge [];
 
 "partsvendor" [shape = record, label = "{<col0> \N| credit_id:  integer\lparts_id:  integer\lpartnumber:  text\lleadtime:  smallint\llastcost:  numeric\lcurr:  character(3)\lentry_id:  serial\l}" ];
 
-"payment" [shape = record, label = "{<col0> \N| id:  serial\lreference:  text\lpayment_class:  integer\lpayment_date:  date\lclosed:  boolean\lentity_credit_id:  integer\lemployee_id:  integer\lcurrency:  character(3)\lnotes:  text\lreversing:  integer\ltrans_id:  integer\l}" ];
-
-"payment_links" [shape = record, label = "{<col0> \N| payment_id:  integer\lentry_id:  integer\ltype:  integer\l}" ];
+"payment" [shape = record, label = "{<col0> \N| id:  serial\lreference:  text\lpayment_class:  integer\lpayment_date:  date\lclosed:  boolean\lentity_credit_id:  integer\lemployee_id:  integer\lcurrency:  character(3)\lnotes:  text\ltrans_id:  integer\laccount_id:  integer\l}" ];
 
 "payment_type" [shape = record, label = "{<col0> \N| id:  serial\llabel:  text\l}" ];
 
@@ -318,17 +320,15 @@ edge [];
 
 "template" [shape = record, label = "{<col0> \N| id:  serial\ltemplate_name:  text\llanguage_code:  character varying(6)\ltemplate:  text\lformat:  text\llast_modified:  timestamp without time zone\l}" ];
 
-"trans_type" [shape = record, label = "{<col0> \N| code:  character(2)\ldescription:  character varying(1000)\l}" ];
+"trans_type" [shape = record, label = "{<col0> \N| code:  character(2)\ldescription:  character varying(1000)\ldetails_table:  text\l}" ];
 
-"transactions" [shape = record, label = "{<col0> \N| id:  integer\ltable_name:  text\llocked_by:  integer\lapproved:  boolean\lapproved_by:  integer\lapproved_at:  timestamp without time zone\ltransdate:  date\lworkflow_id:  integer\lreversing:  integer\lreference:  text\ldescription:  text\ltrans_type_code:  character(2)\lentered_by:  integer\l}" ];
+"transactions" [shape = record, label = "{<col0> \N| id:  serial\llocked_by:  integer\lapproved:  boolean\lapproved_by:  integer\lapproved_at:  timestamp without time zone\ltransdate:  date\lworkflow_id:  integer\lreversing:  integer\lreference:  text\ldescription:  text\ltrans_type_code:  character(2)\lentered_by:  integer\lnotes:  text\lbatch_id:  integer\l}" ];
 
 "trial_balance__yearend_types" [shape = record, label = "{<col0> \N| type:  text\l}" ];
 
 "user_preference" [shape = record, label = "{<col0> \N| id:  serial\luser_id:  integer\lname:  text\lvalue:  text\l}" ];
 
 "users" [shape = record, label = "{<col0> \N| id:  serial\lusername:  character varying(30)\lnotify_password:  interval\lentity_id:  integer\l}" ];
-
-"voucher" [shape = record, label = "{<col0> \N| trans_id:  integer\lbatch_id:  integer\lid:  serial\lbatch_class:  integer\l}" ];
 
 "warehouse" [shape = record, label = "{<col0> \N| id:  serial\ldescription:  text\llast_updated:  timestamp without time zone\l}" ];
 
@@ -347,8 +347,8 @@ edge [];
 "acc_trans" -> "transactions" [label="acc_trans_trans_id_fkey"];
 "acc_trans" -> "account" [label="acc_trans_chart_id_fkey"];
 "acc_trans" -> "invoice" [label="acc_trans_invoice_id_fkey"];
-"acc_trans" -> "voucher" [label="acc_trans_voucher_id_fkey"];
 "acc_trans" -> "currency" [label="acc_trans_curr_fkey"];
+"acc_trans" -> "open_item" [label="acc_trans_open_item_id_fkey"];
 "account" -> "gifi" [label="account_gifi_accno_fkey"];
 "account" -> "account_heading" [label="account_heading_fkey"];
 "account" -> "account_heading" [label="account_heading_negative_balance_fkey"];
@@ -369,12 +369,14 @@ edge [];
 "ap" -> "language" [label="ap_language_code_fkey"];
 "ap" -> "entity_credit_account" [label="ap_entity_credit_account_fkey"];
 "ap" -> "location" [label="ap_shipto_fkey"];
+"ap" -> "open_item" [label="ap_open_item_id_fkey"];
 "ar" -> "transactions" [label="ar_id_fkey"];
 "ar" -> "currency" [label="ar_curr_fkey"];
 "ar" -> "entity_employee" [label="ar_person_id_fkey"];
 "ar" -> "language" [label="ar_language_code_fkey"];
 "ar" -> "entity_credit_account" [label="ar_entity_credit_account_fkey"];
 "ar" -> "location" [label="ar_shipto_fkey"];
+"ar" -> "open_item" [label="ar_open_item_id_fkey"];
 "assembly" -> "parts" [label="assembly_id_fkey"];
 "assembly" -> "parts" [label="assembly_parts_id_fkey"];
 "asset_class" -> "account" [label="asset_class_asset_account_id_fkey"];
@@ -511,7 +513,6 @@ edge [];
 "file_tx_to_order" -> "oe" [label="file_tx_to_order_ref_key_fkey"];
 "file_view_catalog" -> "file_class" [label="file_view_catalog_file_class_fkey"];
 "gl" -> "transactions" [label="gl_id_fkey"];
-"gl" -> "person" [label="gl_person_id_fkey"];
 "inventory_report" -> "transactions" [label="inventory_report_trans_id_fkey"];
 "inventory_report_line" -> "inventory_report" [label="inventory_report_line_adjust_id_fkey"];
 "inventory_report_line" -> "parts" [label="inventory_report_line_parts_id_fkey"];
@@ -520,10 +521,12 @@ edge [];
 "invoice_note" -> "invoice" [label="invoice_note_ref_key_fkey"];
 "invoice_tax_form" -> "invoice" [label="invoice_tax_form_invoice_id_fkey"];
 "jcitems" -> "business_unit" [label="jcitems_business_unit_id_fkey"];
+"jcitems" -> "parts" [label="jcitems_parts_id_fkey"];
 "jcitems" -> "entity" [label="jcitems_person_id_fkey"];
 "jcitems" -> "jctype" [label="jcitems_jctype_fkey"];
 "jcitems" -> "currency" [label="jcitems_curr_fkey"];
 "job" -> "business_unit" [label="job_bu_id_fkey"];
+"job" -> "parts" [label="job_parts_id_fkey"];
 "journal_entry" -> "session" [label="journal_entry_locked_by_fkey"];
 "journal_entry" -> "journal_type" [label="journal_entry_journal_fkey"];
 "journal_entry" -> "entity" [label="journal_entry_entered_by_fkey"];
@@ -556,8 +559,11 @@ edge [];
 "oe_tax" -> "oe" [label="oe_tax_oe_id_fkey"];
 "oe_tax" -> "account" [label="oe_tax_tax_id_fkey"];
 "open_forms" -> "session" [label="open_forms_session_id_fkey"];
+"open_item" -> "account" [label="open_item_account_id_fkey"];
 "orderitems" -> "oe" [label="orderitems_trans_id_fkey"];
 "orderitems" -> "parts" [label="orderitems_parts_id_fkey"];
+"overpayment" -> "open_item" [label="overpayment_open_item_id_fkey"];
+"overpayment" -> "entity_credit_account" [label="overpayment_eca_id_fkey"];
 "parts" -> "account" [label="parts_inventory_accno_id_fkey"];
 "parts" -> "account" [label="parts_income_accno_id_fkey"];
 "parts" -> "account" [label="parts_expense_accno_id_fkey"];
@@ -576,12 +582,12 @@ edge [];
 "partstax" -> "account" [label="partstax_chart_id_fkey"];
 "partstax" -> "taxcategory" [label="partstax_taxcategory_id_fkey"];
 "partsvendor" -> "entity_credit_account" [label="partsvendor_credit_id_fkey"];
+"partsvendor" -> "parts" [label="partsvendor_parts_id_fkey"];
 "partsvendor" -> "currency" [label="partsvendor_curr_fkey"];
 "payment" -> "entity_credit_account" [label="payment_entity_credit_id_fkey"];
 "payment" -> "person" [label="payment_employee_id_fkey"];
 "payment" -> "transactions" [label="payment_trans_id_fkey"];
-"payment_links" -> "payment" [label="payment_links_payment_id_fkey"];
-"payment_links" -> "acc_trans" [label="payment_links_entry_id_fkey"];
+"payment" -> "account" [label="payment_account_id_fkey"];
 "payroll_deduction" -> "entity" [label="payroll_deduction_entity_id_fkey"];
 "payroll_deduction" -> "payroll_deduction_type" [label="payroll_deduction_type_id_fkey"];
 "payroll_deduction_class" -> "country" [label="payroll_deduction_class_country_id_fkey"];
@@ -624,11 +630,9 @@ edge [];
 "transactions" -> "workflow" [label="transactions_workflow_id_fkey"];
 "transactions" -> "trans_type" [label="transactions_trans_type_code_fkey"];
 "transactions" -> "entity" [label="transactions_entered_by_fkey"];
+"transactions" -> "batch" [label="transactions_batch_id_fkey"];
 "user_preference" -> "users" [label="user_preference_user_id_fkey"];
 "users" -> "entity" [label="users_entity_id_fkey"];
-"voucher" -> "transactions" [label="voucher_trans_id_fkey"];
-"voucher" -> "batch" [label="voucher_batch_id_fkey"];
-"voucher" -> "batch_class" [label="voucher_batch_class_fkey"];
 "warehouse_inventory" -> "entity_employee" [label="warehouse_inventory_entity_id_fkey"];
 "warehouse_inventory" -> "warehouse" [label="warehouse_inventory_warehouse_id_fkey"];
 "warehouse_inventory" -> "parts" [label="warehouse_inventory_parts_id_fkey"];
