@@ -37,9 +37,10 @@
 | [0104](./0104-business-logic-in-perl.md) | Accepted | Addresses the design decision regarding using the PostgreSQL layer to  actively manage the consistency and correctness of the data. It also clarifies the responsibilities of the active and passive PostgreSQL layers. |
 | [0105](./0105-change-ui-from-dojo-to-quasar.md) | Accepted | Addresses the design decision to move the code base from Dojo to Vue and Quasar. |
 | [0106](./0106-coding-style-new-perl-syntax.md) | Accepted | Addresses the design decisions regarding Perl coding style and the limited use of newer Perl syntax. |
-| [0107](./0107-using-postgresql-json-jsonb-data-type.md) | Draft | Addresses the design decisions regarding the use of JSON and JSONB data types, and the preferential use of relational schema in the PostgreSQL database. |
+| [0107](./0107-using-postgresql-json-jsonb-data-type.md) | Accepted | Addresses the design decisions regarding the use of JSON and JSONB data types, and the preferential use of relational schema in the PostgreSQL database. |
 | [0108](./0108-transactions-as-resource-representation.md) | Accepted | Addresses the considerations regarding journal lines resulting from e.g. manufacturing lots and fixed assets as to whether they are separate resources or can be combined into a single resource. |
 | [0110](./0110-handling-argumentlist-changes-in-pg-functions.md) | Accepted | Addresses how to deal combine the requirement of having exactly one version of each function when redefining a function with a different argument list (as Pg supports simultaneous functions by the same name with different argument lists). |
+| [0111](./0111-payment-and-overpayment-migration-to-open-items.md) | Accepted | This ADR seeks to disambiguate the terms 'payment' and 'overpayment' and to detail the related change in semantics of these terms in the application. The term 'payment' refers both to cash transfers as well as the use to reduce outstanding invoice amounts. |
+| [0112](./0112-vouchers-no-longer-necessary.md) | Accepted | Vouchers and batches offer the same solution: vouchers can be removed without removing functionality from the application. |
 
-
-Index Generated: Wed Oct  1 22:29:31 2025 UTC
+Index Generated: Sat Aug 15 20:49:55 2026 UTC

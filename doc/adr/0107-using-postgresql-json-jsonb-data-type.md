@@ -4,12 +4,12 @@ Date: 2025-08-15
 
 ## Status
 
-Draft
+Accepted
 
 ## Summary
 
 Addresses the design decisions regarding the use of JSON and JSONB data types,
-and the preferential use of relational schema in the PostgreSQL database..
+and the preferential use of relational schema in the PostgreSQL database.
 
 ## Context
 
