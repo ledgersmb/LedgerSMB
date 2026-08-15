@@ -296,6 +296,7 @@ your software.
 
 
 __DATA__
+openapi: 3.0.3
 paths:
   /languages:
     description: Management of language configuration
