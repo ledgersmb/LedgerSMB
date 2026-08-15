@@ -10,15 +10,19 @@ Added functionalities
 
 Changed functionalities
 * Added support for spaces around commas in CSV uploads (#9505)
+* Batch date is now clearly indicated to be default posting date (#9791)
 
 Removed functionalities
 * Use of multiple cash accounts on the single payment entry screen (#9508)
 * Support for the INI configuration file format (#9433)
+* Table 'voucher' dropped as part of (#9788)
 
 Bugs fixed
 * Overpayment reversals don't have a 'payment' record (#9257)
 * Overpayments don't show on AR/AP invoices and transactions (#2367)
 * One voucher per batch instead of one per transaction in a batch (#9572)
+* Partial payments data generated from vouchers in 1.8 migration script (#9794)
+* Exit code from 'ledgersmb-admin' is zero on failed user creation (#9745)
 
 Cleanup & architecture improvements
 * Payments are now tracked as first-order transactions (#9508)
@@ -26,6 +30,7 @@ Cleanup & architecture improvements
 * Refactored tracking of customer/vendor overpayment balances (#9449)
 * Centralized 'transactions' table, reducing role of ar/ap/gl tables (#9283)
 * Subledger transactions no longer *also* gl transactions (#9235)
+* Batches are now a collection of transactions, not journal lines (#9788)
 * Removed unused SQL modules (#9279)
 * Move last tables to GENERATED IDENTITY (#9319)
 * Various improvements to the generation of our API documentation (#9334, #9335, #9344)
