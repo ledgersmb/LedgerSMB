@@ -69,6 +69,7 @@ your software.
 
 
 __DATA__
+openapi: 3.0.3
 paths:
   /menu-nodes:
     description: Menu items for the active user
