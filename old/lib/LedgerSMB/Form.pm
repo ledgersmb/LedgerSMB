@@ -2130,7 +2130,7 @@ sub create_links {
             SELECT ac.memo, ac.entry_id, ac.transdate, ac.cleared,
                    array_agg(ARRAY[bul.class_id, bul.bu_id]) as bu_lines,
                    ac.approved, ac.source, -ac.amount_tc as amount,
-                   case when ac.amount_tc = 0 then 0 else (-ac.amount_bc/ac.amount_tc)::numeric end as exchangerate,
+                   case when ac.amount_tc = 0 then 0 else (ac.amount_bc/ac.amount_tc)::numeric end as exchangerate,
                    c.accno, c.description
               FROM acc_trans ac
                    LEFT JOIN business_unit_ac bul
