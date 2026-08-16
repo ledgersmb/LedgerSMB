@@ -1926,61 +1926,13 @@ sub create_links {
     my $key;
     my %tax_accounts;
 
-    $sth = $dbh->prepare("SELECT accno FROM account WHERE tax");
-    $sth->execute();
-    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
-        $tax_accounts{$ref->{accno}} = 1;
-    }
-
-    # now get the account numbers
-    $query = qq|SELECT a.accno, a.description, array_agg(l.description) as link
-                  FROM account a
-                  JOIN account_link l ON a.id = l.account_id AND NOT a.obsolete
-                 WHERE (l.description LIKE ? OR a.tax)
-                       AND (a.id in (select acc_trans.chart_id
-                                       FROM acc_trans
-                                      WHERE trans_id = coalesce(?, -1))
-                           OR NOT a.obsolete)
-              GROUP BY a.accno, a.description
-              ORDER BY accno|;
-
-    $sth = $dbh->prepare($query);
-    $self->{id} = undef if $self->{id} && $self->{id} eq '';
-    $sth->execute( "%" . "$module%", $self->{id}) || $self->dberror($query);
-
-    $self->{accounts} = "";
-
-    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
-        $self->{_accno_descriptions}->{$ref->{accno}} = $ref->{description};
-        my $link = $ref->{link};
-
-        push(@$link,"${module}_tax") # there's no "${module}_tax" link; only a tax boolean
-            if $tax_accounts{$ref->{accno}};
-
-        foreach my $key ( @$link ) {
-            if ( $key =~ /$module/ ) { # *all* tax accounts selected in query above
-                # cross reference for keys
-                $xkeyref{ $ref->{accno} } = $key;
-
-                push @{ $self->{"${module}_links"}{$key} },
-                  {
-                    accno       => $ref->{accno},
-                    description => $ref->{description}
-                  };
-
-                $self->{accounts} .= "$ref->{accno} "
-                  unless $key =~ /tax/;
-            }
-        }
-    }
-    $sth->finish;
-
     my $arap = ( $vc eq 'customer' ) ? 'ar' : 'ap';
     $vc = 'vendor' unless $vc eq 'customer';
     my $seq = ( $vc eq 'customer' ) ? 'a.setting_sequence'
                                     : 'NULL as setting_sequence';
     if ( $self->{id} ) {
-
+        # retrieve the 'open_item_id' to query any relevant obsolete accounts
+        # for the transaction and payment lines.
         $query = qq|
             SELECT a.invnumber, txn.transdate,
                 a.entity_credit_account AS entity_id,
@@ -2030,6 +1982,63 @@ sub create_links {
 
         $sth->finish;
 
+    }
+
+        $sth = $dbh->prepare("SELECT accno FROM account WHERE tax");
+    $sth->execute();
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+        $tax_accounts{$ref->{accno}} = 1;
+    }
+
+    # now get the account numbers
+    $query = qq|SELECT a.accno, a.description, array_agg(l.description) as link
+                  FROM account a
+                  JOIN account_link l ON a.id = l.account_id
+                 WHERE (l.description LIKE ? OR a.tax)
+                       AND (a.id in (select acc_trans.chart_id
+                                       FROM acc_trans
+                                      WHERE trans_id = ?)
+                            OR a.id in (select acc_trans.chart_id
+                                          FROM acc_trans
+                                         WHERE trans_id in (select trans_id
+                                                              from acc_trans
+                                                             where open_item_id = ?))
+                           OR NOT a.obsolete)
+              GROUP BY a.accno, a.description
+              ORDER BY accno|;
+
+    $sth = $dbh->prepare($query);
+    $self->{id} = undef if $self->{id} && $self->{id} eq '';
+    $sth->execute( "%" . "$module%", $self->{id}, $self->{open_item_id}) || $self->dberror($query);
+
+    $self->{accounts} = "";
+
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+        $self->{_accno_descriptions}->{$ref->{accno}} = $ref->{description};
+        my $link = $ref->{link};
+
+        push(@$link,"${module}_tax") # there's no "${module}_tax" link; only a tax boolean
+            if $tax_accounts{$ref->{accno}};
+
+        foreach my $key ( @$link ) {
+            if ( $key =~ /$module/ ) { # *all* tax accounts selected in query above
+                # cross reference for keys
+                $xkeyref{ $ref->{accno} } = $key;
+
+                push @{ $self->{"${module}_links"}{$key} },
+                  {
+                    accno       => $ref->{accno},
+                    description => $ref->{description}
+                  };
+
+                $self->{accounts} .= "$ref->{accno} "
+                  unless $key =~ /tax/;
+            }
+        }
+    }
+    $sth->finish;
+
+    if ( $self->{id} ) {
     # get customer e-mail accounts
     $query = qq|SELECT * FROM eca__list_contacts(?)
                       WHERE class_id BETWEEN 12 AND ?
