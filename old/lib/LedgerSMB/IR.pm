@@ -107,11 +107,6 @@ sub post_invoice {
         ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
     }
 
-    $form->{department_id} = 0;
-    ( $null, $form->{department_id} ) = split( /--/, $form->{department} )
-        if $form->{department};
-    $form->{department_id} *= 1;
-
     $query = qq|
         SELECT inventory_accno_id, income_accno_id, expense_accno_id
           FROM parts

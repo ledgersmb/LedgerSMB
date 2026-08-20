@@ -1088,15 +1088,14 @@ sub generate_selects {
         }
     }
 
-    # departments
-    if ( $form->{all_department} && @{ $form->{all_department} } ) {
-        $form->{selectdepartment} = "<option></option>\n";
-        for ( @{ $form->{all_department} } ) {
-                my $value = "$_->{description}--$_->{id}";
-                my $selected = ($form->{department} eq $value) ?
-                     ' selected="selected"' : "";
-            $form->{selectdepartment} .=
-                     qq|<option value="$value"$selected>$_->{description}</option>\n|;
+    # business units
+    if ( $form->{bu_class} && @{ $form->{bu_class} } ) {
+        for my $bu_class ( @{ $form->{bu_class} } ) {
+            my $select = '<option></option>';
+            for my $b_unit ( @{ $form->{b_units}->{$bu_class->{id}} } ) {
+                $select .= qq|<option value="$b_unit->{id}">$b_unit->{description}</option>|;
+            }
+            $form->{"selectbc_$bu_class->{id}"} = $select;
         }
     }
 
@@ -1511,7 +1510,7 @@ is equal to, $myconfig->{vclimit}.
 In addition to the possible population of $form->{all_${vc}},
 $form->{employee_id} is looked up if not already set, the list
 $form->{all_language} is populated using the language table and is sorted by the
-description, and $form->all_employees, $form->all_departments,
+description, and $form->all_employees,
 $form->all_business_units, and $form->all_taxaccounts are all run.
 
 =cut
@@ -1630,7 +1629,6 @@ sub rebuild_vc {
 This is API-compatible with all_vc.  It is a handy wrapper function that calls
 the following functions:
 all_employees
-all_departments
 all_business_units
 all_taxaccounts
 
@@ -1639,7 +1637,7 @@ variable collisions, etc.
 
 $form->{employee_id} is looked up if not already set, the list
 $form->{all_language} is populated using the language table and is sorted by the
-description, and $form->all_employees, $form->all_departments,
+description, and $form->all_employees,
 $form->all_business_units, and $form->all_taxaccounts are all run.
 
 =cut
@@ -1877,7 +1875,7 @@ the accounts looked up.
 If $form->{id} is not set, check $form->{"$form->{vc}_id"}.
 If $form->{id} is set,
 populate the invnumber, transdate, ${vc}_id, datepaid, duedate, ordnumber,
-taxincluded, currency, notes, intnotes, ${vc}, department_id, department,
+taxincluded, currency, notes, intnotes, ${vc},
 oldinvtotal, employee_id, employee, language_code, ponumber,
 reverse, recurring, exchangerate, and acc_trans
 attributes of $form with details about the transaction $form->{id}.  All of

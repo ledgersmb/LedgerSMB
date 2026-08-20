@@ -185,11 +185,6 @@ sub invoice_links {
         language_code => $form->{language_code}
     });
 
-    if ( $form->{all_department} && @{ $form->{all_department} } ) {
-        $form->{department} = "$form->{department}--$form->{department_id}"
-          if $form->{department_id};
-     }
-
     $form->{vendor} //= '';
     $form->{vendor_id} //= '';
     $form->{oldvendor}    = "$form->{vendor}--$form->{vendor_id}";
@@ -313,16 +308,6 @@ sub form_header {
                  .  $locale->text('New') . qq|]</a>|;
     }
 
-    $department = qq|
-              <tr>
-          <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
-          <td colspan=3><select data-dojo-type="dijit/form/Select" id=department name=department $readonly>$form->{selectdepartment}</select>
-          <input type=hidden name=selectdepartment value="|
-      . $form->escape( $form->{selectdepartment}, 1 ) . qq|">
-          </td>
-        </tr>
-| if $form->{selectdepartment};
-
     $n = ( $form->{creditremaining} < 0 ) ? "0" : "1";
 
     $i     = $form->{rowcount} + 1;
@@ -423,7 +408,6 @@ sub form_header {
         <th align=right><label for="AP">| . $locale->text('Record in') . qq|</label></th>
         <td colspan=3><select data-dojo-type="dijit/form/Select" id=AP name=AP $readonly>$form->{selectAP}</select></td>
           </tr>
-              $department
           $exchangerate
             <tr>
                <th align="right" nowrap><label for="description">| . $locale->text('Description') . qq|</label></th>

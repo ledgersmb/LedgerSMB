@@ -107,7 +107,7 @@ sub save {
     _db_prepare_vars( $form,
         "quonumber", "transdate",     "vendor_id",     "entity_id",
         "reqdate",   "taxincluded",   "shippingpoint", "shipvia",
-        "currency",  "department_id", "employee_id",   "language_code",
+        "currency",  "employee_id",   "language_code",
         "ponumber",  "terms"
     );
 
@@ -431,9 +431,7 @@ VALUES (?, (select id from account where accno = ?), ?, ?, ?)
       ? $exchangerate
       : $form->parse_amount( $myconfig, $form->{exchangerate} );
 
-    ( $null, $form->{department_id} ) = split( /--/, $form->{department} );
-
-    for (qw(department_id terms)) { $form->{$_} *= 1 }
+    for (qw(terms)) { $form->{$_} *= 1 }
 
     if ($did_insert) {
         $query = qq|
@@ -2087,12 +2085,6 @@ sub generate_orders {
 
         my $null;
         my $employee_id;
-        my $department_id;
-
-        ( $null, $employee_id ) = $form->get_employee;
-        ( $null, $department_id ) = split /--/, $form->{department};
-        $department_id *= 1;
-
 
         $query = qq|
             UPDATE oe SET
@@ -2104,14 +2096,13 @@ sub generate_orders {
                 taxincluded = ?,
                 curr = ?,
                 person_id = ?,
-                department_id = ?,
                 ponumber = ?
             WHERE id = ?|;
         $sth = $dbh->prepare($query);
         $sth->execute(
             $ordnumber,   $vendor_id,     $amount,
             $netamount,   $taxincluded,   $curr,
-            $employee_id, $department_id, $form->{ponumber},
+            $employee_id, $form->{ponumber},
             $id
         ) || $form->dberror($query);
 

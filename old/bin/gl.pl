@@ -319,9 +319,6 @@ sub display_form
     $form->open_form;
     my ($init) = @_;
     # Form header part begins -------------------------------------------
-    if ($form->{all_department}){
-        unshift @{ $form->{all_department} }, {};
-    }
     $title = $locale->maketext($form->{title});
     if ( $form->{transfer} ) {
         $form->{title} = $locale->text("[_1] Cash Transfer Transaction", $title);
@@ -450,7 +447,6 @@ sub display_form
 
 
 sub save_as_template {
-    my ($department_name, $department_id) = split/--/, $form->{department};
 
     if ($form->{workflow_id}) {
         my $wf = $form->{_conn}->workflows->fetch(
@@ -584,9 +580,6 @@ sub edit {
     $form->all_business_units($form->{transdate}, undef, 'GL');
 
     $form->{title} = "Edit";
-    if ($form->{department_id}) {
-         $form->{department}=$form->{departmentdesc}."--".$form->{department_id};
-    }
 
     my $i = 0;
     my $minusOne = LedgerSMB::PGNumber->new(-1); #HV make sure BigFloat stays BigFloat

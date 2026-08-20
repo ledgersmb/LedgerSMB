@@ -163,10 +163,10 @@ sub display_row {
         $parts_list = 'purchase';
     }
 
-    # replace '' transdate with NULL
-    $form->all_business_units( ($form->{transdate} or undef) ,
-                              $form->{"$form->{vc}_id"},
-                              $lsmb_module);
+    # # replace '' transdate with NULL
+    # $form->all_business_units( ($form->{transdate} or undef) ,
+    #                           $form->{"$form->{vc}_id"},
+    #                           $lsmb_module);
     @column_index = qw(deleteline runningnumber partnumber description qty);
 
     if ( $form->{type} eq "sales_order" ) {
@@ -414,7 +414,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                    }
                    $column_data{"b_unit_$cls->{id}"} .= qq|
                        <option value="$bu->{id}" $selected >
-                               $bu->{control_code}
+                               $bu->{control_code} - $bu->{description}
                        </option>|;
                 }
                 $column_data{"b_unit_$cls->{id}"} .= qq|
@@ -992,7 +992,7 @@ sub create_form {
     for ( "$form->{vc}", "currency" ) { $form->{"select$_"} = "" }
 
     for (
-        qw(currency employee department intnotes notes language_code taxincluded)
+        qw(currency employee intnotes notes language_code taxincluded)
       )
     {
         $temp{$_} = $form->{$_};

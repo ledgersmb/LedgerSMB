@@ -758,9 +758,6 @@ sub post_invoice {
         ( $form->{employee}, $form->{employee_id} ) = $form->get_employee;
     }
 
-    ( $null, $form->{department_id} ) = split( /--/, $form->{department} );
-    $form->{department_id} *= 1;
-
     my $fxgain_accno_id = $form->get_setting('fxgain_accno_id');
     my $fxloss_accno_id = $form->get_setting('fxloss_accno_id');
 
