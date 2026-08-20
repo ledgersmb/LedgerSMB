@@ -477,6 +477,7 @@ your software.
 
 
 __DATA__
+openapi: 3.0.3
 paths:
   /products/pricegroups:
     description: Managing products and related configuration

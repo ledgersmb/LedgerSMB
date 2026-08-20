@@ -483,6 +483,7 @@ your software.
 
 
 __DATA__
+openapi: 3.0.3
 paths:
   /contacts/sic:
     description: Collection of Standard Industry Codes (SICs)

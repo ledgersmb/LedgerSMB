@@ -261,6 +261,7 @@ your software.
 
 
 __DATA__
+openapi: 3.0.3
 paths:
   /gl/gifi:
     description: A list of GIFI
