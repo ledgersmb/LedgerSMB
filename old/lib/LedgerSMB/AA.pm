@@ -362,7 +362,7 @@ sub post_transaction {
              crdate = ?,
              reverse = ?,
              person_id = ?,
-             entity_credit_account = ?,
+             entity_credit_account = ?
        WHERE trans_id = ?
     |;
    }
