@@ -1087,6 +1087,17 @@ sub generate_selects {
         }
     }
 
+    # business units
+    if ( $form->{bu_class} && @{ $form->{bu_class} } ) {
+        for my $bu_class ( @{ $form->{bu_class} } ) {
+            my $select = '<option></option>';
+            for my $b_unit ( @{ $form->{b_units}->{$bu_class->{id}} } ) {
+                $select .= qq|<option value="$b_unit->{id}">$b_unit->{description}</option>|;
+            }
+            $form->{"selectbc_$bu_class->{id}"} = $select;
+        }
+    }
+
     # departments
     if ( $form->{all_department} && @{ $form->{all_department} } ) {
         $form->{selectdepartment} = "<option></option>\n";

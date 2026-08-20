@@ -342,7 +342,7 @@ sub create_links {
     $form->{oldtransdate} = $form->{transdate};
 
     # Business Reporting Units
-    $form->all_business_units;
+    #$form->all_business_units;
 
     # forex
     $form->{forex} = $form->{exchangerate};
@@ -490,9 +490,9 @@ sub form_header {
     }
     $wf->context->param( transdate => $form->{transdate} );
     $title = $form->{title};
-    $form->all_business_units($form->{transdate},
-                              $form->{"$form->{vc}_id"},
-                              $form->{ARAP});
+    # $form->all_business_units($form->{transdate},
+    #                           $form->{"$form->{vc}_id"},
+    #                           $form->{ARAP});
 
     if($form->{batch_id})
     {
@@ -882,7 +882,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
                             $selected = 'selected="selected"';
                          }
                          print qq|  <option value="$bu->{id}" $selected>
-                                        $bu->{control_code}
+                                        $bu->{control_code} - $bu->{description}
                                     </option>|;
                       }
                 print qq|
