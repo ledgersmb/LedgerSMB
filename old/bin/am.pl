@@ -602,7 +602,7 @@ sub process_transactions {
                     delete $form->{"$form->{ARAP}_links"};
                     for (qw(acc_trans invoice_details)) { delete $form->{$_} }
                     for (
-                        qw(department employee language month partsgroup project years)
+                        qw(employee language month partsgroup project years)
                       )
                     {
                         delete $form->{"all_$_"};

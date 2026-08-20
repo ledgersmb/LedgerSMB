@@ -333,14 +333,6 @@ sub form_header {
         $locale->text('New') . qq|]</a> |;
     }
 
-    $department = qq|
-              <tr>
-            <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
-        <td colspan="3"><select data-dojo-type="dijit/form/Select" id="department" name="department" $readonly>$form->{selectdepartment}</select>
-        </td>
-          </tr>
-| if $form->{selectdepartment};
-
     $n = ( defined $form->{creditremaining} and $form->{creditremaining} < 0 ) ? "0" : "1";
 
     if ( $form->{business} ) {
@@ -479,7 +471,6 @@ sub form_header {
     $form->{$_} //= 'today' for (qw(crdate transdate));
     $myconfig{dateformat} //= '';
     $business //= '';
-    $department //= '';
     $exchangerate //= '';
     $form->get_shipto( $form->{shiptolocationid} );
     print qq|
@@ -492,7 +483,6 @@ sub form_header {
         <th align="right" nowrap><label for="AR">| . $locale->text('Record in') . qq|</label></th>
         <td colspan="3"><select data-dojo-type="dijit/form/Select" name="AR" id="AR" $readonly>$form->{selectAR}</select></td>
           </tr>
-          $department
           $exchangerate
             <tr>
                <th align="right" nowrap><label for="description">| . $locale->text('Description') . qq|</label>

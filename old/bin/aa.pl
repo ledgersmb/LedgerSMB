@@ -575,17 +575,6 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=notes rows=$rows cols=50 
     $intnotes =
 qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</textarea>|;
 
-    $department = qq|
-          <tr>
-        <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
-        <td colspan=3><select data-dojo-type="dijit/form/Select" id=department name=department $readonly>$form->{selectdepartment}</select>
-        <input type=hidden name=selectdepartment value="|
-      . $form->escape( $form->{selectdepartment}, 1 ) . qq|">
-        </td>
-          </tr>
-        | if $form->{selectdepartment};
-     $department //= '';
-
     $n = ( ($form->{creditremaining} // 0) < 0 ) ? "0" : "1";
 
     $name =
@@ -747,7 +736,6 @@ $form->open_status_div($status_div_id) . qq|
      $form->{sequence_select} //= '';
      print qq|
           $exchangerate
-          $department
             <tr>
                <th align="right" nowrap><label for="description">| . $locale->text('Description') . qq|</label>
                </th>
@@ -1271,12 +1259,10 @@ sub on_hold {
 #     $lsmb->{due} = $form->{invtotal};
 #     $lsmb->{credit_id} = $form->{customer_id} // $form->{vendor_id};
 #     $lsmb->{curr} = $form->{currency};
-#     my ($department_name, $department_id) = split/--/, $form->{department};
 #      if (!$lsmb->{language_code}){
 #         delete $lsmb->{language_code};
 #     }
 #     $lsmb->{credit_id} = $form->{"$form->{vc}_id"};
-#     $lsmb->{department_id} = $department_id;
 #     if ($form->{ARAP} eq 'AR'){
 #         $lsmb->{entity_class} = 2;
 #     } else {

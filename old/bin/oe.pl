@@ -550,14 +550,6 @@ sub form_header {
                  [| . $locale->text('New') . qq|]</a>|;
     }
 
-    $department = qq|
-              <tr class="department-row">
-            <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
-        <td colspan=3><select data-dojo-type="dijit/form/Select" name=department id=department>$form->{selectdepartment}</select>
-        </td>
-          </tr>
-| if $form->{selectdepartment};
-
     $employee = qq|
               <input type=hidden name=employee value="$form->{employee}">
 |;
@@ -628,7 +620,6 @@ sub form_header {
           </tr>
           $creditremaining
           $business
-          $department
           $exchangerate
           <tr class="shippingpoint-row">
         <th align=right nowrap>| . $locale->text('Shipping Point') . qq|</th>
@@ -1476,7 +1467,7 @@ sub invoice {
 
     for ( "$form->{vc}", "currency" ) { $form->{"select$_"} = "" }
     for (
-        qw(currency oldcurrency employee department intnotes notes taxincluded))
+        qw(currency oldcurrency employee intnotes notes taxincluded))
     {
         $temp{$_} = $form->{$_};
     }
@@ -1816,7 +1807,6 @@ sub display_ship_receive {
         <input type=hidden name=$form->{vc} value="$form->{$form->{vc}}">
         <input type=hidden name="$form->{vc}_id" value=$form->{"$form->{vc}_id"}></td>
           </tr>
-          $department
           <tr>
         <th align=right>| . $locale->text('Shipping Point') . qq|</th>
         <td colspan=3>
@@ -2545,7 +2535,7 @@ qq|<td><input name="ndx_$i" id="ndx_$i" class=checkbox type=checkbox data-dojo-t
 |;
 
     $form->hide_form(
-        qw(callback department ponumber path login sessionid employee_id vc nextsub rowcount type)
+        qw(callback ponumber path login sessionid employee_id vc nextsub rowcount type)
     );
 
     print qq|

@@ -992,7 +992,7 @@ sub create_form {
     for ( "$form->{vc}", "currency" ) { $form->{"select$_"} = "" }
 
     for (
-        qw(currency employee department intnotes notes language_code taxincluded)
+        qw(currency employee intnotes notes language_code taxincluded)
       )
     {
         $temp{$_} = $form->{$_};

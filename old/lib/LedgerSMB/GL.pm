@@ -72,7 +72,6 @@ sub post_transaction {
       if $form->should_update_defaults('reference');
     my $null;
     my $project_id;
-    my $department_id;
     my $i;
 
     my $dbh = $form->{dbh};
@@ -130,10 +129,6 @@ sub post_transaction {
         $sth->execute( $form->{workflow_id}, $form->{reversing}, $form->{description}, $form->{reference}, $form->{notes}, $form->{id} )
             || $form->dberror($query);
     }
-
-    ( $null, $department_id ) =
-        split( /--/, $form->{department}) if $form->{department};
-    ($department_id //= 0) *= 1;
 
     if (defined $form->{approved}) {
         my $query = qq| UPDATE transactions SET approved = ? WHERE id = ?|;

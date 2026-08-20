@@ -42,8 +42,6 @@ Post transaction uses the following variables in the $form variable:
  * dbh - the database connection handle
  * currency - The current users' currency
  * defaultcurrency - The "normal" currency
- * department - Unknown
- * department_id - ID for the department
  * exchangerate - Conversion between currency and defaultcurrency
  * invnumber - invoice number
  * reverse - ?
@@ -77,10 +75,6 @@ sub post_transaction {
 
     my $query;
     my $sth;
-
-    my $null;
-    ( $null, $form->{department_id} ) = split( /--/, $form->{department} );
-    $form->{department_id} *= 1;
 
     my $ml        = 1;
     my $table     = 'ar';
@@ -181,7 +175,7 @@ sub post_transaction {
             $amount{amount}{$i} = $amount;
             $diff = $amount{amount}{$i} - ( $amount - $diff );
 
-            ( $null, $project_id ) = split /--/, $form->{"projectnumber_$i"};
+            ( undef, $project_id ) = split /--/, $form->{"projectnumber_$i"};
             $project_id ||= undef;
             ($accno) = split /--/, $form->{"${ARAP}_amount_$i"};
 
@@ -583,8 +577,6 @@ meta_number:  customer/vendor number
 entity_id:  A specific entity id
 
 parts_id:  Show transactions including a specific part
-
-department_id:  Transactions for a department
 
 entity_credit_account: As an alternate for meta_number to identify a customer
 of vendor credit account
