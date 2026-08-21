@@ -156,17 +156,19 @@ sub display_row {
     my $desc_disabled = "";
     $desc_disabled = 'DISABLED="DISABLED"' if $form->{lock_description};
     if ($form->{vc} eq 'customer'){
-        $lsmb_module = 'AR';
+        $lsmb_module = 'Sales';
         $parts_list = 'sales';
     } elsif ($form->{vc} eq 'vendor'){
-        $lsmb_module = 'AP';
+        $lsmb_module = 'Purchases';
         $parts_list = 'purchase';
     }
 
-    # # replace '' transdate with NULL
-    # $form->all_business_units( ($form->{transdate} or undef) ,
-    #                           $form->{"$form->{vc}_id"},
-    #                           $lsmb_module);
+    # Re-read reporting units, limited by the module (all reporting units are loaded,
+    # which includes the ones not applicable for this module)
+    # replace '' transdate with NULL
+    $form->all_business_units( ($form->{transdate} or undef) ,
+                               $form->{"$form->{vc}_id"},
+                               $lsmb_module );
     @column_index = qw(deleteline runningnumber partnumber description qty);
 
     if ( $form->{type} eq "sales_order" ) {

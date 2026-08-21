@@ -338,8 +338,12 @@ sub create_links {
     }
     $form->{oldtransdate} = $form->{transdate};
 
-    # Business Reporting Units
-    #$form->all_business_units;
+    # Reporting Units
+    # Re-read reporting units, limited by the module (all reporting units are loaded,
+    # which includes the ones not applicable for this module)
+    $form->all_business_units( $form->{transdate} or undef,
+                               $form->{"$form->{vc}_id"},
+                               ($form->{ARAP} eq 'AR' ? 'Sales' : 'Purchases') );
 
     # forex
     $form->{forex} = $form->{exchangerate};
