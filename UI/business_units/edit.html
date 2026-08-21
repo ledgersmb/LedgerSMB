@@ -11,14 +11,13 @@
    ELSE;
       text('Add Reporting Unit');
     END; %]</div>
-<form data-dojo-type="lsmb/Form" id="businessunit-edit" action="business_unit.pl" name="businessunit-edit" method="post">
+<form class="two-column-grid" style="width:fit-content" data-dojo-type="lsmb/Form" id="businessunit-edit" action="business_unit.pl" name="businessunit-edit" method="post">
 <!-- These are for Javascript automation of defaults -CT -->
 [% PROCESS input element_data = {
         type = "hidden"
         name = "id"
         value = id
 } %]
-<div class="inputrow" id="tagrow">
 [% PROCESS input element_data = {
         type = "text"
         class = "control_code"
@@ -37,6 +36,14 @@ IF sequences;
        value_attr = 'label'
    };
 END;
+PROCESS input element_data = {
+        label = text("Description")
+        name = "description"
+        class = "description"
+        style = "grid-column: 1 / span 4"
+        value = description
+        type = "text"
+};
 PROCESS select element_data = {
         label = text('Parent')
         class = "parent"
@@ -47,8 +54,6 @@ PROCESS select element_data = {
 default_values= [parent_id]
 default_blank = 1
 } %]
-</div>
-<div class="inputrow" id="daterow">
 [% PROCESS input element_data = {
         name = "start_date"
         type = "date"
@@ -63,28 +68,6 @@ default_blank = 1
         value = end_date
          size = 12
 } %]
-</div>
-<div class="inputrow" id="descrow">
-[% PROCESS input element_data = {
-        label = text("Description:")
-        name = "description"
-        class = "description"
-        value = description
-        type = "text"
-} %]
-</div>
-<div class="inputrow" id="customer_row">
-<span class="inputgroup" id="startdepgroup">
-[% PROCESS input element_data = {
-        label = text("Customer")
-        name = "customer"
-        value = customer
-        type = "text"
-        size = 12
-        class = "search customer"
-} %]
-</span>
-</div>
 [% IF mode == 'edit'; %]
 <div class="inputrow" id="buttonrow">
 [% PROCESS button element_data = {
