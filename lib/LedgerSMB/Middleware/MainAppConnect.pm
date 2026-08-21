@@ -1,4 +1,7 @@
 
+use v5.38;
+use experimental 'declared_refs';
+
 package LedgerSMB::Middleware::MainAppConnect;
 
 =head1 NAME
@@ -31,8 +34,6 @@ this value in the session hash.
 
 =cut
 
-use strict;
-use warnings;
 use parent qw ( Plack::Middleware );
 
 use HTTP::Throwable::Factory qw( http_throw );
@@ -43,6 +44,7 @@ use Plack::Util;
 use Plack::Util::Accessor
     qw( host port user password provide_connection require_version );
 use Scope::Guard qw/ guard /;
+use Scalar::Util qw( weaken );
 
 use LedgerSMB::Database;
 use LedgerSMB::PSGI::Util;
@@ -146,6 +148,88 @@ sub _connect {
     return ($dbh, undef);
 }
 
+sub _alloc_create_session_cb($self,  $env, $dbhref) {
+    weaken $env;
+    my \$dbh = $dbhref;
+
+    return sub($login, $password, $company) {
+
+        if ($self->provide_connection eq 'closed') {
+            die q{'provide_connection' can't be "closed" for login & logout}
+        }
+
+        my $r;
+        ($dbh, $r) = _connect($self, $env, $login, $password, $company);
+        if (defined $r) {
+            $env->{'lsmb.session.expire'} = 1;
+            return $r;
+        }
+
+        unless (_create_session($dbh, $company, $env->{'lsmb.session'})) {
+            return [ HTTP_UNAUTHORIZED,
+                     [ 'Content-Type' => 'text/html' ],
+                     [ 'Invalid credentials' ] ];
+        }
+
+        return;
+    };
+}
+
+sub _alloc_invalidate_session_cb($self, $env, $dbhref) {
+    weaken $env;
+    my \$dbh = $dbhref;
+
+    return sub() {
+        my $r;
+
+        if ($self->provide_connection eq 'closed') {
+            die q{'provide_connection' can't be "closed" for login & logout};
+        }
+
+        my $session = $env->{'lsmb.session'};
+        if ($session->{company}
+            and $session->{login}
+            and $session->{password}) {
+            ($dbh, $r) = _connect($self, $env);
+
+            return $r if defined $r;
+        }
+        if ($dbh) {
+            _delete_session($dbh, $session);
+        }
+
+        $env->{'lsmb.session.expire'} = 1;
+        return;
+    };
+}
+
+sub _alloc_create_app_cb($self, $dbhref) {
+    my \$dbh = $dbhref;
+
+    return sub($env) {
+        my $r;
+        ($dbh, $r) = _connect($self, $env);
+        http_throw(
+            {
+                status_code => HTTP_UNAUTHORIZED,
+                reason => 'Unauthorized',
+                message => 'Invalid credentials or session expired'
+            })
+            if defined $r;
+
+        $r = _verify_session($dbh, $env);
+        http_throw(
+            {
+                status_code => HTTP_UNAUTHORIZED,
+                reason => 'Unauthorized',
+                message => 'Invalid credentials or session expired'
+            })
+            if defined $r;
+
+        return $dbh;
+    };
+}
+
 sub call {
     my $self = shift;
     my ($env) = @_;
@@ -154,82 +238,23 @@ sub call {
     my $dbh;
     if ($self->provide_connection eq 'open'
         || $self->provide_connection eq 'closed') {
+        my $app_cb = $self->_alloc_create_app_cb(\$dbh);
+
         if ($self->provide_connection eq 'closed') {
-            $env->{'lsmb.app_cb'} = sub {
-                my $env = shift;
-                my $r;
-                ($dbh, $r) = _connect($self, $env);
-                http_throw(
-                    {
-                        status_code => HTTP_UNAUTHORIZED,
-                        reason => 'Unauthorized',
-                        message => 'Missing credentials or session expired'
-                    })
-                    if defined $r;
-
-                $r = _verify_session($dbh, $env);
-                http_throw(
-                    {
-                        status_code => HTTP_UNAUTHORIZED,
-                        reason => 'Unauthorized',
-                        message => 'Missing credentials or session expired'
-                    })
-                    if defined $r;
-
-                return $dbh;
-            };
+            $env->{'lsmb.app_cb'} = $app_cb;
         }
         else {
-            my $r;
-            ($dbh, $r) = _connect($self, $env);
-            return $r if defined $r;
-
-            $r = _verify_session($dbh, $env);
-            return $r if defined $r;
+            $app_cb->($env);
         }
     }
     else {
         # we may or may not have a valid application session...
-        $env->{'lsmb.create_session_cb'} = sub {
-            my ($login, $password, $company) = @_;
+        $env->{'lsmb.create_session_cb'} = $self->_alloc_create_session_cb($env, \$dbh);
 
-            die q{'provide_connection' can't be "closed" for login & logout}
-               if $self->provide_connection eq 'closed';
-
-            my $r;
-            ($dbh, $r) = _connect($self, $env, @_);
-            if (defined $r) {
-                $env->{'lsmb.session.expire'} = 1;
-                return $r;
-            }
-
-            _create_session($dbh, $company, $env->{'lsmb.session'});
-            return;
-        };
         # we don't have a validated session, but the route may want
         # to invalidate one if we have one anyway.
         # create a session invalidation callback here.
-        $env->{'lsmb.invalidate_session_cb'} = sub {
-            my $r;
-
-            die q{'provide_connection' can't be "closed" for login & logout}
-               if $self->provide_connection eq 'closed';
-
-            my $session = $env->{'lsmb.session'};
-            if ($session->{company}
-                and $session->{login}
-                and $session->{password}) {
-                ($dbh, $r) = _connect($self, $env);
-
-                return $r if defined $r;
-            }
-            if ($dbh) {
-                _delete_session($dbh, $session);
-            }
-
-            $env->{'lsmb.session.expire'} = 1;
-            return;
-        };
+        $env->{'lsmb.invalidate_session_cb'} = $self->_alloc_invalidate_session_cb($env, \$dbh);
     }
 
     $env->{__app_guard__} = guard {
@@ -293,10 +318,14 @@ sub _create_session {
     my ($created_session) = $dbh->selectall_array(
         q{SELECT * FROM session_create()}, { Slice => {} },
         ) or die $dbh->errstr;
-    $dbh->commit if $created_session->{session_id};
 
-    @{$session}{keys %$created_session} = values %$created_session;
-    return;
+    if ($created_session->{session_id}) {
+        $dbh->commit;
+        @{$session}{keys %$created_session} = values %$created_session;
+        return 1;
+    }
+
+    return 0;
 }
 
 sub _delete_session {
