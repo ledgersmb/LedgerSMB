@@ -490,9 +490,9 @@ sub form_header {
     }
     $wf->context->param( transdate => $form->{transdate} );
     $title = $form->{title};
-    # $form->all_business_units($form->{transdate},
-    #                           $form->{"$form->{vc}_id"},
-    #                           $form->{ARAP});
+    $form->all_business_units($form->{transdate},
+                              $form->{"$form->{vc}_id"},
+                              $form->{ARAP} eq 'AR' ? 'Sales' : 'Purchases' );
 
     if($form->{batch_id})
     {
