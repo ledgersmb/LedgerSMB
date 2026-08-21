@@ -203,7 +203,11 @@ sub call {
                 return $r;
             }
 
-            _create_session($dbh, $company, $env->{'lsmb.session'});
+            unless (_create_session($dbh, $company, $env->{'lsmb.session'})) {
+                return [ HTTP_UNAUTHORIZED,
+                         [ 'Content-Type' => 'text/html' ],
+                         [ 'Invalid credentials' ] ];
+            }
             return;
         };
         # we don't have a validated session, but the route may want
@@ -293,10 +297,14 @@ sub _create_session {
     my ($created_session) = $dbh->selectall_array(
         q{SELECT * FROM session_create()}, { Slice => {} },
         ) or die $dbh->errstr;
-    $dbh->commit if $created_session->{session_id};
 
-    @{$session}{keys %$created_session} = values %$created_session;
-    return;
+    if ($created_session->{session_id}) {
+        $dbh->commit;
+        @{$session}{keys %$created_session} = values %$created_session;
+        return 1;
+    }
+
+    return 0;
 }
 
 sub _delete_session {
