@@ -99,9 +99,10 @@ sub _rebuild {
 
     my @templates;
     find({ wanted => sub {
-        return if $_ =~ m{UI/node_modules(?:/|$)};
+        my $relative = File::Spec->abs2rel($_, $root);
+        return if $relative =~ m{^UI/node_modules(?:/|$)};
         push @templates, $_
-            if -f $_ && /\.(?:html|tex|csv)$/ && $_ !~ m{UI/(?:js|pod)/};
+            if -f $_ && /\.(?:html|tex|csv)$/ && $relative !~ m{^UI/(?:js|pod)/};
     }, no_chdir => 1 }, map { File::Spec->catdir($root, $_) } qw(UI templates t/data));
     $pot .= $self->_run('template', [File::Spec->catfile($root, 'utils/devel/extract-template-translations')],
         join("\n", sort @templates) . "\n");
@@ -154,11 +155,13 @@ sub _read {
 sub _write {
     open my $fh, '>:raw', $_[0] or die "Can't write $_[0]: $!";
     print {$fh} $_[1] or die "Can't write $_[0]: $!";
+    close $fh or die "Can't close $_[0]: $!";
 }
 
 package LedgerSMB::TranslationWorkbench::Executor;
 
 use IPC::Open3;
+use IO::Select;
 use Symbol qw(gensym);
 
 sub new {
@@ -175,9 +178,21 @@ sub run {
     die "Failed to execute @$command: $@" if $@;
     print {$in} $input if defined $input;
     close $in;
-    local $/;
-    my $result = <$out>;
-    my $error = <$err>;
+    my ($result, $error) = ('', '');
+    my %buffers = ($out => \$result, $err => \$error);
+    my $select = IO::Select->new($out, $err);
+    while (my @ready = $select->can_read) {
+        for my $fh (@ready) {
+            my $chunk;
+            my $length = sysread($fh, $chunk, 8192);
+            if (!$length) {
+                $select->remove($fh);
+                close $fh;
+                next;
+            }
+            ${ $buffers{$fh} } .= $chunk;
+        }
+    }
     waitpid($pid, 0);
     die "Command failed (@$command): $error" if $? != 0;
     warn $error if $self->{verbose} && $error;
