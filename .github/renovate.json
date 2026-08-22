@@ -40,8 +40,10 @@
             "allowedVersions": "<8"
         },
         {
-            "matchPackagePatterns": ["^webpack"],
-            "enabled": false
+            "enabled": false,
+            "matchPackageNames": [
+                "/^webpack/"
+            ]
         },
         {
            "baseBranchPatterns": [
