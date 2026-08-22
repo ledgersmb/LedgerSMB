@@ -161,7 +161,10 @@ package LedgerSMB::TranslationWorkbench::Executor;
 use IPC::Open3;
 use Symbol qw(gensym);
 
-sub new { bless { verbose => $_[1]{verbose} // 0 }, $_[0] }
+sub new {
+    my ($class, %args) = @_;
+    return bless { verbose => $args{verbose} // 0 }, $class;
+}
 
 sub run {
     my ($self, $command, $input) = @_;
