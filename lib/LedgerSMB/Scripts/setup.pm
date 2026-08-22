@@ -334,6 +334,10 @@ sub login($request) {
                 $request->{message} = 'Failed migration found';
                 $request->{next_action} = 'revert_migration';
             }
+            elsif ($version_info->{version} ne $CURRENT_MINOR_VERSION) {
+                # Run backup before rebuilding modules.
+                $request->{next_action} = 'rebuild_modules_backup';
+            }
         }
     }
     return $template->render($request, 'setup/confirm_operation', $request);
@@ -443,7 +447,7 @@ sub _begin_backup($request) {
 
 =item run_backup
 
-Runs the backup.  If backup_type is set to email, emails the
+Runs the backup.  If backup_type is set to email, emails it.
 
 =cut
 
@@ -1643,6 +1647,23 @@ sub rebuild_modules($request) {
     }
     return _complete($request, $db);
 }
+
+=item rebuild_modules_backup
+
+=cut
+
+sub rebuild_modules_backup($request) {
+    if (my $csrf = $request->verify_csrf) {
+        return $csrf;
+    }
+
+    my ($reauth, $db) = _init_db($request);
+    return $reauth if $reauth;
+
+    my $template = $request->{_wire}->get('ui');
+    return $template->render($request, 'setup/upgrade-backup', $request);
+}
+
 
 =item reload_menu
 

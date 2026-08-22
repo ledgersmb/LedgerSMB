@@ -1,0 +1,35 @@
+[% WRAPPER "ui-header.html"
+               stylesheet="ledgersmb.css"
+               include_stylesheet=["system/setup.css"];
+       PROCESS "elements.html";
+       PROCESS "dynatable.html"; %]
+<body id="setup-upgrade-backup" class="[% dojo_theme %]">
+  <div>
+    <div class="setupconsole">
+      <span id="status">Upgrading from older version; starting backup before upgrade.</span>
+      <form data-dojo-type="lsmb/SimpleForm" action="setup.pl" method="GET">
+        <input type="hidden" name="csrf_token" value="[% csrf_token %]" id="csrf_token">
+        <input type="hidden" name="database" value="[% database %]" id="dbname">
+        <lsmb-button name="__action"
+                     type="submit"
+                     value="rebuild_modules">
+          Click this button when the backup download is complete.
+        </lsmb-button>
+      </form>
+    </div>
+  </div>
+</body>
+  <script>
+    const status = document.getElementById('status');
+    const csrf   = document.getElementById('csrf_token').value;
+    const dbname = document.getElementById('dbname').value;
+    const link = document.createElement('a');
+    link.href = '?__action=run_backup&backup=db&backup_type=browser&csrf_token=' + encodeURI(csrf) + '&database=' + encodeURI(dbname);
+    document.body.appendChild(link);
+    link.click();
+
+    setTimeOut(() => {
+       link.remove();
+    }, 3000);
+  </script>
+[% END %]
