@@ -31,10 +31,15 @@ Scans the locale directory and read in the LANGUAGE files
 
 ## `rebuild_pot.pl`
 
-Rebuilds the language file through the Perl translation workbench. Use
-`--dry-run` to inspect the stages without changing catalogs, `--verbose` to
-log commands, `--root DIR` to select a repository, or `--skip STAGE` to skip `perl`, `template`, `sql`, `vue`, `menu`, `normalize`,
-`merge`, or `json`.
+Rebuilds the language file through the Perl translation workbench.
+
+Options include:
+
+* `--dry-run` to inspect stages without changing catalogs
+* `--verbose` to log commands
+* `--root DIR` to select a repository
+* `--skip STAGE` to skip `perl`, `template`, `sql`, `vue`, `menu`, `normalize`,
+  `merge`, or `json`
 
 ## `regen_db_docs.sh`
 
