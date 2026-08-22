@@ -124,7 +124,7 @@ api:
 pot:
 	chmod 666 locale/LedgerSMB.pot locale/po/*.po
 	chmod 777 locale/po
-	$(DOCKER_CMD) utils/devel/rebuild_pot.sh
+	$(DOCKER_CMD) utils/devel/rebuild_pot.pl
 
 test: TESTS ?= t/
 test:
@@ -191,4 +191,3 @@ ifneq ($(origin CONTAINER),undefined)
 else
 	echo No idea which container to restart...
 endif
-

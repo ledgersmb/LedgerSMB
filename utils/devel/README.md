@@ -29,9 +29,12 @@ Scans various Template files for translatable strings
 
 Scans the locale directory and read in the LANGUAGE files
 
-## `rebuild_pot.sh`
+## `rebuild_pot.pl`
 
-Rebuilds the language file
+Rebuilds the language file through the Perl translation workbench. Use
+`--dry-run` to inspect the stages without changing catalogs, `--verbose` to
+log commands, `--root DIR` to select a repository, or `--skip STAGE` to skip `perl`, `template`, `sql`, `vue`, `menu`, `normalize`,
+`merge`, or `json`.
 
 ## `regen_db_docs.sh`
 
