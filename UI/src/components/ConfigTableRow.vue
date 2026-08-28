@@ -140,7 +140,9 @@ let mouseOverDefault = ref(false);
                 :type="column.type"
                 :value="data[column.key]"
                 :name="column.key"
-                :readonly="!editing"
+                :readonly="
+                    !editing || (props.type === 'existing' && column.immutable)
+                "
                 :class="editing ? 'editing' : 'neutral'"
                 class="input-box"
                 @input="(e) => send({ type: 'update', key: column.key, value: e.target.value })"
