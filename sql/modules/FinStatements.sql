@@ -647,7 +647,7 @@ hdr_meta AS (
                 WHERE language_code =
                        coalesce(in_language, preference__get('language'))) at
               ON aht.id = at.trans_id
-     WHERE array_endswith((SELECT value::int FROM defaults
+     WHERE util__array_endswith((SELECT value::int FROM defaults
                             WHERE setting_key = 'earn_id'), aht.path)
            -- legacy (no earn_id) returns all headers
            OR (NOT aht.path @> ARRAY[(SELECT value::int FROM defaults
@@ -750,7 +750,7 @@ hdr_balance AS (
       FROM acc_meta am
              INNER JOIN acc_balance ab on am.id = ab.id
   ) bs
-  WHERE array_endswith((SELECT value::int FROM defaults
+  WHERE util__array_endswith((SELECT value::int FROM defaults
                          WHERE setting_key = 'earn_id'), bs.path)
      -- legacy (no earn_id) returns all accounts; bug?
      OR (NOT bs.path @> ARRAY[(SELECT value::int FROM defaults

@@ -17,7 +17,8 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('array_endswith',ARRAY['anyelement','anyarray']);
+    SELECT has_function('util__array_endswith',
+                        ARRAY['anyelement','anyarray']);
     SELECT has_function('array_splice_from',ARRAY['anyelement','anyarray']);
     SELECT has_function('array_splice_to',ARRAY['anyelement','anyarray']);
     SELECT has_function('get_default_lang','{}'::text[]);

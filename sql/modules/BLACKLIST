@@ -42,7 +42,6 @@ admin__save_user
 admin__search_users
 ar_ap__transaction_search
 ar_ap__transaction_search_summary
-array_endswith
 array_splice_from
 array_splice_to
 assembly__stock
@@ -489,6 +488,7 @@ user__check_my_expiration
 user__get_all_users
 user__get_preferences
 user__save_preferences
+util__array_endswith
 wage__list_for_entity
 wage__list_types
 wage__save
