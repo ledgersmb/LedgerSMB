@@ -47,6 +47,11 @@
   relate to an overpayment that is split. The 'entry_id' is the linking field.
  */
 
+-- Add additional data integrity control to help assure correct
+-- calculation and data generation below
+alter table payment_links
+  alter column payment_id set not null,
+  alter column entry_id set not null;
 
 --  Select payments with more than one cash account (AR_paid/AP_paid)
 create temporary table payments_split as

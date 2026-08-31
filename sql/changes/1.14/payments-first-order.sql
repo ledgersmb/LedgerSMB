@@ -312,11 +312,6 @@ update payment p
  where p.trans_id = ac.trans_id
    and al.description in ('AR_paid', 'AP_paid', 'migration_payment_splitter');
 
-delete from account_link
- where description = 'migration_payment_splitter';
-delete from account_link_description
- where description = 'migration_payment_splitter';
-
 drop table payment_links;
 
 alter table payment
