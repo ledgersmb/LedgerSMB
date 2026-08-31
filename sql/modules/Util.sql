@@ -145,7 +145,7 @@ $BODY$
   $BODY$
   LANGUAGE sql IMMUTABLE;
 
-CREATE OR REPLACE FUNCTION array_endswith(elem anyelement, arr anyarray)
+CREATE OR REPLACE FUNCTION util__array_endswith(elem anyelement, arr anyarray)
   RETURNS boolean
   LANGUAGE SQL
 AS $$
