@@ -50,14 +50,17 @@
   },
   "resolves": {
     "tmp": "^0.2.7",
-    "@ehuelsmann/openapi-validator": "0.18.1"
+    "@ehuelsmann/openapi-validator": "0.17.3"
+  },
+  "resolutions": {
+    "@ehuelsmann/openapi-validator": "0.17.3"
   },
   "devDependencies": {
     "@babel/core": "8.0.0",
     "@babel/eslint-parser": "8.0.0",
     "@babel/plugin-transform-object-rest-spread": "^8.0.0",
     "@babel/preset-env": "8.0.0",
-    "@ehuelsmann/jest-openapi": "0.18.1",
+    "@ehuelsmann/jest-openapi": "0.17.3",
     "@eslint/js": "10.0.1",
     "@pinia/testing": "2.0.1",
     "@quasar/app-webpack": "^4.2.0",
