@@ -2475,17 +2475,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ehuelsmann/jest-openapi@npm:0.18.2":
-  version: 0.18.2
-  resolution: "@ehuelsmann/jest-openapi@npm:0.18.2"
+"@ehuelsmann/jest-openapi@npm:0.18.1":
+  version: 0.18.1
+  resolution: "@ehuelsmann/jest-openapi@npm:0.18.1"
   dependencies:
-    "@ehuelsmann/openapi-validator": "npm:^0.18.2"
+    "@ehuelsmann/openapi-validator": "npm:^0.18.1"
     jest-matcher-utils: "npm:^30.4.1"
-  checksum: 10c0/2ac5df75a5645173a986e14c4741f3826b82646c8fcaa0ed2544f85d133e97d47865b4d70a9e10ffd52575d15b6ba156f9e1084c856164716f3ce0eaac317c1b
+  checksum: 10c0/61323d8c6d1d95c7bad8e17364d65b4061820bc5627767ce981482e16d895af12ffb939f259464d34d9af55500cec3204334a855b45aff2ecfa0a1bcb91a8a87
   languageName: node
   linkType: hard
 
-"@ehuelsmann/openapi-validator@npm:^0.18.2":
+"@ehuelsmann/openapi-validator@npm:^0.18.1":
   version: 0.18.2
   resolution: "@ehuelsmann/openapi-validator@npm:0.18.2"
   dependencies:
@@ -11749,7 +11749,7 @@ __metadata:
     "@babel/eslint-parser": "npm:8.0.0"
     "@babel/plugin-transform-object-rest-spread": "npm:^8.0.0"
     "@babel/preset-env": "npm:8.0.0"
-    "@ehuelsmann/jest-openapi": "npm:0.18.2"
+    "@ehuelsmann/jest-openapi": "npm:0.18.1"
     "@eslint/js": "npm:10.0.1"
     "@pinia/testing": "npm:2.0.1"
     "@quasar/app-webpack": "npm:^4.2.0"
