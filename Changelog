@@ -46,6 +46,14 @@ Updated dependencies
 Changelog for 1.13 Series
 Released 2025-10-04
 
+Changelog for 1.13.8
+* Fix ledgersmb-admin error code to be non-zero on user creation failure (#9746)
+* Prevent errors for database handles accessed during global destruction (#9748)
+* Fix Apache2 example config failing to resolve static assets (#9804)
+* Fix reporting units not showing up on AR/AP transactions (#9816)
+* Explicitly return an HTTP error when user session creation fails (#9827)
+
+
 Changelog for 1.13.7
 * Fix error thrown when selecting 'All accounts' on the trial balance (#9699)
 
