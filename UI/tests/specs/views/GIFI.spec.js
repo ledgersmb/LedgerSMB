@@ -86,4 +86,26 @@ describe("GIFI - register as a component", () => {
             ["modify", "save", "cancel"]
         ]);
     });
+
+    it("should make GIFI codes immutable after creation", async () => {
+        sessionUser.$patch({ roles: ["gifi_create", "gifi_edit"] });
+
+        await retry(() =>
+            expect(wrapper.find(".dynatableData").isVisible()).toBe(true)
+        );
+
+        const existingRow = wrapper.findAll(".dynatableData .data-row").at(0);
+        const existingCode = existingRow.get('[name="accno"]');
+        const existingDescription = existingRow.get('[name="description"]');
+
+        await existingRow.get('[name="modify"]').trigger("click");
+        await retry(() =>
+            expect(existingDescription.element.readOnly).toBe(false)
+        );
+
+        expect(existingCode.element.readOnly).toBe(true);
+
+        const newCode = wrapper.get('tfoot [name="accno"]');
+        expect(newCode.element.readOnly).toBe(false);
+    });
 });

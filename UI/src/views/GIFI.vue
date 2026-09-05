@@ -10,7 +10,7 @@ import ImportCsvGifi from "@/views/ImportCSV-GIFI";
 
 const { t } = useI18n();
 const COLUMNS = [
-    { key: "accno",       type: "text", head: t("Code") },
+    { key: "accno", type: "text", head: t("Code"), immutable: true },
     { key: "description", type: "text", head: t("Description") }
 ];
 
