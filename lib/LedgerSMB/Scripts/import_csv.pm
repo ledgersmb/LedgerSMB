@@ -266,15 +266,6 @@ sub _process_gl_multi($request, $entries) {
                                 })
         or die $dbh->errstr;
 
-    my $wf = $request->conn->workflows->create(
-        'GL',
-        {
-            'transdate' => $request->{transdate},
-            'batch-id'  => $batch_id,
-            'table_name' => 'gl'
-        });
-    $wf->execute_action( 'post' ); # misnomer: actually only saves...
-
     # then, insert the workflow ID in the insertion below.
     my $sth_tx = $dbh->prepare(q{
         INSERT INTO transactions (
@@ -301,11 +292,20 @@ sub _process_gl_multi($request, $entries) {
             LedgerSMB::Setting::Sequence->increment('glnumber', $request)
             unless defined $entry{reference};
 
+        my $wf = $request->conn->workflows->create(
+            'GL',
+            {
+                'transdate' => $request->{transdate},
+                    'batch-id'  => $batch_id,
+                    'table_name' => 'gl'
+            });
+        $wf->execute_action( 'post' ); # misnomer: actually only saves...
+
         $sth_tx->execute($wf->id,
                          @entry{qw/ transdate reference description /},
                          $batch_id)
             or die $sth_tx->errstr;
-        $sth_gl->execute($entry{reference})
+        $sth_gl->execute()
             or die $sth_gl->errstr;
         my ($trans_id) = $sth_gl->fetchrow_array;
         $sth_gl->finish;
