@@ -1,6 +1,7 @@
 {
   "name": "ledgersmb-js",
   "version": "1.14.0-dev",
+  "type": "module",
   "lockfileVersion": 2,
   "description": "LedgerSMB UI",
   "keywords": [
