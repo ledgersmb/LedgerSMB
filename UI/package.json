@@ -1,6 +1,7 @@
 {
   "name": "ledgersmb-js",
   "version": "1.14.0-dev",
+  "type": "module",
   "lockfileVersion": 2,
   "description": "LedgerSMB UI",
   "keywords": [
@@ -115,6 +116,7 @@
     "stylelint-webpack-plugin": "5.1.0",
     "typescript": "7.0.2",
     "unused-webpack-plugin": "2.4.0",
+    "vite": "^8.2.2",
     "vitest": "5.0.0",
     "vue-eslint-parser": "^10.0.0",
     "vue-i18n-extract-translations": "0.1.3",
