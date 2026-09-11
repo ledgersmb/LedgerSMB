@@ -11872,7 +11872,6 @@ __metadata:
     webpack-cli: "npm:7.2.2"
     webpack-deduplication-plugin: "npm:0.0.8"
     webpack-dev-server: "npm:6.0.0"
-    webpack-merge: "npm:6.0.1"
     webpack-sources: "npm:3.5.1"
     webpack-virtual-modules: "npm:0.6.2"
     yargs: "npm:18.1.0"
@@ -18387,7 +18386,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-merge@npm:6.0.1, webpack-merge@npm:^6.0.1":
+"webpack-merge@npm:^6.0.1":
   version: 6.0.1
   resolution: "webpack-merge@npm:6.0.1"
   dependencies:

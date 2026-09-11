@@ -22,7 +22,6 @@ import { VueLoaderPlugin } from "vue-loader";
 import { WebpackDeduplicationPlugin } from "webpack-deduplication-plugin";
 import yargs from "yargs/yargs";
 import { hideBin } from "yargs/helpers";
-import { merge } from "webpack-merge";
 import loaderConfigModule from "./js-src/lsmb/webpack.loaderConfig.js";
 
 // ESM equivalent of __dirname
@@ -45,7 +44,7 @@ const cloneObject = (obj) => {
             console.warn('structuredClone failed, falling back to Object.assign:', e.message);
         }
     }
-    
+
     // Fallback: Object.assign (shallow copy for top level)
     try {
         return Object.assign({}, obj);

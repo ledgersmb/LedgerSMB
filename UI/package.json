@@ -125,7 +125,6 @@
     "webpack-cli": "7.2.2",
     "webpack-deduplication-plugin": "0.0.8",
     "webpack-dev-server": "6.0.0",
-    "webpack-merge": "6.0.1",
     "webpack-sources": "3.5.1",
     "webpack-virtual-modules": "0.6.2",
     "yargs": "18.1.0"
