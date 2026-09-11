@@ -6,6 +6,7 @@ import compatPlugin from "eslint-plugin-compat";
 import eslintConfigESLint from "eslint-config-eslint";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 import eslintImportX from "eslint-plugin-import-x";
+import webpackResolver from "eslint-import-resolver-webpack";
 import js from "@eslint/js";
 import vitest from "@vitest/eslint-plugin";
 import packageJson from "eslint-plugin-package-json";
@@ -57,7 +58,10 @@ export default [
             "import-x": eslintImportX
         },
         settings: {
-            "import-x/resolver": "webpack",
+            "import-x/resolver": {
+                name: "webpack",
+                resolver: webpackResolver
+            },
             "import-x/parsers": {
                 "@babel/eslint-parser": [".js"]
             }
