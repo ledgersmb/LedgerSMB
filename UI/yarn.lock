@@ -8129,19 +8129,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dojo-webpack-plugin@npm:3.0.14":
+"dojo-webpack-plugin@github:ehuelsmann/dojo-webpack-plugin#esm-wrappers":
   version: 3.0.14
-  resolution: "dojo-webpack-plugin@npm:3.0.14"
+  resolution: "dojo-webpack-plugin@https://github.com/ehuelsmann/dojo-webpack-plugin.git#commit=14a2faf90ae185f5541a9aa1e616dbef6889007f"
   dependencies:
     loader-utils: "npm:2.0.4"
     node-stringify: "npm:0.2.1"
     raw-loader: "npm:0.5.1"
-    tmp: "npm:0.2.6"
+    tmp: "npm:0.2.7"
   peerDependencies:
     tapable: ">=2.0"
     webpack: ">=5.0.0"
     webpack-sources: ">=2.0.0"
-  checksum: 10c0/44162be3d8e975cc6593b30b2a150e0bd24c8cc0c9038bab3366025eb3ecfb0fe3db5a246938456a280517aefa674e2897798c0046b11a049c3a3e0c598fd6ea
+  checksum: 10c0/9915a4e698acbaf5b60ee1b00e492e67fb963a586bdb64e4ab1cfad78da4f30d06024b66f14df1438866cd078a1405f0026aa5ecb61c5610b278a8e11d49371d
   languageName: node
   linkType: hard
 
@@ -11818,7 +11818,7 @@ __metadata:
     dijit: "npm:1.17.3"
     dojo: "npm:1.17.3"
     dojo-util: "npm:1.17.3"
-    dojo-webpack-plugin: "npm:3.0.14"
+    dojo-webpack-plugin: "github:ehuelsmann/dojo-webpack-plugin#esm-wrappers"
     ejs-loader: "npm:0.5.0"
     eslint: "npm:10.5.0"
     eslint-config-eslint: "npm:14.0.0"
@@ -17036,10 +17036,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tmp@npm:0.2.6":
-  version: 0.2.6
-  resolution: "tmp@npm:0.2.6"
-  checksum: 10c0/fa5b9bfbe60f70904aba5c96b4970e9158d99867891302d10320fe35eee1e45f42946fded4cf5c8514baa087bebee44419029b7deb227da05a68b5205a12d8ab
+"tmp@npm:0.2.7":
+  version: 0.2.7
+  resolution: "tmp@npm:0.2.7"
+  checksum: 10c0/59eb55584f2f07210d3231b6a1f6b5c2b9794d8a7b509c8ee867ed2acad6d2245ee2448b7937b676ffbff3155a70077edde8a69f9d7cf0f90c86a62e8910c357
   languageName: node
   linkType: hard
 

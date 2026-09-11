@@ -250,7 +250,8 @@ const DojoWebpackPluginOptions = {
     buildEnvironment: { dojoRoot: "node_modules" },
     locales: getPOFilenames("src/locales", ".json"),
     noConsole: true,
-    strictValidation: false
+    strictValidation: false,
+    outputType: "esm"
 };
 // dojo/domReady (only works if the DOM is ready when invoked)
 const NormalModuleReplacementPluginOptionsDomReady = function (data) {
