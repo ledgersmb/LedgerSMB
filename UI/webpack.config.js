@@ -2,28 +2,59 @@
 /* eslint global-require:0, no-unused-vars:0 */
 /* global getConfig */
 
-const fs = require("fs");
-const glob = require("glob");
-const path = require("path");
-const webpack = require("webpack");
-const BundleAnalyzerPlugin =
-      require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via npm
-const CompressionPlugin = require("compression-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const DojoWebpackPlugin = require("dojo-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const StylelintPlugin = require("stylelint-webpack-plugin");
-const UnusedWebpackPlugin = require("unused-webpack-plugin");
-const VirtualModulesPlugin = require("webpack-virtual-modules");
-const { VueLoaderPlugin } = require("vue-loader");
-// eslint-disable-next-line
-const { WebpackDeduplicationPlugin } = require("webpack-deduplication-plugin");
-// No Quasar plugin - we'll integrate directly
-const yargs = require("yargs/yargs");
-const { hideBin } = require("yargs/helpers");
+import fs from "fs";
+import glob from "glob";
+import path from "path";
+import { fileURLToPath } from "url";
+import webpack from "webpack";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import CompressionPlugin from "compression-webpack-plugin";
+import CopyWebpackPlugin from "copy-webpack-plugin";
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
+import DojoWebpackPlugin from "dojo-webpack-plugin";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import StylelintPlugin from "stylelint-webpack-plugin";
+import UnusedWebpackPlugin from "unused-webpack-plugin";
+import VirtualModulesPlugin from "webpack-virtual-modules";
+import { VueLoaderPlugin } from "vue-loader";
+import { WebpackDeduplicationPlugin } from "webpack-deduplication-plugin";
+import yargs from "yargs/yargs";
+import { hideBin } from "yargs/helpers";
+import { merge } from "webpack-merge";
+import loaderConfigModule from "./js-src/lsmb/webpack.loaderConfig.js";
+
+// ESM equivalent of __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// ESM equivalent of require.resolve - resolve package paths
+const resolvePackagePath = (packageName) => {
+    return import.meta.resolve(packageName).replace(/^file:\/\//, '');
+};
+
+// Helper to clone objects while preserving extensibility
+// Tries multiple approaches for maximum compatibility
+const cloneObject = (obj) => {
+    // Try structuredClone first (Node.js 17+)
+    if (typeof structuredClone === 'function') {
+        try {
+            return structuredClone(obj);
+        } catch (e) {
+            console.warn('structuredClone failed, falling back to Object.assign:', e.message);
+        }
+    }
+    
+    // Fallback: Object.assign (shallow copy for top level)
+    try {
+        return Object.assign({}, obj);
+    } catch (e) {
+        console.warn('Object.assign failed, using original:', e.message);
+        return obj;
+    }
+};
+
 const argv = yargs(hideBin(process.argv)).argv;
 const prodMode =
       process.env.NODE_ENV === "production" ||
@@ -35,10 +66,10 @@ const parallelJobs = process.env.CI ? 2 : true;
 process.env.NODE_ENV = prodMode ? "production" : "development";
 
 /* FUNCTIONS */
-var includedRequires = [];
+let includedRequires = [];
 
 function findDataDojoTypes(fileName) {
-    var content = "" + fs.readFileSync(fileName);
+    const content = "" + fs.readFileSync(fileName);
     // Return unique data-dojo-type references
     return (
         content.match(
@@ -64,7 +95,7 @@ function globCssEntries(globPath) {
     const files = glob.sync(globPath);
     let entries = {};
 
-    for (var i = 0; i < files.length; i++) {
+    for (let i = 0; i < files.length; i++) {
         const entry = files[i];
         const dirName = path.dirname(entry).replace(/\.\/css\/?/, "");
         const keyName =
@@ -78,7 +109,6 @@ function globCssEntries(globPath) {
 // Compute used data-dojo-type
 glob.sync("{**/*.html,src/**/*.vue}", {
     ignore: ["lib/ui-header.html", "js/**", "node_modules/**"]
-    // cwd: "."
 }).map(function (filename) {
     const requires = findDataDojoTypes(filename);
     return includedRequires.push(...requires);
@@ -94,10 +124,7 @@ includedRequires = includedRequires
     .concat(
         glob
             .sync(
-                "{js-src/lsmb/**/!(webpack.loaderConfig|main).js,src/*.js,src/elements/*.js}",
-                {
-                    // cwd: "."
-                }
+                "{js-src/lsmb/**/!(webpack.loaderConfig|main).js,src/*.js,src/elements/*.js}"
             )
             .map(function (file) {
                 return file.replace(/\.js$/, "").replace(/js-src\//, "");
@@ -197,7 +224,7 @@ const fonts = {
 const CleanWebpackPluginOptions = {
     dry: false,
     verbose: false
-}; // delete all files in the js directory without deleting this folder
+};
 const StylelintPluginOptions = {
     files: "**/*.css"
 };
@@ -217,12 +244,14 @@ const CopyWebpackPluginOptions = {
         concurrency: 100
     }
 };
+
 const DojoWebpackPluginOptions = {
-    loaderConfig: require("./js-src/lsmb/webpack.loaderConfig.js"),
-    environment: { dojoRoot: "js" }, // used at run time for non-packed resources (e.g. blank.gif)
-    buildEnvironment: { dojoRoot: "node_modules" }, // used at build time
+    loaderConfig: cloneObject(loaderConfigModule),
+    environment: { dojoRoot: "js" },
+    buildEnvironment: { dojoRoot: "node_modules" },
     locales: getPOFilenames("src/locales", ".json"),
-    noConsole: true
+    noConsole: true,
+    strictValidation: false
 };
 // dojo/domReady (only works if the DOM is ready when invoked)
 const NormalModuleReplacementPluginOptionsDomReady = function (data) {
@@ -231,7 +260,7 @@ const NormalModuleReplacementPluginOptionsDomReady = function (data) {
     data.request = "dojo/loaderProxy?loader=dojo/domReady!" + match[1];
 };
 const NormalModuleReplacementPluginOptionsSVG = function (data) {
-    var match = /^svg!(.*)$/.exec(data.request);
+    const match = /^svg!(.*)$/.exec(data.request);
 
     data.request =
         "dojo/loaderProxy?loader=svg&deps=dojo/text%21" +
@@ -286,16 +315,12 @@ const VirtualModulesPluginOptions = {
         `});`
 };
 
-// Define Quasar components needed (we'll import these in app initialization)
-
-var pluginsCommon = [
+const pluginsCommon = [
     // Lint the sources
     new StylelintPlugin(StylelintPluginOptions),
 
     // Add Vue
     new VueLoaderPlugin(),
-
-    // No Quasar plugin needed
 
     // Add Dojo
     new DojoWebpackPlugin(DojoWebpackPluginOptions),
@@ -355,8 +380,8 @@ var pluginsCommon = [
 
     // Handle HTML
     new HtmlWebpackPlugin({
-        inject: "body", // Tags are injected manually in the content below
-        minify: false, // Adjust t/16-schema-upgrade-html.t if prodMode is used,
+        inject: "body",
+        minify: false,
         filename: "ui-header.html",
         mode: prodMode ? "production" : "development",
         excludeChunks: [
@@ -379,7 +404,7 @@ var pluginsCommon = [
 
     new WebpackDeduplicationPlugin({}),
 
-    // Generate GZ versions of compiled code to sppedup download
+    // Generate GZ versions of compiled code to speed up download
     new CompressionPlugin({
         filename: "[path][base].gz",
         algorithm: "gzip",
@@ -406,33 +431,29 @@ var pluginsCommon = [
         __INTLIFY_PROD_DEVTOOLS__: JSON.stringify(false),
     })
 ];
-var pluginsProd = [
+const pluginsProd = [
     ...pluginsCommon,
 
-    // Statics from build.
-    new webpack.DefinePlugin({
-    })
+    new webpack.DefinePlugin({})
 ];
-var pluginsDev = [
+const pluginsDev = [
     ...pluginsCommon,
 
     new UnusedWebpackPlugin(UnusedWebpackPluginOptions),
 
-    new webpack.DefinePlugin({
-    })
+    new webpack.DefinePlugin({})
 ];
-var pluginsList = prodMode
-    ? [
-        // Clean js before building (must be first)
-        new CleanWebpackPlugin(CleanWebpackPluginOptions),
-        ...pluginsProd
-    ]
-    : pluginsDev;
+const pluginsList = prodMode
+      ? [
+          new CleanWebpackPlugin(CleanWebpackPluginOptions),
+          ...pluginsProd
+      ]
+      : pluginsDev;
 
 /* OPTIMIZATIONS */
 
 const optimizationList = {
-    chunkIds: "named", // Keep names to load only 1 theme
+    chunkIds: "named",
     emitOnErrors: false,
     minimize: prodMode,
     minimizer: [
@@ -447,8 +468,6 @@ const optimizationList = {
         cacheGroups: {
             nodeModules: {
                 test(module) {
-                    // `module.resource` contains the absolute path of the file on disk.
-                    // Note the usage of `path.sep` instead of / or \, for cross-platform compatibility.
                     return (
                         module.resource &&
                             !module.resource.endsWith(".css") &&
@@ -478,16 +497,16 @@ const webpackConfigs = {
     context: __dirname,
 
     entry: {
-        bootstrap: "./bootstrap.js", // Virtual file
+        bootstrap: "./bootstrap.js",
         ...lsmbCSS,
         ...quasarCss,
         ...globCssEntries("./css/**/*.css")
     },
 
     output: {
-        path: path.join(__dirname, "js"), // js path
-        publicPath: "js/", // images path
-        pathinfo: !prodMode, // keep source references?
+        path: path.join(__dirname, "js"),
+        publicPath: "js/",
+        pathinfo: !prodMode,
         filename: "_scripts/[name].[contenthash].js",
         chunkFilename: "_scripts/[name].[contenthash].js"
     },
@@ -508,7 +527,7 @@ const webpackConfigs = {
         },
         extensions: [".js", ".vue", ".sass", ".scss"],
         fallback: {
-            path: require.resolve("path-browserify")
+            path: resolvePackagePath("path-browserify")
         }
     },
 
@@ -522,14 +541,14 @@ const webpackConfigs = {
 
     performance: {
         hints: prodMode ? false : "warning",
-        maxAssetSize: prodMode ? 250000 /* the default */ : 10000000,
-        maxEntrypointSize: prodMode ? 250000 /* the default */ : 10000000
+        maxAssetSize: prodMode ? 250000 : 10000000,
+        maxEntrypointSize: prodMode ? 250000 : 10000000
     },
 
     devtool: prodMode ? "hidden-source-map" : "source-map",
 
     devServer: {
-        allowedHosts: "all", // Replace with docker parent and localhost
+        allowedHosts: "all",
         client: {
             logging: "verbose",
             overlay: {
@@ -542,7 +561,7 @@ const webpackConfigs = {
         devMiddleware: {
             index: false,
             serverSideRender: true,
-            writeToDisk: true // Required for Perl TT
+            writeToDisk: true
         },
         hot: true,
         host: "0.0.0.0",
@@ -589,4 +608,4 @@ const webpackConfigs = {
     target: "web"
 };
 
-module.exports = webpackConfigs;
+export default webpackConfigs;
