@@ -5,7 +5,7 @@ import babelParser from "@babel/eslint-parser";
 import compatPlugin from "eslint-plugin-compat";
 import eslintConfigESLint from "eslint-config-eslint";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
-import eslintImportX from "eslint-plugin-import-x";
+import eslintImportX, { createNodeResolver } from "eslint-plugin-import-x";
 import webpackResolver from "eslint-import-resolver-webpack";
 import js from "@eslint/js";
 import vitest from "@vitest/eslint-plugin";
@@ -127,6 +127,15 @@ export default [
             "vars-on-top": "off",
             yoda: "error",
             "no-restricted-syntax": ["error", "SequenceExpression"]
+        }
+    },
+    {
+        files: ["tests/common/mocks/**/*.js"],
+        settings: {
+            "import-x/resolver": {
+                name: "node",
+                resolver: createNodeResolver()
+            }
         }
     },
     // Package.json
