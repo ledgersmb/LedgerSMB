@@ -2223,7 +2223,7 @@
           "in": "path",
           "required": true,
           "schema": {
-            "$ref": "#/components/schemas/common-id"
+            "$ref": "#/components/schemas/partsgroup-id"
           },
           "style": "simple"
         }
@@ -2515,7 +2515,7 @@
           "in": "path",
           "required": true,
           "schema": {
-            "$ref": "#/components/schemas/common-id"
+            "$ref": "#/components/schemas/pricegroup-id"
           },
           "style": "simple"
         }
@@ -2808,7 +2808,7 @@
           "in": "path",
           "required": true,
           "schema": {
-            "$ref": "#/components/schemas/common-id"
+            "$ref": "#/components/schemas/warehouse-id"
           },
           "style": "simple"
         }
@@ -3509,7 +3509,7 @@
           {
             "properties": {
               "id": {
-                "$ref": "#/components/schemas/common-id"
+                "$ref": "#/components/schemas/partsgroup-id"
               }
             },
             "required": [
@@ -3527,7 +3527,7 @@
           {
             "properties": {
               "id": {
-                "$ref": "#/components/schemas/common-id"
+                "$ref": "#/components/schemas/pricegroup-id"
               }
             },
             "required": [
@@ -3560,7 +3560,7 @@
           {
             "properties": {
               "id": {
-                "$ref": "#/components/schemas/common-id"
+                "$ref": "#/components/schemas/warehouse-id"
               }
             },
             "required": [

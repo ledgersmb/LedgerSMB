@@ -3,7 +3,7 @@ info:
   contact:
     email: devel@lists.ledgersmb.org
     name: LedgerSMB API Support
-    url: 'https://github.com/ledgersmb/LedgerSMB/issues'
+    url: https://github.com/ledgersmb/LedgerSMB/issues
   description: |
     LedgerSMB comes with a web service API. The version number assigned follows
     the [rules of semantic versioning](https://semver.org/). The current major
@@ -19,11 +19,11 @@ info:
     can be accessed through `https://example.org/erp/api/v0/menu-nodes`.
   license:
     name: GPL-2.0-or-later
-    url: 'https://spdx.org/licenses/GPL-2.0-or-later.html'
+    url: https://spdx.org/licenses/GPL-2.0-or-later.html
   title: LedgerSMB API
   version: 0.0.1
 servers:
-  - url: 'http://lsmb/erp/api/v0'
+  - url: http://lsmb/erp/api/v0
 paths:
   /contacts/business-types:
     description: Manage business types
@@ -71,7 +71,7 @@ paths:
               $ref: '#/components/schemas/NewBusinessType'
       responses:
         '201':
-          description: 'Confirms creation of the new business type, redirecting to the new resource URI'
+          description: Confirms creation of the new business type, redirecting to the new resource URI
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -89,7 +89,7 @@ paths:
           $ref: '#/components/responses/404'
       tags:
         - Business types
-  '/contacts/business-types/{id}':
+  /contacts/business-types/{id}:
     delete:
       operationId: deleteBusinessTypesById
       summary: Delete a single business type
@@ -157,7 +157,7 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         '200':
-          description: 'Confirms updating the business type data, returning the new resource data'
+          description: Confirms updating the business type data, returning the new resource data
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -265,7 +265,7 @@ paths:
               $ref: '#/components/schemas/SIC'
       responses:
         '201':
-          description: 'Confirms creation of the new SIC, redirecting to the new resource URI'
+          description: Confirms creation of the new SIC, redirecting to the new resource URI
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -283,7 +283,7 @@ paths:
           $ref: '#/components/responses/404'
       tags:
         - SICs
-  '/contacts/sic/{id}':
+  /contacts/sic/{id}:
     delete:
       operationId: deleteSICByCode
       summary: Delete a single SIC
@@ -351,7 +351,7 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         '200':
-          description: 'Confirms updating the data associated with the SIC code, returning the new SIC data'
+          description: Confirms updating the data associated with the SIC code, returning the new SIC data
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -387,7 +387,7 @@ paths:
               $ref: '#/components/schemas/SIC'
       responses:
         '200':
-          description: 'Confirms replacement of SIC resource, returning the new data'
+          description: Confirms replacement of SIC resource, returning the new data
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -477,7 +477,7 @@ paths:
           $ref: '#/components/responses/404'
       tags:
         - Countries
-  '/countries/{id}':
+  /countries/{id}:
     delete:
       operationId: deleteCountryById
       summary: Delete a single country
@@ -545,7 +545,7 @@ paths:
         - $ref: '#/components/parameters/if-match'
       responses:
         '200':
-          description: 'Confirms updating the country resource, returning the new data'
+          description: Confirms updating the country resource, returning the new data
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -574,7 +574,7 @@ paths:
               $ref: '#/components/schemas/Country'
       responses:
         '200':
-          description: 'Confirms replacement of country data, returning the new data'
+          description: Confirms replacement of country data, returning the new data
           headers:
             ETag:
               $ref: '#/components/headers/ETag'
@@ -664,7 +664,7 @@ paths:
           $ref: '#/components/responses/404'
       tags:
         - GIFI
-  '/gl/gifi/{id}':
+  /gl/gifi/{id}:
     delete:
       operationId: deleteGIFIById
       summary: Delete a single GIFI
@@ -856,7 +856,7 @@ paths:
       tags:
         - Invoices
         - Experimental
-  '/invoices/{id}':
+  /invoices/{id}:
     get:
       operationId: getInvoicesById
       summary: Get a single invoice
@@ -999,7 +999,7 @@ paths:
           $ref: '#/components/responses/404'
       tags:
         - Languages
-  '/languages/{id}':
+  /languages/{id}:
     delete:
       operationId: deleteLanguageById
       summary: Delete a single language
@@ -1234,7 +1234,7 @@ paths:
       tags:
         - Orders
         - Experimental
-  '/orders/{id}':
+  /orders/{id}:
     get:
       operationId: getOrdersById
       summary: Get a single order
@@ -1376,7 +1376,7 @@ paths:
           $ref: '#/components/responses/404'
       tags:
         - Parts groups
-  '/products/partsgroups/{id}':
+  /products/partsgroups/{id}:
     delete:
       operationId: deleteProductsPartsgroupById
       summary: Delete a single products price group
@@ -1439,7 +1439,7 @@ paths:
         style: simple
     patch:
       operationId: updateProductsPartsgroupById
-      summary: Update a single products parts group
+      summary: Updaet a single products parts group
       parameters:
         - $ref: '#/components/parameters/if-match'
       responses:
@@ -1567,7 +1567,7 @@ paths:
           $ref: '#/components/responses/404'
       tags:
         - Price groups
-  '/products/pricegroups/{id}':
+  /products/pricegroups/{id}:
     delete:
       operationId: deleteProductsPricegroupById
       summary: Delete a single products price group
@@ -1758,7 +1758,7 @@ paths:
           $ref: '#/components/responses/404'
       tags:
         - Warehouses
-  '/products/warehouses/{id}':
+  /products/warehouses/{id}:
     delete:
       operationId: deleteWarehousesById
       summary: Delete a single warehouse
@@ -2336,13 +2336,13 @@ components:
       minimum: 1
     country-code:
       type: string
-      pattern: '^[a-zA-Z]{2}$'
+      pattern: ^[a-zA-Z]{2}$
     error:
       type: object
     language-code:
       type: string
       example: fr_CA
-      pattern: '^[a-z]{2}(_[A-Z]{2})?$'
+      pattern: ^[a-z]{2}(_[A-Z]{2})?$
     newInvoice:
       type: object
       properties:
@@ -2699,9 +2699,9 @@ components:
           description: AR
         currency: USD
         dates:
-          book: '2022-10-05'
-          created: '2022-09-01'
-          due: '2022-10-01'
+          book: 2022-10-05
+          created: 2022-09-01
+          due: 2022-10-01
         description: null
         eca:
           credit_limit:
@@ -2720,7 +2720,7 @@ components:
         internal-notes: Internal notes
         invoice-number: '2389434'
         lines:
-          - delivery_date: '2022-10-27'
+          - delivery_date: 2022-10-27
             description: A description
             discount: 12
             discount_type: '%'
@@ -2782,9 +2782,9 @@ components:
             description: AR
           currency: USD
           dates:
-            book: '2022-10-05'
-            created: '2022-09-01'
-            due: '2022-10-01'
+            book: 2022-10-05
+            created: 2022-09-01
+            due: 2022-10-01
           description: null
           eca:
             credit_limit:
@@ -2803,7 +2803,7 @@ components:
           internal-notes: Internal notes
           invoice-number: '2389434'
           lines:
-            - delivery_date: '2022-10-27'
+            - delivery_date: 2022-10-27
               description: A description
               discount: 12
               discount_type: '%'
@@ -2881,8 +2881,8 @@ components:
       value:
         currency: USD
         dates:
-          order: '2022-09-01'
-          required-by: '2022-10-01'
+          order: 2022-09-01
+          required-by: 2022-10-01
         eca:
           credit_limit:
             available: 0
@@ -2914,7 +2914,7 @@ components:
             price: 56.78
             price_fixated: false
             qty: 1
-            required-by: '2022-10-27'
+            required-by: 2022-10-27
             serialnumber: '1234567890'
             total: 49.9664
             unit: lbs
@@ -2957,8 +2957,8 @@ components:
       value:
         - currency: USD
           dates:
-            order: '2022-09-01'
-            required-by: '2022-10-01'
+            order: 2022-09-01
+            required-by: 2022-10-01
           eca:
             credit_limit:
               available: 0
@@ -2990,7 +2990,7 @@ components:
               price: 56.78
               price_fixated: false
               qty: 1
-              required-by: '2022-10-27'
+              required-by: 2022-10-27
               serialnumber: '1234567890'
               total: 49.9664
               unit: lbs

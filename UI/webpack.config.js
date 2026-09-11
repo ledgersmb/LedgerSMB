@@ -2,31 +2,63 @@
 /* eslint global-require:0, no-unused-vars:0 */
 /* global getConfig */
 
+import fs from "fs";
+import glob from "glob";
+import path from "path";
+import { fileURLToPath } from "url";
+import webpack from "webpack";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import CompressionPlugin from "compression-webpack-plugin";
+import CopyWebpackPlugin from "copy-webpack-plugin";
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
+import DojoWebpackPlugin from "dojo-webpack-plugin";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import StylelintPlugin from "stylelint-webpack-plugin";
+import UnusedWebpackPlugin from "unused-webpack-plugin";
+import VirtualModulesPlugin from "webpack-virtual-modules";
+import { VueLoaderPlugin } from "vue-loader";
+import { WebpackDeduplicationPlugin } from "webpack-deduplication-plugin";
+import yargs from "yargs/yargs";
+import { hideBin } from "yargs/helpers";
+import { merge } from "webpack-merge";
+
+// ESM equivalent of __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// ESM equivalent of require.resolve - resolve package paths
+const resolvePackagePath = (packageName) => {
+    return import.meta.resolve(packageName).replace(/^file:\/\//, '');
+};
+
+// Helper to clone objects while preserving extensibility
+// Tries multiple approaches for maximum compatibility
+const cloneObject = (obj) => {
+    // Try structuredClone first (Node.js 17+)
+    if (typeof structuredClone === 'function') {
+        try {
+            return structuredClone(obj);
+        } catch (e) {
+            console.warn('structuredClone failed, falling back to Object.assign:', e.message);
+        }
+    }
+    
+    // Fallback: Object.assign (shallow copy for top level)
+    try {
+        return Object.assign({}, obj);
+    } catch (e) {
+        console.warn('Object.assign failed, using original:', e.message);
+        return obj;
+    }
+};
+
 const TARGET = process.env.npm_lifecycle_event;
 
+let config;
+
 if (TARGET !== "readme") {
-    const fs = require("fs");
-    const glob = require("glob");
-    const path = require("path");
-    const webpack = require("webpack");
-    const BundleAnalyzerPlugin =
-        require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-    const { CleanWebpackPlugin } = require("clean-webpack-plugin"); // installed via npm
-    const CompressionPlugin = require("compression-webpack-plugin");
-    const CopyWebpackPlugin = require("copy-webpack-plugin");
-    const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-    const DojoWebpackPlugin = require("dojo-webpack-plugin");
-    const HtmlWebpackPlugin = require("html-webpack-plugin");
-    const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-    const StylelintPlugin = require("stylelint-webpack-plugin");
-    const UnusedWebpackPlugin = require("unused-webpack-plugin");
-    const VirtualModulesPlugin = require("webpack-virtual-modules");
-    const { VueLoaderPlugin } = require("vue-loader");
-    // eslint-disable-next-line
-    const { WebpackDeduplicationPlugin } = require("webpack-deduplication-plugin");
-    // No Quasar plugin - we'll integrate directly
-    const yargs = require("yargs/yargs");
-    const { hideBin } = require("yargs/helpers");
     const argv = yargs(hideBin(process.argv)).argv;
     const prodMode =
         process.env.NODE_ENV === "production" ||
@@ -38,10 +70,10 @@ if (TARGET !== "readme") {
     process.env.NODE_ENV = prodMode ? "production" : "development";
 
     /* FUNCTIONS */
-    var includedRequires = [];
+    let includedRequires = [];
 
     function findDataDojoTypes(fileName) {
-        var content = "" + fs.readFileSync(fileName);
+        const content = "" + fs.readFileSync(fileName);
         // Return unique data-dojo-type references
         return (
             content.match(
@@ -67,7 +99,7 @@ if (TARGET !== "readme") {
         const files = glob.sync(globPath);
         let entries = {};
 
-        for (var i = 0; i < files.length; i++) {
+        for (let i = 0; i < files.length; i++) {
             const entry = files[i];
             const dirName = path.dirname(entry).replace(/\.\/css\/?/, "");
             const keyName =
@@ -81,7 +113,6 @@ if (TARGET !== "readme") {
     // Compute used data-dojo-type
     glob.sync("{**/*.html,src/**/*.vue}", {
         ignore: ["lib/ui-header.html", "js/**", "node_modules/**"]
-        // cwd: "."
     }).map(function (filename) {
         const requires = findDataDojoTypes(filename);
         return includedRequires.push(...requires);
@@ -97,10 +128,7 @@ if (TARGET !== "readme") {
         .concat(
             glob
                 .sync(
-                    "{js-src/lsmb/**/!(webpack.loaderConfig|main).js,src/*.js,src/elements/*.js}",
-                    {
-                        // cwd: "."
-                    }
+                    "{js-src/lsmb/**/!(webpack.loaderConfig|main).js,src/*.js,src/elements/*.js}"
                 )
                 .map(function (file) {
                     return file.replace(/\.js$/, "").replace(/js-src\//, "");
@@ -200,7 +228,7 @@ if (TARGET !== "readme") {
     const CleanWebpackPluginOptions = {
         dry: false,
         verbose: false
-    }; // delete all files in the js directory without deleting this folder
+    };
     const StylelintPluginOptions = {
         files: "**/*.css"
     };
@@ -220,12 +248,20 @@ if (TARGET !== "readme") {
             concurrency: 100
         }
     };
+
+    // Dynamic import for loaderConfig
+    const loaderConfigModule = await import("./js-src/lsmb/webpack.loaderConfig.js");
+    const loaderConfigImported = loaderConfigModule.default || loaderConfigModule;
+    // Create a deep copy to ensure the object is extensible (not frozen/sealed)
+    const loaderConfig = cloneObject(loaderConfigImported);
+
     const DojoWebpackPluginOptions = {
-        loaderConfig: require("./js-src/lsmb/webpack.loaderConfig.js"),
-        environment: { dojoRoot: "js" }, // used at run time for non-packed resources (e.g. blank.gif)
-        buildEnvironment: { dojoRoot: "node_modules" }, // used at build time
+        loaderConfig: loaderConfig,
+        environment: { dojoRoot: "js" },
+        buildEnvironment: { dojoRoot: "node_modules" },
         locales: getPOFilenames("src/locales", ".json"),
-        noConsole: true
+        noConsole: true,
+        strictValidation: false
     };
     // dojo/domReady (only works if the DOM is ready when invoked)
     const NormalModuleReplacementPluginOptionsDomReady = function (data) {
@@ -234,7 +270,7 @@ if (TARGET !== "readme") {
         data.request = "dojo/loaderProxy?loader=dojo/domReady!" + match[1];
     };
     const NormalModuleReplacementPluginOptionsSVG = function (data) {
-        var match = /^svg!(.*)$/.exec(data.request);
+        const match = /^svg!(.*)$/.exec(data.request);
 
         data.request =
             "dojo/loaderProxy?loader=svg&deps=dojo/text%21" +
@@ -289,16 +325,12 @@ if (TARGET !== "readme") {
             `});`
     };
 
-    // Define Quasar components needed (we'll import these in app initialization)
-
-    var pluginsCommon = [
+    const pluginsCommon = [
         // Lint the sources
         new StylelintPlugin(StylelintPluginOptions),
 
         // Add Vue
         new VueLoaderPlugin(),
-
-        // No Quasar plugin needed
 
         // Add Dojo
         new DojoWebpackPlugin(DojoWebpackPluginOptions),
@@ -358,8 +390,8 @@ if (TARGET !== "readme") {
 
         // Handle HTML
         new HtmlWebpackPlugin({
-            inject: "body", // Tags are injected manually in the content below
-            minify: false, // Adjust t/16-schema-upgrade-html.t if prodMode is used,
+            inject: "body",
+            minify: false,
             filename: "ui-header.html",
             mode: prodMode ? "production" : "development",
             excludeChunks: [
@@ -382,7 +414,7 @@ if (TARGET !== "readme") {
 
         new WebpackDeduplicationPlugin({}),
 
-        // Generate GZ versions of compiled code to sppedup download
+        // Generate GZ versions of compiled code to speed up download
         new CompressionPlugin({
             filename: "[path][base].gz",
             algorithm: "gzip",
@@ -409,24 +441,20 @@ if (TARGET !== "readme") {
             __INTLIFY_PROD_DEVTOOLS__: JSON.stringify(false),
         })
     ];
-    var pluginsProd = [
+    const pluginsProd = [
         ...pluginsCommon,
 
-        // Statics from build.
-        new webpack.DefinePlugin({
-        })
+        new webpack.DefinePlugin({})
     ];
-    var pluginsDev = [
+    const pluginsDev = [
         ...pluginsCommon,
 
         new UnusedWebpackPlugin(UnusedWebpackPluginOptions),
 
-        new webpack.DefinePlugin({
-        })
+        new webpack.DefinePlugin({})
     ];
-    var pluginsList = prodMode
+    const pluginsList = prodMode
         ? [
-              // Clean js before building (must be first)
               new CleanWebpackPlugin(CleanWebpackPluginOptions),
               ...pluginsProd
           ]
@@ -435,7 +463,7 @@ if (TARGET !== "readme") {
     /* OPTIMIZATIONS */
 
     const optimizationList = {
-        chunkIds: "named", // Keep names to load only 1 theme
+        chunkIds: "named",
         emitOnErrors: false,
         minimize: prodMode,
         minimizer: [
@@ -450,8 +478,6 @@ if (TARGET !== "readme") {
             cacheGroups: {
                 nodeModules: {
                     test(module) {
-                        // `module.resource` contains the absolute path of the file on disk.
-                        // Note the usage of `path.sep` instead of / or \, for cross-platform compatibility.
                         return (
                             module.resource &&
                             !module.resource.endsWith(".css") &&
@@ -481,16 +507,16 @@ if (TARGET !== "readme") {
         context: __dirname,
 
         entry: {
-            bootstrap: "./bootstrap.js", // Virtual file
+            bootstrap: "./bootstrap.js",
             ...lsmbCSS,
             ...quasarCss,
             ...globCssEntries("./css/**/*.css")
         },
 
         output: {
-            path: path.join(__dirname, "js"), // js path
-            publicPath: "js/", // images path
-            pathinfo: !prodMode, // keep source references?
+            path: path.join(__dirname, "js"),
+            publicPath: "js/",
+            pathinfo: !prodMode,
             filename: "_scripts/[name].[contenthash].js",
             chunkFilename: "_scripts/[name].[contenthash].js"
         },
@@ -511,7 +537,7 @@ if (TARGET !== "readme") {
             },
             extensions: [".js", ".vue", ".sass", ".scss"],
             fallback: {
-                path: require.resolve("path-browserify")
+                path: resolvePackagePath("path-browserify")
             }
         },
 
@@ -525,14 +551,14 @@ if (TARGET !== "readme") {
 
         performance: {
             hints: prodMode ? false : "warning",
-            maxAssetSize: prodMode ? 250000 /* the default */ : 10000000,
-            maxEntrypointSize: prodMode ? 250000 /* the default */ : 10000000
+            maxAssetSize: prodMode ? 250000 : 10000000,
+            maxEntrypointSize: prodMode ? 250000 : 10000000
         },
 
         devtool: prodMode ? "hidden-source-map" : "source-map",
 
         devServer: {
-            allowedHosts: "all", // Replace with docker parent and localhost
+            allowedHosts: "all",
             client: {
                 logging: "verbose",
                 overlay: {
@@ -545,7 +571,7 @@ if (TARGET !== "readme") {
             devMiddleware: {
                 index: false,
                 serverSideRender: true,
-                writeToDisk: true // Required for Perl TT
+                writeToDisk: true
             },
             hot: true,
             host: "0.0.0.0",
@@ -592,11 +618,12 @@ if (TARGET !== "readme") {
         target: "web"
     };
 
-    module.exports = webpackConfigs;
+    config = webpackConfigs;
 } else {
-    const { merge } = require("webpack-merge");
-
-    /* Include Markdown compiling for README.md */
-    const WebpackCompileMarkdown = require("./js-src/webpack-compile-markdown.js");
-    module.exports = merge({ entry: {} }, WebpackCompileMarkdown);
+    // ESM equivalent: Import the markdown compiler module
+    const markdownModule = await import("./js-src/webpack-compile-markdown.js");
+    const WebpackCompileMarkdown = markdownModule.default || markdownModule;
+    config = merge({ entry: {} }, WebpackCompileMarkdown);
 }
+
+export default config;
