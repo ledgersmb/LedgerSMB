@@ -1,6 +1,7 @@
 {
   "name": "ledgersmb-js",
   "version": "1.14.0-dev",
+  "type": "module",
   "lockfileVersion": 2,
   "description": "LedgerSMB UI",
   "keywords": [
@@ -77,7 +78,7 @@
     "css-minimizer-webpack-plugin": "8.0.0",
     "cssnano": "9.0.4",
     "dojo-util": "1.17.3",
-    "dojo-webpack-plugin": "3.0.14",
+    "dojo-webpack-plugin": "github:ehuelsmann/dojo-webpack-plugin#esm-wrappers",
     "ejs-loader": "0.5.0",
     "eslint": "10.5.0",
     "eslint-config-eslint": "14.0.0",
@@ -124,7 +125,6 @@
     "webpack-cli": "7.2.2",
     "webpack-deduplication-plugin": "0.0.8",
     "webpack-dev-server": "6.0.0",
-    "webpack-merge": "6.0.1",
     "webpack-sources": "3.5.1",
     "webpack-virtual-modules": "0.6.2",
     "yargs": "18.1.0"
