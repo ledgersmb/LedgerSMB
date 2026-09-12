@@ -15,10 +15,10 @@ use PageObject::App;
 
 __PACKAGE__->self_register(
               'invoice-line',
-              './/tbody[@data-dojo-type="lsmb/InvoiceLine"]',
+              './/tbody[@class="invoice-line"]',
               tag_name => 'tbody',
               attributes => {
-                  'data-dojo-type' => 'lsmb/InvoiceLine',
+                  'class' => 'invoice-line',
               });
 
 sub _verify {
