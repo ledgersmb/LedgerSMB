@@ -167,6 +167,9 @@ output_formatter:
     # etc...
     - $class: LedgerSMB::Template::Plugin::ODS
     - $class: LedgerSMB::Template::Plugin::CSV
+      numberformat: "1000.00"
+    - $class: LedgerSMB::Template::Plugin::CSV
+      format: "CSV/User number format"
     - $class: LedgerSMB::Template::Plugin::TXT
     - $class: LedgerSMB::Template::Plugin::HTML
     # Custom external tool
