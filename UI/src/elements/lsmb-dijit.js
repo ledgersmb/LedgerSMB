@@ -44,6 +44,11 @@ export class LsmbDijit extends HTMLElement {
             }
         });
 
+        // Only this property is named differently in Dojo than in HTML
+        // making a map of property names is overkill for now...
+        if (Object.hasOwn(props, "readonly")) {
+            props.readOnly = delete props.readonly;
+        }
         this._collectedProps = props;
         return props;
     }
