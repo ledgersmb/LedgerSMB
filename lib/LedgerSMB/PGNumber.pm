@@ -239,17 +239,15 @@ sub to_output($self, @args) {
     $places = $args{money_places} if $args{money};
     $places = ($args{places}) ? $args{places} : $places;
     my $str = $self->bstr;
-    my $dplaces = $places;
-    $places = 0 unless defined $places and ($places > 0);
-    my $zfill = ($places > 0) ? 1 : 0;
-    $dplaces = DEFAULT_NUM_PREC  unless defined $dplaces;
+    my $zfill = (defined $places and $places > 0) ? 1 : 0;
+    $places //= DEFAULT_NUM_PREC;
     my $formatter = _formatter(
         -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
         -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
         -decimal_fill => $zfill,
         -neg_format => 'x'
     );
-    $str = $formatter->format_number($str, $dplaces);
+    $str = $formatter->format_number($str, $places);
 
     my $neg_format = ($args{neg_format}) ? $args{neg_format} : 'def';
     $neg_format = 'def' unless $lsmb_neg_formats->{$neg_format};
