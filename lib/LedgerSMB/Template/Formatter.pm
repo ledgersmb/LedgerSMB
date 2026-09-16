@@ -83,13 +83,14 @@ sub report_doc_renderer {
     $extra_vars //= {};
 
     return sub {
-        my ($template_name, $report, $vars, $cvars) = @_;
+        my ($template_name, $report, $formatter_options, $vars, $cvars) = @_;
         my $template = LedgerSMB::Template->new( # printed document
             template => $template_name,
             path     => 'DB',
             dbh      => $dbh,
             formatter_options => {
-                $options->%{ qw( numberformat dateformat ) }
+                $options->%{ qw( numberformat dateformat ) },
+                $formatter_options->%*
             },
             output_options => {
                 filename => $report->output_name . '.' . lc($format),
