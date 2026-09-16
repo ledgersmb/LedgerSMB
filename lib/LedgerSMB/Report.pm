@@ -617,6 +617,7 @@ sub _render($self, %args) {
 
     return $args{renderer}->(
         $template, $self,
+        $self->formatter_options // {},
         {
             # 'rows' has been set to an empty array to prevent encoding the same data twice
             report          => $self,
