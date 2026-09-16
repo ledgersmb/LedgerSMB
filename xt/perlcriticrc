@@ -119,7 +119,7 @@ pager = less
     set_themes = lsmb lsmb_new
 [Modules::RequireExplicitPackage]
     set_themes = lsmb lsmb_new lsmb_old
-    allow_import_of = v5.38 experimental Sublike::Extended Syntax::Operator::In
+    allow_import_of = v5.38 experimental Sublike::Extended Syntax::Operator::In Syntax::Operator::Equ
 [Modules::RequireFilenameMatchesPackage]
     set_themes = lsmb lsmb_new lsmb_old_wip lsmb_tests
 
