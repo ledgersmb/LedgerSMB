@@ -171,6 +171,7 @@ C<UI/reports/display_report> template will be used.
 
 
 use List::Util qw{ any pairgrep };
+use LedgerSMB::PGMonetary;
 use LedgerSMB::PGNumber;
 use Scalar::Util qw{ blessed };
 
@@ -455,13 +456,9 @@ sub format_money_columns($self, $columns) {
         if ($col->{money}) {
             $col->{class} = 'money';
             for my $row(@{$self->rows}){
-                if ( blessed $row->{$col->{col_id}}
-                     and $row->{$col->{col_id}}->can('to_output') ){
-                    $row->{$col->{col_id}} =
-                        $row->{$col->{col_id}}->to_output(
-                            money => 1,
-                            $self->formatter_options->%*);
-                }
+                $row->{$col->{col_id}} = LedgerSMB::PGMonetary->new(
+                    amount => $row->{$col->{col_id}}
+                    );
             }
         }
     }
