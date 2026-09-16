@@ -508,14 +508,14 @@ jobs:
     resource_class: large
     executor:
       name: test
-      perl: '5.38'
+      perl: '5.40'
       postgres: '18'
       browser: chrome
       selenium: selenium/node-chrome
       # coverage: 0
     steps:
       - prep_env:
-          perl: '5.38'
+          perl: '5.40'
       - start_starman
       - start_proxy
       - prove
@@ -525,11 +525,11 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: '5.38'
+      perl: '5.40'
       postgres: '16'
     steps:
       - prep_env:
-          perl: '5.38'
+          perl: '5.40'
       - start_starman
       - start_proxy
       - jest
@@ -538,13 +538,13 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: '5.38'
+      perl: '5.40'
       postgres: '16'
       browser: firefox
       selenium: selenium/node-firefox
     steps:
       - prep_env:
-          perl: '5.38'
+          perl: '5.40'
       - start_starman
       - start_proxy
       - prove
@@ -555,13 +555,13 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: '5.38'
+      perl: '5.40'
       postgres: '16'
       browser: firefox
       selenium: selenium/node-firefox
     steps:
       - prep_env:
-          perl: '5.38'
+          perl: '5.40'
       - start_starman
       - start_proxy
       - dev-prove
@@ -572,13 +572,13 @@ jobs:
     <<: *defaults
     executor:
       name: test
-      perl: '5.38'
+      perl: '5.40'
       postgres: '16'
       browser: firefox
       selenium: selenium/node-firefox
     steps:
       - prep_env:
-          perl: '5.38'
+          perl: '5.40'
       - start_starman
       - start_proxy
       - dev-prove-pg
@@ -590,13 +590,13 @@ jobs:
     resource_class: large
     executor:
       name: test
-      perl: '5.38'
+      perl: '5.40'
       postgres: '16'
       browser: firefox
       selenium: selenium/node-firefox
     steps:
       - prep_env:
-          perl: '5.38'
+          perl: '5.40'
       - start_starman
       - start_proxy
       - dev-prove-bdd

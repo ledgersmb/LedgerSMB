@@ -1,6 +1,6 @@
 #!perl
 
-requires 'perl', '5.38.0';
+requires 'perl', '5.40.0';
 
 requires 'Array::PrintCols';
 requires 'Archive::Zip';
