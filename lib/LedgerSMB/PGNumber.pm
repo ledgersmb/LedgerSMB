@@ -130,7 +130,7 @@ negative: (123.45)
 
 =cut
 
-my $lsmb_neg_formats = {
+our $lsmb_neg_formats = {
   'def' => { pos => '%s',   neg => '-%s'   },
  'DRCR' => { pos => '%s CR', neg => '%s DR' },
 'paren' => { pos => '%s',   neg => '(%s)'  },

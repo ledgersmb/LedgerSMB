@@ -156,6 +156,7 @@ requires 'Scope::Guard', '0.10';
 requires 'Session::Storage::Secure';
 requires 'String::Random';
 requires 'Sublike::Extended', '0.29';
+requires 'Syntax::Operator::Equ', '0.11';
 requires 'Template', '2.14';
 requires 'Template::Parser';
 requires 'Template::Provider';
