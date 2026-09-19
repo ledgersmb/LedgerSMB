@@ -130,7 +130,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        perl: [ "5.44", "5.42", "5.40", "5.38" ]
+        perl: [ "5.44", "5.42", "5.40" ]
 
     steps:
       - name: Checkout
@@ -147,9 +147,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - perl: "5.38"
-            JOB_COUNT: 5
-
           - perl: "5.40"
             JOB_COUNT: 5
 
@@ -270,7 +267,7 @@ jobs:
       matrix:
         include:
           - postgres: "15"
-            perl: "5.38"
+            perl: "5.40"
             JOB_COUNT: 5
             COVERAGE: 1
 
@@ -399,26 +396,21 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - perl: "5.38"
-            postgres: "14"
-            BROWSER: "firefox"
-            JOB_COUNT: 5
-
           - perl: "5.40"
-            postgres: "16"
+            postgres: "14"
             BROWSER: "chrome"
             DB_TESTING: 1
             JOB_COUNT: 5
 
           - perl: "5.42"
-            postgres: "18"
+            postgres: "16"
             BROWSER: "chrome"
             DB_TESTING: 1
             JOB_COUNT: 5
             COA_TESTING: 1
 
           - perl: "5.44"
-            postgres: "17"
+            postgres: "18"
             BROWSER: "firefox"
             JOB_COUNT: 3
             COVERAGE: 1

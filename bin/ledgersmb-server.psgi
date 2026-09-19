@@ -209,6 +209,7 @@ output_formatter:
     format: XLSX
   - $class: LedgerSMB::Template::Plugin::ODS
   - $class: LedgerSMB::Template::Plugin::CSV
+    numberformat: "1000.00"
   - $class: LedgerSMB::Template::Plugin::TXT
   - $class: LedgerSMB::Template::Plugin::HTML
 paths:

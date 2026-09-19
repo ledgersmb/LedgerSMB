@@ -325,6 +325,7 @@ sub new {
     if ($self->{language}){ # Language takes precedence over locale
         $self->{locale} = LedgerSMB::Locale->get_handle($self->{language});
     }
+    $self->{formatter_options} //= {};
 
     return $self;
 }
@@ -499,7 +500,12 @@ sub _render {
         $cleanvars = {
             %{ preprocess($vars,
                           sub { $self->{format_plugin}->escape(@_) },
-                          $self->{formatter_options},
+                          { $self->{formatter_options}->%*,
+                            numberformat => ($self->{format_plugin}->{numberformat}
+                                             // $self->{formatter_options}->{numberformat}),
+                            dateformat => ($self->{format_plugin}->{dateformat}
+                                           // $self->{formatter_options}->{dateformat})
+                          },
                    ) },
             %{$self->{additional_vars} // {}},
             %$cvars,

@@ -1,4 +1,7 @@
 
+use v5.38;
+use experimental qw(signatures);
+
 package LedgerSMB::Template::Plugin::CSV;
 
 =head1 NAME
@@ -10,9 +13,6 @@ LedgerSMB::Template::Plugin::CSV - Template support module for LedgerSMB
 Implements C<LedgerSMB::Template>'s FORMATTER protocol for CSV output.
 
 =cut
-
-use warnings;
-use strict;
 
 use Moo;
 
@@ -39,7 +39,27 @@ formats, as long as they are in the list of formats.
 
 has format => (is => 'ro', default => 'CSV');
 
+=head2 numberformat
+
+Number format to use, overriding the user's formatting preference. Normally,
+this should be set to C<1000.00> to suppress the thousands separator and use
+the point as the decimal separator as the practical CSV standard.
+
+=cut
+
+has numberformat => (is => 'ro');
+
 =head1 METHODS
+
+=head2 escape($string)
+
+Escapes a scalar string and returns the sanitized version.
+
+=cut
+
+sub escape($self, $vars) {
+    return $vars;
+}
 
 =head2 setup($parent, $vars, $output)
 
@@ -47,9 +67,7 @@ Implements the template's initialization protocol.
 
 =cut
 
-sub setup {
-    my ($self, $parent, $cleanvars, $output) = @_;
-
+sub setup($self, $parent, $cleanvars, $output) {
     return ($output, {
         input_extension => $extension,
         binmode => $binmode,
@@ -62,8 +80,7 @@ Implements the template's post-processing protocol.
 
 =cut
 
-sub postprocess {
-    my ($self, $parent, $output, $config) = @_;
+sub postprocess($self, $parent, $output, $config) {
     return undef;
 }
 
@@ -73,9 +90,7 @@ Returns the rendered template's mimetype.
 
 =cut
 
-sub mimetype {
-    my $self = shift;
-    my $config = shift;
+sub mimetype($self, $config) {
     return 'text/' . $extension;
 }
 
