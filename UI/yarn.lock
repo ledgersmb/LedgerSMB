@@ -4169,9 +4169,9 @@ __metadata:
   linkType: hard
 
 "@quasar/extras@npm:^2.0.0":
-  version: 2.0.4
-  resolution: "@quasar/extras@npm:2.0.4"
-  checksum: 10c0/f0ed699f7892fd25bd248f78cb208e9db368751a4fb54e2de7c06893888bee1f65d182069ab41e786c571a92d91e79c14719e334c3f2ca955ca5480766a55e08
+  version: 2.1.0
+  resolution: "@quasar/extras@npm:2.1.0"
+  checksum: 10c0/e3c3ea00a6136f947ed093e7c2eadbce2c8209cfdb101d69353c668ea3905b22dfae42c7d492b3ee04a4658fa3d644d54af8453e06793221f5a8bbd60ab042da
   languageName: node
   linkType: hard
 
@@ -4204,13 +4204,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/cli@npm:2.51.2":
-  version: 2.51.2
-  resolution: "@redocly/cli@npm:2.51.2"
+"@redocly/cli@npm:2.53.2":
+  version: 2.53.2
+  resolution: "@redocly/cli@npm:2.53.2"
   bin:
     openapi: bin/cli.js
     redocly: bin/cli.js
-  checksum: 10c0/35772554a21e00e27c1f66c2d867e4a8c1986662de145b7ec49e6fd5da6ddfcabefa45aae884b75cc1399af8aa75b0c936c5c1f32e0b9c768bb426bd5e8213b9
+  checksum: 10c0/360db734b95695f9c437811d8b63d3cc68b3cf10c34e4c4677279bbc818a2d79dffff0a2c1515df21dd88ff02ade313a526789aa90d2ac414ec3eff5159195f2
   languageName: node
   linkType: hard
 
@@ -5329,15 +5329,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-vue@npm:6.0.8":
-  version: 6.0.8
-  resolution: "@vitejs/plugin-vue@npm:6.0.8"
+"@vitejs/plugin-vue@npm:6.0.9":
+  version: 6.0.9
+  resolution: "@vitejs/plugin-vue@npm:6.0.9"
   dependencies:
     "@rolldown/pluginutils": "npm:^1.0.1"
   peerDependencies:
     vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
     vue: ^3.2.25
-  checksum: 10c0/28640e62f5f36bafd5f5be70726883af7c14db35bdcc04f348a5a1a4cc4f5d56dc2b59dd3409b048f9577f61af238149a0f55f96a2bfc9b3c24f98288bf5b8ab
+  checksum: 10c0/0e9308788f7ff4f6e0b44cd1135cb780c6bb1791fd513fc11b0f1153e131243993df950397e0b342c4522ba181cd35a621e0c5163327e4b3e225c2902b2a56e2
   languageName: node
   linkType: hard
 
@@ -6562,6 +6562,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"baseline-browser-mapping@npm:^2.11.23":
+  version: 2.11.25
+  resolution: "baseline-browser-mapping@npm:2.11.25"
+  bin:
+    baseline-browser-mapping: dist/cli.cjs
+  checksum: 10c0/d725a78420b3c8b0bf401d2c724ff662e7e1b67a123b17bb4417bbd6f6f00d8245bdbda862edbca84ed65618aa80a184fec83ad5d6f7c4031cced4b8ab2e7f11
+  languageName: node
+  linkType: hard
+
 "batch@npm:0.6.1":
   version: 0.6.1
   resolution: "batch@npm:0.6.1"
@@ -6690,18 +6699,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist@npm:4.28.9, browserslist@npm:^4.28.9":
-  version: 4.28.9
-  resolution: "browserslist@npm:4.28.9"
+"browserslist@npm:4.29.0":
+  version: 4.29.0
+  resolution: "browserslist@npm:4.29.0"
   dependencies:
-    baseline-browser-mapping: "npm:^2.11.20"
+    baseline-browser-mapping: "npm:^2.11.23"
     caniuse-lite: "npm:^1.0.30001810"
-    electron-to-chromium: "npm:^1.5.420"
-    node-releases: "npm:^2.0.54"
-    update-browserslist-db: "npm:^1.3.2"
+    electron-to-chromium: "npm:^1.5.427"
+    node-releases: "npm:^2.0.55"
+    update-browserslist-db: "npm:^1.3.3"
   bin:
     browserslist: cli.js
-  checksum: 10c0/c4c7457cccb188bb904bb84566ff2d09e6f45ccf48619333111e5d60dfad456522a64e3e4af7c7608bc171371fc006f32bcc296877b0586bf80fb9f60841a110
+  checksum: 10c0/0490dad3a4b8e9b187fa1ba79fa84f5753dc148020c298026a6af2a3ad279a419d4507a7a42c0754dbae0ff343c2db3dfa4b9a5e9766b3d60029458dc17b66ae
   languageName: node
   linkType: hard
 
@@ -6717,6 +6726,21 @@ __metadata:
   bin:
     browserslist: cli.js
   checksum: 10c0/047dd517c8d1f1f56a253d752c3127b8ad01c58e4cbb7e21cb5cd07ebd13e083a2237c3afb13eb60674282c9132bd4534aea2c3ff7c6f7d29be0687a00cbd537
+  languageName: node
+  linkType: hard
+
+"browserslist@npm:^4.28.9":
+  version: 4.28.9
+  resolution: "browserslist@npm:4.28.9"
+  dependencies:
+    baseline-browser-mapping: "npm:^2.11.20"
+    caniuse-lite: "npm:^1.0.30001810"
+    electron-to-chromium: "npm:^1.5.420"
+    node-releases: "npm:^2.0.54"
+    update-browserslist-db: "npm:^1.3.2"
+  bin:
+    browserslist: cli.js
+  checksum: 10c0/c4c7457cccb188bb904bb84566ff2d09e6f45ccf48619333111e5d60dfad456522a64e3e4af7c7608bc171371fc006f32bcc296877b0586bf80fb9f60841a110
   languageName: node
   linkType: hard
 
@@ -8366,6 +8390,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"electron-to-chromium@npm:^1.5.427":
+  version: 1.5.430
+  resolution: "electron-to-chromium@npm:1.5.430"
+  checksum: 10c0/60448619a642b9d612ffe9d50986043c0a92ac5216afe2af696649457e839f756313bde2277372dcf85cd35c4d8735222509b2b9b0cd0422759a7a67a1ae67e2
+  languageName: node
+  linkType: hard
+
 "elementtree@npm:0.1.7":
   version: 0.1.7
   resolution: "elementtree@npm:0.1.7"
@@ -9027,9 +9058,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-package-json@npm:1.8.0":
-  version: 1.8.0
-  resolution: "eslint-plugin-package-json@npm:1.8.0"
+"eslint-plugin-package-json@npm:1.8.1":
+  version: 1.8.1
+  resolution: "eslint-plugin-package-json@npm:1.8.1"
   dependencies:
     "@altano/repository-tools": "npm:^2.0.1"
     "@types/estree": "npm:^1.0.0"
@@ -9049,7 +9080,7 @@ __metadata:
   peerDependenciesMeta:
     "@eslint/json":
       optional: true
-  checksum: 10c0/2362e557f4d3a7639cb6961bb3877bb7ef4ae4b796056fffb66eb371f7a4c414ed841f3b9840533418769687341a5ab58ba22df97f7434539e5eff21c3d83227
+  checksum: 10c0/cb91e1a5f6f47786d9501aae4e2c02083b5d165299db524ba84c0ff78192bf99910d5b27348f7231b9ff6d7054a670980336cf745a6b01429b7f7acbb6e2002c
   languageName: node
   linkType: hard
 
@@ -11798,14 +11829,14 @@ __metadata:
     "@pinia/testing": "npm:2.0.1"
     "@quasar/app-webpack": "npm:^4.2.0"
     "@quasar/extras": "npm:^2.0.0"
-    "@redocly/cli": "npm:2.51.2"
+    "@redocly/cli": "npm:2.53.2"
     "@typescript-eslint/utils": "npm:8.70.0"
-    "@vitejs/plugin-vue": "npm:6.0.8"
+    "@vitejs/plugin-vue": "npm:6.0.9"
     "@vitest/coverage-v8": "npm:4.1.11"
     "@vitest/eslint-plugin": "npm:1.6.27"
     "@vue/test-utils": "npm:2.5.0"
     babel-loader: "npm:10.1.1"
-    browserslist: "npm:4.28.9"
+    browserslist: "npm:4.29.0"
     clean-webpack-plugin: "npm:4.0.0"
     compression-webpack-plugin: "npm:12.0.0"
     content-disposition: "npm:3.0.0"
@@ -11828,7 +11859,7 @@ __metadata:
     eslint-plugin-import-x: "npm:4.17.1"
     eslint-plugin-json: "npm:5.0.0"
     eslint-plugin-n: "npm:18.3.0"
-    eslint-plugin-package-json: "npm:1.8.0"
+    eslint-plugin-package-json: "npm:1.8.1"
     eslint-plugin-prettier: "npm:5.5.6"
     eslint-plugin-vue: "npm:10.11.0"
     eslint-webpack-plugin: "npm:6.0.0"
@@ -13151,6 +13182,13 @@ __metadata:
   version: 2.0.54
   resolution: "node-releases@npm:2.0.54"
   checksum: 10c0/196b54ab06fd03b742816b6ca8185c69af42735b283083036e2579682c430b8f9ff89046891fe8c625557e5885793a2032d28070100bb2e57e6d6586b2f483c1
+  languageName: node
+  linkType: hard
+
+"node-releases@npm:^2.0.55":
+  version: 2.0.56
+  resolution: "node-releases@npm:2.0.56"
+  checksum: 10c0/d62240b1440f660a6742e0a45ed7eef14bc79228447042ddb58363f73f4a5971b40fc5647f2e40f26854b24ac575ad4a21453d627c3554b4d4b31b4d596d6e8e
   languageName: node
   linkType: hard
 
@@ -14856,9 +14894,9 @@ __metadata:
   linkType: hard
 
 "quasar@npm:^2.18.1":
-  version: 2.32.0
-  resolution: "quasar@npm:2.32.0"
-  checksum: 10c0/1b4942212185e874e66b1da28d32bd6b9cade1524d47307b83a9a607e416c2f674309251a0e72645e56f7c5834f5a800ede4a84b63ba5ddbfe851cdb3954d002
+  version: 2.33.0
+  resolution: "quasar@npm:2.33.0"
+  checksum: 10c0/ddac5146dcd23d32c87a45d587c5cdb1c9ca55e2ef72d005049fab16f0d5664f078b88e13a09c816f684f558d16a0f10f95435716c494b6a555ea2958f37a1c8
   languageName: node
   linkType: hard
 
@@ -17705,6 +17743,20 @@ __metadata:
   bin:
     update-browserslist-db: cli.js
   checksum: 10c0/837b4ea8c4934228c5c2a922ea747a54b0ec9d1c408d2fbc9220a9b98327c04109776e6ea1206fa056ea61ed8534863af472d9f2cfce569d35f04e98c95db739
+  languageName: node
+  linkType: hard
+
+"update-browserslist-db@npm:^1.3.3":
+  version: 1.3.3
+  resolution: "update-browserslist-db@npm:1.3.3"
+  dependencies:
+    escalade: "npm:^3.2.0"
+    picocolors: "npm:^1.1.1"
+  peerDependencies:
+    browserslist: ">= 4.21.0"
+  bin:
+    update-browserslist-db: cli.js
+  checksum: 10c0/07bab166c18f47ba51f3b755e42f109ef5069d0d7c7224887decbd523d5ccd404f63661ebd5a740099972ed47f41f0e28c04df8be31d76716a346f948ce2aa61
   languageName: node
   linkType: hard
 
