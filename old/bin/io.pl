@@ -260,9 +260,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
     print qq|
   <tr>
     <td>
-      <table width=100% id="invoice-lines"
-                        data-dojo-type="lsmb/InvoiceLines"
-                        data-dojo-attach-point="lines">
+      <table width=100% id="invoice-lines">
 <thead>
     <tr class=listheading>|;
 
@@ -434,7 +432,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                 $column_data{deleteline} .= qq|
 <button data-dojo-type="dijit/form/Button"><span>X</span>
 <script type="dojo/on" data-dojo-event="click">
-require('dijit/registry').byId('invoice-lines').removeLine('line-$i');
+require('dijit/registry').byId('invoice').removeLine('line-$i');
 </script>
 </button>|;
             }
@@ -480,8 +478,7 @@ qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" id="qt
         $column_data{onhand} = qq|<td class="onhand">|. $form->format_amount( \%myconfig, $form->{"onhand_$i"}) . qq|</td>|;
         $column_data{taxformcheck} = qq|<td class="taxform"><input type="checkbox" data-dojo-type="dijit/form/CheckBox" id="taxformcheck_$i" name="taxformcheck_$i" value="1" $taxchecked $readonly></td>|;
         print qq|
-<tbody data-dojo-type="lsmb/InvoiceLine"
- id="line-$i">
+<tbody id="line-$i" class="invoice-line">
         <tr valign=top>|;
 
         for (@column_index) {
