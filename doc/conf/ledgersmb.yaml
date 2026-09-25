@@ -136,11 +136,9 @@ mail:
 # Several settings used throughout the application which have no
 # natural common top-level topic by which they can be combined
 miscellaneous:
-  $class: Beam::Wire
-  config:
-    backup_email_from: ''
-    max_upload_size: 4194304
-    proxy_ip: 127.0.0.1/8 ::1/128 ::ffff:127.0.0.1/108
+  backup_email_from: ''
+  max_upload_size: 4194304
+  proxy_ip: 127.0.0.1/8 ::1/128 ::ffff:127.0.0.1/108
 
 # !book: output_formatter
 #
@@ -183,15 +181,13 @@ output_formatter:
 #
 # Centralized list of paths referenced elsewhere in this configuration
 paths:
-  $class: Beam::Wire
-  config:
-    locale: ./locale/po
-    sql: ./sql
-    sql_data: ./locale
-    templates: ./templates
-    UI: ./UI
-    UI_cache: lsmb_templates
-    workflows:
+  locale: ./locale/po
+  sql: ./sql
+  sql_data: ./locale
+  templates: ./templates
+  UI: ./UI
+  UI_cache: lsmb_templates
+  workflows:
     - ./workflows
     - ./custom_workflows
 
