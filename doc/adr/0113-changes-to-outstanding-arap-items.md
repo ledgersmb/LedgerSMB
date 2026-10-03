@@ -186,8 +186,36 @@ account name would likely mirror the type (including the words "write-off").
 
 ## Decision
 
+Option (3) with the cross reference implementation in the `acc_trans` table
+(column `allocation`) will be used to implement tracking of changes to the
+outstanding amount on invoices.
 
 ## Consequences
+
+1. The rows in the "Payments" section of the invoice will include rows for
+   changes due to payment, allocation of overpayment, voided amounts and
+   write-offs, using the `allocation` column for payments, overpayments and
+   voids.
+2. Allocations of overpayments will show one line per overpayment per
+   allocation event (see explanation below).
+3. Migration needs to be built to populate the `allocation` column
+
+
+### Example of overpayment allocation
+
+This example shows the allocation of two overpayments, one of 37 (OP1) and the
+othe of 73 (OP2), allocated to two invoices in a single allocation ("use of
+overpayment") event. The first invoice (INV1) has an outstanding amount of
+44 and the other (INV2) of 66. The overpayment allocation transaction looks
+like this:
+
+| # | accno | Account      | Debit | Credit | Invoice # | Overpayment # | Allocation |
+|---|-------|--------------|------:|-------:|-----------|---------------|------------|
+| 1 | 2110  | Overpayments |    44 |        |           | OP1           |            |
+| 2 | 2110  | Overpayments |    66 |        |           | OP2           |            |
+| 3 | 1230  | A/R          |       |     37 | INV1      |               | 1          |
+| 4 | 1230  | A/R          |       |      7 | INV2      |               | 1          |
+| 5 | 1230  | A/R          |       |     66 | INV2      |               | 2          |
 
 
 ## Annotations
