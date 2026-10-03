@@ -17760,9 +17760,9 @@ __metadata:
   linkType: hard
 
 "vue-component-type-helpers@npm:^3.0.0":
-  version: 3.3.11
-  resolution: "vue-component-type-helpers@npm:3.3.11"
-  checksum: 10c0/2976679dd6489d469a00a1ccf62318c1d9e4f7da89399d82bca82a71d95ffb4a042b806f18662876f5053f4de2652103b59888f70a852c84c10658759b9e1863
+  version: 3.3.12
+  resolution: "vue-component-type-helpers@npm:3.3.12"
+  checksum: 10c0/02a6fc32704dab2d31a66a488529f631758c32c1a359d8896ad47c3f61b704f8dfd74825ed1d354e048a9bafe013bc912293c52bcd59cdadf06e811230d25e73
   languageName: node
   linkType: hard
 
