@@ -704,7 +704,7 @@ sub report_renderer_ui {
   }
 
   return sub {
-      my ($template_name, $report, $vars, $cvars) = @_;
+      my ($template_name, $report, $formatter_options, $vars, $cvars) = @_;
       $vars->{REPORT_LINK} = $uri->as_string;
       $vars->{SCRIPT} = $request->{script};
       $vars->{SETTINGS} = {
@@ -715,6 +715,7 @@ sub report_renderer_ui {
       $vars->{HIDDENS} = $request->{hiddens};
       $vars->{FORM_ID} = $request->{form_id};
 
+      local $request->{_user} = { $request->{_user}->%*, $formatter_options->%* };
       return $ui->render($request, "Reports/$template_name", $vars, $cvars);
   };
 }
@@ -735,10 +736,10 @@ sub report_renderer_doc {
             });
 
     return sub {
-        my ($template_name, $report, $vars, $cvars) = @_;
+        my ($template_name, $report, $formatter_options, $vars, $cvars) = @_;
 
         return template_response(
-            $renderer->( $template_name, $report, $vars, $cvars ),
+            $renderer->( $template_name, $report, $formatter_options, $vars, $cvars ),
             disposition => 'attach' );
     };
 }
@@ -756,7 +757,7 @@ sub render_report {
         # render as UI element
         $renderer = $request->report_renderer_ui;
     }
-    return $report->render( renderer => $renderer);
+    return $report->render( renderer => $renderer );
 }
 
 

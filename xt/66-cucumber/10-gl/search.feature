@@ -23,8 +23,8 @@ Scenario: Default search with no filter
        | End Date            |                        |
    And I expect the report to contain 2 rows
    And I expect the 'Debits' report column to contain '5000.00' for Account Number '1065'
-   And I expect the 'Credits' report column to contain '0' for Account Number '1065'
-   And I expect the 'Debits' report column to contain '0' for Account Number '1060'
+   And I expect the 'Credits' report column to contain '0.00' for Account Number '1065'
+   And I expect the 'Debits' report column to contain '0.00' for Account Number '1060'
    And I expect the 'Credits' report column to contain '5000.00' for Account Number '1060'
    And I expect the 'Debits' report column to contain '5000.00' for Account Number ''
    And I expect the 'Credits' report column to contain '5000.00' for Account Number ''

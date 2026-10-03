@@ -7,6 +7,7 @@ Changelog for 1.14.0
 Added functionalities
 * Support textual numbers for check printing for all translations (#9430)
 * New numbering sequences for lots, payments and asset reports (#9283, #9321)
+* Configurable CSV number formatting (#9876)
 
 Changed functionalities
 * Added support for spaces around commas in CSV uploads (#9505)
@@ -23,6 +24,7 @@ Bugs fixed
 * One voucher per batch instead of one per transaction in a batch (#9572)
 * Partial payments data generated from vouchers in 1.8 migration script (#9794)
 * Exit code from 'ledgersmb-admin' is zero on failed user creation (#9745)
+* CSV export invalid due to user number formatting configuration (#8920)
 
 Cleanup & architecture improvements
 * Payments are now tracked as first-order transactions (#9508)
@@ -39,7 +41,7 @@ Cleanup & architecture improvements
 * Harmonization of syntax in modules which 'use v5.xx' to v5.38 (#9744)
 
 Updated dependencies
-* Perl minimum version increased to 5.38 (from 5.36)
+* Perl minimum version increased to 5.40 (from 5.36)
 * PostgreSQL minimum version increased to v14 (from v13)
 
 
