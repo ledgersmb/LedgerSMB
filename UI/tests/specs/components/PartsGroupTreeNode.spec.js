@@ -19,7 +19,7 @@ describe("PartsGroupTreeNode", () => {
                 stubs: {
                     QItem: stubGeneric,
                     QItemLabel: stubLabel,
-                    QItemSection: stubGeneric,
+                    QItemSection: stubGeneric
                 }
             },
             props: {
