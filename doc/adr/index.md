@@ -42,5 +42,6 @@
 | [0110](./0110-handling-argumentlist-changes-in-pg-functions.md) | Accepted | Addresses how to deal combine the requirement of having exactly one version of each function when redefining a function with a different argument list (as Pg supports simultaneous functions by the same name with different argument lists). |
 | [0111](./0111-payment-and-overpayment-migration-to-open-items.md) | Accepted | This ADR seeks to disambiguate the terms 'payment' and 'overpayment' and to detail the related change in semantics of these terms in the application. The term 'payment' refers both to cash transfers as well as the use to reduce outstanding invoice amounts. |
 | [0112](./0112-vouchers-no-longer-necessary.md) | Accepted | Vouchers and batches offer the same solution: vouchers can be removed without removing functionality from the application. |
+| [0113](./0113-changes-to-outstanding-arap-items.md) | Draft | Describes a design for handling changes to the outstanding balance of AR/AP items and how to reflect those on the entry screens. |
 
-Index Generated: Sat Aug 15 20:49:55 2026 UTC
+Index Generated: Sat Sep  5 15:47:43 2026 UTC
