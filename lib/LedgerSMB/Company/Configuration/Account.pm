@@ -160,6 +160,23 @@ Contains the internal ID of the GIFI code associated with the account.
 ###initialized from the database using 'gifi_accno' :-(
 has gifi_id => (is => 'rw');
 
+=head2 open_items
+
+  my $bool = $account->open_items;
+
+Indicates if an account is I<open item managed>.
+
+Accounts which are open item managed.
+
+Open item management can be enabled on any account, but only makes sense
+on balance accounts (assets, liabilities and equity): PnL accounts generally
+don't track balances.
+
+=cut
+
+has open_items => (is => 'rw');
+
+
 =head1 CONSTRUCTOR ARGUMENTS
 
 In addition to the attributes from the previous section, the following

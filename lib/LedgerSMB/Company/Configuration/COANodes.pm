@@ -48,13 +48,15 @@ sub _resultset {
         SELECT 'A-'||id as id,
                accno, description, category, gifi_accno,
                'H-'||heading as heading_id, contra,
-               tax, obsolete, false as is_heading
+               tax, obsolete, open_item_managed as open_items,
+               false as is_heading
         FROM account
         UNION ALL
         SELECT 'H-'||id as id,
                accno, description, category, null,
                'H-'||parent_id, null,
-               null, null, true
+               null, null, false,
+               true
         FROM account_heading
 };
 }

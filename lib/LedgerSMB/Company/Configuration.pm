@@ -290,9 +290,10 @@ sub _process_coa_account {
         unless $parent;
 
     my %args;
-    for my $arg (qw(description category contra recon
-                    obsolete is_temp gifi)) {
-        my $value = $account_xml->getAttribute($arg);
+    for my $att (qw(description category contra recon
+                    obsolete is_temp gifi open-items)) {
+        my $value = $account_xml->getAttribute($att);
+        my $arg = ($att =~ s/-/_/gr);
         $args{$arg} = $value if defined $value;
     }
 
