@@ -15,7 +15,11 @@
  *
  * @format
  */
-const path = require("path");
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 function getConfig(/* env */) {
     // env is set by the 'buildEnvironment' and/or 'environment' plugin options
@@ -78,13 +82,8 @@ function getConfig(/* env */) {
         }
     };
 }
-// For Webpack, export the config.
-// This is needed both at build time and on the client at runtime
-if (typeof module !== "undefined") {
-    module.exports = getConfig;
-} else {
-    // No webpack.  This script was loaded by page via script tag, so load Dojo from CDN
-    getConfig(
-        /* { dojoRoot: "//ajax.googleapis.com/ajax/libs/dojo/1.16.0" } */
-    );
-}
+
+// Export the config object
+export default getConfig(
+    /* { dojoRoot: "//ajax.googleapis.com/ajax/libs/dojo/1.16.0" } */
+);
