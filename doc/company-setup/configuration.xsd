@@ -96,6 +96,7 @@
     <xs:attribute name="contra" type="xs:boolean" default="false" />
     <xs:attribute name="recon" type="xs:boolean" default="false" />
     <xs:attribute name="obsolete" type="xs:boolean" default="false" />
+    <xs:attribute name="open-items" type="xs:boolean" default="false" />
     <xs:attribute name="category" use="required" type="account-category" />
     <xs:attribute name="id" type="xs:ID" />
   </xs:complexType>
