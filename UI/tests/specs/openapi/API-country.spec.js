@@ -15,8 +15,8 @@ jestOpenAPI(openapi + "/doc/openapi/API.yaml");
 
 // Load the API definition
 import { readFileSync as _readFileSync } from "node:fs";
-import yaml from "js-yaml";
-const API_yaml = yaml.load(_readFileSync(openapi + "/doc/openapi/API.yaml"));
+import { load } from "js-yaml";
+const API_yaml = load(_readFileSync(openapi + "/doc/openapi/API.yaml"));
 
 // Set API version to use
 const api = "erp/api/v0";

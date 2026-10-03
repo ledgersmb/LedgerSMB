@@ -20,9 +20,9 @@ jestOpenAPI(openapi + "/doc/openapi/API.yaml");
 
 // Load the API definition
 import { readFileSync as _readFileSync } from "node:fs";
-import yaml from "js-yaml";
-const API_yaml = yaml.load(_readFileSync(openapi + "/doc/openapi/API.yaml"), {
-    schema: yaml.JSON_SCHEMA
+import { load, JSON_SCHEMA } from "js-yaml";
+const API_yaml = load(_readFileSync(openapi + "/doc/openapi/API.yaml"), {
+    schema: JSON_SCHEMA
 });
 
 // Set API version to use
