@@ -319,6 +319,10 @@ paths:
               schema:
                 type: string
                 format: uri-reference
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GIFI'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -367,7 +371,7 @@ paths:
     put:
       tags:
         - GIFI
-      summary: Put a single GIFI
+      summary: Replace a single GIFI
       operationId: putGIFIById
       parameters:
         - $ref: '#/components/parameters/if-match'
@@ -437,11 +441,29 @@ paths:
       operationId: updateGIFIById
       parameters:
         - $ref: '#/components/parameters/if-match'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - description
+              properties:
+                description:
+                  type: string
+                  minLength: 1
       responses:
         200:
           description: |
             The resource was succesfully updated,
             returning the new data for the resource.
+          headers:
+            ETag:
+              $ref: '#/components/headers/ETag'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GIFI'
         400:
           $ref: '#/components/responses/400'
         401:
@@ -473,8 +495,8 @@ components:
       value:
         _links: []
         items:
-        - accno: "99999"
-          description: Test GIFI
+          - accno: "99999"
+            description: Test GIFI
     validGIFI:
       summary: Valid GIFI
       description: French Canadian entry
