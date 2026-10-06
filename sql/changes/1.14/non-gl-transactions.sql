@@ -183,3 +183,10 @@ drop trigger if exists gl_track_global_sequence on gl;
 drop trigger if exists ap_track_global_sequence on ap;
 drop trigger if exists ar_track_global_sequence on ar;
 
+
+comment on table transactions is
+  $$This table contains generic transaction header information. Every
+  transaction has a record in this table. Transactions may require
+  specific additional information which is stored in tables referring
+  this table. Examples are the ar, ap and payment tables.
+  $$;
