@@ -191,11 +191,9 @@ mail:
   transport:
     $class: Email::Sender::Transport::Sendmail
 miscellaneous:
-  $class: Beam::Wire
-  config:
-    backup_email_from: ''
-    max_upload_size: 4194304
-    proxy_ip: 127.0.0.1/8 ::1/128 ::ffff:127.0.0.1/108
+  backup_email_from: ''
+  max_upload_size: 4194304
+  proxy_ip: 127.0.0.1/8 ::1/128 ::ffff:127.0.0.1/108
 output_formatter:
   $class: LedgerSMB::Template::Formatter
   plugins:
@@ -213,16 +211,14 @@ output_formatter:
   - $class: LedgerSMB::Template::Plugin::TXT
   - $class: LedgerSMB::Template::Plugin::HTML
 paths:
-  $class: Beam::Wire
-  config:
-    locale: ./locale/po/
-    sql: ./sql/
-    templates: ./templates/
-    UI: ./UI/
-    UI_cache: lsmb_templates/
-    workflows:
-    - workflows/
-    - custom_workflows/
+  locale: ./locale/po/
+  sql: ./sql/
+  templates: ./templates/
+  UI: ./UI/
+  UI_cache: lsmb_templates/
+  workflows:
+  - workflows/
+  - custom_workflows/
 printers:
   $class: LedgerSMB::Printers
   printers: {}
