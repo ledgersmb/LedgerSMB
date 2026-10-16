@@ -5,7 +5,7 @@ requires 'perl', '5.38.0';
 requires 'Array::PrintCols';
 requires 'Archive::Zip';
 recommends 'Authen::SASL';
-requires 'Beam::Wire';
+requires 'Beam::Wire', '1.031';
 requires 'CGI::Emulate::PSGI';
 requires 'CGI::Parse::PSGI';
 requires 'Cookie::Baker', '0.10'; # for 'samesite' attribute
