@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(51);
+    SELECT plan(52);
 
     -- Add data
 
@@ -412,6 +412,19 @@ BEGIN;
     SELECT results_eq('test', array[1::int],
                       'After payment, the payment table contains a record');
     DEALLOCATE test;
+
+
+    PREPARE test AS
+    SELECT count(*)::int
+      FROM acc_trans a
+         JOIN payment p
+            ON a.trans_id = p.trans_id
+      WHERE p.id = :payment_id
+        AND a.allocation is not null;
+    SELECT results_eq('test', array[1::int],
+                      'After payment, the acc_trans table has "allocation" column content');
+    DEALLOCATE test;
+
 
     SELECT trans_id as trans_id FROM payment p
      WHERE notes = 'generated from bulk payment'
