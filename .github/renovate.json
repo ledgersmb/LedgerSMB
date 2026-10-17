@@ -84,6 +84,37 @@
             "matchPackageNames": [
                 "*"
             ]
+        },
+        {
+            "matchBaseBranches": [
+                "1.12",
+                "1.13"
+            ],
+            "matchPackageNames": [ "pinia" ],
+            "allowedVersions": "<4"
+        },
+        {
+            "matchBaseBranches": [
+                "1.12",
+                "1.13"
+            ],
+            "matchPackageNames": [ "@pinia/testing" ],
+            "allowedVersions": "<2"
+        },
+        {
+            "matchBaseBranches": [
+                "1.12",
+                "1.13"
+            ],
+            "matchPackageNames": [ "msw" ],
+            "allowedVersions": "<3"
+        },
+        {
+            "matchBaseBranches": [
+                "1.12"
+            ],
+            "matchPackageNames": [ "openapi-merge-cli" ],
+            "allowedVersions": "<2"
         }
     ],
     "timezone": "Etc/Greenwich",
