@@ -528,6 +528,7 @@ BEGIN
     open_item_id int,         -- open_item.id
     payment_id int,           -- payment.id
     eca_id int,               -- entity_credit_account.id
+    cash_entry_id int,        -- acc_trans.entry_id for cash line
     entry_id int,             -- acc_trans.entry_id
     amount_bc numeric,        -- amount in local currency (current rate)
     amount_tc numeric,        -- amount in foreign currency
@@ -697,15 +698,16 @@ BEGIN
 
   -- Insert cash side @ current fx rate
   UPDATE bulk_payments_in
-     SET entry_id = nextval('acc_trans_entry_id_seq')
+     SET cash_entry_id = nextval('acc_trans_entry_id_seq')
    WHERE amount_tc <> 0;
   INSERT INTO acc_trans
               (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
                transdate, source, entry_id)
   SELECT trans_id, t_cash_id, amount_bc * t_cash_sign,
          in_currency, amount_tc * t_cash_sign, false,
-         in_payment_date, in_source, entry_id
-    FROM bulk_payments_in  where amount_tc <> 0;
+         in_payment_date, in_source, cash_entry_id
+    FROM bulk_payments_in
+   where amount_tc <> 0;
 
   -- Insert discount @ current fx rate
   UPDATE bulk_payments_in
@@ -727,13 +729,13 @@ BEGIN
      SET entry_id = nextval('acc_trans_entry_id_seq');
   INSERT INTO acc_trans
               (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
-               transdate, source, entry_id, open_item_id)
+               transdate, source, entry_id, open_item_id, allocation)
   SELECT bpi.trans_id, t_ar_ap_id,
          (bpi.amount_tc + bpi.disc_amount_tc)
            * t_cash_sign * -1 * bpi.fxrate, in_currency,
          (bpi.amount_tc + bpi.disc_amount_tc)
            * t_cash_sign * -1, false,
-         in_payment_date, in_source, entry_id, open_item_id
+         in_payment_date, in_source, entry_id, open_item_id, entry_id
     FROM bulk_payments_in bpi
            JOIN entity_credit_account eca ON bpi.eca_id = eca.id;
 
