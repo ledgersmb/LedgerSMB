@@ -17,7 +17,7 @@
     "packageRules": [
         {
             "matchPackageNames": [ "selenium/*" ],
-            "baseBranchPatterns": [
+            "matchBaseBranches": [
                 "1.12"
             ],
             "allowedVersions": "<4"
@@ -32,7 +32,7 @@
             "automerge": true
         },
         {
-            "baseBranchPatterns": [
+            "matchBaseBranches": [
                 "1.12",
                 "1.13"
             ],
@@ -46,12 +46,12 @@
             ]
         },
         {
-           "baseBranchPatterns": [
+            "matchBaseBranches": [
                 "1.12",
                 "1.13"
             ],
-           "matchPackageNames": [ "eslint", "@eslint/*" ],
-           "allowedVersions": "<10"
+            "matchPackageNames": [ "eslint", "@eslint/*" ],
+            "allowedVersions": "<10"
         },
         {
             "matchUpdateTypes": [
