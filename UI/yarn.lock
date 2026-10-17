@@ -2475,6 +2475,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@dual-bundle/import-meta-resolve@npm:^4.2.1":
+  version: 4.2.1
+  resolution: "@dual-bundle/import-meta-resolve@npm:4.2.1"
+  checksum: 10c0/8f1e572c14c4d20ea35734635085213abd13bd440c251309cf8ae5ed1082f6759cefa1c2c52a631f76859c57e26062f78a8cee4acc239c0edc87cd316a5d3b5b
+  languageName: node
+  linkType: hard
+
 "@ehuelsmann/jest-openapi@npm:0.19.1":
   version: 0.19.1
   resolution: "@ehuelsmann/jest-openapi@npm:0.19.1"
@@ -4219,13 +4226,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/cli@npm:2.62.2":
-  version: 2.62.2
-  resolution: "@redocly/cli@npm:2.62.2"
+"@redocly/cli@npm:2.63.0":
+  version: 2.63.0
+  resolution: "@redocly/cli@npm:2.63.0"
   bin:
     openapi: bin/cli.js
     redocly: bin/cli.js
-  checksum: 10c0/e126380f700edcab64852566565ad127fd411721d4d3839d5aa7081983a8613b1ca4c769f5ef8298f6f285156f43aa298517e15342f3d691aa0ff1022805f6e3
+  checksum: 10c0/7328ff56a85289ac01f5e4d6502c34acf3547f257795a319d469740d8788784c0d7b617ad6860583b440fe981501e808fb1f0862cf4807cf9ca15a14a8ab5856
   languageName: node
   linkType: hard
 
@@ -9020,12 +9027,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-prettier@npm:5.5.6":
-  version: 5.5.6
-  resolution: "eslint-plugin-prettier@npm:5.5.6"
+"eslint-plugin-prettier@npm:5.5.7":
+  version: 5.5.7
+  resolution: "eslint-plugin-prettier@npm:5.5.7"
   dependencies:
     prettier-linter-helpers: "npm:^1.0.1"
-    synckit: "npm:^0.11.13"
+    synckit: "npm:^0.12.3"
   peerDependencies:
     "@types/eslint": ">=8.0.0"
     eslint: ">=8.0.0"
@@ -9036,7 +9043,7 @@ __metadata:
       optional: true
     eslint-config-prettier:
       optional: true
-  checksum: 10c0/af37126c947ff3e87ff1ea76408db8cb1c7da966ebdaba68c6dd5924da7eb1b43b1abc4796d753a97b1bc26ea94c5497093e6ab9f8588fffe558d5a554e19bbf
+  checksum: 10c0/76a1a99ace86471a320d99371cc34b0eee179f39bd383e46244b65b7b08b980b7a8e72f9d7eaaa74e92ede8032bf04ba0b05ba7c648c44a7c49d121df07eb58f
   languageName: node
   linkType: hard
 
@@ -11746,7 +11753,7 @@ __metadata:
     "@pinia/testing": "npm:2.0.1"
     "@quasar/app-webpack": "npm:^4.2.0"
     "@quasar/extras": "npm:^2.0.0"
-    "@redocly/cli": "npm:2.62.2"
+    "@redocly/cli": "npm:2.63.0"
     "@typescript-eslint/utils": "npm:8.71.2"
     "@vitejs/plugin-vue": "npm:6.0.10"
     "@vitest/coverage-v8": "npm:4.1.11"
@@ -11777,7 +11784,7 @@ __metadata:
     eslint-plugin-json: "npm:5.0.0"
     eslint-plugin-n: "npm:18.4.1"
     eslint-plugin-package-json: "npm:1.10.1"
-    eslint-plugin-prettier: "npm:5.5.6"
+    eslint-plugin-prettier: "npm:5.5.7"
     eslint-plugin-vue: "npm:10.11.1"
     eslint-webpack-plugin: "npm:6.0.0"
     globals: "npm:17.13.0"
@@ -16803,12 +16810,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"synckit@npm:^0.11.13":
-  version: 0.11.13
-  resolution: "synckit@npm:0.11.13"
+"synckit@npm:^0.12.3":
+  version: 0.12.3
+  resolution: "synckit@npm:0.12.3"
   dependencies:
+    "@dual-bundle/import-meta-resolve": "npm:^4.2.1"
     "@pkgr/core": "npm:^0.3.6"
-  checksum: 10c0/5a6c19f4f79045aaa7994106401bff6dbe7cca23a6d0a0723ff14eb8b1bebeb4a71729118f6914905598e304ea2fa13509885e11ba07d92e7cb68a06740cb328
+  checksum: 10c0/e7c3c5bd8272c55c0e108c296dbd0d326e9f22614227079b46ff7bd51c0970d810b222a3a14f5b0f1797d8af2c82058b9a927ac63a06219ead8535d271b382e1
   languageName: node
   linkType: hard
 
