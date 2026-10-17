@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(52);
+    SELECT plan(53);
 
     -- Add data
 
@@ -347,14 +347,26 @@ BEGIN;
                         -- overpayments section
                         null, null, null, null, null, null,
                         -- approved:
-                        true);
+                        true) as payment_id
+    \gset
 
     PREPARE test AS
-    SELECT count(*) = 0
+    SELECT count(*)::int
       FROM payment_get_open_invoice(
              1, -101, 'XTS', null, null, null, null, 'test_reverse', null);
-    SELECT results_eq('test', array[true],
+    SELECT results_eq('test', array[0::int],
                       'After payment, the invoice is paid');
+    DEALLOCATE test;
+
+    PREPARE test AS
+    SELECT count(*)::int
+      FROM payment p
+         JOIN acc_trans a
+            ON p.trans_id = a.trans_id
+      WHERE a.allocation is not null
+        AND p.id = :payment_id;
+    SELECT results_eq('test', array[1::int],
+                      'After payment, the allocation is set');
     DEALLOCATE test;
 
    SELECT payment__reverse(currval('payment_id_seq')::int, now()::date,

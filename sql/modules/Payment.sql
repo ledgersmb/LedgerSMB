@@ -806,6 +806,7 @@ DECLARE
   var_txn_id int;
   var_entry record;
   var_entry_id int[];
+  var_cash_entry_id int;
   out_count int;
   coa_id record;
   var_employee int;
@@ -893,6 +894,8 @@ BEGIN
 
   SELECT currval('payment_id_seq') INTO var_payment_id;
   IF (array_upper(in_cash_account_id, 1) > 0) THEN
+    -- for overpayments, the cash account is actually
+    -- the account which holds the overpayment balance (AR/AP_overpayment)
     DECLARE
       var_payment_bc numeric;
       var_payment_tc numeric;
@@ -944,7 +947,8 @@ BEGIN
               coalesce(in_approved, true),
               in_source[array_lower(in_source, 1)],
               in_memo[array_lower(in_memo, 1)],
-              var_overpayment_id);
+              var_overpayment_id)
+      RETURNING entry_id INTO var_cash_entry_id;
     END;
 
     -- HANDLE THE AR/AP ACCOUNTS
@@ -963,7 +967,8 @@ BEGIN
 
       -- Now we post the AP/AR account
       INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc,
-                             trans_id, transdate, approved, source, memo, open_item_id)
+                             trans_id, transdate, approved, source,
+                             memo, open_item_id, allocation)
       VALUES (var_account_id,
               in_amount[out_count]*old_exchangerate*sign*-1,
               in_curr,
@@ -973,7 +978,8 @@ BEGIN
               coalesce(in_approved, true),
               in_source[out_count],
               in_memo[out_count],
-              in_open_item_id[out_count]);
+              in_open_item_id[out_count],
+              var_cash_entry_id);
 
       -- Calculate the gain/loss on the transaction
       -- everything above depends on this being an AR/AP posting
@@ -1031,7 +1037,8 @@ BEGIN
       VALUES (currval('open_item_id_seq'), in_entity_credit_id);
 
       INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc, trans_id,
-                             transdate, approved, source, memo, open_item_id)
+                             transdate, approved, source, memo, open_item_id,
+                             allocation)
       VALUES (in_op_account_id[out_count],
               in_op_amount[out_count]*current_exchangerate*sign*-1,
               in_curr,
@@ -1041,7 +1048,8 @@ BEGIN
               coalesce(in_approved, true),
               in_op_source[out_count],
               in_op_memo[out_count],
-              currval('open_item_id_seq'));
+              currval('open_item_id_seq'),
+              var_cash_entry_id);
     END LOOP;
   END IF;
   return var_payment_id;
