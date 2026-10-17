@@ -22,7 +22,7 @@ with payment_line as (
     from acc_trans a
            join payment_links pl
                on a.entry_id = pl.entry_id
-   where pl.type = 1
+   where pl.type in (1, 2)
 )
 update acc_trans a
    set allocation = b.entry_id
@@ -36,4 +36,4 @@ update acc_trans a
     and a.chart_id <> b.chart_id
     and a.chart_id in (select account_id
                          from account_link
-                        where description in ('AR', 'AP'));
+                        where description in ('AR', 'AP', 'AR_overpayment', 'AP_overpayment'));

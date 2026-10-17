@@ -2125,20 +2125,25 @@ sub create_links {
         # where the code base assumes we're using the amount from the cash account
         # which has the opposite sign of the allocated amount.
         $query = <<~'SQL';
-            SELECT ac.memo, ac.entry_id, ac.transdate, ac.cleared,
+            SELECT coalesce(alloc.memo, ac.memo) as memo, ac.entry_id, ac.transdate,
+                   coalesce(alloc.cleared, ac.cleared) as cleared,
                    array_agg(ARRAY[bul.class_id, bul.bu_id]) as bu_lines,
-                   ac.approved, ac.source, -ac.amount_tc as amount,
+                   ac.approved, -ac.amount_tc as amount,
+                   coalesce(alloc.source, ac.source) as source,
                    case when ac.amount_tc = 0 then 0 else (ac.amount_bc/ac.amount_tc)::numeric end as exchangerate,
-                   c.accno, c.description
+                   coalesce(c2.accno, c1.accno) as accno,
+                   coalesce(c2.description, c1.description) as description
               FROM acc_trans ac
+                   LEFT JOIN acc_trans alloc
+                        ON ac.allocation = alloc.entry_id
                    LEFT JOIN business_unit_ac bul
                         ON ac.entry_id = bul.entry_id
-                   JOIN payment p
-                        ON p.trans_id = ac.trans_id
-                   JOIN account c
-                        ON c.id = p.account_id
+                   JOIN account c1
+                        ON c1.id = ac.chart_id
+                   JOIN account c2
+                        ON c2.id = alloc.chart_id
              WHERE ac.open_item_id = ?
-             GROUP BY ac.entry_id, c.accno, c.description
+             GROUP BY ac.entry_id, alloc.entry_id, c1.accno, c1.description, c2.accno, c2.description
              ORDER BY ac.transdate
             SQL
 
