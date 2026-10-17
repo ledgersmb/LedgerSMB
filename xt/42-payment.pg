@@ -5,7 +5,7 @@ BEGIN;
 
     -- Plan the tests.
 
-    SELECT plan(51);
+    SELECT plan(53);
 
     -- Add data
 
@@ -347,14 +347,26 @@ BEGIN;
                         -- overpayments section
                         null, null, null, null, null, null,
                         -- approved:
-                        true);
+                        true) as payment_id
+    \gset
 
     PREPARE test AS
-    SELECT count(*) = 0
+    SELECT count(*)::int
       FROM payment_get_open_invoice(
              1, -101, 'XTS', null, null, null, null, 'test_reverse', null);
-    SELECT results_eq('test', array[true],
+    SELECT results_eq('test', array[0::int],
                       'After payment, the invoice is paid');
+    DEALLOCATE test;
+
+    PREPARE test AS
+    SELECT count(*)::int
+      FROM payment p
+         JOIN acc_trans a
+            ON p.trans_id = a.trans_id
+      WHERE a.allocation is not null
+        AND p.id = :payment_id;
+    SELECT results_eq('test', array[1::int],
+                      'After payment, the allocation is set');
     DEALLOCATE test;
 
    SELECT payment__reverse(currval('payment_id_seq')::int, now()::date,
@@ -412,6 +424,19 @@ BEGIN;
     SELECT results_eq('test', array[1::int],
                       'After payment, the payment table contains a record');
     DEALLOCATE test;
+
+
+    PREPARE test AS
+    SELECT count(*)::int
+      FROM acc_trans a
+         JOIN payment p
+            ON a.trans_id = p.trans_id
+      WHERE p.id = :payment_id
+        AND a.allocation is not null;
+    SELECT results_eq('test', array[1::int],
+                      'After payment, the acc_trans table has "allocation" column content');
+    DEALLOCATE test;
+
 
     SELECT trans_id as trans_id FROM payment p
      WHERE notes = 'generated from bulk payment'
