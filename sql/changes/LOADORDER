@@ -193,6 +193,7 @@ mc/delete-migration-validation-data.sql
 1.14/mv-gl_person_id.sql
 1.14/inventory_report-report_date.sql
 1.14/drop-lot_tracking_number.sql
+1.14/allocation-tracking.sql
 1.14/open-item-tracking.sql
 1.14/transaction-batches.sql
 1.14/overpayments-as-open-items.sql
