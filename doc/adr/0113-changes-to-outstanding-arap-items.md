@@ -4,7 +4,7 @@ Date: 2026-09-05
 
 ## Status
 
-Draft
+Accepted
 
 ## Summary
 
