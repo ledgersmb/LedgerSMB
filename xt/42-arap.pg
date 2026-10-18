@@ -7,9 +7,21 @@ BEGIN;
 
     SELECT plan(1);
 
+    -- ========================================================
+    -- Setup
+    -- ========================================================
+
     -- Add data
 
     \i xt/data/42-pg/Base.sql
+
+    -- ========================================================
+    -- Schema checks
+    -- ========================================================
+
+    -- Fixtures: none (relies on the objects loaded from Base.sql)
+
+    -- Tests
 
     -- Validate required tables
 
@@ -17,9 +29,38 @@ BEGIN;
 
     -- Validate required functions
 
-    SELECT has_function('ar_ap__transaction_search',ARRAY['integer', 'text', 'text', 'text',
-                         'text', 'text', 'text', 'text', 'text', 'text', 'date', 'date',
-                         'boolean', 'boolean', 'boolean', 'date', 'integer', 'boolean']);
+    SELECT has_function(
+        'ar_ap__transaction_search',
+        ARRAY[
+            'integer',  -- arg 1
+            'text',     -- arg 2
+            'text',     -- arg 3
+            'text',     -- arg 4
+            'text',     -- arg 5
+            'text',     -- arg 6
+            'text',     -- arg 7
+            'text',     -- arg 8
+            'text',     -- arg 9
+            'text',     -- arg 10
+            'date',     -- arg 11
+            'date',     -- arg 12
+            'boolean',  -- arg 13
+            'boolean',  -- arg 14
+            'boolean',  -- arg 15
+            'date',     -- arg 16
+            'integer',  -- arg 17
+            'boolean'   -- arg 18
+        ],
+        'ar_ap__transaction_search exists with its 18-argument signature'
+    );
+
+    -- ========================================================
+    -- Transaction search behaviour
+    -- ========================================================
+
+    -- Fixtures: none yet
+
+    -- Tests
 
     -- Run tests
 
