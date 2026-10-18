@@ -1,3 +1,6 @@
+
+<!--
+
 Thank you for working on the LedgerSMB code base and wanting to create
 a pull request.
 
@@ -25,3 +28,4 @@ message.
 For more coding standards and community guidelines, please consult the
 links presented above this PR form.
 
+-->
