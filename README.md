@@ -75,23 +75,23 @@ and a range of versions.
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome              | 2025-08  | 139-148                                     |
-| Edge                | 2025-08  | 139-148                                     |
-| Firefox             | 2025-07  | 141-150                                     |
-| Opera               | 2025-05  | 119-127, 131                                |
-| Safari              | 2024-10  | 18.1-18.7, 26.0-26.4                        |
+| Chrome              | 2026-02  | 145-154                                     |
+| Edge                | 2026-02  | 145-154                                     |
+| Firefox             | 2026-02  | 148-157                                     |
+| Opera               | 2025-10  | 123-127, 131-135                            |
+| Safari              | 2025-03  | 18.4, 18.5-18.7, 26.0-26.6, 27              |
 
 ### Mobile
 
 | Browser Name        | Earliest | Versions                                    |
 | -------------------| --------| -------------------------------------------|
-| Chrome for Android  | 2026-05  | 148                                         |
-| Firefox for Android | 2026-04  | 150                                         |
-| Android Browser     | 2026-05  | 148                                         |
-| Safari on iOS       | 2024-10  | 18.1-18.7, 26.0-26.4                        |
+| Chrome for Android  | 2026-09  | 154                                         |
+| Firefox for Android | 2026-09  | 157                                         |
+| Android Browser     | 2026-09  | 154                                         |
+| Safari on iOS       | 2025-03  | 18.4, 18.5-18.7, 26.0-26.6, 27.0            |
 | KaiOS Browser       | 2021-09  | 3.0-3.1                                     |
 | Opera Mobile        | 2024-03  | 80                                          |
-| Samsung Internet    | 2023-02  | 20-29                                       |
+| Samsung Internet    | 2023-05  | 21-30                                       |
 
 
 **Note**: Safari is very sensitive to using LedgerSMB over HTTPS; using it with
