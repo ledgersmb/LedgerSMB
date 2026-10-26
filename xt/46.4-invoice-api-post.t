@@ -107,6 +107,17 @@ subtest 'Invalid and non-invoice identifiers' => sub {
     is post_invoice('4')->[0], 404, 'AR transaction is not an invoice';
 };
 
+subtest 'Registered API route validates its request and response' => sub {
+    my $app = mock 'LedgerSMB::Company' => (override => [new => sub { return $company }]);
+    LedgerSMB::Router::router('erp/api')->hooks(before => sub { return });
+    my $response = LedgerSMB::Router::router('erp/api')->dispatch({
+        REQUEST_METHOD => 'POST', PATH_INFO => '/invoices/1/post', QUERY_STRING => '',
+        'lsmb.db' => $dbh, 'lsmb.app' => $dbh,
+    });
+    is $response->[0], 200, 'Posting route passes OpenAPI validation';
+    like $response->[2]->[0], qr/POSTED/, 'Workflow state serialized to JSON';
+};
+
 $dbh->rollback;
 $dbh->disconnect;
 done_testing;
