@@ -152,7 +152,7 @@ sub calculate_tax {
                             || ($self->maxvalue &&
                                abs($form->{subtotal}) > $self->maxvalue))
     ){
-         return 0;
+         return (LedgerSMB::PGNumber->bzero, LedgerSMB::PGNumber->bzero);
     }
     my ($tax, $base);
     if ($extract) {
