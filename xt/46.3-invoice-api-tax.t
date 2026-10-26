@@ -144,7 +144,7 @@ subtest 'Invoice API persists automatic and manual taxes differently' => sub {
         ALTER TABLE entity_credit_account ADD entity_class int,
             ADD meta_number text, ADD description text, ADD pay_to_name text,
             ADD creditlimit numeric;
-        UPDATE entity_credit_account SET entity_class = 2;
+        UPDATE entity_credit_account SET entity_class = 2, meta_number = 'TEST';
         CREATE TEMP TABLE entity (id int, name text, control_code text);
         INSERT INTO entity VALUES (10, 'Test customer', 'TEST');
         CREATE SCHEMA invoice_api_tax_test;
@@ -174,9 +174,11 @@ subtest 'Invoice API persists automatic and manual taxes differently' => sub {
     ]);
     my $part = mock 'LedgerSMB::Part' => (override => [
         get_by_partnumber => sub {
-            return { id => 1, sellprice => 100, income_accno_id => 200 };
+            return { id => 1, sellprice => 100, income_accno_id => 200,
+                     description => 'Test service' };
         },
-        get_by_id => sub { return { partnumber => 'SERVICE' } },
+        get_by_id => sub { return { partnumber => 'SERVICE', description => 'Test service',
+                                   unit => 'hr', onhand => '0', weight => '0' } },
     ]);
     my $settings = mock 'LedgerSMB::Setting' => (override => [get => sub { return 1 }]);
     my $http = mock 'HTTP::Tiny' => (override => [get => sub {
@@ -198,6 +200,7 @@ subtest 'Invoice API persists automatic and manual taxes differently' => sub {
                 sales => { tax => { category => '2150' },
                            amount => 7, 'base-amount' => 100 } }) : ()),
         };
+        delete @{$body->{lines}->[0]}{qw(discount discount_type)} if $manual == 2;
         my $json = JSON::MaybeXS->new->encode($body);
         open my $input, '<', \$json or die "Cannot open JSON input: $!";
         my $response = LedgerSMB::Router::router('erp/api')->dispatch({
@@ -220,6 +223,12 @@ subtest 'Invoice API persists automatic and manual taxes differently' => sub {
         is sprintf('%.2f', $retrieved->[2]->{total}), $amount,
             'API retrieval includes saved tax';
         is $retrieved->[2]->{workflow}->{state}, 'SAVED', 'Invoice remains saved';
+        my $routed = LedgerSMB::Router::router('erp/api')->dispatch({
+            %$env, 'lsmb.app' => $dbh, REQUEST_METHOD => 'GET',
+            PATH_INFO => "/invoices/$id", QUERY_STRING => '',
+        });
+        is $routed->[0], 200, 'Invoice GET passes response validation';
+        diag $routed->[2]->[0] if $routed->[0] != 200;
     }
     is \@actions, ['post', 'post', 'post'], 'Creation only saves; does not approve invoices';
 };
