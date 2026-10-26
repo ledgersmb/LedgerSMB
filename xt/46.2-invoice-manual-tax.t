@@ -8,6 +8,7 @@ use Test2::Mock;
 
 use DBI;
 use LedgerSMB::IS;
+use LedgerSMB::Locale;
 use LedgerSMB::PGNumber;
 
 plan skip_all => 'Database tests not enabled' unless $ENV{LSMB_TEST_DB};
@@ -57,7 +58,13 @@ my $form_methods = mock 'TaxPrintForm' => (
     ]
 );
 my $numbers = mock 'LedgerSMB::Num2text' => (
-    override => [cardinal => sub { return '' }]
+    override => [
+        init => sub { return },
+        num2text => sub { return '' },
+    ]
+);
+my $locale = mock 'LedgerSMB::Locale' => (
+    override => [get_handle => sub { return }]
 );
 
 sub print_invoice {
@@ -68,6 +75,7 @@ sub print_invoice {
         duedate => '2026-11-01',
         rowcount => 1,
         paidaccounts => 0,
+        language_code => 'en',
         manual_tax => 1,
         total => 100,
         lineitems => [],
