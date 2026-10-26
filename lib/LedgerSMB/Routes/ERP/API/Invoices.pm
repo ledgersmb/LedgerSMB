@@ -30,6 +30,7 @@ This module doesn't export any methods.
 
 use strict;
 use warnings;
+use JSON::PP ();
 
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_FOUND
     HTTP_NOT_FOUND HTTP_BAD_REQUEST HTTP_UNSUPPORTED_MEDIA_TYPE
@@ -144,7 +145,8 @@ sub _get_invoices_by_id {
         delete $line->@{qw(allocated assemblyitem trans_id)};
         $line->{price}         = delete $line->{sellprice};
         $line->{delivery_date} = delete $line->{deliverydate};
-        $line->{price_fixated} = (delete $line->{priceFixated}) ? \1 : \0;
+        $line->{price_fixated} = (delete $line->{priceFixated})
+            ? JSON::PP::true : JSON::PP::false;
         $line->{total} = $line->{amount_tc};
         $line->{discount_type} = defined $line->{discount} ? '%' : '';
         $line->{discount} *= 100 if defined $line->{discount};
@@ -503,7 +505,7 @@ sub _post_invoices {
 
             $inv_line->{qty}   = $inv_line->{qty} // 1;
             $inv_line->{discount} = $inv_line->{discount} / 100
-                if $inv_line->{discount_type} eq '%';
+                if ($inv_line->{discount_type} // '') eq '%';
 
             # determine price and description
             {
@@ -1558,6 +1560,7 @@ components:
                     nullable: true
                   description:
                     type: string
+                    nullable: true
                   discount:
                     description: |
                       A value of 10 means the customer gets a 10% discount,
@@ -1565,10 +1568,12 @@ components:
                     type: number
                     minimum: 0
                     maximum: 100
+                    nullable: true
                   discount_type:
                     type: string
                     enum:
                       - '%'
+                      - ''
                   id:
                     type: number
                   item:
@@ -1583,6 +1588,7 @@ components:
                     default: false
                   unit:
                     type: string
+                    nullable: true
                   qty:
                     type: number
                     default: 1
@@ -1601,12 +1607,16 @@ components:
                         minLength: 1
                       description:
                         type: string
+                        nullable: true
                       onhand:
                         type: string
+                        nullable: true
                       unit:
                         type: string
+                        nullable: true
                       weight:
                         type: string
+                        nullable: true
                   total:
                     type: number
             payments:
@@ -1643,8 +1653,10 @@ components:
                     type: number
                   source:
                     type: string
+                    nullable: true
                   memo:
                     type: string
+                    nullable: true
             workflow:
               type: object
               properties:
@@ -1865,7 +1877,7 @@ components:
                   state:
                     type: string
     409:
-      description: Invoice state or email configuration does not permit sending
+      description: Conflict
       content:
         application/json:
           schema:
