@@ -1,7 +1,7 @@
 
-use v5.38;
-
 package LedgerSMB::Workflow::Persister::Email;
+
+use v5.38;
 
 =head1 NAME
 
@@ -81,9 +81,9 @@ my $json = JSON::MaybeXS->new(
     );
 
 
-sub _save_email_data( $self, $wf ) {
+sub _save_email_data( $self, $app, $wf ) {
     my $ctx         = $wf->context;
-    my $dbh         = $self->handle;
+    my $dbh         = $app->dbh;
     my $old_data    = $ctx->param( '_email_data' );
     my $expansions  = $ctx->param( 'expansions' );
     my $data        = {
@@ -156,8 +156,7 @@ sub _save_email_data( $self, $wf ) {
 }
 
 
-sub _fetch_attachments( $self, $wf_id ) {
-    my $dbh = $self->handle;
+sub _fetch_attachments( $self, $dbh, $wf_id ) {
     my $sth = $dbh->prepare(
         q{SELECT id, file_name, description,
                  (select mime_type from mime_type
@@ -198,14 +197,14 @@ has been replaced by the content as specified by C<fetch_extra_workflow_data>.
 
 sub create_workflow( $self, $app, $wf ) {
     my $wf_id  = $self->SUPER::create_workflow( $app, $wf );
-    $self->_save_email_data( $wf );
+    $self->_save_email_data( $app, $wf );
 
     if (my $attachments = $wf->context->param( 'attachments' )) {
         for my $attachment ($attachments->@*) {
             $self->attach( $wf, $attachment );
         }
     }
-    $wf->context->param( '_attachments' => $self->_fetch_attachments( $wf_id ));
+    $wf->context->param( '_attachments' => $self->_fetch_attachments( $app->dbh, $wf_id ));
 
     return $wf_id;
 }
@@ -218,9 +217,9 @@ when they have changed.
 =cut
 
 
-sub update_workflow( $self, $app, $wf ) {
-    $self->SUPER::update_workflow( $app, $wf );
-    $self->_save_email_data( $wf );
+sub update_workflow( $self, $wf ) {
+    $self->SUPER::update_workflow( $wf );
+    $self->_save_email_data( $wf->app, $wf );
 }
 
 =head2 fetch_workflow( $wf_id )
@@ -272,7 +271,7 @@ sub fetch_workflow( $self, $app, $wf_id ) {
         $ctx->{expansions} = $json->decode( $expansions );
     }
 
-    $ctx->{_attachments} = $self->_fetch_attachments( $wf_id );
+    $ctx->{_attachments} = $self->_fetch_attachments( $app->dbh, $wf_id );
     return $wf_info;
 }
 
@@ -284,4 +283,3 @@ Copyright (C) 2020-2025 The LedgerSMB Core Team
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
-

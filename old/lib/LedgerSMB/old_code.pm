@@ -1,4 +1,6 @@
 
+package LedgerSMB::old_code;
+
 use v5.38;
 use experimental 'try';
 
@@ -25,8 +27,6 @@ LedgerSMB::old_code - dispatching from new code to old code
 
 =cut
 
-package LedgerSMB::old_code;
-
 use CGI::Parse::PSGI qw(parse_cgi_output);
 use IO::File;
 use LedgerSMB::Form;
@@ -35,7 +35,7 @@ use POSIX 'SEEK_SET';
 use Symbol;
 
 use parent qw(Exporter);
-our @EXPORT_OK = qw(dispatch);
+our @EXPORT_OK = qw(dispatch dispatch_no_commit);
 
 # make sure the package exists after 'use'-ing this module:
 
@@ -55,10 +55,30 @@ Wraps a "call" to old code, returning a PSGI triplet for the response.
 
 =cut
 
-sub dispatch($script, $entrypoint, $user, $form_args, @entrypoint_args) {
+sub dispatch(@args) {
+    return _dispatch(1, @args);
+}
+
+=item dispatch_no_commit($script, $entrypoint, $user, $form_keys, ...)
+
+Like dispatch, but leaves transaction management to the caller. Intended for
+document preparation: the entrypoint must not commit, roll back or send mail.
+The parent waits for the renderer before accessing the shared connection again.
+
+=cut
+
+sub dispatch_no_commit(@args) {
+    # Legacy scripts require other scripts relative to the application root.
+    local @INC = ('.', @INC);
+    return _dispatch(0, @args);
+}
+
+sub _dispatch($manage_transaction, $script, $entrypoint, $user, $form_args, @entrypoint_args) {
     my $stdout = IO::File->new_tmpfile;
     binmode $stdout, ':utf8';
-    if (my $cpid = fork()) {
+    my $cpid = fork();
+    die "Cannot fork legacy dispatcher: $!" unless defined $cpid;
+    if ($cpid) {
         waitpid $cpid, 0;
         seek($stdout, 0, SEEK_SET)
             or croak("Can't seek stdout handle: $!");
@@ -115,10 +135,11 @@ sub dispatch($script, $entrypoint, $user, $form_args, @entrypoint_args) {
                 my $ref = qualify_to_ref $entrypoint, 'lsmb_legacy';
                 &{*{$ref}}($lsmb_legacy::form, $lsmb_legacy::locale);
             }
-            $form_args->{dbh}->commit if $form_args->{dbh};
+            $form_args->{dbh}->commit if $manage_transaction && $form_args->{dbh};
         }
         catch ($e) {
-            $form_args->{dbh}->rollback if $form_args->{dbh};
+            $form_args->{dbh}->rollback if $manage_transaction && $form_args->{dbh};
+            print "Status: 500 Internal server error\n\n";
             warn "Error dispatching call to old code: $_\n";
         };
         exit;
