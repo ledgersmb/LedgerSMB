@@ -6,6 +6,7 @@ use warnings;
 use Test2::V0;
 use Test2::Mock;
 use DBI;
+use JSON::MaybeXS;
 use LedgerSMB::Taxes::Invoice;
 use LedgerSMB::Routes::ERP::API::Invoices;
 use LedgerSMB::Magic qw( EC_CUSTOMER );
@@ -184,20 +185,28 @@ subtest 'Invoice API persists automatic and manual taxes differently' => sub {
     local $INC{'LedgerSMB/Taxes/WA.pm'} = $INC{'./utils/wa-tax-service/WA.pm'};
     my $env = { 'lsmb.db' => $dbh, 'lsmb.settings' => { decimal_places => 2 } };
     my $company = bless {}, 'InvoiceAPITestCompany';
+    my $app = mock 'LedgerSMB::Company' => (override => [new => sub { return $company }]);
+    LedgerSMB::Router::router('erp/api')->hooks(before => sub { return });
     for my $manual (0, 1, 2) {
         my $body = {
             eca => { type => 'customer', id => 1 }, currency => 'USD',
             account => { accno => '1200' }, 'invoice-number' => "TEST-$manual",
             dates => { book => '2026-10-26' },
             lines => [{ part => { number => 'SERVICE' }, price => 100,
-                        price_fixated => 1, discount_type => '%', discount => 0 }],
+                        price_fixated => \1, discount_type => '%', discount => 0 }],
             ($manual ? (taxes => $manual == 2 ? {} : {
                 sales => { tax => { category => '2150' },
                            amount => 7, 'base-amount' => 100 } }) : ()),
         };
-        my $response = LedgerSMB::Routes::ERP::API::Invoices::_post_invoices(
-            $env, undef, $company, $body, {});
+        my $json = JSON::MaybeXS->new->encode($body);
+        open my $input, '<', \$json or die "Cannot open JSON input: $!";
+        my $response = LedgerSMB::Router::router('erp/api')->dispatch({
+            %$env, 'lsmb.app' => $dbh, REQUEST_METHOD => 'POST', PATH_INFO => '/invoices',
+            QUERY_STRING => '', CONTENT_TYPE => 'application/json',
+            CONTENT_LENGTH => length $json, 'psgi.input' => $input,
+        });
         is $response->[0], 201, 'Invoice created';
+        diag $response->[2]->[0] if $response->[0] != 201;
         my ($id) = $response->[1]->[1] =~ m{\./(\d+)};
         is $dbh->selectrow_array('SELECT count(*) FROM tax_extended te JOIN acc_trans ac USING (entry_id) WHERE trans_id = ?', {}, $id),
             $manual == 1 ? 1 : 0, $manual ? 'Manual details retained' : 'Automatic mode retained';
