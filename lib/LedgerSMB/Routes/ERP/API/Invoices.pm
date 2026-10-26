@@ -33,7 +33,7 @@ use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_FOUND
     HTTP_NOT_FOUND HTTP_BAD_REQUEST HTTP_UNSUPPORTED_MEDIA_TYPE
-    HTTP_NOT_IMPLEMENTED );
+    HTTP_NOT_IMPLEMENTED HTTP_CONFLICT );
 use JSONSchema::Validator;
 use List::Util qw( reduce sum0 uniq );
 use Plack::Request::WithEncoding;
@@ -327,6 +327,40 @@ sub _get_invoices_by_id {
     return [ HTTP_OK,
              [ 'Content-Type' => 'application/json' ],
              \%inv ];
+}
+
+sub _post_invoice {
+    my ($env, $r, $c, $body, $params) = @_;
+    my $dbh = $env->{'lsmb.db'};
+    return error($r, HTTP_BAD_REQUEST, [], { msg => 'Invalid invoice id' })
+        unless ($params->{id} // '') =~ m/\A[1-9][0-9]*\z/;
+
+    # Serialize posting attempts before loading the workflow. A retry sees the
+    # committed state rather than executing approval against a stale workflow.
+    my $invoice = $dbh->selectrow_hashref(q{
+        SELECT t.workflow_id, t.approved FROM transactions t
+         WHERE t.id = ?
+           AND (EXISTS (SELECT 1 FROM ar WHERE trans_id = t.id AND invoice)
+             OR EXISTS (SELECT 1 FROM ap WHERE trans_id = t.id AND invoice))
+         FOR UPDATE OF t
+    }, {}, $params->{id});
+    die $dbh->errstr if $dbh->err;
+    return [ HTTP_NOT_FOUND, [], [] ] unless $invoice;
+
+    my $wf = $c->workflows->fetch('AR/AP', $invoice->{workflow_id});
+    unless ($wf->state eq 'POSTED' && $invoice->{approved}) {
+        return error($r, HTTP_CONFLICT, [], {
+            msg => 'Invoice cannot be posted in its current state',
+        }) unless $wf->state eq 'SAVED' && !$invoice->{approved}
+            && grep { $_ eq 'approve' } $wf->get_current_actions;
+
+        # Do not bypass workflow permissions, completeness, batch membership or
+        # closed-period checks. execute_action validates these again.
+        $wf->execute_action('approve');
+    }
+    return [ HTTP_OK, [ 'Content-Type' => 'application/json' ], {
+        id => $params->{id}, workflow => { state => $wf->state },
+    } ];
 }
 
 sub _post_invoices {
@@ -1030,6 +1064,7 @@ get '/invoices' => \&_not_implemented;
 post api '/invoices' => \&_post_invoices;
 
 get api '/invoices/{id}' => \&_get_invoices_by_id;
+post api '/invoices/{id}/post' => \&_post_invoice;
 del '/invoices/{id}' => \&_not_implemented;
 patch '/invoices/{id}' => \&_not_implemented;
 
@@ -1123,6 +1158,55 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+  /invoices/{id}/post:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '^[1-9][0-9]*$'
+    post:
+      tags:
+        - Invoices
+        - Experimental
+      summary: Post a saved invoice
+      description: |
+        Executes the existing workflow approval action. All workflow conditions
+        and permissions apply. Repeating this operation for an already posted
+        invoice returns its state without posting again. Creation remains a
+        separate operation and continues to produce a saved invoice.
+      operationId: postInvoice
+      responses:
+        200:
+          description: Invoice posted, or was already posted
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [id, workflow]
+                properties:
+                  id:
+                    type: string
+                  workflow:
+                    type: object
+                    required: [state]
+                    properties:
+                      state:
+                        type: string
+                        enum: [POSTED]
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        404:
+          $ref: '#/components/responses/404'
+        409:
+          description: Invoice state or workflow conditions do not permit posting
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
   /invoices/{id}:
     parameters:
       - name: id
