@@ -551,8 +551,14 @@ sub invoice_details {
                        on acc.entry_id = te.entry_id
                   join account a
                        on acc.chart_id = a.id
-                  join tax
-                       on a.id = tax.chart_id
+                  left join lateral (
+                      select t.taxnumber
+                        from tax t
+                       where t.chart_id = a.id
+                             and t.validto >= acc.transdate
+                       order by t.validto
+                       limit 1
+                  ) tax on true
             where trans_id = ?
            SQL
         my $sth = $dbh->prepare( $query )
