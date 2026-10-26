@@ -1,5 +1,6 @@
 
 use v5.38.0;
+use experimental qw(try);
 
 package LedgerSMB::Taxes::WA;
 
@@ -30,6 +31,7 @@ use XML::LibXML;
 
 use Moose;
 use namespace::autoclean;
+use experimental qw(try); # restore after Moose re-enabled warnings... :-(
 use LedgerSMB::PGNumber;
 use LedgerSMB::MooseTypes;
 
