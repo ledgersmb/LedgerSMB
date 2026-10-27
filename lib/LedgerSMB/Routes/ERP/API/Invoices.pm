@@ -163,6 +163,10 @@ sub _get_invoices_by_id {
             number => $part->{partnumber},
             $part->%{qw( unit weight onhand description )}
         };
+        # PGObject returns numeric objects; the public part summary uses strings.
+        for my $field (qw(weight onhand)) {
+            $line->{part}->{$field} = "$part->{$field}" if defined $part->{$field};
+        }
         delete $line->{parts_id};
 
         push $inv{lines}->@*, {

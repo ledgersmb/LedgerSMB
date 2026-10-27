@@ -178,7 +178,8 @@ subtest 'Invoice API persists automatic and manual taxes differently' => sub {
                      description => 'Test service' };
         },
         get_by_id => sub { return { partnumber => 'SERVICE', description => 'Test service',
-                                   unit => 'hr', onhand => '0', weight => '0' } },
+                                   unit => 'hr', onhand => LedgerSMB::PGNumber->new(0),
+                                   weight => LedgerSMB::PGNumber->new(0) } },
     ]);
     my $settings = mock 'LedgerSMB::Setting' => (override => [get => sub { return 1 }]);
     my $http = mock 'HTTP::Tiny' => (override => [get => sub {
