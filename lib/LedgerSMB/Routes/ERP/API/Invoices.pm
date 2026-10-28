@@ -30,40 +30,28 @@ This module doesn't export any methods.
 
 use strict;
 use warnings;
+use JSON::PP ();
 
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_FOUND
     HTTP_NOT_FOUND HTTP_BAD_REQUEST HTTP_UNSUPPORTED_MEDIA_TYPE
     HTTP_NOT_IMPLEMENTED );
-use JSONSchema::Validator;
 use List::Util qw( reduce sum0 uniq );
 use Plack::Request::WithEncoding;
 use Scalar::Util qw( blessed reftype );
-use YAML::PP;
 
 use LedgerSMB::Entity::Credit_Account;
 use LedgerSMB::Magic qw( EC_CUSTOMER EC_VENDOR );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Part;
 use LedgerSMB::Setting;
+use LedgerSMB::Taxes::Invoice;
+use LedgerSMB::Routes::ERP::API;
 
 use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.invoices';
 
-sub _create_validator {
-    my $reader = YAML::PP->new(boolean => 'JSON::PP');
-    my $schema = $reader->load_string(
-        do {
-            # slurp __DATA__ section
-            local $/ = undef;
-            <DATA>;
-        });
-    return JSONSchema::Validator->new(
-        schema => $schema,
-        specification => 'OAS30');
-}
-
-my $validator = _create_validator();
+set api_schema => openapi_schema(\*DATA);
 
 
 sub _not_implemented {
@@ -157,7 +145,8 @@ sub _get_invoices_by_id {
         delete $line->@{qw(allocated assemblyitem trans_id)};
         $line->{price}         = delete $line->{sellprice};
         $line->{delivery_date} = delete $line->{deliverydate};
-        $line->{price_fixated} = (delete $line->{priceFixated}) ? \1 : \0;
+        $line->{price_fixated} = (delete $line->{priceFixated})
+            ? JSON::PP::true : JSON::PP::false;
         $line->{total} = $line->{amount_tc};
         $line->{discount_type} = defined $line->{discount} ? '%' : '';
         $line->{discount} *= 100 if defined $line->{discount};
@@ -174,6 +163,10 @@ sub _get_invoices_by_id {
             number => $part->{partnumber},
             $part->%{qw( unit weight onhand description )}
         };
+        # PGObject returns numeric objects; the public part summary uses strings.
+        for my $field (qw(weight onhand)) {
+            $line->{part}->{$field} = "$part->{$field}" if defined $part->{$field};
+        }
         delete $line->{parts_id};
 
         push $inv{lines}->@*, {
@@ -187,13 +180,14 @@ sub _get_invoices_by_id {
 
 
     $query = q|
-        SELECT *
-          FROM tax_extended te
-          JOIN acc_trans ac ON ac.entry_id = te.entry_id
+        SELECT ac.*, a.accno, a.description, te.tax_basis, te.rate
+          FROM acc_trans ac
           JOIN account a ON a.id = ac.chart_id
-         WHERE exists (select 1 from acc_trans ac
-                        where te.entry_id = ac.entry_id
-                              and ac.trans_id = $1)
+          LEFT JOIN tax_extended te ON te.entry_id = ac.entry_id
+         WHERE ac.trans_id = $1
+           AND (te.entry_id IS NOT NULL OR EXISTS (
+               SELECT 1 FROM account_link al WHERE al.account_id = ac.chart_id
+                AND al.description IN ('AR_tax', 'AP_tax')))
         |;
     $sth = $env->{'lsmb.db'}->prepare($query)
         or die $env->{'lsmb.db'}->errstr;
@@ -206,10 +200,12 @@ sub _get_invoices_by_id {
             tax => {
                 category => $tax->{accno},
                 name     => $tax->{description},
-                rate     => $tax->{rate},
+                (defined $tax->{rate} ? (rate => $tax->{rate}) : ()),
             },
-            'base-amount' => $tax->{tax_basis},
-            'calculated-amount' => ($tax->{tax_basis} * $tax->{rate}),
+            (defined $tax->{tax_basis} ? (
+                'base-amount' => $tax->{tax_basis},
+                'calculated-amount' => ($tax->{tax_basis} * $tax->{rate}),
+            ) : ()),
             amount => $tax->{amount_tc},
             source => $tax->{source},
             memo   => $tax->{memo},
@@ -449,7 +445,7 @@ sub _post_invoices {
 
             $inv_line->{qty}   = $inv_line->{qty} // 1;
             $inv_line->{discount} = $inv_line->{discount} / 100
-                if $inv_line->{discount_type} eq '%';
+                if ($inv_line->{discount_type} // '') eq '%';
 
             # determine price and description
             {
@@ -708,116 +704,9 @@ sub _post_invoices {
     $inv->{lines_total} = reduce { $a + $b->{total} } 0, $inv->{lines}->@*;
 
     if (not exists $inv->{taxes}) {
-        my $sth = $env->{'lsmb.db'}->prepare(
-          q|
-            WITH taxes AS (
-              SELECT *,
-                    LAG(validto) OVER (PARTITION BY tax.chart_id
-                                        ORDER BY validto ASC NULLS LAST) as validfrom
-                FROM tax
-            )
-            SELECT *
-              FROM taxes
-              JOIN account ON account.id = taxes.chart_id
-              JOIN eca_tax et ON et.chart_id = account.id
-              JOIN taxmodule tm ON taxes.taxmodule_id = tm.taxmodule_id
-            WHERE et.eca_id = $1
-                  AND (validfrom IS NULL OR $2 > validfrom)
-                  AND (validto IS NULL OR $2 <= validto)
-            |)
-          or die $env->{'lsmb.db'}->errstr;
-        $sth->execute($inv->{eca}->{id}, $inv->{transdate})
-            or die $sth->errstr;
-        while (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
-            $inv->{taxes}->{$ref->{accno}} = { tax => $ref };
-        }
-        die $sth->errstr
-            if $sth->err;
-        if (keys $inv->{taxes}->%* and keys %part_qty) {
-            $sth = $env->{'lsmb.db'}->prepare(
-                q|
-                  SELECT *
-                    FROM partstax pt
-                    JOIN account a ON pt.chart_id = a.id
-                  WHERE pt.parts_id = ?
-                |)
-                or die $env->{'lsmb.db'}->errstr;
-
-            # intersect taxes applicable for the part with those
-            # for the ECA
-            my %part_tax = (
-                map {
-                    my $taxes = $_->{taxes};
-                    $_->{part_id} =>
-                    {
-                        map {
-                            $_ => $taxes->{$_}
-                        }
-                        grep { exists $taxes->{$_} }
-                        keys $inv->{taxes}->%*
-                    }
-                }
-                grep { $_->{taxes} }
-                map {
-                    my $part_id = $_;
-                    $sth->execute($part_id)
-                        or die $sth->errstr;
-
-                    my $ref = $sth->fetchall_hashref('accno');
-                    die $sth->errstr
-                        if $sth->err;
-
-                    { part_id => $part_id,
-                      taxes => $ref }
-                }
-                keys %part_qty);
-
-            # Apply the tax calculation
-            for my $line ($inv->{lines}->@*) {
-                next unless exists $part_tax{$line->{part}->{id}};
-
-                my @taxes =
-                    sort {
-                        $a->{pass} <=> $b->{pass}
-                } values $inv->{taxes}->%*;
-                ###BUG: this creates built-in the "Tax::Simple" module;
-                # it also does not support tax extraction
-                # apparently, there was originally a reason to support more
-                # complex Tax modules...
-                ###BUG: this does not support minvalue and maxvalue taxes yet
-
-                my $base = $line->{total};
-                my $passtax = 0;
-                my $pass = 0;
-
-                for my $tax (@taxes) {
-                    $env->{'psgix.logger'}->(
-                        {
-                            level => 'debug',
-                            message => "Considering tax $tax->{tax}->{accnon} for part $line->{part}->{id}" });
-                    next unless exists $part_tax{$line->{part}->{id}}->{$tax->{tax}->{accno}};
-                    $env->{'psgix.logger'}->(
-                        {
-                            level => 'debug',
-                            message => "processing tax for part ID $line->{part}->{id}" });
-                    if ($pass != $tax->{tax}->{pass}) {
-                        $base += $passtax;
-                        $passtax = 0;
-                        $pass = $tax->{tax}->{pass};
-                    }
-
-                    my $amount = $base*$tax->{tax}->{rate};
-                    $line->{taxes}->{$tax->{tax}->{accno}} = {
-                        'base-amount'   => $base,
-                        rate   => $tax->{tax}->{rate},
-                        amount => $amount,
-                    };
-                    $inv->{taxes}->{$tax->{tax}->{accno}}->{'base-amount'}   += $base;
-                    $inv->{taxes}->{$tax->{tax}->{accno}}->{amount} += $amount;
-                    $inv->{taxes}->{$tax->{tax}->{accno}}->{tax} = $tax->{tax};
-                }
-            }
-        }
+        $inv->{taxes} = LedgerSMB::Taxes::Invoice->calculate(
+            $env->{'lsmb.db'}, $inv,
+            $env->{'lsmb.settings'}->{decimal_places});
     }
 
     ###BUG: These amounts in don't have these names in the invoice resource!!!
@@ -1014,8 +903,10 @@ sub _post_invoices {
         die $asth->errstr
             if $asth->err;
 
-        $sth->execute($tax->{'base-amount'}, $tax->{tax}->{rate}, $entry_id)
-            or die $sth->errstr;
+        if (exists $body->{taxes}) {
+            $sth->execute($tax->{'base-amount'}, $tax->{tax}->{rate}, $entry_id)
+                or die $sth->errstr;
+        }
     }
     $wf->execute_action( 'post' ); # move to SAVED state
 
@@ -1105,8 +996,6 @@ paths:
         201:
           description: Created
           headers:
-            ETag:
-              $ref: '#/components/headers/ETag'
             Location:
               schema:
                 type: string
@@ -1140,9 +1029,6 @@ paths:
       responses:
         200:
           description: ...
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETag'
           content:
             application/json:
               schema:
@@ -1345,6 +1231,11 @@ components:
                     type: string
                     minLength: 1
         taxes:
+          description: |
+            Supply manual tax amounts. Omit this property to calculate taxes
+            using configured providers and customer/product tax eligibility.
+            Automatic providers receive the account billing address, falling
+            back to the entity billing address. An empty object means no taxes.
           type: object
           additionalProperties:
             type: object
@@ -1456,6 +1347,7 @@ components:
                     nullable: true
                   description:
                     type: string
+                    nullable: true
                   discount:
                     description: |
                       A value of 10 means the customer gets a 10% discount,
@@ -1463,10 +1355,12 @@ components:
                     type: number
                     minimum: 0
                     maximum: 100
+                    nullable: true
                   discount_type:
                     type: string
                     enum:
                       - '%'
+                      - ''
                   id:
                     type: number
                   item:
@@ -1481,6 +1375,7 @@ components:
                     default: false
                   unit:
                     type: string
+                    nullable: true
                   qty:
                     type: number
                     default: 1
@@ -1499,12 +1394,16 @@ components:
                         minLength: 1
                       description:
                         type: string
+                        nullable: true
                       onhand:
                         type: string
+                        nullable: true
                       unit:
                         type: string
+                        nullable: true
                       weight:
                         type: string
+                        nullable: true
                   total:
                     type: number
             payments:
@@ -1541,8 +1440,10 @@ components:
                     type: number
                   source:
                     type: string
+                    nullable: true
                   memo:
                     type: string
+                    nullable: true
             workflow:
               type: object
               properties:

@@ -222,6 +222,7 @@ feature 'xls', 'Microsoft Excel' =>
 on 'develop' => sub {
     requires 'Capture::Tiny';
     requires 'DBD::Mock', '1.58';
+    requires 'Feature::Compat::Try'; # optional WA provider exercised by tax tests
     requires 'File::Grep';
     requires 'HTML::Lint';
     requires 'HTML::Lint::Parser', '2.26';
