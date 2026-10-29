@@ -1,30 +1,54 @@
 BEGIN;
+
+    -- ====================================================================
+    -- Setup
+    -- ====================================================================
+
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
     SET client_min_messages TO warning;
 
     -- Plan the tests.
-
     SELECT plan(2);
 
-    -- Add data
+    -- ====================================================================
+    -- Module functions
+    -- ====================================================================
 
+    -- --------------------------------------------------------------------
+    -- Fixtures
+    -- --------------------------------------------------------------------
+
+    -- Add data
     \i xt/data/42-pg/Base.sql
 
-    -- Validate required tables
+    -- --------------------------------------------------------------------
+    -- Tests
+    -- --------------------------------------------------------------------
 
---    SELECT has_table('business');
+    -- Validate required tables
+    -- SELECT has_table('business');
 
     -- Validate required functions
-
-    SELECT has_function('lsmb_module__get',ARRAY['integer']);
-    SELECT has_function('lsmb_module__list','{}'::text[]);
+    SELECT has_function(
+        'lsmb_module__get',
+        ARRAY['integer'],
+        'Function lsmb_module__get(integer) exists'
+    );
+    SELECT has_function(
+        'lsmb_module__list',
+        '{}'::text[],
+        'Function lsmb_module__list() exists'
+    );
 
     -- Run tests
+    -- PREPARE test AS select ...;
+    -- SELECT results_eq('test',result,'Description');
+    -- DEALLOCATE test;
 
---    PREPARE test AS select ...;
---    SELECT results_eq('test',result,'Description');
---    DEALLOCATE test;
+    -- ====================================================================
+    -- Finish
+    -- ====================================================================
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
