@@ -34,37 +34,21 @@ use warnings;
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_FOUND
     HTTP_NOT_FOUND HTTP_BAD_REQUEST HTTP_UNSUPPORTED_MEDIA_TYPE
     HTTP_NOT_IMPLEMENTED );
-use JSONSchema::Validator;
 use List::Util qw( reduce sum0 uniq );
 use Plack::Request::WithEncoding;
 use Scalar::Util qw( blessed reftype );
-use YAML::PP;
 
 use LedgerSMB::Entity::Credit_Account;
 use LedgerSMB::Magic qw( EC_CUSTOMER EC_VENDOR );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Part;
+use LedgerSMB::Routes::ERP::API;
 use LedgerSMB::Setting;
 
 use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.invoices';
-
-sub _create_validator {
-    my $reader = YAML::PP->new(boolean => 'JSON::PP');
-    my $schema = $reader->load_string(
-        do {
-            # slurp __DATA__ section
-            local $/ = undef;
-            <DATA>;
-        });
-    return JSONSchema::Validator->new(
-        schema => $schema,
-        specification => 'OAS30');
-}
-
-my $validator = _create_validator();
-
+set api_schema => openapi_schema(\*DATA);
 
 sub _not_implemented {
     return [ HTTP_NOT_IMPLEMENTED, [], [] ];
