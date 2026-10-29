@@ -30,40 +30,27 @@ This module doesn't export any methods.
 
 use strict;
 use warnings;
+use JSON::PP ();
 
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_FOUND
     HTTP_NOT_FOUND HTTP_BAD_REQUEST HTTP_UNSUPPORTED_MEDIA_TYPE
-    HTTP_NOT_IMPLEMENTED );
-use JSONSchema::Validator;
+    HTTP_NOT_IMPLEMENTED HTTP_CONFLICT );
 use List::Util qw( reduce sum0 uniq );
 use Plack::Request::WithEncoding;
 use Scalar::Util qw( blessed reftype );
-use YAML::PP;
 
 use LedgerSMB::Entity::Credit_Account;
 use LedgerSMB::Magic qw( EC_CUSTOMER EC_VENDOR );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Part;
 use LedgerSMB::Setting;
+use LedgerSMB::Routes::ERP::API;
 
 use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.invoices';
 
-sub _create_validator {
-    my $reader = YAML::PP->new(boolean => 'JSON::PP');
-    my $schema = $reader->load_string(
-        do {
-            # slurp __DATA__ section
-            local $/ = undef;
-            <DATA>;
-        });
-    return JSONSchema::Validator->new(
-        schema => $schema,
-        specification => 'OAS30');
-}
-
-my $validator = _create_validator();
+set api_schema => openapi_schema(\*DATA);
 
 
 sub _not_implemented {
@@ -157,7 +144,8 @@ sub _get_invoices_by_id {
         delete $line->@{qw(allocated assemblyitem trans_id)};
         $line->{price}         = delete $line->{sellprice};
         $line->{delivery_date} = delete $line->{deliverydate};
-        $line->{price_fixated} = (delete $line->{priceFixated}) ? \1 : \0;
+        $line->{price_fixated} = (delete $line->{priceFixated})
+            ? JSON::PP::true : JSON::PP::false;
         $line->{total} = $line->{amount_tc};
         $line->{discount_type} = defined $line->{discount} ? '%' : '';
         $line->{discount} *= 100 if defined $line->{discount};
@@ -174,6 +162,10 @@ sub _get_invoices_by_id {
             number => $part->{partnumber},
             $part->%{qw( unit weight onhand description )}
         };
+        # PGObject returns numeric objects; the public part summary uses strings.
+        for my $field (qw(weight onhand)) {
+            $line->{part}->{$field} = "$part->{$field}" if defined $part->{$field};
+        }
         delete $line->{parts_id};
 
         push $inv{lines}->@*, {
@@ -329,6 +321,40 @@ sub _get_invoices_by_id {
              \%inv ];
 }
 
+sub _post_invoice {
+    my ($env, $r, $c, $body, $params) = @_;
+    my $dbh = $env->{'lsmb.db'};
+    return error($r, HTTP_BAD_REQUEST, [], { msg => 'Invalid invoice id' })
+        unless ($params->{id} // '') =~ m/\A[1-9][0-9]*\z/;
+
+    # Serialize posting attempts before loading the workflow. A retry sees the
+    # committed state rather than executing approval against a stale workflow.
+    my $invoice = $dbh->selectrow_hashref(q{
+        SELECT t.workflow_id, t.approved FROM transactions t
+         WHERE t.id = ?
+           AND (EXISTS (SELECT 1 FROM ar WHERE trans_id = t.id AND invoice)
+             OR EXISTS (SELECT 1 FROM ap WHERE trans_id = t.id AND invoice))
+         FOR UPDATE OF t
+    }, {}, $params->{id});
+    die $dbh->errstr if $dbh->err;
+    return [ HTTP_NOT_FOUND, [], [] ] unless $invoice;
+
+    my $wf = $c->workflows->fetch('AR/AP', $invoice->{workflow_id});
+    unless ($wf->state eq 'POSTED' && $invoice->{approved}) {
+        return error($r, HTTP_CONFLICT, [], {
+            msg => 'Invoice cannot be posted in its current state',
+        }) unless $wf->state eq 'SAVED' && !$invoice->{approved}
+            && grep { $_ eq 'approve' } $wf->get_current_actions;
+
+        # Do not bypass workflow permissions, completeness, batch membership or
+        # closed-period checks. execute_action validates these again.
+        $wf->execute_action('approve');
+    }
+    return [ HTTP_OK, [ 'Content-Type' => 'application/json' ], {
+        id => $params->{id}, workflow => { state => $wf->state },
+    } ];
+}
+
 sub _post_invoices {
     my ($env, $r, $c, $body, $params) = @_;
     my @errors;
@@ -449,7 +475,7 @@ sub _post_invoices {
 
             $inv_line->{qty}   = $inv_line->{qty} // 1;
             $inv_line->{discount} = $inv_line->{discount} / 100
-                if $inv_line->{discount_type} eq '%';
+                if ($inv_line->{discount_type} // '') eq '%';
 
             # determine price and description
             {
@@ -1030,6 +1056,7 @@ get '/invoices' => \&_not_implemented;
 post api '/invoices' => \&_post_invoices;
 
 get api '/invoices/{id}' => \&_get_invoices_by_id;
+post api '/invoices/{id}/post' => \&_post_invoice;
 del '/invoices/{id}' => \&_not_implemented;
 patch '/invoices/{id}' => \&_not_implemented;
 
@@ -1105,8 +1132,6 @@ paths:
         201:
           description: Created
           headers:
-            ETag:
-              $ref: '#/components/headers/ETag'
             Location:
               schema:
                 type: string
@@ -1123,6 +1148,55 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+  /invoices/{id}/post:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '^[1-9][0-9]*$'
+    post:
+      tags:
+        - Invoices
+        - Experimental
+      summary: Post a saved invoice
+      description: |
+        Executes the existing workflow approval action. All workflow conditions
+        and permissions apply. Repeating this operation for an already posted
+        invoice returns its state without posting again. Creation remains a
+        separate operation and continues to produce a saved invoice.
+      operationId: postInvoice
+      responses:
+        200:
+          description: Invoice posted, or was already posted
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [id, workflow]
+                properties:
+                  id:
+                    type: string
+                  workflow:
+                    type: object
+                    required: [state]
+                    properties:
+                      state:
+                        type: string
+                        enum: [POSTED]
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        404:
+          $ref: '#/components/responses/404'
+        409:
+          description: Invoice state or workflow conditions do not permit posting
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
   /invoices/{id}:
     parameters:
       - name: id
@@ -1140,9 +1214,6 @@ paths:
       responses:
         200:
           description: ...
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETag'
           content:
             application/json:
               schema:
@@ -1456,6 +1527,7 @@ components:
                     nullable: true
                   description:
                     type: string
+                    nullable: true
                   discount:
                     description: |
                       A value of 10 means the customer gets a 10% discount,
@@ -1463,10 +1535,12 @@ components:
                     type: number
                     minimum: 0
                     maximum: 100
+                    nullable: true
                   discount_type:
                     type: string
                     enum:
                       - '%'
+                      - ''
                   id:
                     type: number
                   item:
@@ -1481,6 +1555,7 @@ components:
                     default: false
                   unit:
                     type: string
+                    nullable: true
                   qty:
                     type: number
                     default: 1
@@ -1499,12 +1574,16 @@ components:
                         minLength: 1
                       description:
                         type: string
+                        nullable: true
                       onhand:
                         type: string
+                        nullable: true
                       unit:
                         type: string
+                        nullable: true
                       weight:
                         type: string
+                        nullable: true
                   total:
                     type: number
             payments:
@@ -1541,8 +1620,10 @@ components:
                     type: number
                   source:
                     type: string
+                    nullable: true
                   memo:
                     type: string
+                    nullable: true
             workflow:
               type: object
               properties:
