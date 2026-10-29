@@ -587,13 +587,12 @@ push @tests, __PACKAGE__->new(
     );
 
 push @tests, __PACKAGE__->new(
-        test_query =>
-           q{select count(*) as customer_count
-              from customer
-             where (select count(*)
-                      from chart
-                     where 'AR' = ANY(string_to_array(link,':'))) > 0
-            having count(*) > 0},
+    test_query => q{select 1
+                     where (select count(*) from customer) > 0
+                       and (select count(*)
+                              from chart
+                             where 'AR' = ANY(string_to_array(link,':'))) = 0
+                   },
  display_name => marktext('AR account available when customers defined'),
  instructions => marktext(
                    q(When customers are defined, an AR account must be defined,
@@ -623,7 +622,7 @@ push @tests, __PACKAGE__->new(
  display_cols => [],
       columns => [],
         table => 'vendor',
-      appname => 'ledgersmb',
+      appname => 'sql-ledger',
   min_version => '2.7',
   max_version => '3.0'
 );
