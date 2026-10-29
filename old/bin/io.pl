@@ -47,6 +47,8 @@ use LedgerSMB::Template;
 use LedgerSMB::Legacy_Util;
 use LedgerSMB::File;
 use List::Util qw(max reduce);
+use JSON::MaybeXS;
+use MIME::Base64 qw(encode_base64);
 
 
 require "old/bin/printer.pl";
@@ -1408,6 +1410,18 @@ sub print_form {
                 push @addresses, $form->{$type};
             }
             $email_data->{$map{$type}} = join(', ', @addresses);
+        }
+
+        # API preparation uses exactly the UI's document, addresses, defaults
+        # and expansions, but does not create a workflow or send mail here.
+        if ($form->{_api_email_prepare}) {
+            for my $attachment ($email_data->{_attachments}->@*) {
+                $attachment->{content_base64} = encode_base64(
+                    delete $attachment->{content}, '');
+            }
+            print "Content-Type: application/json\n\n";
+            print JSON::MaybeXS->new(utf8 => 0)->encode($email_data);
+            return;
         }
 
         my $trans_wf;

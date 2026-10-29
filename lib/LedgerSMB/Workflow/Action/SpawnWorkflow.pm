@@ -94,7 +94,7 @@ sub execute {
             $context->param( $key => $context_data->{$key} );
         }
     }
-    my $new_wf = $wf->_factory->create_workflow( $self->spawn_type, $context );
+    my $new_wf = $wf->_factory->create_workflow( $wf->app, $self->spawn_type, $context );
     my $wf_id  = $new_wf->id;
     $wf->context->param( spawned_workflow => $wf_id );
     $wf->add_history(
@@ -117,4 +117,3 @@ Copyright (C) 2020-2022 The LedgerSMB Core Team
 This file is licensed under the GNU General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with
 your software.
-

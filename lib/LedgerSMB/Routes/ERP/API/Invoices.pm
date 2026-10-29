@@ -30,40 +30,28 @@ This module doesn't export any methods.
 
 use strict;
 use warnings;
+use JSON::PP ();
 
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_FOUND
     HTTP_NOT_FOUND HTTP_BAD_REQUEST HTTP_UNSUPPORTED_MEDIA_TYPE
-    HTTP_NOT_IMPLEMENTED );
-use JSONSchema::Validator;
+    HTTP_NOT_IMPLEMENTED HTTP_CONFLICT HTTP_ACCEPTED );
 use List::Util qw( reduce sum0 uniq );
 use Plack::Request::WithEncoding;
 use Scalar::Util qw( blessed reftype );
-use YAML::PP;
 
 use LedgerSMB::Entity::Credit_Account;
 use LedgerSMB::Magic qw( EC_CUSTOMER EC_VENDOR );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Part;
 use LedgerSMB::Setting;
+use LedgerSMB::Template::InvoiceEmail;
+use LedgerSMB::Routes::ERP::API;
 
 use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.invoices';
 
-sub _create_validator {
-    my $reader = YAML::PP->new(boolean => 'JSON::PP');
-    my $schema = $reader->load_string(
-        do {
-            # slurp __DATA__ section
-            local $/ = undef;
-            <DATA>;
-        });
-    return JSONSchema::Validator->new(
-        schema => $schema,
-        specification => 'OAS30');
-}
-
-my $validator = _create_validator();
+set api_schema => openapi_schema(\*DATA);
 
 
 sub _not_implemented {
@@ -157,7 +145,8 @@ sub _get_invoices_by_id {
         delete $line->@{qw(allocated assemblyitem trans_id)};
         $line->{price}         = delete $line->{sellprice};
         $line->{delivery_date} = delete $line->{deliverydate};
-        $line->{price_fixated} = (delete $line->{priceFixated}) ? \1 : \0;
+        $line->{price_fixated} = (delete $line->{priceFixated})
+            ? JSON::PP::true : JSON::PP::false;
         $line->{total} = $line->{amount_tc};
         $line->{discount_type} = defined $line->{discount} ? '%' : '';
         $line->{discount} *= 100 if defined $line->{discount};
@@ -329,6 +318,73 @@ sub _get_invoices_by_id {
              \%inv ];
 }
 
+sub _invoice_email_status {
+    my ($id, $email) = @_;
+    my $sent = $email && $email->state eq 'SUCCESS';
+    return [ $email && !$sent ? HTTP_ACCEPTED : HTTP_OK,
+        [ 'Content-Type' => 'application/json' ], {
+            id => $id,
+            status => !$email ? 'not_requested' : $sent ? 'sent' : 'unknown',
+            ($email ? (email => { id => '' . $email->id, state => $email->state }) : ()),
+        } ];
+}
+
+sub _invoice_email {
+    my ($env, $r, $c, $body, $params) = @_;
+    my $id = $params->{id};
+    my $send = $env->{REQUEST_METHOD} eq 'POST';
+    return error($r, HTTP_BAD_REQUEST, [], { msg => 'Invalid invoice id' })
+        unless ($id // '') =~ m/\A[1-9][0-9]*\z/;
+    my $dbh = $c->dbh;
+    my $query = q{
+        SELECT t.workflow_id, t.approved, ar.language_code
+          FROM transactions t JOIN ar ON ar.trans_id = t.id
+         WHERE t.id = ? AND ar.invoice
+    } . ($send ? ' FOR UPDATE OF t' : '');
+    my $invoice = $dbh->selectrow_hashref($query, {}, $id);
+    die $dbh->errstr if $dbh->err;
+    return [ HTTP_NOT_FOUND, [], [] ] unless $invoice;
+    my $wf = $c->workflows->fetch('AR/AP', $invoice->{workflow_id});
+    if (my $email_id = $wf->context->param('api_invoice_email_id')) {
+        return _invoice_email_status($id, $c->workflows->fetch('Email', $email_id));
+    }
+    return _invoice_email_status($id, undef) unless $send;
+    my %actions = map { $_ => 1 } $wf->get_current_actions;
+    return error($r, HTTP_CONFLICT, [], {
+        msg => 'Invoice workflow does not permit email',
+    }) unless $invoice->{approved} && $wf->state eq 'POSTED'
+        && $actions{e_mail} && $actions{save_info};
+
+    my $data = LedgerSMB::Template::InvoiceEmail->prepare(
+        $c, user($env), $id, $invoice->{language_code});
+    return error($r, HTTP_CONFLICT, [], {
+        msg => 'Invoice email requires a configured sender, recipient and attachment',
+    }) unless $data->{from} && $data->{to} && @{$data->{_attachments} // []};
+
+    # Prepare through the normal invoice workflow, but defer SMTP until there
+    # is a durable attempt marker. No automatic retry may cross this marker.
+    $data->{immediateSend} = 0;
+    $wf->context->param('_email_data' => $data);
+    $wf->execute_action('e_mail');
+    my $email_id = $wf->context->param('spawned_workflow');
+    die 'Email workflow was not created' unless $email_id;
+    $wf->context->param('api_invoice_email_id' => $email_id);
+    $wf->execute_action('save_info');
+    $dbh->commit or die $dbh->errstr;
+
+    # SMTP and database commits cannot be atomic. A crash or transport error
+    # after this point is deliberately uncertain, never automatically resent.
+    my $email = $c->workflows->fetch('Email', $email_id);
+    my $sent = eval { $email->execute_action('send'); 1 };
+    unless ($sent) {
+        $env->{'psgix.logger'}->({ level => 'error', message => 'Invoice email attempt failed; inspect Email workflow ' . $email_id })
+            if $env->{'psgix.logger'};
+        $dbh->rollback or die $dbh->errstr;
+        $email = $c->workflows->fetch('Email', $email_id);
+    }
+    return _invoice_email_status($id, $email);
+}
+
 sub _post_invoices {
     my ($env, $r, $c, $body, $params) = @_;
     my @errors;
@@ -449,7 +505,7 @@ sub _post_invoices {
 
             $inv_line->{qty}   = $inv_line->{qty} // 1;
             $inv_line->{discount} = $inv_line->{discount} / 100
-                if $inv_line->{discount_type} eq '%';
+                if ($inv_line->{discount_type} // '') eq '%';
 
             # determine price and description
             {
@@ -1030,6 +1086,8 @@ get '/invoices' => \&_not_implemented;
 post api '/invoices' => \&_post_invoices;
 
 get api '/invoices/{id}' => \&_get_invoices_by_id;
+get api '/invoices/{id}/email' => \&_invoice_email;
+post api '/invoices/{id}/email' => \&_invoice_email;
 del '/invoices/{id}' => \&_not_implemented;
 patch '/invoices/{id}' => \&_not_implemented;
 
@@ -1105,8 +1163,6 @@ paths:
         201:
           description: Created
           headers:
-            ETag:
-              $ref: '#/components/headers/ETag'
             Location:
               schema:
                 type: string
@@ -1123,6 +1179,57 @@ paths:
           $ref: '#/components/responses/403'
         404:
           $ref: '#/components/responses/404'
+  /invoices/{id}/email:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '^[1-9][0-9]*$'
+    get:
+      tags: [Invoices, Experimental]
+      summary: Get the API email attempt status for a sales invoice
+      operationId: getInvoiceEmail
+      responses:
+        200:
+          $ref: '#/components/responses/invoiceEmailStatus'
+        202:
+          $ref: '#/components/responses/invoiceEmailStatus'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        404:
+          $ref: '#/components/responses/404'
+    post:
+      tags: [Invoices, Experimental]
+      summary: Render and email a posted sales invoice, at most once through this API
+      description: |
+        Uses the configured invoice PDF template, sender and customer contacts.
+        Emailing is separate from creation and posting; clients must not call
+        this operation for customers who should not receive automated email.
+        A durable workflow reference is committed before SMTP is attempted.
+        Subsequent calls return that attempt, without sending again, even when
+        its result is unknown. Unknown can mean sending is in progress, failed,
+        or succeeded without a recorded database commit. Inspect the Email
+        workflow and mail logs before any manual retry. Sent means the configured
+        transport accepted the message, not confirmed delivery to the recipient.
+        This operation intentionally commits its preparation before sending.
+      operationId: emailInvoice
+      responses:
+        200:
+          $ref: '#/components/responses/invoiceEmailStatus'
+        202:
+          $ref: '#/components/responses/invoiceEmailStatus'
+        400:
+          $ref: '#/components/responses/400'
+        401:
+          $ref: '#/components/responses/401'
+        404:
+          $ref: '#/components/responses/404'
+        409:
+          $ref: '#/components/responses/409'
   /invoices/{id}:
     parameters:
       - name: id
@@ -1140,9 +1247,6 @@ paths:
       responses:
         200:
           description: ...
-          headers:
-            ETag:
-              $ref: '#/components/headers/ETag'
           content:
             application/json:
               schema:
@@ -1456,6 +1560,7 @@ components:
                     nullable: true
                   description:
                     type: string
+                    nullable: true
                   discount:
                     description: |
                       A value of 10 means the customer gets a 10% discount,
@@ -1463,10 +1568,12 @@ components:
                     type: number
                     minimum: 0
                     maximum: 100
+                    nullable: true
                   discount_type:
                     type: string
                     enum:
                       - '%'
+                      - ''
                   id:
                     type: number
                   item:
@@ -1481,6 +1588,7 @@ components:
                     default: false
                   unit:
                     type: string
+                    nullable: true
                   qty:
                     type: number
                     default: 1
@@ -1499,12 +1607,16 @@ components:
                         minLength: 1
                       description:
                         type: string
+                        nullable: true
                       onhand:
                         type: string
+                        nullable: true
                       unit:
                         type: string
+                        nullable: true
                       weight:
                         type: string
+                        nullable: true
                   total:
                     type: number
             payments:
@@ -1541,8 +1653,10 @@ components:
                     type: number
                   source:
                     type: string
+                    nullable: true
                   memo:
                     type: string
+                    nullable: true
             workflow:
               type: object
               properties:
@@ -1741,6 +1855,33 @@ components:
             - update
           state: SAVED
   responses:
+    invoiceEmailStatus:
+      description: Status of the single API email attempt for this invoice
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [id, status]
+            properties:
+              id:
+                type: string
+              status:
+                type: string
+                enum: [not_requested, sent, unknown]
+              email:
+                type: object
+                required: [id, state]
+                properties:
+                  id:
+                    type: string
+                  state:
+                    type: string
+    409:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
     400:
       description: Bad request
     401:

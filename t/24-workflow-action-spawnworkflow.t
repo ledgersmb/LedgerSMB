@@ -11,6 +11,7 @@ BEGIN {
 }
 
 use Workflow;
+use LedgerSMB::Workflow;
 use Workflow::History;
 use Workflow::Persister;
 use LedgerSMB::Workflow::Action::SpawnWorkflow;
@@ -19,7 +20,7 @@ package TestFactory {};
 
 my $c  = Workflow::Context->new();
 my $f  = bless {}, 'TestFactory';
-my $wf = Workflow->new(
+my $wf = LedgerSMB::Workflow->new(
     'id', 'INITIAL', { type => 'test',
                        history_class => 'Workflow::History' }, [], $f );
 my $wf2 = Workflow->new(
@@ -27,6 +28,8 @@ my $wf2 = Workflow->new(
                         history_class => 'Workflow::History' }, [], $f );
 
 $wf->context( $c );
+my $app = bless {}, 'TestApplication';
+$wf->{app} = $app;
 
 
 my $mock_wf = Test2::Mock->new(
@@ -36,13 +39,13 @@ my $mock_wf = Test2::Mock->new(
     ],
     );
 
-my ($created_workflow, $passed_context);
+my ($passed_app, $created_workflow, $passed_context);
 my $mock_fact = Test2::Mock->new(
     class => 'TestFactory',
     add => [
         create_workflow => sub {
             shift;
-            ($created_workflow, $passed_context) = @_;
+            ($passed_app, $created_workflow, $passed_context) = @_;
             $wf2
         },
     ],
@@ -54,6 +57,7 @@ ok lives {
 
     ok !$passed_context,
         'No context passed without context_param';
+    is $passed_app, $app, 'Company passed to workflow factory';
     is $wf->context->param( 'spawned_workflow' ), 'id2',
         'Workflow spawned and ID set in context';
 }, 'No exceptions thrown -- no context parameter', $@;
