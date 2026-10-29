@@ -622,7 +622,7 @@ push @tests, __PACKAGE__->new(
  display_cols => [],
       columns => [],
         table => 'vendor',
-      appname => 'ledgersmb',
+      appname => 'sql-ledger',
   min_version => '2.7',
   max_version => '3.0'
 );
