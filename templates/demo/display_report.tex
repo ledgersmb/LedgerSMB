@@ -1,7 +1,7 @@
 <?lsmb#   This is a comment block; it's ignored by the template engine.
 
-   Version:  1.3
-   Date:     2024-08-21
+   Version:  1.4
+   Date:     2026-10-26
    File:     display_report.tex
    Set:      demo
 
@@ -9,6 +9,8 @@ Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
 Version   Changes
+1.4       Placed visible in array, place & after field. 
+          Cash->Receipt Reports where broken
 1.3       Merged 'dynatable.html' into this template
 1.2       Simplified report header generation factored out of dynatable
 1.1       Merged xelatex targetting templates with those targetting pdflatex
@@ -56,43 +58,57 @@ BLOCK dynatable;
        END;
     END;
 -?>}
+<?lsmb# 
+    A hidden or checkbox col as the first one fails the UNLESS loop.first()
+    and creates a dangling '&' as the first entry.
+
+    So first build an array of all the visible cols and place the SEP after
+?>
 <?lsmb
+    VISIBLE = [];
     FOREACH COL IN columns;
         IF 0 == SKIP_TYPES.grep(COL.type).size() AND ! COL.html_only;
-            UNLESS loop.first();
-               ' & ';
-            END;
-            escape(COL.name);
+            VISIBLE.push(COL);
         END;
     END;
--?>\tabularnewline
+?>
+<?lsmb
+    FOREACH COL IN VISIBLE;
+        escape(COL.name);
+        IF loop.last();
+            '\tabularnewline';
+        ELSE;
+            ' & ';
+        END;
+    END;
+-?>
 \hline\hline
 \endfirsthead
 <?lsmb
-    FOREACH COL IN columns;
-        IF 0 == SKIP_TYPES.grep(COL.type).size() AND ! COL.html_only;
-            UNLESS loop.first() ;
-               ' & ';
-            END;
-            escape(COL.name);
+    FOREACH COL IN VISIBLE;
+        escape(COL.name);
+        IF loop.last();
+            '\tabularnewline';
+        ELSE;
+            ' & ';
         END;
     END;
--?>\tabularnewline
+-?>
 \hline\hline
 \endhead
 <?lsmb
     FOREACH ROW IN tbody.rows;
-        FOREACH COL IN columns;
-            IF 0 == SKIP_TYPES.grep(COL.type).size() AND ! COL.html_only;
-                UNLESS loop.first();
-                   ' & ';
-                END;
-                ?>\begin{tabular}[t]{@{}l@{}}<?lsmb
-                    ROW.${COL.col_id};
-                ?>\end{tabular}<?lsmb
+        FOREACH COL IN VISIBLE;
+            ?>\begin{tabular}[t]{@{}l@{}}<?lsmb
+                ROW.${COL.col_id};
+            ?>\end{tabular}<?lsmb
+            IF loop.last();
+                '\tabularnewline';
+            ELSE;
+                ' & ';
             END;
         END;
-        ?>\tabularnewline
+        ?>
     <?lsmb
     END; # FOREACH ?>
 \end{longtable}
