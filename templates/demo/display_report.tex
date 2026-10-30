@@ -46,10 +46,18 @@ BLOCK dynatable;
        IF 1 == SKIP_TYPES.grep(COL.type).size() or COL.html_only;
           '';
        ELSIF COL.pwidth;
-            IF COL.money OR COL.palign == 'r';
-                '>{\raggedleft\arraybackslash}';
-            END;
-           "p{" _ (COL.pwidth * WIDTH_PER_P) _ "cm}";
+          # If a col has a given width, we need to closely 
+          # look at other aspects in order to get proper 
+          # allinment.
+          #
+          alignspec = '';   # Let's build up the alignspec
+          IF COL.money OR COL.place == 'r';   # right align
+              alignspec = '>{\raggedleft}';
+          ELSE;             # make sure p keeps it raged-right not fill
+                alignspec = '>{\raggedright}';
+          END;
+          # Now we can safely give out the p{width}
+          alignspec _ 'p{' _ (COL.pwidth * WIDTH_PER_P) _ 'cm}';
        ELSIF COL.palign;
             COL.palign;
        ELSIF COL.money;
@@ -103,9 +111,7 @@ BLOCK dynatable;
 <?lsmb
     FOREACH ROW IN tbody.rows;
         FOREACH COL IN VISIBLE;
-            ?>\begin{tabular}[t]{@{}l@{}}<?lsmb
-                ROW.${COL.col_id};
-            ?>\end{tabular}<?lsmb
+            ROW.${COL.col_id};
             IF loop.last();
                 '\tabularnewline';
             ELSE;
