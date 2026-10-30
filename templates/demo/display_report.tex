@@ -9,8 +9,7 @@ Template version numbers are explicitly not aligned across templates or
 releases. No explicit versioning was applied before 2021-01-04.
 
 Version   Changes
-1.4       Placed visible in array, place & after field. 
-          Cash->Receipt Reports where broken
+1.4       Cash->Receipt Reports where broken. visual enhancemnts
 1.3       Merged 'dynatable.html' into this template
 1.2       Simplified report header generation factored out of dynatable
 1.1       Merged xelatex targetting templates with those targetting pdflatex
@@ -47,9 +46,14 @@ BLOCK dynatable;
        IF 1 == SKIP_TYPES.grep(COL.type).size() or COL.html_only;
           '';
        ELSIF COL.pwidth;
+            IF COL.money OR COL.palign == 'r';
+                '>{\raggedleft\arraybackslash}';
+            END;
            "p{" _ (COL.pwidth * WIDTH_PER_P) _ "cm}";
        ELSIF COL.palign;
             COL.palign;
+       ELSIF COL.money;
+            'r';
        ELSE;
             'l';
        END;
@@ -130,6 +134,7 @@ FILTER latex { format="$FORMAT($PROCESSOR)" };
 -?>
 \documentclass[<?lsmb SETTINGS.papersize ?>paper]{article}
 \usepackage{longtable}
+\usepackage{array}
 \usepackage[margin=1cm]{geometry}
 \begin{document}
 
