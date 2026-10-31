@@ -33,7 +33,7 @@ INCLUDE input element_data = {
 <p>
   [% text('In addition to these new defaults LedgerSMB 1.3 adds stricter ' _
               'checks on data validity in the database. Because of these stricter checks ' _
-              'it''s no longer valid to leave companies without a country or customers ' _
+              'it is no longer valid to leave companies without a country or customers ' _
               'without accounts receivable reference. The defaults you choose below will ' _
               'be used to add values where these are currently missing but required.') %]
 </p>
@@ -48,10 +48,10 @@ INCLUDE input element_data = {
 [% IF default_ar.size > 1; %]
 <div class="input_row">
 <p>
-  [% text('LedgerSMB supports multiple <em>Accounts receivable (AR)</em> accounts ' _
+  [% unescape(text('LedgerSMB supports multiple <em>Accounts receivable (AR)</em> accounts ' _
               'per company. One of those must be the system default. Please select ' _
               'your default below in case of multiple. If the list below is empty, ' _
-              'your database is in an inconsistent state and needs to be fixed first.') %]
+              'your database is in an inconsistent state and needs to be fixed first.')) %]
 </p>
 [% INCLUDE select element_data = {
                             name  = 'default_ar'
@@ -70,10 +70,10 @@ END %]
 [% IF default_ap.size > 1; %]
 <div class="input_row">
 <p>
-  [% text('LedgerSMB supports multiple <em>Accounts payable (AP)</em> accounts ' _
+  [% unescape(text('LedgerSMB supports multiple <em>Accounts payable (AP)</em> accounts ' _
               'per company. One of those must be the system default. Please select ' _
               'your default below in case of multiple. If the list below is empty, ' _
-              'your database is in an inconsistent state and needs to be fixed first.') %]
+              'your database is in an inconsistent state and needs to be fixed first.')) %]
 </p>
 [% INCLUDE select element_data = {
                             name  = 'default_ap'
