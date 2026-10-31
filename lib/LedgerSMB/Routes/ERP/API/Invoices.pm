@@ -34,37 +34,21 @@ use warnings;
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_FOUND
     HTTP_NOT_FOUND HTTP_BAD_REQUEST HTTP_UNSUPPORTED_MEDIA_TYPE
     HTTP_NOT_IMPLEMENTED );
-use JSONSchema::Validator;
 use List::Util qw( reduce sum0 uniq );
 use Plack::Request::WithEncoding;
 use Scalar::Util qw( blessed reftype );
-use YAML::PP;
 
 use LedgerSMB::Entity::Credit_Account;
 use LedgerSMB::Magic qw( EC_CUSTOMER EC_VENDOR );
 use LedgerSMB::PGNumber;
 use LedgerSMB::Part;
+use LedgerSMB::Routes::ERP::API;
 use LedgerSMB::Setting;
 
 use LedgerSMB::Router appname => 'erp/api';
 
 set logger => 'erp.api.invoices';
-
-sub _create_validator {
-    my $reader = YAML::PP->new(boolean => 'JSON::PP');
-    my $schema = $reader->load_string(
-        do {
-            # slurp __DATA__ section
-            local $/ = undef;
-            <DATA>;
-        });
-    return JSONSchema::Validator->new(
-        schema => $schema,
-        specification => 'OAS30');
-}
-
-my $validator = _create_validator();
-
+set api_schema => openapi_schema(\*DATA);
 
 sub _not_implemented {
     return [ HTTP_NOT_IMPLEMENTED, [], [] ];
@@ -1456,6 +1440,7 @@ components:
                     nullable: true
                   description:
                     type: string
+                    nullable: true
                   discount:
                     description: |
                       A value of 10 means the customer gets a 10% discount,
@@ -1463,10 +1448,12 @@ components:
                     type: number
                     minimum: 0
                     maximum: 100
+                    nullable: true
                   discount_type:
                     type: string
                     enum:
                       - '%'
+                      - ''
                   id:
                     type: number
                   item:
@@ -1481,6 +1468,7 @@ components:
                     default: false
                   unit:
                     type: string
+                    nullable: true
                   qty:
                     type: number
                     default: 1
@@ -1499,12 +1487,16 @@ components:
                         minLength: 1
                       description:
                         type: string
+                        nullable: true
                       onhand:
                         type: string
+                        nullable: true
                       unit:
                         type: string
+                        nullable: true
                       weight:
                         type: string
+                        nullable: true
                   total:
                     type: number
             payments:
@@ -1541,8 +1533,10 @@ components:
                     type: number
                   source:
                     type: string
+                    nullable: true
                   memo:
                     type: string
+                    nullable: true
             workflow:
               type: object
               properties:
