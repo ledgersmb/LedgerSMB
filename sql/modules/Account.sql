@@ -712,6 +712,7 @@ CREATE TYPE coa_entry AS (
     description text,
     category char(1),
     contra boolean,
+    open_items boolean,
     recon boolean,
     tax boolean,
     obsolete boolean,
@@ -774,19 +775,18 @@ ta(account_id) AS (
   GROUP BY 1
 )
   SELECT * FROM (
-  SELECT a.id, false, a.accno, a.description, a.category,
-         a.contra,
-         (EXISTS (select 1 from cr_coa_to_account cca where chart_id = a.id)),
-         a.tax, a.obsolete, a.gifi_accno, account__is_used(a.id),
-       link
-  FROM account a
-       LEFT JOIN l ON a.id = l.account_id
-  UNION
-  SELECT id, true, accno, description, null::char(1),
-         null::boolean, null::boolean, null::boolean, null::boolean, null::text,
-         account_heading__is_used(h.id), null::text
-   FROM account_heading h
-
+    SELECT a.id, false, a.accno, a.description, a.category,
+           a.contra, a.open_item_managed,
+           (EXISTS (select 1 from cr_coa_to_account cca where chart_id = a.id)),
+           a.tax, a.obsolete, a.gifi_accno, account__is_used(a.id),
+           link
+      FROM account a
+             LEFT JOIN l ON a.id = l.account_id
+     UNION
+    SELECT id, true, accno, description, null::char(1), null::boolean,
+           null::boolean, null::boolean, null::boolean, null::boolean, null::text,
+           account_heading__is_used(h.id), null::text
+      FROM account_heading h
   ) x ORDER BY accno;
 
 $$ LANGUAGE SQL;

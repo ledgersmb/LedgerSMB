@@ -105,6 +105,11 @@ sub columns {
        type => 'boolean_checkmark',
      pwidth => '1', },
 
+    {col_id => 'open_items',
+       name => $self->Text('Open items'),
+       type => 'boolean_checkmark',
+     pwidth => '1', },
+
     {col_id => 'recon',
        name => $self->Text('Recon'),
        type => 'boolean_checkmark',
