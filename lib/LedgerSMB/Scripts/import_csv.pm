@@ -366,7 +366,7 @@ sub _process_chart($request, $entries) {
 
         ###BUG missing import settings: 'recon' and "is_temp"
         @settings{qw( accno description charttype
-                      category contra tax link heading gifi_accno )} = @$entry;
+                      category contra open_items tax link heading gifi_accno )} = @$entry;
         if ($settings{charttype} eq 'A') {
             $settings{type} = 'account';
         }
