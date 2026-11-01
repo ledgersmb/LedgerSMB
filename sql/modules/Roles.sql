@@ -624,12 +624,12 @@ SELECT lsmb__create_role('batch_post',
 );
 SELECT lsmb__grant_exec('batch_post', 'batch_post(int)');
 
-SELECT lsmb__create_role('voucher_delete',
+SELECT lsmb__create_role('batch_delete',
                          $DOC$
                          This role allows deletion of vouchers (i.e. groups of e.g. payments).
                          $DOC$
 );
-SELECT lsmb__grant_exec('voucher_delete', 'batch_delete(int)');
+SELECT lsmb__grant_exec('batch_delete', 'batch_delete(int)');
 
 SELECT lsmb__create_role('draft_modify',
                          $DOC$
@@ -673,24 +673,24 @@ SELECT lsmb__grant_perms('ar_transaction_create', 'acc_trans_entry_id_seq', 'ALL
 SELECT lsmb__grant_perms('ar_transaction_create', 'journal_entry_id_seq', 'ALL');
 SELECT lsmb__grant_perms('ar_transaction_create', 'journal_line_id_seq', 'ALL');
 
-SELECT lsmb__create_role('ar_transaction_create_voucher',
+SELECT lsmb__create_role('sales_transaction_create_batch',
                          $DOC$
                          This role allows creation of batches of new sales transactions (not invoices).
                          $DOC$
 );
-SELECT lsmb__grant_role('ar_transaction_create_voucher', 'contact_read');
-SELECT lsmb__grant_role('ar_transaction_create_voucher', 'batch_create');
-SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'ar', 'INSERT');
-SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'open_item', 'INSERT');
-SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'warehouse_inventory', 'INSERT');
-SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'acc_trans', 'INSERT');
-SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'tax_extended', 'INSERT');
-SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'business_unit_ac', 'INSERT');
-SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'transactions_id_seq', 'all');
-SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'open_item_id_seq', 'all');
-SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'invoice_id_seq', 'all');
-SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'acc_trans_entry_id_seq', 'all');
-SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'warehouse_inventory_entry_id_seq', 'all');
+SELECT lsmb__grant_role('sales_transaction_create_batch', 'contact_read');
+SELECT lsmb__grant_role('sales_transaction_create_batch', 'batch_create');
+SELECT lsmb__grant_perms('sales_transaction_create_batch', 'ar', 'INSERT');
+SELECT lsmb__grant_perms('sales_transaction_create_batch', 'open_item', 'INSERT');
+SELECT lsmb__grant_perms('sales_transaction_create_batch', 'warehouse_inventory', 'INSERT');
+SELECT lsmb__grant_perms('sales_transaction_create_batch', 'acc_trans', 'INSERT');
+SELECT lsmb__grant_perms('sales_transaction_create_batch', 'tax_extended', 'INSERT');
+SELECT lsmb__grant_perms('sales_transaction_create_batch', 'business_unit_ac', 'INSERT');
+SELECT lsmb__grant_perms('sales_transaction_create_batch', 'transactions_id_seq', 'all');
+SELECT lsmb__grant_perms('sales_transaction_create_batch', 'open_item_id_seq', 'all');
+SELECT lsmb__grant_perms('sales_transaction_create_batch', 'invoice_id_seq', 'all');
+SELECT lsmb__grant_perms('sales_transaction_create_batch', 'acc_trans_entry_id_seq', 'all');
+SELECT lsmb__grant_perms('sales_transaction_create_batch', 'warehouse_inventory_entry_id_seq', 'all');
 
 SELECT lsmb__create_role('ar_invoice_create',
                          $DOC$
@@ -703,18 +703,18 @@ SELECT lsmb__grant_perms('ar_invoice_create', tname, ptype)
   FROM unnest('{invoice,business_unit_inv}'::text[]) tname
  CROSS JOIN unnest('{SELECT,INSERT,UPDATE}'::text[]) ptype;
 
-SELECT lsmb__create_role('ar_invoice_create_voucher',
+SELECT lsmb__create_role('sales_invoice_create_batch',
                          $DOC$
                          This role allows creation of batches of new sales invoices (not sales transactions).
                          $DOC$
 );
-SELECT lsmb__grant_role('ar_invoice_create_voucher', 'contact_read');
-SELECT lsmb__grant_role('ar_invoice_create_voucher', 'batch_create');
-SELECT lsmb__grant_role('ar_invoice_create_voucher', 'ar_transaction_create_voucher');
-SELECT lsmb__grant_perms('ar_invoice_create_voucher', 'invoice', 'INSERT');
-SELECT lsmb__grant_perms('ar_invoice_create_voucher', 'warehouse_inventory', 'INSERT');
-SELECT lsmb__grant_perms('ar_invoice_create_voucher', 'invoice_id_seq', 'ALL');
-SELECT lsmb__grant_perms('ar_invoice_create_voucher', 'warehouse_inventory_entry_id_seq', 'ALL');
+SELECT lsmb__grant_role('sales_invoice_create_batch', 'contact_read');
+SELECT lsmb__grant_role('sales_invoice_create_batch', 'batch_create');
+SELECT lsmb__grant_role('sales_invoice_create_batch', 'sales_transaction_create_batch');
+SELECT lsmb__grant_perms('sales_invoice_create_batch', 'invoice', 'INSERT');
+SELECT lsmb__grant_perms('sales_invoice_create_batch', 'warehouse_inventory', 'INSERT');
+SELECT lsmb__grant_perms('sales_invoice_create_batch', 'invoice_id_seq', 'ALL');
+SELECT lsmb__grant_perms('sales_invoice_create_batch', 'warehouse_inventory_entry_id_seq', 'ALL');
 -- TODO add Menu ACLs
 
 SELECT lsmb__create_role('ar_transaction_list',
@@ -731,13 +731,13 @@ SELECT lsmb__grant_perms('ar_transaction_list', tname, 'SELECT')
                'invoice_tax_form']
        ) tname;
 
-SELECT lsmb__create_role('ar_voucher_all',
+SELECT lsmb__create_role('sales_batch_all',
                          $DOC$
                          This role allows creation of batches of both sales transactions and invoices.
                          $DOC$
 );
-SELECT lsmb__grant_role('ar_voucher_all', 'ar_transaction_create_voucher');
-SELECT lsmb__grant_role('ar_voucher_all', 'ar_invoice_create_voucher');
+SELECT lsmb__grant_role('sales_batch_all', 'sales_transaction_create_batch');
+SELECT lsmb__grant_role('sales_batch_all', 'sales_invoice_create_batch');
 
 SELECT lsmb__create_role('ar_transaction_all',
                          $DOC$
@@ -838,7 +838,7 @@ SELECT lsmb__create_role('ar_all',
                          $DOC$
 );
 SELECT lsmb__grant_role('ar_all', rname)
-  FROM unnest(array['ar_voucher_all'::text, 'ar_transaction_all',
+  FROM unnest(array['sales_batch_all'::text, 'ar_transaction_all',
                     'file_attach_tx']) rname;
 
 \echo AP
@@ -863,27 +863,27 @@ SELECT lsmb__grant_perms('ap_transaction_create', 'acc_trans', 'INSERT');
 SELECT lsmb__grant_perms('ap_transaction_create', 'business_unit_ac', 'INSERT');
 SELECT lsmb__grant_perms('ap_transaction_create', 'oe', 'SELECT');
 
-SELECT lsmb__create_role('ap_transaction_create_voucher',
+SELECT lsmb__create_role('purchase_transaction_create_batch',
                          $DOC$
                          This role allows creation of batches of new purchase transactions (not invoices).
                          $DOC$
 );
-SELECT lsmb__grant_role('ap_transaction_create_voucher', 'contact_read');
-SELECT lsmb__grant_role('ap_transaction_create_voucher', 'batch_create');
-SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'oe', 'SELECT');
-SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'business_unit_ac', 'INSERT');
-SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'acc_trans', 'INSERT');
-SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'journal_entry', 'INSERT');
-SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'journal_entry', 'SELECT');
-SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'journal_line', 'INSERT');
-SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'journal_line', 'SELECT');
-SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'eca_invoice', 'INSERT');
-SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'eca_invoice', 'SELECT');
-SELECT lsmb__grant_perms('ap_transaction_create_voucher', obj, ptype)
+SELECT lsmb__grant_role('purchase_transaction_create_batch', 'contact_read');
+SELECT lsmb__grant_role('purchase_transaction_create_batch', 'batch_create');
+SELECT lsmb__grant_perms('purchase_transaction_create_batch', 'oe', 'SELECT');
+SELECT lsmb__grant_perms('purchase_transaction_create_batch', 'business_unit_ac', 'INSERT');
+SELECT lsmb__grant_perms('purchase_transaction_create_batch', 'acc_trans', 'INSERT');
+SELECT lsmb__grant_perms('purchase_transaction_create_batch', 'journal_entry', 'INSERT');
+SELECT lsmb__grant_perms('purchase_transaction_create_batch', 'journal_entry', 'SELECT');
+SELECT lsmb__grant_perms('purchase_transaction_create_batch', 'journal_line', 'INSERT');
+SELECT lsmb__grant_perms('purchase_transaction_create_batch', 'journal_line', 'SELECT');
+SELECT lsmb__grant_perms('purchase_transaction_create_batch', 'eca_invoice', 'INSERT');
+SELECT lsmb__grant_perms('purchase_transaction_create_batch', 'eca_invoice', 'SELECT');
+SELECT lsmb__grant_perms('purchase_transaction_create_batch', obj, ptype)
   FROM unnest(array['ap'::text, 'open_item', 'invoice', 'business_unit_inv']) obj
  CROSS JOIN unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) ptype;
 
-SELECT lsmb__grant_perms('ap_transaction_create_voucher', obj, 'ALL')
+SELECT lsmb__grant_perms('purchase_transaction_create_batch', obj, 'ALL')
   FROM unnest(array['transactions_id_seq'::text, 'open_item_id_seq',
                     'acc_trans_entry_id_seq']) obj;
 
@@ -899,17 +899,17 @@ SELECT lsmb__grant_perms('ap_invoice_create', obj, 'INSERT')
 SELECT lsmb__grant_perms('ap_invoice_create', obj, 'ALL')
   FROM unnest(array['warehouse_inventory_entry_id_seq'::text, 'invoice_id_seq']) obj;
 
-SELECT lsmb__create_role('ap_invoice_create_voucher',
+SELECT lsmb__create_role('purchase_invoice_create_voucher',
                          $DOC$
                          This role allows creation of batches of new purchase invoices (not purchase transactions).
                          $DOC$
 );
-SELECT lsmb__grant_role('ap_invoice_create_voucher', 'contact_read');
-SELECT lsmb__grant_role('ap_invoice_create_voucher', 'batch_create');
-SELECT lsmb__grant_perms('ap_invoice_create_voucher', 'invoice', 'INSERT');
-SELECT lsmb__grant_perms('ap_invoice_create_voucher', 'warehouse_inventory', 'INSERT');
-SELECT lsmb__grant_perms('ap_invoice_create_voucher', 'invoice_id_seq', 'ALL');
-SELECT lsmb__grant_perms('ap_invoice_create_voucher', 'warehouse_inventory_entry_id_seq', 'ALL');
+SELECT lsmb__grant_role('purchase_invoice_create_voucher', 'contact_read');
+SELECT lsmb__grant_role('purchase_invoice_create_voucher', 'batch_create');
+SELECT lsmb__grant_perms('purchase_invoice_create_voucher', 'invoice', 'INSERT');
+SELECT lsmb__grant_perms('purchase_invoice_create_voucher', 'warehouse_inventory', 'INSERT');
+SELECT lsmb__grant_perms('purchase_invoice_create_voucher', 'invoice_id_seq', 'ALL');
+SELECT lsmb__grant_perms('purchase_invoice_create_voucher', 'warehouse_inventory_entry_id_seq', 'ALL');
 -- TODO add Menu ACLs
 
 SELECT lsmb__create_role('ap_transaction_list',
@@ -923,13 +923,13 @@ SELECT lsmb__grant_perms('ap_transaction_list', obj, 'SELECT')
   FROM unnest(array['ap'::text, 'open_item', 'acc_trans', 'invoice', 'warehouse_inventory',
                     'tax_extended', 'ac_tax_form', 'invoice_tax_form']) obj;
 
-SELECT lsmb__create_role('ap_voucher_all',
+SELECT lsmb__create_role('purchases_batch_all',
                          $DOC$
                          This role allows creation of batches of both purchase transactions and invoices.
                          $DOC$
 );
-SELECT lsmb__grant_role('ap_voucher_all', 'ap_transaction_create_voucher');
-SELECT lsmb__grant_role('ap_voucher_all', 'ap_invoice_create_voucher');
+SELECT lsmb__grant_role('purchases_batch_all', 'purchase_transaction_create_batch');
+SELECT lsmb__grant_role('purchases_batch_all', 'purchase_invoice_create_voucher');
 
 SELECT lsmb__create_role('ap_transaction_all',
                          $DOC$
@@ -1000,7 +1000,7 @@ SELECT lsmb__create_role('ap_all',
                          $DOC$
 );
 SELECT lsmb__grant_role('ap_all', rname)
-  FROM unnest(array['ap_voucher_all'::text, 'ap_transaction_all',
+  FROM unnest(array['purchases_batch_all'::text, 'ap_transaction_all',
                     'file_attach_tx']) rname;
 
 \echo CASH
@@ -1292,15 +1292,15 @@ SELECT lsmb__grant_perms('gl_transaction_create', obj, 'ALL')
                     'open_item_id_seq',
                     'journal_entry_id_seq', 'journal_line_id_seq'])obj;
 
-SELECT lsmb__create_role('gl_voucher_create',
+SELECT lsmb__create_role('gl_batch_create',
                          $DOC$
                          This role allows creation of batches of GL transactions.
                          $DOC$
 );
-SELECT lsmb__grant_perms('gl_voucher_create', obj, 'INSERT')
+SELECT lsmb__grant_perms('gl_batch_create', obj, 'INSERT')
   FROM unnest(array['gl'::text, 'acc_trans', 'business_unit_ac']) obj;
 
-SELECT lsmb__grant_perms('gl_voucher_create', obj, 'ALL')
+SELECT lsmb__grant_perms('gl_batch_create', obj, 'ALL')
   FROM unnest(array['transactions_id_seq'::text, 'open_item_id_seq',
                     'acc_trans_entry_id_seq']) obj;
 -- TODO Add menu permissions
@@ -1355,7 +1355,7 @@ SELECT lsmb__create_role('gl_all',
                          $DOC$
 );
 SELECT lsmb__grant_role('gl_all', rname)
-  FROM unnest(array['gl_transaction_create'::text, 'gl_voucher_create',
+  FROM unnest(array['gl_transaction_create'::text, 'gl_batch_create',
                     'yearend_run', 'gl_reports']) rname;
 
 SELECT lsmb__create_role('timecard_add',
