@@ -7,25 +7,54 @@ BEGIN;
 
     SELECT plan(1);
 
+    -- ========================================================
+    -- Setup
+    -- ========================================================
+
     -- Add data
 
     \i xt/data/42-pg/Base.sql
 
+    -- ========================================================
+    -- Schema checks
+    -- ========================================================
+
+    -- Fixtures: none (relies on the objects loaded from Base.sql)
+
+    -- Tests
+
     -- Validate required tables
 
---    SELECT has_table('business');
+    -- SELECT has_table('business');
 
     -- Validate required functions
 
-    SELECT has_function('ar_ap__transaction_search',ARRAY['integer', 'text', 'text', 'text',
-                         'text', 'text', 'text', 'text', 'text', 'text', 'date', 'date',
-                         'boolean', 'boolean', 'boolean', 'date', 'integer', 'boolean']);
+    SELECT has_function(
+        'ar_ap__transaction_search',
+        ARRAY[
+            'integer',
+            'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text',
+            'text',
+            'date', 'date',
+            'boolean', 'boolean', 'boolean',
+            'date',
+            'integer',
+            'boolean'
+        ],
+        'ar_ap__transaction_search exists with its 18-argument signature'
+    );
 
-    -- Run tests
+    -- ========================================================
+    -- Transaction search behaviour
+    -- ========================================================
 
---    PREPARE test AS select ...;
---    SELECT results_eq('test',result,'Description');
---    DEALLOCATE test;
+    -- Fixtures: none yet
+
+    -- Tests
+
+    -- PREPARE test AS select ...;
+    -- SELECT results_eq('test',result,'Description');
+    -- DEALLOCATE test;
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();

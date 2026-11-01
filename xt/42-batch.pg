@@ -7,102 +7,228 @@ BEGIN;
 
     SELECT plan(26);
 
-    -- Add data
+    -- ====================================================================
+    -- SETUP
+    -- ====================================================================
 
+    -- Base data. Supplies rows used below but not created in this file
+    -- (e.g. the -1000 account, entity -100, the country rows, the
+    -- account_heading row and the test_get_account_id() helper).
     \i xt/data/42-pg/Base.sql
 
-    -- Validate required tables
+    -- Id legend. Negative ids are explicit fixture ids; ids are reused
+    -- across tables for different purposes, so they are not \set variables.
+    --   -3      entity.id; also entity_credit_account.entity_id and
+    --           entity_employee.entity_id
+    --   -1      entity_credit_account.id (used as ap.entity_credit_account);
+    --           ALSO the acc_trans/ac_tax_form entry_id of transaction -6
+    --   -2      acc_trans/ac_tax_form entry_id of transaction -7
+    --   -5      account.id and account_link.account_id; ALSO the id of the
+    --           first transaction (transactions.id, ap.trans_id)
+    --   -6, -7  transactions.id of the second and third ap transactions
+    --   -101    country_tax_form.id
+    --   -1000   entity_credit_account.ar_ap_account_id; not created here
+    --   -100    entity id passed to batch_search_empty(); not created here
+    --   242     entity.country_id; 232 country_tax_form.country_id
+    --           (both country rows come from Base.sql or the schema)
+    --   3       batch class id of 'payment' (asserted in the last section)
+    --   batch ids come from batch_id_seq and are captured with \gset as
+    --   :payment_batch_id and :ap_batch_id
+
+    -- ====================================================================
+    -- SCHEMA: required tables and functions
+    -- ====================================================================
+
+    -- ---- Fixtures ------------------------------------------------------
+
+    -- (none)
+
+    -- ---- Tests ---------------------------------------------------------
 
     SELECT has_table('batch');
 
-    -- Validate required functions
+    SELECT has_function(t.fn::name, t.args::name[])
+    FROM (VALUES
+        ('batch__get', ARRAY['integer']),
+        ('batch__list', ARRAY['integer']),
+        ('batch__lock', ARRAY['integer']),
+        ('batch__lock_for_update', ARRAY['integer']),
+        ('batch__search', ARRAY[
+            'integer', 'text', 'integer', 'date', 'date', 'numeric',
+            'numeric', 'boolean'
+        ]),
+        ('batch__unlock', ARRAY['integer']),
+        ('batch_create', ARRAY['text', 'text', 'text', 'date']),
+        ('batch_delete', ARRAY['integer']),
+        ('batch_get_class_id', ARRAY['text']),
+        ('batch_get_class_name', ARRAY['integer']),
+        ('batch_get_users', '{}'::text[]),
+        ('batch_list_classes', '{}'::text[]),
+        ('batch_post', ARRAY['integer']),
+        ('batch_search_empty', ARRAY[
+            'integer', 'text', 'integer', 'numeric', 'numeric', 'boolean'
+        ]),
+        ('batch_search_mini', ARRAY['integer', 'text', 'integer', 'boolean'])
+    ) AS t(fn, args);
 
-    SELECT has_function('batch__get',ARRAY['integer']);
-    SELECT has_function('batch__list',ARRAY['integer']);
-    SELECT has_function('batch__lock',ARRAY['integer']);
-    SELECT has_function('batch__lock_for_update',ARRAY['integer']);
-    SELECT has_function('batch__search',ARRAY['integer','text','integer','date','date','numeric','numeric','boolean']);
-    SELECT has_function('batch__unlock',ARRAY['integer']);
-    SELECT has_function('batch_create',ARRAY['text','text','text','date']);
-    SELECT has_function('batch_delete',ARRAY['integer']);
-    SELECT has_function('batch_get_class_id',ARRAY['text']);
-    SELECT has_function('batch_get_class_name',ARRAY['integer']);
-    SELECT has_function('batch_get_users','{}'::text[]);
-    SELECT has_function('batch_list_classes','{}'::text[]);
-    SELECT has_function('batch_post',ARRAY['integer']);
-    SELECT has_function('batch_search_empty',ARRAY['integer','text','integer','numeric','numeric','boolean']);
-    SELECT has_function('batch_search_mini',ARRAY['integer','text','integer','boolean']);
+    -- ====================================================================
+    -- BATCH LISTING: batch__list
+    -- ====================================================================
 
-    -- Set specific data
+    -- ---- Fixtures ------------------------------------------------------
 
-    PREPARE test AS SELECT
-            batch_create('_TEST', '_TEST', 'payment', '2008-01-01') IS NOT NULL;
-    SELECT results_eq('test',ARRAY[true],'Batch Created');
-    DEALLOCATE test;
+    -- The two batch_create() calls below are assertions that also act as
+    -- fixtures: the \gset lines read their results through currval().
+    -- Keep each \gset directly after its batch_create() assertion.
 
-    select currval('batch_id_seq') as payment_batch_id
-    \gset
+    SELECT ok(
+        batch_create('_TEST', '_TEST', 'payment', '2008-01-01') IS NOT NULL,
+        'Payment batch is created'
+    );
 
-    PREPARE test AS SELECT
-            batch_create('_TEST2', '_TEST2', 'ap', '2008-01-01') IS NOT NULL;
-    SELECT results_eq('test',ARRAY[true],'Batch Created');
-    DEALLOCATE test;
+    SELECT currval('batch_id_seq') AS payment_batch_id \gset
 
-    select currval('batch_id_seq') as ap_batch_id
-    \gset
+    SELECT ok(
+        batch_create('_TEST2', '_TEST2', 'ap', '2008-01-01') IS NOT NULL,
+        'AP batch is created'
+    );
 
+    SELECT currval('batch_id_seq') AS ap_batch_id \gset
 
-    INSERT INTO entity (id, name, control_code, country_id)
-    values (-3, 'Test', 'test', 242);
-    INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id, curr)
-    values (-3, -1, 'Test', 1, -1000, 'XTS');
+    INSERT INTO entity (
+        id, name, control_code, country_id
+    ) VALUES (
+        -3, 'Test', 'test', 242
+    );
 
-    INSERT INTO entity_employee(entity_id) values (-3);
+    INSERT INTO entity_credit_account (
+        entity_id, id, meta_number, entity_class, ar_ap_account_id, curr
+    ) VALUES (
+        -3, -1, 'Test', 1, -1000, 'XTS'
+    );
 
-    INSERT INTO account(id, accno, description, category, heading, contra)
-    values (-5, '-21111', 'Testing AP', 'A', (select id from account_heading WHERE accno  = '000000000000000000000'), false);
+    INSERT INTO entity_employee (
+        entity_id
+    ) VALUES (
+        -3
+    );
 
-    INSERT INTO country_tax_form(country_id, form_name, id) values (232, 'TEST', '-101');
+    INSERT INTO account (
+        id, accno, description, category,
+        heading,
+        contra
+    ) VALUES (
+        -5, '-21111', 'Testing AP', 'A',
+        (SELECT id FROM account_heading WHERE accno = '000000000000000000000'),
+        FALSE
+    );
 
-    INSERT INTO account_link(account_id, description) values (-5, 'AP');
+    INSERT INTO country_tax_form (
+        country_id, form_name, id
+    ) VALUES (
+        232, 'TEST', -101
+    );
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved, batch_id)
-    VALUES (-5, now(), 'ap', false, :payment_batch_id);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('test1', 'ap', test_get_account_id('-21111'));
-    INSERT INTO ap (trans_id, open_item_id, invnumber, amount_bc, curr, amount_tc, entity_credit_account)
-    VALUES (-5, currval('open_item_id_seq'), 'test1', '1000', 'XTS', 1000, -1);
+    INSERT INTO account_link (
+        account_id, description
+    ) VALUES (
+        -5, 'AP'
+    );
 
-    INSERT INTO acc_trans(trans_id, chart_id, amount_bc, curr, amount_tc, approved)
-    values (-5, test_get_account_id('-21111'), 1000, 'XTS', 1000, true);
+    -- Transaction -5: in the payment batch.
+    INSERT INTO transactions (
+        id, transdate, trans_type_code, approved, batch_id
+    ) VALUES (
+        -5, now(), 'ap', FALSE, :payment_batch_id
+    );
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved, batch_id)
-    VALUES (-6, now(), 'ap', false, :ap_batch_id);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('test1/2', 'ap', test_get_account_id('-21111'));
-    INSERT INTO ap (trans_id, open_item_id, invnumber, amount_bc, curr, amount_tc, entity_credit_account)
-    VALUES (-6, currval('open_item_id_seq'), 'test1', '1000', 'XTS', 1000, -1);
+    INSERT INTO open_item (
+        item_number, item_type, account_id
+    ) VALUES (
+        'test1', 'ap', test_get_account_id('-21111')
+    );
 
-    INSERT INTO acc_trans(trans_id, chart_id, amount_bc, curr, amount_tc, approved, entry_id)
-    values (-6, test_get_account_id('-21111'), 1000, 'XTS', 1000, true, -1);
+    INSERT INTO ap (
+        trans_id, open_item_id, invnumber,
+        amount_bc, curr, amount_tc, entity_credit_account
+    ) VALUES (
+        -5, currval('open_item_id_seq'), 'test1',
+        1000, 'XTS', 1000, -1
+    );
 
-    INSERT INTO ac_tax_form (entry_id, reportable)
-    values (-1, false);
+    INSERT INTO acc_trans (
+        trans_id, chart_id, amount_bc, curr, amount_tc, approved
+    ) VALUES (
+        -5, test_get_account_id('-21111'), 1000, 'XTS', 1000, TRUE
+    );
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-7, now(), 'ap', false);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('test1/3', 'ap', test_get_account_id('-21111'));
-    INSERT INTO ap (trans_id, open_item_id, invnumber, amount_bc, curr, amount_tc, entity_credit_account)
-    VALUES (-7, currval('open_item_id_seq'), 'test1', '1000', 'XTS', 1000, -1);
+    -- Transaction -6: in the AP batch.
+    INSERT INTO transactions (
+        id, transdate, trans_type_code, approved, batch_id
+    ) VALUES (
+        -6, now(), 'ap', FALSE, :ap_batch_id
+    );
 
-    INSERT INTO acc_trans(trans_id, chart_id, amount_bc, curr, amount_tc, approved, entry_id)
-    values (-7, test_get_account_id('-21111'), 1000, 'XTS', 1000, true, -2);
+    INSERT INTO open_item (
+        item_number, item_type, account_id
+    ) VALUES (
+        'test1/2', 'ap', test_get_account_id('-21111')
+    );
 
-    INSERT INTO ac_tax_form (entry_id, reportable)
-    values (-2, false);
+    INSERT INTO ap (
+        trans_id, open_item_id, invnumber,
+        amount_bc, curr, amount_tc, entity_credit_account
+    ) VALUES (
+        -6, currval('open_item_id_seq'), 'test1',
+        1000, 'XTS', 1000, -1
+    );
 
-    -- Run tests
+    INSERT INTO acc_trans (
+        trans_id, chart_id, amount_bc, curr, amount_tc, approved, entry_id
+    ) VALUES (
+        -6, test_get_account_id('-21111'), 1000, 'XTS', 1000, TRUE, -1
+    );
+
+    INSERT INTO ac_tax_form (
+        entry_id, reportable
+    ) VALUES (
+        -1, FALSE
+    );
+
+    -- Transaction -7: in no batch.
+    INSERT INTO transactions (
+        id, transdate, trans_type_code, approved
+    ) VALUES (
+        -7, now(), 'ap', FALSE
+    );
+
+    INSERT INTO open_item (
+        item_number, item_type, account_id
+    ) VALUES (
+        'test1/3', 'ap', test_get_account_id('-21111')
+    );
+
+    INSERT INTO ap (
+        trans_id, open_item_id, invnumber,
+        amount_bc, curr, amount_tc, entity_credit_account
+    ) VALUES (
+        -7, currval('open_item_id_seq'), 'test1',
+        1000, 'XTS', 1000, -1
+    );
+
+    INSERT INTO acc_trans (
+        trans_id, chart_id, amount_bc, curr, amount_tc, approved, entry_id
+    ) VALUES (
+        -7, test_get_account_id('-21111'), 1000, 'XTS', 1000, TRUE, -2
+    );
+
+    INSERT INTO ac_tax_form (
+        entry_id, reportable
+    ) VALUES (
+        -2, FALSE
+    );
+
+    -- ---- Tests ---------------------------------------------------------
 
 -- the code above inserts approved acc_trans lines where the transaction itself is
 -- not approved. that doesn't make sense. the sense we make of it at this point is
@@ -111,52 +237,85 @@ BEGIN;
 
 -- 20260810 EH: the text above doesn't make sense to me at all...
 
-    PREPARE test AS SELECT count(*)
-      FROM batch__list( (:ap_batch_id)::int );
-    SELECT results_eq('test',ARRAY[1::bigint],'Batch content lists all transactions');
-    DEALLOCATE test;
+    -- Transaction -6 is the only transaction in the AP batch.
+    SELECT is(
+        (SELECT count(*) FROM batch__list((:ap_batch_id)::int)),
+        1::bigint,
+        'Batch content lists all transactions in the AP batch'
+    );
 
-    PREPARE test AS SELECT count(*)
-      FROM batch__list( (:payment_batch_id)::int )
-      WHERE batch_class_id = 3;
-    SELECT results_eq('test',ARRAY[1::bigint],'Batch content lists Payable transactions');
-    DEALLOCATE test;
+    -- Transaction -5 is the only transaction in the payment batch.
+    SELECT is(
+        (SELECT count(*)
+         FROM batch__list((:payment_batch_id)::int)
+         WHERE batch_class_id = 3),
+        1::bigint,
+        'Batch content lists the transactions of the payment batch (class 3)'
+    );
+
+    -- ====================================================================
+    -- EMPTY BATCH: batch_search_empty, batch_delete
+    -- ====================================================================
+
+    -- ---- Fixtures ------------------------------------------------------
 
     -- Adding the test for empty batch sproc
 
-    PREPARE test AS SELECT batch_create('EMPTYBATCHTEST1', 'EMPTY BATCH TEST',
-                                        'ap', '2008-01-01')
-                    IS NOT NULL;
-    SELECT results_eq('test',ARRAY[true],'creating batch 2');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 1
-      FROM batch_search_empty(1,                        -- Batch class ID
-                              'EMPTY BATCH TEST',       -- Batch description
-                              -100,                       -- Entity ID
-                              NULL::numeric,            -- Amount greater than
-                              NULL::numeric,            -- Amount less than
-                              'f'::bool                 -- Approved
+    -- This assertion also creates the batch used by the tests below, which
+    -- read it back through currval('batch_id_seq'). Do not create rows or
+    -- advance batch_id_seq between it and the tests.
+    SELECT ok(
+        batch_create(
+            'EMPTYBATCHTEST1', 'EMPTY BATCH TEST', 'ap', '2008-01-01'
+        ) IS NOT NULL,
+        'Batch for the empty-batch tests is created'
     );
-    SELECT results_eq('test',ARRAY[true],'Empty Batch Detected');
-    DEALLOCATE test;
 
-    PREPARE test AS SELECT batch_delete(currval('batch_id_seq')::int) = 1;
-    SELECT results_eq('test',ARRAY[true],'Delete batch');
-    DEALLOCATE test;
+    -- ---- Tests ---------------------------------------------------------
 
-    PREPARE test AS SELECT count(*) = 0
-    FROM batch where id = currval('batch_id_seq');
-    SELECT results_eq('test',ARRAY[true],'Batch is deleted');
-    DEALLOCATE test;
+    -- The new batch (matched by its description) is the one empty batch.
+    SELECT ok(
+        (SELECT count(*) = 1
+         FROM batch_search_empty(
+             1,                  -- Batch class ID
+             'EMPTY BATCH TEST', -- Batch description
+             -100,               -- Entity ID
+             NULL::numeric,      -- Amount greater than
+             NULL::numeric,      -- Amount less than
+             'f'::bool           -- Approved
+         )),
+        'Empty batch is found by batch_search_empty'
+    );
 
-    PREPARE test AS SELECT batch_get_class_id('payment') = 3;
-    SELECT results_eq('test',ARRAY[true],'get batch class_id from batch class name');
-    DEALLOCATE test;
+    SELECT ok(
+        batch_delete(currval('batch_id_seq')::int) = 1,
+        'batch_delete returns 1 when deleting the empty batch'
+    );
 
-    PREPARE test AS SELECT batch_get_class_name(3) = 'payment';
-    SELECT results_eq('test',ARRAY[true],'get batch class name from batch class id');
-    DEALLOCATE test;
+    SELECT is_empty(
+        $$ SELECT id FROM batch WHERE id = currval('batch_id_seq') $$,
+        'Deleted empty batch is gone from the batch table'
+    );
+
+    -- ====================================================================
+    -- BATCH CLASS LOOKUPS: batch_get_class_id, batch_get_class_name
+    -- ====================================================================
+
+    -- ---- Fixtures ------------------------------------------------------
+
+    -- (none)
+
+    -- ---- Tests ---------------------------------------------------------
+
+    SELECT ok(
+        batch_get_class_id('payment') = 3,
+        'batch_get_class_id returns 3 for the class name payment'
+    );
+
+    SELECT ok(
+        batch_get_class_name(3) = 'payment',
+        'batch_get_class_name returns payment for class id 3'
+    );
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();

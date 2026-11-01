@@ -1,52 +1,89 @@
 BEGIN;
+
+    -- ========================================================================
+    -- Setup
+    -- ========================================================================
+
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
     SET client_min_messages TO warning;
 
     -- Plan the tests.
-
     SELECT plan(25);
 
-    -- Add data
-
+    -- Fixtures: base data (supplies everything not created in this file).
     \i xt/data/42-pg/Base.sql
 
-    -- Validate required tables
+    -- ========================================================================
+    -- Schema: required tables
+    -- ========================================================================
 
-    SELECT has_table('defaults');
-    SELECT has_table('entity_employee');
-    SELECT has_table('session');
-    SELECT has_table('user_preference');
-    SELECT has_table('users');
+    -- Tests (5 assertions: one per row).
+    SELECT has_table(
+        t.table_name::name,
+        format('Table %s should exist', t.table_name)
+    )
+    FROM (
+        VALUES
+            ('defaults'),
+            ('entity_employee'),
+            ('session'),
+            ('user_preference'),
+            ('users')
+    ) AS t(table_name);
 
-    -- Validate required views
+    -- ========================================================================
+    -- Schema: required views
+    -- ========================================================================
 
-    SELECT has_view('user_listable');
+    -- Tests (1 assertion).
+    SELECT has_view('user_listable', 'View user_listable should exist');
 
-    -- Validate required functions
+    -- ========================================================================
+    -- Schema: required functions
+    -- ========================================================================
 
-    SELECT has_function('admin__add_user_to_role',ARRAY['text','text']);
-    SELECT has_function('admin__delete_user',ARRAY['text','boolean']);
-    SELECT has_function('admin__drop_session',ARRAY['integer']);
-    SELECT has_function('admin__get_roles','{}'::text[]);
-    SELECT has_function('admin__get_roles_for_user',ARRAY['integer']);
-    SELECT has_function('admin__get_roles_for_user_by_entity',ARRAY['integer']);
-    SELECT has_function('admin__get_user',ARRAY['integer']);
-    SELECT has_function('admin__get_user_by_entity',ARRAY['integer']);
-    SELECT has_function('admin__is_user',ARRAY['text']);
-    SELECT has_function('admin__list_sessions','{}'::text[]);
-    SELECT has_function('admin__remove_user_from_role',ARRAY['text','text']);
-    SELECT has_function('admin__save_user',ARRAY['integer','integer','text','text','boolean']);
-    SELECT has_function('admin__search_users',ARRAY['text','text','text','text','date']);
-    SELECT has_function('user__change_password',ARRAY['text']);
-    SELECT has_function('user__check_my_expiration','{}'::text[]);
-    SELECT has_function('user__get_all_users','{}'::text[]);
-    SELECT has_function('user__get_preferences',ARRAY['integer']);
-    SELECT has_function('user__save_preferences',ARRAY['text','text','text','text','text']);
+    -- Tests (18 assertions: one per row).
+    SELECT has_function(
+        t.function_name::name,
+        t.argument_types::name[],
+        format(
+            'Function %s(%s) should exist',
+            t.function_name,
+            array_to_string(t.argument_types, ', ')
+        )
+    )
+    FROM (
+        VALUES
+            ('admin__add_user_to_role', ARRAY['text','text']),
+            ('admin__delete_user', ARRAY['text','boolean']),
+            ('admin__drop_session', ARRAY['integer']),
+            ('admin__get_roles', '{}'::text[]),
+            ('admin__get_roles_for_user', ARRAY['integer']),
+            ('admin__get_roles_for_user_by_entity', ARRAY['integer']),
+            ('admin__get_user', ARRAY['integer']),
+            ('admin__get_user_by_entity', ARRAY['integer']),
+            ('admin__is_user', ARRAY['text']),
+            ('admin__list_sessions', '{}'::text[]),
+            ('admin__remove_user_from_role', ARRAY['text','text']),
+            ('admin__save_user',
+                ARRAY['integer','integer','text','text','boolean']),
+            ('admin__search_users',
+                ARRAY['text','text','text','text','date']),
+            ('user__change_password', ARRAY['text']),
+            ('user__check_my_expiration', '{}'::text[]),
+            ('user__get_all_users', '{}'::text[]),
+            ('user__get_preferences', ARRAY['integer']),
+            ('user__save_preferences',
+                ARRAY['text','text','text','text','text'])
+    ) AS t(function_name, argument_types);
 
-    -- Run tests
+    -- ========================================================================
+    -- Admin behaviour (placeholder)
+    -- ========================================================================
 
-    SELECT ok(true,'No specific admin tests yet!');
+    -- Tests (1 assertion).
+    SELECT ok(TRUE, 'No specific admin tests yet!');
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();

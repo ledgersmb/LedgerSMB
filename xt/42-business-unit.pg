@@ -1,41 +1,77 @@
 BEGIN;
+    -- ====================================================================
+    -- Setup
+    -- ====================================================================
+
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
     SET client_min_messages TO warning;
 
     -- Plan the tests.
-
     SELECT plan(11);
 
     -- Add data
-
     \i xt/data/42-pg/Base.sql
 
-    -- Validate required tables
 
+    -- ====================================================================
+    -- Required schema objects (existence checks, 11 assertions)
+    -- ====================================================================
+    -- No fixtures of its own: relies on the schema and on Base.sql above.
+
+    -- --------------------------------------------------------------------
+    -- Tests
+    -- --------------------------------------------------------------------
+
+    -- Validate required tables
     SELECT has_table('business');
 
-    -- Validate required functions
+    -- Validate required functions: one has_function() assertion per VALUES
+    -- row (fn = function name, args = argument types), 10 in total.
+    SELECT has_function(t.fn, t.args)
+    FROM (
+        VALUES
+            ('business_unit__get', ARRAY['integer']),
+            ('business_unit__get_tree_for', ARRAY['integer']),
+            ('business_unit__list_by_class',
+                ARRAY['integer', 'date', 'integer', 'boolean']),
+            ('business_unit__list_classes', ARRAY['boolean', 'text']),
+            ('business_unit__save',
+                ARRAY['integer', 'integer', 'text', 'text', 'date', 'date',
+                      'integer', 'integer']),
+            ('business_unit_class__get_modules', ARRAY['integer']),
+            ('business_unit_class__save',
+                ARRAY['integer', 'text', 'boolean', 'integer']),
+            ('business_unit_class__save_modules',
+                ARRAY['integer', 'integer[]']),
+            ('business_unit_get', ARRAY['integer']),
+            ('eca_bu_trigger', '{}'::text[])
+    ) AS t (fn, args);
 
-    SELECT has_function('business_unit__get',ARRAY['integer']);
-    SELECT has_function('business_unit__get_tree_for',ARRAY['integer']);
-    SELECT has_function('business_unit__list_by_class',ARRAY['integer','date','integer','boolean']);
-    SELECT has_function('business_unit__list_classes',ARRAY['boolean','text']);
-    SELECT has_function('business_unit__save',ARRAY['integer','integer','text','text','date','date','integer','integer']);
-    SELECT has_function('business_unit_class__get_modules',ARRAY['integer']);
-    SELECT has_function('business_unit_class__save',ARRAY['integer','text','boolean','integer']);
-    SELECT has_function('business_unit_class__save_modules',ARRAY['integer','integer[]']);
-    SELECT has_function('business_unit_get',ARRAY['integer']);
-    SELECT has_function('eca_bu_trigger','{}'::text[]);
 
-    -- Run tests
+    -- ====================================================================
+    -- Disabled: business type listing (commented out in the original)
+    -- ====================================================================
+
+    -- --------------------------------------------------------------------
+    -- Fixtures
+    -- --------------------------------------------------------------------
 
 --    INSERT INTO business (description) values ('testing');
+
+    -- --------------------------------------------------------------------
+    -- Tests
+    -- --------------------------------------------------------------------
 
 --    PREPARE test AS SELECT count(*) > 0 from business_type__list()
 --                    WHERE description = 'testing';
 --    SELECT results_eq('test',ARRAY[true],'Business Class Inserted');
 --    DEALLOCATE test;
+
+
+    -- ====================================================================
+    -- Teardown
+    -- ====================================================================
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();

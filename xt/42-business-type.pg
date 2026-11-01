@@ -1,32 +1,63 @@
 BEGIN;
+
+    -- ======================================================================
+    -- Setup
+    -- ======================================================================
+
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
     SET client_min_messages TO warning;
 
     -- Plan the tests.
-
     SELECT plan(3);
 
-    -- Add data
-
+    -- Add data (external fixtures: schema and base rows come from this file).
     \i xt/data/42-pg/Base.sql
 
-    -- Validate required tables
 
+    -- ======================================================================
+    -- Schema checks
+    -- ======================================================================
+
+    -- ----------------------------------------------------------------------
+    -- Tests
+    -- ----------------------------------------------------------------------
+
+    -- Validate required tables
     SELECT has_table('business');
 
     -- Validate required functions
+    SELECT has_function('business_type__list', '{}'::text[]);
 
-    SELECT has_function('business_type__list','{}'::text[]);
 
-    -- Run tests
+    -- ======================================================================
+    -- business_type__list(): inserted business row is listed
+    -- ======================================================================
 
-    INSERT INTO business (description) values ('testing');
+    -- ----------------------------------------------------------------------
+    -- Fixtures
+    -- ----------------------------------------------------------------------
 
-    PREPARE test AS SELECT count(*) > 0 from business_type__list()
-                    WHERE description = 'testing';
-    SELECT results_eq('test',ARRAY[true],'Business Class Inserted');
-    DEALLOCATE test;
+    INSERT INTO business (description)
+    VALUES ('testing');
+
+    -- ----------------------------------------------------------------------
+    -- Tests
+    -- ----------------------------------------------------------------------
+
+    SELECT ok(
+        (
+            SELECT count(*) > 0
+              FROM business_type__list()
+             WHERE description = 'testing'
+        ),
+        'business_type__list() returns the inserted business row'
+    );
+
+
+    -- ======================================================================
+    -- Teardown
+    -- ======================================================================
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
