@@ -1,4 +1,8 @@
 BEGIN;
+    -- ====================================================================
+    -- Setup
+    -- ====================================================================
+
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
     SET client_min_messages TO warning;
@@ -11,24 +15,61 @@ BEGIN;
 
     \i xt/data/42-pg/Base.sql
 
+    -- ====================================================================
+    -- Required tables
+    -- ====================================================================
+
+    -- Tests
+
     -- Validate required tables
 
 --    SELECT has_table('business');
 
-    -- Validate required functions
+    -- ====================================================================
+    -- Required functions
+    -- ====================================================================
 
-    SELECT has_function('budget__get_info',ARRAY['integer']);
-    SELECT has_function('budget__get_business_units',ARRAY['integer']);
-    SELECT has_function('budget__search',ARRAY['date', 'date' , 'date', 'text', 'text', 'integer', 'integer', 'integer', 'integer[]', 'boolean', 'boolean']);
-    SELECT has_function('budget__save_info',ARRAY['integer', 'date', 'date', 'text', 'text', 'integer[]']);
-    SELECT has_function('budget__save_details',ARRAY['integer', 'text[]']);
-    SELECT has_function('budget__get_details',ARRAY['integer']);
-    SELECT has_function('budget__get_notes',ARRAY['integer']);
-    SELECT has_function('budget__save_note',ARRAY['integer', 'text', 'text']);
-    SELECT has_function('budget__get_notes',ARRAY['integer']);
-    SELECT has_function('budget__variance_report',ARRAY['integer']);
-    SELECT has_function('budget__mark_obsolete',ARRAY['integer']);
-    SELECT has_function('budget__reject',ARRAY['integer']);
+    -- Tests
+
+    -- Validate required functions
+    -- One has_function() call per VALUES row, in the original order.
+    -- budget__get_notes(integer) is listed twice, as in the original file.
+
+    SELECT has_function(t.fn, t.args)
+      FROM (VALUES
+                ( 1, 'budget__get_info',
+                     ARRAY['integer']),
+                ( 2, 'budget__get_business_units',
+                     ARRAY['integer']),
+                ( 3, 'budget__search',
+                     ARRAY['date', 'date', 'date', 'text', 'text', 'integer',
+                           'integer', 'integer', 'integer[]', 'boolean',
+                           'boolean']),
+                ( 4, 'budget__save_info',
+                     ARRAY['integer', 'date', 'date', 'text', 'text',
+                           'integer[]']),
+                ( 5, 'budget__save_details',
+                     ARRAY['integer', 'text[]']),
+                ( 6, 'budget__get_details',
+                     ARRAY['integer']),
+                ( 7, 'budget__get_notes',
+                     ARRAY['integer']),
+                ( 8, 'budget__save_note',
+                     ARRAY['integer', 'text', 'text']),
+                ( 9, 'budget__get_notes',
+                     ARRAY['integer']),
+                (10, 'budget__variance_report',
+                     ARRAY['integer']),
+                (11, 'budget__mark_obsolete',
+                     ARRAY['integer']),
+                (12, 'budget__reject',
+                     ARRAY['integer'])
+           ) AS t(seq, fn, args)
+     ORDER BY t.seq;
+
+    -- ====================================================================
+    -- Finish
+    -- ====================================================================
 
     -- Run tests
 

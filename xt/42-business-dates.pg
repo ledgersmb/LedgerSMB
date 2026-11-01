@@ -4,40 +4,101 @@ BEGIN;
     SET client_min_messages TO warning;
 
     -- Plan the tests.
-
     SELECT plan(13);
 
-    -- Add data
+    -- ========================================================================
+    -- Setup
+    -- ========================================================================
 
+    -- ------------------------------------------------------------------------
+    -- Fixtures
+    -- ------------------------------------------------------------------------
+
+    -- Add data
     \i xt/data/42-pg/Base.sql
+
+    -- ------------------------------------------------------------------------
+    -- Tests
+    -- ------------------------------------------------------------------------
+
+    -- (none: setup only)
+
+    -- ========================================================================
+    -- Required tables
+    -- ========================================================================
+
+    -- ------------------------------------------------------------------------
+    -- Fixtures
+    -- ------------------------------------------------------------------------
+
+    -- (none)
+
+    -- ------------------------------------------------------------------------
+    -- Tests
+    -- ------------------------------------------------------------------------
 
     -- Validate required tables
 
---    SELECT has_table('business');
+    -- SELECT has_table('business');
+
+    -- ========================================================================
+    -- Required functions
+    -- ========================================================================
+
+    -- ------------------------------------------------------------------------
+    -- Fixtures
+    -- ------------------------------------------------------------------------
+
+    -- (none)
+
+    -- ------------------------------------------------------------------------
+    -- Tests
+    -- ------------------------------------------------------------------------
 
     -- Validate required functions
 
-    SELECT todo('Business Dates not even completed nor compiling properly', 13);
+    SELECT todo(
+        'Business Dates not even completed nor compiling properly',
+        13
+    );
 
-    SELECT has_function('lsmb__closest_business_day',ARRAY['date', 'integer', 'integer']);
-    SELECT has_function('lsmb__daycount_30e_360',ARRAY['date', 'date']);
-    SELECT has_function('lsmb__daycount_30e_360_isda',ARRAY['date', 'date', 'date']);
-    SELECT has_function('lsmb__daycount_act_act_isda',ARRAY['date', 'date']);
-    SELECT has_function('lsmb__daycount_act_365fixed',ARRAY['date', 'date']);
-    SELECT has_function('lsmb__daycount_act_360',ARRAY['date', 'date']);
-    SELECT has_function('lsmb__daycount_act_364',ARRAY['date', 'date']);
-    SELECT has_function('lsmb__daycount_factor',ARRAY['text', 'date', 'date', 'date']);
-    SELECT has_function('lsmb__is_workday',ARRAY['date', 'integer']);
-    SELECT has_function('lsmb__is_holiday',ARRAY['date', 'integer']);
-    SELECT has_function('lsmb__next_business_day',ARRAY['date', 'integer', 'integer']);
-    SELECT has_function('lsmb__next_business_day_modified',ARRAY['date', 'integer', 'integer']);
-    SELECT has_function('lsmb__next_interval_date',ARRAY['date', 'integer', 'interval', 'boolean']);
-
-    -- Run tests
-
---    PREPARE test AS select ...;
---    SELECT results_eq('test',result,'Description');
---    DEALLOCATE test;
+    -- One has_function() assertion per row (13 rows = 13 assertions).
+    -- "n" only fixes the execution order; each row is (function name,
+    -- argument types).
+    SELECT has_function(t.fn::NAME, t.args::NAME[])
+    FROM (
+        SELECT v.n, v.fn, v.args
+        FROM (
+            VALUES
+                (1, 'lsmb__closest_business_day',
+                 ARRAY['date', 'integer', 'integer']),
+                (2, 'lsmb__daycount_30e_360',
+                 ARRAY['date', 'date']),
+                (3, 'lsmb__daycount_30e_360_isda',
+                 ARRAY['date', 'date', 'date']),
+                (4, 'lsmb__daycount_act_act_isda',
+                 ARRAY['date', 'date']),
+                (5, 'lsmb__daycount_act_365fixed',
+                 ARRAY['date', 'date']),
+                (6, 'lsmb__daycount_act_360',
+                 ARRAY['date', 'date']),
+                (7, 'lsmb__daycount_act_364',
+                 ARRAY['date', 'date']),
+                (8, 'lsmb__daycount_factor',
+                 ARRAY['text', 'date', 'date', 'date']),
+                (9, 'lsmb__is_workday',
+                 ARRAY['date', 'integer']),
+                (10, 'lsmb__is_holiday',
+                 ARRAY['date', 'integer']),
+                (11, 'lsmb__next_business_day',
+                 ARRAY['date', 'integer', 'integer']),
+                (12, 'lsmb__next_business_day_modified',
+                 ARRAY['date', 'integer', 'integer']),
+                (13, 'lsmb__next_interval_date',
+                 ARRAY['date', 'integer', 'interval', 'boolean'])
+        ) AS v(n, fn, args)
+        ORDER BY v.n
+    ) AS t;
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
