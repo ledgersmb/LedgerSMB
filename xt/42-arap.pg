@@ -25,31 +25,21 @@ BEGIN;
 
     -- Validate required tables
 
---    SELECT has_table('business');
+    -- SELECT has_table('business');
 
     -- Validate required functions
 
     SELECT has_function(
         'ar_ap__transaction_search',
         ARRAY[
-            'integer',  -- arg 1
-            'text',     -- arg 2
-            'text',     -- arg 3
-            'text',     -- arg 4
-            'text',     -- arg 5
-            'text',     -- arg 6
-            'text',     -- arg 7
-            'text',     -- arg 8
-            'text',     -- arg 9
-            'text',     -- arg 10
-            'date',     -- arg 11
-            'date',     -- arg 12
-            'boolean',  -- arg 13
-            'boolean',  -- arg 14
-            'boolean',  -- arg 15
-            'date',     -- arg 16
-            'integer',  -- arg 17
-            'boolean'   -- arg 18
+            'integer',
+            'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text',
+            'text',
+            'date', 'date',
+            'boolean', 'boolean', 'boolean',
+            'date',
+            'integer',
+            'boolean'
         ],
         'ar_ap__transaction_search exists with its 18-argument signature'
     );
@@ -62,11 +52,9 @@ BEGIN;
 
     -- Tests
 
-    -- Run tests
-
---    PREPARE test AS select ...;
---    SELECT results_eq('test',result,'Description');
---    DEALLOCATE test;
+    -- PREPARE test AS select ...;
+    -- SELECT results_eq('test',result,'Description');
+    -- DEALLOCATE test;
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();

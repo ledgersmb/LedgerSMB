@@ -32,7 +32,7 @@ BEGIN;
 
     -- Validate required tables
 
---    SELECT has_table('business');
+    -- SELECT has_table('business');
 
     -- Validate required functions
 
@@ -133,132 +133,123 @@ BEGIN;
     -- ======================================================================
 
     -- Fixtures
+    -- Account ids (asset_acc_id, dep_acc_id, exp_acc_id, gain_acc_id,
+    -- loss_acc_id) come from the __create_*_account() helpers, which are
+    -- not defined in this file (presumably loaded by the \i includes).
 
     -- Set up asset class
 
-    SELECT __create_fixed_asset_account() AS asset_acc_id
-    \gset
-    SELECT __create_asset_dep_account() AS dep_acc_id
-    \gset
-    SELECT __create_asset_loss_account() AS loss_acc_id
-    \gset
-    SELECT __create_asset_gain_account() AS gain_acc_id
-    \gset
+    SELECT __create_fixed_asset_account() AS asset_acc_id \gset
+    SELECT __create_asset_dep_account() AS dep_acc_id \gset
+    SELECT __create_asset_loss_account() AS loss_acc_id \gset
+    SELECT __create_asset_gain_account() AS gain_acc_id \gset
     SELECT asset_class__save(
-        NULL,                           -- id (guess)
-        :asset_acc_id,                  -- asset account id (guess)
-        :dep_acc_id,                    -- depreciation account id (guess)
+        NULL,
+        :asset_acc_id,
+        :dep_acc_id,
         (SELECT id FROM asset_dep_method
-          WHERE method = 'Annual Straight Line Monthly'),  -- method id (guess)
-        'new asset class',              -- name (guess)
-        'unit label'                    -- label (guess)
-    ) AS new_class
-    \gset
+          WHERE method = 'Annual Straight Line Monthly'),
+        'new asset class',
+        'unit label'
+    ) AS new_class \gset
 
     -- Create asset
 
-    SELECT __create_asset_exp_account() AS exp_acc_id
-    \gset
+    SELECT __create_asset_exp_account() AS exp_acc_id \gset
     SELECT asset__save(
-        NULL,                           -- id (guess)
-        (:'new_class'::asset_class).id, -- asset class id (guess)
-        'new asset',                    -- description (guess)
-        'tag of new asset',             -- tag (guess)
-        '2010-10-01'::date,             -- purchase date (guess)
-        4800,                           -- purchase value (guess)
-        3,                              -- usable life in years (guess)
-        1200,                           -- salvage value (guess)
-        '2010-10-01'::date,             -- depreciation start date (guess)
-        NULL,                           -- integer arg, purpose unknown
-        NULL,                           -- integer arg, purpose unknown
-        NULL,                           -- integer arg, purpose unknown
-        :asset_acc_id,                  -- asset account id (guess)
-        :dep_acc_id,                    -- depreciation account id (guess)
-        :exp_acc_id,                    -- expense account id (guess)
-        NULL                            -- integer arg, purpose unknown
-    ) AS new_asset
-    \gset
+        NULL,
+        (:'new_class'::asset_class).id,
+        'new asset',
+        'tag of new asset',
+        '2010-10-01'::date,
+        4800,
+        3,
+        1200,
+        '2010-10-01'::date,
+        NULL,
+        NULL,
+        NULL,
+        :asset_acc_id,
+        :dep_acc_id,
+        :exp_acc_id,
+        NULL
+    ) AS new_asset \gset
 
     -- Run depreciation
 
     SELECT asset_report__save(
-        NULL,                            -- id (guess)
-        '2010-11-01'::date,              -- report date (guess)
-        :asset_report_type_depreciation, -- report type id (guess)
-        (:'new_class'::asset_class).id,  -- asset class id (guess)
-        TRUE                             -- boolean flag, purpose unknown
-    ) AS new_report
-    \gset
+        NULL,
+        '2010-11-01'::date,
+        :asset_report_type_depreciation,
+        (:'new_class'::asset_class).id,
+        TRUE
+    ) AS new_report \gset
     SELECT asset_report__approve(
-        (:'new_report'::asset_report).id, -- report id (guess)
-        :exp_acc_id,                      -- expense account id (guess)
-        NULL,                             -- gain account id (guess)
-        NULL,                             -- loss account id (guess)
-        NULL                              -- integer arg, purpose unknown
-    ) AS approved_report
-    \gset
+        (:'new_report'::asset_report).id,
+        :exp_acc_id,
+        NULL,
+        NULL,
+        NULL
+    ) AS approved_report \gset
 
     -- Run partial disposal (abandonment)
 
     SELECT asset_report__save(
-        NULL,                               -- id (guess)
-        '2010-11-01'::date,                 -- report date (guess)
-        :asset_report_type_partial_disposal, -- report type id (guess)
-        (:'new_class'::asset_class).id,     -- asset class id (guess)
-        TRUE                                -- boolean flag, purpose unknown
-    ) AS disposal_report
-    \gset
+        NULL,
+        '2010-11-01'::date,
+        :asset_report_type_partial_disposal,
+        (:'new_class'::asset_class).id,
+        TRUE
+    ) AS disposal_report \gset
     SELECT asset_report__dispose(
-        (:'disposal_report'::asset_report).id, -- report id (guess)
-        (:'new_asset'::asset_item).id,         -- asset item id (guess)
-        0.00,                                  -- proceeds (guess)
+        (:'disposal_report'::asset_report).id,
+        (:'new_asset'::asset_item).id,
+        0.00,
         (SELECT id FROM asset_disposal_method
-          WHERE short_label = 'A'),            -- method id (guess)
-        50                                     -- percent disposed (guess)
+          WHERE short_label = 'A'),
+        50
     );
     SELECT asset_report__approve(
-        (:'disposal_report'::asset_report).id, -- report id (guess)
-        :exp_acc_id,                           -- expense account id (guess)
-        :gain_acc_id,                          -- gain account id (guess)
-        :loss_acc_id,                          -- loss account id (guess)
-        NULL                                   -- integer arg, purpose unknown
-    ) AS approved_report
-    \gset
+        (:'disposal_report'::asset_report).id,
+        :exp_acc_id,
+        :gain_acc_id,
+        :loss_acc_id,
+        NULL
+    ) AS approved_report \gset
 
     -- Run full disposal (abandonment)
 
     SELECT asset_report__save(
-        NULL,                            -- id (guess)
-        '2010-11-01'::date,              -- report date (guess)
-        :asset_report_type_full_disposal, -- report type id (guess)
-        (:'new_class'::asset_class).id,  -- asset class id (guess)
-        TRUE                             -- boolean flag, purpose unknown
-    ) AS full_disposal_report
-    \gset
+        NULL,
+        '2010-11-01'::date,
+        :asset_report_type_full_disposal,
+        (:'new_class'::asset_class).id,
+        TRUE
+    ) AS full_disposal_report \gset
     SELECT asset_report__dispose(
-        (:'full_disposal_report'::asset_report).id, -- report id (guess)
-        (:'new_asset'::asset_item).id,              -- asset item id (guess)
-        0.00,                                       -- proceeds (guess)
+        (:'full_disposal_report'::asset_report).id,
+        (:'new_asset'::asset_item).id,
+        0.00,
         (SELECT id FROM asset_disposal_method
-          WHERE short_label = 'A'),                 -- method id (guess)
-        100                                         -- percent disposed (guess)
+          WHERE short_label = 'A'),
+        100
     );
     SELECT asset_report__approve(
-        (:'disposal_report'::asset_report).id, -- report id (guess)
-        :exp_acc_id,                           -- expense account id (guess)
-        :gain_acc_id,                          -- gain account id (guess)
-        :loss_acc_id,                          -- loss account id (guess)
-        NULL                                   -- integer arg, purpose unknown
-    ) AS approved_report
-    \gset
+        (:'disposal_report'::asset_report).id,
+        :exp_acc_id,
+        :gain_acc_id,
+        :loss_acc_id,
+        NULL
+    ) AS approved_report \gset
 
     -- Tests
 
-    -- TODO: Verify results on various reports (depreciation, partial/full disposal)
+    -- TODO: Verify results on various reports (depreciation, partial/full
+    -- TODO: disposal)
 
---    PREPARE test AS select ...;
---    SELECT results_eq('test',result,'Description');
---    DEALLOCATE test;
+    -- PREPARE test AS select ...;
+    -- SELECT results_eq('test',result,'Description');
+    -- DEALLOCATE test;
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
