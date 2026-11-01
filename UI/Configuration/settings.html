@@ -10,7 +10,21 @@
       <tr><th colspan="3" class="listheading">[% GROUP.title %]</th></tr>
       [% FOREACH ITEM IN GROUP.items %]
       <tr>
-        <th align="right">[% ITEM.label %]</th>
+        <th align="right">[% IF ITEM.type == 'YES_NO' OR ITEM.type == 'YES_NO_AUTO' -%]
+            [% ITEM.label %]
+            [%- ELSE ;
+                IF ITEM.type == 'SELECT_ONE' ;
+                   et = 'select' ;
+                ELSIF ITEM.type == 'TEXTAREA' ;
+                   et = 'textarea' ;
+                ELSE ;
+                   et = 'input' ;
+                END; # IF
+                PROCESS auto_id element_data=ITEM, element_type=et;
+            -%]
+            <label for="[% ITEM.id %]">[% ITEM.label %]</label>
+            [%- END; # IF -%]
+        </th>
         <td colspan="[% ITEM.info ? 1 : 2 %]" style='white-space:nowrap'>
           [%
              IF ITEM.type == 'YES_NO' OR ITEM.type == 'YES_NO_AUTO';
