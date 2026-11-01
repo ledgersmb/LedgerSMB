@@ -1,3 +1,7 @@
+
+use v5.38.0;
+use Syntax::Operator::Equ;
+
 package LedgerSMB::Routes::ERP::API::Invoices;
 
 =head1 NAME
@@ -27,9 +31,6 @@ the recalculated totals.
 This module doesn't export any methods.
 
 =cut
-
-use strict;
-use warnings;
 
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_FOUND
     HTTP_NOT_FOUND HTTP_BAD_REQUEST HTTP_UNSUPPORTED_MEDIA_TYPE
@@ -61,7 +62,7 @@ sub _get_invoices_by_id {
 
     return error( $r, HTTP_BAD_REQUEST, [],
                   [ q|'id' parameter missing| ])
-        if defined $params->{id} and $params->{id} eq '';
+        if $params->{id} equ '';
 
     my $query = q|
         SELECT 'customer' as type, md5(w.last_update::text) as etag,
@@ -224,7 +225,7 @@ sub _get_invoices_by_id {
         |;
     $sth = $env->{'lsmb.db'}->prepare($query)
         or die $env->{'lsmb.db'}->errstr;
-    $sth->execute( $params->{id}, ($inv{type} eq 'customer' ? 'AR':'AP') )
+    $sth->execute( $params->{id}, ($inv{type} equ 'customer' ? 'AR':'AP') )
         or die $sth->errstr;
 
     my $account = $sth->fetchrow_hashref( 'NAME_lc' );
@@ -445,7 +446,7 @@ sub _post_invoices {
 
             $inv_line->{qty}   = $inv_line->{qty} // 1;
             $inv_line->{discount} = $inv_line->{discount} / 100
-                if $inv_line->{discount_type} eq '%';
+                if $inv_line->{discount_type} equ '%';
 
             # determine price and description
             {
@@ -604,7 +605,7 @@ sub _post_invoices {
     my %part_qty = (
         map { my $id = $_;
               $id => (sum0 grep { not $_->{price_fixated}
-                                  and $_->{part}->{id} eq $id }
+                                  and $_->{part}->{id} equ $id }
                       $inv->{lines}->@*) }
         uniq map { $_->{part}->{id} } $inv->{lines}->@*
         );
@@ -669,7 +670,7 @@ sub _post_invoices {
                     $ref->{sellprice} // $ref->{lastcost};
 
                 for my $line (grep { not $_->{price_fixated}
-                                     and $_->{part}->{id} eq $part_id }
+                                     and $_->{part}->{id} equ $part_id }
                               $inv->{lines}->@*) {
 
                     ###TODO: Round price due to price matrix?
