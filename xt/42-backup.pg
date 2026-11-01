@@ -29,7 +29,7 @@ BEGIN;
 
     -- Validate required tables
 
---    SELECT has_table('business');
+    -- SELECT has_table('business');
 
     -- Validate required functions
 
@@ -45,9 +45,9 @@ BEGIN;
 
     -- Run tests
 
---    PREPARE test AS select ...;
---    SELECT results_eq('test',result,'Description');
---    DEALLOCATE test;
+    -- PREPARE test AS select ...;
+    -- SELECT results_eq('test',result,'Description');
+    -- DEALLOCATE test;
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
