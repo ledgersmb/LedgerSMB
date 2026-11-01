@@ -33,7 +33,7 @@
     </menu-item>
     <menu-item id="244" label="Import Batch" url="/import-csv/ar_multi">
       <acls>
-        <acl role="ar_transaction_create_voucher" access="allow"/>
+        <acl role="sales_transaction_create_batch" access="allow"/>
       </acls>
     </menu-item>
     <menu-item id="3" label="Sales Invoice" url="is.pl?__action=add&amp;type=invoice">
@@ -64,17 +64,17 @@
     <menu-item id="249" label="Batches">
       <menu-item id="198" label="AR Batch" url="batches.pl?__action=create_batch&amp;batch_type=ar">
         <acls>
-          <acl role="ar_transaction_create_voucher" access="allow"/>
+          <acl role="sales_transaction_create_batch" access="allow"/>
         </acls>
       </menu-item>
       <menu-item id="20" label="Invoice Batches" url="batches.pl?__action=create_batch&amp;batch_type=sales_invoice">
         <acls>
-          <acl role="ar_transaction_create_voucher" access="allow"/>
+          <acl role="sales_transaction_create_batch" access="allow"/>
         </acls>
       </menu-item>
       <menu-item id="11" label="Import AR Batch" url="/import-csv/ar_multi">
         <acls>
-          <acl role="ar_transaction_create_voucher" access="allow"/>
+          <acl role="sales_transaction_create_batch" access="allow"/>
         </acls>
       </menu-item>
     </menu-item>
@@ -104,7 +104,7 @@
     </menu-item>
     <menu-item id="243" label="Import Batch" url="/import-csv/ap_multi">
       <acls>
-        <acl role="ap_transaction_create_voucher" access="allow"/>
+        <acl role="purchase_transaction_create_batch" access="allow"/>
       </acls>
     </menu-item>
     <menu-item id="23" label="Vendor Invoice" url="ir.pl?__action=add&amp;type=invoice">
@@ -130,12 +130,12 @@
     <menu-item id="250" label="Batches">
       <menu-item id="199" label="AP Batch" url="batches.pl?__action=create_batch&amp;batch_type=ap">
         <acls>
-          <acl role="ap_transaction_create_voucher" access="allow"/>
+          <acl role="purchase_transaction_create_batch" access="allow"/>
         </acls>
       </menu-item>
       <menu-item id="39" label="Invoice Batches" url="batches.pl?__action=create_batch&amp;batch_type=vendor_invoice">
         <acls>
-          <acl role="ap_transaction_create_voucher" access="allow"/>
+          <acl role="purchase_transaction_create_batch" access="allow"/>
         </acls>
       </menu-item>
       <menu-item id="13" label="Import AP Batch" url="/import-csv/ap_multi">

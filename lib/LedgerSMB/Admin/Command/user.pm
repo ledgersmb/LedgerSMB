@@ -566,10 +566,10 @@ Permission(s) to affect to the user.
 Permission can be C<Full Permissions> or a comma separated list of the following roles:
 
 C<account_all> C<account_create> C<account_delete> C<account_edit> C<account_link_description_create>
-C<ap_all> C<ap_voucher_all> C<ap_invoice_create> C<ap_invoice_create_voucher>
-C<ap_transaction_all> C<ap_transaction_create> C<ap_transaction_create_voucher> C<ap_transaction_list>
-C<ar_all> C<ar_invoice_create> C<ar_invoice_create_voucher> C<ar_transaction_all> C<ar_transaction_create>
-C<ar_transaction_create_voucher> C<ar_transaction_list> C<ar_voucher_all> C<assembly_stock>
+C<ap_all> C<purchases_batch_all> C<ap_invoice_create> C<purchase_invoice_create_batch>
+C<ap_transaction_all> C<ap_transaction_create> C<purchase_transaction_create_batch> C<ap_transaction_list>
+C<ar_all> C<ar_invoice_create> C<sales_invoice_create_batch> C<ar_transaction_all> C<ar_transaction_create>
+C<sales_transaction_create_batch> C<ar_transaction_list> C<sales_batch_all> C<assembly_stock>
 C<assets_administer> C<assets_approve> C<assets_depreciate> C<assets_enter> C<audit_trail_maintenance>
 C<auditor> C<base_user> C<batch_create> C<batch_list> C<batch_post> C<budget_approve> C<budget_enter>
 C<budget_obsolete> C<budget_view> C<business_type_all> C<business_type_create> C<business_type_edit>
@@ -579,7 +579,7 @@ C<contact_class_referral> C<contact_class_robot> C<contact_class_sub_contractor>
 C<contact_create> C<contact_delete> C<contact_edit> C<contact_read> C<draft_modify> C<draft_post>
 C<employees_manage> C<exchangerate_edit> C<file_attach_eca> C<file_attach_entity> C<file_attach_order>
 C<file_attach_part> C<file_attach_tx> C<file_read> C<file_upload> C<financial_reports> C<gifi_create>
-C<gifi_edit> C<gl_all> C<gl_reports> C<gl_transaction_create> C<gl_voucher_create> C<inventory_adjust>
+C<gifi_edit> C<gl_all> C<gl_reports> C<gl_transaction_create> C<gl_batch_create> C<inventory_adjust>
 C<inventory_all> C<inventory_approve> C<inventory_receive> C<inventory_reports> C<inventory_ship>
 C<inventory_transfer> C<language_create> C<language_edit> C<orders_generate> C<orders_manage>
 C<orders_purchase_consolidate> C<orders_sales_consolidate> C<orders_sales_to_purchase>
@@ -589,7 +589,7 @@ C<reconciliation_approve> C<reconciliation_enter> C<recurring> C<rfq_create> C<r
 C<sales_order_edit> C<sales_order_list> C<sales_quotation_create> C<sales_quotation_list> C<sic_all>
 C<sic_create> C<sic_edit> C<system_admin> C<system_settings_change> C<system_settings_list>
 C<tax_form_save> C<taxes_set> C<template_edit> C<timecard_add> C<timecard_list> C<timecard_order_generate>
-C<transaction_template_delete> C<translation_create> C<users_manage> C<voucher_delete> C<warehouse_create>
+C<transaction_template_delete> C<translation_create> C<users_manage> C<batch_delete> C<warehouse_create>
 C<warehouse_edit> C<yearend_reopen> C<yearend_run> C<yearend_run>
 
 =item ssn C<string>
