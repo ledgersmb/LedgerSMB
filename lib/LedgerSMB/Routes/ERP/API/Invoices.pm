@@ -34,6 +34,7 @@ use warnings;
 use HTTP::Status qw( HTTP_OK HTTP_CREATED HTTP_FOUND
     HTTP_NOT_FOUND HTTP_BAD_REQUEST HTTP_UNSUPPORTED_MEDIA_TYPE
     HTTP_NOT_IMPLEMENTED );
+use JSON::PP;
 use List::Util qw( reduce sum0 uniq );
 use Plack::Request::WithEncoding;
 use Scalar::Util qw( blessed reftype );
@@ -63,23 +64,31 @@ sub _get_invoices_by_id {
         if defined $params->{id} and $params->{id} eq '';
 
     my $query = q|
-        SELECT 'customer' as type,
+        SELECT 'customer' as type, md5(w.last_update::text) as etag,
               invnumber, ordnumber, quonumber, ponumber, txn.transdate, duedate, crdate,
               txn.approved, on_hold, reverse, is_return, force_closed,
               entity_credit_account, person_id,
               language_code, description, ar.notes, txn.notes as intnotes, shippingpoint, shipvia,
               amount_bc, netamount_bc, curr, amount_tc, netamount_tc
-          FROM ar JOIN transactions txn ON ar.trans_id = txn.id
+          FROM ar
+             JOIN transactions txn
+                ON ar.trans_id = txn.id
+             JOIN workflow w
+                ON txn.workflow_id = w.workflow_id
         WHERE invoice AND txn.id = ?
 
         UNION ALL
-        SELECT 'vendor' as type,
+        SELECT 'vendor' as type, md5(w.last_update::text) as etag,
               invnumber, ordnumber, quonumber, ponumber, txn.transdate, duedate, crdate,
               txn.approved, on_hold, reverse, is_return, force_closed,
               entity_credit_account, person_id,
               language_code, description, ap.notes, txn.notes as intnotes, shippingpoint, shipvia,
               amount_bc, netamount_bc, curr, amount_tc, netamount_tc
-          FROM ap JOIN transactions txn ON ap.trans_id = txn.id
+          FROM ap
+             JOIN transactions txn
+                ON ap.trans_id = txn.id
+             JOIN workflow w
+                ON txn.workflow_id = w.workflow_id
         WHERE invoice and txn.id = ?
         |;
     my $sth = $env->{'lsmb.db'}->prepare($query)
@@ -141,7 +150,7 @@ sub _get_invoices_by_id {
         delete $line->@{qw(allocated assemblyitem trans_id)};
         $line->{price}         = delete $line->{sellprice};
         $line->{delivery_date} = delete $line->{deliverydate};
-        $line->{price_fixated} = (delete $line->{priceFixated}) ? \1 : \0;
+        $line->{price_fixated} = (delete $line->{priceFixated}) ? $JSON::PP::true : $JSON::PP::false;
         $line->{total} = $line->{amount_tc};
         $line->{discount_type} = defined $line->{discount} ? '%' : '';
         $line->{discount} *= 100 if defined $line->{discount};
@@ -154,6 +163,8 @@ sub _get_invoices_by_id {
             _dbh => $env->{'lsmb.db'}
             );
         $part = $part->get_by_id($line->{parts_id});
+        $part->{weight} .= '' if defined $part->{weight};
+        $part->{onhand} .= '' if defined $part->{onhand};
         $line->{part} = {
             number => $part->{partnumber},
             $part->%{qw( unit weight onhand description )}
@@ -309,7 +320,8 @@ sub _get_invoices_by_id {
     };
 
     return [ HTTP_OK,
-             [ 'Content-Type' => 'application/json' ],
+             [ 'Content-Type' => 'application/json',
+               'ETag'         => qq|"$ref->{etag}"| ],
              \%inv ];
 }
 
@@ -1002,10 +1014,13 @@ sub _post_invoices {
             or die $sth->errstr;
     }
     $wf->execute_action( 'post' ); # move to SAVED state
+    my ($etag) = $env->{'lsmb.db'}->selectrow_array('select md5(last_update::text) from workflow where workflow_id = ?', {}, $wf->id )
+        or die $env->{'lsmb.db'}->errstr;
 
     return [
         HTTP_CREATED,
-        [ 'Location' => "./$inv_id" ],  # We return this in a header?
+        [ 'Location' => "./$inv_id",
+          'ETag'     => qq|"$etag"| ],  # We return this in a header?
         [  ] ];
 }
 
