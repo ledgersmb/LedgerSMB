@@ -1,6 +1,6 @@
 
+requires 'perl', 'v5.38.0';
 
-requires 'Feature::Compat::Try';
 requires 'HTTP::Tiny';
 requires 'URI::Escape';
 requires 'XML::LibXML';
