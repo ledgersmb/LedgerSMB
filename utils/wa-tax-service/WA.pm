@@ -1,4 +1,6 @@
 
+use v5.38.0;
+
 package LedgerSMB::Taxes::WA;
 
 
@@ -21,11 +23,7 @@ apply_tax - sets $value to the tax value for the subtotal
 
 =cut
 
-use strict;
-use warnings;
-
 use HTTP::Tiny;
-use Feature::Compat::Try;
 use Log::Any qw($logger);
 use URI::Escape;
 use XML::LibXML;
