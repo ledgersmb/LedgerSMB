@@ -1,7 +1,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.12.21-dev\n"
+"Project-Id-Version: LedgerSMB 1.12.21\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
 "POT-Creation-Date: 2026-11-04 21:58+0000\n"
 "Language-Team: Estonian (Estonia) (https://app.transifex.com/ledgersmb/teams/"
