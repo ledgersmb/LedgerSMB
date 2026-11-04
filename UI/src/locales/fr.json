@@ -690,7 +690,6 @@
     "Import existing user": "Importer un utilisateur existant",
     "In": "Entrée",
     "In Svc": "En service",
-    "In addition to these new defaults LedgerSMB 1.3 adds stricter checks on data validity in the database. Because of these stricter checks it's no longer valid to leave companies without a country or customers without accounts receivable reference. The defaults you choose below will be used to add values where these are currently missing but required.": "En plus de ces nouvelles valeurs par défaut, LedgerSMB 1.3 ajoute des contrôles plus stricts sur la validité des données dans la base de données. En raison de ces contrôles plus stricts, il n'est plus valable de laisser des entreprises sans pays ou des clients sans référence de comptes clients. Les valeurs par défaut que vous choisissez ci-dessous seront utilisées pour ajouter des valeurs là où elles sont actuellement manquantes mais requises.",
     "In-line": "En ligne",
     "Include Payment": "Inclure paiement",
     "Include in Report": "Inclure dans l'état",
