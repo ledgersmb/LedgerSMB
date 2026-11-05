@@ -126,6 +126,8 @@ subtest 'Invoice API persists automatic and manual taxes differently' => sub {
              shippingpoint text, shipvia text, person_id int, language_code text,
              entity_credit_account int);
         CREATE TEMP TABLE workflow (workflow_id int, last_update date);
+        -- Match the mocked workflow ID so the API can derive its ETag.
+        INSERT INTO workflow VALUES (1, '2026-10-26');
         CREATE TEMP TABLE invoice
             (id serial, trans_id int, parts_id int, description text, qty numeric,
              sellprice numeric, precision int, fxsellprice numeric, discount numeric,
@@ -211,7 +213,12 @@ subtest 'Invoice API persists automatic and manual taxes differently' => sub {
         });
         is $response->[0], 201, 'Invoice created';
         diag $response->[2]->[0] if $response->[0] != 201;
-        my ($id) = $response->[1]->[1] =~ m{\./(\d+)};
+        my %headers = $response->[1]->@*;
+        my ($expected_etag) = $dbh->selectrow_array(
+            'SELECT md5(last_update::text) FROM workflow WHERE workflow_id = 1');
+        is $headers{ETag}, qq|"$expected_etag"|,
+            'POST returns the persisted workflow ETag';
+        my ($id) = $headers{Location} =~ m{\./(\d+)};
         is $dbh->selectrow_array('SELECT count(*) FROM tax_extended te JOIN acc_trans ac USING (entry_id) WHERE trans_id = ?', {}, $id),
             $manual == 1 ? 1 : 0, $manual ? 'Manual details retained' : 'Automatic mode retained';
         my $amount = $dbh->selectrow_array('SELECT amount_tc FROM ar WHERE trans_id = ?', {}, $id);
@@ -230,6 +237,8 @@ subtest 'Invoice API persists automatic and manual taxes differently' => sub {
         });
         is $routed->[0], 200, 'Invoice GET passes response validation';
         diag $routed->[2]->[0] if $routed->[0] != 200;
+        my %get_headers = $routed->[1]->@*;
+        is $get_headers{ETag}, $headers{ETag}, 'GET returns the same workflow ETag';
     }
     is \@actions, ['post', 'post', 'post'], 'Creation only saves; does not approve invoices';
 };
