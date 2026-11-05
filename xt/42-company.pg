@@ -1,5 +1,8 @@
-
 BEGIN;
+    -- ========================================================================
+    -- Setup
+    -- ========================================================================
+
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
     SET client_min_messages TO warning;
@@ -10,327 +13,297 @@ BEGIN;
     -- Add data
     \i xt/data/42-pg/Company.sql
 
-    -- Validate required tables
+    -- Id legend:
+    --   * -100 and -101 are the first column of the expected contact__search
+    --     rows below. They are not created in this file; they must be supplied
+    --     by the include above or by the schema.
+    --   * Every other id comes from sequences (currval(...)) and is not fixed.
+    --   * Tests below are order-sensitive: later sections read currval(...)
+    --     values set by earlier ones, so keep the sections in this order.
 
+    -- ========================================================================
+    -- Schema: required tables and functions
+    -- ========================================================================
+
+    -- Fixtures: none.
+
+    -- Tests: required tables
     SELECT has_table('company');
     SELECT has_table('person_to_company');
 
-    -- Validate required functions
+    -- Tests: required functions (one row per function; default descriptions)
+    SELECT has_function(t.func_name, t.arg_types)
+    FROM (
+        VALUES
+            ('account__all_headings', '{}'::text[]),
+            ('company_get_billing_info', ARRAY['integer']),
+            ('company__get_by_cc', ARRAY['text']),
+            ('company__get', ARRAY['integer']),
+            ('company__next_id', '{}'::text[]),
+            ('company__save',
+             ARRAY['text', 'text', 'text', 'integer', 'text', 'integer', 'text',
+                   'text']),
+            ('contact_class__list', '{}'::text[]),
+            ('contact__search',
+             ARRAY['integer', 'text', 'text[]', 'text', 'text', 'text', 'text',
+                   'text', 'text', 'date', 'date', 'integer', 'text', 'text',
+                   'text', 'boolean']),
+            ('eca__delete_contact', ARRAY['integer', 'integer', 'text']),
+            ('eca__delete_location', ARRAY['integer', 'integer', 'integer']),
+            ('eca__delete_pricematrix', ARRAY['integer', 'integer']),
+            ('eca__get_by_meta_number', ARRAY['text', 'integer']),
+            ('eca__get_pricematrix_by_pricegroup', ARRAY['integer']),
+            ('eca__get_pricematrix', ARRAY['integer']),
+            ('eca__get_taxes', ARRAY['integer']),
+            ('eca__history',
+             ARRAY['text', 'text', 'text', 'text', 'text', 'text', 'text',
+                   'text', 'text', 'integer', 'date', 'date', 'character',
+                   'date', 'date', 'integer', 'boolean', 'boolean']),
+            ('eca__history_summary',
+             ARRAY['text', 'text', 'text', 'text', 'text', 'text', 'text',
+                   'text', 'text', 'integer', 'date', 'date', 'character',
+                   'date', 'date', 'integer', 'boolean', 'boolean']),
+            ('eca__list_contacts', ARRAY['integer']),
+            ('eca__list_locations', ARRAY['integer']),
+            ('eca__list_notes', ARRAY['integer']),
+            ('eca__save',
+             ARRAY['integer', 'integer', 'integer', 'text', 'numeric',
+                   'boolean', 'numeric', 'integer', 'integer',
+                   'character varying', 'integer', 'character varying',
+                   'integer', 'character', 'date', 'date', 'numeric', 'integer',
+                   'integer', 'text', 'integer', 'integer']),
+            ('eca__save_contact',
+             ARRAY['integer', 'integer', 'text', 'text', 'text', 'integer']),
+            ('eca__save_notes', ARRAY['integer', 'text', 'text']),
+            ('eca__save_pricematrix',
+             ARRAY['integer', 'integer', 'numeric', 'numeric', 'smallint',
+                   'text', 'date', 'date', 'character', 'integer']),
+            ('eca__set_taxes', ARRAY['integer', 'integer[]']),
+            ('entity_credit__get', ARRAY['integer']),
+            ('entity_credit_get_id', ARRAY['integer', 'integer', 'text']),
+            ('entity_credit_get_id_by_meta_number', ARRAY['text', 'integer']),
+            ('entity__delete_contact', ARRAY['integer', 'integer', 'text']),
+            ('entity__delete_location', ARRAY['integer', 'integer', 'integer']),
+            ('entity__list_bank_account', ARRAY['integer']),
+            ('entity__list_contacts', ARRAY['integer']),
+            ('entity__list_credit', ARRAY['integer', 'integer']),
+            ('entity__list_locations', ARRAY['integer']),
+            ('entity__list_notes', ARRAY['integer']),
+            ('_entity_location_save',
+             ARRAY['integer', 'integer', 'integer', 'text', 'text', 'text',
+                   'text', 'text', 'text', 'integer']),
+            ('entity__location_save',
+             ARRAY['integer', 'integer', 'integer', 'text', 'text', 'text',
+                   'text', 'text', 'text', 'integer', 'date']),
+            ('entity__save_bank_account',
+             ARRAY['integer', 'integer', 'text', 'text', 'text', 'integer']),
+            ('entity__save_contact',
+             ARRAY['integer', 'integer', 'text', 'text', 'text', 'integer']),
+            ('entity__save_notes', ARRAY['integer', 'text', 'text']),
+            ('list_taxforms', ARRAY['integer']),
+            ('pricegroup__list', '{}'::text[]),
+            ('sic__list', '{}'::text[])
+    ) AS t(func_name, arg_types);
 
-    SELECT has_function('account__all_headings','{}'::text[]);
-    SELECT has_function('company_get_billing_info',ARRAY['integer']);
-    SELECT has_function('company__get_by_cc',ARRAY['text']);
-    SELECT has_function('company__get',ARRAY['integer']);
-    SELECT has_function('company__next_id','{}'::text[]);
-    SELECT has_function('company__save',ARRAY['text','text','text','integer','text','integer','text','text']);
-    SELECT has_function('contact_class__list','{}'::text[]);
-    SELECT has_function('contact__search',ARRAY['integer','text','text[]','text','text','text','text','text','text','date','date','integer','text','text','text','boolean']);
-    SELECT has_function('eca__delete_contact',ARRAY['integer','integer','text']);
-    SELECT has_function('eca__delete_location',ARRAY['integer','integer','integer']);
-    SELECT has_function('eca__delete_pricematrix',ARRAY['integer','integer']);
-    SELECT has_function('eca__get_by_meta_number',ARRAY['text','integer']);
-    SELECT has_function('eca__get_pricematrix_by_pricegroup',ARRAY['integer']);
-    SELECT has_function('eca__get_pricematrix',ARRAY['integer']);
-    SELECT has_function('eca__get_taxes',ARRAY['integer']);
-    SELECT has_function('eca__history',ARRAY['text','text','text','text','text','text','text','text','text','integer','date','date','character','date','date','integer','boolean','boolean']);
-    SELECT has_function('eca__history_summary',ARRAY['text','text','text','text','text','text','text','text','text','integer','date','date','character','date','date','integer','boolean','boolean']);
-    SELECT has_function('eca__list_contacts',ARRAY['integer']);
-    SELECT has_function('eca__list_locations',ARRAY['integer']);
-    SELECT has_function('eca__list_notes',ARRAY['integer']);
-    SELECT has_function('eca__save',ARRAY['integer','integer','integer','text','numeric','boolean','numeric','integer','integer','character varying','integer','character varying','integer','character','date','date','numeric','integer','integer','text','integer','integer']);
-    SELECT has_function('eca__save_contact',ARRAY['integer','integer','text','text','text','integer']);
-    SELECT has_function('eca__save_notes',ARRAY['integer','text','text']);
-    SELECT has_function('eca__save_pricematrix',ARRAY['integer','integer','numeric','numeric','smallint','text','date','date','character','integer']);
-    SELECT has_function('eca__set_taxes',ARRAY['integer','integer[]']);
-    SELECT has_function('entity_credit__get',ARRAY['integer']);
-    SELECT has_function('entity_credit_get_id',ARRAY['integer','integer','text']);
-    SELECT has_function('entity_credit_get_id_by_meta_number',ARRAY['text','integer']);
-    SELECT has_function('entity__delete_contact',ARRAY['integer','integer','text']);
-    SELECT has_function('entity__delete_location',ARRAY['integer','integer','integer']);
-    SELECT has_function('entity__list_bank_account',ARRAY['integer']);
-    SELECT has_function('entity__list_contacts',ARRAY['integer']);
-    SELECT has_function('entity__list_credit',ARRAY['integer','integer']);
-    SELECT has_function('entity__list_locations',ARRAY['integer']);
-    SELECT has_function('entity__list_notes',ARRAY['integer']);
-    SELECT has_function('_entity_location_save',ARRAY['integer','integer','integer','text','text','text','text','text','text','integer']);
-    SELECT has_function('entity__location_save',ARRAY['integer','integer','integer','text','text','text','text','text','text','integer','date']);
-    SELECT has_function('entity__save_bank_account',ARRAY['integer','integer','text','text','text','integer']);
-    SELECT has_function('entity__save_contact',ARRAY['integer','integer','text','text','text','integer']);
-    SELECT has_function('entity__save_notes',ARRAY['integer','text','text']);
-    SELECT has_function('list_taxforms',ARRAY['integer']);
-    SELECT has_function('pricegroup__list','{}'::text[]);
-    SELECT has_function('sic__list','{}'::text[]);
+    -- ========================================================================
+    -- Company and credit account
+    -- ========================================================================
 
-    -- Run tests
+    -- Fixtures
+    INSERT INTO sic (code, description)
+    VALUES ('1234', '1234 Desc');
 
-    INSERT INTO sic (code, description) VALUES ('1234', '1234 Desc');
-    PREPARE test AS SELECT
-        company__save ('TESTING...', 'TESTING', 'TESTING', NULL, '1234',
-                        232, 'st-123', 'ubi-123-456-789')
-                IS NOT NULL;
-    SELECT results_eq('test',ARRAY[true],'Saving Company');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT
-        eca__save(  NULL , 1, currval('entity_id_seq')::int, 'TEST', 0, false,
-                0, 0, 0, 'test-123', NULL, NULL, NULL, 'XTS',
-                now()::date, now()::date,
-                0, -1000, NULL, NULL, NULL, NULL)
-        IS NOT NULL;
-    SELECT results_eq('test',ARRAY[true],'Saving Credit Acct');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT
-        eca__location_save(currval('entity_credit_account_id_seq')::int,
-                NULL, 2, 'Test', 'Test',
-                NULL, 'Test', 'Test', '12345', 25, NULL)
-        IS NOT NULL;
-    SELECT results_eq('test',ARRAY[true],'eca_location_save');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT
-        eca__location_save(currval('entity_credit_account_id_seq')::int,
-                NULL, 1, 'Test2', 'Test',
-                '', 'Test', 'Test123', '12345', 25, NULL) =
-        eca__location_save(currval('entity_credit_account_id_seq')::int,
-                NULL, 3, 'Test2', 'Test',
-                '', 'Test', 'Test123', '12345', 25, NULL);
-    SELECT results_eq('test',ARRAY[true],'eca_location_save returns same id with same args and no in_location_id');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 3
-        FROM eca__list_locations(currval('entity_credit_account_id_seq')::int);
-    SELECT results_eq('test',ARRAY[true],'list_locations');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT
-        eca__save_contact(currval('entity_credit_account_id_seq')::int,
-                1, 'test_d', 'test_c', NULL, NULL) IS NOT NULL;
-    SELECT results_eq('test',ARRAY[true],'saving eca contact');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 1
-        FROM eca__list_contacts(currval('entity_credit_account_id_seq')::int)
-        WHERE contact = 'test_c';
-    SELECT results_eq('test',ARRAY[true],'Contact found correctly');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 1
-    FROM company_get_billing_info((select max(id) from entity_credit_account))
-    WHERE control_code is not null;
-        SELECT results_eq('test',ARRAY[true],'Company_get_billing_info working');
-        DEALLOCATE test;
-
-    -- Note tests --
-
-    PREPARE test AS SELECT
-       entity__save_notes ( currval('entity_id_seq')::int, 'Test note text', 'Test note subject' ) is not null;
-    SELECT results_eq('test',ARRAY[true],'entity__save_notes');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT
-       CASE WHEN subject = 'Test note subject' THEN 't'::bool ELSE 'f'::bool END
-       FROM entity_note
-       WHERE id = currval('entity_note_id_seq');
-    SELECT results_eq('test',ARRAY[true],'entity__save_note subject record');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT
-           eca__save_notes( currval('entity_credit_account_id_seq')::int, 'Test note text', 'ECA test note subject' ) is not null;
-    SELECT results_eq('test',ARRAY[true],'eca_save_notes');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT
-           CASE WHEN subject = 'ECA test note subject' THEN 't'::bool ELSE 'f'::bool END
-           FROM eca_note
-           WHERE id = currval('eca_note_id_seq');
-    SELECT results_eq('test',ARRAY[true],'eca__save_notes subject record');
-    DEALLOCATE test;
-
-    -- Contact/Entity Search Tests
-    --- Search for person by name
-    PREPARE test AS SELECT * FROM contact__search(
-        NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL,
-        'User', NULL, NULL, NULL
+    -- Tests
+    SELECT ok(
+        company__save(
+            'TESTING...', 'TESTING', 'TESTING', NULL, '1234',
+            232, 'st-123', 'ubi-123-456-789'
+        ) IS NOT NULL,
+        'company__save returns a non-NULL result'
     );
-    PREPARE expected_result AS VALUES(
-        -100,
-        '_TESTING.....',
-        NULL::integer,
-        NULL::text,
-        NULL::text,
-        NULL::integer,
-        'Test User',
-        NULL::text,
-        NULL::text,
-        NULL::text
-    );
-    SELECT results_eq('test', 'expected_result', 'contact__search find person by name');
-    DEALLOCATE test;
-    DEALLOCATE expected_result;
 
-    --- Search for company by name
-    PREPARE test AS SELECT * FROM contact__search(
-        NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL,
-        'Test Company', NULL, NULL, NULL
+    -- Order-sensitive: relies on currval('entity_id_seq') set earlier.
+    SELECT ok(
+        eca__save(
+            NULL, 1, currval('entity_id_seq')::int, 'TEST', 0, FALSE,
+            0, 0, 0, 'test-123', NULL, NULL, NULL, 'XTS',
+            now()::date, now()::date,
+            0, -1000, NULL, NULL, NULL, NULL
+        ) IS NOT NULL,
+        'eca__save returns a non-NULL result (credit account)'
     );
-    PREPARE expected_result AS VALUES(
-        -101,
-        '_TEST2',
-        NULL::integer,
-        NULL::text,
-        NULL::text,
-        NULL::integer,
-        'Test Company',
-        NULL::text,
-        NULL::text,
-        NULL::text
-    );
-    SELECT results_eq('test', 'expected_result', 'contact__search find company by name');
-    DEALLOCATE test;
-    DEALLOCATE expected_result;
 
-    --- Search for company by city
-    PREPARE test AS SELECT * FROM contact__search(
-        NULL, NULL, NULL, NULL,
-        NULL, 'Cityville', NULL, NULL,
-        NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL
-    );
-    PREPARE expected_result AS VALUES(
-        -101,
-        '_TEST2',
-        NULL::integer,
-        NULL::text,
-        NULL::text,
-        NULL::integer,
-        'Test Company',
-        NULL::text,
-        NULL::text,
-        NULL::text
-    );
-    SELECT results_eq('test', 'expected_result', 'contact__search find company by city');
-    DEALLOCATE test;
-    DEALLOCATE expected_result;
+    -- ========================================================================
+    -- Credit account locations
+    -- ========================================================================
 
-    --- Search for company by state
-    PREPARE test AS SELECT * FROM contact__search(
-        NULL, NULL, NULL, NULL,
-        NULL, NULL, 'Statington', NULL,
-        NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL
-    );
-    PREPARE expected_result AS VALUES(
-        -101,
-        '_TEST2',
-        NULL::integer,
-        NULL::text,
-        NULL::text,
-        NULL::integer,
-        'Test Company',
-        NULL::text,
-        NULL::text,
-        NULL::text
-    );
-    SELECT results_eq('test', 'expected_result', 'contact__search find company by state');
-    DEALLOCATE test;
-    DEALLOCATE expected_result;
+    -- Fixtures: none (uses the credit account saved above).
 
-    --- Search for company by mail code (zip code/postcode)
-    PREPARE test AS SELECT * FROM contact__search(
-        NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, 'AB1234',
-        NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL
+    -- Tests
+    -- Order-sensitive: relies on currval('entity_credit_account_id_seq').
+    SELECT ok(
+        eca__location_save(
+            currval('entity_credit_account_id_seq')::int,
+            NULL, 2, 'Test', 'Test',
+            NULL, 'Test', 'Test', '12345', 25, NULL
+        ) IS NOT NULL,
+        'eca__location_save returns a non-NULL result'
     );
-    PREPARE expected_result AS VALUES(
-        -101,
-        '_TEST2',
-        NULL::integer,
-        NULL::text,
-        NULL::text,
-        NULL::integer,
-        'Test Company',
-        NULL::text,
-        NULL::text,
-        NULL::text
-    );
-    SELECT results_eq('test', 'expected_result', 'contact__search find company by mail code');
-    DEALLOCATE test;
-    DEALLOCATE expected_result;
 
-    --- Search for company by control code
-    PREPARE test AS SELECT * FROM contact__search(
-        NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL,
-        NULL, '_TEST2', NULL, NULL
+    SELECT ok(
+        eca__location_save(
+            currval('entity_credit_account_id_seq')::int,
+            NULL, 1, 'Test2', 'Test',
+            '', 'Test', 'Test123', '12345', 25, NULL
+        ) = eca__location_save(
+            currval('entity_credit_account_id_seq')::int,
+            NULL, 3, 'Test2', 'Test',
+            '', 'Test', 'Test123', '12345', 25, NULL
+        ),
+        'eca__location_save returns the same id for calls differing only in '
+        '1 vs 3, with no in_location_id'
     );
-    PREPARE expected_result AS VALUES(
-        -101,
-        '_TEST2',
-        NULL::integer,
-        NULL::text,
-        NULL::text,
-        NULL::integer,
-        'Test Company',
-        NULL::text,
-        NULL::text,
-        NULL::text
-    );
-    SELECT results_eq('test', 'expected_result', 'contact__search find company by mail code');
-    DEALLOCATE test;
-    DEALLOCATE expected_result;
 
-    --- Search for company by address
-    PREPARE test AS SELECT * FROM contact__search(
-        NULL, NULL, NULL, NULL,
-        '101 Main', NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL
+    SELECT ok(
+        (SELECT count(*) = 3
+           FROM eca__list_locations(
+               currval('entity_credit_account_id_seq')::int)),
+        'eca__list_locations returns 3 rows'
     );
-    PREPARE expected_result AS VALUES(
-        -101,
-        '_TEST2',
-        NULL::integer,
-        NULL::text,
-        NULL::text,
-        NULL::integer,
-        'Test Company',
-        NULL::text,
-        NULL::text,
-        NULL::text
-    );
-    SELECT results_eq('test', 'expected_result', 'contact__search find company by address');
-    DEALLOCATE test;
-    DEALLOCATE expected_result;
 
-    --- Search for company by country
-    PREPARE test AS SELECT * FROM contact__search(
-        NULL, NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL,
-        'CA', NULL, NULL, NULL,
-        NULL, NULL, NULL, NULL
+    -- ========================================================================
+    -- Credit account contacts
+    -- ========================================================================
+
+    -- Fixtures: none (uses the credit account saved above).
+
+    -- Tests
+    SELECT ok(
+        eca__save_contact(
+            currval('entity_credit_account_id_seq')::int,
+            1, 'test_d', 'test_c', NULL, NULL
+        ) IS NOT NULL,
+        'eca__save_contact returns a non-NULL result'
     );
-    PREPARE expected_result AS VALUES(
-        -101,
-        '_TEST2',
-        NULL::integer,
-        NULL::text,
-        NULL::text,
-        NULL::integer,
-        'Test Company',
-        NULL::text,
-        NULL::text,
-        NULL::text
+
+    SELECT ok(
+        (SELECT count(*) = 1
+           FROM eca__list_contacts(
+               currval('entity_credit_account_id_seq')::int)
+          WHERE contact = 'test_c'),
+        'eca__list_contacts finds exactly one contact test_c'
     );
-    SELECT results_eq('test', 'expected_result', 'contact__search find company by country');
-    DEALLOCATE test;
-    DEALLOCATE expected_result;
+
+    -- ========================================================================
+    -- Billing info
+    -- ========================================================================
+
+    -- Fixtures: none (uses the highest entity_credit_account id).
+
+    -- Tests
+    SELECT ok(
+        (SELECT count(*) = 1
+           FROM company_get_billing_info(
+               (SELECT max(id) FROM entity_credit_account))
+          WHERE control_code IS NOT NULL),
+        'company_get_billing_info returns one row with a control code '
+        'for the highest credit account id'
+    );
+
+    -- ========================================================================
+    -- Notes
+    -- ========================================================================
+
+    -- Fixtures: none (uses the entity and credit account saved above).
+
+    -- Tests
+    SELECT ok(
+        entity__save_notes(
+            currval('entity_id_seq')::int,
+            'Test note text', 'Test note subject'
+        ) IS NOT NULL,
+        'entity__save_notes returns a non-NULL result'
+    );
+
+    SELECT results_eq(
+        $$ SELECT CASE WHEN subject = 'Test note subject'
+                       THEN TRUE ELSE FALSE END
+             FROM entity_note
+            WHERE id = currval('entity_note_id_seq') $$,
+        ARRAY[TRUE],
+        'entity__save_notes stored the expected subject'
+    );
+
+    SELECT ok(
+        eca__save_notes(
+            currval('entity_credit_account_id_seq')::int,
+            'Test note text', 'ECA test note subject'
+        ) IS NOT NULL,
+        'eca__save_notes returns a non-NULL result'
+    );
+
+    SELECT results_eq(
+        $$ SELECT CASE WHEN subject = 'ECA test note subject'
+                       THEN TRUE ELSE FALSE END
+             FROM eca_note
+            WHERE id = currval('eca_note_id_seq') $$,
+        ARRAY[TRUE],
+        'eca__save_notes stored the expected subject'
+    );
+
+    -- ========================================================================
+    -- Contact search
+    -- ========================================================================
+
+    -- Fixtures: none (rows -100 and -101 come from the include; see legend).
+
+    -- Tests
+    -- Each case calls contact__search with all 16 arguments NULL except the
+    -- one at arg_pos, which is set to arg_value, and expects exactly one full
+    -- row. Row order below is the execution order (no ORDER BY on purpose).
+    SELECT results_eq(
+        format(
+            'SELECT * FROM contact__search(%s)',
+            (SELECT string_agg(
+                        CASE WHEN g.n = t.arg_pos
+                             THEN quote_literal(t.arg_value)
+                             ELSE 'NULL'
+                        END,
+                        ', ' ORDER BY g.n)
+               FROM generate_series(1, 16) AS g(n))
+        ),
+        format(
+            $$ VALUES (%s, %L, NULL::integer, NULL::text, NULL::text,
+                       NULL::integer, %L, NULL::text, NULL::text,
+                       NULL::text) $$,
+            t.expected_id, t.expected_ctrl, t.expected_name
+        ),
+        t.description
+    )
+    FROM (
+        VALUES
+            ('contact__search finds person by name',
+             13, 'User', -100, '_TESTING.....', 'Test User'),
+            ('contact__search finds company by name',
+             13, 'Test Company', -101, '_TEST2', 'Test Company'),
+            ('contact__search finds company by city',
+             6, 'Cityville', -101, '_TEST2', 'Test Company'),
+            ('contact__search finds company by state',
+             7, 'Statington', -101, '_TEST2', 'Test Company'),
+            ('contact__search finds company by mail code',
+             8, 'AB1234', -101, '_TEST2', 'Test Company'),
+            ('contact__search finds company by control code',
+             14, '_TEST2', -101, '_TEST2', 'Test Company'),
+            ('contact__search finds company by address',
+             5, '101 Main', -101, '_TEST2', 'Test Company'),
+            ('contact__search finds company by country',
+             9, 'CA', -101, '_TEST2', 'Test Company')
+    ) AS t(description, arg_pos, arg_value,
+           expected_id, expected_ctrl, expected_name);
+
+    -- ========================================================================
+    -- Finish
+    -- ========================================================================
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
