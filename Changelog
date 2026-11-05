@@ -48,6 +48,13 @@ Updated dependencies
 Changelog for 1.13 Series
 Released 2025-10-04
 
+Changelog for 1.13.9
+* Fix SQL-Ledger migration check for AR account when customers are defined (#9944)
+* Fix SQL-Ledger migration check for AP account failing to be run (#9944)
+* Fix read-only date entry input boxes not being read-only (#9873)
+* Fix duplicate printed manual taxes caused by historical rates (#9936)
+
+
 Changelog for 1.13.8
 * Fix ledgersmb-admin error code to be non-zero on user creation failure (#9746)
 * Prevent errors for database handles accessed during global destruction (#9748)
