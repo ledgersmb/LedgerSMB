@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.12.22-dev\n"
 "Report-Msgid-Bugs-To: devel@lists.ledgersmb.org\n"
-"POT-Creation-Date: 2026-11-04 21:58+0000\n"
+"POT-Creation-Date: 2026-11-05 21:16+0000\n"
 "Last-Translator: Ferruccio Zamuner <nonsolosoft@diff.org>, 2024\n"
 "Language-Team: Italian (https://app.transifex.com/ledgersmb/teams/58325/it/)\n"
 "Language: it\n"
@@ -8590,7 +8590,7 @@ msgstr ""
 msgid "label"
 msgstr "etichetta"
 
-#: UI/src/views/Home.vue:58 UI/src/views/Home.vue:43
+#: UI/src/views/Home.vue:43 UI/src/views/Home.vue:58
 msgid "mailing lists"
 msgstr ""
 
