@@ -3,6 +3,18 @@
 Changelog for 1.12 Series
 Released 2024-12-14
 
+Changelog for 1.12.22
+* Add Changelog item for 1.12.21
+
+
+Changelog for 1.12.21
+* Fix ledgersmb-admin error code to be non-zero on user creation failure (#9746)
+* Prevent errors for database handles accessed during global destruction (#9748)
+* Fix reporting units not showing up on AR/AP transactions (#9816)
+* Fix SQL-Ledger migration check for AR account when customers are defined (#9944)
+* Fix SQL-Ledger migration check for AP account failing to be run (#9944)
+
+
 Changelog for 1.12.20
 * Fix error thrown when selecting 'All accounts' on the trial balance (#9699)
 
