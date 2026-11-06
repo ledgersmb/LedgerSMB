@@ -1,4 +1,24 @@
 BEGIN;
+    -- ======================================================================
+    -- SETUP: pgTAP, plan and base data
+    -- ======================================================================
+
+    -- Id legend (explicit ids used in this file):
+    --   -101         company, business and entity_credit_account rows; also
+    --                the entity_id of the company and of the credit account
+    --   -200         users.id and users.entity_id; also session.session_id
+    --                and session.users_id of the second session row
+    --   -11 .. -14   transactions.id of the invoices for tests 1 .. 4; also
+    --                the trans_id of the matching ap and acc_trans rows
+    --   -1000        ar_ap_account_id of the credit account
+    -- Rows referenced but not created here (entities -101 and -200, account
+    -- -1000, the account heading '000000000000000000000') are expected to
+    -- come from the include below.
+    -- Generated ids (accounts, open items) are never hard-coded; open item
+    -- ids are read back with currval('open_item_id_seq').
+    -- Account numbers: 00001 AP, 00002 AP cost, 00003 cash, 00004 fx gain,
+    -- 00005 fx loss.
+
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
     SET client_min_messages TO warning;
@@ -11,55 +31,77 @@ BEGIN;
 
     \i xt/data/42-pg/Base.sql
 
-    -- Validate required tables
 
-    SELECT has_table('account');
-    SELECT has_table('account_link');
-    SELECT has_table('acc_trans');
-    SELECT has_table('ap');
-    SELECT has_table('business');
-    SELECT has_table('company');
-    SELECT has_table('entity_credit_account');
-    SELECT has_table('session');
-    SELECT has_table('users');
+    -- ======================================================================
+    -- SECTION 1: Schema and base ledger checks
+    -- ======================================================================
+
+    -- ---- Fixtures --------------------------------------------------------
+    -- None (relies on the data loaded by Base.sql).
+
+    -- ---- Tests -----------------------------------------------------------
+
+    -- Validate required tables
+    SELECT has_table(t)
+      FROM (VALUES ('account'::name),
+                   ('account_link'),
+                   ('acc_trans'),
+                   ('ap'),
+                   ('business'),
+                   ('company'),
+                   ('entity_credit_account'),
+                   ('session'),
+                   ('users')
+           ) AS v(t);
 
     -- Validate required functions
-
---    SELECT has_function('business_type__list','{}'::text[]);
-
+    -- SELECT has_function('business_type__list', '{}'::text[]);
 
     -- Validate ledger being balanced
-    SELECT ok( coalesce(abs(sum(amount_bc)),0) < 0.01,
-               'base currency is balanced' )
+    SELECT ok(coalesce(abs(sum(amount_bc)), 0) < 0.01,
+              'Approved entries balance in base currency before fixtures')
       FROM acc_trans
      WHERE approved;
 
-    --- COMMON SETUP
 
-    insert into currency values ('xts', 'xts');
-    insert into users (entity_id, username, id)
-    values (-200, '_test1', -200);
-    INSERT INTO session (users_id, last_used, token)
-    values (currval('users_id_seq'),  now(), md5('test2'));
-    insert into session (session_id, users_id, token, last_used)
-    values (-200, -200, md5(random()::text), now());
+    -- ======================================================================
+    -- SETUP: common fixtures
+    -- ======================================================================
 
-    WITH a (accno, description, category, open_item_managed) as (
-     values ('00001'::text, 'testing AP'::text, 'L'::text, true),
-           ('00002', 'testing AP cost', 'E', false),
-           ('00003', 'testing cash', 'A', false),
-           ('00004', 'fx gain', 'I', false),
-           ('00005', 'fx loss', 'E', false)
+    -- Currency, user and sessions
+    INSERT INTO currency
+    VALUES ('xts', 'xts');
+
+    INSERT INTO users (entity_id, username, id)
+    VALUES (-200, '_test1', -200);
+
+    INSERT INTO session (users_id, token, last_used)
+    VALUES (currval('users_id_seq'), md5('test2'), now());
+
+    INSERT INTO session (session_id, users_id, token, last_used)
+    VALUES (-200, -200, md5(random()::text), now());
+
+    -- Accounts
+    WITH a (accno, description, category, open_item_managed) AS (
+        VALUES ('00001'::text, 'testing AP'::text, 'L'::text, TRUE),
+               ('00002', 'testing AP cost', 'E', FALSE),
+               ('00003', 'testing cash', 'A', FALSE),
+               ('00004', 'fx gain', 'I', FALSE),
+               ('00005', 'fx loss', 'E', FALSE)
     )
-    INSERT INTO account (accno, description, category, heading, open_item_managed)
+    INSERT INTO account (accno, description, category, heading,
+                         open_item_managed)
     SELECT a.accno, a.description, a.category, h.id, a.open_item_managed
-    FROM account_heading h
-    JOIN a ON h.accno = '000000000000000000000';
+      FROM account_heading h
+      JOIN a ON h.accno = '000000000000000000000';
 
-    INSERT INTO defaults VALUES ('fxgain_accno_id',
-           (select id from account where accno = '00004'));
-    INSERT INTO defaults VALUES ('fxloss_accno_id',
-           (select id from account where accno = '00005'));
+    INSERT INTO defaults
+    VALUES ('fxgain_accno_id',
+            (SELECT id FROM account WHERE accno = '00004'));
+
+    INSERT INTO defaults
+    VALUES ('fxloss_accno_id',
+            (SELECT id FROM account WHERE accno = '00005'));
 
     INSERT INTO account_link (account_id, description)
     SELECT id, 'AP' FROM account WHERE accno = '00001'
@@ -68,173 +110,264 @@ BEGIN;
     UNION
     SELECT id, 'AP_paid' FROM account WHERE accno = '00003';
 
-    -- TEST 1: payment_post() with fx rate 1.1
+    -- Helper: add one AP invoice for entity credit account -101.
+    -- Inserts, in this order: one transactions row, one open_item row (on
+    -- account 00001), one ap row and two acc_trans rows (+100 bc / +110 tc
+    -- on account 00001 linked to the open item, -100 bc / -110 tc on account
+    -- 00002 without an open item). Returns nothing; afterwards
+    -- currval('open_item_id_seq') is the id of the new open item.
+    CREATE FUNCTION pg_temp.add_ap_invoice(
+        p_trans_id    integer,
+        p_transdate   date,
+        p_item_number text,
+        p_invnumber   text
+    ) RETURNS void AS $$
+    BEGIN
+        INSERT INTO transactions (id, transdate, trans_type_code, approved)
+        VALUES (p_trans_id, p_transdate, 'ap', TRUE);
 
-    INSERT INTO company (id, legal_name, entity_id) VALUES (-101, 'TEST', -101);
-    INSERT INTO business (id, description) values (-101, 'test');
-    INSERT INTO entity_credit_account (id, meta_number, threshold, entity_id, entity_class, business_id, ar_ap_account_id, curr)
-         VALUES (-101, 'TEST1', 100000, -101, 1, -101, -1000, 'xts');
+        INSERT INTO open_item (item_number, item_type, account_id)
+        VALUES (p_item_number,
+                'ap',
+                (SELECT id FROM account WHERE accno = '00001'));
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-11, '1901-01-01', 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('inv_test1', 'ap', (select id from account where accno = '00001'));
-    INSERT INTO ap (trans_id, open_item_id, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
-         VALUES (-11, currval('open_item_id_seq'), 100, 110, 'inv_test1', 'xts', -101);
-    INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id, open_item_id)
-         VALUES (-11, '1901-01-01', 100, 'xts', 110, 't', (select id from account where accno = '00001'), currval('open_item_id_seq')),
-                (-11, '1901-01-01', -100, 'xts', -110, 't', (select id from account where accno = '00002'), null);
+        INSERT INTO ap (trans_id, open_item_id, amount_bc, amount_tc,
+                        invnumber, curr, entity_credit_account)
+        VALUES (p_trans_id, currval('open_item_id_seq'), 100, 110,
+                p_invnumber, 'xts', -101);
+
+        INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr,
+                               amount_tc, approved, chart_id, open_item_id)
+        VALUES (p_trans_id, p_transdate, 100, 'xts',
+                110, 't',
+                (SELECT id FROM account WHERE accno = '00001'),
+                currval('open_item_id_seq')),
+               (p_trans_id, p_transdate, -100, 'xts',
+                -110, 't',
+                (SELECT id FROM account WHERE accno = '00002'),
+                NULL);
+    END;
+    $$ LANGUAGE plpgsql;
+
+
+    -- ======================================================================
+    -- SECTION 2: Test 1 - payment_post() with fx rate 1.1
+    -- ======================================================================
+
+    -- ---- Fixtures --------------------------------------------------------
+
+    -- Credit account used by all four tests
+    INSERT INTO company (id, legal_name, entity_id)
+    VALUES (-101, 'TEST', -101);
+
+    INSERT INTO business (id, description)
+    VALUES (-101, 'test');
+
+    INSERT INTO entity_credit_account (id, meta_number, threshold, entity_id,
+                                       entity_class, business_id,
+                                       ar_ap_account_id, curr)
+    VALUES (-101, 'TEST1', 100000, -101, 1, -101, -1000, 'xts');
+
+    -- Invoice to be paid
+    SELECT pg_temp.add_ap_invoice(-11, '1901-01-01',
+                                  'inv_test1', 'inv_test1');
 
     -- Pay the invoice in full
-    SELECT * FROM
-        payment_post('1901-01-01', -- datepaid
-                     1,            -- account_class
-                     -101,         -- entity_credit_id
-                     'xts',
-                     1.10,
-                     NULL,         -- notes
-                     'This gl movement is a consequence of a payment transaction',
-                     ARRAY[(SELECT id FROM account WHERE accno = '00003')], -- cash_account_id
-                     ARRAY[110],       -- amount
-                     ARRAY['cash '],   -- source
-                     ARRAY[NULL],      -- memo
-                     ARRAY[-11],       -- transaction_id
-                     ARRAY[currval('open_item_id_seq')::int],
-                     NULL,  -- op_amount
-                     NULL,  -- op_cash_account_id
-                     NULL,  -- op_source
-                     NULL,  -- op_memo
-                     NULL,  -- op_account_id
-                     NULL,  -- ovp_payment_id
-                     't');  -- approved
+    SELECT *
+      FROM payment_post(
+          '1901-01-01',     -- datepaid
+          1,                -- account_class
+          -101,             -- entity_credit_id
+          'xts',
+          1.10,
+          NULL,             -- notes
+          'This gl movement is a consequence of a payment transaction',
+          ARRAY[(SELECT id
+                   FROM account
+                  WHERE accno = '00003')],  -- cash_account_id
+          ARRAY[110],       -- amount
+          ARRAY['cash '],   -- source
+          ARRAY[NULL],      -- memo
+          ARRAY[-11],       -- transaction_id
+          ARRAY[currval('open_item_id_seq')::int],
+          NULL,             -- op_amount
+          NULL,             -- op_cash_account_id
+          NULL,             -- op_source
+          NULL,             -- op_memo
+          NULL,             -- op_account_id
+          NULL,             -- ovp_payment_id
+          't'               -- approved
+      );
     --     ARRAY[-11], ARRAY[], ARRAY[], ARRAY[], ARRAY[], ARRAY[], NULL, 't');
 
-    -- Run tests
+    -- ---- Tests -----------------------------------------------------------
+
+    -- Expected values: the invoice is 100 bc / 110 tc, and 110 / 1.10 = 100.
+    -- Paying 110 tc at rate 1.10 should offset it, so both sums are expected
+    -- to be about 0 (within 0.01).
 
     --TODO: 0.01? Ain't that dependent of the country
-    PREPARE test AS SELECT abs(sum(amount_bc)) < 0.01
-                        from acc_trans
-                       where open_item_id = (select open_item_id from ap where invnumber = 'inv_test1');
-    SELECT results_eq('test',ARRAY[true],'Local currency marks fully paid (test1)');
-    DEALLOCATE test;
+    SELECT ok((SELECT abs(sum(amount_bc)) < 0.01
+                 FROM acc_trans
+                WHERE open_item_id = (SELECT open_item_id
+                                        FROM ap
+                                       WHERE invnumber = 'inv_test1')),
+              'Test 1: payment_post nets the open item to zero (base currency)');
 
     --TODO: 0.01? Ain't that dependent of the country
-    PREPARE test AS SELECT abs(sum(amount_tc)) < 0.01
-                        from acc_trans
-                       where open_item_id = (select open_item_id from ap where invnumber = 'inv_test1');
-    SELECT results_eq('test',ARRAY[true],'Foreign currency marks fully paid (test1)');
-    DEALLOCATE test;
+    SELECT ok((SELECT abs(sum(amount_tc)) < 0.01
+                 FROM acc_trans
+                WHERE open_item_id = (SELECT open_item_id
+                                        FROM ap
+                                       WHERE invnumber = 'inv_test1')),
+              'Test 1: payment_post nets the open item to zero '
+              || '(foreign currency)');
 
 
-    -- Test 2: payment_bulk_post
+    -- ======================================================================
+    -- SECTION 3: Test 2 - payment_bulk_post()
+    -- ======================================================================
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-12, '1901-01-02', 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('inv_test2', 'ap', (select id from account where accno = '00001'));
-    INSERT INTO ap (trans_id, open_item_id, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
-         VALUES (-12, currval('open_item_id_seq'), 100, 110, 'inv_test2', 'xts', -101);
-    INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id, open_item_id)
-         VALUES (-12, '1901-01-02', 100, 'xts', 110, 't', (select id from account where accno = '00001'), currval('open_item_id_seq')),
-                (-12, '1901-01-02', -100, 'xts', -110, 't', (select id from account where accno = '00002'), null);
+    -- ---- Fixtures --------------------------------------------------------
 
+    -- Invoice to be paid
+    SELECT pg_temp.add_ap_invoice(-12, '1901-01-02',
+                                  'inv_test2', 'inv_test2');
 
-    SELECT payment_bulk_post(ARRAY[ARRAY[-12,currval('open_item_id_seq'),110]],
-                             batch_create('TestBatch', 'TestBatch',
-                             'payment', -- payment
-                             '1901-01-03'::date), 'source',
-                             '00001', '00003',
-                             '1901-01-03'::date, 1, 1.10, 'xts');
+    -- Pay the invoice in full through a batch
+    SELECT payment_bulk_post(
+        ARRAY[ARRAY[-12, currval('open_item_id_seq'), 110]],
+        batch_create('TestBatch', 'TestBatch',
+                     'payment',  -- payment
+                     '1901-01-03'::date),
+        'source',
+        '00001',
+        '00003',
+        '1901-01-03'::date,
+        1,
+        1.10,
+        'xts'
+    );
 
-    PREPARE test AS SELECT abs(sum(amount_bc)) < 0.01
-                        from acc_trans
-                       where open_item_id = currval('open_item_id_seq')
-                         and chart_id = (select id from account where accno = '00001');
-    SELECT results_eq('test',ARRAY[true],'Local currency marks fully paid (test2)');
-    DEALLOCATE test;
+    -- ---- Tests -----------------------------------------------------------
 
-    PREPARE test AS SELECT abs(sum(amount_tc)) < 0.01
-                        from acc_trans
-                       where open_item_id = currval('open_item_id_seq')
-                         and chart_id = (select id from account where accno = '00001');
-    SELECT results_eq('test',ARRAY[true],'Foreign currency marks fully paid (test2)');
-    DEALLOCATE test;
+    -- Expected values: same arithmetic as test 1 (invoice 100 bc / 110 tc,
+    -- payment of 110 tc at rate 1.10), so the AP account lines of the open
+    -- item are expected to sum to about 0.
+    SELECT ok((SELECT abs(sum(amount_bc)) < 0.01
+                 FROM acc_trans
+                WHERE open_item_id = currval('open_item_id_seq')
+                  AND chart_id = (SELECT id
+                                    FROM account
+                                   WHERE accno = '00001')),
+              'Test 2: payment_bulk_post nets AP account lines to zero '
+              || '(base currency)');
 
-
-
-   -- Test 3 + 4: payment without fx accounts set
-   DELETE FROM defaults
-         WHERE setting_key IN ('fxgain_accno_id', 'fxloss_accno_id');
-
-
-    -- Test 3: Single payment
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-13, '1901-01-01', 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('inv_test1/2', 'ap', (select id from account where accno = '00001'));
-    INSERT INTO ap (trans_id, open_item_id, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
-         VALUES (-13, currval('open_item_id_seq'), 100, 110, 'inv_test1', 'xts', -101);
-    INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id, open_item_id)
-         VALUES (-13, '1901-01-01', 100, 'xts', 110, 't', (select id from account where accno = '00001'), currval('open_item_id_seq')),
-                (-13, '1901-01-01', -100, 'xts', -110, 't', (select id from account where accno = '00002'), null);
+    SELECT ok((SELECT abs(sum(amount_tc)) < 0.01
+                 FROM acc_trans
+                WHERE open_item_id = currval('open_item_id_seq')
+                  AND chart_id = (SELECT id
+                                    FROM account
+                                   WHERE accno = '00001')),
+              'Test 2: payment_bulk_post nets AP account lines to zero '
+              || '(foreign currency)');
 
 
-    PREPARE test AS
-        SELECT * FROM
-        payment_post('1901-01-01', -- datepaid
-                     1,            -- account_class
-                     -101,         -- entity_credit_id
-                     'xts',
-                     1.10,
-                     NULL,         -- notes
-                     'This gl movement is a consequence of a payment transaction',
-                     ARRAY[(SELECT id FROM account WHERE accno = '00003')], -- cash_account_id
-                     ARRAY[110],       -- amount
-                     ARRAY['cash '],   -- source
-                     ARRAY[NULL],      -- memo
-                     ARRAY[-13],       -- transaction_id
-                     ARRAY[currval('open_item_id_seq')::int], -- open_item_id
-                     NULL,  -- op_amount
-                     NULL,  -- op_cash_account_id
-                     NULL,  -- op_source
-                     NULL,  -- op_memo
-                     NULL,  -- op_account_id
-                     NULL,  -- ovp_payment_id
-                     't');  -- approved
+    -- ======================================================================
+    -- SECTION 4: Test 3 - single payment without fx gain/loss accounts
+    -- ======================================================================
 
-    SELECT throws_ok('test', null,
-                     'single payment should throw an exception without gain/loss account');
-    DEALLOCATE test;
+    -- ---- Fixtures --------------------------------------------------------
 
+    -- Tests 3 and 4: run without the fx gain/loss accounts configured
+    DELETE FROM defaults
+     WHERE setting_key IN ('fxgain_accno_id', 'fxloss_accno_id');
 
-    -- Test 4: Bulk payment
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-14, '1901-01-02', 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('inv_test2/2', 'ap', (select id from account where accno = '00001'));
-    INSERT INTO ap (trans_id, open_item_id, amount_bc, amount_tc, invnumber, curr, entity_credit_account)
-         VALUES (-14, currval('open_item_id_seq'), 100, 110, 'inv_test2', 'xts', -101);
-    INSERT INTO acc_trans (trans_id, transdate, amount_bc, curr, amount_tc, approved, chart_id, open_item_id)
-         VALUES (-14, '1901-01-02', 100, 'xts', 110, 't', (select id from account where accno = '00001'), currval('open_item_id_seq')),
-                (-14, '1901-01-02', -100, 'xts', -110, 't', (select id from account where accno = '00002'), null);
+    -- Invoice to be paid
+    SELECT pg_temp.add_ap_invoice(-13, '1901-01-01',
+                                  'inv_test1/2', 'inv_test1');
 
+    -- ---- Tests -----------------------------------------------------------
 
-    PREPARE test AS
-        SELECT payment_bulk_post(ARRAY[ARRAY[-14,currval('open_item_id_seq'),110]],
-                             batch_create('TestBatch', 'TestBatch',
-                             'payment', -- payment
-                             '1901-01-03'::date), 'source',
-                             '00001', '00003',
-                             '1901-01-03'::date, 1, 1.10, 'xts');
-    SELECT throws_ok('test', null,
-                     'bulk payment should throw an exception without gain/loss account');
-    DEALLOCATE test;
+    SELECT throws_ok(
+        $$
+        SELECT *
+          FROM payment_post(
+              '1901-01-01',     -- datepaid
+              1,                -- account_class
+              -101,             -- entity_credit_id
+              'xts',
+              1.10,
+              NULL,             -- notes
+              'This gl movement is a consequence of a payment transaction',
+              ARRAY[(SELECT id
+                       FROM account
+                      WHERE accno = '00003')],  -- cash_account_id
+              ARRAY[110],       -- amount
+              ARRAY['cash '],   -- source
+              ARRAY[NULL],      -- memo
+              ARRAY[-13],       -- transaction_id
+              ARRAY[currval('open_item_id_seq')::int],  -- open_item_id
+              NULL,             -- op_amount
+              NULL,             -- op_cash_account_id
+              NULL,             -- op_source
+              NULL,             -- op_memo
+              NULL,             -- op_account_id
+              NULL,             -- ovp_payment_id
+              't'               -- approved
+          )
+        $$,
+        NULL,
+        'Test 3: payment_post throws without fx gain/loss accounts'
+    );
 
 
+    -- ======================================================================
+    -- SECTION 5: Test 4 - bulk payment without fx gain/loss accounts
+    -- ======================================================================
+
+    -- ---- Fixtures --------------------------------------------------------
+
+    -- Invoice to be paid (fx gain/loss accounts already removed in section 4)
+    SELECT pg_temp.add_ap_invoice(-14, '1901-01-02',
+                                  'inv_test2/2', 'inv_test2');
+
+    -- ---- Tests -----------------------------------------------------------
+
+    SELECT throws_ok(
+        $$
+        SELECT payment_bulk_post(
+            ARRAY[ARRAY[-14, currval('open_item_id_seq'), 110]],
+            batch_create('TestBatch', 'TestBatch',
+                         'payment',  -- payment
+                         '1901-01-03'::date),
+            'source',
+            '00001',
+            '00003',
+            '1901-01-03'::date,
+            1,
+            1.10,
+            'xts'
+        )
+        $$,
+        NULL,
+        'Test 4: payment_bulk_post throws without fx gain/loss accounts'
+    );
+
+
+    -- ======================================================================
+    -- SECTION 6: Final ledger check
+    -- ======================================================================
+
+    -- ---- Fixtures --------------------------------------------------------
+    -- None.
+
+    -- ---- Tests -----------------------------------------------------------
 
     -- Still balanced?
-    SELECT ok( abs(sum(amount_bc)) < 0.01,
-               'base currency is balanced; ' || abs(sum(amount_bc)) )
+    SELECT ok(abs(sum(amount_bc)) < 0.01,
+              'Approved entries still balance in base currency; abs sum = '
+              || abs(sum(amount_bc)))
       FROM acc_trans
      WHERE approved;
 

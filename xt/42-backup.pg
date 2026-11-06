@@ -1,4 +1,8 @@
 BEGIN;
+    -- ================================================================
+    -- Setup
+    -- ================================================================
+
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
     SET client_min_messages TO warning;
@@ -7,23 +11,43 @@ BEGIN;
 
     SELECT plan(1);
 
-    -- Add data
+    -- ================================================================
+    -- Required database objects
+    -- ================================================================
+
+    -- ----------------------------------------------------------------
+    -- Fixtures
+    -- ----------------------------------------------------------------
+
+    -- Add data (all fixtures come from the include; none are created here)
 
     \i xt/data/42-pg/Base.sql
 
+    -- ----------------------------------------------------------------
+    -- Tests
+    -- ----------------------------------------------------------------
+
     -- Validate required tables
 
---    SELECT has_table('business');
+    -- SELECT has_table('business');
 
     -- Validate required functions
 
-    SELECT has_function('lsmb__clear_role_backup','{}'::text[]);
+    SELECT has_function(
+        'lsmb__clear_role_backup',
+        '{}'::text[],
+        'Function lsmb__clear_role_backup() exists'
+    );
+
+    -- ================================================================
+    -- Behaviour tests (not yet written)
+    -- ================================================================
 
     -- Run tests
 
---    PREPARE test AS select ...;
---    SELECT results_eq('test',result,'Description');
---    DEALLOCATE test;
+    -- PREPARE test AS select ...;
+    -- SELECT results_eq('test',result,'Description');
+    -- DEALLOCATE test;
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
