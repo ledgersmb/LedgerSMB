@@ -65,7 +65,7 @@ export default {};
                         to <a href="https://github.com/ledgersmb/LedgerSMB/issues/">the
                             project's GitHub bug tracker</a> or
                         <a href="https://lists.ledgersmb.org/">{{ $t(`mailing lists`) }}</a></li>
-                    <li>Help translate the software through the <a href="https://www.transifex.com/ledgersmb/ledgersmb/">LedgerSMB
+                    <li>Help translate the software through the <a href="https://app.transifex.com/ledgersmb/ledgersmb/">LedgerSMB
                         project Transifex web-based translation project</a></li>
                     <li>Fix a <a href="https://github.com/ledgersmb/LedgerSMB/issues?q=is%3aopen%20is%3aissue%20label%3abite-sized">{{ $t(`bug`) }}</a> and
                         submit a &quot;Pull Request&quot;<br>
