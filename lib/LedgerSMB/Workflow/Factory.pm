@@ -11,6 +11,8 @@ use Scalar::Util qw( blessed );
 use Workflow::Context;
 use Workflow::Exception qw( workflow_error );
 
+use LedgerSMB::Workflow;
+
 =head1 NAME
 
 LedgerSMB::Workflow::Factory - LedgerSMB factory for the instantiation of workflows
@@ -39,20 +41,6 @@ my $DEFAULT_INITIAL_STATE = 'INITIAL';
 =head1 METHODS
 
 =head2 Public methods
-
-=head3 init
-
-  $factory->init();
-
-=cut
-
-sub init($self, @args) {
-    $self->SUPER::init(@args);
-
-    # compensate for the fact that the class isn't in the configuration,
-    # but "patched in" below
-    $self->_load_class( 'LedgerSMB::Workflow' );
-}
 
 =head3 create_workflow
 
