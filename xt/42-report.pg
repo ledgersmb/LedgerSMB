@@ -1,114 +1,170 @@
 BEGIN;
+
+-- ============================================================================
+-- Setup
+-- ============================================================================
+
     -- Load the TAP functions.
     CREATE EXTENSION pgtap;
     SET client_min_messages TO warning;
 
     -- Plan the tests.
-
     SELECT plan(12);
 
     -- Add data
-
     \i xt/data/42-pg/Base.sql
 
-    -- Validate required tables
+    -- External dependencies (not created in this file; expected from Base.sql
+    -- or the schema): the account row with id -1000, the currency XTS and the
+    -- transaction type code gl.
+    --
+    -- Id scheme used by the fixtures below:
+    --   * -1000 and -1001 are the two test transactions. Each id is reused as
+    --     transactions.id, gl.id, acc_trans.trans_id and acc_trans.entry_id.
+    --   * -1000 is also used as acc_trans.chart_id, which refers to the
+    --     account with id -1000 (the tests look up its accno).
 
---    SELECT has_table('business');
+
+-- ============================================================================
+-- Required functions
+-- ============================================================================
+
+    -- ------------------------------------------------------------------------
+    -- Tests
+    -- ------------------------------------------------------------------------
+
+    -- Validate required tables
+    -- (disabled, not an assertion)
+    --     SELECT has_table('business');
 
     -- Validate required functions
+    -- (disabled, not an assertion)
+    --     SELECT has_function('business_type__list', '{}'::text[]);
 
---    SELECT has_function('business_type__list','{}'::text[]);
-    SELECT has_function('report__aa_outstanding',ARRAY['integer','integer','text','text','integer','integer[]','text','boolean','date','date','text','integer']);
-    SELECT has_function('report__aa_outstanding_details',ARRAY['integer','integer','text','text','integer','integer[]','text','boolean','date','date','text','integer']);
-    SELECT has_function('report__aa_transactions',ARRAY['integer','integer','text','text','integer','integer','text','text','text','text','text','text','text','date','date','boolean','boolean','integer','boolean','boolean','boolean','boolean','text']);
-    SELECT has_function('report__general_balance',ARRAY['date','date']);
-    SELECT has_function('report__gl',ARRAY['text','text','character','text','text','text','date','date','boolean','boolean','numeric','numeric','integer[]']);
-    SELECT has_function('report__incoming_cogs_line',ARRAY['date','date','text','text']);
-    SELECT has_function('report__invoice_aging_detail',ARRAY['integer','integer','integer','text','date','integer[]','boolean','text']);
-    SELECT has_function('report__invoice_aging_summary',ARRAY['integer','integer','integer','text','date','integer[]','boolean','text']);
+    SELECT has_function(t.function_name::name, t.arg_types::name[])
+      FROM (VALUES
+                (1, 'report__aa_outstanding',
+                 ARRAY[
+                     'integer', 'integer', 'text', 'text', 'integer',
+                     'integer[]', 'text', 'boolean', 'date', 'date',
+                     'text', 'integer'
+                 ]),
+                (2, 'report__aa_outstanding_details',
+                 ARRAY[
+                     'integer', 'integer', 'text', 'text', 'integer',
+                     'integer[]', 'text', 'boolean', 'date', 'date',
+                     'text', 'integer'
+                 ]),
+                (3, 'report__aa_transactions',
+                 ARRAY[
+                     'integer', 'integer', 'text', 'text', 'integer',
+                     'integer', 'text', 'text', 'text', 'text', 'text',
+                     'text', 'text', 'date', 'date', 'boolean', 'boolean',
+                     'integer', 'boolean', 'boolean', 'boolean', 'boolean',
+                     'text'
+                 ]),
+                (4, 'report__general_balance',
+                 ARRAY['date', 'date']),
+                (5, 'report__gl',
+                 ARRAY[
+                     'text', 'text', 'character', 'text', 'text', 'text',
+                     'date', 'date', 'boolean', 'boolean', 'numeric',
+                     'numeric', 'integer[]'
+                 ]),
+                (6, 'report__incoming_cogs_line',
+                 ARRAY['date', 'date', 'text', 'text']),
+                (7, 'report__invoice_aging_detail',
+                 ARRAY[
+                     'integer', 'integer', 'integer', 'text', 'date',
+                     'integer[]', 'boolean', 'text'
+                 ]),
+                (8, 'report__invoice_aging_summary',
+                 ARRAY[
+                     'integer', 'integer', 'integer', 'text', 'date',
+                     'integer[]', 'boolean', 'text'
+                 ])
+           ) AS t(case_no, function_name, arg_types)
+     ORDER BY t.case_no;
+
+
+-- ============================================================================
+-- report__gl running balance
+-- ============================================================================
+
+    -- ------------------------------------------------------------------------
+    -- Fixtures
+    -- ------------------------------------------------------------------------
 
     -- Set specific data
 
-COPY transactions(id, transdate, trans_type_code, approved) FROM stdin DELIMITER '|';
+COPY transactions(id, transdate, trans_type_code, approved)
+    FROM STDIN DELIMITER '|';
 -1000|1900-01-01|gl|true
 -1001|1900-01-03|gl|true
 \.
 
-COPY gl(id) FROM stdin DELIMITER '|';
+COPY gl(id) FROM STDIN DELIMITER '|';
 -1000
 -1001
 \.
 
-COPY acc_trans(trans_id,chart_id,amount_bc,curr,amount_tc,transdate,approved,entry_id) FROM stdin DELIMITER '|';
+COPY acc_trans(
+    trans_id, chart_id, amount_bc, curr, amount_tc, transdate, approved,
+    entry_id
+)
+    FROM STDIN DELIMITER '|';
 -1000|-1000|100.00|XTS|100.00|1900-01-01|TRUE|-1000
 -1001|-1000|100.00|XTS|100.00|1900-01-03|TRUE|-1001
 \.
 
+    -- ------------------------------------------------------------------------
+    -- Tests
+    -- ------------------------------------------------------------------------
+
     -- Run tests
+    --
+    -- Account -1000 has two postings of 100.00 each: transaction -1000 on
+    -- 1900-01-01 and transaction -1001 on 1900-01-03. Expected balances:
+    --   100 = 100 (transaction -1000)
+    --   200 = 100 (transaction -1000) + 100 (transaction -1001)
+    SELECT results_eq(
+               format(
+                   $sql$
+                       SELECT running_balance = %s
+                         FROM report__gl(
+                                  NULL, -- reference
+                                  (SELECT accno FROM account WHERE id = -1000),
+                                  NULL, NULL, -- category, source
+                                  NULL, NULL, -- memo, description
+                                  %L::date, -- from_date
+                                  %L::date, -- to_date
+                                  NULL, -- approved
+                                  NULL, -- voided
+                                  NULL, NULL, -- from_amount, to_amount
+                                  NULL -- business_units
+                              )
+                   $sql$,
+                   t.expected_balance, t.from_date, t.to_date
+               ),
+               ARRAY[true],
+               t.description
+           )
+      FROM (VALUES
+                (1, '1899-12-31', '1900-01-01', 100,
+                 'First transaction balance is 100 (pre-posting start date)'),
+                (2, NULL, '1900-01-01', 100,
+                 'First transaction balance is 100 (NULL start date)'),
+                (3, '1900-01-01', '1900-01-02', 100,
+                 'First transaction balance is 100 (start date = transdate)'),
+                (4, '1900-01-02', '1900-01-03', 200,
+                 'Second transaction balance is 200 (end date = transdate)')
+           ) AS t(case_no, from_date, to_date, expected_balance, description)
+     ORDER BY t.case_no;
 
-    PREPARE test AS SELECT
-        running_balance = 100
-     FROM report__gl(NULL, -- reference
-                     (select accno from account where id = -1000),
-                     NULL, NULL, -- category, source
-                     NULL, NULL, -- memo, description
-                     '1899-12-31'::date, -- from_date
-                     '1900-01-01'::date, -- to_date
-                     NULL, -- approved
-                     NULL, -- voided
-                     NULL, NULL, -- from_amount, to_amount
-                     NULL -- business_units
-                     );
-    SELECT results_eq('test',ARRAY[true],'first transaction balance = 100 (with pre-posting start-date)');
-    DEALLOCATE test;
 
-    PREPARE test AS SELECT
-        running_balance = 100
-     FROM report__gl(NULL, -- reference
-                     (select accno from account where id = -1000),
-                     NULL, NULL, -- category, source
-                     NULL, NULL, -- memo, description
-                     NULL, -- from_date
-                     '1900-01-01'::date, -- to_date
-                     NULL, -- approved
-                     NULL, -- voided
-                     NULL, NULL, -- from_amount, to_amount
-                     NULL -- business_units
-                     );
-    SELECT results_eq('test',ARRAY[true],'first transaction balance = 100 (NULL start-date)');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT
-        running_balance = 100
-     FROM report__gl(NULL, -- reference
-                     (select accno from account where id = -1000),
-                     NULL, NULL, -- category, source
-                     NULL, NULL, -- memo, description
-                     '1900-01-01'::date, -- from_date
-                     '1900-01-02'::date, -- to_date
-                     NULL, -- approved
-                     NULL, -- voided
-                     NULL, NULL, -- from_amount, to_amount
-                     NULL -- business_units
-                     );
-    SELECT results_eq('test',ARRAY[true],'first transaction balance = 100 (start-date matches transdate)');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT
-        running_balance = 200
-     FROM report__gl(NULL, -- reference
-                     (select accno from account where id = -1000),
-                     NULL, NULL, -- category, source
-                     NULL, NULL, -- memo, description
-                     '1900-01-02'::date, -- from_date
-                     '1900-01-03'::date, -- to_date
-                     NULL, -- approved
-                     NULL, -- voided
-                     NULL, NULL, -- from_amount, to_amount
-                     NULL -- business_units
-                     );
-    SELECT results_eq('test',ARRAY[true],'end-dates-match balance = 200');
-    DEALLOCATE test;
+-- ============================================================================
+-- Teardown
+-- ============================================================================
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
