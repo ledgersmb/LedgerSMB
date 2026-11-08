@@ -6,249 +6,360 @@ BEGIN;
     -- Plan the tests.
     SELECT plan(58);
 
-    -- Add data
+    -- ====================================================================
+    -- SETUP: base data and helper functions
+    -- ====================================================================
+
+    -- ---- Fixtures ----
 
     \i xt/data/42-pg/Base.sql
 
-    -- Validate required tables
-
-    SELECT has_table('account_heading');
-    SELECT has_table('account');
-    SELECT has_table('account_checkpoint');
-    SELECT has_table('account_link_description');
-    SELECT has_table('account_link');
-    SELECT has_table('account_translation');
-    SELECT has_table('account_heading_translation');
-
-    -- Validate required functions
-
-    SELECT has_function('account__all_headings','{}'::text[]);
-    SELECT has_function('account__delete',ARRAY['integer']);
-    SELECT has_function('account__delete_translation',ARRAY['integer','text']);
-    SELECT has_function('account__get_by_link_desc',ARRAY['text']);
-    SELECT has_function('account__get_from_accno',ARRAY['text']);
-    SELECT has_function('account_get',ARRAY['integer']);
-    SELECT has_function('account__get_taxes','{}'::text[]);
-    SELECT has_function('account_has_transactions',ARRAY['integer']);
-    SELECT has_function('account_heading__check_tree','{}'::text[]);
-    SELECT has_function('account_heading__delete',ARRAY['integer']);
-    SELECT has_function('account_heading__delete_translation',ARRAY['integer','text']);
-    SELECT has_function('account_heading__list','{}'::text[]);
-    SELECT has_function('account_heading__list_translations',ARRAY['integer']);
-    SELECT has_function('account_heading__save_translation',ARRAY['integer','text','text']);
-    SELECT has_function('account_heading_get',ARRAY['integer']);
-    SELECT has_function('account_heading_list','{}'::text[]);
-    SELECT has_function('account_heading_save',ARRAY['integer','text','text','integer']);
-    SELECT has_function('account__is_recon',ARRAY['text']);
-    SELECT has_function('account__list_by_heading','{}'::text[]);
-    SELECT has_function('account__list_translations',ARRAY['integer']);
-    SELECT has_function('account__save',ARRAY['integer','text','text','character','text','integer','integer','boolean','boolean','text[]','boolean','boolean','boolean']);
-    SELECT has_function('account__save_tax',ARRAY['integer','date','numeric','numeric','numeric','text','integer','integer','date']);
-    SELECT has_function('account__save_translation',ARRAY['integer','text','text']);
-    SELECT has_function('chart_get_ar_ap',ARRAY['integer']);
-    SELECT has_function('chart_list_all','{}'::text[]);
-    SELECT has_function('chart_list_cash',ARRAY['integer']);
-    SELECT has_function('chart_list_discount',ARRAY['integer']);
-    SELECT has_function('chart_list_overpayment',ARRAY['integer']);
-    SELECT has_function('chart_list_search',ARRAY['text','text']);
-    SELECT has_function('cr_coa_to_account_save',ARRAY['text','text']);
-    SELECT has_function('get_link_descriptions',ARRAY['boolean','boolean']);
-    SELECT has_function('gifi__list','{}'::text[]);
-    SELECT has_function('report__coa','{}'::text[]);
-    SELECT has_function('report_trial_balance',ARRAY['date','date','integer','integer','boolean']);
-
-    -- Prepare specific data
-
+    -- Helper: inserts one account_link_description row from the given
+    -- description (d), summary flag (s) and custom flag (c).
+    -- Always returns NULL: ret is never assigned, because the assertion
+    -- that would have set it is commented out. It emits no TAP result.
     CREATE OR REPLACE FUNCTION test_account_link_description(
-                    d TEXT, s BOOLEAN, c BOOLEAN)
+        d TEXT, s BOOLEAN, c BOOLEAN)
     RETURNS BOOLEAN AS $$
     DECLARE ret BOOLEAN;
     BEGIN
-       INSERT INTO account_link_description(description, summary, custom)
-                   VALUES (d, s, c);
---       PREPARE test(TEXT,BOOLEAN,BOOLEAN) AS SELECT description = $1 AND summary = $2
---                  AND custom = $3 AND count(*) = 1
---               FROM account_link_description
---               WHERE description = $1
---               GROUP BY description;
---       SELECT results_eq('test(''' || d || ''',' || s || ',' || c || ')',ARRAY[true],'Account link description for ' || d) INTO ret;
---       DEALLOCATE test;
-       RETURN ret;
+        INSERT INTO account_link_description (description, summary, custom)
+        VALUES (d, s, c);
+        -- PREPARE test(TEXT,BOOLEAN,BOOLEAN) AS
+        --     SELECT description = $1 AND summary = $2
+        --            AND custom = $3 AND count(*) = 1
+        --       FROM account_link_description
+        --      WHERE description = $1
+        --      GROUP BY description;
+        -- SELECT results_eq(
+        --     'test(''' || d || ''',' || s || ',' || c || ')',
+        --     ARRAY[true],
+        --     'Account link description for ' || d)
+        --   INTO ret;
+        -- DEALLOCATE test;
+        RETURN ret;
     END $$ LANGUAGE plpgsql;
 
+    -- ---- Tests ----
 
-    SELECT test_account_link_description('AR_paid1', false, true);
-    SELECT test_account_link_description('AP_paid1', false, true);
-    SELECT test_account_link_description('AR_p', false, true);
-    SELECT test_account_link_description('AP_p', false, true);
-    SELECT test_account_link_description('AR_overp', false, true);
-    SELECT test_account_link_description('AP_overpayment1', false, true);
-    SELECT test_account_link_description('AP_overp', false, true);
-    SELECT test_account_link_description('AR_overpayment1', false, true);
-
-    SELECT account__save (null, accno, description, category::char(1),
-                null, (select id from account_heading limit 1), null, false, false,
-                case when link is not null then link::text[] else '{}' END,
-                false, false, false)
-      FROM (VALUES ('TEST testing 1', 'A', 'A', '00001', null),
-                   ('TEST testing 2', 'A', 'A', '00002', null),
-                   ('TEST AP 1', 'A', 'L', '00003', '{AP}'),
-                   ('TEST AP 2', 'A', 'L', '00004', '{AP}'),
-                   ('TEST AR 1', 'A', 'A', '00005', '{AR}'),
-                   ('TEST AR 2', 'A', 'A', '00006', '{AR}'),
-                   ('TEST AR PAID 1', 'A', 'A', '00007', '{AR_paid}'),
-                   ('TEST AR PAID 2', 'A', 'A', '00008', '{AR_paid1}'),
-                   ('TEST AR PAID 3', 'A', 'A', '00009', '{IC_tax,AR_paid}'),
-                   ('TEST AR PAID 4 INVALID', 'A', 'A', '00010', '{AR_p}'),
-                   ('TEST AP PAID 1', 'A', 'A', '00011', '{AP_paid}'),
-                   ('TEST AP PAID 2', 'A', 'A', '00012', '{AP_paid1}'),
-                   ('TEST AP PAID 3', 'A', 'A', '00013', '{IC_tax,AP_paid}'),
-                   ('TEST AP PAID 4 INVALID', 'A', 'A', '00014', '{AP_p}'),
-                   ('TEST AP Overpayment 1', 'A', 'A', '00015', '{AP_overpayment}'),
-                   ('TEST AP Overpayment 2', 'A', 'A', '00016', '{AP_overpayment1}'),
-                   ('TEST AP Overpayment 3', 'A', 'A', '00017', '{IC_tax,AP_overpayment}'),
-                   ('TEST AP Overpayment 4 INVALID', 'A', 'A', '00018', '{AP_overp}'),
-                   ('TEST AP Overpayment 1', 'A', 'A', '00019', '{AR_overpayment}'),
-                   ('TEST AP Overpayment 2', 'A', 'A', '00020', '{AR_overpayment1}'),
-                   ('TEST AP Overpayment 3', 'A', 'A', '00021', '{IC_tax,AR_overpayment}'),
-                   ('TEST AP Overpayment 4 INVALID', 'A', 'A', '00022', '{AR_overp}')
-           ) f (description, charttype, category, accno, link);
+    -- None (setup only).
 
 
-    INSERT INTO entity_credit_account (id, meta_number, entity_id, entity_class, ar_ap_account_id, curr)
-    values (-100, 'test1', -100, 1, -1000, 'XTS');
+    -- ====================================================================
+    -- SCHEMA: required tables
+    -- ====================================================================
 
-    INSERT INTO transactions (id, reference, approved, trans_type_code)
-    VALUES (-100, 'TEST', false, 'ap');
+    -- ---- Fixtures ----
 
-    INSERT INTO open_item (item_number,  item_type, account_id)
-    VALUES('TEST', 'ap', (select id from account where accno = '00002'));
+    -- None (schema checks only).
 
-    INSERT INTO ap (invnumber, netamount_bc, amount_bc, entity_credit_account,
-                    open_item_id, trans_id, curr, netamount_tc, amount_tc)
-    VALUES ('TEST', '0', '0', -100, currval('open_item_id_seq'), -100, 'XTS', 0, 0);
-    INSERT INTO acc_trans (trans_id, chart_id, amount_bc, curr, amount_tc)
-    VALUES (-100, (select id from account where accno = '00002'), '0', 'XTS', 0);
+    -- ---- Tests ----
 
-    -- Run tests
-
-    PREPARE test AS SELECT currval('account_id_seq') IS NOT NULL;
-    SELECT results_eq('test',ARRAY[true],'Accounts created');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT account_has_transactions(
-                            (SELECT id FROM account WHERE description = 'TEST testing 1')
-                           ) IS FALSE;
-    SELECT results_eq('test',ARRAY[true],'Chart 1 is orphaned');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT account_has_transactions(
-                            (SELECT id FROM account WHERE accno = '00002')
-                           ) IS TRUE;
-    SELECT results_eq('test',ARRAY[true],'Chart 2 is not orphaned');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 22 FROM chart_list_all()
-                    WHERE accno LIKE '0%' AND description LIKE 'TEST%';
-    SELECT results_eq('test',ARRAY[true],'All Test Accounts Exist');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 2 FROM chart_list_cash(2)
-                    WHERE accno LIKE '0%' AND description LIKE 'TEST%';
-    SELECT results_eq('test',ARRAY[true],'List AR Cash Test Accounts');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 2 FROM chart_list_cash(1)
-                    WHERE accno LIKE '0%' AND description LIKE 'TEST%';
-    SELECT results_eq('test',ARRAY[true],'List AP Cash Test Accounts');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 2 FROM chart_list_overpayment(1)
-                    WHERE accno LIKE '0%' AND description LIKE 'TEST%';
-    SELECT results_eq('test',ARRAY[true],'List AP Overpayment Accts');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 2 FROM chart_list_overpayment(2)
-                    WHERE accno LIKE '0%' AND description LIKE 'TEST%';
-    SELECT results_eq('test',ARRAY[true],'List AR Overpayment Accts');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 2 FROM chart_get_ar_ap(1)
-                    WHERE accno LIKE '0%' AND description LIKE 'TEST%';
-    SELECT results_eq('test',ARRAY[true],'Test AP Accounts Are Found');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 2 FROM chart_get_ar_ap(2)
-                    WHERE accno LIKE '0%' AND description LIKE 'TEST%';
-    SELECT results_eq('test',ARRAY[true],'Test AR Accounts Are Found');
-    DEALLOCATE test;
+    SELECT has_table(t.table_name::name)
+      FROM (VALUES
+        ('account_heading'),
+        ('account'),
+        ('account_checkpoint'),
+        ('account_link_description'),
+        ('account_link'),
+        ('account_translation'),
+        ('account_heading_translation')
+      ) AS t (table_name);
 
 
-    -- Tests for get_link_descriptions function
+    -- ====================================================================
+    -- SCHEMA: required functions
+    -- ====================================================================
+
+    -- ---- Fixtures ----
+
+    -- None (schema checks only).
+
+    -- ---- Tests ----
+
+    -- One has_function() per row: function name and argument types.
+    SELECT has_function(t.function_name::name, t.arg_types::name[])
+      FROM (VALUES
+        ('account__all_headings', '{}'::text[]),
+        ('account__delete', ARRAY['integer']),
+        ('account__delete_translation', ARRAY['integer', 'text']),
+        ('account__get_by_link_desc', ARRAY['text']),
+        ('account__get_from_accno', ARRAY['text']),
+        ('account_get', ARRAY['integer']),
+        ('account__get_taxes', '{}'::text[]),
+        ('account_has_transactions', ARRAY['integer']),
+        ('account_heading__check_tree', '{}'::text[]),
+        ('account_heading__delete', ARRAY['integer']),
+        ('account_heading__delete_translation', ARRAY['integer', 'text']),
+        ('account_heading__list', '{}'::text[]),
+        ('account_heading__list_translations', ARRAY['integer']),
+        ('account_heading__save_translation',
+            ARRAY['integer', 'text', 'text']),
+        ('account_heading_get', ARRAY['integer']),
+        ('account_heading_list', '{}'::text[]),
+        ('account_heading_save',
+            ARRAY['integer', 'text', 'text', 'integer']),
+        ('account__is_recon', ARRAY['text']),
+        ('account__list_by_heading', '{}'::text[]),
+        ('account__list_translations', ARRAY['integer']),
+        ('account__save',
+            ARRAY['integer', 'text', 'text', 'character', 'text',
+                  'integer', 'integer', 'boolean', 'boolean', 'text[]',
+                  'boolean', 'boolean', 'boolean']),
+        ('account__save_tax',
+            ARRAY['integer', 'date', 'numeric', 'numeric', 'numeric',
+                  'text', 'integer', 'integer', 'date']),
+        ('account__save_translation', ARRAY['integer', 'text', 'text']),
+        ('chart_get_ar_ap', ARRAY['integer']),
+        ('chart_list_all', '{}'::text[]),
+        ('chart_list_cash', ARRAY['integer']),
+        ('chart_list_discount', ARRAY['integer']),
+        ('chart_list_overpayment', ARRAY['integer']),
+        ('chart_list_search', ARRAY['text', 'text']),
+        ('cr_coa_to_account_save', ARRAY['text', 'text']),
+        ('get_link_descriptions', ARRAY['boolean', 'boolean']),
+        ('gifi__list', '{}'::text[]),
+        ('report__coa', '{}'::text[]),
+        ('report_trial_balance',
+            ARRAY['date', 'date', 'integer', 'integer', 'boolean'])
+      ) AS t (function_name, arg_types);
+
+
+    -- ====================================================================
+    -- CHART OF ACCOUNTS: account__save fixtures and chart_* listings
+    -- ====================================================================
+
+    -- ---- Fixtures ----
+
+    -- Ids used below. -100 is reused for three different purposes: the
+    -- entity_credit_account id, its entity_id and the transactions id.
+    -- Entity -100 and account -1000 are referenced here but not created in
+    -- this file (presumably supplied by Base.sql).
+    \set eca_id -100
+    \set entity_id -100
+    \set ar_ap_account_id -1000
+    \set trans_id -100
+
+    -- Link descriptions used by the accounts below. Each call inserts one
+    -- account_link_description row (description, summary, custom).
+    SELECT test_account_link_description('AR_paid1', FALSE, TRUE);
+    SELECT test_account_link_description('AP_paid1', FALSE, TRUE);
+    SELECT test_account_link_description('AR_p', FALSE, TRUE);
+    SELECT test_account_link_description('AP_p', FALSE, TRUE);
+    SELECT test_account_link_description('AR_overp', FALSE, TRUE);
+    SELECT test_account_link_description('AP_overpayment1', FALSE, TRUE);
+    SELECT test_account_link_description('AP_overp', FALSE, TRUE);
+    SELECT test_account_link_description('AR_overpayment1', FALSE, TRUE);
+
+    -- Test accounts 00001 - 00022 (22 rows), created through account__save.
+    SELECT account__save(
+               NULL, accno, description, category::char(1),
+               NULL, (SELECT id FROM account_heading LIMIT 1), NULL,
+               FALSE, FALSE,
+               CASE WHEN link IS NOT NULL THEN link::text[] ELSE '{}' END,
+               FALSE, FALSE, FALSE
+           )
+      FROM (VALUES
+        ('TEST testing 1', 'A', 'A', '00001', NULL),
+        ('TEST testing 2', 'A', 'A', '00002', NULL),
+        ('TEST AP 1', 'A', 'L', '00003', '{AP}'),
+        ('TEST AP 2', 'A', 'L', '00004', '{AP}'),
+        ('TEST AR 1', 'A', 'A', '00005', '{AR}'),
+        ('TEST AR 2', 'A', 'A', '00006', '{AR}'),
+        ('TEST AR PAID 1', 'A', 'A', '00007', '{AR_paid}'),
+        ('TEST AR PAID 2', 'A', 'A', '00008', '{AR_paid1}'),
+        ('TEST AR PAID 3', 'A', 'A', '00009', '{IC_tax,AR_paid}'),
+        ('TEST AR PAID 4 INVALID', 'A', 'A', '00010', '{AR_p}'),
+        ('TEST AP PAID 1', 'A', 'A', '00011', '{AP_paid}'),
+        ('TEST AP PAID 2', 'A', 'A', '00012', '{AP_paid1}'),
+        ('TEST AP PAID 3', 'A', 'A', '00013', '{IC_tax,AP_paid}'),
+        ('TEST AP PAID 4 INVALID', 'A', 'A', '00014', '{AP_p}'),
+        ('TEST AP Overpayment 1', 'A', 'A', '00015', '{AP_overpayment}'),
+        ('TEST AP Overpayment 2', 'A', 'A', '00016', '{AP_overpayment1}'),
+        ('TEST AP Overpayment 3', 'A', 'A', '00017',
+            '{IC_tax,AP_overpayment}'),
+        ('TEST AP Overpayment 4 INVALID', 'A', 'A', '00018', '{AP_overp}'),
+        ('TEST AP Overpayment 1', 'A', 'A', '00019', '{AR_overpayment}'),
+        ('TEST AP Overpayment 2', 'A', 'A', '00020', '{AR_overpayment1}'),
+        ('TEST AP Overpayment 3', 'A', 'A', '00021',
+            '{IC_tax,AR_overpayment}'),
+        ('TEST AP Overpayment 4 INVALID', 'A', 'A', '00022', '{AR_overp}')
+      ) AS f (description, charttype, category, accno, link);
+
+    -- A transaction posted to account 00002, so that account has activity.
+    INSERT INTO entity_credit_account (
+        id, meta_number, entity_id, entity_class, ar_ap_account_id, curr
+    ) VALUES (
+        :eca_id, 'test1', :entity_id, 1, :ar_ap_account_id, 'XTS'
+    );
+
+    INSERT INTO transactions (
+        id, reference, approved, trans_type_code
+    ) VALUES (
+        :trans_id, 'TEST', FALSE, 'ap'
+    );
+
+    INSERT INTO open_item (
+        item_number, item_type, account_id
+    ) VALUES (
+        'TEST', 'ap', (SELECT id FROM account WHERE accno = '00002')
+    );
+
+    INSERT INTO ap (
+        invnumber, netamount_bc, amount_bc, entity_credit_account,
+        open_item_id, trans_id, curr, netamount_tc, amount_tc
+    ) VALUES (
+        'TEST', 0, 0, :eca_id,
+        currval('open_item_id_seq'), :trans_id, 'XTS', 0, 0
+    );
+
+    INSERT INTO acc_trans (
+        trans_id, chart_id, amount_bc, curr, amount_tc
+    ) VALUES (
+        :trans_id, (SELECT id FROM account WHERE accno = '00002'),
+        0, 'XTS', 0
+    );
+
+    -- ---- Tests ----
+
+    SELECT results_eq(
+        $$ SELECT currval('account_id_seq') IS NOT NULL $$,
+        ARRAY[TRUE],
+        'account__save created accounts (account_id_seq has a value)'
+    );
+
+    SELECT results_eq(
+        $$ SELECT account_has_transactions(
+               (SELECT id FROM account WHERE description = 'TEST testing 1')
+           ) IS FALSE $$,
+        ARRAY[TRUE],
+        'Chart 1 has no transactions (is orphaned)'
+    );
+
+    SELECT results_eq(
+        $$ SELECT account_has_transactions(
+               (SELECT id FROM account WHERE accno = '00002')
+           ) IS TRUE $$,
+        ARRAY[TRUE],
+        'Chart 2 has transactions (is not orphaned)'
+    );
+
+    -- 22 = accounts 00001 - 00022 created above.
+    SELECT is(
+        (SELECT count(*)
+           FROM chart_list_all()
+          WHERE accno LIKE '0%' AND description LIKE 'TEST%'),
+        22::bigint,
+        'chart_list_all lists all 22 test accounts'
+    );
+
+    -- 2 = accounts 00007 and 00009 (links AR_paid).
+    SELECT is(
+        (SELECT count(*)
+           FROM chart_list_cash(2)
+          WHERE accno LIKE '0%' AND description LIKE 'TEST%'),
+        2::bigint,
+        'chart_list_cash(2) lists the 2 AR cash test accounts'
+    );
+
+    -- 2 = accounts 00011 and 00013 (links AP_paid).
+    SELECT is(
+        (SELECT count(*)
+           FROM chart_list_cash(1)
+          WHERE accno LIKE '0%' AND description LIKE 'TEST%'),
+        2::bigint,
+        'chart_list_cash(1) lists the 2 AP cash test accounts'
+    );
+
+    -- 2 = accounts 00015 and 00017 (links AP_overpayment).
+    SELECT is(
+        (SELECT count(*)
+           FROM chart_list_overpayment(1)
+          WHERE accno LIKE '0%' AND description LIKE 'TEST%'),
+        2::bigint,
+        'chart_list_overpayment(1) lists the 2 AP overpayment test accounts'
+    );
+
+    -- 2 = accounts 00019 and 00021 (links AR_overpayment).
+    SELECT is(
+        (SELECT count(*)
+           FROM chart_list_overpayment(2)
+          WHERE accno LIKE '0%' AND description LIKE 'TEST%'),
+        2::bigint,
+        'chart_list_overpayment(2) lists the 2 AR overpayment test accounts'
+    );
+
+    -- 2 = accounts 00003 and 00004 (link AP).
+    SELECT is(
+        (SELECT count(*)
+           FROM chart_get_ar_ap(1)
+          WHERE accno LIKE '0%' AND description LIKE 'TEST%'),
+        2::bigint,
+        'chart_get_ar_ap(1) finds the 2 AP test accounts'
+    );
+
+    -- 2 = accounts 00005 and 00006 (link AR).
+    SELECT is(
+        (SELECT count(*)
+           FROM chart_get_ar_ap(2)
+          WHERE accno LIKE '0%' AND description LIKE 'TEST%'),
+        2::bigint,
+        'chart_get_ar_ap(2) finds the 2 AR test accounts'
+    );
+
+
+    -- ====================================================================
+    -- GET_LINK_DESCRIPTIONS: filtering by summary and custom flags
+    -- ====================================================================
+
+    -- ---- Fixtures ----
+
+    -- Start from an empty link table, then add one description for each
+    -- combination of the summary and custom flags.
     DELETE FROM account_link;
     DELETE FROM account_link_description;
-    INSERT INTO account_link_description(description, summary, custom) VALUES
-        ('Plain', false, false),
-        ('Summary', true, false),
-        ('Custom', false, true),
-        ('CustomSummary', true, true);
 
+    INSERT INTO account_link_description (
+        description, summary, custom
+    ) VALUES
+        ('Plain',         FALSE, FALSE),
+        ('Summary',       TRUE,  FALSE),
+        ('Custom',        FALSE, TRUE),
+        ('CustomSummary', TRUE,  TRUE);
 
-    PREPARE test AS SELECT description FROM get_link_descriptions(NULL, NULL);
+    -- ---- Tests ----
+
+    -- One set_eq() per row. A NULL flag means "do not filter on it".
     SELECT set_eq(
-        'test',
-        ARRAY['Plain', 'Summary', 'CustomSummary', 'Custom'],
-        $$get_link_descriptions (no filter) returns expected records$$
-    );
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT description FROM get_link_descriptions(TRUE, NULL);
-    SELECT set_eq(
-        'test',
-        ARRAY['Summary', 'CustomSummary'],
-        $$get_link_descriptions (Summary) returns expected records$$
-    );
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT description FROM get_link_descriptions(TRUE, FALSE);
-    SELECT set_eq(
-        'test',
-        ARRAY['Summary'],
-        $$get_link_descriptions (Summary, not Custom) returns expected records$$
-    );
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT description FROM get_link_descriptions(TRUE, TRUE);
-    SELECT set_eq(
-        'test',
-        ARRAY['CustomSummary'],
-        $$get_link_descriptions (Summary + Custom) returns expected records$$
-    );
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT description FROM get_link_descriptions(NULL, TRUE);
-    SELECT set_eq(
-        'test',
-        ARRAY['CustomSummary', 'Custom'],
-        $$get_link_descriptions (Custom) returns expected records$$
-    );
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT description FROM get_link_descriptions(FALSE, TRUE);
-    SELECT set_eq(
-        'test',
-        ARRAY['Custom'],
-        $$get_link_descriptions (Custom, not Summary) returns expected records$$
-    );
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT description FROM get_link_descriptions(FALSE, FALSE);
-    SELECT set_eq(
-        'test',
-        ARRAY['Plain'],
-        $$get_link_descriptions (Neither Custom nor Summary) returns expected records$$
-    );
-    DEALLOCATE test;
+               format('SELECT description FROM get_link_descriptions(%L, %L)',
+                      t.summary, t.custom),
+               t.expected,
+               format('get_link_descriptions (%s) returns expected records',
+                      t.label)
+           )
+      FROM (VALUES
+        (NULL, NULL,
+            ARRAY['Plain', 'Summary', 'CustomSummary', 'Custom'],
+            'no filter'),
+        (TRUE, NULL,
+            ARRAY['Summary', 'CustomSummary'],
+            'summary'),
+        (TRUE, FALSE,
+            ARRAY['Summary'],
+            'summary, not custom'),
+        (TRUE, TRUE,
+            ARRAY['CustomSummary'],
+            'summary and custom'),
+        (NULL, TRUE,
+            ARRAY['CustomSummary', 'Custom'],
+            'custom'),
+        (FALSE, TRUE,
+            ARRAY['Custom'],
+            'custom, not summary'),
+        (FALSE, FALSE,
+            ARRAY['Plain'],
+            'neither custom nor summary')
+      ) AS t (summary, custom, expected, label);
 
 
     -- Finish the tests and clean up.

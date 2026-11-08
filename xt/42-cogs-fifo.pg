@@ -11,32 +11,65 @@ BEGIN;
 
     \i xt/data/42-pg/Base.sql
 
+
+    -- ==================================================================
+    -- SETUP
+    -- ==================================================================
+
+    -- Id legend (every id created by this file is negative):
+    --   * -1000 is reused across tables: account_heading, entity and
+    --     entity_credit_account each have a row with id -1000. The second
+    --     entity_credit_account is -2000.
+    --   * Series N (N = 1..5) uses part -N and accounts -N101 .. -N104
+    --     (categories A, E, E, I). Part -6 ('TS5/part2') also belongs to
+    --     series 5 and uses accounts -6101 .. -6104. COGS is read from
+    --     acc_trans.chart_id = -N102 (-6102 for part -6).
+    --   * Invoice ids: transactions.id = invoice.id = invoice.trans_id =
+    --     -SNNN, where S is the series (1..5) and NNN counts up from 201:
+    --     series 1 = -1201..-1205, series 2 = -2201..-2206,
+    --     series 3 = -3201..-3205, series 4 = -4201..-4204,
+    --     series 5 = -5201..-5210.
+    --   * open_item ids are not explicit: they come from open_item_id_seq and
+    --     are linked to ar/ap rows with currval('open_item_id_seq').
+    --   * Supplied by the include or the schema, not created here:
+    --     country_id 232 (entity), currency 'XTS', and all tables, functions
+    --     and sequences used below.
+
+    -- Schema checks (tests; no fixtures needed)
+
     -- Validate required tables
 
-    SELECT has_table('account');
-    SELECT has_table('account_heading');
-    SELECT has_table('ap');
-    SELECT has_table('ar');
-    SELECT has_table('entity_credit_account');
-    SELECT has_table('entity');
-    SELECT has_table('invoice');
-    SELECT has_table('parts');
+    SELECT has_table(t.table_name::name)
+      FROM (VALUES ('account'),
+                   ('account_heading'),
+                   ('ap'),
+                   ('ar'),
+                   ('entity_credit_account'),
+                   ('entity'),
+                   ('invoice'),
+                   ('parts')
+           ) AS t(table_name);
 
     -- Validate required functions
 
-    SELECT has_function('cogs__add_for_ap',ARRAY['integer','numeric','numeric','date']);
-    SELECT has_function('cogs__add_for_ap_line',ARRAY['integer','date']);
-    SELECT has_function('cogs__add_for_ar',ARRAY['integer','numeric']);
-    SELECT has_function('cogs__add_for_ar_line',ARRAY['integer']);
-    SELECT has_function('cogs__reverse_ap',ARRAY['integer','numeric']);
-    SELECT has_function('cogs__reverse_ar',ARRAY['integer','numeric']);
+    SELECT has_function(t.function_name::name, t.arg_types::name[])
+      FROM (VALUES ('cogs__add_for_ap',
+                    ARRAY['integer', 'numeric', 'numeric', 'date']),
+                   ('cogs__add_for_ap_line', ARRAY['integer', 'date']),
+                   ('cogs__add_for_ar', ARRAY['integer', 'numeric']),
+                   ('cogs__add_for_ar_line', ARRAY['integer']),
+                   ('cogs__reverse_ap', ARRAY['integer', 'numeric']),
+                   ('cogs__reverse_ar', ARRAY['integer', 'numeric'])
+           ) AS t(function_name, arg_types);
 
-    -- Set specific data
+    -- Shared fixtures
 
-    INSERT INTO account_heading (id, accno, description)
+    INSERT INTO account_heading
+           (id, accno, description)
     VALUES (-1000, '-1000', 'Test heading');
 
-    INSERT INTO account (id, accno, category, description, heading)
+    INSERT INTO account
+           (id, accno, category, description, heading)
     VALUES (-1101, 'TEST1001', 'A', 'COGS test series 1 Inventory', -1000),
            (-1102, 'TEST1002', 'E', 'COGS test series 1 COGS', -1000),
            (-1103, 'TEST1003', 'E', 'COGS test series 1 returns', -1000),
@@ -65,23 +98,33 @@ BEGIN;
     INSERT INTO parts
            (id, partnumber, description, income_accno_id, expense_accno_id,
             inventory_accno_id, returns_accno_id)
-    VALUES (-1, 'TS1', 'COGS Test Series 1', -1101, -1102, -1104, -1103),
-           (-2, 'TS2', 'COGS Test Series 2', -2101, -2102, -2104, -2103),
-           (-3, 'TS3', 'COGS Test Series 3', -3101, -3102, -3104, -3103),
-           (-4, 'TS4', 'COGS Test Series 4', -4101, -4102, -4104, -4103),
-           (-5, 'TS5', 'COGS Test Series 5', -5101, -5102, -5104, -5103),
-           (-6, 'TS5/part2', 'COGS Test Series 5/part2', -6101, -6102, -6104, -6103);
+    VALUES (-1, 'TS1', 'COGS Test Series 1',
+            -1101, -1102, -1104, -1103),
+           (-2, 'TS2', 'COGS Test Series 2',
+            -2101, -2102, -2104, -2103),
+           (-3, 'TS3', 'COGS Test Series 3',
+            -3101, -3102, -3104, -3103),
+           (-4, 'TS4', 'COGS Test Series 4',
+            -4101, -4102, -4104, -4103),
+           (-5, 'TS5', 'COGS Test Series 5',
+            -5101, -5102, -5104, -5103),
+           (-6, 'TS5/part2', 'COGS Test Series 5/part2',
+            -6101, -6102, -6104, -6103);
 
-    INSERT INTO entity (id, name, country_id)
+    INSERT INTO entity
+           (id, name, country_id)
     VALUES (-1000, 'Test act', 232);
 
     INSERT INTO entity_credit_account
-            (id, entity_class, meta_number, entity_id, curr, ar_ap_account_id)
+           (id, entity_class, meta_number, entity_id, curr,
+            ar_ap_account_id)
     VALUES (-1000, 1, 'cogs test1', -1000, 'XTS', -1103),
            (-2000, 2, 'cogs test2', -1000, 'XTS', -1103);
 
-    -- Run tests
 
+    -- ==================================================================
+    -- SERIES 1: AR before AP
+    -- ==================================================================
 
 /*
     # First series of tests, AR before AP
@@ -104,630 +147,752 @@ BEGIN;
 
 */
 
-    -----------------------------------
-    --  Step 1: Create invoice -1201
+    -- ------------------------------------------------------------------
+    -- Step 1: Create invoice -1201
+    -- ------------------------------------------------------------------
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-1201, now() - '10 days'::interval,  'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-1201, now() - '10 days'::interval, 'ar', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test1001', 'ar', -1102);
-    INSERT INTO ar (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-1201, currval('open_item_id_seq'), true, 'test1001', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ar
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-1201, currval('open_item_id_seq'), TRUE, 'test1001', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-1201, -1201, -1, 100, 0, 3);
 
-    SELECT is(sum(amount_bc),
-              NULL,
-              'initial COGS is null, (invoice 1, series 1)')
-      FROM acc_trans
-     WHERE trans_id = -1201 AND chart_id = -1102;
+    -- Tests
 
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -1201 AND chart_id = -1102),
+               NULL,
+               'Series 1, before any COGS run: invoice -1201 COGS is NULL');
 
-    -----------------------------------
-    --  Step 2: Generate COGS for invoice -1201 (AR)
+    -- ------------------------------------------------------------------
+    -- Step 2: Generate COGS for invoice -1201 (AR)
+    -- ------------------------------------------------------------------
+
+    -- Fixtures
 
     SELECT cogs__add_for_ar_line(-1201);
 
-    SELECT is(sum(amount_bc),
-              0::numeric,
-              'post-run COGS is 0, (invoice 1, series 1)')
-      FROM acc_trans
-     WHERE trans_id = -1201 AND chart_id = -1102;
+    -- Tests
 
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -1201 AND chart_id = -1102),
+               0::numeric,
+               'Series 1, after AR -1201 run: invoice -1201 COGS is 0');
 
-    -----------------------------------
-    --  Step 3: Create invoice -1202 (AP) and post COGS
+    -- ------------------------------------------------------------------
+    -- Step 3: Create invoice -1202 (AP) and post COGS
+    -- ------------------------------------------------------------------
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-1202, now() - '10 days'::interval, 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-1202, now() - '10 days'::interval, 'ap', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test1002', 'ap', -1102);
-    INSERT INTO ap (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-1202,  currval('open_item_id_seq'), true, 'test1002', -1000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ap
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-1202, currval('open_item_id_seq'), TRUE, 'test1002', -1000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-1202, -1202, -1, -75, 0, 0.5);
 
     SELECT cogs__add_for_ap_line(-1202);
 
+    -- Tests
 
-    SELECT is(sum(amount_bc),
-              -37.5,
-              'post-ap-run COGS is 37.50, (invoice 1, series 1)')
-      FROM acc_trans
-     WHERE trans_id = -1201 AND chart_id = -1102;
+    -- -1201: 75 units @ 0.5 (invoice -1202) = 37.5
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -1201 AND chart_id = -1102),
+               -37.5::numeric,
+               'Series 1, after AP -1202 run: invoice -1201 COGS is -37.5');
 
-    SELECT is(ARRAY(SELECT allocated FROM invoice WHERE id IN (-1201, -1202) ORDER BY id),
-              ARRAY[75, -75]::numeric[],
-              'post-ap-run allocated 75 (invoice 2+1, series 1)');
+    SELECT is(
+               ARRAY(SELECT allocated
+                       FROM invoice
+                      WHERE id IN (-1201, -1202)
+                      ORDER BY id),
+               ARRAY[75, -75]::numeric[],
+               'Series 1, after AP -1202 run: invoices -1202, -1201 allocated are 75, -75');
 
+    -- ------------------------------------------------------------------
+    -- Step 4: Create invoice -1203 (AR) and post COGS
+    -- ------------------------------------------------------------------
 
+    -- Fixtures
 
-    -----------------------------------
-    --  Step 4: Create invoice -1203 (AR) and post COGS
-
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-1203, now() - '9 days'::interval, 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-1203, now() - '9 days'::interval, 'ar', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test1003', 'ar', -1102);
-    INSERT INTO ar (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-1203, currval('open_item_id_seq'), true, 'test1003', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ar
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-1203, currval('open_item_id_seq'), TRUE, 'test1003', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-1203, -1203, -1, 100, 0, 3);
 
-    SELECT is(sum(amount_bc),
-              NULL,
-              'initial COGS is null, (invoice 3, series 1)')
-      FROM acc_trans
-     WHERE trans_id = -1203 AND chart_id = -1102;
+    -- Tests (before the COGS run)
+
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -1203 AND chart_id = -1102),
+               NULL,
+               'Series 1, before AR -1203 run: invoice -1203 COGS is NULL');
+
+    -- Fixtures (COGS run)
 
     SELECT cogs__add_for_ar_line(-1203);
 
-    SELECT is(ARRAY(SELECT allocated FROM invoice WHERE id IN (-1201, -1202, -1203) ORDER BY id),
-              ARRAY[0, 75, -75]::numeric[],
-              'post-ap-run allocated (invoice 3+2+1, series 1)');
+    -- Tests (after the COGS run)
 
-    PREPARE test AS SELECT
-                       sum(amount_bc) = -37.5
-                      from acc_trans
-                     where trans_id = -1201 and chart_id = -1102;
-    SELECT results_eq('test',ARRAY[true],'post-ap-run COGS still 37.50, (invoice 1, series 1)');
-    DEALLOCATE test;
+    SELECT is(
+               ARRAY(SELECT allocated
+                       FROM invoice
+                      WHERE id IN (-1201, -1202, -1203)
+                      ORDER BY id),
+               ARRAY[0, 75, -75]::numeric[],
+               'Series 1, after AR -1203 run: invoices -1203, -1202, -1201 allocated are 0, 75, -75');
 
-    PREPARE test AS SELECT
-                        sum(amount_bc) = 0
-                      from acc_trans
-                     where trans_id = -1203 and chart_id = -1102;
-    SELECT results_eq('test',ARRAY[true],'post-run COGS is 0, (invoice 3, series 1)');
-    DEALLOCATE test;
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -1201 AND chart_id = -1102),
+               -37.5::numeric,
+               'Series 1, after AR -1203 run: invoice -1201 COGS is -37.5');
 
-    -----------------------------------
-    --  Step 5: Create invoice -1204 (AP) and post COGS
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -1203 AND chart_id = -1102),
+               0::numeric,
+               'Series 1, after AR -1203 run: invoice -1203 COGS is 0');
 
+    -- ------------------------------------------------------------------
+    -- Step 5: Create invoice -1204 (AP) and post COGS
+    -- ------------------------------------------------------------------
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-1204, now() - '8 days'::interval, 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-1204, now() - '8 days'::interval, 'ap', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test1004', 'ap', -1102);
-    INSERT INTO ap (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-1204,  currval('open_item_id_seq'), true, 'test1004', -1000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ap
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-1204, currval('open_item_id_seq'), TRUE, 'test1004', -1000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-1204, -1204, -1, -75, 0, 1);
 
     SELECT cogs__add_for_ap_line(-1204);
 
-    PREPARE test AS SELECT allocated = -100
-                    FROM invoice WHERE id = -1201;
-    SELECT results_eq('test',ARRAY[true],'post-ap-run allocated 100 (invoice 1, series 1)');
-    DEALLOCATE test;
+    -- Tests
 
-    PREPARE test AS SELECT allocated = 75
-                    FROM invoice WHERE id = -1202;
-    SELECT results_eq('test',ARRAY[true],'post-ap-run allocated still 75 (invoice 2, series 1)');
-    DEALLOCATE test;
+    SELECT results_eq(
+               format('SELECT allocated FROM invoice WHERE id = %L', t.id),
+               format('VALUES (%L::numeric)', t.expected),
+               'Series 1, after AP -1204 run: ' || t.label)
+      FROM (VALUES (-1201, -100, 'invoice -1201 allocated is -100'),
+                   (-1202,   75, 'invoice -1202 allocated is 75'),
+                   (-1203,  -50, 'invoice -1203 allocated is -50'),
+                   (-1204,   75, 'invoice -1204 allocated is 75')
+           ) AS t(id, expected, label);
 
-    PREPARE test AS SELECT allocated = -50
-                    FROM invoice WHERE id = -1203;
-    SELECT results_eq('test',ARRAY[true],'post-ap-run allocated 50 (invoice 3, series 1)');
-    DEALLOCATE test;
+    -- -1201: 37.5 + 25 units @ 1 (invoice -1204) = 62.5
+    -- -1203: 50 units @ 1 (invoice -1204) = 50
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -1201 AND chart_id = -1102),
+               -62.5::numeric,
+               'Series 1, after AP -1204 run: invoice -1201 COGS is -62.5');
 
-    PREPARE test AS SELECT allocated = 75
-                    FROM invoice WHERE id = -1204;
-    SELECT results_eq('test',ARRAY[true],'post-ap-run allocated 75 (invoice 4, series 1)');
-    DEALLOCATE test;
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -1203 AND chart_id = -1102),
+               -50::numeric,
+               'Series 1, after AP -1204 run: invoice -1203 COGS is -50');
 
-    PREPARE test AS SELECT sum(amount_bc) = -62.5
-                      from acc_trans
-                     where trans_id = -1201 and chart_id = -1102;
-    SELECT results_eq('test',ARRAY[true],'post-ap-run COGS is 62.50, (invoice 1, series 1)');
-    DEALLOCATE test;
+    -- ------------------------------------------------------------------
+    -- Step 6: Create invoice -1205 (AP) and post COGS
+    -- ------------------------------------------------------------------
 
-    PREPARE test AS SELECT sum(amount_bc) = -50
-                      from acc_trans
-                     where trans_id = -1203 and chart_id = -1102;
-    SELECT results_eq('test',ARRAY[true],'post-ap-run COGS is 50, (invoice 2, series 1)');
-    DEALLOCATE test;
+    -- Fixtures
 
-    -----------------------------------
-    --  Step 6: Create invoice -1205 (AP) and post COGS
-
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-1205, now() - '8 days'::interval, 'ap', true);
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-1205, now() - '8 days'::interval, 'ap', TRUE);
     --###OPEN_ITEMS_ARAP: this indicates a problem: AP items aren't de-duplicated on their "invnumber"
-    INSERT INTO open_item (item_number, item_type, account_id)
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test1004/2', 'ap', -1102);
-    INSERT INTO ap (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-1205,  currval('open_item_id_seq'), true, 'test1004', -1000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ap
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-1205, currval('open_item_id_seq'), TRUE, 'test1004', -1000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-1205, -1205, -1, -50, 0, 2);
 
     SELECT cogs__add_for_ap_line(-1205);
 
-    PREPARE test AS SELECT allocated = -100
-                    FROM invoice WHERE id = -1201;
-    SELECT results_eq('test',ARRAY[true],'post-ap-run allocated still 100 (invoice 1, series 1)');
-    DEALLOCATE test;
+    -- Tests
 
-    PREPARE test AS SELECT allocated = 75
-                    FROM invoice WHERE id = -1202;
-    SELECT results_eq('test',ARRAY[true],'post-ap-run allocated still 75 (invoice 2, series 1)');
-    DEALLOCATE test;
+    SELECT results_eq(
+               format('SELECT allocated FROM invoice WHERE id = %L', t.id),
+               format('VALUES (%L::numeric)', t.expected),
+               'Series 1, after AP -1205 run: ' || t.label)
+      FROM (VALUES (-1201, -100, 'invoice -1201 allocated is -100'),
+                   (-1202,   75, 'invoice -1202 allocated is 75'),
+                   (-1203, -100, 'invoice -1203 allocated is -100'),
+                   (-1204,   75, 'invoice -1204 allocated is 75'),
+                   (-1205,   50, 'invoice -1205 allocated is 50')
+           ) AS t(id, expected, label);
 
-    PREPARE test AS SELECT allocated = -100
-                    FROM invoice WHERE id = -1203;
-    SELECT results_eq('test',ARRAY[true],'post-ap-run allocated 100 (invoice 3, series 1)');
-    DEALLOCATE test;
+    -- -1201 is unchanged. -1203: 50 + 50 units @ 2 (invoice -1205) = 150
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -1201 AND chart_id = -1102),
+               -62.5::numeric,
+               'Series 1, after AP -1205 run: invoice -1201 COGS is -62.5');
 
-    PREPARE test AS SELECT allocated = 75
-                    FROM invoice WHERE id = -1204;
-    SELECT results_eq('test',ARRAY[true],'post-ap-run allocated still 75 (invoice 4, series 1)');
-    DEALLOCATE test;
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -1203 AND chart_id = -1102),
+               -150::numeric,
+               'Series 1, after AP -1205 run: invoice -1203 COGS is -150');
 
-    PREPARE test AS SELECT allocated = 50
-                    FROM invoice WHERE id = -1205;
-    SELECT results_eq('test',ARRAY[true],'post-ap-run allocated 50 (invoice 5, series 1)');
-    DEALLOCATE test;
 
-    PREPARE test AS SELECT sum(amount_bc) = -62.5
-                      from acc_trans
-                     where trans_id = -1201 and chart_id = -1102;
-    SELECT results_eq('test',ARRAY[true],'post-ap-run COGS is 62.50, (invoice 1, series 1)');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT sum(amount_bc) = -150
-                      from acc_trans
-                     where trans_id = -1203 and chart_id = -1102;
-    SELECT results_eq('test',ARRAY[true],'post-ap-run COGS is 150, (invoice 2, series 1)');
-    DEALLOCATE test;
-
+    -- ==================================================================
+    -- SERIES 2: AP invoices first, COGS added to AR
+    -- ==================================================================
 
 /*
     # Series 2, AP invoices first, cogs only added to AR
 
 
 */
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-2201, now() - '10 days'::interval, 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+
+    -- ------------------------------------------------------------------
+    -- Invoice -2201 (AP)
+    -- ------------------------------------------------------------------
+
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-2201, now() - '10 days'::interval, 'ap', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test2001', 'ap', -2102);
-    INSERT INTO ap (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-2201, currval('open_item_id_seq'), true, 'test2001', -1000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ap
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-2201, currval('open_item_id_seq'), TRUE, 'test2001', -1000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-2201, -2201, -2, -100, 0, 0.5);
 
     SELECT cogs__add_for_ap_line(-2201);
 
-    PREPARE test AS SELECT allocated = 0
-                    FROM invoice WHERE id = -2201;
-    SELECT results_eq('test',ARRAY[true],'Allocated is 0 post-AP run (invoice 1 series 2)');
-    DEALLOCATE test;
+    -- Tests
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-2202, now() - '10 days'::interval, 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('test2001/ar', 'ar', -2102); -- 'ap' invoice by the same number exists!
-    INSERT INTO ar (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-2202, currval('open_item_id_seq'), true, 'test2001', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    SELECT results_eq(
+               $$ SELECT allocated FROM invoice WHERE id = -2201 $$,
+               $$ VALUES (0::numeric) $$,
+               'Series 2, after AP -2201 run: invoice -2201 allocated is 0');
+
+    -- ------------------------------------------------------------------
+    -- Invoice -2202 (AR)
+    -- ------------------------------------------------------------------
+
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-2202, now() - '10 days'::interval, 'ar', TRUE);
+    -- 'ap' invoice by the same number exists!
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
+    VALUES ('test2001/ar', 'ar', -2102);
+    INSERT INTO ar
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-2202, currval('open_item_id_seq'), TRUE, 'test2001', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-2202, -2202, -2, 75, 0, 3);
 
     SELECT cogs__add_for_ar_line(-2202);
 
-    PREPARE test AS SELECT allocated = 75
-                    FROM invoice WHERE id = -2201;
-    SELECT results_eq('test',ARRAY[true],'Allocated is 75 post-AR run (invoice 1 series 2)');
-    DEALLOCATE test;
+    -- Tests
 
-    PREPARE test AS SELECT allocated = -75
-                    FROM invoice WHERE id = -2202;
-    SELECT results_eq('test',ARRAY[true],'Allocated is 75 post-AR run (invoice 2 series 2)');
-    DEALLOCATE test;
+    SELECT results_eq(
+               $$ SELECT allocated FROM invoice WHERE id = -2201 $$,
+               $$ VALUES (75::numeric) $$,
+               'Series 2, after AR -2202 run: invoice -2201 allocated is 75');
 
-    PREPARE test AS SELECT sum(amount_bc) = -37.5
-                      from acc_trans
-                     where trans_id = -2202 and chart_id = -2102;
-    SELECT results_eq('test',ARRAY[true],'post-ar-run COGS is 37.50, (invoice 2, series 2)');
-    DEALLOCATE test;
+    SELECT results_eq(
+               $$ SELECT allocated FROM invoice WHERE id = -2202 $$,
+               $$ VALUES (-75::numeric) $$,
+               'Series 2, after AR -2202 run: invoice -2202 allocated is -75');
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-2203, now() - '9 days'::interval, 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    -- -2202: 75 units @ 0.5 (invoice -2201) = 37.5
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -2202 AND chart_id = -2102),
+               -37.5::numeric,
+               'Series 2, after AR -2202 run: invoice -2202 COGS is -37.5');
+
+    -- ------------------------------------------------------------------
+    -- Invoice -2203 (AP)
+    -- ------------------------------------------------------------------
+
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-2203, now() - '9 days'::interval, 'ap', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test2003', 'ap', -2103);
-    INSERT INTO ap (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-2203, currval('open_item_id_seq'), true, 'test2003', -1000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ap
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-2203, currval('open_item_id_seq'), TRUE, 'test2003', -1000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-2203, -2203, -2, -100, 0, 1);
 
     SELECT cogs__add_for_ap_line(-2203);
 
-    PREPARE test AS SELECT allocated = 75
-                    FROM invoice WHERE id = -2201;
-    SELECT results_eq('test',ARRAY[true],'Allocated is 75 post-AP run (invoice 1 series 2)');
-    DEALLOCATE test;
+    -- Tests
 
-    PREPARE test AS SELECT allocated = -75
-                    FROM invoice WHERE id = -2202;
-    SELECT results_eq('test',ARRAY[true],'Allocated is 75 post-AP run (invoice 2 series 2)');
-    DEALLOCATE test;
+    SELECT results_eq(
+               format('SELECT allocated FROM invoice WHERE id = %L', t.id),
+               format('VALUES (%L::numeric)', t.expected),
+               'Series 2, after AP -2203 run: ' || t.label)
+      FROM (VALUES (-2201,   75, 'invoice -2201 allocated is 75'),
+                   (-2202,  -75, 'invoice -2202 allocated is -75'),
+                   (-2203,    0, 'invoice -2203 allocated is 0')
+           ) AS t(id, expected, label);
 
-    PREPARE test AS SELECT allocated = 0
-                    FROM invoice WHERE id = -2203;
-    SELECT results_eq('test',ARRAY[true],'Allocated is 0 post-AP run (invoice 3 series 2)');
-    DEALLOCATE test;
+    -- ------------------------------------------------------------------
+    -- Invoice -2204 (AR)
+    -- ------------------------------------------------------------------
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-2204, now() - '7 days'::interval, 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-2204, now() - '7 days'::interval, 'ar', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test2004', 'ar', -2102);
-    INSERT INTO ar (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-2204, currval('open_item_id_seq'), true, 'test2004', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ar
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-2204, currval('open_item_id_seq'), TRUE, 'test2004', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-2204, -2204, -2, 75, 0, 3);
 
     SELECT cogs__add_for_ar_line(-2204);
 
-    PREPARE test AS SELECT allocated = 100
-                    FROM invoice WHERE id = -2201;
-    SELECT results_eq('test',ARRAY[true],'post-ar-4, allocation invoice 1 series 2 is 100');
-    DEALLOCATE test;
+    -- Tests
 
-    PREPARE test AS SELECT allocated = -75
-                    FROM invoice WHERE id = -2202;
-    SELECT results_eq('test',ARRAY[true],'post-ar-4, allocation invoice 2 series 2 is 75');
-    DEALLOCATE test;
+    SELECT results_eq(
+               format('SELECT allocated FROM invoice WHERE id = %L', t.id),
+               format('VALUES (%L::numeric)', t.expected),
+               'Series 2, after AR -2204 run: ' || t.label)
+      FROM (VALUES (-2201,  100, 'invoice -2201 allocated is 100'),
+                   (-2202,  -75, 'invoice -2202 allocated is -75'),
+                   (-2203,   50, 'invoice -2203 allocated is 50'),
+                   (-2204,  -75, 'invoice -2204 allocated is -75')
+           ) AS t(id, expected, label);
 
-    PREPARE test AS SELECT allocated = 50
-                    FROM invoice WHERE id = -2203;
-    SELECT results_eq('test',ARRAY[true],'post-ar-4, allocation invoice 3 series 2 is 50');
-    DEALLOCATE test;
+    -- -2204: 25 units @ 0.5 (rest of -2201) + 50 units @ 1 (-2203) = 62.5
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -2202 AND chart_id = -2102),
+               -37.5::numeric,
+               'Series 2, after AR -2204 run: invoice -2202 COGS is -37.5');
 
-    PREPARE test AS SELECT allocated = -75
-                    FROM invoice WHERE id = -2204;
-    SELECT results_eq('test',ARRAY[true],'post-ar-4, allocation invoice 4 series 2 is 75');
-    DEALLOCATE test;
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -2204 AND chart_id = -2102),
+               -62.5::numeric,
+               'Series 2, after AR -2204 run: invoice -2204 COGS is -62.5');
 
-    PREPARE test AS SELECT sum(amount_bc) = -37.5
-                      from acc_trans
-                     where trans_id = -2202 and chart_id = -2102;
-    SELECT results_eq('test',ARRAY[true],'post-ar-4 COGS is 37.50, (invoice 2, series 2)');
-    DEALLOCATE test;
+    -- ------------------------------------------------------------------
+    -- Invoice -2205 (AR)
+    -- ------------------------------------------------------------------
 
-    PREPARE test AS SELECT sum(amount_bc) = -62.5
-                      from acc_trans
-                     where trans_id = -2204 and chart_id = -2102;
-    SELECT results_eq('test',ARRAY[true],'post-ar-4 COGS is 62.50, (invoice 2, series 4)');
-    DEALLOCATE test;
+    -- Fixtures
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-2205, now() - '5 days'::interval, 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-2205, now() - '5 days'::interval, 'ar', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test2005', 'ar', -2102);
-    INSERT INTO ar (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-2205, currval('open_item_id_seq'), true, 'test2005', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ar
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-2205, currval('open_item_id_seq'), TRUE, 'test2005', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-2205, -2205, -2, 50, 0, 3);
 
     SELECT cogs__add_for_ar_line(-2205);
 
-    PREPARE test AS SELECT allocated = 100
-                    FROM invoice WHERE id = -2201;
-    SELECT results_eq('test',ARRAY[true],'post-ar-5, allocation invoice 1 series 2 is 100');
-    DEALLOCATE test;
+    -- Tests
 
-    PREPARE test AS SELECT allocated = -75
-                    FROM invoice WHERE id = -2202;
-    SELECT results_eq('test',ARRAY[true],'post-ar-5, allocation invoice 2 series 2 is 75');
-    DEALLOCATE test;
+    SELECT results_eq(
+               format('SELECT allocated FROM invoice WHERE id = %L', t.id),
+               format('VALUES (%L::numeric)', t.expected),
+               'Series 2, after AR -2205 run: ' || t.label)
+      FROM (VALUES (-2201,  100, 'invoice -2201 allocated is 100'),
+                   (-2202,  -75, 'invoice -2202 allocated is -75'),
+                   (-2203,  100, 'invoice -2203 allocated is 100'),
+                   (-2204,  -75, 'invoice -2204 allocated is -75'),
+                   (-2205,  -50, 'invoice -2205 allocated is -50')
+           ) AS t(id, expected, label);
 
-    PREPARE test AS SELECT allocated = 100
-                    FROM invoice WHERE id = -2203;
-    SELECT results_eq('test',ARRAY[true],'post-ar-5, allocation invoice 3 series 2 is 100');
-    DEALLOCATE test;
+    -- -2205: 50 units @ 1 (rest of -2203) = 50
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = t.trans_id AND chart_id = -2102),
+               t.expected::numeric,
+               'Series 2, after AR -2205 run: ' || t.label)
+      FROM (VALUES (-2202, -37.5, 'invoice -2202 COGS is -37.5'),
+                   (-2204, -62.5, 'invoice -2204 COGS is -62.5'),
+                   (-2205,   -50, 'invoice -2205 COGS is -50')
+           ) AS t(trans_id, expected, label);
 
-    PREPARE test AS SELECT allocated = -75
-                    FROM invoice WHERE id = -2204;
-    SELECT results_eq('test',ARRAY[true],'post-ar-5, allocation invoice 4 series 2 is 75');
-    DEALLOCATE test;
 
-    PREPARE test AS SELECT allocated = -50
-                    FROM invoice WHERE id = -2205;
-    SELECT results_eq('test',ARRAY[true],'post-ar-5, allocation invoice 5 series 2 is 50');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT sum(amount_bc) = -37.5
-                      from acc_trans
-                     where trans_id = -2202 and chart_id = -2102;
-    SELECT results_eq('test',ARRAY[true],'post-ar-5 COGS is 37.50, (invoice 2, series 2)');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT sum(amount_bc) = -62.5
-                      from acc_trans
-                     where trans_id = -2204 and chart_id = -2102;
-    SELECT results_eq('test',ARRAY[true],'post-ar-5 COGS is 62.50, (invoice 2, series 4)');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT sum(amount_bc) = -50
-                      from acc_trans
-                     where trans_id = -2205 and chart_id = -2102;
-    SELECT results_eq('test',ARRAY[true],'post-ar-5 COGS is 50, (invoice 2, series 5)');
-    DEALLOCATE test;
+    -- ==================================================================
+    -- SERIES 2.5: AR reversal
+    -- ==================================================================
 
 /*
     # Series 2.5, AR reversal
 
 
 */
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-2206, now() - '4 days'::interval, 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+
+    -- ------------------------------------------------------------------
+    -- Invoice -2206 (AR, reversal)
+    -- ------------------------------------------------------------------
+
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-2206, now() - '4 days'::interval, 'ar', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test2006', 'ar', -2102);
-    INSERT INTO ar (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-2206, currval('open_item_id_seq'), true, 'test2006', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ar
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-2206, currval('open_item_id_seq'), TRUE, 'test2006', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-2206, -2206, -2, -150, 0, 3);
 
     SELECT cogs__add_for_ar_line(-2206);
 
-    PREPARE test AS SELECT allocated = 50
-      FROM invoice WHERE id = -2201;
-    SELECT results_eq('test',ARRAY[true],'post-ar-6, allocation invoice 1 series 2 is 50; ');
-    DEALLOCATE test;
+    -- Tests
 
-    PREPARE test AS SELECT allocated = -75
-      FROM invoice WHERE id = -2202;
-    SELECT results_eq('test',ARRAY[true],'post-ar-6, allocation invoice 2 series 2 is -75');
-    DEALLOCATE test;
+    SELECT results_eq(
+               format('SELECT allocated FROM invoice WHERE id = %L', t.id),
+               format('VALUES (%L::numeric)', t.expected),
+               'Series 2.5, after AR -2206 run: ' || t.label)
+      FROM (VALUES (-2201,   50, 'invoice -2201 allocated is 50'),
+                   (-2202,  -75, 'invoice -2202 allocated is -75'),
+                   (-2203,    0, 'invoice -2203 allocated is 0'),
+                   (-2204,  -75, 'invoice -2204 allocated is -75'),
+                   (-2205,  -50, 'invoice -2205 allocated is -50'),
+                   (-2206,  150, 'invoice -2206 allocated is 150')
+           ) AS t(id, expected, label);
 
-    PREPARE test AS SELECT allocated = 0
-      FROM invoice WHERE id = -2203;
-    SELECT results_eq('test',ARRAY[true],'post-ar-6, allocation invoice 3 series 2 is 0; ');
-    DEALLOCATE test;
+    -- -2206: 50 units @ 0.5 (-2201) + 100 units @ 1 (-2203) = 125 released
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = t.trans_id AND chart_id = -2102),
+               t.expected::numeric,
+               'Series 2.5, after AR -2206 run: ' || t.label)
+      FROM (VALUES (-2202, -37.5, 'invoice -2202 COGS is -37.5'),
+                   (-2204, -62.5, 'invoice -2204 COGS is -62.5'),
+                   (-2205,   -50, 'invoice -2205 COGS is -50'),
+                   (-2206,   125, 'invoice -2206 COGS is 125')
+           ) AS t(trans_id, expected, label);
 
-    PREPARE test AS SELECT allocated = -75
-      FROM invoice WHERE id = -2204;
-    SELECT results_eq('test',ARRAY[true],'post-ar-6, allocation invoice 4 series 2 is -75; ');
-    DEALLOCATE test;
 
-    PREPARE test AS SELECT allocated = -50
-      FROM invoice WHERE id = -2205;
-    SELECT results_eq('test',ARRAY[true],'post-ar-6, allocation invoice 5 series 2 is -50; ');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT allocated = 150
-      FROM invoice WHERE id = -2206;
-    SELECT results_eq('test',ARRAY[true],'post-ar-6, allocation invoice 6 series 2 is 150; ');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT sum(amount_bc) = -37.5
-    from acc_trans
-     where trans_id = -2202 and chart_id = -2102;
-    SELECT results_eq('test',ARRAY[true],'post-ar-6 COGS is 37.50, (invoice 2, series 2)');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT sum(amount_bc) = -62.5
-    from acc_trans
-     where trans_id = -2204 and chart_id = -2102;
-    SELECT results_eq('test',ARRAY[true],'post-ar-6 COGS is 62.50, (invoice 4, series 2)');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT sum(amount_bc) = -50
-    from acc_trans
-     where trans_id = -2205 and chart_id = -2102;
-    SELECT results_eq('test',ARRAY[true],'post-ar-6 COGS is 50, (invoice 5, series 2)');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT sum(amount_bc) = 125
-    from acc_trans
-     where trans_id = -2206 and chart_id = -2102;
-    SELECT results_eq('test',ARRAY[true],'post-ar-6 COGS is -125, (invoice 6, series 2)');
-    DEALLOCATE test;
+    -- ==================================================================
+    -- SERIES 3: Mixed
+    -- ==================================================================
 
 /*
     # Series 3, Mixed
 
 
 */
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-3201, now() - '10 days'::interval, 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+
+    -- ------------------------------------------------------------------
+    -- Invoice -3201 (AP)
+    -- ------------------------------------------------------------------
+
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-3201, now() - '10 days'::interval, 'ap', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test3001', 'ap', -3102);
-    INSERT INTO ap (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-3201, currval('open_item_id_seq'), true, 'test3001', -1000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ap
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-3201, currval('open_item_id_seq'), TRUE, 'test3001', -1000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-3201, -3201, -3, -100, 0, 0.5);
 
     SELECT cogs__add_for_ap_line(-3201);
 
-    PREPARE test AS SELECT allocated = 0
-      FROM invoice WHERE id = -3201;
-    SELECT results_eq('test',ARRAY[true],'post-ap-1, allocation invoice 1 series 3 is 0');
-    DEALLOCATE test;
+    -- Tests
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-3202, now() - '9 days'::interval, 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    SELECT results_eq(
+               $$ SELECT allocated FROM invoice WHERE id = -3201 $$,
+               $$ VALUES (0::numeric) $$,
+               'Series 3, after AP -3201 run: invoice -3201 allocated is 0');
+
+    -- ------------------------------------------------------------------
+    -- Invoice -3202 (AR)
+    -- ------------------------------------------------------------------
+
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-3202, now() - '9 days'::interval, 'ar', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test3002', 'ap', -3102);
-    INSERT INTO ar (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-3202, currval('open_item_id_seq'), true, 'test3002', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ar
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-3202, currval('open_item_id_seq'), TRUE, 'test3002', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-3202, -3202, -3, 75, 0, 3);
 
     SELECT cogs__add_for_ar_line(-3202);
 
-    PREPARE test AS SELECT allocated = 75
-      FROM invoice WHERE id = -3201;
-    SELECT results_eq('test',ARRAY[true],'Allocated is 75 post-AR run (invoice 1 series 3)');
-    DEALLOCATE test;
+    -- Tests
 
-    PREPARE test AS SELECT allocated = -75
-      FROM invoice WHERE id = -3202;
-    SELECT results_eq('test',ARRAY[true],'Allocated is 75 post-AR run (invoice 2 series 3)');
-    DEALLOCATE test;
+    SELECT results_eq(
+               $$ SELECT allocated FROM invoice WHERE id = -3201 $$,
+               $$ VALUES (75::numeric) $$,
+               'Series 3, after AR -3202 run: invoice -3201 allocated is 75');
 
-    PREPARE test AS SELECT sum(amount_bc) = -37.5
-    from acc_trans
-     where trans_id = -3202 and chart_id = -3102;
-    SELECT results_eq('test',ARRAY[true],'post-ar-run COGS is 37.50, (invoice 2, series 3)');
-    DEALLOCATE test;
+    SELECT results_eq(
+               $$ SELECT allocated FROM invoice WHERE id = -3202 $$,
+               $$ VALUES (-75::numeric) $$,
+               'Series 3, after AR -3202 run: invoice -3202 allocated is -75');
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-3203, now() - '9 days'::interval, 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    -- -3202: 75 units @ 0.5 (invoice -3201) = 37.5
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -3202 AND chart_id = -3102),
+               -37.5::numeric,
+               'Series 3, after AR -3202 run: invoice -3202 COGS is -37.5');
+
+    -- ------------------------------------------------------------------
+    -- Invoice -3203 (AR)
+    -- ------------------------------------------------------------------
+
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-3203, now() - '9 days'::interval, 'ar', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test3003', 'ar', -3102);
-    INSERT INTO ar (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-3203, currval('open_item_id_seq'), true, 'test3003', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ar
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-3203, currval('open_item_id_seq'), TRUE, 'test3003', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-3203, -3203, -3, 75, 0, 3);
 
     SELECT cogs__add_for_ar_line(-3203);
 
-    PREPARE test AS SELECT allocated = 100
-      FROM invoice WHERE id = -3201;
-    SELECT results_eq('test',ARRAY[true],'Allocated is 100 post-AR run (invoice 1 series 3)');
-    DEALLOCATE test;
+    -- Tests
 
-    PREPARE test AS SELECT allocated = -75
-      FROM invoice WHERE id = -3202;
-    SELECT results_eq('test',ARRAY[true],'Allocated is 75 post-AR run (invoice 2 series 3)');
-    DEALLOCATE test;
+    SELECT results_eq(
+               format('SELECT allocated FROM invoice WHERE id = %L', t.id),
+               format('VALUES (%L::numeric)', t.expected),
+               'Series 3, after AR -3203 run: ' || t.label)
+      FROM (VALUES (-3201,  100, 'invoice -3201 allocated is 100'),
+                   (-3202,  -75, 'invoice -3202 allocated is -75'),
+                   (-3203,  -25, 'invoice -3203 allocated is -25')
+           ) AS t(id, expected, label);
 
-    PREPARE test AS SELECT allocated = -25
-      FROM invoice WHERE id = -3203;
-    SELECT results_eq('test',ARRAY[true],'Allocated is 75 post-AR run (invoice 3 series 3)');
-    DEALLOCATE test;
+    -- -3203: 25 units @ 0.5 (rest of -3201) = 12.5
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -3202 AND chart_id = -3102),
+               -37.5::numeric,
+               'Series 3, after AR -3203 run: invoice -3202 COGS is -37.5');
 
-    PREPARE test AS SELECT sum(amount_bc) = -37.5
-    from acc_trans
-     where trans_id = -3202 and chart_id = -3102;
-    SELECT results_eq('test',ARRAY[true],'post-ar-run COGS is 37.50, (invoice 2, series 3)');
-    DEALLOCATE test;
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -3203 AND chart_id = -3102),
+               -12.5::numeric,
+               'Series 3, after AR -3203 run: invoice -3203 COGS is -12.5');
 
-    PREPARE test AS SELECT sum(amount_bc) = -12.5
-    from acc_trans
-     where trans_id = -3203 and chart_id = -3102;
-    SELECT results_eq('test',ARRAY[true],'post-ar-run COGS is 12.5, (invoice 3, series 3)');
-    DEALLOCATE test;
+    -- ------------------------------------------------------------------
+    -- Invoice -3204 (AP)
+    -- ------------------------------------------------------------------
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-3204, now() - '8 days'::interval, 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-3204, now() - '8 days'::interval, 'ap', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test3004', 'ap', -3102);
-    INSERT INTO ap (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-3204, currval('open_item_id_seq'), true, 'test3004', -1000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ap
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-3204, currval('open_item_id_seq'), TRUE, 'test3004', -1000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-3204, -3204, -3, -100, 0, 1);
 
     SELECT cogs__add_for_ap_line(-3204);
 
-    PREPARE test AS SELECT
-           allocated = 100
-      FROM invoice WHERE id = -3201;
-    SELECT results_eq('test',ARRAY[true],'post-ap-4 Allocated is 100 post-AR run (invoice 1 series 3)');
-    DEALLOCATE test;
+    -- Tests
 
-    PREPARE test AS SELECT
-            allocated = -75
-      FROM invoice WHERE id = -3202;
-    SELECT results_eq('test',ARRAY[true],'post-ap-4 Allocated is 75 post-AR run (invoice 2 series 3)');
-    DEALLOCATE test;
+    SELECT results_eq(
+               format('SELECT allocated FROM invoice WHERE id = %L', t.id),
+               format('VALUES (%L::numeric)', t.expected),
+               'Series 3, after AP -3204 run: ' || t.label)
+      FROM (VALUES (-3201,  100, 'invoice -3201 allocated is 100'),
+                   (-3202,  -75, 'invoice -3202 allocated is -75'),
+                   (-3203,  -75, 'invoice -3203 allocated is -75'),
+                   (-3204,   50, 'invoice -3204 allocated is 50')
+           ) AS t(id, expected, label);
 
-    PREPARE test AS SELECT allocated = -75
-      FROM invoice WHERE id = -3203;
-    SELECT results_eq('test',ARRAY[true],'post-ap-4 Allocated is 75 post-AR run (invoice 3 series 3)');
-    DEALLOCATE test;
+    -- -3203: 12.5 + 50 units @ 1 (invoice -3204) = 62.5
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -3202 AND chart_id = -3102),
+               -37.5::numeric,
+               'Series 3, after AP -3204 run: invoice -3202 COGS is -37.5');
 
-    PREPARE test AS SELECT allocated = 50
-      FROM invoice WHERE id = -3204;
-    SELECT results_eq('test',ARRAY[true],'post-ap-4 Allocated is 50 post-AR run (invoice 4 series 3)');
-    DEALLOCATE test;
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -3203 AND chart_id = -3102),
+               -62.5::numeric,
+               'Series 3, after AP -3204 run: invoice -3203 COGS is -62.5');
 
-    PREPARE test AS SELECT sum(amount_bc) = -37.5
-    from acc_trans
-     where trans_id = -3202 and chart_id = -3102;
-    SELECT results_eq('test',ARRAY[true],'post-ap-4 COGS is 37.50, (invoice 2, series 3)');
-    DEALLOCATE test;
+    -- ------------------------------------------------------------------
+    -- Invoice -3205 (AR)
+    -- ------------------------------------------------------------------
 
-    PREPARE test AS SELECT sum(amount_bc) = -62.5
-    from acc_trans
-     where trans_id = -3203 and chart_id = -3102;
-    SELECT results_eq('test',ARRAY[true],'post-ap-4 COGS is 62.5, (invoice 3, series 3)');
-    DEALLOCATE test;
+    -- Fixtures
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-3205, now() - '9 days'::interval, 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-3205, now() - '9 days'::interval, 'ar', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test3005', 'ap', -3102);
-    INSERT INTO ar (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-3205, currval('open_item_id_seq'), true, 'test3005', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ar
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-3205, currval('open_item_id_seq'), TRUE, 'test3005', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-3205, -3205, -3, 75, 0, 3);
 
     SELECT cogs__add_for_ar_line(-3205);
 
-    PREPARE test AS SELECT
-           allocated = 100
-      FROM invoice WHERE id = -3201;
-    SELECT results_eq('test',ARRAY[true],'post-ap-5 Allocated is 100 post-AR run (invoice 1 series 3)');
-    DEALLOCATE test;
+    -- Tests
 
-    PREPARE test AS SELECT
-            allocated = -75
-      FROM invoice WHERE id = -3202;
-    SELECT results_eq('test',ARRAY[true],'post-ap-5 Allocated is 75 post-AR run (invoice 2 series 3)');
-    DEALLOCATE test;
+    SELECT results_eq(
+               format('SELECT allocated FROM invoice WHERE id = %L', t.id),
+               format('VALUES (%L::numeric)', t.expected),
+               'Series 3, after AR -3205 run: ' || t.label)
+      FROM (VALUES (-3201,  100, 'invoice -3201 allocated is 100'),
+                   (-3202,  -75, 'invoice -3202 allocated is -75'),
+                   (-3203,  -75, 'invoice -3203 allocated is -75'),
+                   (-3204,  100, 'invoice -3204 allocated is 100'),
+                   (-3205,  -50, 'invoice -3205 allocated is -50')
+           ) AS t(id, expected, label);
 
-    PREPARE test AS SELECT allocated = -75
-      FROM invoice WHERE id = -3203;
-    SELECT results_eq('test',ARRAY[true],'post-ap-5 Allocated is 75 post-AR run (invoice 3 series 3)');
-    DEALLOCATE test;
+    -- -3205: 50 units @ 1 (rest of -3204) = 50
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = t.trans_id AND chart_id = -3102),
+               t.expected::numeric,
+               'Series 3, after AR -3205 run: ' || t.label)
+      FROM (VALUES (-3202, -37.5, 'invoice -3202 COGS is -37.5'),
+                   (-3203, -62.5, 'invoice -3203 COGS is -62.5'),
+                   (-3205,   -50, 'invoice -3205 COGS is -50')
+           ) AS t(trans_id, expected, label);
 
-    PREPARE test AS SELECT
-           allocated = 100
-      FROM invoice WHERE id = -3204;
-    SELECT results_eq('test',ARRAY[true],'post-ap-5 Allocated is 100 post-AR run (invoice 4 series 3)');
-    DEALLOCATE test;
 
-    PREPARE test AS SELECT allocated = -50
-      FROM invoice WHERE id = -3205;
-    SELECT results_eq('test',ARRAY[true],'post-ap-5 Allocated is 50 post-AR run (invoice 5 series 3)');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT sum(amount_bc) = -37.5
-    from acc_trans
-     where trans_id = -3202 and chart_id = -3102;
-    SELECT results_eq('test',ARRAY[true],'post-ap-5 COGS is 37.50, (invoice 2, series 3)');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT sum(amount_bc) = -62.5
-    from acc_trans
-     where trans_id = -3203 and chart_id = -3102;
-    SELECT results_eq('test',ARRAY[true],'post-ap-5 COGS is 62.5, (invoice 3, series 3)');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT sum(amount_bc) = -50
-    from acc_trans
-     where trans_id = -3205 and chart_id = -3102;
-    SELECT results_eq('test',ARRAY[true],'post-ap-5 COGS is 50, (invoice 3, series 5)');
-    DEALLOCATE test;
+    -- ==================================================================
+    -- SERIES 4: AP reversal
+    -- ==================================================================
 
 /*
     # Series 4, AP Reversal
@@ -735,123 +900,165 @@ BEGIN;
 
 */
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-4201, now() - '10 days'::interval, 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    -- ------------------------------------------------------------------
+    -- Invoice -4201 (AP)
+    -- ------------------------------------------------------------------
+
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-4201, now() - '10 days'::interval, 'ap', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test4001', 'ap', -4102);
-    INSERT INTO ap (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-4201, currval('open_item_id_seq'), true, 'test3001', -1000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ap
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-4201, currval('open_item_id_seq'), TRUE, 'test3001', -1000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-4201, -4201, -4, -100, 0, 1);
 
     SELECT cogs__add_for_ap_line(-4201);
 
-    PREPARE test AS SELECT allocated = 0
-      FROM invoice WHERE id = -4201;
-    SELECT results_eq('test',ARRAY[true],'post-ap-1 Allocated is 0 (invoice 1 series 4)');
-    DEALLOCATE test;
+    -- Tests
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-4202, now() - '10 days'::interval, 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    SELECT results_eq(
+               $$ SELECT allocated FROM invoice WHERE id = -4201 $$,
+               $$ VALUES (0::numeric) $$,
+               'Series 4, after AP -4201 run: invoice -4201 allocated is 0');
+
+    -- ------------------------------------------------------------------
+    -- Invoice -4202 (AP)
+    -- ------------------------------------------------------------------
+
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-4202, now() - '10 days'::interval, 'ap', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test4002', 'ap', -4102);
-    INSERT INTO ap (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-4202, currval('open_item_id_seq'), true, 'test4002', -1000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ap
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-4202, currval('open_item_id_seq'), TRUE, 'test4002', -1000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-4202, -4202, -4, 75, 0, 1);
 
     SELECT cogs__add_for_ap_line(-4202);
 
-    PREPARE test AS SELECT allocated = 75
-      FROM invoice WHERE id = -4201;
-    SELECT results_eq('test',ARRAY[true],'post-ap-2 Allocated is 75 (invoice 1 series 4)');
-    DEALLOCATE test;
+    -- Tests
 
-    PREPARE test AS SELECT allocated = -75
-      FROM invoice WHERE id = -4202;
-    SELECT results_eq('test',ARRAY[true],'post-ap-2 Allocated is -75 (invoice 2 series 4)');
-    DEALLOCATE test;
+    SELECT results_eq(
+               $$ SELECT allocated FROM invoice WHERE id = -4201 $$,
+               $$ VALUES (75::numeric) $$,
+               'Series 4, after AP -4202 run: invoice -4201 allocated is 75');
 
-    PREPARE test AS SELECT sum(amount_bc) = 0
-      FROM acc_trans
-     WHERE trans_id = -4202 and chart_id = -4102;
-    SELECT results_eq('test',ARRAY[true],'post-ap-2 COGS is 0, invoice 2, series 4)');
-    DEALLOCATE test;
+    SELECT results_eq(
+               $$ SELECT allocated FROM invoice WHERE id = -4202 $$,
+               $$ VALUES (-75::numeric) $$,
+               'Series 4, after AP -4202 run: invoice -4202 allocated is -75');
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-4203, now() - '7 days'::interval, 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -4202 AND chart_id = -4102),
+               0::numeric,
+               'Series 4, after AP -4202 run: invoice -4202 COGS is 0');
+
+    -- ------------------------------------------------------------------
+    -- Invoice -4203 (AP)
+    -- ------------------------------------------------------------------
+
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-4203, now() - '7 days'::interval, 'ap', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test4003', 'ap', -4102);
-    INSERT INTO ap (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-4203, currval('open_item_id_seq'), true, 'test4003', -1000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ap
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-4203, currval('open_item_id_seq'), TRUE, 'test4003', -1000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-4203, -4203, -4, -100, 0, 0.5);
 
     SELECT cogs__add_for_ap_line(-4203);
 
-    PREPARE test AS SELECT allocated = 75
-      FROM invoice WHERE id = -4201;
-    SELECT results_eq('test',ARRAY[true],'post-ap-3 Allocated is 75 (invoice 1 series 4)');
-    DEALLOCATE test;
+    -- Tests
 
-    PREPARE test AS SELECT allocated = -75
-      FROM invoice WHERE id = -4202;
-    SELECT results_eq('test',ARRAY[true],'post-ap-3 Allocated is -75 (invoice 2 series 4)');
-    DEALLOCATE test;
+    SELECT results_eq(
+               format('SELECT allocated FROM invoice WHERE id = %L', t.id),
+               format('VALUES (%L::numeric)', t.expected),
+               'Series 4, after AP -4203 run: ' || t.label)
+      FROM (VALUES (-4201,   75, 'invoice -4201 allocated is 75'),
+                   (-4202,  -75, 'invoice -4202 allocated is -75'),
+                   (-4203,    0, 'invoice -4203 allocated is 0')
+           ) AS t(id, expected, label);
 
-    PREPARE test AS SELECT allocated = 0
-      FROM invoice WHERE id = -4203;
-    SELECT results_eq('test',ARRAY[true],'post-ap-3 Allocated is 0 (invoice 3 series 4)');
-    DEALLOCATE test;
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -4202 AND chart_id = -4102),
+               0::numeric,
+               'Series 4, after AP -4203 run: invoice -4202 COGS is 0');
 
-    PREPARE test AS SELECT sum(amount_bc) = 0
-      FROM acc_trans
-     WHERE trans_id = -4202 and chart_id = -4102;
-    SELECT results_eq('test',ARRAY[true],'post-ap-3 COGS is 0, invoice 2, series 4)');
-    DEALLOCATE test;
+    -- ------------------------------------------------------------------
+    -- Invoice -4204 (AP)
+    -- ------------------------------------------------------------------
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-4204, now() - '5 days'::interval, 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-4204, now() - '5 days'::interval, 'ap', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test4002/2', 'ap', -4102);
-    INSERT INTO ap (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-4204, currval('open_item_id_seq'), true, 'test4002', -1000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ap
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-4204, currval('open_item_id_seq'), TRUE, 'test4002', -1000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-4204, -4204, -4, 75, 0, 1);
 
     SELECT cogs__add_for_ap_line(-4204);
 
-    PREPARE test AS SELECT allocated = 100
-      FROM invoice WHERE id = -4201;
-    SELECT results_eq('test',ARRAY[true],'post-ap-4 Allocated is 100 (invoice 1 series 4)');
-    DEALLOCATE test;
+    -- Tests
 
-    PREPARE test AS SELECT allocated = -75
-      FROM invoice WHERE id = -4202;
-    SELECT results_eq('test',ARRAY[true],'post-ap-4 Allocated is -75 (invoice 2 series 4)');
-    DEALLOCATE test;
+    SELECT results_eq(
+               format('SELECT allocated FROM invoice WHERE id = %L', t.id),
+               format('VALUES (%L::numeric)', t.expected),
+               'Series 4, after AP -4204 run: ' || t.label)
+      FROM (VALUES (-4201,  100, 'invoice -4201 allocated is 100'),
+                   (-4202,  -75, 'invoice -4202 allocated is -75'),
+                   (-4203,   50, 'invoice -4203 allocated is 50'),
+                   (-4204,  -75, 'invoice -4204 allocated is -75')
+           ) AS t(id, expected, label);
 
-    PREPARE test AS SELECT allocated = 50
-      FROM invoice WHERE id = -4203;
-    SELECT results_eq('test',ARRAY[true],'post-ap-4 Allocated is 50 (invoice 3 series 4)');
-    DEALLOCATE test;
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -4202 AND chart_id = -4102),
+               0::numeric,
+               'Series 4, after AP -4204 run: invoice -4202 COGS is 0');
 
-    PREPARE test AS SELECT allocated = -75
-      FROM invoice WHERE id = -4204;
-    SELECT results_eq('test',ARRAY[true],'post-ap-4 Allocated is 75 (invoice 4 series 4)');
-    DEALLOCATE test;
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE trans_id = -4204 AND chart_id = -4102),
+               25::numeric,
+               'Series 4, after AP -4204 run: invoice -4204 COGS is 25');
 
-    PREPARE test AS SELECT sum(amount_bc) = 0
-      FROM acc_trans
-     WHERE trans_id = -4202 and chart_id = -4102;
-    SELECT results_eq('test',ARRAY[true],'post-ap-4 COGS is 0, invoice 2, series 4)');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT sum(amount_bc) = 25
-      FROM acc_trans
-     WHERE trans_id = -4204 and chart_id = -4102;
-    SELECT results_eq('test',ARRAY[true],'post-ap-4 COGS is 25, invoice 2, series 4)');
-    DEALLOCATE test;
+    -- Disabled assertions (kept as in the original; not part of plan(132))
 
 --    SELECT results_eq('test',
 --        $$ SELECT cogs__add_for_ar_line(i.id) = 0
@@ -866,7 +1073,9 @@ BEGIN;
 --    ARRAY[true],'multi-call-safe ap cogs, id ' || i.id);
 
 
-
+    -- ==================================================================
+    -- SERIES 5: AR reversal
+    -- ==================================================================
 
 /*
     # Series 5, AR reversal
@@ -874,48 +1083,70 @@ BEGIN;
 
 */
 
-    ---------------------------------------
-    -- Step 1:  Simple reversal of invoice without allocation
+    -- ------------------------------------------------------------------
+    -- Step 1: Simple reversal of invoice without allocation
+    -- (invoices -5201, -5202)
+    -- ------------------------------------------------------------------
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-5201, now() - '4 days'::interval, 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-5201, now() - '4 days'::interval, 'ar', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test5001', 'ar', -5102);
-    INSERT INTO ar (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-5201, currval('open_item_id_seq'), true, 'test5001', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ar
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-5201, currval('open_item_id_seq'), TRUE, 'test5001', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5201, -5201, -5, 150, 0, 3);
 
     SELECT cogs__add_for_ar_line(-5201);
 
-    PREPARE test AS SELECT allocated = 0
-      FROM invoice WHERE id = -5201;
-    SELECT results_eq('test',ARRAY[true],'post-ar-1, allocation invoice 1 series 5 is 0; ');
-    DEALLOCATE test;
+    -- Tests
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-5202, now() - '4 days'::interval, 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    SELECT results_eq(
+               $$ SELECT allocated FROM invoice WHERE id = -5201 $$,
+               $$ VALUES (0::numeric) $$,
+               'Series 5, step 1, after AR -5201 run: invoice -5201 allocated is 0');
+
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-5202, now() - '4 days'::interval, 'ar', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test5002', 'ar', -5102);
-    INSERT INTO ar (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-5202, currval('open_item_id_seq'), true, 'test5002', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ar
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-5202, currval('open_item_id_seq'), TRUE, 'test5002', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5202, -5202, -5, -150, 0, 3);
 
     SELECT cogs__add_for_ar_line(-5202);
 
-    PREPARE test AS SELECT allocated = -150
-      FROM invoice WHERE id = -5201;
-    SELECT results_eq('test',ARRAY[true],'post-ar-2, allocation invoice 1 series 5 is -150; ');
-    DEALLOCATE test;
+    -- Tests
 
-    PREPARE test AS SELECT allocated = 150
-      FROM invoice WHERE id = -5202;
-    SELECT results_eq('test',ARRAY[true],'post-ar-2, allocation invoice 2 series 5 is 150; ');
-    DEALLOCATE test;
+    SELECT results_eq(
+               $$ SELECT allocated FROM invoice WHERE id = -5201 $$,
+               $$ VALUES (-150::numeric) $$,
+               'Series 5, step 1, after AR -5202 run: invoice -5201 allocated is -150');
 
-    ---------------------------------------
-    -- Step 2:  Reversal of AR invoice with allocation, reallocates to invoice without and AP
+    SELECT results_eq(
+               $$ SELECT allocated FROM invoice WHERE id = -5202 $$,
+               $$ VALUES (150::numeric) $$,
+               'Series 5, step 1, after AR -5202 run: invoice -5202 allocated is 150');
+
+    -- ------------------------------------------------------------------
+    -- Step 2: Reversal of AR invoice with allocation, reallocates to
+    -- invoice without and AP
+    -- ------------------------------------------------------------------
 
     -- Test outline:
     --  * Set up an ar invoice and an ap invoice, each at 150 units
@@ -927,118 +1158,149 @@ BEGIN;
     --  * The second AR invoice is now allocated
     --  * The AP invoice is 50% de-allocated
 
+    -- Fixtures
+
     --  * Set up an ar invoice and an ap invoice, each at 150 units
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-5203, now() - '4 days'::interval, 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-5203, now() - '4 days'::interval, 'ar', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test5003', 'ar', -5102);
-    INSERT INTO ar (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-5203, currval('open_item_id_seq'), true, 'test5003', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ar
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-5203, currval('open_item_id_seq'), TRUE, 'test5003', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5203, -5203, -5, 150, 0, 3);
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-5204, now() - '4 days'::interval, 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-5204, now() - '4 days'::interval, 'ap', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test5004', 'ap', -5102);
-    INSERT INTO ap (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-5204, currval('open_item_id_seq'), true, 'test5004', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ap
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-5204, currval('open_item_id_seq'), TRUE, 'test5004', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5204, -5204, -5, -150, 0, 3);
+
+    -- Tests
 
     --  * Allocate these against each other
     SELECT is(
-              cogs__add_for_ap_line(-5204),
-              150::numeric,
-              'ar-1, allocation invoice 3 series 5'
-              );
+               cogs__add_for_ap_line(-5204),
+               150::numeric,
+               'Series 5, step 2: cogs__add_for_ap_line(-5204) returns 150');
 
     -- VERIFY
+    -- 150 units @ 3 (invoice -5204) = 450
     SELECT is(
-              sum(amount_bc),
-              -450::numeric,
-              'ar-1, cogs 1 series 5, expense account total')
-     FROM acc_trans WHERE chart_id = -5102;
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE chart_id = -5102),
+               -450::numeric,
+               'Series 5, step 2: expense account -5102 total is -450 after AP -5204 run');
 
-    PREPARE test AS SELECT allocated = -150
-                    FROM invoice WHERE id = -5203;
-    SELECT results_eq('test',ARRAY[true],'post-ar-1, allocation invoice 3 series 5 is -150; ');
-    DEALLOCATE test;
+    SELECT results_eq(
+               $$ SELECT allocated FROM invoice WHERE id = -5203 $$,
+               $$ VALUES (-150::numeric) $$,
+               'Series 5, step 2, after AP -5204 run: invoice -5203 allocated is -150');
 
-    PREPARE test AS SELECT allocated = 150
-                    FROM invoice WHERE id = -5204;
-    SELECT results_eq('test',ARRAY[true],'post-ar-1, allocation invoice 4 series 5 is 150; ');
-    DEALLOCATE test;
+    SELECT results_eq(
+               $$ SELECT allocated FROM invoice WHERE id = -5204 $$,
+               $$ VALUES (150::numeric) $$,
+               'Series 5, step 2, after AP -5204 run: invoice -5204 allocated is 150');
+
+    -- Fixtures
 
     --  * Set up another ar invoice at 75 units
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-5205, now() - '4 days'::interval, 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-5205, now() - '4 days'::interval, 'ar', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test5005', 'ar', -5102);
-    INSERT INTO ar (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-5205, currval('open_item_id_seq'), true, 'test5005', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ar
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-5205, currval('open_item_id_seq'), TRUE, 'test5005', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5205, -5205, -5, 75, 0, 3);
+
+    -- Tests
 
     --  * Allocate the new invoice / no units availeble == no effect
     SELECT is(
-              cogs__add_for_ar_line(-5205),
-              0::numeric,
-              'ar-1, allocation invoice 5 series 5'
-              );
+               cogs__add_for_ar_line(-5205),
+               0::numeric,
+               'Series 5, step 2: cogs__add_for_ar_line(-5205) returns 0');
 
     -- VERIFY
     SELECT is(
-              sum(amount_bc),
-              -450::numeric,
-              'ar-1, cogs 2 series 5, expense account total')
-     FROM acc_trans WHERE chart_id = -5102;
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE chart_id = -5102),
+               -450::numeric,
+               'Series 5, step 2: expense account -5102 total is still -450 after AR -5205 run');
 
-    PREPARE test AS SELECT allocated = 0
-      FROM invoice WHERE id = -5205;
-    SELECT results_eq('test',ARRAY[true],'post-ar-2, allocation invoice 5 series 5 is 0');
-    DEALLOCATE test;
+    SELECT results_eq(
+               $$ SELECT allocated FROM invoice WHERE id = -5205 $$,
+               $$ VALUES (0::numeric) $$,
+               'Series 5, step 2, after AR -5205 run: invoice -5205 allocated is 0');
+
+    -- Fixtures
 
     --  * Reverse the original AR invoice at 150 units
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-5206, now() - '4 days'::interval, 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-5206, now() - '4 days'::interval, 'ar', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test5006-rev3', 'ar', -5102);
-    INSERT INTO ar (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-5206, currval('open_item_id_seq'), true, 'test5006-rev3', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ar
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-5206, currval('open_item_id_seq'), TRUE, 'test5006-rev3', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5206, -5206, -5, -150, 0, 3);
 
+    -- Tests
+
     SELECT is(
-              cogs__add_for_ar_line(-5206),
-              -150::numeric,
-              'ar-1, allocation invoice 6 series 5'
-              );
+               cogs__add_for_ar_line(-5206),
+               -150::numeric,
+               'Series 5, step 2: cogs__add_for_ar_line(-5206) returns -150');
+
+    -- -450 reversed by -5206, then 75 units @ 3 allocated to -5205 = 225
     SELECT is(
-              sum(amount_bc),
-              -225::numeric,
-              'ar-1, cogs 3 series 5, expense account total')
-     FROM acc_trans WHERE chart_id = -5102;
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE chart_id = -5102),
+               -225::numeric,
+               'Series 5, step 2: expense account -5102 total is -225 after AR -5206 run');
 
-    PREPARE test AS SELECT allocated
-                    FROM invoice WHERE id = -5205;
-    SELECT results_eq('test',ARRAY[-75::numeric],'post-ar-3, allocation invoice 5 series 5 is -75');
-    DEALLOCATE test;
+    SELECT results_eq(
+               format('SELECT allocated FROM invoice WHERE id = %L', t.id),
+               format('VALUES (%L::numeric)', t.expected),
+               'Series 5, step 2, after AR -5206 run: ' || t.label)
+      FROM (VALUES (-5205,  -75, 'invoice -5205 allocated is -75'),
+                   (-5206,  150, 'invoice -5206 allocated is 150'),
+                   (-5204,   75, 'invoice -5204 allocated is 75')
+           ) AS t(id, expected, label);
 
-    PREPARE test AS SELECT allocated
-                    FROM invoice WHERE id = -5206;
-    SELECT results_eq('test',ARRAY[150::numeric],'post-ar-3, allocation invoice 6 series 5 is 150');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT allocated
-       FROM invoice WHERE id = -5204;
-    SELECT results_eq('test',ARRAY[75::numeric],'post-ar-3, allocation invoice 4 series 5 is -75');
-    DEALLOCATE test;
-
-
-    ---------------------------------------
-    -- Step 3:  Reversal of AP invoice with allocation (reallocates to invoice without and removes AR allocation)
+    -- ------------------------------------------------------------------
+    -- Step 3: Reversal of AP invoice with allocation (reallocates to
+    -- invoice without and removes AR allocation)
+    -- (invoices -5207 .. -5210, part -6)
+    -- ------------------------------------------------------------------
 
     -- TODO
     -- Test outline:
@@ -1051,84 +1313,136 @@ BEGIN;
     --  * The second AP invoice is now allocated
     --  * The AR invoice is 50% de-allocated
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-5207, now() - '4 days'::interval, 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-5207, now() - '4 days'::interval, 'ar', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test5007', 'ar', -5102);
-    INSERT INTO ar (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-5207, currval('open_item_id_seq'), true, 'test5007', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ar
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-5207, currval('open_item_id_seq'), TRUE, 'test5007', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5207, -5207, -6, 150, 0, 3);
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-5208, now() - '4 days'::interval, 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-5208, now() - '4 days'::interval, 'ap', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test5008', 'ap', -5102);
-    INSERT INTO ap (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-5208, currval('open_item_id_seq'), true, 'test5008', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ap
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-5208, currval('open_item_id_seq'), TRUE, 'test5008', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5208, -5208, -6, -150, 0, 3);
 
-    SELECT is(
-              cogs__add_for_ar_line(-5207)::numeric,
-              150::numeric,
-              'ar-1, cogs calculation series 5 invoices 8,7');
-    SELECT is(
-              sum(amount_bc),
-              -450::numeric,
-              'ar-1, cogs 2 series 5, expense account total')
-     FROM acc_trans WHERE chart_id = -6102;
+    -- Tests
 
-    SELECT is(ARRAY(select allocated from invoice where id in (-5207, -5208) order by id),
-              ARRAY[150, -150]::numeric[],
-              'post-ar-1, allocation invoice 8,7 series 5 is 150,-150; ');
+    SELECT is(
+               cogs__add_for_ar_line(-5207)::numeric,
+               150::numeric,
+               'Series 5, step 3: cogs__add_for_ar_line(-5207) returns 150');
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-5209, now() - '4 days'::interval, 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    -- 150 units @ 3 = 450
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE chart_id = -6102),
+               -450::numeric,
+               'Series 5, step 3: expense account -6102 total is -450 after AR -5207 run');
+
+    SELECT is(
+               ARRAY(SELECT allocated
+                       FROM invoice
+                      WHERE id IN (-5207, -5208)
+                      ORDER BY id),
+               ARRAY[150, -150]::numeric[],
+               'Series 5, step 3, after AR -5207 run: invoices -5208, -5207 allocated are 150, -150');
+
+    -- Fixtures
+
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-5209, now() - '4 days'::interval, 'ap', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test5009', 'ap', -5102);
-    INSERT INTO ap (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-5209, currval('open_item_id_seq'), true, 'test5009', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ap
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-5209, currval('open_item_id_seq'), TRUE, 'test5009', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5209, -5209, -6, -75, 0, 3);
 
+    -- Tests
+
     SELECT is(
-              cogs__add_for_ap_line(-5209)::numeric,
-              0::numeric,
-              'ap-1, cogs calculation series 5 invoices 9');
+               cogs__add_for_ap_line(-5209)::numeric,
+               0::numeric,
+               'Series 5, step 3: cogs__add_for_ap_line(-5209) returns 0');
+
     SELECT is(
-              sum(amount_bc),
-              -450::numeric,
-              'ap-1, cogs series 5, expense account total')
-     FROM acc_trans WHERE chart_id = -6102;
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE chart_id = -6102),
+               -450::numeric,
+               'Series 5, step 3: expense account -6102 total is still -450 after AP -5209 run');
 
-    SELECT is(allocated, 0::numeric, 'post-ap-1, allocation invoice 9 series 5 is 0')
-      FROM invoice WHERE id = -5209;
+    SELECT is(allocated, 0::numeric, 'Series 5, step 3, after AP -5209 run: invoice -5209 allocated is 0')
+      FROM invoice
+     WHERE id = -5209;
 
+    -- Fixtures
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-5210, now() - '4 days'::interval, 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
+    INSERT INTO transactions
+           (id, transdate, trans_type_code, approved)
+    VALUES (-5210, now() - '4 days'::interval, 'ap', TRUE);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
     VALUES ('test5010-rev8', 'ap', -5102);
-    INSERT INTO ap (trans_id, open_item_id, invoice, invnumber, entity_credit_account)
-    VALUES (-5210, currval('open_item_id_seq'), true, 'test5010-rev8', -2000);
-    INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
+    INSERT INTO ap
+           (trans_id, open_item_id, invoice, invnumber,
+            entity_credit_account)
+    VALUES (-5210, currval('open_item_id_seq'), TRUE, 'test5010-rev8', -2000);
+    INSERT INTO invoice
+           (id, trans_id, parts_id, qty, allocated, sellprice)
     VALUES (-5210, -5210, -6, 150, 0, 3);
 
-    SELECT is(
-              cogs__add_for_ap_line(-5210)::numeric,
-              -150::numeric,
-              'ap-2, cogs calculation series 5 invoice 10');
-    SELECT is(
-              sum(amount_bc),
-              -225::numeric,
-              'ap-2, cogs series 5, expense account total')
-     FROM acc_trans WHERE chart_id = -6102;
+    -- Tests
 
-    SELECT is(ARRAY(select allocated from invoice where id in (-5207, -5208, -5209, -5210) order by id),
-              ARRAY[-150, 75, 150, -75]::numeric[],
-              'post-ap-2, allocation invoice 10,9,8,7 series 5 is -150,75,150,-75; ');
+    SELECT is(
+               cogs__add_for_ap_line(-5210)::numeric,
+               -150::numeric,
+               'Series 5, step 3: cogs__add_for_ap_line(-5210) returns -150');
 
+    -- 75 units @ 3 remain allocated = 225
+    SELECT is(
+               (SELECT sum(amount_bc)
+                  FROM acc_trans
+                 WHERE chart_id = -6102),
+               -225::numeric,
+               'Series 5, step 3: expense account -6102 total is -225 after AP -5210 run');
+
+    SELECT is(
+               ARRAY(SELECT allocated
+                       FROM invoice
+                      WHERE id IN (-5207, -5208, -5209, -5210)
+                      ORDER BY id),
+               ARRAY[-150, 75, 150, -75]::numeric[],
+               'Series 5, step 3, after AP -5210 run: invoices -5210, -5209, -5208, -5207 allocated are -150, 75, 150, -75');
+
+
+    -- ==================================================================
+    -- GOODS HISTORY SEARCH
+    -- ==================================================================
 
 /*
     # Goods history search
@@ -1136,30 +1450,49 @@ BEGIN;
 
 */
 
-    PREPARE test AS select count(*) = 30
-  from goods__history(null, null, null, null, null, false, false, false, false, true, true);
-    select results_eq('test', ARRAY[true], 'get correct count of ar and ap lines from inv. history (30)');
-     DEALLOCATE test;
+    -- Fixtures: none (counts the 30 invoices created by the series above)
 
-    PREPARE test AS select count(*) = 15
-  from goods__history(null, null, null, null, null, false, false, false, false, true, false);
-    select results_eq('test', ARRAY[true], 'get correct count of ar lines from inv. history');
-     DEALLOCATE test;
+    -- Tests
 
-    PREPARE test AS select count(*) = 15
-  from goods__history(null, null, null, null, null, false, false, false, false, false, true);
-    select results_eq('test', ARRAY[true], 'get correct count (15) of ap lines from inv. history');
-     DEALLOCATE test;
+    SELECT is(
+               (SELECT count(*)
+                  FROM goods__history(NULL, NULL, NULL, NULL, NULL,
+                                      FALSE, FALSE, FALSE, FALSE,
+                                      TRUE, TRUE)),
+               30::bigint,
+               'goods__history returns 30 lines for AR and AP (flags TRUE, TRUE)');
 
-    PREPARE test AS select count(*) = 0
-  from goods__history(null, null, null, null, null, false, false, false, false, false, false);
-    select results_eq('test', ARRAY[true], 'get correct count (0) of ap lines from inv. history with all exclused');
-     DEALLOCATE test;
+    SELECT is(
+               (SELECT count(*)
+                  FROM goods__history(NULL, NULL, NULL, NULL, NULL,
+                                      FALSE, FALSE, FALSE, FALSE,
+                                      TRUE, FALSE)),
+               15::bigint,
+               'goods__history returns 15 AR lines (flags TRUE, FALSE)');
 
-    PREPARE test AS select count(*) = 30
-  from goods__history(null, null, null, null, null, null, null, null, null, null, null);
-    select results_eq('test', ARRAY[true], 'get correct count (30) of ar and ap lines from inv. history with all default');
-     DEALLOCATE test;
+    SELECT is(
+               (SELECT count(*)
+                  FROM goods__history(NULL, NULL, NULL, NULL, NULL,
+                                      FALSE, FALSE, FALSE, FALSE,
+                                      FALSE, TRUE)),
+               15::bigint,
+               'goods__history returns 15 AP lines (flags FALSE, TRUE)');
+
+    SELECT is(
+               (SELECT count(*)
+                  FROM goods__history(NULL, NULL, NULL, NULL, NULL,
+                                      FALSE, FALSE, FALSE, FALSE,
+                                      FALSE, FALSE)),
+               0::bigint,
+               'goods__history returns 0 lines when both are excluded (flags FALSE, FALSE)');
+
+    SELECT is(
+               (SELECT count(*)
+                  FROM goods__history(NULL, NULL, NULL, NULL, NULL,
+                                      NULL, NULL, NULL, NULL,
+                                      NULL, NULL)),
+               30::bigint,
+               'goods__history returns 30 lines with all-default (NULL) arguments');
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
