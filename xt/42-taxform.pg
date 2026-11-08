@@ -47,869 +47,872 @@ BEGIN;
 
     \i xt/data/42-pg/Base.sql
 
-    -- Validate required tables
+    -- =========================================================================
+    -- SETUP
+    -- =========================================================================
 
-    SELECT has_table('ac_tax_form');
-    SELECT has_table('country_tax_form');
-    SELECT has_table('eca_tax');
-    SELECT has_table('invoice_tax_form');
-    SELECT has_table('tax');
-    SELECT has_table('tax_extended');
-    SELECT has_table('taxmodule');
+    -- Helper functions used by the fixtures and the tests.
+    --
+    -- date1(): December 1st of the current year (the "current" period).
+    CREATE OR REPLACE FUNCTION date1() RETURNS date AS
+    $$
+        SELECT (extract('YEAR' FROM now()) || '-12-01')::date;
+    $$ LANGUAGE SQL;
+
+    -- date2(): December 1st of the following year (the "future" period).
+    CREATE OR REPLACE FUNCTION date2() RETURNS date AS
+    $$
+        SELECT ((extract('YEAR' FROM now()) || '-12-01')::date
+                + '1 year'::interval)::date;
+    $$ LANGUAGE SQL;
+
+    -- Id legend (all fixture ids are negative).
+    --
+    -- Not created in this file (presumably supplied by Base.sql / the schema):
+    --   entities -100, -101 (referenced by the ECAs and company rows),
+    --   accounts -1000, -1001, -1002 (linked below as AP, AP_amount, AP_paid),
+    --   country 232, currency 'XTS'.
+    --
+    -- Created in this file:
+    --   -511             country_tax_form ("Testing Form")
+    --   -255, -256       account_heading/account ids; the same numbers are also
+    --                    the parts ids and the entity_credit_account ids
+    --                    (vendor 1 = -255, vendor 2 = -256)
+    --   -1024, -1025     company ids (the same numbers as two AP transactions)
+    --   -1024 .. -1027   AP transactions (trans_id)
+    --   -1035 .. -1037   invoice transactions stored in ar (trans_id)
+    --   -111 .. -145     acc_trans entry_ids of -1024 .. -1027
+    --   -221 .. -245     acc_trans entry_ids of -1035 .. -1037
+    --   -211, -212       invoice line ids of -1035
+    --   -221, -222       invoice line ids of -1036 (same numbers as entry_ids
+    --                    -221, -222 of -1035; different tables)
+    --   -231, -232       invoice line ids of -1037 (same numbers as entry_ids
+    --                    -231, -232 of -1036; different tables)
+
+    -- =========================================================================
+    -- SCHEMA CHECKS
+    -- =========================================================================
+
+    -- -------------------------------------------------------------------------
+    -- Tests
+    -- -------------------------------------------------------------------------
+
+    -- Validate required tables
+    SELECT has_table(t.table_name::name)
+      FROM (VALUES
+            ('ac_tax_form'),
+            ('country_tax_form'),
+            ('eca_tax'),
+            ('invoice_tax_form'),
+            ('tax'),
+            ('tax_extended'),
+            ('taxmodule')
+           ) AS t(table_name);
 
     -- Validate required functions
+    SELECT has_function(t.function_name::name, t.arg_types::name[])
+      FROM (VALUES
+            ('tax_form__get', ARRAY['integer']),
+            ('tax_form__list_all', '{}'::text[]),
+            ('tax_form__list_ext', '{}'::text[]),
+            ('tax_form__save',
+             ARRAY['integer', 'integer', 'text', 'boolean', 'boolean'])
+           ) AS t(function_name, arg_types);
 
-    SELECT has_function('tax_form__get',ARRAY['integer']);
-    SELECT has_function('tax_form__list_all','{}'::text[]);
-    SELECT has_function('tax_form__list_ext','{}'::text[]);
-    SELECT has_function('tax_form__save',ARRAY['integer','integer','text','boolean','boolean']);
+    -- =========================================================================
+    -- TAX FORM SUMMARY AND DETAIL REPORTS
+    -- =========================================================================
+
+    -- -------------------------------------------------------------------------
+    -- Fixtures
+    -- -------------------------------------------------------------------------
 
     -- Basic setup
 
-    INSERT INTO account_heading(id, accno ) VALUES (-255, '-billion-heading');
-    INSERT INTO account (id, accno, category, heading ) VALUES (-255, '-billion', 'L', -255);
-    INSERT INTO account (id, accno, category, heading ) VALUES (-256, '-billiontest', 'L', -255);
+    INSERT INTO account_heading
+           (id,   accno)
+    VALUES (-255, '-billion-heading');
 
-    INSERT INTO country_tax_form (country_id, form_name, id) VALUES (232, 'Testing Form', -511);
+    INSERT INTO account
+           (id,   accno,      category, heading)
+    VALUES (-255, '-billion', 'L',      -255);
 
-    INSERT INTO parts (id, partnumber, description) values (-255, '-test1', 'test 1');
-    INSERT INTO parts (id, partnumber, description) values (-256, '-test2', 'test 2');
+    INSERT INTO account
+           (id,   accno,          category, heading)
+    VALUES (-256, '-billiontest', 'L',      -255);
+
+    INSERT INTO country_tax_form
+           (country_id, form_name,      id)
+    VALUES (232,        'Testing Form', -511);
+
+    INSERT INTO parts
+           (id,   partnumber, description)
+    VALUES (-255, '-test1',   'test 1');
+
+    INSERT INTO parts
+           (id,   partnumber, description)
+    VALUES (-256, '-test2',   'test 2');
 
     -- Set up an ECAs, for AP.
 
-    INSERT INTO entity_credit_account (id, entity_id, entity_class, meta_number, taxform_id, ar_ap_account_id, curr) VALUES (-255, -100, 1, 'Test account 1', -511, -255, 'XTS');
+    INSERT INTO entity_credit_account
+           (id,   entity_id, entity_class, meta_number,      taxform_id,
+            ar_ap_account_id, curr)
+    VALUES (-255, -100,      1,            'Test account 1', -511,
+            -255,             'XTS');
 
-    INSERT INTO company (id, entity_id, legal_name) VALUES (-1024, -100, 'Testing Tax Form');
+    INSERT INTO company
+           (id,    entity_id, legal_name)
+    VALUES (-1024, -100,      'Testing Tax Form');
 
-    INSERT INTO entity_credit_account (id, entity_id, entity_class, meta_number, taxform_id, ar_ap_account_id, curr) VALUES (-256, -101, 1, 'Test account 2', -511, -255, 'XTS');
+    INSERT INTO entity_credit_account
+           (id,   entity_id, entity_class, meta_number,      taxform_id,
+            ar_ap_account_id, curr)
+    VALUES (-256, -101,      1,            'Test account 2', -511,
+            -255,             'XTS');
 
-    INSERT INTO company (id, entity_id, legal_name) VALUES (-1025, -101, 'Testing Tax Form');
+    INSERT INTO company
+           (id,    entity_id, legal_name)
+    VALUES (-1025, -101,      'Testing Tax Form');
 
-    CREATE OR REPLACE FUNCTION date1() RETURNS date AS
-    $$
-    SELECT (extract('YEAR' from now())|| '-12-01')::date;
-    $$ language sql;
+    -- Account links
 
-    CREATE OR REPLACE FUNCTION date2() RETURNS date AS
-    $$
-    SELECT ((extract('YEAR' from now())|| '-12-01')::date
-            + '1 year'::interval)::date;
-    $$ language sql;
+    INSERT INTO account_link
+           (account_id, description)
+    VALUES (-1000,      'AP');
 
-    INSERT INTO account_link (account_id, description)
-    values (-1000, 'AP');
+    INSERT INTO account_link
+           (account_id, description)
+    VALUES (-1001,      'AP_amount');
 
-    INSERT INTO account_link (account_id, description)
-    values (-1001, 'AP_amount');
+    INSERT INTO account_link
+           (account_id, description)
+    VALUES (-1002,      'AP_paid');
 
-    INSERT INTO account_link (account_id, description)
-    values (-1002, 'AP_paid');
-    --AP transactions.
+    -- AP transactions.
 
-    --1) AP transaction: Reportable amount 1000, non-reportable amount $10, paid
-    -- in full in current year. id -1024
+    -- 1) AP transaction: Reportable amount 1000, non-reportable amount $10,
+    -- paid in full in current year. id -1024
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-1024, date1(), 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('test1', 'ap', -1000);
-    INSERT INTO ap (trans_id, open_item_id, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
-                    entity_credit_account)
-    values(-1024, currval('open_item_id_seq'), 1010, 1010, 'XTS', 1010, 1010, -255);
+    INSERT INTO transactions
+           (id,    transdate, trans_type_code, approved)
+    VALUES (-1024, date1(),   'ap',            TRUE);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1024, -1000, date1(), 1010, 'XTS', 1010, true, -111);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
+    VALUES ('test1',     'ap',      -1000);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1024, -1001, date1(), -1000, 'XTS', -1000, true, -112);
+    INSERT INTO ap
+           (trans_id, open_item_id,                amount_bc, netamount_bc,
+            curr,  amount_tc, netamount_tc, entity_credit_account)
+    VALUES (-1024,    currval('open_item_id_seq'), 1010,      1010,
+            'XTS', 1010,      1010,         -255);
 
-    INSERT INTO ac_tax_form(entry_id, reportable) values (-112, true);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1024,    -1000,    date1(),   1010,      'XTS', 1010,
+            TRUE,     -111);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1024, -1001, date1(), -10, 'XTS', -10, true, -113);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1024,    -1001,    date1(),   -1000,     'XTS', -1000,
+            TRUE,     -112);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1024, -1002, date1(), 1010, 'XTS', 1010, true, -114);
+    INSERT INTO ac_tax_form
+           (entry_id, reportable)
+    VALUES (-112,     TRUE);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1024, -1000, date1(), -1010, 'XTS', -1010, true, -115);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1024,    -1001,    date1(),   -10,       'XTS', -10,
+            TRUE,     -113);
+
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1024,    -1002,    date1(),   1010,      'XTS', 1010,
+            TRUE,     -114);
+
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1024,    -1000,    date1(),   -1010,     'XTS', -1010,
+            TRUE,     -115);
 
     -- 2) AP transaction: Reportable amount $1000, non-reportable amount $10,
     -- partially paid ($500) in current year -1025
+    --
+    INSERT INTO transactions
+           (id,    transdate, trans_type_code, approved)
+    VALUES (-1025, date1(),   'ap',            TRUE);
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-1025, date1(), 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('test2', 'ap', -1000);
-    INSERT INTO ap (trans_id, open_item_id, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
-                    entity_credit_account)
-    values(-1025, currval('open_item_id_seq'), 1010, 1010, 'XTS', 1010, 1010, -255);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
+    VALUES ('test2',     'ap',      -1000);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1025, -1000, date1(), 1010, 'XTS', 1010, true, -121);
+    INSERT INTO ap
+           (trans_id, open_item_id,                amount_bc, netamount_bc,
+            curr,  amount_tc, netamount_tc, entity_credit_account)
+    VALUES (-1025,    currval('open_item_id_seq'), 1010,      1010,
+            'XTS', 1010,      1010,         -255);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1025, -1001, date1(), -1000, 'XTS', -1000, true, -122);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1025,    -1000,    date1(),   1010,      'XTS', 1010,
+            TRUE,     -121);
 
-    INSERT INTO ac_tax_form(entry_id, reportable) values (-122, true);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1025,    -1001,    date1(),   -1000,     'XTS', -1000,
+            TRUE,     -122);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1025, -1001, date1(), -10, 'XTS', -10, true, -123);
+    INSERT INTO ac_tax_form
+           (entry_id, reportable)
+    VALUES (-122,     TRUE);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1025, -1002, date1(), 505, 'XTS', 505, true, -124);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1025,    -1001,    date1(),   -10,       'XTS', -10,
+            TRUE,     -123);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1025, -1000, date1(), -505, 'XTS', 505, true, -125);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1025,    -1002,    date1(),   505,       'XTS', 505,
+            TRUE,     -124);
 
-    -- 3)_AP Transaction: Reportable amount $1000, non-reportable amount $10,
-    -- paid $500 currnet year, $500 in future year -1026
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1025,    -1000,    date1(),   -505,      'XTS', 505,
+            TRUE,     -125);
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-1026, date1(), 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('test3', 'ap', -1000);
-    INSERT INTO ap (trans_id, open_item_id, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
-                    entity_credit_account)
-          values(-1026, currval('open_item_id_seq'), 1010, 1010, 'XTS', 1010, 10101, -255);
+    -- 3) AP Transaction: Reportable amount $1000, non-reportable amount $10,
+    -- paid $500 current year, $500 in future year -1026
+    --
+    INSERT INTO transactions
+           (id,    transdate, trans_type_code, approved)
+    VALUES (-1026, date1(),   'ap',            TRUE);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1026, -1000, date1(), 1010, 'XTS', 1010, true, -131);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
+    VALUES ('test3',     'ap',      -1000);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1026, -1001, date1(), -1000, 'XTS', -1000, true, -132);
+    INSERT INTO ap
+           (trans_id, open_item_id,                amount_bc, netamount_bc,
+            curr,  amount_tc, netamount_tc, entity_credit_account)
+    VALUES (-1026,    currval('open_item_id_seq'), 1010,      1010,
+            'XTS', 1010,      10101,        -255);
 
-    INSERT INTO ac_tax_form(entry_id, reportable) values (-132, true);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1026,    -1000,    date1(),   1010,      'XTS', 1010,
+            TRUE,     -131);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1026, -1001, date1(), -10, 'XTS', -10, true, -133);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1026,    -1001,    date1(),   -1000,     'XTS', -1000,
+            TRUE,     -132);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1026, -1002, date1(), 505, 'XTS', 505, true, -134);
+    INSERT INTO ac_tax_form
+           (entry_id, reportable)
+    VALUES (-132,     TRUE);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1026, -1000, date1(), -505, 'XTS', -505, true, -135);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1026,    -1001,    date1(),   -10,       'XTS', -10,
+            TRUE,     -133);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1026, -1002, date2(), 505, 'XTS', 505, true, -136);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1026,    -1002,    date1(),   505,       'XTS', 505,
+            TRUE,     -134);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1026, -1000, date2(), -505, 'XTS', -505, true, -137);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1026,    -1000,    date1(),   -505,      'XTS', -505,
+            TRUE,     -135);
 
-    -- 4) AP transaction: Reportable amount 1000, non-reportable amount $10, paid
-    -- $500 currnet year, $500 in future year -1027, to second vendor
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1026,    -1002,    date2(),   505,       'XTS', 505,
+            TRUE,     -136);
+
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1026,    -1000,    date2(),   -505,      'XTS', -505,
+            TRUE,     -137);
+
+    -- 4) AP transaction: Reportable amount 1000, non-reportable amount $10,
+    -- paid $500 current year, $500 in future year -1027, to second vendor
+
+    INSERT INTO transactions
+           (id,    transdate, trans_type_code, approved)
+    VALUES (-1027, date1(),   'ap',            TRUE);
+
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
+    VALUES ('test4',     'ap',      -1000);
+
+    INSERT INTO ap
+           (trans_id, open_item_id,                amount_bc, netamount_bc,
+            curr,  amount_tc, netamount_tc, entity_credit_account)
+    VALUES (-1027,    currval('open_item_id_seq'), 1010,      1010,
+            'XTS', 1010,      1010,         -256);
+
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1027,    -1000,    date1(),   1010,      'XTS', 1010,
+            TRUE,     -141);
+
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1027,    -1001,    date1(),   -1000,     'XTS', -1000,
+            TRUE,     -142);
+
+    INSERT INTO ac_tax_form
+           (entry_id, reportable)
+    VALUES (-142,     TRUE);
+
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1027,    -1001,    date1(),   -10,       'XTS', -10,
+            TRUE,     -143);
+
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1027,    -1002,    date1(),   1010,      'XTS', -10,
+            TRUE,     -144);
+
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1027,    -1000,    date1(),   -1010,     'XTS', -1010,
+            TRUE,     -145);
+
     -- Vendor Invoices.
-
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-1027, date1(), 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('test4', 'ap', -1000);
-    INSERT INTO ap (trans_id, open_item_id, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
-                    entity_credit_account)
-    values(-1027, currval('open_item_id_seq'), 1010, 1010, 'XTS', 1010, 1010, -256);
-
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1027, -1000, date1(), 1010, 'XTS', 1010, true, -141);
-
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1027, -1001, date1(), -1000, 'XTS', -1000, true, -142);
-
-    INSERT INTO ac_tax_form(entry_id, reportable) values (-142, true);
-
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1027, -1001, date1(), -10, 'XTS', -10, true, -143);
-
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1027, -1002, date1(), 1010, 'XTS', -10, true, -144);
-
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1027, -1000, date1(), -1010, 'XTS', -1010, true, -145);
 
     -- 2) AP invoice: Reportable amount $1000, non-reportable amount $10,
     -- partially paid ($500) in current year -1035
+    --
+    INSERT INTO transactions
+           (id,    transdate, trans_type_code, approved)
+    VALUES (-1035, date1(),   'ar',            TRUE);
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-1035, date1(), 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('test10', 'ar', -1000);
-    INSERT INTO ar (trans_id, open_item_id, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
-                    entity_credit_account, invoice, invnumber)
-         values (-1035, currval('open_item_id_seq'), 1010, 1010, 'XTS', 1010, 1010, -255, true, 'test1');
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
+    VALUES ('test10',    'ar',      -1000);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1035, -1000, date1(), 1010, 'XTS', 1010, true, -221);
+    INSERT INTO ar
+           (trans_id, open_item_id,                amount_bc, netamount_bc,
+            curr,  amount_tc, netamount_tc, entity_credit_account, invoice,
+            invnumber)
+    VALUES (-1035,    currval('open_item_id_seq'), 1010,      1010,
+            'XTS', 1010,      1010,         -255,                  TRUE,
+            'test1');
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1035, -1001, date1(), -1000, 'XTS', -1000, true, -222);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1035,    -1000,    date1(),   1010,      'XTS', 1010,
+            TRUE,     -221);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1035, -1001, date1(), -10, 'XTS', -10, true, -223);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1035,    -1001,    date1(),   -1000,     'XTS', -1000,
+            TRUE,     -222);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1035, -1002, date1(), 505, 'XTS', 505, true, -224);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1035,    -1001,    date1(),   -10,       'XTS', -10,
+            TRUE,     -223);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1035, -1000, date1(), -505, 'XTS', 505, true, -225);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1035,    -1002,    date1(),   505,       'XTS', 505,
+            TRUE,     -224);
 
-    insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
-         VALUES (-1035, -211, -255, 'test 1', -1, 1000);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1035,    -1000,    date1(),   -505,      'XTS', 505,
+            TRUE,     -225);
 
-    INSERT INTO invoice_tax_form(invoice_id, reportable)
-         VALUES (-211, true);
+    INSERT INTO invoice
+           (trans_id, id,   parts_id, description, qty, sellprice)
+    VALUES (-1035,    -211, -255,     'test 1',    -1,  1000);
 
-    insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
-         VALUES (-1035, -212, -256, 'test 1', -1, 10);
+    INSERT INTO invoice_tax_form
+           (invoice_id, reportable)
+    VALUES (-211,       TRUE);
 
-    -- 3)_AP invoice: Reportable amount $1000, non-reportable amount $10,
-    -- paid $500 currnet year, $500 in future year -1036
+    INSERT INTO invoice
+           (trans_id, id,   parts_id, description, qty, sellprice)
+    VALUES (-1035,    -212, -256,     'test 1',    -1,  10);
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-1036, date1(), 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('test11', 'ar', -1000);
-    INSERT INTO ar (trans_id, open_item_id, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
-                    entity_credit_account, invoice, invnumber)
-          values(-1036, currval('open_item_id_seq'), 1010, 1010, 'XTS', 1010, 1010, -255, true, 'test2');
+    -- 3) AP invoice: Reportable amount $1000, non-reportable amount $10,
+    -- paid $500 current year, $500 in future year -1036
+    --
+    INSERT INTO transactions
+           (id,    transdate, trans_type_code, approved)
+    VALUES (-1036, date1(),   'ar',            TRUE);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1036, -1000, date1(), 1010, 'XTS', 1010, true, -231);
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
+    VALUES ('test11',    'ar',      -1000);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1036, -1001, date1(), -1000, 'XTS', -1000, true, -232);
+    INSERT INTO ar
+           (trans_id, open_item_id,                amount_bc, netamount_bc,
+            curr,  amount_tc, netamount_tc, entity_credit_account, invoice,
+            invnumber)
+    VALUES (-1036,    currval('open_item_id_seq'), 1010,      1010,
+            'XTS', 1010,      1010,         -255,                  TRUE,
+            'test2');
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1036, -1001, date1(), -10, 'XTS', -10, true, -233);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1036,    -1000,    date1(),   1010,      'XTS', 1010,
+            TRUE,     -231);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1036, -1002, date1(), 505, 'XTS', 505, true, -234);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1036,    -1001,    date1(),   -1000,     'XTS', -1000,
+            TRUE,     -232);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1036, -1000, date1(), -505, 'XTS', -505, true, -235);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1036,    -1001,    date1(),   -10,       'XTS', -10,
+            TRUE,     -233);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1036, -1002, date2(), 505, 'XTS', 505, true, -236);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1036,    -1002,    date1(),   505,       'XTS', 505,
+            TRUE,     -234);
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1036, -1000, date2(), -505, 'XTS', -505, true, -237);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1036,    -1000,    date1(),   -505,      'XTS', -505,
+            TRUE,     -235);
 
-    insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
-         VALUES (-1036, -221, -255, 'test 1', -1, 1000);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1036,    -1002,    date2(),   505,       'XTS', 505,
+            TRUE,     -236);
 
-    INSERT INTO invoice_tax_form(invoice_id, reportable)
-         VALUES (-221, true);
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1036,    -1000,    date2(),   -505,      'XTS', -505,
+            TRUE,     -237);
 
-    insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
-         VALUES (-1036, -222, -256, 'test 1', -1, 10);
+    INSERT INTO invoice
+           (trans_id, id,   parts_id, description, qty, sellprice)
+    VALUES (-1036,    -221, -255,     'test 1',    -1,  1000);
+
+    INSERT INTO invoice_tax_form
+           (invoice_id, reportable)
+    VALUES (-221,       TRUE);
+
+    INSERT INTO invoice
+           (trans_id, id,   parts_id, description, qty, sellprice)
+    VALUES (-1036,    -222, -256,     'test 1',    -1,  10);
 
     -- 4) AP invoice: Reportable amount 1000, non-reportable amount $10, paid
-    -- $500 currnet year, $500 in future year -1037, to second vendor
-
-
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-1037, date1(), 'ar', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('test12', 'ar', -1000);
-    INSERT INTO ar (trans_id, open_item_id, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
-                    entity_credit_account, invoice, invnumber)
-          values(-1037, currval('open_item_id_seq'), 1010, 1010, 'XTS', 1010, 1010, -256, true, 'test3');
-
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1037, -1000, date1(), 1010, 'XTS', 1010, true, -241);
-
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1037, -1001, date1(), -1000, 'XTS', -1000, true, -242);
-
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1037, -1001, date1(), -10, 'XTS', -10, true, -243);
-
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1037, -1002, date1(), 1010, 'XTS', 1010, true, -244);
-
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
-         VALUES (-1037, -1000, date1(), -1010, 'XTS', -1010, true, -245);
-
-    insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
-         VALUES (-1037, -231, -255, 'test 1', -1, 1000);
-
-    INSERT INTO invoice_tax_form(invoice_id, reportable)
-         VALUES (-231, true);
-
-    insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
-         VALUES (-1037, -232, -256, 'test 1', -1, 10);
-
-    -- Run tests
-
-    PREPARE test AS SELECT count(*) = 2
-      FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date);
-    SELECT results_eq('test',ARRAY[true],'2 rows on current summary report');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 2
-      FROM tax_form_summary_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date);
-    SELECT results_eq('test',ARRAY[true],'2 rows on current accrual summary report');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 1
-      FROM tax_form_summary_report(-511, (date2() - '1 day'::interval)::date,
-                                      (date2() + '1 day'::interval)::date);
-    SELECT results_eq('test',ARRAY[true],'1 row on future summary report');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 0
-      FROM tax_form_summary_report_accrual(-511, (date2() - '1 day'::interval)::date,
-                                      (date2() + '1 day'::interval)::date);
-    SELECT results_eq('test',ARRAY[true],'0 rows on future summary accrual report');
-    DEALLOCATE test;
-
-
-
-    PREPARE test AS SELECT invoice_sum = 1000
-      FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date)
-     where meta_number = 'Test account 1';
-    SELECT results_eq('test',ARRAY[true],'inv_sum for test vendor 1, current report is $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum = 2000
-      FROM tax_form_summary_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date)
-     where meta_number = 'Test account 1';
-    SELECT results_eq('test',ARRAY[true],'inv_sum for test vendor 1, current accrual report is $2000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum = 500
-      FROM tax_form_summary_report(-511, (date2() - '1 day'::interval)::date,
-                                      (date2() + '1 day'::interval)::date)
-     where meta_number = 'Test account 1';
-    SELECT results_eq('test',ARRAY[true],'inv_sum for test vendor 1, future report is $500');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum = 1000
-      FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date)
-     where meta_number = 'Test account 2';
-    SELECT results_eq('test',ARRAY[true],'inv_sum for test vendor 2, current report is $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum = 1000
-      FROM tax_form_summary_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date)
-     where meta_number = 'Test account 2';
-    SELECT results_eq('test',ARRAY[true],'inv_sum for test vendor 2, current accrual report is $1000');
-    DEALLOCATE test;
-
-
-    PREPARE test AS SELECT total_sum = 3000
-      FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date)
-     where meta_number = 'Test account 1';
-    SELECT results_eq('test',ARRAY[true],'total_sum for test vendor 1, current report is $3000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT total_sum = 5000
-      FROM tax_form_summary_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date)
-     where meta_number = 'Test account 1';
-    SELECT results_eq('test',ARRAY[true],'total_sum for test vendor 1, current accrual report is $5000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT total_sum = 1000
-      FROM tax_form_summary_report(-511, (date2() - '1 day'::interval)::date,
-                                      (date2() + '1 day'::interval)::date)
-     where meta_number = 'Test account 1';
-    SELECT results_eq('test',ARRAY[true],'total_sum for test vendor 1, future report is $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT total_sum = 2000
-      FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date)
-     where meta_number = 'Test account 2';
-    SELECT results_eq('test',ARRAY[true],'total_sum for test vendor 2, current report is $2000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT total_sum = 2000
-      FROM tax_form_summary_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date)
-     where meta_number = 'Test account 2';
-    SELECT results_eq('test',ARRAY[true],'total_sum for test vendor 2, current accrual report is $2000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum = 2000
-      FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date)
-     where meta_number = 'Test account 1';
-    SELECT results_eq('test',ARRAY[true],'ac_sum for test vendor 1, current report is $2000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum = 3000
-      FROM tax_form_summary_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date)
-     where meta_number = 'Test account 1';
-    SELECT results_eq('test',ARRAY[true],'ac_sum for test vendor 1, current accrual report is $3000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum = 500
-      FROM tax_form_summary_report(-511, (date2() - '1 day'::interval)::date,
-                                      (date2() + '1 day'::interval)::date)
-     where meta_number = 'Test account 1';
-    SELECT results_eq('test',ARRAY[true],'ac_sum for test vendor 1, future report is $500');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum = 1000
-      FROM tax_form_summary_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date)
-     where meta_number = 'Test account 2';
-    SELECT results_eq('test',ARRAY[true],'ac_sum for test vendor 2, current report is $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum = 1000
-      FROM tax_form_summary_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date)
-     where meta_number = 'Test account 2';
-    SELECT results_eq('test',ARRAY[true],'ac_sum for test vendor 2, current accrual report is $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 5
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1');
-    SELECT results_eq('test',ARRAY[true],'6 in detail report for current report, vendor 1');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 5
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1');
-    SELECT results_eq('test',ARRAY[true],'6 in detail report for current accrual report, vendor 1');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 2
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 2');
-    SELECT results_eq('test',ARRAY[true],'2 in detail report for current report, vendor 2');
-    DEALLOCATE test;
-    PREPARE test AS SELECT count(*) = 2
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 2');
-    SELECT results_eq('test',ARRAY[true],'2 in detail report for current accrual report, vendor 2');
-    DEALLOCATE test;
-
-
-    PREPARE test AS SELECT count(*) = 2
-        FROM tax_form_details_report(-511, (date2() - '1 day'::interval)::date,
-                                      (date2() + '1 day'::interval)::date,
-                                    'Test account 1');
-    SELECT results_eq('test',ARRAY[true],'2 in detail report for future report, vendor 1');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*) = 0
-        FROM tax_form_details_report(-511, (date2() - '1 day'::interval)::date,
-                                      (date2() + '1 day'::interval)::date,
-                                    'Test account 2');
-    SELECT results_eq('test',ARRAY[true],'0 in detail report for future report, vendor 2');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum= 1000
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1024;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1024, acc $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum= 1000
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1024;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1024, acc $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum= 500
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1025;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1025, acc $500');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum= 1000
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1025;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1025, acc $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum= 500
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1026;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1026, acc $500');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum= 1000
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1026;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1026, acc $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum= 1000
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 2')
-        WHERE invoice_id = -1027;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1027, acc $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum= 1000
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 2')
-        WHERE invoice_id = -1027;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1027, acc $1000');
-    DEALLOCATE test;
-
-
-    PREPARE test AS SELECT total_sum= 1000
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1024;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1024, total $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT total_sum= 1000
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1024;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1024, total $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT total_sum= 500
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1025;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1025, total $500');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT total_sum= 1000
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1025;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1025, total $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT total_sum= 500
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1026;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1026, total $500');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT total_sum= 1000
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1026;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1026, total $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT total_sum= 1000
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 2')
-        WHERE invoice_id = -1027;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1027, total $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT total_sum= 1000
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 2')
-        WHERE invoice_id = -1027;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1027, total $1000');
-    DEALLOCATE test;
-
-
-
-    PREPARE test AS SELECT invoice_sum= 0
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1024;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1024, inv_total 0');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum= 0
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1024;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1024, inv_total 0');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum= 0
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1025;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1025, inv 0');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum= 0
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1025;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1025, inv 0');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum = 0
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1026;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1026, inv 0');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum = 0
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1026;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1026, inv 0');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum= 0
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 2')
-        WHERE invoice_id = -1027;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1027, inv 0');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum= 0
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 2')
-        WHERE invoice_id = -1027;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1027, inv 0');
-    DEALLOCATE test;
-
-
-
-    PREPARE test AS SELECT invoice_sum= 500
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1035;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1035, inv $500');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum= 1000
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1035;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1035, inv $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum= 500
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1036;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1036, inv $500');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum= 1000
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1036;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1036, inv $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum= 1000
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 2')
-        WHERE invoice_id = -1037;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1037, inv $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum= 1000
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 2')
-        WHERE invoice_id = -1037;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1037, inv $1000');
-    DEALLOCATE test;
-
-
-
-    PREPARE test AS SELECT total_sum= 500
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1035;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1035, total $500');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT total_sum= 500
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1036;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1036, total $500');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT total_sum= 1000
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 2')
-        WHERE invoice_id = -1037;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1037, total $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT total_sum= 1000
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1035;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1035, total $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT total_sum= 1000
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1036;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1036, total $1000');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT total_sum= 1000
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 2')
-        WHERE invoice_id = -1037;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1037, total $1000');
-    DEALLOCATE test;
-
-
-
-
-    PREPARE test AS SELECT acc_sum = 0
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1035;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1035, acc 0');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum = 0
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1036;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1036, acc 0');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum = 0
-        FROM tax_form_details_report(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 2')
-        WHERE invoice_id = -1037;
-    SELECT results_eq('test',ARRAY[true],'current report, invoice -1037, acc 0');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum = 0
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1035;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1035, acc 0');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum = 0
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1036;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1036, acc 0');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum = 0
-        FROM tax_form_details_report_accrual(-511, (date1() - '1 day'::interval)::date,
-                                      (date1() + '1 day'::interval)::date,
-                                    'Test account 2')
-        WHERE invoice_id = -1037;
-    SELECT results_eq('test',ARRAY[true],'current accrual report, invoice -1037, acc 0');
-    DEALLOCATE test;
-
-
-
-    PREPARE test AS SELECT acc_sum = 500
-        FROM tax_form_details_report(-511, (date2() - '1 day'::interval)::date,
-                                      (date2() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1026;
-    SELECT results_eq('test',ARRAY[true],'future report, invoice -1026, acc 500');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum = 0
-        FROM tax_form_details_report(-511, (date2() - '1 day'::interval)::date,
-                                      (date2() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1026;
-    SELECT results_eq('test',ARRAY[true],'future report, invoice -1026, inv 0');
-    DEALLOCATE test;
-
-
-    PREPARE test AS SELECT total_sum = 500
-        FROM tax_form_details_report(-511, (date2() - '1 day'::interval)::date,
-                                      (date2() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1026;
-    SELECT results_eq('test',ARRAY[true],'future report, invoice -1026, total 500');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT acc_sum = 0
-        FROM tax_form_details_report(-511, (date2() - '1 day'::interval)::date,
-                                      (date2() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1036;
-    SELECT results_eq('test',ARRAY[true],'future report, invoice -1036, acc 0');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT invoice_sum = 500
-        FROM tax_form_details_report(-511, (date2() - '1 day'::interval)::date,
-                                      (date2() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1036;
-    SELECT results_eq('test',ARRAY[true],'future report, invoice -1036, inv 500');
-    DEALLOCATE test;
-
-
-    PREPARE test AS SELECT total_sum = 500
-        FROM tax_form_details_report(-511, (date2() - '1 day'::interval)::date,
-                                      (date2() + '1 day'::interval)::date,
-                                    'Test account 1')
-        WHERE invoice_id = -1036;
-    SELECT results_eq('test',ARRAY[true],'future report, invoice -1036, total 500');
-    DEALLOCATE test;
+    -- $500 current year, $500 in future year -1037, to second vendor
+
+    INSERT INTO transactions
+           (id,    transdate, trans_type_code, approved)
+    VALUES (-1037, date1(),   'ar',            TRUE);
+
+    INSERT INTO open_item
+           (item_number, item_type, account_id)
+    VALUES ('test12',    'ar',      -1000);
+
+    INSERT INTO ar
+           (trans_id, open_item_id,                amount_bc, netamount_bc,
+            curr,  amount_tc, netamount_tc, entity_credit_account, invoice,
+            invnumber)
+    VALUES (-1037,    currval('open_item_id_seq'), 1010,      1010,
+            'XTS', 1010,      1010,         -256,                  TRUE,
+            'test3');
+
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1037,    -1000,    date1(),   1010,      'XTS', 1010,
+            TRUE,     -241);
+
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1037,    -1001,    date1(),   -1000,     'XTS', -1000,
+            TRUE,     -242);
+
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1037,    -1001,    date1(),   -10,       'XTS', -10,
+            TRUE,     -243);
+
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1037,    -1002,    date1(),   1010,      'XTS', 1010,
+            TRUE,     -244);
+
+    INSERT INTO acc_trans
+           (trans_id, chart_id, transdate, amount_bc, curr,  amount_tc,
+            approved, entry_id)
+    VALUES (-1037,    -1000,    date1(),   -1010,     'XTS', -1010,
+            TRUE,     -245);
+
+    INSERT INTO invoice
+           (trans_id, id,   parts_id, description, qty, sellprice)
+    VALUES (-1037,    -231, -255,     'test 1',    -1,  1000);
+
+    INSERT INTO invoice_tax_form
+           (invoice_id, reportable)
+    VALUES (-231,       TRUE);
+
+    INSERT INTO invoice
+           (trans_id, id,   parts_id, description, qty, sellprice)
+    VALUES (-1037,    -232, -256,     'test 1',    -1,  10);
+
+    -- -------------------------------------------------------------------------
+    -- Tests
+    -- -------------------------------------------------------------------------
+
+    -- Summary reports: row counts
+    --
+    SELECT is(
+        (SELECT count(*)
+           FROM tax_form_summary_report(
+                       -511,
+                       (date1() - '1 day'::interval)::date,
+                       (date1() + '1 day'::interval)::date)),
+        2::bigint,
+        'Current summary report has 2 rows'
+    );
+
+    SELECT is(
+        (SELECT count(*)
+           FROM tax_form_summary_report_accrual(
+                       -511,
+                       (date1() - '1 day'::interval)::date,
+                       (date1() + '1 day'::interval)::date)),
+        2::bigint,
+        'Current accrual summary report has 2 rows'
+    );
+
+    SELECT is(
+        (SELECT count(*)
+           FROM tax_form_summary_report(
+                       -511,
+                       (date2() - '1 day'::interval)::date,
+                       (date2() + '1 day'::interval)::date)),
+        1::bigint,
+        'Future summary report has 1 row'
+    );
+
+    SELECT is_empty(
+        $$
+            SELECT *
+              FROM tax_form_summary_report_accrual(
+                         -511,
+                         (date2() - '1 day'::interval)::date,
+                         (date2() + '1 day'::interval)::date)
+        $$,
+        'Future accrual summary report has no rows'
+    );
+
+    -- Summary reports: sums per vendor
+    --
+    -- Expected values, from the fixtures above. Every item has 1000 reportable
+    -- (plus 10 non-reportable). A payment of 505 against an item of 1010 counts
+    -- as 500 reportable (1000 * 505 / 1010).
+    --
+    -- tax_form_summary_report, current period:
+    --   vendor 1  acc_sum     = 1000 (-1024) + 500 (-1025) + 500 (-1026) = 2000
+    --             invoice_sum =  500 (-1035) + 500 (-1036)               = 1000
+    --             total_sum   = 2000 + 1000                              = 3000
+    --   vendor 2  acc_sum = 1000 (-1027), invoice_sum = 1000 (-1037),
+    --             total_sum = 2000
+    -- tax_form_summary_report_accrual, current period (full amounts):
+    --   vendor 1  acc_sum     = 3 * 1000 (-1024, -1025, -1026) = 3000
+    --             invoice_sum = 2 * 1000 (-1035, -1036)        = 2000
+    --             total_sum   = 3000 + 2000                    = 5000
+    --   vendor 2  same as the non-accrual report: 1000 / 1000 / 2000
+    -- tax_form_summary_report, future period (payments of 505 each):
+    --   vendor 1  acc_sum = 500 (-1026), invoice_sum = 500 (-1036),
+    --             total_sum = 1000
+    --
+    SELECT results_eq(
+        format($q$
+            SELECT %I = %s
+              FROM tax_form_summary_report(
+                       -511,
+                       (date1() - '1 day'::interval)::date,
+                       (date1() + '1 day'::interval)::date)
+             WHERE meta_number = %L
+        $q$, t.measure, t.expected, t.vendor),
+        ARRAY[TRUE],
+        format('Current summary report, %s, %s = %s',
+               t.label, t.measure, t.expected)
+    )
+      FROM (VALUES
+            ('vendor 1', 'Test account 1', 'invoice_sum', 1000),
+            ('vendor 2', 'Test account 2', 'invoice_sum', 1000),
+            ('vendor 1', 'Test account 1', 'total_sum', 3000),
+            ('vendor 2', 'Test account 2', 'total_sum', 2000),
+            ('vendor 1', 'Test account 1', 'acc_sum', 2000),
+            ('vendor 2', 'Test account 2', 'acc_sum', 1000)
+           ) AS t(label, vendor, measure, expected);
+
+    SELECT results_eq(
+        format($q$
+            SELECT %I = %s
+              FROM tax_form_summary_report_accrual(
+                       -511,
+                       (date1() - '1 day'::interval)::date,
+                       (date1() + '1 day'::interval)::date)
+             WHERE meta_number = %L
+        $q$, t.measure, t.expected, t.vendor),
+        ARRAY[TRUE],
+        format('Current accrual summary report, %s, %s = %s',
+               t.label, t.measure, t.expected)
+    )
+      FROM (VALUES
+            ('vendor 1', 'Test account 1', 'invoice_sum', 2000),
+            ('vendor 2', 'Test account 2', 'invoice_sum', 1000),
+            ('vendor 1', 'Test account 1', 'total_sum', 5000),
+            ('vendor 2', 'Test account 2', 'total_sum', 2000),
+            ('vendor 1', 'Test account 1', 'acc_sum', 3000),
+            ('vendor 2', 'Test account 2', 'acc_sum', 1000)
+           ) AS t(label, vendor, measure, expected);
+
+    SELECT results_eq(
+        format($q$
+            SELECT %I = %s
+              FROM tax_form_summary_report(
+                       -511,
+                       (date2() - '1 day'::interval)::date,
+                       (date2() + '1 day'::interval)::date)
+             WHERE meta_number = %L
+        $q$, t.measure, t.expected, t.vendor),
+        ARRAY[TRUE],
+        format('Future summary report, %s, %s = %s',
+               t.label, t.measure, t.expected)
+    )
+      FROM (VALUES
+            ('vendor 1', 'Test account 1', 'invoice_sum', 500),
+            ('vendor 1', 'Test account 1', 'total_sum', 1000),
+            ('vendor 1', 'Test account 1', 'acc_sum', 500)
+           ) AS t(label, vendor, measure, expected);
+
+    -- Detail reports: row counts
+    --
+    -- Vendor 1, current period: -1024, -1025, -1026, -1035, -1036 = 5 rows.
+    -- Vendor 2, current period: -1027, -1037 = 2 rows.
+    -- Vendor 1, future period: -1026, -1036 = 2 rows; vendor 2: none.
+    --
+    SELECT is(
+        (SELECT count(*)
+           FROM tax_form_details_report(
+                       -511,
+                       (date1() - '1 day'::interval)::date,
+                       (date1() + '1 day'::interval)::date,
+                       'Test account 1')),
+        5::bigint,
+        'Current detail report, vendor 1, has 5 rows'
+    );
+
+    SELECT is(
+        (SELECT count(*)
+           FROM tax_form_details_report_accrual(
+                       -511,
+                       (date1() - '1 day'::interval)::date,
+                       (date1() + '1 day'::interval)::date,
+                       'Test account 1')),
+        5::bigint,
+        'Current accrual detail report, vendor 1, has 5 rows'
+    );
+
+    SELECT is(
+        (SELECT count(*)
+           FROM tax_form_details_report(
+                       -511,
+                       (date1() - '1 day'::interval)::date,
+                       (date1() + '1 day'::interval)::date,
+                       'Test account 2')),
+        2::bigint,
+        'Current detail report, vendor 2, has 2 rows'
+    );
+
+    SELECT is(
+        (SELECT count(*)
+           FROM tax_form_details_report_accrual(
+                       -511,
+                       (date1() - '1 day'::interval)::date,
+                       (date1() + '1 day'::interval)::date,
+                       'Test account 2')),
+        2::bigint,
+        'Current accrual detail report, vendor 2, has 2 rows'
+    );
+
+    SELECT is(
+        (SELECT count(*)
+           FROM tax_form_details_report(
+                       -511,
+                       (date2() - '1 day'::interval)::date,
+                       (date2() + '1 day'::interval)::date,
+                       'Test account 1')),
+        2::bigint,
+        'Future detail report, vendor 1, has 2 rows'
+    );
+
+    SELECT is_empty(
+        $$
+            SELECT *
+              FROM tax_form_details_report(
+                         -511,
+                         (date2() - '1 day'::interval)::date,
+                         (date2() + '1 day'::interval)::date,
+                         'Test account 2')
+        $$,
+        'Future detail report, vendor 2, has no rows'
+    );
+
+    -- Detail reports: amounts per invoice
+    --
+    -- Expected values follow the same arithmetic as the summary reports above:
+    -- tax_form_details_report: values match pro rata payments (e.g. -1025:
+    -- 505 of 1010 -> 500). tax_form_details_report_accrual: the full 1000 per
+    -- item. In every row total_sum = acc_sum + invoice_sum.
+    --
+    SELECT results_eq(
+        format($q$
+            SELECT %I = %s
+              FROM tax_form_details_report(
+                       -511,
+                       (date1() - '1 day'::interval)::date,
+                       (date1() + '1 day'::interval)::date,
+                       %L)
+             WHERE invoice_id = %s
+        $q$, t.measure, t.expected, t.vendor, t.invoice_id),
+        ARRAY[TRUE],
+        format('Current detail report, %s, %s = %s',
+               t.label, t.measure, t.expected)
+    )
+      FROM (VALUES
+            ('invoice -1024', 'Test account 1', -1024, 'acc_sum', 1000),
+            ('invoice -1025', 'Test account 1', -1025, 'acc_sum', 500),
+            ('invoice -1026', 'Test account 1', -1026, 'acc_sum', 500),
+            ('invoice -1027', 'Test account 2', -1027, 'acc_sum', 1000),
+            ('invoice -1024', 'Test account 1', -1024, 'total_sum', 1000),
+            ('invoice -1025', 'Test account 1', -1025, 'total_sum', 500),
+            ('invoice -1026', 'Test account 1', -1026, 'total_sum', 500),
+            ('invoice -1027', 'Test account 2', -1027, 'total_sum', 1000),
+            ('invoice -1024', 'Test account 1', -1024, 'invoice_sum', 0),
+            ('invoice -1025', 'Test account 1', -1025, 'invoice_sum', 0),
+            ('invoice -1026', 'Test account 1', -1026, 'invoice_sum', 0),
+            ('invoice -1027', 'Test account 2', -1027, 'invoice_sum', 0),
+            ('invoice -1035', 'Test account 1', -1035, 'invoice_sum', 500),
+            ('invoice -1036', 'Test account 1', -1036, 'invoice_sum', 500),
+            ('invoice -1037', 'Test account 2', -1037, 'invoice_sum', 1000),
+            ('invoice -1035', 'Test account 1', -1035, 'total_sum', 500),
+            ('invoice -1036', 'Test account 1', -1036, 'total_sum', 500),
+            ('invoice -1037', 'Test account 2', -1037, 'total_sum', 1000),
+            ('invoice -1035', 'Test account 1', -1035, 'acc_sum', 0),
+            ('invoice -1036', 'Test account 1', -1036, 'acc_sum', 0),
+            ('invoice -1037', 'Test account 2', -1037, 'acc_sum', 0)
+           ) AS t(label, vendor, invoice_id, measure, expected);
+
+    SELECT results_eq(
+        format($q$
+            SELECT %I = %s
+              FROM tax_form_details_report_accrual(
+                       -511,
+                       (date1() - '1 day'::interval)::date,
+                       (date1() + '1 day'::interval)::date,
+                       %L)
+             WHERE invoice_id = %s
+        $q$, t.measure, t.expected, t.vendor, t.invoice_id),
+        ARRAY[TRUE],
+        format('Current accrual detail report, %s, %s = %s',
+               t.label, t.measure, t.expected)
+    )
+      FROM (VALUES
+            ('invoice -1024', 'Test account 1', -1024, 'acc_sum', 1000),
+            ('invoice -1025', 'Test account 1', -1025, 'acc_sum', 1000),
+            ('invoice -1026', 'Test account 1', -1026, 'acc_sum', 1000),
+            ('invoice -1027', 'Test account 2', -1027, 'acc_sum', 1000),
+            ('invoice -1024', 'Test account 1', -1024, 'total_sum', 1000),
+            ('invoice -1025', 'Test account 1', -1025, 'total_sum', 1000),
+            ('invoice -1026', 'Test account 1', -1026, 'total_sum', 1000),
+            ('invoice -1027', 'Test account 2', -1027, 'total_sum', 1000),
+            ('invoice -1024', 'Test account 1', -1024, 'invoice_sum', 0),
+            ('invoice -1025', 'Test account 1', -1025, 'invoice_sum', 0),
+            ('invoice -1026', 'Test account 1', -1026, 'invoice_sum', 0),
+            ('invoice -1027', 'Test account 2', -1027, 'invoice_sum', 0),
+            ('invoice -1035', 'Test account 1', -1035, 'invoice_sum', 1000),
+            ('invoice -1036', 'Test account 1', -1036, 'invoice_sum', 1000),
+            ('invoice -1037', 'Test account 2', -1037, 'invoice_sum', 1000),
+            ('invoice -1035', 'Test account 1', -1035, 'total_sum', 1000),
+            ('invoice -1036', 'Test account 1', -1036, 'total_sum', 1000),
+            ('invoice -1037', 'Test account 2', -1037, 'total_sum', 1000),
+            ('invoice -1035', 'Test account 1', -1035, 'acc_sum', 0),
+            ('invoice -1036', 'Test account 1', -1036, 'acc_sum', 0),
+            ('invoice -1037', 'Test account 2', -1037, 'acc_sum', 0)
+           ) AS t(label, vendor, invoice_id, measure, expected);
+
+    SELECT results_eq(
+        format($q$
+            SELECT %I = %s
+              FROM tax_form_details_report(
+                       -511,
+                       (date2() - '1 day'::interval)::date,
+                       (date2() + '1 day'::interval)::date,
+                       %L)
+             WHERE invoice_id = %s
+        $q$, t.measure, t.expected, t.vendor, t.invoice_id),
+        ARRAY[TRUE],
+        format('Future detail report, %s, %s = %s',
+               t.label, t.measure, t.expected)
+    )
+      FROM (VALUES
+            ('invoice -1026', 'Test account 1', -1026, 'acc_sum', 500),
+            ('invoice -1026', 'Test account 1', -1026, 'invoice_sum', 0),
+            ('invoice -1026', 'Test account 1', -1026, 'total_sum', 500),
+            ('invoice -1036', 'Test account 1', -1036, 'acc_sum', 0),
+            ('invoice -1036', 'Test account 1', -1036, 'invoice_sum', 500),
+            ('invoice -1036', 'Test account 1', -1036, 'total_sum', 500)
+           ) AS t(label, vendor, invoice_id, measure, expected);
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();

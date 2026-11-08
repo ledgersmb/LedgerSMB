@@ -15,7 +15,145 @@ BEGIN;
 
     \i xt/data/42-pg/Base.sql
 
-    -- Validate required tables
+    -- ========================================================================
+    -- Setup: helper functions and id legend
+    -- ========================================================================
+
+    -- Id legend (all fixture ids are negative):
+    --   -1000, -1001, -1002  accounts linked below as 'AP', 'AP_amount' and
+    --                        'AP_paid'; not created in this file
+    --   -255, -256           ids reused across account_heading (-255 only),
+    --                        account, entity_credit_account and parts;
+    --                        -255 is also the AP account of both credit
+    --                        accounts
+    --   -100, -101           entity ids of the two credit accounts and
+    --                        companies; not created in this file
+    --   -511                 country_tax_form id (country_id 232 is not
+    --                        created in this file)
+    --   -1024, -1025         company ids, reused as AP transaction ids
+    --   -1024 .. -1027       AP transaction ids
+    --   -115 .. -149         acc_trans / ac_tax_form entry ids, derived by
+    --                        test_ap_transaction() from a per-transaction
+    --                        base id (base + 0 .. base + 6)
+
+    -- Returns 1 December of the current year.
+    CREATE OR REPLACE FUNCTION date1() RETURNS date AS
+    $$
+    SELECT (EXTRACT('YEAR' FROM now()) || '-12-01')::date;
+    $$ LANGUAGE SQL;
+
+    -- Returns 1 December of the following year.
+    CREATE OR REPLACE FUNCTION date2() RETURNS date AS
+    $$
+    SELECT ((EXTRACT('YEAR' FROM now()) || '-12-01')::date
+            + '1 year'::interval)::date;
+    $$ LANGUAGE SQL;
+
+    -- Creates one AP transaction (rows in transactions, open_item, ap,
+    -- acc_trans and ac_tax_form) and returns nothing. Every transaction
+    -- has an AP line of 1010 on account -1000, a reportable expense line
+    -- of 1000 (ac_tax_form flagged) and a non-reportable one of 10 on
+    -- account -1001. It is paid p_paid_now on date1() through account
+    -- -1002; if p_paid_later is non-zero it is also paid that amount on
+    -- date2().
+    -- Entry ids follow the pattern p_entry_base + n, n = 0 .. 6, in the
+    -- order the rows are inserted (+5 and +6 only for the later payment).
+    CREATE OR REPLACE FUNCTION test_ap_transaction(
+        p_trans_id integer,
+        p_item_number text,
+        p_eca_id integer,
+        p_entry_base integer,
+        p_paid_now numeric,
+        p_paid_later numeric DEFAULT 0
+    ) RETURNS void AS
+    $$
+    BEGIN
+        INSERT INTO transactions
+            (id, transdate, trans_type_code, approved)
+        VALUES
+            (p_trans_id, date1(), 'ap', TRUE);
+
+        INSERT INTO open_item
+            (item_number, item_type, account_id)
+        VALUES
+            (p_item_number, 'ap', -1000);
+
+        INSERT INTO ap
+            (trans_id, open_item_id, amount_bc, netamount_bc, curr,
+             amount_tc, netamount_tc, entity_credit_account)
+        VALUES
+            (p_trans_id, currval('open_item_id_seq'), 1010, 1010, 'XTS',
+             1010, 1010, p_eca_id);
+
+        INSERT INTO acc_trans
+            (trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+             approved, entry_id, open_item_id)
+        VALUES
+            (p_trans_id, -1000, date1(), 1010, 1010, 'XTS',
+             TRUE, p_entry_base, currval('open_item_id_seq'));
+
+        INSERT INTO acc_trans
+            (trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+             approved, entry_id)
+        VALUES
+            (p_trans_id, -1001, date1(), -1000, -1000, 'XTS',
+             TRUE, p_entry_base + 1);
+
+        INSERT INTO ac_tax_form
+            (entry_id, reportable)
+        VALUES
+            (p_entry_base + 1, TRUE);
+
+        INSERT INTO acc_trans
+            (trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+             approved, entry_id)
+        VALUES
+            (p_trans_id, -1001, date1(), -10, -10, 'XTS',
+             TRUE, p_entry_base + 2);
+
+        INSERT INTO acc_trans
+            (trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+             approved, entry_id)
+        VALUES
+            (p_trans_id, -1002, date1(), p_paid_now, p_paid_now, 'XTS',
+             TRUE, p_entry_base + 3);
+
+        INSERT INTO acc_trans
+            (trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
+             approved, entry_id, open_item_id)
+        VALUES
+            (p_trans_id, -1000, date1(), -p_paid_now, -p_paid_now, 'XTS',
+             TRUE, p_entry_base + 4, currval('open_item_id_seq'));
+
+        IF p_paid_later <> 0 THEN
+            INSERT INTO acc_trans
+                (trans_id, chart_id, transdate, amount_bc, amount_tc,
+                 curr, approved, entry_id)
+            VALUES
+                (p_trans_id, -1002, date2(), p_paid_later, p_paid_later,
+                 'XTS', TRUE, p_entry_base + 5);
+
+            INSERT INTO acc_trans
+                (trans_id, chart_id, transdate, amount_bc, amount_tc,
+                 curr, approved, entry_id, open_item_id)
+            VALUES
+                (p_trans_id, -1000, date2(), -p_paid_later,
+                 -p_paid_later, 'XTS', TRUE, p_entry_base + 6,
+                 currval('open_item_id_seq'));
+        END IF;
+    END;
+    $$ LANGUAGE plpgsql;
+
+    -- ========================================================================
+    -- Schema checks
+    -- ========================================================================
+
+    -- ---- Fixtures ---------------------------------------------------------
+    -- None.
+
+    -- ---- Tests ------------------------------------------------------------
+
+    -- Required tables
 
     SELECT has_table('account_heading');
     SELECT has_table('account_link');
@@ -27,314 +165,350 @@ BEGIN;
     SELECT has_table('entity_credit_account');
     SELECT has_table('parts');
 
-    -- Validate required functions
+    -- Required functions
 
-    SELECT has_function('report__balance_sheet',ARRAY['date','text', 'text']);
-    SELECT has_function('pnl__customer',ARRAY['integer','date','date','text']);
-    SELECT has_function('pnl__income_statement_accrual',ARRAY['date','date','integer[]','text']);
-    SELECT has_function('pnl__income_statement_cash',ARRAY['date','date','integer[]','text']);
-    SELECT has_function('pnl__invoice',ARRAY['integer','text']);
-    SELECT has_function('pnl__product',ARRAY['date','date','integer','integer[]','text']);
+    SELECT has_function(
+        'report__balance_sheet',
+        ARRAY['date', 'text', 'text']
+    );
+    SELECT has_function(
+        'pnl__customer',
+        ARRAY['integer', 'date', 'date', 'text']
+    );
+    SELECT has_function(
+        'pnl__income_statement_accrual',
+        ARRAY['date', 'date', 'integer[]', 'text']
+    );
+    SELECT has_function(
+        'pnl__income_statement_cash',
+        ARRAY['date', 'date', 'integer[]', 'text']
+    );
+    SELECT has_function(
+        'pnl__invoice',
+        ARRAY['integer', 'text']
+    );
+    SELECT has_function(
+        'pnl__product',
+        ARRAY['date', 'date', 'integer', 'integer[]', 'text']
+    );
 
-    -- Basic setup
+    -- ========================================================================
+    -- Shared AP fixtures: accounts, tax form, parts, credit accounts
+    -- ========================================================================
 
-    INSERT INTO account_heading(id, accno ) VALUES (-255, '-billion-heading');
-    INSERT INTO account (id, accno, category, heading ) VALUES (-255, '-billion', 'L', -255);
-    INSERT INTO account (id, accno, category, heading ) VALUES (-256, '-billiontest', 'L', -255);
+    -- ---- Fixtures ---------------------------------------------------------
 
-    INSERT INTO country_tax_form (country_id, form_name, id) VALUES (232, 'Testing Form', -511);
+    INSERT INTO account_heading
+        (id, accno)
+    VALUES
+        (-255, '-billion-heading');
 
-    INSERT INTO parts (id, partnumber, description) values (-255, '-test1', 'test 1');
-    INSERT INTO parts (id, partnumber, description) values (-256, '-test2', 'test 2');
+    INSERT INTO account
+        (id, accno, category, heading)
+    VALUES
+        (-255, '-billion', 'L', -255);
 
-    -- Set up an ECAs, for AP.
+    INSERT INTO account
+        (id, accno, category, heading)
+    VALUES
+        (-256, '-billiontest', 'L', -255);
 
-    INSERT INTO entity_credit_account (id, entity_id, entity_class, meta_number, taxform_id, ar_ap_account_id, curr) VALUES (-255, -100, 1, 'Test account 1', -511, -255, 'XTS');
+    INSERT INTO country_tax_form
+        (country_id, form_name, id)
+    VALUES
+        (232, 'Testing Form', -511);
 
-    INSERT INTO company (id, entity_id, legal_name) VALUES (-1024, -100, 'Testing Tax Form');
+    INSERT INTO parts
+        (id, partnumber, description)
+    VALUES
+        (-255, '-test1', 'test 1');
 
-    INSERT INTO entity_credit_account (id, entity_id, entity_class, meta_number, taxform_id, ar_ap_account_id, curr) VALUES (-256, -101, 1, 'Test account 2', -511, -255, 'XTS');
+    INSERT INTO parts
+        (id, partnumber, description)
+    VALUES
+        (-256, '-test2', 'test 2');
 
-    INSERT INTO company (id, entity_id, legal_name) VALUES (-1025, -101, 'Testing Tax Form');
+    -- Set up ECAs, for AP.
 
-    CREATE OR REPLACE FUNCTION date1() RETURNS date AS
-    $$
-    SELECT (extract('YEAR' from now())|| '-12-01')::date;
-    $$ language sql;
+    INSERT INTO entity_credit_account
+        (id, entity_id, entity_class, meta_number, taxform_id,
+         ar_ap_account_id, curr)
+    VALUES
+        (-255, -100, 1, 'Test account 1', -511,
+         -255, 'XTS');
 
-    CREATE OR REPLACE FUNCTION date2() RETURNS date AS
-    $$
-    SELECT ((extract('YEAR' from now())|| '-12-01')::date
-            + '1 year'::interval)::date;
-    $$ language sql;
+    INSERT INTO company
+        (id, entity_id, legal_name)
+    VALUES
+        (-1024, -100, 'Testing Tax Form');
 
-    INSERT INTO account_link (account_id, description)
-    values (-1000, 'AP');
-    UPDATE account SET open_item_managed = true WHERE id = -1000;
+    INSERT INTO entity_credit_account
+        (id, entity_id, entity_class, meta_number, taxform_id,
+         ar_ap_account_id, curr)
+    VALUES
+        (-256, -101, 1, 'Test account 2', -511,
+         -255, 'XTS');
+
+    INSERT INTO company
+        (id, entity_id, legal_name)
+    VALUES
+        (-1025, -101, 'Testing Tax Form');
+
+    INSERT INTO account_link
+        (account_id, description)
+    VALUES
+        (-1000, 'AP');
+    UPDATE account SET open_item_managed = TRUE WHERE id = -1000;
 
     UPDATE account SET category = 'L' WHERE id = -1000;
 
-    INSERT INTO account_link (account_id, description)
-    values (-1001, 'AP_amount');
+    INSERT INTO account_link
+        (account_id, description)
+    VALUES
+        (-1001, 'AP_amount');
 
     UPDATE account SET category = 'E' WHERE id = -1001;
 
-    INSERT INTO account_link (account_id, description)
-    values (-1002, 'AP_paid');
+    INSERT INTO account_link
+        (account_id, description)
+    VALUES
+        (-1002, 'AP_paid');
 
     UPDATE account SET category = 'A' WHERE id = -1002;
 
-    --AP transactions.
+    -- Tests: none.
 
-    --1) AP transaction: Reportable amount 1000, non-reportable amount $10, paid
-    -- in full in current year. id -1024
+    -- ========================================================================
+    -- AP 1: -1024, paid in full in the current year
+    -- ========================================================================
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-1024, date1(), 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('_TEST AP', 'ap', -1000);
-    INSERT INTO ap (trans_id, open_item_id, amount_bc, netamount_bc, curr,
-                    amount_tc, netamount_tc, entity_credit_account)
-        VALUES(-1024, currval('open_item_id_seq'), 1010, 1010, 'XTS', 1010, 1010, -255);
+    -- 1) AP transaction: Reportable amount 1000, non-reportable amount $10,
+    -- paid in full in current year. id -1024
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc,
-                          curr, approved, entry_id, open_item_id)
-        VALUES (-1024, -1000, date1(), 1010, 1010, 'XTS', true, -119, currval('open_item_id_seq'));
+    -- ---- Fixtures ---------------------------------------------------------
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id)
-        VALUES (-1024, -1001, date1(), -1000, -1000, 'XTS', true, -118);
+    SELECT test_ap_transaction(
+        p_trans_id    => -1024,
+        p_item_number => '_TEST AP',
+        p_eca_id      => -255,
+        p_entry_base  => -119,
+        p_paid_now    => 1010
+    );
 
-    INSERT INTO ac_tax_form(entry_id, reportable) values (-118, true);
+    -- ---- Tests ------------------------------------------------------------
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id)
-        VALUES (-1024, -1001, date1(), -10, -10, 'XTS', true, -117);
+    -- Paid 1010 of 1010 on a single date: portion 1 in one row.
+    SELECT is(
+        (SELECT sum(portion) FROM cash_impact WHERE trans_id = -1024),
+        1::numeric,
+        '-1024: cash impact portions sum to 1 across all dates'
+    );
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id)
-        VALUES (-1024, -1002, date1(), 1010, 1010, 'XTS', true, -116);
+    SELECT is(
+        (SELECT count(*) FROM cash_impact WHERE trans_id = -1024),
+        1::bigint,
+        '-1024: exactly one cash_impact row'
+    );
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id, open_item_id)
-        VALUES (-1024, -1000, date1(), -1010, -1010, 'XTS', true, -115, currval('open_item_id_seq'));
-
-    -- Run tests
-
-    PREPARE test AS SELECT sum(portion)
-                      FROM cash_impact
-                     WHERE trans_id = -1024;
-    SELECT results_eq('test',ARRAY[1::numeric],'-1024, cash impact 1 across all dates');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*)
-          FROM cash_impact
-         WHERE trans_id = -1024;
-    SELECT results_eq('test',ARRAY[1::bigint],'-1024, one cash impact row');
-    DEALLOCATE test;
+    -- ========================================================================
+    -- AP 2: -1025, partially paid in the current year
+    -- ========================================================================
 
     -- 2) AP transaction: Reportable amount $1000, non-reportable amount $10,
     -- partially paid ($500) in current year -1025
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-1025, date1(), 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('_TEST AP2', 'ap', -1000);
-    INSERT INTO ap (trans_id, open_item_id, amount_bc, netamount_bc, amount_tc, netamount_tc,
-                    curr, entity_credit_account)
-         VALUES (-1025, currval('open_item_id_seq'), 1010, 1010, 1010, 1010, 'XTS', -255);
+    -- ---- Fixtures ---------------------------------------------------------
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id, open_item_id)
-         VALUES (-1025, -1000, date1(), 1010, 1010, 'XTS', true, -129, currval('open_item_id_seq'));
+    SELECT test_ap_transaction(
+        p_trans_id    => -1025,
+        p_item_number => '_TEST AP2',
+        p_eca_id      => -255,
+        p_entry_base  => -129,
+        p_paid_now    => 505
+    );
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id)
-         VALUES (-1025, -1001, date1(), -1000, -1000, 'XTS', true, -128);
+    -- ---- Tests ------------------------------------------------------------
 
-    INSERT INTO ac_tax_form(entry_id, reportable) values (-128, true);
+    -- debug output (not an assertion)
+    SELECT * FROM cash_impact WHERE trans_id = -1025;
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id)
-         VALUES (-1025, -1001, date1(), -10, -10, 'XTS', true, -127);
+    -- Paid 505 of 1010 on a single date: portion 505 / 1010 = 0.5 in one row.
+    SELECT is(
+        (SELECT sum(portion) FROM cash_impact WHERE trans_id = -1025),
+        0.5::numeric,
+        '-1025: cash impact portions sum to 0.5 across all dates'
+    );
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id)
-         VALUES (-1025, -1002, date1(), 505, 505, 'XTS', true, -126);
+    SELECT is(
+        (SELECT count(*) FROM cash_impact WHERE trans_id = -1025),
+        1::bigint,
+        '-1025: exactly one cash_impact row'
+    );
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id, open_item_id)
-         VALUES (-1025, -1000, date1(), -505, -505, 'XTS', true, -125, currval('open_item_id_seq'));
+    -- ========================================================================
+    -- AP 3: -1026, paid in the current year and in a future year
+    -- ========================================================================
 
-    -- Run tests
+    -- 3) AP Transaction: Reportable amount $1000, non-reportable amount $10,
+    -- paid $500 current year, $500 in future year -1026
 
-    select * from cash_impact where trans_id = -1025;
-    PREPARE test AS SELECT sum(portion)
-                      FROM cash_impact
-                     WHERE trans_id = -1025;
-    SELECT results_eq('test',ARRAY[0.5],'-1025, cash impact 0.5 across all dates');
-    DEALLOCATE test;
+    -- ---- Fixtures ---------------------------------------------------------
 
-    PREPARE test AS SELECT count(*)
-                      FROM cash_impact
-                     WHERE trans_id = -1025;
-    SELECT results_eq('test',ARRAY[1::bigint],'-1025, one cash impact row');
-    DEALLOCATE test;
+    SELECT test_ap_transaction(
+        p_trans_id    => -1026,
+        p_item_number => '_TEST AP3',
+        p_eca_id      => -255,
+        p_entry_base  => -139,
+        p_paid_now    => 505,
+        p_paid_later  => 505
+    );
 
-    -- 3)_AP Transaction: Reportable amount $1000, non-reportable amount $10,
-    -- paid $500 currnet year, $500 in future year -1026
+    -- ---- Tests ------------------------------------------------------------
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-1026, date1(), 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('_TEST AP3', 'ap', -1000);
-    INSERT INTO ap (trans_id, open_item_id, amount_bc, netamount_bc, curr,
-                    amount_tc, netamount_tc, entity_credit_account)
-          values(-1026, currval('open_item_id_seq'), 1010, 1010, 'XTS', 1010, 1010, -255);
+    -- Paid 505 on date1() and 505 on date2(): 505 / 1010 + 505 / 1010 = 1,
+    -- in two rows of 0.5 each.
+    SELECT is(
+        (SELECT sum(portion) FROM cash_impact WHERE trans_id = -1026),
+        1::numeric,
+        '-1026: cash impact portions sum to 1 across all dates'
+    );
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id, open_item_id)
-         VALUES (-1026, -1000, date1(), 1010, 1010, 'XTS', true, -139, currval('open_item_id_seq'));
+    SELECT is(
+        (SELECT count(*) FROM cash_impact WHERE trans_id = -1026),
+        2::bigint,
+        '-1026: exactly two cash_impact rows'
+    );
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id)
-         VALUES (-1026, -1001, date1(), -1000, -1000, 'XTS', true, -138);
+    SELECT results_eq(
+        $$ SELECT portion
+             FROM cash_impact
+            WHERE trans_id = -1026 AND transdate = date1() $$,
+        ARRAY[0.5],
+        '-1026: cash impact is 0.5 on date1()'
+    );
 
-    INSERT INTO ac_tax_form(entry_id, reportable) values (-138, true);
+    SELECT results_eq(
+        $$ SELECT portion
+             FROM cash_impact
+            WHERE trans_id = -1026 AND transdate = date2() $$,
+        ARRAY[0.5],
+        '-1026: cash impact is 0.5 on date2()'
+    );
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id)
-         VALUES (-1026, -1001, date1(), -10, -10, 'XTS', true, -137);
+    -- ========================================================================
+    -- AP 4: -1027, second vendor, paid in full in the current year
+    -- ========================================================================
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id)
-         VALUES (-1026, -1002, date1(), 505, 505, 'XTS', true, -136);
-
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id, open_item_id)
-         VALUES (-1026, -1000, date1(), -505, -505, 'XTS', true, -135, currval('open_item_id_seq'));
-
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id)
-         VALUES (-1026, -1002, date2(), 505, 505, 'XTS', true, -134);
-
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id, open_item_id)
-         VALUES (-1026, -1000, date2(), -505, -505, 'XTS', true, -133, currval('open_item_id_seq'));
-
-    PREPARE test AS SELECT sum(portion)
-                      FROM cash_impact
-                     WHERE trans_id = -1026;
-    SELECT results_eq('test',ARRAY[1::numeric],'-1026, cash impact 1 across all dates');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT count(*)
-                      FROM cash_impact
-                     WHERE trans_id = -1026;
-    SELECT results_eq('test',ARRAY[2::bigint],'-1026, two cash impact rows');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT portion
-                      FROM cash_impact
-                     WHERE trans_id = -1026 and transdate = date1();
-    SELECT results_eq('test',ARRAY[0.5],'-1026, cash impact 0.5 on date 1');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT portion
-                      FROM cash_impact
-                     WHERE trans_id = -1026 and transdate = date2();
-    SELECT results_eq('test',ARRAY[0.5],'-1026, cash impact 0.5 on date 2');
-    DEALLOCATE test;
-
-    -- 4) AP transaction: Reportable amount 1000, non-reportable amount $10, paid
-    -- $500 currnet year, $500 in future year -1027, to second vendor
+    -- 4) AP transaction: Reportable amount 1000, non-reportable amount $10,
+    -- paid $500 current year, $500 in future year -1027, to second vendor
     -- Vendor Invoices.
 
-    INSERT INTO transactions (id, transdate, trans_type_code, approved)
-    VALUES (-1027, date1(), 'ap', true);
-    INSERT INTO open_item (item_number, item_type, account_id)
-    VALUES ('_TEST AP4', 'ap', -1000);
-    INSERT INTO ap (trans_id, open_item_id, amount_bc, netamount_bc, curr,
-                    amount_tc, netamount_tc, entity_credit_account)
-    values(-1027, currval('open_item_id_seq'), 1010, 1010, 'XTS', 1010, 1010, -256);
+    -- ---- Fixtures ---------------------------------------------------------
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id, open_item_id)
-         VALUES (-1027, -1000, date1(), 1010, 1010, 'XTS', true, -149, currval('open_item_id_seq'));
+    SELECT test_ap_transaction(
+        p_trans_id    => -1027,
+        p_item_number => '_TEST AP4',
+        p_eca_id      => -256,
+        p_entry_base  => -149,
+        p_paid_now    => 1010
+    );
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id)
-         VALUES (-1027, -1001, date1(), -1000, -1000, 'XTS', true, -148);
+    -- ---- Tests ------------------------------------------------------------
 
-    INSERT INTO ac_tax_form(entry_id, reportable) values (-148, true);
+    -- Paid 1010 of 1010 on a single date: portion 1 in one row.
+    SELECT ok(
+        (SELECT sum(portion) = 1 FROM cash_impact WHERE trans_id = -1027),
+        '-1027: cash impact portions sum to 1 across all dates'
+    );
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id)
-         VALUES (-1027, -1001, date1(), -10, -10, 'XTS', true, -147);
+    SELECT ok(
+        (SELECT count(*) = 1 FROM cash_impact WHERE trans_id = -1027),
+        '-1027: exactly one cash_impact row'
+    );
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id)
-         VALUES (-1027, -1002, date1(), 1010, 1010, 'XTS', true, -146);
+    -- ========================================================================
+    -- Income statements for account -1001 across -1024 .. -1027
+    -- ========================================================================
 
-    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc, curr,
-                          approved, entry_id, open_item_id)
-         VALUES (-1027, -1000, date1(), -1010, -1010, 'XTS', true, -145, currval('open_item_id_seq'));
+    -- ---- Fixtures ---------------------------------------------------------
+    -- None; uses the AP 1 - AP 4 fixtures above.
 
-    PREPARE test AS SELECT sum(portion) = 1
-                      FROM cash_impact
-                     WHERE trans_id = -1027;
-    SELECT results_eq('test',ARRAY[true],'-1027, cash impact 1 across all dates');
-    DEALLOCATE test;
+    -- ---- Tests ------------------------------------------------------------
 
-    PREPARE test AS SELECT count(*) = 1
-                      FROM cash_impact
-                     WHERE trans_id = -1027;
-    SELECT results_eq('test',ARRAY[true],'-1027, one cash impact row');
-    DEALLOCATE test;
+    -- Accrual basis, window date1() .. date2() - 1: all four transactions
+    -- are dated date1() and each puts -1000 + -10 = -1010 on account
+    -- -1001, so the total is 4 * -1010 = -4040.
+    SELECT ok(
+        (SELECT count(*) = 1
+           FROM pnl__income_statement_accrual(
+                    date1(), date2() - 1, ARRAY[]::int[], NULL)
+          WHERE account_id = -1001),
+        'Account -1001 appears in the accrual income statement'
+    );
 
-    PREPARE test AS SELECT count(*) = 1
-                      FROM pnl__income_statement_accrual(date1(), date2() - 1, ARRAY[]::int[], null)
-                     WHERE account_id = -1001;
-    SELECT results_eq('test',ARRAY[true],'Account -1001 shows up in accrual income statement');
-    DEALLOCATE test;
+    SELECT results_eq(
+        $$ SELECT amount = -4040
+             FROM pnl__income_statement_accrual(
+                      date1(), date2() - 1, ARRAY[]::int[], NULL)
+            WHERE account_id = -1001 $$,
+        ARRAY[TRUE],
+        'Account -1001 accrual total is -4040'
+    );
 
-    PREPARE test AS SELECT amount = -4040
-                      FROM pnl__income_statement_accrual(date1(), date2() - 1, ARRAY[]::int[], null)
-                     WHERE account_id = -1001;
-    SELECT results_eq('test',ARRAY[true],'Account -1001 accrual total -4040');
-    DEALLOCATE test;
+    -- Window starts at date2(), after every transaction date.
+    SELECT is_empty(
+        $$ SELECT account_id
+             FROM pnl__income_statement_accrual(
+                      date2(), date2() + 365, ARRAY[]::int[], NULL)
+            WHERE account_id = -1001 $$,
+        'Account -1001 is absent from accrual income statement from date2()'
+    );
 
-    PREPARE test AS SELECT count(*) = 0
-                      FROM pnl__income_statement_accrual(date2(), date2() + 365, ARRAY[]::int[], null)
-                     WHERE account_id = -1001;
-    SELECT results_eq('test',ARRAY[true],'Account -1001 does not show up in future accrual pnl');
-    DEALLOCATE test;
+    -- Cash basis, window date1() .. date2() - 1: expense is recognized in
+    -- proportion to payments dated inside the window:
+    --   -1024: 1 * -1010 = -1010
+    --   -1025: 0.5 * -1010 = -505
+    --   -1026: 0.5 * -1010 = -505 (date2() payment is outside the window)
+    --   -1027: 1 * -1010 = -1010
+    -- Total: -1010 - 505 - 505 - 1010 = -3030.
+    SELECT ok(
+        (SELECT count(*) = 1
+           FROM pnl__income_statement_cash(
+                    date1(), date2() - 1, ARRAY[]::int[], NULL)
+          WHERE account_id = -1001),
+        'Account -1001 appears in the cash income statement'
+    );
 
-    PREPARE test AS SELECT count(*) = 1
-                      FROM pnl__income_statement_cash(date1(), date2() - 1, ARRAY[]::int[], null)
-                     WHERE account_id = -1001;
-    SELECT results_eq('test',ARRAY[true],'Account -1001 shows up in cash income statement');
-    DEALLOCATE test;
+    SELECT results_eq(
+        $$ SELECT amount = -3030
+             FROM pnl__income_statement_cash(
+                      date1(), date2() - 1, ARRAY[]::int[], NULL)
+            WHERE account_id = -1001 $$,
+        ARRAY[TRUE],
+        'Account -1001 cash total is -3030'
+    );
 
-    PREPARE test AS SELECT amount = -3030
-                      FROM pnl__income_statement_cash(date1(), date2() - 1, ARRAY[]::int[], null)
-                     WHERE account_id = -1001;
-    SELECT results_eq('test',ARRAY[true],'Account -1001 cash total -3030');
-    DEALLOCATE test;
+    -- debug output (not an assertion)
+    SELECT * FROM pnl__income_statement_cash(
+        date1(), date2() - 1, ARRAY[]::int[], NULL);
 
-    SELECT * FROM pnl__income_statement_cash(date1(), date2() - 1, ARRAY[]::int[], null);
+    -- Cash basis, window around date2(): only the -1026 payment of 505
+    -- (0.5 * -1010 = -505) falls inside it.
+    SELECT ok(
+        (SELECT count(*) = 1
+           FROM pnl__income_statement_cash(
+                    date2() - 5, date2() + 20, ARRAY[]::int[], NULL)
+          WHERE account_id = -1001),
+        'Account -1001 appears in the cash income statement around date2()'
+    );
 
-    PREPARE test AS SELECT count(*) = 1
-                      FROM pnl__income_statement_cash(date2() - 5, date2() + 20, ARRAY[]::int[], null)
-                     WHERE account_id = -1001;
-    SELECT results_eq('test',ARRAY[true],'Account -1001 shows up in future cash pnl');
-    DEALLOCATE test;
-
-    PREPARE test AS SELECT sum(amount) = -505
-                      FROM pnl__income_statement_cash(date2() - 5, date2() + 20, ARRAY[]::int[], null)
-                     WHERE account_id = -1001;
-    SELECT results_eq('test',ARRAY[true],'Account -1001 future cash total -505');
-    DEALLOCATE test;
+    SELECT ok(
+        (SELECT sum(amount) = -505
+           FROM pnl__income_statement_cash(
+                    date2() - 5, date2() + 20, ARRAY[]::int[], NULL)
+          WHERE account_id = -1001),
+        'Account -1001 cash total around date2() is -505'
+    );
 
     -- Finish the tests and clean up.
     SELECT * FROM finish();
