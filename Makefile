@@ -1,5 +1,6 @@
 
 -include Makefile.local
+-include Makefile.perl
 
 DIST_VER=$(shell git rev-parse --short HEAD)
 DIST_DIR=/tmp

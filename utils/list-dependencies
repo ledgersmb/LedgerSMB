@@ -1,0 +1,57 @@
+#!/usr/bin/env perl
+
+=head1 NAME
+
+list-dependencies - List runtime dependencies from the cpanfile, with versions
+
+=head1 SYNOPSIS
+
+  utils/list-dependencies [--feature NAME]... [--cpanfile FILE]
+
+  # Install the runtime dependencies including the 'starman' and 'edi' features
+  utils/list-dependencies --feature starman --feature edi | xargs cpanm --notest
+
+=head1 DESCRIPTION
+
+Prints one C<Module~version> line per runtime requirement (the format
+C<cpanm> understands, e.g. C<Beam::Wire~1.031>), or just the module name when
+there's no minimum version. Requirements of the features given with
+C<--feature> are included.
+
+=cut
+
+use strict;
+use warnings;
+
+use Getopt::Long qw( :config no_ignore_case );
+use Module::CPANfile;
+use Pod::Usage;
+
+my @features;
+my $cpanfile = 'cpanfile';
+my $help;
+
+GetOptions(
+    'feature=s' => \@features,
+    'cpanfile=s' => \$cpanfile,
+    'help|h'    => \$help,
+) or pod2usage(2);
+pod2usage(1) if $help;
+
+my $file = Module::CPANfile->load( $cpanfile );
+my %known = map { $_->identifier => 1 } $file->features;
+my @unknown = grep { not $known{$_} } @features;
+die "Unknown feature(s): @unknown\n" if @unknown;
+
+my $reqs = $file->prereqs_with( @features )
+    ->merged_requirements( ['runtime'], ['requires'] )
+    ->as_string_hash;
+
+for my $module (sort keys %$reqs) {
+    next if $module eq 'perl';
+    my $version = $reqs->{$module};
+    # Version ranges (e.g. '>= 1, < 2') must be quoted for cpanm
+    print $version eq '0' ? "$module\n"
+        : $version =~ /^[v\d._]+$/ ? "$module~$version\n"
+        : "$module~\"$version\"\n";
+}

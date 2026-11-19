@@ -217,11 +217,19 @@ feature 'xls', 'Microsoft Excel' =>
         requires 'Excel::Writer::XLSX';
 };
 
-# Even with cpanm --notest, 'test' target of --installdeps
-# will be included, so put our testing requirements in develop...
-on 'develop' => sub {
+# Requirements of the tests in t/ (which are run from the distribution archive)
+on 'test' => sub {
     requires 'Capture::Tiny';
+    requires 'Carp::Always';
     requires 'DBD::Mock', '1.58';
+    requires 'Test2::Mock';
+    requires 'Test2::Plugin::BailOnFail';
+    requires 'Test2::V0';
+    requires 'Text::Diff';
+};
+
+# Requirements of the tests in xt/ and other development tooling
+on 'develop' => sub {
     requires 'File::Grep';
     requires 'HTML::Lint';
     requires 'HTML::Lint::Parser', '2.26';
@@ -243,11 +251,8 @@ on 'develop' => sub {
     requires 'Test::Pod', '1.00';
     requires 'Test::Pod::Coverage';
     requires 'Test2::Harness';
-    requires 'Test2::Mock';
-    requires 'Test2::V0';
     requires 'Test2::Plugin::Feature', '0.001112';
     requires 'Test2::Plugin::pgTAP';
-    requires 'Text::Diff';
     requires 'Weasel', '0.32';
     requires 'Weasel::Driver::Selenium4', '0.01';
     requires 'Weasel::Session', '0.32';

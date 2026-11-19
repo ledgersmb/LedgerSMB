@@ -19,7 +19,10 @@ cp utils/wa-tax-service/WA.pm lib/LedgerSMB/Taxes/WA.pm
 psql -U postgres -h localhost -d YOURCOMPANY \
    -c 'INSERT INTO "public"."taxmodule" ("taxmodulename") VALUES (''WA'')'
 cd utils/wa-tax-service
-cpanm --installdeps .
+# Install dependencies from the cpanfile in that directory
+utils/list-dependencies --cpanfile cpanfile | xargs cpanm --notest
+# Or use cpanm's built-in dependency resolution (slower):
+# cpanm --installdeps --notest .
 ```
 
 ## Configuration
