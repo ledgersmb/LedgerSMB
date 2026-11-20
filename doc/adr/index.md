@@ -43,5 +43,6 @@
 | [0111](./0111-payment-and-overpayment-migration-to-open-items.md) | Accepted | This ADR seeks to disambiguate the terms 'payment' and 'overpayment' and to detail the related change in semantics of these terms in the application. The term 'payment' refers both to cash transfers as well as the use to reduce outstanding invoice amounts. |
 | [0112](./0112-vouchers-no-longer-necessary.md) | Accepted | Vouchers and batches offer the same solution: vouchers can be removed without removing functionality from the application. |
 | [0113](./0113-changes-to-outstanding-arap-items.md) | Accepted | Describes a design for handling changes to the outstanding balance of AR/AP items and how to reflect those on the entry screens. |
+| [0114](./0114-email-template-editor.md) | Proposed | Addresses the design decisions regarding named email templates with separate subject and body fields, Template Toolkit rendering, placeholder previews, and persistent Email drafts shared by the UI and API. |
 
-Index Generated: Sun Oct 18 08:54:31 2026 UTC
+Index Generated: Tue Oct 27 03:02:36 2026 UTC
