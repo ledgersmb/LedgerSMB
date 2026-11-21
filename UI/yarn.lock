@@ -4252,13 +4252,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redocly/cli@npm:2.79.0":
-  version: 2.79.0
-  resolution: "@redocly/cli@npm:2.79.0"
+"@redocly/cli@npm:2.80.0":
+  version: 2.80.0
+  resolution: "@redocly/cli@npm:2.80.0"
   bin:
     openapi: bin/cli.js
     redocly: bin/cli.js
-  checksum: 10c0/4af35f11b1cfc092f17fec99f2f99b18bf81805d4bccfbf9d6a9c2c348166e36bed3286f184da08e539390ac7aab87142a1fef4e564f12c72e82ea36126faf8c
+  checksum: 10c0/61c0d5a941efc484537d6b01726109d05d51f1c1e5224be257f8583d4de9a742f4e4ff1b093171dcbf37046c082a9ca2272f1dd799d1c219f4d30c236a737b16
   languageName: node
   linkType: hard
 
@@ -11591,7 +11591,7 @@ __metadata:
     "@pinia/testing": "npm:2.0.2"
     "@quasar/app-webpack": "npm:^4.2.0"
     "@quasar/extras": "npm:^2.0.0"
-    "@redocly/cli": "npm:2.79.0"
+    "@redocly/cli": "npm:2.80.0"
     "@typescript-eslint/utils": "npm:8.73.0"
     "@vitejs/plugin-vue": "npm:6.0.11"
     "@vitest/coverage-v8": "npm:4.1.12"
