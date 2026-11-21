@@ -1017,6 +1017,13 @@
                   "format": "uri-reference"
                 }
               }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GIFI"
+                }
+              }
             }
           },
           "400": {
@@ -1140,9 +1147,39 @@
             "$ref": "#/components/parameters/if-match"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "description"
+                ]
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "The resource was succesfully updated,\nreturning the new data for the resource.\n"
+            "description": "The resource was succesfully updated,\nreturning the new data for the resource.\n",
+            "headers": {
+              "ETag": {
+                "$ref": "#/components/headers/ETag"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GIFI"
+                }
+              }
+            }
           },
           "400": {
             "$ref": "#/components/responses/400"
@@ -1163,7 +1200,7 @@
       },
       "put": {
         "operationId": "putGIFIById",
-        "summary": "Put a single GIFI",
+        "summary": "Replace a single GIFI",
         "parameters": [
           {
             "$ref": "#/components/parameters/if-match"
@@ -2223,7 +2260,7 @@
           "in": "path",
           "required": true,
           "schema": {
-            "$ref": "#/components/schemas/common-id"
+            "$ref": "#/components/schemas/partsgroup-id"
           },
           "style": "simple"
         }
@@ -2515,7 +2552,7 @@
           "in": "path",
           "required": true,
           "schema": {
-            "$ref": "#/components/schemas/common-id"
+            "$ref": "#/components/schemas/pricegroup-id"
           },
           "style": "simple"
         }
@@ -2808,7 +2845,7 @@
           "in": "path",
           "required": true,
           "schema": {
-            "$ref": "#/components/schemas/common-id"
+            "$ref": "#/components/schemas/warehouse-id"
           },
           "style": "simple"
         }
@@ -3067,18 +3104,21 @@
                       "nullable": true
                     },
                     "description": {
-                      "type": "string"
+                      "type": "string",
+                      "nullable": true
                     },
                     "discount": {
                       "description": "A value of 10 means the customer gets a 10% discount,\nif discount_type has a value of '%'\n",
                       "type": "number",
                       "maximum": 100,
-                      "minimum": 0
+                      "minimum": 0,
+                      "nullable": true
                     },
                     "discount_type": {
                       "type": "string",
                       "enum": [
-                        "%"
+                        "%",
+                        ""
                       ]
                     },
                     "id": {
@@ -3098,20 +3138,24 @@
                           "type": "string"
                         },
                         "description": {
-                          "type": "string"
+                          "type": "string",
+                          "nullable": true
                         },
                         "number": {
                           "type": "string",
                           "minLength": 1
                         },
                         "onhand": {
-                          "type": "string"
+                          "type": "string",
+                          "nullable": true
                         },
                         "unit": {
-                          "type": "string"
+                          "type": "string",
+                          "nullable": true
                         },
                         "weight": {
-                          "type": "string"
+                          "type": "string",
+                          "nullable": true
                         }
                       },
                       "required": [
@@ -3137,7 +3181,8 @@
                       "type": "number"
                     },
                     "unit": {
-                      "type": "string"
+                      "type": "string",
+                      "nullable": true
                     }
                   },
                   "type": "object"
@@ -3173,10 +3218,12 @@
                       "type": "number"
                     },
                     "memo": {
-                      "type": "string"
+                      "type": "string",
+                      "nullable": true
                     },
                     "source": {
-                      "type": "string"
+                      "type": "string",
+                      "nullable": true
                     },
                     "tax": {
                       "type": "object",
@@ -3509,7 +3556,7 @@
           {
             "properties": {
               "id": {
-                "$ref": "#/components/schemas/common-id"
+                "$ref": "#/components/schemas/partsgroup-id"
               }
             },
             "required": [
@@ -3527,7 +3574,7 @@
           {
             "properties": {
               "id": {
-                "$ref": "#/components/schemas/common-id"
+                "$ref": "#/components/schemas/pricegroup-id"
               }
             },
             "required": [
@@ -3560,7 +3607,7 @@
           {
             "properties": {
               "id": {
-                "$ref": "#/components/schemas/common-id"
+                "$ref": "#/components/schemas/warehouse-id"
               }
             },
             "required": [
@@ -3805,6 +3852,7 @@
             "nullable": true
           },
           "taxes": {
+            "description": "Supply manual tax amounts. Omit this property to calculate taxes\nusing configured providers and customer/product tax eligibility.\nAutomatic providers receive the account billing address, falling\nback to the entity billing address. An empty object means no taxes.\n",
             "type": "object",
             "additionalProperties": {
               "properties": {
