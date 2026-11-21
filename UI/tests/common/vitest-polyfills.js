@@ -33,5 +33,4 @@ if (!globalThis.define) {
         }
         return factory;
     };
-    globalThis.define.amd = {};
 }
