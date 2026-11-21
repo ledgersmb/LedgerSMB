@@ -620,6 +620,13 @@ sub sort_order {
     $self->{oldsort} = "" unless defined $self->{oldsort};
     $self->{direction} = "" unless defined $self->{direction};
 
+    # Restrict ORDER BY direction to a safe whitelist to prevent SQL injection.
+    # Any value other than ASC/DESC (case-insensitive) is treated as unset,
+    # which the logic below normalizes to ASC.
+    $self->{direction} = $self->{direction} =~ /^desc$/i ? "DESC"
+                       : $self->{direction} =~ /^asc$/i  ? "ASC"
+                       : "";
+
     # setup direction
     if ( $self->{direction} ) {
 
