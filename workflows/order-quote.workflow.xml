@@ -1,45 +1,46 @@
-<workflow>
-  <type>Order/Quote</type>
-  <initial_state>SAVED</initial_state>
-  <persister>Order</persister>
+<workflow
+    xmlns="http://ledgersmb.org/xml-schemas/workflows"
+    type="Order/Quote"
+    persister="Order"
+    initial-state="SAVED">
   <description>Manage the life cycle of an AR/AP document</description>
   <state name="SAVED">
-    <action name="update" resulting_state="NOCHANGE" />
-    <action name="e_mail" resulting_state="NOCHANGE">
+    <action name="update" resulting-state="NOCHANGE" />
+    <action name="e_mail" resulting-state="NOCHANGE">
       <!-- condition name="configuredEmailFrom" / -->
     </action>
-    <action name="print" resulting_state="NOCHANGE" />
-    <action name="print_and_save" resulting_state="NOCHANGE" />
-    <action name="print_and_save_as_new" resulting_state="NOCHANGE" />
-    <action name="save" resulting_state="NOCHANGE" />
-    <action name="save_as_new" resulting_state="NOCHANGE" />
-    <action name="ship_to" resulting_state="NOCHANGE">
+    <action name="print" resulting-state="NOCHANGE" />
+    <action name="print_and_save" resulting-state="NOCHANGE" />
+    <action name="print_and_save_as_new" resulting-state="NOCHANGE" />
+    <action name="save" resulting-state="NOCHANGE" />
+    <action name="save_as_new" resulting-state="NOCHANGE" />
+    <action name="ship_to" resulting-state="NOCHANGE">
       <condition name="is_sales" />
     </action>
-    <action name="sales_invoice" resulting_state="NOCHANGE">
+    <action name="sales_invoice" resulting-state="NOCHANGE">
       <condition name="is_order" />
       <condition name="is_sales" />
     </action>
-    <action name="sales_order" resulting_state="NOCHANGE">
+    <action name="sales_order" resulting-state="NOCHANGE">
       <condition name="is_sales" />
       <condition name="!is_order" />
     </action>
-    <action name="quotation" resulting_state="NOCHANGE">
+    <action name="quotation" resulting-state="NOCHANGE">
       <condition name="is_sales" />
       <condition name="is_order" />
    </action>
-    <action name="vendor_invoice" resulting_state="NOCHANGE">
+    <action name="vendor_invoice" resulting-state="NOCHANGE">
       <condition name="is_order" />
       <condition name="!is_sales" />
     </action>
-    <action name="purchase_order" resulting_state="NOCHANGE">
+    <action name="purchase_order" resulting-state="NOCHANGE">
       <condition name="!is_purchase_order" />
     </action>
-    <action name="rfq" resulting_state="NOCHANGE">
+    <action name="rfq" resulting-state="NOCHANGE">
       <condition name="!is_sales" />
       <condition name="is_order" />
     </action>
-    <action name="delete" resulting_state="DELETED" />
+    <action name="delete" resulting-state="DELETED" />
   </state>
   <state name="DELETED">
   </state>

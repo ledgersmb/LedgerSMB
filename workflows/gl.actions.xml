@@ -1,4 +1,6 @@
-<actions type="GL">
+<actions
+    xmlns="http://ledgersmb.org/xml-schemas/workflows"
+    type="GL">
   <!--
 
 Notes on actions for GL:

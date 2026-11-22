@@ -1,4 +1,6 @@
-<actions type="Payment">
+<actions
+    xmlns="http://ledgersmb.org/xml-schemas/workflows"
+    type="Payment">
   <action name="post"
           text="Save"
           class="LedgerSMB::Workflow::Action::Null" />

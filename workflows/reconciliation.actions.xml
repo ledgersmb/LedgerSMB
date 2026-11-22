@@ -1,4 +1,6 @@
-<actions type="reconciliation">
+<actions
+    xmlns="http://ledgersmb.org/xml-schemas/workflows"
+    type="reconciliation">
   <action name="add_pending_items"
           class="LedgerSMB::Workflow::Action::Null" />
   <action name="approve"

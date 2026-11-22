@@ -1,4 +1,6 @@
-<actions type="AR/AP">
+<actions
+    xmlns="http://ledgersmb.org/xml-schemas/workflows"
+    type="AR/AP">
   <!--
 
 Notes on actions for AR/AP:

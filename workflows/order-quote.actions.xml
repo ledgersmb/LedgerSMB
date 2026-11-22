@@ -1,4 +1,6 @@
-<actions type="Order/Quote">
+<actions
+    xmlns="http://ledgersmb.org/xml-schemas/workflows"
+    type="Order/Quote">
   <action name="update"
           group="main"
           order="0100"

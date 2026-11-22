@@ -1,5 +1,6 @@
-<conditions>
-  <type>AR/AP</type>
+<conditions
+    xmlns="http://ledgersmb.org/xml-schemas/workflows"
+    type="AR/AP">
   <condition name="is_sales"
              test="($context->{trans_type_code} eq 'ar')"
              class="Workflow::Condition::Evaluate"/>

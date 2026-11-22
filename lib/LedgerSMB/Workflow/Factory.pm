@@ -8,10 +8,12 @@ use parent 'Workflow::Factory';
 
 use DateTime;
 use Scalar::Util qw( blessed );
+
 use Workflow::Context;
 use Workflow::Exception qw( workflow_error );
 
 use LedgerSMB::Workflow;
+use LedgerSMB::Workflow::Config::XML;
 
 =head1 NAME
 

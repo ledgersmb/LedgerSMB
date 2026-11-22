@@ -1,5 +1,6 @@
-<conditions>
-  <type>GL</type>
+<conditions
+    xmlns="http://ledgersmb.org/xml-schemas/workflows"
+    type="GL">
   <condition name="complete"
              test="$context->{transdate}"
              class="Workflow::Condition::Evaluate"/>

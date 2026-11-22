@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://ledgersmb.org/xml-schemas/workflows"
+           xmlns:w="http://ledgersmb.org/xml-schemas/workflows"
+           xmlns:xh="http://www.w3.org/1999/xhtml"
+           elementFormDefault="qualified">
+
+  <xs:import namespace="http://www.w3.org/1999/xhtml"
+             schemaLocation="xhtml-subset.xsd"/>
+
+  <!-- Workflow descriptions: restricted XHTML block, text and table markup -->
+  <xs:element name="description">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="xh:div"/>
+        <xs:element ref="xh:p"/>
+        <xs:element ref="xh:address"/>
+        <xs:element ref="xh:blockquote"/>
+        <xs:element ref="xh:pre"/>
+        <xs:element ref="xh:h1"/>
+        <xs:element ref="xh:h2"/>
+        <xs:element ref="xh:h3"/>
+        <xs:element ref="xh:h4"/>
+        <xs:element ref="xh:h5"/>
+        <xs:element ref="xh:h6"/>
+        <xs:element ref="xh:br"/>
+        <xs:element ref="xh:span"/>
+        <xs:element ref="xh:abbr"/>
+        <xs:element ref="xh:acronym"/>
+        <xs:element ref="xh:cite"/>
+        <xs:element ref="xh:code"/>
+        <xs:element ref="xh:dfn"/>
+        <xs:element ref="xh:em"/>
+        <xs:element ref="xh:kbd"/>
+        <xs:element ref="xh:q"/>
+        <xs:element ref="xh:samp"/>
+        <xs:element ref="xh:strong"/>
+        <xs:element ref="xh:var"/>
+        <xs:element ref="xh:table"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Root element definitions -->
+  <xs:element name="actions" type="w:actions"/>
+  <xs:element name="conditions" type="w:conditions"/>
+  <xs:element name="observers" type="w:observers"/>
+  <xs:element name="validators" type="w:validators"/>
+  <xs:element name="persisters" type="w:persisters"/>
+  <xs:element name="workflow" type="w:workflow"/>
+
+  <xs:simpleType name="yesNoValue">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="yes|no"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="actions">
+    <xs:sequence>
+      <xs:element name="action" type="w:action" minOccurs="0" maxOccurs="unbounded">
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="type" type="xs:string" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="action">
+    <xs:sequence>
+      <xs:element name="field" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="param" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:attribute name="name" type="xs:string" use="required" />
+                <xs:attribute name="value" type="xs:string" use="required" />
+              </xs:complexType>
+            </xs:element>
+            <xs:choice minOccurs="0" maxOccurs="1">
+              <xs:element name="source-list">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="item" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="source-class" type="xs:string" />
+            </xs:choice>
+          </xs:sequence>
+          <xs:attribute name="is-required" type="w:yesNoValue" use="optional" default="no"/>
+          <xs:attribute name="type" type="xs:string" use="required" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="validator" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="arg" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+          <xs:attribute name="name" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required" />
+    <xs:attribute name="class" type="xs:string" use="required" />
+    <xs:attribute name="description" type="xs:string" use="optional" />
+    <xs:anyAttribute processContents="skip"/>
+  </xs:complexType>
+
+
+  <xs:complexType name="conditions">
+    <xs:sequence>
+      <xs:element name="condition" type="w:condition" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="type" type="xs:string" use="optional" />
+  </xs:complexType>
+
+  <xs:complexType name="condition">
+    <xs:sequence>
+      <xs:element name="param" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="name" type="xs:string" use="required"/>
+          <xs:attribute name="value" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="class" type="xs:string" use="required"/>
+    <xs:anyAttribute processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="observers">
+    <xs:sequence>
+      <xs:element name="observer" type="w:observer" minOccurs="0" maxOccurs="unbounded">
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="observer">
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="type" type="xs:string" use="optional"/>
+    <xs:attribute name="class" type="xs:string" use="optional"/>
+    <xs:attribute name="sub" type="xs:string" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="validators">
+    <xs:sequence>
+      <xs:element name="validator" type="w:validator" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="validator">
+    <xs:sequence>
+      <xs:element name="param" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="name" type="xs:string" use="required"/>
+          <xs:attribute name="value" type="xs:string" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="class" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="persisters">
+    <xs:sequence>
+      <xs:element name="persister" type="w:persister" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="persister">
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="class" type="xs:string" use="required"/>
+    <xs:attribute name="use-random" type="w:yesNoValue" use="optional" default="no"/>
+    <xs:attribute name="use-uuid" type="w:yesNoValue" use="optional" default="no"/>
+    <xs:anyAttribute processContents="skip"/>
+  </xs:complexType>
+
+  <xs:complexType name="workflow">
+    <xs:sequence>
+      <xs:element ref="w:description" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="state" minOccurs="1" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="w:description" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="action" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="resulting-state" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                      <xs:attribute name="return" type="xs:string" use="required"/>
+                      <xs:attribute name="state" type="xs:string" use="required"/>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="condition" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                      <xs:attribute name="name" type="xs:string" use="required"/>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:attribute name="name" type="xs:string" use="required"/>
+                <!-- Exactly one of this attribute or the resulting-state child
+                     elements must be used. XSD 1.0 cannot enforce this
+                     exclusion, so it is documented here and must be checked
+                     by consumers. -->
+                <xs:attribute name="resulting-state" type="xs:string" use="optional"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="name" type="xs:string" use="required"/>
+          <xs:attribute name="autorun" type="w:yesNoValue" use="optional" default="no"/>
+          <xs:attribute name="may-stop" type="w:yesNoValue" use="optional" default="no"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="observer" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="class" type="xs:string" use="optional"/>
+          <xs:attribute name="sub" type="xs:string" use="optional"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="class" type="xs:string" use="optional" default="Workflow"/>
+    <xs:attribute name="type" type="xs:string" use="optional"/>
+    <xs:attribute name="persister" type="xs:string" use="required"/>
+    <xs:attribute name="initial-state" type="xs:string" use="optional" default="INITIAL"/>
+  </xs:complexType>
+</xs:schema>

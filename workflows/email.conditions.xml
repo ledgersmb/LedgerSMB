@@ -1,5 +1,6 @@
-<conditions>
-  <type>Email</type>
+<conditions
+    xmlns="http://ledgersmb.org/xml-schemas/workflows"
+    type="Email">
   <condition name="hasTo"      test="$context->{to} ? 1 : 0"
              class="Workflow::Condition::Evaluate"/>
   <condition name="hasBody"    test="$context->{body} ? 1 : 0"
