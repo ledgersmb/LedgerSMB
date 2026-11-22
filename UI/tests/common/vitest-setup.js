@@ -29,7 +29,7 @@ config.global.plugins = [i18n];
 beforeAll(() => {
     // Establish API mocking before all tests.
     server.listen({
-        onUnhandledRequest(req) {
+        onUnhandledFrame(req) {
             console.error(
                 "Found an unhandled %s request to %s",
                 req.method,

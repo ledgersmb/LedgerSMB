@@ -46,7 +46,7 @@ beforeAll(() => {
 
     // Establish API mocking before all tests.
     server.listen({
-        onUnhandledRequest: "bypass"
+        onUnhandledFrame: "bypass"
     });
 });
 
