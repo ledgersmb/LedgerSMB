@@ -25,6 +25,7 @@ This module implements a parser for workflow configuration files in XML format.
 use parent qw( Workflow::Config );
 
 use Log::Any qw( $log );
+use Workflow::Config;
 use XML::LibXML;
 
 use constant WF_NS   => 'http://ledgersmb.org/xml-schemas/workflows';
@@ -304,8 +305,13 @@ sub parse($self, $type, @items) {
             my $root = $doc->documentElement;
             my $parse_root =
                 _is_wf_element($root) && $ROOT_PARSERS{ $root->localname };
-            die "Unsupported root element '" . $root->localname . "' in namespace '" . ($root->namespaceURI // '') . "'\n"
-                unless $parse_root;
+
+            unless ($parse_root) {
+                die q{Unsupported root element '} .
+                    $root->localname .
+                    q{' in namespace '} .
+                    ($root->namespaceURI // '') . "'\n";
+            }
 
             my $config = $parse_root->($root);
             if (exists $config->{type}) {
@@ -321,9 +327,6 @@ sub parse($self, $type, @items) {
         }
         catch ($e) {
             die "Failed to parse workflow source: $e";
-        }
-        finally {
-            close $fh if $fh;
         }
     }
 

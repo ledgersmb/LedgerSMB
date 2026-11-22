@@ -168,6 +168,7 @@ requires 'URI::Escape';
 requires 'Workflow', '2.10'; # 2.10 Fixes use of bare hash context initialization
 requires 'Workflow::Action', '2.10';
 requires 'Workflow::Condition', '2.10';
+requires 'Workflow::Config', '2.10';
 requires 'Workflow::Context', '2.10';
 requires 'Workflow::Exception', '2.10';
 requires 'Workflow::Factory', '2.10';
