@@ -333,7 +333,7 @@ jobs:
 
       - name: Run API tests
         run: |
-          PERL5LIB="lib:old/lib:$PERL5LIB" make jstest TESTS="$JSCOVERAGE"
+          PERL5LIB="lib:old/lib:$PERL5LIB" NODE_OPTIONS="--no-webstorage" make jstest TESTS="$JSCOVERAGE"
 
       - name: Stop 'starman'
         run: |
