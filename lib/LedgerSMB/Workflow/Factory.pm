@@ -66,7 +66,7 @@ sub create_workflow {
         workflow_error "No workflow of type '$wf_type' available";
     }
 
-    $wf_class = $wf_config->{class} || 'Workflow' unless ($wf_class);
+    $wf_class = $wf_config->{class} || 'LedgerSMB::Workflow' unless ($wf_class);
     my $wf
         = $wf_class->new( undef,
         $wf_config->{initial_state} || $DEFAULT_INITIAL_STATE,
@@ -149,7 +149,7 @@ sub fetch_workflow {
     }
     my $persister = $self->get_persister( $wf_config->{persister} );
     my $wf_info   = $persister->fetch_workflow($app, $wf_id);
-    $wf_class     = $wf_config->{class} || 'Workflow' unless ($wf_class);
+    $wf_class     = $wf_config->{class} || 'LedgerSMB::Workflow' unless ($wf_class);
 
     return unless ($wf_info);
 
@@ -197,6 +197,8 @@ workflow instances instead of the regular L<Workflow> default.
 sub _get_workflow_config( $self, $wf_type ) {
     my $wf_config = $self->SUPER::_get_workflow_config( $wf_type );
     $wf_config->{class} //= 'LedgerSMB::Workflow';
+    $wf_config->{class} = 'LedgerSMB::Workflow'
+        if ($wf_config->{class} eq 'Workflow');
 
     return $wf_config;
 }
