@@ -1,4 +1,5 @@
-<conditions>
+<conditions
+    xmlns="http://ledgersmb.org/xml-schemas/workflows">
   <condition name="have-transdate"
              test="$context->{transdate}"
              class="Workflow::Condition::Evaluate"/>

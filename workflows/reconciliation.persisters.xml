@@ -1,4 +1,5 @@
-<persisters>
+<persisters
+    xmlns="http://ledgersmb.org/xml-schemas/workflows">
   <persister name="reconciliation"
              class="LedgerSMB::Workflow::Persister::Reconciliation"
              driver="Pg" />

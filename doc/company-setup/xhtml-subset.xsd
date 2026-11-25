@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xh="http://www.w3.org/1999/xhtml"
+    targetNamespace="http://www.w3.org/1999/xhtml"
+    elementFormDefault="qualified">
+  <!-- in a sub-directory, place these XHTML 1.1 modules: -->
+  <xs:include schemaLocation="xhtml/xhtml-attribs-1.xsd"/>
+  <xs:include schemaLocation="xhtml/xhtml-text-1.xsd"/>
+  <xs:include schemaLocation="xhtml/xhtml-table-1.xsd"/>
+
+  <!--
+    Content model for the XHTML subset used by workflow descriptions.
+    Provides the groups the XHTML 1.1 modules reference, limited to the
+    Block (structural and phrasal), Text (structural and phrasal) and
+    Table modules. No forms, lists, images, scripting or links.
+  -->
+  <xs:attributeGroup name="xhtml.Common.extra"/>
+  <xs:attributeGroup name="xhtml.Core.extra.attrib"/>
+  <xs:attributeGroup name="xhtml.I18n.extra.attrib"/>
+  <xs:attributeGroup name="xhtml.Global.Common.extra"/>
+  <xs:attributeGroup name="xhtml.Global.I18n.extra.attrib"/>
+  <xs:attributeGroup name="xhtml.Global.core.extra.attrib"/>
+
+  <xs:group name="xhtml.Inline.mix">
+    <xs:choice>
+      <xs:element name="br" type="xh:xhtml.br.type"/>
+      <xs:element name="span" type="xh:xhtml.span.type"/>
+      <xs:element name="abbr" type="xh:xhtml.abbr.type"/>
+      <xs:element name="acronym" type="xh:xhtml.acronym.type"/>
+      <xs:element name="cite" type="xh:xhtml.cite.type"/>
+      <xs:element name="code" type="xh:xhtml.code.type"/>
+      <xs:element name="dfn" type="xh:xhtml.dfn.type"/>
+      <xs:element name="em" type="xh:xhtml.em.type"/>
+      <xs:element name="kbd" type="xh:xhtml.kbd.type"/>
+      <xs:element name="q" type="xh:xhtml.q.type"/>
+      <xs:element name="samp" type="xh:xhtml.samp.type"/>
+      <xs:element name="strong" type="xh:xhtml.strong.type"/>
+      <xs:element name="var" type="xh:xhtml.var.type"/>
+    </xs:choice>
+  </xs:group>
+
+  <xs:group name="xhtml.InlinePre.mix">
+    <xs:choice>
+      <xs:group ref="xh:xhtml.Inline.mix"/>
+    </xs:choice>
+  </xs:group>
+
+  <xs:group name="xhtml.Block.mix">
+    <xs:choice>
+      <xs:element name="div" type="xh:xhtml.div.type"/>
+      <xs:element name="p" type="xh:xhtml.p.type"/>
+      <xs:element name="address" type="xh:xhtml.address.type"/>
+      <xs:element name="blockquote" type="xh:xhtml.blockquote.type"/>
+      <xs:element name="pre" type="xh:xhtml.pre.type"/>
+      <xs:element name="h1" type="xh:xhtml.h1.type"/>
+      <xs:element name="h2" type="xh:xhtml.h2.type"/>
+      <xs:element name="h3" type="xh:xhtml.h3.type"/>
+      <xs:element name="h4" type="xh:xhtml.h4.type"/>
+      <xs:element name="h5" type="xh:xhtml.h5.type"/>
+      <xs:element name="h6" type="xh:xhtml.h6.type"/>
+      <xs:element name="table" type="xh:xhtml.table.type"/>
+    </xs:choice>
+  </xs:group>
+
+  <xs:group name="xhtml.Flow.mix">
+    <xs:choice>
+      <xs:group ref="xh:xhtml.Block.mix"/>
+      <xs:group ref="xh:xhtml.Inline.mix"/>
+    </xs:choice>
+  </xs:group>
+
+  <!-- Block Structural and Block Phrasal (Text module) -->
+  <xs:element name="div" type="xh:xhtml.div.type"/>
+  <xs:element name="p" type="xh:xhtml.p.type"/>
+  <xs:element name="address" type="xh:xhtml.address.type"/>
+  <xs:element name="blockquote" type="xh:xhtml.blockquote.type"/>
+  <xs:element name="pre" type="xh:xhtml.pre.type"/>
+  <xs:element name="h1" type="xh:xhtml.h1.type"/>
+  <xs:element name="h2" type="xh:xhtml.h2.type"/>
+  <xs:element name="h3" type="xh:xhtml.h3.type"/>
+  <xs:element name="h4" type="xh:xhtml.h4.type"/>
+  <xs:element name="h5" type="xh:xhtml.h5.type"/>
+  <xs:element name="h6" type="xh:xhtml.h6.type"/>
+
+  <!-- Inline Structural and Inline Phrasal (Text module) -->
+  <xs:element name="br" type="xh:xhtml.br.type"/>
+  <xs:element name="span" type="xh:xhtml.span.type"/>
+  <xs:element name="abbr" type="xh:xhtml.abbr.type"/>
+  <xs:element name="acronym" type="xh:xhtml.acronym.type"/>
+  <xs:element name="cite" type="xh:xhtml.cite.type"/>
+  <xs:element name="code" type="xh:xhtml.code.type"/>
+  <xs:element name="dfn" type="xh:xhtml.dfn.type"/>
+  <xs:element name="em" type="xh:xhtml.em.type"/>
+  <xs:element name="kbd" type="xh:xhtml.kbd.type"/>
+  <xs:element name="q" type="xh:xhtml.q.type"/>
+  <xs:element name="samp" type="xh:xhtml.samp.type"/>
+  <xs:element name="strong" type="xh:xhtml.strong.type"/>
+  <xs:element name="var" type="xh:xhtml.var.type"/>
+
+  <!-- Tables module -->
+  <xs:element name="table" type="xh:xhtml.table.type"/>
+</xs:schema>

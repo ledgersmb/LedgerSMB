@@ -1,4 +1,6 @@
-<conditions type="Payment">
+<conditions
+    xmlns="http://ledgersmb.org/xml-schemas/workflows"
+    type="Payment">
   <condition name="is-batch-member"
              test="$context->{'batch-id'}"
              class="Workflow::Condition::Evaluate"/>

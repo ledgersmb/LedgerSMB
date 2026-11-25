@@ -1,18 +1,19 @@
-<workflow>
-  <type>Payment</type>
-  <persister>JournalEntry</persister>
+<workflow
+    xmlns="http://ledgersmb.org/xml-schemas/workflows"
+    type="Payment"
+    persister="JournalEntry">
   <description></description>
   <state name="INITIAL" autorun="yes">
-    <action name="post" resulting_state="SAVED"/>
+    <action name="post" resulting-state="SAVED"/>
   </state>
   <state name="SAVED">
-    <action name="approve" resulting_state="POSTED">
+    <action name="approve" resulting-state="POSTED">
       <condition name="!is-batch-member"/>
     </action>
-    <action name="batch-approve" resulting_state="POSTED">
+    <action name="batch-approve" resulting-state="POSTED">
       <condition name="is-batch-member"/>
     </action>
-    <action name="batch-delete" resulting_state="DELETED">
+    <action name="batch-delete" resulting-state="DELETED">
       <condition name="is-batch-member"/>
     </action>
   </state>

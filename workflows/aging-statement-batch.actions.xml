@@ -1,4 +1,6 @@
-<actions type="Aging statement batch">
+<actions
+    xmlns="http://ledgersmb.org/xml-schemas/workflows"
+    type="Aging statement batch">
   <action name="complete"
           text="Complete"
           class="LedgerSMB::Workflow::Action::Null" />

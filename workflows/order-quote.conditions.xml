@@ -1,5 +1,6 @@
-<conditions>
-  <type>Order/Quote</type>
+<conditions
+    xmlns="http://ledgersmb.org/xml-schemas/workflows"
+    type="Order/Quote">
   <condition name="is_sales"
              test="($context->{_extra}->{oe_class_id} &amp; 1) == 1"
              class="Workflow::Condition::Evaluate"/>

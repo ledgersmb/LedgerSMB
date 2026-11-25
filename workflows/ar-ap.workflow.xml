@@ -1,28 +1,29 @@
-<workflow>
-  <type>AR/AP</type>
-  <persister>JournalEntry</persister>
+<workflow
+    xmlns="http://ledgersmb.org/xml-schemas/workflows"
+    type="AR/AP"
+    persister="JournalEntry">
   <description>Manage the life cycle of an AR/AP document</description>
 
   <state name="INITIAL">
-    <action name="update" resulting_state="NOCHANGE" />
-    <action name="post" resulting_state="SAVED">
+    <action name="update" resulting-state="NOCHANGE" />
+    <action name="post" resulting-state="SAVED">
       <condition name="!reversing" />
       <condition name="undefined-transdate-or-not-closed-period" />
     </action>
-    <action name="post_and_approve" resulting_state="POSTED">
+    <action name="post_and_approve" resulting-state="POSTED">
       <condition name="!reversing" />
       <condition name="!is-batch-member" />
       <condition name="!separate-duties" />
       <condition name="!period-closed" />
       <condition name="complete" />
     </action>
-    <action name="batch-approve" resulting_state="POSTED">
+    <action name="batch-approve" resulting-state="POSTED">
       <condition name="!reversing" />
       <condition name="is-batch-member" />
       <condition name="!period-closed" />
       <condition name="complete" />
     </action>
-    <action name="post_reversing" resulting_state="POSTED">
+    <action name="post_reversing" resulting-state="POSTED">
       <condition name="reversing" />
       <condition name="!period-closed" />
       <condition name="acl-draft-post" />
@@ -30,81 +31,81 @@
   </state>
 
   <state name="SAVED">
-    <!-- action name="save_temp" resulting_state="NOCHANGE">
+    <!-- action name="save_temp" resulting-state="NOCHANGE">
       <condition name="!is_invoice" />
     </action -->
-    <action name="save_info" resulting_state="NOCHANGE" />
-    <action name="edit_and_save" resulting_state="NOCHANGE">
+    <action name="save_info" resulting-state="NOCHANGE" />
+    <action name="edit_and_save" resulting-state="NOCHANGE">
       <condition name="acl-draft-modify" />
     </action>
-    <action name="copy_to_new" resulting_state="NOCHANGE" />
-    <action name="new_screen" resulting_state="NOCHANGE" />
-    <action name="update" resulting_state="NOCHANGE" />
-    <action name="ship_to" resulting_state="NOCHANGE">
+    <action name="copy_to_new" resulting-state="NOCHANGE" />
+    <action name="new_screen" resulting-state="NOCHANGE" />
+    <action name="update" resulting-state="NOCHANGE" />
+    <action name="ship_to" resulting-state="NOCHANGE">
       <condition name="is_invoice" />
       <condition name="is_sales" />
     </action>
-    <action name="schedule" resulting_state="NOCHANGE">
+    <action name="schedule" resulting-state="NOCHANGE">
       <condition name="!is-batch-member" />
     </action>
-    <action name="approve" resulting_state="POSTED">
+    <action name="approve" resulting-state="POSTED">
       <condition name="!is-batch-member" />
       <condition name="complete" />
       <condition name="!period-closed" />
       <condition name="acl-draft-post" />
     </action>
-    <action name="batch-approve" resulting_state="POSTED">
+    <action name="batch-approve" resulting-state="POSTED">
       <condition name="is-batch-member" />
       <condition name="!period-closed" />
       <condition name="complete" />
     </action>
-    <action name="del" resulting_state="DELETED">
+    <action name="del" resulting-state="DELETED">
       <condition name="!is-batch-member" />
     </action>
-    <action name="batch-delete" resulting_state="DELETED">
+    <action name="batch-delete" resulting-state="DELETED">
       <condition name="is-batch-member" />
     </action>
-    <action name="sales_order" resulting_state="NOCHANGE">
+    <action name="sales_order" resulting-state="NOCHANGE">
       <condition name="is_sales" />
       <condition name="is_invoice" />
     </action>
-    <action name="purchase_order" resulting_state="NOCHANGE">
+    <action name="purchase_order" resulting-state="NOCHANGE">
       <condition name="!is_sales" />
       <condition name="is_invoice" />
     </action>
   </state>
 
   <state name="POSTED">
-    <action name="save_info" resulting_state="NOCHANGE" />
-    <action name="copy_to_new" resulting_state="NOCHANGE">
+    <action name="save_info" resulting-state="NOCHANGE" />
+    <action name="copy_to_new" resulting-state="NOCHANGE">
       <condition name="!reversing" />
     </action>
-    <action name="new_screen" resulting_state="NOCHANGE" />
-    <action name="void" resulting_state="VOIDED">
+    <action name="new_screen" resulting-state="NOCHANGE" />
+    <action name="void" resulting-state="VOIDED">
       <condition name="is_sales_invoice" />
       <condition name="!reversing" />
     </action>
-    <action name="reverse" resulting_state="REVERSED">
+    <action name="reverse" resulting-state="REVERSED">
       <condition name="!is_sales_invoice" />
       <condition name="!reversing" />
     </action>
-    <action name="hold" resulting_state="ONHOLD">
+    <action name="hold" resulting-state="ONHOLD">
       <condition name="!reversing" />
     </action>
-    <action name="schedule" resulting_state="NOCHANGE">
+    <action name="schedule" resulting-state="NOCHANGE">
       <condition name="!reversing" />
     </action>
-    <action name="print" resulting_state="NOCHANGE" />
-    <action name="e_mail" resulting_state="NOCHANGE">
+    <action name="print" resulting-state="NOCHANGE" />
+    <action name="e_mail" resulting-state="NOCHANGE">
       <!-- condition name="configuredEmailFrom" / -->
       <condition name="is_invoice" />
     </action>
-    <action name="sales_order" resulting_state="NOCHANGE">
+    <action name="sales_order" resulting-state="NOCHANGE">
       <condition name="!reversing" />
       <condition name="is_sales" />
       <condition name="is_invoice" />
     </action>
-    <action name="purchase_order" resulting_state="NOCHANGE">
+    <action name="purchase_order" resulting-state="NOCHANGE">
       <condition name="!reversing" />
       <condition name="!is_sales" />
       <condition name="is_invoice" />
@@ -112,18 +113,18 @@
   </state>
 
   <state name="ONHOLD">
-    <action name="save_info" resulting_state="NOCHANGE" />
-    <action name="release" resulting_state="POSTED" />
+    <action name="save_info" resulting-state="NOCHANGE" />
+    <action name="release" resulting-state="POSTED" />
   </state>
 
   <state name="VOIDED">
-    <action name="save_info" resulting_state="NOCHANGE" />
-    <action name="copy_to_new" resulting_state="NOCHANGE" />
+    <action name="save_info" resulting-state="NOCHANGE" />
+    <action name="copy_to_new" resulting-state="NOCHANGE" />
   </state>
 
   <state name="REVERSED">
-    <action name="save_info" resulting_state="NOCHANGE" />
-    <action name="copy_to_new" resulting_state="NOCHANGE" />
+    <action name="save_info" resulting-state="NOCHANGE" />
+    <action name="copy_to_new" resulting-state="NOCHANGE" />
   </state>
   <state name="DELETED" />
 </workflow>

@@ -42,6 +42,7 @@ use Log::Any qw($log);
 use File::Find::Rule;
 use File::Spec;
 use LedgerSMB::Workflow::Factory;
+use LedgerSMB::Workflow::Config::XML;
 use Workflow::Condition;
 
 $Workflow::Condition::STRICT_BOOLEANS = 0;

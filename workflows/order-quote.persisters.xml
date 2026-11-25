@@ -1,4 +1,5 @@
-<persisters>
+<persisters
+    xmlns="http://ledgersmb.org/xml-schemas/workflows">
   <persister name="Order"
              class="LedgerSMB::Workflow::Persister::Order"
              date_format="%Y-%m-%d %H:%M:%S"

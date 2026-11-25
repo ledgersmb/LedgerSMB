@@ -1,4 +1,6 @@
-<actions type="Email">
+<actions
+    xmlns="http://ledgersmb.org/xml-schemas/workflows"
+    type="Email">
   <description>Actions for Email workflow</description>
   <action name="save"
           text="Save"
