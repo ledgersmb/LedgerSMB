@@ -37,22 +37,22 @@
   },
   "dependencies": {
     "@quasar/extras": "^2.0.0",
-    "content-disposition": "3.0.0",
+    "content-disposition": "3.1.0",
     "dijit": "1.17.3",
     "dojo": "1.17.3",
     "pinia": "4.1.0",
     "quasar": "^2.18.1",
     "robot3": "1.4.0",
     "rtl-detect": "1.1.2",
-    "vue": "3.5.45",
-    "vue-i18n": "11.4.22",
+    "vue": "3.5.46",
+    "vue-i18n": "11.4.23",
     "vue-router": "5.5.1"
   },
   "resolves": {
     "tmp": "^0.2.7"
   },
   "devDependencies": {
-    "@babel/core": "8.1.2",
+    "@babel/core": "8.1.3",
     "@babel/eslint-parser": "8.1.2",
     "@babel/plugin-transform-object-rest-spread": "^8.0.0",
     "@babel/preset-env": "8.0.7",
@@ -60,8 +60,8 @@
     "@eslint/js": "10.0.1",
     "@pinia/testing": "2.0.2",
     "@quasar/app-webpack": "^4.2.0",
-    "@redocly/cli": "2.80.0",
-    "@typescript-eslint/utils": "8.73.0",
+    "@redocly/cli": "2.83.0",
+    "@typescript-eslint/utils": "8.74.0",
     "@vitejs/plugin-vue": "6.0.11",
     "@vitest/coverage-v8": "4.1.12",
     "@vitest/eslint-plugin": "1.6.28",
@@ -99,15 +99,15 @@
     "jsonc-eslint-parser": "3.3.0",
     "markdown-include": "0.4.3",
     "markdownlint": "0.42.2",
-    "markdownlint-cli": "0.50.0",
+    "markdownlint-cli": "0.50.1",
     "mini-css-extract-plugin": "2.10.2",
     "msw": "3.0.7",
     "openapi-merge-cli": "2.0.3",
     "path-browserify": "^1.0.1",
     "postcss": "8.5.33",
     "prettier": "3.10.1",
-    "stylelint": "18.0.0",
-    "stylelint-config-standard": "41.0.0",
+    "stylelint": "18.1.0",
+    "stylelint-config-standard": "41.1.0",
     "stylelint-declaration-block-no-ignored-properties": "3.1.0",
     "stylelint-no-nested-media": "0.1.0",
     "stylelint-no-unsupported-browser-features": "8.1.2",
@@ -147,7 +147,7 @@
     "test": "vitest run",
     "test:unit": "vitest run --project browser"
   },
-  "packageManager": "yarn@4.18.1",
+  "packageManager": "yarn@4.19.0",
   "babel": {
     "presets": [
       [
